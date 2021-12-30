@@ -1,0 +1,22 @@
+[remap]
+
+importer="vnen.tiled_importer"
+type="PackedScene"
+path="res://.import/002-3-4.tmx-f4c7e45e67a4382f2e596c7ff45aa1ab.scn"
+
+[deps]
+
+source_file="res://maps/phatina/002-3-4.tmx"
+dest_files=[ "res://.import/002-3-4.tmx-f4c7e45e67a4382f2e596c7ff45aa1ab.scn" ]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+uv_clip=true
+image_flags=7
+collision_layer=1
+embed_internal_images=false
+save_tiled_properties=false
+add_background=true
+post_import_script=""

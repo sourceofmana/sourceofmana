@@ -1,0 +1,4 @@
+[gd_scene format=2]
+
+[node name="PlayerCamera" type="Camera2D"]
+current = true
