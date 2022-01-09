@@ -1,68 +1,102 @@
 extends KinematicBody2D
 
-enum Actions { IDLE, WALK, SIT, UNKNOWN = -1 }
+enum Actions { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
 
-const ACCELERATION = 600
-const FRICTION = 800
-const MAX_SPEED = 125
+const ACTION_GP_MOVE_RIGHT		= "gp_move_right"
+const ACTION_GP_MOVE_LEFT		= "gp_move_left"
+const ACTION_GP_MOVE_UP			= "gp_move_up"
+const ACTION_GP_MOVE_DOWN		= "gp_move_down"
+const ACTION_GP_SIT				= "gp_sit"
 
-var velocity = Vector2.ZERO
-var enumState = Actions.IDLE
+const ACCELERATION				= 600
+const FRICTION					= 800
+const MAX_SPEED					= 125
 
-onready var animationTree = $AnimationTree
-onready var animationState = animationTree.get("parameters/playback")
+onready var animationTree		= $AnimationTree
+onready var animationState		= animationTree.get("parameters/playback")
 
-#
-func HandleInputVector() :
-	var input_vector = Vector2.ZERO
+var currentInput				= Vector2.ZERO
+var currentVelocity				= Vector2.ZERO
+var currentDirection			= Vector2.ZERO
+var currentState				= Actions.IDLE
 
-	input_vector.x = Input.get_action_strength( "gp_move_right" ) - Input.get_action_strength("gp_move_left" )
-	input_vector.y = Input.get_action_strength( "gp_move_down" ) - Input.get_action_strength("gp_move_up" )
-	input_vector.normalized()
-
-	return input_vector
-
-#
-func HandleAnimationTree( delta ) :
-	var input_vector = HandleInputVector()
-	UpdateVelocity( input_vector, delta )
-
-	var isWalking	= velocity.length_squared() > 1
-	var isSitting	= Input.is_action_just_pressed( "gp_sit" )
-
-	match enumState :
-		Actions.IDLE :
-			if isWalking :
-				animationTree.set( "parameters/Idle/blend_position", velocity )
-				animationTree.set( "parameters/Walk/blend_position", velocity )
-				animationState.travel( "Walk" )
-				enumState = Actions.WALK
-			elif isSitting :
-				animationState.travel( "Sit" )
-				enumState = Actions.SIT
-		Actions.WALK :
-			if isWalking == false :
-				animationState.travel( "Idle" )
-				enumState = Actions.IDLE
-		Actions.SIT :
-			if isWalking :
-				animationTree.set( "parameters/Sit/blend_position", velocity )
-				animationTree.set( "parameters/Walk/blend_position", velocity )
-				animationState.travel( "Walk" )
-				enumState = Actions.WALK
-			elif isSitting :
-				animationState.travel( "Idle" )
-				enumState = Actions.IDLE
 
 #
-func UpdateVelocity( input, delta ) :
-	if input != Vector2.ZERO :
-		velocity = velocity.move_toward( input * MAX_SPEED, ACCELERATION * delta )
-	else :
-		velocity = velocity.move_toward( Vector2.ZERO, FRICTION * delta )
+func GetNextDirection():
+	if currentVelocity.length_squared() > 1:
+		return currentVelocity.normalized()
+	else:
+		return currentDirection
 
-	velocity = move_and_slide( velocity )
+func GetNextState():
+	var newEnumState			= currentState
+	var isWalking				= currentVelocity.length_squared() > 1
+	var actionSitPressed		= Input.is_action_pressed(ACTION_GP_SIT)
+	var actionSitJustPressed	= Input.is_action_just_pressed(ACTION_GP_SIT)
+
+	match currentState:
+		Actions.IDLE:
+			if isWalking:
+				newEnumState = Actions.WALK
+			elif actionSitJustPressed:
+				newEnumState = Actions.SIT
+		Actions.WALK:
+			if isWalking == false:
+				newEnumState = Actions.IDLE
+		Actions.SIT:
+			if actionSitPressed == false && isWalking:
+				newEnumState = Actions.WALK
+			elif actionSitJustPressed:
+				newEnumState = Actions.IDLE
+
+	return newEnumState
+
+func ApplyNextState(nextState, nextDirection):
+	currentState		= nextState
+	currentDirection	= nextDirection
+
+	animationTree.set("parameters/Idle/blend_position", currentDirection)
+	animationTree.set("parameters/Sit/blend_position", currentDirection)
+	animationTree.set("parameters/Walk/blend_position", currentDirection)
+
+	match currentState:
+		Actions.IDLE:
+			animationState.travel("Idle")
+			print("idle")
+		Actions.WALK:
+			animationState.travel("Walk")
+			print("walk")
+		Actions.SIT:
+			animationState.travel("Sit")
+			print("sit")
 
 #
-func _physics_process( delta ) :
-	HandleAnimationTree( delta )
+func UpdateInput():
+	currentInput.x	= Input.get_action_strength(ACTION_GP_MOVE_RIGHT) - Input.get_action_strength(ACTION_GP_MOVE_LEFT)
+	currentInput.y	= Input.get_action_strength(ACTION_GP_MOVE_DOWN) - Input.get_action_strength(ACTION_GP_MOVE_UP)
+	currentInput.normalized()
+
+#
+func UpdateVelocity(deltaTime):
+	if currentInput != Vector2.ZERO:
+		currentVelocity = currentVelocity.move_toward(currentInput * MAX_SPEED, ACCELERATION * deltaTime)
+	else:
+		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, FRICTION * deltaTime)
+
+	currentVelocity = move_and_slide(currentVelocity)
+
+#
+func UpdateState():
+	var nextState		= GetNextState()
+	var nextDirection	= GetNextDirection()
+	var newState		= nextState != currentState
+	var newDirection	= nextDirection != currentDirection
+
+	if newState || newDirection:
+		ApplyNextState(nextState, nextDirection)
+
+#
+func _physics_process(deltaTime) :
+	UpdateInput()
+	UpdateVelocity(deltaTime)
+	UpdateState()
