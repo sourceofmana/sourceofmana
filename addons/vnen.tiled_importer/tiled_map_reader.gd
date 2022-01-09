@@ -154,8 +154,15 @@ func build(source_path, options):
 		"infinite": bool(map.infinite) if "infinite" in map else false
 	}
 
+	var z_index = -1
+
 	for layer in map.layers:
-		err = make_layer(layer, root, root, map_data)
+		if "Fringe" in layer.name:
+			z_index = 0
+		elif z_index == 0:
+			z_index = 1
+
+		err = make_layer(layer, root, root, map_data, z_index)
 		if err != OK:
 			return err
 
@@ -192,7 +199,7 @@ func build(source_path, options):
 
 # Creates a layer node from the data
 # Returns an error code
-func make_layer(layer, parent, root, data):
+func make_layer(layer, parent, root, data, zindex):
 	var err = validate_layer(layer)
 	if err != OK:
 		return err
@@ -225,6 +232,7 @@ func make_layer(layer, parent, root, data):
 		tilemap.cell_y_sort = true
 		tilemap.cell_tile_origin = TileMap.TILE_ORIGIN_BOTTOM_LEFT
 		tilemap.collision_layer = options.collision_layer
+		tilemap.z_index = zindex
 
 		var offset = Vector2()
 		if "offsetx" in layer:
@@ -557,7 +565,7 @@ func make_layer(layer, parent, root, data):
 				# Translate from Tiled bottom-left position to Godot top-left
 				sprite.centered = false
 				sprite.region_filter_clip = options.uv_clip
-				sprite.offset = Vector2(0, -texture_size.y)
+				sprite.offset = Vector2(0, texture_size.y)
 
 				if not has_collisions:
 					object_layer.add_child(sprite)
@@ -596,8 +604,15 @@ func make_layer(layer, parent, root, data):
 		parent.add_child(group)
 		group.set_owner(root)
 
+		var z_index = -1
+
 		for sub_layer in layer.layers:
-			make_layer(sub_layer, group, root, data)
+			if "Fringe" in layer.name:
+				z_index = 0
+			elif z_index == 0:
+				z_index = 1
+
+			make_layer(sub_layer, group, root, data, z_index)
 
 	else:
 		print_error("Unknown layer type ('%s') in '%s'" % [str(layer.type), str(layer.name) if "name" in layer else "[unnamed layer]"])
@@ -702,7 +717,7 @@ func build_tileset_for_scene(tilesets, source_path, options):
 				result.tile_set_texture(gid, image)
 				result.tile_set_region(gid, region)
 				if options.apply_offset:
-					result.tile_set_texture_offset(gid, Vector2(0, -tilesize.y))
+					result.tile_set_texture_offset(gid, Vector2(0, 0))
 			elif not rel_id in ts.tiles:
 				gid += 1
 				continue
@@ -714,7 +729,7 @@ func build_tileset_for_scene(tilesets, source_path, options):
 					return image
 				result.tile_set_texture(gid, image)
 				if options.apply_offset:
-					result.tile_set_texture_offset(gid, Vector2(0, -image.get_height()))
+					result.tile_set_texture_offset(gid, Vector2(0, 0))
 
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:
