@@ -350,7 +350,7 @@ anim_player = NodePath("../Animation")
 active = true
 parameters/playback = SubResource( 23 )
 parameters/Idle/blend_position = Vector2( -0.00154561, 1 )
-parameters/Sit/blend_position = Vector2( 0.247544, 1.37931 )
+parameters/Sit/blend_position = Vector2( 0.0174326, -0.431034 )
 parameters/Walk/blend_position = Vector2( 0, 0 )
 
 [node name="PlayerCamera" parent="." instance=ExtResource( 4 )]
