@@ -61,6 +61,7 @@ const whitelist_properties = [
 	"version",
 	"visible",
 	"width",
+	"custom_material",
 ]
 
 # All templates loaded, can be looked up by path name
@@ -630,6 +631,8 @@ func set_default_obj_params(object):
 	if not "visible" in object:
 		object.visible = true
 
+var flags
+
 # Makes a tileset from a array of tilesets data
 # Since Godot supports only one TileSet per TileMap, all tilesets from Tiled are combined
 func build_tileset_for_scene(tilesets, source_path, options):
@@ -705,31 +708,82 @@ func build_tileset_for_scene(tilesets, source_path, options):
 
 		var i = 0
 		var column = 0
+		var tileRegions = []
+
 		while i < tilecount:
 			var tilepos = Vector2(x, y)
 			var region = Rect2(tilepos, tilesize)
+
+
+			tileRegions.push_back(region)
+
+			column += 1
+			i += 1
+
+			x += int(tilesize.x) + spacing
+			if (columns > 0 and column >= columns) or x >= int(imagesize.x) - margin or (x + int(tilesize.x)) > int(imagesize.x):
+				x = margin
+				y += int(tilesize.y) + spacing
+				column = 0
+
+		i = 0
+
+		while i < tilecount:
+			var region = tileRegions[i]
 
 			var rel_id = str(gid - firstgid)
 
 			result.create_tile(gid)
 
 			if has_global_image:
-				result.tile_set_texture(gid, image)
-				result.tile_set_region(gid, region)
+				if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
+					var animated_tex = AnimatedTexture.new()
+					animated_tex.frames = ts.tiles[rel_id].animation.size()
+					animated_tex.fps = 0
+					var c = 0
+					# Animated texture wants us to have seperate textures for each frame
+					# so we have to pull them out of the tileset
+					var tilesetTexture = image.get_data()
+					for g in ts.tiles[rel_id].animation:
+						var frameTex = tilesetTexture.get_rect(tileRegions[(int(g.tileid))])
+						var newTex = ImageTexture.new()
+						newTex.create_from_image(frameTex, flags)
+						animated_tex.set_frame_texture(c, newTex)
+						animated_tex.set_frame_delay(c, float(g.duration) * 0.001)
+						c += 1
+					result.tile_set_texture(gid, animated_tex)
+					result.tile_set_region(gid, Rect2(Vector2(0, 0), tilesize))
+				else:
+					result.tile_set_texture(gid, image)
+					result.tile_set_region(gid, region)
 				if options.apply_offset:
-					result.tile_set_texture_offset(gid, Vector2(0, 0))
+					result.tile_set_texture_offset(gid, Vector2(0, 32-tilesize.y))
 			elif not rel_id in ts.tiles:
 				gid += 1
 				continue
 			else:
-				var image_path = ts.tiles[rel_id].image
-				image = load_image(image_path, ts_source_path, options)
-				if typeof(image) != TYPE_OBJECT:
-					# Error happened
-					return image
-				result.tile_set_texture(gid, image)
+				if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
+					var animated_tex = AnimatedTexture.new()
+					animated_tex.frames = ts.tiles[rel_id].animation.size()
+					animated_tex.fps = 0
+					var c = 0
+					#untested
+					var image_path = ts.tiles[rel_id].image
+					for g in ts.tiles[rel_id].animation:
+						animated_tex.set_frame_texture(c, load_image(image_path, ts_source_path, options))
+						animated_tex.set_frame_delay(c, float(g.duration) * 0.001)
+						c += 1
+					result.tile_set_texture(gid, animated_tex)
+					result.tile_set_region(gid, Rect2(Vector2(0, 0), tilesize))
+				else:
+					var image_path = ts.tiles[rel_id].image
+					image = load_image(image_path, ts_source_path, options)
+					if typeof(image) != TYPE_OBJECT:
+						# Error happened
+						return image
+					result.tile_set_texture(gid, image)
 				if options.apply_offset:
-					result.tile_set_texture_offset(gid, Vector2(0, 0))
+					result.tile_set_texture_offset(gid, Vector2(0, -image.get_height()))
 
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:
@@ -756,6 +810,9 @@ func build_tileset_for_scene(tilesets, source_path, options):
 					else:
 						result.tile_add_shape(gid, shape, Transform2D(0, offset), object.type == "one-way")
 
+			if "properties" in ts and "custom_material" in ts.properties:
+				result.tile_set_material(gid, load(ts.properties.custom_material))
+
 			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
 					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
 				tile_meta[gid] = get_custom_properties(ts.tileproperties[rel_id], ts.tilepropertytypes[rel_id])
@@ -766,13 +823,7 @@ func build_tileset_for_scene(tilesets, source_path, options):
 						tile_meta[gid][property] = ts.tiles[rel_id][property]
 
 			gid += 1
-			column += 1
 			i += 1
-			x += int(tilesize.x) + spacing
-			if (columns > 0 and column >= columns) or x >= int(imagesize.x) - margin or (x + int(tilesize.x)) > int(imagesize.x):
-				x = margin
-				y += int(tilesize.y) + spacing
-				column = 0
 
 		if str(ts.name) != "":
 			result.resource_name = str(ts.name)
@@ -805,7 +856,7 @@ func build_tileset(source_path, options):
 # Loads an image from a given path
 # Returns a Texture
 func load_image(rel_path, source_path, options):
-	var flags = options.image_flags if "image_flags" in options else Texture.FLAGS_DEFAULT
+	flags = options.image_flags if "image_flags" in options else Texture.FLAGS_DEFAULT
 	var embed = options.embed_internal_images if "embed_internal_images" in options else false
 
 	var ext = rel_path.get_extension().to_lower()
