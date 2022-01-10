@@ -326,9 +326,6 @@ hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Collision" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, -23 )
-
 [node name="Animation" type="AnimationPlayer" parent="."]
 anims/IdleDown = SubResource( 6 )
 anims/IdleLeft = SubResource( 7 )
@@ -354,3 +351,5 @@ parameters/Sit/blend_position = Vector2( 0.0174326, -0.431034 )
 parameters/Walk/blend_position = Vector2( 0, 0 )
 
 [node name="PlayerCamera" parent="." instance=ExtResource( 4 )]
+
+[node name="Collision" parent="." instance=ExtResource( 3 )]
