@@ -783,7 +783,7 @@ func build_tileset_for_scene(tilesets, source_path, options):
 						return image
 					result.tile_set_texture(gid, image)
 				if options.apply_offset:
-					result.tile_set_texture_offset(gid, Vector2(0, -image.get_height()))
+					result.tile_set_texture_offset(gid, Vector2(0, 32-image.get_height()))
 
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:

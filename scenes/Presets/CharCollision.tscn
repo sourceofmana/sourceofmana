@@ -2,8 +2,8 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 9.32449
-height = 13.351
+height = 0.0
 
 [node name="Collision" type="CollisionShape2D"]
-position = Vector2( 0, -18 )
+position = Vector2( 0, -9 )
 shape = SubResource( 1 )
