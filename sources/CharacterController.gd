@@ -62,13 +62,11 @@ func ApplyNextState(nextState, nextDirection):
 	match currentState:
 		Actions.IDLE:
 			animationState.travel("Idle")
-			print("idle")
 		Actions.WALK:
 			animationState.travel("Walk")
-			print("walk")
 		Actions.SIT:
 			animationState.travel("Sit")
-			print("sit")
+
 
 #
 func UpdateInput():
