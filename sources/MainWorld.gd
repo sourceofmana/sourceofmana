@@ -5,8 +5,8 @@ onready var currentPlayer	= load("res://scenes/Presets/PC.tscn").instance()
 
 # Debug
 func SetDefaultPlayerPosition():
-	var defaultMap = "res://maps/phatina/002-3-0.tmx"
-	var defaultPosition = Vector2(60, 40)
+	var defaultMap = "res://maps/phatina/002-3-4.tmx"
+	var defaultPosition = Vector2(47, 37)
 	SetPlayerInWorld(defaultMap, defaultPosition)
 
 # Utils	
