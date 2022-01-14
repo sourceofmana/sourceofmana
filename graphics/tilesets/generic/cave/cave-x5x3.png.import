@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/torch-x1x2.png-b3fedd9ec124b0163f95021d52879b24.stex"
+path="res://.import/cave-x5x3.png-3f0b7b41cf850840fe55dac1478f466f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/tilesets/isles/candor/cave/torch-x1x2.png"
-dest_files=[ "res://.import/torch-x1x2.png-b3fedd9ec124b0163f95021d52879b24.stex" ]
+source_file="res://graphics/tilesets/generic/cave/cave-x5x3.png"
+dest_files=[ "res://.import/cave-x5x3.png-3f0b7b41cf850840fe55dac1478f466f.stex" ]
 
 [params]
 

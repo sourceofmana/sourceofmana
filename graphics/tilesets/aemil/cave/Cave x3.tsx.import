@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+path="res://.import/Cave x3.tsx-f0843ac3c6be2cd2ab661a12f4f36bfc.res"
+
+[deps]
+
+source_file="res://graphics/tilesets/aemil/cave/Cave x3.tsx"
+dest_files=[ "res://.import/Cave x3.tsx-f0843ac3c6be2cd2ab661a12f4f36bfc.res" ]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+image_flags=7
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

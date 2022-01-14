@@ -2,12 +2,12 @@
 
 importer="vnen.tiled_tileset_importer"
 type="TileSet"
-path="res://.import/Cave x4.tsx-b4d8d47c60614594262c6a95a39fa3e3.res"
+path="res://.import/Cave x4 x4.tsx-52a667a26cf790d480969d34647c3256.res"
 
 [deps]
 
-source_file="res://graphics/tilesets/generic/cave/Cave x4.tsx"
-dest_files=[ "res://.import/Cave x4.tsx-b4d8d47c60614594262c6a95a39fa3e3.res" ]
+source_file="res://graphics/tilesets/generic/cave/Cave x4 x4.tsx"
+dest_files=[ "res://.import/Cave x4 x4.tsx-52a667a26cf790d480969d34647c3256.res" ]
 
 [params]
 
