@@ -5,15 +5,15 @@ onready var currentPlayer	= load("res://scenes/Presets/PC.tscn").instance()
 
 # Debug
 func SetDefaultPlayerPosition():
-	var defaultMap = "res://maps/phatina/002-3-4.tmx"
-	var defaultPosition = Vector2(47, 37)
+	var defaultMap = "res://maps/phatina/002-3-1.tmx"
+	var defaultPosition = Vector2(70, 40)
 	SetPlayerInWorld(defaultMap, defaultPosition)
 
 # Utils	
 func SetCameraBoundaries():
 	if currentMap && currentPlayer:
 		var playerCamera	= currentPlayer.get_node("PlayerCamera")
-		var groundLayer		= currentMap.get_node("Ground 1")
+		var groundLayer		= currentMap.get_node("Collision")
 
 		assert(playerCamera, "Player camera not found")
 		assert(groundLayer, "Could not find a ground layer on map: " + currentMap.get_name())
