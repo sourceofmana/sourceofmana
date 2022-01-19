@@ -430,7 +430,7 @@ func make_layer(layer, parent, root, data, zindex):
 
 					if not ("polygon" in object or "polyline" in object):
 						# Regular shape
-						collision = CollisionShape2D.new()
+						collision = Shape2D.new()
 						collision.shape = shape
 						if shape is RectangleShape2D:
 							offset = shape.extents
@@ -446,7 +446,7 @@ func make_layer(layer, parent, root, data, zindex):
 							shape.height *= 2
 						collision.position = offset
 					else:
-						collision = CollisionPolygon2D.new()
+						collision = Polygon2D.new()
 						var points = null
 						if shape is ConcavePolygonShape2D:
 							points = []
@@ -455,13 +455,13 @@ func make_layer(layer, parent, root, data, zindex):
 								if i % 2 != 0:
 									continue
 								points.push_back(segments[i])
-							collision.build_mode = CollisionPolygon2D.BUILD_SEGMENTS
+#							collision.build_mode = Polygon2D.BUILD_SEGMENTS
 						else:
 							points = shape.points
-							collision.build_mode = CollisionPolygon2D.BUILD_SOLIDS
+#							collision.build_mode = Polygon2D.BUILD_SOLIDS
 						collision.polygon = points
 
-					collision.one_way_collision = object.type == "one-way"
+#					collision.one_way_collision = object.type == "one-way"
 
 					if "x" in object:
 						pos.x = float(object.x)
