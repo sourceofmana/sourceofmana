@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var currentMap		= null
-onready var currentPlayer	= load("res://scenes/Presets/PC.tscn").instance()
+onready var currentPlayer	= load("res://scenes/presets/PC.tscn").instance()
 
 # Debug
 func SetDefaultPlayerPosition():
@@ -10,17 +10,17 @@ func SetDefaultPlayerPosition():
 	SetPlayerInWorld(defaultMap, defaultPosition)
 
 # Utils	
-func SetCameraBoundaries():
-	if currentMap && currentPlayer:
-		var playerCamera	= currentPlayer.get_node("PlayerCamera")
-		var groundLayer		= currentMap.get_node("Collision")
+func SetCameraBoundaries(map, player):
+	if map && player:
+		var playerCamera	= player.get_node("PlayerCamera")
+		var collisionLayer	= map.get_node("Collision")
 
 		assert(playerCamera, "Player camera not found")
-		assert(groundLayer, "Could not find a ground layer on map: " + currentMap.get_name())
+		assert(collisionLayer, "Could not find a collision layer on map: " + currentMap.get_name())
 
-		if groundLayer && playerCamera:
-			var mapLimits		= groundLayer.get_used_rect()
-			var mapCellsize		= groundLayer.cell_size
+		if collisionLayer && playerCamera:
+			var mapLimits		= collisionLayer.get_used_rect()
+			var mapCellsize		= collisionLayer.cell_size
 
 			playerCamera.limit_left		= mapLimits.position.x * mapCellsize.x
 			playerCamera.limit_right	= mapLimits.end.x * mapCellsize.x
@@ -44,7 +44,7 @@ func ReturnInventoryList(s_inventoryList):
 func _ready():
 	if currentMap == null:
 		SetDefaultPlayerPosition()
-	SetCameraBoundaries()
+	SetCameraBoundaries(currentMap, currentPlayer)
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_inventory"):
