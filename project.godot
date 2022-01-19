@@ -11,15 +11,17 @@ config_version=4
 [application]
 
 config/name="Source of Mana"
-run/main_scene="res://scenes/Map/Proto.tscn"
+run/main_scene="res://scenes/map/Proto.tscn"
 boot_splash/image="res://press/splash/splashscreen.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://press/logo/logo_seed.svg"
 
 [autoload]
 
-Server="*res://sources/Server.gd"
+Server="*res://sources/network/Server.gd"
 MainWorld="*res://sources/MainWorld.gd"
+Actions="*res://sources/entity/Action.gd"
+Trait="*res://sources/entity/Trait.gd"
 
 [debug]
 

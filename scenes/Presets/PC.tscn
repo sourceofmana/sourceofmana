@@ -1,9 +1,9 @@
 [gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://graphics/sprites/players/human-male.png" type="Texture" id=1]
-[ext_resource path="res://sources/CharacterController.gd" type="Script" id=2]
-[ext_resource path="res://scenes/Presets/CharCollision.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/Presets/Camera.tscn" type="PackedScene" id=4]
+[ext_resource path="res://sources/entity/Entity.gd" type="Script" id=2]
+[ext_resource path="res://scenes/presets/CharCollision.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/presets/Camera.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=6]
 resource_name = "IdleDown"
