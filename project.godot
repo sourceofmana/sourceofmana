@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "DialogueResource",
+"language": "GDScript",
+"path": "res://addons/dialogue_manager/dialogue_resource.gd"
+} ]
+_global_script_class_icons={
+"DialogueResource": ""
+}
+
 [application]
 
 config/name="Source of Mana"
@@ -19,9 +29,11 @@ config/icon="res://press/logo/logo_seed.svg"
 [autoload]
 
 Server="*res://sources/network/Server.gd"
-MainWorld="*res://sources/MainWorld.gd"
 Actions="*res://sources/entity/Action.gd"
 Trait="*res://sources/entity/Trait.gd"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+GlobalWorld="*res://sources/GlobalWorld.gd"
+Launcher="*res://sources/Launcher.gd"
 
 [debug]
 
@@ -38,7 +50,7 @@ window/per_pixel_transparency/enabled=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/vnen.tiled_importer/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addons/tiled_importer/plugin.cfg" )
 
 [importer_defaults]
 
