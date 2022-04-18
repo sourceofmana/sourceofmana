@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=2]
+[gd_resource type="Theme" load_steps=11 format=2]
 
 [ext_resource path="res://graphics/fonts/Oleaguid.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://graphics/gui/button/button.png" type="Texture" id=2]
@@ -22,10 +22,6 @@ region_rect = Rect2( 2, 1, 1, 2 )
 texture = ExtResource( 3 )
 region_rect = Rect2( 2, 2, 1, 2 )
 
-[sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 2 )
-region_rect = Rect2( 0, 0, 6, 6 )
-
 [sub_resource type="DynamicFont" id=1]
 size = 20
 font_data = ExtResource( 1 )
@@ -43,9 +39,6 @@ Button/styles/disabled = SubResource( 4 )
 Button/styles/hover = SubResource( 6 )
 Button/styles/normal = SubResource( 2 )
 Button/styles/pressed = SubResource( 3 )
-Tabs/colors/font_color_bg = Color( 0.69, 0.69, 0.69, 1 )
-Tabs/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
-Tabs/colors/font_color_fg = Color( 0.94, 0.94, 0.94, 1 )
 Tabs/constants/hseparation = 4
 Tabs/constants/label_valign_bg = 2
 Tabs/constants/label_valign_fg = 0
@@ -58,6 +51,6 @@ Tabs/icons/increment = null
 Tabs/icons/increment_highlight = null
 Tabs/styles/button = null
 Tabs/styles/button_pressed = null
-Tabs/styles/tab_bg = SubResource( 7 )
+Tabs/styles/tab_bg = null
 Tabs/styles/tab_disabled = null
 Tabs/styles/tab_fg = null

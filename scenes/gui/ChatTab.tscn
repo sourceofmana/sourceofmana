@@ -6,7 +6,7 @@
 [node name="Tab" type="NinePatchRect"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 103.0
+margin_right = 11.0
 margin_bottom = 25.0
 texture = ExtResource( 1 )
 patch_margin_left = 4
@@ -18,12 +18,13 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-margin_left = 6.0
+margin_left = -1.0
 margin_top = -1.0
-margin_right = 93.0
-margin_bottom = 27.0
+margin_right = 29.0
+margin_bottom = 14.0
 theme = ExtResource( 2 )
 custom_colors/font_color = Color( 0.843137, 0.717647, 0.482353, 1 )
+text = "Test"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
