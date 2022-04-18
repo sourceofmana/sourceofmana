@@ -1,0 +1,101 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/gui/Window.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/gui/Bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://graphics/items/common/mucus-red-key.png" type="Texture" id=3]
+[ext_resource path="res://graphics/items/common/mucus-green-key.png" type="Texture" id=4]
+[ext_resource path="res://graphics/items/common/mucus-purple-key.png" type="Texture" id=5]
+[ext_resource path="res://graphics/gui/inventory/selection.png" type="Texture" id=6]
+
+[node name="Inventory" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 300.0
+margin_top = 300.0
+margin_right = -439.0
+margin_bottom = -129.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Window" parent="." instance=ExtResource( 1 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -394.0
+margin_bottom = -46.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Window" type="HBoxContainer" parent="Window/VBoxContainer"]
+margin_right = 127.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Window/VBoxContainer/Window"]
+margin_right = 61.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Weight"
+fit_content_height = true
+scroll_active = false
+
+[node name="BarHP" parent="Window/VBoxContainer/Window" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 65.0
+margin_top = 0.0
+margin_right = 127.0
+margin_bottom = 15.0
+grow_horizontal = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Window/VBoxContainer"]
+margin_top = 19.0
+margin_right = 127.0
+margin_bottom = 225.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="Window/VBoxContainer/ScrollContainer"]
+margin_right = 127.0
+margin_bottom = 206.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 100
+
+[node name="Inv1" type="TextureRect" parent="Window/VBoxContainer/ScrollContainer/GridContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 4 )
+
+[node name="Inv2" type="TextureRect" parent="Window/VBoxContainer/ScrollContainer/GridContainer"]
+margin_left = 36.0
+margin_right = 68.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 5 )
+
+[node name="TextureRect" type="TextureRect" parent="Window/VBoxContainer/ScrollContainer/GridContainer/Inv2"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inv3" type="TextureRect" parent="Window/VBoxContainer/ScrollContainer/GridContainer"]
+margin_left = 72.0
+margin_right = 104.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 3 )

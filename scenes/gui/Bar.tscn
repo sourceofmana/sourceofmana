@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sources/gui/Bar.gd" type="Script" id=1]
+[ext_resource path="res://graphics/gui/bar.png" type="Texture" id=2]
+
+[node name="BarHP" type="TextureProgress"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 110.0
+margin_top = -763.0
+margin_right = 142.0
+margin_bottom = -1378.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+value = 20.0
+texture_under = ExtResource( 2 )
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
