@@ -1,9 +1,10 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://graphics/sprites/players/human-male.png" type="Texture" id=1]
 [ext_resource path="res://sources/entity/Entity.gd" type="Script" id=2]
 [ext_resource path="res://scenes/presets/CharCollision.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/presets/Camera.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/gui/Bar.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Animation" id=6]
 resource_name = "IdleDown"
@@ -315,9 +316,15 @@ start_node = "Idle"
 
 [node name="PC" type="KinematicBody2D"]
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
+
+[node name="BarHP" parent="." instance=ExtResource( 5 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -23.0
+margin_top = -74.0
+margin_right = 23.0
+margin_bottom = -69.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
