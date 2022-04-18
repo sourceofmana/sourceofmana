@@ -48,4 +48,8 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_inventory"):
-		Server.FetchInventoryList("All", get_instance_id())
+#		Server.FetchInventoryList("All", get_instance_id())
+		var dialogue_resource = load("res://data/dialogue/Enora.tres")
+		var dialogue = yield(DialogueManager.get_next_dialogue_line("Enora", dialogue_resource), "completed")
+		if dialogue != null:
+			add_child(dialogue)

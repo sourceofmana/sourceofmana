@@ -7,9 +7,11 @@ var stat						= preload("res://sources/entity/Stat.gd").new()
 var slot						= preload("res://sources/entity/Slot.gd").new()
 
 var entityName					= ""
-var showName					= false
 var gender						= Trait.Gender.MALE
+var type						= Trait.Type.HUMAN
+
 var damageReceived				= {}
+var showName					= false
 
 var currentInput				= Vector2.ZERO
 var currentVelocity				= Vector2.ZERO
@@ -78,7 +80,7 @@ func UpdateVelocity(deltaTime):
 	else:
 		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, stat.moveFriction * deltaTime)
 
-	currentVelocity = move_and_slide(currentVelocity)
+	currentVelocity = move_and_slide(currentVelocity, Vector2.ZERO, false, 1, 0.1, false)
 
 #
 func UpdateState():
