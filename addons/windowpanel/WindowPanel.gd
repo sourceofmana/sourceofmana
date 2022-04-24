@@ -13,36 +13,64 @@ var selectedEdge		= EdgeOrientation.NONE
 
 
 func ClampViewport(globalPos, moveLimit):
+	if selectedEdge == EdgeOrientation.BOTTOM_LEFT || selectedEdge == EdgeOrientation.LEFT || selectedEdge == EdgeOrientation.TOP_LEFT:
+		moveLimit.x -= rect_min_size.x
+	elif selectedEdge == EdgeOrientation.TOP_LEFT || selectedEdge == EdgeOrientation.TOP || selectedEdge == EdgeOrientation.TOP_RIGHT:
+		moveLimit.y -= rect_min_size.y
 	return Vector2( clamp(globalPos.x, 0, moveLimit.x), clamp(globalPos.y, 0, moveLimit.y))
 
 func ResizeWindow(globalPos):
+	var rectSize = rect_size
+	var rectPos = rect_position
+
 	match selectedEdge:
 		EdgeOrientation.RIGHT:
-			rect_size.x = globalPos.x - rect_position.x
+			rectSize.x = globalPos.x - rectPos.x
 		EdgeOrientation.BOTTOM_RIGHT:
-			rect_size.x = globalPos.x - rect_position.x
-			rect_size.y = globalPos.y - rect_position.y
+			rectSize.x = globalPos.x - rectPos.x
+			rectSize.y = globalPos.y - rectPos.y
 		EdgeOrientation.BOTTOM:
-			rect_size.y = globalPos.y - rect_position.y
+			rectSize.y = globalPos.y - rectPos.y
 		EdgeOrientation.BOTTOM_LEFT:
-			rect_size.x += rect_position.x - globalPos.x
-			rect_position.x = globalPos.x
-			rect_size.y = globalPos.y - rect_position.y
+			rectSize.x += rectPos.x - globalPos.x
+			if rectSize.x < rect_min_size.x:
+				rectPos.x = globalPos.x + (rectSize.x - rect_min_size.x)
+			else:
+				rectPos.x = globalPos.x
+			rectSize.y = globalPos.y - rectPos.y
 		EdgeOrientation.LEFT:
-			rect_size.x += rect_position.x - globalPos.x
-			rect_position.x = globalPos.x
+			rectSize.x += rectPos.x - globalPos.x
+			if rectSize.x < rect_min_size.x:
+				rectPos.x = globalPos.x + (rectSize.x - rect_min_size.x)
+			else:
+				rectPos.x = globalPos.x
 		EdgeOrientation.TOP_LEFT:
-			rect_size.x += rect_position.x - globalPos.x
-			rect_position.x = globalPos.x
-			rect_size.y += rect_position.y - globalPos.y
-			rect_position.y = globalPos.y
+			rectSize.x += rectPos.x - globalPos.x
+			if rectSize.x < rect_min_size.x:
+				rectPos.x = globalPos.x + (rectSize.x - rect_min_size.x)
+			else:
+				rectPos.x = globalPos.x
+			rectSize.y += rectPos.y - globalPos.y
+			if rectSize.y < rect_min_size.y:
+				rectPos.y = globalPos.y + (rectSize.y - rect_min_size.y)
+			else:
+				rectPos.y = globalPos.y
 		EdgeOrientation.TOP:
-			rect_size.y += rect_position.y - globalPos.y
-			rect_position.y = globalPos.y
+			rectSize.y += rectPos.y - globalPos.y
+			if rectSize.y < rect_min_size.y:
+				rectPos.y = globalPos.y + (rectSize.y - rect_min_size.y)
+			else:
+				rectPos.y = globalPos.y
 		EdgeOrientation.TOP_RIGHT:
-			rect_size.x = globalPos.x - rect_position.x
-			rect_size.y += rect_position.y - globalPos.y
-			rect_position.y = globalPos.y
+			rectSize.x = globalPos.x - rectPos.x
+			rectSize.y += rectPos.y - globalPos.y
+			if rectSize.y < rect_min_size.y:
+				rectPos.y = globalPos.y + (rectSize.y - rect_min_size.y)
+			else:
+				rectPos.y = globalPos.y
+
+	rect_size = rectSize
+	rect_position = rectPos
 
 func GetEdgeOrientation(pos):
 	var cornersArray = []
