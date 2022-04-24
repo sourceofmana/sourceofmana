@@ -1,101 +1,116 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scenes/gui/Window.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/gui/DefaultTheme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/gui/Bar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://graphics/items/common/mucus-red-key.png" type="Texture" id=3]
 [ext_resource path="res://graphics/items/common/mucus-green-key.png" type="Texture" id=4]
 [ext_resource path="res://graphics/items/common/mucus-purple-key.png" type="Texture" id=5]
 [ext_resource path="res://graphics/gui/inventory/selection.png" type="Texture" id=6]
+[ext_resource path="res://addons/windowpanel/WindowPanel.gd" type="Script" id=7]
 
-[node name="Inventory" type="Control"]
+[node name="Panel" type="Panel"]
+show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 300.0
-margin_top = 300.0
-margin_right = -439.0
-margin_bottom = -129.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+rect_min_size = Vector2( 150, 100 )
+hint_tooltip = "Panel"
+theme = ExtResource( 1 )
+script = ExtResource( 7 )
 
-[node name="Window" parent="." instance=ExtResource( 1 )]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = -394.0
-margin_bottom = -46.0
+[node name="TitleBar" type="HBoxContainer" parent="."]
+margin_left = 6.0
+margin_top = 6.0
+margin_right = 356.0
+margin_bottom = 168.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Window"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Window" type="HBoxContainer" parent="Window/VBoxContainer"]
-margin_right = 127.0
+[node name="WindowName" type="Label" parent="TitleBar"]
+margin_right = 72.0
 margin_bottom = 15.0
-size_flags_horizontal = 3
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Inventory"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Window/VBoxContainer/Window"]
-margin_right = 61.0
-margin_bottom = 15.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 7.0
+margin_top = 29.0
+margin_right = -7.0
+margin_bottom = -7.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Weight"
-fit_content_height = true
-scroll_active = false
 
-[node name="BarHP" parent="Window/VBoxContainer/Window" instance=ExtResource( 2 )]
+[node name="Weight" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1266.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+
+[node name="WeightText" type="Label" parent="VBoxContainer/Weight"]
+margin_right = 50.0
+margin_bottom = 15.0
+size_flags_vertical = 1
+text = "Weight"
+
+[node name="WeightBar" parent="VBoxContainer/Weight" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 65.0
+margin_left = 54.0
 margin_top = 0.0
-margin_right = 127.0
+margin_right = 1266.0
 margin_bottom = 15.0
 grow_horizontal = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Window/VBoxContainer"]
+[node name="ItemContainer" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 19.0
-margin_right = 127.0
-margin_bottom = 225.0
+margin_right = 1266.0
+margin_bottom = 684.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+scroll_horizontal_enabled = false
 
-[node name="GridContainer" type="GridContainer" parent="Window/VBoxContainer/ScrollContainer"]
-margin_right = 127.0
-margin_bottom = 206.0
+[node name="ItemGrid" type="GridContainer" parent="VBoxContainer/ItemContainer"]
+margin_right = 1266.0
+margin_bottom = 665.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-columns = 100
+custom_constants/vseparation = 2
+custom_constants/hseparation = 2
+columns = 2
 
-[node name="Inv1" type="TextureRect" parent="Window/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="Item1" type="TextureRect" parent="VBoxContainer/ItemContainer/ItemGrid"]
 margin_right = 32.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 4 )
 
-[node name="Inv2" type="TextureRect" parent="Window/VBoxContainer/ScrollContainer/GridContainer"]
-margin_left = 36.0
-margin_right = 68.0
+[node name="Item2" type="TextureRect" parent="VBoxContainer/ItemContainer/ItemGrid"]
+margin_left = 34.0
+margin_right = 66.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 5 )
 
-[node name="TextureRect" type="TextureRect" parent="Window/VBoxContainer/ScrollContainer/GridContainer/Inv2"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="ItemHover" type="TextureRect" parent="VBoxContainer/ItemContainer/ItemGrid/Item2"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+expand = true
+stretch_mode = 7
 
-[node name="Inv3" type="TextureRect" parent="Window/VBoxContainer/ScrollContainer/GridContainer"]
-margin_left = 72.0
-margin_right = 104.0
-margin_bottom = 32.0
+[node name="Item3" type="TextureRect" parent="VBoxContainer/ItemContainer/ItemGrid"]
+margin_top = 34.0
+margin_right = 32.0
+margin_bottom = 66.0
 rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 3 )
+
+[connection signal="focus_exited" from="." to="." method="_on_window_focus_exited"]
+[connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
+[connection signal="mouse_exited" from="." to="." method="_on_window_mouse_exited"]

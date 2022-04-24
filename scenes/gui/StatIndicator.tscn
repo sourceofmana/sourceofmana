@@ -12,9 +12,6 @@ margin_bottom = 85.0
 size_flags_horizontal = 3
 theme = ExtResource( 5 )
 texture = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Bars" type="Control" parent="."]
 margin_right = 40.0
@@ -46,9 +43,9 @@ __meta__ = {
 
 [node name="HPText" type="Label" parent="Bars/HP"]
 margin_left = 85.0
-margin_top = 21.0
+margin_top = 25.0
 margin_right = 125.0
-margin_bottom = 45.0
+margin_bottom = 49.0
 rect_rotation = 0.0987821
 custom_colors/font_color = Color( 0.635294, 0.180392, 0.0588235, 1 )
 text = "0/0"
@@ -79,9 +76,9 @@ __meta__ = {
 
 [node name="ManaText" type="Label" parent="Bars/Mana"]
 margin_left = 85.0
-margin_top = 43.0
+margin_top = 47.0
 margin_right = 125.0
-margin_bottom = 67.0
+margin_bottom = 71.0
 custom_colors/font_color = Color( 0.0901961, 0.470588, 0.698039, 1 )
 text = "0/0"
 __meta__ = {
@@ -123,9 +120,9 @@ __meta__ = {
 
 [node name="LevelText" type="Label" parent="."]
 margin_left = 19.0
-margin_top = 12.0
+margin_top = 16.0
 margin_right = 51.0
-margin_bottom = 36.0
+margin_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_scale = Vector2( 1.5, 1.5 )
@@ -139,9 +136,9 @@ __meta__ = {
 
 [node name="ExpText" type="Label" parent="."]
 margin_left = 18.0
-margin_top = 43.5
+margin_top = 47.5
 margin_right = 88.0
-margin_bottom = 67.5
+margin_bottom = 71.5
 grow_horizontal = 2
 grow_vertical = 2
 rect_scale = Vector2( 0.7, 0.7 )
@@ -149,6 +146,3 @@ custom_colors/font_color = Color( 0.843137, 0.717647, 0.482353, 1 )
 text = "100.00%"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}

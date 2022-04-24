@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/gui/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/windowpanel/WindowPanel.gd" type="Script" id=2]
+
+[node name="ChatTabContainer" type="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+tab_align = 0
+drag_to_rearrange_enabled = true
+script = ExtResource( 2 )
+
+[node name="General" type="Tabs" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 55.0
+margin_right = -6.0
+margin_bottom = -5.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+tab_close_display_policy = 1
+drag_to_rearrange_enabled = true
+
+[node name="ChatVBox" type="VBoxContainer" parent="General"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 3
+
+[node name="Backlog" type="Label" parent="General/ChatVBox"]
+margin_right = 1268.0
+margin_bottom = 631.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NewText" type="LineEdit" parent="General/ChatVBox"]
+margin_top = 635.0
+margin_right = 1268.0
+margin_bottom = 660.0
+
+[connection signal="focus_exited" from="." to="." method="_on_window_mouse_exited"]
+[connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
+[connection signal="mouse_exited" from="." to="." method="_on_window_mouse_exited"]
