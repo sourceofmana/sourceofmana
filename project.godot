@@ -50,7 +50,7 @@ window/per_pixel_transparency/enabled=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addons/tiled_importer/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addons/tiled_importer/plugin.cfg", "res://addons/windowpanel/plugin.cfg" )
 
 [importer_defaults]
 
