@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scenes/gui/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://data/themes/DefaultTheme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/gui/Bar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://graphics/items/common/mucus-red-key.png" type="Texture" id=3]
-[ext_resource path="res://graphics/items/common/mucus-green-key.png" type="Texture" id=4]
-[ext_resource path="res://graphics/items/common/mucus-purple-key.png" type="Texture" id=5]
-[ext_resource path="res://graphics/gui/inventory/selection.png" type="Texture" id=6]
+[ext_resource path="res://data/graphics/items/common/mucus-red-key.png" type="Texture" id=3]
+[ext_resource path="res://data/graphics/items/common/mucus-green-key.png" type="Texture" id=4]
+[ext_resource path="res://data/graphics/items/common/mucus-purple-key.png" type="Texture" id=5]
+[ext_resource path="res://data/graphics/gui/inventory/selection.png" type="Texture" id=6]
 [ext_resource path="res://addons/windowpanel/WindowPanel.gd" type="Script" id=7]
 
 [node name="Panel" type="Panel"]

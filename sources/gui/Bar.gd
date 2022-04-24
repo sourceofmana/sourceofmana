@@ -1,6 +1,6 @@
 extends TextureProgress
 
-const defaultTexturePath	= "res://graphics/gui/barprogressdefault.png"
+const defaultTexturePath	= "res://data/graphics/gui/barprogressdefault.png"
 
 func _ready():
 	if get_progress_texture() == null:

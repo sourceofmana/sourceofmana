@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://sources/gui/Bar.gd" type="Script" id=1]
-[ext_resource path="res://graphics/gui/bar.png" type="Texture" id=2]
+[ext_resource path="res://data/graphics/gui/bar.png" type="Texture" id=2]
 
 [node name="BarHP" type="TextureProgress"]
 anchor_right = 1.0

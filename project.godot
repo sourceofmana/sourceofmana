@@ -22,9 +22,9 @@ _global_script_class_icons={
 
 config/name="Source of Mana"
 run/main_scene="res://scenes/map/Proto.tscn"
-boot_splash/image="res://press/splash/splashscreen.png"
+boot_splash/image="res://data/press/splash/splashscreen.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
-config/icon="res://press/logo/logo_seed.svg"
+config/icon="res://data/press/logo/logo_seed.svg"
 
 [autoload]
 

@@ -1,12 +1,13 @@
 extends Node2D
 
+const defaultMap			= "res://data/maps/phatina/002-3-1.tmx"
+const defaultPosition		= Vector2(70, 40)
+
 onready var currentMap		= null
 onready var currentPlayer	= load("res://scenes/presets/PC.tscn").instance()
 
 # Debug
 func SetDefaultPlayerPosition():
-	var defaultMap = "res://maps/phatina/002-3-1.tmx"
-	var defaultPosition = Vector2(70, 40)
 	SetPlayerInWorld(defaultMap, defaultPosition)
 
 # Utils	
