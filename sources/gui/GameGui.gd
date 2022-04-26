@@ -3,6 +3,7 @@ extends Node
 onready var hpStat			= $VBoxMain/HBoxTop/StatIndicator/Bars/HP
 onready var manaStat		= $VBoxMain/HBoxTop/StatIndicator/Bars/Mana
 onready var staminaStat		= $VBoxMain/HBoxTop/StatIndicator/Bars/Stamina
+onready var weightStat		= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/Weight
 
 onready var LevelText		= $VBoxMain/HBoxTop/StatIndicator/LevelText
 onready var ExpText			= $VBoxMain/HBoxTop/StatIndicator/ExpText
@@ -20,6 +21,9 @@ func _ready():
 		manaStat.SetStat(GlobalWorld.currentPlayer.stat.mana, GlobalWorld.currentPlayer.stat.maxMana)
 	if staminaStat:
 		staminaStat.SetStat(GlobalWorld.currentPlayer.stat.stamina, GlobalWorld.currentPlayer.stat.maxStamina)
+
+	if weightStat:
+		weightStat.SetStat(40, 100)
 
 	var levelFormat = String(GlobalWorld.currentPlayer.stat.level)
 	LevelText.set_text(levelFormat)

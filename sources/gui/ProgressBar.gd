@@ -1,6 +1,7 @@
 extends Control
 
 export(Texture)		var textureProgress
+export(Texture)		var textureBackground
 export(Color)		var labelColor
 export(float)		var labelScale
 
@@ -43,6 +44,8 @@ func _ready():
 		if textureProgress:
 			bar.texture_progress = textureProgress
 			bar.rect_size = textureProgress.get_size()
+		if textureBackground:
+			bar.texture_under = textureBackground
 	if label:
 		if labelScale != 1:
 			label.set_scale(Vector2(labelScale,labelScale))

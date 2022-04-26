@@ -22,20 +22,26 @@ __meta__ = {
 }
 
 [node name="HP" parent="Bars" instance=ExtResource( 2 )]
+margin_left = 66.0
+margin_top = 22.0
+margin_right = 66.0
+margin_bottom = 22.0
 textureProgress = ExtResource( 6 )
 labelColor = Color( 0.6, 0.188235, 0.0392157, 1 )
 
 [node name="Mana" parent="Bars" instance=ExtResource( 2 )]
-margin_top = 22.0
-margin_bottom = 62.0
+margin_left = 67.0
+margin_top = 44.0
+margin_right = 67.0
+margin_bottom = 84.0
 textureProgress = ExtResource( 3 )
 labelColor = Color( 0.196078, 0.466667, 0.698039, 1 )
 
 [node name="Stamina" parent="Bars" instance=ExtResource( 2 )]
-margin_left = -11.0
-margin_top = 44.0
-margin_right = 29.0
-margin_bottom = 84.0
+margin_left = 55.0
+margin_top = 66.0
+margin_right = 95.0
+margin_bottom = 106.0
 textureProgress = ExtResource( 4 )
 labelScale = 0.85
 

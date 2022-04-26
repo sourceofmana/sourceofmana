@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://data/themes/DefaultTheme.tres" type="Theme" id=1]
-[ext_resource path="res://scenes/gui/Bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/gui/ProgressBar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://data/graphics/items/common/mucus-red-key.png" type="Texture" id=3]
 [ext_resource path="res://data/graphics/items/common/mucus-green-key.png" type="Texture" id=4]
 [ext_resource path="res://data/graphics/items/common/mucus-purple-key.png" type="Texture" id=5]
 [ext_resource path="res://data/graphics/gui/inventory/selection.png" type="Texture" id=6]
 [ext_resource path="res://addons/windowpanel/WindowPanel.gd" type="Script" id=7]
+[ext_resource path="res://data/graphics/gui/bar.png" type="Texture" id=8]
 
 [node name="Panel" type="Panel"]
 show_behind_parent = true
@@ -47,20 +48,27 @@ margin_right = 1266.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
 
-[node name="WeightText" type="Label" parent="VBoxContainer/Weight"]
+[node name="Text" type="Label" parent="VBoxContainer/Weight"]
 margin_right = 50.0
 margin_bottom = 15.0
 size_flags_vertical = 1
 text = "Weight"
 
-[node name="WeightBar" parent="VBoxContainer/Weight" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="BgTex" type="NinePatchRect" parent="VBoxContainer/Weight"]
 margin_left = 54.0
-margin_top = 0.0
 margin_right = 1266.0
 margin_bottom = 15.0
-grow_horizontal = 0
+size_flags_horizontal = 3
+texture = ExtResource( 8 )
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Weight" parent="VBoxContainer/Weight/BgTex" instance=ExtResource( 2 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+labelScale = 0.85
 
 [node name="ItemContainer" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 19.0
