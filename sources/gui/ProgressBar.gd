@@ -4,7 +4,7 @@ export(Texture)		var textureProgress
 export(Texture)		var textureBackground
 export(Color)		var labelColor
 export(float)		var labelScale
-
+export(String)		var labelUnit
 
 onready var label	= get_node("Label")
 onready var bar		= get_node("Bar")
@@ -33,7 +33,12 @@ func GetFormatedText(value : String) -> String:
 func GetBarFormat(currentValue : float, maxValue : float) -> String:
 	var currentValueText = GetFormatedText(currentValue as String)
 	var maxValueText = GetFormatedText(maxValue as String)
-	return currentValueText + " / " + maxValueText
+
+	var formatedText = currentValueText + " / " + maxValueText
+	if labelUnit.length() > 0:
+		formatedText += " " + labelUnit
+	
+	return formatedText
 
 #
 func SetStat(currentValue, maxValue):
