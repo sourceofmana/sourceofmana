@@ -23,7 +23,7 @@ func _ready():
 		staminaStat.SetStat(GlobalWorld.currentPlayer.stat.stamina, GlobalWorld.currentPlayer.stat.maxStamina)
 
 	if weightStat:
-		weightStat.SetStat(40, 100)
+		weightStat.SetStat(GlobalWorld.currentPlayer.stat.weight, GlobalWorld.currentPlayer.stat.maxWeight)
 
 	var levelFormat = String(GlobalWorld.currentPlayer.stat.level)
 	LevelText.set_text(levelFormat)

@@ -5,6 +5,7 @@ export(Texture)		var textureBackground
 export(Color)		var labelColor
 export(float)		var labelScale
 
+
 onready var label	= get_node("Label")
 onready var bar		= get_node("Bar")
 
@@ -16,13 +17,20 @@ func GetRatio(currentValue : int, maxValue : int) -> float:
 	return ratio
 
 func GetFormatedText(value : String) -> String:
-	var i : int = value.length() - 3
-	while i > 0:
-		value = value.insert(i, ",")
-		i = i - 3
+	var commaLocation : int = value.find(".")
+	var charCounter : int = 0
+
+	if commaLocation > 0:
+		charCounter = commaLocation - 3
+	else:
+		charCounter = value.length() - 3
+
+	while charCounter > 0:
+		value = value.insert(charCounter, ",")
+		charCounter = charCounter - 3
 	return value
 
-func GetBarFormat(currentValue : int, maxValue : int) -> String:
+func GetBarFormat(currentValue : float, maxValue : float) -> String:
 	var currentValueText = GetFormatedText(currentValue as String)
 	var maxValueText = GetFormatedText(maxValue as String)
 	return currentValueText + " / " + maxValueText

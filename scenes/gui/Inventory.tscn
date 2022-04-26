@@ -13,7 +13,7 @@
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 150, 100 )
+rect_min_size = Vector2( 200, 100 )
 hint_tooltip = "Panel"
 theme = ExtResource( 1 )
 script = ExtResource( 7 )
@@ -45,20 +45,25 @@ size_flags_vertical = 3
 
 [node name="Weight" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 1266.0
-margin_bottom = 15.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 
 [node name="Text" type="Label" parent="VBoxContainer/Weight"]
 margin_right = 50.0
-margin_bottom = 15.0
-size_flags_vertical = 1
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 22 )
+size_flags_vertical = 3
 text = "Weight"
+align = 1
+valign = 1
 
 [node name="BgTex" type="NinePatchRect" parent="VBoxContainer/Weight"]
 margin_left = 54.0
 margin_right = 1266.0
-margin_bottom = 15.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 22 )
 size_flags_horizontal = 3
+size_flags_vertical = 3
 texture = ExtResource( 8 )
 patch_margin_left = 2
 patch_margin_top = 2
@@ -68,10 +73,15 @@ patch_margin_bottom = 3
 [node name="Weight" parent="VBoxContainer/Weight/BgTex" instance=ExtResource( 2 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
-labelScale = 0.85
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -3.0
+margin_bottom = -3.0
+textureProgress = null
+labelColor = Color( 0.305882, 0.298039, 0.298039, 1 )
 
 [node name="ItemContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 19.0
+margin_top = 26.0
 margin_right = 1266.0
 margin_bottom = 684.0
 size_flags_horizontal = 3
@@ -80,7 +90,7 @@ scroll_horizontal_enabled = false
 
 [node name="ItemGrid" type="GridContainer" parent="VBoxContainer/ItemContainer"]
 margin_right = 1266.0
-margin_bottom = 665.0
+margin_bottom = 658.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/vseparation = 2
