@@ -91,9 +91,9 @@ margin_right = 365.0
 margin_bottom = 668.0
 hint_tooltip = "Chat"
 
-[node name="Panel" parent="FloatingWindows" instance=ExtResource( 6 )]
+[node name="Inventory" parent="FloatingWindows" instance=ExtResource( 6 )]
 show_behind_parent = false
-margin_left = 496.0
-margin_top = 309.0
-margin_right = 690.0
-margin_bottom = 399.0
+anchor_left = 12.4
+anchor_top = 7.725
+anchor_right = 18.25
+anchor_bottom = 10.975
