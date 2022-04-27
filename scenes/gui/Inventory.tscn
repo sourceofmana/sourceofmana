@@ -80,6 +80,8 @@ margin_bottom = -3.0
 textureProgress = null
 labelColor = Color( 0.305882, 0.298039, 0.298039, 1 )
 labelUnit = "kg"
+delayToFillSec = 4.0
+precisionDivider = 100
 
 [node name="ItemContainer" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 26.0
