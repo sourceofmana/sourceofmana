@@ -13,7 +13,7 @@
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 200, 100 )
+rect_min_size = Vector2( 200, 150 )
 hint_tooltip = "Panel"
 theme = ExtResource( 1 )
 script = ExtResource( 7 )
