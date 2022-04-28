@@ -10,7 +10,8 @@ script = ExtResource( 1 )
 textureProgress = ExtResource( 2 )
 labelColor = Color( 0.6, 0.407843, 0.0196078, 1 )
 labelScale = 1.0
-delayToFillSec = 2.0
+delayToFillSec = 1.0
+delayToInitSec = 3.0
 
 [node name="Bar" type="TextureProgress" parent="."]
 anchor_right = 1.0
@@ -28,6 +29,5 @@ margin_bottom = 18.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 3 )
-custom_colors/font_color = Color( 0.635294, 0.180392, 0.0588235, 1 )
 text = "0/0"
 align = 1

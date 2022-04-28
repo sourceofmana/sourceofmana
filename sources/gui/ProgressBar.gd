@@ -6,6 +6,7 @@ export(Color)			var labelColor
 export(String)			var labelUnit
 export(float)			var labelScale
 export(float)			var delayToFillSec
+export(float)			var delayToInitSec
 export(int)				var precisionDivider
 
 onready var label		= get_node("Label")
@@ -13,6 +14,7 @@ onready var bar			= get_node("Bar")
 
 var isUpdating			= false
 var remainsToFillSec	= 0.0
+var initDelayToFillSec	= 0.0
 var valueFrom			= 0
 var valueTo				= 0
 var valueMax			= 0
@@ -52,11 +54,16 @@ func GetBarFormat(currentValue : float, maxValue : float) -> String:
 func SetStat(newValue, maxValue):
 	assert(bar && label, "ProgressBar childs are missing")
 
-	remainsToFillSec = delayToFillSec
-	isUpdating = true
 	valueFrom = bar.get_value()
 	valueTo = newValue
+	isUpdating = true
 	valueMax = maxValue
+	if valueFrom == 0:
+		remainsToFillSec = delayToInitSec
+		initDelayToFillSec = delayToInitSec
+	else:
+		remainsToFillSec = delayToFillSec
+		initDelayToFillSec = delayToFillSec
 
 	UpdateValue(0)
 
@@ -65,8 +72,8 @@ func UpdateValue(delta):
 		remainsToFillSec -= delta
 
 		var ratioToFinish : float = 0
-		if delayToFillSec != 0:
-			ratioToFinish = (delayToFillSec - remainsToFillSec) / delayToFillSec
+		if initDelayToFillSec != 0:
+			ratioToFinish = (initDelayToFillSec - remainsToFillSec) / initDelayToFillSec
 			ratioToFinish = ease(ratioToFinish, 0.3)
 
 		var newValue = lerp(valueFrom, valueTo, ratioToFinish)
@@ -89,6 +96,7 @@ func UpdateValue(delta):
 			
 			isUpdating = false
 			remainsToFillSec = 0
+			initDelayToFillSec = 0
 			valueFrom = valueTo
 #
 func _ready():
