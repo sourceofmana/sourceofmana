@@ -3,8 +3,8 @@ extends Node
 enum Gender { MALE = 0, FEMALE, NONBINARY }
 enum Type { HUMAN = 0, MONSTER, NPC }
 
-onready var Ethnicity		= LoadRessource("res://db/ethnicity.json", "Could not load all entity traits")
-onready var Hairstyle		= LoadRessource("res://db/hairstyle.json", "Could not load all hairstyle traits")
+onready var Ethnicity		= LoadRessource("res://data/db/ethnicity.json", "Could not load all entity traits")
+onready var Hairstyle		= LoadRessource("res://data/db/hairstyle.json", "Could not load all hairstyle traits")
 
 
 func LoadRessource(path, err):

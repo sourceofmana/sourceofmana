@@ -5,6 +5,7 @@ onready var animationState		= animationTree.get("parameters/playback")
 
 var stat						= preload("res://sources/entity/Stat.gd").new()
 var slot						= preload("res://sources/entity/Slot.gd").new()
+var inventory					= preload("res://sources/entity/Inventory.gd").new()
 
 var entityName					= ""
 var gender						= Trait.Gender.MALE
