@@ -1,13 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://data/themes/DefaultTheme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/gui/ProgressBar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://data/graphics/items/common/mucus-red-key.png" type="Texture" id=3]
-[ext_resource path="res://data/graphics/items/common/mucus-green-key.png" type="Texture" id=4]
-[ext_resource path="res://data/graphics/items/common/mucus-purple-key.png" type="Texture" id=5]
-[ext_resource path="res://data/graphics/gui/inventory/selection.png" type="Texture" id=6]
 [ext_resource path="res://addons/windowpanel/WindowPanel.gd" type="Script" id=7]
 [ext_resource path="res://data/graphics/gui/bar.png" type="Texture" id=8]
+[ext_resource path="res://sources/gui/InventoryGrid.gd" type="Script" id=9]
 
 [node name="Panel" type="Panel"]
 show_behind_parent = true
@@ -91,46 +88,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
-[node name="ItemGrid" type="GridContainer" parent="VBoxContainer/ItemContainer"]
+[node name="Grid" type="GridContainer" parent="VBoxContainer/ItemContainer"]
 margin_right = 1266.0
 margin_bottom = 658.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/vseparation = 2
-custom_constants/hseparation = 2
-columns = 2
-
-[node name="Item1" type="TextureRect" parent="VBoxContainer/ItemContainer/ItemGrid"]
-margin_right = 32.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 32, 32 )
-texture = ExtResource( 4 )
-
-[node name="Item2" type="TextureRect" parent="VBoxContainer/ItemContainer/ItemGrid"]
-margin_left = 34.0
-margin_right = 66.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 32, 32 )
-texture = ExtResource( 5 )
-
-[node name="ItemHover" type="TextureRect" parent="VBoxContainer/ItemContainer/ItemGrid/Item2"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource( 6 )
-expand = true
-stretch_mode = 7
-
-[node name="Item3" type="TextureRect" parent="VBoxContainer/ItemContainer/ItemGrid"]
-margin_top = 34.0
-margin_right = 32.0
-margin_bottom = 66.0
-rect_min_size = Vector2( 32, 32 )
-texture = ExtResource( 3 )
+columns = 10
+script = ExtResource( 9 )
 
 [connection signal="focus_exited" from="." to="." method="_on_window_focus_exited"]
 [connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
