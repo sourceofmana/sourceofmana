@@ -28,12 +28,12 @@ config/icon="res://data/press/logo/logo_seed.svg"
 
 [autoload]
 
+Launcher="*res://sources/Launcher.gd"
 Server="*res://sources/network/Server.gd"
 Actions="*res://sources/entity/Action.gd"
 Trait="*res://sources/entity/Trait.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 GlobalWorld="*res://sources/GlobalWorld.gd"
-Launcher="*res://sources/Launcher.gd"
 
 [debug]
 
