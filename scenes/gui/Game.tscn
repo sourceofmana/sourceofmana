@@ -5,7 +5,7 @@
 [ext_resource path="res://sources/gui/GameGui.gd" type="Script" id=3]
 [ext_resource path="res://scenes/gui/ActionBox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/gui/Chat.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/gui/Inventory.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/gui/inventory/Inventory.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sources/gui/FloatingWindows.gd" type="Script" id=7]
 
 [node name="CanvasLayer" type="CanvasLayer"]
