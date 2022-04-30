@@ -7,8 +7,11 @@ onready var currentMap		= null
 onready var currentPlayer	= load("res://scenes/presets/PC.tscn").instance()
 
 # Debug
-func SetDefaultPlayerPosition():
+func SetDebugPlayerPosition():
 	SetPlayerInWorld(defaultMap, defaultPosition)
+
+func SetDebugPlayerInventory():
+	currentPlayer.inventory.items += Launcher.DB.ItemsDB
 
 # Utils	
 func SetCameraBoundaries(map, player):
@@ -44,13 +47,15 @@ func ReturnInventoryList(s_inventoryList):
 #
 func _ready():
 	if currentMap == null:
-		SetDefaultPlayerPosition()
+		SetDebugPlayerPosition()
 	SetCameraBoundaries(currentMap, currentPlayer)
+	SetDebugPlayerInventory()
 
 func _process(_delta):
-	if Input.is_action_just_pressed("ui_inventory"):
+#	if Input.is_action_just_pressed("ui_inventory"):
 #		Server.FetchInventoryList("All", get_instance_id())
-		var dialogue_resource = load("res://data/dialogue/Enora.tres")
-		var dialogue = yield(DialogueManager.get_next_dialogue_line("Enora", dialogue_resource), "completed")
-		if dialogue != null:
-			add_child(dialogue)
+#		var dialogue_resource = load("res://data/dialogue/Enora.tres")
+#		var dialogue = yield(DialogueManager.get_next_dialogue_line("Enora", dialogue_resource), "completed")
+#		if dialogue != null:
+#			add_child(dialogue)
+	pass
