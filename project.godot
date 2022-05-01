@@ -40,17 +40,24 @@ GlobalWorld="*res://sources/GlobalWorld.gd"
 gdscript/warnings/treat_warnings_as_errors=true
 gdscript/completion/autocomplete_setters_and_getters=true
 gdscript/warnings/unsafe_cast=true
+gdscript/warnings/unsafe_call_argument=true
 
 [display]
 
 window/size/width=1280
 window/size/height=720
+window/vsync/use_vsync=false
 window/per_pixel_transparency/allowed=true
 window/per_pixel_transparency/enabled=true
 
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addons/tiled_importer/plugin.cfg", "res://addons/windowpanel/plugin.cfg" )
+
+[global]
+
+fps=false
+vsync=false
 
 [importer_defaults]
 
@@ -148,10 +155,13 @@ ui_inventory={
 [physics]
 
 common/enable_pause_aware_picking=true
+2d/thread_model=2
 
 [rendering]
 
 quality/driver/fallback_to_gles2=true
+quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=0
 2d/snapping/use_gpu_pixel_snap=true
 threads/thread_model=2
 threads/thread_safe_bvh=true
