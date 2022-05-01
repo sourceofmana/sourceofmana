@@ -8,10 +8,11 @@ onready var weightStat		= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/
 onready var LevelText		= $VBoxMain/HBoxTop/StatIndicator/LevelText
 onready var ExpText			= $VBoxMain/HBoxTop/StatIndicator/ExpText
 
-
+#
 func GetPercentFormat(value : int) -> String:
 	return "%.2f%%" % [value]
 
+#
 func _ready():
 	assert(hpStat && manaStat && staminaStat, "Stat progress bars are missing")
 

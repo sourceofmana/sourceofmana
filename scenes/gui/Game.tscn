@@ -80,21 +80,27 @@ margin_right = 1260.0
 margin_bottom = 700.0
 
 [node name="FloatingWindows" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 script = ExtResource( 7 )
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource( 5 )]
-margin_left = 8.0
-margin_top = 375.0
-margin_right = 365.0
-margin_bottom = 668.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 346.0
+margin_right = 378.0
+margin_bottom = 710.0
 hint_tooltip = "Chat"
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource( 6 )]
 show_behind_parent = false
-anchor_left = 12.4
-anchor_top = 7.725
-anchor_right = 18.25
-anchor_bottom = 10.975
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 708.0
+margin_top = 286.0
+margin_right = 908.0
+margin_bottom = 436.0
 hint_tooltip = "Inventory"
+
+[connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]
