@@ -1,4 +1,4 @@
 @echo off
 title Clean Map Import
 
-del /S /Q ..\..\maps\*.tmx.import
+del /S /Q ..\..\data\maps\*.tmx.import
