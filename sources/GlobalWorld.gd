@@ -46,7 +46,7 @@ func SetPlayerInWorld(map, pos):
 	if currentPlayer && currentMap:
 		var fringeSort = currentMap.get_node("Fringe")
 		if fringeSort:
-			currentPlayer.set_position(pos * fringeSort.cell_size)
+			currentPlayer.set_position(pos * fringeSort.cell_size + fringeSort.cell_size / 2)
 			fringeSort.add_child(currentPlayer)
 			add_child(currentMap)
 
