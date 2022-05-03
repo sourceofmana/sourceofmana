@@ -29,6 +29,7 @@ var tileset_import_plugin = null
 func get_name():
 	return "Tiled Map Importer"
 
+
 func _enter_tree():
 	if not ProjectSettings.has_setting("tiled_importer/enable_json_format"):
 		ProjectSettings.set_setting("tiled_importer/enable_json_format", true)
@@ -37,9 +38,13 @@ func _enter_tree():
 	tileset_import_plugin = preload("tiled_tileset_import_plugin.gd").new()
 	add_import_plugin(import_plugin)
 	add_import_plugin(tileset_import_plugin)
+	add_custom_type("WarpObject", "Polygon2D", preload("WarpObject.gd"), preload("warp.png"))
+	add_custom_type("SpawnObject", "Polygon2D", preload("SpawnObject.gd"), preload("spawn.png"))
 
 func _exit_tree():
 	remove_import_plugin(import_plugin)
 	remove_import_plugin(tileset_import_plugin)
 	import_plugin = null
 	tileset_import_plugin = null
+	remove_custom_type("WarpObject")
+	remove_custom_type("SpawnObject")

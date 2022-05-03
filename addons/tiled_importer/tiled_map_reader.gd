@@ -35,6 +35,10 @@ const TiledXMLToDictionary = preload("tiled_xml_to_dict.gd")
 # Polygon vertices sorter
 const PolygonSorter = preload("polygon_sorter.gd")
 
+# Custom objects
+const WarpObject = preload("WarpObject.gd")
+const SpawnObject = preload("SpawnObject.gd")
+
 # Prefix for error messages, make easier to identify the source
 const error_prefix = "Tiled Importer: "
 
@@ -421,17 +425,15 @@ func make_layer(layer, parent, root, data, zindex):
 					occluder.set_owner(root)
 
 				else:
-					var body = Area2D.new() if object.type == "area" else StaticBody2D.new()
-
 					var offset = Vector2()
-					var collision
+					var customObject
 					var pos = Vector2()
 					var rot = 0
 
 					if not ("polygon" in object or "polyline" in object):
 						# Regular shape
-						collision = Shape2D.new()
-						collision.shape = shape
+						customObject = Shape2D.new()
+						customObject.shape = shape
 						if shape is RectangleShape2D:
 							offset = shape.extents
 						elif shape is CircleShape2D:
@@ -442,11 +444,17 @@ func make_layer(layer, parent, root, data, zindex):
 								var temp = shape.radius
 								shape.radius = shape.height
 								shape.height = temp
-								collision.rotation_degrees = 90
+								customObject.rotation_degrees = 90
 							shape.height *= 2
-						collision.position = offset
+						customObject.position = offset
 					else:
-						collision = Polygon2D.new()
+						if object.type == "Warp":
+							customObject = WarpObject.new()
+						elif object.type == "Spawn":
+							customObject = SpawnObject.new()
+						else:
+							customObject = Polygon2D.new()
+
 						var points = null
 						if shape is ConcavePolygonShape2D:
 							points = []
@@ -455,13 +463,13 @@ func make_layer(layer, parent, root, data, zindex):
 								if i % 2 != 0:
 									continue
 								points.push_back(segments[i])
-#							collision.build_mode = Polygon2D.BUILD_SEGMENTS
+#							customObject.build_mode = Polygon2D.BUILD_SEGMENTS
 						else:
 							points = shape.points
-#							collision.build_mode = Polygon2D.BUILD_SOLIDS
-						collision.polygon = points
+#							customObject.build_mode = Polygon2D.BUILD_SOLIDS
+						customObject.polygon = points
 
-#					collision.one_way_collision = object.type == "one-way"
+#					customObject.one_way_collision = object.type == "one-way"
 
 					if "x" in object:
 						pos.x = float(object.x)
@@ -470,24 +478,48 @@ func make_layer(layer, parent, root, data, zindex):
 					if "rotation" in object:
 						rot = float(object.rotation)
 
-					body.set("editor/display_folded", true)
-					object_layer.add_child(body)
-					body.set_owner(root)
-					body.add_child(collision)
-					collision.set_owner(root)
+					customObject.set("editor/display_folded", true)
+					object_layer.add_child(customObject)
+					customObject.set_owner(root)
 
 					if options.save_tiled_properties:
-						set_tiled_properties_as_meta(body, object)
+						set_tiled_properties_as_meta(customObject, object)
 					if options.custom_properties:
-						set_custom_properties(body, object)
+						set_custom_properties(customObject, object)
 
 					if "name" in object and not str(object.name).empty():
-						body.set_name(str(object.name))
+						customObject.set_name(str(object.name))
 					elif "id" in object and not str(object.id).empty():
-						body.set_name(str(object.id))
-					body.visible = bool(object.visible) if "visible" in object else true
-					body.position = pos
-					body.rotation_degrees = rot
+						customObject.set_name(str(object.id))
+
+					# Warp
+					if "type" in object and object.type == "Warp":
+						if "properties" in object:
+#							if "dest_map" in object.properties and not str(object.properties.dest_map).empty():
+#								customObject.set_name(str(object.name))
+#							print(object.properties.dest_map)
+#							print(object.properties.dest_pos_x)
+#							print(object.properties.dest_pos_y)
+							if "dest_map" in object.properties and not str(object.properties.dest_map).empty():
+								customObject.destinationMap = object.properties.dest_map
+							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
+								customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y)
+
+					# Spawn
+					elif "type" in object and object.type == "Spawn":
+						if "properties" in object:
+							if "max_count" in object.properties:
+								customObject.maxCount = object.properties.max_count
+							if "mob_id" in object.properties:
+								customObject.mobID = object.properties.mob_id
+							if "mob_level" in object.properties:
+								customObject.mobLevel = object.properties.mob_level
+							if "respawn_timer" in object.properties:
+								customObject.respawnTimer = object.properties.respawn_timer
+
+					customObject.visible = bool(object.visible) if "visible" in object else true
+					customObject.position = pos
+					customObject.rotation_degrees = rot
 
 			else: # "gid" in object
 				var tile_raw_id = int(str(object.gid)) & 0xFFFFFFFF
