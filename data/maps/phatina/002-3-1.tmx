@@ -1043,6 +1043,11 @@
  </layer>
  <objectgroup color="#c8c837" id="16" name="Object">
   <object id="27" name="Warp Entrance" type="Warp" x="2240" y="1440">
+   <properties>
+    <property name="dest_map" value="002-3-0"/>
+    <property name="dest_pos_x" type="int" value="47"/>
+    <property name="dest_pos_y" type="int" value="31"/>
+   </properties>
    <polygon points="0,0 32,32 64,0"/>
   </object>
   <object id="29" name="Warp First" type="Warp" x="1024" y="1216">
