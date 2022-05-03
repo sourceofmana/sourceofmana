@@ -3,6 +3,10 @@ extends Node2D
 const defaultMap			= "res://data/maps/phatina/002-3-1.tmx"
 const defaultPosition		= Vector2(70, 40)
 
+# Custom objects
+const WarpObject = preload("res://addons/tiled_importer/WarpObject.gd")
+const SpawnObject = preload("res://addons/tiled_importer/SpawnObject.gd")
+
 onready var currentMap		= null
 onready var currentPlayer	= load("res://scenes/presets/PC.tscn").instance()
 
@@ -32,6 +36,12 @@ func SetCameraBoundaries(map, player):
 			playerCamera.limit_bottom	= mapLimits.end.y * mapCellsize.y
 
 func SetPlayerInWorld(map, pos):
+	if currentMap:
+		var fringeSort = currentMap.get_node("Fringe")
+		if fringeSort:
+			fringeSort.remove_child(currentPlayer)
+		remove_child(currentMap)
+		currentMap.queue_free()
 	currentMap = load(map).instance()
 	if currentPlayer && currentMap:
 		var fringeSort = currentMap.get_node("Fringe")
@@ -52,6 +62,13 @@ func _ready():
 	SetDebugPlayerInventory()
 
 func _process(_delta):
+	if currentMap.has_node("Object"):
+		for child in currentMap.get_node("Object").get_children():
+			if child && child is WarpObject:
+				var playerPos = currentPlayer.get_global_position()
+				var polygonPool = child.get_polygon()
+				if Geometry.is_point_in_polygon(playerPos - child.get_position(), polygonPool):
+					SetPlayerInWorld("res://data/maps/phatina/" + child.destinationMap + ".tmx", child.destinationPos)
 #	if Input.is_action_just_pressed("ui_inventory"):
 #		Server.FetchInventoryList("All", get_instance_id())
 #		var dialogue_resource = load("res://data/dialogue/Enora.tres")
