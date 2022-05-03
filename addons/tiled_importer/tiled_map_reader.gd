@@ -495,11 +495,6 @@ func make_layer(layer, parent, root, data, zindex):
 					# Warp
 					if "type" in object and object.type == "Warp":
 						if "properties" in object:
-#							if "dest_map" in object.properties and not str(object.properties.dest_map).empty():
-#								customObject.set_name(str(object.name))
-#							print(object.properties.dest_map)
-#							print(object.properties.dest_pos_x)
-#							print(object.properties.dest_pos_y)
 							if "dest_map" in object.properties and not str(object.properties.dest_map).empty():
 								customObject.destinationMap = object.properties.dest_map
 							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
