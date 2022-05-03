@@ -21,7 +21,6 @@ var currentDirection			= Vector2.ZERO
 var currentState				= Actions.State.IDLE
 var currentStateTimer			= 0.0
 
-
 #
 func GetNextDirection():
 	if currentVelocity.length_squared() > 1:
@@ -74,16 +73,15 @@ func UpdateInput():
 	currentInput.y	= Input.get_action_strength(Actions.ACTION_GP_MOVE_DOWN) - Input.get_action_strength(Actions.ACTION_GP_MOVE_UP)
 	currentInput.normalized()
 
-#
-func UpdateVelocity(deltaTime):
+func UpdateVelocity(deltaTime : float):
 	if currentInput != Vector2.ZERO:
-		currentVelocity = currentVelocity.move_toward(currentInput * stat.moveSpeed, stat.moveAcceleration * deltaTime)
+		var normalizedInput : Vector2 = currentInput.normalized()
+		currentVelocity = currentVelocity.move_toward(normalizedInput * stat.moveSpeed, stat.moveAcceleration * deltaTime)
 	else:
 		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, stat.moveFriction * deltaTime)
 
 	currentVelocity = move_and_slide(currentVelocity, Vector2.ZERO, false, 1, 0.1, false)
 
-#
 func UpdateState():
 	var nextState		= GetNextState()
 	var nextDirection	= GetNextDirection()
