@@ -8,6 +8,10 @@ const Map						= preload("res://sources/db/instance/Map.gd")
 var MapsDBPath : String			= "res://data/db/maps.json"
 var MapsDB : Array				= []
 
+const Music						= preload("res://sources/db/instance/Music.gd")
+var MusicsDBPath : String		= "res://data/db/musics.json"
+var MusicsDB : Array			= []
+
 
 func Parse(path : String):
 	var result
@@ -52,9 +56,17 @@ func ParseMapsDB():
 			map._path = result[key].Path
 			MapsDB.append(map)
 
+func ParseMusicsDB():
+	var result = Parse(MusicsDBPath)
+	if result != null:
+		for key in result:
+			var music : Music = Music.new()
+			music._name = key
+			music._path = result[key].Path
+			MusicsDB.append(music)
+
 #
 func Init():
 	ParseItemsDB()
 	ParseMapsDB()
-	print(ItemsDB)
-	print(MapsDB)
+	ParseMusicsDB()
