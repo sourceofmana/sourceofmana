@@ -40,7 +40,7 @@ func SetPlayerInWorld(map, pos):
 		var fringeSort = currentMap.get_node("Fringe")
 		if fringeSort:
 			fringeSort.remove_child(currentPlayer)
-		remove_child(currentMap)
+			call_deferred("remove_child", currentMap)
 		currentMap.queue_free()
 	currentMap = load(map).instance()
 	if currentPlayer && currentMap:
@@ -48,7 +48,7 @@ func SetPlayerInWorld(map, pos):
 		if fringeSort:
 			currentPlayer.set_position(pos * fringeSort.cell_size + fringeSort.cell_size / 2)
 			fringeSort.add_child(currentPlayer)
-			add_child(currentMap)
+			call_deferred("add_child", currentMap)
 
 # Network
 func ReturnInventoryList(s_inventoryList):
@@ -62,15 +62,9 @@ func _ready():
 	SetDebugPlayerInventory()
 
 func _process(_delta):
-	if currentMap.has_node("Object"):
-		for child in currentMap.get_node("Object").get_children():
-			if child && child is WarpObject:
-				var playerPos = currentPlayer.get_global_position()
-				var polygonPool = child.get_polygon()
-				if Geometry.is_point_in_polygon(playerPos - child.get_position(), polygonPool):
-					SetPlayerInWorld("res://data/maps/phatina/" + child.destinationMap + ".tmx", child.destinationPos)
 #	if Input.is_action_just_pressed("ui_inventory"):
 #		Server.FetchInventoryList("All", get_instance_id())
+
 #		var dialogue_resource = load("res://data/dialogue/Enora.tres")
 #		var dialogue = yield(DialogueManager.get_next_dialogue_line("Enora", dialogue_resource), "completed")
 #		if dialogue != null:

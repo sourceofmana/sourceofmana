@@ -427,6 +427,7 @@ func make_layer(layer, parent, root, data, zindex):
 				else:
 					var offset = Vector2()
 					var customObject
+					var collisionObject
 					var pos = Vector2()
 					var rot = 0
 
@@ -450,6 +451,7 @@ func make_layer(layer, parent, root, data, zindex):
 					else:
 						if object.type == "Warp":
 							customObject = WarpObject.new()
+							collisionObject = CollisionPolygon2D.new()
 						elif object.type == "Spawn":
 							customObject = SpawnObject.new()
 						else:
@@ -467,7 +469,10 @@ func make_layer(layer, parent, root, data, zindex):
 						else:
 							points = shape.points
 #							customObject.build_mode = Polygon2D.BUILD_SOLIDS
-						customObject.polygon = points
+						if collisionObject:
+							collisionObject.polygon = points
+						else:
+							customObject.polygon = points
 
 #					customObject.one_way_collision = object.type == "one-way"
 
@@ -478,19 +483,26 @@ func make_layer(layer, parent, root, data, zindex):
 					if "rotation" in object:
 						rot = float(object.rotation)
 
+					if "name" in object and not str(object.name).empty():
+						customObject.set_name(str(object.name))
+					elif "id" in object and not str(object.id).empty():
+						customObject.set_name(str(object.id))
+					if collisionObject:
+						collisionObject.set_name(customObject.get_name())
+
 					customObject.set("editor/display_folded", true)
 					object_layer.add_child(customObject)
 					customObject.set_owner(root)
+
+					if collisionObject:
+						collisionObject.set("editor/display_folded", true)
+						customObject.add_child(collisionObject)
+						collisionObject.set_owner(root)
 
 					if options.save_tiled_properties:
 						set_tiled_properties_as_meta(customObject, object)
 					if options.custom_properties:
 						set_custom_properties(customObject, object)
-
-					if "name" in object and not str(object.name).empty():
-						customObject.set_name(str(object.name))
-					elif "id" in object and not str(object.id).empty():
-						customObject.set_name(str(object.id))
 
 					# Warp
 					if "type" in object and object.type == "Warp":

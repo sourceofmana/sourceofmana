@@ -38,7 +38,7 @@ func _enter_tree():
 	tileset_import_plugin = preload("tiled_tileset_import_plugin.gd").new()
 	add_import_plugin(import_plugin)
 	add_import_plugin(tileset_import_plugin)
-	add_custom_type("WarpObject", "Polygon2D", preload("WarpObject.gd"), preload("warp.png"))
+	add_custom_type("WarpObject", "Area2D", preload("WarpObject.gd"), preload("warp.png"))
 	add_custom_type("SpawnObject", "Polygon2D", preload("SpawnObject.gd"), preload("spawn.png"))
 
 func _exit_tree():
