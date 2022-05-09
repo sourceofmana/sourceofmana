@@ -5,4 +5,4 @@ export var _path : String
 
 func _init():
 	_name = "Unknown"
-	_path = "res://data/graphics/default.png"
+	_path = ""
