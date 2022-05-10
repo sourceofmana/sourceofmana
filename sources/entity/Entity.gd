@@ -73,14 +73,16 @@ func UpdateInput():
 	currentInput.y	= Input.get_action_strength(Actions.ACTION_GP_MOVE_DOWN) - Input.get_action_strength(Actions.ACTION_GP_MOVE_UP)
 	currentInput.normalized()
 
-func UpdateVelocity(deltaTime : float):
+func UpdateOrientation(deltaTime : float):
 	if currentInput != Vector2.ZERO:
 		var normalizedInput : Vector2 = currentInput.normalized()
 		currentVelocity = currentVelocity.move_toward(normalizedInput * stat.moveSpeed, stat.moveAcceleration * deltaTime)
 	else:
 		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, stat.moveFriction * deltaTime)
 
-	currentVelocity = move_and_slide(currentVelocity, Vector2.ZERO, false, 1, 0.1, false)
+func UpdateVelocity():
+	if currentState != Actions.State.SIT:
+		currentVelocity = move_and_slide(currentVelocity, Vector2.ZERO, false, 1, 0.1, false)
 
 func UpdateState():
 	var nextState		= GetNextState()
@@ -94,5 +96,6 @@ func UpdateState():
 #
 func _physics_process(deltaTime) :
 	UpdateInput()
-	UpdateVelocity(deltaTime)
+	UpdateOrientation(deltaTime)
+	UpdateVelocity()
 	UpdateState()
