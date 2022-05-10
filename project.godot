@@ -33,7 +33,6 @@ Server="*res://sources/network/Server.gd"
 Actions="*res://sources/entity/Action.gd"
 Trait="*res://sources/entity/Trait.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
-GlobalWorld="*res://sources/GlobalWorld.gd"
 
 [debug]
 

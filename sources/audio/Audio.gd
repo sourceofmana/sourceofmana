@@ -1,6 +1,6 @@
 extends Node
 
-var audioPlayer : AudioStreamPlayer2D				= AudioStreamPlayer2D.new()
+var audioPlayer : AudioStreamPlayer				= null
 var currentTrack : String = ""
 
 #
@@ -16,6 +16,9 @@ func Stop():
 		audioPlayer.Stop()
 
 func Load(name : String):
+	if audioPlayer == null:
+		audioPlayer = Launcher.World.get_node("AudioStreamPlayer")
+
 	if currentTrack != name:
 		if name.empty() == false && Launcher.DB.MusicsDB[name] != null:
 			var path = Launcher.Path.MusicRsc + Launcher.DB.MusicsDB[name]._path
@@ -25,5 +28,11 @@ func Load(name : String):
 
 				audioPlayer.stream	= stream
 				currentTrack		= name
-#				audioPlayer.set_autoplay(true)
+
+				audioPlayer.set_autoplay(true)
 				audioPlayer.play()
+
+func _ready():
+	if audioPlayer == null:
+		audioPlayer = AudioStreamPlayer.new()
+		get_tree().get_root().add_child(audioPlayer)

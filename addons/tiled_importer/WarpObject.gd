@@ -10,7 +10,7 @@ func Warp(body):
 		if destinationMap.empty() == false:
 			var mapReference = Launcher.DB.MapsDB[destinationMap]
 			if mapReference:
-				GlobalWorld.SetPlayerInWorld(Launcher.Path.MapRsc + mapReference._path, destinationPos)
+				Launcher.World.SetPlayerInWorld(Launcher.Path.MapRsc + mapReference._path, destinationPos)
 
 #
 func _ready():
