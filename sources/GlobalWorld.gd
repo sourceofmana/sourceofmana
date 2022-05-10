@@ -44,6 +44,7 @@ func SetPlayerInWorld(map, pos):
 		currentMap.queue_free()
 	currentMap = load(map).instance()
 	if currentPlayer && currentMap:
+		Launcher.Map.UpdateBackgroundMusic(currentMap)
 		var fringeSort = currentMap.get_node("Fringe")
 		if fringeSort:
 			currentPlayer.set_position(pos * fringeSort.cell_size + fringeSort.cell_size / 2)

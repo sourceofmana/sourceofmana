@@ -2,8 +2,11 @@ extends Node
 
 var minWindowSize		= Vector2(640, 480)
 var gameTitle			= "Source of Mana v0.1"
+
 var Path				= null
 var DB					= null
+var Audio				= null
+var Map					= null
 
 #
 func _process(_delta):
@@ -19,4 +22,5 @@ func _init():
 func _ready():
 	# Load all low-prio services
 	DB = load("res://sources/db/DB.gd").new()
-
+	Audio = load("res://sources/audio/Audio.gd").new()
+	Map = load("res://sources/map/Map.gd").new()

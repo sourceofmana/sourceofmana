@@ -1,22 +1,6 @@
 extends Node2D
 
-var mapList = {}
-
-func LoadMapsJSON():
-	var mapFile = File.new()
-	mapFile.open("res://db/maps.json", File.READ)
-
-	var mapListJSON = JSON.parse(mapFile.get_as_text())
-	mapListJSON.close()
-
-	mapList = mapListJSON.result
-	assert(mapList != null, "Map list not found")
-
-#func OnMapChange(path):
-	#should change scene or just change node? Better to change node and reload our current mainworld
-	#var ret = get_tree().change_scene("res://" + path)
-	#assert(ret == OK, "Could not find the scene")
-
+#
 func GetMapBoundaries(map):
 	var boundaries = Rect2()
 
@@ -36,5 +20,6 @@ func GetMapBoundaries(map):
 
 	return boundaries
 
-func _ready():
-	LoadMapsJSON()
+func UpdateBackgroundMusic(map):
+	Launcher.Audio.Load(map.get_meta("music") )
+#	Launcher.Audio.Play()
