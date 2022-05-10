@@ -1,8 +1,8 @@
 {
-    "Phatyna Entrance": {				"Path" : "maps/phatyna/002-3-0.png",},
-    "Phatyna Corridor": {				"Path" : "maps/phatyna/002-3-1.png",},
-    "Phatyna Boss Room": {				"Path" : "maps/phatyna/002-3-2.png",},
-    "Phatyna Third Room": {				"Path" : "maps/phatyna/002-3-3.png",},
-    "Phatyna Second Room": {			"Path" : "maps/phatyna/002-3-4.png",},
-    "Phatyna First Room": {				"Path" : "maps/phatyna/002-3-5.png",},
+    "Phatyna Entrance": {				"Path" : "phatyna/002-3-0.tmx",},
+    "Phatyna Corridor": {				"Path" : "phatyna/002-3-1.tmx",},
+    "Phatyna Boss Room": {				"Path" : "phatyna/002-3-2.tmx",},
+    "Phatyna Third Room": {				"Path" : "phatyna/002-3-3.tmx",},
+    "Phatyna Second Room": {			"Path" : "phatyna/002-3-4.tmx",},
+    "Phatyna First Room": {				"Path" : "phatyna/002-3-5.tmx",},
 }
