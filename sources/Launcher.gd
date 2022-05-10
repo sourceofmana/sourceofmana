@@ -4,6 +4,7 @@ var minWindowSize		= Vector2(640, 480)
 var gameTitle			= "Source of Mana v0.1"
 
 var Path				= null
+var World				= null
 var DB					= null
 var Audio				= null
 var Map					= null
@@ -20,6 +21,9 @@ func _init():
 	Path = load("res://sources/system/Path.gd").new()
 
 func _ready():
+	World = get_tree().root.get_node("World")
+
+
 	# Load all low-prio services
 	DB = load("res://sources/db/DB.gd").new()
 	Audio = load("res://sources/audio/Audio.gd").new()

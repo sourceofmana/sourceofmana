@@ -4,11 +4,11 @@ const defaultMap			= "res://data/maps/phatyna/002-3-1.tmx"
 const defaultPosition		= Vector2(70, 40)
 
 # Custom objects
-const WarpObject = preload("res://addons/tiled_importer/WarpObject.gd")
-const SpawnObject = preload("res://addons/tiled_importer/SpawnObject.gd")
+const WarpObject			= preload("res://addons/tiled_importer/WarpObject.gd")
+const SpawnObject			= preload("res://addons/tiled_importer/SpawnObject.gd")
 
-onready var currentMap		= null
-onready var currentPlayer	= load("res://scenes/presets/PC.tscn").instance()
+var currentMap				= null
+var currentPlayer			= load("res://scenes/presets/PC.tscn").instance()
 
 # Debug
 func SetDebugPlayerPosition():

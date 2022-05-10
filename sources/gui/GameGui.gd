@@ -17,17 +17,17 @@ func _ready():
 	assert(hpStat && manaStat && staminaStat, "Stat progress bars are missing")
 
 	if hpStat:
-		hpStat.SetStat(GlobalWorld.currentPlayer.stat.health, GlobalWorld.currentPlayer.stat.maxHealth)
+		hpStat.SetStat(Launcher.World.currentPlayer.stat.health, Launcher.World.currentPlayer.stat.maxHealth)
 	if manaStat:
-		manaStat.SetStat(GlobalWorld.currentPlayer.stat.mana, GlobalWorld.currentPlayer.stat.maxMana)
+		manaStat.SetStat(Launcher.World.currentPlayer.stat.mana, Launcher.World.currentPlayer.stat.maxMana)
 	if staminaStat:
-		staminaStat.SetStat(GlobalWorld.currentPlayer.stat.stamina, GlobalWorld.currentPlayer.stat.maxStamina)
+		staminaStat.SetStat(Launcher.World.currentPlayer.stat.stamina, Launcher.World.currentPlayer.stat.maxStamina)
 
 	if weightStat:
-		weightStat.SetStat(GlobalWorld.currentPlayer.stat.weight, GlobalWorld.currentPlayer.stat.maxWeight)
+		weightStat.SetStat(Launcher.World.currentPlayer.stat.weight, Launcher.World.currentPlayer.stat.maxWeight)
 
-	var levelFormat = String(GlobalWorld.currentPlayer.stat.level)
+	var levelFormat = String(Launcher.World.currentPlayer.stat.level)
 	LevelText.set_text(levelFormat)
 
-	var expFormat = GetPercentFormat(GlobalWorld.currentPlayer.stat.experience)
+	var expFormat = GetPercentFormat(Launcher.World.currentPlayer.stat.experience)
 	ExpText.set_text(expFormat)
