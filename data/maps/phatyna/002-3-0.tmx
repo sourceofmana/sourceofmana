@@ -481,7 +481,7 @@
  <objectgroup color="#c8c837" id="14" name="Object">
   <object id="28" name="Warp Cave" type="Warp" x="1504" y="896">
    <properties>
-    <property name="dest_map" value="002-3-1"/>
+    <property name="dest_map" value="Phatyna Corridor"/>
     <property name="dest_pos_x" type="int" value="70"/>
     <property name="dest_pos_y" type="int" value="44"/>
    </properties>

@@ -460,7 +460,7 @@
  <objectgroup color="#c8c837" id="14" name="Object">
   <object id="27" name="Warp Entrance" type="Warp" x="1120" y="1792">
    <properties>
-    <property name="dest_map" value="002-3-1"/>
+    <property name="dest_map" value="Phatyna Corridor"/>
     <property name="dest_pos_x" type="int" value="89"/>
     <property name="dest_pos_y" type="int" value="83"/>
    </properties>
