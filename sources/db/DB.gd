@@ -1,18 +1,18 @@
 extends Node
 
-const Item						= preload("res://sources/db/instance/Item.gd")
-var ItemsDBPath : String		= "res://data/db/items.json"
-var ItemsDB : Array				= []
+var Item							= load(Launcher.Path.DBInstSrc + "Item.gd")
+var ItemsDBPath : String			= Launcher.Path.DBRsc + "items.json"
+var ItemsDB : Dictionary			= {}
 
-const Map						= preload("res://sources/db/instance/Map.gd")
-var MapsDBPath : String			= "res://data/db/maps.json"
-var MapsDB : Array				= []
+var Map								= preload("res://sources/db/instance/Map.gd")
+var MapsDBPath : String				= Launcher.Path.DBRsc + "maps.json"
+var MapsDB : Dictionary				= {}
 
-const Music						= preload("res://sources/db/instance/Music.gd")
-var MusicsDBPath : String		= "res://data/db/musics.json"
-var MusicsDB : Array			= []
+var Music							= preload("res://sources/db/instance/Music.gd")
+var MusicsDBPath : String			= Launcher.Path.DBRsc + "musics.json"
+var MusicsDB : Dictionary			= {}
 
-
+#
 func Parse(path : String):
 	var result
 	var DBFile : File = File.new()
@@ -40,33 +40,33 @@ func ParseItemsDB():
 	var result = Parse(ItemsDBPath)
 	if result != null:
 		for key in result:
-			var item : Item = Item.new()
+			var item = Item.new()
 			item._id = key
 			item._name = result[key].Name
 			item._description =  result[key].Description
 			item._path = result[key].Path
-			ItemsDB.append(item)
+			ItemsDB[key] = item
 
 func ParseMapsDB():
 	var result = Parse(MapsDBPath)
 	if result != null:
 		for key in result:
-			var map : Map = Map.new()
+			var map = Map.new()
 			map._name = key
 			map._path = result[key].Path
-			MapsDB.append(map)
+			MapsDB[key] = map
 
 func ParseMusicsDB():
 	var result = Parse(MusicsDBPath)
 	if result != null:
 		for key in result:
-			var music : Music = Music.new()
+			var music = Music.new()
 			music._name = key
 			music._path = result[key].Path
-			MusicsDB.append(music)
+			MusicsDB[key] = music
 
 #
-func Init():
+func _init():
 	ParseItemsDB()
 	ParseMapsDB()
 	ParseMusicsDB()

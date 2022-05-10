@@ -1,6 +1,6 @@
 extends Node2D
 
-const defaultMap			= "res://data/maps/phatina/002-3-1.tmx"
+const defaultMap			= "res://data/maps/phatyna/002-3-1.tmx"
 const defaultPosition		= Vector2(70, 40)
 
 # Custom objects
@@ -15,7 +15,7 @@ func SetDebugPlayerPosition():
 	SetPlayerInWorld(defaultMap, defaultPosition)
 
 func SetDebugPlayerInventory():
-	currentPlayer.inventory.items += Launcher.DB.ItemsDB
+	currentPlayer.inventory.items = Launcher.DB.ItemsDB
 
 # Utils	
 func SetCameraBoundaries(map, player):
