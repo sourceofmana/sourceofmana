@@ -433,7 +433,10 @@ func make_layer(layer, parent, root, data, zindex):
 
 					if not ("polygon" in object or "polyline" in object):
 						# Regular shape
-						customObject = Shape2D.new()
+						if object.type == "Spawn":
+							customObject = Shape2D.new()
+						else:
+							customObject = Shape2D.new()
 						customObject.shape = shape
 						if shape is RectangleShape2D:
 							offset = shape.extents
@@ -452,8 +455,6 @@ func make_layer(layer, parent, root, data, zindex):
 						if object.type == "Warp":
 							customObject = WarpObject.new()
 							collisionObject = CollisionPolygon2D.new()
-						elif object.type == "Spawn":
-							customObject = SpawnObject.new()
 						else:
 							customObject = Polygon2D.new()
 

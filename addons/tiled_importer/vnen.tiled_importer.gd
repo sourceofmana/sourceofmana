@@ -39,7 +39,7 @@ func _enter_tree():
 	add_import_plugin(import_plugin)
 	add_import_plugin(tileset_import_plugin)
 	add_custom_type("WarpObject", "Area2D", preload("WarpObject.gd"), preload("warp.png"))
-	add_custom_type("SpawnObject", "Polygon2D", preload("SpawnObject.gd"), preload("spawn.png"))
+	add_custom_type("SpawnObject", "RectangleShape2D", preload("SpawnObject.gd"), preload("spawn.png"))
 
 func _exit_tree():
 	remove_import_plugin(import_plugin)
