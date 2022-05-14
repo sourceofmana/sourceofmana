@@ -4,11 +4,11 @@ var audioPlayer : AudioStreamPlayer				= null
 var currentTrack : String = ""
 
 #
-func Play(_pause : bool = false):
-#	if pause:
-#		audioPlayer.pause()
-#	else:
-#		audioPlayer.play()
+func Play(pause : bool = false):
+	if pause:
+		audioPlayer.pause()
+	else:
+		audioPlayer.play()
 	pass
 
 func Stop():
