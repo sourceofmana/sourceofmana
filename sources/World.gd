@@ -1,7 +1,7 @@
 extends Node2D
 
-const defaultMap			= "res://data/maps/phatyna/002-3-1.tmx"
-const defaultPosition		= Vector2(70, 40)
+const defaultMap			= "Phatyna Entrance"
+const defaultPosition		= Vector2(65, 40)
 
 # Custom objects
 const WarpObject			= preload("res://addons/tiled_importer/WarpObject.gd")
@@ -10,9 +10,10 @@ const SpawnObject			= preload("res://addons/tiled_importer/SpawnObject.gd")
 var currentMap				= null
 var currentPlayer			= load("res://scenes/presets/PC.tscn").instance()
 
+
 # Debug
 func SetDebugPlayerPosition():
-	SetPlayerInWorld(defaultMap, defaultPosition)
+	Launcher.Map.Warp(null, defaultMap, defaultPosition)
 
 func SetDebugPlayerInventory():
 	currentPlayer.inventory.items = Launcher.DB.ItemsDB
@@ -34,22 +35,6 @@ func SetCameraBoundaries(map, player):
 			playerCamera.limit_right	= mapLimits.end.x * mapCellsize.x
 			playerCamera.limit_top		= mapLimits.position.y * mapCellsize.y
 			playerCamera.limit_bottom	= mapLimits.end.y * mapCellsize.y
-
-func SetPlayerInWorld(map, pos):
-	if currentMap:
-		var fringeSort = currentMap.get_node("Fringe")
-		if fringeSort:
-			fringeSort.remove_child(currentPlayer)
-			call_deferred("remove_child", currentMap)
-		currentMap.queue_free()
-	currentMap = load(map).instance()
-	if currentPlayer && currentMap:
-		Launcher.Map.UpdateBackgroundMusic(currentMap)
-		var fringeSort = currentMap.get_node("Fringe")
-		if fringeSort:
-			currentPlayer.set_position(pos * fringeSort.cell_size + fringeSort.cell_size / 2)
-			fringeSort.add_child(currentPlayer)
-			call_deferred("add_child", currentMap)
 
 # Network
 func ReturnInventoryList(s_inventoryList):

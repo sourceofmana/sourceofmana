@@ -23,7 +23,6 @@ func _init():
 func _ready():
 	World = get_tree().root.get_node("World")
 
-
 	# Load all low-prio services
 	DB = load("res://sources/db/DB.gd").new()
 	Audio = load("res://sources/audio/Audio.gd").new()
