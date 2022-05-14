@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Source of Mana"
-run/main_scene="res://scenes/map/Proto.tscn"
+run/main_scene="res://scenes/map/World.tscn"
 boot_splash/image="res://data/press/splash/splashscreen.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://data/press/logo/logo_seed.svg"
@@ -154,7 +154,7 @@ ui_inventory={
 [physics]
 
 common/enable_pause_aware_picking=true
-2d/thread_model=2
+2d/physics_engine="GodotPhysics"
 
 [rendering]
 
