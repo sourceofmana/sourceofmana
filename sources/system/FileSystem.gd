@@ -1,10 +1,23 @@
 extends Node
 
-onready var directory = Directory.new();
+var directory = Directory.new();
 
 # Generic
 func Exists(path : String) -> bool:
 	return directory.file_exists(path)
+
+# Scene
+func LoadScene(path : String) -> Node:
+	var fullPath : String		= Launcher.Path.Scn + path
+	var scnInstance : Node		= null
+
+	var pathExists : bool		= Exists(fullPath)
+	assert(pathExists, "Scene file not found " + path + " should be located at " + fullPath)
+
+	if pathExists:
+		scnInstance = load(fullPath).instance()
+
+	return scnInstance
 
 # Source
 func LoadSource(path : String) -> Node:
@@ -21,7 +34,7 @@ func LoadSource(path : String) -> Node:
 
 # Config
 func LoadConfig(path : String) -> ConfigFile:
-	var fullPath : String		= Launcher.Path.Config + path
+	var fullPath : String		= Launcher.Path.ConfRsc + path + ".conf"
 	var cfgFile : ConfigFile	= null
 
 	var pathExists : bool		= Exists(fullPath)
