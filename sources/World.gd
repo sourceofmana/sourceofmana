@@ -1,11 +1,7 @@
 extends Node2D
 
 const defaultMap			= "Phatyna Entrance"
-const defaultPosition		= Vector2(65, 40)
-
-# Custom objects
-const WarpObject			= preload("res://addons/tiled_importer/WarpObject.gd")
-const SpawnObject			= preload("res://addons/tiled_importer/SpawnObject.gd")
+const defaultPosition		= Vector2(47, 32)
 
 var currentMap				= null
 var currentPlayer			= load("res://scenes/presets/PC.tscn").instance()
