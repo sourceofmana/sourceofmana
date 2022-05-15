@@ -4,17 +4,28 @@ var activeMap : Node2D		= null
 
 #
 func GetMapPath(mapName : String) -> String:
+	var path : String = ""
 	var mapInstance = Launcher.DB.MapsDB[mapName]
-	return Launcher.Path.MapRsc + mapInstance._path
+
+	if mapInstance:
+		path = Launcher.Path.MapRsc + mapInstance._path
+
+	return path
 
 #
 func RemoveMap(map : Node2D):
+	if map:
 		Launcher.World.call_deferred("remove_child", map)
-		map.call_deferred("free")
+		map.queue_free()
 
 func LoadMap(mapName : String) -> Node:
+	var mapInstance : Node = null
 	var mapPath : String = GetMapPath(mapName)
-	return load(mapPath).instance()
+
+	if Launcher.FileSystem.Exists(mapPath):
+		mapInstance = load(mapPath).instance()
+
+	return mapInstance
 
 func AddMap(map : Node2D):
 	Launcher.World.call_deferred("add_child", map)
@@ -35,7 +46,7 @@ func AddPlayerToMap(player : KinematicBody2D, map : Node2D, newPos : Vector2):
 #
 func ApplyMapMetadata(map : Node2D):
 	Launcher.Audio.Load(map.get_meta("music") )
-var done = false
+
 #
 func Warp(_caller : Area2D, mapName : String, mapPos : Vector2):
 	var player : KinematicBody2D = Launcher.World.currentPlayer
@@ -48,11 +59,9 @@ func Warp(_caller : Area2D, mapName : String, mapPos : Vector2):
 
 	if activeMap:
 		AddMap(activeMap)
-		if done == false:
-			ApplyMapMetadata(activeMap)
-			if player:
-				AddPlayerToMap(player, activeMap, mapPos)
-				done = true
+		ApplyMapMetadata(activeMap)
+		if player:
+			AddPlayerToMap(player, activeMap, mapPos)
 
 
 #register adjacent maps?
