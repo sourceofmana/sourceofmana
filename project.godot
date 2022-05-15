@@ -21,14 +21,14 @@ _global_script_class_icons={
 [application]
 
 config/name="Source of Mana"
-run/main_scene="res://scenes/map/World.tscn"
+run/main_scene="res://scenes/World.tscn"
 boot_splash/image="res://data/press/splash/splashscreen.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://data/press/logo/logo_seed.svg"
 
 [autoload]
 
-Launcher="*res://sources/Launcher.gd"
+Launcher="*res://sources/launcher/Launcher.gd"
 Server="*res://sources/network/Server.gd"
 Actions="*res://sources/entity/Action.gd"
 Trait="*res://sources/entity/Trait.gd"
@@ -57,6 +57,7 @@ enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addo
 
 fps=false
 vsync=false
+version=false
 
 [importer_defaults]
 
