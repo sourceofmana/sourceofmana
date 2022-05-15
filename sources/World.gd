@@ -1,16 +1,9 @@
 extends Node2D
 
-const defaultMap			= "Phatyna Entrance"
-const defaultPosition		= Vector2(47, 32)
-
 var currentMap				= null
-var currentPlayer			= load("res://scenes/presets/PC.tscn").instance()
-
+var currentPlayer			= Launcher.FileSystem.LoadScene("presets/PC.tscn")
 
 # Debug
-func SetDebugPlayerPosition():
-	Launcher.Map.Warp(null, defaultMap, defaultPosition)
-
 func SetDebugPlayerInventory():
 	currentPlayer.inventory.items = Launcher.DB.ItemsDB
 
@@ -38,8 +31,8 @@ func ReturnInventoryList(s_inventoryList):
 
 #
 func _ready():
-	if currentMap == null:
-		SetDebugPlayerPosition()
+	#Move progressively to Launcher.gd
+	Launcher.FSM.Login()
 	SetCameraBoundaries(currentMap, currentPlayer)
 	SetDebugPlayerInventory()
 
