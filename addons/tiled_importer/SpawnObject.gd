@@ -1,5 +1,5 @@
 tool
-extends RectangleShape2D
+extends Polygon2D
 
 export var maxCount : int 				= 0
 export var mobID : int					= 0
