@@ -1060,7 +1060,7 @@
    <properties>
     <property name="dest_map" value="Phatyna Second Room"/>
     <property name="dest_pos_x" type="int" value="47"/>
-    <property name="dest_pos_y" type="int" value="33"/>
+    <property name="dest_pos_y" type="int" value="34"/>
    </properties>
    <polygon points="0,0 32,32 64,0"/>
   </object>
