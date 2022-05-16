@@ -1,31 +1,13 @@
 extends Node2D
 
-var activeMap : Node2D		= null
-
 #
-func GetMapPath(mapName : String) -> String:
-	var path : String = ""
-	var mapInstance = Launcher.DB.MapsDB[mapName]
-
-	if mapInstance:
-		path = Launcher.Path.MapRsc + mapInstance._path
-
-	return path
+var Pool					= Launcher.FileSystem.LoadSource("map/MapPool.gd")
+var activeMap : Node2D		= null
 
 #
 func RemoveMap(map : Node2D):
 	if map:
 		Launcher.World.call_deferred("remove_child", map)
-		map.queue_free()
-
-func LoadMap(mapName : String) -> Node:
-	var mapInstance : Node = null
-	var mapPath : String = GetMapPath(mapName)
-
-	if Launcher.FileSystem.Exists(mapPath):
-		mapInstance = load(mapPath).instance()
-
-	return mapInstance
 
 func AddMap(map : Node2D):
 	Launcher.World.call_deferred("add_child", map)
@@ -55,14 +37,14 @@ func Warp(_caller : Area2D, mapName : String, mapPos : Vector2):
 			RemovePlayerFromMap(player, activeMap)
 		RemoveMap(activeMap)
 
-	activeMap = LoadMap(mapName)
+	activeMap = Pool.LoadMap(mapName)
 
 	if activeMap:
 		AddMap(activeMap)
 		ApplyMapMetadata(activeMap)
 		if player:
 			AddPlayerToMap(player, activeMap, mapPos)
-
+		Pool.RefreshPool(activeMap)
 
 #register adjacent maps?
 #threading?
