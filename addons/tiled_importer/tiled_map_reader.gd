@@ -234,7 +234,10 @@ func make_layer(layer, parent, root, data, zindex):
 		tilemap.cell_half_offset = map_offset
 		tilemap.format = 1
 		tilemap.cell_clip_uv = options.uv_clip
-		tilemap.cell_y_sort = true
+		if "Fringe" in layer.name:
+			tilemap.cell_y_sort = true
+		else:
+			tilemap.cell_y_sort = false
 		tilemap.cell_tile_origin = TileMap.TILE_ORIGIN_BOTTOM_LEFT
 		tilemap.collision_layer = options.collision_layer
 		tilemap.z_index = zindex
@@ -434,7 +437,8 @@ func make_layer(layer, parent, root, data, zindex):
 					if not ("polygon" in object or "polyline" in object):
 						# Regular shape
 						if object.type == "Spawn":
-							customObject = Shape2D.new()
+#							customObject = Shape2D.new()
+							continue
 						else:
 							customObject = Shape2D.new()
 						customObject.shape = shape
