@@ -7,34 +7,36 @@ var activeMap : Node2D		= null
 #
 func RemoveMap(map : Node2D):
 	if map:
-		Launcher.World.call_deferred("remove_child", map)
+		Launcher.call_deferred("remove_child", map)
 
 func AddMap(map : Node2D):
-	Launcher.World.call_deferred("add_child", map)
+	Launcher.call_deferred("add_child", map)
 
 #
-func RemovePlayerFromMap(player : KinematicBody2D, map : Node2D):
+func RemoveEntityFromMap(entity : KinematicBody2D, map : Node2D):
 	var fringeLayer : TileMap = map.get_node("Fringe")
 	if fringeLayer:
-		fringeLayer.call_deferred("remove_child", player)
+		fringeLayer.call_deferred("remove_child", entity)
 
-func AddPlayerToMap(player : KinematicBody2D, map : Node2D, newPos : Vector2):
+func AddEntityToMap(entity : KinematicBody2D, map : Node2D, newPos : Vector2):
 		var fringeLayer : TileMap = map.get_node("Fringe")
 		if fringeLayer:
-			var playerPos : Vector2 = newPos * fringeLayer.cell_size + fringeLayer.cell_size / 2
-			player.set_position(playerPos)
-			fringeLayer.call_deferred("add_child", player)
+			var entityPos : Vector2 = newPos * fringeLayer.cell_size + fringeLayer.cell_size / 2
+			entity.set_position(entityPos)
+			fringeLayer.call_deferred("add_child", entity)
 
 #
 func ApplyMapMetadata(map : Node2D):
 	Launcher.Audio.Load(map.get_meta("music") )
 
 #
-func Warp(_caller : Area2D, mapName : String, mapPos : Vector2):
-	var player : KinematicBody2D = Launcher.World.currentPlayer
+func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : Node2D = null):
+	if entity == null:
+		entity = Launcher.Entities.activePlayer
+
 	if activeMap:
-		if player:
-			RemovePlayerFromMap(player, activeMap)
+		if entity:
+			RemoveEntityFromMap(entity, activeMap)
 		RemoveMap(activeMap)
 
 	activeMap = Pool.LoadMap(mapName)
@@ -42,29 +44,33 @@ func Warp(_caller : Area2D, mapName : String, mapPos : Vector2):
 	if activeMap:
 		AddMap(activeMap)
 		ApplyMapMetadata(activeMap)
-		if player:
-			AddPlayerToMap(player, activeMap, mapPos)
-		Pool.RefreshPool(activeMap)
+		if entity:
+			AddEntityToMap(entity, activeMap, mapPos)
+			if entity.camera:
+				Launcher.Camera.SetBoundaries(entity)
 
-#register adjacent maps?
-#threading?
-#change player node to entities node
+		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
+			Pool.RefreshPool(activeMap)
 
-#func GetMapBoundaries(map):
-#	var boundaries = Rect2()
 #
-#	assert(map, "Map instance is not found, could not generate map boundaries")
-#	if map:
-#		var collisionLayer	= map.get_node("Collision")
-#
-#		assert(collisionLayer, "Could not find a collision layer on map: " + map.get_name())
-#		if collisionLayer:
-#			var mapLimits			= collisionLayer.get_used_rect()
-#			var mapCellsize			= collisionLayer.cell_size
-#
-#			boundaries.position.x	= mapCellsize.x * mapLimits.position.x
-#			boundaries.end.x		= mapCellsize.x * mapLimits.end.x
-#			boundaries.position.y	= mapCellsize.y * mapLimits.position.y
-#			boundaries.end.y		= mapCellsize.y * mapLimits.end.y
-#
-#	return boundaries
+func GetMapBoundaries(map : Node2D = null) -> Rect2:
+	var boundaries : Rect2 = Rect2()
+
+	if map == null:
+		map = activeMap
+
+	assert(map, "Map instance is not found, could not generate map boundaries")
+	if map:
+		var collisionLayer	= map.get_node("Collision")
+
+		assert(collisionLayer, "Could not find a collision layer on map: " + map.get_name())
+		if collisionLayer:
+			var mapLimits			= collisionLayer.get_used_rect()
+			var mapCellsize			= collisionLayer.cell_size
+
+			boundaries.position.x	= mapCellsize.x * mapLimits.position.x
+			boundaries.end.x		= mapCellsize.x * mapLimits.end.x
+			boundaries.position.y	= mapCellsize.y * mapLimits.position.y
+			boundaries.end.y		= mapCellsize.y * mapLimits.end.y
+
+	return boundaries

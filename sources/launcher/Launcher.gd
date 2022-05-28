@@ -8,8 +8,10 @@ var World				= null
 var Debug				= null
 # Low-prio services
 var Audio				= null
+var Camera				= null
 var Conf				= null
 var DB					= null
+var Entities			= null
 var FSM					= null
 var Map					= null
 var Save				= null
@@ -27,14 +29,18 @@ func _ready():
 
 	# Load all low-prio services, order should not be important
 	Audio			= FileSystem.LoadSource("audio/Audio.gd")
+	Camera			= FileSystem.LoadSource("camera/Camera.gd")
 	Conf			= FileSystem.LoadSource("conf/Conf.gd")
 	DB				= FileSystem.LoadSource("db/DB.gd")
+	Entities		= FileSystem.LoadSource("entity/EntityManager.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
 
 	# Call post_ready functions for service depending on other services
 	if Debug:
 		Debug._post_ready()
+	Conf._post_ready()
+	FSM._post_ready()
 
 func _process(delta : float):
 	if Debug:

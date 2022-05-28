@@ -1,10 +1,44 @@
 extends Node
 
-var Project : ConfigFile				= Launcher.FileSystem.LoadConfig("project")
-var Map : ConfigFile					= Launcher.FileSystem.LoadConfig("map")
-var Window : ConfigFile					= Launcher.FileSystem.LoadConfig("window")
+
+enum Type \
+{ \
+	NONE = -1, \
+	PROJECT = 0, \
+	MAP, \
+	WINDOW \
+}
+
+var ConfHandler				= null
 
 #
+func GetVariant(category : String, param : String, type : int, default):
+	var ret = default
+	if ConfHandler:
+		ret = ConfHandler.GetValue(category, param, type, default)
+	return ret
+
+func GetBool(category : String, param : String, type : int = Type.NONE) -> bool:
+	return GetVariant(category, param, type, false)
+
+func GetInt(category : String, param : String, type : int = Type.NONE) -> int:
+	return GetVariant(category, param, type, 0)
+
+func GetFloat(category : String, param : String, type : int = Type.NONE) -> float:
+	return GetVariant(category, param, type, 0.0)
+
+func GetVector2(category : String, param : String, type : int = Type.NONE) -> Vector2:
+	return GetVariant(category, param, type, Vector2.ZERO)
+
+func GetString(category : String, param : String, type : int = Type.NONE) -> String:
+	return GetVariant(category, param, type, "")
+
+#
+func _init():
+	notification(NOTIFICATION_READY) 
+
 func _ready():
-	if Window:
-		OS.set_min_window_size(Window.get_value("PresetPC", "minWindowSize"))
+	ConfHandler = Launcher.FileSystem.LoadSource("conf/ConfHandler.gd")
+
+func _post_ready():
+	OS.set_min_window_size(GetVector2("PresetPC", "minWindowSize", Type.WINDOW))

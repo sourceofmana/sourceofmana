@@ -19,7 +19,9 @@ func Load(name : String):
 	if audioPlayer == null:
 		audioPlayer = Launcher.World.get_node("AudioStreamPlayer")
 
-	if currentTrack != name:
+	assert(audioPlayer, "AudioStreamPlayer could not be found")
+
+	if audioPlayer && currentTrack != name:
 		if name.empty() == false && Launcher.DB.MusicsDB[name] != null:
 			var path = Launcher.Path.MusicRsc + Launcher.DB.MusicsDB[name]._path
 			if path.empty() == false:

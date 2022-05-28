@@ -4,14 +4,14 @@
  <tile id="0">
   <objectgroup draworder="index" id="2">
    <object id="1" x="16" y="0">
-    <polygon points="4,0 3,16 4,32 0,32 -6,4 -1,0"/>
+    <polygon points="4,0 4,32 0,32 -6,4 -1,0"/>
    </object>
   </objectgroup>
  </tile>
  <tile id="2">
   <objectgroup draworder="index" id="2">
    <object id="1" x="14" y="0">
-    <polygon points="-2,0 -3,21 -2,32 2,32 5,17 6,3 2,0"/>
+    <polygon points="-2,0 -2,32 2,32 5,17 6,3 2,0"/>
    </object>
   </objectgroup>
  </tile>
@@ -32,14 +32,14 @@
  <tile id="5">
   <objectgroup draworder="index" id="2">
    <object id="1" x="16" y="0">
-    <polygon points="4,0 3,16 4,32 0,32 -6,4 -1,0"/>
+    <polygon points="4,0 4,32 0,32 -6,4 -1,0"/>
    </object>
   </objectgroup>
  </tile>
  <tile id="7">
   <objectgroup draworder="index" id="2">
    <object id="1" x="14" y="0">
-    <polygon points="-2,0 -3,21 -2,32 2,32 5,17 6,3 2,0"/>
+    <polygon points="-2,0 -2,32 2,32 5,17 6,3 2,0"/>
    </object>
   </objectgroup>
  </tile>
@@ -72,7 +72,7 @@
  <tile id="17">
   <objectgroup draworder="index" id="2">
    <object id="1" x="16" y="0">
-    <polygon points="0,18 -16,16 -16,32 0,32 16,32 16,16"/>
+    <polygon points="-16,16 -16,32 0,32 16,32 16,16"/>
    </object>
   </objectgroup>
  </tile>
@@ -107,7 +107,7 @@
  <tile id="22">
   <objectgroup draworder="index" id="2">
    <object id="2" x="16" y="0">
-    <polygon points="0,18 -16,16 -16,32 0,32 16,32 16,16"/>
+    <polygon points="-16,16 -16,32 0,32 16,32 16,16"/>
    </object>
   </objectgroup>
  </tile>
@@ -368,7 +368,7 @@
  <tile id="97">
   <objectgroup draworder="index" id="2">
    <object id="2" x="0" y="8">
-    <polygon points="0,0 19,2 32,0 32,24 0,24"/>
+    <polygon points="0,0 32,0 32,24 0,24"/>
    </object>
   </objectgroup>
  </tile>
@@ -403,7 +403,7 @@
  <tile id="103">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="8">
-    <polygon points="0,0 19,2 32,0 32,24 0,24"/>
+    <polygon points="0,0 32,0 32,24 0,24"/>
    </object>
   </objectgroup>
  </tile>
@@ -431,7 +431,7 @@
  <tile id="112">
   <objectgroup draworder="index" id="2">
    <object id="1" x="4" y="53">
-    <polygon points="9,-21 7,-38 9,-53 28,-53 28,-21"/>
+    <polygon points="9,-21 9,-53 28,-53 28,-21"/>
    </object>
   </objectgroup>
  </tile>
@@ -464,7 +464,7 @@
  <tile id="118">
   <objectgroup draworder="index" id="2">
    <object id="1" x="4" y="53">
-    <polygon points="9,-21 7,-38 9,-53 28,-53 28,-21"/>
+    <polygon points="9,-21 9,-53 28,-53 28,-21"/>
    </object>
   </objectgroup>
  </tile>
@@ -499,7 +499,7 @@
  <tile id="129">
   <objectgroup draworder="index" id="2">
    <object id="1" x="4" y="32">
-    <polygon points="-4,-21 -4,-32 28,-32 28,-21 6,-22"/>
+    <polygon points="-4,-21 -4,-32 28,-32 28,-21"/>
    </object>
   </objectgroup>
  </tile>
@@ -535,7 +535,7 @@
  <tile id="135">
   <objectgroup draworder="index" id="2">
    <object id="1" x="4" y="32">
-    <polygon points="-4,-21 -4,-32 28,-32 28,-21 6,-22"/>
+    <polygon points="-4,-21 -4,-32 28,-32 28,-21"/>
    </object>
   </objectgroup>
  </tile>
@@ -623,7 +623,7 @@
  <tile id="196">
   <objectgroup draworder="index" id="2">
    <object id="1" x="16" y="32">
-    <polygon points="-16,-5 -6,-7 16,-5 16,-32 -16,-32"/>
+    <polygon points="-16,-5 16,-5 16,-32 -16,-32"/>
    </object>
   </objectgroup>
  </tile>
@@ -679,7 +679,7 @@
  <tile id="212">
   <objectgroup draworder="index" id="2">
    <object id="1" x="16" y="0">
-    <polygon points="0,18 -16,16 -16,32 0,32 16,32 16,16"/>
+    <polygon points="-16,16 -16,32 0,32 16,32 16,16"/>
    </object>
   </objectgroup>
  </tile>
@@ -707,14 +707,14 @@
  <tile id="224">
   <objectgroup draworder="index" id="2">
    <object id="2" x="16" y="0">
-    <polygon points="4,0 3,16 4,32 -16,32 -16,0"/>
+    <polygon points="4,0 4,32 -16,32 -16,0"/>
    </object>
   </objectgroup>
  </tile>
  <tile id="225">
   <objectgroup draworder="index" id="2">
    <object id="2" x="14" y="0">
-    <polygon points="-2,0 -3,21 -2,32 18,32 18,0"/>
+    <polygon points="-2,0 -2,32 18,32 18,0"/>
    </object>
   </objectgroup>
  </tile>

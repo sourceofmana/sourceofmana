@@ -1,8 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[sub_resource type="CapsuleShape2D" id=1]
-radius = 9.32449
-height = 0.0
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( -12, -4, -12, 4, -4, 12, 4, 12, 12, 4, 12, -4, 4, -12, -4, -12 )
 
 [node name="Collision" type="CollisionShape2D"]
 position = Vector2( 0, -9 )

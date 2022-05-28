@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+onready var camera				= $PlayerCamera
 onready var animationTree		= $AnimationTree
 onready var animationState		= animationTree.get("parameters/playback")
 
@@ -81,7 +82,7 @@ func UpdateOrientation(deltaTime : float):
 		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, stat.moveFriction * deltaTime)
 
 func UpdateVelocity():
-	if currentState != Actions.State.SIT:
+	if currentState != Actions.State.SIT && currentVelocity != Vector2.ZERO:
 		currentVelocity = move_and_slide(currentVelocity, Vector2.ZERO, false, 1, 0.1, false)
 
 func UpdateState():

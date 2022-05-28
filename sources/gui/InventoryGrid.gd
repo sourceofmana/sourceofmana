@@ -5,9 +5,9 @@ const Tile = preload("res://scenes/gui/inventory/Tile.tscn")
 var slots : Array = []
 
 func _ready():
-	for item in Launcher.World.currentPlayer.inventory.items:
+	for item in Launcher.Entities.activePlayer.inventory.items:
 		var tileInstance	= Tile.instance()
-		var itemReference	= Launcher.World.currentPlayer.inventory.items[item]
+		var itemReference	= Launcher.Entities.activePlayer.inventory.items[item]
 		var iconTexture		= load(Launcher.Path.ItemRsc + itemReference._path)
 
 		tileInstance.get_node("Icon").set_texture(iconTexture)
