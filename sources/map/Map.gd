@@ -27,7 +27,8 @@ func AddEntityToMap(entity : KinematicBody2D, map : Node2D, newPos : Vector2):
 
 #
 func ApplyMapMetadata(map : Node2D):
-	Launcher.Audio.Load(map.get_meta("music") )
+	if map && map.has_meta("music"):
+		Launcher.Audio.Load(map.get_meta("music") )
 
 #
 func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : Node2D = null):
