@@ -3,14 +3,14 @@
  <image source="cave-x1x2.png" width="512" height="64"/>
  <tile id="0">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="9" y="45">
+   <object id="1" x="10" y="45">
     <polygon points="2,-1 10,2 15,11 0,16 -9,10 -6,2"/>
    </object>
   </objectgroup>
  </tile>
  <tile id="1">
   <objectgroup draworder="index" id="3">
-   <object id="2" x="16" y="45">
+   <object id="2" x="15" y="45">
     <polygon points="3,-2 13,2 16,13 3,17 -9,10 -6,1"/>
    </object>
   </objectgroup>
@@ -24,7 +24,7 @@
  </tile>
  <tile id="9">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="15" y="24">
+   <object id="1" x="14" y="24">
     <polygon points="15,3 17,11 13,35 -10,28 -6,2"/>
    </object>
   </objectgroup>
@@ -39,7 +39,7 @@
  <tile id="11">
   <objectgroup draworder="index" id="2">
    <object id="1" x="16" y="39">
-    <polygon points="-8,-16 10,-19 17,16 2,12 -10,11"/>
+    <polygon points="-8,-16 10,-19 15,16 2,12 -10,11"/>
    </object>
   </objectgroup>
  </tile>
