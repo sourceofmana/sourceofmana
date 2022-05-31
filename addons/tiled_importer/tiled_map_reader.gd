@@ -139,7 +139,7 @@ func build(source_path, options):
 		# Error happened
 		return tileset
 
-	var root = Node2D.new()
+	var root = Navigation2D.new()
 	root.set_name(source_path.get_file().get_basename())
 	if options.save_tiled_properties:
 		set_tiled_properties_as_meta(root, map)
@@ -828,7 +828,6 @@ func build_tileset_for_scene(tilesets, source_path, options):
 					result.tile_set_texture(gid, image)
 				if options.apply_offset:
 					result.tile_set_texture_offset(gid, Vector2(0, 32-image.get_height()))
-
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:
 				for object in ts.tiles[rel_id].objectgroup.objects:
@@ -845,14 +844,42 @@ func build_tileset_for_scene(tilesets, source_path, options):
 					if "width" in object and "height" in object:
 						offset += Vector2(float(object.width) / 2, float(object.height) / 2)
 
-					if object.type == "navigation":
-						result.tile_set_navigation_polygon(gid, shape)
-						result.tile_set_navigation_polygon_offset(gid, offset)
-					elif object.type == "occluder":
-						result.tile_set_light_occluder(gid, shape)
-						result.tile_set_occluder_offset(gid, offset)
-					else:
-						result.tile_add_shape(gid, shape, Transform2D(0, offset), object.type == "one-way")
+					result.tile_add_shape(gid, shape, Transform2D(0, offset), object.type == "one-way")
+
+					var tileShape = PoolVector2Array([
+							Vector2(-offset.x, -offset.y),
+							Vector2(tilesize.x - offset.x, -offset.y),
+							Vector2(tilesize.x - offset.x, tilesize.y - offset.y),
+							Vector2(-offset.x, tilesize.y - offset.y)
+					])
+
+					var navOutlines = []
+					var colShape = result.tile_get_shape(gid, 0)
+					if colShape is ConvexPolygonShape2D:
+						navOutlines = Geometry.clip_polygons_2d(tileShape, colShape.get_points())
+					elif colShape is ConcavePolygonShape2D:
+						navOutlines = Geometry.clip_polygons_2d(tileShape, colShape.get_segments())
+
+					var shapeNav = NavigationPolygon.new()
+					for navOutline in navOutlines:
+						shapeNav.add_outline(navOutline)
+					shapeNav.make_polygons_from_outlines()
+
+					result.tile_set_navigation_polygon(gid, shapeNav)
+					result.tile_set_navigation_polygon_offset(gid, offset)
+			else:
+				var tileShape = PoolVector2Array([
+						Vector2(0, 0),
+						Vector2(tilesize.x, 0),
+						tilesize,
+						Vector2(0, tilesize.y)
+				])
+
+				var shapeNav = NavigationPolygon.new()
+				shapeNav.add_outline(tileShape)
+				shapeNav.make_polygons_from_outlines()
+
+				result.tile_set_navigation_polygon(gid, shapeNav)
 
 			if "properties" in ts and "custom_material" in ts.properties:
 				result.tile_set_material(gid, load(ts.properties.custom_material))
