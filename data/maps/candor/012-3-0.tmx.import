@@ -1,0 +1,22 @@
+[remap]
+
+importer="vnen.tiled_importer"
+type="PackedScene"
+path="res://.import/012-3-0.tmx-c77ade8f11a17e19c28053b12871fdd2.scn"
+
+[deps]
+
+source_file="res://data/maps/candor/012-3-0.tmx"
+dest_files=[ "res://.import/012-3-0.tmx-c77ade8f11a17e19c28053b12871fdd2.scn" ]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+uv_clip=true
+image_flags=7
+collision_layer=1
+embed_internal_images=false
+save_tiled_properties=false
+add_background=true
+post_import_script=""

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Jose. S & Dakota. D - Night is calling.ogg-59b959013a2d837beef4999244ffb916.oggstr"
+
+[deps]
+
+source_file="res://data/musics/Jose. S & Dakota. D - Night is calling.ogg"
+dest_files=[ "res://.import/Jose. S & Dakota. D - Night is calling.ogg-59b959013a2d837beef4999244ffb916.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
