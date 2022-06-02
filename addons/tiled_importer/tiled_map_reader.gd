@@ -865,8 +865,8 @@ func build_tileset_for_scene(tilesets, source_path, options):
 						shapeNav.add_outline(navOutline)
 					shapeNav.make_polygons_from_outlines()
 
-					result.tile_set_navigation_polygon(gid, shapeNav)
-					result.tile_set_navigation_polygon_offset(gid, offset)
+#					result.tile_set_navigation_polygon(gid, shapeNav)
+#					result.tile_set_navigation_polygon_offset(gid, offset)
 			else:
 				var tileShape = PoolVector2Array([
 						Vector2(0, 0),
