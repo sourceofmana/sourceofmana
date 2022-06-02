@@ -1,0 +1,7 @@
+{
+    "Kaizei Viro": {
+		"Male"		: "players/human-male.png",
+		"Female"	: "players/human-female.png",
+		"Nonbinary"	: "players/human-nonbinary.png",
+	},
+}

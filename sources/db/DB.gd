@@ -1,43 +1,16 @@
 extends Node
 
-var Item							= load(Launcher.Path.DBInstSrc + "Item.gd")
-var ItemsDBPath : String			= Launcher.Path.DBRsc + "items.json"
 var ItemsDB : Dictionary			= {}
-
-var Map								= preload("res://sources/db/instance/Map.gd")
-var MapsDBPath : String				= Launcher.Path.DBRsc + "maps.json"
 var MapsDB : Dictionary				= {}
-
-var Music							= preload("res://sources/db/instance/Music.gd")
-var MusicsDBPath : String			= Launcher.Path.DBRsc + "musics.json"
 var MusicsDB : Dictionary			= {}
-
-#
-func Parse(path : String):
-	var result
-	var DBFile : File = File.new()
-	var err : int = DBFile.open(path, File.READ)
-
-	if err == OK:
-		var DBJson : JSONParseResult = JSON.parse(DBFile.get_as_text())
-		DBFile.close()
-
-		if DBJson.error == OK:
-			result = DBJson.result
-		else:
-			print("DB.Parse: Error loading JSON file '" + str(path) + "'.")
-			print("\tError: ", DBJson.error)
-			print("\tError Line: ", DBJson.error_line)
-			print("\tError String: ", DBJson.error_string)
-	else:
-		print("DB.Parse: Error loading JSON file '" + str(path) + "'.")
-		print("\tError: ", err)
-
-	return result
+var EthnicityDB : Dictionary		= {}
+var HairstyleDB : Dictionary		= {}
 
 #
 func ParseItemsDB():
-	var result = Parse(ItemsDBPath)
+	var Item = load(Launcher.Path.DBInstSrc + "Item.gd")
+	var result = Launcher.FileSystem.LoadDB("items.json")
+
 	if result != null:
 		for key in result:
 			var item = Item.new()
@@ -48,7 +21,9 @@ func ParseItemsDB():
 			ItemsDB[key] = item
 
 func ParseMapsDB():
-	var result = Parse(MapsDBPath)
+	var Map = load(Launcher.Path.DBInstSrc + "Map.gd")
+	var result = Launcher.FileSystem.LoadDB("maps.json")
+
 	if result != null:
 		for key in result:
 			var map = Map.new()
@@ -57,7 +32,9 @@ func ParseMapsDB():
 			MapsDB[key] = map
 
 func ParseMusicsDB():
-	var result = Parse(MusicsDBPath)
+	var Music = load(Launcher.Path.DBInstSrc + "Music.gd")
+	var result = Launcher.FileSystem.LoadDB("musics.json")
+
 	if result != null:
 		for key in result:
 			var music = Music.new()
@@ -65,8 +42,36 @@ func ParseMusicsDB():
 			music._path = result[key].Path
 			MusicsDB[key] = music
 
+func ParseEthnicitiesDB():
+	var Trait = load(Launcher.Path.DBInstSrc + "Trait.gd")
+	var result = Launcher.FileSystem.LoadDB("ethnicities.json")
+
+	if result != null:
+		for key in result:
+			var ethnicity = Trait.new()
+			ethnicity._name = key
+			ethnicity._path[Launcher.Entities.Trait.Gender.MALE] = result[key].Male
+			ethnicity._path[Launcher.Entities.Trait.Gender.FEMALE] = result[key].Female
+			ethnicity._path[Launcher.Entities.Trait.Gender.NONBINARY] = result[key].Nonbinary
+			MusicsDB[key] = ethnicity
+
+func ParseHairstylesDB():
+	var Trait = load(Launcher.Path.DBInstSrc + "Trait.gd")
+	var result = Launcher.FileSystem.LoadDB("hairstyles.json")
+
+	if result != null:
+		for key in result:
+			var hairstyle = Trait.new()
+			hairstyle._name = key
+			hairstyle._path[Launcher.Entities.Trait.Gender.MALE] = result[key].Male
+			hairstyle._path[Launcher.Entities.Trait.Gender.FEMALE] = result[key].Female
+			hairstyle._path[Launcher.Entities.Trait.Gender.NONBINARY] = result[key].Nonbinary
+			MusicsDB[key] = hairstyle
+
 #
-func _init():
+func _post_ready():
 	ParseItemsDB()
 	ParseMapsDB()
 	ParseMusicsDB()
+	ParseEthnicitiesDB()
+	ParseHairstylesDB()

@@ -40,6 +40,8 @@ func _ready():
 	if Debug:
 		Debug._post_ready()
 	Conf._post_ready()
+	Entities._post_ready()
+	DB._post_ready()
 	FSM._post_ready()
 
 func _process(delta : float):

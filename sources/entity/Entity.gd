@@ -9,8 +9,8 @@ var slot						= preload("res://sources/entity/Slot.gd").new()
 var inventory					= preload("res://sources/entity/Inventory.gd").new()
 
 var entityName					= ""
-var gender						= Trait.Gender.MALE
-var type						= Trait.Type.HUMAN
+var gender						= Launcher.Entities.Trait.Gender.MALE
+var type						= Launcher.Entities.Trait.Type.HUMAN
 
 var damageReceived				= {}
 var showName					= false

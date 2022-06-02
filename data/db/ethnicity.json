@@ -1,8 +1,0 @@
-{
-    "1": {
-		"Name"		: "Kaizei Viro",
-		"Male"		: "players/human-male.xml",
-		"Female"	: "players/human-female.xml",
-		"Nonbinary"	: "players/human-nonbinary.xml",
-	},
-}

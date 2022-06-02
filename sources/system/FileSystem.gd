@@ -6,6 +6,35 @@ var directory = Directory.new();
 func Exists(path : String) -> bool:
 	return directory.file_exists(path)
 
+# DB
+func LoadDB(path : String) -> Dictionary:
+	var fullPath : String		= Launcher.Path.DBRsc + path
+	var result : Dictionary		= {}
+
+	var pathExists : bool		= Exists(fullPath)
+	assert(pathExists, "DB file not found " + path + " should be located at " + fullPath)
+
+	if pathExists:
+		var DBFile : File	= File.new()
+		var err : int		= DBFile.open(fullPath, File.READ)
+
+		assert(err == OK, "DB parsing error loading JSON file '" + fullPath + "'" \
+			+ "\tError: " + str(err) \
+		)
+		if err == OK:
+			var DBJson : JSONParseResult = JSON.parse(DBFile.get_as_text())
+			DBFile.close()
+
+			assert(DBJson.error == OK, "DB parsing issue on file " + fullPath \
+				+ "\tError: " + str(DBJson.error) \
+				+ "\tError Line: " + str(DBJson.error_line) \
+				+ "\tError String: " + str(DBJson.error_string) \
+			)
+			if DBJson.error == OK:
+				result = DBJson.result
+
+	return result
+
 # Scene
 func LoadScene(path : String) -> Node:
 	var fullPath : String		= Launcher.Path.Scn + path
@@ -28,7 +57,7 @@ func LoadSource(path : String) -> Node:
 	assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		srcFile = load(fullPath).new()
+		srcFile = ResourceLoader.load(fullPath).new()
 
 	return srcFile
 

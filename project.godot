@@ -30,7 +30,6 @@ config/icon="res://data/press/logo/logo_seed.svg"
 
 Server="*res://sources/network/Server.gd"
 Actions="*res://sources/entity/Action.gd"
-Trait="*res://sources/entity/Trait.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 Launcher="*res://sources/launcher/Launcher.gd"
 
