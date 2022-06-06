@@ -17,7 +17,7 @@ func GetValue(category : String, param : String, type : int, default):
 		value = confFiles[type].get_value(category, param, default)
 	else:
 		for conf in confFiles:
-			if conf.has_section_key(category, param):
+			if conf && conf.has_section_key(category, param):
 				value = conf.get_value(category, param, default)
 
 	return value

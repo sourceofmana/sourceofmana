@@ -42,9 +42,12 @@ func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : Node2D 
 
 	activeMap = Pool.LoadMap(mapName)
 
+	assert(activeMap, "Map instance could not be created")
 	if activeMap:
 		AddMap(activeMap)
 		ApplyMapMetadata(activeMap)
+
+		assert(entity, "Entity is not initialized, could not warp it to this map")
 		if entity:
 			AddEntityToMap(entity, activeMap, mapPos)
 			if entity.camera:

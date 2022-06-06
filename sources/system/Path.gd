@@ -1,5 +1,6 @@
 extends Node
 
+# Paths
 const Rsc : String						= "res://"
 
 const DataRsc : String					= Rsc + "data/"
@@ -16,3 +17,14 @@ const DBInstSrc : String				= Src + "db/instance/"
 const Scn : String						= Rsc + "scenes/"
 const GuiScn : String					= Scn + "gui/"
 const PresetScn : String				= Scn + "presets/"
+
+# Local
+const Local : String					= "user://"
+const ConfLocal : String				= Local + "conf/"
+
+# Extentions
+const ItemExt: String					= ".png"
+const MapExt: String					= ".tmx"
+const MusicExt: String					= ".ogg"
+const DBExt: String						= ".db"
+const ConfExt: String					= ".cfg"

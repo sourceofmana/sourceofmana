@@ -9,6 +9,7 @@ func GetMapPath(mapName : String) -> String:
 	var path : String = ""
 	var mapInstance = Launcher.DB.MapsDB[mapName]
 
+	assert(mapInstance, "Could not find the map " + mapName + " within the db")
 	if mapInstance:
 		path = Launcher.Path.MapRsc + mapInstance._path
 
@@ -18,8 +19,10 @@ func GetMapPath(mapName : String) -> String:
 func LoadMap(mapName : String) -> Node:
 	var mapInstance : Node2D		= GetMap(mapName)
 	var mapPath : String			= GetMapPath(mapName)
+	var mapPathExists : bool		= Launcher.FileSystem.ResourceExists(mapPath)
 
-	if mapInstance == null && Launcher.FileSystem.Exists(mapPath):
+	assert(mapPathExists, "Map path unavailable (" + mapPath + ")")
+	if mapInstance == null && mapPathExists:
 		mapInstance = load(mapPath).instance()
 		mapInstance.set_name(mapName)
 		pool[mapName] = mapInstance

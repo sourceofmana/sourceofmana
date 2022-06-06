@@ -3,15 +3,24 @@ extends Node
 var directory = Directory.new();
 
 # Generic
-func Exists(path : String) -> bool:
+func FileExists(path : String) -> bool:
 	return directory.file_exists(path)
+
+func ResourceExists(path : String) -> bool:
+	return ResourceLoader.exists(path)
+
+func FileLoad(path : String) -> Resource:
+	return load(path)
+
+func ResourceLoad(path : String) -> Resource:
+	return ResourceLoader.load(path)
 
 # DB
 func LoadDB(path : String) -> Dictionary:
 	var fullPath : String		= Launcher.Path.DBRsc + path
 	var result : Dictionary		= {}
 
-	var pathExists : bool		= Exists(fullPath)
+	var pathExists : bool		= FileExists(fullPath)
 	assert(pathExists, "DB file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
@@ -40,11 +49,11 @@ func LoadScene(path : String) -> Node:
 	var fullPath : String		= Launcher.Path.Scn + path
 	var scnInstance : Node		= null
 
-	var pathExists : bool		= Exists(fullPath)
+	var pathExists : bool		= ResourceExists(fullPath)
 	assert(pathExists, "Scene file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		scnInstance = load(fullPath).instance()
+		scnInstance = ResourceLoad(fullPath).instance()
 
 	return scnInstance
 
@@ -52,21 +61,29 @@ func LoadScene(path : String) -> Node:
 func LoadSource(path : String) -> Node:
 	var fullPath : String		= Launcher.Path.Src + path
 	var srcFile : Node			= null
+	if OS.has_feature("standalone"):
+		fullPath += "c"
 
-	var pathExists : bool		= Exists(fullPath)
+	var pathExists : bool		= ResourceExists(fullPath)
 	assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		srcFile = ResourceLoader.load(fullPath).new()
+		srcFile = ResourceLoad(fullPath).new()
 
 	return srcFile
 
 # Config
 func LoadConfig(path : String) -> ConfigFile:
-	var fullPath : String		= Launcher.Path.ConfRsc + path + ".conf"
+	var fullPath : String		= Launcher.Path.ConfRsc + path + Launcher.Path.ConfExt
+	var localPath : String		= Launcher.Path.ConfLocal + path + Launcher.Path.ConfExt
 	var cfgFile : ConfigFile	= null
 
-	var pathExists : bool		= Exists(fullPath)
+	var pathExists : bool = false
+	if FileExists(localPath):
+		pathExists = true
+		fullPath = localPath
+	else:
+		pathExists = FileExists(fullPath)
 	assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
@@ -82,11 +99,11 @@ func LoadConfig(path : String) -> ConfigFile:
 	return cfgFile
 
 func SaveConfig(path : String, cfgFile : ConfigFile):
-	var fullPath = Launcher.Path.Config + path
+	var fullPath = Launcher.Path.ConfLocal + path
 	assert(cfgFile, "Config file " + path + " not initialized")
 
 	if cfgFile:
-		var pathExists : bool = Exists(fullPath)
+		var pathExists : bool = FileExists(fullPath)
 		assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
 
 		if pathExists:
