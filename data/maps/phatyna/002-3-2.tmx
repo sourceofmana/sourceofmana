@@ -561,7 +561,7 @@
    <properties>
     <property name="dest_map" value="Phatyna Corridor"/>
     <property name="dest_pos_x" type="int" value="110"/>
-    <property name="dest_pos_y" type="int" value="127"/>
+    <property name="dest_pos_y" type="int" value="128"/>
    </properties>
    <polygon points="0,0 32,32 64,0"/>
   </object>
