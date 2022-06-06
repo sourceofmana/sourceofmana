@@ -48,6 +48,11 @@ window/vsync/use_vsync=false
 window/per_pixel_transparency/allowed=true
 window/per_pixel_transparency/enabled=true
 
+[editor]
+
+search_in_file_extensions=PoolStringArray( "gd", "gdshader", "shader", "conf", "db" )
+convert_text_resources_to_binary_on_export=true
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addons/tiled_importer/plugin.cfg", "res://addons/windowpanel/plugin.cfg" )
@@ -57,6 +62,7 @@ enabled=PoolStringArray( "res://addons/dialogue_manager/plugin.cfg", "res://addo
 fps=false
 vsync=false
 version=false
+cfg=false
 
 [importer_defaults]
 
@@ -158,15 +164,18 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
 quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=0
 2d/snapping/use_gpu_pixel_snap=true
 threads/thread_model=2
 threads/thread_safe_bvh=true
+vram_compression/import_etc=true
+vram_compression/import_pvrtc=true
+environment/default_environment="res://default_env.tres"
 quality/subsurface_scattering/scale=1
 quality/subsurface_scattering/follow_surface=true
-environment/default_environment="res://default_env.tres"
 
 [tiled_importer]
 
