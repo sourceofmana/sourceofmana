@@ -772,7 +772,7 @@
  <tile id="254">
   <objectgroup draworder="index" id="2">
    <object id="1" x="11" y="-96">
-    <polygon points="15,110 6,96 18,96 20,108"/>
+    <polygon points="15,108 6,96 18,96 20,108"/>
    </object>
   </objectgroup>
  </tile>
