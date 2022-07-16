@@ -72,6 +72,14 @@ const whitelist_properties = [
 var _loaded_templates = {}
 # Maps each tileset file used by the map to it's first gid; Used for template parsing
 var _tileset_path_to_first_gid = {}
+# Store the max gid parsed to define the navigation polygon
+var max_gid = 0
+# Navigation polygon to be used on top of every tilemaps
+var nav_polygon_instance : NavigationPolygonInstance = NavigationPolygonInstance.new()
+# Collision polygons
+var collisionPool : Array = []
+# Navigation polygons
+var navigationPool : Array = []
 
 func reset_global_memebers():
 	_loaded_templates = {}
@@ -161,6 +169,13 @@ func build(source_path, options):
 
 	var z_index = -1
 
+	var base_polygon = PoolVector2Array([
+			Vector2(0, 0),
+			Vector2(int(map.layers[0].width * 32), 0),
+			Vector2(int(map.layers[0].width * 32), int(map.layers[0].height * 32)),
+			Vector2(0, int(map.layers[0].height * 32))
+	])
+
 	for layer in map.layers:
 		if "Fringe" in layer.name:
 			z_index = 0
@@ -168,8 +183,23 @@ func build(source_path, options):
 			z_index = 1
 
 		err = make_layer(layer, root, root, map_data, z_index)
+
 		if err != OK:
 			return err
+
+	create_collision_layer()
+	create_navigation_layer()
+
+	var nav_polygon : NavigationPolygon = NavigationPolygon.new()
+	for navPolygon in navigationPool:
+		nav_polygon.add_outline(navPolygon)
+		nav_polygon.make_polygons_from_outlines()
+
+	nav_polygon_instance.set_navigation_polygon(nav_polygon)
+
+	if nav_polygon_instance:
+		root.add_child(nav_polygon_instance)
+		nav_polygon_instance.owner = root
 
 	if options.add_background and "backgroundcolor" in map:
 		var bg_color = str(map.backgroundcolor)
@@ -201,6 +231,127 @@ func build(source_path, options):
 		colorizer.owner = root
 
 	return root
+
+func build_collision_pool(tilemap, gid):
+	if gid == 299:
+		pass
+
+	var used_tiles = tilemap.get_used_cells_by_id(gid)
+	for tile in used_tiles:
+		var polygon_offset = tilemap.map_to_world(tile)
+		var tile_region = tilemap.get_cell_autotile_coord(tile[0], tile[1])
+		var tile_transform = tilemap.get_tileset().tile_get_shape_transform(gid, tile_region[0])
+
+		var polygon_shape = null
+		var col_shape = tilemap.get_tileset().tile_get_shape(gid, tile_region[0])
+		if col_shape:
+			if col_shape is ConvexPolygonShape2D:
+				polygon_shape = col_shape.get_points()
+			elif col_shape is ConcavePolygonShape2D:
+				polygon_shape = col_shape.get_segments()
+			elif col_shape is RectangleShape2D:
+				var shapeExtents = col_shape.get_extents()
+				polygon_shape = [ \
+					Vector2(-shapeExtents.x, -shapeExtents.y), \
+					Vector2(shapeExtents.x, -shapeExtents.y), \
+					Vector2(shapeExtents.x, -shapeExtents.y), \
+					Vector2(shapeExtents.x, shapeExtents.y), \
+					Vector2(shapeExtents.x, shapeExtents.y), \
+					Vector2(-shapeExtents.x, shapeExtents.y), \
+					Vector2(-shapeExtents.x, shapeExtents.y), \
+					Vector2(-shapeExtents.x, -shapeExtents.y) \
+				]
+			else:
+				print("ERROR: this shape is not supported (" + str(col_shape) + ") ")
+
+		if polygon_shape:
+			var new_polygon = PoolVector2Array()
+			for vertex in polygon_shape:
+				vertex += polygon_offset
+				new_polygon.append(tile_transform.xform(vertex))
+			if new_polygon.size() > 0:
+				collisionPool.append(new_polygon)
+
+func create_collision_layer():
+	var newPool : Array = []
+	var isIntersected : bool = true
+
+	while collisionPool.size() > 0:
+		isIntersected = false
+
+		var polygonLeft = collisionPool.pop_front()
+		for polygonRight in collisionPool:
+			var mergedPool = Geometry.merge_polygons_2d(polygonLeft, polygonRight)
+			if mergedPool.size() == 1:
+				isIntersected = true
+				collisionPool.erase(polygonRight)
+				collisionPool.append(mergedPool[0])
+				break
+		if isIntersected == false:
+			newPool.append(polygonLeft)
+
+	for colPolygon in newPool:
+		var hullPolygon : PoolVector2Array = colPolygon
+		if hullPolygon[0] == hullPolygon[hullPolygon.size() - 1]:
+			hullPolygon.remove(hullPolygon.size() - 1)
+		collisionPool.append(hullPolygon)
+
+func create_navigation_layer():
+	navigationPool.append(PoolVector2Array([
+			Vector2(0, 0),
+			Vector2(3424, 0),
+			Vector2(3424,2848),
+			Vector2(0, 2848)
+	]))
+
+	for colPolygon in collisionPool:
+		var newNavPolygon = []
+		for navPolygon in navigationPool:
+			newNavPolygon.append_array(Geometry.exclude_polygons_2d(navPolygon, colPolygon))
+		navigationPool.clear()
+		navigationPool = newNavPolygon
+
+func remove_polygon_from_navigation(tilemap, gid):
+	var polygon : NavigationPolygon = nav_polygon_instance.get_navigation_polygon()
+	var used_tiles = tilemap.get_used_cells_by_id(gid)
+
+	for tile in used_tiles:
+		var new_polygon = PoolVector2Array()
+		var polygon_offset = tilemap.map_to_world(tile) - Vector2(tilemap.get_cell_size()[0]/2, 0)
+		var tile_region = tilemap.get_cell_autotile_coord(tile[0], tile[1])
+		var tile_transform = tilemap.get_tileset().tile_get_shape_transform(gid, tile_region[0])
+
+		var polygon_bp = null
+		var col_shape = tilemap.get_tileset().tile_get_shape(gid, tile_region[0])
+		if col_shape is ConvexPolygonShape2D:
+			polygon_bp = col_shape.get_points()
+		elif col_shape is ConcavePolygonShape2D:
+			polygon_bp = col_shape.get_segments()
+
+		for vertex in polygon_bp:
+			vertex += polygon_offset
+			new_polygon.append(tile_transform.xform(vertex))
+
+		var new_outlines = NavigationPolygon.new()
+		for outline_idx in range(0, polygon.get_outline_count()):
+			var sliced_outlines = Geometry.clip_polygons_2d(polygon.get_outline(outline_idx), new_polygon)
+			print(polygon.get_outline(outline_idx))
+			print("-")
+			print(polygon_bp)
+			print("->")
+			print(sliced_outlines)
+			for sliced_outline in sliced_outlines:
+				new_outlines.add_outline(sliced_outline)
+			print("")
+
+		polygon.clear_outlines()
+		new_outlines.make_polygons_from_outlines()
+
+		for outline_idx in range(0, new_outlines.get_outline_count()):
+			polygon.add_outline(new_outlines.get_outline(outline_idx))
+
+		polygon.make_polygons_from_outlines()
+	nav_polygon_instance.set_navigation_polygon(polygon)
 
 # Creates a layer node from the data
 # Returns an error code
@@ -292,6 +443,9 @@ func make_layer(layer, parent, root, data, zindex):
 				var cell_y = cell_offset.y + chunk.y + int(count / chunk.width)
 				tilemap.set_cell(cell_x, cell_y, gid, flipped_h, flipped_v, flipped_d)
 
+				if gid > max_gid:
+					max_gid = gid
+
 				count += 1
 
 		if options.save_tiled_properties:
@@ -302,6 +456,11 @@ func make_layer(layer, parent, root, data, zindex):
 		tilemap.set("editor/display_folded", true)
 		parent.add_child(tilemap)
 		tilemap.set_owner(root)
+
+		var gid= 0
+		while gid <= max_gid:
+			build_collision_pool(tilemap, gid)
+			gid += 1
 	elif layer.type == "imagelayer":
 		var image = null
 		if layer.image != "":
@@ -658,6 +817,7 @@ func make_layer(layer, parent, root, data, zindex):
 				z_index = 1
 
 			make_layer(sub_layer, group, root, data, z_index)
+		create_collision_layer()
 
 	else:
 		print_error("Unknown layer type ('%s') in '%s'" % [str(layer.type), str(layer.name) if "name" in layer else "[unnamed layer]"])
@@ -680,6 +840,228 @@ var flags
 # Makes a tileset from a array of tilesets data
 # Since Godot supports only one TileSet per TileMap, all tilesets from Tiled are combined
 func build_tileset_for_scene(tilesets, source_path, options):
+	var result = TileSet.new()
+	var err = ERR_INVALID_DATA
+	var tile_meta = {}
+
+	for tileset in tilesets:
+		var ts = tileset
+		var ts_source_path = source_path
+		if "source" in ts:
+			if not "firstgid" in tileset or not str(tileset.firstgid).is_valid_integer():
+				print_error("Missing or invalid firstgid tileset property.")
+				return ERR_INVALID_DATA
+
+			ts_source_path = source_path.get_base_dir().plus_file(ts.source)
+			# Used later for templates
+			_tileset_path_to_first_gid[ts_source_path] = tileset.firstgid
+
+			if ts.source.get_extension().to_lower() == "tsx":
+				var tsx_reader = TiledXMLToDictionary.new()
+				ts = tsx_reader.read_tsx(ts_source_path)
+				if typeof(ts) != TYPE_DICTIONARY:
+					# Error happened
+					return ts
+			else: # JSON Tileset
+				var f = File.new()
+				err = f.open(ts_source_path, File.READ)
+				if err != OK:
+					print_error("Error opening tileset '%s'." % [ts.source])
+					return err
+
+				var json_res = JSON.parse(f.get_as_text())
+				if json_res.error != OK:
+					print_error("Error parsing tileset '%s' JSON: %s" % [ts.source, json_res.error_string])
+					return ERR_INVALID_DATA
+
+				ts = json_res.result
+				if typeof(ts) != TYPE_DICTIONARY:
+					print_error("Tileset '%s' is not a dictionary." % [ts.source])
+					return ERR_INVALID_DATA
+
+			ts.firstgid = tileset.firstgid
+
+		err = validate_tileset(ts)
+		if err != OK:
+			return err
+
+		var has_global_image = "image" in ts
+
+		var spacing = int(ts.spacing) if "spacing" in ts and str(ts.spacing).is_valid_integer() else 0
+		var margin = int(ts.margin) if "margin" in ts and str(ts.margin).is_valid_integer() else 0
+		var firstgid = int(ts.firstgid)
+		var columns = int(ts.columns) if "columns" in ts and str(ts.columns).is_valid_integer() else -1
+
+		var image = null
+		var imagesize = Vector2()
+
+		if has_global_image:
+			image = load_image(ts.image, ts_source_path, options)
+			if typeof(image) != TYPE_OBJECT:
+				# Error happened
+				return image
+			imagesize = Vector2(int(ts.imagewidth), int(ts.imageheight))
+
+		var tilesize = Vector2(int(ts.tilewidth), int(ts.tileheight))
+		var tilecount = int(ts.tilecount)
+
+		var gid = firstgid
+
+		var x = margin
+		var y = margin
+
+		var i = 0
+		var column = 0
+		var tileRegions = []
+
+		while i < tilecount:
+			var tilepos = Vector2(x, y)
+			var region = Rect2(tilepos, tilesize)
+
+
+			tileRegions.push_back(region)
+
+			column += 1
+			i += 1
+
+			x += int(tilesize.x) + spacing
+			if (columns > 0 and column >= columns) or x >= int(imagesize.x) - margin or (x + int(tilesize.x)) > int(imagesize.x):
+				x = margin
+				y += int(tilesize.y) + spacing
+				column = 0
+
+		i = 0
+
+		while i < tilecount:
+			var region = tileRegions[i]
+
+			var rel_id = str(gid - firstgid)
+
+			result.create_tile(gid)
+
+			if has_global_image:
+				if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
+					var animated_tex = AnimatedTexture.new()
+					animated_tex.frames = ts.tiles[rel_id].animation.size()
+					animated_tex.fps = 0
+					var c = 0
+					# Animated texture wants us to have seperate textures for each frame
+					# so we have to pull them out of the tileset
+					var tilesetTexture = image.get_data()
+					for g in ts.tiles[rel_id].animation:
+						var frameTex = tilesetTexture.get_rect(tileRegions[(int(g.tileid))])
+						var newTex = ImageTexture.new()
+						newTex.create_from_image(frameTex, flags)
+						animated_tex.set_frame_texture(c, newTex)
+						animated_tex.set_frame_delay(c, float(g.duration) * 0.001)
+						c += 1
+					result.tile_set_texture(gid, animated_tex)
+					result.tile_set_region(gid, Rect2(Vector2(0, 0), tilesize))
+				else:
+					result.tile_set_texture(gid, image)
+					result.tile_set_region(gid, region)
+				if options.apply_offset:
+					result.tile_set_texture_offset(gid, Vector2(0, 32-tilesize.y))
+			elif not rel_id in ts.tiles:
+				gid += 1
+				continue
+			else:
+				if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
+					var animated_tex = AnimatedTexture.new()
+					animated_tex.frames = ts.tiles[rel_id].animation.size()
+					animated_tex.fps = 0
+					var c = 0
+					#untested
+					var image_path = ts.tiles[rel_id].image
+					for g in ts.tiles[rel_id].animation:
+						animated_tex.set_frame_texture(c, load_image(image_path, ts_source_path, options))
+						animated_tex.set_frame_delay(c, float(g.duration) * 0.001)
+						c += 1
+					result.tile_set_texture(gid, animated_tex)
+					result.tile_set_region(gid, Rect2(Vector2(0, 0), tilesize))
+				else:
+					var image_path = ts.tiles[rel_id].image
+					image = load_image(image_path, ts_source_path, options)
+					if typeof(image) != TYPE_OBJECT:
+						# Error happened
+						return image
+					result.tile_set_texture(gid, image)
+				if options.apply_offset:
+					result.tile_set_texture_offset(gid, Vector2(0, 32-image.get_height()))
+			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
+					and "objects" in ts.tiles[rel_id].objectgroup:
+				for object in ts.tiles[rel_id].objectgroup.objects:
+
+					var shape = shape_from_object(object)
+
+					if typeof(shape) != TYPE_OBJECT:
+						# Error happened
+						return shape
+
+					var offset = Vector2(float(object.x), float(object.y))
+					if options.apply_offset:
+						offset += result.tile_get_texture_offset(gid)
+					if "width" in object and "height" in object:
+						offset += Vector2(float(object.width) / 2, float(object.height) / 2)
+
+					result.tile_add_shape(gid, shape, Transform2D(0, offset), object.type == "one-way")
+
+					if object.type == "navigation":
+						result.tile_set_navigation_polygon(gid, shape)
+						result.tile_set_navigation_polygon_offset(gid, offset)
+					elif object.type == "occluder":
+						result.tile_set_light_occluder(gid, shape)
+						result.tile_set_occluder_offset(gid, offset)
+					else:
+						result.tile_add_shape(gid, shape, Transform2D(0, offset), object.type == "one-way")
+
+
+			if "properties" in ts and "custom_material" in ts.properties:
+				result.tile_set_material(gid, load(ts.properties.custom_material))
+
+			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
+					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
+				tile_meta[gid] = get_custom_properties(ts.tileproperties[rel_id], ts.tilepropertytypes[rel_id])
+			if options.save_tiled_properties and rel_id in ts.tiles:
+				for property in whitelist_properties:
+					if property in ts.tiles[rel_id]:
+						if not gid in tile_meta: tile_meta[gid] = {}
+						tile_meta[gid][property] = ts.tiles[rel_id][property]
+
+			gid += 1
+			i += 1
+
+		if str(ts.name) != "":
+			result.resource_name = str(ts.name)
+
+		if options.save_tiled_properties:
+			set_tiled_properties_as_meta(result, ts)
+		if options.custom_properties:
+			if "properties" in ts and "propertytypes" in ts:
+				set_custom_properties(result, ts)
+
+	if options.custom_properties and options.tile_metadata:
+		result.set_meta("tile_meta", tile_meta)
+	return result
+
+# Makes a standalone TileSet. Useful for importing TileSets from Tiled
+# Returns an error code if fails
+func build_tileset(source_path, options):
+	var set = read_tileset_file(source_path)
+	if typeof(set) == TYPE_INT:
+		return set
+	if typeof(set) != TYPE_DICTIONARY:
+		return ERR_INVALID_DATA
+
+	# Just to validate and build correctly using the existing builder
+	set["firstgid"] = 0
+
+	return build_tileset_for_scene([set], source_path, options)
+
+
+# Makes a tileset from a array of tilesets data
+# Since Godot supports only one TileSet per TileMap, all tilesets from Tiled are combined
+func build_navigation_polygon_for_scene(tilesets, source_path, options):
 	var result = TileSet.new()
 	var err = ERR_INVALID_DATA
 	var tile_meta = {}
@@ -910,19 +1292,6 @@ func build_tileset_for_scene(tilesets, source_path, options):
 
 	return result
 
-# Makes a standalone TileSet. Useful for importing TileSets from Tiled
-# Returns an error code if fails
-func build_tileset(source_path, options):
-	var set = read_tileset_file(source_path)
-	if typeof(set) == TYPE_INT:
-		return set
-	if typeof(set) != TYPE_DICTIONARY:
-		return ERR_INVALID_DATA
-
-	# Just to validate and build correctly using the existing builder
-	set["firstgid"] = 0
-
-	return build_tileset_for_scene([set], source_path, options)
 
 # Loads an image from a given path
 # Returns a Texture
