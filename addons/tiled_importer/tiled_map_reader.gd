@@ -75,7 +75,7 @@ var _tileset_path_to_first_gid = {}
 # Store the max gid parsed to define the navigation polygon
 var max_gid = 0
 # Navigation polygon to be used on top of every tilemaps
-var nav_polygon_instance : NavigationPolygonInstance = NavigationPolygonInstance.new()
+#var nav_polygon_instance : NavigationPolygonInstance = NavigationPolygonInstance.new()
 # Collision polygons
 var collisionPool : Array = []
 # Navigation polygons
@@ -187,19 +187,19 @@ func build(source_path, options):
 		if err != OK:
 			return err
 
-	create_collision_layer()
-	create_navigation_layer()
-
-	var nav_polygon : NavigationPolygon = NavigationPolygon.new()
-	for navPolygon in navigationPool:
-		nav_polygon.add_outline(navPolygon)
-		nav_polygon.make_polygons_from_outlines()
-
-	nav_polygon_instance.set_navigation_polygon(nav_polygon)
-
-	if nav_polygon_instance:
-		root.add_child(nav_polygon_instance)
-		nav_polygon_instance.owner = root
+#	create_collision_layer()
+#	create_navigation_layer()
+#
+#	var nav_polygon : NavigationPolygon = NavigationPolygon.new()
+#	for navPolygon in navigationPool:
+#		nav_polygon.add_outline(navPolygon)
+#		nav_polygon.make_polygons_from_outlines()
+#
+#	nav_polygon_instance.set_navigation_polygon(nav_polygon)
+#
+#	if nav_polygon_instance:
+#		root.add_child(nav_polygon_instance)
+#		nav_polygon_instance.owner = root
 
 	if options.add_background and "backgroundcolor" in map:
 		var bg_color = str(map.backgroundcolor)
@@ -233,9 +233,6 @@ func build(source_path, options):
 	return root
 
 func build_collision_pool(tilemap, gid):
-	if gid == 299:
-		pass
-
 	var used_tiles = tilemap.get_used_cells_by_id(gid)
 	for tile in used_tiles:
 		var polygon_offset = tilemap.map_to_world(tile)
@@ -310,48 +307,6 @@ func create_navigation_layer():
 			newNavPolygon.append_array(Geometry.exclude_polygons_2d(navPolygon, colPolygon))
 		navigationPool.clear()
 		navigationPool = newNavPolygon
-
-func remove_polygon_from_navigation(tilemap, gid):
-	var polygon : NavigationPolygon = nav_polygon_instance.get_navigation_polygon()
-	var used_tiles = tilemap.get_used_cells_by_id(gid)
-
-	for tile in used_tiles:
-		var new_polygon = PoolVector2Array()
-		var polygon_offset = tilemap.map_to_world(tile) - Vector2(tilemap.get_cell_size()[0]/2, 0)
-		var tile_region = tilemap.get_cell_autotile_coord(tile[0], tile[1])
-		var tile_transform = tilemap.get_tileset().tile_get_shape_transform(gid, tile_region[0])
-
-		var polygon_bp = null
-		var col_shape = tilemap.get_tileset().tile_get_shape(gid, tile_region[0])
-		if col_shape is ConvexPolygonShape2D:
-			polygon_bp = col_shape.get_points()
-		elif col_shape is ConcavePolygonShape2D:
-			polygon_bp = col_shape.get_segments()
-
-		for vertex in polygon_bp:
-			vertex += polygon_offset
-			new_polygon.append(tile_transform.xform(vertex))
-
-		var new_outlines = NavigationPolygon.new()
-		for outline_idx in range(0, polygon.get_outline_count()):
-			var sliced_outlines = Geometry.clip_polygons_2d(polygon.get_outline(outline_idx), new_polygon)
-			print(polygon.get_outline(outline_idx))
-			print("-")
-			print(polygon_bp)
-			print("->")
-			print(sliced_outlines)
-			for sliced_outline in sliced_outlines:
-				new_outlines.add_outline(sliced_outline)
-			print("")
-
-		polygon.clear_outlines()
-		new_outlines.make_polygons_from_outlines()
-
-		for outline_idx in range(0, new_outlines.get_outline_count()):
-			polygon.add_outline(new_outlines.get_outline(outline_idx))
-
-		polygon.make_polygons_from_outlines()
-	nav_polygon_instance.set_navigation_polygon(polygon)
 
 # Creates a layer node from the data
 # Returns an error code
@@ -497,16 +452,32 @@ func make_layer(layer, parent, root, data, zindex):
 		sprite.position = pos + offset
 		sprite.set_owner(root)
 	elif layer.type == "objectgroup":
-		var object_layer = Node2D.new()
+		var object_layer = null
+		var is_navigation_layer = false
+
+		if "name" in layer and not str(layer.name).empty() && str(layer.name) == "Navigation":
+			object_layer = NavigationPolygonInstance.new()
+			is_navigation_layer = true
+		else:
+			object_layer = Node2D.new()
+			
 		if options.save_tiled_properties:
 			set_tiled_properties_as_meta(object_layer, layer)
 		if options.custom_properties:
 			set_custom_properties(object_layer, layer)
-		object_layer.modulate = Color(1.0, 1.0, 1.0, opacity)
-		object_layer.visible = visible
-		object_layer.set("editor/display_folded", true)
-		parent.add_child(object_layer)
-		object_layer.set_owner(root)
+			object_layer.modulate = Color(1.0, 1.0, 1.0, opacity)
+			object_layer.visible = visible
+			object_layer.set("editor/display_folded", true)
+		if is_navigation_layer:
+			var nav2d : Navigation2D = Navigation2D.new()
+			parent.add_child(nav2d)
+			nav2d.set_owner(root)
+			nav2d.set_name("Navigation2D")
+			nav2d.add_child(object_layer)
+			object_layer.set_owner(root)
+		else:
+			parent.add_child(object_layer)
+			object_layer.set_owner(root)
 		if "name" in layer and not str(layer.name).empty():
 			object_layer.set_name(str(layer.name))
 
@@ -654,9 +625,18 @@ func make_layer(layer, parent, root, data, zindex):
 					if collisionObject:
 						collisionObject.set_name(customObject.get_name())
 
-					customObject.set("editor/display_folded", true)
-					object_layer.add_child(customObject)
-					customObject.set_owner(root)
+					if customObject && object_layer:
+						if is_navigation_layer:
+							var nav_polygon : NavigationPolygon = NavigationPolygon.new()
+							var polygon_offseted : PoolVector2Array = Transform2D(0, pos).xform(customObject.polygon)
+							nav_polygon.add_outline(polygon_offseted)
+							nav_polygon.make_polygons_from_outlines()
+
+							object_layer.set_navigation_polygon(nav_polygon)
+						else:
+							customObject.set("editor/display_folded", true)
+							object_layer.add_child(customObject)
+							customObject.set_owner(root)
 
 					if collisionObject:
 						collisionObject.set("editor/display_folded", true)
@@ -817,7 +797,7 @@ func make_layer(layer, parent, root, data, zindex):
 				z_index = 1
 
 			make_layer(sub_layer, group, root, data, z_index)
-		create_collision_layer()
+		#create_collision_layer()
 
 	else:
 		print_error("Unknown layer type ('%s') in '%s'" % [str(layer.type), str(layer.name) if "name" in layer else "[unnamed layer]"])
