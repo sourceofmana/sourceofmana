@@ -2,3 +2,4 @@
 
 [node name="PlayerCamera" type="Camera2D"]
 current = true
+smoothing_enabled = true
