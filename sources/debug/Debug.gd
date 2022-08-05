@@ -24,7 +24,4 @@ func _process(_delta : float):
 
 func UpdateNavLine():
 	if navLine:
-		var mouse_pos_on_world : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
-		var player_pos_on_world : Vector2 = Launcher.Entities.activePlayer.get_global_position()
-		var path = Launcher.Map.activeMap.get_node('Navigation2D').get_simple_path(player_pos_on_world, mouse_pos_on_world)
-		navLine.points = path
+		navLine.points = Launcher.Entities.activePlayer.navPath

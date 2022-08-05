@@ -21,6 +21,8 @@ var currentDirection			= Vector2.ZERO
 var currentState				= Actions.State.IDLE
 var currentStateTimer			= 0.0
 
+var navPath : PoolVector2Array	= []
+
 #
 func GetNextDirection():
 	if currentVelocity.length_squared() > 1:
@@ -97,6 +99,10 @@ func UpdateState():
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT && event.pressed:
+			var mouse_pos_on_world : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
+			var player_pos_on_world : Vector2 = Launcher.Entities.activePlayer.get_global_position()
+			navPath = Launcher.Map.activeMap.get_node('Navigation2D').get_simple_path(player_pos_on_world, mouse_pos_on_world)
+
 			if Launcher.Debug:
 				Launcher.Debug.UpdateNavLine()
 			get_tree().set_input_as_handled()
