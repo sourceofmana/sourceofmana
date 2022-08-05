@@ -20,20 +20,24 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = -10.0
 margin_bottom = -10.0
+mouse_filter = 2
 
 [node name="HBoxTop" type="HBoxContainer" parent="VBoxMain"]
 margin_right = 1260.0
 margin_bottom = 85.0
+mouse_filter = 2
 alignment = 1
 
 [node name="StatIndicator" parent="VBoxMain/HBoxTop" instance=ExtResource( 2 )]
 margin_right = 386.0
+mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 0
 
 [node name="PanelContainer" type="Control" parent="VBoxMain/HBoxTop"]
 margin_left = 390.0
 margin_right = 1152.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
@@ -41,6 +45,7 @@ size_flags_vertical = 0
 margin_left = 1156.0
 margin_right = 1260.0
 margin_bottom = 28.0
+mouse_filter = 2
 size_flags_vertical = 0
 alignment = 2
 
@@ -71,6 +76,7 @@ __meta__ = {
 margin_top = 89.0
 margin_right = 1260.0
 margin_bottom = 657.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -78,10 +84,12 @@ size_flags_vertical = 3
 margin_top = 661.0
 margin_right = 1260.0
 margin_bottom = 700.0
+mouse_filter = 2
 
 [node name="FloatingWindows" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 script = ExtResource( 7 )
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource( 5 )]
@@ -92,6 +100,7 @@ margin_top = 346.0
 margin_right = 378.0
 margin_bottom = 710.0
 hint_tooltip = "Chat"
+mouse_filter = 1
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource( 6 )]
 show_behind_parent = false
@@ -102,5 +111,6 @@ margin_top = 286.0
 margin_right = 908.0
 margin_bottom = 436.0
 hint_tooltip = "Inventory"
+mouse_filter = 1
 
 [connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]

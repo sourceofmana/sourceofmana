@@ -1,11 +1,13 @@
 extends Node
 
+var mainCamera : Camera2D		= null
+
 func SetBoundaries(player):
 	if player:
-		var playerCamera : Node2D	= player.get_node("PlayerCamera")
-		var mapBoundaries : Rect2	= Launcher.Map.GetMapBoundaries()
-
-		playerCamera.limit_left		= mapBoundaries.position.x
-		playerCamera.limit_right	= mapBoundaries.end.x
-		playerCamera.limit_top		= mapBoundaries.position.y
-		playerCamera.limit_bottom	= mapBoundaries.end.y
+		mainCamera = player.get_node("PlayerCamera")
+		if mainCamera:
+			var mapBoundaries : Rect2	= Launcher.Map.GetMapBoundaries()
+			mainCamera.limit_left		= int(mapBoundaries.position.x)
+			mainCamera.limit_right		= int(mapBoundaries.end.x)
+			mainCamera.limit_top		= int(mapBoundaries.position.y)
+			mainCamera.limit_bottom		= int(mapBoundaries.end.y)

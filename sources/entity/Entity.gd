@@ -1,6 +1,5 @@
 extends KinematicBody2D
 
-onready var camera				= $PlayerCamera
 onready var animationTree		= $AnimationTree
 onready var animationState		= animationTree.get("parameters/playback")
 
@@ -95,8 +94,19 @@ func UpdateState():
 		ApplyNextState(nextState, nextDirection)
 
 #
-func _physics_process(deltaTime) :
+func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT && event.pressed:
+			if Launcher.Debug:
+				Launcher.Debug.UpdateNavLine()
+			get_tree().set_input_as_handled()
+
+func _physics_process(deltaTime : float):
 	UpdateInput()
 	UpdateOrientation(deltaTime)
 	UpdateVelocity()
 	UpdateState()
+
+func _ready():
+	set_process_input(true)
+	set_process_unhandled_input(true)

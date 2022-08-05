@@ -7,13 +7,12 @@
 [node name="Window" type="Control"]
 margin_right = 533.0
 margin_bottom = 265.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+mouse_filter = 1
 
 [node name="Background" type="NinePatchRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 texture = ExtResource( 2 )
 patch_margin_left = 5
 patch_margin_top = 6
@@ -30,6 +29,7 @@ margin_left = 460.0
 margin_top = 2.0
 margin_right = 500.0
 margin_bottom = 42.0
+mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -54,6 +54,7 @@ margin_left = -8.0
 margin_top = 7.0
 margin_right = -8.0
 margin_bottom = 7.0
+mouse_filter = 1
 texture_normal = ExtResource( 3 )
 stretch_mode = 2
 __meta__ = {
