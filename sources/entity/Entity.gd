@@ -116,7 +116,8 @@ func _unhandled_input(event):
 			var mousePosOnWorld : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
 			var navPolygon : Navigation2D = Launcher.Map.activeMap.get_node('Navigation2D')
 
-			navPath = navPolygon.get_simple_path(playerPosOnWorld, mousePosOnWorld)
+			if navPolygon:
+				navPath = navPolygon.get_simple_path(playerPosOnWorld, mousePosOnWorld)
 
 			if Launcher.Debug:
 				Launcher.Debug.UpdateNavLine()
