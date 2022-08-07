@@ -75,6 +75,17 @@ func UpdateInput():
 	currentInput.y	= Input.get_action_strength(Actions.ACTION_GP_MOVE_DOWN) - Input.get_action_strength(Actions.ACTION_GP_MOVE_UP)
 	currentInput.normalized()
 
+	if navPath:
+		if not is_zero_approx(currentInput.length()) || navPath.size() <= 1:
+			navPath = []
+		else:
+			if navPath.size() > 1 &&  (position - navPath[1]).length() < 5:
+				navPath.remove(0)
+				if Launcher.Debug:
+					Launcher.Debug.UpdateNavLine()
+			if navPath.size() > 1:
+				currentInput = -(position - navPath[1])
+
 func UpdateOrientation(deltaTime : float):
 	if currentInput != Vector2.ZERO:
 		var normalizedInput : Vector2 = currentInput.normalized()
@@ -99,13 +110,16 @@ func UpdateState():
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT && event.pressed:
-			var mouse_pos_on_world : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
-			var player_pos_on_world : Vector2 = Launcher.Entities.activePlayer.get_global_position()
-			navPath = Launcher.Map.activeMap.get_node('Navigation2D').get_simple_path(player_pos_on_world, mouse_pos_on_world)
+			get_tree().set_input_as_handled()
+
+			var playerPosOnWorld : Vector2 = Launcher.Entities.activePlayer.get_global_position()
+			var mousePosOnWorld : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
+			var navPolygon : Navigation2D = Launcher.Map.activeMap.get_node('Navigation2D')
+
+			navPath = navPolygon.get_simple_path(playerPosOnWorld, mousePosOnWorld)
 
 			if Launcher.Debug:
 				Launcher.Debug.UpdateNavLine()
-			get_tree().set_input_as_handled()
 
 func _physics_process(deltaTime : float):
 	UpdateInput()
