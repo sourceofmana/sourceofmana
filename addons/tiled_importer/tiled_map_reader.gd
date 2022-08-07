@@ -972,6 +972,7 @@ func build_tileset_for_scene(tilesets, source_path, options):
 					result.tile_set_texture_offset(gid, Vector2(0, 32-image.get_height()))
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:
+
 				for object in ts.tiles[rel_id].objectgroup.objects:
 
 					var shape = shape_from_object(object)
@@ -981,8 +982,6 @@ func build_tileset_for_scene(tilesets, source_path, options):
 						return shape
 
 					var offset = Vector2(float(object.x), float(object.y))
-					if options.apply_offset:
-						offset += result.tile_get_texture_offset(gid)
 					if "width" in object and "height" in object:
 						offset += Vector2(float(object.width) / 2, float(object.height) / 2)
 
@@ -1203,8 +1202,6 @@ func build_navigation_polygon_for_scene(tilesets, source_path, options):
 						return shape
 
 					var offset = Vector2(float(object.x), float(object.y))
-					if options.apply_offset:
-						offset += result.tile_get_texture_offset(gid)
 					if "width" in object and "height" in object:
 						offset += Vector2(float(object.width) / 2, float(object.height) / 2)
 
