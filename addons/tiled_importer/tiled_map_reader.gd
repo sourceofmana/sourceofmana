@@ -627,8 +627,10 @@ func make_layer(layer, parent, root, data, zindex):
 
 					if customObject && object_layer:
 						if is_navigation_layer:
-							var nav_polygon : NavigationPolygon = NavigationPolygon.new()
 							var polygon_offseted : PoolVector2Array = Transform2D(0, pos).xform(customObject.polygon)
+							var nav_polygon : NavigationPolygon = object_layer.get_navigation_polygon()
+							if nav_polygon == null:
+								nav_polygon = NavigationPolygon.new()
 							nav_polygon.add_outline(polygon_offseted)
 							nav_polygon.make_polygons_from_outlines()
 
