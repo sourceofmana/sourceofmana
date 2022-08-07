@@ -41,19 +41,42 @@ func LoadDB(path : String) -> Dictionary:
 			)
 			if DBJson.error == OK:
 				result = DBJson.result
+				print("Loading DB: " + fullPath)
 
 	return result
 
+# Map
+func LoadMap(path : String) -> Node:
+	var mapInstance : Node		= null
+
+	var filePath : String		= Launcher.Path.MapRsc + path
+	var scenePath : String		= filePath + Launcher.Path.SceneExt
+	var mapPath : String		= filePath + Launcher.Path.MapExt
+	var usedPath : String		= ""
+
+	if ResourceExists(scenePath):
+		usedPath = scenePath
+	elif ResourceExists(mapPath):
+		usedPath = mapPath
+	else:
+		assert(true, "Map file not found " + path + "(.tmx/.tscn) should be located at " + Launcher.Path.MapRsc)
+
+	if usedPath != "":
+		mapInstance = ResourceLoad(usedPath).instance()
+		print("Loading map: " + usedPath)
+
+	return mapInstance
+
 # Scene
 func LoadScene(path : String) -> Node:
-	var fullPath : String		= Launcher.Path.Scn + path
 	var scnInstance : Node		= null
-
+	var fullPath : String		= Launcher.Path.Scn + path + Launcher.Path.SceneExt
 	var pathExists : bool		= ResourceExists(fullPath)
-	assert(pathExists, "Scene file not found " + path + " should be located at " + fullPath)
 
+	assert(pathExists, "Scene file not found " + fullPath + " should be located at " + Launcher.Path.Scn)
 	if pathExists:
 		scnInstance = ResourceLoad(fullPath).instance()
+		print("Loading scene: " + fullPath)
 
 	return scnInstance
 
@@ -69,6 +92,7 @@ func LoadSource(path : String) -> Node:
 
 	if pathExists:
 		srcFile = ResourceLoad(fullPath).new()
+		print("Loading Source: " + fullPath)
 
 	return srcFile
 
@@ -95,6 +119,8 @@ func LoadConfig(path : String) -> ConfigFile:
 		if err != OK:
 			cfgFile.free()
 			cfgFile = null
+		else:
+			print("Loading Config: " + fullPath)
 
 	return cfgFile
 
@@ -109,3 +135,4 @@ func SaveConfig(path : String, cfgFile : ConfigFile):
 		if pathExists:
 			var err = cfgFile.save(fullPath)
 			assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
+			print("Saving Config: " + fullPath)

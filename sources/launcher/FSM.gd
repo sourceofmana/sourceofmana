@@ -25,7 +25,7 @@ func Game():
 		map = Launcher.Save.GetMap()
 		playerPos = Launcher.Save.GetPlayerPos()
 
-	Launcher.Entities.activePlayer = Launcher.FileSystem.LoadScene("presets/PC.tscn")
+	Launcher.Entities.activePlayer = Launcher.FileSystem.LoadScene("presets/PC")
 	Launcher.Map.Warp(null, map, playerPos, Launcher.Entities.activePlayer)
 
 	if Launcher.Debug:
