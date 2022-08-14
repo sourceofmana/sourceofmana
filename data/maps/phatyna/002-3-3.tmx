@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="72" height="85" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="28">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="72" height="85" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="29">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Night is calling"/>
@@ -466,6 +466,11 @@
     <property name="dest_pos_y" type="int" value="84"/>
    </properties>
    <polygon points="0,0 32,32 64,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="14" name="Navigation">
+  <object id="28" x="945" y="1126">
+   <polygon points="0,0 66,2 86,-12 91,-59 132,-68 142,-71 150,-79 150,-99 230,-102 237,-73 270,-64 298,-64 303,-46 326,-39 330,-9 344,-1 372,7 398,-5 414,8 416,79 356,145 356,180 302,240 294,240 247,128 240,125 234,135 248,258 255,267 254,319 245,349 245,365 229,420 238,446 251,483 264,498 277,497 282,487 274,451 313,447 375,443 384,447 388,496 331,558 295,559 257,601 229,661 210,690 180,657 150,593 115,559 81,558 25,500 24,451 39,441 118,450 117,469 128,481 143,494 161,492 182,420 167,342 154,306 155,250 171,233 180,124 168,118 155,131 126,240 114,240 56,181 56,145 -10,78 -8,5"/>
   </object>
  </objectgroup>
 </map>
