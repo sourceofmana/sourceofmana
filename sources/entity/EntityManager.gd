@@ -2,7 +2,7 @@ extends Node
 
 var Trait : Node			= null
 
-var activePlayer			= null
+var activePlayer : Node2D	= null
 var otherPlayers : Array	= []
 var monsters : Array		= []
 var npcs : Array			= []
