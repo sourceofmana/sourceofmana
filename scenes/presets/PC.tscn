@@ -352,3 +352,9 @@ parameters/Walk/blend_position = Vector2( 0, 0 )
 [node name="PlayerCamera" parent="." instance=ExtResource( 4 )]
 
 [node name="Collision" parent="." instance=ExtResource( 3 )]
+
+[node name="NavAgent" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+target_desired_distance = 10.0
+path_max_distance = 100.0
+radius = 24.0
