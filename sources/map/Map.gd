@@ -19,11 +19,13 @@ func RemoveEntityFromMap(entity : KinematicBody2D, map : Node2D):
 		fringeLayer.call_deferred("remove_child", entity)
 
 func AddEntityToMap(entity : KinematicBody2D, map : Node2D, newPos : Vector2):
-		var fringeLayer : TileMap = map.get_node("Fringe")
-		if fringeLayer:
-			var entityPos : Vector2 = newPos * fringeLayer.cell_size + fringeLayer.cell_size / 2
-			entity.set_position(entityPos)
-			fringeLayer.call_deferred("add_child", entity)
+	var fringeLayer : TileMap = map.get_node("Fringe")
+	if fringeLayer:
+		var entityPos : Vector2 = newPos * fringeLayer.cell_size + fringeLayer.cell_size / 2
+		entity.set_position(entityPos)
+		fringeLayer.call_deferred("add_child", entity)
+
+	entity.Warped(map)
 
 #
 func ApplyMapMetadata(map : Node2D):
@@ -50,7 +52,7 @@ func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : Node2D 
 		assert(entity, "Entity is not initialized, could not warp it to this map")
 		if entity:
 			AddEntityToMap(entity, activeMap, mapPos)
-			if entity.get_node("PlayerCamera"):
+			if entity.has_node("PlayerCamera"):
 				Launcher.Camera.SetBoundaries(entity)
 
 		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
