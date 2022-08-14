@@ -24,4 +24,4 @@ func _process(_delta : float):
 
 func UpdateNavLine():
 	if navLine:
-		navLine.points = Launcher.Entities.activePlayer.navPath
+		navLine.points = Launcher.Entities.activePlayer.agent.get_nav_path()

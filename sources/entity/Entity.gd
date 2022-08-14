@@ -3,6 +3,8 @@ extends KinematicBody2D
 onready var animationTree		= $AnimationTree
 onready var animationState		= animationTree.get("parameters/playback")
 
+var agent: NavigationAgent2D	= null
+
 var stat						= preload("res://sources/entity/Stat.gd").new()
 var slot						= preload("res://sources/entity/Slot.gd").new()
 var inventory					= preload("res://sources/entity/Inventory.gd").new()
@@ -14,14 +16,13 @@ var type						= Launcher.Entities.Trait.Type.HUMAN
 var damageReceived				= {}
 var showName					= false
 
+var isCapturingMouseInput		= false
 var currentInput				= Vector2.ZERO
 var currentVelocity				= Vector2.ZERO
 var currentDirection			= Vector2.ZERO
 
 var currentState				= Actions.State.IDLE
 var currentStateTimer			= 0.0
-
-var navPath : PoolVector2Array	= []
 
 #
 func GetNextDirection():
@@ -75,16 +76,14 @@ func UpdateInput():
 	currentInput.y	= Input.get_action_strength(Actions.ACTION_GP_MOVE_DOWN) - Input.get_action_strength(Actions.ACTION_GP_MOVE_UP)
 	currentInput.normalized()
 
-	if navPath:
-		if not is_zero_approx(currentInput.length()) || navPath.size() <= 1:
-			navPath = []
-		else:
-			if navPath.size() > 1 &&  (position - navPath[1]).length() < 5:
-				navPath.remove(0)
-				if Launcher.Debug:
-					Launcher.Debug.UpdateNavLine()
-			if navPath.size() > 1:
-				currentInput = -(position - navPath[1])
+	if isCapturingMouseInput:
+		var mousePosOnWorld : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
+		Warped(Launcher.Map.activeMap)
+		if agent:
+			agent.set_target_location(mousePosOnWorld)
+
+	if agent and not agent.is_navigation_finished():
+		currentInput = global_position.direction_to(agent.get_next_location())
 
 func UpdateOrientation(deltaTime : float):
 	if currentInput != Vector2.ZERO:
@@ -107,20 +106,24 @@ func UpdateState():
 		ApplyNextState(nextState, nextDirection)
 
 #
+func Warped(map : Node2D):
+	var nav2d : Navigation2D = null
+
+	if map && map.has_node("Navigation2D"):
+		nav2d = map.get_node("Navigation2D")
+	if not agent && has_node("NavAgent"):
+		agent = get_node("NavAgent")
+
+	if agent:
+		assert(nav2d != null, "Navigation layer not found on current map")
+		agent.set_navigation(nav2d)
+
+#
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT && event.pressed:
+		if event.button_index == BUTTON_LEFT:
+			isCapturingMouseInput = event.pressed
 			get_tree().set_input_as_handled()
-
-			var playerPosOnWorld : Vector2 = Launcher.Entities.activePlayer.get_global_position()
-			var mousePosOnWorld : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
-			var navPolygon : Navigation2D = Launcher.Map.activeMap.get_node('Navigation2D')
-
-			if navPolygon:
-				navPath = navPolygon.get_simple_path(playerPosOnWorld, mousePosOnWorld)
-
-			if Launcher.Debug:
-				Launcher.Debug.UpdateNavLine()
 
 func _physics_process(deltaTime : float):
 	UpdateInput()
@@ -131,3 +134,7 @@ func _physics_process(deltaTime : float):
 func _ready():
 	set_process_input(true)
 	set_process_unhandled_input(true)
+
+	if Launcher.Debug && agent:
+		var err = agent.connect("path_changed", Launcher.Debug, "UpdateNavLine")
+		assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")
