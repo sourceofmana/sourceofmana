@@ -12,6 +12,10 @@ onready var expText			= $VBoxMain/HBoxTop/StatIndicator/ExpText
 func GetPercentFormat(value : int) -> String:
 	return "%.2f%%" % [value]
 
+func ToggleControl(control : Control):
+	if control:
+		control.set_visible(!control.is_visible())
+
 #
 func _ready():
 	if Launcher.Entities.activePlayer:
@@ -31,3 +35,10 @@ func _ready():
 			levelText.set_text(String(Launcher.Entities.activePlayer.stat.level))
 		if expText:
 			expText.set_text(GetPercentFormat(Launcher.Entities.activePlayer.stat.experience))
+
+func _process(_delta):
+	if Input.is_action_just_pressed(Actions.ACTION_UI_QUIT_GAME):
+		ToggleControl($NonFloatingWindows/Quit)
+
+	if Input.is_action_just_pressed(Actions.ACTION_UI_INVENTORY):
+		ToggleControl($FloatingWindows/Inventory)
