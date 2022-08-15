@@ -47,6 +47,7 @@ window/size/height=720
 window/vsync/use_vsync=false
 window/per_pixel_transparency/allowed=true
 window/per_pixel_transparency/enabled=true
+mouse_cursor/custom_image="res://data/graphics/gui/misc/mouse.png"
 
 [editor]
 
@@ -63,6 +64,7 @@ fps=false
 vsync=false
 version=false
 cfg=false
+mouse=false
 
 [importer_defaults]
 
