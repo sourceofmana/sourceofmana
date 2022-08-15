@@ -48,6 +48,7 @@ window/vsync/use_vsync=false
 window/per_pixel_transparency/allowed=true
 window/per_pixel_transparency/enabled=true
 mouse_cursor/custom_image="res://data/graphics/gui/misc/mouse.png"
+mouse_cursor/tooltip_position_offset=Vector2( 16, 16 )
 
 [editor]
 
