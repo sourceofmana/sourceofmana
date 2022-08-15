@@ -1,31 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scenes/presets/animations/trees/Default.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sources/entity/Entity.gd" type="Script" id=2]
-[ext_resource path="res://scenes/presets/cameras/Default.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/presets/collisions/Medium.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/presets/sprites/KaizeiViroMale.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/presets/animations/Player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/presets/navigations/PlayerAgent.tscn" type="PackedScene" id=7]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
 
 [node name="PC" type="KinematicBody2D"]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 2 )
-
-[node name="Sprite" parent="." instance=ExtResource( 5 )]
-frame = 64
-
-[node name="Animation" parent="." instance=ExtResource( 6 )]
-
-[node name="AnimationTree" parent="." instance=ExtResource( 1 )]
-parameters/playback = SubResource( 1 )
-
-[node name="NavAgent" parent="." instance=ExtResource( 7 )]
-avoidance_enabled = true
-
-[node name="Camera" parent="." instance=ExtResource( 3 )]
-
-[node name="Collision" parent="." instance=ExtResource( 4 )]

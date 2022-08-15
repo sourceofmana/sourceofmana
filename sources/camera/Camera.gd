@@ -3,8 +3,8 @@ extends Node
 var mainCamera : Camera2D		= null
 
 func SetBoundaries(entity : Node2D):
-	if entity && entity.has_node("Camera"):
-		mainCamera = entity.get_node("Camera")
+	if entity && entity.camera:
+		mainCamera = entity.camera
 		if mainCamera:
 			var mapBoundaries : Rect2	= Launcher.Map.GetMapBoundaries()
 			mainCamera.limit_left		= int(mapBoundaries.position.x)

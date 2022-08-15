@@ -1,14 +1,13 @@
 extends KinematicBody2D
 
-onready var sprite : Sprite					= $Sprite
-onready var animation : Node				= $Animation
-onready var animationTree : AnimationTree	= $AnimationTree
-onready var agent : NavigationAgent2D		= $NavAgent
-onready var camera : Camera2D				= $Camera
-onready var collision : CollisionShape2D	= $Collision
+var sprite : Sprite					= null
+var animation : Node				= null
+var animationTree : AnimationTree	= null
+var agent : NavigationAgent2D		= null
+var camera : Camera2D				= null
+var collision : CollisionShape2D	= null
 
 onready var animationState		= animationTree.get("parameters/playback")
-
 
 var stat						= preload("res://sources/entity/Stat.gd").new()
 var slot						= preload("res://sources/entity/Slot.gd").new()
