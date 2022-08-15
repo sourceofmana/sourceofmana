@@ -1,12 +1,13 @@
 {
-    "Default Entity": {
-		"Ethnicity"			: "Kaizei Viro",
+    "0": {
+		"Name"				: "Default Entity",
+		"Ethnicity"			: "KaizeiViro",
 		"Gender"			: "Male",
 		"Hairstyle"			: "Bald",
 		"Animation"			: "Player",
 		"AnimationTree"		: "Default",
 		"NavigationAgent"	: "PlayerAgent",
 		"Camera"			: "Default",
-		"Collision"			: "Medium"
+		"Collision"			: "Medium",
 	},
 }

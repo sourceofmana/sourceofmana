@@ -3,8 +3,9 @@ extends Node
 var ItemsDB : Dictionary			= {}
 var MapsDB : Dictionary				= {}
 var MusicsDB : Dictionary			= {}
-var EthnicityDB : Dictionary		= {}
-var HairstyleDB : Dictionary		= {}
+var EthnicitiesDB : Dictionary		= {}
+var HairstylesDB : Dictionary		= {}
+var EntitiesDB : Dictionary			= {}
 
 #
 func ParseItemsDB():
@@ -53,7 +54,7 @@ func ParseEthnicitiesDB():
 			ethnicity._path[Launcher.Entities.Trait.Gender.MALE] = result[key].Male
 			ethnicity._path[Launcher.Entities.Trait.Gender.FEMALE] = result[key].Female
 			ethnicity._path[Launcher.Entities.Trait.Gender.NONBINARY] = result[key].Nonbinary
-			MusicsDB[key] = ethnicity
+			EthnicitiesDB[key] = ethnicity
 
 func ParseHairstylesDB():
 	var Trait = load(Launcher.Path.DBInstSrc + "Trait.gd")
@@ -66,7 +67,26 @@ func ParseHairstylesDB():
 			hairstyle._path[Launcher.Entities.Trait.Gender.MALE] = result[key].Male
 			hairstyle._path[Launcher.Entities.Trait.Gender.FEMALE] = result[key].Female
 			hairstyle._path[Launcher.Entities.Trait.Gender.NONBINARY] = result[key].Nonbinary
-			MusicsDB[key] = hairstyle
+			HairstylesDB[key] = hairstyle
+
+func ParseEntitiesDB():
+	var Entity = load(Launcher.Path.DBInstSrc + "Entity.gd")
+	var result = Launcher.FileSystem.LoadDB("entities.json")
+
+	if result != null:
+		for key in result:
+			var entity = Entity.new()
+			entity._id = key
+			entity._name = result[key].Name
+			entity._ethnicity = result[key].Ethnicity
+			entity._gender = result[key].Gender
+			entity._hairstyle = result[key].Hairstyle
+			entity._animation = result[key].Animation
+			entity._animationTree = result[key].AnimationTree
+			entity._navigationAgent = result[key].NavigationAgent
+			entity._camera = result[key].Camera
+			entity._collision = result[key].Collision
+			EntitiesDB[key] = entity
 
 #
 func _post_ready():
@@ -75,3 +95,4 @@ func _post_ready():
 	ParseMusicsDB()
 	ParseEthnicitiesDB()
 	ParseHairstylesDB()
+	ParseEntitiesDB()

@@ -28,16 +28,16 @@ func LoadDB(path : String) -> Dictionary:
 		var err : int		= DBFile.open(fullPath, File.READ)
 
 		assert(err == OK, "DB parsing error loading JSON file '" + fullPath + "'" \
-			+ "\tError: " + str(err) \
+			+ " Error: " + str(err) \
 		)
 		if err == OK:
 			var DBJson : JSONParseResult = JSON.parse(DBFile.get_as_text())
 			DBFile.close()
 
 			assert(DBJson.error == OK, "DB parsing issue on file " + fullPath \
-				+ "\tError: " + str(DBJson.error) \
-				+ "\tError Line: " + str(DBJson.error_line) \
-				+ "\tError String: " + str(DBJson.error_string) \
+				+ " Error: " + str(DBJson.error) \
+				+ " Error Line: " + str(DBJson.error_line) \
+				+ " Error String: " + str(DBJson.error_string) \
 			)
 			if DBJson.error == OK:
 				result = DBJson.result
@@ -79,6 +79,19 @@ func LoadScene(path : String) -> Node:
 		print("Loading scene: " + fullPath)
 
 	return scnInstance
+
+# Preset
+func LoadPreset(path : String) -> Node:
+	var presetInstance : Node	= null
+	var fullPath : String		= Launcher.Path.PresetScn + path + Launcher.Path.SceneExt
+	var pathExists : bool		= ResourceExists(fullPath)
+
+	assert(pathExists, "Preset file not found " + fullPath + " should be located at " + Launcher.Path.PresetScn)
+	if pathExists:
+		presetInstance = ResourceLoad(fullPath).instance()
+		print("Loading preset: " + fullPath)
+
+	return presetInstance
 
 # Source
 func LoadSource(path : String) -> Node:
