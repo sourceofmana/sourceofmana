@@ -102,6 +102,7 @@ margin_left = -100.0
 margin_top = -50.0
 margin_right = 100.0
 margin_bottom = 50.0
+hint_tooltip = "Quit"
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource( 5 )]
 anchor_right = 0.0
@@ -124,9 +125,5 @@ margin_right = 1245.0
 margin_bottom = 386.0
 hint_tooltip = "Inventory"
 mouse_filter = 1
-
-[node name="NonFloatingWindows" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
 
 [connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]
