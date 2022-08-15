@@ -130,7 +130,8 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT && event.pressed:
 			isCapturingMouseInput = true
-
+			#Todo: Use signal to know when the agent is instancied and to launch Map's warp func
+			Warped(Launcher.Map.activeMap)
 			if agent:
 				agent.set_target_location(Launcher.Camera.mainCamera.get_global_mouse_position())
 			get_tree().set_input_as_handled()
@@ -140,6 +141,7 @@ func _unhandled_input(event):
 	currentInput.normalized()
 	if currentInput.length() > 0:
 		SwitchInputMode(false)
+		get_tree().set_input_as_handled()
 
 func _physics_process(deltaTime : float):
 	UpdateInput()
