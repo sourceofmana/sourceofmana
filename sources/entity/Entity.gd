@@ -146,6 +146,13 @@ func _unhandled_input(event):
 func _physics_process(deltaTime : float):
 	UpdateInput()
 	UpdateOrientation(deltaTime)
+	if agent.get_avoidance_enabled():
+		agent.set_velocity(currentVelocity)
+	else:
+		_velocity_computed(currentVelocity)
+
+func _velocity_computed(safeVelocity : Vector2):
+	currentVelocity = safeVelocity
 	UpdateVelocity()
 	UpdateState()
 
@@ -156,6 +163,10 @@ func _ready():
 	#Todo: Use signal to know when the agent is instancied and to launch Map's warp func
 	Warped(Launcher.Map.activeMap)
 
-	if Launcher.Debug && agent:
-		var err = agent.connect("path_changed", Launcher.Debug, "UpdateNavLine")
-		assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")
+	if agent:
+		if agent.get_avoidance_enabled():
+			var err = agent.connect("velocity_computed", self, "_velocity_computed")
+			assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
+		if Launcher.Debug:
+			var err = agent.connect("path_changed", Launcher.Debug, "UpdateNavLine")
+			assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")

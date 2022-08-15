@@ -24,6 +24,7 @@ frame = 64
 parameters/playback = SubResource( 1 )
 
 [node name="NavAgent" parent="." instance=ExtResource( 7 )]
+avoidance_enabled = true
 
 [node name="Camera" parent="." instance=ExtResource( 3 )]
 
