@@ -75,20 +75,24 @@ func ApplyNextState(nextState, nextDirection):
 		Actions.State.SIT:
 			animationState.travel("Sit")
 
+func SwitchInputMode(clearCurrentInput : bool):
+	isCapturingMouseInput = false
+
+	if clearCurrentInput:
+		currentInput = Vector2.ZERO
+
+	if Launcher.Debug:
+		Launcher.Debug.ClearNavLine()
+
 #
 func UpdateInput():
-	currentInput.x	= Input.get_action_strength(Actions.ACTION_GP_MOVE_RIGHT) - Input.get_action_strength(Actions.ACTION_GP_MOVE_LEFT)
-	currentInput.y	= Input.get_action_strength(Actions.ACTION_GP_MOVE_DOWN) - Input.get_action_strength(Actions.ACTION_GP_MOVE_UP)
-	currentInput.normalized()
-
 	if isCapturingMouseInput:
-		var mousePosOnWorld : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
-		Warped(Launcher.Map.activeMap)
-		if agent:
-			agent.set_target_location(mousePosOnWorld)
-
-	if agent and not agent.is_navigation_finished():
-		currentInput = global_position.direction_to(agent.get_next_location())
+		if agent && not agent.is_navigation_finished():
+			var newDirection : Vector2 = global_position.direction_to(agent.get_next_location())
+			if newDirection != Vector2.ZERO:
+				currentInput = newDirection
+		else:
+			SwitchInputMode(true)
 
 func UpdateOrientation(deltaTime : float):
 	if currentInput != Vector2.ZERO:
@@ -124,9 +128,18 @@ func Warped(map : Node2D):
 #
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT:
-			isCapturingMouseInput = event.pressed
+		if event.button_index == BUTTON_LEFT && event.pressed:
+			isCapturingMouseInput = true
+
+			if agent:
+				agent.set_target_location(Launcher.Camera.mainCamera.get_global_mouse_position())
 			get_tree().set_input_as_handled()
+
+	currentInput.x	= Input.get_action_strength(Actions.ACTION_GP_MOVE_RIGHT) - Input.get_action_strength(Actions.ACTION_GP_MOVE_LEFT)
+	currentInput.y	= Input.get_action_strength(Actions.ACTION_GP_MOVE_DOWN) - Input.get_action_strength(Actions.ACTION_GP_MOVE_UP)
+	currentInput.normalized()
+	if currentInput.length() > 0:
+		SwitchInputMode(false)
 
 func _physics_process(deltaTime : float):
 	UpdateInput()
@@ -137,6 +150,9 @@ func _physics_process(deltaTime : float):
 func _ready():
 	set_process_input(true)
 	set_process_unhandled_input(true)
+
+	#Todo: Use signal to know when the agent is instancied and to launch Map's warp func
+	Warped(Launcher.Map.activeMap)
 
 	if Launcher.Debug && agent:
 		var err = agent.connect("path_changed", Launcher.Debug, "UpdateNavLine")
