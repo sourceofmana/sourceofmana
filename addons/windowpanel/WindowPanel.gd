@@ -142,3 +142,6 @@ func _on_window_gui_input(event):
 
 func _on_window_mouse_exited():
 	ResetWindowModifier()
+
+func _on_CloseButton_pressed():
+	set_visible(false)

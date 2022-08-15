@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://data/themes/DefaultTheme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/gui/ProgressBar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://data/graphics/gui/inventory/closebutton.png" type="Texture" id=3]
 [ext_resource path="res://addons/windowpanel/WindowPanel.gd" type="Script" id=7]
 [ext_resource path="res://data/graphics/gui/bar.png" type="Texture" id=8]
 [ext_resource path="res://sources/gui/InventoryGrid.gd" type="Script" id=9]
@@ -19,16 +20,35 @@ script = ExtResource( 7 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 7.0
-margin_top = 7.0
+margin_top = 5.0
+margin_right = -7.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
 [node name="WindowName" type="Label" parent="TitleBar"]
 margin_right = 72.0
 margin_bottom = 15.0
+mouse_filter = 1
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "Inventory"
+
+[node name="ControlEmpty" type="Control" parent="TitleBar"]
+margin_left = 76.0
+margin_right = 76.0
+mouse_filter = 1
+size_flags_horizontal = 2
+size_flags_vertical = 0
+
+[node name="CloseButton" type="TextureButton" parent="TitleBar"]
+margin_left = 1249.0
+margin_right = 1266.0
+margin_bottom = 17.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+size_flags_vertical = 0
+texture_normal = ExtResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -99,3 +119,4 @@ script = ExtResource( 9 )
 [connection signal="focus_exited" from="." to="." method="_on_window_focus_exited"]
 [connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
 [connection signal="mouse_exited" from="." to="." method="_on_window_mouse_exited"]
+[connection signal="pressed" from="TitleBar/CloseButton" to="." method="_on_CloseButton_pressed"]
