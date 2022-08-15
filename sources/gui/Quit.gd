@@ -1,15 +1,14 @@
-extends Panel
+extends VBoxContainer
 
-onready var yesButton : Button = $VBoxContainer/HBoxContainer/Yes
-onready var noButton : Button = $VBoxContainer/HBoxContainer/No
+onready var leaveButton : Button = $ButtonChoice/Leave
 
 #
-func _on_Yes_pressed():
+func _on_Leave_pressed():
 	get_tree().quit()
 
-func _on_No_pressed():
-	set_visible(false)
+func _on_Stay_pressed():
+	get_parent().set_visible(false)
 
-func _on_Panel_draw():
-	if yesButton:
-		yesButton.grab_focus()
+func _on_window_draw():
+	if leaveButton:
+		leaveButton.grab_focus()

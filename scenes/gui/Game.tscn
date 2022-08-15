@@ -85,13 +85,23 @@ size_flags_vertical = 3
 margin_top = 661.0
 margin_right = 1260.0
 margin_bottom = 700.0
-mouse_filter = 2
 
 [node name="FloatingWindows" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource( 7 )
+
+[node name="Quit" parent="FloatingWindows" instance=ExtResource( 8 )]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -50.0
+margin_right = 100.0
+margin_bottom = 50.0
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource( 5 )]
 anchor_right = 0.0
@@ -118,16 +128,5 @@ mouse_filter = 1
 [node name="NonFloatingWindows" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
-
-[node name="Quit" parent="NonFloatingWindows" instance=ExtResource( 8 )]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 520.0
-margin_top = 290.0
-margin_right = 720.0
-margin_bottom = 390.0
 
 [connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]

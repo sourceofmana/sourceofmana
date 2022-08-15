@@ -1,15 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://data/themes/DefaultTheme.tres" type="Theme" id=1]
-[ext_resource path="res://sources/gui/Quit.gd" type="Script" id=2]
+[ext_resource path="res://addons/windowpanel/WindowPanel.gd" type="Script" id=2]
+[ext_resource path="res://sources/gui/Quit.gd" type="Script" id=3]
 
 [node name="Panel" type="Panel"]
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -1080.0
-margin_bottom = -620.0
-rect_min_size = Vector2( 200, 100 )
+margin_right = -1000.0
+margin_bottom = -613.0
+rect_min_size = Vector2( 280, 100 )
 hint_tooltip = "Panel"
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
@@ -29,7 +30,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "Quit"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="WindowCore" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 7.0
@@ -38,33 +39,37 @@ margin_right = -7.0
 margin_bottom = -7.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource( 3 )
 
-[node name="Label" type="Label" parent="VBoxContainer"]
-margin_top = 13.0
-margin_right = 186.0
-margin_bottom = 28.0
+[node name="Label" type="Label" parent="WindowCore"]
+margin_top = 7.0
+margin_right = 266.0
+margin_bottom = 40.0
 size_flags_vertical = 6
-text = "Would you like to leave?"
+text = "Any time spent in the real world is less time spent in the mana world!"
 align = 1
+autowrap = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 45.0
-margin_right = 186.0
-margin_bottom = 64.0
+[node name="ButtonChoice" type="HBoxContainer" parent="WindowCore"]
+margin_top = 52.0
+margin_right = 266.0
+margin_bottom = 71.0
 alignment = 2
 
-[node name="Yes" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 128.0
-margin_right = 158.0
+[node name="Leave" type="Button" parent="WindowCore/ButtonChoice"]
+margin_left = 180.0
+margin_right = 226.0
 margin_bottom = 19.0
-text = "Yes"
+text = "Leave"
 
-[node name="No" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 162.0
-margin_right = 186.0
+[node name="Stay" type="Button" parent="WindowCore/ButtonChoice"]
+margin_left = 230.0
+margin_right = 266.0
 margin_bottom = 19.0
-text = "No"
+text = "Stay"
 
-[connection signal="draw" from="." to="." method="_on_Panel_draw"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Yes" to="." method="_on_Yes_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/No" to="." method="_on_No_pressed"]
+[connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
+[connection signal="mouse_exited" from="." to="." method="_on_window_mouse_exited"]
+[connection signal="draw" from="WindowCore/ButtonChoice" to="WindowCore" method="_on_window_draw"]
+[connection signal="pressed" from="WindowCore/ButtonChoice/Leave" to="WindowCore" method="_on_Leave_pressed"]
+[connection signal="pressed" from="WindowCore/ButtonChoice/Stay" to="WindowCore" method="_on_Stay_pressed"]
