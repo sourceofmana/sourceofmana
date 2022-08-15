@@ -65,5 +65,6 @@ margin_right = 186.0
 margin_bottom = 19.0
 text = "No"
 
+[connection signal="draw" from="." to="." method="_on_Panel_draw"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Yes" to="." method="_on_Yes_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/No" to="." method="_on_No_pressed"]
