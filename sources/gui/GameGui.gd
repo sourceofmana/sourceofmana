@@ -18,6 +18,8 @@ func ToggleControl(control : Control):
 
 #
 func _ready():
+	get_tree().set_auto_accept_quit(false)
+
 	if Launcher.Entities.activePlayer:
 		assert(hpStat && manaStat && staminaStat, "Stat progress bars are missing")
 		assert(weightStat, "Stat inventory weight bar is missing")
@@ -42,3 +44,7 @@ func _process(_delta):
 
 	if Input.is_action_just_pressed(Actions.ACTION_UI_INVENTORY):
 		ToggleControl($FloatingWindows/Inventory)
+
+func _notification(notif):
+	if notif == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		ToggleControl($NonFloatingWindows/Quit)
