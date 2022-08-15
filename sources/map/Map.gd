@@ -52,8 +52,7 @@ func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : Node2D 
 		assert(entity, "Entity is not initialized, could not warp it to this map")
 		if entity:
 			AddEntityToMap(entity, activeMap, mapPos)
-			if entity.has_node("PlayerCamera"):
-				Launcher.Camera.SetBoundaries(entity)
+			Launcher.Camera.SetBoundaries(entity)
 
 		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
 			Pool.RefreshPool(activeMap)

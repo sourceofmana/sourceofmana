@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://data/graphics/sprites/players/human-male.png" type="Texture" id=1]
+
+[node name="Sprite" type="Sprite"]
+texture = ExtResource( 1 )
+offset = Vector2( 0, -32 )
+hframes = 16
+vframes = 8

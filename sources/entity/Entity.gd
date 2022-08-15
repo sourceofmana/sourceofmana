@@ -1,9 +1,14 @@
 extends KinematicBody2D
 
-onready var animationTree		= $AnimationTree
+onready var sprite : Sprite					= $Sprite
+onready var animation : Node				= $Animation
+onready var animationTree : AnimationTree	= $AnimationTree
+onready var agent : NavigationAgent2D		= $NavAgent
+onready var camera : Camera2D				= $Camera
+onready var collision : CollisionShape2D	= $Collision
+
 onready var animationState		= animationTree.get("parameters/playback")
 
-var agent: NavigationAgent2D	= null
 
 var stat						= preload("res://sources/entity/Stat.gd").new()
 var slot						= preload("res://sources/entity/Slot.gd").new()
@@ -111,8 +116,6 @@ func Warped(map : Node2D):
 
 	if map && map.has_node("Navigation2D"):
 		nav2d = map.get_node("Navigation2D")
-	if not agent && has_node("NavAgent"):
-		agent = get_node("NavAgent")
 
 	if agent:
 		assert(nav2d != null, "Navigation layer not found on current map")
