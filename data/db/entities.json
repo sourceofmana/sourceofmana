@@ -10,4 +10,12 @@
 		"Camera"			: "Default",
 		"Collision"			: "Medium",
 	},
+    "1": {
+		"Name"				: "Phatyna",
+		"Ethnicity"			: "Phatyna",
+		"Animation"			: "Slime",
+		"AnimationTree"		: "Default",
+		"NavigationAgent"	: "PlayerAgent",
+		"Collision"			: "Large",
+	},
 }
