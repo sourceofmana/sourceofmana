@@ -147,7 +147,7 @@ func build(source_path, options):
 		# Error happened
 		return tileset
 
-	var root = Navigation2D.new()
+	var root = Node2D.new()
 	root.set_name(source_path.get_file().get_basename())
 	if options.save_tiled_properties:
 		set_tiled_properties_as_meta(root, map)
