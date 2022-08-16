@@ -11,7 +11,7 @@ var clickPosition		= null
 var isResizing			= false
 var selectedEdge		= EdgeOrientation.NONE
 
-
+#
 func ClampViewport(globalPos, moveLimit):
 	if selectedEdge == EdgeOrientation.BOTTOM_LEFT || selectedEdge == EdgeOrientation.LEFT || selectedEdge == EdgeOrientation.TOP_LEFT:
 		moveLimit.x -= rect_min_size.x
@@ -114,9 +114,10 @@ func ResetWindowModifier():
 	isResizing		= false
 	selectedEdge 	= EdgeOrientation.NONE
 
-func _ready():
-	hint_tooltip = name
-
+func SetFloatingWindowToTop():
+	set_draw_behind_parent(false)
+	emit_signal('MoveFloatingWindowToTop', self)
+#
 func _on_window_gui_input(event):
 	if event is InputEventMouseButton:
 		var rescaledPanelPosition = event.global_position - rect_position
@@ -125,7 +126,7 @@ func _on_window_gui_input(event):
 			if event.pressed:
 				clickPosition = event.global_position - rect_global_position
 				GetEdgeOrientation(rescaledPanelPosition)
-				emit_signal('MoveFloatingWindowToTop', self)
+				SetFloatingWindowToTop()
 			else:
 				ResetWindowModifier()
 
