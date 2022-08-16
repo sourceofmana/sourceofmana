@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://data/graphics/gui/button.png" type="Texture" id=1]
 [ext_resource path="res://scenes/gui/StatIndicator.tscn" type="PackedScene" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://scenes/gui/inventory/Inventory.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sources/gui/FloatingWindows.gd" type="Script" id=7]
 [ext_resource path="res://scenes/gui/Quit.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/shaders/CRT.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/shaders/HQ4x.tscn" type="PackedScene" id=10]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 layer = 128
@@ -125,5 +127,18 @@ margin_right = 1245.0
 margin_bottom = 386.0
 hint_tooltip = "Inventory"
 mouse_filter = 1
+
+[node name="Shaders" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="HQ4x" parent="Shaders" instance=ExtResource( 10 )]
+visible = false
+mouse_filter = 2
+
+[node name="CRT" parent="Shaders" instance=ExtResource( 9 )]
+visible = false
+mouse_filter = 2
 
 [connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]

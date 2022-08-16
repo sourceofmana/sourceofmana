@@ -16,12 +16,12 @@ shader_type canvas_item;
 // On Mac there is potentially a bug causing this to not work properly. If that is the case and you want to use the shader as an overlay
 // change all "overlay ? SCREEN_TEXTURE : TEXTURE" to only "SCREEN_TEXTURE" on lines 129-140, and "vec2 uv = overlay ? warp(SCREEN_UV) : warp(UV);"
 // to "vec2 uv = warp(SCREEN_UV);" on line 98.
-uniform bool overlay = false;
+uniform bool overlay = true;
 
 uniform float scanlines_opacity : hint_range(0.0, 1.0) = 0.4;
 uniform float scanlines_width : hint_range(0.0, 0.5) = 0.25;
 uniform float grille_opacity : hint_range(0.0, 1.0) = 0.3;
-uniform vec2 resolution = vec2(640.0, 480.0); // Set the number of rows and columns the texture will be divided in. Scanlines and grille will make a square based on these values
+uniform vec2 resolution = vec2(1280.0, 720.0); // Set the number of rows and columns the texture will be divided in. Scanlines and grille will make a square based on these values
 
 uniform bool pixelate = true; // Fill each square ("pixel") with a sampled color, creating a pixel look and a more accurate representation of how a CRT monitor would work.
 
