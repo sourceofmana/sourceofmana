@@ -78,14 +78,22 @@ func ParseEntitiesDB():
 			var entity = Entity.new()
 			entity._id = key
 			entity._name = result[key].Name
-			entity._ethnicity = result[key].Ethnicity
-			entity._gender = result[key].Gender
-			entity._hairstyle = result[key].Hairstyle
-			entity._animation = result[key].Animation
-			entity._animationTree = result[key].AnimationTree
-			entity._navigationAgent = result[key].NavigationAgent
-			entity._camera = result[key].Camera
-			entity._collision = result[key].Collision
+			if "Ethnicity" in result[key]:
+				entity._ethnicity = result[key].Ethnicity
+			if "Gender" in result[key]:
+				entity._gender = result[key].Gender
+			if "Hairstyle" in result[key]:
+				entity._hairstyle = result[key].Hairstyle
+			if "Animation" in result[key]:
+				entity._animation = result[key].Animation
+			if "AnimationTree" in result[key]:
+				entity._animationTree = result[key].AnimationTree
+			if "NavigationAgent" in result[key]:
+				entity._navigationAgent = result[key].NavigationAgent
+			if "Camera" in result[key]:
+				entity._camera = result[key].Camera
+			if "Collision" in result[key]:
+				entity._collision = result[key].Collision
 			EntitiesDB[key] = entity
 
 #

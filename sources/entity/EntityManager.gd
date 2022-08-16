@@ -12,20 +12,24 @@ func Create(entity : Object) -> Node2D:
 	var instanciatedEntity = null
 	if entity:
 		instanciatedEntity = Launcher.FileSystem.LoadScene("presets/Entity")
-#		instanciatedEntity.equipment[E_HAIRSTYLE] = entity._hairstyle
-		instanciatedEntity.sprite = Launcher.FileSystem.LoadPreset("sprites/" + entity._ethnicity + entity._gender)
-		instanciatedEntity.animation = Launcher.FileSystem.LoadPreset("animations/" + entity._animation)
-		instanciatedEntity.animationTree = Launcher.FileSystem.LoadPreset("animations/trees/" + entity._animationTree)
-		instanciatedEntity.agent = Launcher.FileSystem.LoadPreset("navigations/" + entity._navigationAgent)
-		instanciatedEntity.camera = Launcher.FileSystem.LoadPreset("cameras/" + entity._camera)
-		instanciatedEntity.collision = Launcher.FileSystem.LoadPreset("collisions/" + entity._collision)
-
-		instanciatedEntity.add_child(instanciatedEntity.sprite)
-		instanciatedEntity.add_child(instanciatedEntity.animation)
-		instanciatedEntity.add_child(instanciatedEntity.animationTree)
-		instanciatedEntity.add_child(instanciatedEntity.agent)
-		instanciatedEntity.add_child(instanciatedEntity.camera)
-		instanciatedEntity.add_child(instanciatedEntity.collision)
+		if entity._ethnicity or entity._gender:
+			instanciatedEntity.sprite = Launcher.FileSystem.LoadPreset("sprites/" + entity._ethnicity + entity._gender)
+			instanciatedEntity.add_child(instanciatedEntity.sprite)
+		if entity._animation:
+			instanciatedEntity.animation = Launcher.FileSystem.LoadPreset("animations/" + entity._animation)
+			instanciatedEntity.add_child(instanciatedEntity.animation)
+		if entity._animationTree:
+			instanciatedEntity.animationTree = Launcher.FileSystem.LoadPreset("animations/trees/" + entity._animationTree)
+			instanciatedEntity.add_child(instanciatedEntity.animationTree)
+		if entity._navigationAgent:
+			instanciatedEntity.agent = Launcher.FileSystem.LoadPreset("navigations/" + entity._navigationAgent)
+			instanciatedEntity.add_child(instanciatedEntity.agent)
+		if entity._camera:
+			instanciatedEntity.camera = Launcher.FileSystem.LoadPreset("cameras/" + entity._camera)
+			instanciatedEntity.add_child(instanciatedEntity.camera)
+		if entity._collision:
+			instanciatedEntity.collision = Launcher.FileSystem.LoadPreset("collisions/" + entity._collision)
+			instanciatedEntity.add_child(instanciatedEntity.collision)
 
 	return instanciatedEntity
 
