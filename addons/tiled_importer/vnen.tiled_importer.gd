@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-tool
+@tool
 extends EditorPlugin
 
 var import_plugin = null
@@ -28,7 +28,6 @@ var tileset_import_plugin = null
 
 func get_name():
 	return "Tiled Map Importer"
-
 
 func _enter_tree():
 	if not ProjectSettings.has_setting("tiled_importer/enable_json_format"):

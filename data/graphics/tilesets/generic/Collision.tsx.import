@@ -2,18 +2,18 @@
 
 importer="vnen.tiled_tileset_importer"
 type="TileSet"
-path="res://.import/Collision.tsx-8a602531461830584bb7e23d43c3c013.res"
+uid="uid://o6b0lw4x8fu1"
+path="res://.godot/imported/Collision.tsx-8a602531461830584bb7e23d43c3c013.res"
 
 [deps]
 
 source_file="res://data/graphics/tilesets/generic/Collision.tsx"
-dest_files=[ "res://.import/Collision.tsx-8a602531461830584bb7e23d43c3c013.res" ]
+dest_files=["res://.godot/imported/Collision.tsx-8a602531461830584bb7e23d43c3c013.res"]
 
 [params]
 
 custom_properties=true
 tile_metadata=false
-image_flags=7
 embed_internal_images=false
 save_tiled_properties=false
 apply_offset=false

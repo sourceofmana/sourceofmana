@@ -1,9 +1,9 @@
 extends Node
 
-export var _id : int
-export var _name : String
-export var _description : String
-export var _path : String
+@export var _id : int
+@export var _name : String
+@export var _description : String
+@export var _path : String
 
 func _init():
 	_id = 0

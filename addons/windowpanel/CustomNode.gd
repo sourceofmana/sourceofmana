@@ -1,7 +1,7 @@
-tool
+@tool
 extends EditorPlugin
 
-
+#
 func _enter_tree():
 	add_custom_type("WindowPanel", "Panel", preload("WindowPanel.gd"), preload("icon.png"))
 

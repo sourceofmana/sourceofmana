@@ -2,18 +2,18 @@
 
 importer="vnen.tiled_tileset_importer"
 type="TileSet"
-path="res://.import/Gold.tsx-649d99342c9e76911a3bbe34641d1e4a.res"
+uid="uid://bq3g3cndqrmd2"
+path="res://.godot/imported/Gold.tsx-649d99342c9e76911a3bbe34641d1e4a.res"
 
 [deps]
 
 source_file="res://data/graphics/tilesets/generic/cave/Gold.tsx"
-dest_files=[ "res://.import/Gold.tsx-649d99342c9e76911a3bbe34641d1e4a.res" ]
+dest_files=["res://.godot/imported/Gold.tsx-649d99342c9e76911a3bbe34641d1e4a.res"]
 
 [params]
 
 custom_properties=true
 tile_metadata=false
-image_flags=7
 embed_internal_images=false
 save_tiled_properties=false
 apply_offset=false

@@ -3,6 +3,7 @@ extends Node
 # High-prio services
 var Path				= null
 var FileSystem			= null
+var Util				= null
 # Specific services
 var World				= null
 var Debug				= null
@@ -21,6 +22,7 @@ func _init():
 	# Load all high-prio services, order should not be important
 	Path			= load("res://sources/system/Path.gd").new()
 	FileSystem		= load("res://sources/system/FileSystem.gd").new()
+	Util			= FileSystem.LoadSource("util/Util.gd").new()
 
 func _ready():
 	World			= get_tree().root.get_node("World")

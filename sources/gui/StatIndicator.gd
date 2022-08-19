@@ -1,10 +1,10 @@
 extends TextureRect
 
-onready var hpStat			= $Bars/HP
-onready var manaStat		= $Bars/Mana
-onready var staminaStat		= $Bars/Stamina
-onready var levelText		= $LevelText
-onready var expText			= $ExpText
+@onready var hpStat				= $Bars/HP
+@onready var manaStat			= $Bars/Mana
+@onready var staminaStat		= $Bars/Stamina
+@onready var levelText			= $LevelText
+@onready var expText			= $ExpText
 
 #
 func GetPercentFormat(value : int) -> String:
@@ -25,4 +25,3 @@ func _ready():
 			levelText.set_text(String(Launcher.Entities.activePlayer.stat.level))
 		if expText:
 			expText.set_text(GetPercentFormat(Launcher.Entities.activePlayer.stat.experience))
-

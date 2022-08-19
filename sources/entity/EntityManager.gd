@@ -40,7 +40,7 @@ func Spawn(entityID) -> Node2D:
 		if entityDB == entityID || entityRef._name == entityID:
 			instanciatedEntity = Create(entityRef)
 
-	assert(instanciatedEntity != null, "Could not create the entity: " + entityID)
+	Launcher.Util.Assert(instanciatedEntity != null, "Could not create the entity: " + entityID)
 	return instanciatedEntity
 
 #

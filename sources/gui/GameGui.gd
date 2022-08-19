@@ -1,6 +1,6 @@
 extends Node
 
-onready var weightStat		= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/Weight
+@onready var weightStat		= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/Weight
 
 #
 func ToggleControl(control : Control):

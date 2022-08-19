@@ -2,18 +2,18 @@
 
 importer="vnen.tiled_tileset_importer"
 type="TileSet"
-path="res://.import/Cave x5 x3.tsx-73fcb181e4aeb54e911500b6b9604e49.res"
+uid="uid://xjetvaq4snpr"
+path="res://.godot/imported/Cave x5 x3.tsx-73fcb181e4aeb54e911500b6b9604e49.res"
 
 [deps]
 
 source_file="res://data/graphics/tilesets/generic/cave/Cave x5 x3.tsx"
-dest_files=[ "res://.import/Cave x5 x3.tsx-73fcb181e4aeb54e911500b6b9604e49.res" ]
+dest_files=["res://.godot/imported/Cave x5 x3.tsx-73fcb181e4aeb54e911500b6b9604e49.res"]
 
 [params]
 
 custom_properties=true
 tile_metadata=false
-image_flags=7
 embed_internal_images=false
 save_tiled_properties=false
 apply_offset=false

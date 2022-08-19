@@ -9,7 +9,7 @@ func GetMapPath(mapName : String) -> String:
 	var path : String = ""
 	var mapInstance = Launcher.DB.MapsDB[mapName]
 
-	assert(mapInstance, "Could not find the map " + mapName + " within the db")
+	Launcher.Util.Assert(mapInstance, "Could not find the map " + mapName + " within the db")
 	if mapInstance:
 		path = mapInstance._path
 
@@ -41,7 +41,7 @@ func FreeMap(map : String):
 		if pool.get(map) != null:
 			pool[map].queue_free()
 			var ret : bool = pool.erase(map)
-			assert(ret, "Could not remove map (" + map + ") from the pool")
+			Launcher.Util.Assert(ret, "Could not remove map (" + map + ") from the pool")
 
 #
 func RefreshPool(currentMap : Node2D):

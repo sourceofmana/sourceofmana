@@ -1,28 +1,29 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://clslfktryuttf"]
 
-[ext_resource path="res://data/themes/DefaultTheme.tres" type="Theme" id=1]
-[ext_resource path="res://addons/windowpanel/WindowPanel.gd" type="Script" id=2]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1"]
+[ext_resource type="Script" path="res://addons/windowpanel/WindowPanel.gd" id="2"]
 
 [node name="ChatTabContainer" type="TabContainer"]
+custom_minimum_size = Vector2(200, 150)
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 150, 150 )
+offset_right = -824.0
+offset_bottom = -450.0
 hint_tooltip = "ChatTabContainer"
-theme = ExtResource( 1 )
-tab_align = 0
+theme = ExtResource("1")
 drag_to_rearrange_enabled = true
-script = ExtResource( 2 )
+script = ExtResource("2")
 
-[node name="General" type="Tabs" parent="."]
+[node name="General" type="TabBar" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 6.0
-margin_top = 55.0
-margin_right = -6.0
-margin_bottom = -5.0
+offset_left = 6.0
+offset_top = 55.0
+offset_right = -6.0
+offset_bottom = -6.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource( 1 )
+theme = ExtResource("1")
 tab_close_display_policy = 1
 drag_to_rearrange_enabled = true
 
@@ -32,15 +33,15 @@ anchor_bottom = 1.0
 size_flags_vertical = 3
 
 [node name="Backlog" type="Label" parent="General/ChatVBox"]
-margin_right = 1268.0
-margin_bottom = 631.0
+offset_right = 188.0
+offset_bottom = 62.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="NewText" type="LineEdit" parent="General/ChatVBox"]
-margin_top = 635.0
-margin_right = 1268.0
-margin_bottom = 660.0
+offset_top = 66.0
+offset_right = 188.0
+offset_bottom = 89.0
 
 [connection signal="focus_exited" from="." to="." method="_on_window_mouse_exited"]
 [connection signal="gui_input" from="." to="." method="_on_window_gui_input"]

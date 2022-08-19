@@ -20,43 +20,41 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-tool
+@tool
 extends EditorImportPlugin
 
 enum { PRESET_DEFAULT, PRESET_PIXEL_ART }
 
-const TiledMapReader = preload("tiled_map_reader.gd")
-
-func get_importer_name():
+func _get_importer_name():
 	return "vnen.tiled_importer"
 
-func get_visible_name():
+func _get_visible_name():
 	return "Scene from Tiled"
 
-func get_recognized_extensions():
+func _get_recognized_extensions():
 	return ["tmx"]
 
-func get_save_extension():
+func _get_save_extension():
 	return "scn"
 
-func get_priority():
+func _get_priority():
 	return 1
 
-func get_import_order():
+func _get_import_order():
 	return 100
 
-func get_resource_type():
+func _get_resource_type():
 	return "PackedScene"
 
-func get_preset_count():
+func _get_preset_count():
 	return 2
 
-func get_preset_name(preset):
+func _get_preset_name(preset):
 	match preset:
 		PRESET_DEFAULT: return "Default"
 		PRESET_PIXEL_ART: return "Pixel Art"
 
-func get_import_options(preset):
+func _get_import_options(path, preset):
 	return [
 		{
 			"name": "custom_properties",
@@ -69,12 +67,6 @@ func get_import_options(preset):
 		{
 			"name": "uv_clip",
 			"default_value": true
-		},
-		{
-			"name": "image_flags",
-			"default_value": 0 if preset == PRESET_PIXEL_ART else Texture.FLAGS_DEFAULT,
-			"property_hint": PROPERTY_HINT_FLAGS,
-			"hint_string": "Mipmaps,Repeat,Filter,Anisotropic,sRGB,Mirrored Repeat"
 		},
 		{
 			"name": "collision_layer",
@@ -101,15 +93,15 @@ func get_import_options(preset):
 		}
 	]
 
-func get_option_visibility(option, options):
+func _get_option_visibility(path, option, options):
 	return true
 
-func import(source_file, save_path, options, r_platform_variants, r_gen_files):
-	var map_reader = TiledMapReader.new()
-
+func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	# Offset is only optional for importing TileSets
 	options.apply_offset = true
-	var scene = map_reader.build(source_file, options)
+
+	var TiledMapReader = load("res://addons/tiled_importer/tiled_map_reader.gd").new()
+	var scene = TiledMapReader.build(source_file, options)
 
 	if typeof(scene) != TYPE_OBJECT:
 		# Error happened
@@ -135,4 +127,4 @@ func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 
 	var packed_scene = PackedScene.new()
 	packed_scene.pack(scene)
-	return ResourceSaver.save("%s.%s" % [save_path, get_save_extension()], packed_scene)
+	return ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()])

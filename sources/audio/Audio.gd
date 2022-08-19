@@ -22,10 +22,9 @@ func Load(name : String):
 	assert(audioPlayer, "AudioStreamPlayer could not be found")
 
 	if audioPlayer && currentTrack != name:
-		if name.empty() == false && Launcher.DB.MusicsDB[name] != null:
-			var path = Launcher.Path.MusicRsc + Launcher.DB.MusicsDB[name]._path
-			if path.empty() == false:
-				var stream : AudioStreamOGGVorbis = load(path)
+		if not name.is_empty() && Launcher.DB.MusicsDB[name] != null:
+			var stream : Resource = Launcher.FileSystem.LoadMusic(Launcher.DB.MusicsDB[name]._path)
+			if stream != null:
 				stream.set_loop(true)
 
 				audioPlayer.stream	= stream
@@ -34,6 +33,7 @@ func Load(name : String):
 				audioPlayer.set_autoplay(true)
 				audioPlayer.play()
 
+#
 func _ready():
 	if audioPlayer == null:
 		audioPlayer = AudioStreamPlayer.new()

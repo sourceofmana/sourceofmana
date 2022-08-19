@@ -1,16 +1,16 @@
 extends Control
 
-export(Texture)			var textureProgress
-export(Texture)			var textureBackground
-export(Color)			var labelColor
-export(String)			var labelUnit
-export(float)			var labelScale
-export(float)			var delayToFillSec
-export(float)			var delayToInitSec
-export(int)				var precisionDivider
+@export var textureProgress : Texture2D
+@export var textureBackground : Texture2D
+@export var labelColor : Color
+@export var labelUnit : String
+@export var labelScale : float
+@export var delayToFillSec : float
+@export var delayToInitSec : float
+@export var precisionDivider : int
 
-onready var label		= get_node("Label")
-onready var bar			= get_node("Bar")
+@onready var label		= get_node("Label")
+@onready var bar		= get_node("Bar")
 
 var isUpdating			= false
 var remainsToFillSec	= 0.0

@@ -21,26 +21,25 @@ func LoadDB(path : String) -> Dictionary:
 	var result : Dictionary		= {}
 
 	var pathExists : bool		= FileExists(fullPath)
-	assert(pathExists, "DB file not found " + path + " should be located at " + fullPath)
+	Launcher.Util.Assert(pathExists, "DB file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
 		var DBFile : File	= File.new()
 		var err : int		= DBFile.open(fullPath, File.READ)
 
-		assert(err == OK, "DB parsing error loading JSON file '" + fullPath + "'" \
+		Launcher.Util.Assert(err == OK, "DB parsing error loading JSON file '" + fullPath + "'" \
 			+ " Error: " + str(err) \
 		)
 		if err == OK:
-			var DBJson : JSONParseResult = JSON.parse(DBFile.get_as_text())
+			var jsonInstance = JSON.new()
+			err = jsonInstance.parse(DBFile.get_as_text())
 			DBFile.close()
 
-			assert(DBJson.error == OK, "DB parsing issue on file " + fullPath \
-				+ " Error: " + str(DBJson.error) \
-				+ " Error Line: " + str(DBJson.error_line) \
-				+ " Error String: " + str(DBJson.error_string) \
+			Launcher.Util.Assert(err == OK, "DB parsing issue on file " + fullPath \
+				+ " Error: " + str(err) \
 			)
-			if DBJson.error == OK:
-				result = DBJson.result
+			if err == OK:
+				result = jsonInstance.get_data()
 				print("Loading DB: " + fullPath)
 
 	return result
@@ -59,7 +58,7 @@ func LoadMap(path : String) -> Node:
 	elif ResourceExists(mapPath):
 		usedPath = mapPath
 	else:
-		assert(true, "Map file not found " + path + "(.tmx/.tscn) should be located at " + Launcher.Path.MapRsc)
+		Launcher.Util.Assert(true, "Map file not found " + path + "(.tmx/.tscn) should be located at " + Launcher.Path.MapRsc)
 
 	if usedPath != "":
 		mapInstance = ResourceLoad(usedPath).instance()
@@ -73,7 +72,7 @@ func LoadScene(path : String) -> Node:
 	var fullPath : String		= Launcher.Path.Scn + path + Launcher.Path.SceneExt
 	var pathExists : bool		= ResourceExists(fullPath)
 
-	assert(pathExists, "Scene file not found " + fullPath + " should be located at " + Launcher.Path.Scn)
+	Launcher.Util.Assert(pathExists, "Scene file not found " + fullPath + " should be located at " + Launcher.Path.Scn)
 	if pathExists:
 		scnInstance = ResourceLoad(fullPath).instance()
 		print("Loading scene: " + fullPath)
@@ -86,7 +85,7 @@ func LoadPreset(path : String) -> Node:
 	var fullPath : String		= Launcher.Path.PresetScn + path + Launcher.Path.SceneExt
 	var pathExists : bool		= ResourceExists(fullPath)
 
-	assert(pathExists, "Preset file not found " + fullPath + " should be located at " + Launcher.Path.PresetScn)
+	Launcher.Util.Assert(pathExists, "Preset file not found " + fullPath + " should be located at " + Launcher.Path.PresetScn)
 	if pathExists:
 		presetInstance = ResourceLoad(fullPath).instance()
 		print("Loading preset: " + fullPath)
@@ -101,7 +100,7 @@ func LoadSource(path : String) -> Node:
 		fullPath += "c"
 
 	var pathExists : bool		= ResourceExists(fullPath)
-	assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
+	Launcher.Util.Assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
 		srcFile = ResourceLoad(fullPath).new()
@@ -121,13 +120,13 @@ func LoadConfig(path : String) -> ConfigFile:
 		fullPath = localPath
 	else:
 		pathExists = FileExists(fullPath)
-	assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
+	Launcher.Util.Assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
 		cfgFile = ConfigFile.new()
 
 		var err = cfgFile.load(fullPath)
-		assert(err == OK, "Error loading the config file " + path + " located at " + fullPath)
+		Launcher.Util.Assert(err == OK, "Error loading the config file " + path + " located at " + fullPath)
 
 		if err != OK:
 			cfgFile.free()
@@ -139,13 +138,26 @@ func LoadConfig(path : String) -> ConfigFile:
 
 func SaveConfig(path : String, cfgFile : ConfigFile):
 	var fullPath = Launcher.Path.ConfLocal + path
-	assert(cfgFile, "Config file " + path + " not initialized")
+	Launcher.Util.Assert(cfgFile, "Config file " + path + " not initialized")
 
 	if cfgFile:
 		var pathExists : bool = FileExists(fullPath)
-		assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
+		Launcher.Util.Assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
 
 		if pathExists:
 			var err = cfgFile.save(fullPath)
-			assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
+			Launcher.Util.Assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
 			print("Saving Config: " + fullPath)
+
+# Music
+func LoadMusic(path : String) -> Resource:
+	var musicInstance : Resource	= null
+	var fullPath : String			= Launcher.Path.MusicRsc + path
+	var pathExists : bool			= ResourceExists(fullPath)
+
+	Launcher.Util.Assert(pathExists, "Music file not found " + fullPath + " should be located at " + Launcher.Path.MusicRsc)
+	if pathExists:
+		musicInstance = ResourceLoad(fullPath).instance()
+		print("Loading music: " + fullPath)
+
+	return musicInstance

@@ -2,19 +2,19 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-path="res://.import/001-3-0.tmx-8ff3c535c21d3e27d54ddff1c16619f3.scn"
+uid="uid://cqm88o8dg44ww"
+path="res://.godot/imported/001-3-0.tmx-8ff3c535c21d3e27d54ddff1c16619f3.scn"
 
 [deps]
 
 source_file="res://data/maps/sewer/001-3-0.tmx"
-dest_files=[ "res://.import/001-3-0.tmx-8ff3c535c21d3e27d54ddff1c16619f3.scn" ]
+dest_files=["res://.godot/imported/001-3-0.tmx-8ff3c535c21d3e27d54ddff1c16619f3.scn"]
 
 [params]
 
 custom_properties=true
 tile_metadata=false
 uv_clip=true
-image_flags=7
 collision_layer=1
 embed_internal_images=false
 save_tiled_properties=false

@@ -2,19 +2,19 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-path="res://.import/002-3-0.tmx-6be2d489385d9010b7357789912f429f.scn"
+uid="uid://dbpe7ilq06kv2"
+path="res://.godot/imported/002-3-0.tmx-6be2d489385d9010b7357789912f429f.scn"
 
 [deps]
 
 source_file="res://data/maps/phatyna/002-3-0.tmx"
-dest_files=[ "res://.import/002-3-0.tmx-6be2d489385d9010b7357789912f429f.scn" ]
+dest_files=["res://.godot/imported/002-3-0.tmx-6be2d489385d9010b7357789912f429f.scn"]
 
 [params]
 
 custom_properties=true
 tile_metadata=false
 uv_clip=true
-image_flags=7
 collision_layer=1
 embed_internal_images=false
 save_tiled_properties=false

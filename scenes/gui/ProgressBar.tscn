@@ -1,33 +1,38 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://coppbcrkvraoh"]
 
-[ext_resource path="res://sources/gui/ProgressBar.gd" type="Script" id=1]
-[ext_resource path="res://data/graphics/gui/barprogressdefault.png" type="Texture" id=2]
-[ext_resource path="res://data/themes/DefaultTheme.tres" type="Theme" id=3]
+[ext_resource type="Script" path="res://sources/gui/ProgressBar.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dg7bdxr15avbp" path="res://data/graphics/gui/barprogressdefault.png" id="2"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="3"]
 
 [node name="ProgressBar" type="Control"]
+custom_minimum_size = Vector2(40, 10)
+offset_right = 40.0
+offset_bottom = 10.0
 size_flags_horizontal = 3
-script = ExtResource( 1 )
-textureProgress = ExtResource( 2 )
-labelColor = Color( 0.6, 0.407843, 0.0196078, 1 )
+script = ExtResource("1")
+textureProgress = ExtResource("2")
+labelColor = Color(0.6, 0.407843, 0.0196078, 1)
 labelScale = 1.0
 delayToFillSec = 1.0
 delayToInitSec = 3.0
 
-[node name="Bar" type="TextureProgress" parent="."]
+[node name="Bar" type="TextureProgressBar" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 step = 0.0
-texture_progress = ExtResource( 2 )
 nine_patch_stretch = true
+texture_progress = ExtResource("2")
 
 [node name="Label" type="Label" parent="."]
-margin_top = 3.0
-margin_right = 150.0
-margin_bottom = 18.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource( 3 )
+theme = ExtResource("3")
 text = "0/0"
-align = 1
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_custom_anchors = true

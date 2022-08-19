@@ -1,6 +1,6 @@
 extends VBoxContainer
 
-onready var leaveButton : Button = $ButtonChoice/Leave
+@onready var leaveButton : Button = $ButtonChoice/Leave
 
 #
 func _on_Leave_pressed():

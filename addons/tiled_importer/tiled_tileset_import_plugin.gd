@@ -20,37 +20,45 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-tool
+@tool
 extends EditorImportPlugin
+
+
+################################################################################
+
+
+
+################################################################################
 
 enum { PRESET_DEFAULT, PRESET_PIXEL_ART }
 
-const TiledMapReader = preload("tiled_map_reader.gd")
-
-func get_importer_name():
+func _get_importer_name():
 	return "vnen.tiled_tileset_importer"
 
-func get_visible_name():
+func _get_visible_name():
 	return "TileSet from Tiled"
 
-func get_recognized_extensions():
+func _get_recognized_extensions():
 	return ["tsx"]
 
-func get_save_extension():
+func _get_save_extension():
 	return "res"
 
-func get_resource_type():
+func _get_import_order():
+	return 0
+
+func _get_resource_type():
 	return "TileSet"
 
-func get_preset_count():
+func _get_preset_count():
 	return 2
 
-func get_preset_name(preset):
+func _get_preset_name(preset):
 	match preset:
 		PRESET_DEFAULT: return "Default"
 		PRESET_PIXEL_ART: return "Pixel Art"
 
-func get_import_options(preset):
+func _get_import_options(path, preset):
 	return [
 		{
 			"name": "custom_properties",
@@ -59,12 +67,6 @@ func get_import_options(preset):
 		{
 			"name": "tile_metadata",
 			"default_value": false
-		},
-		{
-			"name": "image_flags",
-			"default_value": 0 if preset == PRESET_PIXEL_ART else Texture.FLAGS_DEFAULT,
-			"property_hint": PROPERTY_HINT_FLAGS,
-			"hint_string": "Mipmaps,Repeat,Filter,Anisotropic,sRGB,Mirrored Repeat"
 		},
 		{
 			"name": "embed_internal_images",
@@ -86,13 +88,12 @@ func get_import_options(preset):
 		}
 	]
 
-func get_option_visibility(option, options):
+func _get_option_visibility(path, option, options):
 	return true
 
-func import(source_file, save_path, options, r_platform_variants, r_gen_files):
-	var map_reader = TiledMapReader.new()
-
-	var tileset = map_reader.build_tileset(source_file, options)
+func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
+#	var mapReader = preload("res://addons/tiled_importer/tiled_map_reader.gd").instance()
+	var tileset = build_tileset(source_file, options)
 
 	if typeof(tileset) != TYPE_OBJECT:
 		# Error happened
@@ -116,4 +117,4 @@ func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 			printerr("Invalid TileSet returned from post import script.")
 			return ERR_INVALID_DATA
 
-	return ResourceSaver.save("%s.%s" % [save_path, get_save_extension()], tileset)
+	return ResourceSaver.save(tileset, "%s.%s" % [save_path, _get_save_extension()])

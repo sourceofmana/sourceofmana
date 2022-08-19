@@ -20,7 +20,7 @@ func _post_ready():
 		Launcher.World.call_deferred("add_child", navLine)
 
 func _process(_delta : float):
-	OS.set_window_title(projectName + " | fps: " + str(Engine.get_frames_per_second()))
+	OS.title = projectName + " | fps: " + str(Engine.get_frames_per_second())
 
 func UpdateNavLine():
 	if navLine:

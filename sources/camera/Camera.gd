@@ -2,6 +2,7 @@ extends Node
 
 var mainCamera : Camera2D		= null
 
+#
 func SetBoundaries(entity : Node2D):
 	if entity && entity.camera:
 		mainCamera = entity.camera

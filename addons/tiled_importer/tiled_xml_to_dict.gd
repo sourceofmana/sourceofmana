@@ -20,8 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-tool
-extends Reference
+@tool
+extends RefCounted
 
 # Reads a TMX file from a path and return a Dictionary with the same structure
 # as the JSON map format
@@ -303,8 +303,8 @@ static func parse_object(parser):
 
 					for pr in points_raw:
 						points.push_back({
-							"x": float(pr.split(",")[0]),
-							"y": float(pr.split(",")[1]),
+							"x": pr.split(",")[0].to_float(),
+							"y": pr.split(",")[1].to_float(),
 						})
 
 					data[parser.get_node_name()] = points
@@ -366,7 +366,7 @@ func parse_tile_layer(parser, infinite):
 								var csv = parser.get_node_data().split(",", false)
 
 								for v in csv:
-									data.data.push_back(int(v.strip_edges()))
+									data.data.push_back(v.strip_edges().to_int())
 
 				elif parser.get_node_name() == "tile":
 					var gid = int(parser.get_named_attribute_value_safe("gid"))
@@ -559,10 +559,10 @@ static func attributes_to_dict(parser):
 	for i in range(parser.get_attribute_count()):
 		var attr = parser.get_attribute_name(i)
 		var val = parser.get_attribute_value(i)
-		if val.is_valid_integer():
-			val = int(val)
+		if val.is_valid_int():
+			val = val.to_int()
 		elif val.is_valid_float():
-			val = float(val)
+			val = val.to_float()
 		elif val == "true":
 			val = true
 		elif val == "false":

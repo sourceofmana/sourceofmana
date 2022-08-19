@@ -13,13 +13,13 @@ func AddMap(map : Node2D):
 	Launcher.call_deferred("add_child", map)
 
 #
-func RemoveEntityFromMap(entity : KinematicBody2D, map : Node2D):
+func RemoveEntityFromMap(entity : KinematicCollision2D, map : Node2D):
 	var fringeLayer : TileMap = map.get_node("Fringe")
 	if fringeLayer:
 		entity.set_physics_process(false)
 		fringeLayer.call_deferred("remove_child", entity)
 
-func AddEntityToMap(entity : KinematicBody2D, map : Node2D, newPos : Vector2):
+func AddEntityToMap(entity : KinematicCollision2D, map : Node2D, newPos : Vector2):
 	var fringeLayer : TileMap = map.get_node("Fringe")
 	if fringeLayer:
 		var entityPos : Vector2 = newPos * fringeLayer.cell_size + fringeLayer.cell_size / 2
@@ -34,7 +34,7 @@ func ApplyMapMetadata(map : Node2D):
 		Launcher.Audio.Load(map.get_meta("music") )
 
 #
-func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : Node2D):
+func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : KinematicCollision2D):
 	assert(entity, "Entity is not initialized, could not warp it to this map")
 
 	if activeMap && activeMap.get_name() != mapName:
@@ -66,11 +66,11 @@ func GetMapBoundaries(map : Node2D = null) -> Rect2:
 	if map == null:
 		map = activeMap
 
-	assert(map, "Map instance is not found, could not generate map boundaries")
+	Launcher.Util.Assert(map, "Map instance is not found, could not generate map boundaries")
 	if map:
 		var collisionLayer	= map.get_node("Collision")
 
-		assert(collisionLayer, "Could not find a collision layer on map: " + map.get_name())
+		Launcher.Util.Assert(collisionLayer, "Could not find a collision layer on map: " + str(map.get_name()))
 		if collisionLayer:
 			var mapLimits			= collisionLayer.get_used_rect()
 			var mapCellsize			= collisionLayer.cell_size

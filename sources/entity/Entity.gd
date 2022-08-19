@@ -1,13 +1,13 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
-var sprite : Sprite					= null
+@onready var animationState		= animationTree.get("parameters/playback")
+
+var sprite : Sprite2D				= null
 var animation : Node				= null
 var animationTree : AnimationTree	= null
 var agent : NavigationAgent2D		= null
 var camera : Camera2D				= null
 var collision : CollisionShape2D	= null
-
-onready var animationState		= animationTree.get("parameters/playback")
 
 var stat						= preload("res://sources/entity/Stat.gd").new()
 var slot						= preload("res://sources/entity/Slot.gd").new()
@@ -102,7 +102,9 @@ func UpdateOrientation(deltaTime : float):
 
 func UpdateVelocity():
 	if currentState != Actions.State.SIT && currentVelocity != Vector2.ZERO:
-		currentVelocity = move_and_slide(currentVelocity, Vector2.ZERO, false, 1, 0.1, false)
+		velocity = currentVelocity
+		move_and_slide()
+
 
 func UpdateState():
 	var nextState		= GetNextState()
@@ -115,7 +117,7 @@ func UpdateState():
 
 #
 func Warped(map : Node2D):
-	var nav2d : Navigation2D = null
+	var nav2d : Node2D = null
 
 	if map && map.has_node("Navigation2D"):
 		nav2d = map.get_node("Navigation2D")
@@ -127,7 +129,7 @@ func Warped(map : Node2D):
 #
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT && event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
 			isCapturingMouseInput = true
 			#Todo: Use signal to know when the agent is instancied and to launch Map's warp func
 			Warped(Launcher.Map.activeMap)
@@ -164,8 +166,8 @@ func _ready():
 
 	if agent:
 		if agent.get_avoidance_enabled():
-			var err = agent.connect("velocity_computed", self, "_velocity_computed")
+			var err = agent.velocity_computed.connect(self._velocity_computed)
 			assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
 		if Launcher.Debug:
-			var err = agent.connect("path_changed", Launcher.Debug, "UpdateNavLine")
+			var err = agent.path_changed.connect(Launcher.Debug.UpdateNavLine)
 			assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")

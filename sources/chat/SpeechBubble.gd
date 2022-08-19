@@ -1,20 +1,22 @@
 extends Node
 
-var Text = ""
-var Delay = 5.0
-var Timer = 0.0
+#
+var _text = ""
+var _delay = 5.0
+var _timer = 0.0
 
-
+#
 func OnDisplay(text):
-	Text = text
+	_text = text
 	StartTimer()
 
 func StartTimer():
-	Timer = Delay
+	_timer = _delay
 
+#
 func _process(delta):
-	Timer -= delta
-	if Timer < 0.0:
-		Timer = 0.0
-		Text = ""
-	print(Text)
+	_timer -= delta
+	if _timer < 0.0:
+		_timer = 0.0
+		_text = ""
+	print(_text)
