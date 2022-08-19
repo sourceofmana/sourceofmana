@@ -141,7 +141,7 @@ func _on_window_gui_input(event):
 			if isResizing:
 				ResizeWindow(ClampViewport(globalPosition, viewport))
 			else:
-				viewport -= get_size()
+				viewport -= (Vector2i) (get_size())
 				globalPosition -= clickPosition
 				global_position = ClampViewport(globalPosition, viewport)
 

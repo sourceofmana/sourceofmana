@@ -41,4 +41,4 @@ func _ready():
 	ConfHandler = Launcher.FileSystem.LoadSource("conf/ConfHandler.gd")
 
 func _post_ready():
-	OS.min_size = GetVector2("PresetPC", "minWindowSize", Type.WINDOW)
+	DisplayServer.window_set_min_size(GetVector2("PresetPC", "minWindowSize", Type.WINDOW), DisplayServer.get_window_list()[0])

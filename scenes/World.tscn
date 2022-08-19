@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://2cvj1td0m55t"]
 
-[ext_resource path="res://scenes/gui/Game.tscn" type="PackedScene" id=2]
+[ext_resource type="PackedScene" uid="uid://cx3n3yjonu1x4" path="res://scenes/gui/Game.tscn" id="2"]
 
 [node name="World" type="Node2D"]
 
-[node name="CanvasLayer" parent="." instance=ExtResource( 2 )]
+[node name="CanvasLayer" parent="." instance=ExtResource("2")]
 follow_viewport_enable = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

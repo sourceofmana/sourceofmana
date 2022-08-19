@@ -4,3 +4,6 @@ binary/*
 .godot/shader*/
 .godot/*.bin
 .godot/\.*
+
+# linux env
+.mono

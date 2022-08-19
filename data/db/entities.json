@@ -1,5 +1,5 @@
 {
-    "0": {
+	0: {
 		"Name"				: "Default Entity",
 		"Ethnicity"			: "KaizeiViro",
 		"Gender"			: "Male",
@@ -10,7 +10,7 @@
 		"Camera"			: "Default",
 		"Collision"			: "Medium",
 	},
-    "1": {
+	1: {
 		"Name"				: "Phatyna",
 		"Ethnicity"			: "Phatyna",
 		"Animation"			: "Slime",

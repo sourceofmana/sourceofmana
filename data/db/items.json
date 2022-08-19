@@ -1,15 +1,15 @@
 {
-    "1": {
+	1: {
 		"Name"				: "Grumpy's Key",
 		"Description"		: "A key that has been hidden a long time ago, seems to open a fancy door",
 		"Path"				: "commons/phatina-key1.png",
 	},
-    "2": {
+	2: {
 		"Name"				: "Hungry's Key",
 		"Description"		: "A key that has been eaten a long time ago, seems to open a fancy door",
 		"Path"				: "commons/phatina-key2.png",
 	},
-    "3": {
+	3: {
 		"Name"				: "Petty's Key",
 		"Description"		: "A key that has been forgotten a long time ago, seems to open a fancy door",
 		"Path"				: "commons/phatina-key3.png",

@@ -20,9 +20,9 @@ var Save				= null
 #
 func _init():
 	# Load all high-prio services, order should not be important
+	Util			= load("res://sources/util/Util.gd").new()
 	Path			= load("res://sources/system/Path.gd").new()
 	FileSystem		= load("res://sources/system/FileSystem.gd").new()
-	Util			= FileSystem.LoadSource("util/Util.gd").new()
 
 func _ready():
 	World			= get_tree().root.get_node("World")

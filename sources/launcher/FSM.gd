@@ -50,7 +50,7 @@ func UpdateFSM():
 
 #
 func _post_ready():
-	if Launcher.Conf.GetString("Default", "skipLogin", Launcher.Conf.Type.PROJECT):
+	if Launcher.Conf.GetBool("Default", "skipLogin", Launcher.Conf.Type.PROJECT):
 		nextState = States.IN_GAME
 	else:
 		nextState = States.SERVER_SELECTION

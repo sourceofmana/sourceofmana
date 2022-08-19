@@ -105,15 +105,15 @@ func _ready():
 	if bar:
 		if textureProgress:
 			bar.texture_progress = textureProgress
-			bar.rect_size = textureProgress.get_size()
+			bar.size = textureProgress.get_size()
 		if textureBackground:
 			bar.texture_under = textureBackground
 	if label:
 		if labelScale != 1:
 			label.set_scale(Vector2(labelScale,labelScale))
-			label.rect_position.y -= ceil((1 - labelScale) * 10) 
+			label.position.y -= ceil((1 - labelScale) * 10) 
 		if labelColor:
-			label.add_color_override("font_color", labelColor)
+			label.set("custom_colors/font_color", labelColor)
 
 func _process(delta):
 	UpdateValue(delta)
