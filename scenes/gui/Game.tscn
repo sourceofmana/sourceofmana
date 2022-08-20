@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://cx3n3yjonu1x4"]
 
 [ext_resource type="Texture2D" uid="uid://b8iqfegulwe6t" path="res://data/graphics/gui/button.png" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/gui/StatIndicator.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://owocc5bniyvj" path="res://scenes/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Script" path="res://sources/gui/GameGui.gd" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/gui/ActionBox.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://clslfktryuttf" path="res://scenes/gui/Chat.tscn" id="5"]
@@ -117,6 +117,7 @@ mouse_filter = 2
 script = ExtResource("7")
 
 [node name="Quit" parent="FloatingWindows" instance=ExtResource("8")]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

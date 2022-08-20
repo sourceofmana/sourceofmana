@@ -1,77 +1,65 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://owocc5bniyvj"]
 
-[ext_resource path="res://data/graphics/gui/stat/statindicator.png" type="Texture" id=1]
-[ext_resource path="res://scenes/gui/ProgressBar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://data/graphics/gui/stat/manabar.png" type="Texture" id=3]
-[ext_resource path="res://data/graphics/gui/stat/staminabar.png" type="Texture" id=4]
-[ext_resource path="res://data/themes/DefaultTheme.tres" type="Theme" id=5]
-[ext_resource path="res://data/graphics/gui/stat/healthbar.png" type="Texture" id=6]
-[ext_resource path="res://sources/gui/StatIndicator.gd" type="Script" id=7]
+[ext_resource type="Texture2D" uid="uid://cvps8apmh5ldl" path="res://data/graphics/gui/stat/statindicator.png" id="1"]
+[ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://scenes/gui/ProgressBar.tscn" id="2"]
+[ext_resource type="Texture2D" uid="uid://sxsrg2ksliy4" path="res://data/graphics/gui/stat/manabar.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://djt2bg4a6r3wj" path="res://data/graphics/gui/stat/staminabar.png" id="4"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="5"]
+[ext_resource type="Texture2D" uid="uid://rxnq0fxuvc88" path="res://data/graphics/gui/stat/healthbar.png" id="6"]
+[ext_resource type="Script" path="res://sources/gui/StatIndicator.gd" id="7"]
 
 [node name="StatIndicator" type="TextureRect"]
-margin_right = 424.0
-margin_bottom = 85.0
 size_flags_horizontal = 3
-theme = ExtResource( 5 )
-texture = ExtResource( 1 )
-script = ExtResource( 7 )
+theme = ExtResource("5")
+texture = ExtResource("1")
+script = ExtResource("7")
 
 [node name="Bars" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="HP" parent="Bars" instance=ExtResource( 2 )]
-margin_left = 66.0
-margin_top = 22.0
-margin_right = 66.0
-margin_bottom = 22.0
-textureProgress = ExtResource( 6 )
-labelColor = Color( 0.6, 0.188235, 0.0392157, 1 )
+[node name="HP" parent="Bars" instance=ExtResource("2")]
+offset_left = 67.0
+offset_top = 22.0
+offset_right = 379.0
+offset_bottom = 41.0
+textureProgress = ExtResource("6")
+labelColor = Color(0.6, 0.188235, 0.0392157, 1)
 
-[node name="Mana" parent="Bars" instance=ExtResource( 2 )]
-margin_left = 67.0
-margin_top = 44.0
-margin_right = 67.0
-margin_bottom = 84.0
-textureProgress = ExtResource( 3 )
-labelColor = Color( 0.196078, 0.466667, 0.698039, 1 )
+[node name="Mana" parent="Bars" instance=ExtResource("2")]
+offset_left = 67.0
+offset_top = 44.0
+offset_right = 379.0
+offset_bottom = 63.0
+textureProgress = ExtResource("3")
+labelColor = Color(0.196078, 0.466667, 0.698039, 1)
 
-[node name="Stamina" parent="Bars" instance=ExtResource( 2 )]
-margin_left = 55.0
-margin_top = 66.0
-margin_right = 95.0
-margin_bottom = 106.0
-textureProgress = ExtResource( 4 )
+[node name="Stamina" parent="Bars" instance=ExtResource("2")]
+offset_left = 55.0
+offset_top = 66.0
+offset_right = 357.0
+offset_bottom = 75.0
+textureProgress = ExtResource("4")
 labelScale = 0.85
 
 [node name="LevelText" type="Label" parent="."]
-margin_left = 19.0
-margin_top = 16.0
-margin_right = 51.0
-margin_bottom = 40.0
+offset_left = 19.0
+offset_top = 16.0
+offset_right = 51.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_scale = Vector2( 1.5, 1.5 )
-custom_colors/font_color = Color( 0.843137, 0.717647, 0.482353, 1 )
+scale = Vector2(1.5, 1.5)
 text = "256"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ExpText" type="Label" parent="."]
-margin_left = 18.0
-margin_top = 47.5
-margin_right = 88.0
-margin_bottom = 71.5
+offset_left = 18.0
+offset_top = 47.0
+offset_right = 88.0
+offset_bottom = 71.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_scale = Vector2( 0.7, 0.7 )
-custom_colors/font_color = Color( 0.843137, 0.717647, 0.482353, 1 )
+scale = Vector2(0.7, 0.7)
 text = "100.00%"
-align = 1
-valign = 1
+horizontal_alignment = 1
+vertical_alignment = 1

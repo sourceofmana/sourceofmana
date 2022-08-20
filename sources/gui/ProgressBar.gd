@@ -53,19 +53,20 @@ func GetBarFormat(currentValue : float, maxValue : float) -> String:
 #
 func SetStat(newValue, maxValue):
 	assert(bar && label, "ProgressBar childs are missing")
+	if valueTo != newValue || valueMax != maxValue:
+		valueFrom = bar.get_value()
+		valueTo = newValue
+		isUpdating = true
+		valueMax = maxValue
 
-	valueFrom = bar.get_value()
-	valueTo = newValue
-	isUpdating = true
-	valueMax = maxValue
-	if valueFrom == 0:
-		remainsToFillSec = delayToInitSec
-		initDelayToFillSec = delayToInitSec
-	else:
-		remainsToFillSec = delayToFillSec
-		initDelayToFillSec = delayToFillSec
+		if valueFrom == 0:
+			remainsToFillSec = delayToInitSec
+			initDelayToFillSec = delayToInitSec
+		else:
+			remainsToFillSec = delayToFillSec
+			initDelayToFillSec = delayToFillSec
 
-	UpdateValue(0)
+		UpdateValue(0)
 
 func UpdateValue(delta):
 	if isUpdating:

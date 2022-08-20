@@ -5,7 +5,6 @@
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="3"]
 
 [node name="ProgressBar" type="Control"]
-custom_minimum_size = Vector2(40, 10)
 offset_right = 40.0
 offset_bottom = 10.0
 size_flags_horizontal = 3
