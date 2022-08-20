@@ -56,6 +56,11 @@ version=false
 cfg=false
 mouse=false
 
+[gui]
+
+theme/default_font_antialiased=false
+theme/default_font_subpixel_positioning=0
+
 [importer_defaults]
 
 texture={
@@ -161,6 +166,7 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
 quality/intended_usage/framebuffer_allocation=0
