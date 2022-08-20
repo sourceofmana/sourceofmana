@@ -1,13 +1,21 @@
-[gd_scene format=2]
+[gd_scene format=3 uid="uid://p70cqs28fvau"]
 
 [node name="Background" type="ColorRect"]
-margin_right = 34.0
-margin_bottom = 34.0
-rect_min_size = Vector2( 34, 34 )
-color = Color( 0.32549, 0.305882, 0.290196, 1 )
+custom_minimum_size = Vector2(34, 34)
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(0.32549, 0.305882, 0.290196, 1)
 
 [node name="Icon" type="TextureRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_min_size = Vector2( 32, 32 )
-stretch_mode = 4
+custom_minimum_size = Vector2(32, 32)
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 3
