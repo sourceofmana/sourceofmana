@@ -7,7 +7,7 @@
 custom_minimum_size = Vector2(200, 150)
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -824.0
+offset_right = -740.0
 offset_bottom = -450.0
 hint_tooltip = "ChatTabContainer"
 theme = ExtResource("1")
@@ -18,31 +18,46 @@ script = ExtResource("2")
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
-offset_top = 55.0
+offset_top = 56.0
 offset_right = -6.0
 offset_bottom = -6.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+mouse_filter = 2
 theme = ExtResource("1")
 tab_close_display_policy = 1
 drag_to_rearrange_enabled = true
 
 [node name="ChatVBox" type="VBoxContainer" parent="General"]
-anchor_right = 1.0
+anchor_right = 0.995
 anchor_bottom = 1.0
+offset_top = -29.0
+offset_right = -0.51001
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
+mouse_filter = 2
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true
 
 [node name="Backlog" type="Label" parent="General/ChatVBox"]
-offset_right = 188.0
-offset_bottom = 62.0
+offset_right = 270.0
+offset_bottom = 90.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "Server: Welcome to Source of Mana"
+autowrap_mode = 2
 
 [node name="NewText" type="LineEdit" parent="General/ChatVBox"]
-offset_top = 66.0
-offset_right = 188.0
-offset_bottom = 89.0
+offset_top = 94.0
+offset_right = 270.0
+offset_bottom = 117.0
+mouse_filter = 2
+caret_blink = true
+caret_blink_speed = 0.5
 
-[connection signal="focus_exited" from="." to="." method="_on_window_mouse_exited"]
+[node name="World" type="TabBar" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
 [connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
-[connection signal="mouse_exited" from="." to="." method="_on_window_mouse_exited"]

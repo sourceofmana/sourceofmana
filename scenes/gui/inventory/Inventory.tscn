@@ -22,7 +22,7 @@ script = ExtResource("7")
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
-offset_top = 7.0
+offset_top = 4.0
 offset_right = -6.0
 offset_bottom = -7.0
 size_flags_horizontal = 3
@@ -59,10 +59,16 @@ size_flags_vertical = 0
 mouse_filter = 1
 texture_normal = ExtResource("3")
 
-[node name="Weight" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Offset" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 1)
 offset_top = 22.0
 offset_right = 349.0
-offset_bottom = 40.0
+offset_bottom = 23.0
+
+[node name="Weight" type="HBoxContainer" parent="VBoxContainer"]
+offset_top = 27.0
+offset_right = 349.0
+offset_bottom = 45.0
 size_flags_horizontal = 3
 
 [node name="Text" type="Label" parent="VBoxContainer/Weight"]
@@ -91,21 +97,20 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 textureProgress = null
-labelColor = Color(0.305882, 0.298039, 0.298039, 1)
 labelUnit = "kg"
 delayToFillSec = 2.0
 precisionDivider = 100
 metadata/_edit_layout_mode = 1
 
 [node name="ItemContainer" type="ScrollContainer" parent="VBoxContainer"]
-offset_top = 44.0
+offset_top = 49.0
 offset_right = 349.0
-offset_bottom = 94.0
+offset_bottom = 97.0
 size_flags_vertical = 3
 
 [node name="Grid" type="GridContainer" parent="VBoxContainer/ItemContainer"]
 offset_right = 349.0
-offset_bottom = 50.0
+offset_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 4
@@ -114,5 +119,4 @@ columns = 10
 script = ExtResource("9")
 
 [connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
-[connection signal="mouse_exited" from="." to="." method="_on_window_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/TitleBar/CloseButton" to="." method="_on_CloseButton_pressed"]

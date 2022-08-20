@@ -56,13 +56,13 @@ offset_bottom = 106.0
 alignment = 2
 
 [node name="Leave" type="Button" parent="WindowCore/ButtonChoice"]
-offset_left = 180.0
-offset_right = 227.0
+offset_left = 178.0
+offset_right = 226.0
 offset_bottom = 21.0
 text = "Leave"
 
 [node name="Stay" type="Button" parent="WindowCore/ButtonChoice"]
-offset_left = 231.0
+offset_left = 230.0
 offset_right = 268.0
 offset_bottom = 21.0
 text = "Stay"
@@ -72,7 +72,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
-[connection signal="mouse_exited" from="." to="." method="_on_window_mouse_exited"]
 [connection signal="draw" from="WindowCore/ButtonChoice" to="WindowCore" method="_on_window_draw"]
 [connection signal="pressed" from="WindowCore/ButtonChoice/Leave" to="WindowCore" method="_on_Leave_pressed"]
 [connection signal="pressed" from="WindowCore/ButtonChoice/Stay" to="WindowCore" method="_on_Stay_pressed"]

@@ -145,8 +145,5 @@ func _on_window_gui_input(event):
 				globalPosition -= clickPosition
 				global_position = ClampViewport(globalPosition, viewport)
 
-func _on_window_mouse_exited():
-	ResetWindowModifier()
-
 func _on_CloseButton_pressed():
 	set_visible(false)

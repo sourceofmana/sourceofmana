@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b8iqfegulwe6t" path="res://data/graphics/gui/button.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://owocc5bniyvj" path="res://scenes/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Script" path="res://sources/gui/GameGui.gd" id="3"]
-[ext_resource type="PackedScene" path="res://scenes/gui/ActionBox.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://c2q5vtkxo04dp" path="res://scenes/gui/ActionBox.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://clslfktryuttf" path="res://scenes/gui/Chat.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://c4aoe63fobqn6" path="res://scenes/gui/inventory/Inventory.tscn" id="6"]
 [ext_resource type="Script" path="res://sources/gui/FloatingWindows.gd" id="7"]
@@ -100,15 +100,17 @@ stretch_mode = 4
 [node name="MainPanelContainer" type="Control" parent="VBoxMain"]
 offset_top = 89.0
 offset_right = 1024.0
-offset_bottom = 591.0
+offset_bottom = 560.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="ActionBox" parent="VBoxMain" instance=ExtResource("4")]
-offset_top = 595.0
-offset_right = 1024.0
+offset_left = 310.0
+offset_top = 564.0
+offset_right = 714.0
 offset_bottom = 600.0
+size_flags_horizontal = 4
 
 [node name="FloatingWindows" type="Control" parent="."]
 anchor_right = 1.0
@@ -132,13 +134,14 @@ hint_tooltip = "Quit"
 metadata/_edit_layout_mode = 1
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 9.0
-offset_top = 443.0
-offset_right = 412.0
-offset_bottom = 593.0
+offset_top = 431.0
+offset_right = -725.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
 hint_tooltip = "Chat"
+metadata/_edit_layout_mode = 1
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
 show_behind_parent = false
