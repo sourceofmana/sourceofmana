@@ -917,7 +917,7 @@ func build_tileset_for_scene(tilesets, source_path, options):
 
 			var rel_id = str(gid - firstgid)
 
-			result.create_tile(gid)
+			result.create_alternative_tile(, gid)
 
 			if has_global_image:
 				if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:

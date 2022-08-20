@@ -7,7 +7,7 @@ var slots : Array = []
 func _ready():
 	if Launcher.Entities.activePlayer:
 		for item in Launcher.Entities.activePlayer.inventory.items:
-			var tileInstance	= Tile.instance()
+			var tileInstance	= Tile.instantiate()
 			var itemReference	= Launcher.Entities.activePlayer.inventory.items[item]
 			var iconTexture		= load(Launcher.Path.ItemRsc + itemReference._path)
 

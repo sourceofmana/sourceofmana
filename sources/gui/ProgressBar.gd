@@ -41,8 +41,8 @@ func GetFormatedText(value : String) -> String:
 	return value
 
 func GetBarFormat(currentValue : float, maxValue : float) -> String:
-	var currentValueText = GetFormatedText(currentValue as String)
-	var maxValueText = GetFormatedText(maxValue as String)
+	var currentValueText = GetFormatedText(String.num(currentValue))
+	var maxValueText = GetFormatedText(String.num(maxValue))
 
 	var formatedText = currentValueText + " / " + maxValueText
 	if labelUnit.length() > 0:
@@ -71,12 +71,12 @@ func UpdateValue(delta):
 	if isUpdating:
 		remainsToFillSec -= delta
 
-		var ratioToFinish : float = 0
+		var ratioToFinish : float = 0.0
 		if initDelayToFillSec != 0:
 			ratioToFinish = (initDelayToFillSec - remainsToFillSec) / initDelayToFillSec
 			ratioToFinish = ease(ratioToFinish, 0.3)
 
-		var newValue = lerp(valueFrom, valueTo, ratioToFinish)
+		var newValue = lerpf(float(valueFrom), float(valueTo), ratioToFinish)
 		if bar:
 			bar.set_value(GetRatio(newValue, valueMax))
 
@@ -98,6 +98,7 @@ func UpdateValue(delta):
 			remainsToFillSec = 0
 			initDelayToFillSec = 0
 			valueFrom = valueTo
+
 #
 func _ready():
 	assert(bar && label, "ProgressBar childs are missing")
@@ -105,7 +106,8 @@ func _ready():
 	if bar:
 		if textureProgress:
 			bar.texture_progress = textureProgress
-			bar.size = textureProgress.get_size()
+			if anchor_bottom == anchor_top && anchor_left == anchor_right:
+				set_deferred("bar.size", textureProgress.get_size())
 		if textureBackground:
 			bar.texture_under = textureBackground
 	if label:

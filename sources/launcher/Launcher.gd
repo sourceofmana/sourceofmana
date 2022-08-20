@@ -20,16 +20,18 @@ var Save				= null
 #
 func _init():
 	# Load all high-prio services, order should not be important
-	Util			= load("res://sources/util/Util.gd").new()
 	Path			= load("res://sources/system/Path.gd").new()
 	FileSystem		= load("res://sources/system/FileSystem.gd").new()
+	Util			= load("res://sources/util/Util.gd").new()
 
 func _ready():
+	# Load first low-prio services on which the order is important
 	World			= get_tree().root.get_node("World")
+
 	if OS.is_debug_build():
 		Debug		= FileSystem.LoadSource("debug/Debug.gd")
 
-	# Load all low-prio services, order should not be important
+	# Load first low-prio services on which the order is not important
 	Audio			= FileSystem.LoadSource("audio/Audio.gd")
 	Camera			= FileSystem.LoadSource("camera/Camera.gd")
 	Conf			= FileSystem.LoadSource("conf/Conf.gd")
@@ -42,7 +44,6 @@ func _ready():
 	if Debug:
 		Debug._post_ready()
 	Conf._post_ready()
-	Entities._post_ready()
 	DB._post_ready()
 	FSM._post_ready()
 

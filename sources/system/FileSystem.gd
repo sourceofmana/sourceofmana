@@ -9,11 +9,12 @@ func FileExists(path : String) -> bool:
 func ResourceExists(path : String) -> bool:
 	return ResourceLoader.exists(path)
 
-func FileLoad(path : String) -> Resource:
-	return load(path)
+func FileLoad(path : String) -> Object:
+	return load(path).new()
 
-func ResourceLoad(path : String) -> Resource:
-	return ResourceLoader.load(path)
+func ResourceLoad(path : String) -> Object:
+	var ressourceLoaded : Resource = ResourceLoader.load(path)
+	return ressourceLoaded.instantiate() if ressourceLoaded != null && ressourceLoaded.can_instantiate() else null
 
 # DB
 func LoadDB(path : String) -> Dictionary:
@@ -36,7 +37,8 @@ func LoadDB(path : String) -> Dictionary:
 			DBFile.close()
 
 			Launcher.Util.Assert(err == OK, "DB parsing issue on file " + fullPath \
-				+ " Error: " + str(err) \
+				+ " Line: " + str(jsonInstance.get_error_line()) \
+				+ " Error: " + jsonInstance.get_error_message() \
 			)
 			if err == OK:
 				result = jsonInstance.get_data()
@@ -61,7 +63,7 @@ func LoadMap(path : String) -> Node:
 		Launcher.Util.Assert(true, "Map file not found " + path + "(.tmx/.tscn) should be located at " + Launcher.Path.MapRsc)
 
 	if usedPath != "":
-		mapInstance = ResourceLoad(usedPath).instance()
+		mapInstance = ResourceLoad(usedPath)
 		print("Loading map: " + usedPath)
 
 	return mapInstance
@@ -74,7 +76,7 @@ func LoadScene(path : String) -> Node:
 
 	Launcher.Util.Assert(pathExists, "Scene file not found " + fullPath + " should be located at " + Launcher.Path.Scn)
 	if pathExists:
-		scnInstance = ResourceLoad(fullPath).instance()
+		scnInstance = ResourceLoad(fullPath)
 		print("Loading scene: " + fullPath)
 
 	return scnInstance
@@ -87,7 +89,7 @@ func LoadPreset(path : String) -> Node:
 
 	Launcher.Util.Assert(pathExists, "Preset file not found " + fullPath + " should be located at " + Launcher.Path.PresetScn)
 	if pathExists:
-		presetInstance = ResourceLoad(fullPath).instance()
+		presetInstance = ResourceLoad(fullPath)
 		print("Loading preset: " + fullPath)
 
 	return presetInstance
@@ -103,7 +105,7 @@ func LoadSource(path : String) -> Node:
 	Launcher.Util.Assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		srcFile = ResourceLoad(fullPath).new()
+		srcFile = FileLoad(fullPath)
 		print("Loading Source: " + fullPath)
 
 	return srcFile
@@ -157,7 +159,7 @@ func LoadMusic(path : String) -> Resource:
 
 	Launcher.Util.Assert(pathExists, "Music file not found " + fullPath + " should be located at " + Launcher.Path.MusicRsc)
 	if pathExists:
-		musicInstance = ResourceLoad(fullPath).instance()
+		musicInstance = ResourceLoad(fullPath)
 		print("Loading music: " + fullPath)
 
 	return musicInstance

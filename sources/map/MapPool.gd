@@ -9,7 +9,7 @@ func GetMapPath(mapName : String) -> String:
 	var path : String = ""
 	var mapInstance = Launcher.DB.MapsDB[mapName]
 
-	Launcher.Util.Assert(mapInstance, "Could not find the map " + mapName + " within the db")
+	Launcher.Util.Assert(mapInstance != null, "Could not find the map " + mapName + " within the db")
 	if mapInstance:
 		path = mapInstance._path
 

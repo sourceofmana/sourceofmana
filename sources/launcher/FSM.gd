@@ -44,7 +44,7 @@ func UpdateFSM():
 			States.IN_GAME:
 				Game()
 			_:
-				assert(false, "Wanted FSM state not handled.")
+				Launcher.Util.Assert(false, "Wanted FSM state not handled.")
 
 		currentState = nextState
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://2cvj1td0m55t"]
+[gd_scene load_steps=2 format=3 uid="uid://cs02hhrtmhnxx"]
 
 [ext_resource type="PackedScene" uid="uid://cx3n3yjonu1x4" path="res://scenes/gui/Game.tscn" id="2"]
 

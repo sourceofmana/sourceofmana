@@ -44,5 +44,5 @@ func Spawn(entityID) -> Node2D:
 	return instanciatedEntity
 
 #
-func _post_ready():
+func _init():
 	Trait = Launcher.FileSystem.LoadSource("entity/Trait.gd")

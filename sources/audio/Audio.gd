@@ -15,20 +15,20 @@ func Stop():
 	if audioPlayer.is_playing():
 		audioPlayer.Stop()
 
-func Load(name : String):
+func Load(soundName : String):
 	if audioPlayer == null:
 		audioPlayer = Launcher.World.get_node("AudioStreamPlayer")
 
 	assert(audioPlayer, "AudioStreamPlayer could not be found")
 
 	if audioPlayer && currentTrack != name:
-		if not name.is_empty() && Launcher.DB.MusicsDB[name] != null:
-			var stream : Resource = Launcher.FileSystem.LoadMusic(Launcher.DB.MusicsDB[name]._path)
-			if stream != null:
-				stream.set_loop(true)
+		if not soundName.is_empty() && Launcher.DB.MusicsDB[name] != null:
+			var soundStream : Resource = Launcher.FileSystem.LoadMusic(Launcher.DB.MusicsDB[name]._path)
+			if soundStream != null:
+				soundStream.set_loop(true)
 
-				audioPlayer.stream	= stream
-				currentTrack		= name
+				audioPlayer.stream	= soundStream
+				currentTrack		= soundName
 
 				audioPlayer.set_autoplay(true)
 				audioPlayer.play()

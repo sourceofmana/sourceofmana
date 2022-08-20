@@ -13,13 +13,13 @@ func AddMap(map : Node2D):
 	Launcher.call_deferred("add_child", map)
 
 #
-func RemoveEntityFromMap(entity : KinematicCollision2D, map : Node2D):
+func RemoveEntityFromMap(entity : CharacterBody2D, map : Node2D):
 	var fringeLayer : TileMap = map.get_node("Fringe")
 	if fringeLayer:
 		entity.set_physics_process(false)
 		fringeLayer.call_deferred("remove_child", entity)
 
-func AddEntityToMap(entity : KinematicCollision2D, map : Node2D, newPos : Vector2):
+func AddEntityToMap(entity : CharacterBody2D, map : Node2D, newPos : Vector2):
 	var fringeLayer : TileMap = map.get_node("Fringe")
 	if fringeLayer:
 		var entityPos : Vector2 = newPos * fringeLayer.cell_size + fringeLayer.cell_size / 2
@@ -34,7 +34,7 @@ func ApplyMapMetadata(map : Node2D):
 		Launcher.Audio.Load(map.get_meta("music") )
 
 #
-func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : KinematicCollision2D):
+func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : CharacterBody2D):
 	assert(entity, "Entity is not initialized, could not warp it to this map")
 
 	if activeMap && activeMap.get_name() != mapName:
@@ -45,7 +45,7 @@ func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : Kinemat
 
 	if not activeMap:
 		activeMap = Pool.LoadMap(mapName)
-		assert(activeMap, "Map instance could not be created")
+		Launcher.Util.Assert(activeMap != null, "Map instance could not be created")
 		if activeMap:
 			AddMap(activeMap)
 			ApplyMapMetadata(activeMap)
