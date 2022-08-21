@@ -6,6 +6,10 @@ extends Control
 func MoveWindow(window):
 	move_child(window, get_child_count() - 1)
 
+func ClearWindowsModifier():
+	for window in get_children():
+		window.ResetWindowModifier()
+
 #
 func _ready():
 	prevSize = size

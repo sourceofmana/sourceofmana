@@ -27,3 +27,6 @@ func _process(_delta):
 func _notification(notif):
 	if notif == Node.NOTIFICATION_WM_CLOSE_REQUEST:
 		ToggleControl($FloatingWindows/Quit)
+	elif notif == Node.NOTIFICATION_WM_MOUSE_EXIT:
+		if has_node("FloatingWindows"):
+			get_node("FloatingWindows").ClearWindowsModifier()
