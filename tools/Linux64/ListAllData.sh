@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ../../data/
+find . -type f -name "*.png" -o -name "*.svg" -o -name "*.ttf"
