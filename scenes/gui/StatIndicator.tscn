@@ -7,7 +7,7 @@
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="5"]
 [ext_resource type="Texture2D" uid="uid://rxnq0fxuvc88" path="res://data/graphics/gui/stat/healthbar.png" id="6"]
 [ext_resource type="Script" path="res://sources/gui/StatIndicator.gd" id="7"]
-[ext_resource type="FontFile" uid="uid://moax7kfaynbb" path="res://data/graphics/fonts/Oleaguid.ttf" id="8_qvvnk"]
+[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="8_jf846"]
 
 [node name="StatIndicator" type="TextureRect"]
 size_flags_horizontal = 3
@@ -42,22 +42,22 @@ textureProgress = ExtResource("4")
 labelScale = 0.85
 
 [node name="LevelText" type="Label" parent="."]
-offset_left = 15.0
-offset_top = 3.0
-offset_right = 75.0
-offset_bottom = 64.0
-theme_override_fonts/font = ExtResource("8_qvvnk")
+offset_left = 14.0
+offset_top = 6.0
+offset_right = 77.0
+offset_bottom = 67.0
+theme_override_fonts/font = ExtResource("8_jf846")
 theme_override_font_sizes/font_size = 48
 text = "256"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ExpText" type="Label" parent="."]
-offset_left = 10.0
+offset_left = 9.0
 offset_top = 44.0
-offset_right = 80.0
+offset_right = 79.0
 offset_bottom = 68.0
-theme_override_fonts/font = ExtResource("8_qvvnk")
+theme_override_fonts/font = ExtResource("8_jf846")
 theme_override_font_sizes/font_size = 16
 text = "100.00%"
 horizontal_alignment = 1
