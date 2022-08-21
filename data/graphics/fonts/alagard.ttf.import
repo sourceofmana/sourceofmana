@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://moax7kfaynbb"
-path="res://.godot/imported/Oleaguid.ttf-e1f8cdf2ae951c23421abf2571d32f4d.fontdata"
+uid="uid://xjlm0vx7cd6y"
+path="res://.godot/imported/alagard.ttf-acf6caeda3cf6c6bb20583713f7f165f.fontdata"
 
 [deps]
 
-source_file="res://data/graphics/fonts/Oleaguid.ttf"
-dest_files=["res://.godot/imported/Oleaguid.ttf-e1f8cdf2ae951c23421abf2571d32f4d.fontdata"]
+source_file="res://data/graphics/fonts/alagard.ttf"
+dest_files=["res://.godot/imported/alagard.ttf-acf6caeda3cf6c6bb20583713f7f165f.fontdata"]
 
 [params]
 

@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://rxoc1e0m7ivk"
-path="res://.godot/imported/alagard_by_pix3m-d6awiwp.ttf-ebe6b610b315add3dabf0b5467299afc.fontdata"
+uid="uid://2r8d45jgc1r5"
+path="res://.godot/imported/romulus.ttf-b2bc6244c65f17e9109c575f036c4b01.fontdata"
 
 [deps]
 
-source_file="res://data/graphics/fonts/alagard_by_pix3m-d6awiwp.ttf"
-dest_files=["res://.godot/imported/alagard_by_pix3m-d6awiwp.ttf-ebe6b610b315add3dabf0b5467299afc.fontdata"]
+source_file="res://data/graphics/fonts/romulus.ttf"
+dest_files=["res://.godot/imported/romulus.ttf-b2bc6244c65f17e9109c575f036c4b01.fontdata"]
 
 [params]
 
