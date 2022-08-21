@@ -13,8 +13,11 @@ func FileLoad(path : String) -> Object:
 	return load(path).new()
 
 func ResourceLoad(path : String) -> Object:
-	var ressourceLoaded : Resource = ResourceLoader.load(path)
-	return ressourceLoaded.instantiate() if ressourceLoaded != null && ressourceLoaded.can_instantiate() else null
+	var resourceInstance	= null
+	var resourceLoaded		= ResourceLoader.load(path)
+	if resourceLoaded != null && resourceLoaded.has_method("can_instantiate") && resourceLoaded.can_instantiate():
+		resourceInstance = resourceLoaded.instantiate()
+	return resourceInstance
 
 # DB
 func LoadDB(path : String) -> Dictionary:
@@ -42,13 +45,13 @@ func LoadDB(path : String) -> Dictionary:
 			)
 			if err == OK:
 				result = jsonInstance.get_data()
-				print("Loading DB: " + fullPath)
+				Launcher.Util.PrintLog("Loading DB: " + fullPath)
 
 	return result
 
 # Map
-func LoadMap(path : String) -> Node:
-	var mapInstance : Node		= null
+func LoadMap(path : String) -> Resource:
+	var mapInstance : Resource		= null
 
 	var filePath : String		= Launcher.Path.MapRsc + path
 	var scenePath : String		= filePath + Launcher.Path.SceneExt
@@ -64,35 +67,9 @@ func LoadMap(path : String) -> Node:
 
 	if usedPath != "":
 		mapInstance = ResourceLoad(usedPath)
-		print("Loading map: " + usedPath)
+		Launcher.Util.PrintLog("Loading map: " + usedPath)
 
 	return mapInstance
-
-# Scene
-func LoadScene(path : String) -> Node:
-	var scnInstance : Node		= null
-	var fullPath : String		= Launcher.Path.Scn + path + Launcher.Path.SceneExt
-	var pathExists : bool		= ResourceExists(fullPath)
-
-	Launcher.Util.Assert(pathExists, "Scene file not found " + fullPath + " should be located at " + Launcher.Path.Scn)
-	if pathExists:
-		scnInstance = ResourceLoad(fullPath)
-		print("Loading scene: " + fullPath)
-
-	return scnInstance
-
-# Preset
-func LoadPreset(path : String) -> Node:
-	var presetInstance : Node	= null
-	var fullPath : String		= Launcher.Path.PresetScn + path + Launcher.Path.SceneExt
-	var pathExists : bool		= ResourceExists(fullPath)
-
-	Launcher.Util.Assert(pathExists, "Preset file not found " + fullPath + " should be located at " + Launcher.Path.PresetScn)
-	if pathExists:
-		presetInstance = ResourceLoad(fullPath)
-		print("Loading preset: " + fullPath)
-
-	return presetInstance
 
 # Source
 func LoadSource(path : String) -> Node:
@@ -106,7 +83,7 @@ func LoadSource(path : String) -> Node:
 
 	if pathExists:
 		srcFile = FileLoad(fullPath)
-		print("Loading Source: " + fullPath)
+		Launcher.Util.PrintLog("Loading Source: " + fullPath)
 
 	return srcFile
 
@@ -134,7 +111,7 @@ func LoadConfig(path : String) -> ConfigFile:
 			cfgFile.free()
 			cfgFile = null
 		else:
-			print("Loading Config: " + fullPath)
+			Launcher.Util.PrintLog("Loading Config: " + fullPath)
 
 	return cfgFile
 
@@ -149,17 +126,37 @@ func SaveConfig(path : String, cfgFile : ConfigFile):
 		if pathExists:
 			var err = cfgFile.save(fullPath)
 			Launcher.Util.Assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
-			print("Saving Config: " + fullPath)
+			Launcher.Util.PrintLog("Saving Config: " + fullPath)
+
+# Resource
+func LoadResource(fullPath : String) -> Object:
+	var rscInstance : Object	= null
+	var pathExists : bool		= ResourceExists(fullPath)
+
+	Launcher.Util.Assert(pathExists, "Resource file not found at: " + fullPath)
+	if pathExists:
+		rscInstance = ResourceLoad(fullPath)
+		Launcher.Util.PrintLog("Loading resource: " + fullPath)
+
+	return rscInstance
+
+# Scene
+func LoadScene(path : String) -> Resource:
+	var fullPath : String = Launcher.Path.Scn + path + Launcher.Path.SceneExt
+	return LoadResource(fullPath)
+
+# Preset
+func LoadPreset(path : String) -> Resource:
+	var fullPath : String = Launcher.Path.PresetScn + path + Launcher.Path.SceneExt
+	return LoadResource(fullPath)
 
 # Music
 func LoadMusic(path : String) -> Resource:
-	var musicInstance : Resource	= null
-	var fullPath : String			= Launcher.Path.MusicRsc + path
-	var pathExists : bool			= ResourceExists(fullPath)
+	var fullPath : String = Launcher.Path.MusicRsc + path
+	return LoadResource(fullPath)
 
-	Launcher.Util.Assert(pathExists, "Music file not found " + fullPath + " should be located at " + Launcher.Path.MusicRsc)
-	if pathExists:
-		musicInstance = ResourceLoad(fullPath)
-		print("Loading music: " + fullPath)
-
-	return musicInstance
+# Music
+func LoadItem(path : String) -> Resource:
+	var fullPath : String = Launcher.Path.ItemRsc + path
+	return LoadResource(fullPath)
+	
