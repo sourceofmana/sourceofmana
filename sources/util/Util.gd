@@ -1,10 +1,10 @@
 extends Node
 
 #
-func Assert(cond : bool, message : String) -> void:
-	if OS.is_debug_build() && not cond:
+func Assert(condition : bool, message : String) -> void:
+	if OS.is_debug_build() && not condition:
 		printerr(message)
 		push_warning(message)
 
-func PrintLog(log : String):
-	print(log)
+func PrintLog(logString : String):
+	print(logString)

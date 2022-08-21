@@ -13,8 +13,11 @@ func FileLoad(path : String) -> Object:
 	return load(path).new()
 
 func ResourceLoad(path : String) -> Object:
+	return ResourceLoader.load(path)
+
+func ResourceInstance(path : String) -> Object:
+	var resourceLoaded		= ResourceLoad(path)
 	var resourceInstance	= null
-	var resourceLoaded		= ResourceLoader.load(path)
 	if resourceLoaded != null && resourceLoaded.has_method("can_instantiate") && resourceLoaded.can_instantiate():
 		resourceInstance = resourceLoaded.instantiate()
 	return resourceInstance
@@ -66,7 +69,7 @@ func LoadMap(path : String) -> Resource:
 		Launcher.Util.Assert(true, "Map file not found " + path + "(.tmx/.tscn) should be located at " + Launcher.Path.MapRsc)
 
 	if usedPath != "":
-		mapInstance = ResourceLoad(usedPath)
+		mapInstance = ResourceInstance(usedPath)
 		Launcher.Util.PrintLog("Loading map: " + usedPath)
 
 	return mapInstance
@@ -129,13 +132,13 @@ func SaveConfig(path : String, cfgFile : ConfigFile):
 			Launcher.Util.PrintLog("Saving Config: " + fullPath)
 
 # Resource
-func LoadResource(fullPath : String) -> Object:
+func LoadResource(fullPath : String, instantiate : bool = true) -> Object:
 	var rscInstance : Object	= null
 	var pathExists : bool		= ResourceExists(fullPath)
 
 	Launcher.Util.Assert(pathExists, "Resource file not found at: " + fullPath)
 	if pathExists:
-		rscInstance = ResourceLoad(fullPath)
+		rscInstance = ResourceInstance(fullPath) if instantiate else ResourceLoad(fullPath)
 		Launcher.Util.PrintLog("Loading resource: " + fullPath)
 
 	return rscInstance
@@ -158,5 +161,5 @@ func LoadMusic(path : String) -> Resource:
 # Music
 func LoadItem(path : String) -> Resource:
 	var fullPath : String = Launcher.Path.ItemRsc + path
-	return LoadResource(fullPath)
+	return LoadResource(fullPath, false)
 	

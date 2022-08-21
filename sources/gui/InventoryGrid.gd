@@ -7,12 +7,18 @@ var slots : Array = []
 func _ready():
 	if Launcher.Entities.activePlayer:
 		for item in Launcher.Entities.activePlayer.inventory.items:
-			var tileInstance	= Tile.instantiate()
-			var itemReference	= Launcher.Entities.activePlayer.inventory.items[item]
-			var iconTexture		= load(Launcher.Path.ItemRsc + itemReference._path)
+			var tileInstance : ColorRect	= Tile.instantiate()
+			var itemReference : Object		= Launcher.Entities.activePlayer.inventory.items[item]
+			var iconTexture : Texture2D		= Launcher.FileSystem.LoadItem(itemReference._path)
 
-			tileInstance.get_node("Icon").set_texture(iconTexture)
-			tileInstance.hint_tooltip = itemReference._name
+			if tileInstance.has_node("Icon"):
+				var iconNode = tileInstance.get_node("Icon")
+				iconNode.set_texture(iconTexture)
+			else:
+				Launcher.Util.Assert(false, "Could not find the Icon node for item:" + itemReference._name)
+
+			var tooltip : String = itemReference._name + "\n" + itemReference._description
+			tileInstance.hint_tooltip = tooltip
 
 			add_child(tileInstance)
 			slots.append(tileInstance)
