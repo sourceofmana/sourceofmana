@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cx3n3yjonu1x4"]
+[gd_scene load_steps=14 format=3 uid="uid://cx3n3yjonu1x4"]
 
 [ext_resource type="Texture2D" uid="uid://b8iqfegulwe6t" path="res://data/graphics/gui/button.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://owocc5bniyvj" path="res://scenes/gui/StatIndicator.tscn" id="2"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://sources/gui/FloatingWindows.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://ddi7hwl7efcod" path="res://scenes/gui/Quit.tscn" id="8"]
 [ext_resource type="Shader" path="res://sources/shaders/HQ4x.gdshader" id="9_k3j53"]
+[ext_resource type="PackedScene" uid="uid://p32vsmjk8hmh" path="res://scenes/gui/Minimap.tscn" id="9_myjuo"]
 [ext_resource type="Shader" path="res://sources/shaders/CRT.gdshader" id="10_t0lb8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pp1k4"]
@@ -154,7 +155,14 @@ offset_bottom = 400.0
 hint_tooltip = "Inventory"
 mouse_filter = 1
 
+[node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
+offset_left = 879.0
+offset_top = 42.0
+offset_right = 1011.0
+offset_bottom = 139.0
+
 [node name="Shaders" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
