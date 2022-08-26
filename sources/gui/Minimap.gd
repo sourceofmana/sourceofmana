@@ -11,5 +11,5 @@ func _process(_delta):
 		var mapSize : Vector2		= Vector2(Launcher.Camera.mainCamera.limit_right, Launcher.Camera.mainCamera.limit_bottom)
 		if mapSize.x != 0 && mapSize.y != 0:
 			var posRatio : Vector2 = screenCenter / mapSize * size
-			set_h_scroll(posRatio.x)
-			set_v_scroll(posRatio.y)
+			set_h_scroll(int(posRatio.x))
+			set_v_scroll(int(posRatio.y))
