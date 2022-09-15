@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="2" height="2" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="44">
+ <properties>
+  <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
+  <property name="music" value="Night is calling"/>
+  <property name="name" value="Phatyna Entrance"/>
+ </properties>
+ <tileset firstgid="1" source="../../graphics/tilesets/generic/cave/Gold.tsx"/>
+ <layer id="1" name="Ground 1" width="2" height="2">
+  <data encoding="csv">
+7,8,
+11,12
+</data>
+ </layer>
+</map>
