@@ -5,6 +5,5 @@
 [node name="World" type="Node2D"]
 
 [node name="CanvasLayer" parent="." instance=ExtResource("2")]
-follow_viewport_enable = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
