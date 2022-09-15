@@ -108,7 +108,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 		return scene
 
 	# Post imports script
-	if not options.post_import_script.empty():
+	if not options.post_import_script.is_empty():
 		var script = load(options.post_import_script)
 		if not script or not script is GDScript:
 			printerr("Post import script is not a GDScript.")

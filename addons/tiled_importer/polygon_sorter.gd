@@ -40,7 +40,7 @@ func sort_polygon(vertices):
 	centroid /= size
 
 	center = centroid
-	vertices.sort_custom(self, "is_less")
+	vertices.sort_custom(is_less)
 
 	return PackedVector2Array(vertices)
 
