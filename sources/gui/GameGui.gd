@@ -24,6 +24,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed(Actions.ACTION_UI_QUIT_GAME): ToggleControl($FloatingWindows/Quit)
 	if Input.is_action_just_pressed(Actions.ACTION_UI_INVENTORY): ToggleControl($FloatingWindows/Inventory)
 	if Input.is_action_just_pressed(Actions.ACTION_UI_MINIMAP): ToggleControl($FloatingWindows/Minimap)
+	if Input.is_action_just_pressed(Actions.ACTION_UI_CHAT): ToggleControl($FloatingWindows/Chat)
 
 func _notification(notif):
 	if notif == Node.NOTIFICATION_WM_CLOSE_REQUEST:
