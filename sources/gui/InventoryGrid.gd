@@ -18,7 +18,7 @@ func _ready():
 				Launcher.Util.Assert(false, "Could not find the Icon node for item:" + itemReference._name)
 
 			var tooltip : String = itemReference._name + "\n" + itemReference._description
-			tileInstance.hint_tooltip = tooltip
+			tileInstance.set_tooltip_text(tooltip)
 
 			add_child(tileInstance)
 			slots.append(tileInstance)

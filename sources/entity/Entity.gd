@@ -119,12 +119,10 @@ func UpdateState():
 func Warped(map : Node2D):
 	var nav2d : Node2D = null
 
-	if map && map.has_node("Navigation2D"):
-		nav2d = map.get_node("Navigation2D")
+	if map && map.has_node("Navigation"):
+		nav2d = map.get_node("Navigation")
 
-	if agent:
-		assert(nav2d != null, "Navigation layer not found on current map")
-		agent.set_navigation(nav2d)
+	Launcher.Util.Assert(nav2d != null, "Navigation layer not found on current map")
 
 #
 func _unhandled_input(event):
@@ -135,14 +133,12 @@ func _unhandled_input(event):
 			Warped(Launcher.Map.activeMap)
 			if agent:
 				agent.set_target_location(Launcher.Camera.mainCamera.get_global_mouse_position())
-			get_tree().set_input_as_handled()
 
 	currentInput.x	= Input.get_action_strength(Actions.ACTION_GP_MOVE_RIGHT) - Input.get_action_strength(Actions.ACTION_GP_MOVE_LEFT)
 	currentInput.y	= Input.get_action_strength(Actions.ACTION_GP_MOVE_DOWN) - Input.get_action_strength(Actions.ACTION_GP_MOVE_UP)
 	currentInput.normalized()
 	if currentInput.length() > 0:
 		SwitchInputMode(false)
-		get_tree().set_input_as_handled()
 
 func _physics_process(deltaTime : float):
 	UpdateInput()

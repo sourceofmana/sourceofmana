@@ -7,7 +7,7 @@ func _ready():
 
 func _process(_delta):
 	if Launcher.Camera.mainCamera:
-		var screenCenter : Vector2	= Launcher.Camera.mainCamera.get_camera_screen_center()
+		var screenCenter : Vector2	= Launcher.Camera.mainCamera.get_screen_center_position()
 		var mapSize : Vector2		= Vector2(Launcher.Camera.mainCamera.limit_right, Launcher.Camera.mainCamera.limit_bottom)
 		if mapSize.x != 0 && mapSize.y != 0:
 			var posRatio : Vector2 = screenCenter / mapSize * size

@@ -53,8 +53,8 @@ func LoadDB(path : String) -> Dictionary:
 	return result
 
 # Map
-func LoadMap(path : String) -> Resource:
-	var mapInstance : Resource		= null
+func LoadMap(path : String) -> Node2D:
+	var mapInstance : Node2D	= null
 
 	var filePath : String		= Launcher.Path.MapRsc + path
 	var scenePath : String		= filePath + Launcher.Path.SceneExt
