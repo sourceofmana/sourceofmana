@@ -12,5 +12,7 @@ func _process(_delta):
 		if mapSize.x != 0 && mapSize.y != 0:
 			var posRatio : Vector2 = screenCenter / mapSize
 			var minimapWindowSize = get_node("TextureRect").size
-			set_h_scroll(int(minimapWindowSize.x * posRatio.x - size.x / 2))
-			set_v_scroll(int(minimapWindowSize.y * posRatio.y - size.y / 2))
+			var scrollPos : Vector2i = Vector2i(minimapWindowSize * posRatio - size / 2)
+
+			set_h_scroll(scrollPos.x)
+			set_v_scroll(scrollPos.y)
