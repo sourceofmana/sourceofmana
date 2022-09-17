@@ -13,6 +13,7 @@ const cornerSize		= 15
 var clickPosition		= null
 var isResizing			= false
 var selectedEdge		= EdgeOrientation.NONE
+var max_size			= Vector2(-1, -1)
 
 #
 func ClampViewport(globalPos, moveLimit):
@@ -71,6 +72,11 @@ func ResizeWindow(globalPos):
 				rectPos.y = globalPos.y + (rectSize.y - custom_minimum_size.y)
 			else:
 				rectPos.y = globalPos.y
+
+	if max_size.x != -1:
+		size.x = clamp(size.x, custom_minimum_size.x, max_size.x)
+	if max_size.y != -1:
+		size.y = clamp(size.y, custom_minimum_size.y, max_size.y)
 
 	size = rectSize
 	position = rectPos

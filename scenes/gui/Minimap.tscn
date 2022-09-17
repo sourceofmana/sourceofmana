@@ -6,20 +6,22 @@
 [ext_resource type="Texture2D" uid="uid://wdut7jbhem3h" path="res://data/graphics/minimaps/Phatyna/002-3-0.png" id="4_3dvn1"]
 
 [node name="Panel" type="PanelContainer"]
-custom_minimum_size = Vector2(32, 32)
-offset_right = 235.0
-offset_bottom = 205.0
+custom_minimum_size = Vector2i(160, 96)
+offset_right = 160.0
+offset_bottom = 96.0
 theme = ExtResource("1_6u7q8")
 script = ExtResource("2_4yhdg")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
 offset_left = 5.0
 offset_top = 4.0
-offset_right = 230.0
-offset_bottom = 200.0
+offset_right = 155.0
+offset_bottom = 91.0
 script = ExtResource("3_g8pkj")
 
 [node name="TextureRect" type="TextureRect" parent="ScrollContainer"]
+layout_mode = 2
 offset_right = 428.0
 offset_bottom = 356.0
 texture = ExtResource("4_3dvn1")
