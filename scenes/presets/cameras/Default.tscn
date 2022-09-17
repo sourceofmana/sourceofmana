@@ -1,4 +1,4 @@
-[gd_scene format=2]
+[gd_scene format=3 uid="uid://chfa2rm8sfwc3"]
 
 [node name="PlayerCamera" type="Camera2D"]
 current = true

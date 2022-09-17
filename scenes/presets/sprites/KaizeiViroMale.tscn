@@ -1,9 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://ch4fabqgx6sal"]
 
-[ext_resource path="res://data/graphics/sprites/players/human-male.png" type="Texture" id=1]
+[ext_resource type="Texture2D" uid="uid://dbwd2qy1p6wur" path="res://data/graphics/sprites/players/human-male.png" id="1"]
 
-[node name="Sprite" type="Sprite"]
-texture = ExtResource( 1 )
-offset = Vector2( 0, -32 )
+[node name="Sprite" type="Sprite2D"]
+texture = ExtResource("1")
+offset = Vector2(0, -32)
 hframes = 16
 vframes = 8

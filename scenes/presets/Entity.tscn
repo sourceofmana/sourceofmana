@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://bcq6jo1lfyehe"]
 
-[ext_resource path="res://sources/entity/Entity.gd" type="Script" id=2]
+[ext_resource type="Script" path="res://sources/entity/Entity.gd" id="2"]
 
-[node name="Entity" type="KinematicBody2D"]
+[node name="Entity" type="CharacterBody2D"]
 collision_layer = 3
 collision_mask = 3
-script = ExtResource( 2 )
+script = ExtResource("2")

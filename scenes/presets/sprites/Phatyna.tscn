@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://qelnyqmuropd"]
 
-[ext_resource path="res://data/graphics/sprites/monsters/phatyna.png" type="Texture" id=1]
+[ext_resource type="Texture2D" uid="uid://cwqehwlm65atm" path="res://data/graphics/sprites/monsters/phatyna.png" id="1"]
 
-[node name="Sprite" type="Sprite"]
-texture = ExtResource( 1 )
-offset = Vector2( 0, -16 )
+[node name="Sprite" type="Sprite2D"]
+texture = ExtResource("1")
+offset = Vector2(0, -16)
 hframes = 9
 vframes = 4
 frame = 3
