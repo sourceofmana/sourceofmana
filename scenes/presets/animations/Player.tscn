@@ -1,4 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://1hpo8ttqpjoj"]
+[gd_scene load_steps=17 format=3 uid="uid://1hpo8ttqpjoj"]
+
+[ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://scenes/presets/animations/trees/Default.tscn" id="1_fjltp"]
 
 [sub_resource type="Animation" id="6"]
 resource_name = "IdleDown"
@@ -225,7 +227,14 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_a2i5v"]
+
 [node name="Animation" type="AnimationPlayer"]
 libraries = {
 "": SubResource("AnimationLibrary_pnwib")
 }
+
+[node name="AnimationTree" parent="." instance=ExtResource("1_fjltp")]
+anim_player = NodePath("..")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_a2i5v")

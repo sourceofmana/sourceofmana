@@ -17,10 +17,11 @@ func Create(entity : Object) -> Node2D:
 			instanciatedEntity.add_child(instanciatedEntity.sprite)
 		if entity._animation:
 			instanciatedEntity.animation = Launcher.FileSystem.LoadPreset("animations/" + entity._animation)
+			var canFetchAnimTree = instanciatedEntity.animation != null && instanciatedEntity.animation.has_node("AnimationTree")
+			Launcher.Util.Assert(canFetchAnimTree, "No AnimationTree found")
+			if canFetchAnimTree:
+				instanciatedEntity.animationTree = instanciatedEntity.animation.get_node("AnimationTree")
 			instanciatedEntity.add_child(instanciatedEntity.animation)
-		if entity._animationTree:
-			instanciatedEntity.animationTree = Launcher.FileSystem.LoadPreset("animations/trees/" + entity._animationTree)
-			instanciatedEntity.add_child(instanciatedEntity.animationTree)
 		if entity._navigationAgent:
 			instanciatedEntity.agent = Launcher.FileSystem.LoadPreset("navigations/" + entity._navigationAgent)
 			instanciatedEntity.add_child(instanciatedEntity.agent)
