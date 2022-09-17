@@ -180,6 +180,7 @@ func build(source_path, options):
 
 	var layerID = 0
 	var level = TileMap.new()
+	tileset.tile_size = cell_size
 	level.set_tileset(map_data.tileset)
 	level.set("editor/display_folded", true)
 	root.add_child(level)
@@ -194,7 +195,6 @@ func build(source_path, options):
 			
 		level.add_layer(layerID)
 		++layerID
-
 		err = make_layer(level, tmxLayer, root, root, map_data, z_index, layerID)
 
 		if err != OK:
@@ -389,7 +389,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 				var cell_x = cell_offset.x + chunk.x + (count % int(chunk.width))
 				var cell_y = cell_offset.y + chunk.y + int(count / chunk.width)
-				level.set_cell(layerID, Vector2i(cell_x, cell_y), -1, Vector2(-1, -1), gid)
+				level.set_cell(layerID, Vector2i(cell_x, cell_y), 0, Vector2(1, 2))
 
 				if gid > max_gid:
 					max_gid = gid
@@ -445,7 +445,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 		var is_navigation_layer = false
 
 		if "name" in tmxLayer and not str(tmxLayer.name).is_empty() && str(tmxLayer.name) == "Navigation":
-			object_layer = NavigationMesh.new()
+			object_layer = NavigationRegion2D.new()
 			is_navigation_layer = true
 		else:
 			object_layer = Node2D.new()
@@ -456,11 +456,9 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 			set_custom_properties(object_layer, tmxLayer)
 			object_layer.set("editor/display_folded", true)
 		if is_navigation_layer:
-			var nav2d : NavigationPolygon = NavigationPolygon.new()
-			parent.add_child(nav2d)
-			nav2d.set_owner(root)
-			nav2d.set_name("Navigation2D")
-			nav2d.add_child(object_layer)
+			object_layer.navpoly = NavigationPolygon.new()
+			object_layer.set_name("Navigation2D")
+			parent.add_child(object_layer)
 			object_layer.set_owner(root)
 		else:
 			parent.add_child(object_layer)
@@ -614,7 +612,9 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 					if customObject && object_layer:
 						if is_navigation_layer:
-							var polygon_offseted : PackedVector2Array = [Transform2D(0, pos).basis_xform(customObject.polygon)]
+							var polygon_offseted : PackedVector2Array = []
+							for poly in customObject.polygon:
+								polygon_offseted.append(pos + poly)
 							var nav_polygon : NavigationPolygon = object_layer.get_navigation_polygon()
 							if nav_polygon == null:
 								nav_polygon = NavigationPolygon.new()
@@ -813,13 +813,14 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 				print_error("Missing or invalid firstgid tileset property.")
 				return ERR_INVALID_DATA
 
-			ts_source_path = source_path.get_base_dir().plus_file(ts.source)
+			ts_source_path = source_path.get_base_dir().path_join(ts.source)
 			# Used later for templates
 			_tileset_path_to_first_gid[ts_source_path] = tileset.firstgid
 
 			if ts.source.get_extension().to_lower() == "tsx":
 				var tsx_reader = TiledXMLToDictionary.new()
 				ts = tsx_reader.read_tsx(ts_source_path)
+
 				if typeof(ts) != TYPE_DICTIONARY:
 					# Error happened
 					return ts
@@ -841,7 +842,6 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 					return ERR_INVALID_DATA
 
 			ts.firstgid = tileset.firstgid
-
 		err = validate_tileset(ts)
 		if err != OK:
 			return err
@@ -944,7 +944,7 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 #				if options.apply_offset:
 #					tsAtlas.set_margins(Vector2(0, 32-image.get_height()))
 			tsAtlas.set_texture_region_size(region.size)
-			tsAtlas.create_tile(region.position / 32, region.size / 32)
+			tsAtlas.create_tile(region.position / region.size, region.size / region.size)
 
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:
@@ -1031,7 +1031,7 @@ func build_navigation_polygon_for_scene(tilesets, source_path, options):
 				print_error("Missing or invalid firstgid tileset property.")
 				return ERR_INVALID_DATA
 
-			ts_source_path = source_path.get_base_dir().plus_file(ts.source)
+			ts_source_path = source_path.get_base_dir().path_join(ts.source)
 			# Used later for templates
 			_tileset_path_to_first_gid[ts_source_path] = tileset.firstgid
 
