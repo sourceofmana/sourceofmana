@@ -82,6 +82,8 @@ var collisionPool : Array = []
 var navigationPool : Array = []
 # JSON Instance
 var JSONInstance = JSON.new()
+# Tile DB
+var tileDic : Dictionary = {}
 
 func reset_global_memebers():
 	_loaded_templates = {}
@@ -169,7 +171,7 @@ func build(source_path, options):
 		"infinite": bool(map.infinite) if "infinite" in map else false
 	}
 
-	var z_index = -1
+	var z_index = 0
 
 	var base_polygon = PackedVector2Array([
 			Vector2(0, 0),
@@ -181,21 +183,17 @@ func build(source_path, options):
 	var layerID = 0
 	var level = TileMap.new()
 	tileset.tile_size = cell_size
-	level.set_tileset(map_data.tileset)
+	level.set_tileset(tileset)
 	level.set("editor/display_folded", true)
 	root.add_child(level)
 	level.set_owner(root)
 	level.set_name(source_path.get_file().get_basename())
 
 	for tmxLayer in map.layers:
-		if "Fringe" in tmxLayer.name:
-			z_index = 0
-		elif z_index == 0:
-			z_index = 1
-			
 		level.add_layer(layerID)
 		++layerID
 		err = make_layer(level, tmxLayer, root, root, map_data, z_index, layerID)
+		z_index += 1
 
 		if err != OK:
 			return err
@@ -340,9 +338,9 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 	var opacity = float(tmxLayer.opacity) if "opacity" in tmxLayer else 1.0
 	var visible = bool(tmxLayer.visible) if "visible" in tmxLayer else true
 
+	level.set_layer_name(layerID, tmxLayer.name)
 	if tmxLayer.type == "tilelayer":
 		var layer_size = Vector2(int(tmxLayer.width), int(tmxLayer.height))
-		level.set_layer_name(layerID, tmxLayer.name)
 		level.set_layer_modulate(layerID, Color(1.0, 1.0, 1.0, opacity))
 		level.set_layer_enabled(layerID, visible)
 		level.set_layer_y_sort_enabled(layerID, true if "Fringe" in tmxLayer.name else false)
@@ -389,7 +387,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 				var cell_x = cell_offset.x + chunk.x + (count % int(chunk.width))
 				var cell_y = cell_offset.y + chunk.y + int(count / chunk.width)
-				level.set_cell(layerID, Vector2i(cell_x, cell_y), 0, Vector2(1, 2))
+				level.set_cell(layerID, Vector2i(cell_x, cell_y), tileDic[gid][0], tileDic[gid][1])
 
 				if gid > max_gid:
 					max_gid = gid
@@ -802,10 +800,11 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 	var err = ERR_INVALID_DATA
 	var tile_meta = {}
 	var tsGroup = TileSet.new()
+	tsGroup.set_tile_layout(TileSet.TileLayout.TILE_LAYOUT_STAIRS_RIGHT)
 
 	for tileset in tilesets:
 		var tsAtlas = TileSetAtlasSource.new()
-		tsGroup.add_source(tsAtlas)
+		var layerID = tsGroup.add_source(tsAtlas)
 		var ts = tileset
 		var ts_source_path = source_path
 		if "source" in ts:
@@ -943,8 +942,10 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 					tsAtlas.set_texture(image)
 #				if options.apply_offset:
 #					tsAtlas.set_margins(Vector2(0, 32-image.get_height()))
+			var atlasPos : Vector2i = region.position / region.size
+			tileDic[gid] = [layerID, atlasPos]
 			tsAtlas.set_texture_region_size(region.size)
-			tsAtlas.create_tile(region.position / region.size, region.size / region.size)
+			tsAtlas.create_tile(atlasPos, region.size / region.size)
 
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:
@@ -999,6 +1000,7 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 
 	if options.custom_properties and options.tile_metadata:
 		tsGroup.set_meta("tile_meta", tile_meta)
+
 	return tsGroup
 
 # Makes a standalone TileSet. Useful for importing TileSets from Tiled
