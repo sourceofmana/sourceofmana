@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://sources/entity/Entity.gd" id="2"]
 
 [node name="Entity" type="CharacterBody2D"]
+y_sort_enabled = true
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("2")

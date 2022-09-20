@@ -187,6 +187,7 @@ func build(source_path, options):
 	root.add_child(level)
 	level.set_owner(root)
 	level.set_name(source_path.get_file().get_basename())
+	level.set_y_sort_enabled(true)
 
 	for tmxLayer in map.layers:
 		if tmxLayer.name == "Fringe":
