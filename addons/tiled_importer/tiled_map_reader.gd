@@ -171,8 +171,6 @@ func build(source_path, options):
 		"infinite": bool(map.infinite) if "infinite" in map else false
 	}
 
-	var z_index = 0
-
 	var base_polygon = PackedVector2Array([
 			Vector2(0, 0),
 			Vector2(int(map.layers[0].width * 32), 0),
@@ -181,6 +179,7 @@ func build(source_path, options):
 	])
 
 	var layerID = 0
+	var zOrder = 0
 	var level = TileMap.new()
 	tileset.tile_size = cell_size
 	level.set_tileset(tileset)
@@ -190,10 +189,16 @@ func build(source_path, options):
 	level.set_name(source_path.get_file().get_basename())
 
 	for tmxLayer in map.layers:
+		if tmxLayer.name == "Fringe":
+			break
+		else:
+			zOrder -= 1
+
+	for tmxLayer in map.layers:
 		level.add_layer(layerID)
-		++layerID
-		err = make_layer(level, tmxLayer, root, root, map_data, z_index, layerID)
-		z_index += 1
+		err = make_layer(level, tmxLayer, root, root, map_data, zOrder, layerID)
+		layerID +=1
+		zOrder += 1
 
 		if err != OK:
 			return err
@@ -800,7 +805,6 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 	var err = ERR_INVALID_DATA
 	var tile_meta = {}
 	var tsGroup = TileSet.new()
-	tsGroup.set_tile_layout(TileSet.TileLayout.TILE_LAYOUT_STAIRS_RIGHT)
 
 	for tileset in tilesets:
 		var tsAtlas = TileSetAtlasSource.new()
