@@ -1,62 +1,36 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bkef572pka3gv"]
 
-[ext_resource path="res://data/graphics/gui/inventory/closebackground.png" type="Texture" id=1]
-[ext_resource path="res://data/graphics/gui/inventory/background.png" type="Texture" id=2]
-[ext_resource path="res://data/graphics/gui/inventory/closebutton.png" type="Texture" id=3]
+[ext_resource type="Texture2D" uid="uid://dsw3ffnpfp7rw" path="res://data/graphics/gui/inventory/background.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bg4lcfpfs8wuo" path="res://data/graphics/gui/inventory/closebutton.png" id="3"]
 
 [node name="Window" type="Control"]
-margin_right = 533.0
-margin_bottom = 265.0
+layout_mode = 3
+anchors_preset = 0
 mouse_filter = 1
 
 [node name="Background" type="NinePatchRect" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
-texture = ExtResource( 2 )
+texture = ExtResource("2")
 patch_margin_left = 5
 patch_margin_top = 6
 patch_margin_right = 5
 patch_margin_bottom = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Close" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = 460.0
-margin_top = 2.0
-margin_right = 500.0
-margin_bottom = 42.0
 mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CloseBackground" type="TextureRect" parent="Close"]
-visible = false
-margin_left = -486.0
-margin_top = -9.0
-margin_right = -446.0
-margin_bottom = 31.0
-texture = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="CloseButton" type="TextureButton" parent="Close"]
+anchors_preset = -1
 anchor_left = -11.75
 anchor_top = -0.2
 anchor_right = -11.325
 anchor_bottom = 0.225
-margin_left = -8.0
-margin_top = 7.0
-margin_right = -8.0
-margin_bottom = 7.0
 mouse_filter = 1
-texture_normal = ExtResource( 3 )
-stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
+texture_normal = ExtResource("3")

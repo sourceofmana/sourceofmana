@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cx3n3yjonu1x4"]
+[gd_scene load_steps=12 format=3 uid="uid://cx3n3yjonu1x4"]
 
 [ext_resource type="Texture2D" uid="uid://b8iqfegulwe6t" path="res://data/graphics/gui/button.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://owocc5bniyvj" path="res://scenes/gui/StatIndicator.tscn" id="2"]
@@ -8,37 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://c4aoe63fobqn6" path="res://scenes/gui/inventory/Inventory.tscn" id="6"]
 [ext_resource type="Script" path="res://sources/gui/FloatingWindows.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://ddi7hwl7efcod" path="res://scenes/gui/Quit.tscn" id="8"]
-[ext_resource type="Shader" path="res://sources/shaders/HQ4x.gdshader" id="9_k3j53"]
 [ext_resource type="PackedScene" uid="uid://p32vsmjk8hmh" path="res://scenes/gui/Minimap.tscn" id="9_myjuo"]
-[ext_resource type="Shader" path="res://sources/shaders/CRT.gdshader" id="10_t0lb8"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pp1k4"]
-shader = ExtResource("9_k3j53")
-shader_parameter/enabled = null
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vehbk"]
-shader = ExtResource("10_t0lb8")
-shader_parameter/warp_amount = null
-shader_parameter/vignette_opacity = null
-shader_parameter/vignette_intensity = null
-shader_parameter/static_noise_intensity = null
-shader_parameter/scanlines_width = null
-shader_parameter/scanlines_opacity = null
-shader_parameter/roll_variation = null
-shader_parameter/roll_speed = null
-shader_parameter/roll_size = null
-shader_parameter/roll = null
-shader_parameter/resolution = null
-shader_parameter/pixelate = null
-shader_parameter/overlay = null
-shader_parameter/noise_speed = null
-shader_parameter/noise_opacity = null
-shader_parameter/grille_opacity = null
-shader_parameter/distort_intensity = null
-shader_parameter/discolor = null
-shader_parameter/clip_warp = null
-shader_parameter/brightness = null
-shader_parameter/aberration = null
+[ext_resource type="PackedScene" uid="uid://6pundiwfj5s1" path="res://scenes/shaders/HQ4x.tscn" id="10_id8es"]
+[ext_resource type="PackedScene" uid="uid://bagfvnt2bhttv" path="res://scenes/shaders/CRT.tscn" id="11_x7rk2"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 layer = 128
@@ -194,28 +166,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="HQ4x" type="TextureRect" parent="Shaders"]
-visible = false
-material = SubResource("ShaderMaterial_pp1k4")
+[node name="HQ4x" parent="Shaders" instance=ExtResource("10_id8es")]
+visible = true
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("1")
 
-[node name="CRT" type="TextureRect" parent="Shaders"]
-visible = false
-material = SubResource("ShaderMaterial_vehbk")
+[node name="CRT" parent="Shaders" instance=ExtResource("11_x7rk2")]
+visible = true
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("1")
 
 [connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]
