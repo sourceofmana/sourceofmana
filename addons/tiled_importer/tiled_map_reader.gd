@@ -349,8 +349,10 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 		var layer_size = Vector2(int(tmxLayer.width), int(tmxLayer.height))
 		level.set_layer_modulate(layerID, Color(1.0, 1.0, 1.0, opacity))
 		level.set_layer_enabled(layerID, visible)
-		level.set_layer_y_sort_enabled(layerID, true if "Fringe" in tmxLayer.name else false)
 		level.set_layer_z_index(layerID, zindex)
+		if "Fringe" in tmxLayer.name:
+			level.set_layer_y_sort_enabled(layerID, true)
+			level.set_layer_y_sort_origin(layerID, 32)
 
 		var offset = Vector2()
 		if "offsetx" in tmxLayer:
@@ -393,6 +395,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 				var cell_x = cell_offset.x + chunk.x + (count % int(chunk.width))
 				var cell_y = cell_offset.y + chunk.y + int(count / chunk.width)
+
 				level.set_cell(layerID, Vector2i(cell_x, cell_y), tileDic[gid][0], tileDic[gid][1])
 
 				if gid > max_gid:
@@ -951,6 +954,15 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 			tileDic[gid] = [layerID, atlasPos]
 			tsAtlas.set_texture_region_size(region.size)
 			tsAtlas.create_tile(atlasPos, region.size / region.size)
+			if region.size.x > 32 || region.size.y > 32:
+				var textureOffset : Vector2i
+				var tileData : TileData = tsAtlas.get_tile_data(atlasPos, 0)
+				print(tileData.get_texture_offset())
+				textureOffset.x = -(region.size.x - 32) / 2
+				textureOffset.y = (region.size.y - 32) / 2
+				tileData.set_texture_offset(textureOffset)
+				print(tileData.get_texture_offset())
+				print("")
 
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:
