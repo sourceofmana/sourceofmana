@@ -171,13 +171,6 @@ func build(source_path, options):
 		"infinite": bool(map.infinite) if "infinite" in map else false
 	}
 
-	var base_polygon = PackedVector2Array([
-			Vector2(0, 0),
-			Vector2(int(map.layers[0].width * 32), 0),
-			Vector2(int(map.layers[0].width * 32), int(map.layers[0].height * 32)),
-			Vector2(0, int(map.layers[0].height * 32))
-	])
-
 	var layerID = 0
 	var zOrder = 0
 	var level = TileMap.new()
@@ -809,6 +802,7 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 	var err = ERR_INVALID_DATA
 	var tile_meta = {}
 	var tsGroup = TileSet.new()
+	tsGroup.add_physics_layer()
 
 	for tileset in tilesets:
 		var tsAtlas = TileSetAtlasSource.new()
@@ -954,15 +948,13 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 			tileDic[gid] = [layerID, atlasPos]
 			tsAtlas.set_texture_region_size(region.size)
 			tsAtlas.create_tile(atlasPos, region.size / region.size)
+
+			var tileData : TileData = tsAtlas.get_tile_data(atlasPos, 0)
+			var textureOffset : Vector2i = Vector2i.ZERO
 			if region.size.x > 32 || region.size.y > 32:
-				var textureOffset : Vector2i
-				var tileData : TileData = tsAtlas.get_tile_data(atlasPos, 0)
-				print(tileData.get_texture_offset())
 				textureOffset.x = -(region.size.x - 32) / 2
 				textureOffset.y = (region.size.y - 32) / 2
 				tileData.set_texture_offset(textureOffset)
-				print(tileData.get_texture_offset())
-				print("")
 
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:
@@ -976,20 +968,34 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 						return shape
 
 					var offset = Vector2(float(object.x), float(object.y))
-					if "width" in object and "height" in object:
-						offset += Vector2(float(object.width) / 2, float(object.height) / 2)
+					offset -= Vector2(16,16) if region.size == Vector2(32,32) else Vector2(16, region.size.y - 16)
 
-#					result.tile_add_shape(gid, shape, Transform2D(0, offset), object.type == "one-way")
+					var polygonShape : PackedVector2Array = []
+					if shape is ConvexPolygonShape2D:
+						polygonShape = shape.get_points()
+					elif shape is ConcavePolygonShape2D:
+						polygonShape = shape.get_segments()
+					elif shape is RectangleShape2D:
+						var shapeSize = shape.get_size()
+						polygonShape = [ \
+							Vector2(0, 0), \
+							Vector2(0, shapeSize.y), \
+							Vector2(0, shapeSize.y), \
+							Vector2(shapeSize.x, shapeSize.y), \
+							Vector2(shapeSize.x, shapeSize.y), \
+							Vector2(shapeSize.x, 0), \
+							Vector2(shapeSize.x, 0), \
+							Vector2(0, 0) \
+							]
 
-#					if object.type == "navigation":
-#						result.tile_set_navigation_polygon(gid, shape)
-#						result.tile_set_navigation_polygon_offset(gid, offset)
-#					elif object.type == "occluder":
-#						result.tile_set_light_occluder(gid, shape)
-#						result.tile_set_occluder_offset(gid, offset)
-#					else:
-#						result.tile_add_shape(gid, shape, Transform2D(0, offset), object.type == "one-way")
+					if region.size.x == 160:
+						print(polygonShape)
 
+					for iVertice in range(0, polygonShape.size()):
+						polygonShape[iVertice] += offset
+					if polygonShape.is_empty() == false:
+						tileData.set_collision_polygons_count(0, 1)
+						tileData.set_collision_polygon_points(0, 0, polygonShape)
 
 #			if "properties" in ts and "custom_material" in ts.properties:
 #				result.tile_set_material(gid, load(ts.properties.custom_material))
