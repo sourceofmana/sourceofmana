@@ -1,5 +1,6 @@
 *.DS_Store
 binary/*
+build/*
 .godot/editor*/
 .godot/shader*/
 .godot/*.bin
