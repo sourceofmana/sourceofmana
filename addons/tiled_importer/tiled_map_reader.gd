@@ -973,7 +973,6 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 					var polygonShape : PackedVector2Array = []
 					if shape is ConvexPolygonShape2D:
 						polygonShape = shape.get_points()
-
 					elif shape is ConcavePolygonShape2D:
 						polygonShape = shape.get_segments()
 					elif shape is RectangleShape2D:

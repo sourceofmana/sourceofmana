@@ -5,9 +5,9 @@ extends Area2D
 @export var destinationPos : Vector2			= Vector2.ZERO
 
 #
-func areaEntered(area):
-	if area && area is KinematicCollision2D:
-		Launcher.Map.Warp(self, destinationMap, destinationPos, area)
+func bodyEntered(body):
+	if body && body is CharacterBody2D:
+		Launcher.Map.Warp(self, destinationMap, destinationPos, body)
 
 #
 func _init():
@@ -15,4 +15,5 @@ func _init():
 	collision_mask = 2
 
 func _ready():
-	self.area_entered.connect(self.areaEntered)
+	var err = self.body_entered.connect(bodyEntered)
+	Launcher.Util.Assert(err == OK, "Could not connect map warp signal")
