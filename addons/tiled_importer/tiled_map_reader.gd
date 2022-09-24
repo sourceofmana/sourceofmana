@@ -973,6 +973,7 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 					var polygonShape : PackedVector2Array = []
 					if shape is ConvexPolygonShape2D:
 						polygonShape = shape.get_points()
+
 					elif shape is ConcavePolygonShape2D:
 						polygonShape = shape.get_segments()
 					elif shape is RectangleShape2D:
@@ -988,14 +989,12 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 							Vector2(0, 0) \
 							]
 
-					if region.size.x == 160:
-						print(polygonShape)
-
 					for iVertice in range(0, polygonShape.size()):
 						polygonShape[iVertice] += offset
 					if polygonShape.is_empty() == false:
-						tileData.set_collision_polygons_count(0, 1)
-						tileData.set_collision_polygon_points(0, 0, polygonShape)
+						var tilePolygonCount = tileData.get_collision_polygons_count(0)
+						tileData.set_collision_polygons_count(0, tilePolygonCount + 1)
+						tileData.set_collision_polygon_points(0, tilePolygonCount, polygonShape)
 
 #			if "properties" in ts and "custom_material" in ts.properties:
 #				result.tile_set_material(gid, load(ts.properties.custom_material))
