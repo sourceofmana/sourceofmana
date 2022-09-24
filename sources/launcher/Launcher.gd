@@ -6,6 +6,7 @@ var FileSystem			= null
 var Util				= null
 # Specific services
 var World				= null
+var GUI					= null
 var Debug				= null
 # Low-prio services
 var Audio				= null
@@ -27,6 +28,7 @@ func _init():
 func _ready():
 	# Load first low-prio services on which the order is important
 	World			= get_tree().root.get_node("World")
+	GUI				= World.get_node("CanvasLayer")
 
 	if OS.is_debug_build():
 		Debug		= FileSystem.LoadSource("debug/Debug.gd")

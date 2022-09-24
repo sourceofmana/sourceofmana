@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dml4oic211pyo"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_eubtc"]
+[ext_resource type="Script" path="res://sources/gui/WindowButton.gd" id="2_nytlv"]
+
+[node name="Button" type="Button"]
+offset_right = 32.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme = ExtResource("1_eubtc")
+toggle_mode = true
+script = ExtResource("2_nytlv")
+
+[connection signal="pressed" from="." to="." method="_on_button_pressed"]
