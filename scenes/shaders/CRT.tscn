@@ -28,7 +28,6 @@ shader_parameter/brightness = null
 shader_parameter/aberration = null
 
 [node name="CRT" type="TextureRect"]
-visible = false
 material = SubResource("ShaderMaterial_vehbk")
 anchors_preset = 15
 anchor_right = 1.0

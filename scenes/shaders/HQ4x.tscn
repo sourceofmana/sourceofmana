@@ -8,7 +8,6 @@ shader = ExtResource("1_ojh3w")
 shader_parameter/enabled = null
 
 [node name="HQ4x" type="TextureRect"]
-visible = false
 material = SubResource("ShaderMaterial_pp1k4")
 anchors_preset = 15
 anchor_right = 1.0
