@@ -20,5 +20,14 @@ func _ready():
 			var tooltip : String = itemReference._name + "\n" + itemReference._description
 			tileInstance.set_tooltip_text(tooltip)
 
+			tileInstance.set_name(itemReference._name)
 			add_child(tileInstance)
 			slots.append(tileInstance)
+		_on_panel_resized()
+
+func _on_panel_resized():
+	var tileSize = 38 # Tile.size.x + h_separation 
+	if get_child_count() > 0:
+		tileSize = get_child(0).size.x + get("theme_override_constants/h_separation")
+
+	set_columns(int(get_parent().get_size().x / tileSize))

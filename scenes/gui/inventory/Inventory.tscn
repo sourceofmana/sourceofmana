@@ -9,16 +9,18 @@
 
 [node name="Panel" type="Panel"]
 show_behind_parent = true
-custom_minimum_size = Vector2(180, 100)
+custom_minimum_size = Vector2i(180, 100)
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -663.0
-offset_bottom = -492.0
-hint_tooltip = "Panel"
+offset_right = -979.0
+offset_bottom = -620.0
 theme = ExtResource("1")
 script = ExtResource("7")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
@@ -30,11 +32,13 @@ size_flags_vertical = 3
 metadata/_edit_use_custom_anchors = true
 
 [node name="TitleBar" type="HBoxContainer" parent="VBoxContainer"]
-offset_right = 349.0
+layout_mode = 2
+offset_right = 289.0
 offset_bottom = 18.0
 size_flags_vertical = 0
 
 [node name="WindowName" type="Label" parent="VBoxContainer/TitleBar"]
+layout_mode = 2
 offset_right = 72.0
 offset_bottom = 18.0
 size_flags_horizontal = 0
@@ -43,6 +47,8 @@ mouse_filter = 1
 text = "Inventory"
 
 [node name="ControlEmpty" type="Control" parent="VBoxContainer/TitleBar"]
+layout_mode = 2
+anchors_preset = 0
 offset_left = 76.0
 offset_right = 76.0
 size_flags_horizontal = 2
@@ -50,8 +56,9 @@ size_flags_vertical = 0
 mouse_filter = 1
 
 [node name="CloseButton" type="TextureButton" parent="VBoxContainer/TitleBar"]
-offset_left = 332.0
-offset_right = 349.0
+layout_mode = 2
+offset_left = 272.0
+offset_right = 289.0
 offset_bottom = 17.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -60,26 +67,31 @@ mouse_filter = 1
 texture_normal = ExtResource("3")
 
 [node name="Offset" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 1)
+custom_minimum_size = Vector2i(0, 1)
+layout_mode = 2
+anchors_preset = 0
 offset_top = 22.0
-offset_right = 349.0
+offset_right = 289.0
 offset_bottom = 23.0
 
 [node name="Weight" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
 offset_top = 27.0
-offset_right = 349.0
+offset_right = 289.0
 offset_bottom = 45.0
 size_flags_horizontal = 3
 
 [node name="Text" type="Label" parent="VBoxContainer/Weight"]
+layout_mode = 2
 offset_right = 50.0
 offset_bottom = 18.0
 size_flags_vertical = 3
 text = "Weight"
 
 [node name="BgTex" type="NinePatchRect" parent="VBoxContainer/Weight"]
+layout_mode = 2
 offset_left = 54.0
-offset_right = 349.0
+offset_right = 289.0
 offset_bottom = 18.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -90,6 +102,8 @@ patch_margin_right = 3
 patch_margin_bottom = 3
 
 [node name="Weight" parent="VBoxContainer/Weight/BgTex" instance=ExtResource("2")]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 0.0
@@ -103,20 +117,25 @@ precisionDivider = 100
 metadata/_edit_layout_mode = 1
 
 [node name="ItemContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
 offset_top = 49.0
-offset_right = 349.0
-offset_bottom = 97.0
+offset_right = 289.0
+offset_bottom = 89.0
 size_flags_vertical = 3
+horizontal_scroll_mode = 3
 
 [node name="Grid" type="GridContainer" parent="VBoxContainer/ItemContainer"]
-offset_right = 349.0
-offset_bottom = 48.0
+clip_contents = true
+layout_mode = 2
+offset_right = 289.0
+offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
-columns = 10
+columns = 4
 script = ExtResource("9")
 
 [connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
+[connection signal="resized" from="." to="VBoxContainer/ItemContainer/Grid" method="_on_panel_resized"]
 [connection signal="pressed" from="VBoxContainer/TitleBar/CloseButton" to="." method="_on_CloseButton_pressed"]
