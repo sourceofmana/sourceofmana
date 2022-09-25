@@ -6,6 +6,7 @@ var MusicsDB : Dictionary			= {}
 var EthnicitiesDB : Dictionary		= {}
 var HairstylesDB : Dictionary		= {}
 var EntitiesDB : Dictionary			= {}
+var EmotesDB : Dictionary			= {}
 
 #
 func ParseItemsDB():
@@ -97,6 +98,19 @@ func ParseEntitiesDB():
 			EntitiesDB[key] = entity
 
 #
+func ParseEmotesDB():
+	var Item = load(Launcher.Path.DBInstSrc + "Item.gd")
+	var result = Launcher.FileSystem.LoadDB("emotes.json")
+
+	if not result.is_empty():
+		for key in result:
+			var emote = Item.new()
+			emote._id = key.to_int()
+			emote._name = result[key].Name
+			emote._path = result[key].Path
+			EmotesDB[key] = emote
+
+#
 func _post_ready():
 	ParseItemsDB()
 	ParseMapsDB()
@@ -104,3 +118,4 @@ func _post_ready():
 	ParseEthnicitiesDB()
 	ParseHairstylesDB()
 	ParseEntitiesDB()
+	ParseEmotesDB()

@@ -170,11 +170,10 @@ func LoadMusic(path : String) -> Resource:
 
 	return musicFile
 
-# Item
-func LoadItem(path : String) -> Resource:
-	var fullPath : String = Launcher.Path.ItemRsc + path
+# Generic texture loading
+func LoadGfx(path : String) -> Resource:
+	var fullPath : String = Launcher.Path.GfxRsc + path
 	return LoadResource(fullPath, false)
-	
 
 # Minimap
 func LoadMinimap(path : String) -> Resource:

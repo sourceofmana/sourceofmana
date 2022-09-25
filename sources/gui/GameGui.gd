@@ -1,6 +1,8 @@
 extends Node
 
 @onready var weightStat		= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/Weight
+@onready var itemInventory	= $FloatingWindows/Inventory/VBoxContainer/ItemContainer/Grid
+@onready var emoteList		= $FloatingWindows/Emote/ItemContainer/Grid
 
 #
 func ToggleControl(control : Control):
@@ -17,6 +19,16 @@ func UpdatePlayerInfo():
 #
 func _ready():
 	get_tree().set_auto_accept_quit(false)
+
+	if Launcher.Entities.activePlayer:
+		assert(itemInventory, "Item inventory container is missing")
+		if itemInventory:
+			itemInventory.FillGridContainer(Launcher.Entities.activePlayer.inventory.items)
+
+	assert(emoteList, "Emote grid container is missing")
+	if emoteList:
+		emoteList.FillGridContainer(Launcher.DB.EmotesDB)
+
 
 func _process(_delta):
 	UpdatePlayerInfo()

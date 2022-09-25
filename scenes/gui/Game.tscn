@@ -1,15 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://cx3n3yjonu1x4"]
+[gd_scene load_steps=13 format=3 uid="uid://cx3n3yjonu1x4"]
 
 [ext_resource type="PackedScene" uid="uid://owocc5bniyvj" path="res://scenes/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Script" path="res://sources/gui/GameGui.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://dml4oic211pyo" path="res://scenes/gui/WindowButton.tscn" id="3_sl5jl"]
 [ext_resource type="PackedScene" uid="uid://c2q5vtkxo04dp" path="res://scenes/gui/ActionBox.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://clslfktryuttf" path="res://scenes/gui/Chat.tscn" id="5"]
-[ext_resource type="PackedScene" uid="uid://c4aoe63fobqn6" path="res://scenes/gui/inventory/Inventory.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://dgyikuvy3k4wl" path="res://scenes/gui/inventory/Inventory.tscn" id="6"]
 [ext_resource type="Script" path="res://sources/gui/FloatingWindows.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://ddi7hwl7efcod" path="res://scenes/gui/Quit.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://p32vsmjk8hmh" path="res://scenes/gui/Minimap.tscn" id="9_myjuo"]
 [ext_resource type="PackedScene" uid="uid://6pundiwfj5s1" path="res://scenes/shaders/HQ4x.tscn" id="10_id8es"]
+[ext_resource type="PackedScene" uid="uid://qkbagdfpd22b" path="res://scenes/gui/Emote.tscn" id="10_q754c"]
 [ext_resource type="PackedScene" uid="uid://bagfvnt2bhttv" path="res://scenes/shaders/CRT.tscn" id="11_x7rk2"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
@@ -43,14 +44,14 @@ mouse_filter = 2
 layout_mode = 2
 anchors_preset = 0
 offset_left = 390.0
-offset_right = 1079.0
+offset_right = 1023.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 mouse_filter = 2
 
 [node name="HBoxButtons" type="HBoxContainer" parent="VBoxMain/HBoxTop"]
 layout_mode = 2
-offset_left = 1083.0
+offset_left = 1027.0
 offset_right = 1280.0
 offset_bottom = 21.0
 size_flags_vertical = 0
@@ -78,6 +79,14 @@ offset_left = 127.0
 offset_right = 197.0
 offset_bottom = 21.0
 text = "Minimap"
+targetWindow = NodePath("../../../../FloatingWindows/Minimap")
+
+[node name="Emote" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+layout_mode = 2
+offset_left = 201.0
+offset_right = 253.0
+offset_bottom = 21.0
+text = "Emote"
 targetWindow = NodePath("../../../../FloatingWindows/Minimap")
 
 [node name="MainPanelContainer" type="Control" parent="VBoxMain"]
@@ -140,14 +149,16 @@ metadata/_edit_layout_mode = 1
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
 show_behind_parent = false
-custom_minimum_size = Vector2i(180, 100)
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 800.0
-offset_top = 300.0
-offset_right = 980.0
-offset_bottom = 400.0
+offset_left = 1057.0
+offset_top = 257.0
+offset_right = 1237.0
+offset_bottom = 357.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
 custom_minimum_size = Vector2i(200, 125)
@@ -156,6 +167,14 @@ offset_left = 1065.0
 offset_top = 33.0
 offset_right = 1265.0
 offset_bottom = 158.0
+
+[node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
+custom_minimum_size = Vector2i(34, 34)
+layout_mode = 0
+offset_left = 1067.0
+offset_top = 164.0
+offset_right = 1201.0
+offset_bottom = 214.0
 
 [node name="Shaders" type="Control" parent="."]
 visible = false
