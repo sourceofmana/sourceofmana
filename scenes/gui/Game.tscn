@@ -135,6 +135,7 @@ offset_right = -725.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 metadata/_edit_layout_mode = 1
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
@@ -147,7 +148,6 @@ offset_left = 800.0
 offset_top = 300.0
 offset_right = 980.0
 offset_bottom = 400.0
-mouse_filter = 1
 
 [node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
 layout_mode = 0
