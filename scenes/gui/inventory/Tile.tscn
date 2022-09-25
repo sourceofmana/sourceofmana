@@ -6,7 +6,7 @@ offset_right = 32.0
 offset_bottom = 32.0
 color = Color(0.32549, 0.305882, 0.290196, 1)
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="Icon" type="TextureButton" parent="."]
 custom_minimum_size = Vector2i(32, 32)
 layout_mode = 1
 anchors_preset = 8

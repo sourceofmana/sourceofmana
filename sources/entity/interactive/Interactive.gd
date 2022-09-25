@@ -6,6 +6,7 @@ var emoteDelay : float				= 5.0
 
 var currentEmoteTimer : float			= 0.0
 var currentEmoteID : int				= -1
+
 #
 func RemoveEmoteResource():
 	if emoteSprite.get_texture() != null:
@@ -43,6 +44,11 @@ func Update(dt : float):
 	UpdateEmoteDelay(dt)
 	UpdateInteractiveActions()
 
+func EmoteWindowClicked(selectedEmote : String):
+	DisplayEmote(selectedEmote.to_int())
+
 func InitSprite():
-	if Launcher.Entities.activePlayer:
+	if Launcher.Entities && Launcher.Entities.activePlayer:
 		emoteSprite = Launcher.Entities.activePlayer.get_node("Emote")
+	if Launcher.GUI && Launcher.GUI.emoteList:
+		Launcher.GUI.emoteList.ItemClicked.connect(EmoteWindowClicked)
