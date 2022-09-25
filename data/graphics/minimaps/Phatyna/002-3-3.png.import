@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjy8pmbeyhga"
-path="res://.godot/imported/'.png-cea9ed6ef2df11405a0b13dae8abea0f.ctex"
+uid="uid://wdut7jbhem3h"
+path="res://.godot/imported/002-3-3.png-5b1b283512ccd818a31dc75ebe141dcf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/Phatyna/'.png"
-dest_files=["res://.godot/imported/'.png-cea9ed6ef2df11405a0b13dae8abea0f.ctex"]
+source_file="res://data/graphics/minimaps/Phatyna/002-3-3.png"
+dest_files=["res://.godot/imported/002-3-3.png-5b1b283512ccd818a31dc75ebe141dcf.ctex"]
 
 [params]
 
