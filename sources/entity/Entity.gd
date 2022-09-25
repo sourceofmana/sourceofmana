@@ -11,6 +11,7 @@ var collision : CollisionShape2D	= null
 
 var stat						= preload("res://sources/entity/Stat.gd").new()
 var slot						= preload("res://sources/entity/Slot.gd").new()
+var interactive					= preload("res://sources/entity/interactive/Interactive.gd").new()
 var inventory					= preload("res://sources/entity/Inventory.gd").new()
 
 var entityName					= ""
@@ -147,6 +148,8 @@ func _physics_process(deltaTime : float):
 		agent.set_velocity(currentVelocity)
 	else:
 		_velocity_computed(currentVelocity)
+	if interactive:
+		interactive.Update(deltaTime)
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity

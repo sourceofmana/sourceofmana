@@ -6,7 +6,8 @@ enum Type \
 	NONE = -1, \
 	PROJECT = 0, \
 	MAP, \
-	WINDOW \
+	WINDOW, \
+	GAMEPLAY \
 }
 
 var ConfHandler				= null

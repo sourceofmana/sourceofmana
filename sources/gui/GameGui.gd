@@ -1,8 +1,8 @@
 extends Node
 
-@onready var weightStat		= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/Weight
-@onready var itemInventory	= $FloatingWindows/Inventory/VBoxContainer/ItemContainer/Grid
-@onready var emoteList		= $FloatingWindows/Emote/ItemContainer/Grid
+@onready var weightStat : Control				= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/Weight
+@onready var itemInventory : GridContainer		= $FloatingWindows/Inventory/VBoxContainer/ItemContainer/Grid
+@onready var emoteList : GridContainer			= $FloatingWindows/Emote/ItemContainer/Grid
 
 #
 func ToggleControl(control : Control):
@@ -28,7 +28,6 @@ func _ready():
 	assert(emoteList, "Emote grid container is missing")
 	if emoteList:
 		emoteList.FillGridContainer(Launcher.DB.EmotesDB)
-
 
 func _process(_delta):
 	UpdatePlayerInfo()
