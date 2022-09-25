@@ -899,49 +899,19 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 			var rel_id = str(gid - firstgid)
 
 			if has_global_image:
-#				if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
-#					var animated_tex = AnimatedTexture.new()
-#					animated_tex.frames = ts.tiles[rel_id].animation.size()
-#					animated_tex.fps = 0
-#					var c = 0
-#					# Animated texture wants us to have seperate textures for each frame
-#					# so we have to pull them out of the tileset
-#					var tilesetTexture = image.get_image()
-#					for g in ts.tiles[rel_id].animation:
-#						var frameTex = tilesetTexture.get_rect(tileRegions[g.tileid.to_int()])
-#						var newTex = ImageTexture.new()
-#						newTex.create_from_image(frameTex)
-#						animated_tex.set_frame_texture(c, newTex)
-#						animated_tex.set_frame_delay(c, g.duration.to_float() * 0.001)
-#						c += 1
-#					tsAtlas.set_texture(animated_tex)
-#				else:
-					tsAtlas.set_texture(image)
+				tsAtlas.set_texture(image)
 #				if options.apply_offset:
 #					tsAtlas.set_margins(Vector2(0, 32-tilesize.y))
 			elif not rel_id in ts.tiles:
 				gid += 1
 				continue
 			else:
-#				if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
-#					var animated_tex = AnimatedTexture.new()
-#					animated_tex.frames = ts.tiles[rel_id].animation.size()
-#					animated_tex.fps = 0
-#					var c = 0
-#					#untested
-#					var image_path = ts.tiles[rel_id].image
-#					for g in ts.tiles[rel_id].animation:
-#						animated_tex.set_frame_texture(c, load_image(image_path, ts_source_path, options))
-#						animated_tex.set_frame_delay(c, g.duration.to_float() * 0.001)
-#						c += 1
-#					tsAtlas.set_texture(animated_tex)
-#				else:
-					var image_path = ts.tiles[rel_id].image
-					image = load_image(image_path, ts_source_path, options)
-					if typeof(image) != TYPE_OBJECT:
-						# Error happened
-						return image
-					tsAtlas.set_texture(image)
+				var image_path = ts.tiles[rel_id].image
+				image = load_image(image_path, ts_source_path, options)
+				if typeof(image) != TYPE_OBJECT:
+					# Error happened
+					return image
+				tsAtlas.set_texture(image)
 #				if options.apply_offset:
 #					tsAtlas.set_margins(Vector2(0, 32-image.get_height()))
 			var atlasPos : Vector2i = region.position / region.size
@@ -955,6 +925,18 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 				textureOffset.x = -(region.size.x - 32) / 2
 				textureOffset.y = (region.size.y - 32) / 2
 				tileData.set_texture_offset(textureOffset)
+
+#			if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
+#				tsAtlas.set_tile_animation_frames_count(region.position / region.size, ts.tiles[rel_id].animation.size() - 1)
+#				tsAtlas.set_tile_animation_columns(region.position / region.size, ts.tiles[rel_id].animation.size() - 1)
+#
+#				var c = 0
+#				# Animated texture wants us to have seperate textures for each frame
+#				# so we have to pull them out of the tileset
+#				var tilesetTexture = image.get_image()
+#				for g in ts.tiles[rel_id].animation:
+#					tsAtlas.set_tile_animation_frame_duration(region.position / region.size, c, g.duration.to_float() * 0.001)
+#					c += 1
 
 			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
 					and "objects" in ts.tiles[rel_id].objectgroup:
