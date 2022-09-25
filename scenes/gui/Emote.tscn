@@ -13,6 +13,7 @@ script = ExtResource("2_4yhdg")
 
 [node name="ItemContainer" type="ScrollContainer" parent="."]
 custom_minimum_size = Vector2i(34, 34)
+layout_mode = 2
 offset_left = 5.0
 offset_top = 4.0
 offset_right = 155.0
@@ -22,6 +23,7 @@ horizontal_scroll_mode = 3
 
 [node name="Grid" type="GridContainer" parent="ItemContainer"]
 clip_contents = true
+layout_mode = 2
 offset_right = 150.0
 offset_bottom = 87.0
 size_flags_horizontal = 3
@@ -32,4 +34,3 @@ columns = 100
 script = ExtResource("3_2umbh")
 
 [connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
-[connection signal="resized" from="." to="ItemContainer/Grid" method="_on_panel_resized"]

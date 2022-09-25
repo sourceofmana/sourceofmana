@@ -33,3 +33,6 @@ func _on_panel_resized():
 		columns = int(get_parent().get_size().x / tileSize)
 	else:
 		columns = 100
+
+func _ready():
+	get_parent().resized.connect(_on_panel_resized)
