@@ -1,9 +1,28 @@
 extends ScrollContainer
 
+@onready var textureRect : TextureRect = $TextureRect
+
+#
+func Warped():
+	if textureRect:
+		var mapName : String = Launcher.Map.activeMap.get_name()
+		Launcher.Util.Assert(mapName.is_empty() == false, "Could not fetch the active map name")
+		if mapName.is_empty() == false:
+			var mapPath : String = Launcher.Map.Pool.GetMapPath(mapName)
+			Launcher.Util.Assert(mapPath.is_empty() == false, "Could not fetch the active map path")
+			if mapPath.is_empty() == false:
+				var resource : Resource = Launcher.FileSystem.LoadMinimap(mapPath)
+				Launcher.Util.Assert(resource != null, "Could not load the minimap resource")
+				if resource:
+					textureRect.set_texture(resource)
+
 #
 func _ready():
 	get_h_scroll_bar().scale = Vector2.ZERO
 	get_v_scroll_bar().scale = Vector2.ZERO
+
+	Launcher.Map.PlayerWarped.connect(self.Warped)
+	Warped()
 
 func _process(_delta):
 	if Launcher.Camera.mainCamera:

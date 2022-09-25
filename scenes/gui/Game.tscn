@@ -150,6 +150,7 @@ offset_right = 980.0
 offset_bottom = 400.0
 
 [node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
+custom_minimum_size = Vector2i(200, 125)
 layout_mode = 0
 offset_left = 953.0
 offset_top = 39.0

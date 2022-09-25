@@ -1,6 +1,9 @@
 extends Node2D
 
 #
+signal PlayerWarped
+
+#
 var Pool					= Launcher.FileSystem.LoadSource("map/MapPool.gd")
 var activeMap : Node2D		= null
 
@@ -69,6 +72,8 @@ func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : Charact
 
 		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
 			Pool.RefreshPool(activeMap)
+
+		emit_signal('PlayerWarped')
 
 #
 func GetMapBoundaries(map : Node2D = null) -> Rect2:

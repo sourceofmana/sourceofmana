@@ -158,8 +158,13 @@ func LoadMusic(path : String) -> Resource:
 	var fullPath : String = Launcher.Path.MusicRsc + path
 	return LoadResource(fullPath)
 
-# Music
+# Item
 func LoadItem(path : String) -> Resource:
 	var fullPath : String = Launcher.Path.ItemRsc + path
 	return LoadResource(fullPath, false)
 	
+
+# Minimap
+func LoadMinimap(path : String) -> Resource:
+	var fullPath : String = Launcher.Path.MinimapRsc + path + Launcher.Path.GfxExt
+	return LoadResource(fullPath, false)
