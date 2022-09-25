@@ -58,6 +58,9 @@ func _get_preset_name(preset):
 		PRESET_DEFAULT: return "Default"
 		PRESET_PIXEL_ART: return "Pixel Art"
 
+func _get_priority():
+	return 1
+
 func _get_import_options(path, preset):
 	return [
 		{

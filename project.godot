@@ -177,11 +177,12 @@ ui_chat={
 
 [physics]
 
-2d/physics_engine="GodotPhysics"
 common/enable_pause_aware_picking=true
 
 [rendering]
 
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
 textures/canvas_textures/default_texture_filter=0
 quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
@@ -198,7 +199,7 @@ quality/subsurface_scattering/follow_surface=true
 
 [tiled_importer]
 
-enable_json_format=true
+enable_json_format=false
 
 [xr]
 

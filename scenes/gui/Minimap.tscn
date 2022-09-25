@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://p32vsmjk8hmh"]
+[gd_scene load_steps=4 format=3 uid="uid://p32vsmjk8hmh"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_6u7q8"]
 [ext_resource type="Script" path="res://addons/windowpanel/WindowPanel.gd" id="2_4yhdg"]
 [ext_resource type="Script" path="res://sources/gui/Minimap.gd" id="3_g8pkj"]
-[ext_resource type="Texture2D" uid="uid://wdut7jbhem3h" path="res://data/graphics/minimaps/Phatyna/002-3-0.png" id="4_3dvn1"]
 
 [node name="Panel" type="PanelContainer"]
 custom_minimum_size = Vector2i(160, 96)
@@ -13,7 +12,6 @@ theme = ExtResource("1_6u7q8")
 script = ExtResource("2_4yhdg")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-layout_mode = 2
 offset_left = 5.0
 offset_top = 4.0
 offset_right = 155.0
@@ -21,10 +19,6 @@ offset_bottom = 91.0
 script = ExtResource("3_g8pkj")
 
 [node name="TextureRect" type="TextureRect" parent="ScrollContainer"]
-layout_mode = 2
-offset_right = 428.0
-offset_bottom = 356.0
-texture = ExtResource("4_3dvn1")
 stretch_mode = 2
 
 [connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
