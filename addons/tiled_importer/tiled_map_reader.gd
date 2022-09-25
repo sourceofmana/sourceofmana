@@ -699,7 +699,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 					match object.type:
 						"area": obj_root = Area2D.new()
 						"kinematic": obj_root = KinematicCollision2D.new()
-						"rigid": obj_root = RigidBody2D.new()
+						"rigid": obj_root = PhysicsBody2D.new()
 						_: obj_root = StaticBody2D.new() 
 
 					object_layer.add_child(obj_root)
@@ -1264,7 +1264,7 @@ func load_image(rel_path, source_path, options):
 
 	var total_path = rel_path
 	if rel_path.is_relative_path():
-		total_path = ProjectSettings.globalize_path(source_path.get_base_dir()).path_join(rel_path)
+		total_path = ProjectSettings.globalize_path(source_path.get_base_dir()).plus_file(rel_path)
 	total_path = ProjectSettings.localize_path(total_path)
 
 	var dir = Directory.new()
