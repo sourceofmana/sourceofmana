@@ -1,0 +1,26 @@
+{
+	"3": {
+		"Name"				: "Smile",
+		"Path"				: "emotes/smile.png",
+	},
+	"5": {
+		"Name"				: "Evil",
+		"Path"				: "emotes/evil.png",
+	},
+	"12": {
+		"Name"				: "Bored",
+		"Path"				: "emotes/bored.png",
+	},
+	"21": {
+		"Name"				: "Whatever",
+		"Path"				: "emotes/whatever.png",
+	},
+	"23": {
+		"Name"				: "Surprised",
+		"Path"				: "emotes/surprised.png",
+	},
+	"26": {
+		"Name"				: "Confused",
+		"Path"				: "emotes/confused.png",
+	},
+}

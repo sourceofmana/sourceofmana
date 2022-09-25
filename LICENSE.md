@@ -27,6 +27,12 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 
 #./path/to/file [Author] [Contributors]
 ./graphics/default.png [Reid]
+./graphics/emotes/bored.png [Reid]
+./graphics/emotes/confused.png [Reid]
+./graphics/emotes/evil.png [Reid]
+./graphics/emotes/smile.png [Reid]
+./graphics/emotes/surprised.png [Reid]
+./graphics/emotes/whatever.png [Reid]
 ./graphics/fonts/alagard.ttf [pix3m]
 ./graphics/fonts/romulus.ttf [pix3m]
 ./graphics/gui/bar.png [Reid]
