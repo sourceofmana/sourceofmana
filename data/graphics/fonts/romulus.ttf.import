@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/romulus.ttf-b2bc6244c65f17e9109c575f036c4b01.
 [params]
 
 Rendering=null
-antialiased=true
+antialiasing=1
 generate_mipmaps=false
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
