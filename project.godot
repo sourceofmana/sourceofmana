@@ -31,6 +31,8 @@ gdscript/completion/autocomplete_setters_and_getters=true
 
 [display]
 
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/per_pixel_transparency/allowed=true
 mouse_cursor/custom_image="res://data/graphics/gui/misc/mouse.png"
 mouse_cursor/tooltip_position_offset=Vector2(16, 16)
