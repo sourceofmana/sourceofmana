@@ -45,6 +45,7 @@ func _ready():
 	# Call post_ready functions for service depending on other services
 	if Debug:
 		Debug._post_ready()
+	Audio._post_ready()
 	Conf._post_ready()
 	DB._post_ready()
 	FSM._post_ready()

@@ -9,8 +9,11 @@ func FileExists(path : String) -> bool:
 func ResourceExists(path : String) -> bool:
 	return ResourceLoader.exists(path)
 
-func FileLoad(path : String) -> Object:
-	return load(path).new()
+func FileLoad(path : String) -> Resource:
+	return load(path)
+
+func FileAlloc(path : String) -> Node:
+	return FileLoad(path).new()
 
 func ResourceLoad(path : String) -> Object:
 	return ResourceLoader.load(path)
@@ -85,7 +88,7 @@ func LoadSource(path : String) -> Node:
 	Launcher.Util.Assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		srcFile = FileLoad(fullPath)
+		srcFile = FileAlloc(fullPath)
 		Launcher.Util.PrintLog("Loading Source: " + fullPath)
 
 	return srcFile
@@ -156,7 +159,16 @@ func LoadPreset(path : String) -> Resource:
 # Music
 func LoadMusic(path : String) -> Resource:
 	var fullPath : String = Launcher.Path.MusicRsc + path
-	return LoadResource(fullPath)
+	var musicFile : Resource			= null
+
+	var pathExists : bool		= ResourceExists(fullPath)
+	Launcher.Util.Assert(pathExists, "Music file not found " + path + " should be located at " + fullPath)
+
+	if pathExists:
+		musicFile = FileLoad(fullPath)
+		Launcher.Util.PrintLog("Loading Music: " + fullPath)
+
+	return musicFile
 
 # Item
 func LoadItem(path : String) -> Resource:

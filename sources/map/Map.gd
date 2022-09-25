@@ -43,11 +43,6 @@ func AddEntityToMap(entity : CharacterBody2D, map : Node2D, newPos : Vector2):
 	entity.set_physics_process(true)
 
 #
-func ApplyMapMetadata(map : Node2D):
-	if map && map.has_meta("music"):
-		Launcher.Audio.Load(map.get_meta("music") )
-
-#
 func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : CharacterBody2D):
 	assert(entity, "Entity is not initialized, could not warp it to this map")
 
@@ -62,7 +57,6 @@ func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : Charact
 		Launcher.Util.Assert(activeMap != null, "Map instance could not be created")
 		if activeMap:
 			AddMap(activeMap)
-			ApplyMapMetadata(activeMap)
 			if entity:
 				Launcher.Camera.SetBoundaries(entity)
 
