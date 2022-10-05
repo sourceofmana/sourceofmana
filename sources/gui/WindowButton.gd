@@ -2,6 +2,6 @@ extends Button
 
 @export var targetWindow : Control = null
 
-func _on_button_pressed():
+func OnTopButtonPressed():
 	if targetWindow:
 		Launcher.GUI.ToggleControl(targetWindow)

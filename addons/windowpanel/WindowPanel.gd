@@ -128,7 +128,7 @@ func SetFloatingWindowToTop():
 	emit_signal('MoveFloatingWindowToTop', self)
 
 #
-func _on_window_gui_input(event):
+func OnGuiInput(event):
 	if event is InputEventMouseButton:
 		var rescaledPanelPosition = event.global_position - position
 		var isInPanel = rescaledPanelPosition >= Vector2(0,0) && rescaledPanelPosition <= size

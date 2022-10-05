@@ -1,10 +1,8 @@
 extends Node
 
-var directory = Directory.new();
-
 # Generic
 func FileExists(path : String) -> bool:
-	return directory.file_exists(path)
+	return FileAccess.file_exists(path)
 
 func ResourceExists(path : String) -> bool:
 	return ResourceLoader.exists(path)
@@ -34,24 +32,18 @@ func LoadDB(path : String) -> Dictionary:
 	Launcher.Util.Assert(pathExists, "DB file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		var DBFile : File	= File.new()
-		var err : int		= DBFile.open(fullPath, File.READ)
+		var DBFile : FileAccess = FileAccess.open(fullPath, FileAccess.READ)
 
-		Launcher.Util.Assert(err == OK, "DB parsing error loading JSON file '" + fullPath + "'" \
-			+ " Error: " + str(err) \
+		var jsonInstance : JSON = JSON.new()
+		var err : int = jsonInstance.parse(DBFile.get_as_text())
+
+		Launcher.Util.Assert(err == OK, "DB parsing issue on file " + fullPath \
+			+ " Line: " + str(jsonInstance.get_error_line()) \
+			+ " Error: " + jsonInstance.get_error_message() \
 		)
 		if err == OK:
-			var jsonInstance = JSON.new()
-			err = jsonInstance.parse(DBFile.get_as_text())
-			DBFile.close()
-
-			Launcher.Util.Assert(err == OK, "DB parsing issue on file " + fullPath \
-				+ " Line: " + str(jsonInstance.get_error_line()) \
-				+ " Error: " + jsonInstance.get_error_message() \
-			)
-			if err == OK:
-				result = jsonInstance.get_data()
-				Launcher.Util.PrintLog("Loading DB: " + fullPath)
+			result = jsonInstance.get_data()
+			Launcher.Util.PrintLog("Loading DB: " + fullPath)
 
 	return result
 
@@ -81,8 +73,6 @@ func LoadMap(path : String) -> Node2D:
 func LoadSource(path : String) -> Node:
 	var fullPath : String		= Launcher.Path.Src + path
 	var srcFile : Node			= null
-	if OS.has_feature("standalone"):
-		fullPath += "c"
 
 	var pathExists : bool		= ResourceExists(fullPath)
 	Launcher.Util.Assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
