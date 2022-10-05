@@ -826,12 +826,11 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 					# Error happened
 					return ts
 			else: # JSON Tileset
-				var f = File.new()
-				err = f.open(ts_source_path, File.READ)
-				if err != OK:
+				if FileAccess.file_exists(ts_source_path) == false:
 					print_error("Error opening tileset '%s'." % [ts.source])
-					return err
+					return false
 
+				var f = FileAccess.open(ts_source_path, FileAccess.READ)
 				var json_res = JSONInstance.parse(f.get_as_text())
 				if json_res.error != OK:
 					print_error("Error parsing tileset '%s' JSON: %s" % [ts.source, json_res.error_string])
@@ -1047,11 +1046,10 @@ func build_navigation_polygon_for_scene(tilesets, source_path, options):
 					# Error happened
 					return ts
 			else: # JSON Tileset
-				var f = File.new()
-				err = f.open(ts_source_path, File.READ)
-				if err != OK:
+				if FileAccess.file_exists(ts_source_path) == false:
 					print_error("Error opening tileset '%s'." % [ts.source])
-					return err
+					return false
+				var f = FileAccess.open(ts_source_path, FileAccess.READ)
 
 				var json_res = JSONInstance.parse(f.get_as_text())
 				if json_res.error != OK:
@@ -1267,8 +1265,7 @@ func load_image(rel_path, source_path, options):
 		total_path = ProjectSettings.globalize_path(source_path.get_base_dir()).path_join(rel_path)
 	total_path = ProjectSettings.localize_path(total_path)
 
-	var dir = Directory.new()
-	if not dir.file_exists(total_path):
+	if not FileAccess.file_exists(total_path):
 		print_error("Image not found: %s" % [total_path])
 		return ERR_FILE_NOT_FOUND
 
@@ -1298,11 +1295,9 @@ func read_file(path):
 		return data
 
 	# Not TMX, must be JSON
-	var file = File.new()
-	var err = file.open(path, File.READ)
-	if err != OK:
-		return err
-
+	if FileAccess.file_exists(path) == false:
+		return false
+	var file = FileAccess.open(path, FileAccess.READ)
 
 	var error = JSONInstance.parse(file.get_as_text())
 	if error != OK:
@@ -1324,10 +1319,9 @@ func read_tileset_file(path):
 		return data
 
 	# Not TSX, must be JSON
-	var file = File.new()
-	var err = file.open(path, File.READ)
-	if err != OK:
-		return err
+	if FileAccess.file_exists(path) == false:
+		return false
+	var file = FileAccess.open(path, FileAccess.READ)
 
 	var content = JSONInstance.parse(file.get_as_text())
 	if content.error != OK:
@@ -1455,7 +1449,7 @@ func decompress_layer_data(layer_data, compression, map_size):
 		print_error("Unrecognized compression format: %s" % [compression])
 		return ERR_INVALID_DATA
 
-	var compression_type = File.COMPRESSION_DEFLATE if compression == "zlib" else File.COMPRESSION_GZIP
+	var compression_type = FileAccess.COMPRESSION_DEFLATE if compression == "zlib" else FileAccess.COMPRESSION_GZIP
 	var expected_size = int(map_size.x) * int(map_size.y) * 4
 	var raw_data = Marshalls.base64_to_raw(layer_data).decompress(expected_size, compression_type)
 
@@ -1680,10 +1674,9 @@ func get_template(path):
 
 		# IS JSON
 		else:
-			var file = File.new()
-			var err = file.open(path, File.READ)
-			if err != OK:
-				return err
+			if FileAccess.file_exists(path):
+				return false
+			var file = FileAccess.open(path, FileAccess.READ)
 
 			var json_res = JSONInstance.parse(file.get_as_text())
 			if json_res.error != OK:
@@ -1761,15 +1754,11 @@ static func remove_filename_from_path(path):
 	return file_path
 
 static func is_same_file(path1, path2):
-	var file1 = File.new()
-	var err = file1.open(path1, File.READ)
-	if err != OK:
-		return err
+	if FileAccess.file_exists(path1) || FileAccess.file_exists(path2):
+		return false
 
-	var file2 = File.new()
-	err = file2.open(path2, File.READ)
-	if err != OK:
-		return err
+	var file1 = FileAccess.open(path1, FileAccess.READ)
+	var file2 = FileAccess.open(path2, FileAccess.READ)
 
 	var file1_str = file1.get_as_text()
 	var file2_str = file2.get_as_text()
