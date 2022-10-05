@@ -14,4 +14,4 @@ theme = ExtResource("1_eubtc")
 toggle_mode = true
 script = ExtResource("2_nytlv")
 
-[connection signal="pressed" from="." to="." method="_on_button_pressed"]
+[connection signal="pressed" from="." to="." method="OnTopButtonPressed"]

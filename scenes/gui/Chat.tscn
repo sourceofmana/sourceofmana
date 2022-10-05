@@ -4,29 +4,35 @@
 [ext_resource type="Script" path="res://addons/windowpanel/WindowPanel.gd" id="2"]
 
 [node name="ChatTabContainer" type="TabContainer"]
-custom_minimum_size = Vector2(200, 150)
+custom_minimum_size = Vector2i(200, 150)
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -740.0
 offset_bottom = -450.0
-hint_tooltip = "ChatTabContainer"
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("1")
 drag_to_rearrange_enabled = true
 script = ExtResource("2")
 
 [node name="General" type="TabBar" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
 offset_top = 56.0
 offset_right = -6.0
 offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1")
 tab_close_display_policy = 1
 drag_to_rearrange_enabled = true
 
 [node name="ChatVBox" type="VBoxContainer" parent="General"]
+anchors_preset = -1
 anchor_right = 0.995
 anchor_bottom = 1.0
 offset_top = -29.0
@@ -39,20 +45,21 @@ metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = true
 
 [node name="Backlog" type="Label" parent="General/ChatVBox"]
-offset_right = 270.0
-offset_bottom = 90.0
+offset_right = 524.0
+offset_bottom = 210.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Server: Welcome to Source of Mana"
 autowrap_mode = 2
 
 [node name="NewText" type="LineEdit" parent="General/ChatVBox"]
-offset_top = 94.0
-offset_right = 270.0
-offset_bottom = 117.0
+offset_top = 214.0
+offset_right = 524.0
+offset_bottom = 237.0
+focus_mode = 1
 mouse_filter = 1
+placeholder_text = "Type here"
 caret_blink = true
-caret_blink_speed = 0.5
 
 [node name="World" type="TabBar" parent="."]
 visible = false
@@ -60,4 +67,4 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
+[connection signal="gui_input" from="." to="." method="OnGuiInput"]

@@ -140,5 +140,5 @@ theme_override_constants/v_separation = 4
 columns = 4
 script = ExtResource("6_u84n8")
 
-[connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
+[connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="pressed" from="VBoxContainer/TitleBar/CloseButton" to="." method="_on_CloseButton_pressed"]

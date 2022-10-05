@@ -31,4 +31,4 @@ theme_override_constants/v_separation = 4
 columns = 100
 script = ExtResource("3_2umbh")
 
-[connection signal="gui_input" from="." to="." method="_on_window_gui_input"]
+[connection signal="gui_input" from="." to="." method="OnGuiInput"]
