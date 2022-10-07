@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://uiwxfl4dyoyw"]
+
+[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="1_sbb0g"]
+
+[node name="Tab" type="RichTextLabel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 30.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("1_sbb0g")
+theme_override_fonts/bold_font = ExtResource("1_sbb0g")
+theme_override_fonts/italics_font = ExtResource("1_sbb0g")
+theme_override_fonts/bold_italics_font = ExtResource("1_sbb0g")
+theme_override_fonts/mono_font = ExtResource("1_sbb0g")
+bbcode_enabled = true
+scroll_following = true
+autowrap_mode = 2
+context_menu_enabled = true

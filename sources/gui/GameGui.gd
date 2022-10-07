@@ -10,6 +10,14 @@ func ToggleControl(control : Control):
 		control.set_visible(!control.is_visible())
 		control.SetFloatingWindowToTop()
 
+func ToggleChatNewLine(control : Control):
+	if control:
+		if control.is_visible() == false:
+			ToggleControl(control)
+		var chatContainer : Control = control.get_node("VBoxContainer")
+		if chatContainer:
+			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
+
 func UpdatePlayerInfo():
 	if Launcher.Entities.activePlayer:
 		assert(weightStat, "Stat inventory weight bar is missing")
@@ -36,6 +44,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed(Actions.ACTION_UI_INVENTORY): ToggleControl($FloatingWindows/Inventory)
 	if Input.is_action_just_pressed(Actions.ACTION_UI_MINIMAP): ToggleControl($FloatingWindows/Minimap)
 	if Input.is_action_just_pressed(Actions.ACTION_UI_CHAT): ToggleControl($FloatingWindows/Chat)
+	if Input.is_action_just_pressed(Actions.ACTION_UI_CHAT_NEWLINE) : ToggleChatNewLine($FloatingWindows/Chat)
 
 func _notification(notif):
 	if notif == Node.NOTIFICATION_WM_CLOSE_REQUEST:

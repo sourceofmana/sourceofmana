@@ -14,6 +14,7 @@ const ACTION_UI_QUIT_GAME		= "ui_quit_game"
 const ACTION_UI_INVENTORY		= "ui_inventory"
 const ACTION_UI_MINIMAP			= "ui_minimap"
 const ACTION_UI_CHAT			= "ui_chat"
+const ACTION_UI_CHAT_NEWLINE	= "ui_chat_newline"
 
 # Interactive/Emote actions
 const ACTION_IM_1			= "smile_1"
