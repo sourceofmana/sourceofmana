@@ -12,7 +12,6 @@ theme = ExtResource("1")
 script = ExtResource("2")
 
 [node name="WindowCore" type="VBoxContainer" parent="."]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,13 +19,14 @@ offset_left = 6.0
 offset_top = 7.0
 offset_right = -6.0
 offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3")
 metadata/_edit_use_custom_anchors = true
 
 [node name="TitleBar" type="HBoxContainer" parent="WindowCore"]
-layout_mode = 2
 offset_right = 31.0
 offset_bottom = 18.0
 size_flags_horizontal = 0
@@ -34,7 +34,6 @@ size_flags_vertical = 0
 metadata/_edit_layout_mode = 1
 
 [node name="WindowName" type="Label" parent="WindowCore/TitleBar"]
-layout_mode = 2
 offset_right = 31.0
 offset_bottom = 18.0
 size_flags_horizontal = 0
@@ -42,7 +41,6 @@ size_flags_vertical = 0
 text = "Quit"
 
 [node name="Label" type="Label" parent="WindowCore"]
-layout_mode = 2
 offset_top = 33.0
 offset_right = 268.0
 offset_bottom = 69.0
@@ -54,28 +52,24 @@ autowrap_mode = 2
 language = "en_GB"
 
 [node name="ButtonChoice" type="HBoxContainer" parent="WindowCore"]
-layout_mode = 2
 offset_top = 85.0
 offset_right = 268.0
 offset_bottom = 106.0
 alignment = 2
 
 [node name="Leave" type="Button" parent="WindowCore/ButtonChoice"]
-layout_mode = 2
 offset_left = 178.0
 offset_right = 226.0
 offset_bottom = 21.0
 text = "Leave"
 
 [node name="Stay" type="Button" parent="WindowCore/ButtonChoice"]
-layout_mode = 2
 offset_left = 230.0
 offset_right = 268.0
 offset_bottom = 21.0
 text = "Stay"
 
 [node name="Container" type="MarginContainer" parent="."]
-layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 

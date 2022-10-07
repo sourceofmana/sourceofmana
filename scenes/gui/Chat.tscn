@@ -3,40 +3,35 @@
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1"]
 [ext_resource type="Script" path="res://addons/windowpanel/WindowPanel.gd" id="2"]
 
-[node name="ChatTabContainer" type="TabContainer"]
-custom_minimum_size = Vector2i(200, 150)
+[node name="Chat" type="Panel"]
+custom_minimum_size = Vector2i(100, 100)
+offset_right = 201.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1")
+script = ExtResource("2")
+
+[node name="ChatTabContainer" type="TabContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -740.0
-offset_bottom = -450.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1")
 drag_to_rearrange_enabled = true
-script = ExtResource("2")
 
-[node name="General" type="TabBar" parent="."]
+[node name="General" type="VBoxContainer" parent="ChatTabContainer"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
-offset_top = 56.0
+offset_top = 30.0
 offset_right = -6.0
 offset_bottom = -6.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("1")
-tab_close_display_policy = 1
-drag_to_rearrange_enabled = true
-
-[node name="ChatVBox" type="VBoxContainer" parent="General"]
-anchors_preset = -1
-anchor_right = 0.995
-anchor_bottom = 1.0
-offset_top = -29.0
-offset_right = -0.51001
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
@@ -44,27 +39,63 @@ mouse_filter = 2
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = true
 
-[node name="Backlog" type="Label" parent="General/ChatVBox"]
-offset_right = 524.0
-offset_bottom = 210.0
+[node name="Backlog" type="RichTextLabel" parent="ChatTabContainer/General"]
+offset_right = 189.0
+offset_bottom = 127.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Server: Welcome to Source of Mana"
+bbcode_enabled = true
+text = "[color=#eecc77]Server: Welcome to Source of Mana[/color]
+[color=#ffffdd]Player: Hello!"
+scroll_following = true
 autowrap_mode = 2
+context_menu_enabled = true
 
-[node name="NewText" type="LineEdit" parent="General/ChatVBox"]
-offset_top = 214.0
-offset_right = 524.0
-offset_bottom = 237.0
+[node name="NewText" type="LineEdit" parent="ChatTabContainer/General"]
+offset_top = 131.0
+offset_right = 189.0
+offset_bottom = 154.0
 focus_mode = 1
 mouse_filter = 1
 placeholder_text = "Type here"
 caret_blink = true
+caret_blink_interval = 0.5
 
-[node name="World" type="TabBar" parent="."]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="World" type="VBoxContainer" parent="ChatTabContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 30.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
 mouse_filter = 2
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true
+
+[node name="Backlog" type="RichTextLabel" parent="ChatTabContainer/World"]
+offset_right = 189.0
+offset_bottom = 127.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[color=#eecc77]Server: Welcome to Source of Mana[/color]
+[color=#ffffdd]Player: Hello!"
+scroll_following = true
+autowrap_mode = 2
+context_menu_enabled = true
+
+[node name="NewText" type="LineEdit" parent="ChatTabContainer/World"]
+offset_top = 131.0
+offset_right = 189.0
+offset_bottom = 154.0
+focus_mode = 1
+mouse_filter = 1
+placeholder_text = "Type here"
+caret_blink = true
+caret_blink_interval = 0.5
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
