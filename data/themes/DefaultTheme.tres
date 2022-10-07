@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=29 format=3 uid="uid://dhb6h35g1bk0x"]
+[gd_resource type="Theme" load_steps=28 format=3 uid="uid://dhb6h35g1bk0x"]
 
 [ext_resource type="Texture2D" uid="uid://bh3c7tlihpf45" path="res://data/graphics/gui/tab/tab_fg.png" id="1"]
 [ext_resource type="FontFile" uid="uid://xjlm0vx7cd6y" path="res://data/graphics/fonts/alagard.ttf" id="1_vbxts"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://m61y0i8l7rdk" path="res://data/graphics/gui/tab/tab_bg.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://c5g52nqcr71or" path="res://data/graphics/gui/tab/tab_disabled.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://cl4eml37ecajb" path="res://data/graphics/gui/button/button.png" id="5_fw406"]
-[ext_resource type="Texture2D" uid="uid://d4i7ausynqw04" path="res://data/graphics/gui/tab/tab_close.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://cdut807bkni47" path="res://data/graphics/gui/checkbox/cb_small_enabled.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://d4bhga5kna3u5" path="res://data/graphics/gui/checkbox/cb_small_lock_enabled.png" id="8"]
 [ext_resource type="Texture2D" uid="uid://1v1gb5rhhwm1" path="res://data/graphics/gui/window/window_bg_title.png" id="9"]
@@ -162,7 +161,6 @@ LineEdit/colors/selection_color = Color(0.32549, 0.305882, 0.290196, 1)
 Panel/styles/panel = SubResource("StyleBoxTexture_nwj08")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_hyw86")
 PopupPanel/styles/panel = SubResource("StyleBoxTexture_xry2u")
-TabBar/icons/close = ExtResource("6")
 TabContainer/colors/font_color_disabled = Color(0.8, 0.364706, 0.364706, 1)
 TabContainer/colors/font_selected_color = Color(0.843137, 0.717647, 0.482353, 1)
 TabContainer/colors/font_unselected_color = Color(0.756863, 0.592157, 0.278431, 1)
