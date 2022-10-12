@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://clslfktryuttf"]
+[gd_scene load_steps=5 format=3 uid="uid://clslfktryuttf"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1"]
 [ext_resource type="Script" path="res://addons/windowpanel/WindowPanel.gd" id="2"]
 [ext_resource type="Script" path="res://sources/chat/Chat.gd" id="3_far1h"]
+[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="4_c4b63"]
 
 [node name="Chat" type="Panel"]
 custom_minimum_size = Vector2i(100, 100)
@@ -16,7 +17,6 @@ theme = ExtResource("1")
 script = ExtResource("2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -28,7 +28,6 @@ grow_vertical = 2
 script = ExtResource("3_far1h")
 
 [node name="ChatTabContainer" type="TabContainer" parent="VBoxContainer"]
-layout_mode = 2
 offset_right = 397.0
 offset_bottom = 124.0
 grow_horizontal = 2
@@ -39,13 +38,13 @@ drag_to_rearrange_enabled = true
 
 [node name="NewText" type="LineEdit" parent="VBoxContainer"]
 visible = false
-layout_mode = 2
 offset_top = 101.0
 offset_right = 397.0
 offset_bottom = 124.0
 focus_mode = 1
-mouse_filter = 1
+theme_override_fonts/font = ExtResource("4_c4b63")
 placeholder_text = "Type here"
+max_length = 255
 caret_blink = true
 caret_blink_interval = 0.5
 

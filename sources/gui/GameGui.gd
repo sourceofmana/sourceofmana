@@ -3,6 +3,7 @@ extends Node
 @onready var weightStat : Control				= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/Weight
 @onready var itemInventory : GridContainer		= $FloatingWindows/Inventory/VBoxContainer/ItemContainer/Grid
 @onready var emoteList : GridContainer			= $FloatingWindows/Emote/ItemContainer/Grid
+@onready var chatContainer : Container			= $FloatingWindows/Chat/VBoxContainer
 
 #
 func ToggleControl(control : Control):
@@ -14,7 +15,6 @@ func ToggleChatNewLine(control : Control):
 	if control:
 		if control.is_visible() == false:
 			ToggleControl(control)
-		var chatContainer : Control = control.get_node("VBoxContainer")
 		if chatContainer:
 			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
 

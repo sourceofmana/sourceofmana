@@ -149,7 +149,7 @@ func _physics_process(deltaTime : float):
 	else:
 		_velocity_computed(currentVelocity)
 	if interactive:
-		interactive.Update(deltaTime)
+		interactive.Update()
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
@@ -170,3 +170,6 @@ func _ready():
 		if Launcher.Debug:
 			var err = agent.path_changed.connect(Launcher.Debug.UpdateNavLine)
 			assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")
+
+	if interactive:
+		interactive._ready()

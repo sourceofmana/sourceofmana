@@ -8,6 +8,23 @@ collision_layer = 3
 collision_mask = 3
 script = ExtResource("2")
 
-[node name="Emote" type="Sprite2D" parent="."]
+[node name="Interactions" type="Node2D" parent="."]
+position = Vector2(0, -80)
 z_index = 1
-offset = Vector2(0, -80)
+z_as_relative = false
+
+[node name="Emote" type="Sprite2D" parent="Interactions"]
+
+[node name="SpeechContainer" type="VBoxContainer" parent="Interactions"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+alignment = 1

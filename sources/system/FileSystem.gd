@@ -142,9 +142,14 @@ func LoadScene(path : String) -> Resource:
 	return LoadResource(fullPath)
 
 # Preset
-func LoadPreset(path : String) -> Resource:
+func LoadPreset(path : String, instantiate : bool = true) -> Object:
 	var fullPath : String = Launcher.Path.PresetScn + path + Launcher.Path.SceneExt
-	return LoadResource(fullPath)
+	return LoadResource(fullPath, instantiate)
+
+# GUI
+func LoadGui(path : String, instantiate : bool = true) -> Object:
+	var fullPath : String = Launcher.Path.GuiScn + path + Launcher.Path.SceneExt
+	return LoadResource(fullPath, instantiate)
 
 # Music
 func LoadMusic(path : String) -> Resource:

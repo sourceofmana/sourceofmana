@@ -7,6 +7,8 @@ var tabInstance : Object						= Launcher.FileSystem.ResourceLoad("res://scenes/g
 var playerColor : Color 						= Color("FFFFDD")
 var systemColor : Color 						= Color("EECC77")
 
+signal NewTextTyped(text : String)
+
 #
 func AddPlayerText(playerName : String, speech : String):
 	AddText(playerName + ": " + speech, playerColor)
@@ -34,8 +36,19 @@ func OnNewTextSubmitted(newText):
 			lineEdit.clear()
 			if Launcher.Entities.activePlayer:
 				AddPlayerText(Launcher.Entities.activePlayer.entityName, newText)
+				emit_signal('NewTextTyped', newText)
 
 #
+func _unhandled_input(_event):
+	if lineEdit && isNewLineEnabled():
+		lineEdit.set_process(true)
+		lineEdit.set_process_input(true)
+		lineEdit.set_process_internal(true)
+		lineEdit.set_process_unhandled_input(true)
+		lineEdit.set_process_unhandled_key_input(true)
+		lineEdit.set_physics_process(true)
+		lineEdit.set_physics_process_internal(true)
+
 func _ready():
 	Launcher.Util.Assert(tabContainer && tabInstance, "TabContainer or TabInstance not correctly set")
 	if tabContainer && tabInstance:
