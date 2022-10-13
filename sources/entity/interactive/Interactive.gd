@@ -73,19 +73,26 @@ func UpdateDelay():
 		for speechChild in speechContainer.get_children():
 			if speechChild.has_node("Timer"):
 				var timeLeft : float = speechChild.get_node("Timer").get_time_left()
-				if timeLeft > 0 && timeLeft < speechDecreaseDelay:
+
+				if timeLeft > speechDelay - speechDecreaseDelay:
+					var ratio : float = ((speechDelay - timeLeft) / speechDecreaseDelay)
+					speechChild.set_visible_characters_behavior(TextServer.VC_GLYPHS_LTR)
+					speechChild.visible_ratio = ratio
+				elif timeLeft > 0 && timeLeft < speechDecreaseDelay:
 					var ratio : float = (timeLeft / speechDecreaseDelay)
 					speechChild.modulate.a = ratio
-					if timeLeft < speechDecreaseDelay / 2:
-						speechChild.visible_ratio = ratio
+					speechChild.set_visible_characters_behavior(TextServer.VC_GLYPHS_RTL)
+					speechChild.visible_ratio = ratio
+				else:
+					speechChild.visible_ratio = 1
 
 func UpdateActions():
-	if Input.is_action_just_pressed(Actions.ACTION_IM_3): DisplayEmote(3)
-	if Input.is_action_just_pressed(Actions.ACTION_IM_5): DisplayEmote(5)
-	if Input.is_action_just_pressed(Actions.ACTION_IM_12): DisplayEmote(12)
-	if Input.is_action_just_pressed(Actions.ACTION_IM_21): DisplayEmote(21)
-	if Input.is_action_just_pressed(Actions.ACTION_IM_22): DisplayEmote(22)
-	if Input.is_action_just_pressed(Actions.ACTION_IM_26): DisplayEmote(26)
+	if Launcher.Action.IsActionJustPressed("smile_3"): DisplayEmote(3)
+	if Launcher.Action.IsActionJustPressed("smile_5"): DisplayEmote(5)
+	if Launcher.Action.IsActionJustPressed("smile_12"): DisplayEmote(12)
+	if Launcher.Action.IsActionJustPressed("smile_21"): DisplayEmote(21)
+	if Launcher.Action.IsActionJustPressed("smile_22"): DisplayEmote(22)
+	if Launcher.Action.IsActionJustPressed("smile_26"): DisplayEmote(26)
 
 func Update():
 	UpdateDelay()

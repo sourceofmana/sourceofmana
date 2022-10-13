@@ -26,7 +26,8 @@ var currentInput				= Vector2.ZERO
 var currentVelocity				= Vector2.ZERO
 var currentDirection			= Vector2.ZERO
 
-var currentState				= Actions.State.IDLE
+enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
+var currentState				= State.IDLE
 var currentStateTimer			= 0.0
 
 #
@@ -39,23 +40,23 @@ func GetNextDirection():
 func GetNextState():
 	var newEnumState			= currentState
 	var isWalking				= currentVelocity.length_squared() > 1
-	var actionSitPressed		= Input.is_action_pressed(Actions.ACTION_GP_SIT)
-	var actionSitJustPressed	= Input.is_action_just_pressed(Actions.ACTION_GP_SIT)
+	var actionSitPressed		= Launcher.Action.IsActionPressed("gp_sit")
+	var actionSitJustPressed	= Launcher.Action.IsActionJustPressed("gp_sit")
 
 	match currentState:
-		Actions.State.IDLE:
+		State.IDLE:
 			if isWalking:
-				newEnumState = Actions.State.WALK
+				newEnumState = State.WALK
 			elif actionSitJustPressed:
-				newEnumState = Actions.State.SIT
-		Actions.State.WALK:
+				newEnumState = State.SIT
+		State.WALK:
 			if isWalking == false:
-				newEnumState = Actions.State.IDLE
-		Actions.State.SIT:
+				newEnumState = State.IDLE
+		State.SIT:
 			if actionSitPressed == false && isWalking:
-				newEnumState = Actions.State.WALK
+				newEnumState = State.WALK
 			elif actionSitJustPressed:
-				newEnumState = Actions.State.IDLE
+				newEnumState = State.IDLE
 
 	return newEnumState
 
@@ -68,11 +69,11 @@ func ApplyNextState(nextState, nextDirection):
 	animationTree.set("parameters/Walk/blend_position", currentDirection)
 
 	match currentState:
-		Actions.State.IDLE:
+		State.IDLE:
 			animationState.travel("Idle")
-		Actions.State.WALK:
+		State.WALK:
 			animationState.travel("Walk")
-		Actions.State.SIT:
+		State.SIT:
 			animationState.travel("Sit")
 
 func SwitchInputMode(clearCurrentInput : bool):
@@ -102,7 +103,7 @@ func UpdateOrientation(deltaTime : float):
 		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, stat.moveFriction * deltaTime)
 
 func UpdateVelocity():
-	if currentState != Actions.State.SIT && currentVelocity != Vector2.ZERO:
+	if currentState != State.SIT && currentVelocity != Vector2.ZERO:
 		velocity = currentVelocity
 		move_and_slide()
 
@@ -135,8 +136,8 @@ func _unhandled_input(event):
 			if agent:
 				agent.set_target_location(Launcher.Camera.mainCamera.get_global_mouse_position())
 
-	currentInput.x	= Input.get_action_strength(Actions.ACTION_GP_MOVE_RIGHT) - Input.get_action_strength(Actions.ACTION_GP_MOVE_LEFT)
-	currentInput.y	= Input.get_action_strength(Actions.ACTION_GP_MOVE_DOWN) - Input.get_action_strength(Actions.ACTION_GP_MOVE_UP)
+	currentInput.x	= Input.get_action_strength("gp_move_right") - Input.get_action_strength("gp_move_left")
+	currentInput.y	= Input.get_action_strength("gp_move_down") - Input.get_action_strength("gp_move_up")
 	currentInput.normalized()
 	if currentInput.length() > 0:
 		SwitchInputMode(false)

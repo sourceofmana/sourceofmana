@@ -3,9 +3,10 @@ extends VBoxContainer
 @onready var tabContainer : TabContainer		= $ChatTabContainer
 @onready var lineEdit : LineEdit				= $NewText
 
-var tabInstance : Object						= Launcher.FileSystem.ResourceLoad("res://scenes/gui/Chat/ChatTab.tscn")
+@onready var tabInstance : Object				= Launcher.FileSystem.ResourceLoad("res://scenes/gui/chat/ChatTab.tscn")
 var playerColor : Color 						= Color("FFFFDD")
 var systemColor : Color 						= Color("EECC77")
+var enabledLastFrame : bool						= false
 
 signal NewTextTyped(text : String)
 
@@ -24,10 +25,13 @@ func isNewLineEnabled():
 	return lineEdit.is_visible() if lineEdit else false 
 
 func SetNewLineEnabled(enable : bool):
-	if lineEdit:
+	if lineEdit && enabledLastFrame == false:
 		lineEdit.set_visible(enable)
+		Launcher.Action.Enable(!enable)
 		if enable:
 			lineEdit.grab_focus()
+		else:
+			enabledLastFrame = true
 
 #
 func OnNewTextSubmitted(newText):
@@ -37,17 +41,16 @@ func OnNewTextSubmitted(newText):
 			if Launcher.Entities.activePlayer:
 				AddPlayerText(Launcher.Entities.activePlayer.entityName, newText)
 				emit_signal('NewTextTyped', newText)
+				SetNewLineEnabled(false)
+		else:
+			SetNewLineEnabled(false)
 
 #
-func _unhandled_input(_event):
-	if lineEdit && isNewLineEnabled():
-		lineEdit.set_process(true)
-		lineEdit.set_process_input(true)
-		lineEdit.set_process_internal(true)
-		lineEdit.set_process_unhandled_input(true)
-		lineEdit.set_process_unhandled_key_input(true)
-		lineEdit.set_physics_process(true)
-		lineEdit.set_physics_process_internal(true)
+func _process(_deltaTime : float):
+	if isNewLineEnabled() && Input.is_action_just_pressed("ui_cancel"):
+		SetNewLineEnabled(false)
+	if enabledLastFrame:
+		enabledLastFrame = false
 
 func _ready():
 	Launcher.Util.Assert(tabContainer && tabInstance, "TabContainer or TabInstance not correctly set")
@@ -56,4 +59,4 @@ func _ready():
 		newTab.set_name("General")
 		tabContainer.add_child(newTab)
 
-		AddSystemText("Welcome to Source of Mana")
+		AddSystemText("Welcome to " + Launcher.Conf.GetString("Default", "projectName", Launcher.Conf.Type.PROJECT))

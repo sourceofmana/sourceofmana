@@ -9,6 +9,7 @@ var World				= null
 var GUI					= null
 var Debug				= null
 # Low-prio services
+var Action				= null
 var Audio				= null
 var Camera				= null
 var Conf				= null
@@ -34,6 +35,7 @@ func _ready():
 		Debug		= FileSystem.LoadSource("debug/Debug.gd")
 
 	# Load first low-prio services on which the order is not important
+	Action			= FileSystem.LoadSource("action/Action.gd")
 	Audio			= FileSystem.LoadSource("audio/Audio.gd")
 	Camera			= FileSystem.LoadSource("camera/Camera.gd")
 	Conf			= FileSystem.LoadSource("conf/Conf.gd")

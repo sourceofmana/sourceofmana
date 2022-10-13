@@ -40,11 +40,11 @@ func _ready():
 func _process(_delta):
 	UpdatePlayerInfo()
 
-	if Input.is_action_just_pressed(Actions.ACTION_UI_QUIT_GAME): ToggleControl($FloatingWindows/Quit)
-	if Input.is_action_just_pressed(Actions.ACTION_UI_INVENTORY): ToggleControl($FloatingWindows/Inventory)
-	if Input.is_action_just_pressed(Actions.ACTION_UI_MINIMAP): ToggleControl($FloatingWindows/Minimap)
-	if Input.is_action_just_pressed(Actions.ACTION_UI_CHAT): ToggleControl($FloatingWindows/Chat)
-	if Input.is_action_just_pressed(Actions.ACTION_UI_CHAT_NEWLINE) : ToggleChatNewLine($FloatingWindows/Chat)
+	if Launcher.Action.IsActionJustPressed("ui_quit_game"): ToggleControl($FloatingWindows/Quit)
+	if Launcher.Action.IsActionJustPressed("ui_inventory"): ToggleControl($FloatingWindows/Inventory)
+	if Launcher.Action.IsActionJustPressed("ui_minimap"): ToggleControl($FloatingWindows/Minimap)
+	if Launcher.Action.IsActionJustPressed("ui_chat"): ToggleControl($FloatingWindows/Chat)
+	if Launcher.Action.IsActionJustPressed("ui_chat_newline") : ToggleChatNewLine($FloatingWindows/Chat)
 
 func _notification(notif):
 	if notif == Node.NOTIFICATION_WM_CLOSE_REQUEST:

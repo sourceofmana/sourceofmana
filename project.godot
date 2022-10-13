@@ -19,7 +19,6 @@ config/icon="res://data/press/logo/logo_seed.svg"
 
 [autoload]
 
-Actions="*res://sources/entity/Action.gd"
 Launcher="*res://sources/launcher/Launcher.gd"
 
 [debug]
