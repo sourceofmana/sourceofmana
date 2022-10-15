@@ -122,6 +122,7 @@ offset_right = 140.0
 offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
+blockActions = true
 metadata/_edit_layout_mode = 1
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
@@ -135,6 +136,7 @@ offset_right = 1237.0
 offset_bottom = 357.0
 grow_horizontal = 1
 grow_vertical = 1
+blockActions = null
 
 [node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
 custom_minimum_size = Vector2i(200, 125)
@@ -142,6 +144,7 @@ offset_left = 1065.0
 offset_top = 33.0
 offset_right = 1265.0
 offset_bottom = 158.0
+blockActions = null
 
 [node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
 custom_minimum_size = Vector2i(34, 34)
@@ -149,6 +152,7 @@ offset_left = 1067.0
 offset_top = 164.0
 offset_right = 1201.0
 offset_bottom = 214.0
+blockActions = null
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
 offset_left = 3.0
@@ -157,6 +161,7 @@ offset_right = 295.0
 offset_bottom = 714.0
 grow_horizontal = 1
 grow_vertical = 1
+blockActions = null
 
 [node name="Shaders" type="Control" parent="."]
 visible = false

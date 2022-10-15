@@ -12,9 +12,15 @@ func IsEnabled() -> bool:
 
 #
 func IsActionJustPressed(action : String, forceMode : bool = false) -> bool:
-	var state : bool = Input.is_action_just_pressed(action)
-	return state if IsEnabled() || forceMode else false
+	return Input.is_action_just_pressed(action) if IsEnabled() || forceMode else false
 
 func IsActionPressed(action : String, forceMode : bool = false) -> bool:
-	var state : bool = Input.is_action_just_pressed(action)
-	return state if IsEnabled() || forceMode else false
+	return Input.is_action_just_pressed(action) if IsEnabled() || forceMode else false
+
+func GetMove(forceMode : bool = false) -> Vector2:
+	var moveVector : Vector2 = Vector2.ZERO
+	if IsEnabled() || forceMode:
+		moveVector.x = Input.get_action_strength("gp_move_right") - Input.get_action_strength("gp_move_left")
+		moveVector.y = Input.get_action_strength("gp_move_down") - Input.get_action_strength("gp_move_up")
+		moveVector.normalized()
+	return moveVector

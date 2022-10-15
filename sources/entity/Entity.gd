@@ -136,9 +136,7 @@ func _unhandled_input(event):
 			if agent:
 				agent.set_target_location(Launcher.Camera.mainCamera.get_global_mouse_position())
 
-	currentInput.x	= Input.get_action_strength("gp_move_right") - Input.get_action_strength("gp_move_left")
-	currentInput.y	= Input.get_action_strength("gp_move_down") - Input.get_action_strength("gp_move_up")
-	currentInput.normalized()
+	currentInput = Launcher.Action.GetMove()
 	if currentInput.length() > 0:
 		SwitchInputMode(false)
 

@@ -8,12 +8,13 @@ signal MoveFloatingWindowToTop
 enum EdgeOrientation { NONE, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT, TOP_LEFT, TOP, TOP_RIGHT }
 
 #
-const edgeSize			= 5
-const cornerSize		= 15
-var clickPosition		= null
-var isResizing			= false
-var selectedEdge		= EdgeOrientation.NONE
-var max_size			= Vector2(-1, -1)
+@export var blockActions	= false
+const edgeSize				= 5
+const cornerSize			= 15
+var clickPosition			= null
+var isResizing				= false
+var selectedEdge			= EdgeOrientation.NONE
+var max_size				= Vector2(-1, -1)
 
 #
 func ClampViewport(globalPos, moveLimit):
@@ -123,9 +124,20 @@ func ResetWindowModifier():
 	isResizing		= false
 	selectedEdge 	= EdgeOrientation.NONE
 
+func ToggleControl():
+	set_visible(!is_visible())
+	SetFloatingWindowToTop()
+
+	Launcher.Util.Assert(Launcher.Action != null, "Launcher's action is not initialized")
+	if Launcher.Action && blockActions:
+		Launcher.Action.Enable(!is_visible())
+
 func SetFloatingWindowToTop():
 	set_draw_behind_parent(false)
 	emit_signal('MoveFloatingWindowToTop', self)
+
+func CanBlockActions():
+	return blockActions
 
 #
 func OnGuiInput(event):

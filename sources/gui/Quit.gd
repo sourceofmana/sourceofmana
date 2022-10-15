@@ -7,7 +7,7 @@ func _on_Leave_pressed():
 	get_tree().quit()
 
 func _on_Stay_pressed():
-	get_parent().set_visible(false)
+	Launcher.GUI.CloseCurrentWindow()
 
 func _on_window_draw():
 	if leaveButton:

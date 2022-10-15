@@ -1,15 +1,31 @@
 extends Node
 
+@onready var windows : Control					= $FloatingWindows
 @onready var weightStat : Control				= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/Weight
 @onready var itemInventory : GridContainer		= $FloatingWindows/Inventory/VBoxContainer/ItemContainer/Grid
 @onready var emoteList : GridContainer			= $FloatingWindows/Emote/ItemContainer/Grid
 @onready var chatContainer : Container			= $FloatingWindows/Chat/VBoxContainer
 
 #
+func CloseWindow():
+	var control : Control = GetCurrentWindow()
+	if control && control.has_method("CanBlockActions") && control.CanBlockActions():
+		CloseCurrentWindow()
+	else:
+		ToggleControl($FloatingWindows/Quit)
+
+func GetCurrentWindow():
+	if windows && windows.get_child_count() > 0:
+		return windows.get_child(windows.get_child_count() - 1)
+
+func CloseCurrentWindow():
+	var control : Control = GetCurrentWindow()
+	if control:
+		ToggleControl(control)
+
 func ToggleControl(control : Control):
 	if control:
-		control.set_visible(!control.is_visible())
-		control.SetFloatingWindowToTop()
+		control.ToggleControl()
 
 func ToggleChatNewLine(control : Control):
 	if control:
@@ -40,7 +56,7 @@ func _ready():
 func _process(_delta):
 	UpdatePlayerInfo()
 
-	if Launcher.Action.IsActionJustPressed("ui_quit_game"): ToggleControl($FloatingWindows/Quit)
+	if Launcher.Action.IsActionJustPressed("ui_close", true): CloseWindow()
 	if Launcher.Action.IsActionJustPressed("ui_inventory"): ToggleControl($FloatingWindows/Inventory)
 	if Launcher.Action.IsActionJustPressed("ui_minimap"): ToggleControl($FloatingWindows/Minimap)
 	if Launcher.Action.IsActionJustPressed("ui_chat"): ToggleControl($FloatingWindows/Chat)

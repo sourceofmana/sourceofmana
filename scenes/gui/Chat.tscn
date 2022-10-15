@@ -13,8 +13,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_mode = 1
 theme = ExtResource("1")
 script = ExtResource("2")
+blockActions = null
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -25,6 +27,7 @@ offset_right = -7.0
 offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("3_far1h")
 
 [node name="ChatTabContainer" type="TabContainer" parent="VBoxContainer"]
@@ -33,6 +36,7 @@ offset_bottom = 124.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme = ExtResource("1")
 drag_to_rearrange_enabled = true
 
