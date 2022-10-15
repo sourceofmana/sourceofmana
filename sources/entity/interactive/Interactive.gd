@@ -11,6 +11,7 @@ var currentEmoteID : int			= -1
 var emoteDelay : float				= 0
 var speechDelay : float				= 0
 var speechDecreaseDelay : float		= 0
+var speechIncreaseThreshold : int	= 0
 
 #
 func AddTimer(parent : Node, delay : float, callable: Callable) -> Timer:
@@ -72,10 +73,15 @@ func UpdateDelay():
 	if speechDecreaseDelay > 0:
 		for speechChild in speechContainer.get_children():
 			if speechChild.has_node("Timer"):
-				var timeLeft : float = speechChild.get_node("Timer").get_time_left()
+				var timeLeft : float			= speechChild.get_node("Timer").get_time_left()
+				var speechIncreaseDelay : float	= speechDecreaseDelay
+				var textLength : int			= speechChild.get_total_character_count()
 
-				if timeLeft > speechDelay - speechDecreaseDelay:
-					var ratio : float = ((speechDelay - timeLeft) / speechDecreaseDelay)
+				if textLength < speechIncreaseThreshold:
+					speechIncreaseDelay = speechDecreaseDelay / (speechIncreaseThreshold - textLength)
+
+				if timeLeft > speechDelay - speechIncreaseDelay:
+					var ratio : float = ((speechDelay - timeLeft) / speechIncreaseDelay)
 					speechChild.set_visible_characters_behavior(TextServer.VC_GLYPHS_LTR)
 					speechChild.visible_ratio = ratio
 				elif timeLeft > 0 && timeLeft < speechDecreaseDelay:
@@ -118,6 +124,7 @@ func _ready():
 		if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(SpeechTextTyped) == false:
 			Launcher.GUI.chatContainer.NewTextTyped.connect(SpeechTextTyped)
 
-	emoteDelay = Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
-	speechDelay = Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)
-	speechDecreaseDelay = Launcher.Conf.GetFloat("Gameplay", "speechDecreaseDelay", Launcher.Conf.Type.PROJECT)
+	emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
+	speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)
+	speechDecreaseDelay		= Launcher.Conf.GetFloat("Gameplay", "speechDecreaseDelay", Launcher.Conf.Type.PROJECT)
+	speechIncreaseThreshold	= Launcher.Conf.GetInt("Gameplay", "speechIncreaseThreshold", Launcher.Conf.Type.PROJECT)
