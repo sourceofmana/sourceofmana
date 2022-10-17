@@ -227,7 +227,7 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_a2i5v"]
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_vldf1"]
 
 [node name="Animation" type="AnimationPlayer"]
 libraries = {
@@ -237,4 +237,4 @@ libraries = {
 [node name="AnimationTree" parent="." instance=ExtResource("1_fjltp")]
 anim_player = NodePath("..")
 active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_a2i5v")
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_vldf1")

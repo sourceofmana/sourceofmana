@@ -30,6 +30,9 @@ enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
 var currentState				= State.IDLE
 var currentStateTimer			= 0.0
 
+var isPlayableController		= false
+var lastPosition				= Vector2.ZERO
+
 #
 func GetNextDirection():
 	if currentVelocity.length_squared() > 1:
@@ -92,6 +95,7 @@ func UpdateInput():
 			var newDirection : Vector2 = global_position.direction_to(agent.get_next_location())
 			if newDirection != Vector2.ZERO:
 				currentInput = newDirection
+			lastPosition = position
 		else:
 			SwitchInputMode(true)
 
@@ -118,6 +122,11 @@ func UpdateState():
 		ApplyNextState(nextState, nextDirection)
 
 #
+func WalkToward(pos : Vector2):
+	isCapturingMouseInput = true
+	if agent:
+		agent.set_target_location(pos)
+
 func Warped(map : Node2D):
 	var nav2d : Node2D = null
 
@@ -130,11 +139,9 @@ func Warped(map : Node2D):
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-			isCapturingMouseInput = true
 			#Todo: Use signal to know when the agent is instancied and to launch Map's warp func
 			Warped(Launcher.Map.activeMap)
-			if agent:
-				agent.set_target_location(Launcher.Camera.mainCamera.get_global_mouse_position())
+			WalkToward(Launcher.Camera.mainCamera.get_global_mouse_position())
 
 	currentInput = Launcher.Action.GetMove()
 	if currentInput.length() > 0:
@@ -156,19 +163,19 @@ func _velocity_computed(safeVelocity : Vector2):
 	UpdateState()
 
 func _ready():
-	set_process_input(true)
-	set_process_unhandled_input(true)
+	set_process_input(isPlayableController)
+	set_process_unhandled_input(isPlayableController)
 
-	#Todo: Use signal to know when the agent is instancied and to launch Map's warp func
+	#Todo: Use signal to know when the agent is instanced and to launch Map's warp func
 	Warped(Launcher.Map.activeMap)
 
 	if agent:
 		if agent.get_avoidance_enabled():
 			var err = agent.velocity_computed.connect(self._velocity_computed)
-			assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
+			Launcher.Util.Assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
 		if Launcher.Debug:
 			var err = agent.path_changed.connect(Launcher.Debug.UpdateNavLine)
-			assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")
+			Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")
 
-	if interactive:
-		interactive._ready()
+	if interactive && isPlayableController:
+		interactive.Setup(self)

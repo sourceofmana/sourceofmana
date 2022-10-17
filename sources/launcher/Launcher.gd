@@ -55,3 +55,4 @@ func _ready():
 func _process(delta : float):
 	if Debug:
 		Debug._process(delta)
+	Entities._process(delta)

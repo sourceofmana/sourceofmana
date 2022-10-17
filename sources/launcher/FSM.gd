@@ -25,8 +25,27 @@ func Game():
 		map = Launcher.Save.GetMap()
 		playerPos = Launcher.Save.GetPlayerPos()
 
-	Launcher.Entities.activePlayer = Launcher.Entities.Spawn("Default Entity")
+	# Player
+	Launcher.Entities.activePlayer = Launcher.Entities.Spawn("Default Entity", "Enora", true)
+
+	# Other players
+#	Launcher.Entities.otherPlayers.append(Launcher.Entities.Spawn("Default Entity", "Player"))
+
+	# NPCs
+	Launcher.Entities.npcs.append(Launcher.Entities.Spawn("Default Entity", "NPC"))
+	Launcher.Entities.npcs.append(Launcher.Entities.Spawn("Default Entity", "NPC"))
+
+	# Monsters
+	Launcher.Entities.monsters.append(Launcher.Entities.Spawn("Phatyna"))
+
+	# Warps
 	Launcher.Map.Warp(null, map, playerPos, Launcher.Entities.activePlayer)
+	for entity in Launcher.Entities.otherPlayers:
+		Launcher.Map.Warp(null, map, playerPos + Vector2(1, 0), entity)
+	for entity in Launcher.Entities.npcs:
+		Launcher.Map.Warp(null, map, playerPos + Vector2(-1, 0), entity)
+	for entity in Launcher.Entities.monsters:
+		Launcher.Map.Warp(null, map, playerPos + Vector2(0, 2), entity)
 
 	if Launcher.Debug:
 		Launcher.Debug.SetPlayerInventory(Launcher.Entities.activePlayer)

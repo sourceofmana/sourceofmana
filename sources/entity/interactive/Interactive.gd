@@ -111,12 +111,11 @@ func SpeechTextTyped(speech : String):
 	DisplaySpeech(speech)
 
 #
-func _ready():
-	if Launcher.Entities && Launcher.Entities.activePlayer:
-		if Launcher.Entities.activePlayer.has_node("Interactions/Emote"):
-			emoteSprite = Launcher.Entities.activePlayer.get_node("Interactions/Emote")
-		if Launcher.Entities.activePlayer.has_node("Interactions/SpeechContainer"):
-			speechContainer = Launcher.Entities.activePlayer.get_node("Interactions/SpeechContainer")
+func Setup(entity : Node2D):
+	if entity.has_node("Interactions/Emote"):
+		emoteSprite = entity.get_node("Interactions/Emote")
+	if entity.has_node("Interactions/SpeechContainer"):
+		speechContainer = entity.get_node("Interactions/SpeechContainer")
 
 	if Launcher.GUI:
 		if Launcher.GUI.emoteList && Launcher.GUI.emoteList.ItemClicked.is_connected(EmoteWindowClicked) == false:
