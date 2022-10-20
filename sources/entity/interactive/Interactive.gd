@@ -104,9 +104,10 @@ func UpdateActions():
 	if Launcher.Action.IsActionJustPressed("smile_22"): DisplayEmote(22)
 	if Launcher.Action.IsActionJustPressed("smile_26"): DisplayEmote(26)
 
-func Update():
+func Update(isPC : bool):
 	UpdateDelay()
-	UpdateActions()
+	if isPC:
+		UpdateActions()
 
 func EmoteWindowClicked(selectedEmote : String):
 	DisplayEmote(selectedEmote.to_int())

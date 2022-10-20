@@ -175,7 +175,7 @@ func _physics_process(deltaTime : float):
 	else:
 		_velocity_computed(currentVelocity)
 	if interactive:
-		interactive.Update()
+		interactive.Update(isPlayableController)
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
