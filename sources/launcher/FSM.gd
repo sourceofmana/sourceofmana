@@ -32,20 +32,27 @@ func Game():
 #	Launcher.Entities.otherPlayers.append(Launcher.Entities.Spawn("Default Entity", "Player"))
 
 	# NPCs
-	Launcher.Entities.npcs.append(Launcher.Entities.Spawn("Default Entity", "NPC"))
-	Launcher.Entities.npcs.append(Launcher.Entities.Spawn("Default Entity", "NPC"))
+	Launcher.Entities.npcs.append(Launcher.Entities.Spawn("Becees"))
 
 	# Monsters
 	Launcher.Entities.monsters.append(Launcher.Entities.Spawn("Phatyna"))
+	Launcher.Entities.monsters.append(Launcher.Entities.Spawn("Dorian"))
+	Launcher.Entities.monsters.append(Launcher.Entities.Spawn("Emil"))
+	Launcher.Entities.monsters.append(Launcher.Entities.Spawn("Gabriel"))
+	Launcher.Entities.monsters.append(Launcher.Entities.Spawn("Lilah"))
+	Launcher.Entities.monsters.append(Launcher.Entities.Spawn("Lulea"))
+	Launcher.Entities.monsters.append(Launcher.Entities.Spawn("Marvin"))
 
 	# Warps
 	Launcher.Map.Warp(null, map, playerPos, Launcher.Entities.activePlayer)
 	for entity in Launcher.Entities.otherPlayers:
 		Launcher.Map.Warp(null, map, playerPos + Vector2(1, 0), entity)
 	for entity in Launcher.Entities.npcs:
-		Launcher.Map.Warp(null, map, playerPos + Vector2(-1, 0), entity)
+		var pos : Vector2 = Launcher.Entities.RandomPosition(Launcher.Map.activeMap)
+		Launcher.Map.Warp(null, map, pos, entity)
 	for entity in Launcher.Entities.monsters:
-		Launcher.Map.Warp(null, map, playerPos + Vector2(0, 2), entity)
+		var pos : Vector2 = Launcher.Entities.RandomPosition(Launcher.Map.activeMap)
+		Launcher.Map.Warp(null, map, pos, entity)
 
 	if Launcher.Debug:
 		Launcher.Debug.SetPlayerInventory(Launcher.Entities.activePlayer)

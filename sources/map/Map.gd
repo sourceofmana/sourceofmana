@@ -34,11 +34,8 @@ func RemoveEntityFromMap(entity : CharacterBody2D, map : Node2D):
 
 func AddEntityToMap(entity : CharacterBody2D, map : Node2D, newPos : Vector2):
 	var tilemap : TileMap = GetTileMap(map)
-	if tilemap && tilemap.get_tileset():
-		var cellSize : Vector2 = tilemap.get_tileset().get_tile_size()
-		var entityPos : Vector2 = newPos * cellSize + cellSize / 2
-		entity.set_position(entityPos)
-		tilemap.call_deferred("add_child", entity)
+	entity.set_position(newPos)
+	tilemap.call_deferred("add_child", entity)
 	entity.Warped(map)
 	entity.set_physics_process(true)
 

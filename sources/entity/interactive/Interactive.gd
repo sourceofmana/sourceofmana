@@ -64,6 +64,10 @@ func AddSpeechLabel(speech : String):
 	speechContainer.add_child(speechLabel)
 	speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
 
+func AddDebugSpeech(speech : String):
+	RemoveSpeechLabel()
+	AddSpeechLabel(speech)
+
 func DisplaySpeech(speech : String):
 	Launcher.Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
 	if speechContainer:
@@ -111,19 +115,20 @@ func SpeechTextTyped(speech : String):
 	DisplaySpeech(speech)
 
 #
-func Setup(entity : Node2D):
+func Setup(entity : Node2D, isPC : bool):
 	if entity.has_node("Interactions/Emote"):
 		emoteSprite = entity.get_node("Interactions/Emote")
 	if entity.has_node("Interactions/SpeechContainer"):
 		speechContainer = entity.get_node("Interactions/SpeechContainer")
 
-	if Launcher.GUI:
-		if Launcher.GUI.emoteList && Launcher.GUI.emoteList.ItemClicked.is_connected(EmoteWindowClicked) == false:
-			Launcher.GUI.emoteList.ItemClicked.connect(EmoteWindowClicked)
-		if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(SpeechTextTyped) == false:
-			Launcher.GUI.chatContainer.NewTextTyped.connect(SpeechTextTyped)
+	if isPC:
+		if Launcher.GUI:
+			if Launcher.GUI.emoteList && Launcher.GUI.emoteList.ItemClicked.is_connected(EmoteWindowClicked) == false:
+				Launcher.GUI.emoteList.ItemClicked.connect(EmoteWindowClicked)
+			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(SpeechTextTyped) == false:
+				Launcher.GUI.chatContainer.NewTextTyped.connect(SpeechTextTyped)
 
-	emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
-	speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)
-	speechDecreaseDelay		= Launcher.Conf.GetFloat("Gameplay", "speechDecreaseDelay", Launcher.Conf.Type.PROJECT)
-	speechIncreaseThreshold	= Launcher.Conf.GetInt("Gameplay", "speechIncreaseThreshold", Launcher.Conf.Type.PROJECT)
+		emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
+		speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)
+		speechDecreaseDelay		= Launcher.Conf.GetFloat("Gameplay", "speechDecreaseDelay", Launcher.Conf.Type.PROJECT)
+		speechIncreaseThreshold	= Launcher.Conf.GetInt("Gameplay", "speechIncreaseThreshold", Launcher.Conf.Type.PROJECT)

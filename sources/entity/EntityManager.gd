@@ -12,8 +12,12 @@ func Create(entity : Object, isPlayable : bool) -> Node2D:
 	var instanciatedEntity = null
 	if entity:
 		instanciatedEntity = Launcher.FileSystem.LoadScene("presets/Entity")
+		instanciatedEntity.stat.moveSpeed = entity._walkSpeed
+
 		if entity._ethnicity or entity._gender:
 			instanciatedEntity.sprite = Launcher.FileSystem.LoadPreset("sprites/" + entity._ethnicity + entity._gender)
+			if instanciatedEntity.sprite && entity._customTexture:
+				instanciatedEntity.sprite.texture = Launcher.FileSystem.LoadGfx(entity._customTexture)
 			instanciatedEntity.add_child(instanciatedEntity.sprite)
 		if entity._animation:
 			instanciatedEntity.animation = Launcher.FileSystem.LoadPreset("animations/" + entity._animation)
@@ -31,6 +35,9 @@ func Create(entity : Object, isPlayable : bool) -> Node2D:
 		if entity._collision:
 			instanciatedEntity.collision = Launcher.FileSystem.LoadPreset("collisions/" + entity._collision)
 			instanciatedEntity.add_child(instanciatedEntity.collision)
+		if entity._canWarp:
+			instanciatedEntity.collision_layer += 1 << 1
+			instanciatedEntity.collision_mask += 1 << 1
 
 	return instanciatedEntity
 
@@ -68,22 +75,26 @@ func RandomLocationInNavigationLayer(map : Node2D) -> Vector2:
 					return a + sqrt(randf()) * (-a + b + randf() * (c - b))
 	return Vector2.ZERO
 
+func RandomPosition(map : Node2D) -> Vector2:
+	var newPos = RandomLocationInNavigationLayer(map)
+	if newPos == Vector2.ZERO:
+		var mapBoundaries : Rect2i	= Launcher.Map.GetMapBoundaries()
+		newPos.x = randi_range(mapBoundaries.position.x, mapBoundaries.end.x)
+		newPos.y = randi_range(mapBoundaries.position.y, mapBoundaries.end.y)
+	return newPos
 
 func UpdateWalkPaths(entity : Node2D):
-	if entity.isCapturingMouseInput == false || entity.lastPosition.is_equal_approx(entity.position):
-		var newPos = RandomLocationInNavigationLayer(Launcher.Map.activeMap)
-		if newPos == Vector2.ZERO:
-			var mapBoundaries : Rect2i	= Launcher.Map.GetMapBoundaries()
-			newPos.x = randi_range(mapBoundaries.position.x, mapBoundaries.end.x)
-			newPos.y = randi_range(mapBoundaries.position.y, mapBoundaries.end.y)
-		entity.WalkToward(newPos)
-	entity.UpdateInput()
+	var newPos : Vector2 = RandomPosition(Launcher.Map.activeMap)
+	entity.WalkToward(newPos)
 
 func _process(_dt : float):
-	for entity in npcs:
-		UpdateWalkPaths(entity)
-	for entity in monsters:
-		UpdateWalkPaths(entity)
+	for entity in npcs + monsters:
+		if entity.isCapturingMouseInput == false && entity.AITimer.is_stopped():
+			entity.AddAITimer(randi_range(5, 10), UpdateWalkPaths)
+		elif entity.isCapturingMouseInput && entity.IsStuck():
+			entity.WalkToward(entity.position)
+			entity.AddAITimer(randi_range(0, 3), UpdateWalkPaths)
+		entity.UpdateInput()
 
 #
 func _init():

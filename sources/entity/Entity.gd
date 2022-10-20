@@ -24,14 +24,16 @@ var showName					= false
 var isCapturingMouseInput		= false
 var currentInput				= Vector2.ZERO
 var currentVelocity				= Vector2.ZERO
-var currentDirection			= Vector2.ZERO
+var currentDirection			= Vector2(0, 1)
 
 enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
 var currentState				= State.IDLE
 var currentStateTimer			= 0.0
 
 var isPlayableController		= false
-var lastPosition				= Vector2.ZERO
+var lastPositions : Array		= []
+var AITimer : Timer				= null
+
 
 #
 func GetNextDirection():
@@ -43,8 +45,8 @@ func GetNextDirection():
 func GetNextState():
 	var newEnumState			= currentState
 	var isWalking				= currentVelocity.length_squared() > 1
-	var actionSitPressed		= Launcher.Action.IsActionPressed("gp_sit")
-	var actionSitJustPressed	= Launcher.Action.IsActionJustPressed("gp_sit")
+	var actionSitPressed		= Launcher.Action.IsActionPressed("gp_sit") if isPlayableController else false
+	var actionSitJustPressed	= Launcher.Action.IsActionJustPressed("gp_sit") if isPlayableController else false
 
 	match currentState:
 		State.IDLE:
@@ -95,7 +97,9 @@ func UpdateInput():
 			var newDirection : Vector2 = global_position.direction_to(agent.get_next_location())
 			if newDirection != Vector2.ZERO:
 				currentInput = newDirection
-			lastPosition = position
+			lastPositions.push_back(position)
+			if lastPositions.size() > 5:
+				lastPositions.pop_front()
 		else:
 			SwitchInputMode(true)
 
@@ -124,16 +128,32 @@ func UpdateState():
 #
 func WalkToward(pos : Vector2):
 	isCapturingMouseInput = true
+	lastPositions.clear()
 	if agent:
 		agent.set_target_location(pos)
 
+func IsStuck() -> bool:
+	var isStuck : bool = false
+	if lastPositions.size() >= 5:
+		var sum : Vector2 = Vector2.ZERO
+		for pos in lastPositions:
+			sum += pos - position
+		isStuck = sum.abs() < Vector2(1, 1)
+	return isStuck
+
 func Warped(map : Node2D):
 	var nav2d : Node2D = null
-
 	if map && map.has_node("Navigation"):
 		nav2d = map.get_node("Navigation")
-
 	Launcher.Util.Assert(nav2d != null, "Navigation layer not found on current map")
+
+#
+func AddAITimer(delay : float, callable: Callable):
+	AITimer.stop()
+	AITimer.start(delay)
+	AITimer.autostart = true
+	if not AITimer.timeout.is_connected(callable):
+		AITimer.timeout.connect(callable.bind(self))
 
 #
 func _unhandled_input(event):
@@ -177,5 +197,10 @@ func _ready():
 			var err = agent.path_changed.connect(Launcher.Debug.UpdateNavLine)
 			Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")
 
-	if interactive && isPlayableController:
-		interactive.Setup(self)
+	if interactive:
+		interactive.Setup(self, isPlayableController)
+
+	if AITimer == null:
+		AITimer = Timer.new()
+		AITimer.set_name("Timer")
+		add_child(AITimer)

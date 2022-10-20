@@ -10,6 +10,9 @@ extends Node
 @export var _navigationAgent : String
 @export var _camera : String
 @export var _collision : String
+@export var _customTexture : String
+@export var _canWarp : bool
+@export var _walkSpeed : int
 
 func _init():
 	_id = -1
@@ -22,3 +25,6 @@ func _init():
 	_navigationAgent = ""
 	_camera = ""
 	_collision = ""
+	_customTexture = ""
+	_canWarp = false
+	_walkSpeed = 125
