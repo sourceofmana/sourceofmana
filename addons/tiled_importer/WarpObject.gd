@@ -16,4 +16,4 @@ func _init():
 
 func _ready():
 	var err = self.body_entered.connect(bodyEntered)
-#	Launcher.Util.Assert(err == OK, "Could not connect map warp signal")
+	Launcher.Util.Assert(err == OK, "Could not connect map warp signal")

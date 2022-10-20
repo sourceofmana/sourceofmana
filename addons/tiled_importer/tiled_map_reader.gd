@@ -643,7 +643,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 							if "dest_map" in object.properties and not str(object.properties.dest_map).is_empty():
 								customObject.destinationMap = object.properties.dest_map
 							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
-								customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y)
+								customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * cell_size
 
 					# Spawn
 					elif "type" in object and object.type == "Spawn":
