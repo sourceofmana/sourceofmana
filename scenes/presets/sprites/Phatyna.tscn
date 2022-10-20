@@ -4,7 +4,6 @@
 
 [node name="Sprite" type="Sprite2D"]
 texture = ExtResource("1")
-offset = Vector2(0, -16)
-hframes = 9
-vframes = 4
-frame = 3
+offset = Vector2(0, -28)
+hframes = 6
+vframes = 8
