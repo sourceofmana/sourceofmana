@@ -8,12 +8,79 @@
 		"NavigationAgent"	: "PlayerAgent",
 		"Camera"			: "Default",
 		"Collision"			: "Medium",
+		"CanWarp"			: true,
 	},
-	"1": {
+
+	"1000": {
 		"Name"				: "Phatyna",
 		"Ethnicity"			: "Phatyna",
+		"Animation"			: "Phatyna",
+		"NavigationAgent"	: "NPAgent",
+		"Collision"			: "Medium",
+		"WalkSpeed"			: 50
+	},
+	"1001": {
+		"Name"				: "Dorian",
+		"Ethnicity"			: "Slime",
 		"Animation"			: "Slime",
-		"NavigationAgent"	: "PlayerAgent",
-		"Collision"			: "Large",
+		"Texture"			: "sprites/monsters/dorian.png",
+		"NavigationAgent"	: "NPAgent",
+		"Collision"			: "VerySmall",
+		"WalkSpeed"			: 70
+	},
+	"1002": {
+		"Name"				: "Emil",
+		"Ethnicity"			: "Slime",
+		"Animation"			: "Slime",
+		"Texture"			: "sprites/monsters/emil.png",
+		"NavigationAgent"	: "NPAgent",
+		"Collision"			: "VerySmall",
+		"WalkSpeed"			: 70
+	},
+	"1003": {
+		"Name"				: "Gabriel",
+		"Ethnicity"			: "Slime",
+		"Animation"			: "Slime",
+		"Texture"			: "sprites/monsters/gabriel.png",
+		"NavigationAgent"	: "NPAgent",
+		"Collision"			: "VerySmall",
+		"WalkSpeed"			: 70
+	},
+	"1004": {
+		"Name"				: "Lilah",
+		"Ethnicity"			: "Slime",
+		"Animation"			: "Slime",
+		"Texture"			: "sprites/monsters/lilah.png",
+		"NavigationAgent"	: "NPAgent",
+		"Collision"			: "VerySmall",
+		"WalkSpeed"			: 70
+	},
+	"1005": {
+		"Name"				: "Lulea",
+		"Ethnicity"			: "Slime",
+		"Animation"			: "Slime",
+		"Texture"			: "sprites/monsters/lulea.png",
+		"NavigationAgent"	: "NPAgent",
+		"Collision"			: "VerySmall",
+		"WalkSpeed"			: 70
+	},
+	"1006": {
+		"Name"				: "Marvin",
+		"Ethnicity"			: "Slime",
+		"Animation"			: "Slime",
+		"Texture"			: "sprites/monsters/marvin.png",
+		"NavigationAgent"	: "NPAgent",
+		"Collision"			: "VerySmall",
+		"WalkSpeed"			: 70
+	},
+
+	"2000": {
+		"Name"				: "Becees",
+		"Ethnicity"			: "KaizeiViro",
+		"Gender"			: "Male",
+		"Hairstyle"			: "Bald",
+		"Animation"			: "Player",
+		"NavigationAgent"	: "NPAgent",
+		"Collision"			: "Small",
 	},
 }
