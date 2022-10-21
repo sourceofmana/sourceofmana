@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Source of Mana"
-run/main_scene="res://scenes/World.tscn"
+run/main_scene="res://scenes/Source.tscn"
 config/features=PackedStringArray("4.0")
 boot_splash/image="res://data/press/splash/splashscreen.png"
 boot_splash/bg_color=Color(0, 0, 0, 1)

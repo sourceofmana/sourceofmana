@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cs02hhrtmhnxx"]
-
-[ext_resource type="PackedScene" uid="uid://cx3n3yjonu1x4" path="res://scenes/gui/Game.tscn" id="2"]
-
-[node name="World" type="Node2D"]
-
-[node name="CanvasLayer" parent="." instance=ExtResource("2")]
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
