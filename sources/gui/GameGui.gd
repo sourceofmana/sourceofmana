@@ -40,10 +40,7 @@ func UpdatePlayerInfo():
 		if weightStat:
 			weightStat.SetStat(Launcher.Entities.playerEntity.stat.weight, Launcher.Entities.playerEntity.stat.maxWeight)
 
-#
-func _ready():
-	get_tree().set_auto_accept_quit(false)
-
+func PlayerSpawned():
 	if Launcher.Entities.playerEntity:
 		assert(itemInventory, "Item inventory container is missing")
 		if itemInventory:
@@ -52,6 +49,11 @@ func _ready():
 	assert(emoteList, "Emote grid container is missing")
 	if emoteList:
 		emoteList.FillGridContainer(Launcher.DB.EmotesDB)
+
+#
+func _ready():
+	Launcher.FSM.enter_game.connect(PlayerSpawned)
+	get_tree().set_auto_accept_quit(false)
 
 func _process(_delta):
 	UpdatePlayerInfo()

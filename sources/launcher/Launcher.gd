@@ -58,4 +58,5 @@ func _ready():
 func _process(delta : float):
 	if Debug:
 		Debug._process(delta)
+	FSM._process(delta)
 	World._process(delta)

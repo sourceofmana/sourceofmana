@@ -11,9 +11,9 @@ func GetPercentFormat(value : int) -> String:
 	return "%.2f%%" % [value]
 
 #
-func _ready():
+func _process(_dt : float):
 	if Launcher.Entities.playerEntity:
-		assert(hpStat && manaStat && staminaStat, "Stat progress bars are missing")
+		assert(hpStat && manaStat && staminaStat && expText, "Stat controls are missing")
 
 		if hpStat:
 			hpStat.SetStat(Launcher.Entities.playerEntity.stat.health, Launcher.Entities.playerEntity.stat.maxHealth)

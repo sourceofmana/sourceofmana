@@ -9,12 +9,12 @@ enum EdgeOrientation { NONE, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT, TOP
 
 #
 @export var blockActions	= false
+@export var maxSize			= Vector2(-1, -1)
 const edgeSize				= 5
 const cornerSize			= 15
 var clickPosition			= null
 var isResizing				= false
 var selectedEdge			= EdgeOrientation.NONE
-var max_size				= Vector2(-1, -1)
 
 #
 func ClampViewport(globalPos, moveLimit):
@@ -74,10 +74,10 @@ func ResizeWindow(globalPos):
 			else:
 				rectPos.y = globalPos.y
 
-	if max_size.x != -1:
-		size.x = clamp(size.x, custom_minimum_size.x, max_size.x)
-	if max_size.y != -1:
-		size.y = clamp(size.y, custom_minimum_size.y, max_size.y)
+	if maxSize.x != -1:
+		size.x = clamp(size.x, custom_minimum_size.x, maxSize.x)
+	if maxSize.y != -1:
+		size.y = clamp(size.y, custom_minimum_size.y, maxSize.y)
 
 	size = rectSize
 	position = rectPos

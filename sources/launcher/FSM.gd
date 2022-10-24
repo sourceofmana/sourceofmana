@@ -1,20 +1,27 @@
 extends Node
 
 #
+signal enter_login
+signal enter_char_selection
+signal enter_game
+
+#
 enum States { NONE = 0, LOGIN_CONNECTION, CHAR_SELECTION, IN_GAME }
 
 #
-var currentState	= States.LOGIN_CONNECTION
-var nextState		= States.NONE
+var currentState	= States.NONE
+var nextState		= States.LOGIN_CONNECTION
 
 #
-func Login():
-	pass
+func EnterLogin():
+	nextState = States.CHAR_SELECTION
+	emit_signal("enter_login")
 
-func Char():
-	pass
+func EnterCharSelection():
+	nextState = States.IN_GAME
+	emit_signal("enter_char_selection")
 
-func Game():
+func EnterGame():
 	if Launcher.World:
 		var map : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
 		var pos : Vector2	= Launcher.Conf.GetVector2("Default", "startPos", Launcher.Conf.Type.MAP)
@@ -24,28 +31,27 @@ func Game():
 		Launcher.Map.WarpEntity(map, pos, Launcher.Entities.playerEntity)
 
 	if Launcher.Debug:
-		Launcher.Debug.SetPlayerInventory(Launcher.Entities.playerEntity)
+		Launcher.Debug.SetPlayerInventory()
+
+	emit_signal("enter_game")
 
 #
-func UpdateFSM():
+func _process(_delta):
 	if currentState != nextState:
+		currentState = nextState
 		match nextState:
 			States.LOGIN_CONNECTION:
-				Login()
+				EnterLogin()
 			States.CHAR_SELECTION:
-				Char()
+				EnterCharSelection()
 			States.IN_GAME:
-				Game()
+				EnterGame()
 			_:
 				Launcher.Util.Assert(false, "Wanted FSM state not handled.")
-
-		currentState = nextState
 
 #
 func _post_ready():
 	if Launcher.Conf.GetBool("Default", "skipLogin", Launcher.Conf.Type.PROJECT):
 		nextState = States.IN_GAME
 	else:
-		nextState = States.SERVER_SELECTION
-
-	UpdateFSM()
+		nextState = States.LOGIN_CONNECTION

@@ -10,6 +10,7 @@ offset_right = 160.0
 offset_bottom = 96.0
 theme = ExtResource("1_6u7q8")
 script = ExtResource("2_4yhdg")
+maxSize = null
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2

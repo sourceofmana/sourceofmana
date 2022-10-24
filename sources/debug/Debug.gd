@@ -4,8 +4,9 @@ var projectName : String = ""
 var navLine : Line2D = null
 
 #
-func SetPlayerInventory(player : Node2D):
-	player.inventory.items = Launcher.DB.ItemsDB
+func SetPlayerInventory():
+	if Launcher.Entities && Launcher.Entities.playerEntity:
+		Launcher.Entities.playerEntity.inventory.items = Launcher.DB.ItemsDB
 
 #
 func _post_ready():
