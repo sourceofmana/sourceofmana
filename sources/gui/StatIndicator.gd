@@ -12,16 +12,16 @@ func GetPercentFormat(value : int) -> String:
 
 #
 func _ready():
-	if Launcher.Entities.activePlayer:
+	if Launcher.Entities.playerEntity:
 		assert(hpStat && manaStat && staminaStat, "Stat progress bars are missing")
 
 		if hpStat:
-			hpStat.SetStat(Launcher.Entities.activePlayer.stat.health, Launcher.Entities.activePlayer.stat.maxHealth)
+			hpStat.SetStat(Launcher.Entities.playerEntity.stat.health, Launcher.Entities.playerEntity.stat.maxHealth)
 		if manaStat:
-			manaStat.SetStat(Launcher.Entities.activePlayer.stat.mana, Launcher.Entities.activePlayer.stat.maxMana)
+			manaStat.SetStat(Launcher.Entities.playerEntity.stat.mana, Launcher.Entities.playerEntity.stat.maxMana)
 		if staminaStat:
-			staminaStat.SetStat(Launcher.Entities.activePlayer.stat.stamina, Launcher.Entities.activePlayer.stat.maxStamina)
+			staminaStat.SetStat(Launcher.Entities.playerEntity.stat.stamina, Launcher.Entities.playerEntity.stat.maxStamina)
 		if levelText:
-			levelText.set_text(String.num_int64(Launcher.Entities.activePlayer.stat.level))
+			levelText.set_text(String.num_int64(Launcher.Entities.playerEntity.stat.level))
 		if expText:
-			expText.set_text(GetPercentFormat(Launcher.Entities.activePlayer.stat.experience))
+			expText.set_text(GetPercentFormat(Launcher.Entities.playerEntity.stat.experience))

@@ -35,19 +35,19 @@ func ToggleChatNewLine(control : Control):
 			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
 
 func UpdatePlayerInfo():
-	if Launcher.Entities.activePlayer:
+	if Launcher.Entities.playerEntity:
 		assert(weightStat, "Stat inventory weight bar is missing")
 		if weightStat:
-			weightStat.SetStat(Launcher.Entities.activePlayer.stat.weight, Launcher.Entities.activePlayer.stat.maxWeight)
+			weightStat.SetStat(Launcher.Entities.playerEntity.stat.weight, Launcher.Entities.playerEntity.stat.maxWeight)
 
 #
 func _ready():
 	get_tree().set_auto_accept_quit(false)
 
-	if Launcher.Entities.activePlayer:
+	if Launcher.Entities.playerEntity:
 		assert(itemInventory, "Item inventory container is missing")
 		if itemInventory:
-			itemInventory.FillGridContainer(Launcher.Entities.activePlayer.inventory.items)
+			itemInventory.FillGridContainer(Launcher.Entities.playerEntity.inventory.items)
 
 	assert(emoteList, "Emote grid container is missing")
 	if emoteList:

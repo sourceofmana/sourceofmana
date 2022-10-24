@@ -7,7 +7,7 @@ extends Area2D
 #
 func bodyEntered(body):
 	if body && body is CharacterBody2D:
-		Launcher.Map.Warp(self, destinationMap, destinationPos, body)
+		Launcher.Map.WarpEntity(destinationMap, destinationPos, body)
 
 #
 func _init():

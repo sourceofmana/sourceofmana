@@ -141,26 +141,18 @@ func IsStuck() -> bool:
 		isStuck = sum.abs() < Vector2(1, 1)
 	return isStuck
 
-func Warped(map : Node2D):
-	var nav2d : Node2D = null
-	if map && map.has_node("Navigation"):
-		nav2d = map.get_node("Navigation")
-	Launcher.Util.Assert(nav2d != null, "Navigation layer not found on current map")
-
 #
-func AddAITimer(delay : float, callable: Callable):
+func AddAITimer(delay : float, callable: Callable, map : Object):
 	AITimer.stop()
 	AITimer.start(delay)
 	AITimer.autostart = true
 	if not AITimer.timeout.is_connected(callable):
-		AITimer.timeout.connect(callable.bind(self))
+		AITimer.timeout.connect(callable.bind(self, map))
 
 #
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-			#Todo: Use signal to know when the agent is instancied and to launch Map's warp func
-			Warped(Launcher.Map.activeMap)
 			WalkToward(Launcher.Camera.mainCamera.get_global_mouse_position())
 
 	currentInput = Launcher.Action.GetMove()
@@ -185,9 +177,6 @@ func _velocity_computed(safeVelocity : Vector2):
 func _ready():
 	set_process_input(isPlayableController)
 	set_process_unhandled_input(isPlayableController)
-
-	#Todo: Use signal to know when the agent is instanced and to launch Map's warp func
-	Warped(Launcher.Map.activeMap)
 
 	if agent:
 		if agent.get_avoidance_enabled():

@@ -18,6 +18,7 @@ var Entities			= null
 var FSM					= null
 var Map					= null
 var Save				= null
+var World				= null
 
 #
 func _init():
@@ -43,6 +44,7 @@ func _ready():
 	Entities		= FileSystem.LoadSource("entity/EntityManager.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
+	World			= FileSystem.LoadSource("world/World.gd")
 
 	# Call post_ready functions for service depending on other services
 	if Debug:
@@ -50,9 +52,10 @@ func _ready():
 	Audio._post_ready()
 	Conf._post_ready()
 	DB._post_ready()
+	World._post_ready()
 	FSM._post_ready()
 
 func _process(delta : float):
 	if Debug:
 		Debug._process(delta)
-	Entities._process(delta)
+	World._process(delta)

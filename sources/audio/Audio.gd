@@ -34,8 +34,8 @@ func Load(soundName : String):
 			audioPlayer.play()
 
 func Warped():
-	if Launcher.Map.activeMap && Launcher.Map.activeMap.has_meta("music"):
-		Load(Launcher.Map.activeMap.get_meta("music"))
+	if Launcher.Map.mapNode && Launcher.Map.mapNode.has_meta("music"):
+		Load(Launcher.Map.mapNode.get_meta("music"))
 
 #
 func _post_ready():

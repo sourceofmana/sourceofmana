@@ -132,7 +132,6 @@ func LoadResource(fullPath : String, instantiate : bool = true) -> Object:
 	Launcher.Util.Assert(pathExists, "Resource file not found at: " + fullPath)
 	if pathExists:
 		rscInstance = ResourceInstance(fullPath) if instantiate else ResourceLoad(fullPath)
-		Launcher.Util.PrintLog("Loading resource: " + fullPath)
 
 	return rscInstance
 

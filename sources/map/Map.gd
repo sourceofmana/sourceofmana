@@ -4,79 +4,23 @@ extends Node2D
 signal PlayerWarped
 
 #
-var Pool					= Launcher.FileSystem.LoadSource("map/MapPool.gd")
-var activeMap : Node2D		= null
+var pool					= Launcher.FileSystem.LoadSource("map/MapPool.gd")
+var mapNode : Node2D		= null
 
 #
-func RemoveMap(map : Node2D):
-	if map:
-		Launcher.call_deferred("remove_child", map)
-
-func AddMap(map : Node2D):
-	if map:
-		Launcher.call_deferred("add_child", map)
-
-func GetTileMap(map : Node2D) -> TileMap:
+func GetTileMap() -> TileMap:
 	var tilemap : TileMap = null
-	if map:
-		for child in map.get_children():
+	if mapNode:
+		for child in mapNode.get_children():
 			if child is TileMap:
 				tilemap = child
 				break
 	return tilemap
 
-#
-func RemoveEntityFromMap(entity : CharacterBody2D, map : Node2D):
-	var tilemap : TileMap = GetTileMap(map)
-	if tilemap:
-		entity.set_physics_process(false)
-		tilemap.call_deferred("remove_child", entity)
-
-func AddEntityToMap(entity : CharacterBody2D, map : Node2D, newPos : Vector2):
-	var tilemap : TileMap = GetTileMap(map)
-	entity.set_position(newPos)
-	tilemap.call_deferred("add_child", entity)
-	entity.Warped(map)
-	entity.set_physics_process(true)
-
-#
-func Warp(_caller : Area2D, mapName : String, mapPos : Vector2, entity : CharacterBody2D):
-	assert(entity, "Entity is not initialized, could not warp it to this map")
-
-	if activeMap && activeMap.get_name() != mapName:
-		if entity:
-			RemoveEntityFromMap(entity, activeMap)
-		RemoveMap(activeMap)
-		activeMap = null
-
-	if not activeMap:
-		activeMap = Pool.LoadMap(mapName)
-		Launcher.Util.Assert(activeMap != null, "Map instance could not be created")
-		if activeMap:
-			AddMap(activeMap)
-			if entity:
-				Launcher.Camera.SetBoundaries(entity)
-
-	if activeMap:
-		if entity:
-			AddEntityToMap(entity, activeMap, mapPos)
-
-		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
-			Pool.RefreshPool(activeMap)
-
-		emit_signal('PlayerWarped')
-
-#
-func GetMapBoundaries(map : Node2D = null) -> Rect2:
+func GetMapBoundaries() -> Rect2:
 	var boundaries : Rect2 = Rect2()
-
-	if map == null:
-		map = activeMap
-
-	Launcher.Util.Assert(map != null, "Map instance is not found, could not generate map boundaries")
-
-	var tilemap : TileMap = GetTileMap(map)
-	Launcher.Util.Assert(tilemap != null, "Could not find a tilemap on this map scene: " + str(map.get_name()))
+	var tilemap : TileMap = GetTileMap()
+	Launcher.Util.Assert(tilemap != null, "Could not find a tilemap on the current scene")
 	if tilemap:
 		var mapLimits			= tilemap.get_used_rect()
 		var mapCellsize			= tilemap.get_tileset().get_tile_size() if tilemap.get_tileset() else Vector2i(32, 32)
@@ -87,3 +31,49 @@ func GetMapBoundaries(map : Node2D = null) -> Rect2:
 		boundaries.end.y		= mapCellsize.y * mapLimits.end.y
 
 	return boundaries
+
+#
+func UnloadMapNode():
+	if mapNode:
+		RemoveChilds()
+		Launcher.call_deferred("remove_child", mapNode)
+		mapNode = null
+
+func LoadMapNode(mapName : String):
+	mapNode = pool.LoadMap(mapName)
+	Launcher.Util.Assert(mapNode != null, "Map instance could not be created")
+	if mapNode:
+		Launcher.call_deferred("add_child", mapNode)
+
+#
+func RemoveChilds():
+	var tileMap : TileMap = GetTileMap()
+	if tileMap:
+		for entity in tileMap.get_children():
+			entity.set_physics_process(false)
+			tileMap.call_deferred("remove_child", entity)
+
+func AddChild(entity : CharacterBody2D):
+	var tilemap : TileMap = GetTileMap()
+	tilemap.call_deferred("add_child", entity)
+	entity.set_physics_process(true)
+
+#
+func WarpEntity(mapName : String, mapPos : Vector2, pc : CharacterBody2D):
+	assert(pc, "Entity is not initialized, could not warp it to this map")
+
+	if mapNode && mapNode.get_name() != mapName:
+		Launcher.World.Warp(mapNode.get_name(), mapName, pc)
+		UnloadMapNode()
+	LoadMapNode(mapName)
+	Launcher.Camera.SetBoundaries(pc)
+
+	if mapNode:
+		if pc:
+			for entity in Launcher.World.GetEntities(mapName, pc.entityName):
+				AddChild(entity)
+			pc.set_position(mapPos)
+				
+		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
+			pool.RefreshPool(mapNode)
+		emit_signal('PlayerWarped')
