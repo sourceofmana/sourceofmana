@@ -24,8 +24,8 @@ func _process(_delta : float):
 	DisplayServer.window_set_title(projectName + " | fps: " + str(Engine.get_frames_per_second()))
 
 func UpdateNavLine():
-	if navLine:
-		navLine.points = Launcher.Entities.activePlayer.agent.get_nav_path()
+	if navLine && Launcher.Entities && Launcher.Entities.playerEntity && Launcher.Entities.playerEntity.agent:
+		navLine.points = Launcher.Entities.playerEntity.agent.get_nav_path()
 
 func ClearNavLine():
 	if navLine:
