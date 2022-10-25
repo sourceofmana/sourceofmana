@@ -29,6 +29,7 @@ func FillGridContainer(listOfItem : Dictionary):
 
 			add_child(tileInstance)
 			slots.append(tileInstance)
+		_on_panel_resized()
 
 func OnItemPressed(item : String):
 	emit_signal('ItemClicked', item)

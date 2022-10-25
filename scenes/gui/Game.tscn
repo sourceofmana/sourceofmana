@@ -160,10 +160,10 @@ blockActions = null
 [node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
 custom_minimum_size = Vector2i(38, 38)
 layout_mode = 0
-offset_left = 1067.0
-offset_top = 164.0
-offset_right = 1201.0
-offset_bottom = 214.0
+offset_left = 66.0
+offset_top = 85.0
+offset_right = 304.0
+offset_bottom = 128.0
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
 layout_mode = 0
