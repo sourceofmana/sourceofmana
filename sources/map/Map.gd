@@ -73,6 +73,7 @@ func WarpEntity(mapName : String, mapPos : Vector2, pc : CharacterBody2D):
 			for entity in Launcher.World.GetEntities(mapName, pc.entityName):
 				AddChild(entity)
 			pc.set_position(mapPos)
+			pc.ResetNav()
 				
 		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
 			pool.RefreshPool(mapNode)

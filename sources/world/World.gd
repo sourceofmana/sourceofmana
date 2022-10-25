@@ -175,7 +175,7 @@ func UpdateAI(entity : Node2D, map : Map):
 	if entity.isCapturingMouseInput == false && entity.AITimer && entity.AITimer.is_stopped():
 		entity.AddAITimer(randi_range(5, 10), UpdateWalkPaths, map)
 	elif entity.isCapturingMouseInput && entity.IsStuck():
-		entity.WalkToward(entity.position)
+		entity.ResetNav()
 		entity.AddAITimer(randi_range(0, 3), UpdateWalkPaths, map)
 	entity.UpdateInput()
 

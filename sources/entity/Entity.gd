@@ -132,6 +132,9 @@ func WalkToward(pos : Vector2):
 	if agent:
 		agent.set_target_location(pos)
 
+func ResetNav():
+	WalkToward(position)
+
 func IsStuck() -> bool:
 	var isStuck : bool = false
 	if lastPositions.size() >= 5:
