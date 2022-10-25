@@ -10,7 +10,7 @@ func ResourceExists(path : String) -> bool:
 func FileLoad(path : String) -> Resource:
 	return load(path)
 
-func FileAlloc(path : String) -> Node:
+func FileAlloc(path : String) -> Object:
 	return FileLoad(path).new()
 
 func ResourceLoad(path : String) -> Object:
@@ -70,9 +70,9 @@ func LoadMap(path : String) -> Node2D:
 	return mapInstance
 
 # Source
-func LoadSource(path : String) -> Node:
+func LoadSource(path : String) -> Object:
 	var fullPath : String		= Launcher.Path.Src + path
-	var srcFile : Node			= null
+	var srcFile : Object		= null
 
 	var pathExists : bool		= ResourceExists(fullPath)
 	Launcher.Util.Assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
