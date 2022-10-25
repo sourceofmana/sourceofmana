@@ -10,10 +10,8 @@ offset_right = 160.0
 offset_bottom = 96.0
 theme = ExtResource("1_6u7q8")
 script = ExtResource("2_4yhdg")
-maxSize = null
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-layout_mode = 2
 offset_left = 5.0
 offset_top = 4.0
 offset_right = 155.0
@@ -21,7 +19,6 @@ offset_bottom = 91.0
 script = ExtResource("3_g8pkj")
 
 [node name="TextureRect" type="TextureRect" parent="ScrollContainer"]
-layout_mode = 2
 stretch_mode = 2
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]

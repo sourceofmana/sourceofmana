@@ -31,6 +31,6 @@ func _process(_delta):
 			var posRatio : Vector2 = screenCenter / mapSize
 			var minimapWindowSize = get_node("TextureRect").size
 			var scrollPos : Vector2i = Vector2i(minimapWindowSize * posRatio - size / 2)
-
+			get_parent().maxSize = minimapWindowSize
 			set_h_scroll(scrollPos.x)
 			set_v_scroll(scrollPos.y)
