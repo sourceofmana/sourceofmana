@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wdut7jbhem3h"
-path="res://.godot/imported/002-3-3.png-5b1b283512ccd818a31dc75ebe141dcf.ctex"
+uid="uid://davloxt7oclue"
+path="res://.godot/imported/enchi_items_transparent.png-ea2fe6f8694b95d1fa461268c8a7bb31.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/Phatyna/002-3-3.png"
-dest_files=["res://.godot/imported/002-3-3.png-5b1b283512ccd818a31dc75ebe141dcf.ctex"]
+source_file="res://data/graphics/items/enchi_items/enchi_items_transparent.png"
+dest_files=["res://.godot/imported/enchi_items_transparent.png-ea2fe6f8694b95d1fa461268c8a7bb31.ctex"]
 
 [params]
 

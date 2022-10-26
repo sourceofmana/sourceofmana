@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://wdut7jbhem3h"
-path="res://.godot/imported/002-3-1.png-f90dcff341762ab165c56055087c2b21.ctex"
+path="res://.godot/imported/002-3-1.png-d97a1eae1e2dd01cda0ee3d10e8688c8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/phatyna/002-3-1.png"
-dest_files=["res://.godot/imported/002-3-1.png-f90dcff341762ab165c56055087c2b21.ctex"]
+source_file="res://data/graphics/minimaps/Phatyna/002-3-1.png"
+dest_files=["res://.godot/imported/002-3-1.png-d97a1eae1e2dd01cda0ee3d10e8688c8.ctex"]
 
 [params]
 

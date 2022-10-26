@@ -1,5 +1,6 @@
 @tool
 extends Control
+class_name WindowPanel
 
 #
 signal MoveFloatingWindowToTop

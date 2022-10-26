@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://sources/resource_types/BaseItem.gd" id="1_71cxl"]
+[ext_resource type="Texture2D" uid="uid://cme6adrtp7g37" path="res://data/graphics/items/commons/phatina-key1.png" id="1_w35pv"]
+
+[resource]
+script = ExtResource("1_71cxl")
+name = "Hungry's Key"
+description = "A key that has been hidden a long time ago, seems to open a fancy door"
+stackable = true
+icon = ExtResource("1_w35pv")
+weight = 15.0

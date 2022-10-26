@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cccd3h3yh4we2"]
+
+[ext_resource type="Texture2D" uid="uid://ipj5b4ar8xuv" path="res://data/graphics/items/enchi_items/apple.png" id="1_27ds8"]
+[ext_resource type="Script" path="res://sources/resource_types/FoodItem.gd" id="1_ywd5u"]
+
+[resource]
+script = ExtResource("1_ywd5u")
+HealthPoints = 6
+name = "Apple"
+description = "an apple a day keeps the doctor away"
+stackable = true
+icon = ExtResource("1_27ds8")
+weight = 140.0

@@ -1,8 +1,7 @@
 extends Node
 
 @onready var windows : Control					= $FloatingWindows
-@onready var weightStat : Control				= $FloatingWindows/Inventory/VBoxContainer/Weight/BgTex/Weight
-@onready var itemInventory : GridContainer		= $FloatingWindows/Inventory/VBoxContainer/ItemContainer/Grid
+@onready var itemInventory : InventoryWindow		= $FloatingWindows/Inventory
 @onready var emoteList : GridContainer			= $FloatingWindows/Emote/ItemContainer/Grid
 @onready var chatContainer : Container			= $FloatingWindows/Chat/VBoxContainer
 
@@ -36,15 +35,14 @@ func ToggleChatNewLine(control : Control):
 
 func UpdatePlayerInfo():
 	if Launcher.Entities.playerEntity:
-		assert(weightStat, "Stat inventory weight bar is missing")
-		if weightStat:
-			weightStat.SetStat(Launcher.Entities.playerEntity.stat.weight, Launcher.Entities.playerEntity.stat.maxWeight)
+			itemInventory.update_inventory()
+	pass
 
 func PlayerSpawned():
-	if Launcher.Entities.playerEntity:
-		assert(itemInventory, "Item inventory container is missing")
-		if itemInventory:
-			itemInventory.FillGridContainer(Launcher.Entities.playerEntity.inventory.items)
+#	if Launcher.Entities.playerEntity:
+#		assert(itemInventory, "Item inventory container is missing")
+#		if itemInventory:
+#			itemInventory.FillGridContainer(Launcher.Entities.playerEntity.inventory.items)
 
 	assert(emoteList, "Emote grid container is missing")
 	if emoteList:
