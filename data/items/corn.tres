@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://drx2qmyo7tw83"]
+
+[ext_resource type="Texture2D" uid="uid://davloxt7oclue" path="res://data/graphics/items/enchi_items/enchi_items_transparent.png" id="1_gdkal"]
+[ext_resource type="Script" path="res://sources/resource_types/FoodItem.gd" id="1_o52wt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0xjo"]
+atlas = ExtResource("1_gdkal")
+region = Rect2(160, 160, 32, 32)
+
+[resource]
+script = ExtResource("1_o52wt")
+HealthPoints = 4
+name = "Corn"
+description = "maybe you could pop it for a movie snack?"
+icon = SubResource("AtlasTexture_k0xjo")
+stackable = null
+weight = 1
