@@ -197,7 +197,7 @@ func build(source_path, options):
 		if err != OK:
 			return err
 
-#	create_collision_layer()
+#	create_collision_layer(root)
 #	create_navigation_layer()
 #
 #	var nav_polygon : NavigationPolygon = NavigationPolygon.new()
@@ -242,44 +242,22 @@ func build(source_path, options):
 
 	return root
 
-func build_collision_pool(tilemap, gid):
-	var used_tiles = tilemap.get_used_cells_by_id(gid)
-	for tile in used_tiles:
-		var polygon_offset = tilemap.map_to_world(tile)
-		var tile_region = tilemap.get_cell_autotile_coord(tile[0], tile[1])
-		var tile_transform = tilemap.get_tileset().tile_get_shape_transform(gid, tile_region[0])
+func fill_collision_pool(level : TileMap, cell : Vector2, gid : int):
+	var layer_id : int			= tileDic[gid][0]
+	var atlas_pos : Vector2i	= tileDic[gid][1]
 
-		var polygon_shape = null
-		var col_shape = tilemap.get_tileset().tile_get_shape(gid, tile_region[0])
-		if col_shape:
-			if col_shape is ConvexPolygonShape2D:
-				polygon_shape = col_shape.get_points()
-			elif col_shape is ConcavePolygonShape2D:
-				polygon_shape = col_shape.get_segments()
-			elif col_shape is RectangleShape2D:
-				var shapeExtents = col_shape.get_extents()
-				polygon_shape = [ \
-					Vector2(-shapeExtents.x, -shapeExtents.y), \
-					Vector2(shapeExtents.x, -shapeExtents.y), \
-					Vector2(shapeExtents.x, -shapeExtents.y), \
-					Vector2(shapeExtents.x, shapeExtents.y), \
-					Vector2(shapeExtents.x, shapeExtents.y), \
-					Vector2(-shapeExtents.x, shapeExtents.y), \
-					Vector2(-shapeExtents.x, shapeExtents.y), \
-					Vector2(-shapeExtents.x, -shapeExtents.y) \
-				]
-			else:
-				print("ERROR: this shape is not supported (" + str(col_shape) + ") ")
+	var ts_atlas : TileSetAtlasSource	= level.get_tileset().get_source(layer_id)
+	var tile_data : TileData			= ts_atlas.get_tile_data(atlas_pos, 0)
+	var tile_polygon_count : int		= tile_data.get_collision_polygons_count(0)
 
-		if polygon_shape:
-			var new_polygon = PackedVector2Array()
-			for vertex in polygon_shape:
-				vertex += polygon_offset
-				new_polygon.append(tile_transform.xform(vertex))
-			if new_polygon.size() > 0:
-				collisionPool.append(new_polygon)
+	for tile_polygon in tile_polygon_count:
+		var polygon : PackedVector2Array = tile_data.get_collision_polygon_points(0, tile_polygon)
+		if polygon.size() > 0:
+			for point in polygon.size():
+				polygon[point] += cell
+			collisionPool.append(polygon)
 
-func create_collision_layer():
+func create_collision_layer(root : Node2D):
 	var newPool : Array = []
 	var isIntersected : bool = true
 
@@ -302,6 +280,14 @@ func create_collision_layer():
 		if hullPolygon[0] == hullPolygon[hullPolygon.size() - 1]:
 			hullPolygon.remove_at(hullPolygon.size() - 1)
 		collisionPool.append(hullPolygon)
+
+	for colPolygon in collisionPool:
+		var polygonNode = Polygon2D.new()
+		polygonNode.set_polygon(colPolygon)
+		polygonNode.set_name("Collisions")
+
+		root.add_child(polygonNode)
+		polygonNode.set_owner(root)
 
 func create_navigation_layer():
 	navigationPool.append(PackedVector2Array([
@@ -388,9 +374,12 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 				var cell_x = cell_offset.x + chunk.x + (count % int(chunk.width))
 				var cell_y = cell_offset.y + chunk.y + int(count / chunk.width)
+				var cell = Vector2i(cell_x, cell_y)
+#				var cell_pos_x = cell_x * cell_size.x
+#				var cell_pos_y = cell_y * cell_size.y
 
-				level.set_cell(layerID, Vector2i(cell_x, cell_y), tileDic[gid][0], tileDic[gid][1])
-
+				level.set_cell(layerID, cell, tileDic[gid][0], tileDic[gid][1])
+#				fill_collision_pool(level, Vector2(cell_pos_x, cell_pos_y), gid)
 				if gid > max_gid:
 					max_gid = gid
 
@@ -401,10 +390,6 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 		if options.custom_properties:
 			set_custom_properties(level, tmxLayer)
 
-		var gid= 0
-#		while gid <= max_gid:
-#			build_collision_pool(tilemap, gid)
-#			gid += 1
 	elif tmxLayer.type == "imagelayer":
 		var image = null
 		if tmxLayer.image != "":
@@ -776,8 +761,6 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 		parent.add_child(group)
 		group.set_owner(root)
 
-		#create_collision_layer()
-
 	else:
 		print_error("Unknown tmxLayer type ('%s') in '%s'" % [str(tmxLayer.type), str(tmxLayer.name) if "name" in tmxLayer else "[unnamed tmxLayer]"])
 		return ERR_INVALID_DATA
@@ -975,9 +958,6 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 						var tilePolygonCount = tileData.get_collision_polygons_count(0)
 						tileData.set_collision_polygons_count(0, tilePolygonCount + 1)
 						tileData.set_collision_polygon_points(0, tilePolygonCount, polygonShape)
-
-#			if "properties" in ts and "custom_material" in ts.properties:
-#				result.tile_set_material(gid, load(ts.properties.custom_material))
 
 			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
 					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
