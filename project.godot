@@ -33,13 +33,19 @@ _global_script_classes=[{
 "class": &"InventoryWindow",
 "language": &"GDScript",
 "path": "res://scenes/gui/inventory/Inventory.gd"
+}, {
+"base": "Control",
+"class": &"WindowPanel",
+"language": &"GDScript",
+"path": "res://addons/windowpanel/WindowPanel.gd"
 }]
 _global_script_class_icons={
 "BaseItem": "",
 "FoodItem": "",
 "InventoryItem": "",
 "InventoryItemGridTile": "",
-"InventoryWindow": ""
+"InventoryWindow": "",
+"WindowPanel": ""
 }
 
 [application]

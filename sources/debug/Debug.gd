@@ -6,7 +6,7 @@ var navLine : Line2D = null
 #
 func SetPlayerInventory():
 	if Launcher.Entities && Launcher.Entities.playerEntity:
-		Launcher.Entities.playerEntity.inventory.items = Launcher.DB.ItemsDB
+		#Launcher.Entities.playerEntity.inventory.items = Launcher.DB.ItemsDB
 
 #
 func _post_ready():

@@ -1,6 +1,5 @@
 extends Node
 
-var ItemsDB : Dictionary			= {}
 var MapsDB : Dictionary				= {}
 var MusicsDB : Dictionary			= {}
 var EthnicitiesDB : Dictionary		= {}
@@ -8,19 +7,6 @@ var HairstylesDB : Dictionary		= {}
 var EntitiesDB : Dictionary			= {}
 var EmotesDB : Dictionary			= {}
 
-#
-func ParseItemsDB():
-	var Item = load(Launcher.Path.DBInstSrc + "Item.gd")
-	var result = Launcher.FileSystem.LoadDB("items.json")
-
-	if not result.is_empty():
-		for key in result:
-			var item = Item.new()
-			item._id = key.to_int()
-			item._name = result[key].Name
-			item._description =  result[key].Description
-			item._path = result[key].Path
-			ItemsDB[key] = item
 
 func ParseMapsDB():
 	var Map = load(Launcher.Path.DBInstSrc + "Map.gd")
@@ -118,7 +104,6 @@ func ParseEmotesDB():
 
 #
 func _post_ready():
-	ParseItemsDB()
 	ParseMapsDB()
 	ParseMusicsDB()
 	ParseEthnicitiesDB()
