@@ -3,7 +3,7 @@ extends GridContainer
 #
 signal ItemClicked
 
-const Tile = preload("res://scenes/gui/inventory/Tile.tscn")
+const Tile = preload("res://scenes/gui/emotes/Tile.tscn")
 
 var slots : Array = []
 
@@ -21,10 +21,7 @@ func FillGridContainer(listOfItem : Dictionary):
 				iconNode.set_normal_texture(itemTexture)
 				iconNode.button_down.connect(OnItemPressed.bind(item))
 
-			var tooltip : String = itemReference._name
-			if itemReference._description != "":
-				tooltip += "\n" + itemReference._description
-			tileInstance.set_tooltip_text(tooltip)
+			tileInstance.set_tooltip_text(itemReference._name)
 			tileInstance.set_name(item)
 
 			add_child(tileInstance)

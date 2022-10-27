@@ -15,6 +15,14 @@ func set_data(p_item: InventoryItem):
 	else:
 		$Label.text = str(item.count)
 	
+	var tooltip : String = item.type.name
+	if item.type.description:
+		tooltip += "\n" + item.type.description
+	
+	if item.type.weight != 0:
+		tooltip += "\n\nWeight: " + str(item.type.weight) + "g"
+	
+	tooltip_text = tooltip
 
 
 func _on_icon_button_up():
