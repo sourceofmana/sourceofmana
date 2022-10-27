@@ -1,13 +1,16 @@
 extends Resource
 class_name BaseItem
 
+
+@export_category("Item Metadata")
 @export var name : String
-@export var description : String
-@export var stackable : bool
+@export_multiline var description : String
 
 @export var icon : Texture2D
 # later: @export var dyeCMDShaderSteps : 
 
+@export_category("Item Properties")
+@export var stackable : bool
 # weight in grams
 @export var weight : float = 1
 
