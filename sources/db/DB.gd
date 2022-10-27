@@ -91,12 +91,12 @@ func ParseEntitiesDB():
 
 #
 func ParseEmotesDB():
-	var Item = load(Launcher.Path.DBInstSrc + "Item.gd")
+	var Emote = load(Launcher.Path.DBInstSrc + "Emote.gd")
 	var result = Launcher.FileSystem.LoadDB("emotes.json")
 
 	if not result.is_empty():
 		for key in result:
-			var emote = Item.new()
+			var emote = Emote.new()
 			emote._id = key.to_int()
 			emote._name = result[key].Name
 			emote._path = result[key].Path
