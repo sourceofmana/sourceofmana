@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Entity
 
 @onready var animationState		= animationTree.get("parameters/playback")
 
@@ -11,8 +12,8 @@ var collision : CollisionShape2D	= null
 
 var stat						= preload("res://sources/entity/Stat.gd").new()
 var slot						= preload("res://sources/entity/Slot.gd").new()
-var interactive					= preload("res://sources/entity/interactive/Interactive.gd").new()
-var inventory					= preload("res://sources/entity/Inventory.gd").new()
+var interactive					= load("res://sources/entity/interactive/Interactive.gd").new()
+var inventory: EntityInventory	= load("res://sources/entity/Inventory.gd").new()
 
 var entityName					= "PlayerName"
 var gender						= Launcher.Entities.Trait.Gender.MALE

@@ -1,8 +1,9 @@
 extends Node
+class_name EntityManager
 
 #
 var Trait : Node			= null
-var playerEntity : Node2D	= null
+var playerEntity : Entity	= null
 
 #
 func _init():

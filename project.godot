@@ -14,6 +14,21 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://sources/resource_types/BaseItem.gd"
 }, {
+"base": "CharacterBody2D",
+"class": &"Entity",
+"language": &"GDScript",
+"path": "res://sources/entity/Entity.gd"
+}, {
+"base": "Object",
+"class": &"EntityInventory",
+"language": &"GDScript",
+"path": "res://sources/entity/Inventory.gd"
+}, {
+"base": "Node",
+"class": &"EntityManager",
+"language": &"GDScript",
+"path": "res://sources/entity/EntityManager.gd"
+}, {
 "base": "BaseItem",
 "class": &"FoodItem",
 "language": &"GDScript",
@@ -22,7 +37,7 @@ _global_script_classes=[{
 "base": "Object",
 "class": &"InventoryItem",
 "language": &"GDScript",
-"path": "res://scenes/gui/inventory/InventoryItem.gd"
+"path": "res://sources/entity/InventoryItem.gd"
 }, {
 "base": "ColorRect",
 "class": &"InventoryItemGridTile",
@@ -41,6 +56,9 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "BaseItem": "",
+"Entity": "",
+"EntityInventory": "",
+"EntityManager": "",
 "FoodItem": "",
 "InventoryItem": "",
 "InventoryItemGridTile": "",
