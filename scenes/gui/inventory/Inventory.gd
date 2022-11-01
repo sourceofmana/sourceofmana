@@ -7,6 +7,10 @@ class_name InventoryWindow
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$VBoxContainer/ItemContainer.resized.connect(_on_panel_resized)
+	
+func initialize():
+	Launcher.Entities.playerEntity.inventory.content_changed.connect(update_inventory)
+	update_inventory()
 
 func _on_panel_resized():
 	print("resized")
@@ -17,25 +21,14 @@ func _on_panel_resized():
 	else:
 		itemGrid.columns = 100
 
-var timeout = 0.0
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	timeout += delta
-
 func update_inventory():
-	# crude debounce
-	if timeout <= 1.0:
-		return
-	timeout = 0.0
-	print("update_inventory") # this is print too often, TODO make sure this function is only called when needed
+	print("update_inventory") # if this is print too often, make sure this function is only called when needed
 	
 	var player = Launcher.Entities.playerEntity
 	# display inventory
 	update_inventory_ui()
 	# update weight
-	weightStat.SetStat(
-		player.inventory.calculate_weight(), player.stat.maxWeight)
+	weightStat.SetStat(player.inventory.calculate_weight(), player.stat.maxWeight)
 
 
 const Tile = preload("res://scenes/gui/inventory/ItemGridTile.tscn")

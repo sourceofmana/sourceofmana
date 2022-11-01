@@ -33,16 +33,9 @@ func ToggleChatNewLine(control : Control):
 		if chatContainer:
 			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
 
-func UpdatePlayerInfo():
-	if Launcher.Entities.playerEntity:
-			itemInventory.update_inventory()
-	pass
-
 func PlayerSpawned():
-#	if Launcher.Entities.playerEntity:
-#		assert(itemInventory, "Item inventory container is missing")
-#		if itemInventory:
-#			itemInventory.FillGridContainer(Launcher.Entities.playerEntity.inventory.items)
+	if Launcher.Entities.playerEntity:
+			itemInventory.initialize()
 
 	assert(emoteList, "Emote grid container is missing")
 	if emoteList:
@@ -54,8 +47,6 @@ func _ready():
 	get_tree().set_auto_accept_quit(false)
 
 func _process(_delta):
-	UpdatePlayerInfo()
-
 	if Launcher.Action.IsActionJustPressed("ui_close", true): CloseWindow()
 	if Launcher.Action.IsActionJustPressed("ui_inventory"): ToggleControl($FloatingWindows/Inventory)
 	if Launcher.Action.IsActionJustPressed("ui_minimap"): ToggleControl($FloatingWindows/Minimap)

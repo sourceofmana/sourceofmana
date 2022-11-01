@@ -9,5 +9,7 @@ func is_stackable():
 
 func _init(p_type: BaseItem, p_count: int):
 	type = p_type
+	if p_count > 1 and not type.stackable:
+		printerr("trying to create an InventoryItem with multiple items, but the type is not stackable")
 	count = p_count
 	
