@@ -11,7 +11,8 @@ func _ready():
 func _on_panel_resized():
 	print("resized")
 	if itemGrid.get_child_count() > 0:
-		var tileSize = get_child(0).size.x + get("theme_override_constants/h_separation")
+		var h_separation = itemGrid.get("theme_override_constants/h_separation")
+		var tileSize = get_child(0).size.x + h_separation
 		itemGrid.columns = max(1, int(get_parent().get_size().x / tileSize))
 	else:
 		itemGrid.columns = 100
