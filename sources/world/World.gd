@@ -3,9 +3,9 @@ extends Node2D
 # Types
 class Instance:
 	var id : int							= 0
-	var npcs : Array						= []
-	var mobs : Array						= []
-	var players : Array						= []
+	var npcs : Array[NpcEntity]				= []
+	var mobs : Array[MonsterEntity]			= []
+	var players : Array[PlayerEntity]		= []
 
 class Map:
 	var name : String						= ""
@@ -49,14 +49,14 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	var inst : Instance = Instance.new()
 
 	inst.id = instanceID
-	inst.npcs.append(CreateEntity("Becees"))
-	inst.mobs.append(CreateEntity("Phatyna"))
-	inst.mobs.append(CreateEntity("Dorian"))
-	inst.mobs.append(CreateEntity("Emil"))
-	inst.mobs.append(CreateEntity("Gabriel"))
-	inst.mobs.append(CreateEntity("Lilah"))
-	inst.mobs.append(CreateEntity("Lulea"))
-	inst.mobs.append(CreateEntity("Marvin"))
+	inst.npcs.append(CreateNpc("Becees"))
+	inst.mobs.append(CreateMob("Phatyna"))
+	inst.mobs.append(CreateMob("Dorian"))
+	inst.mobs.append(CreateMob("Emil"))
+	inst.mobs.append(CreateMob("Gabriel"))
+	inst.mobs.append(CreateMob("Lilah"))
+	inst.mobs.append(CreateMob("Lulea"))
+	inst.mobs.append(CreateMob("Marvin"))
 
 	map.instances.push_back(inst)
 
@@ -117,52 +117,34 @@ func FindEntityReference(entityID : String) -> Object:
 			break
 	return ref
 
-func CreateEntityInstance(entity : Object, isPlayable : bool) -> Node2D:
-	var inst = null
-	if entity:
-		inst = Launcher.FileSystem.LoadScene("presets/Entity")
-		inst.stat.moveSpeed = entity._walkSpeed
-
-		if entity._ethnicity or entity._gender:
-			inst.sprite = Launcher.FileSystem.LoadPreset("sprites/" + entity._ethnicity + entity._gender)
-			if inst.sprite && entity._customTexture:
-				inst.sprite.texture = Launcher.FileSystem.LoadGfx(entity._customTexture)
-			inst.add_child(inst.sprite)
-		if entity._animation:
-			inst.animation = Launcher.FileSystem.LoadPreset("animations/" + entity._animation)
-			var canFetchAnimTree = inst.animation != null && inst.animation.has_node("AnimationTree")
-			Launcher.Util.Assert(canFetchAnimTree, "No AnimationTree found")
-			if canFetchAnimTree:
-				inst.animationTree = inst.animation.get_node("AnimationTree")
-			inst.add_child(inst.animation)
-		if entity._navigationAgent:
-			inst.agent = Launcher.FileSystem.LoadPreset("navigations/" + entity._navigationAgent)
-			inst.add_child(inst.agent)
-		if entity._camera && isPlayable:
-			inst.camera = Launcher.FileSystem.LoadPreset("cameras/" + entity._camera)
-			inst.add_child(inst.camera)
-		if entity._collision:
-			inst.collision = Launcher.FileSystem.LoadPreset("collisions/" + entity._collision)
-			inst.add_child(inst.collision)
-		if entity._canWarp:
-			inst.collision_layer += 1 << 1
-			inst.collision_mask += 1 << 1
-
+func CreatePlayer(entityID : String, entityName : String = "", isLocalPlayer = false) -> BaseEntity:
+	var inst : BaseEntity = null
+	var template : EntityData = FindEntityReference(entityID)
+	if template:
+		inst = Launcher.FileSystem.LoadScene("presets/entities/Player")
+		inst.isPlayableController = isLocalPlayer
+		inst.applyEntityData(template)
+		inst.SetName(entityID, entityName)
+	Launcher.Util.Assert(inst != null, "Could not create the entity: " + entityID)
 	return inst
 
-func SetEntityName(inst : Object, entityID : String, entityName : String):
-	if entityName.length() == 0:
-		entityName = entityID
-	inst.entityName = entityName
-	inst.name = entityName
+func CreateMob(entityID : String, entityName : String = "") -> BaseEntity:
+	var inst : BaseEntity = null
+	var template : EntityData = FindEntityReference(entityID)
+	if template:
+		inst = Launcher.FileSystem.LoadScene("presets/entities/Monster")
+		inst.applyEntityData(template)
+		inst.SetName(entityID, entityName)
+	Launcher.Util.Assert(inst != null, "Could not create the entity: " + entityID)
+	return inst
 
-func CreateEntity(entityID : String, entityName : String = "", isPlayable : bool = false) -> Node2D:
-	var inst : Object = null
-	var ref : Object = FindEntityReference(entityID)
-	if ref:
-		inst = CreateEntityInstance(ref, isPlayable)
-		SetEntityName(inst, entityID, entityName)
-
+func CreateNpc(entityID : String, entityName : String = "") -> BaseEntity:
+	var inst : BaseEntity = null
+	var template : EntityData = FindEntityReference(entityID)
+	if template:
+		inst = Launcher.FileSystem.LoadScene("presets/entities/Npc")
+		inst.applyEntityData(template)
+		inst.SetName(entityID, entityName)
 	Launcher.Util.Assert(inst != null, "Could not create the entity: " + entityID)
 	return inst
 
@@ -171,10 +153,10 @@ func UpdateWalkPaths(entity : Node2D, map : Map):
 	var newPos : Vector2 = GenerateRandomPosition(map)
 	entity.WalkToward(newPos)
 
-func UpdateAI(entity : Node2D, map : Map):
-	if entity.isCapturingMouseInput == false && entity.AITimer && entity.AITimer.is_stopped():
+func UpdateAI(entity : BaseEntity, map : Map):
+	if entity.hasGoal == false && entity.AITimer && entity.AITimer.is_stopped():
 		entity.AddAITimer(randi_range(5, 10), UpdateWalkPaths, map)
-	elif entity.isCapturingMouseInput && entity.IsStuck():
+	elif entity.hasGoal && entity.IsStuck():
 		entity.ResetNav()
 		entity.AddAITimer(randi_range(0, 3), UpdateWalkPaths, map)
 	entity.UpdateInput()

@@ -7,8 +7,7 @@
 		"Animation"			: "Player",
 		"NavigationAgent"	: "PlayerAgent",
 		"Camera"			: "Default",
-		"Collision"			: "Medium",
-		"CanWarp"			: true,
+		"Collision"			: "Medium"
 	},
 
 	"1000": {
@@ -75,6 +74,6 @@
 		"Hairstyle"			: "Bald",
 		"Animation"			: "Player",
 		"NavigationAgent"	: "NPAgent",
-		"Collision"			: "Small",
-	},
+		"Collision"			: "Small"
+	}
 }

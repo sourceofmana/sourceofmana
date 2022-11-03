@@ -77,14 +77,10 @@ func ParseEntitiesDB():
 				entity._animationTree = result[key].AnimationTree
 			if "NavigationAgent" in result[key]:
 				entity._navigationAgent = result[key].NavigationAgent
-			if "Camera" in result[key]:
-				entity._camera = result[key].Camera
 			if "Collision" in result[key]:
 				entity._collision = result[key].Collision
 			if "Texture" in result[key]:
 				entity._customTexture = result[key].Texture
-			if "CanWarp" in result[key]:
-				entity._canWarp = result[key].CanWarp
 			if "WalkSpeed" in result[key]:
 				entity._walkSpeed = result[key].WalkSpeed
 			EntitiesDB[key] = entity

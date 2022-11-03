@@ -55,4 +55,3 @@ func _remove_one_item(item: InventoryItem):
 	if item.count <= 0:
 		items.erase(item)
 	content_changed.emit()
-

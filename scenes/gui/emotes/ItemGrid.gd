@@ -3,12 +3,12 @@ extends GridContainer
 #
 signal ItemClicked
 
-const Tile = preload("res://scenes/gui/inventory/Tile.tscn")
+const Tile = preload("res://scenes/gui/emotes/Tile.tscn")
 
 var slots : Array = []
 
 #
-func FillGridContainer(listOfItem : Array[InventoryItem]):
+func FillGridContainer(listOfItem : Array[Object]):
 	if listOfItem:
 		for item in listOfItem:
 			var tileInstance : ColorRect	= Tile.instantiate()

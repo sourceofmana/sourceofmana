@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://f2jxqr5e7i5e"]
+
+[node name="Interactions" type="Node2D"]
+position = Vector2(0, -80)
+z_index = 1
+z_as_relative = false
+
+[node name="Emote" type="Sprite2D" parent="."]
+
+[node name="SpeechContainer" type="VBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+alignment = 1

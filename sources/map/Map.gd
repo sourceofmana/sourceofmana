@@ -59,7 +59,7 @@ func AddChild(entity : CharacterBody2D):
 	entity.set_physics_process(true)
 
 #
-func WarpEntity(mapName : String, mapPos : Vector2, pc : CharacterBody2D):
+func WarpEntity(mapName : String, mapPos : Vector2, pc : PlayerEntity):
 	assert(pc, "Entity is not initialized, could not warp it to this map")
 
 	if mapNode && mapNode.get_name() != mapName:

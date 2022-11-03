@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name Entity
+class_name BaseEntity
 
 @onready var animationState		= animationTree.get("parameters/playback")
 
@@ -7,22 +7,20 @@ var sprite : Sprite2D				= null
 var animation : Node				= null
 var animationTree : AnimationTree	= null
 var agent : NavigationAgent2D		= null
-var camera : Camera2D				= null
 var collision : CollisionShape2D	= null
 
-var stat						= preload("res://sources/entity/Stat.gd").new()
-var slot						= preload("res://sources/entity/Slot.gd").new()
-var interactive					= load("res://sources/entity/interactive/Interactive.gd").new()
-var inventory: EntityInventory	= load("res://sources/entity/Inventory.gd").new()
+var stat						= preload("res://sources/entity/components/Stat.gd").new()
+var slot						= preload("res://sources/entity/components/Slot.gd").new()
+var interactive					= load("res://sources/entity/components/Interactive.gd").new()
+var inventory: EntityInventory	= load("res://sources/entity/components/inventory/Inventory.gd").new()
 
 var entityName					= "PlayerName"
 var gender						= Launcher.Entities.Trait.Gender.MALE
-var type						= Launcher.Entities.Trait.Type.HUMAN
 
 var damageReceived				= {}
 var showName					= false
 
-var isCapturingMouseInput		= false
+var hasGoal		                = false
 var currentInput				= Vector2.ZERO
 var currentVelocity				= Vector2.ZERO
 var currentDirection			= Vector2(0, 1)
@@ -31,10 +29,7 @@ enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
 var currentState				= State.IDLE
 var currentStateTimer			= 0.0
 
-var isPlayableController		= false
 var lastPositions : Array		= []
-var AITimer : Timer				= null
-
 
 #
 func GetNextDirection():
@@ -46,23 +41,16 @@ func GetNextDirection():
 func GetNextState():
 	var newEnumState			= currentState
 	var isWalking				= currentVelocity.length_squared() > 1
-	var actionSitPressed		= Launcher.Action.IsActionPressed("gp_sit") if isPlayableController else false
-	var actionSitJustPressed	= Launcher.Action.IsActionJustPressed("gp_sit") if isPlayableController else false
-
 	match currentState:
 		State.IDLE:
 			if isWalking:
 				newEnumState = State.WALK
-			elif actionSitJustPressed:
-				newEnumState = State.SIT
 		State.WALK:
 			if isWalking == false:
 				newEnumState = State.IDLE
 		State.SIT:
-			if actionSitPressed == false && isWalking:
+			if isWalking:
 				newEnumState = State.WALK
-			elif actionSitJustPressed:
-				newEnumState = State.IDLE
 
 	return newEnumState
 
@@ -82,8 +70,9 @@ func ApplyNextState(nextState, nextDirection):
 		State.SIT:
 			animationState.travel("Sit")
 
+
 func SwitchInputMode(clearCurrentInput : bool):
-	isCapturingMouseInput = false
+	hasGoal = false
 
 	if clearCurrentInput:
 		currentInput = Vector2.ZERO
@@ -91,9 +80,8 @@ func SwitchInputMode(clearCurrentInput : bool):
 	if Launcher.Debug:
 		Launcher.Debug.ClearNavLine()
 
-#
 func UpdateInput():
-	if isCapturingMouseInput:
+	if hasGoal:
 		if agent && not agent.is_navigation_finished():
 			var newDirection : Vector2 = global_position.direction_to(agent.get_next_location())
 			if newDirection != Vector2.ZERO:
@@ -116,7 +104,6 @@ func UpdateVelocity():
 		velocity = currentVelocity
 		move_and_slide()
 
-
 func UpdateState():
 	var nextState		= GetNextState()
 	var nextDirection	= GetNextDirection()
@@ -126,9 +113,8 @@ func UpdateState():
 	if newState || newDirection:
 		ApplyNextState(nextState, nextDirection)
 
-#
 func WalkToward(pos : Vector2):
-	isCapturingMouseInput = true
+	hasGoal = true
 	lastPositions.clear()
 	if agent:
 		agent.set_target_location(pos)
@@ -145,23 +131,6 @@ func IsStuck() -> bool:
 		isStuck = sum.abs() < Vector2(1, 1)
 	return isStuck
 
-#
-func AddAITimer(delay : float, callable: Callable, map : Object):
-	AITimer.stop()
-	AITimer.start(delay)
-	AITimer.autostart = true
-	if not AITimer.timeout.is_connected(callable):
-		AITimer.timeout.connect(callable.bind(self, map))
-
-#
-func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-			WalkToward(Launcher.Camera.mainCamera.get_global_mouse_position())
-
-	currentInput = Launcher.Action.GetMove()
-	if currentInput.length() > 0:
-		SwitchInputMode(false)
 
 func _physics_process(deltaTime : float):
 	UpdateInput()
@@ -170,18 +139,14 @@ func _physics_process(deltaTime : float):
 		agent.set_velocity(currentVelocity)
 	else:
 		_velocity_computed(currentVelocity)
-	if interactive:
-		interactive.Update(isPlayableController)
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
 	UpdateVelocity()
 	UpdateState()
 
-func _ready():
-	set_process_input(isPlayableController)
-	set_process_unhandled_input(isPlayableController)
 
+func _setup_nav_agent():
 	if agent:
 		if agent.get_avoidance_enabled():
 			var err = agent.velocity_computed.connect(self._velocity_computed)
@@ -190,10 +155,37 @@ func _ready():
 			var err = agent.path_changed.connect(Launcher.Debug.UpdateNavLine)
 			Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")
 
-	if interactive:
-		interactive.Setup(self, isPlayableController)
 
-	if AITimer == null:
-		AITimer = Timer.new()
-		AITimer.set_name("Timer")
-		add_child(AITimer)
+func _enable_warp():
+	collision_layer += 1 << 1
+	collision_mask += 1 << 1
+
+func SetName(_entityID : String, _entityName : String):
+	if _entityName.length() == 0:
+		entityName = _entityID
+		name =  _entityID
+	else:
+		entityName = _entityName
+		name = _entityName
+
+
+func applyEntityData(data: EntityData):
+	stat.moveSpeed = data._walkSpeed
+	if !data._ethnicity.is_empty() or !data._gender.is_empty():
+		sprite = Launcher.FileSystem.LoadPreset("sprites/" + data._ethnicity + data._gender)
+		if sprite != null && !data._customTexture.is_empty():
+			sprite.texture = Launcher.FileSystem.LoadGfx(data._customTexture)
+		add_child(sprite)
+	if data._animation:
+		animation = Launcher.FileSystem.LoadPreset("animations/" + data._animation)
+		var canFetchAnimTree = animation != null && animation.has_node("AnimationTree")
+		Launcher.Util.Assert(canFetchAnimTree, "No AnimationTree found")
+		if canFetchAnimTree:
+			animationTree = animation.get_node("AnimationTree")
+		add_child(animation)
+	if data._navigationAgent:
+		agent = Launcher.FileSystem.LoadPreset("navigations/" + data._navigationAgent)
+		add_child(agent)	
+	if data._collision:
+		collision = Launcher.FileSystem.LoadPreset("collisions/" + data._collision)
+		add_child(collision)

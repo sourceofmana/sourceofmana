@@ -5,7 +5,7 @@ class_name InventoryItem
 @export var count: int
 
 func is_stackable():
-	type.stackable
+	return type.stackable
 
 func _init(p_type: BaseItem, p_count: int):
 	type = p_type

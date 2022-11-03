@@ -9,20 +9,30 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "BaseEntity",
+"class": &"AiEntity",
+"language": &"GDScript",
+"path": "res://sources/entity/AiEntity.gd"
+}, {
+"base": "CharacterBody2D",
+"class": &"BaseEntity",
+"language": &"GDScript",
+"path": "res://sources/entity/BaseEntity.gd"
+}, {
 "base": "Resource",
 "class": &"BaseItem",
 "language": &"GDScript",
 "path": "res://sources/resource_types/BaseItem.gd"
 }, {
-"base": "CharacterBody2D",
-"class": &"Entity",
+"base": "Node",
+"class": &"EntityData",
 "language": &"GDScript",
-"path": "res://sources/entity/Entity.gd"
+"path": "res://sources/db/instance/Entity.gd"
 }, {
 "base": "Object",
 "class": &"EntityInventory",
 "language": &"GDScript",
-"path": "res://sources/entity/Inventory.gd"
+"path": "res://sources/entity/components/inventory/Inventory.gd"
 }, {
 "base": "Node",
 "class": &"EntityManager",
@@ -37,7 +47,7 @@ _global_script_classes=[{
 "base": "Object",
 "class": &"InventoryItem",
 "language": &"GDScript",
-"path": "res://sources/entity/InventoryItem.gd"
+"path": "res://sources/entity/components/inventory/InventoryItem.gd"
 }, {
 "base": "ColorRect",
 "class": &"InventoryItemGridTile",
@@ -49,20 +59,40 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://scenes/gui/inventory/Inventory.gd"
 }, {
+"base": "AiEntity",
+"class": &"MonsterEntity",
+"language": &"GDScript",
+"path": "res://sources/entity/variants/MonsterEntity.gd"
+}, {
+"base": "AiEntity",
+"class": &"NpcEntity",
+"language": &"GDScript",
+"path": "res://sources/entity/variants/NpcEntity.gd"
+}, {
+"base": "BaseEntity",
+"class": &"PlayerEntity",
+"language": &"GDScript",
+"path": "res://sources/entity/variants/PlayerEntity.gd"
+}, {
 "base": "Control",
 "class": &"WindowPanel",
 "language": &"GDScript",
 "path": "res://addons/windowpanel/WindowPanel.gd"
 }]
 _global_script_class_icons={
+"AiEntity": "",
+"BaseEntity": "",
 "BaseItem": "",
-"Entity": "",
+"EntityData": "",
 "EntityInventory": "",
 "EntityManager": "",
 "FoodItem": "",
 "InventoryItem": "",
 "InventoryItemGridTile": "",
 "InventoryWindow": "",
+"MonsterEntity": "",
+"NpcEntity": "",
+"PlayerEntity": "",
 "WindowPanel": ""
 }
 
