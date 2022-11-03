@@ -33,7 +33,7 @@ func _unhandled_input(event):
 			WalkToward(Launcher.Camera.mainCamera.get_global_mouse_position())
 			return
 
-	#currentInput = Launcher.Action.GetMove()
+	currentInput = Launcher.Action.GetMove()
 	if currentInput.length() > 0:
 		SwitchInputMode(false)
 
