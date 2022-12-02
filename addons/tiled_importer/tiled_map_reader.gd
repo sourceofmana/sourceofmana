@@ -68,6 +68,9 @@ const whitelist_properties = [
 	"custom_material",
 ]
 
+const polygon_vector_offset = Vector2(8,8)
+const polygon_vector_grow = Vector2(1.5,1.5)
+
 # All templates loaded, can be looked up by path name
 var _loaded_templates = {}
 # Maps each tileset file used by the map to it's first gid; Used for template parsing
@@ -77,9 +80,9 @@ var max_gid = 0
 # Navigation polygon to be used on top of every tilemaps
 #var nav_polygon_instance : NavigationPolygonInstance = NavigationPolygonInstance.new()
 # Collision polygons
-var collisionPool : Array = []
+var collision_pool : Array = []
 # Navigation polygons
-var navigationPool : Array = []
+var navigation_pool : Array = []
 # JSON Instance
 var JSONInstance = JSON.new()
 # Tile DB
@@ -109,6 +112,13 @@ func build(source_path, options):
 	var map_pos_offset = Vector2()
 	var map_background = Color()
 	var cell_offset = Vector2()
+	var map_width = 0
+	var map_height = 0
+
+	if "width" in map:
+		map_width = map.width
+	if "height" in map:
+		map_height = map.height
 	if "orientation" in map:
 		match map.orientation:
 			"isometric":
@@ -197,19 +207,7 @@ func build(source_path, options):
 		if err != OK:
 			return err
 
-#	create_collision_layer(root)
-#	create_navigation_layer()
-#
-#	var nav_polygon : NavigationPolygon = NavigationPolygon.new()
-#	for navPolygon in navigationPool:
-#		nav_polygon.add_outline(navPolygon)
-#		nav_polygon.make_polygons_from_outlines()
-#
-#	nav_polygon_instance.set_navigation_polygon(nav_polygon)
-#
-#	if nav_polygon_instance:
-#		root.add_child(nav_polygon_instance)
-#		nav_polygon_instance.owner = root
+#	create_navigation_layer(root, Vector2i(map_width * int(map.tilewidth), map_height * int(map.tileheight)))
 
 	if options.add_background and "backgroundcolor" in map:
 		var bg_color = str(map.backgroundcolor)
@@ -242,67 +240,123 @@ func build(source_path, options):
 
 	return root
 
-func fill_collision_pool(level : TileMap, cell : Vector2, gid : int):
+func grow_vertex(polygon : PackedVector2Array, vertex : int) -> Vector2:
+	var D : Vector2 = Vector2.ZERO
+
+	if polygon.size() > 1:
+		var A : Vector2 = polygon[vertex]
+		var B : Vector2 = polygon[vertex - 1 if vertex > 0 else polygon.size() - 1]
+		var C : Vector2 = polygon[vertex + 1 if vertex < polygon.size() - 1 else 0]
+
+		D.x = -(B.x - A.x + C.x - A.x) / 2
+		D.y = -(B.y - A.y + C.y - A.y) / 2
+
+		D.x = 1 if D.x > 0 else -1
+		D.y = 1 if D.y > 0 else -1
+		D = D.normalized() * Vector2(20,20) + A
+	else:
+		print_error("Wrong polygon size detected, can't grow its vertex")
+
+	return D
+
+func fill_collision_pool(level : TileMap, cell : Vector2, cell_size : Vector2, gid : int):
 	var layer_id : int			= tileDic[gid][0]
 	var atlas_pos : Vector2i	= tileDic[gid][1]
 
 	var ts_atlas : TileSetAtlasSource	= level.get_tileset().get_source(layer_id)
 	var tile_data : TileData			= ts_atlas.get_tile_data(atlas_pos, 0)
 	var tile_polygon_count : int		= tile_data.get_collision_polygons_count(0)
+	var cell_offset = cell_size / 2
 
 	for tile_polygon in tile_polygon_count:
 		var polygon : PackedVector2Array = tile_data.get_collision_polygon_points(0, tile_polygon)
+
 		if polygon.size() > 0:
-			for point in polygon.size():
-				polygon[point] += cell
-			collisionPool.append(polygon)
+# Not working as of 21/11/2022:
+# Geometry2D.offset_polygon() is returning [0,0]
+#				polygon = Geometry2D.offset_polygon(polygon, 16, Geometry2D.JOIN_MITER)
+			var last_vertex = Vector2(-1, -1)
+			var first_vertex = polygon[0]
+			var filtered_polygon : PackedVector2Array
 
-func create_collision_layer(root : Node2D):
-	var newPool : Array = []
-	var isIntersected : bool = true
+			for vertex in polygon.size():
+				if last_vertex != polygon[vertex]:
+					last_vertex = polygon[vertex]
+					if vertex != polygon.size() - 1 || vertex == polygon.size() - 1 && polygon[vertex] != first_vertex:
+						filtered_polygon.append(polygon[vertex] + cell_offset + cell)
 
-	while collisionPool.size() > 0:
-		isIntersected = false
+			var offseted_polygon : PackedVector2Array
+			for vertex in filtered_polygon.size():
+				var offset_vertex : Vector2 = grow_vertex(filtered_polygon, vertex)
+				offseted_polygon.append(offset_vertex)
 
-		var polygonLeft = collisionPool.pop_front()
-		for polygonRight in collisionPool:
-			var mergedPool = Geometry2D.merge_polygons(polygonLeft, polygonRight)
-			if mergedPool.size() == 1:
-				isIntersected = true
-				collisionPool.erase(polygonRight)
-				collisionPool.append(mergedPool[0])
-				break
-		if isIntersected == false:
-			newPool.append(polygonLeft)
+			collision_pool.append(offseted_polygon)
 
-	for colPolygon in newPool:
-		var hullPolygon : PackedVector2Array = colPolygon
-		if hullPolygon[0] == hullPolygon[hullPolygon.size() - 1]:
-			hullPolygon.remove_at(hullPolygon.size() - 1)
-		collisionPool.append(hullPolygon)
+func merge_polygons(pool : Array) -> Array:
+	var new_pool : Array = []
 
-	for colPolygon in collisionPool:
-		var polygonNode = Polygon2D.new()
-		polygonNode.set_polygon(colPolygon)
-		polygonNode.set_name("Collisions")
+	while(new_pool.size() != pool.size()):
+		if new_pool.size() != 0:
+			pool = new_pool.duplicate()
+			new_pool.clear()
 
-		root.add_child(polygonNode)
-		polygonNode.set_owner(root)
+		var skip_polygon : Dictionary = {}
+		for i in pool.size():
+			if not skip_polygon.has(i):
+				var is_merged : bool = false
+				for j in range(i + 1, pool.size()):
+					var merged : Array = Geometry2D.merge_polygons(pool[i], pool[j])
+					if merged.size() == 1:
+						new_pool.append(merged[0])
+						skip_polygon[j] = true
+						is_merged = true
+						break
+					else:
+						var is_inside = true
+						for vertice in merged[0]:
+							if not Geometry2D.is_point_in_polygon(vertice, merged[1]):
+								is_inside = false
+								break
+						if not is_inside:
+							is_inside = true
+							for vertice in merged[1]:
+								if not Geometry2D.is_point_in_polygon(vertice, merged[0]):
+									is_inside = false
+									break
+						if is_inside:
+							new_pool.append(merged[0])
+							new_pool.append(merged[1])
+							skip_polygon[j] = true
+							is_merged = true
+				if is_merged == false:
+					new_pool.append(pool[i])
 
-func create_navigation_layer():
-	navigationPool.append(PackedVector2Array([
-			Vector2(0, 0),
-			Vector2(3424, 0),
-			Vector2(3424,2848),
-			Vector2(0, 2848)
+	return new_pool
+
+func create_navigation_layer(root : Node2D, map_size : Vector2i):
+	var nav_region = NavigationRegion2D.new()
+	var nav_polygon = NavigationPolygon.new()
+
+	nav_polygon.add_outline(PackedVector2Array([
+			Vector2(-20, -20),
+			Vector2(map_size.x + 20, -20),
+			Vector2(map_size.x + 20, map_size.y + 20),
+			Vector2(-20, map_size.y + 20)
 	]))
+	nav_polygon.make_polygons_from_outlines()
+	nav_region.set_navigation_polygon(nav_polygon)
 
-	for colPolygon in collisionPool:
-		var newNavPolygon = []
-		for navPolygon in navigationPool:
-			newNavPolygon.append_array(Geometry2D.exclude_polygons(navPolygon, colPolygon))
-		navigationPool.clear()
-		navigationPool = newNavPolygon
+	var merged_pool : Array = merge_polygons(collision_pool)
+
+	for polygon in merged_pool:
+		nav_polygon = nav_region.get_navigation_polygon()
+		nav_polygon.add_outline(polygon)
+	nav_polygon.make_polygons_from_outlines()
+	nav_region.set_navigation_polygon(nav_polygon)
+
+	nav_region.set_name("Navigation")
+	root.add_child(nav_region)
+	nav_region.set_owner(root)
 
 # Creates a layer node from the data
 # Returns an error code
@@ -375,11 +429,12 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 				var cell_x = cell_offset.x + chunk.x + (count % int(chunk.width))
 				var cell_y = cell_offset.y + chunk.y + int(count / chunk.width)
 				var cell = Vector2i(cell_x, cell_y)
-#				var cell_pos_x = cell_x * cell_size.x
-#				var cell_pos_y = cell_y * cell_size.y
+				var cell_pos_x = cell_x * cell_size.x
+				var cell_pos_y = cell_y * cell_size.y
+				var cell_in_map = Vector2(cell_pos_x, cell_pos_y)
 
 				level.set_cell(layerID, cell, tileDic[gid][0], tileDic[gid][1])
-#				fill_collision_pool(level, Vector2(cell_pos_x, cell_pos_y), gid)
+				fill_collision_pool(level, cell_in_map, cell_size, gid)
 				if gid > max_gid:
 					max_gid = gid
 
@@ -441,6 +496,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 			set_custom_properties(object_layer, tmxLayer)
 			object_layer.set("editor/display_folded", true)
 		if is_navigation_layer:
+
 			object_layer.navpoly = NavigationPolygon.new()
 			object_layer.set_name("Navigation2D")
 			parent.add_child(object_layer)
@@ -540,7 +596,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 #							customObject = Shape2D.new()
 							continue
 						else:
-							customObject = Shape2D.new()
+							customObject = CollisionShape2D.new()
 						customObject.shape = shape
 						if shape is RectangleShape2D:
 							offset = shape.extents
