@@ -70,6 +70,8 @@ const whitelist_properties = [
 
 const polygon_vector_offset = Vector2(8,8)
 const polygon_vector_grow = Vector2(1.5,1.5)
+const polygon_grow_default = 15
+const map_polygon_boundaries = 64
 
 # All templates loaded, can be looked up by path name
 var _loaded_templates = {}
@@ -108,7 +110,6 @@ func build(source_path, options):
 
 	var cell_size = Vector2(int(map.tilewidth), int(map.tileheight))
 	var map_mode = TileSet.TILE_SHAPE_SQUARE
-	var map_offset = TileSet.TILE_SHAPE_HALF_OFFSET_SQUARE
 	var map_pos_offset = Vector2()
 	var map_background = Color()
 	var cell_offset = Vector2()
@@ -127,13 +128,11 @@ func build(source_path, options):
 				map_pos_offset.y -= cell_size.y / 2
 				match map.staggeraxis:
 					"x":
-						map_offset = TileMap.HALF_OFFSET_Y
 						cell_size.x /= 2.0
 						if map.staggerindex == "even":
 							cell_offset.x += 1
 							map_pos_offset.x -= cell_size.x
 					"y":
-						map_offset = TileMap.HALF_OFFSET_X
 						cell_size.y /= 2.0
 						if map.staggerindex == "even":
 							cell_offset.y += 1
@@ -144,13 +143,11 @@ func build(source_path, options):
 				# adjust the position of the whole map.
 				match map.staggeraxis:
 					"x":
-						map_offset = TileMap.HALF_OFFSET_Y
 						cell_size.x = int((cell_size.x + map.hexsidelength) / 2)
 						if map.staggerindex == "even":
 							cell_offset.x += 1
 							map_pos_offset.x -= cell_size.x
 					"y":
-						map_offset = TileMap.HALF_OFFSET_X
 						cell_size.y = int((cell_size.y + map.hexsidelength) / 2)
 						if map.staggerindex == "even":
 							cell_offset.y += 1
@@ -171,7 +168,6 @@ func build(source_path, options):
 	var map_data = {
 		"options": options,
 		"map_mode": map_mode,
-		"map_offset": map_offset,
 		"map_pos_offset": map_pos_offset,
 		"map_background": map_background,
 		"cell_size": cell_size,
@@ -240,120 +236,147 @@ func build(source_path, options):
 
 	return root
 
-func grow_vertex(polygon : PackedVector2Array, vertex : int) -> Vector2:
-	var D : Vector2 = Vector2.ZERO
-
-	if polygon.size() > 1:
-		var A : Vector2 = polygon[vertex]
-		var B : Vector2 = polygon[vertex - 1 if vertex > 0 else polygon.size() - 1]
-		var C : Vector2 = polygon[vertex + 1 if vertex < polygon.size() - 1 else 0]
-
-		D.x = -(B.x - A.x + C.x - A.x) / 2
-		D.y = -(B.y - A.y + C.y - A.y) / 2
-
-		D.x = 1 if D.x > 0 else -1
-		D.y = 1 if D.y > 0 else -1
-		D = D.normalized() * Vector2(20,20) + A
-	else:
-		print_error("Wrong polygon size detected, can't grow its vertex")
-
-	return D
-
-func fill_collision_pool(level : TileMap, cell : Vector2, cell_size : Vector2, gid : int):
+func fill_collision_pool(level : TileMap, cell_pos : Vector2, cell_size : Vector2, gid : int):
 	var layer_id : int			= tileDic[gid][0]
 	var atlas_pos : Vector2i	= tileDic[gid][1]
 
 	var ts_atlas : TileSetAtlasSource	= level.get_tileset().get_source(layer_id)
 	var tile_data : TileData			= ts_atlas.get_tile_data(atlas_pos, 0)
 	var tile_polygon_count : int		= tile_data.get_collision_polygons_count(0)
-	var cell_offset = cell_size / 2
+	var cell_offset = cell_size / 2 + cell_pos
 
 	for tile_polygon in tile_polygon_count:
 		var polygon : PackedVector2Array = tile_data.get_collision_polygon_points(0, tile_polygon)
 
 		if polygon.size() > 0:
-# Not working as of 21/11/2022:
-# Geometry2D.offset_polygon() is returning [0,0]
-#				polygon = Geometry2D.offset_polygon(polygon, 16, Geometry2D.JOIN_MITER)
 			var last_vertex = Vector2(-1, -1)
 			var first_vertex = polygon[0]
-			var filtered_polygon : PackedVector2Array
+			var filtered_polygon : PackedVector2Array = []
 
 			for vertex in polygon.size():
 				if last_vertex != polygon[vertex]:
 					last_vertex = polygon[vertex]
 					if vertex != polygon.size() - 1 || vertex == polygon.size() - 1 && polygon[vertex] != first_vertex:
-						filtered_polygon.append(polygon[vertex] + cell_offset + cell)
+						filtered_polygon.append(polygon[vertex] + cell_offset)
 
-			var offseted_polygon : PackedVector2Array
-			for vertex in filtered_polygon.size():
-				var offset_vertex : Vector2 = grow_vertex(filtered_polygon, vertex)
-				offseted_polygon.append(offset_vertex)
+			collision_pool.append(filtered_polygon)
 
-			collision_pool.append(offseted_polygon)
+func is_cyclic_polygon(inner_polygon : PackedVector2Array, outer_polygon : PackedVector2Array) -> bool:
+	var is_cyclic : bool = inner_polygon.size() > 0
 
-func merge_polygons(pool : Array) -> Array:
-	var new_pool : Array = []
+	for vertice in inner_polygon:
+		if not Geometry2D.is_point_in_polygon(vertice, outer_polygon):
+			is_cyclic = false
+			break
 
-	while(new_pool.size() != pool.size()):
-		if new_pool.size() != 0:
-			pool = new_pool.duplicate()
-			new_pool.clear()
+	return is_cyclic
 
-		var skip_polygon : Dictionary = {}
-		for i in pool.size():
-			if not skip_polygon.has(i):
-				var is_merged : bool = false
-				for j in range(i + 1, pool.size()):
-					var merged : Array = Geometry2D.merge_polygons(pool[i], pool[j])
-					if merged.size() == 1:
-						new_pool.append(merged[0])
-						skip_polygon[j] = true
-						is_merged = true
-						break
-					else:
-						var is_inside = true
-						for vertice in merged[0]:
-							if not Geometry2D.is_point_in_polygon(vertice, merged[1]):
-								is_inside = false
-								break
-						if not is_inside:
-							is_inside = true
-							for vertice in merged[1]:
-								if not Geometry2D.is_point_in_polygon(vertice, merged[0]):
-									is_inside = false
-									break
-						if is_inside:
-							new_pool.append(merged[0])
-							new_pool.append(merged[1])
-							skip_polygon[j] = true
-							is_merged = true
-				if is_merged == false:
-					new_pool.append(pool[i])
+func both_cyclic_polygon(first : PackedVector2Array, second : PackedVector2Array) -> bool:
+	return is_cyclic_polygon(first, second) || is_cyclic_polygon(second, first)
 
-	return new_pool
+func merge_polygons(pool : Array, has_debug : bool = false):
+	while(true):
+		var polygons_to_remove : Array = []
+		var polygons_to_skip : Array = []
+
+		for pol_index in pool.size():
+			if polygons_to_remove.has(pol_index) or polygons_to_skip.has(pol_index):
+				continue
+
+			if has_debug: print("Reducing polygons: ", pol_index, " / ", pool.size()-1)
+			var current_polygon : PackedVector2Array = pool[pol_index]
+
+			for pol_subindex in range(pol_index + 1, pool.size()):
+				if polygons_to_remove.has(pol_subindex) or polygons_to_skip.has(pol_subindex):
+					continue
+
+				var other_polygon : PackedVector2Array = pool[pol_subindex]
+
+# CRITICAL PART
+				if both_cyclic_polygon(current_polygon, other_polygon):
+					if has_debug: print("\t", pol_subindex, " already cycled with ", pol_index)
+					continue
+# CRITICAL PART
+
+				var merged_polygon : Array = Geometry2D.merge_polygons(current_polygon, other_polygon)
+				if merged_polygon.size() == 1:
+					if has_debug: print("\t", pol_subindex, " merged with ", pol_index)
+					pool[pol_subindex] = merged_polygon[0]
+					polygons_to_remove.append(pol_index)
+					polygons_to_skip.append(pol_subindex)
+					break
+				elif merged_polygon.size() == 2:
+					if both_cyclic_polygon(merged_polygon[0], merged_polygon[1]):
+						if has_debug: print("\t", pol_subindex, " newly cycling with ", pol_index)
+						pool[pol_index] = merged_polygon[0]
+						pool[pol_subindex] = merged_polygon[1]
+						polygons_to_remove.erase(pol_index)
+						polygons_to_remove.erase(pol_subindex)
+						polygons_to_skip.append(pol_subindex)
+						continue
+
+		polygons_to_remove.sort()
+		if polygons_to_remove.size() == 0:
+			break
+
+		for rem_index in range(polygons_to_remove.size() -1, -1, -1):
+			pool.remove_at(polygons_to_remove[rem_index])
+
+		if has_debug: print("")
+
+func offset_polygons(pool : Array, offset : int) -> Array:
+	var offseted_pool : Array = []
+	var inner_polygons : Array = []
+
+	for pol_index in pool.size():
+		if not inner_polygons.has(pol_index):
+			var current_polygon : PackedVector2Array = pool[pol_index]
+			for pol_subindex in range(pol_index + 1, pool.size()):
+				if not inner_polygons.has(pol_subindex):
+					var other_polygon : PackedVector2Array = pool[pol_subindex]
+					if is_cyclic_polygon(current_polygon, other_polygon):
+						inner_polygons.append(pol_index)
+					elif is_cyclic_polygon(other_polygon, current_polygon):
+						inner_polygons.append(pol_index)
+
+	for pol_index in pool.size():
+		if not inner_polygons.has(pol_index):
+			var outer_polygon : PackedVector2Array = pool[pol_index]
+			var offseted_polygons = Geometry2D.offset_polygon(outer_polygon, -offset, Geometry2D.JOIN_SQUARE)
+			offseted_pool.append_array(offseted_polygons)
+
+	for pol_index in pool.size():
+		if inner_polygons.has(pol_index):
+			var outer_polygon : PackedVector2Array = pool[pol_index]
+			var offseted_polygons = Geometry2D.offset_polygon(outer_polygon, offset, Geometry2D.JOIN_SQUARE)
+			offseted_pool.append_array(offseted_polygons)
+
+	return offseted_pool
 
 func create_navigation_layer(root : Node2D, map_size : Vector2i):
 	var nav_region = NavigationRegion2D.new()
 	var nav_polygon = NavigationPolygon.new()
 
 	nav_polygon.add_outline(PackedVector2Array([
-			Vector2(-20, -20),
-			Vector2(map_size.x + 20, -20),
-			Vector2(map_size.x + 20, map_size.y + 20),
-			Vector2(-20, map_size.y + 20)
+			Vector2(-map_polygon_boundaries, -map_polygon_boundaries),
+			Vector2(map_size.x + map_polygon_boundaries, -map_polygon_boundaries),
+			Vector2(map_size.x + map_polygon_boundaries, map_size.y + map_polygon_boundaries),
+			Vector2(-map_polygon_boundaries, map_size.y + map_polygon_boundaries)
 	]))
 	nav_polygon.make_polygons_from_outlines()
 	nav_region.set_navigation_polygon(nav_polygon)
 
-	var merged_pool : Array = merge_polygons(collision_pool)
+	merge_polygons(collision_pool)
+	var offseted_pool : Array = offset_polygons(collision_pool, polygon_grow_default)
+	merge_polygons(offseted_pool)
 
-	for polygon in merged_pool:
+	for polygon in offseted_pool:
 		nav_polygon = nav_region.get_navigation_polygon()
 		nav_polygon.add_outline(polygon)
 	nav_polygon.make_polygons_from_outlines()
 	nav_region.set_navigation_polygon(nav_polygon)
 
+	# only one set_navigation_polygon
 	nav_region.set_name("Navigation")
 	root.add_child(nav_region)
 	nav_region.set_owner(root)
@@ -1367,7 +1390,7 @@ func read_tileset_file(path):
 	return content.result
 
 # Creates a shape from an object data
-# Returns a valid shape depending on the object type (collision/occluder/navigation)
+# Returns a valid shape depending on the object type (collision/occluder/navigation/warp/spawn)
 func shape_from_object(object):
 	var shape = ERR_INVALID_DATA
 	set_default_obj_params(object)

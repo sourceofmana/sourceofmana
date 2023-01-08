@@ -283,6 +283,8 @@ static func parse_object(parser):
 		while err == OK:
 			if parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
 				if parser.get_node_name() == "object":
+					if data.has("class"):
+						data.type = data["class"]
 					break
 
 			elif parser.get_node_type() == XMLParser.NODE_ELEMENT:
