@@ -18,7 +18,7 @@ func FillGridContainer(listOfItem : Dictionary):
 			Launcher.Util.Assert(tileInstance.has_node("Icon"), "Could not find the Icon node:" + itemReference._name)
 			if tileInstance.has_node("Icon"):
 				var iconNode = tileInstance.get_node("Icon")
-				iconNode.set_normal_texture(itemTexture)
+				iconNode.set_texture_normal(itemTexture)
 				iconNode.button_down.connect(OnItemPressed.bind(item))
 
 			var tooltip : String = itemReference._name
