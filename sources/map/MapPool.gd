@@ -7,7 +7,7 @@ var pool : Dictionary		= {}
 #
 func GetMapPath(mapName : String) -> String:
 	var path : String = ""
-	var mapInstance = Launcher.DB.MapsDB[mapName]
+	var mapInstance = Launcher.DB.MapsDB[mapName] if Launcher.DB.MapsDB.has(mapName) else null
 
 	Launcher.Util.Assert(mapInstance != null, "Could not find the map " + mapName + " within the db")
 	if mapInstance:
@@ -46,7 +46,7 @@ func FreeMap(map : String):
 #
 func RefreshPool(currentMap : Node2D):
 	var adjacentMaps : Array = []
-	if currentMap.get_node("Object"):
+	if currentMap.has_node("Object"):
 		for object in currentMap.get_node("Object").get_children():
 			if object is WarpObject:
 				adjacentMaps.append(object.destinationMap)

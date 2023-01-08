@@ -40,10 +40,11 @@ func GenerateTriangulation(map : Map):
 	Launcher.Util.Assert(map != null && map.navigation != null, "Could not generate the triangulation as the map is lacking information")
 	if map && map.navigation:
 		if map.navigation && map.navigation.navpoly:
-			var outlineCount : int = map.navigation.navpoly.get_outline_count()
-			if outlineCount > 0:
-				map.outlines = map.navigation.navpoly.get_outline(0)
-				map.triangulation = Geometry2D.triangulate_polygon(map.outlines)
+			for outline in map.navigation.navpoly.get_outline_count():
+				var currentOutline : PackedVector2Array = map.navigation.navpoly.get_outline(outline)
+				if map.outlines.size() < currentOutline.size():
+					map.outlines = currentOutline
+			map.triangulation = Geometry2D.triangulate_polygon(map.outlines)
 
 func CreateInstance(map : Map, instanceID : int = 0):
 	var inst : Instance = Instance.new()

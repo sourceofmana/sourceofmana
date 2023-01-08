@@ -7,7 +7,8 @@
 		"Animation"			: "Player",
 		"NavigationAgent"	: "PlayerAgent",
 		"Camera"			: "Default",
-		"Collision"			: "Medium"
+		"Collision"			: "Small",
+		"CanWarp"			: true,
 	},
 
 	"1000": {

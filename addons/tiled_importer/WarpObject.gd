@@ -14,6 +14,4 @@ func _init():
 	collision_layer = 2
 	collision_mask = 2
 
-func _ready():
-	var err = self.body_entered.connect(bodyEntered)
-	Launcher.Util.Assert(err == OK, "Could not connect map warp signal")
+	var _err = self.body_entered.connect(bodyEntered)

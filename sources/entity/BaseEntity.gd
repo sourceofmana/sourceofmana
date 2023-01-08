@@ -157,8 +157,8 @@ func _setup_nav_agent():
 
 
 func _enable_warp():
-	collision_layer += 1 << 1
-	collision_mask += 1 << 1
+	collision_layer |= 1 << 1
+	collision_mask |= 1 << 1
 
 func SetName(_entityID : String, _entityName : String):
 	if _entityName.length() == 0:

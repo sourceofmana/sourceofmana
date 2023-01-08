@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="112" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="27">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="112" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="32">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
   <property name="name" value="Candor Battle Cave"/>
  </properties>
- <tileset firstgid="1" name="Cave" tilewidth="32" tileheight="32" tilecount="256" columns="16">
-  <image source="../../graphics/tilesets/isles/candor/cave/cave.png" width="512" height="512"/>
- </tileset>
+ <tileset firstgid="1" source="../../graphics/tilesets/aemil/cave/Cave.tsx"/>
  <tileset firstgid="257" name="Chess" tilewidth="32" tileheight="32" tilecount="64" columns="8">
   <image source="../../graphics/tilesets/isles/candor/cave/chess.png" width="256" height="256"/>
  </tileset>
  <tileset firstgid="321" name="Collision" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="../../graphics/tilesets/generic/collision.png" width="128" height="128"/>
  </tileset>
- <tileset firstgid="337" name="Cave x2" tilewidth="32" tileheight="64" tilecount="16" columns="16">
-  <image source="../../graphics/tilesets/isles/candor/cave/cave-x1x2.png" width="512" height="64"/>
- </tileset>
+ <tileset firstgid="337" source="../../graphics/tilesets/aemil/cave/Cave x2.tsx"/>
  <tileset firstgid="353" name="Spider Web" tilewidth="32" tileheight="64" tilecount="10" columns="5">
   <image source="../../graphics/tilesets/generic/cave/spiderweb-x1x2.png" width="160" height="128"/>
  </tileset>

@@ -99,7 +99,6 @@ func _get_option_visibility(path, option, options):
 func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	# Offset is only optional for importing TileSets
 	options.apply_offset = true
-
 	var TiledMapReader = load("res://addons/tiled_importer/tiled_map_reader.gd").new()
 	var scene = TiledMapReader.build(source_file, options)
 
@@ -127,4 +126,5 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 
 	var packed_scene = PackedScene.new()
 	packed_scene.pack(scene)
+
 	return ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()])
