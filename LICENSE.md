@@ -68,6 +68,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/gui/window/window_bg.png [Reid]
 ./graphics/gui/window/window_bg_soft.png [Reid]
 ./graphics/gui/window/window_bg_title.png [Reid]
+./graphics/gui/window/window_bg_title_full.png [Reid]
 ./graphics/gui/window/window_bg_title_nodrag.png [Reid]
 ./graphics/items/commons/phatina-key1.png [Reid]
 ./graphics/items/commons/phatina-key2.png [Reid]
