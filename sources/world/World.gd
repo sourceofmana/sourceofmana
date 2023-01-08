@@ -120,7 +120,7 @@ func FindEntityReference(entityID : String) -> Object:
 
 func CreatePlayer(entityID : String, entityName : String = "", isLocalPlayer = false) -> BaseEntity:
 	var inst : BaseEntity = null
-	var template : EntityData = FindEntityReference(entityID)
+	var template = FindEntityReference(entityID)
 	if template:
 		inst = Launcher.FileSystem.LoadScene("presets/entities/Player")
 		inst.isPlayableController = isLocalPlayer
@@ -131,7 +131,7 @@ func CreatePlayer(entityID : String, entityName : String = "", isLocalPlayer = f
 
 func CreateMob(entityID : String, entityName : String = "") -> BaseEntity:
 	var inst : BaseEntity = null
-	var template : EntityData = FindEntityReference(entityID)
+	var template = FindEntityReference(entityID)
 	if template:
 		inst = Launcher.FileSystem.LoadScene("presets/entities/Monster")
 		inst.applyEntityData(template)
@@ -141,7 +141,7 @@ func CreateMob(entityID : String, entityName : String = "") -> BaseEntity:
 
 func CreateNpc(entityID : String, entityName : String = "") -> BaseEntity:
 	var inst : BaseEntity = null
-	var template : EntityData = FindEntityReference(entityID)
+	var template = FindEntityReference(entityID)
 	if template:
 		inst = Launcher.FileSystem.LoadScene("presets/entities/Npc")
 		inst.applyEntityData(template)

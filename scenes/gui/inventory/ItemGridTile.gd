@@ -7,7 +7,7 @@ var item : InventoryItem
 
 func set_data(p_item: InventoryItem):
 	item = p_item
-	$Icon.set_normal_texture(item.type.icon)
+	$Icon.set_texture_normal(item.type.icon)
 	if item.count >= 1000:
 		$Label.text = "999+"
 	elif item.count <= 1:

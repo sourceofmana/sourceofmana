@@ -1,7 +1,7 @@
 extends Node
 
 @onready var windows : Control					= $FloatingWindows
-@onready var itemInventory : InventoryWindow		= $FloatingWindows/Inventory
+@onready var itemInventory : InventoryWindow	= $FloatingWindows/Inventory
 @onready var emoteList : GridContainer			= $FloatingWindows/Emote/ItemContainer/Grid
 @onready var chatContainer : Container			= $FloatingWindows/Chat/VBoxContainer
 

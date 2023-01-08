@@ -169,7 +169,7 @@ func SetName(_entityID : String, _entityName : String):
 		name = _entityName
 
 
-func applyEntityData(data: EntityData):
+func applyEntityData(data):
 	stat.moveSpeed = data._walkSpeed
 	if !data._ethnicity.is_empty() or !data._gender.is_empty():
 		sprite = Launcher.FileSystem.LoadPreset("sprites/" + data._ethnicity + data._gender)

@@ -43,11 +43,11 @@ func calculate_weight():
 func use_item(item: InventoryItem):
 	var inv_item_index = items.find(item)
 	var inv_item = items[inv_item_index]
-	print(inv_item.type.name)
+
 	if inv_item:
 		inv_item.type.use()
 		if inv_item.type is FoodItem:
-			Launcher.Entities.playerEntity.stat.health += (inv_item.type as FoodItem).HealthPoints
+			Launcher.Entities.playerEntity.stat.health += inv_item.type.HealthPoints
 			_remove_one_item(inv_item)
 
 func _remove_one_item(item: InventoryItem):

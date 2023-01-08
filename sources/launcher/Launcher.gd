@@ -9,16 +9,16 @@ var Source				= null
 var GUI					= null
 var Debug				= null
 # Low-prio services
-var Action				    = null
-var Audio				    = null
-var Camera				    = null
-var Conf				    = null
-var DB					    = null
-var Entities: EntityManager	= null
-var FSM					    = null
-var Map					    = null
-var Save				    = null
-var World				    = null
+var Action				= null
+var Audio				= null
+var Camera				= null
+var Conf				= null
+var DB					= null
+var Entities			= null
+var FSM					= null
+var Map					= null
+var Save				= null
+var World				= null
 
 #
 func _init():

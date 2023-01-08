@@ -24,20 +24,10 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://sources/resource_types/BaseItem.gd"
 }, {
-"base": "Node",
-"class": &"EntityData",
-"language": &"GDScript",
-"path": "res://sources/db/instance/Entity.gd"
-}, {
 "base": "Object",
 "class": &"EntityInventory",
 "language": &"GDScript",
 "path": "res://sources/entity/components/inventory/Inventory.gd"
-}, {
-"base": "Node",
-"class": &"EntityManager",
-"language": &"GDScript",
-"path": "res://sources/entity/EntityManager.gd"
 }, {
 "base": "BaseItem",
 "class": &"FoodItem",
@@ -77,15 +67,13 @@ _global_script_classes=[{
 "base": "Control",
 "class": &"WindowPanel",
 "language": &"GDScript",
-"path": "res://addons/windowpanel/WindowPanel.gd"
+"path": "res://sources/gui/WindowPanel.gd"
 }]
 _global_script_class_icons={
 "AiEntity": "",
 "BaseEntity": "",
 "BaseItem": "",
-"EntityData": "",
 "EntityInventory": "",
-"EntityManager": "",
 "FoodItem": "",
 "InventoryItem": "",
 "InventoryItemGridTile": "",

@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://1iem3khoe666" path="res://data/graphics/gui/checkbox/cb_small_disabled.png" id="14"]
 [ext_resource type="Texture2D" uid="uid://o8yiy2cccwpp" path="res://data/graphics/gui/button/button_focus.png" id="16"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_166p7"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ls22y"]
 texture = ExtResource("3")
 margin_left = 3.0
 margin_top = 3.0
@@ -24,7 +24,7 @@ margin_right = 3.0
 margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qwxwm"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_upuwt"]
 texture = ExtResource("16")
 margin_left = 3.0
 margin_top = 3.0
@@ -32,7 +32,7 @@ margin_right = 3.0
 margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fm4y5"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2sqft"]
 texture = ExtResource("11")
 margin_left = 3.0
 margin_top = 3.0
@@ -40,7 +40,7 @@ margin_right = 3.0
 margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6vfhd"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j7syu"]
 texture = ExtResource("5_fw406")
 margin_left = 3.0
 margin_top = 3.0
@@ -48,7 +48,7 @@ margin_right = 4.0
 margin_bottom = 3.0
 region_rect = Rect2(0, 0, 8, 8)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_buxby"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w7io8"]
 texture = ExtResource("10")
 margin_left = 3.0
 margin_top = 3.0
@@ -56,7 +56,7 @@ margin_right = 3.0
 margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_chw5l"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xadpl"]
 texture = ExtResource("11_ue8tk")
 margin_left = 6.0
 margin_top = 32.0
@@ -64,7 +64,7 @@ margin_right = 6.0
 margin_bottom = 6.0
 region_rect = Rect2(0, 0, 16, 39)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8vr00"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f7umf"]
 content_margin_left = 5.0
 content_margin_top = 4.0
 content_margin_right = 5.0
@@ -76,7 +76,7 @@ margin_right = 6.0
 margin_bottom = 6.0
 region_rect = Rect2(0, 0, 13, 16)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf30q"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ik3rj"]
 texture = ExtResource("2")
 margin_left = 6.0
 margin_top = 5.0
@@ -84,13 +84,13 @@ margin_right = 6.0
 margin_bottom = 6.0
 region_rect = Rect2(0, 0, 13, 16)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dj8bs"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4m2pv"]
 margin_left = 6.0
 margin_top = 6.0
 margin_right = 6.0
 margin_bottom = 6.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xo2be"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_85tto"]
 content_margin_left = 0.0
 content_margin_top = 5.0
 content_margin_right = 0.0
@@ -102,7 +102,7 @@ margin_right = 6.0
 margin_bottom = 10.0
 region_rect = Rect2(0, 0, 11, 24)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uvvb1"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0d0g8"]
 content_margin_top = 5.0
 content_margin_bottom = 4.0
 texture = ExtResource("1")
@@ -115,7 +115,7 @@ expand_margin_top = 2.0
 expand_margin_right = 3.0
 region_rect = Rect2(0, 0, 11, 24)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pdkq1"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4jsee"]
 content_margin_left = 0.0
 content_margin_top = 5.0
 content_margin_right = 0.0
@@ -141,11 +141,11 @@ Button/colors/font_hover_color = Color(0.843137, 0.717647, 0.482353, 1)
 Button/colors/font_pressed_color = Color(0.843137, 0.717647, 0.482353, 1)
 Button/constants/hseparation = 2
 Button/fonts/font = ExtResource("1_vbxts")
-Button/styles/disabled = SubResource("StyleBoxTexture_166p7")
-Button/styles/focus = SubResource("StyleBoxTexture_qwxwm")
-Button/styles/hover = SubResource("StyleBoxTexture_fm4y5")
-Button/styles/normal = SubResource("StyleBoxTexture_6vfhd")
-Button/styles/pressed = SubResource("StyleBoxTexture_buxby")
+Button/styles/disabled = SubResource("StyleBoxTexture_ls22y")
+Button/styles/focus = SubResource("StyleBoxTexture_upuwt")
+Button/styles/hover = SubResource("StyleBoxTexture_2sqft")
+Button/styles/normal = SubResource("StyleBoxTexture_j7syu")
+Button/styles/pressed = SubResource("StyleBoxTexture_w7io8")
 CheckButton/icons/off = ExtResource("14")
 CheckButton/icons/off_disabled = ExtResource("13")
 CheckButton/icons/on = ExtResource("7")
@@ -158,16 +158,16 @@ LineEdit/colors/cursor_color = Color(0.843137, 0.717647, 0.482353, 1)
 LineEdit/colors/font_color = Color(0.843137, 0.717647, 0.482353, 1)
 LineEdit/colors/font_color_selected = Color(0.2, 0.137255, 0.0431373, 1)
 LineEdit/colors/selection_color = Color(0.32549, 0.305882, 0.290196, 1)
-Panel/styles/panel = SubResource("StyleBoxTexture_chw5l")
-PanelContainer/styles/panel = SubResource("StyleBoxTexture_8vr00")
-PopupPanel/styles/panel = SubResource("StyleBoxTexture_uf30q")
+Panel/styles/panel = SubResource("StyleBoxTexture_xadpl")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_f7umf")
+PopupPanel/styles/panel = SubResource("StyleBoxTexture_ik3rj")
 TabContainer/colors/font_color_disabled = Color(0.8, 0.364706, 0.364706, 1)
 TabContainer/colors/font_selected_color = Color(0.843137, 0.717647, 0.482353, 1)
 TabContainer/colors/font_unselected_color = Color(0.756863, 0.592157, 0.278431, 1)
 TabContainer/constants/side_margin = -2
 TabContainer/font_sizes/font_size = 16
 TabContainer/fonts/font = ExtResource("1_vbxts")
-TabContainer/styles/panel = SubResource("StyleBoxTexture_dj8bs")
-TabContainer/styles/tab_disabled = SubResource("StyleBoxTexture_xo2be")
-TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_uvvb1")
-TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_pdkq1")
+TabContainer/styles/panel = SubResource("StyleBoxTexture_4m2pv")
+TabContainer/styles/tab_disabled = SubResource("StyleBoxTexture_85tto")
+TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_0d0g8")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_4jsee")
