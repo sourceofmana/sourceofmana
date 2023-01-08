@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.3.1" name="Cave x4 x4" tilewidth="128" tileheight="128" tilecount="2" columns="2">
+<tileset version="1.9" tiledversion="1.9.2" name="Cave x4 x4" tilewidth="128" tileheight="128" tilecount="2" columns="2">
  <image source="cave-x4x4.png" width="256" height="128"/>
  <tile id="0">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="18">
-    <polygon points="0,-18 32,-18 0,46"/>
+   <object id="5" x="0" y="0">
+    <polygon points="0,0 0,64 16,64 16,32 32,0"/>
    </object>
-   <object id="2" x="97.8182" y="17.8182">
-    <polygon points="-1.81818,-17.8182 30.1818,-17.8182 30.1818,48.1818"/>
+   <object id="6" x="96" y="0">
+    <polygon points="32,0 32,64 16,64 16,32 0,0"/>
    </object>
   </objectgroup>
  </tile>
