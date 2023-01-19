@@ -8,101 +8,13 @@
 
 config_version=5
 
-_global_script_classes=[{
-"base": "BaseEntity",
-"class": &"AiEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/AiEntity.gd"
-}, {
-"base": "CharacterBody2D",
-"class": &"BaseEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/BaseEntity.gd"
-}, {
-"base": "Resource",
-"class": &"BaseItem",
-"language": &"GDScript",
-"path": "res://sources/resource_types/BaseItem.gd"
-}, {
-"base": "Node",
-"class": &"EntityData",
-"language": &"GDScript",
-"path": "res://sources/db/instance/Entity.gd"
-}, {
-"base": "Object",
-"class": &"EntityInventory",
-"language": &"GDScript",
-"path": "res://sources/entity/components/inventory/Inventory.gd"
-}, {
-"base": "Node",
-"class": &"EntityManager",
-"language": &"GDScript",
-"path": "res://sources/entity/EntityManager.gd"
-}, {
-"base": "BaseItem",
-"class": &"FoodItem",
-"language": &"GDScript",
-"path": "res://sources/resource_types/FoodItem.gd"
-}, {
-"base": "Object",
-"class": &"InventoryItem",
-"language": &"GDScript",
-"path": "res://sources/entity/components/inventory/InventoryItem.gd"
-}, {
-"base": "ColorRect",
-"class": &"InventoryItemGridTile",
-"language": &"GDScript",
-"path": "res://scenes/gui/inventory/ItemGridTile.gd"
-}, {
-"base": "WindowPanel",
-"class": &"InventoryWindow",
-"language": &"GDScript",
-"path": "res://scenes/gui/inventory/Inventory.gd"
-}, {
-"base": "AiEntity",
-"class": &"MonsterEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/variants/MonsterEntity.gd"
-}, {
-"base": "AiEntity",
-"class": &"NpcEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/variants/NpcEntity.gd"
-}, {
-"base": "BaseEntity",
-"class": &"PlayerEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/variants/PlayerEntity.gd"
-}, {
-"base": "Control",
-"class": &"WindowPanel",
-"language": &"GDScript",
-"path": "res://sources/gui/WindowPanel.gd"
-}]
-_global_script_class_icons={
-"AiEntity": "",
-"BaseEntity": "",
-"BaseItem": "",
-"EntityData": "",
-"EntityInventory": "",
-"EntityManager": "",
-"FoodItem": "",
-"InventoryItem": "",
-"InventoryItemGridTile": "",
-"InventoryWindow": "",
-"MonsterEntity": "",
-"NpcEntity": "",
-"PlayerEntity": "",
-"WindowPanel": ""
-}
-
 [application]
 
 config/name="Source of Mana"
 run/main_scene="res://scenes/Source.tscn"
 config/features=PackedStringArray("4.0")
-boot_splash/image="res://data/press/splash/splashscreen.png"
 boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="res://data/press/splash/splashscreen.png"
 config/icon="res://data/press/logo/logo_seed.svg"
 
 [autoload]
@@ -131,6 +43,7 @@ window/per_pixel_transparency/enabled=true
 [editor]
 
 import/use_multiple_threads=false
+export/convert_text_resources_to_binary=true
 search_in_file_extensions=PackedStringArray("gd", "gdshader", "shader", "conf", "db")
 convert_text_resources_to_binary_on_export=true
 
@@ -142,14 +55,6 @@ enabled=PackedStringArray("res://addons/tiled_importer/plugin.cfg")
 
 import/blender/enabled=false
 import/fbx/enabled=false
-
-[global]
-
-fps=false
-vsync=false
-version=false
-cfg=false
-mouse=false
 
 [gui]
 
@@ -311,21 +216,19 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+textures/lossless_compression/force_png=true
+anti_aliasing/screen_space_roughness_limiter/enabled=false
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
 textures/canvas_textures/default_texture_filter=0
 quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
-quality/intended_usage/framebuffer_allocation=0
-quality/intended_usage/framebuffer_allocation.mobile=0
 2d/snapping/use_gpu_pixel_snap=true
 threads/thread_model=2
 threads/thread_safe_bvh=true
 vram_compression/import_etc=true
 vram_compression/import_pvrtc=true
 environment/default_environment="res://default_env.tres"
-quality/subsurface_scattering/scale=1
-quality/subsurface_scattering/follow_surface=true
 
 [tiled_importer]
 
