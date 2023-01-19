@@ -73,6 +73,8 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/items/commons/phatina-key1.png [Reid]
 ./graphics/items/commons/phatina-key2.png [Reid]
 ./graphics/items/commons/phatina-key3.png [Reid]
+./graphics/items/usable/apple.png [Enchilado]
+./graphics/items/commons/phatina-key3.png [Reid]
 ./graphics/minimaps/Phatyna/002-3-0.png [Reid]
 ./graphics/sprites/monsters/dorian.png [Reid] [Neorice]
 ./graphics/sprites/monsters/emil.png [Reid] [Neorice]

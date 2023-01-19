@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2022 Source of Mana
+<!-- Copyright (C) 2022-2023 Source of Mana
 
 This file contains a list of all contributors and developers who contributed directly or indirectly in the Source of Mana.
 
@@ -17,6 +17,7 @@ Contact us at this mail for any inquiry: team [at] sourceofmana.org
 	<contributor" nick="Chicka-Maria"			mailid="fire4light"				mailserver="live.com"/>
 	<contributor" nick="Clint Bellanger"		mailid="clintbellanger"			mailserver="gmail.com"/>
 	<contributor" nick="crush"					mailid="crush"					mailserver="themanaworld.org"/>
+	<contributor" nick="enchilado"				/>
 	<contributor" nick="gumi"					mailid="tmw-forums"				mailserver="gumi.ca"/>
 	<contributor" nick="Hal9000"				mailid="miglietta.francesco"	mailserver="gmail.com"/>
 	<contributor" nick="IvanMorve"				mailid="phineasfreakears"		mailserver="gmail.com"/>

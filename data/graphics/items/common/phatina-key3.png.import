@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ipj5b4ar8xuv"
-path="res://.godot/imported/apple.png-3f809e619aa7a6a055418976e463e3c4.ctex"
+uid="uid://66y6ijo8rp2b"
+path="res://.godot/imported/phatina-key3.png-7918e80f45c20a0b10ab268307d0e508.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/items/enchi_items/apple.png"
-dest_files=["res://.godot/imported/apple.png-3f809e619aa7a6a055418976e463e3c4.ctex"]
+source_file="res://data/graphics/items/common/phatina-key3.png"
+dest_files=["res://.godot/imported/phatina-key3.png-7918e80f45c20a0b10ab268307d0e508.ctex"]
 
 [params]
 

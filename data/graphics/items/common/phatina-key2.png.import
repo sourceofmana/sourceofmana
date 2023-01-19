@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://djbyhc4xstaop"
-path="res://.godot/imported/phatina-key2.png-7aeb10de814cb00d95ef2593cffa1144.ctex"
+path="res://.godot/imported/phatina-key2.png-1b52682bf6b0fc7f23354e8460a4fd93.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/items/commons/phatina-key2.png"
-dest_files=["res://.godot/imported/phatina-key2.png-7aeb10de814cb00d95ef2593cffa1144.ctex"]
+source_file="res://data/graphics/items/common/phatina-key2.png"
+dest_files=["res://.godot/imported/phatina-key2.png-1b52682bf6b0fc7f23354e8460a4fd93.ctex"]
 
 [params]
 
