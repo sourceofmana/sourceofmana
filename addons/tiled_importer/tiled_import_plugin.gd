@@ -86,10 +86,12 @@ func _get_import_options(path, preset):
 			"default_value": true
 		},
 		{
-			"name": "post_import_script",
-			"default_value": "",
-			"property_hint": PROPERTY_HINT_FILE,
-			"hint_string": "*.gd;GDScript"
+			"name": "export_navigation_mesh",
+			"default_value": false
+		},
+		{
+			"name": "polygon_grow_default",
+			"default_value": 12
 		}
 	]
 
@@ -99,32 +101,21 @@ func _get_option_visibility(path, option, options):
 func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	# Offset is only optional for importing TileSets
 	options.apply_offset = true
+	var saveRet = OK
 	var TiledMapReader = load("res://addons/tiled_importer/tiled_map_reader.gd").new()
-	var scene = TiledMapReader.build(source_file, options)
 
-	if typeof(scene) != TYPE_OBJECT:
-		# Error happened
-		return scene
+	var tilemap_scene = TiledMapReader.build_tilemap(source_file, options)
+	if typeof(tilemap_scene) == TYPE_OBJECT:
+		var packed_tilemap_scene = PackedScene.new()
+		packed_tilemap_scene.pack(tilemap_scene)
+		saveRet &= ResourceSaver.save(packed_tilemap_scene, "%s.tilemap.%s" % [source_file, _get_save_extension()])
 
-	# Post imports script
-	if not options.post_import_script.is_empty():
-		var script = load(options.post_import_script)
-		if not script or not script is GDScript:
-			printerr("Post import script is not a GDScript.")
-			return ERR_INVALID_PARAMETER
+	# Tilemap import
+	if options.export_navigation_mesh:
+		var navigation_scene = TiledMapReader.build_navigation(source_file, options)
+		if typeof(navigation_scene) == TYPE_OBJECT:
+			var packed_navigation_scene = PackedScene.new()
+			packed_navigation_scene.pack(navigation_scene)
+			saveRet &= ResourceSaver.save(packed_navigation_scene, "%s.navigation.%s" % [source_file, _get_save_extension()])
 
-		script = script.new()
-		if not script.has_method("post_import"):
-			printerr("Post import script does not have a 'post_import' method.")
-			return ERR_INVALID_PARAMETER
-
-		scene = script.post_import(scene)
-
-		if not scene or not scene is Node2D:
-			printerr("Invalid scene returned from post import script.")
-			return ERR_INVALID_DATA
-
-	var packed_scene = PackedScene.new()
-	packed_scene.pack(scene)
-
-	return ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()])
+	return saveRet
