@@ -1,21 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://cklsgf40b0t0u"]
+[gd_scene load_steps=3 format=3 uid="uid://cq76gfx44nn6q"]
 
-[ext_resource type="Script" path="res://scenes/gui/inventory/ItemGridTile.gd" id="1_12c1y"]
+[ext_resource type="Script" path="res://sources/gui/inventory/ItemGridTile.gd" id="1_ec554"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_p54e4"]
+[sub_resource type="LabelSettings" id="LabelSettings_s0bqm"]
 line_spacing = 0.0
 font_size = 15
 
 [node name="Background" type="ColorRect"]
-custom_minimum_size = Vector2i(34, 34)
+custom_minimum_size = Vector2(34, 34)
 offset_right = 32.0
 offset_bottom = 32.0
 color = Color(0.32549, 0.305882, 0.290196, 1)
-script = ExtResource("1_12c1y")
+script = ExtResource("1_ec554")
 
 [node name="Icon" type="TextureButton" parent="."]
-custom_minimum_size = Vector2i(32, 32)
-anchors_preset = 8
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -30,7 +30,7 @@ focus_mode = 1
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="."]
-anchors_preset = 3
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -41,7 +41,7 @@ offset_bottom = 3.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "12"
-label_settings = SubResource("LabelSettings_p54e4")
+label_settings = SubResource("LabelSettings_s0bqm")
 horizontal_alignment = 2
 vertical_alignment = 2
 clip_text = true

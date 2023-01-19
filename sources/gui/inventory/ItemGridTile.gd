@@ -19,7 +19,7 @@ func set_data(p_item: InventoryItem):
 	if item.type.description:
 		tooltip += "\n" + item.type.description
 	
-	if item.type.weight != 0:
+	if item.type.weight == 0:
 		tooltip += "\n\nWeight: " + str(item.type.weight) + "g"
 	
 	$Icon.tooltip_text = tooltip

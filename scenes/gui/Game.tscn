@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dml4oic211pyo" path="res://scenes/gui/WindowButton.tscn" id="3_sl5jl"]
 [ext_resource type="PackedScene" uid="uid://c2q5vtkxo04dp" path="res://scenes/gui/ActionBox.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/gui/Chat.tscn" id="5"]
-[ext_resource type="PackedScene" uid="uid://dgyikuvy3k4wl" path="res://scenes/gui/inventory/Inventory.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://scenes/gui/inventory/Inventory.tscn" id="6"]
 [ext_resource type="Script" path="res://sources/gui/FloatingWindows.gd" id="7"]
 [ext_resource type="PackedScene" path="res://scenes/gui/Quit.tscn" id="8"]
 [ext_resource type="PackedScene" path="res://scenes/gui/Minimap.tscn" id="9_myjuo"]
