@@ -60,3 +60,6 @@ func _process(delta : float):
 		Debug._process(delta)
 	FSM._process(delta)
 	World._process(delta)
+
+func _quit():
+	get_tree().quit()

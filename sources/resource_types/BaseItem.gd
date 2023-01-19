@@ -16,4 +16,4 @@ class_name BaseItem
 
 
 func use():
-	Launcher.Util.PrintLog("Item use is not yet implemented")
+	pass

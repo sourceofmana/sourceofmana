@@ -4,7 +4,7 @@ extends VBoxContainer
 
 #
 func _on_Leave_pressed():
-	get_tree().quit()
+	Launcher._quit()
 
 func _on_Stay_pressed():
 	Launcher.GUI.CloseCurrentWindow()
