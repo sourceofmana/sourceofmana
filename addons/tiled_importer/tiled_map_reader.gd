@@ -414,7 +414,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 		level.set_layer_z_index(layerID, zindex)
 		if "Fringe" in tmxLayer.name:
 			level.set_layer_y_sort_enabled(layerID, true)
-			level.set_layer_y_sort_origin(layerID, 21)
+			level.set_layer_y_sort_origin(layerID, 10)
 
 		var offset = Vector2()
 		if "offsetx" in tmxLayer:
