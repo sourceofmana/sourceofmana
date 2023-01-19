@@ -16,10 +16,11 @@ texture = ExtResource("1")
 script = ExtResource("7")
 
 [node name="Bars" type="Control" parent="."]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 0
 
 [node name="HP" parent="Bars" instance=ExtResource("2")]
+layout_mode = 1
 offset_left = 67.0
 offset_top = 22.0
 offset_right = 379.0
@@ -28,6 +29,7 @@ textureProgress = ExtResource("6")
 labelColor = Color(0.6, 0.188235, 0.0392157, 1)
 
 [node name="Mana" parent="Bars" instance=ExtResource("2")]
+layout_mode = 1
 offset_left = 67.0
 offset_top = 44.0
 offset_right = 379.0
@@ -36,6 +38,7 @@ textureProgress = ExtResource("3")
 labelColor = Color(0.196078, 0.466667, 0.698039, 1)
 
 [node name="Stamina" parent="Bars" instance=ExtResource("2")]
+layout_mode = 1
 offset_left = 55.0
 offset_top = 66.0
 offset_right = 357.0
@@ -43,6 +46,7 @@ offset_bottom = 75.0
 textureProgress = ExtResource("4")
 
 [node name="LevelText" type="Label" parent="."]
+layout_mode = 0
 offset_left = 14.0
 offset_top = 6.0
 offset_right = 77.0
@@ -54,6 +58,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ExpText" type="Label" parent="."]
+layout_mode = 0
 offset_left = 9.0
 offset_top = 44.0
 offset_right = 79.0

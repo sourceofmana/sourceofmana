@@ -26,77 +26,56 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="HBoxTop" type="HBoxContainer" parent="VBoxMain"]
-offset_right = 1280.0
-offset_bottom = 85.0
+layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
 [node name="StatIndicator" parent="VBoxMain/HBoxTop" instance=ExtResource("2")]
-offset_right = 386.0
-offset_bottom = 85.0
+layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 0
 mouse_filter = 2
 
 [node name="PanelContainer" type="Control" parent="VBoxMain/HBoxTop"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 390.0
-offset_right = 1023.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 mouse_filter = 2
 
 [node name="HBoxButtons" type="HBoxContainer" parent="VBoxMain/HBoxTop"]
-offset_left = 1027.0
-offset_right = 1280.0
-offset_bottom = 21.0
+layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 alignment = 2
 
 [node name="Iventory" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-offset_right = 79.0
-offset_bottom = 21.0
+layout_mode = 2
 text = "Inventory"
 targetWindow = NodePath("../../../../FloatingWindows/Inventory")
 
 [node name="Chat" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-offset_left = 83.0
-offset_right = 123.0
-offset_bottom = 21.0
+layout_mode = 2
 text = "Chat"
 targetWindow = NodePath("")
 
 [node name="Minimap" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-offset_left = 127.0
-offset_right = 197.0
-offset_bottom = 21.0
+layout_mode = 2
 text = "Minimap"
 targetWindow = NodePath("../../../../FloatingWindows/Minimap")
 
 [node name="Emote" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-offset_left = 201.0
-offset_right = 253.0
-offset_bottom = 21.0
+layout_mode = 2
 text = "Emote"
 targetWindow = NodePath("../../../../FloatingWindows/Minimap")
 
 [node name="MainPanelContainer" type="Control" parent="VBoxMain"]
-layout_mode = 3
-anchors_preset = 0
-offset_top = 89.0
-offset_right = 1280.0
-offset_bottom = 680.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="ActionBox" parent="VBoxMain" instance=ExtResource("4")]
-offset_left = 438.0
-offset_top = 684.0
-offset_right = 842.0
-offset_bottom = 720.0
+layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="FloatingWindows" type="Control" parent="."]
@@ -112,7 +91,7 @@ script = ExtResource("7")
 [node name="Quit" parent="FloatingWindows" instance=ExtResource("8")]
 visible = false
 custom_minimum_size = Vector2(280, 120)
-anchors_preset = 8
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -128,6 +107,7 @@ metadata/_edit_layout_mode = 1
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
 show_behind_parent = false
+layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -140,6 +120,7 @@ grow_vertical = 1
 
 [node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
 custom_minimum_size = Vector2(200, 125)
+layout_mode = 0
 offset_left = 1065.0
 offset_top = 33.0
 offset_right = 1265.0
@@ -148,6 +129,7 @@ blockActions = null
 
 [node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
 custom_minimum_size = Vector2(38, 38)
+layout_mode = 0
 offset_left = 66.0
 offset_top = 85.0
 offset_right = 304.0
@@ -155,6 +137,7 @@ offset_bottom = 128.0
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
 custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
 offset_left = 3.0
 offset_top = 529.0
 offset_right = 295.0
@@ -174,8 +157,20 @@ mouse_filter = 2
 
 [node name="HQ4x" parent="Shaders" instance=ExtResource("10_id8es")]
 visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="CRT" parent="Shaders" instance=ExtResource("11_x7rk2")]
 visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]
