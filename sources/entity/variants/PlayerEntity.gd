@@ -55,7 +55,9 @@ func _ready():
 	_setup_nav_agent()
 	_enable_warp()
 
-	if isPlayableController:
-		camera = Launcher.FileSystem.LoadPreset("cameras/Default")
+func SetLocalPlayer():
+	isPlayableController = true
+	camera = Launcher.FileSystem.LoadPreset("cameras/Default")
+	if camera:
 		add_child(camera)
 		Launcher.Camera.mainCamera = camera

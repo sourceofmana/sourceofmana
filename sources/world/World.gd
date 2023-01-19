@@ -137,7 +137,8 @@ func CreatePlayer(entityID : String, entityName : String = "", isLocalPlayer = f
 	var template = FindEntityReference(entityID)
 	if template:
 		inst = Launcher.FileSystem.LoadScene("presets/entities/Player")
-		inst.isPlayableController = isLocalPlayer
+		if isLocalPlayer:
+			inst.SetLocalPlayer()
 		inst.applyEntityData(template)
 		inst.SetName(entityID, entityName)
 	Launcher.Util.Assert(inst != null, "Could not create the entity: " + entityID)
