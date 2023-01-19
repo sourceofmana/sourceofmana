@@ -54,7 +54,6 @@ func GetBarFormat(currentValue : float, maxValue : float) -> String:
 func SetStat(newValue, maxValue):
 	assert(bar && label, "ProgressBar childs are missing")
 	if valueTo != newValue || valueMax != maxValue:
-		valueFrom = bar.get_value()
 		valueTo = newValue
 		isUpdating = true
 		valueMax = maxValue
@@ -116,7 +115,7 @@ func _ready():
 			label.set_scale(Vector2(labelScale,labelScale))
 			label.position.y -= ceil((1 - labelScale) * 10) 
 		if labelColor:
-			label.set("custom_colors/font_color", labelColor)
+			label.set("theme_override_colors/font_color", labelColor)
 
 func _process(delta):
 	UpdateValue(delta)
