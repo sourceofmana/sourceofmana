@@ -18,6 +18,7 @@ var initDelayToFillSec	= 0.0
 var valueFrom			= 0
 var valueTo				= 0
 var valueMax			= 0
+var valueTmp			= 0
 
 #
 func GetRatio(currentValue : float, maxValue : float) -> float:
@@ -54,6 +55,7 @@ func GetBarFormat(currentValue : float, maxValue : float) -> String:
 func SetStat(newValue, maxValue):
 	assert(bar && label, "ProgressBar childs are missing")
 	if valueTo != newValue || valueMax != maxValue:
+		valueFrom = valueTo
 		valueTo = newValue
 		isUpdating = true
 		valueMax = maxValue
@@ -76,17 +78,17 @@ func UpdateValue(delta):
 			ratioToFinish = (initDelayToFillSec - remainsToFillSec) / initDelayToFillSec
 			ratioToFinish = ease(ratioToFinish, 0.3)
 
-		var newValue = lerpf(float(valueFrom), float(valueTo), ratioToFinish)
+		valueTmp = lerpf(float(valueFrom), float(valueTo), ratioToFinish)
 		if bar:
-			bar.set_value(GetRatio(newValue, valueMax))
+			bar.set_value(GetRatio(valueTmp, valueMax))
 
 		if precisionDivider != 0:
-			newValue = round(newValue * precisionDivider) / precisionDivider
+			valueTmp = round(valueTmp * precisionDivider) / precisionDivider
 		else:
-			newValue = round(newValue)
+			valueTmp = round(valueTmp)
 
 		if label:
-			label.set_text(GetBarFormat(newValue, valueMax))
+			label.set_text(GetBarFormat(valueTmp, valueMax))
 
 		if valueFrom == valueTo || remainsToFillSec <= 0:
 			if bar:

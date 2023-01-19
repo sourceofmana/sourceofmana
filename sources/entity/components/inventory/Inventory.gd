@@ -10,11 +10,9 @@ var items: Array[InventoryItem] = []
 func _init():
 	# fill inventory
 	add_item(load("res://data/items/apple.tres"), 14)
-	add_item(load("res://data/items/pineapple.tres"), 3)
+	add_item(load("res://data/items/pettys_key.tres"), 3)
 	add_item(load("res://data/items/grumpys_key.tres"))
 	add_item(load("res://data/items/hungrys_key.tres"), 2)
-	add_item(load("res://data/items/pineapple.tres"), 9)
-	add_item(load("res://data/items/corn.tres"), 5)
 
 func add_item(type: BaseItem, count: int = 1):
 	# add to existing item "pile" if it is stackable
@@ -47,7 +45,6 @@ func use_item(item: InventoryItem):
 	if inv_item:
 		inv_item.type.use()
 		if inv_item.type is FoodItem:
-			Launcher.Entities.playerEntity.stat.health += inv_item.type.HealthPoints
 			_remove_one_item(inv_item)
 
 func _remove_one_item(item: InventoryItem):
