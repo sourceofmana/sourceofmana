@@ -769,7 +769,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 					match object.type:
 						"area": obj_root = Area2D.new()
 						"kinematic": obj_root = KinematicCollision2D.new()
-						"rigid": obj_root = PhysicsBody2D.new()
+						"rigid": obj_root = RigidBody2D.new()
 						_: obj_root = StaticBody2D.new() 
 
 					object_layer.add_child(obj_root)
