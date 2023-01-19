@@ -16,6 +16,7 @@ texture = ExtResource("1")
 script = ExtResource("7")
 
 [node name="Bars" type="Control" parent="."]
+layout_mode = 1
 anchors_preset = 0
 
 [node name="HP" parent="Bars" instance=ExtResource("2")]
