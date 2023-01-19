@@ -16,7 +16,7 @@ var speechIncreaseThreshold : int	= 0
 #
 func AddTimer(parent : Node, delay : float, callable: Callable) -> Timer:
 	var timer = Timer.new()
-	timer.set_name("Timer")
+	timer.set_name("InteractiveTimer")
 	parent.add_child(timer)
 	timer.start(delay)
 	timer.autostart = true

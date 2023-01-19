@@ -4,10 +4,8 @@ class_name AiEntity
 var AITimer : Timer	= null
 
 
-func AddAITimer(delay : float, callable: Callable, map : Object):
-	AITimer.stop()
+func StartAITimer(delay : float, callable: Callable, map : Object):
 	AITimer.start(delay)
-	AITimer.autostart = true
 	if not AITimer.timeout.is_connected(callable):
 		AITimer.timeout.connect(callable.bind(self, map))
 
@@ -20,5 +18,5 @@ func _ready():
 
 	if AITimer == null:
 		AITimer = Timer.new()
-		AITimer.set_name("Timer")
+		AITimer.set_name("AITimer")
 		add_child(AITimer)

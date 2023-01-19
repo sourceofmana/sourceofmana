@@ -2,8 +2,10 @@ extends BaseEntity
 class_name PlayerEntity
 
 var isPlayableController		= false
-var camera : Camera2D				= null
+var camera : Camera2D			= null
+var timer : Timer				= null
 
+#
 func GetNextState():
 	var newEnumState			= currentState
 	var isWalking				= currentVelocity.length_squared() > 1
@@ -27,23 +29,36 @@ func GetNextState():
 
 	return newEnumState
 
-func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-			WalkToward(Launcher.Camera.mainCamera.get_global_mouse_position())
-			return
+func SetLocalPlayer():
+	isPlayableController = true
+	camera = Launcher.FileSystem.LoadPreset("cameras/Default")
+	if camera:
+		add_child(camera)
+		Launcher.Camera.mainCamera = camera
 
-	currentInput = Launcher.Action.GetMove()
-	if currentInput.length() > 0:
-		SwitchInputMode(false)
+#
+func _move_process():
+	if Launcher.Action.IsActionPressed("gp_move_to"):
+		if timer.get_time_left() == 0:
+			_update_walk_path()
+	else:
+		if timer.get_time_left() > 0:
+			timer.stop()
 
+		currentInput = Launcher.Action.GetMove()
+		if currentInput.length() > 0:
+			SwitchInputMode(false)
+
+func _update_walk_path():
+	WalkToward(Launcher.Camera.mainCamera.get_global_mouse_position())
+	timer.start()
 
 func _physics_process(deltaTime : float):
+	_move_process()
 	if interactive:
 		interactive.Update(isPlayableController)
 	
 	super._physics_process(deltaTime)
-
 
 func _ready():
 	set_process_input(isPlayableController)
@@ -55,9 +70,9 @@ func _ready():
 	_setup_nav_agent()
 	_enable_warp()
 
-func SetLocalPlayer():
-	isPlayableController = true
-	camera = Launcher.FileSystem.LoadPreset("cameras/Default")
-	if camera:
-		add_child(camera)
-		Launcher.Camera.mainCamera = camera
+func _init():
+	timer = Timer.new()
+	timer.set_name("ClickTimer")
+	timer.set_wait_time(0.2)
+	timer.set_one_shot(true)
+	add_child(timer)

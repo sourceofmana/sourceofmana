@@ -171,10 +171,10 @@ func UpdateWalkPaths(entity : Node2D, map : Map):
 
 func UpdateAI(entity : BaseEntity, map : Map):
 	if entity.hasGoal == false && entity.AITimer && entity.AITimer.is_stopped():
-		entity.AddAITimer(randi_range(5, 10), UpdateWalkPaths, map)
+		entity.StartAITimer(randi_range(5, 10), UpdateWalkPaths, map)
 	elif entity.hasGoal && entity.IsStuck():
 		entity.ResetNav()
-		entity.AddAITimer(randi_range(0, 3), UpdateWalkPaths, map)
+		entity.StartAITimer(randi_range(0, 3), UpdateWalkPaths, map)
 	entity.UpdateInput()
 
 # Generic
