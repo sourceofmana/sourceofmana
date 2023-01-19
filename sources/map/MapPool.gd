@@ -16,18 +16,24 @@ func GetMapPath(mapName : String) -> String:
 	return path
 
 #
-func LoadMap(mapName : String) -> Node:
+func LoadTileMap(mapName : String) -> Node2D:
 	var mapInstance : Node2D		= GetMap(mapName)
 	var mapPath : String			= GetMapPath(mapName)
 
 	if mapInstance == null:
-		mapInstance = Launcher.FileSystem.LoadMap(mapPath)
+		mapInstance = Launcher.FileSystem.LoadTileMap(mapPath)
 
 	if mapInstance != null:
 		mapInstance.set_name(mapName)
 		pool[mapName] = mapInstance
 
 	return mapInstance
+
+func LoadNavigationMesh(mapName : String) -> Node2D:
+	var mapPath : String			= GetMapPath(mapName)
+	var meshInstance : Node2D		= Launcher.FileSystem.LoadNavMesh(mapPath)
+
+	return meshInstance
 
 #
 func GetMap(mapName : String) -> Node2D:
@@ -53,7 +59,7 @@ func RefreshPool(currentMap : Node2D):
 
 	for mapName in adjacentMaps:
 		if pool.has(mapName) == false:
-			pool[mapName] = LoadMap(mapName)
+			pool[mapName] = LoadTileMap(mapName)
 
 	var poolMaxSize : int		= Launcher.Conf.GetInt("MapPool", "maxSize", Launcher.Conf.Type.MAP)
 	var poolCurrentSize : int	= pool.size()

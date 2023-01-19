@@ -13,6 +13,8 @@ class Map:
 	var navigation : Node2D					= null
 	var triangulation : PackedInt32Array	= []
 	var outlines : PackedVector2Array		= []
+	var mapRID : RID						= RID()
+	var regionRID : RID						= RID()
 
 # Vars
 var areas : Dictionary = {}
@@ -31,10 +33,17 @@ func GenerateRandomPosition(map : Map) -> Vector2:
 
 # Instance init
 func ParseInformation(map : Map):
-	var mapNode : Node2D = Launcher.Map.pool.LoadMap(map.name)
+	var mapNode : Node2D = Launcher.Map.pool.LoadNavigationMesh(map.name)
 	if mapNode:
 		if mapNode.has_node("Navigation"):
 			map.navigation = mapNode.get_node("Navigation")
+
+			map.mapRID = NavigationServer2D.map_create()
+			NavigationServer2D.map_set_active(map.mapRID, true)
+
+			map.regionRID = NavigationServer2D.region_create()
+			NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
+			NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.navigation.navpoly)
 
 func GenerateTriangulation(map : Map):
 	Launcher.Util.Assert(map != null && map.navigation != null, "Could not generate the triangulation as the map is lacking information")
@@ -63,6 +72,8 @@ func CreateInstance(map : Map, instanceID : int = 0):
 
 	for entity in inst.npcs + inst.players + inst.mobs:
 		entity.position = GenerateRandomPosition(map)
+		if entity.agent:
+			entity.agent.set_navigation_map(map.mapRID)
 
 # Entities Management
 func Warp(oldMap : String, newMap : String, entity : Node2D):
@@ -89,6 +100,9 @@ func Spawn(newMap : String, entity : Node2D, instID : int = 0):
 	Launcher.Util.Assert(not err, "WarpEntity could not proceed, one or multiple parameters are invalid")
 
 	if not err:
+		if entity.agent:
+			entity.agent.set_navigation_map(areas[newMap].mapRID)
+
 		var inst : Instance = areas[newMap].instances[instID]
 		var arrayIdx : int = inst.players.find(entity)
 		if arrayIdx < 0:

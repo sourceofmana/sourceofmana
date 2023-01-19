@@ -68,11 +68,6 @@ const whitelist_properties = [
 	"custom_material",
 ]
 
-const polygon_vector_offset = Vector2(8,8)
-const polygon_vector_grow = Vector2(1.5,1.5)
-const polygon_grow_default = 15
-const map_polygon_boundaries = 64
-
 # All templates loaded, can be looked up by path name
 var _loaded_templates = {}
 # Maps each tileset file used by the map to it's first gid; Used for template parsing
@@ -82,7 +77,7 @@ var max_gid = 0
 # Navigation polygon to be used on top of every tilemaps
 #var nav_polygon_instance : NavigationPolygonInstance = NavigationPolygonInstance.new()
 # Collision polygons
-var collision_pool : Array = []
+var polygon_pool : Array = []
 # Navigation polygons
 var navigation_pool : Array = []
 # JSON Instance
@@ -90,13 +85,17 @@ var JSONInstance = JSON.new()
 # Tile DB
 var tileDic : Dictionary = {}
 
+var cell_size = Vector2.ZERO
+var map_width = 0
+var map_height = 0
+
 func reset_global_memebers():
 	_loaded_templates = {}
 	_tileset_path_to_first_gid = {}
 
-# Main function
+# Main functions
 # Reads a source file and gives back a scene
-func build(source_path, options):
+func build_tilemap(source_path, options):
 	reset_global_memebers()
 	var map = read_file(source_path)
 	if typeof(map) == TYPE_INT:
@@ -108,13 +107,13 @@ func build(source_path, options):
 	if err != OK:
 		return err
 
-	var cell_size = Vector2(int(map.tilewidth), int(map.tileheight))
 	var map_mode = TileSet.TILE_SHAPE_SQUARE
 	var map_pos_offset = Vector2()
 	var map_background = Color()
 	var cell_offset = Vector2()
-	var map_width = 0
-	var map_height = 0
+	cell_size = Vector2(int(map.tilewidth), int(map.tileheight))
+	map_width = 0
+	map_height = 0
 
 	if "width" in map:
 		map_width = map.width
@@ -203,8 +202,6 @@ func build(source_path, options):
 		if err != OK:
 			return err
 
-#	create_navigation_layer(root, Vector2i(map_width * int(map.tilewidth), map_height * int(map.tileheight)))
-
 	if options.add_background and "backgroundcolor" in map:
 		var bg_color = str(map.backgroundcolor)
 		if (!bg_color.is_valid_html_color()):
@@ -236,7 +233,38 @@ func build(source_path, options):
 
 	return root
 
-func fill_collision_pool(level : TileMap, cell_pos : Vector2, cell_size : Vector2, gid : int):
+# Reads a collision pool and create a navigation mesh
+func build_navigation(source_path, options):
+	var map_size : Vector2i = Vector2i(map_width * cell_size.x, map_height * cell_size.y)
+	var root = Node2D.new()
+	root.set_name(source_path.get_file().get_basename())
+
+	var nav_region = NavigationRegion2D.new()
+	var nav_polygon = NavigationPolygon.new()
+
+	# Merge algorithm
+	merge_polygons(true)
+	offset_polygons(options.polygon_grow_default)
+	merge_polygons(true)
+	merge_polygons(false)
+	remove_outer_polygons(map_size)
+	# TODO: reduce nearest points
+
+	# Create navigation mesh
+	for polygon in polygon_pool:
+		nav_polygon.add_outline(polygon)
+	nav_polygon.make_polygons_from_outlines()
+	nav_region.set_navigation_polygon(nav_polygon)
+
+	nav_region.set_name("Navigation")
+	root.add_child(nav_region)
+	nav_region.set_owner(root)
+
+	# TODO: create triangulation
+
+	return root
+
+func fill_polygon_pool(level : TileMap, cell_pos : Vector2, cell_size : Vector2, gid : int):
 	var layer_id : int			= tileDic[gid][0]
 	var atlas_pos : Vector2i	= tileDic[gid][1]
 
@@ -259,7 +287,7 @@ func fill_collision_pool(level : TileMap, cell_pos : Vector2, cell_size : Vector
 					if vertex != polygon.size() - 1 || vertex == polygon.size() - 1 && polygon[vertex] != first_vertex:
 						filtered_polygon.append(polygon[vertex] + cell_offset)
 
-			collision_pool.append(filtered_polygon)
+			polygon_pool.append(filtered_polygon)
 
 func is_cyclic_polygon(inner_polygon : PackedVector2Array, outer_polygon : PackedVector2Array) -> bool:
 	var is_cyclic : bool = inner_polygon.size() > 0
@@ -274,42 +302,40 @@ func is_cyclic_polygon(inner_polygon : PackedVector2Array, outer_polygon : Packe
 func both_cyclic_polygon(first : PackedVector2Array, second : PackedVector2Array) -> bool:
 	return is_cyclic_polygon(first, second) || is_cyclic_polygon(second, first)
 
-func merge_polygons(pool : Array, has_debug : bool = false):
+func merge_polygons(merge_inner_polygons : bool = false, has_debug : bool = false):
 	while(true):
 		var polygons_to_remove : Array = []
 		var polygons_to_skip : Array = []
 
-		for pol_index in pool.size():
+		for pol_index in polygon_pool.size():
 			if polygons_to_remove.has(pol_index) or polygons_to_skip.has(pol_index):
 				continue
 
-			if has_debug: print("Reducing polygons: ", pol_index, " / ", pool.size()-1)
-			var current_polygon : PackedVector2Array = pool[pol_index]
+			if has_debug: print("Reducing polygons: ", pol_index, " / ", polygon_pool.size()-1)
+			var current_polygon : PackedVector2Array = polygon_pool[pol_index]
 
-			for pol_subindex in range(pol_index + 1, pool.size()):
+			for pol_subindex in range(pol_index + 1, polygon_pool.size()):
 				if polygons_to_remove.has(pol_subindex) or polygons_to_skip.has(pol_subindex):
 					continue
 
-				var other_polygon : PackedVector2Array = pool[pol_subindex]
+				var other_polygon : PackedVector2Array = polygon_pool[pol_subindex]
 
-# CRITICAL PART
-				if both_cyclic_polygon(current_polygon, other_polygon):
+				if merge_inner_polygons && both_cyclic_polygon(current_polygon, other_polygon):
 					if has_debug: print("\t", pol_subindex, " already cycled with ", pol_index)
 					continue
-# CRITICAL PART
 
 				var merged_polygon : Array = Geometry2D.merge_polygons(current_polygon, other_polygon)
 				if merged_polygon.size() == 1:
 					if has_debug: print("\t", pol_subindex, " merged with ", pol_index)
-					pool[pol_subindex] = merged_polygon[0]
+					polygon_pool[pol_subindex] = merged_polygon[0]
 					polygons_to_remove.append(pol_index)
 					polygons_to_skip.append(pol_subindex)
 					break
-				elif merged_polygon.size() == 2:
+				elif not merge_inner_polygons && merged_polygon.size() == 2:
 					if both_cyclic_polygon(merged_polygon[0], merged_polygon[1]):
 						if has_debug: print("\t", pol_subindex, " newly cycling with ", pol_index)
-						pool[pol_index] = merged_polygon[0]
-						pool[pol_subindex] = merged_polygon[1]
+						polygon_pool[pol_index] = merged_polygon[0]
+						polygon_pool[pol_subindex] = merged_polygon[1]
 						polygons_to_remove.erase(pol_index)
 						polygons_to_remove.erase(pol_subindex)
 						polygons_to_skip.append(pol_subindex)
@@ -320,66 +346,46 @@ func merge_polygons(pool : Array, has_debug : bool = false):
 			break
 
 		for rem_index in range(polygons_to_remove.size() -1, -1, -1):
-			pool.remove_at(polygons_to_remove[rem_index])
+			polygon_pool.remove_at(polygons_to_remove[rem_index])
 
 		if has_debug: print("")
 
-func offset_polygons(pool : Array, offset : int) -> Array:
+func offset_polygons(offset : int):
 	var offseted_pool : Array = []
 	var inner_polygons : Array = []
 
-	for pol_index in pool.size():
+	for pol_index in polygon_pool.size():
 		if not inner_polygons.has(pol_index):
-			var current_polygon : PackedVector2Array = pool[pol_index]
-			for pol_subindex in range(pol_index + 1, pool.size()):
+			var current_polygon : PackedVector2Array = polygon_pool[pol_index]
+			for pol_subindex in range(pol_index + 1, polygon_pool.size()):
 				if not inner_polygons.has(pol_subindex):
-					var other_polygon : PackedVector2Array = pool[pol_subindex]
+					var other_polygon : PackedVector2Array = polygon_pool[pol_subindex]
 					if is_cyclic_polygon(current_polygon, other_polygon):
 						inner_polygons.append(pol_index)
 					elif is_cyclic_polygon(other_polygon, current_polygon):
 						inner_polygons.append(pol_index)
 
-	for pol_index in pool.size():
-		if not inner_polygons.has(pol_index):
-			var outer_polygon : PackedVector2Array = pool[pol_index]
-			var offseted_polygons = Geometry2D.offset_polygon(outer_polygon, -offset, Geometry2D.JOIN_SQUARE)
-			offseted_pool.append_array(offseted_polygons)
+	for pol_index in polygon_pool.size():
+		var pol_offset = offset
+		var outer_polygon : PackedVector2Array = polygon_pool[pol_index]
+		var offseted_polygons = Geometry2D.offset_polygon(outer_polygon, pol_offset, Geometry2D.JOIN_SQUARE)
+		offseted_pool.append_array(offseted_polygons)
 
-	for pol_index in pool.size():
-		if inner_polygons.has(pol_index):
-			var outer_polygon : PackedVector2Array = pool[pol_index]
-			var offseted_polygons = Geometry2D.offset_polygon(outer_polygon, offset, Geometry2D.JOIN_SQUARE)
-			offseted_pool.append_array(offseted_polygons)
+	polygon_pool.clear()
+	polygon_pool = offseted_pool
 
-	return offseted_pool
+func remove_outer_polygons(border : Vector2i):
+	var polygons_to_remove : Array = []
 
-func create_navigation_layer(root : Node2D, map_size : Vector2i):
-	var nav_region = NavigationRegion2D.new()
-	var nav_polygon = NavigationPolygon.new()
+	for pol_index in polygon_pool.size():
+		var polygon : PackedVector2Array = polygon_pool[pol_index]
+		for vertice in polygon:
+			if vertice.x <= 0 || vertice.x >= border.x || vertice.y <= 0 || vertice.y >= border.y:
+				polygons_to_remove.append(pol_index)
+				break
 
-	nav_polygon.add_outline(PackedVector2Array([
-			Vector2(-map_polygon_boundaries, -map_polygon_boundaries),
-			Vector2(map_size.x + map_polygon_boundaries, -map_polygon_boundaries),
-			Vector2(map_size.x + map_polygon_boundaries, map_size.y + map_polygon_boundaries),
-			Vector2(-map_polygon_boundaries, map_size.y + map_polygon_boundaries)
-	]))
-	nav_polygon.make_polygons_from_outlines()
-	nav_region.set_navigation_polygon(nav_polygon)
-
-	merge_polygons(collision_pool)
-	var offseted_pool : Array = offset_polygons(collision_pool, polygon_grow_default)
-	merge_polygons(offseted_pool)
-
-	for polygon in offseted_pool:
-		nav_polygon = nav_region.get_navigation_polygon()
-		nav_polygon.add_outline(polygon)
-	nav_polygon.make_polygons_from_outlines()
-	nav_region.set_navigation_polygon(nav_polygon)
-
-	# only one set_navigation_polygon
-	nav_region.set_name("Navigation")
-	root.add_child(nav_region)
-	nav_region.set_owner(root)
+	for rem_index in range(polygons_to_remove.size() -1, -1, -1):
+		polygon_pool.remove_at(polygons_to_remove[rem_index])
 
 # Creates a layer node from the data
 # Returns an error code
@@ -457,7 +463,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 				var cell_in_map = Vector2(cell_pos_x, cell_pos_y)
 
 				level.set_cell(layerID, cell, tileDic[gid][0], tileDic[gid][1])
-				fill_collision_pool(level, cell_in_map, cell_size, gid)
+				fill_polygon_pool(level, cell_in_map, cell_size, gid)
 				if gid > max_gid:
 					max_gid = gid
 
@@ -1077,237 +1083,6 @@ func build_tileset(source_path, options):
 	set["firstgid"] = 0
 
 	return build_tileset_for_scene([set], source_path, options, null)
-
-
-# Makes a tileset from a array of tilesets data
-# Since Godot supports only one TileSet per TileMap, all tilesets from Tiled are combined
-func build_navigation_polygon_for_scene(tilesets, source_path, options):
-	var result = TileSet.new()
-	var err = ERR_INVALID_DATA
-	var tile_meta = {}
-
-	for tileset in tilesets:
-		var ts = tileset
-		var ts_source_path = source_path
-		if "source" in ts:
-			if not "firstgid" in tileset or not str(tileset.firstgid).is_valid_int():
-				print_error("Missing or invalid firstgid tileset property.")
-				return ERR_INVALID_DATA
-
-			ts_source_path = source_path.get_base_dir().path_join(ts.source)
-			# Used later for templates
-			_tileset_path_to_first_gid[ts_source_path] = tileset.firstgid
-
-			if ts.source.get_extension().to_lower() == "tsx":
-				var tsx_reader = TiledXMLToDictionary.new()
-				ts = tsx_reader.read_tsx(ts_source_path)
-				if typeof(ts) != TYPE_DICTIONARY:
-					# Error happened
-					return ts
-			else: # JSON Tileset
-				if FileAccess.file_exists(ts_source_path) == false:
-					print_error("Error opening tileset '%s'." % [ts.source])
-					return false
-				var f = FileAccess.open(ts_source_path, FileAccess.READ)
-
-				var json_res = JSONInstance.parse(f.get_as_text())
-				if json_res.error != OK:
-					print_error("Error parsing tileset '%s' JSON: %s" % [ts.source, json_res.error_string])
-					return ERR_INVALID_DATA
-
-				ts = json_res.result
-				if typeof(ts) != TYPE_DICTIONARY:
-					print_error("Tileset '%s' is not a dictionary." % [ts.source])
-					return ERR_INVALID_DATA
-
-			ts.firstgid = tileset.firstgid
-
-		err = validate_tileset(ts)
-		if err != OK:
-			return err
-
-		var has_global_image = "image" in ts
-
-		var spacing = int(ts.spacing) if "spacing" in ts and str(ts.spacing).is_valid_int() else 0
-		var margin = int(ts.margin) if "margin" in ts and str(ts.margin).is_valid_int() else 0
-		var firstgid = int(ts.firstgid)
-		var columns = int(ts.columns) if "columns" in ts and str(ts.columns).is_valid_int() else -1
-
-		var image = null
-		var imagesize = Vector2()
-
-		if has_global_image:
-			image = load_image(ts.image, ts_source_path, options)
-			if typeof(image) != TYPE_OBJECT:
-				# Error happened
-				return image
-			imagesize = Vector2(int(ts.imagewidth), int(ts.imageheight))
-
-		var tilesize = Vector2(int(ts.tilewidth), int(ts.tileheight))
-		var tilecount = int(ts.tilecount)
-
-		var gid = firstgid
-
-		var x = margin
-		var y = margin
-
-		var i = 0
-		var column = 0
-		var tileRegions = []
-
-		while i < tilecount:
-			var tilepos = Vector2(x, y)
-			var region = Rect2(tilepos, tilesize)
-
-
-			tileRegions.push_back(region)
-
-			column += 1
-			i += 1
-
-			x += int(tilesize.x) + spacing
-			if (columns > 0 and column >= columns) or x >= int(imagesize.x) - margin or (x + int(tilesize.x)) > int(imagesize.x):
-				x = margin
-				y += int(tilesize.y) + spacing
-				column = 0
-
-		i = 0
-
-		while i < tilecount:
-			var region = tileRegions[i]
-
-			var rel_id = str(gid - firstgid)
-
-			result.create_tile(gid)
-
-			if has_global_image:
-				if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
-					var animated_tex = AnimatedTexture.new()
-					animated_tex.frames = ts.tiles[rel_id].animation.size()
-					animated_tex.fps = 0
-					var c = 0
-					# Animated texture wants us to have seperate textures for each frame
-					# so we have to pull them out of the tileset
-					var tilesetTexture = image.get_data()
-					for g in ts.tiles[rel_id].animation:
-						var frameTex = tilesetTexture.get_rect(tileRegions[g.tileid.to_int()])
-						var newTex = ImageTexture.new()
-						newTex.create_from_image(frameTex)
-						animated_tex.set_frame_texture(c, newTex)
-						animated_tex.set_frame_delay(c, float(g.duration) * 0.001)
-						c += 1
-					result.set_texture(animated_tex)
-					result.tile_set_region(gid, Rect2(Vector2(0, 0), tilesize))
-				else:
-					result.set_texture(image)
-				if options.apply_offset:
-					result.set_margins(gid, Vector2i(0, 32-tilesize.y))
-			elif not rel_id in ts.tiles:
-				gid += 1
-				continue
-			else:
-				if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
-					var animated_tex = AnimatedTexture.new()
-					animated_tex.frames = ts.tiles[rel_id].animation.size()
-					animated_tex.fps = 0
-					var c = 0
-					#untested
-					var image_path = ts.tiles[rel_id].image
-					for g in ts.tiles[rel_id].animation:
-						animated_tex.set_frame_texture(c, load_image(image_path, ts_source_path, options))
-						animated_tex.set_frame_delay(c, float(g.duration) * 0.001)
-						c += 1
-					result.tile_set_texture(animated_tex)
-					result.tile_set_region(gid, Rect2(Vector2(0, 0), tilesize))
-				else:
-					var image_path = ts.tiles[rel_id].image
-					image = load_image(image_path, ts_source_path, options)
-					if typeof(image) != TYPE_OBJECT:
-						# Error happened
-						return image
-					result.tile_set_texture(image)
-				if options.apply_offset:
-					result.tile_set_texture_offset(gid, Vector2(0, 32-image.get_height()))
-			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
-					and "objects" in ts.tiles[rel_id].objectgroup:
-				for object in ts.tiles[rel_id].objectgroup.objects:
-
-					var shape = shape_from_object(object)
-
-					if typeof(shape) != TYPE_OBJECT:
-						# Error happened
-						return shape
-
-					var offset = Vector2(float(object.x), float(object.y))
-					if "width" in object and "height" in object:
-						offset += Vector2(float(object.width) / 2, float(object.height) / 2)
-
-					result.tile_add_shape(gid, shape, Transform2D(0, offset), object.type == "one-way")
-
-					var tileShape = PackedVector2Array([
-							Vector2(-offset.x, -offset.y),
-							Vector2(tilesize.x - offset.x, -offset.y),
-							Vector2(tilesize.x - offset.x, tilesize.y - offset.y),
-							Vector2(-offset.x, tilesize.y - offset.y)
-					])
-
-					var navOutlines = []
-					var colShape = result.tile_get_shape(gid, 0)
-					if colShape is ConvexPolygonShape2D:
-						navOutlines = Geometry2D.clip_polygons(tileShape, colShape.get_points())
-					elif colShape is ConcavePolygonShape2D:
-						navOutlines = Geometry2D.clip_polygons(tileShape, colShape.get_segments())
-
-					var shapeNav = NavigationPolygon.new()
-					for navOutline in navOutlines:
-						shapeNav.add_outline(navOutline)
-					shapeNav.make_polygons_from_outlines()
-
-#					result.tile_set_navigation_polygon(gid, shapeNav)
-#					result.tile_set_navigation_polygon_offset(gid, offset)
-			else:
-				var tileShape = PackedVector2Array([
-						Vector2(0, 0),
-						Vector2(tilesize.x, 0),
-						tilesize,
-						Vector2(0, tilesize.y)
-				])
-
-				var shapeNav = NavigationPolygon.new()
-				shapeNav.add_outline(tileShape)
-				shapeNav.make_polygons_from_outlines()
-
-				result.tile_set_navigation_polygon(gid, shapeNav)
-
-			if "properties" in ts and "custom_material" in ts.properties:
-				result.tile_set_material(gid, load(ts.properties.custom_material))
-
-			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
-					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
-				tile_meta[gid] = get_custom_properties(ts.tileproperties[rel_id], ts.tilepropertytypes[rel_id])
-			if options.save_tiled_properties and rel_id in ts.tiles:
-				for property in whitelist_properties:
-					if property in ts.tiles[rel_id]:
-						if not gid in tile_meta: tile_meta[gid] = {}
-						tile_meta[gid][property] = ts.tiles[rel_id][property]
-
-			gid += 1
-			i += 1
-
-		if str(ts.name) != "":
-			result.resource_name = str(ts.name)
-
-		if options.save_tiled_properties:
-			set_tiled_properties_as_meta(result, ts)
-		if options.custom_properties:
-			if "properties" in ts and "propertytypes" in ts:
-				set_custom_properties(result, ts)
-
-	if options.custom_properties and options.tile_metadata:
-		result.set_meta("tile_meta", tile_meta)
-
-	return result
-
 
 # Loads an image from a given path
 # Returns a Texture

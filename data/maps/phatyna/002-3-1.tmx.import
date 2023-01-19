@@ -19,4 +19,5 @@ collision_layer=1
 embed_internal_images=false
 save_tiled_properties=false
 add_background=true
-post_import_script=""
+export_navigation_mesh=false
+polygon_grow_default=12

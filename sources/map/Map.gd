@@ -40,7 +40,7 @@ func UnloadMapNode():
 		mapNode = null
 
 func LoadMapNode(mapName : String):
-	mapNode = pool.LoadMap(mapName)
+	mapNode = pool.LoadTileMap(mapName)
 	Launcher.Util.Assert(mapNode != null, "Map instance could not be created")
 	if mapNode:
 		Launcher.call_deferred("add_child", mapNode)
