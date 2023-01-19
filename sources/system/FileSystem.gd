@@ -48,26 +48,33 @@ func LoadDB(path : String) -> Dictionary:
 	return result
 
 # Map
-func LoadMap(path : String) -> Node2D:
+func LoadTileMap(path : String) -> Node2D:
 	var mapInstance : Node2D	= null
 
 	var filePath : String		= Launcher.Path.MapRsc + path
-	var scenePath : String		= filePath + Launcher.Path.SceneExt
-	var mapPath : String		= filePath + Launcher.Path.MapExt
-	var usedPath : String		= ""
+	var scenePath : String		= filePath + Launcher.Path.TmxTilemapExt
+	var pathExists : bool		= ResourceExists(scenePath)
 
-	if ResourceExists(scenePath):
-		usedPath = scenePath
-	elif ResourceExists(mapPath):
-		usedPath = mapPath
-	else:
-		Launcher.Util.Assert(true, "Map file not found " + path + "(.tmx/.tscn) should be located at " + Launcher.Path.MapRsc)
-
-	if usedPath != "":
-		mapInstance = ResourceInstance(usedPath)
-		Launcher.Util.PrintLog("Loading map: " + usedPath)
+	Launcher.Util.Assert(pathExists, "Map file not found " + path + "(" + Launcher.Path.TmxTilemapExt + ") should be located at " + Launcher.Path.MapRsc)
+	if pathExists:
+		mapInstance = ResourceInstance(scenePath)
+		Launcher.Util.PrintLog("Loading map: " + scenePath)
 
 	return mapInstance
+
+func LoadNavMesh(path : String) -> Node2D:
+	var meshInstance : Node2D	= null
+
+	var filePath : String		= Launcher.Path.MapRsc + path
+	var scenePath : String		= filePath + Launcher.Path.TmxNavMeshExt
+	var pathExists : bool		= ResourceExists(scenePath)
+
+	Launcher.Util.Assert(pathExists, "Mesh file not found " + path + "(" + Launcher.Path.TmxNavMeshExt + ") should be located at " + Launcher.Path.MapRsc)
+	if pathExists:
+		meshInstance = ResourceInstance(scenePath)
+		Launcher.Util.PrintLog("Loading mesh: " + scenePath)
+
+	return meshInstance
 
 # Source
 func LoadSource(path : String) -> Object:
