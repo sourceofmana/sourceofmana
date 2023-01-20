@@ -17,6 +17,12 @@ func IsActionJustPressed(action : String, forceMode : bool = false) -> bool:
 func IsActionPressed(action : String, forceMode : bool = false) -> bool:
 	return Input.is_action_pressed(action) if IsEnabled() || forceMode else false
 
+func IsActionOnlyPressed(action : String, forceMode : bool = false) -> bool:
+	return Input.is_action_pressed(action) && not Input.is_action_just_pressed(action) if IsEnabled() || forceMode else false
+
+func IsActionJustReleased(action : String, forceMode : bool = false) -> bool:
+	return Input.is_action_just_released(action) if IsEnabled() || forceMode else false
+
 func GetMove(forceMode : bool = false) -> Vector2:
 	var moveVector : Vector2 = Vector2.ZERO
 	if IsEnabled() || forceMode:
