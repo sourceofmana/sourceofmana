@@ -37,11 +37,12 @@ func SetLocalPlayer():
 		Launcher.Camera.mainCamera = camera
 
 #
+func _unhandled_input(_event):
+	if Launcher.Action.IsActionJustPressed("gp_move_to"):
+		_update_walk_path()
+
 func _move_process():
-	if Launcher.Action.IsActionPressed("gp_move_to"):
-		if timer.get_time_left() == 0:
-			_update_walk_path()
-	else:
+	if not Launcher.Action.IsActionPressed("gp_move_to"):
 		if timer.get_time_left() > 0:
 			timer.stop()
 
@@ -50,8 +51,9 @@ func _move_process():
 			SwitchInputMode(false)
 
 func _update_walk_path():
-	WalkToward(Launcher.Camera.mainCamera.get_global_mouse_position())
-	timer.start()
+	if Launcher.Action.IsActionPressed("gp_move_to"):
+		WalkToward(Launcher.Camera.mainCamera.get_global_mouse_position())
+		timer.start()
 
 func _physics_process(deltaTime : float):
 	_move_process()
@@ -75,4 +77,5 @@ func _init():
 	timer.set_name("ClickTimer")
 	timer.set_wait_time(0.2)
 	timer.set_one_shot(true)
+	timer.timeout.connect(_update_walk_path)
 	add_child(timer)
