@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=false
-polygon_grow_default=12
+polygon_grow_default=16
