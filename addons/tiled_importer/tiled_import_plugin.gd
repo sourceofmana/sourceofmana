@@ -111,11 +111,20 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 		saveRet &= ResourceSaver.save(packed_tilemap_scene, "%s.tilemap.%s" % [source_file, _get_save_extension()])
 
 	# Tilemap import
+	var navigation_scene = null
 	if options.export_navigation_mesh:
-		var navigation_scene = TiledMapReader.build_navigation(source_file, options)
+		navigation_scene = TiledMapReader.build_navigation(source_file, options)
 		if typeof(navigation_scene) == TYPE_OBJECT:
 			var packed_navigation_scene = PackedScene.new()
 			packed_navigation_scene.pack(navigation_scene)
 			saveRet &= ResourceSaver.save(packed_navigation_scene, "%s.navigation.%s" % [source_file, _get_save_extension()])
+
+	# Mandatory and default import file when we want to open the tmx
+	if tilemap_scene:
+		if navigation_scene:
+			tilemap_scene.add_child(navigation_scene)
+		var packed_scene = PackedScene.new()
+		packed_scene.pack(tilemap_scene)
+		saveRet &= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()]) # Mandatory 
 
 	return saveRet
