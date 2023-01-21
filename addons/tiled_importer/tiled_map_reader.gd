@@ -245,8 +245,8 @@ func build_navigation(source_path, options):
 	# Merge algorithm
 	merge_polygons(true)
 	offset_polygons(options.polygon_grow_default)
-	merge_polygons(true)
-	merge_polygons(false)
+	merge_polygons(true, true)
+	merge_polygons(false, true)
 	remove_outer_polygons(map_size)
 	# TODO: reduce nearest points
 
@@ -710,10 +710,13 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 					# Warp
 					if "type" in object and object.type == "Warp":
 						if "properties" in object:
+							var dest_cellsize = cell_size
+							if "dest_cellsize" in object.properties:
+								dest_cellsize = object.properties.dest_cellsize
 							if "dest_map" in object.properties and not str(object.properties.dest_map).is_empty():
 								customObject.destinationMap = object.properties.dest_map
 							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
-								customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * cell_size
+								customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
 
 					# Spawn
 					elif "type" in object and object.type == "Spawn":
