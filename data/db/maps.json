@@ -1,4 +1,5 @@
 {
+    "Overworld": {						"Path" : "overworld/000-0",},
     "Phatyna Entrance": {				"Path" : "phatyna/002-3-0",},
     "Phatyna Corridor": {				"Path" : "phatyna/002-3-1",},
     "Phatyna Boss Room": {				"Path" : "phatyna/002-3-2",},
