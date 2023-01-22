@@ -8,101 +8,13 @@
 
 config_version=5
 
-_global_script_classes=[{
-"base": "BaseEntity",
-"class": &"AiEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/AiEntity.gd"
-}, {
-"base": "CharacterBody2D",
-"class": &"BaseEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/BaseEntity.gd"
-}, {
-"base": "Resource",
-"class": &"BaseItem",
-"language": &"GDScript",
-"path": "res://sources/resource_types/BaseItem.gd"
-}, {
-"base": "Node",
-"class": &"EntityData",
-"language": &"GDScript",
-"path": "res://sources/db/instance/Entity.gd"
-}, {
-"base": "Object",
-"class": &"EntityInventory",
-"language": &"GDScript",
-"path": "res://sources/entity/components/inventory/Inventory.gd"
-}, {
-"base": "Node",
-"class": &"EntityManager",
-"language": &"GDScript",
-"path": "res://sources/entity/EntityManager.gd"
-}, {
-"base": "BaseItem",
-"class": &"FoodItem",
-"language": &"GDScript",
-"path": "res://sources/resource_types/FoodItem.gd"
-}, {
-"base": "Object",
-"class": &"InventoryItem",
-"language": &"GDScript",
-"path": "res://sources/entity/components/inventory/InventoryItem.gd"
-}, {
-"base": "ColorRect",
-"class": &"InventoryItemGridTile",
-"language": &"GDScript",
-"path": "res://sources/gui/inventory/ItemGridTile.gd"
-}, {
-"base": "WindowPanel",
-"class": &"InventoryWindow",
-"language": &"GDScript",
-"path": "res://sources/gui/inventory/Inventory.gd"
-}, {
-"base": "AiEntity",
-"class": &"MonsterEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/variants/MonsterEntity.gd"
-}, {
-"base": "AiEntity",
-"class": &"NpcEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/variants/NpcEntity.gd"
-}, {
-"base": "BaseEntity",
-"class": &"PlayerEntity",
-"language": &"GDScript",
-"path": "res://sources/entity/variants/PlayerEntity.gd"
-}, {
-"base": "Control",
-"class": &"WindowPanel",
-"language": &"GDScript",
-"path": "res://sources/gui/WindowPanel.gd"
-}]
-_global_script_class_icons={
-"AiEntity": "",
-"BaseEntity": "",
-"BaseItem": "",
-"EntityData": "",
-"EntityInventory": "",
-"EntityManager": "",
-"FoodItem": "",
-"InventoryItem": "",
-"InventoryItemGridTile": "",
-"InventoryWindow": "",
-"MonsterEntity": "",
-"NpcEntity": "",
-"PlayerEntity": "",
-"WindowPanel": ""
-}
-
 [application]
 
 config/name="Source of Mana"
 run/main_scene="res://scenes/Source.tscn"
 config/features=PackedStringArray("4.0")
-boot_splash/image="res://data/press/splash/splashscreen.png"
 boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="res://data/press/splash/splashscreen.png"
 config/icon="res://data/press/logo/logo_seed.svg"
 
 [autoload]
@@ -131,6 +43,7 @@ window/per_pixel_transparency/enabled=true
 [editor]
 
 import/use_multiple_threads=false
+export/convert_text_resources_to_binary=true
 search_in_file_extensions=PackedStringArray("gd", "gdshader", "shader", "conf", "db")
 convert_text_resources_to_binary_on_export=true
 
@@ -258,7 +171,7 @@ ui_chat={
 }
 ui_chat_newline={
 "deadzone": 0.49,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194309,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 smile_3={

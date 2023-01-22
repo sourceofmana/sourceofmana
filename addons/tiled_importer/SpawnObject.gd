@@ -1,7 +1,9 @@
 @tool
-extends Polygon2D
+extends Node
 
-@export var maxCount : int 				= 0
-@export var mobID : int					= 0
-@export var mobLevel : int				= 1
-@export var respawnTimer : int			= 300 # in seconds
+class_name SpawnObject
+
+@export var mob_count : int 				= 0
+@export var mob_name : String				= ""
+@export var spawn_position : Vector2i		= Vector2i.ZERO
+@export var spawn_offset : Vector2i			= Vector2i.ZERO

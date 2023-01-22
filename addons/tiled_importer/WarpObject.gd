@@ -1,6 +1,8 @@
 @tool
 extends Area2D
 
+class_name WarpObject
+
 @export var destinationMap : String 			= ""
 @export var destinationPos : Vector2			= Vector2.ZERO
 

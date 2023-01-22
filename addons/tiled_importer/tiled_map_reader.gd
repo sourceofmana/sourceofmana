@@ -37,7 +37,6 @@ const PolygonSorter = preload("polygon_sorter.gd")
 
 # Custom objects
 const WarpObject = preload("WarpObject.gd")
-const SpawnObject = preload("SpawnObject.gd")
 
 # Prefix for error messages, make easier to identify the source
 const error_prefix = "Tiled Importer: "
@@ -72,19 +71,19 @@ const whitelist_properties = [
 var _loaded_templates = {}
 # Maps each tileset file used by the map to it's first gid; Used for template parsing
 var _tileset_path_to_first_gid = {}
-# Store the max gid parsed to define the navigation polygon
-var max_gid = 0
-# Navigation polygon to be used on top of every tilemaps
-#var nav_polygon_instance : NavigationPolygonInstance = NavigationPolygonInstance.new()
 # Collision polygons
 var polygon_pool : Array = []
 # Navigation polygons
 var navigation_pool : Array = []
+# Spawn objects
+var spawn_pool : Array = [SpawnObject]
+# Warp objects
+var warp_pool : Array = [WarpObject]
 # JSON Instance
 var JSONInstance = JSON.new()
 # Tile DB
 var tileDic : Dictionary = {}
-
+# Navigation mesh variables
 var cell_size = Vector2.ZERO
 var map_width = 0
 var map_height = 0
@@ -95,7 +94,7 @@ func reset_global_memebers():
 
 # Main functions
 # Reads a source file and gives back a scene
-func build_tilemap(source_path, options):
+func build_client(source_path, options):
 	reset_global_memebers()
 	var map = read_file(source_path)
 	if typeof(map) == TYPE_INT:
@@ -234,33 +233,27 @@ func build_tilemap(source_path, options):
 	return root
 
 # Reads a collision pool and create a navigation mesh
-func build_navigation(source_path, options):
+func build_server(source_path, options):
 	var map_size : Vector2i = Vector2i(map_width * cell_size.x, map_height * cell_size.y)
-	var root = Node2D.new()
+	var root = MapServerData.new()
 	root.set_name(source_path.get_file().get_basename())
 
-	var nav_region = NavigationRegion2D.new()
-	var nav_polygon = NavigationPolygon.new()
+	root.spawns = spawn_pool
+	root.warps = warp_pool.duplicate()
+	root.nav_poly = NavigationPolygon.new()
 
 	# Merge algorithm
 	merge_polygons(true)
 	offset_polygons(options.polygon_grow_default)
-	merge_polygons(true, true)
-	merge_polygons(false, true)
+	merge_polygons(true)
+	merge_polygons(false)
 	remove_outer_polygons(map_size)
 	# TODO: reduce nearest points
 
 	# Create navigation mesh
 	for polygon in polygon_pool:
-		nav_polygon.add_outline(polygon)
-	nav_polygon.make_polygons_from_outlines()
-	nav_region.set_navigation_polygon(nav_polygon)
-
-	nav_region.set_name("Navigation")
-	root.add_child(nav_region)
-	nav_region.set_owner(root)
-
-	# TODO: create triangulation
+		root.nav_poly.add_outline(polygon)
+	root.nav_poly.make_polygons_from_outlines()
 
 	return root
 
@@ -464,8 +457,6 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 				level.set_cell(layerID, cell, tileDic[gid][0], tileDic[gid][1])
 				fill_polygon_pool(level, cell_in_map, cell_size, gid)
-				if gid > max_gid:
-					max_gid = gid
 
 				count += 1
 
@@ -510,29 +501,17 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 		sprite.position = pos + offset
 		sprite.set_owner(root)
 	elif tmxLayer.type == "objectgroup":
-		var object_layer = null
-		var is_navigation_layer = false
-
-		if "name" in tmxLayer and not str(tmxLayer.name).is_empty() && str(tmxLayer.name) == "Navigation":
-			object_layer = NavigationRegion2D.new()
-			is_navigation_layer = true
-		else:
-			object_layer = Node2D.new()
+		var object_layer = Node2D.new()
 			
 		if options.save_tiled_properties:
 			set_tiled_properties_as_meta(object_layer, tmxLayer)
 		if options.custom_properties:
 			set_custom_properties(object_layer, tmxLayer)
 			object_layer.set("editor/display_folded", true)
-		if is_navigation_layer:
 
-			object_layer.navpoly = NavigationPolygon.new()
-			object_layer.set_name("Navigation2D")
-			parent.add_child(object_layer)
-			object_layer.set_owner(root)
-		else:
-			parent.add_child(object_layer)
-			object_layer.set_owner(root)
+		parent.add_child(object_layer)
+		object_layer.set_owner(root)
+
 		if "name" in tmxLayer and not str(tmxLayer.name).is_empty():
 			object_layer.set_name(str(tmxLayer.name))
 
@@ -619,13 +598,32 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 					var pos = Vector2()
 					var rot = 0
 
-					if not ("polygon" in object or "polyline" in object):
-						# Regular shape
-						if object.type == "Spawn":
-#							customObject = Shape2D.new()
-							continue
+					if "x" in object:
+						pos.x = float(object.x)
+					if "y" in object:
+						pos.y = float(object.y)
+					if "rotation" in object:
+						rot = float(object.rotation)
+
+					# Spawn objects are not generating nodes but are storing information in the spawn pool
+					if object.type == "Spawn":
+						if not shape is RectangleShape2D:
+							print_error("Spawn object is not set as a rectangle shape, no other shape or polygons should be used for this object")
 						else:
-							customObject = CollisionShape2D.new()
+							var spawn_object = SpawnObject.new()
+							if "properties" in object:
+								if "mob_count" in object.properties:
+									spawn_object.mob_count = object.properties.mob_count
+								if "mob_name" in object.properties:
+									spawn_object.mob_name = object.properties.mob_name
+								spawn_object.spawn_position = pos
+								spawn_object.spawn_offset = shape.extents
+							spawn_pool.push_back(spawn_object)
+						continue
+
+					# Regular shape
+					if not ("polygon" in object or "polyline" in object):
+						customObject = CollisionShape2D.new()
 						customObject.shape = shape
 						if shape is RectangleShape2D:
 							offset = shape.extents
@@ -640,6 +638,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 								customObject.rotation_degrees = 90
 							shape.height *= 2
 						customObject.position = offset
+					# Hand-drawn polygons
 					else:
 						if object.type == "Warp":
 							customObject = WarpObject.new()
@@ -666,13 +665,6 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 #					customObject.one_way_collision = object.type == "one-way"
 
-					if "x" in object:
-						pos.x = float(object.x)
-					if "y" in object:
-						pos.y = float(object.y)
-					if "rotation" in object:
-						rot = float(object.rotation)
-
 					if "name" in object and not str(object.name).is_empty():
 						customObject.set_name(str(object.name))
 					elif "id" in object and not str(object.id).is_empty():
@@ -681,21 +673,9 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 						collisionObject.set_name(customObject.get_name())
 
 					if customObject && object_layer:
-						if is_navigation_layer:
-							var polygon_offseted : PackedVector2Array = []
-							for poly in customObject.polygon:
-								polygon_offseted.append(pos + poly)
-							var nav_polygon : NavigationPolygon = object_layer.get_navigation_polygon()
-							if nav_polygon == null:
-								nav_polygon = NavigationPolygon.new()
-							nav_polygon.add_outline(polygon_offseted)
-							nav_polygon.make_polygons_from_outlines()
-
-							object_layer.set_navigation_polygon(nav_polygon)
-						else:
-							customObject.set("editor/display_folded", true)
-							object_layer.add_child(customObject)
-							customObject.set_owner(root)
+						customObject.set("editor/display_folded", true)
+						object_layer.add_child(customObject)
+						customObject.set_owner(root)
 
 					if collisionObject:
 						collisionObject.set("editor/display_folded", true)
@@ -717,18 +697,6 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 								customObject.destinationMap = object.properties.dest_map
 							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
 								customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
-
-					# Spawn
-					elif "type" in object and object.type == "Spawn":
-						if "properties" in object:
-							if "max_count" in object.properties:
-								customObject.maxCount = object.properties.max_count
-							if "mob_id" in object.properties:
-								customObject.mobID = object.properties.mob_id
-							if "mob_level" in object.properties:
-								customObject.mobLevel = object.properties.mob_level
-							if "respawn_timer" in object.properties:
-								customObject.respawnTimer = object.properties.respawn_timer
 
 					customObject.visible = bool(object.visible) if "visible" in object else true
 					customObject.position = pos

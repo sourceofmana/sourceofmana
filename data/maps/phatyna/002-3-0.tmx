@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="45">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="46">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
@@ -487,7 +487,7 @@
    </properties>
    <polygon points="0,32 32,0 64,32"/>
   </object>
-  <object id="44" name="Warp Cave" class="Warp" x="1728" y="1760">
+  <object id="44" name="Warp Overworld" class="Warp" x="1728" y="1760">
    <properties>
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
@@ -495,6 +495,12 @@
     <property name="dest_pos_y" type="int" value="43"/>
    </properties>
    <polygon points="0,0 32,32 64,0"/>
+  </object>
+  <object id="45" name="Phatyna" class="Spawn" x="1534" y="1285" width="96" height="128">
+   <properties>
+    <property name="mob_count" type="int" value="1"/>
+    <property name="mob_name" value="Phatyna"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

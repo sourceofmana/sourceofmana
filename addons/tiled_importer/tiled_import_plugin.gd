@@ -104,27 +104,27 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	var saveRet = OK
 	var TiledMapReader = load("res://addons/tiled_importer/tiled_map_reader.gd").new()
 
-	var tilemap_scene = TiledMapReader.build_tilemap(source_file, options)
-	if typeof(tilemap_scene) == TYPE_OBJECT:
-		var packed_tilemap_scene = PackedScene.new()
-		packed_tilemap_scene.pack(tilemap_scene)
-		saveRet &= ResourceSaver.save(packed_tilemap_scene, "%s.tilemap.%s" % [source_file, _get_save_extension()])
+	var client_scene = TiledMapReader.build_client(source_file, options)
+	if typeof(client_scene) == TYPE_OBJECT:
+		var packed_client_scene = PackedScene.new()
+		packed_client_scene.pack(client_scene)
+		saveRet &= ResourceSaver.save(packed_client_scene, "%s.client.%s" % [source_file, _get_save_extension()])
 
 	# Tilemap import
-	var navigation_scene = null
+	var server_scene = null
 	if options.export_navigation_mesh:
-		navigation_scene = TiledMapReader.build_navigation(source_file, options)
-		if typeof(navigation_scene) == TYPE_OBJECT:
-			var packed_navigation_scene = PackedScene.new()
-			packed_navigation_scene.pack(navigation_scene)
-			saveRet &= ResourceSaver.save(packed_navigation_scene, "%s.navigation.%s" % [source_file, _get_save_extension()])
+		server_scene = TiledMapReader.build_server(source_file, options)
+		if typeof(server_scene) == TYPE_OBJECT:
+			var packed_server_scene = PackedScene.new()
+			packed_server_scene.pack(server_scene)
+			saveRet &= ResourceSaver.save(packed_server_scene, "%s.server.%s" % [source_file, _get_save_extension()])
 
 	# Mandatory and default import file when we want to open the tmx
-	if tilemap_scene:
-		if navigation_scene:
-			tilemap_scene.add_child(navigation_scene)
+	if client_scene:
+		if server_scene:
+			client_scene.add_child(server_scene)
 		var packed_scene = PackedScene.new()
-		packed_scene.pack(tilemap_scene)
+		packed_scene.pack(client_scene)
 		saveRet &= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()]) # Mandatory 
 
 	return saveRet

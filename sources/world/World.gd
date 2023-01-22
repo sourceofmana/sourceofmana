@@ -10,9 +10,9 @@ class Instance:
 class Map:
 	var name : String						= ""
 	var instances : Array					= []
-	var navigation : Node2D					= null
-	var triangulation : PackedInt32Array	= []
-	var outlines : PackedVector2Array		= []
+	var spawns : Array						= []
+	var warps : Array						= []
+	var nav_poly : NavigationPolygon		= null
 	var mapRID : RID						= RID()
 	var regionRID : RID						= RID()
 
@@ -21,39 +21,41 @@ var areas : Dictionary = {}
 
 # Utils
 func GenerateRandomPosition(map : Map) -> Vector2:
-	Launcher.Util.Assert(map != null && map.triangulation.size() >= 3 && map.outlines.size() >= 3, "Map triangulation data is incomplete")
-	if map && map.triangulation.size() >= 3 && map.outlines.size() >= 3:
-		var randTriangleID : int = randi_range(0, map.triangulation.size() - 3)
-		var a : Vector2 = map.outlines[map.triangulation[randTriangleID + 0]]
-		var b : Vector2 = map.outlines[map.triangulation[randTriangleID + 1]]
-		var c : Vector2 = map.outlines[map.triangulation[randTriangleID + 2]]
+	Launcher.Util.Assert(map != null && map.nav_poly != null && map.nav_poly.get_polygon_count() > 0, "No triangulation available")
+	if map != null && map.nav_poly != null && map.nav_poly.get_polygon_count() > 0:
+		var outlinesList : PackedVector2Array  = map.nav_poly.get_vertices()
+
+		var randPolygonID : int = randi_range(0, map.nav_poly.get_polygon_count() - 1)
+		var randPolygon : PackedInt32Array = map.nav_poly.get_polygon(randPolygonID)
+
+		var randVerticeID : int = randi_range(0, randPolygon.size() - 1)
+		var a : Vector2 = outlinesList[randPolygon[randVerticeID]]
+		var b : Vector2 = outlinesList[randPolygon[(randVerticeID + 1) % randPolygon.size()]]
+		var c : Vector2 = outlinesList[randPolygon[(randVerticeID + 2) % randPolygon.size()]]
+
 		return a + sqrt(randf()) * (-a + b + randf() * (c - b))
 
 	return Vector2.ZERO
 
 # Instance init
 func ParseInformation(map : Map):
-	var mapNode : Node2D = Launcher.Map.pool.LoadNavigationMesh(map.name)
-	if mapNode:
-		if mapNode.has_node("Navigation"):
-			map.navigation = mapNode.get_node("Navigation")
+	var node : Node = Launcher.Map.pool.LoadMapServer(map.name)
+	if node:
+		if "nav_poly" in node:
+			map.nav_poly = node.nav_poly
+		if "spawns" in node:
+			map.spawns = node.spawns
+		if "warps" in node:
+			map.warps = node.warps
 
-			map.mapRID = NavigationServer2D.map_create()
-			NavigationServer2D.map_set_active(map.mapRID, true)
+		map.mapRID = NavigationServer2D.map_create()
+		NavigationServer2D.map_set_active(map.mapRID, true)
 
-			map.regionRID = NavigationServer2D.region_create()
-			NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
-			NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.navigation.navpoly)
+		map.regionRID = NavigationServer2D.region_create()
+		NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
+		NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.nav_poly)
 
-func GenerateTriangulation(map : Map):
-	Launcher.Util.Assert(map != null && map.navigation != null, "Could not generate the triangulation as the map is lacking information")
-	if map && map.navigation:
-		if map.navigation && map.navigation.navpoly:
-			for outline in map.navigation.navpoly.get_outline_count():
-				var currentOutline : PackedVector2Array = map.navigation.navpoly.get_outline(outline)
-				if map.outlines.size() < currentOutline.size():
-					map.outlines = currentOutline
-			map.triangulation = Geometry2D.triangulate_polygon(map.outlines)
+		node.queue_free()
 
 func CreateInstance(map : Map, instanceID : int = 0):
 	var inst : Instance = Instance.new()
@@ -183,7 +185,6 @@ func _post_ready():
 		var map : Map = Map.new()
 		map.name = mapName
 		ParseInformation(map)
-		GenerateTriangulation(map)
 		CreateInstance(map)
 		areas[mapName] = map
 

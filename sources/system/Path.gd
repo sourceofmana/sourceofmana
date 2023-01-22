@@ -25,8 +25,8 @@ const ConfLocal : String				= Local + "conf/"
 
 # Extentions
 const GfxExt: String					= ".png"
-const TmxTilemapExt: String				= ".tmx.tilemap.scn"
-const TmxNavMeshExt: String				= ".tmx.navigation.scn"
+const MapClientExt: String				= ".tmx.client.scn"
+const MapServerExt: String				= ".tmx.server.scn"
 const MusicExt: String					= ".ogg"
 const DBExt: String						= ".db"
 const ConfExt: String					= ".cfg"
