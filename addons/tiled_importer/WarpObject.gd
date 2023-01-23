@@ -5,6 +5,7 @@ class_name WarpObject
 
 @export var destinationMap : String 			= ""
 @export var destinationPos : Vector2			= Vector2.ZERO
+@export var polygon : PackedVector2Array 		= []
 
 #
 func bodyEntered(body):

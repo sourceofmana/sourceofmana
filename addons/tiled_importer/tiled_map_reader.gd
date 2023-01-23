@@ -76,9 +76,9 @@ var polygon_pool : Array = []
 # Navigation polygons
 var navigation_pool : Array = []
 # Spawn objects
-var spawn_pool : Array = [SpawnObject]
+var spawn_pool : Array = []
 # Warp objects
-var warp_pool : Array = [WarpObject]
+var warp_pool : Array = []
 # JSON Instance
 var JSONInstance = JSON.new()
 # Tile DB
@@ -238,8 +238,25 @@ func build_server(source_path, options):
 	var root = MapServerData.new()
 	root.set_name(source_path.get_file().get_basename())
 
-	root.spawns = spawn_pool
-	root.warps = warp_pool.duplicate()
+	# Can't save an array of custom objects, every element will be null when loaded
+#	root.spawns = spawn_pool
+	for spawn in spawn_pool:
+		var spawn_array : Array = []
+		spawn_array.append(spawn.mob_count)
+		spawn_array.append(spawn.mob_name)
+		spawn_array.append(spawn.spawn_position)
+		spawn_array.append(spawn.spawn_offset)
+		root.spawns.append(spawn_array)
+
+	# Can't save an array of custom objects, every element will be null when loaded
+#	root.warps = warp_pool
+	for warp in warp_pool:
+		var warp_array : Array = []
+		warp_array.append(warp.destinationMap)
+		warp_array.append(warp.destinationPos)
+		warp_array.append(warp.polygon)
+		root.warps.append(warp_array)
+
 	root.nav_poly = NavigationPolygon.new()
 
 	# Merge algorithm
@@ -617,7 +634,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 								if "mob_name" in object.properties:
 									spawn_object.mob_name = object.properties.mob_name
 								spawn_object.spawn_position = pos
-								spawn_object.spawn_offset = shape.extents
+								spawn_object.spawn_offset = shape.extents * 2
 							spawn_pool.push_back(spawn_object)
 						continue
 
@@ -660,8 +677,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 #							customObject.build_mode = Polygon2D.BUILD_SOLIDS
 						if collisionObject:
 							collisionObject.polygon = points
-						else:
-							customObject.polygon = points
+						customObject.polygon = points
 
 #					customObject.one_way_collision = object.type == "one-way"
 
@@ -697,6 +713,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 								customObject.destinationMap = object.properties.dest_map
 							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
 								customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
+						warp_pool.append(customObject)
 
 					customObject.visible = bool(object.visible) if "visible" in object else true
 					customObject.position = pos
