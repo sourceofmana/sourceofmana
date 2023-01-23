@@ -5,7 +5,8 @@ var confFiles : Array		= \
 	Launcher.FileSystem.LoadConfig("project"),			\
 	Launcher.FileSystem.LoadConfig("map"),				\
 	Launcher.FileSystem.LoadConfig("window"),			\
-	Launcher.FileSystem.LoadConfig("gameplay")			\
+	Launcher.FileSystem.LoadConfig("gameplay"),			\
+	Launcher.FileSystem.LoadConfig("server")			\
 ]
 
 #
