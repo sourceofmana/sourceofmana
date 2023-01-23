@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="146" height="167" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="38">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="146" height="167" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="39">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
@@ -1079,6 +1079,12 @@
     <property name="dest_pos_y" type="int" value="70"/>
    </properties>
    <polygon points="0,32 32,0 64,32"/>
+  </object>
+  <object id="38" name="Dorian" class="Spawn" x="-200" y="120" width="32" height="32">
+   <properties>
+    <property name="mob_count" type="int" value="50"/>
+    <property name="mob_name" value="Dorian"/>
+   </properties>
   </object>
  </objectgroup>
 </map>
