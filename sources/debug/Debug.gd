@@ -1,33 +1,46 @@
 extends Node
 
 var projectName : String = ""
-var navLine : Line2D = null
 
 #
 func SetPlayerInventory():
-	if Launcher.Entities && Launcher.Entities.playerEntity:
-		#Launcher.Entities.playerEntity.inventory.items = Launcher.DB.ItemsDB
-		pass
+	Launcher.Util.Assert(Launcher.Entities != null && Launcher.Entities.playerEntity != null && Launcher.Entities.playerEntity.inventory != null, "Debug: Player inventory is not accessible")
+	if Launcher.Entities && Launcher.Entities.playerEntity && Launcher.Entities.playerEntity.inventory:
+		var inventory : Object = Launcher.Entities.playerEntity.inventory
+		inventory.add_item(load("res://data/items/apple.tres"), 14)
+		inventory.add_item(load("res://data/items/pettys_key.tres"), 3)
+		inventory.add_item(load("res://data/items/grumpys_key.tres"))
+		inventory.add_item(load("res://data/items/hungrys_key.tres"), 2)
 
 #
 func _post_ready():
 	projectName = Launcher.Conf.GetString("Default", "projectName", Launcher.Conf.Type.PROJECT)
 
-	if Launcher.Conf.GetBool("NavLine", "enable", Launcher.Conf.Type.MAP):
-		var lineWidth : float = Launcher.Conf.GetFloat("NavLine", "lineWidth", Launcher.Conf.Type.MAP)
-		navLine = Line2D.new()
-		navLine.set_name("NavigationLine")
-		navLine.set_width(lineWidth)
-		navLine.set_antialiased(true)
-		Launcher.World.call_deferred("add_child", navLine)
-
 func _process(_delta : float):
-	DisplayServer.window_set_title(projectName + " | fps: " + str(Engine.get_frames_per_second()))
+	pass
 
-func UpdateNavLine():
-	if navLine && Launcher.Entities && Launcher.Entities.playerEntity && Launcher.Entities.playerEntity.agent:
-		navLine.points = Launcher.Entities.playerEntity.agent.get_nav_path()
+#
+func UpdateNavLine(entity : BaseEntity):
+	if Launcher.Conf.GetBool("NavLine", "enable", Launcher.Conf.Type.MAP):
+		if entity && entity.agent:
+			if entity.has_node("NavigationLine") == false:
+				var lineWidth : float = Launcher.Conf.GetFloat("NavLine", "lineWidth", Launcher.Conf.Type.MAP)
+				var navLine : Line2D = Line2D.new()
+				navLine.set_name("NavigationLine")
+				navLine.set_width(lineWidth)
+				navLine.set_default_color(Color(Color.WHITE, 0.4))
+				navLine.set_antialiased(true)
+				navLine.set_as_top_level(true)
+				entity.add_child(navLine)
 
-func ClearNavLine():
-	if navLine:
-		navLine.points = []
+			if entity.has_node("NavigationLine"):
+				var entityNavLine : Line2D = entity.get_node("NavigationLine")
+				entityNavLine.points = entity.agent.get_current_navigation_path()
+			else:
+				Launcher.Util.Assert(false, "Navigation Line2D can't be null, something went wrong")
+
+func ClearNavLine(entity : BaseEntity):
+	if entity:
+		if entity.has_node("NavigationLine"):
+			var entityNavLine : Line2D = entity.get_node("NavigationLine")
+			entityNavLine.points = []

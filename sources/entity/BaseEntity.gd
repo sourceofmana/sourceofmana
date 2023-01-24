@@ -78,7 +78,7 @@ func SwitchInputMode(clearCurrentInput : bool):
 		currentInput = Vector2.ZERO
 
 	if Launcher.Debug:
-		Launcher.Debug.ClearNavLine()
+		Launcher.Debug.ClearNavLine(self)
 
 func UpdateInput():
 	if hasGoal:
@@ -145,6 +145,11 @@ func _velocity_computed(safeVelocity : Vector2):
 	UpdateVelocity()
 	UpdateState()
 
+func _path_changed():
+	Launcher.Debug.UpdateNavLine(self)
+
+func _target_reached():
+	Launcher.Debug.ClearNavLine(self)
 
 func _setup_nav_agent():
 	if agent:
@@ -152,9 +157,10 @@ func _setup_nav_agent():
 			var err = agent.velocity_computed.connect(self._velocity_computed)
 			Launcher.Util.Assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
 		if Launcher.Debug:
-			var err = agent.path_changed.connect(Launcher.Debug.UpdateNavLine)
-			Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to Launcher.Debug.UpdateNavLine")
-
+			var err = agent.path_changed.connect(self._path_changed)
+			Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _path_changed")
+			err = agent.target_reached.connect(self._target_reached)
+			Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _target_reached")
 
 func _enable_warp():
 	collision_layer |= 1 << 1
