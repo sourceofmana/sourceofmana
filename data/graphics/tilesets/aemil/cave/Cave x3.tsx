@@ -17,15 +17,15 @@
  </tile>
  <tile id="2">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="8" y="64">
-    <polygon points="8,-16 8,24 24,24 24,-16"/>
+   <object id="1" x="8" y="73.6">
+    <polygon points="8,-9.6 8,14.4 24,14.4 24,-9.6"/>
    </object>
   </objectgroup>
  </tile>
  <tile id="3">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="64">
-    <polygon points="16,-16 16,24 0,24 0,-16"/>
+   <object id="1" x="0" y="73.6">
+    <polygon points="16,-9.6 16,14.4 0,14.4 0,-9.6"/>
    </object>
   </objectgroup>
  </tile>

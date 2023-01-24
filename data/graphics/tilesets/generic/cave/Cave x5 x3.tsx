@@ -7,7 +7,7 @@
     <polygon points="0,0 0,64 16,64 16,32 32,0"/>
    </object>
    <object id="4" x="144" y="0">
-    <polygon points="16,0 16,64 1,64 1,32 -16,0"/>
+    <polygon points="16,0 16,64 0,64 0,32 -16,0"/>
    </object>
   </objectgroup>
  </tile>
