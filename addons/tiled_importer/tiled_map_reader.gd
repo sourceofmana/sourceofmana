@@ -633,8 +633,8 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 									spawn_object.mob_count = object.properties.mob_count
 								if "mob_name" in object.properties:
 									spawn_object.mob_name = object.properties.mob_name
-								spawn_object.spawn_position = pos
-								spawn_object.spawn_offset = shape.extents * 2
+								spawn_object.spawn_position = pos + shape.extents
+								spawn_object.spawn_offset = shape.extents
 							spawn_pool.push_back(spawn_object)
 						continue
 

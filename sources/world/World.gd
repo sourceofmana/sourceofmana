@@ -42,7 +42,7 @@ func GetRandomPositionAABB(map : Map, pos : Vector2i, offset : Vector2i) -> Vect
 	Launcher.Util.Assert(map != null, "Could not create a random position for a non-initialized map")
 	if map != null:
 		for i in Launcher.Conf.GetInt("Navigation", "navigationSpawnTry", Launcher.Conf.Type.SERVER):
-			var randPoint : Vector2i = Vector2i(randi_range(0, offset.x), randi_range(0, offset.y))
+			var randPoint : Vector2i = Vector2i(randi_range(-offset.x, offset.x), randi_range(-offset.y, offset.y))
 			randPoint += pos
 
 			var closestPoint : Vector2i = NavigationServer2D.map_get_closest_point(map.mapRID, randPoint)
@@ -201,15 +201,16 @@ func CreateNpc(entityID : String, entityName : String = "") -> BaseEntity:
 
 # AI
 func UpdateWalkPaths(entity : Node2D, map : Map):
-	var newPos : Vector2 = GetRandomPosition(map)
+	var randAABB : Vector2i = Vector2i(randi_range(30, 200), randi_range(30, 200))
+	var newPos : Vector2i = GetRandomPositionAABB(map, entity.position, randAABB)
 	entity.WalkToward(newPos)
 
 func UpdateAI(entity : BaseEntity, map : Map):
 	if entity.hasGoal == false && entity.AITimer && entity.AITimer.is_stopped():
-		entity.StartAITimer(randi_range(5, 10), UpdateWalkPaths, map)
+		entity.StartAITimer(randf_range(5, 15), UpdateWalkPaths, map)
 	elif entity.hasGoal && entity.IsStuck():
 		entity.ResetNav()
-		entity.StartAITimer(randi_range(0, 3), UpdateWalkPaths, map)
+		entity.StartAITimer(randf_range(2, 10), UpdateWalkPaths, map)
 	entity.UpdateInput()
 
 # Generic
