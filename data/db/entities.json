@@ -67,6 +67,14 @@
 		"NavigationAgent"	: "NPAgent",
 		"WalkSpeed"			: 50
 	},
+	"1007": {
+		"Name"				: "Salt Slime",
+		"Ethnicity"			: "Slime",
+		"Animation"			: "Slime",
+		"Texture"			: "sprites/monsters/slime-salt.png",
+		"NavigationAgent"	: "NPAgent",
+		"WalkSpeed"			: 50
+	},
 
 	"2000": {
 		"Name"				: "Becees",

@@ -89,6 +89,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/monsters/lulea.png [Reid] [Neorice]
 ./graphics/sprites/monsters/marvin.png [Reid] [Neorice]
 ./graphics/sprites/monsters/phatyna.png [Reid]
+./graphics/sprites/monsters/slime-salt.png [Reid] [Neorice]
 ./graphics/sprites/npcs/razor.png [Reid]
 ./graphics/sprites/players/human-male.png [Talaroc] [Modanung, Saphy]
 ./graphics/tilesets/aemil/aurora/artis/lamps.png [Alige]
