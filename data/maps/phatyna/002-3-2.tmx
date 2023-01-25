@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="95" height="105" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="39">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="95" height="105" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="41">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
@@ -571,10 +571,16 @@
     <property name="mob_name" value="Phatyna"/>
    </properties>
   </object>
-  <object id="38" name="Dorian" class="Spawn" x="-192" y="88" width="32" height="32">
+  <object id="39" name="Lilah" class="Spawn" x="-191" y="296" width="32" height="32">
    <properties>
-    <property name="mob_count" type="int" value="8"/>
-    <property name="mob_name" value="Dorian"/>
+    <property name="mob_count" type="int" value="4"/>
+    <property name="mob_name" value="Lilah"/>
+   </properties>
+  </object>
+  <object id="40" name="Lulea" class="Spawn" x="-191" y="189" width="32" height="32">
+   <properties>
+    <property name="mob_count" type="int" value="4"/>
+    <property name="mob_name" value="Lulea"/>
    </properties>
   </object>
  </objectgroup>
