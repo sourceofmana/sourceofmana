@@ -56,7 +56,7 @@ targetWindow = NodePath("../../../../FloatingWindows/Inventory")
 [node name="Chat" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "Chat"
-targetWindow = NodePath("")
+targetWindow = NodePath("../../../../FloatingWindows/Chat")
 
 [node name="Minimap" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
@@ -66,7 +66,7 @@ targetWindow = NodePath("../../../../FloatingWindows/Minimap")
 [node name="Emote" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "Emote"
-targetWindow = NodePath("../../../../FloatingWindows/Minimap")
+targetWindow = NodePath("../../../../FloatingWindows/Emote")
 
 [node name="MainPanelContainer" type="Control" parent="VBoxMain"]
 layout_mode = 2
