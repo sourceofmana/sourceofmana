@@ -4,7 +4,7 @@ Client and Game development for Source of Mana, a The Mana World story.
 
 ## Tools
 
-Godot current version is ['Godot 4.0 beta 13'](https://downloads.tuxfamily.org/godotengine/4.0/beta13/) accessible on [Godot's official website](https://godotengine.org/download).
+Godot current version is ['Godot 4.0 beta 15'](https://downloads.tuxfamily.org/godotengine/4.0/beta15/) accessible on [Godot's official website](https://godotengine.org/download).
 Tiled current version is ['Tiled 1.9'](https://www.mapeditor.org/2022/06/25/tiled-1-9-released.html) accessible on [Tiled's official website](https://www.mapeditor.org/).
 
 ## License
