@@ -8,6 +8,7 @@ extends Control
 @export var delayToFillSec : float
 @export var delayToInitSec : float
 @export var precisionDivider : int
+@export var numberAfterComma : int
 
 @onready var label		= get_node("Label")
 @onready var bar		= get_node("Bar")
@@ -39,6 +40,15 @@ func GetFormatedText(value : String) -> String:
 	while charCounter > 0:
 		value = value.insert(charCounter, ",")
 		charCounter = charCounter - 3
+
+	commaLocation = value.find(".")
+	if commaLocation == -1:
+		commaLocation = value.length()
+		value += "."
+
+	for i in range(value.length() - 1, commaLocation + numberAfterComma):
+		value += "0"
+
 	return value
 
 func GetBarFormat(currentValue : float, maxValue : float) -> String:
