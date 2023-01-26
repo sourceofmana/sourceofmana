@@ -44,10 +44,14 @@ func GetFormatedText(value : String) -> String:
 	commaLocation = value.find(".")
 	if commaLocation == -1:
 		commaLocation = value.length()
-		value += "."
+		if numberAfterComma > 0:
+			value += "."
 
-	for i in range(value.length() - 1, commaLocation + numberAfterComma):
-		value += "0"
+	if numberAfterComma > 0:
+		for i in range(value.length() - 1, commaLocation + numberAfterComma):
+			value += "0"
+	else:
+		value = value.substr(0, commaLocation)
 
 	return value
 
