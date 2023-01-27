@@ -12,6 +12,8 @@ config_version=5
 
 config/name="Source of Mana"
 run/main_scene="res://scenes/Source.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="SourceOfMana"
 config/features=PackedStringArray("4.0")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://data/press/splash/splashscreen.png"
@@ -207,6 +209,11 @@ smile_26={
 gp_move_to={
 "deadzone": 0.5,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"pressed":false,"double_click":false,"script":null)
+]
+}
+ui_screenshot={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":80,"unicode":0,"echo":false,"script":null)
 ]
 }
 
