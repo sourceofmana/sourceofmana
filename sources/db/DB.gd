@@ -38,9 +38,9 @@ func ParseEthnicitiesDB():
 		for key in result:
 			var ethnicity = Trait.new()
 			ethnicity._name = key
-			ethnicity._path[Launcher.Entities.Trait.Gender.MALE] = result[key].Male
-			ethnicity._path[Launcher.Entities.Trait.Gender.FEMALE] = result[key].Female
-			ethnicity._path[Launcher.Entities.Trait.Gender.NONBINARY] = result[key].Nonbinary
+			ethnicity._path.append(result[key].Male)
+			ethnicity._path.append(result[key].Female)
+			ethnicity._path.append(result[key].Nonbinary)
 			EthnicitiesDB[key] = ethnicity
 
 func ParseHairstylesDB():
@@ -51,9 +51,9 @@ func ParseHairstylesDB():
 		for key in result:
 			var hairstyle = Trait.new()
 			hairstyle._name = key
-			hairstyle._path[Launcher.Entities.Trait.Gender.MALE] = result[key].Male
-			hairstyle._path[Launcher.Entities.Trait.Gender.FEMALE] = result[key].Female
-			hairstyle._path[Launcher.Entities.Trait.Gender.NONBINARY] = result[key].Nonbinary
+			hairstyle._path.append(result[key].Male)
+			hairstyle._path.append(result[key].Female)
+			hairstyle._path.append(result[key].Nonbinary)
 			HairstylesDB[key] = hairstyle
 
 func ParseEntitiesDB():

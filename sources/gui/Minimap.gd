@@ -21,7 +21,8 @@ func _ready():
 	get_h_scroll_bar().scale = Vector2.ZERO
 	get_v_scroll_bar().scale = Vector2.ZERO
 
-	Launcher.Map.PlayerWarped.connect(self.Warped)
+	if Launcher.Map:
+		Launcher.Map.PlayerWarped.connect(self.Warped)
 
 func _process(_delta):
 	if Launcher.Camera.mainCamera:

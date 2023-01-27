@@ -35,7 +35,7 @@ func ToggleChatNewLine(control : Control):
 
 func PlayerSpawned():
 	if Launcher.Entities.playerEntity:
-			itemInventory.initialize()
+		itemInventory.initialize()
 
 	assert(emoteList, "Emote grid container is missing")
 	if emoteList:

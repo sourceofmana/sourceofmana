@@ -6,4 +6,3 @@ extends Node
 func _init():
 	_name = "Unknown"
 	_path = []
-	_path.resize(Launcher.Entities.Trait.Gender.size())
