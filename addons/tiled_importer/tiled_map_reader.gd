@@ -94,13 +94,13 @@ func reset_global_memebers():
 
 # Main functions
 # Reads a source file and gives back a scene
-func build_client(source_path, options):
+func build_client(source_path, options) -> Node2D:
 	reset_global_memebers()
 	var map = read_file(source_path)
 	if typeof(map) == TYPE_INT:
 		return map
 	if typeof(map) != TYPE_DICTIONARY:
-		return ERR_INVALID_DATA
+		return null
 
 	var err = validate_map(map)
 	if err != OK:
@@ -233,8 +233,7 @@ func build_client(source_path, options):
 	return root
 
 # Reads a collision pool and create a navigation mesh
-func build_server(source_path, options):
-	var map_size : Vector2i = Vector2i(map_width * cell_size.x, map_height * cell_size.y)
+func build_server(source_path) -> Node:
 	var root = MapServerData.new()
 	root.set_name(source_path.get_file().get_basename())
 
@@ -257,7 +256,12 @@ func build_server(source_path, options):
 		warp_array.append(warp.polygon)
 		root.warps.append(warp_array)
 
-	root.nav_poly = NavigationPolygon.new()
+	return root
+
+func build_navigation(source_path, options) -> NavigationPolygon:
+	var map_size : Vector2i = Vector2i(map_width * cell_size.x, map_height * cell_size.y)
+	var root = NavigationPolygon.new()
+	root.set_name(source_path.get_file().get_basename())
 
 	# Merge algorithm
 	merge_polygons(true)
@@ -269,8 +273,8 @@ func build_server(source_path, options):
 
 	# Create navigation mesh
 	for polygon in polygon_pool:
-		root.nav_poly.add_outline(polygon)
-	root.nav_poly.make_polygons_from_outlines()
+		root.add_outline(polygon)
+	root.make_polygons_from_outlines()
 
 	return root
 

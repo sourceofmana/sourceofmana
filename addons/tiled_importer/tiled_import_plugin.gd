@@ -104,22 +104,28 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	var saveRet = OK
 	var TiledMapReader = load("res://addons/tiled_importer/tiled_map_reader.gd").new()
 
+	# Client Data import (TileMap and warp locations)
 	var client_scene = TiledMapReader.build_client(source_file, options)
 	if typeof(client_scene) == TYPE_OBJECT:
-		var packed_client_scene = PackedScene.new()
-		packed_client_scene.pack(client_scene)
-		saveRet &= ResourceSaver.save(packed_client_scene, "%s.client.%s" % [source_file, _get_save_extension()])
+		var packed_scene = PackedScene.new()
+		packed_scene.pack(client_scene)
+		saveRet &= ResourceSaver.save(packed_scene, "%s.client.%s" % [source_file, _get_save_extension()])
 
-	# Tilemap import
+	# Server Data import (Spawn and warp locations)
 	var server_scene = null
-	if options.export_navigation_mesh:
-		server_scene = TiledMapReader.build_server(source_file, options)
-		if typeof(server_scene) == TYPE_OBJECT:
-			var packed_server_scene = PackedScene.new()
-			packed_server_scene.pack(server_scene)
-			saveRet &= ResourceSaver.save(packed_server_scene, "%s.server.%s" % [source_file, _get_save_extension()])
+	server_scene = TiledMapReader.build_server(source_file)
+	if typeof(server_scene) == TYPE_OBJECT:
+		var packed_scene = PackedScene.new()
+		packed_scene.pack(server_scene)
+		saveRet &= ResourceSaver.save(packed_scene, "%s.server.%s" % [source_file, _get_save_extension()])
 
-	# Mandatory and default import file when we want to open the tmx
+	var navigation_tres = null
+	if options.export_navigation_mesh:
+		navigation_tres = TiledMapReader.build_navigation(source_file, options)
+		if typeof(server_scene) == TYPE_OBJECT:
+			saveRet &= ResourceSaver.save(navigation_tres, "%s.navigation.tres" % [source_file])
+
+	# Default import file when opening the .tmx file
 	if client_scene:
 		if server_scene:
 			client_scene.add_child(server_scene)
