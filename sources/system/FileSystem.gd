@@ -167,9 +167,7 @@ func LoadMinimap(path : String) -> Resource:
 	var fullPath : String = Launcher.Path.MinimapRsc + path + Launcher.Path.GfxExt
 	return LoadResource(fullPath, false)
 
-func SaveScreenshot():
-	var image : Image = get_viewport().get_texture().get_image()
-
+func SaveScreenshot(image : Image):
 	Launcher.Util.Assert(image != null, "Could not get a viewport screenshot")
 	if image:
 		var dir = DirAccess.open(OS.get_user_data_dir())
@@ -178,10 +176,12 @@ func SaveScreenshot():
 		dir.change_dir("Screenshots")
 
 		var date : Dictionary = Time.get_datetime_dict_from_system()
-
 		var savePath : String = dir.get_current_dir(true)
 		savePath += "/Screenshot-%d-%02d-%02d_%02d-%02d-%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second]
-		savePath += ".png"
+		savePath += Launcher.Path.GfxExt
 
-		if image.save_png(savePath) == OK:
-			Launcher.Util.PrintLog("Saving screenshot: " + savePath)
+		if not dir.dir_exists(savePath):
+			var ret = image.save_png(savePath)
+			Launcher.Util.Assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
+			if ret == OK:
+				Launcher.Util.PrintLog("Saving screenshot: " + savePath)
