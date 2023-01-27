@@ -52,11 +52,9 @@ func GetRandomPositionAABB(map : Map, pos : Vector2i, offset : Vector2i) -> Vect
 	return GetRandomPosition(map)
 
 # Instance init
-func ParseInformation(map : Map):
-	var node : Node = Launcher.Map.pool.LoadMapServer(map.name)
+func LoadGenericData(map : Map):
+	var node : Node = Launcher.Map.pool.LoadMapServerData(map.name, Launcher.Path.MapServerExt)
 	if node:
-		if "nav_poly" in node:
-			map.nav_poly = node.nav_poly
 		if "spawns" in node:
 			for spawn in node.spawns:
 				Launcher.Util.Assert(spawn != null, "Warp format is not supported")
@@ -78,16 +76,20 @@ func ParseInformation(map : Map):
 					warpObject.polygon = warp[2]
 					map.warps.append(warpObject)
 
-		map.mapRID = NavigationServer2D.map_create()
-		NavigationServer2D.map_set_active(map.mapRID, true)
+func LoadNavigationData(map : Map):
+	var obj : Object = Launcher.Map.pool.LoadMapServerData(map.name, Launcher.Path.MapNavigationExt)
+	if obj:
+		map.nav_poly = obj
 
-		map.regionRID = NavigationServer2D.region_create()
-		NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
-		NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.nav_poly)
+		if map.nav_poly:
+			map.mapRID = NavigationServer2D.map_create()
+			NavigationServer2D.map_set_active(map.mapRID, true)
 
-		NavigationServer2D.map_force_update(map.mapRID)
+			map.regionRID = NavigationServer2D.region_create()
+			NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
+			NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.nav_poly)
 
-		node.queue_free()
+			NavigationServer2D.map_force_update(map.mapRID)
 
 func CreateInstance(map : Map, instanceID : int = 0):
 	var inst : Instance = Instance.new()
@@ -218,7 +220,8 @@ func _post_ready():
 	for mapName in Launcher.DB.MapsDB:
 		var map : Map = Map.new()
 		map.name = mapName
-		ParseInformation(map)
+		LoadGenericData(map)
+		LoadNavigationData(map)
 		CreateInstance(map)
 		areas[mapName] = map
 

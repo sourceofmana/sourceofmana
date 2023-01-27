@@ -16,7 +16,7 @@ func GetMapPath(mapName : String) -> String:
 	return path
 
 #
-func LoadMapClient(mapName : String) -> Node2D:
+func LoadMapClientData(mapName : String) -> Node2D:
 	var mapInstance : Node2D		= GetMap(mapName)
 	var mapPath : String			= GetMapPath(mapName)
 
@@ -29,9 +29,9 @@ func LoadMapClient(mapName : String) -> Node2D:
 
 	return mapInstance
 
-func LoadMapServer(mapName : String) -> Node:
+func LoadMapServerData(mapName : String, ext : String) -> Object:
 	var mapPath : String			= GetMapPath(mapName)
-	var mapInstance : Node			= Launcher.FileSystem.LoadMap(mapPath, Launcher.Path.MapServerExt)
+	var mapInstance : Object		= Launcher.FileSystem.LoadMap(mapPath, ext)
 
 	if mapInstance != null:
 		mapInstance.set_name(mapName)
@@ -62,7 +62,7 @@ func RefreshPool(currentMap : Node2D):
 
 	for mapName in adjacentMaps:
 		if pool.has(mapName) == false:
-			pool[mapName] = LoadMapClient(mapName)
+			pool[mapName] = LoadMapClientData(mapName)
 
 	var poolMaxSize : int		= Launcher.Conf.GetInt("MapPool", "maxSize", Launcher.Conf.Type.MAP)
 	var poolCurrentSize : int	= pool.size()

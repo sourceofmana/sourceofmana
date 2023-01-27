@@ -13,15 +13,28 @@ func FileLoad(path : String) -> Resource:
 func FileAlloc(path : String) -> Object:
 	return FileLoad(path).new()
 
+func CanInstantiateResource(res : Object) -> bool:
+	return res.has_method("can_instantiate") && res.can_instantiate()
+
 func ResourceLoad(path : String) -> Object:
 	return ResourceLoader.load(path)
 
 func ResourceInstance(path : String) -> Object:
 	var resourceLoaded		= ResourceLoad(path)
 	var resourceInstance	= null
-	if resourceLoaded != null && resourceLoaded.has_method("can_instantiate") && resourceLoaded.can_instantiate():
+	if resourceLoaded != null && CanInstantiateResource(resourceLoaded):
 		resourceInstance = resourceLoaded.instantiate()
 	return resourceInstance
+
+func ResourceInstanceOrLoad(path : String) -> Object:
+	var resourceLoaded		= ResourceLoad(path)
+	var resource			= null
+	if resourceLoaded != null:
+		if CanInstantiateResource(resourceLoaded):
+			resource = resourceLoaded.instantiate()
+		else:
+			resource = resourceLoaded
+	return resource
 
 # DB
 func LoadDB(path : String) -> Dictionary:
@@ -48,8 +61,8 @@ func LoadDB(path : String) -> Dictionary:
 	return result
 
 # Map
-func LoadMap(path : String, ext : String) -> Node2D:
-	var mapInstance : Node		= null
+func LoadMap(path : String, ext : String) -> Object:
+	var mapInstance : Object	= null
 
 	var filePath : String		= Launcher.Path.MapRsc + path
 	var scenePath : String		= filePath + ext
@@ -57,7 +70,7 @@ func LoadMap(path : String, ext : String) -> Node2D:
 
 	Launcher.Util.Assert(pathExists, "Map file not found " + path + Launcher.Path.MapClientExt + " should be located at " + Launcher.Path.MapRsc)
 	if pathExists:
-		mapInstance = ResourceInstance(scenePath)
+		mapInstance = ResourceInstanceOrLoad(scenePath)
 		Launcher.Util.PrintLog("Loading map: " + scenePath)
 
 	return mapInstance
