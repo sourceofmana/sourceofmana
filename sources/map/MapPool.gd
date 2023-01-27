@@ -5,20 +5,9 @@ const WarpObject			= preload("res://addons/tiled_importer/WarpObject.gd")
 var pool : Dictionary		= {}
 
 #
-func GetMapPath(mapName : String) -> String:
-	var path : String = ""
-	var mapInstance = Launcher.DB.MapsDB[mapName] if Launcher.DB.MapsDB.has(mapName) else null
-
-	Launcher.Util.Assert(mapInstance != null, "Could not find the map " + mapName + " within the db")
-	if mapInstance:
-		path = mapInstance._path
-
-	return path
-
-#
 func LoadMapClientData(mapName : String) -> Node2D:
 	var mapInstance : Node2D		= GetMap(mapName)
-	var mapPath : String			= GetMapPath(mapName)
+	var mapPath : String			= Launcher.DB.GetMapPath(mapName)
 
 	if mapInstance == null:
 		mapInstance = Launcher.FileSystem.LoadMap(mapPath, Launcher.Path.MapClientExt)
@@ -26,15 +15,6 @@ func LoadMapClientData(mapName : String) -> Node2D:
 	if mapInstance != null:
 		mapInstance.set_name(mapName)
 		pool[mapName] = mapInstance
-
-	return mapInstance
-
-func LoadMapServerData(mapName : String, ext : String) -> Object:
-	var mapPath : String			= GetMapPath(mapName)
-	var mapInstance : Object		= Launcher.FileSystem.LoadMap(mapPath, ext)
-
-	if mapInstance != null:
-		mapInstance.set_name(mapName)
 
 	return mapInstance
 

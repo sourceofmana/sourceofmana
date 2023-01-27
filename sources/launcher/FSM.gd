@@ -25,9 +25,12 @@ func EnterGame():
 	if Launcher.World:
 		var map : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
 		var pos : Vector2	= Launcher.Conf.GetVector2("Default", "startPos", Launcher.Conf.Type.MAP)
-		Launcher.Entities.playerEntity = Launcher.World.CreatePlayer("Default Entity", "Enora", true)
-		Launcher.World.Spawn(map, Launcher.Entities.playerEntity)
-		Launcher.Map.WarpEntity(map, pos, Launcher.Entities.playerEntity)
+		Launcher.Player = Launcher.World.CreatePlayer("Default Entity", "Enora", true)
+
+		Launcher.Util.Assert(Launcher.Player != null, "Player was not created")
+		if Launcher.Player:
+			Launcher.World.Spawn(map, Launcher.Player)
+			Launcher.Map.WarpEntity(map, pos, Launcher.Player)
 
 	if Launcher.Debug:
 		Launcher.Debug.SetPlayerInventory()

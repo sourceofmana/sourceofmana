@@ -99,6 +99,18 @@ func ParseEmotesDB():
 			EmotesDB[key] = emote
 
 #
+func GetMapPath(mapName : String) -> String:
+	var path : String = ""
+	var mapInfo = null
+
+	if MapsDB.has(mapName):
+		mapInfo = MapsDB[mapName]
+		Launcher.Util.Assert(mapInfo != null, "Could not find the map " + mapName + " within the db")
+		if mapInfo:
+			path = mapInfo._path
+	return path
+
+#
 func _post_ready():
 	ParseMapsDB()
 	ParseMusicsDB()

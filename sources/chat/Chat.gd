@@ -38,8 +38,8 @@ func OnNewTextSubmitted(newText):
 	if lineEdit:
 		if newText.is_empty() == false:
 			lineEdit.clear()
-			if Launcher.Entities.playerEntity:
-				AddPlayerText(Launcher.Entities.playerEntity.entityName, newText)
+			if Launcher.Player:
+				AddPlayerText(Launcher.Player.entityName, newText)
 				emit_signal('NewTextTyped', newText)
 				SetNewLineEnabled(false)
 		else:

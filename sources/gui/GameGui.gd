@@ -34,7 +34,7 @@ func ToggleChatNewLine(control : Control):
 			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
 
 func PlayerSpawned():
-	if Launcher.Entities.playerEntity:
+	if Launcher.Player:
 		itemInventory.initialize()
 
 	assert(emoteList, "Emote grid container is missing")

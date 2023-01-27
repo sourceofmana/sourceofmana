@@ -3,6 +3,9 @@ class_name BaseEntity
 
 @onready var animationState		= animationTree.get("parameters/playback")
 
+enum Gender { MALE = 0, FEMALE, NONBINARY, COUNT }
+enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
+
 var sprite : Sprite2D				= null
 var animation : Node				= null
 var animationTree : AnimationTree	= null
@@ -15,7 +18,7 @@ var interactive					= load("res://sources/entity/components/Interactive.gd").new
 var inventory: EntityInventory	= load("res://sources/entity/components/inventory/Inventory.gd").new()
 
 var entityName					= "PlayerName"
-var gender						= Launcher.Entities.Trait.Gender.MALE
+var gender						= Gender.MALE
 
 var damageReceived				= {}
 var showName					= false
@@ -25,7 +28,6 @@ var currentInput				= Vector2.ZERO
 var currentVelocity				= Vector2.ZERO
 var currentDirection			= Vector2(0, 1)
 
-enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
 var currentState				= State.IDLE
 var currentStateTimer			= 0.0
 

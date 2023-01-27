@@ -4,9 +4,9 @@ var projectName : String = ""
 
 #
 func SetPlayerInventory():
-	Launcher.Util.Assert(Launcher.Entities != null && Launcher.Entities.playerEntity != null && Launcher.Entities.playerEntity.inventory != null, "Debug: Player inventory is not accessible")
-	if Launcher.Entities && Launcher.Entities.playerEntity && Launcher.Entities.playerEntity.inventory:
-		var inventory : Object = Launcher.Entities.playerEntity.inventory
+	Launcher.Util.Assert(Launcher.Player != null && Launcher.Player.inventory != null, "Debug: Player inventory is not accessible")
+	if Launcher.Player && Launcher.Player.inventory:
+		var inventory : Object = Launcher.Player.inventory
 		inventory.add_item(load("res://data/items/apple.tres"), 14)
 		inventory.add_item(load("res://data/items/pettys_key.tres"), 3)
 		inventory.add_item(load("res://data/items/grumpys_key.tres"))

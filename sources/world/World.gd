@@ -52,8 +52,14 @@ func GetRandomPositionAABB(map : Map, pos : Vector2i, offset : Vector2i) -> Vect
 	return GetRandomPosition(map)
 
 # Instance init
+func LoadMapData(mapName : String, ext : String) -> Object:
+	var mapPath : String			= Launcher.DB.GetMapPath(mapName)
+	var mapInstance : Object		= Launcher.FileSystem.LoadMap(mapPath, ext)
+
+	return mapInstance
+
 func LoadGenericData(map : Map):
-	var node : Node = Launcher.Map.pool.LoadMapServerData(map.name, Launcher.Path.MapServerExt)
+	var node : Node = LoadMapData(map.name, Launcher.Path.MapServerExt)
 	if node:
 		if "spawns" in node:
 			for spawn in node.spawns:
@@ -77,7 +83,7 @@ func LoadGenericData(map : Map):
 					map.warps.append(warpObject)
 
 func LoadNavigationData(map : Map):
-	var obj : Object = Launcher.Map.pool.LoadMapServerData(map.name, Launcher.Path.MapNavigationExt)
+	var obj : Object = LoadMapData(map.name, Launcher.Path.MapNavigationExt)
 	if obj:
 		map.nav_poly = obj
 
@@ -208,6 +214,10 @@ func UpdateWalkPaths(entity : Node2D, map : Map):
 	entity.WalkToward(newPos)
 
 func UpdateAI(entity : BaseEntity, map : Map):
+#	if entity is PlayerEntity:
+#	if entity is NpcEntity:
+#	if entity is MonsterEntity:
+
 	if entity.hasGoal == false && entity.AITimer && entity.AITimer.is_stopped():
 		entity.StartAITimer(randf_range(5, 15), UpdateWalkPaths, map)
 	elif entity.hasGoal && entity.IsStuck():

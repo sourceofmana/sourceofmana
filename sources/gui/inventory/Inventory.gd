@@ -12,7 +12,7 @@ func _ready():
 	$VBoxContainer/ItemContainer.resized.connect(_on_panel_resized)
 	
 func initialize():
-	Launcher.Entities.playerEntity.inventory.content_changed.connect(update_inventory)
+	Launcher.Player.inventory.content_changed.connect(update_inventory)
 	update_inventory()
 
 func _on_panel_resized():
@@ -24,11 +24,10 @@ func _on_panel_resized():
 		itemGrid.columns = 100
 
 func update_inventory():
-	var player = Launcher.Entities.playerEntity
 	# display inventory
 	update_inventory_ui()
 	# update weight
-	weightStat.SetStat(player.inventory.calculate_weight() / 1000, player.stat.maxWeight / 1000)
+	weightStat.SetStat(Launcher.Player.inventory.calculate_weight() / 1000, Launcher.Player.stat.maxWeight / 1000)
 
 # render inventory items to ui
 func update_inventory_ui():
@@ -37,12 +36,12 @@ func update_inventory_ui():
 		oldItem.disconnect("ItemClicked", _on_item_click)
 		oldItem.queue_free()
 	
-	for item in Launcher.Entities.playerEntity.inventory.items:
+	for item in Launcher.Player.inventory.items:
 		var tileInstance : InventoryItemGridTile = Tile.instantiate()
 		tileInstance.set_data(item)
 		tileInstance.connect("ItemClicked", _on_item_click)
 		itemGrid.add_child(tileInstance)
 
 func _on_item_click(item: InventoryItem):
-	Launcher.Entities.playerEntity.inventory.use_item(item)
+	Launcher.Player.inventory.use_item(item)
 

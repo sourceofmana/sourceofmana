@@ -14,7 +14,7 @@ var Audio				= null
 var Camera				= null
 var Conf				= null
 var DB					= null
-var Entities			= null
+var Player				= null
 var FSM					= null
 var Map					= null
 var Save				= null
@@ -33,7 +33,6 @@ func RunClient():
 	Action			= FileSystem.LoadSource("action/Action.gd")
 	Audio			= FileSystem.LoadSource("audio/Audio.gd")
 	Camera			= FileSystem.LoadSource("camera/Camera.gd")
-	Entities		= FileSystem.LoadSource("entity/EntityManager.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
 
