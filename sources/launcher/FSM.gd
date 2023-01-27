@@ -32,8 +32,8 @@ func EnterGame():
 			Launcher.World.Spawn(map, Launcher.Player)
 			Launcher.Map.WarpEntity(map, pos, Launcher.Player)
 
-	if Launcher.Debug:
-		Launcher.Debug.SetPlayerInventory()
+			if Launcher.Debug:
+				Launcher.Debug.SetPlayerInventory()
 
 	emit_signal("enter_game")
 
