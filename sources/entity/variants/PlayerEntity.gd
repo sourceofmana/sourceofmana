@@ -16,7 +16,7 @@ func GetNextState():
 		State.IDLE:
 			if isWalking:
 				newEnumState = State.WALK
-			elif actionSitJustPressed:
+			elif actionSitPressed:
 				newEnumState = State.SIT
 		State.WALK:
 			if isWalking == false:
