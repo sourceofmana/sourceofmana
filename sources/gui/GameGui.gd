@@ -1,6 +1,10 @@
 extends Node
 
+@onready var buttons : Container				= $VBoxMain/HBoxTop/HBoxButtons
+@onready var stats : Control					= $VBoxMain/HBoxTop/StatIndicator
 @onready var windows : Control					= $FloatingWindows
+@onready var boxes : Container					= $VBoxMain/ActionBox
+
 @onready var itemInventory : InventoryWindow	= $FloatingWindows/Inventory
 @onready var emoteList : GridContainer			= $FloatingWindows/Emote/ItemContainer/Grid
 @onready var chatContainer : Container			= $FloatingWindows/Chat/VBoxContainer
@@ -37,14 +41,29 @@ func PlayerSpawned():
 	if Launcher.Player:
 		itemInventory.initialize()
 
-	assert(emoteList, "Emote grid container is missing")
-	if emoteList:
-		emoteList.FillGridContainer(Launcher.DB.EmotesDB)
+	emoteList.FillGridContainer(Launcher.DB.EmotesDB)
+
+	for w in buttons.get_children():
+		w.set_visible(true)
+		if w.targetWindow:
+			w.targetWindow.set_visible(true)
+
+	boxes.set_visible(true)
+	stats.set_visible(true)
 
 #
 func _ready():
 	Launcher.FSM.enter_game.connect(PlayerSpawned)
 	get_tree().set_auto_accept_quit(false)
+
+	if windows:
+		for w in buttons.get_children():
+			w.set_visible(false)
+			if w.targetWindow:
+				w.targetWindow.set_visible(false)
+
+		boxes.set_visible(false)
+		stats.set_visible(false)
 
 func _process(_delta):
 	if Launcher.Action.IsActionJustPressed("ui_close", true): CloseWindow()
