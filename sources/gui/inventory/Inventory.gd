@@ -3,13 +3,14 @@ class_name InventoryWindow
 
 @onready var weightStat : Control		= $VBoxContainer/Weight/BgTex/Weight
 @onready var itemGrid : GridContainer	= $VBoxContainer/ItemContainer/Grid
+@onready var itemContainer : Container	= $VBoxContainer/ItemContainer
 
 const Tile = preload("res://scenes/gui/inventory/ItemGridTile.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$VBoxContainer/ItemContainer.resized.connect(_on_panel_resized)
+	itemContainer.resized.connect(_on_panel_resized)
 	
 func initialize():
 	Launcher.Player.inventory.content_changed.connect(update_inventory)

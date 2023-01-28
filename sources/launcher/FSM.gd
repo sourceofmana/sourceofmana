@@ -14,8 +14,10 @@ var nextState		= States.LOGIN_CONNECTION
 
 #
 func EnterLogin():
-	nextState = States.CHAR_SELECTION
 	emit_signal("enter_login")
+
+func ExitLogin():
+	nextState = States.CHAR_SELECTION
 
 func EnterCharSelection():
 	nextState = States.IN_GAME

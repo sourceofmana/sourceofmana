@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://cx3n3yjonu1x4"]
+[gd_scene load_steps=15 format=3 uid="uid://cx3n3yjonu1x4"]
 
 [ext_resource type="PackedScene" uid="uid://owocc5bniyvj" path="res://scenes/gui/StatIndicator.tscn" id="2"]
+[ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
 [ext_resource type="Script" path="res://sources/gui/GameGui.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://dml4oic211pyo" path="res://scenes/gui/WindowButton.tscn" id="3_sl5jl"]
 [ext_resource type="PackedScene" uid="uid://c2q5vtkxo04dp" path="res://scenes/gui/ActionBox.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/gui/Chat.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://cv0t25l5uwesy" path="res://scenes/gui/inventory/Inventory.tscn" id="6"]
 [ext_resource type="Script" path="res://sources/gui/FloatingWindows.gd" id="7"]
+[ext_resource type="PackedScene" uid="uid://cjgijbfxixe67" path="res://scenes/gui/Login.tscn" id="7_lrq68"]
 [ext_resource type="PackedScene" path="res://scenes/gui/Quit.tscn" id="8"]
 [ext_resource type="PackedScene" path="res://scenes/gui/Minimap.tscn" id="9_myjuo"]
 [ext_resource type="PackedScene" uid="uid://6pundiwfj5s1" path="res://scenes/shaders/HQ4x.tscn" id="10_id8es"]
@@ -16,6 +18,15 @@
 [node name="CanvasLayer" type="CanvasLayer"]
 layer = 128
 script = ExtResource("3")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_u1iab")
+expand_mode = 1
 
 [node name="VBoxMain" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -97,18 +108,17 @@ script = ExtResource("7")
 visible = false
 custom_minimum_size = Vector2(280, 120)
 layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -140.0
-offset_top = -60.0
-offset_right = 140.0
-offset_bottom = 60.0
+anchor_left = 0.390625
+anchor_top = 0.416667
+anchor_right = 0.609375
+anchor_bottom = 0.583333
+offset_right = 0.0
+offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 blockActions = true
 metadata/_edit_layout_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
 show_behind_parent = false
@@ -149,6 +159,19 @@ offset_right = 295.0
 offset_bottom = 714.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="Login" parent="FloatingWindows" instance=ExtResource("7_lrq68")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.390625
+anchor_top = 0.416667
+anchor_right = 0.609375
+anchor_bottom = 0.583333
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Shaders" type="Control" parent="."]
 visible = false

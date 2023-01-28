@@ -4,6 +4,7 @@ extends Node
 @onready var stats : Control					= $VBoxMain/HBoxTop/StatIndicator
 @onready var windows : Control					= $FloatingWindows
 @onready var boxes : Container					= $VBoxMain/ActionBox
+@onready var background : TextureRect			= $Background
 
 @onready var itemInventory : InventoryWindow	= $FloatingWindows/Inventory
 @onready var emoteList : GridContainer			= $FloatingWindows/Emote/ItemContainer/Grid
@@ -17,9 +18,10 @@ func CloseWindow():
 	else:
 		ToggleControl($FloatingWindows/Quit)
 
-func GetCurrentWindow():
+func GetCurrentWindow() -> Control:
 	if windows && windows.get_child_count() > 0:
 		return windows.get_child(windows.get_child_count() - 1)
+	return null
 
 func CloseCurrentWindow():
 	var control : Control = GetCurrentWindow()
@@ -37,33 +39,38 @@ func ToggleChatNewLine(control : Control):
 		if chatContainer:
 			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
 
-func PlayerSpawned():
+#
+func EnterLoginMenu():
+	for w in buttons.get_children():
+		w.set_visible(false)
+		if w.targetWindow:
+			w.targetWindow.set_visible(false)
+
+	boxes.set_visible(false)
+	stats.set_visible(false)
+	background.set_visible(true)
+
+func EnterGame():
 	if Launcher.Player:
 		itemInventory.initialize()
 
-	emoteList.FillGridContainer(Launcher.DB.EmotesDB)
+		emoteList.FillGridContainer(Launcher.DB.EmotesDB)
 
-	for w in buttons.get_children():
-		w.set_visible(true)
-		if w.targetWindow:
-			w.targetWindow.set_visible(true)
+		background.set_visible(false)
 
-	boxes.set_visible(true)
-	stats.set_visible(true)
+		for w in buttons.get_children():
+			w.set_visible(true)
+			if w.targetWindow:
+				w.targetWindow.set_visible(true)
+
+		boxes.set_visible(true)
+		stats.set_visible(true)
 
 #
 func _ready():
-	Launcher.FSM.enter_game.connect(PlayerSpawned)
+	Launcher.FSM.enter_login.connect(EnterLoginMenu)
+	Launcher.FSM.enter_game.connect(EnterGame)
 	get_tree().set_auto_accept_quit(false)
-
-	if windows:
-		for w in buttons.get_children():
-			w.set_visible(false)
-			if w.targetWindow:
-				w.targetWindow.set_visible(false)
-
-		boxes.set_visible(false)
-		stats.set_visible(false)
 
 func _process(_delta):
 	if Launcher.Action.IsActionJustPressed("ui_close", true): CloseWindow()
