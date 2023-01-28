@@ -6,9 +6,9 @@ extends Node
 @onready var boxes : Container					= $VBoxMain/ActionBox
 @onready var background : TextureRect			= $Background
 
-@onready var itemInventory : InventoryWindow	= $FloatingWindows/Inventory
-@onready var emoteList : GridContainer			= $FloatingWindows/Emote/ItemContainer/Grid
-@onready var chatContainer : Container			= $FloatingWindows/Chat/VBoxContainer
+@onready var inventoryWindow : InventoryWindow	= $FloatingWindows/Inventory
+@onready var emoteWindow : GridContainer		= $FloatingWindows/Emote/ItemContainer/Grid
+@onready var chatWindow : Container				= $FloatingWindows/Chat/VBoxContainer
 
 #
 func CloseWindow():
@@ -36,8 +36,8 @@ func ToggleChatNewLine(control : Control):
 	if control:
 		if control.is_visible() == false:
 			ToggleControl(control)
-		if chatContainer:
-			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
+		if chatWindow:
+			chatWindow.SetNewLineEnabled(!chatWindow.isNewLineEnabled())
 
 #
 func EnterLoginMenu():
@@ -52,9 +52,9 @@ func EnterLoginMenu():
 
 func EnterGame():
 	if Launcher.Player:
-		itemInventory.initialize()
+		inventoryWindow.initialize()
 
-		emoteList.FillGridContainer(Launcher.DB.EmotesDB)
+		emoteWindow.FillGridContainer(Launcher.DB.EmotesDB)
 
 		background.set_visible(false)
 
