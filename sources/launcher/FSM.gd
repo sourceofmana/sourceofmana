@@ -35,7 +35,7 @@ func EnterGame():
 			if Launcher.Debug:
 				Launcher.Debug.SetPlayerInventory()
 
-	emit_signal("enter_game")
+			emit_signal("enter_game")
 
 #
 func _process(_delta):
