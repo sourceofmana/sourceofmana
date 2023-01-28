@@ -94,6 +94,7 @@ mouse_filter = 2
 script = ExtResource("7")
 
 [node name="Quit" parent="FloatingWindows" instance=ExtResource("8")]
+visible = false
 custom_minimum_size = Vector2(280, 120)
 layout_mode = 0
 anchor_left = 0.5
