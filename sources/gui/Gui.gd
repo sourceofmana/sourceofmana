@@ -6,6 +6,7 @@ extends Node
 @onready var boxes : Container					= $VBoxMain/ActionBox
 @onready var background : TextureRect			= $Background
 
+@onready var loginWindow : Control				= $FloatingWindows/Login
 @onready var inventoryWindow : InventoryWindow	= $FloatingWindows/Inventory
 @onready var emoteWindow : GridContainer		= $FloatingWindows/Emote/ItemContainer/Grid
 @onready var chatWindow : Container				= $FloatingWindows/Chat/VBoxContainer
@@ -53,18 +54,17 @@ func EnterLoginMenu():
 func EnterGame():
 	if Launcher.Player:
 		inventoryWindow.initialize()
-
 		emoteWindow.FillGridContainer(Launcher.DB.EmotesDB)
 
+		loginWindow.set_visible(false)
 		background.set_visible(false)
+		boxes.set_visible(true)
+		stats.set_visible(true)
 
 		for w in buttons.get_children():
 			w.set_visible(true)
 			if w.targetWindow:
 				w.targetWindow.set_visible(true)
-
-		boxes.set_visible(true)
-		stats.set_visible(true)
 
 #
 func _ready():
