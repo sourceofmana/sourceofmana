@@ -1,6 +1,7 @@
 extends Node
 
 # High-prio services
+var Root				= null
 var Path				= null
 var FileSystem			= null
 var Util				= null
@@ -18,6 +19,7 @@ var Player				= null
 var FSM					= null
 var Map					= null
 var Save				= null
+var Settings			= null
 var World				= null
 
 #
@@ -35,18 +37,25 @@ func RunClient():
 	Camera			= FileSystem.LoadSource("camera/Camera.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
+	Settings		= FileSystem.LoadSource("settings/Settings.gd")
 
 func RunServer():
 	if not Scene:
-		Scene		= get_tree().root.get_node("Server")
+		Scene		= Root.get_node("Server")
 	World			= FileSystem.LoadSource("world/World.gd")
 
 #
+# Load all high-prio services, order should not be important
 func _init():
-	# Load all high-prio services, order should not be important
 	Path			= load("res://sources/system/Path.gd").new()
 	FileSystem		= load("res://sources/system/FileSystem.gd").new()
 	Util			= load("res://sources/util/Util.gd").new()
+
+func _enter_tree():
+	Root			= get_tree().get_root()
+	if not Root or not Path or not FileSystem or not Util:
+		printerr("Could not initialize source's base services")
+		_quit()
 
 func _ready():
 	Conf			= FileSystem.LoadSource("conf/Conf.gd")
@@ -56,9 +65,9 @@ func _ready():
 	if Conf.GetBool("Default", "runServer", Launcher.Conf.Type.MAP):
 		RunServer()
 
-	# Call post_ready functions for service depending on other services
 	_post_ready()
 
+# Call post_ready functions for service depending on other services
 func _post_ready():
 	if Debug:
 		Debug._post_ready()
@@ -72,6 +81,8 @@ func _post_ready():
 		World._post_ready()
 	if FSM:
 		FSM._post_ready()
+	if Settings:
+		Settings._post_ready()
 
 func _process(delta : float):
 	if Debug:
