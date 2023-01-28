@@ -1,8 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://cx3n3yjonu1x4"]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="PackedScene" uid="uid://owocc5bniyvj" path="res://scenes/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
-[ext_resource type="Script" path="res://sources/gui/GameGui.gd" id="3"]
+[ext_resource type="Script" path="res://sources/gui/Gui.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://dml4oic211pyo" path="res://scenes/gui/WindowButton.tscn" id="3_sl5jl"]
 [ext_resource type="PackedScene" uid="uid://c2q5vtkxo04dp" path="res://scenes/gui/ActionBox.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/gui/Chat.tscn" id="5"]
