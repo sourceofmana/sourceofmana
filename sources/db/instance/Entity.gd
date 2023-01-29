@@ -13,6 +13,7 @@ class_name EntityData
 @export var _collision : String
 @export var _customTexture : String
 @export var _walkSpeed : int
+@export var _displayName : bool
 
 func _init():
 	_id = -1
@@ -26,3 +27,4 @@ func _init():
 	_collision = ""
 	_customTexture = ""
 	_walkSpeed = 125
+	_displayName = false

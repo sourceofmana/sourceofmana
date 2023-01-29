@@ -8,7 +8,7 @@
 		"NavigationAgent"	: "PlayerAgent",
 		"Camera"			: "Default",
 		"Collision"			: "Medium",
-		"CanWarp"			: true,
+		"DisplayName"		: true
 	},
 
 	"1000": {
@@ -17,7 +17,8 @@
 		"Animation"			: "Phatyna",
 		"NavigationAgent"	: "NPAgent",
 		"Collision"			: "Medium",
-		"WalkSpeed"			: 40
+		"WalkSpeed"			: 40,
+		"DisplayName"		: true
 	},
 	"1001": {
 		"Name"				: "Dorian",
@@ -83,6 +84,7 @@
 		"Hairstyle"			: "Bald",
 		"Animation"			: "Player",
 		"NavigationAgent"	: "NPAgent",
-		"Collision"			: "Small"
+		"Collision"			: "Small",
+		"DisplayName"		: true
 	}
 }

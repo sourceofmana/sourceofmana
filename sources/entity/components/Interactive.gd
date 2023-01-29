@@ -6,6 +6,7 @@ var speechContainer : BoxContainer	= null
 var emoteSprite : Sprite2D			= null
 var emoteTimer : Timer				= null
 var speechTimers : Array			= []
+var nameLabel : Label				= null
 
 var currentEmoteID : int			= -1
 var emoteDelay : float				= 0
@@ -76,8 +77,8 @@ func DisplaySpeech(speech : String):
 func UpdateDelay():
 	if speechDecreaseDelay > 0:
 		for speechChild in speechContainer.get_children():
-			if speechChild.has_node("Timer"):
-				var timeLeft : float			= speechChild.get_node("Timer").get_time_left()
+			if speechChild.has_node("InteractiveTimer"):
+				var timeLeft : float			= speechChild.get_node("InteractiveTimer").get_time_left()
 				var speechIncreaseDelay : float	= speechDecreaseDelay
 				var textLength : int			= speechChild.get_total_character_count()
 
@@ -121,6 +122,10 @@ func Setup(entity : Node2D, isPC : bool):
 		emoteSprite = entity.get_node("Interactions/Emote")
 	if entity.has_node("Interactions/SpeechContainer"):
 		speechContainer = entity.get_node("Interactions/SpeechContainer")
+	if entity.has_node("Interactions/Name"):
+		nameLabel = entity.get_node("Interactions/Name")
+		nameLabel.set_text(entity.entityName)
+		nameLabel.set_visible(entity.displayName)
 
 	if isPC:
 		if Launcher.GUI:

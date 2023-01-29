@@ -17,6 +17,7 @@ var slot						= preload("res://sources/entity/components/Slot.gd").new()
 var interactive					= load("res://sources/entity/components/Interactive.gd").new()
 var inventory: EntityInventory	= load("res://sources/entity/components/inventory/Inventory.gd").new()
 
+var displayName					= false
 var entityName					= "PlayerName"
 var gender						= Gender.MALE
 
@@ -178,6 +179,8 @@ func SetName(_entityID : String, _entityName : String):
 
 
 func applyEntityData(data):
+	entityName = data._name
+	displayName = data._displayName
 	stat.moveSpeed = data._walkSpeed
 	if !data._ethnicity.is_empty() or !data._gender.is_empty():
 		sprite = Launcher.FileSystem.LoadPreset("sprites/" + data._ethnicity + data._gender)

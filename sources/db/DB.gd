@@ -83,6 +83,8 @@ func ParseEntitiesDB():
 				entity._customTexture = result[key].Texture
 			if "WalkSpeed" in result[key]:
 				entity._walkSpeed = result[key].WalkSpeed
+			if "DisplayName" in result[key]:
+				entity._displayName = result[key].DisplayName
 			EntitiesDB[key] = entity
 
 #

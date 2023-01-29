@@ -9,6 +9,7 @@ signal enter_game
 enum States { NONE = 0, LOGIN_CONNECTION, CHAR_SELECTION, IN_GAME }
 
 #
+var playerName		= ""
 var currentState	= States.NONE
 var nextState		= States.LOGIN_CONNECTION
 
@@ -16,7 +17,8 @@ var nextState		= States.LOGIN_CONNECTION
 func EnterLogin():
 	emit_signal("enter_login")
 
-func ExitLogin():
+func ExitLogin(loginName : String):
+	playerName = loginName
 	nextState = States.CHAR_SELECTION
 
 func EnterCharSelection():
@@ -27,7 +29,7 @@ func EnterGame():
 	if Launcher.World:
 		var map : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
 		var pos : Vector2	= Launcher.Conf.GetVector2("Default", "startPos", Launcher.Conf.Type.MAP)
-		Launcher.Player = Launcher.World.CreatePlayer("Default Entity", "Enora", true)
+		Launcher.Player = Launcher.World.CreatePlayer("Default Entity", playerName, true)
 
 		Launcher.Util.Assert(Launcher.Player != null, "Player was not created")
 		if Launcher.Player:
