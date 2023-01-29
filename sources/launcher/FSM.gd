@@ -34,7 +34,7 @@ func EnterGame():
 		Launcher.Util.Assert(Launcher.Player != null, "Player was not created")
 		if Launcher.Player:
 			Launcher.World.Spawn(map, Launcher.Player)
-			Launcher.Map.WarpEntity(map, pos, Launcher.Player)
+			Launcher.Map.WarpEntity(map, pos)
 
 			if Launcher.Debug:
 				Launcher.Debug.SetPlayerInventory()

@@ -35,6 +35,7 @@ func GetMapBoundaries() -> Rect2:
 #
 func UnloadMapNode():
 	if mapNode:
+		Launcher.Player.set_physics_process(false)
 		RemoveChilds()
 		Launcher.call_deferred("remove_child", mapNode)
 		mapNode = null
@@ -50,31 +51,30 @@ func RemoveChilds():
 	var tileMap : TileMap = GetTileMap()
 	if tileMap:
 		for entity in tileMap.get_children():
-			entity.set_physics_process(false)
 			tileMap.call_deferred("remove_child", entity)
 
 func AddChild(entity : CharacterBody2D):
 	var tilemap : TileMap = GetTileMap()
 	tilemap.call_deferred("add_child", entity)
-	entity.set_physics_process(true)
 
 #
-func WarpEntity(mapName : String, mapPos : Vector2, pc : PlayerEntity):
-	assert(pc, "Entity is not initialized, could not warp it to this map")
+func WarpEntity(mapName : String, mapPos : Vector2):
+	assert(Launcher.Player, "Entity is not initialized, could not warp it to this map")
 
 	if mapNode && mapNode.get_name() != mapName:
-		Launcher.World.Warp(mapNode.get_name(), mapName, pc)
+		Launcher.World.Warp(mapNode.get_name(), mapName, Launcher.Player)
 		UnloadMapNode()
 	LoadMapNode(mapName)
-	Launcher.Camera.SetBoundaries(pc)
+	Launcher.Camera.SetBoundaries()
 
 	if mapNode:
-		if pc:
-			for entity in Launcher.World.GetEntities(mapName, pc.entityName):
+		if Launcher.Player:
+			for entity in Launcher.World.GetEntities(mapName, Launcher.Player.entityName):
 				AddChild(entity)
-			pc.set_position(mapPos)
-			pc.ResetNav()
-				
+			Launcher.Player.set_position(mapPos)
+			Launcher.Player.ResetNav()
+
 		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
 			pool.RefreshPool(mapNode)
 		emit_signal('PlayerWarped')
+		Launcher.Player.set_physics_process(true)				

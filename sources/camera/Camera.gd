@@ -3,9 +3,9 @@ extends Node
 var mainCamera : Camera2D		= null
 
 # makes sure the camera does not move outside of the map
-func SetBoundaries(player : PlayerEntity):
-	if player && player.camera:
-		mainCamera = player.camera
+func SetBoundaries():
+	if Launcher.Player && Launcher.Player.camera:
+		mainCamera = Launcher.Player.camera
 		if mainCamera:
 			var mapBoundaries : Rect2i	= Launcher.Map.GetMapBoundaries()
 			mainCamera.limit_left		= int(mapBoundaries.position.x)
