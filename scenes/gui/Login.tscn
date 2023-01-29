@@ -80,6 +80,7 @@ size_flags_horizontal = 3
 [node name="PasswordText" type="LineEdit" parent="VBoxContainer/GridContainer/PasswordContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 focus_next = NodePath("../../../SignBar/SignIn")
 focus_previous = NodePath("../../NameContainer/NameText")
 focus_mode = 1
@@ -120,7 +121,6 @@ focus_next = NodePath("../../GridContainer/NameContainer/NameText")
 focus_previous = NodePath("../SignIn")
 text = "Sign Up"
 
-[connection signal="draw" from="VBoxContainer" to="." method="_on_window_draw"]
 [connection signal="text_submitted" from="VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_submitted"]
 [connection signal="text_submitted" from="VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_submitted"]
 [connection signal="pressed" from="VBoxContainer/SignBar/SignIn" to="." method="_on_sign_in_pressed"]
