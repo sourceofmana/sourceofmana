@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://sources/gui/ItemGridDisplay.gd" id="6_u84n8"]
 [ext_resource type="Texture2D" uid="uid://n5h5pue2jfn0" path="res://data/graphics/gui/bar.png" id="8"]
 
-[node name="Panel" type="Panel"]
+[node name="Panel" type="PanelContainer"]
 show_behind_parent = true
 custom_minimum_size = Vector2(180, 100)
 anchors_preset = 15
@@ -21,41 +21,37 @@ theme = ExtResource("1")
 script = ExtResource("2_46jtg")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 6.0
-offset_top = 4.0
-offset_right = -6.0
-offset_bottom = -7.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_custom_anchors = true
 
 [node name="TitleBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 4
 
 [node name="WindowName" type="Label" parent="VBoxContainer/TitleBar"]
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 0
 mouse_filter = 1
 text = "Inventory"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ControlEmpty" type="Control" parent="VBoxContainer/TitleBar"]
 layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 0
+size_flags_horizontal = 3
 mouse_filter = 1
 
 [node name="CloseButton" type="TextureButton" parent="VBoxContainer/TitleBar"]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 1
 texture_normal = ExtResource("3")
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
 
 [node name="Offset" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 1)
@@ -113,4 +109,3 @@ columns = 4
 script = ExtResource("6_u84n8")
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
-[connection signal="pressed" from="VBoxContainer/TitleBar/CloseButton" to="." method="_on_CloseButton_pressed"]

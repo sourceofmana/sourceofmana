@@ -1,5 +1,5 @@
 @tool
-extends Control
+extends PanelContainer
 class_name WindowPanel
 
 #

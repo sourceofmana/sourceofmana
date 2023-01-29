@@ -129,10 +129,10 @@ func Setup(entity : Node2D, isPC : bool):
 
 	if isPC:
 		if Launcher.GUI:
-			if Launcher.GUI.emoteWindow && Launcher.GUI.emoteWindow.ItemClicked.is_connected(EmoteWindowClicked) == false:
-				Launcher.GUI.emoteWindow.ItemClicked.connect(EmoteWindowClicked)
-			if Launcher.GUI.chatWindow && Launcher.GUI.chatWindow.NewTextTyped.is_connected(SpeechTextTyped) == false:
-				Launcher.GUI.chatWindow.NewTextTyped.connect(SpeechTextTyped)
+			if Launcher.GUI.emoteContainer && Launcher.GUI.emoteContainer.ItemClicked.is_connected(EmoteWindowClicked) == false:
+				Launcher.GUI.emoteContainer.ItemClicked.connect(EmoteWindowClicked)
+			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(SpeechTextTyped) == false:
+				Launcher.GUI.chatContainer.NewTextTyped.connect(SpeechTextTyped)
 
 		emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
 		speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)

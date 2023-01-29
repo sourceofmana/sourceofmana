@@ -6,10 +6,11 @@ extends Node
 @onready var boxes : Container					= $VBoxMain/ActionBox
 @onready var background : TextureRect			= $Background
 
-@onready var loginWindow : Control				= $FloatingWindows/Login
-@onready var inventoryWindow : InventoryWindow	= $FloatingWindows/Inventory
-@onready var emoteWindow : GridContainer		= $FloatingWindows/Emote/ItemContainer/Grid
-@onready var chatWindow : Container				= $FloatingWindows/Chat/VBoxContainer
+@onready var loginWindow : WindowPanel			= $FloatingWindows/Login
+@onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
+
+@onready var chatContainer : Container			= $FloatingWindows/Chat/VBoxContainer
+@onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
 
 #
 func CloseWindow():
@@ -37,8 +38,8 @@ func ToggleChatNewLine(control : Control):
 	if control:
 		if control.is_visible() == false:
 			ToggleControl(control)
-		if chatWindow:
-			chatWindow.SetNewLineEnabled(!chatWindow.isNewLineEnabled())
+		if chatContainer:
+			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
 
 #
 func EnterLoginMenu():
@@ -54,7 +55,7 @@ func EnterLoginMenu():
 func EnterGame():
 	if Launcher.Player:
 		inventoryWindow.initialize()
-		emoteWindow.FillGridContainer(Launcher.DB.EmotesDB)
+		emoteContainer.FillGridContainer(Launcher.DB.EmotesDB)
 
 		loginWindow.set_visible(false)
 		background.set_visible(false)
@@ -77,7 +78,7 @@ func _process(_delta):
 	if Launcher.Action.IsActionJustPressed("ui_inventory"): ToggleControl($FloatingWindows/Inventory)
 	if Launcher.Action.IsActionJustPressed("ui_minimap"): ToggleControl($FloatingWindows/Minimap)
 	if Launcher.Action.IsActionJustPressed("ui_chat"): ToggleControl($FloatingWindows/Chat)
-	if Launcher.Action.IsActionJustPressed("ui_chat_newline") : ToggleChatNewLine($FloatingWindows/Chat)
+	if Launcher.Action.IsActionJustPressed("ui_validate") : ToggleChatNewLine($FloatingWindows/Chat)
 	if Launcher.Action.IsActionJustPressed("ui_screenshot") : Launcher.FileSystem.SaveScreenshot(get_viewport().get_texture().get_image())
 
 func _notification(notif):

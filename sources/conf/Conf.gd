@@ -8,7 +8,8 @@ enum Type \
 	MAP, \
 	WINDOW, \
 	GAMEPLAY, \
-	SERVER \
+	SERVER, \
+	AUTH \
 }
 
 var ConfHandler				= null

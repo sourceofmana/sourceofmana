@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=28 format=3 uid="uid://dhb6h35g1bk0x"]
+[gd_resource type="Theme" load_steps=29 format=3 uid="uid://dhb6h35g1bk0x"]
 
 [ext_resource type="Texture2D" uid="uid://bh3c7tlihpf45" path="res://data/graphics/gui/tab/tab_fg.png" id="1"]
 [ext_resource type="FontFile" uid="uid://xjlm0vx7cd6y" path="res://data/graphics/fonts/alagard.ttf" id="1_vbxts"]
@@ -55,6 +55,10 @@ margin_top = 3.0
 margin_right = 3.0
 margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ytr4r"]
+color = Color(0.780392, 0.6, 0.298039, 1)
+thickness = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xadpl"]
 texture = ExtResource("11_ue8tk")
@@ -150,6 +154,8 @@ CheckButton/icons/off = ExtResource("14")
 CheckButton/icons/off_disabled = ExtResource("13")
 CheckButton/icons/on = ExtResource("7")
 CheckButton/icons/on_disabled = ExtResource("8")
+HSeparator/constants/separation = 0
+HSeparator/styles/separator = SubResource("StyleBoxLine_ytr4r")
 Label/colors/font_color = Color(0.843137, 0.717647, 0.482353, 1)
 Label/constants/line_spacing = 3
 LineEdit/colors/clear_button_color = Color(0.843137, 0.717647, 0.482353, 1)

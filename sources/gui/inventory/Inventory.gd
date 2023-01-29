@@ -1,5 +1,4 @@
 extends WindowPanel
-class_name InventoryWindow
 
 @onready var weightStat : Control		= $VBoxContainer/Weight/BgTex/Weight
 @onready var itemGrid : GridContainer	= $VBoxContainer/ItemContainer/Grid
