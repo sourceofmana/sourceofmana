@@ -121,10 +121,6 @@ focus_previous = NodePath("../SignIn")
 text = "Sign Up"
 
 [connection signal="draw" from="VBoxContainer" to="." method="_on_window_draw"]
-[connection signal="focus_entered" from="VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_focus_entered"]
-[connection signal="focus_exited" from="VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_focus_exited"]
 [connection signal="text_submitted" from="VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_submitted"]
-[connection signal="focus_entered" from="VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_focus_entered"]
-[connection signal="focus_exited" from="VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_focus_exited"]
 [connection signal="text_submitted" from="VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_submitted"]
 [connection signal="pressed" from="VBoxContainer/SignBar/SignIn" to="." method="_on_sign_in_pressed"]
