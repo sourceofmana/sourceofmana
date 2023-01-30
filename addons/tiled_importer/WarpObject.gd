@@ -10,7 +10,7 @@ class_name WarpObject
 #
 func bodyEntered(body):
 	if body && body is CharacterBody2D:
-		Launcher.Map.WarpEntity(destinationMap, destinationPos, body)
+		Launcher.Map.WarpEntity(destinationMap, destinationPos)
 
 #
 func _init():
