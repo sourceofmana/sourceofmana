@@ -82,6 +82,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/minimaps/Phatyna/002-3-4.png [Reid]
 ./graphics/minimaps/Phatyna/002-3-5.png [Reid]
 ./graphics/minimaps/Overworld/000-0.png [Reid]
+./graphics/sprites/monsters/bigpiou.png [Hocus]
 ./graphics/sprites/monsters/dorian.png [Reid] [Neorice]
 ./graphics/sprites/monsters/emil.png [Reid] [Neorice]
 ./graphics/sprites/monsters/gabriel.png [Reid] [Neorice]
