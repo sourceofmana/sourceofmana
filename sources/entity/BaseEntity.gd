@@ -136,12 +136,13 @@ func IsStuck() -> bool:
 
 
 func _physics_process(deltaTime : float):
-	UpdateInput()
-	UpdateOrientation(deltaTime)
-	if agent.get_avoidance_enabled():
-		agent.set_velocity(currentVelocity)
-	else:
-		_velocity_computed(currentVelocity)
+	if agent:
+		UpdateInput()
+		UpdateOrientation(deltaTime)
+		if agent.get_avoidance_enabled():
+			agent.set_velocity(currentVelocity)
+		else:
+			_velocity_computed(currentVelocity)
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity

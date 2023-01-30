@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://crlka24yev5fw"]
+
+[ext_resource type="Texture2D" uid="uid://cnmxs1n4xeaix" path="res://data/graphics/sprites/npcs/large-chest.png" id="1_ql3k7"]
+
+[node name="Sprite" type="Sprite2D"]
+texture = ExtResource("1_ql3k7")
+offset = Vector2(0, -16)
+hframes = 4

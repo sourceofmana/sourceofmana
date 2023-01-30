@@ -86,5 +86,12 @@
 		"NavigationAgent"	: "NPAgent",
 		"Collision"			: "Small",
 		"DisplayName"		: true
+	},
+	"2001": {
+		"Name"				: "Old Chest",
+		"Ethnicity"			: "OldChest",
+		"Animation"			: "Chest",
+		"Collision"			: "Large",
+		"DisplayName"		: true
 	}
 }
