@@ -36,6 +36,15 @@ func ResourceInstanceOrLoad(path : String) -> Object:
 			resource = resourceLoaded
 	return resource
 
+# File
+func LoadFile(path : String) -> String:
+	var result : String = ""
+	if FileExists(path):
+		var file = FileAccess.open(path, FileAccess.READ)
+		if file:
+			result = file.get_as_text()
+	return result
+
 # DB
 func LoadDB(path : String) -> Dictionary:
 	var fullPath : String		= Launcher.Path.DBRsc + path

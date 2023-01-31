@@ -10,6 +10,7 @@ offset_right = 280.0
 offset_bottom = 120.0
 theme = ExtResource("1")
 script = ExtResource("2")
+blockActions = true
 
 [node name="WindowCore" type="VBoxContainer" parent="."]
 layout_mode = 2

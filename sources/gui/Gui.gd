@@ -6,6 +6,7 @@ extends Node
 @onready var boxes : Container					= $VBoxMain/ActionBox
 @onready var background : TextureRect			= $Background
 
+@onready var welcomeWindow : WindowPanel		= $FloatingWindows/Welcome
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
 
@@ -14,11 +15,7 @@ extends Node
 
 #
 func CloseWindow():
-	var control : Control = GetCurrentWindow()
-	if control && control.has_method("CanBlockActions") && control.CanBlockActions():
-		CloseCurrentWindow()
-	else:
-		ToggleControl($FloatingWindows/Quit)
+	ToggleControl($FloatingWindows/Quit)
 
 func GetCurrentWindow() -> Control:
 	if windows && windows.get_child_count() > 0:
@@ -26,15 +23,15 @@ func GetCurrentWindow() -> Control:
 	return null
 
 func CloseCurrentWindow():
-	var control : Control = GetCurrentWindow()
+	var control : WindowPanel = GetCurrentWindow()
 	if control:
 		ToggleControl(control)
 
-func ToggleControl(control : Control):
+func ToggleControl(control : WindowPanel):
 	if control:
 		control.ToggleControl()
 
-func ToggleChatNewLine(control : Control):
+func ToggleChatNewLine(control : WindowPanel):
 	if control:
 		if control.is_visible() == false:
 			ToggleControl(control)
@@ -46,18 +43,20 @@ func EnterLoginMenu():
 	for w in buttons.get_children():
 		w.set_visible(false)
 		if w.targetWindow:
-			w.targetWindow.set_visible(false)
+			w.targetWindow.EnableControl(false)
 
 	boxes.set_visible(false)
 	stats.set_visible(false)
 	background.set_visible(true)
+
+	welcomeWindow.EnableControl(true)
+	loginWindow.EnableControl(true)
 
 func EnterGame():
 	if Launcher.Player:
 		inventoryWindow.initialize()
 		emoteContainer.FillGridContainer(Launcher.DB.EmotesDB)
 
-		loginWindow.set_visible(false)
 		background.set_visible(false)
 		boxes.set_visible(true)
 		stats.set_visible(true)
@@ -65,7 +64,10 @@ func EnterGame():
 		for w in buttons.get_children():
 			w.set_visible(true)
 			if w.targetWindow:
-				w.targetWindow.set_visible(true)
+				w.targetWindow.EnableControl(true)
+
+		loginWindow.EnableControl(false)
+		welcomeWindow.EnableControl(false)
 
 #
 func _ready():

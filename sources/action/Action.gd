@@ -4,6 +4,8 @@ var isEnabled : bool = true
 
 #
 func Enable(enable : bool):
+	# Force one full loop to change the state
+	await Launcher.get_tree().process_frame
 	await Launcher.get_tree().process_frame
 	isEnabled = enable
 

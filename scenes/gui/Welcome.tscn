@@ -1,0 +1,94 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjapfr57h8nwq"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_l06lx"]
+[ext_resource type="Script" path="res://sources/gui/Welcome.gd" id="2_3lvfq"]
+
+[node name="Welcome" type="PanelContainer"]
+custom_minimum_size = Vector2(160, 96)
+offset_right = 438.0
+offset_bottom = 594.0
+theme = ExtResource("1_l06lx")
+script = ExtResource("2_3lvfq")
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBox" type="VBoxContainer" parent="Scroll/Margin"]
+clip_contents = true
+layout_mode = 2
+
+[node name="WelcomeText" type="RichTextLabel" parent="Scroll/Margin/VBox"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.843137, 0.717647, 0.482353, 1)
+text = "Welcome to Source of Mana!
+
+Source of Mana is a 2D MMORPG using Godot to provide a modern player experience for a classic style of game that never really goes out of fashion. In Source of Mana you can live your medieval fantasy RPG adventure with friends and explore a world of magical tales and just pure silly fun.
+
+SoM is in the very early stages of development and updates will come soon. Stay tuned and join us on Discord or IRC to discuss the project!
+
+The Adventure Begins!
+
+----------------
+
+Version 0.0.3
+
+Changelog:
+Game:
+- Add various new slime mobs
+- Complete the slime cave design
+- Add an overworld map concept
+
+Code:
+- General UI improvement
+- Item management
+- Chat support (but local only)
+- Map import improvement
+- Entity refactorisation
+- NPC/Monster support
+- Full navigation support
+- Default AI
+- Split most of our code to work in client/server
+
+Design:
+- Game Design Document update ( https://gitlab.com/sourceofmana/product ... er/OGDD.md )
+- World map concept ( https://miro.com/app/board/uXjVOh9bBfo=/ )
+- Quest & Narrative design in progress ( https://miro.com/app/board/uXjVPPCT-pY=/ )
+
+Project:
+- Create a new Art & Design repository to store most of our assets ( https://gitlab.com/sourceofmana/artdesign )
+
+----------------
+
+Version 0.0.2
+
+Hello Manaverse!
+We bring you the second step in this project, on the second day of the second month from publication!
+
+Today we're finally releasing the 0.0.2 version of Source of Mana. A lot of things are being built from scratch or are newly adapted for Godot, so most of these changes are designed to prepare the game for a future prototype release. New builds are now available for download. We encourage you to take a look and let us know what you think.
+
+Source of Mana has grown a lot over the past month, our seedling of a project is finally sprouting into the wonderful tree it will one day become. The 0.0.1 release was dowloaded nearly 100 times, which we consider pretty good for such a small prototype.
+
+Changelog:
+- Game ported to Godot 4.0 (Beta 2) after intially being built on Godot 3.5;
+- Added minimap support;
+- Improved Tiled map imports to work with Godot 4.0;
+- Added various GUI elements including windows, buttons and fonts;
+- Added support for emotes (as well as new TMW-style emotes that will be coming with future releases!);
+- Various GUI, navigation and build fixes;
+- New story design in progress for a central storyline and to incorporate Mana into our World."
+
+[node name="Extand" type="Control" parent="Scroll/Margin/VBox"]
+layout_mode = 2
+
+[connection signal="gui_input" from="." to="." method="OnGuiInput"]

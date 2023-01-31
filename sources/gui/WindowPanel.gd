@@ -126,12 +126,15 @@ func ResetWindowModifier():
 	selectedEdge 	= EdgeOrientation.NONE
 
 func ToggleControl():
-	set_visible(!is_visible())
+	EnableControl(!is_visible())
+
+func EnableControl(state : bool):
+	set_visible(state)
 	SetFloatingWindowToTop()
 
 	Launcher.Util.Assert(Launcher.Action != null, "Launcher's action is not initialized")
 	if Launcher.Action && blockActions:
-		Launcher.Action.Enable(!is_visible())
+		Launcher.Action.Enable(!state)
 
 func SetFloatingWindowToTop():
 	set_draw_behind_parent(false)

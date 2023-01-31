@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://corn2kg1xmv33"]
+[gd_scene load_steps=16 format=3 uid="uid://corn2kg1xmv33"]
 
 [ext_resource type="PackedScene" uid="uid://owocc5bniyvj" path="res://scenes/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://6pundiwfj5s1" path="res://scenes/shaders/HQ4x.tscn" id="10_id8es"]
 [ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://scenes/gui/emotes/Emote.tscn" id="10_q754c"]
 [ext_resource type="PackedScene" uid="uid://bagfvnt2bhttv" path="res://scenes/shaders/CRT.tscn" id="11_x7rk2"]
+[ext_resource type="PackedScene" uid="uid://cjapfr57h8nwq" path="res://scenes/gui/Welcome.tscn" id="13_73agc"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 layer = 128
@@ -115,11 +116,11 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
-blockActions = true
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
+visible = false
 show_behind_parent = false
 layout_mode = 0
 anchors_preset = 0
@@ -133,6 +134,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
+visible = false
 custom_minimum_size = Vector2(200, 125)
 layout_mode = 0
 offset_left = 1065.0
@@ -142,6 +144,7 @@ offset_bottom = 158.0
 blockActions = null
 
 [node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
+visible = false
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 0
 offset_left = 66.0
@@ -150,6 +153,7 @@ offset_right = 304.0
 offset_bottom = 128.0
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
+visible = false
 layout_mode = 0
 offset_left = 3.0
 offset_top = 529.0
@@ -159,14 +163,24 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Login" parent="FloatingWindows" instance=ExtResource("7_lrq68")]
-layout_mode = 0
-anchor_left = 0.390625
-anchor_top = 0.416667
-anchor_right = 0.609375
-anchor_bottom = 0.583333
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.165625
+anchor_top = 0.427778
+anchor_right = 0.384375
+anchor_bottom = 0.647222
 offset_right = 0.0
 offset_bottom = 0.0
 metadata/_edit_use_anchors_ = true
+
+[node name="Welcome" parent="FloatingWindows" instance=ExtResource("13_73agc")]
+visible = false
+layout_mode = 0
+offset_left = 819.0
+offset_top = 141.0
+offset_right = 1253.0
+offset_bottom = 694.0
 
 [node name="Shaders" type="Control" parent="."]
 visible = false

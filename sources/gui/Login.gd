@@ -51,9 +51,11 @@ func _ready():
 		passwordTextControl.grab_focus()
 	else:
 		signInButton.grab_focus()
+	SetFloatingWindowToTop()
 
 #
 func _on_text_focus_entered():
+	SetFloatingWindowToTop()
 	Launcher.Action.Enable(false)
 
 func _on_text_focus_exited():
