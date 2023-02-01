@@ -2,66 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://duky5bv15qjay" path="res://scenes/presets/animations/trees/Chest.tscn" id="1_xx2j7"]
 
-[sub_resource type="Animation" id="Animation_2ge8q"]
-resource_name = "Opening"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_x1wls"]
-resource_name = "Closed"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_8svaw"]
-resource_name = "Closing"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [3, 2, 1, 0]
-}
-
-[sub_resource type="Animation" id="Animation_v53m3"]
-resource_name = "Opened"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [3]
-}
-
 [sub_resource type="Animation" id="Animation_tli2y"]
 length = 0.001
 tracks/0/type = "value"
@@ -77,18 +17,78 @@ tracks/0/keys = {
 "values": [3]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_gf7hs"]
-_data = {
-"Closed": SubResource("Animation_x1wls"),
-"Closing": SubResource("Animation_8svaw"),
-"Opened": SubResource("Animation_v53m3"),
-"Opening": SubResource("Animation_2ge8q"),
-"RESET": SubResource("Animation_tli2y")
+[sub_resource type="Animation" id="Animation_x1wls"]
+resource_name = "Default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_27kpf"]
+[sub_resource type="Animation" id="Animation_2ge8q"]
+resource_name = "To Trigger"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_3i1ca"]
+[sub_resource type="Animation" id="Animation_8svaw"]
+resource_name = "From Trigger"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_v53m3"]
+resource_name = "Trigger"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gf7hs"]
+_data = {
+"Default": SubResource("Animation_x1wls"),
+"From Trigger": SubResource("Animation_8svaw"),
+"RESET": SubResource("Animation_tli2y"),
+"To Trigger": SubResource("Animation_2ge8q"),
+"Trigger": SubResource("Animation_v53m3")
+}
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_d2ndq"]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_l0e6t"]
 
 [node name="AnimationPlayer" type="AnimationPlayer"]
 libraries = {
@@ -97,5 +97,5 @@ libraries = {
 
 [node name="AnimationTree" parent="." instance=ExtResource("1_xx2j7")]
 anim_player = NodePath("")
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_27kpf")
-parameters/Open/playback = SubResource("AnimationNodeStateMachinePlayback_3i1ca")
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_d2ndq")
+parameters/Trigger/playback = SubResource("AnimationNodeStateMachinePlayback_l0e6t")

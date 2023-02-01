@@ -3,13 +3,16 @@ class_name AiEntity
 
 var AITimer : Timer	= null
 
+#
+func Trigger():
+	pass
 
 func StartAITimer(delay : float, callable: Callable, map : Object):
 	AITimer.start(delay)
 	if not AITimer.timeout.is_connected(callable):
 		AITimer.timeout.connect(callable.bind(self, map))
 
-
+#
 func _ready():
 	_setup_nav_agent()
 	

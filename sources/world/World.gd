@@ -103,12 +103,16 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	inst.id = instanceID
 	for spawn in map.spawns:
 		for i in spawn.mob_count:
+#			Add check to spawn something else than mobs
 			var mob : BaseEntity = CreateMob(spawn.mob_name)
 			if spawn.is_global:
 				mob.position = GetRandomPosition(map)
 			else:
 				mob.position = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
-			inst.mobs.append(mob)
+			if spawn.mob_name == "Old Chest":
+				inst.npcs.append(mob)
+			else:
+				inst.mobs.append(mob)
 
 	map.instances.push_back(inst)
 
@@ -201,6 +205,7 @@ func CreateNpc(entityID : String, entityName : String = "") -> BaseEntity:
 	var inst : BaseEntity = null
 	var template = FindEntityReference(entityID)
 	if template:
+#		inst = Launcher.FileSystem.LoadScene("presets/entities/variants/Trigger")
 		inst = Launcher.FileSystem.LoadScene("presets/entities/Npc")
 		inst.applyEntityData(template)
 		inst.SetName(entityID, entityName)

@@ -50,8 +50,6 @@ min_space = Vector2(-1.1, -1)
 max_space = Vector2(1.1, 1)
 blend_mode = 1
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_iqf7h"]
-
 [sub_resource type="AnimationNodeAnimation" id="15"]
 animation = &"WalkLeft"
 
@@ -77,6 +75,8 @@ min_space = Vector2(-1.1, -1)
 max_space = Vector2(1.1, 1)
 blend_mode = 1
 
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_iqf7h"]
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="48"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_akgkv"]
@@ -89,27 +89,27 @@ advance_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="22"]
-states/Close/node = SubResource("32")
-states/Close/position = Vector2(97, 62)
-states/Closing/node = SubResource("39")
-states/Closing/position = Vector2(97, 187)
-states/Open/node = SubResource("AnimationNodeStateMachine_iqf7h")
-states/Open/position = Vector2(426, 187)
-states/Opening/node = SubResource("19")
-states/Opening/position = Vector2(426, 62)
+states/Default/node = SubResource("32")
+states/Default/position = Vector2(97, 62)
+"states/From Trigger/node" = SubResource("39")
+"states/From Trigger/position" = Vector2(97, 187)
 states/Start/position = Vector2(707, 100)
-transitions = ["Closing", "Close", SubResource("48"), "Opening", "Open", SubResource("AnimationNodeStateMachineTransition_akgkv"), "Close", "Opening", SubResource("AnimationNodeStateMachineTransition_coqm6"), "Open", "Closing", SubResource("AnimationNodeStateMachineTransition_pk0ku")]
+"states/To Trigger/node" = SubResource("19")
+"states/To Trigger/position" = Vector2(426, 62)
+states/Trigger/node = SubResource("AnimationNodeStateMachine_iqf7h")
+states/Trigger/position = Vector2(426, 187)
+transitions = ["From Trigger", "Default", SubResource("48"), "To Trigger", "Trigger", SubResource("AnimationNodeStateMachineTransition_akgkv"), "Default", "To Trigger", SubResource("AnimationNodeStateMachineTransition_coqm6"), "Trigger", "From Trigger", SubResource("AnimationNodeStateMachineTransition_pk0ku")]
 graph_offset = Vector2(-135.143, 22.8162)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="23"]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_pobwq"]
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_h2gpj"]
 
 [node name="AnimationTree" type="AnimationTree"]
 tree_root = SubResource("22")
 anim_player = NodePath("../Animation")
 parameters/playback = SubResource("23")
-parameters/Close/blend_position = Vector2(0, 0)
-parameters/Closing/blend_position = Vector2(0, 0)
-parameters/Open/playback = SubResource("AnimationNodeStateMachinePlayback_pobwq")
-parameters/Opening/blend_position = Vector2(0, 0)
+parameters/Default/blend_position = Vector2(0, 0)
+"parameters/From Trigger/blend_position" = Vector2(0, 0)
+"parameters/To Trigger/blend_position" = Vector2(0, 0)
+parameters/Trigger/playback = SubResource("AnimationNodeStateMachinePlayback_h2gpj")

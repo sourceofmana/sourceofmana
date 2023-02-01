@@ -58,7 +58,7 @@ func _update_walk_path():
 func _physics_process(deltaTime : float):
 	_move_process()
 	if interactive:
-		interactive.Update(isPlayableController)
+		interactive.Update(isPlayableController, self)
 	
 	super._physics_process(deltaTime)
 

@@ -7,12 +7,15 @@ var emoteSprite : Sprite2D			= null
 var emoteTimer : Timer				= null
 var speechTimers : Array			= []
 var nameLabel : Label				= null
+var triggerArea : Area2D			= null
 
 var currentEmoteID : int			= -1
 var emoteDelay : float				= 0
 var speechDelay : float				= 0
 var speechDecreaseDelay : float		= 0
 var speechIncreaseThreshold : int	= 0
+
+var canInteractWith : Array[BaseEntity]			= []
 
 #
 func AddTimer(parent : Node, delay : float, callable: Callable) -> Timer:
@@ -97,18 +100,19 @@ func UpdateDelay():
 				else:
 					speechChild.visible_ratio = 1
 
-func UpdateActions():
+func UpdateActions(entity : BaseEntity):
 	if Launcher.Action.IsActionJustPressed("smile_3"): DisplayEmote(3)
 	if Launcher.Action.IsActionJustPressed("smile_5"): DisplayEmote(5)
 	if Launcher.Action.IsActionJustPressed("smile_12"): DisplayEmote(12)
 	if Launcher.Action.IsActionJustPressed("smile_21"): DisplayEmote(21)
 	if Launcher.Action.IsActionJustPressed("smile_22"): DisplayEmote(22)
 	if Launcher.Action.IsActionJustPressed("smile_26"): DisplayEmote(26)
+	if Launcher.Action.IsActionJustPressed("gp_interact"): Interact(entity)
 
-func Update(isPC : bool):
+func Update(isPC : bool, entity : BaseEntity):
 	UpdateDelay()
 	if isPC:
-		UpdateActions()
+		UpdateActions(entity)
 
 func EmoteWindowClicked(selectedEmote : String):
 	DisplayEmote(selectedEmote.to_int())
@@ -126,6 +130,10 @@ func Setup(entity : Node2D, isPC : bool):
 		nameLabel = entity.get_node("Interactions/Name")
 		nameLabel.set_text(entity.entityName)
 		nameLabel.set_visible(entity.displayName)
+	if entity.has_node("Interactions/Area"):
+		triggerArea = entity.get_node("Interactions/Area")
+		triggerArea.body_entered.connect(_body_entered)
+		triggerArea.body_exited.connect(_body_exited)
 
 	if isPC:
 		if Launcher.GUI:
@@ -138,3 +146,26 @@ func Setup(entity : Node2D, isPC : bool):
 		speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)
 		speechDecreaseDelay		= Launcher.Conf.GetFloat("Gameplay", "speechDecreaseDelay", Launcher.Conf.Type.PROJECT)
 		speechIncreaseThreshold	= Launcher.Conf.GetInt("Gameplay", "speechIncreaseThreshold", Launcher.Conf.Type.PROJECT)
+
+func Interact(selfEntity : BaseEntity):
+	var nearestEntity : BaseEntity = null
+	var nearestDistance : float = -1
+	for nearEntity in canInteractWith:
+		var distance : float = (nearEntity.position - selfEntity.position).length()
+		if nearestDistance == -1 || distance < nearestDistance:
+			nearestDistance = distance
+			nearestEntity = nearEntity
+	if nearestEntity:
+		nearestEntity.Trigger()
+
+#
+func _body_entered(body):
+	if body && body is AiEntity && self != body.interactive:
+		if canInteractWith.has(body) == false:
+			canInteractWith.append(body)
+
+func _body_exited(body):
+	if body && body is AiEntity && self != body.interactive:
+		var bodyPos : int = canInteractWith.find(body)
+		if bodyPos != -1:
+			canInteractWith.remove_at(bodyPos)
