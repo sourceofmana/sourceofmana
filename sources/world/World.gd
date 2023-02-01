@@ -109,9 +109,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 				mob.position = GetRandomPosition(map)
 			else:
 				mob.position = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
-			if spawn.mob_name == "Old Chest":
-				inst.npcs.append(mob)
-			else:
+#				inst.npcs.append(npc)
 				inst.mobs.append(mob)
 
 	map.instances.push_back(inst)
