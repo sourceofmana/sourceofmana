@@ -499,8 +499,9 @@
   </object>
   <object id="30" name="Dorian" class="Spawn" x="1163" y="1732" width="32" height="32">
    <properties>
-    <property name="mob_count" type="int" value="1"/>
-    <property name="mob_name" value="Dorian"/>
+    <property name="count" type="int" value="1"/>
+    <property name="name" value="Dorian"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>

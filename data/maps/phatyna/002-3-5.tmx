@@ -448,14 +448,16 @@
   </object>
   <object id="30" name="Marvin" class="Spawn" x="1549" y="1287" width="32" height="32">
    <properties>
-    <property name="mob_count" type="int" value="1"/>
-    <property name="mob_name" value="Marvin"/>
+    <property name="count" type="int" value="1"/>
+    <property name="name" value="Marvin"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="32" name="Lilah" class="Spawn" x="1342" y="1290" width="341" height="156">
    <properties>
-    <property name="mob_count" type="int" value="2"/>
-    <property name="mob_name" value="Lilah"/>
+    <property name="count" type="int" value="2"/>
+    <property name="name" value="Lilah"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>

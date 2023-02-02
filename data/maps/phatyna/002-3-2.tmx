@@ -567,26 +567,30 @@
   </object>
   <object id="36" name="Phatyna" class="Spawn" x="1685" y="1475" width="96" height="128">
    <properties>
-    <property name="mob_count" type="int" value="1"/>
-    <property name="mob_name" value="Phatyna"/>
+    <property name="count" type="int" value="1"/>
+    <property name="name" value="Phatyna"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="41" name="Old Chest" class="Spawn" x="1968" y="1340" width="23" height="21">
    <properties>
-    <property name="mob_count" type="int" value="1"/>
-    <property name="mob_name" value="Old Chest"/>
+    <property name="count" type="int" value="1"/>
+    <property name="name" value="Old Chest"/>
+    <property name="type" value="Trigger"/>
    </properties>
   </object>
   <object id="39" name="Lilah" class="Spawn" x="-191" y="296" width="32" height="32">
    <properties>
-    <property name="mob_count" type="int" value="4"/>
-    <property name="mob_name" value="Lilah"/>
+    <property name="count" type="int" value="4"/>
+    <property name="name" value="Lilah"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="40" name="Lulea" class="Spawn" x="-191" y="189" width="32" height="32">
    <properties>
-    <property name="mob_count" type="int" value="4"/>
-    <property name="mob_name" value="Lulea"/>
+    <property name="count" type="int" value="4"/>
+    <property name="name" value="Lulea"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>
