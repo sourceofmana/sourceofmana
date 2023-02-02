@@ -241,8 +241,9 @@ func build_server(source_path) -> Node:
 #	root.spawns = spawn_pool
 	for spawn in spawn_pool:
 		var spawn_array : Array = []
-		spawn_array.append(spawn.mob_count)
-		spawn_array.append(spawn.mob_name)
+		spawn_array.append(spawn.count)
+		spawn_array.append(spawn.name)
+		spawn_array.append(spawn.type)
 		spawn_array.append(spawn.spawn_position)
 		spawn_array.append(spawn.spawn_offset)
 		root.spawns.append(spawn_array)
@@ -633,10 +634,12 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 						else:
 							var spawn_object = SpawnObject.new()
 							if "properties" in object:
-								if "mob_count" in object.properties:
-									spawn_object.mob_count = object.properties.mob_count
-								if "mob_name" in object.properties:
-									spawn_object.mob_name = object.properties.mob_name
+								if "count" in object.properties:
+									spawn_object.count = object.properties.count
+								if "name" in object.properties:
+									spawn_object.name = object.properties.name
+								if "type" in object.properties:
+									spawn_object.type = object.properties.type
 								spawn_object.spawn_position = pos + shape.extents
 								spawn_object.spawn_offset = shape.extents
 							spawn_pool.push_back(spawn_object)
