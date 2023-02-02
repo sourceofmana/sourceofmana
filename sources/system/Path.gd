@@ -18,6 +18,8 @@ const DBInstSrc : String				= Src + "db/instance/"
 const Scn : String						= Rsc + "scenes/"
 const GuiScn : String					= Scn + "gui/"
 const PresetScn : String				= Scn + "presets/"
+const EntityScn : String				= PresetScn + "entities/"
+const EntityVariantScn : String			= EntityScn + "variants/"
 
 # Local
 const Local : String					= "user://"

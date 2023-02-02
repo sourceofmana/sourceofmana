@@ -66,10 +66,11 @@ func LoadGenericData(map : Map):
 				Launcher.Util.Assert(spawn != null, "Warp format is not supported")
 				if spawn:
 					var spawnObject = SpawnObject.new()
-					spawnObject.mob_count = spawn[0]
-					spawnObject.mob_name = spawn[1]
-					spawnObject.spawn_position = spawn[2]
-					spawnObject.spawn_offset = spawn[3]
+					spawnObject.count = spawn[0]
+					spawnObject.name = spawn[1]
+					spawnObject.type = spawn[2]
+					spawnObject.spawn_position = spawn[3]
+					spawnObject.spawn_offset = spawn[4]
 					spawnObject.is_global = spawnObject.spawn_position < Vector2i.LEFT
 					map.spawns.append(spawnObject)
 		if "warps" in node:
@@ -102,21 +103,34 @@ func CreateInstance(map : Map, instanceID : int = 0):
 
 	inst.id = instanceID
 	for spawn in map.spawns:
-		for i in spawn.mob_count:
+		for i in spawn.count:
 #			Add check to spawn something else than mobs
-			var mob : BaseEntity = CreateMob(spawn.mob_name)
+			var entity : BaseEntity = null
+			match spawn.type:
+				"Player":	entity = CreateEntity(spawn.type, spawn.name)
+				"Npc":		entity = CreateEntity(spawn.type, spawn.name)
+				"Monster":	entity = CreateEntity(spawn.type, spawn.name)
+				"Trigger":	entity = CreateEntity(spawn.type, spawn.name)
+				_: Launcher.Util.Assert(false, "Entity type is not valid")
+
 			if spawn.is_global:
-				mob.position = GetRandomPosition(map)
+				entity.position = GetRandomPosition(map)
 			else:
-				mob.position = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
-#				inst.npcs.append(npc)
-				inst.mobs.append(mob)
+				entity.position = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
+
+			# TODO: use internal Spawn function
+			Launcher.Util.Assert(entity.position != Vector2.ZERO, "Could not spawn the entity %s, no walkable position found" % spawn.name)
+			if entity.position != Vector2.ZERO:
+				match spawn.type:
+					"Player":	inst.players.append(entity)
+					"Npc":		inst.npcs.append(entity)
+					"Monster":	inst.mobs.append(entity)
+					"Trigger":	inst.npcs.append(entity)
+					_: Launcher.Util.Assert(false, "Entity type is not valid")
 
 	map.instances.push_back(inst)
 
 	for entity in inst.npcs + inst.players + inst.mobs:
-		if entity.position == Vector2.ZERO:
-			entity.position = GetRandomPosition(map)
 		if entity.agent:
 			entity.agent.set_navigation_map(map.mapRID)
 
@@ -177,36 +191,16 @@ func FindEntityReference(entityID : String) -> Object:
 			break
 	return ref
 
-func CreatePlayer(entityID : String, entityName : String = "", isLocalPlayer = false) -> BaseEntity:
+func CreateEntity(entityType : String, entityID : String, entityName : String = "", isLocalPlayer : bool = false) -> BaseEntity:
 	var inst : BaseEntity = null
 	var template = FindEntityReference(entityID)
 	if template:
-		inst = Launcher.FileSystem.LoadScene("presets/entities/Player")
-		if isLocalPlayer:
-			inst.SetLocalPlayer()
-		inst.applyEntityData(template)
-		inst.SetName(entityID, entityName)
-	Launcher.Util.Assert(inst != null, "Could not create the entity: " + entityID)
-	return inst
-
-func CreateMob(entityID : String, entityName : String = "") -> BaseEntity:
-	var inst : BaseEntity = null
-	var template = FindEntityReference(entityID)
-	if template:
-		inst = Launcher.FileSystem.LoadScene("presets/entities/Monster")
-		inst.applyEntityData(template)
-		inst.SetName(entityID, entityName)
-	Launcher.Util.Assert(inst != null, "Could not create the entity: " + entityID)
-	return inst
-
-func CreateNpc(entityID : String, entityName : String = "") -> BaseEntity:
-	var inst : BaseEntity = null
-	var template = FindEntityReference(entityID)
-	if template:
-#		inst = Launcher.FileSystem.LoadScene("presets/entities/variants/Trigger")
-		inst = Launcher.FileSystem.LoadScene("presets/entities/Npc")
-		inst.applyEntityData(template)
-		inst.SetName(entityID, entityName)
+		inst = Launcher.FileSystem.LoadEntity(entityType)
+		if inst:
+			if isLocalPlayer:
+				inst.SetLocalPlayer()
+			inst.applyEntityData(template)
+			inst.SetName(entityID, entityName)
 	Launcher.Util.Assert(inst != null, "Could not create the entity: " + entityID)
 	return inst
 

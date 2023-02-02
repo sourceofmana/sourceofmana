@@ -160,6 +160,14 @@ func LoadPreset(path : String, instantiate : bool = true) -> Object:
 	var fullPath : String = Launcher.Path.PresetScn + path + Launcher.Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
+# Entity
+func LoadEntity(type : String, instantiate : bool = true) -> BaseEntity:
+	var fullPath : String = Launcher.Path.EntityScn + type + Launcher.Path.SceneExt
+
+	if not ResourceExists(fullPath):
+		fullPath = Launcher.Path.EntityVariantScn + type + Launcher.Path.SceneExt
+	return LoadResource(fullPath, instantiate)
+
 # GUI
 func LoadGui(path : String, instantiate : bool = true) -> Object:
 	var fullPath : String = Launcher.Path.GuiScn + path + Launcher.Path.SceneExt
