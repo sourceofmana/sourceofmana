@@ -77,6 +77,17 @@ func _ready():
 
 	var runClient : bool = Conf.GetBool("Default", "runClient", Launcher.Conf.Type.PROJECT)
 	var runServer : bool = Conf.GetBool("Default", "runServer", Launcher.Conf.Type.PROJECT)
+
+	if "--hybrid" in OS.get_cmdline_args():
+		runClient = true
+		runServer = true
+	elif "--client" in OS.get_cmdline_args():
+		runClient = true
+		runServer = false
+	elif "--server" in OS.get_cmdline_args():
+		runClient = false
+		runServer = true
+
 	RunMode(runClient, runServer)
 
 # Call post_ready functions for service depending on other services
