@@ -13,7 +13,7 @@ func SetPlayerInventory():
 		inventory.add_item(load("res://data/items/hungrys_key.tres"), 2)
 
 #
-func _post_ready():
+func _post_run():
 	projectName = Launcher.Conf.GetString("Default", "projectName", Launcher.Conf.Type.PROJECT)
 
 func _process(_delta : float):

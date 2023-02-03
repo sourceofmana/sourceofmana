@@ -113,7 +113,7 @@ func GetMapPath(mapName : String) -> String:
 	return path
 
 #
-func _post_ready():
+func _post_run():
 	ParseMapsDB()
 	ParseMusicsDB()
 	ParseEthnicitiesDB()

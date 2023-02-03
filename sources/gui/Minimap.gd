@@ -25,7 +25,7 @@ func _ready():
 		Launcher.Map.PlayerWarped.connect(self.Warped)
 
 func _process(_delta):
-	if Launcher.Camera.mainCamera:
+	if Launcher.Camera && Launcher.Camera.mainCamera:
 		var screenCenter : Vector2	= Launcher.Camera.mainCamera.get_target_position()
 		var mapSize : Vector2		= Vector2(Launcher.Camera.mainCamera.limit_right, Launcher.Camera.mainCamera.limit_bottom)
 		if mapSize.x != 0 && mapSize.y != 0:

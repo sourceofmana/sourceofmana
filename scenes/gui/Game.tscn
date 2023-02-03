@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://corn2kg1xmv33"]
+[gd_scene load_steps=17 format=3 uid="uid://corn2kg1xmv33"]
 
 [ext_resource type="PackedScene" uid="uid://owocc5bniyvj" path="res://scenes/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cv0t25l5uwesy" path="res://scenes/gui/inventory/Inventory.tscn" id="6"]
 [ext_resource type="Script" path="res://sources/gui/FloatingWindows.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://cjgijbfxixe67" path="res://scenes/gui/Login.tscn" id="7_lrq68"]
+[ext_resource type="PackedScene" uid="uid://do0fda0fj06ak" path="res://scenes/gui/Mode.tscn" id="7_vrpmr"]
 [ext_resource type="PackedScene" uid="uid://c6nwveqo000dl" path="res://scenes/gui/Quit.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://x1jkhsyls2i4" path="res://scenes/gui/Minimap.tscn" id="9_myjuo"]
 [ext_resource type="PackedScene" uid="uid://6pundiwfj5s1" path="res://scenes/shaders/HQ4x.tscn" id="10_id8es"]
@@ -43,6 +44,7 @@ mouse_filter = 2
 alignment = 1
 
 [node name="StatIndicator" parent="VBoxMain/HBoxTop" instance=ExtResource("2")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 0
@@ -55,6 +57,7 @@ size_flags_vertical = 0
 mouse_filter = 2
 
 [node name="HBoxButtons" type="HBoxContainer" parent="VBoxMain/HBoxTop"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
@@ -92,6 +95,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="ActionBox" parent="VBoxMain" instance=ExtResource("4")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -104,6 +108,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7")
+
+[node name="Mode" parent="FloatingWindows" instance=ExtResource("7_vrpmr")]
+layout_mode = 0
+offset_left = 483.0
+offset_top = 333.0
+offset_right = 763.0
+offset_bottom = 389.0
 
 [node name="Quit" parent="FloatingWindows" instance=ExtResource("8")]
 visible = false

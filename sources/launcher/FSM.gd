@@ -56,7 +56,7 @@ func _process(_delta):
 				Launcher.Util.Assert(false, "Wanted FSM state not handled.")
 
 #
-func _post_ready():
+func _post_run():
 	if Launcher.Conf.GetBool("Default", "skipLogin", Launcher.Conf.Type.PROJECT):
 		nextState = States.IN_GAME
 	else:

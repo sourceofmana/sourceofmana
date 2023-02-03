@@ -21,11 +21,22 @@ var Map					= null
 var Save				= null
 var Settings			= null
 var World				= null
+var Network				= null
 
 #
+func RunMode(isClient : bool = false, isServer : bool = false):
+	if not isClient and not isServer:
+		return
+	if isClient:	RunClient()
+	if isServer:	RunServer()
+
+	if not isClient:
+		Scene.queue_free()
+
+	_post_run()
+
 func RunClient():
 	# Load first low-prio services on which the order is important
-	Scene			= get_tree().root.get_node("Source")
 	GUI				= Scene.get_node("CanvasLayer")
 
 	if OS.is_debug_build():
@@ -38,11 +49,12 @@ func RunClient():
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
 	Settings		= FileSystem.LoadSource("settings/Settings.gd")
+	Network			= FileSystem.LoadSource("network/Client.gd")
 
 func RunServer():
-	if not Scene:
-		Scene		= Root.get_node("Server")
 	World			= FileSystem.LoadSource("world/World.gd")
+	if not Network:
+		Network		= FileSystem.LoadSource("network/Server.gd")
 
 #
 # Load all high-prio services, order should not be important
@@ -53,36 +65,38 @@ func _init():
 
 func _enter_tree():
 	Root			= get_tree().get_root()
-	if not Root or not Path or not FileSystem or not Util:
+	Scene			= Root.get_node("Source")
+
+	if not Root or not Path or not FileSystem or not Util or not Scene:
 		printerr("Could not initialize source's base services")
 		_quit()
 
 func _ready():
 	Conf			= FileSystem.LoadSource("conf/Conf.gd")
 	DB				= FileSystem.LoadSource("db/DB.gd")
-	if Conf.GetBool("Default", "runClient", Launcher.Conf.Type.MAP):
-		RunClient()
-	if Conf.GetBool("Default", "runServer", Launcher.Conf.Type.MAP):
-		RunServer()
 
-	_post_ready()
+	var runClient : bool = Conf.GetBool("Default", "runClient", Launcher.Conf.Type.PROJECT)
+	var runServer : bool = Conf.GetBool("Default", "runServer", Launcher.Conf.Type.PROJECT)
+	RunMode(runClient, runServer)
 
 # Call post_ready functions for service depending on other services
-func _post_ready():
+func _post_run():
+	if GUI:
+		GUI._post_run()
 	if Debug:
-		Debug._post_ready()
+		Debug._post_run()
 	if Audio:
-		Audio._post_ready()
+		Audio._post_run()
 	if Conf:
-		Conf._post_ready()
+		Conf._post_run()
 	if DB:
-		DB._post_ready()
+		DB._post_run()
 	if World:
-		World._post_ready()
+		World._post_run()
 	if FSM:
-		FSM._post_ready()
+		FSM._post_run()
 	if Settings:
-		Settings._post_ready()
+		Settings._post_run()
 
 func _process(delta : float):
 	if Debug:

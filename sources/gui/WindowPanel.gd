@@ -132,7 +132,6 @@ func EnableControl(state : bool):
 	set_visible(state)
 	SetFloatingWindowToTop()
 
-	Launcher.Util.Assert(Launcher.Action != null, "Launcher's action is not initialized")
 	if Launcher.Action && blockActions:
 		Launcher.Action.Enable(!state)
 

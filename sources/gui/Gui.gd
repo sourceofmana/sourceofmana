@@ -6,6 +6,7 @@ extends Node
 @onready var boxes : Container					= $VBoxMain/ActionBox
 @onready var background : TextureRect			= $Background
 
+@onready var modeWindow : WindowPanel			= $FloatingWindows/Mode
 @onready var welcomeWindow : WindowPanel		= $FloatingWindows/Welcome
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
@@ -49,11 +50,13 @@ func EnterLoginMenu():
 	stats.set_visible(false)
 	background.set_visible(true)
 
+	modeWindow.EnableControl(false)
 	welcomeWindow.EnableControl(true)
 	loginWindow.EnableControl(true)
 
 func EnterGame():
 	if Launcher.Player:
+		modeWindow.EnableControl(false)
 		inventoryWindow.initialize()
 		emoteContainer.FillGridContainer(Launcher.DB.EmotesDB)
 
@@ -70,18 +73,19 @@ func EnterGame():
 		welcomeWindow.EnableControl(false)
 
 #
-func _ready():
+func _post_run():
 	Launcher.FSM.enter_login.connect(EnterLoginMenu)
 	Launcher.FSM.enter_game.connect(EnterGame)
 	get_tree().set_auto_accept_quit(false)
 
 func _process(_delta):
-	if Launcher.Action.IsActionJustPressed("ui_close", true): CloseWindow()
-	if Launcher.Action.IsActionJustPressed("ui_inventory"): ToggleControl($FloatingWindows/Inventory)
-	if Launcher.Action.IsActionJustPressed("ui_minimap"): ToggleControl($FloatingWindows/Minimap)
-	if Launcher.Action.IsActionJustPressed("ui_chat"): ToggleControl($FloatingWindows/Chat)
-	if Launcher.Action.IsActionJustPressed("ui_validate") : ToggleChatNewLine($FloatingWindows/Chat)
-	if Launcher.Action.IsActionJustPressed("ui_screenshot") : Launcher.FileSystem.SaveScreenshot(get_viewport().get_texture().get_image())
+	if Launcher.Action:
+		if Launcher.Action.IsActionJustPressed("ui_close", true): CloseWindow()
+		if Launcher.Action.IsActionJustPressed("ui_inventory"): ToggleControl($FloatingWindows/Inventory)
+		if Launcher.Action.IsActionJustPressed("ui_minimap"): ToggleControl($FloatingWindows/Minimap)
+		if Launcher.Action.IsActionJustPressed("ui_chat"): ToggleControl($FloatingWindows/Chat)
+		if Launcher.Action.IsActionJustPressed("ui_validate") : ToggleChatNewLine($FloatingWindows/Chat)
+		if Launcher.Action.IsActionJustPressed("ui_screenshot") : Launcher.FileSystem.SaveScreenshot(get_viewport().get_texture().get_image())
 
 func _notification(notif):
 	if notif == Node.NOTIFICATION_WM_CLOSE_REQUEST:
