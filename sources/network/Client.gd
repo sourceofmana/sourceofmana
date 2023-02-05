@@ -11,14 +11,26 @@ func SetConnectPlayer(playerName : String):
 	var maxPlayerCount : int	= Launcher.Conf.GetInt("Network", "maxPlayerCount", Launcher.Conf.Type.PROJECT)
 	peer.create_client(serverAdress, serverPort, maxPlayerCount)
 
-	Launcher.Root.multiplayer.multiplayer_peer = peer
-	uniqueID = Launcher.Root.multiplayer.get_unique_id()
+	if Launcher.Server:
+		ConnectPlayer(playerName)
+	else:
+		Launcher.Root.multiplayer.multiplayer_peer = peer
+		Launcher.Root.multiplayer.connected_to_server.connect(ConnectPlayer.bind(playerName))
+		Launcher.Root.multiplayer.connection_failed.connect(DisconnectPlayer)
+		Launcher.Root.multiplayer.server_disconnected.connect(DisconnectPlayer)
+		uniqueID = Launcher.Root.multiplayer.get_unique_id()
 
-	Launcher.Server.SetConnectPlayer(playerName)
+func ConnectPlayer(playerName):
+	if Launcher.Server:
+		Launcher.Server.SetConnectPlayer(playerName)
 
 func SetDisconnectPlayer():
 	if Launcher.Player:
-		Launcher.Server.SetDisconnectPlayer(Launcher.Player.entityName)
+		if Launcher.Server:
+			Launcher.Server.SetDisconnectPlayer(Launcher.Player.entityName)
+
+func DisconnectPlayer():
+	Launcher.FSM.EnterLogin()
 
 func GetPlayer(entity : PlayerEntity, map : String, pos : Vector2i):
 	Launcher.Player = entity
@@ -33,11 +45,13 @@ func GetPlayer(entity : PlayerEntity, map : String, pos : Vector2i):
 			Launcher.FSM.emit_signal("enter_game")
 
 func GetEntities(mapName : String):
-	Launcher.Server.GetEntities(mapName, Launcher.Player.entityName)
+	if Launcher.Server:
+		Launcher.Server.GetEntities(mapName, Launcher.Player.entityName)
 
 func SetEntities(entities : Array[BaseEntity]):
 	for entity in entities:
 		Launcher.Map.AddChild(entity)
 
 func SetWarp(oldMapName : String, newMapName : String):
-	Launcher.Server.SetWarp(oldMapName, newMapName, Launcher.Player)
+	if Launcher.Server:
+		Launcher.Server.SetWarp(oldMapName, newMapName, Launcher.Player)

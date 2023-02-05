@@ -25,10 +25,10 @@ func SetWarp(oldMapName : String, newMapName : String, entity):
 
 #
 func player_connected(id : int):
-	Launcher.Util.PrintLog("Player connected: %s" % id)
+	Launcher.Util.PrintLog("[Server] Player connected: %s" % id)
 
 func player_disconnected(id : int):
-	Launcher.Util.PrintLog("Player disconnected: %s" % id)
+	Launcher.Util.PrintLog("[Server] Player disconnected: %s" % id)
 
 #
 func _init():
@@ -41,4 +41,4 @@ func _init():
 		Launcher.Root.multiplayer.multiplayer_peer = peer
 		Launcher.Root.multiplayer.peer_connected.connect(player_connected)
 		Launcher.Root.multiplayer.peer_disconnected.connect(player_disconnected)
-		Launcher.Util.PrintLog("Server created on port %d" % serverPort)
+		Launcher.Util.PrintLog("[Server] Initialized on port %d" % serverPort)
