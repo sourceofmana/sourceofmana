@@ -16,11 +16,7 @@ func Stop():
 		audioPlayer.Stop()
 
 func Load(soundName : String):
-	if audioPlayer == null:
-		audioPlayer = Launcher.World.get_node("AudioStreamPlayer")
-
 	assert(audioPlayer, "AudioStreamPlayer could not be found")
-
 	if audioPlayer && currentTrack != soundName && not soundName.is_empty() && Launcher.DB.MusicsDB[soundName] != null:
 		var soundStream : Resource = Launcher.FileSystem.LoadMusic(Launcher.DB.MusicsDB[soundName]._path)
 		Launcher.Util.Assert(soundStream != null, "Could not load music: " + soundName)

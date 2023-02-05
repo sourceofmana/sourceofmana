@@ -21,7 +21,8 @@ var Map					= null
 var Save				= null
 var Settings			= null
 var World				= null
-var Network				= null
+var Client				= null
+var Server				= null
 
 #
 func LaunchMode(isClient : bool = false, isServer : bool = false):
@@ -49,12 +50,11 @@ func LaunchClient():
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
 	Settings		= FileSystem.LoadSource("settings/Settings.gd")
-	Network			= FileSystem.LoadSource("network/Client.gd")
+	Client			= FileSystem.LoadSource("network/Client.gd")
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
-	if not Network:
-		Network		= FileSystem.LoadSource("network/Server.gd")
+	Server			= FileSystem.LoadSource("network/Server.gd")
 
 #
 # Load all high-prio services, order should not be important
@@ -92,30 +92,20 @@ func _ready():
 
 # Call post_ready functions for service depending on other services
 func _post_run():
-	if GUI:
-		GUI._post_run()
-	if Debug:
-		Debug._post_run()
-	if Audio:
-		Audio._post_run()
-	if Conf:
-		Conf._post_run()
-	if DB:
-		DB._post_run()
-	if World:
-		World._post_run()
-	if FSM:
-		FSM._post_run()
-	if Settings:
-		Settings._post_run()
+	if GUI:			GUI._post_run()
+	if Debug:		Debug._post_run()
+	if Audio:		Audio._post_run()
+	if Conf:		Conf._post_run()
+	if DB:			DB._post_run()
+	if World:		World._post_run()
+	if FSM:			FSM._post_run()
+	if Settings:	Settings._post_run()
 
 func _process(delta : float):
-	if Debug:
-		Debug._process(delta)
-	if FSM:
-		FSM._process(delta)
-	if World:
-		World._process(delta)
+	if Debug:		Debug._process(delta)
+	if FSM:			FSM._process(delta)
+	if World:		World._process(delta)
 
 func _quit():
+	Launcher.Client.SetDisconnectPlayer()
 	get_tree().quit()

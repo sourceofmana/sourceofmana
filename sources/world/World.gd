@@ -182,6 +182,34 @@ func GetEntities(mapName : String, playerName : String):
 					break
 	return list
 
+func HasEntity(entityName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
+	for map in areas.values():
+		for instance in map.instances:
+			if checkPlayers:
+				for entity in \
+				instance.players if checkPlayers else [] + \
+				instance.npcs if checkNpcs else [] + \
+				instance.mobs if checkMonsters else []:
+					if entity.entityName == entityName:
+						return true
+	return false
+
+func RemoveEntity(entityName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
+	for map in areas.values():
+		for instance in map.instances:
+			if checkPlayers:
+				for entity in instance.players:
+					if entity.entityName == entityName:
+						instance.players.erase(entity)
+			if checkNpcs:
+				for entity in instance.npcs:
+					if entity.entityName == entityName:
+						instance.npcs.erase(entity)
+			if checkMonsters:
+				for entity in instance.mobs:
+					if entity.entityName == entityName:
+						instance.mobs.erase(entity)
+
 # Entity Creation
 func FindEntityReference(entityID : String) -> Object:
 	var ref : Object = null

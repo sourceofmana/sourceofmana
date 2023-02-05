@@ -62,15 +62,14 @@ func WarpEntity(mapName : String, mapPos : Vector2):
 	assert(Launcher.Player, "Entity is not initialized, could not warp it to this map")
 
 	if mapNode && mapNode.get_name() != mapName:
-		Launcher.World.Warp(mapNode.get_name(), mapName, Launcher.Player)
+		Launcher.Client.SetWarp(mapNode.get_name(), mapName)
 		UnloadMapNode()
 	LoadMapNode(mapName)
 	Launcher.Camera.SetBoundaries()
 
 	if mapNode:
 		if Launcher.Player:
-			for entity in Launcher.World.GetEntities(mapName, Launcher.Player.entityName):
-				AddChild(entity)
+			Launcher.Client.GetEntities(mapName)
 			Launcher.Player.set_position(mapPos)
 			Launcher.Player.ResetNav()
 

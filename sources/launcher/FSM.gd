@@ -26,20 +26,8 @@ func EnterCharSelection():
 	emit_signal("enter_char_selection")
 
 func EnterGame():
-	if Launcher.World:
-		var map : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
-		var pos : Vector2	= Launcher.Conf.GetVector2("Default", "startPos", Launcher.Conf.Type.MAP)
-		Launcher.Player		= Launcher.World.CreateEntity("Player", "Default Entity", playerName, true)
-
-		Launcher.Util.Assert(Launcher.Player != null, "Player was not created")
-		if Launcher.Player:
-			Launcher.World.Spawn(map, Launcher.Player)
-			Launcher.Map.WarpEntity(map, pos)
-
-			if Launcher.Debug:
-				Launcher.Debug.SetPlayerInventory()
-
-			emit_signal("enter_game")
+	if Launcher.Client:
+		Launcher.Client.SetConnectPlayer(playerName)
 
 #
 func _process(_delta):
