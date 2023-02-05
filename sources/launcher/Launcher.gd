@@ -24,18 +24,18 @@ var World				= null
 var Network				= null
 
 #
-func RunMode(isClient : bool = false, isServer : bool = false):
+func LaunchMode(isClient : bool = false, isServer : bool = false):
 	if not isClient and not isServer:
 		return
-	if isClient:	RunClient()
-	if isServer:	RunServer()
+	if isClient:	LaunchClient()
+	if isServer:	LaunchServer()
 
 	if not isClient:
 		Scene.queue_free()
 
 	_post_run()
 
-func RunClient():
+func LaunchClient():
 	# Load first low-prio services on which the order is important
 	GUI				= Scene.get_node("CanvasLayer")
 
@@ -51,7 +51,7 @@ func RunClient():
 	Settings		= FileSystem.LoadSource("settings/Settings.gd")
 	Network			= FileSystem.LoadSource("network/Client.gd")
 
-func RunServer():
+func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
 	if not Network:
 		Network		= FileSystem.LoadSource("network/Server.gd")
@@ -75,20 +75,20 @@ func _ready():
 	Conf			= FileSystem.LoadSource("conf/Conf.gd")
 	DB				= FileSystem.LoadSource("db/DB.gd")
 
-	var runClient : bool = Conf.GetBool("Default", "runClient", Launcher.Conf.Type.PROJECT)
-	var runServer : bool = Conf.GetBool("Default", "runServer", Launcher.Conf.Type.PROJECT)
+	var launchClient : bool = Conf.GetBool("Default", "launchClient", Launcher.Conf.Type.PROJECT)
+	var launchServer : bool = Conf.GetBool("Default", "launchServer", Launcher.Conf.Type.PROJECT)
 
 	if "--hybrid" in OS.get_cmdline_args():
-		runClient = true
-		runServer = true
+		launchClient = true
+		launchServer = true
 	elif "--client" in OS.get_cmdline_args():
-		runClient = true
-		runServer = false
+		launchClient = true
+		launchServer = false
 	elif "--server" in OS.get_cmdline_args():
-		runClient = false
-		runServer = true
+		launchClient = false
+		launchServer = true
 
-	RunMode(runClient, runServer)
+	LaunchMode(launchClient, launchServer)
 
 # Call post_ready functions for service depending on other services
 func _post_run():

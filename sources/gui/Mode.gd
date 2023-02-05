@@ -7,12 +7,12 @@ extends WindowPanel
 #
 func _on_offline_pressed():
 	set_visible(false)
-	Launcher.RunMode(true, true)
+	Launcher.LaunchMode(true, true)
 
 func _on_online_pressed():
 	set_visible(false)
-	Launcher.RunMode(true, false)
+	Launcher.LaunchMode(true, false)
 
 func _on_host_pressed():
 	set_visible(false)
-	Launcher.RunMode(false, true)
+	Launcher.LaunchMode(false, true)
