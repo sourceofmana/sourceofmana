@@ -51,10 +51,12 @@ func LaunchClient():
 	Map				= FileSystem.LoadSource("map/Map.gd")
 	Settings		= FileSystem.LoadSource("settings/Settings.gd")
 	Client			= FileSystem.LoadSource("network/Client.gd")
+	add_child(Client)
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
 	Server			= FileSystem.LoadSource("network/Server.gd")
+	add_child(Server)
 
 #
 # Load all high-prio services, order should not be important

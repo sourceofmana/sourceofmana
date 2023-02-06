@@ -5,11 +5,17 @@ var peer : ENetMultiplayerPeer		= ENetMultiplayerPeer.new()
 var uniqueID : int					= 0
 
 #
+func NetCall(methodName : String, args : Array):
+	if Launcher.Server:
+		Launcher.Server.callv(methodName, args)
+	else:
+		callv("rpc", [methodName] + args)
+
+#
+@rpc
 func SetConnectPlayer(playerName : String):
-	var serverAdress : String	= Launcher.Conf.GetString("Network", "serverAdress", Launcher.Conf.Type.PROJECT)
-	var serverPort : int		= Launcher.Conf.GetInt("Network", "serverPort", Launcher.Conf.Type.PROJECT)
-	var maxPlayerCount : int	= Launcher.Conf.GetInt("Network", "maxPlayerCount", Launcher.Conf.Type.PROJECT)
-	peer.create_client(serverAdress, serverPort, maxPlayerCount)
+	if uniqueID == 0:
+		_connect_client()
 
 	if Launcher.Server:
 		ConnectPlayer(playerName)
@@ -21,8 +27,7 @@ func SetConnectPlayer(playerName : String):
 		uniqueID = Launcher.Root.multiplayer.get_unique_id()
 
 func ConnectPlayer(playerName):
-	if Launcher.Server:
-		Launcher.Server.SetConnectPlayer(playerName)
+	NetCall("SetConnectPlayer", [playerName])
 
 func SetDisconnectPlayer():
 	if Launcher.Player:
@@ -30,6 +35,7 @@ func SetDisconnectPlayer():
 			Launcher.Server.SetDisconnectPlayer(Launcher.Player.entityName)
 
 func DisconnectPlayer():
+	uniqueID = 0
 	Launcher.FSM.EnterLogin()
 
 func GetPlayer(entity : PlayerEntity, map : String, pos : Vector2i):
@@ -55,3 +61,10 @@ func SetEntities(entities : Array[BaseEntity]):
 func SetWarp(oldMapName : String, newMapName : String):
 	if Launcher.Server:
 		Launcher.Server.SetWarp(oldMapName, newMapName, Launcher.Player)
+
+#
+func _connect_client():
+	var serverAdress : String	= Launcher.Conf.GetString("Network", "serverAdress", Launcher.Conf.Type.PROJECT)
+	var serverPort : int		= Launcher.Conf.GetInt("Network", "serverPort", Launcher.Conf.Type.PROJECT)
+	var maxPlayerCount : int	= Launcher.Conf.GetInt("Network", "maxPlayerCount", Launcher.Conf.Type.PROJECT)
+	peer.create_client(serverAdress, serverPort, maxPlayerCount)
