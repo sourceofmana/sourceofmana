@@ -21,17 +21,18 @@ var Map					= null
 var Save				= null
 var Settings			= null
 var World				= null
-var Client				= null
-var Server				= null
+var Network				= null
 
 #
 func LaunchMode(isClient : bool = false, isServer : bool = false):
 	if not isClient and not isServer:
 		return
+
+	Network.NetMode(isClient, isServer)
 	if isClient:	LaunchClient()
 	if isServer:	LaunchServer()
 
-	if not isClient:
+	if Scene && not isClient:
 		Scene.queue_free()
 
 	_post_run()
@@ -50,13 +51,10 @@ func LaunchClient():
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
 	Settings		= FileSystem.LoadSource("settings/Settings.gd")
-	Client			= FileSystem.LoadSource("network/Client.gd")
-	add_child(Client)
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
-	Server			= FileSystem.LoadSource("network/Server.gd")
-	add_child(Server)
+	Network.ConnectMode()
 
 #
 # Load all high-prio services, order should not be important
@@ -76,6 +74,8 @@ func _enter_tree():
 func _ready():
 	Conf			= FileSystem.LoadSource("conf/Conf.gd")
 	DB				= FileSystem.LoadSource("db/DB.gd")
+	Network			= FileSystem.LoadSource("network/Network.gd")
+	add_child(Network)
 
 	var launchClient : bool = Conf.GetBool("Default", "launchClient", Launcher.Conf.Type.PROJECT)
 	var launchServer : bool = Conf.GetBool("Default", "launchServer", Launcher.Conf.Type.PROJECT)
@@ -92,7 +92,7 @@ func _ready():
 
 	LaunchMode(launchClient, launchServer)
 
-# Call post_ready functions for service depending on other services
+# Call _post_run functions for service depending on other services
 func _post_run():
 	if GUI:			GUI._post_run()
 	if Debug:		Debug._post_run()
@@ -109,5 +109,5 @@ func _process(delta : float):
 	if World:		World._process(delta)
 
 func _quit():
-	Launcher.Client.SetDisconnectPlayer()
+	Launcher.Network.Client.SetDisconnectPlayer()
 	get_tree().quit()

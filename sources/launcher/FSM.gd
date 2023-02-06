@@ -26,8 +26,8 @@ func EnterCharSelection():
 	emit_signal("enter_char_selection")
 
 func EnterGame():
-	if Launcher.Client:
-		Launcher.Client.SetConnectPlayer(playerName)
+	if Launcher.Network:
+		Launcher.Network.ConnectMode()
 
 #
 func _process(_delta):
