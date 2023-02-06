@@ -31,7 +31,7 @@ func LaunchMode(isClient : bool = false, isServer : bool = false):
 	Network.NetMode(isClient, isServer)
 	if isClient:	LaunchClient()
 	if isServer:	LaunchServer()
-	_post_run()
+	_post_launch()
 
 	if Scene && not isClient:
 		Scene.queue_free()
@@ -91,16 +91,16 @@ func _ready():
 
 	LaunchMode(launchClient, launchServer)
 
-# Call _post_run functions for service depending on other services
-func _post_run():
-	if GUI:			GUI._post_run()
-	if Debug:		Debug._post_run()
-	if Audio:		Audio._post_run()
-	if Conf:		Conf._post_run()
-	if DB:			DB._post_run()
-	if World:		World._post_run()
-	if FSM:			FSM._post_run()
-	if Settings:	Settings._post_run()
+# Call _post_launch functions for service depending on other services
+func _post_launch():
+	if GUI:			GUI._post_launch()
+	if Debug:		Debug._post_launch()
+	if Audio:		Audio._post_launch()
+	if Conf:		Conf._post_launch()
+	if DB:			DB._post_launch()
+	if World:		World._post_launch()
+	if FSM:			FSM._post_launch()
+	if Settings:	Settings._post_launch()
 
 func _process(delta : float):
 	if Debug:		Debug._process(delta)

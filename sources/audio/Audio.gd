@@ -34,7 +34,7 @@ func Warped():
 		Load(Launcher.Map.mapNode.get_meta("music"))
 
 #
-func _post_run():
+func _post_launch():
 	audioPlayer = Launcher.Scene.get_node("AudioStreamPlayer")
 	Launcher.Util.Assert(audioPlayer != null, "Could not find the AudioStreamPlayer instance")
 

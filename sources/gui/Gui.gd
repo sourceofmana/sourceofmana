@@ -73,7 +73,7 @@ func EnterGame():
 		welcomeWindow.EnableControl(false)
 
 #
-func _post_run():
+func _post_launch():
 	Launcher.FSM.enter_login.connect(EnterLoginMenu)
 	Launcher.FSM.enter_game.connect(EnterGame)
 	get_tree().set_auto_accept_quit(false)

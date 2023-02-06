@@ -251,7 +251,7 @@ func UpdateAI(entity : BaseEntity, map : Map):
 	entity.UpdateInput()
 
 # Generic
-func _post_run():
+func _post_launch():
 	for mapName in Launcher.DB.MapsDB:
 		var map : Map = Map.new()
 		map.name = mapName
