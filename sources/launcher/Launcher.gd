@@ -31,11 +31,11 @@ func LaunchMode(isClient : bool = false, isServer : bool = false):
 	Network.NetMode(isClient, isServer)
 	if isClient:	LaunchClient()
 	if isServer:	LaunchServer()
+	_post_run()
 
 	if Scene && not isClient:
 		Scene.queue_free()
-
-	_post_run()
+		Network.NetCreate()
 
 func LaunchClient():
 	# Load first low-prio services on which the order is important
@@ -54,7 +54,6 @@ func LaunchClient():
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
-	Network.ConnectMode()
 
 #
 # Load all high-prio services, order should not be important
@@ -109,5 +108,5 @@ func _process(delta : float):
 	if World:		World._process(delta)
 
 func _quit():
-	Launcher.Network.Client.SetDisconnectPlayer()
+	Launcher.Network.NetDestroy()
 	get_tree().quit()

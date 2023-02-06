@@ -12,7 +12,7 @@ func DisconnectPlayer():
 func GetPlayer(entity : PlayerEntity, map : String, pos : Vector2i):
 	Launcher.Player = entity
 	Launcher.Util.Assert(Launcher.Player != null, "Player was not created")
-	if Launcher.Player:
+	if Launcher.Player and Launcher.Map:
 		Launcher.Map.WarpEntity(map, pos)
 
 		if Launcher.Debug:

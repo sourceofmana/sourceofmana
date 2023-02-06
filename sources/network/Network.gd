@@ -9,7 +9,36 @@ var peer : ENetMultiplayerPeer		= ENetMultiplayerPeer.new()
 var uniqueID : int					= 0
 
 #
-func ConnectMode():
+@rpc(any_peer)
+func ConnectPlayer(playerName : String):
+	if Client:		NetCallServer("ConnectPlayer", [playerName])
+	elif Server:	Server.ConnectPlayer(playerName)
+
+@rpc(any_peer)
+func DisconnectPlayer(playerName : String):
+	if Client:		NetCallServer("DisconnectPlayer", [playerName])
+	elif Server:	Server.DisconnectPlayer(playerName)
+
+#
+func NetCallServer(methodName : String, args : Array):
+	if Server:
+		Server.callv(methodName, args)
+	else:
+		callv("rpc", [methodName] + args)
+
+func NetCallClient(methodName : String, args : Array):
+	if Client:
+		Client.callv(methodName, args)
+	else:
+		callv("rpc", [methodName] + args)
+
+func NetMode(isClient : bool, isServer : bool):
+	if isClient:
+		Client = Launcher.FileSystem.LoadSource("network/Client.gd")
+	if isServer:
+		Server = Launcher.FileSystem.LoadSource("network/Server.gd")
+
+func NetCreate():
 	if uniqueID != 0:
 		pass
 
@@ -42,31 +71,10 @@ func ConnectMode():
 
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 
-@rpc(any_peer)
-func ConnectPlayer(playerName : String):
-	if Client:		ServerCall("ConnectPlayer", [playerName])
-	elif Server:	Server.ConnectPlayer(playerName)
-
-@rpc(any_peer)
-func DisconnectPlayer(playerName : String):
-	if Client:		ServerCall("DisconnectPlayer", [playerName])
-	elif Server:	Server.DisconnectPlayer(playerName)
-
-#
-func ServerCall(methodName : String, args : Array):
-	if Server:
-		Server.callv(methodName, args)
-	else:
-		callv("rpc", [methodName] + args)
-
-func ClientCall(methodName : String, args : Array):
+func NetDestroy():
+	uniqueID = 0
 	if Client:
-		Client.callv(methodName, args)
-	else:
-		callv("rpc", [methodName] + args)
-
-func NetMode(isClient : bool, isServer : bool):
-	if isClient:
-		Client = Launcher.FileSystem.LoadSource("network/Client.gd")
-	if isServer:
-		Server = Launcher.FileSystem.LoadSource("network/Server.gd")
+		Client.SetDisconnectPlayer()
+		Client.queue_free()
+	if Server:
+		Server.queue_free()

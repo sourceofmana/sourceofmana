@@ -27,7 +27,7 @@ func EnterCharSelection():
 
 func EnterGame():
 	if Launcher.Network:
-		Launcher.Network.ConnectMode()
+		Launcher.Network.NetCreate()
 
 #
 func _process(_delta):
