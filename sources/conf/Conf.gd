@@ -33,6 +33,9 @@ func GetFloat(category : String, param : String, type : int = Type.NONE) -> floa
 func GetVector2(category : String, param : String, type : int = Type.NONE) -> Vector2:
 	return GetVariant(category, param, type, Vector2.ZERO)
 
+func GetVector2i(category : String, param : String, type : int = Type.NONE) -> Vector2i:
+	return GetVariant(category, param, type, Vector2i.ZERO)
+
 func GetString(category : String, param : String, type : int = Type.NONE) -> String:
 	return GetVariant(category, param, type, "")
 
