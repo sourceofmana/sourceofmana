@@ -46,6 +46,7 @@ func EnterLoginMenu():
 		if w.targetWindow:
 			w.targetWindow.EnableControl(false)
 
+	buttons.set_visible(true)
 	boxes.set_visible(false)
 	stats.set_visible(false)
 	background.set_visible(true)
@@ -84,6 +85,7 @@ func _process(_delta):
 		if Launcher.Action.IsActionJustPressed("ui_inventory"): ToggleControl($FloatingWindows/Inventory)
 		if Launcher.Action.IsActionJustPressed("ui_minimap"): ToggleControl($FloatingWindows/Minimap)
 		if Launcher.Action.IsActionJustPressed("ui_chat"): ToggleControl($FloatingWindows/Chat)
+		if Launcher.Action.IsActionJustPressed("ui_emote"): ToggleControl($FloatingWindows/Emote)
 		if Launcher.Action.IsActionJustPressed("ui_validate") : ToggleChatNewLine($FloatingWindows/Chat)
 		if Launcher.Action.IsActionJustPressed("ui_screenshot") : Launcher.FileSystem.SaveScreenshot(get_viewport().get_texture().get_image())
 
