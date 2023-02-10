@@ -104,29 +104,24 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	inst.id = instanceID
 	for spawn in map.spawns:
 		for i in spawn.count:
-#			Add check to spawn something else than mobs
-			var entity : BaseEntity = null
-			match spawn.type:
-				"Player":	entity = CreateEntity(spawn.type, spawn.name)
-				"Npc":		entity = CreateEntity(spawn.type, spawn.name)
-				"Monster":	entity = CreateEntity(spawn.type, spawn.name)
-				"Trigger":	entity = CreateEntity(spawn.type, spawn.name)
-				_: Launcher.Util.Assert(false, "Entity type is not valid")
+			var entity : BaseEntity = Launcher.DB.Instantiate.CreateEntity(spawn.type, spawn.name)
 
-			if spawn.is_global:
-				entity.position = GetRandomPosition(map)
-			else:
-				entity.position = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
+			Launcher.Util.Assert(entity != null, "Entity %s (type: %s) could not be created" % [spawn.name, spawn.type])
+			if entity:
+				if spawn.is_global:
+					entity.position = GetRandomPosition(map)
+				else:
+					entity.position = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
 
-			# TODO: use internal Spawn function
-			Launcher.Util.Assert(entity.position != Vector2.ZERO, "Could not spawn the entity %s, no walkable position found" % spawn.name)
-			if entity.position != Vector2.ZERO:
-				match spawn.type:
-					"Player":	inst.players.append(entity)
-					"Npc":		inst.npcs.append(entity)
-					"Monster":	inst.mobs.append(entity)
-					"Trigger":	inst.npcs.append(entity)
-					_: Launcher.Util.Assert(false, "Entity type is not valid")
+				# TODO: use internal Spawn function
+				Launcher.Util.Assert(entity.position != Vector2.ZERO, "Could not spawn the entity %s, no walkable position found" % spawn.name)
+				if entity.position != Vector2.ZERO:
+					match spawn.type:
+						"Player":	inst.players.append(entity)
+						"Npc":		inst.npcs.append(entity)
+						"Monster":	inst.mobs.append(entity)
+						"Trigger":	inst.npcs.append(entity)
+						_: Launcher.Util.Assert(false, "Entity type is not valid")
 
 	map.instances.push_back(inst)
 
@@ -135,7 +130,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 			entity.agent.set_navigation_map(map.mapRID)
 
 # Entities Management
-func Warp(oldMap : String, newMap : String, entity : Node2D):
+func Warp(oldMap : String, newMap : String, newPos : Vector2i, entity : BaseEntity):
 	var err : bool = false
 	err = err || not areas.has(oldMap)
 	err = err || entity == null
@@ -151,6 +146,7 @@ func Warp(oldMap : String, newMap : String, entity : Node2D):
 	Launcher.Util.Assert(not err, "WarpEntity could not proceed, the entity is not found on old map's instances")
 	
 	Spawn(newMap, entity)
+	entity.set_position(newPos)
 
 func Spawn(newMap : String, entity : Node2D, instID : int = 0):
 	var err : bool = false
@@ -176,8 +172,8 @@ func GetEntities(mapName : String, playerName : String):
 	Launcher.Util.Assert(area != null, "World can't find the map name " + mapName)
 	if area:
 		for instance in area.instances:
-			for entity in instance.players:
-				if entity.entityName == playerName:
+			for player in instance.players:
+				if player.entityName == playerName:
 					list = instance.npcs + instance.mobs + instance.players
 					break
 	return list
@@ -209,28 +205,6 @@ func RemoveEntity(entityName : String, checkPlayers = true, checkNpcs = true, ch
 				for entity in instance.mobs:
 					if entity.entityName == entityName:
 						instance.mobs.erase(entity)
-
-# Entity Creation
-func FindEntityReference(entityID : String) -> Object:
-	var ref : Object = null
-	for entityDB in Launcher.DB.EntitiesDB:
-		if entityDB == entityID || Launcher.DB.EntitiesDB[entityDB]._name == entityID:
-			ref = Launcher.DB.EntitiesDB[entityDB]
-			break
-	return ref
-
-func CreateEntity(entityType : String, entityID : String, entityName : String = "", isLocalPlayer : bool = false) -> BaseEntity:
-	var inst : BaseEntity = null
-	var template = FindEntityReference(entityID)
-	if template:
-		inst = Launcher.FileSystem.LoadEntity(entityType)
-		if inst:
-			if isLocalPlayer:
-				inst.SetLocalPlayer()
-			inst.applyEntityData(template)
-			inst.SetName(entityID, entityName)
-	Launcher.Util.Assert(inst != null, "Could not create the entity: " + entityID)
-	return inst
 
 # AI
 func UpdateWalkPaths(entity : Node2D, map : Map):

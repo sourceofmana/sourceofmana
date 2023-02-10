@@ -10,23 +10,34 @@ var uniqueID : int					= 0
 
 #
 @rpc(any_peer)
-func ConnectPlayer(playerName : String):
+func ConnectPlayer(playerName : String, rpcID : int = -1):
 	if Client:		NetCallServer("ConnectPlayer", [playerName])
-	elif Server:	Server.ConnectPlayer(playerName)
+	elif Server:	Server.ConnectPlayer(playerName, rpcID)
 
 @rpc(any_peer)
-func DisconnectPlayer(playerName : String):
+func DisconnectPlayer(playerName : String, rpcID : int = -1):
 	if Client:		NetCallServer("DisconnectPlayer", [playerName])
-	elif Server:	Server.DisconnectPlayer(playerName)
+	elif Server:	Server.DisconnectPlayer(playerName, rpcID)
+
+@rpc
+func SetPlayerInWorld(mapName : String, rpcID : int = -1):
+	if Server:		NetCallClient("SetPlayerInWorld", [mapName], rpcID)
+	elif Client:	Client.SetPlayerInWorld(mapName)
 
 #
 func NetCallServer(methodName : String, args : Array):
 	if Server:
 		Server.callv(methodName, args)
 	else:
-		callv("rpc", [methodName] + args)
+		callv("rpc_id", [1, methodName] + args + [uniqueID])
 
-func NetCallClient(methodName : String, args : Array):
+func NetCallClient(methodName : String, args : Array, rpcID : int):
+	if Client:
+		Client.callv(methodName, args)
+	else:
+		callv("rpc_id", [rpcID, methodName] + args)
+
+func NetCallClientGlobal(methodName : String, args : Array):
 	if Client:
 		Client.callv(methodName, args)
 	else:
@@ -52,9 +63,13 @@ func NetCreate():
 		Launcher.Util.Assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAdress, serverPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
-			Launcher.Root.multiplayer.connected_to_server.connect(ConnectPlayer.bind(Launcher.FSM.playerName))
-			Launcher.Root.multiplayer.connection_failed.connect(DisconnectPlayer.bind(Launcher.FSM.playerName))
-			Launcher.Root.multiplayer.server_disconnected.connect(DisconnectPlayer.bind(Launcher.FSM.playerName))
+			var connectedCallback : Callable = ConnectPlayer.bind(Launcher.FSM.playerName) 
+			if not Launcher.Root.multiplayer.connected_to_server.is_connected(connectedCallback):
+				Launcher.Root.multiplayer.connected_to_server.connect(connectedCallback)
+			if not Launcher.Root.multiplayer.connection_failed.is_connected(Client.Disconnect):
+				Launcher.Root.multiplayer.connection_failed.connect(Client.Disconnect)
+			if not Launcher.Root.multiplayer.server_disconnected.is_connected(Client.Disconnect):
+				Launcher.Root.multiplayer.server_disconnected.connect(Client.Disconnect)
 
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 	elif Server:
@@ -65,8 +80,10 @@ func NetCreate():
 		Launcher.Util.Assert(ret == OK, "Server could not be created, please check if your port %d is valid" % serverPort)
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
-			Launcher.Root.multiplayer.peer_connected.connect(Server.ConnectPeer)
-			Launcher.Root.multiplayer.peer_disconnected.connect(Server.DisconnectPeer)
+			if not Launcher.Root.multiplayer.peer_connected.is_connected(Server.ConnectPeer):
+				Launcher.Root.multiplayer.peer_connected.connect(Server.ConnectPeer)
+			if not Launcher.Root.multiplayer.peer_disconnected.is_connected(Server.DisconnectPeer):
+				Launcher.Root.multiplayer.peer_disconnected.connect(Server.DisconnectPeer)
 			Launcher.Util.PrintLog("[Server] Initialized on port %d" % serverPort)
 
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
@@ -74,7 +91,7 @@ func NetCreate():
 func NetDestroy():
 	uniqueID = 0
 	if Client:
-		Client.SetDisconnectPlayer()
+		Client.Disconnect()
 		Client.queue_free()
 	if Server:
 		Server.queue_free()

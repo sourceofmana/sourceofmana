@@ -6,6 +6,7 @@ signal PlayerWarped
 #
 var pool					= Launcher.FileSystem.LoadSource("map/MapPool.gd")
 var mapNode : Node2D		= null
+var visibleEntities : Array[BaseEntity] = []
 
 #
 func GetTileMap() -> TileMap:
@@ -58,22 +59,27 @@ func AddChild(entity : CharacterBody2D):
 	tilemap.call_deferred("add_child", entity)
 
 #
-func WarpEntity(mapName : String, mapPos : Vector2):
-	assert(Launcher.Player, "Entity is not initialized, could not warp it to this map")
-
+func ReplaceMapNode(mapName : String):
 	if mapNode && mapNode.get_name() != mapName:
-		Launcher.Network.Client.SetWarp(mapNode.get_name(), mapName)
 		UnloadMapNode()
 	LoadMapNode(mapName)
-	Launcher.Camera.SetBoundaries()
+	Launcher.Network.Client.GetEntities(mapName)
 
 	if mapNode:
-		if Launcher.Player:
-			Launcher.Network.Client.GetEntities(mapName)
-			Launcher.Player.set_position(mapPos)
-			Launcher.Player.ResetNav()
-
 		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
 			pool.RefreshPool(mapNode)
+
+func WarpEntities(entities : Array[BaseEntity]):
+	visibleEntities = entities
+
+	for entity in visibleEntities:
+		if not Launcher.Player and entity.entityName == Launcher.FSM.playerName:
+			Launcher.Player = entity
+			Launcher.Player.SetLocalPlayer()
+		Launcher.Map.AddChild(entity)
+
+	if Launcher.Player:
+		Launcher.Player.ResetNav()
+		Launcher.Camera.SetBoundaries()
 		emit_signal('PlayerWarped')
 		Launcher.Player.set_physics_process(true)				

@@ -1,5 +1,7 @@
 extends Node
 
+var Instantiate : Object			= load("res://sources/db/Instantiate.gd").new()
+
 var MapsDB : Dictionary				= {}
 var MusicsDB : Dictionary			= {}
 var EthnicitiesDB : Dictionary		= {}

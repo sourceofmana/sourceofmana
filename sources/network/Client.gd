@@ -1,19 +1,12 @@
 extends Node
 
 #
-func SetDisconnectPlayer():
-	if Launcher.Player:
-		if Launcher.Network.Server:
-			Launcher.Network.Server.SetDisconnectPlayer(Launcher.Player.entityName)
-
-func DisconnectPlayer():
+func Disconnect():
 	Launcher.FSM.EnterLogin()
 
-func GetPlayer(entity : PlayerEntity, map : String, pos : Vector2i):
-	Launcher.Player = entity
-	Launcher.Util.Assert(Launcher.Player != null, "Player was not created")
-	if Launcher.Player and Launcher.Map:
-		Launcher.Map.WarpEntity(map, pos)
+func SetPlayerInWorld(map : String, _rpcID : int = -1):
+	if Launcher.Map:
+		Launcher.Map.ReplaceMapNode(map)
 
 		if Launcher.Debug:
 			Launcher.Debug.SetPlayerInventory()
@@ -23,12 +16,11 @@ func GetPlayer(entity : PlayerEntity, map : String, pos : Vector2i):
 
 func GetEntities(mapName : String):
 	if Launcher.Network.Server:
-		Launcher.Network.Server.GetEntities(mapName, Launcher.Player.entityName)
+		Launcher.Network.Server.GetEntities(mapName, Launcher.FSM.playerName)
 
 func SetEntities(entities : Array[BaseEntity]):
-	for entity in entities:
-		Launcher.Map.AddChild(entity)
+	Launcher.Map.WarpEntities(entities)
 
-func SetWarp(oldMapName : String, newMapName : String):
+func SetWarp(oldMapName : String, newMapName : String, newPos : Vector2i):
 	if Launcher.Network.Server:
-		Launcher.Network.Server.SetWarp(oldMapName, newMapName, Launcher.Player)
+		Launcher.Network.Server.SetWarp(oldMapName, newMapName, newPos, Launcher.Player)

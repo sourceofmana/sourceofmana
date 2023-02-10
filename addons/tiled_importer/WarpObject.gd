@@ -10,8 +10,8 @@ class_name WarpObject
 #
 func bodyEntered(body):
 	if body && body is CharacterBody2D:
-		Launcher.Map.WarpEntity(destinationMap, destinationPos)
-
+		Launcher.Network.Client.SetWarp(Launcher.Map.mapNode.get_name(), destinationMap, destinationPos)
+		Launcher.Map.ReplaceMapNode(destinationMap)
 #
 func _init():
 	collision_layer = 2

@@ -1,25 +1,32 @@
 extends Node
 
+var playerMap : Dictionary = {}
+
 #
-func ConnectPlayer(playerName : String):
-	if not Launcher.World.HasEntity(playerName):
-		var player : PlayerEntity = Launcher.World.CreateEntity("Player", "Default Entity", playerName, true)
-		var map : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
-		var pos : Vector2	= Launcher.Conf.GetVector2("Default", "startPos", Launcher.Conf.Type.MAP)
+func ConnectPlayer(playerName : String, rpcID : int = -1):
+	if not playerMap.has(rpcID):
 
-		Launcher.World.Spawn(map, player)
-		Launcher.Network.Client.GetPlayer(player, map, pos)
+		if not Launcher.World.HasEntity(playerName):
+			var player : PlayerEntity = Launcher.DB.Instantiate.CreateEntity("Player", "Default Entity", playerName)
+			var map : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
+			player.set_position(Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP))
 
-func SetDisconnectPlayer(playerName : String):
-	Launcher.World.RemoveEntity(playerName)
+			playerMap[rpcID] = playerName
+			Launcher.World.Spawn(map, player)
+			Launcher.Network.SetPlayerInWorld(map, rpcID)
+
+func DisconnectPlayer(playerName : String, rpcID : int = -1):
+	if playerMap.has(rpcID):
+		playerMap.erase(rpcID)
+		Launcher.World.RemoveEntity(playerName)
 
 #
 func GetEntities(mapName : String, entityName : String):
 	var entities : Array[BaseEntity] = Launcher.World.GetEntities(mapName, entityName)
 	Launcher.Network.Client.SetEntities(entities)
 
-func SetWarp(oldMapName : String, newMapName : String, entity):
-	Launcher.World.Warp(oldMapName, newMapName, entity)
+func SetWarp(oldMapName : String, newMapName : String, newPos : Vector2i, entity : BaseEntity):
+	Launcher.World.Warp(oldMapName, newMapName, newPos, entity)
 
 #
 func ConnectPeer(id : int):
