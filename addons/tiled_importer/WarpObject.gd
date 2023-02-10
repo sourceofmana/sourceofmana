@@ -17,4 +17,5 @@ func _init():
 	collision_layer = 2
 	collision_mask = 2
 
-	var _err = self.body_entered.connect(bodyEntered)
+	var err = self.body_entered.connect(bodyEntered)
+	Launcher.Util.Assert(err == OK, "Could not connect to Area2D's body_entered signal")
