@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name BaseEntity
 
-@onready var animationState		= animationTree.get("parameters/playback")
+@onready var animationState		= animationTree.get("parameters/playback") if animationTree else null
 
 enum Gender { MALE = 0, FEMALE, NONBINARY, COUNT }
 enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
@@ -30,7 +30,6 @@ var currentVelocity				= Vector2.ZERO
 var currentDirection			= Vector2(0, 1)
 
 var currentState				= State.IDLE
-var currentStateTimer			= 0.0
 
 var lastPositions : Array		= []
 
@@ -179,15 +178,22 @@ func SetName(_entityID : String, _entityName : String):
 		name = _entityName
 
 
-func applyEntityData(data):
-	entityName = data._name
-	displayName = data._displayName
-	stat.moveSpeed = data._walkSpeed
+func ApplyData(data : Object):
+	# Display
+	entityName		= data._name
+	displayName		= data._displayName
+
+	# Stat
+	stat.moveSpeed	= data._walkSpeed
+
+	# Sprite
 	if !data._ethnicity.is_empty() or !data._gender.is_empty():
 		sprite = Launcher.FileSystem.LoadPreset("sprites/" + data._ethnicity + data._gender)
 		if sprite != null && !data._customTexture.is_empty():
 			sprite.texture = Launcher.FileSystem.LoadGfx(data._customTexture)
 		add_child(sprite)
+
+	# Animation
 	if data._animation:
 		animation = Launcher.FileSystem.LoadPreset("animations/" + data._animation)
 		var canFetchAnimTree = animation != null && animation.has_node("AnimationTree")
@@ -195,9 +201,13 @@ func applyEntityData(data):
 		if canFetchAnimTree:
 			animationTree = animation.get_node("AnimationTree")
 		add_child(animation)
+
+	# Navigation
 	if data._navigationAgent:
 		agent = Launcher.FileSystem.LoadPreset("navigations/" + data._navigationAgent)
 		add_child(agent)	
+
+	# Collision
 	if data._collision:
 		collision = Launcher.FileSystem.LoadPreset("collisions/" + data._collision)
 		add_child(collision)
