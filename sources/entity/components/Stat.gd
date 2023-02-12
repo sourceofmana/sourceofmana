@@ -1,4 +1,5 @@
-extends Node
+extends Object
+class_name EntityStat
 
 var level : int							= 52
 var experience : float					= 80.569999

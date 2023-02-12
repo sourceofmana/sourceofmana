@@ -5,20 +5,19 @@ class_name BaseAgent
 enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
 
 #
-var stat								= Launcher.FileSystem.LoadSource("entity/components/Stat.gd")
-
-#
 var agent : NavigationAgent2D			= null
 var agentName							= "PlayerName"
+var aiTimer : AiTimer					= null
+var stat : EntityStat					= null
 
-var hasGoal								= false
+var hasCurrentGoal						= false
 var currentInput						= Vector2.ZERO
 var currentVelocity						= Vector2.ZERO
 var currentDirection					= Vector2(0, 1)
-
 var currentState						= State.IDLE
+
 var lastPositions : Array[Vector2]		= []
-var navigationLine : Array[Vector2i]	= []
+var navigationLine : PackedVector2Array	= []
 
 #
 func GetNextDirection():
@@ -48,7 +47,7 @@ func ApplyNextState(nextState, nextDirection):
 	currentDirection	= nextDirection
 
 func SwitchInputMode(clearCurrentInput : bool):
-	hasGoal = false
+	hasCurrentGoal = false
 
 	if clearCurrentInput:
 		currentInput = Vector2.ZERO
@@ -56,7 +55,7 @@ func SwitchInputMode(clearCurrentInput : bool):
 	navigationLine = []
 
 func UpdateInput():
-	if hasGoal:
+	if hasCurrentGoal:
 		if agent && not agent.is_navigation_finished():
 			var newDirection : Vector2 = global_position.direction_to(agent.get_next_location())
 			if newDirection != Vector2.ZERO:
@@ -90,11 +89,12 @@ func UpdateState():
 		ApplyNextState(nextState, nextDirection)
 
 func WalkToward(pos : Vector2):
-	hasGoal = true
+	hasCurrentGoal = true
 	lastPositions.clear()
 	if agent:
 		agent.set_target_location(pos)
-		navigationLine = agent.get_current_navigation_path()
+		navigationLine.clear()
+		navigationLine += agent.get_current_navigation_path()
 
 func ResetNav():
 	WalkToward(position)
@@ -110,22 +110,27 @@ func IsStuck() -> bool:
 	return isStuck
 
 #
-func SetName(_entityID : String, _agentName : String):
-	if _agentName.length() == 0:
-		agentName = _entityID
-		name =  _entityID
+func SetKind(entityType : String, entityID : String, entityName : String):
+	if entityName.length() == 0:
+		agentName = entityID
+		name =  entityID
 	else:
-		agentName = _agentName
-		name = _agentName
+		agentName = entityName
+		name = entityName
 
-func ApplyEntityData(data : Object):
+	if entityType == "Monster" or entityType == "Npc":
+		aiTimer = AiTimer.new()
+		add_child(aiTimer)
+
+func SetData(data : Object):
 	# Stat
+	stat = EntityStat.new()
 	stat.moveSpeed	= data._walkSpeed
 
 	# Navigation
 	if data._navigationAgent:
 		agent = Launcher.FileSystem.LoadPreset("navigations/" + data._navigationAgent)
-		add_child(agent)	
+		add_child(agent)
 
 #
 func _physics_process(deltaTime : float):
@@ -160,3 +165,4 @@ func _setup_nav_agent():
 
 func _ready():
 	_setup_nav_agent()
+	set_name(str(get_rid().get_id()))

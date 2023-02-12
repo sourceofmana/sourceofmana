@@ -15,16 +15,16 @@ func CreateEntity(entityType : String, entityID : String, entityName : String = 
 	if template:
 		inst = Launcher.FileSystem.LoadEntity(entityType)
 		if inst:
-			inst.ApplyData(template)
-			inst.SetName(entityID, entityName)
+			inst.SetData(template)
+			inst.SetKind(entityID, entityName)
 	Launcher.Util.Assert(inst != null, "Could not create the client entity: " + entityID)
 	return inst
 
-func CreateAgent(entityID : String, entityName : String = "") -> BaseAgent:
+func CreateAgent(entityType : String, entityID : String, entityName : String = "") -> BaseAgent:
 	var inst : BaseAgent = BaseAgent.new()
 	var template = FindEntityReference(entityID)
 	if template and inst:
-		inst.ApplyData(template)
-		inst.SetName(entityID, entityName)
+		inst.SetData(template)
+		inst.SetKind(entityType, entityID, entityName)
 	Launcher.Util.Assert(inst != null, "Could not create the agent entity: " + entityID)
 	return inst

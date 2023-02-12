@@ -1,17 +1,17 @@
 extends Node2D
 
 # Types
-class Instance:
+class Instance extends SubViewport:
 	var id : int							= 0
-	var npcs : Array[NpcEntity]				= []
-	var mobs : Array[MonsterEntity]			= []
-	var players : Array[PlayerEntity]		= []
+	var npcs : Array[BaseAgent]				= []
+	var mobs : Array[BaseAgent]				= []
+	var players : Array[BaseAgent]			= []
 
 class Map:
 	var name : String						= ""
-	var instances : Array					= []
-	var spawns : Array						= []
-	var warps : Array						= []
+	var instances : Array[Instance]			= []
+	var spawns : Array[SpawnObject]			= []
+	var warps : Array[WarpObject]			= []
 	var nav_poly : NavigationPolygon		= null
 	var mapRID : RID						= RID()
 	var regionRID : RID						= RID()
@@ -88,141 +88,153 @@ func LoadNavigationData(map : Map):
 	if obj:
 		map.nav_poly = obj
 
-		if map.nav_poly:
-			map.mapRID = NavigationServer2D.map_create()
-			NavigationServer2D.map_set_active(map.mapRID, true)
+func CreateNavigation(map : Map, mapRID : RID):
+	if map.nav_poly:
+		map.mapRID = mapRID if mapRID.is_valid() else NavigationServer2D.map_create()
+		NavigationServer2D.map_set_active(map.mapRID, true)
 
-			map.regionRID = NavigationServer2D.region_create()
-			NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
-			NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.nav_poly)
+		map.regionRID = NavigationServer2D.region_create()
+		NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
+		NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.nav_poly)
 
-			NavigationServer2D.map_force_update(map.mapRID)
+		NavigationServer2D.map_force_update(map.mapRID)
 
 func CreateInstance(map : Map, instanceID : int = 0):
 	var inst : Instance = Instance.new()
+	CreateNavigation(map, inst.get_world_2d().get_navigation_map())
 
 	inst.id = instanceID
 	for spawn in map.spawns:
 		for i in spawn.count:
-			var entity : BaseEntity = Launcher.DB.Instantiate.CreateEntity(spawn.type, spawn.name)
+			var agent : BaseAgent = Launcher.DB.Instantiate.CreateAgent(spawn.type, spawn.name)
 
-			Launcher.Util.Assert(entity != null, "Entity %s (type: %s) could not be created" % [spawn.name, spawn.type])
-			if entity:
+			Launcher.Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
+			if agent:
 				if spawn.is_global:
-					entity.position = GetRandomPosition(map)
+					agent.position = GetRandomPosition(map)
 				else:
-					entity.position = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
+					agent.position = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
 
 				# TODO: use internal Spawn function
-				Launcher.Util.Assert(entity.position != Vector2.ZERO, "Could not spawn the entity %s, no walkable position found" % spawn.name)
-				if entity.position != Vector2.ZERO:
+				Launcher.Util.Assert(agent.position != Vector2.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
+				if agent.position != Vector2.ZERO:
 					match spawn.type:
-						"Player":	inst.players.append(entity)
-						"Npc":		inst.npcs.append(entity)
-						"Monster":	inst.mobs.append(entity)
-						"Trigger":	inst.npcs.append(entity)
-						_: Launcher.Util.Assert(false, "Entity type is not valid")
+						"Player":	inst.players.append(agent)
+						"Npc":		inst.npcs.append(agent)
+						"Monster":	inst.mobs.append(agent)
+						"Trigger":	inst.npcs.append(agent)
+						_: Launcher.Util.Assert(false, "Agent type is not valid")
+					inst.add_child(agent)
 
+	for agent in inst.npcs + inst.players + inst.mobs:
+		if agent.agent:
+			agent.agent.set_navigation_map(map.mapRID)
+
+	inst.disable_3d = true
+	inst.gui_disable_input = true
+	inst.name = map.name
+	if instanceID > 0:
+		inst.name += "_" + str(instanceID)
+
+	Launcher.Root.add_child(inst)
 	map.instances.push_back(inst)
 
-	for entity in inst.npcs + inst.players + inst.mobs:
-		if entity.agent:
-			entity.agent.set_navigation_map(map.mapRID)
-
-# Entities Management
-func Warp(oldMap : String, newMap : String, newPos : Vector2i, entity : BaseEntity):
+# Agent Management
+func Warp(oldMap : String, newMap : String, newPos : Vector2i, agent : BaseAgent):
 	var err : bool = false
 	err = err || not areas.has(oldMap)
-	err = err || entity == null
-	Launcher.Util.Assert(not err, "WarpEntity could not proceed, one or multiple parameters are invalid")
+	err = err || agent == null
+	Launcher.Util.Assert(not err, "Warp could not proceed, one or multiple parameters are invalid")
 
 	if not err:
 		err = true
 		for instance in areas[oldMap].instances:
-			var arrayIdx : int = instance.players.find(entity)
+			var arrayIdx : int = instance.players.find(agent)
 			if arrayIdx >= 0:
 				instance.players.remove_at(arrayIdx)
+				var entityNode : Node = instance.get_node_or_null(str(agent.get_rid().get_id()))
+				if entityNode:
+					Launcher.remove_child(entityNode)
 				err = false
-	Launcher.Util.Assert(not err, "WarpEntity could not proceed, the entity is not found on old map's instances")
+				break
+	Launcher.Util.Assert(not err, "Warp could not proceed, the agent is not found on old map's instances")
 	
-	Spawn(newMap, entity)
-	entity.set_position(newPos)
+	Spawn(newMap, agent)
+	agent.set_position(newPos)
 
-func Spawn(newMap : String, entity : Node2D, instID : int = 0):
+func Spawn(newMap : String, agent : Node2D, instID : int = 0):
 	var err : bool = false
 	err = err || not areas.has(newMap)
-	err = err || entity == null
-	Launcher.Util.Assert(not err, "WarpEntity could not proceed, one or multiple parameters are invalid")
+	err = err || agent == null
+	Launcher.Util.Assert(not err, "Warp could not proceed, one or multiple parameters are invalid")
 
 	if not err:
-		if entity.agent:
-			entity.agent.set_navigation_map(areas[newMap].mapRID)
+		if agent.agent:
+			agent.agent.set_navigation_map(areas[newMap].mapRID)
 
 		var inst : Instance = areas[newMap].instances[instID]
-		var arrayIdx : int = inst.players.find(entity)
+		var arrayIdx : int = inst.players.find(agent)
 		if arrayIdx < 0:
-			inst.players.push_back(entity)
+			inst.players.push_back(agent)
 		else:
 			err = true
-	Launcher.Util.Assert(not err, "WarpEntity could not proceed, the entity is not found on new map's instances")
 
-func GetEntities(mapName : String, playerName : String):
+		inst.add_child(agent)
+	Launcher.Util.Assert(not err, "Warp could not proceed, the agent is not found on new map's instances")
+
+func GetAgents(mapName : String, playerName : String):
 	var list : Array = []
 	var area : Map = areas[mapName] if areas.has(mapName) else null
 	Launcher.Util.Assert(area != null, "World can't find the map name " + mapName)
 	if area:
 		for instance in area.instances:
 			for player in instance.players:
-				if player.entityName == playerName:
+				if player.agentName == playerName:
 					list = instance.npcs + instance.mobs + instance.players
 					break
 	return list
 
-func HasEntity(entityName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
+func HasAgent(agentName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
 	for map in areas.values():
 		for instance in map.instances:
 			if checkPlayers:
-				for entity in \
+				for agent in \
 				instance.players if checkPlayers else [] + \
 				instance.npcs if checkNpcs else [] + \
 				instance.mobs if checkMonsters else []:
-					if entity.entityName == entityName:
+					if agent.agentName == agentName:
 						return true
 	return false
 
-func RemoveEntity(entityName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
+func RemoveAgent(agentName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
 	for map in areas.values():
 		for instance in map.instances:
 			if checkPlayers:
-				for entity in instance.players:
-					if entity.entityName == entityName:
-						instance.players.erase(entity)
+				for agent in instance.players:
+					if agent.agentName == agentName:
+						instance.players.erase(agent)
 			if checkNpcs:
-				for entity in instance.npcs:
-					if entity.entityName == entityName:
-						instance.npcs.erase(entity)
+				for agent in instance.npcs:
+					if agent.agentName == agentName:
+						instance.npcs.erase(agent)
 			if checkMonsters:
-				for entity in instance.mobs:
-					if entity.entityName == entityName:
-						instance.mobs.erase(entity)
+				for agent in instance.mobs:
+					if agent.agentName == agentName:
+						instance.mobs.erase(agent)
 
 # AI
-func UpdateWalkPaths(entity : Node2D, map : Map):
+func UpdateWalkPaths(agent : Node2D, map : Map):
 	var randAABB : Vector2i = Vector2i(randi_range(30, 200), randi_range(30, 200))
-	var newPos : Vector2i = GetRandomPositionAABB(map, entity.position, randAABB)
-	entity.WalkToward(newPos)
+	var newPos : Vector2i = GetRandomPositionAABB(map, agent.position, randAABB)
+	agent.WalkToward(newPos)
 
-func UpdateAI(entity : BaseEntity, map : Map):
-#	if entity is PlayerEntity:
-#	if entity is NpcEntity:
-#	if entity is MonsterEntity:
-
-	if entity.hasGoal == false && entity.AITimer && entity.AITimer.is_stopped():
-		entity.StartAITimer(randf_range(5, 15), UpdateWalkPaths, map)
-	elif entity.hasGoal && entity.IsStuck():
-		entity.ResetNav()
-		entity.StartAITimer(randf_range(2, 10), UpdateWalkPaths, map)
-	entity.UpdateInput()
+func UpdateAI(agent : BaseAgent, map : Map):
+	if agent.hasCurrentGoal == false && agent.aiTimer && agent.aiTimer.is_stopped():
+		agent.aiTimer.StartTimer(randf_range(5, 15), UpdateWalkPaths.bind(agent, map))
+	elif agent.hasCurrentGoal && agent.IsStuck():
+		agent.ResetNav()
+		agent.aiTimer.StartTimer(randf_range(2, 10), UpdateWalkPaths.bind(agent, map))
+	agent.UpdateInput()
 
 # Generic
 func _post_launch():
@@ -237,6 +249,6 @@ func _post_launch():
 func _process(_dt : float):
 	for map in areas.values():
 		for instance in map.instances:
-			if instance.players.size() > 0:
-				for entity in instance.npcs + instance.mobs:
-					UpdateAI(entity, map)
+#			if instance.players.size() > 0:
+			for agent in instance.npcs + instance.mobs:
+				UpdateAI(agent, map)
