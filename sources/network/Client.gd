@@ -34,6 +34,6 @@ func SetClickPos(pos : Vector2):
 	if Launcher.Network.Server:
 		Launcher.Network.Server.SetClickPos(pos)
 
-func SetMovePos(pos : Vector2, delta : float):
+func SetMovePos(pos : Vector2):
 	if Launcher.Network.Server:
-		Launcher.Network.Server.SetMovePos(pos, delta)
+		Launcher.Network.Server.SetMovePos(pos)

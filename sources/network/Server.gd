@@ -40,16 +40,21 @@ func SetClickPos(pos : Vector2, senderRpcID : int = -1):
 		if agent:
 			agent.WalkToward(pos)
 
-func SetMovePos(pos : Vector2, delta : float, senderRpcID : int = -1):
+func SetMovePos(direction : Vector2, senderRpcID : int = -1):
 	if playerMap.has(senderRpcID):
 		var playerAgentID : int = playerMap.get(senderRpcID)
 		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
 		if agent:
-			if pos != Vector2.ZERO:
-				var normalizedInput : Vector2 = pos.normalized()
-				agent.velocity = agent.velocity.move_toward(normalizedInput * agent.stat.moveSpeed, agent.stat.moveAcceleration * delta)
-			else:
-				agent.velocity = agent.velocity.move_toward(Vector2.ZERO, agent.stat.moveFriction * delta)
+			if direction != Vector2.ZERO:
+				var newPos : Vector2 = direction.normalized() * Vector2(16,16) + agent.position
+				var path = NavigationServer2D.map_get_path(agent.agent.get_navigation_map(), agent.position, newPos, true)
+				var pathLength = 0
+				for i in range(0, path.size() - 1):
+					pathLength += Vector2(path[i] - path[i+1]).length_squared()
+				if pathLength <= 500:
+					SetClickPos(newPos, senderRpcID)
+				else:
+					print(pathLength)
 
 #
 func ConnectPeer(id : int):

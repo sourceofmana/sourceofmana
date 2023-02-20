@@ -34,7 +34,7 @@ func GetMove(forceMode : bool = false) -> Vector2:
 	return moveVector
 
 # Local player movement
-func _process(deltaTime : float):
+func _process(_deltaTime : float):
 	if Launcher.Player && Launcher.Player.timer:
 		var timer : Timer = Launcher.Player.timer
 		if timer.is_stopped() and IsActionPressed("gp_click_to"):
@@ -46,4 +46,4 @@ func _process(deltaTime : float):
 			if movePos != Vector2.ZERO:
 				if timer.get_time_left() > 0:
 					timer.stop()
-				Launcher.Network.Client.SetMovePos(movePos, deltaTime)
+				Launcher.Network.Client.SetMovePos(movePos)
