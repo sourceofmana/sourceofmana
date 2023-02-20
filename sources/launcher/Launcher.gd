@@ -103,6 +103,7 @@ func _post_launch():
 	if Settings:	Settings._post_launch()
 
 func _process(delta : float):
+	if Action:		Action._process(delta)
 	if Debug:		Debug._process(delta)
 	if FSM:			FSM._process(delta)
 	if World:		World._process(delta)

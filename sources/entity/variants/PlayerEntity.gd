@@ -19,6 +19,7 @@ func _physics_process(_deltaTime : float):
 		interactive.Update(isPlayableController, self)
 
 func _ready():
+	super._ready()
 	if interactive:
 		interactive.Setup(self, isPlayableController)
 

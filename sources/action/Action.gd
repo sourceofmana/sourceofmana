@@ -34,19 +34,16 @@ func GetMove(forceMode : bool = false) -> Vector2:
 	return moveVector
 
 # Local player movement
-func _physics_process(_deltaTime : float):
+func _process(deltaTime : float):
 	if Launcher.Player && Launcher.Player.timer:
 		var timer : Timer = Launcher.Player.timer
 		if timer.is_stopped() and IsActionPressed("gp_click_to"):
 			var mousePos : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
-			Launcher.Network.SetClickPos(mousePos)
+			Launcher.Network.Client.SetClickPos(mousePos)
 			timer.start()
 		else:
-			if timer.get_time_left() > 0:
-				timer.stop()
 			var movePos : Vector2 = GetMove()
-			Launcher.Network.SetMovePos(movePos)
-
-func _ready():
-	set_process_input(true)
-	set_process_unhandled_input(true)
+			if movePos != Vector2.ZERO:
+				if timer.get_time_left() > 0:
+					timer.stop()
+				Launcher.Network.Client.SetMovePos(movePos, deltaTime)

@@ -22,14 +22,18 @@ func SetAgents(agents : Array[BaseAgent]):
 func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2):
 		Launcher.Map.UpdateEntity(ridAgent, velocity, position)
 
+# Player
 func SetWarp(oldMapName : String, newMapName : String, newPos : Vector2i):
 	if Launcher.Network.Server:
 		Launcher.Network.Server.SetWarp(Launcher.Player.entityName, oldMapName, newMapName, newPos)
 
-# Player
-func UpdatePlayerInput(currentInput : Vector2, deltaTime : float):
-	if Launcher.Network.Server:
-		Launcher.Network.Server.UpdatePlayerInput(currentInput, deltaTime)
-
 func SetVelocity(velocity : Vector2):
 	Launcher.Player.SetVelocity(velocity)
+
+func SetClickPos(pos : Vector2):
+	if Launcher.Network.Server:
+		Launcher.Network.Server.SetClickPos(pos)
+
+func SetMovePos(pos : Vector2, delta : float):
+	if Launcher.Network.Server:
+		Launcher.Network.Server.SetMovePos(pos, delta)

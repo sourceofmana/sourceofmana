@@ -261,5 +261,5 @@ func _process(_dt : float):
 					UpdateAI(agent, map)
 				for player in instance.players:
 					var playerID : int = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
-					for agent in instance.npcs + instance.mobs:
+					for agent in instance.npcs + instance.mobs + instance.players:
 						Launcher.Network.Server.UpdateEntity(playerID, agent.get_rid().get_id(), agent.currentVelocity, agent.position)
