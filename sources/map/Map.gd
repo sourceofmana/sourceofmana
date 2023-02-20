@@ -4,9 +4,9 @@ extends Node2D
 signal PlayerWarped
 
 #
-var pool					= Launcher.FileSystem.LoadSource("map/MapPool.gd")
-var mapNode : Node2D		= null
-var visibleEntities : Array[BaseEntity] = []
+var pool								= Launcher.FileSystem.LoadSource("map/MapPool.gd")
+var mapNode : Node2D					= null
+var entities : Dictionary				= {}
 
 #
 func GetTileMap() -> TileMap:
@@ -63,23 +63,39 @@ func ReplaceMapNode(mapName : String):
 	if mapNode && mapNode.get_name() != mapName:
 		UnloadMapNode()
 	LoadMapNode(mapName)
-	Launcher.Network.Client.GetEntities(mapName)
+	Launcher.Network.Client.GetAgents(mapName)
 
 	if mapNode:
 		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
 			pool.RefreshPool(mapNode)
 
-func WarpEntities(entities : Array[BaseEntity]):
-	visibleEntities = entities
-
-	for entity in visibleEntities:
-		if not Launcher.Player and entity.entityName == Launcher.FSM.playerName:
+#
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i):
+	var isLocalPlayer : bool = entityName == Launcher.FSM.playerName
+	var entity : BaseEntity = null
+	if isLocalPlayer and Launcher.Player:
+		entity = Launcher.Player
+	else:
+		entity = Launcher.DB.Instantiate.CreateEntity(entityType, entityID, entityName)
+		if entity && isLocalPlayer:
 			Launcher.Player = entity
 			Launcher.Player.SetLocalPlayer()
-		Launcher.Map.AddChild(entity)
+			if Launcher.Debug:
+				Launcher.Debug.SetPlayerInventory()
 
-	if Launcher.Player:
-		Launcher.Player.ResetNav()
-		Launcher.Camera.SetBoundaries()
-		emit_signal('PlayerWarped')
-		Launcher.Player.set_physics_process(true)				
+	if entity:
+		entity.set_position(entityPos)
+		AddChild(entity)
+		entity.set_physics_process(true)
+		entities[agentID] = entity
+
+		if isLocalPlayer:
+			if Launcher.Camera:
+				Launcher.Camera.SetBoundaries()
+			emit_signal('PlayerWarped')
+
+func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2):
+	var entity : BaseEntity = entities.get(agentID)
+	if entity:
+		entity.set_position(agentPosition)
+		entity.SetVelocity(agentVelocity)

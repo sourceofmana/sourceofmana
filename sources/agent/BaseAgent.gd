@@ -2,50 +2,22 @@ extends CharacterBody2D
 class_name BaseAgent
 
 #
-enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
-
-#
 var agent : NavigationAgent2D			= null
-var agentName							= "PlayerName"
+var agentName							= ""
+var agentType : String					= ""
+var agentID : String					= ""
 var aiTimer : AiTimer					= null
-var stat : EntityStat					= null
 
 var hasCurrentGoal						= false
 var currentInput						= Vector2.ZERO
 var currentVelocity						= Vector2.ZERO
-var currentDirection					= Vector2(0, 1)
-var currentState						= State.IDLE
 
 var lastPositions : Array[Vector2]		= []
 var navigationLine : PackedVector2Array	= []
 
+var stat : EntityStat					= EntityStat.new()
+
 #
-func GetNextDirection():
-	if currentVelocity.length_squared() > 1:
-		return currentVelocity.normalized()
-	else:
-		return currentDirection
-
-func GetNextState():
-	var newEnumState			= currentState
-	var isWalking				= currentVelocity.length_squared() > 1
-	match currentState:
-		State.IDLE:
-			if isWalking:
-				newEnumState = State.WALK
-		State.WALK:
-			if isWalking == false:
-				newEnumState = State.IDLE
-		State.SIT:
-			if isWalking:
-				newEnumState = State.WALK
-
-	return newEnumState
-
-func ApplyNextState(nextState, nextDirection):
-	currentState		= nextState
-	currentDirection	= nextDirection
-
 func SwitchInputMode(clearCurrentInput : bool):
 	hasCurrentGoal = false
 
@@ -73,20 +45,10 @@ func UpdateOrientation(deltaTime : float):
 	else:
 		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, stat.moveFriction * deltaTime)
 
-func UpdateVelocity():
-	if currentState != State.SIT && currentVelocity != Vector2.ZERO:
+func SetVelocity():
+	if currentVelocity != Vector2.ZERO:
 		velocity = currentVelocity
 		move_and_slide()
-
-func UpdateState():
-	var nextState		= GetNextState()
-	var nextDirection	= GetNextDirection()
-
-	var newState		= nextState != currentState
-	var newDirection	= nextDirection != currentDirection
-
-	if newState || newDirection:
-		ApplyNextState(nextState, nextDirection)
 
 func WalkToward(pos : Vector2):
 	hasCurrentGoal = true
@@ -111,20 +73,21 @@ func IsStuck() -> bool:
 
 #
 func SetKind(entityType : String, entityID : String, entityName : String):
-	if entityName.length() == 0:
-		agentName = entityID
-		name =  entityID
-	else:
-		agentName = entityName
-		name = entityName
+	agentName	= entityName
+	agentType	= entityType
+	agentID		= entityID
 
-	if entityType == "Monster" or entityType == "Npc":
+	if agentName.length() == 0:
+		set_name(agentID)
+	else:
+		set_name(agentName)
+
+	if agentType == "Monster" or agentType == "Npc":
 		aiTimer = AiTimer.new()
 		add_child(aiTimer)
 
 func SetData(data : Object):
 	# Stat
-	stat = EntityStat.new()
 	stat.moveSpeed	= data._walkSpeed
 
 	# Navigation
@@ -144,8 +107,7 @@ func _physics_process(deltaTime : float):
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
-	UpdateVelocity()
-	UpdateState()
+	SetVelocity()
 
 func _path_changed():
 	if agent:
@@ -165,4 +127,4 @@ func _setup_nav_agent():
 
 func _ready():
 	_setup_nav_agent()
-	set_name(str(get_rid().get_id()))
+	name = str(get_rid().get_id())

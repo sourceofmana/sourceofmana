@@ -1,4 +1,4 @@
-extends AiEntity
+extends BaseEntity
 class_name NpcEntity
 
 #

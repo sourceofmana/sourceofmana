@@ -1,4 +1,4 @@
-extends AiEntity
+extends BaseEntity
 class_name MonsterEntity
 
 # on dead drop whole inventory (some mobs like slimes can collect items)

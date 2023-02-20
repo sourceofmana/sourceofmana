@@ -20,3 +20,4 @@ layout_mode = 2
 stretch_mode = 2
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
+[connection signal="visibility_changed" from="ScrollContainer" to="ScrollContainer" method="_on_visibility_changed"]

@@ -21,9 +21,6 @@ func _ready():
 	get_h_scroll_bar().scale = Vector2.ZERO
 	get_v_scroll_bar().scale = Vector2.ZERO
 
-	if Launcher.Map:
-		Launcher.Map.PlayerWarped.connect(self.Warped)
-
 func _process(_delta):
 	if Launcher.Camera && Launcher.Camera.mainCamera:
 		var screenCenter : Vector2	= Launcher.Camera.mainCamera.get_target_position()
@@ -35,3 +32,8 @@ func _process(_delta):
 			get_parent().maxSize = minimapWindowSize
 			set_h_scroll(scrollPos.x)
 			set_v_scroll(scrollPos.y)
+
+func _on_visibility_changed():
+	if Launcher.Map and not Launcher.Map.PlayerWarped.is_connected(Warped):
+		Launcher.Map.PlayerWarped.connect(Warped)
+	Warped()

@@ -18,6 +18,7 @@ class Map:
 
 # Vars
 var areas : Dictionary = {}
+var rids : Dictionary = {}
 
 # Utils
 func GetRandomPosition(map : Map) -> Vector2i:
@@ -92,6 +93,7 @@ func CreateNavigation(map : Map, mapRID : RID):
 	if map.nav_poly:
 		map.mapRID = mapRID if mapRID.is_valid() else NavigationServer2D.map_create()
 		NavigationServer2D.map_set_active(map.mapRID, true)
+		NavigationServer2D.map_set_cell_size(map.mapRID, 0.1)
 
 		map.regionRID = NavigationServer2D.region_create()
 		NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
@@ -107,6 +109,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	for spawn in map.spawns:
 		for i in spawn.count:
 			var agent : BaseAgent = Launcher.DB.Instantiate.CreateAgent(spawn.type, spawn.name)
+			rids[agent.get_rid().get_id()] = agent
 
 			Launcher.Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
 			if agent:
@@ -140,27 +143,31 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	map.instances.push_back(inst)
 
 # Agent Management
-func Warp(oldMap : String, newMap : String, newPos : Vector2i, agent : BaseAgent):
-	var err : bool = false
-	err = err || not areas.has(oldMap)
-	err = err || agent == null
-	Launcher.Util.Assert(not err, "Warp could not proceed, one or multiple parameters are invalid")
+func Warp(entityName : String, oldMap : String, newMap : String, newPos : Vector2i):
+	var bOK : bool = areas.has(oldMap)
+	Launcher.Util.Assert(bOK, "Warp could not proceed, previous map not found")
 
-	if not err:
-		err = true
+	if bOK:
+		bOK = false
+
 		for instance in areas[oldMap].instances:
-			var arrayIdx : int = instance.players.find(agent)
-			if arrayIdx >= 0:
-				instance.players.remove_at(arrayIdx)
-				var entityNode : Node = instance.get_node_or_null(str(agent.get_rid().get_id()))
-				if entityNode:
-					Launcher.remove_child(entityNode)
-				err = false
-				break
-	Launcher.Util.Assert(not err, "Warp could not proceed, the agent is not found on old map's instances")
-	
-	Spawn(newMap, agent)
-	agent.set_position(newPos)
+			var agent : BaseAgent = null
+			for playerAgent in instance.players:
+				if playerAgent && playerAgent.agentName == entityName:
+					agent = playerAgent
+					break
+
+			if agent:
+				var arrayIdx : int = instance.players.find(agent)
+				if arrayIdx >= 0:
+					instance.players.remove_at(arrayIdx)
+					instance.remove_child(agent)
+					Spawn(newMap, agent)
+					agent.set_position(newPos)
+					agent.ResetNav()
+					bOK = true
+
+	Launcher.Util.Assert(bOK, "Warp could not proceed, the agent is not found on old map's instances")
 
 func Spawn(newMap : String, agent : Node2D, instID : int = 0):
 	var err : bool = false
@@ -176,10 +183,10 @@ func Spawn(newMap : String, agent : Node2D, instID : int = 0):
 		var arrayIdx : int = inst.players.find(agent)
 		if arrayIdx < 0:
 			inst.players.push_back(agent)
+			inst.add_child(agent)
 		else:
 			err = true
 
-		inst.add_child(agent)
 	Launcher.Util.Assert(not err, "Warp could not proceed, the agent is not found on new map's instances")
 
 func GetAgents(mapName : String, playerName : String):
@@ -249,6 +256,10 @@ func _post_launch():
 func _process(_dt : float):
 	for map in areas.values():
 		for instance in map.instances:
-#			if instance.players.size() > 0:
-			for agent in instance.npcs + instance.mobs:
-				UpdateAI(agent, map)
+			if Launcher.Debug or instance.players.size() > 0:
+				for agent in instance.npcs + instance.mobs:
+					UpdateAI(agent, map)
+				for player in instance.players:
+					var playerID : int = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
+					for agent in instance.npcs + instance.mobs:
+						Launcher.Network.Server.UpdateEntity(playerID, agent.get_rid().get_id(), agent.currentVelocity, agent.position)

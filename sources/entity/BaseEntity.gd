@@ -1,70 +1,63 @@
 extends CharacterBody2D
 class_name BaseEntity
 
-@onready var animationState		= animationTree.get("parameters/playback") if animationTree else null
-
+#
 enum Gender { MALE = 0, FEMALE, NONBINARY, COUNT }
 enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
 
-var sprite : Sprite2D				= null
-var animation : Node				= null
-var animationTree : AnimationTree	= null
-var agent : NavigationAgent2D		= null
-var collision : CollisionShape2D	= null
+var sprite : Sprite2D					= null
+var animation : Node					= null
+var animationTree : AnimationTree		= null
+var animationState : Resource			= null
+var collision : CollisionShape2D		= null
 
-var stat						= preload("res://sources/entity/components/Stat.gd").new()
-var slot						= preload("res://sources/entity/components/Slot.gd").new()
-var interactive					= load("res://sources/entity/components/Interactive.gd").new()
-var inventory: EntityInventory	= load("res://sources/entity/components/inventory/Inventory.gd").new()
+var displayName : bool					= false
+var entityName : String					= "PlayerName"
+var entityState : State					= State.IDLE
+var entityDirection : Vector2			= Vector2(0, 1)
 
-var displayName					= false
-var entityName					= "PlayerName"
-var gender						= Gender.MALE
+var interactive : EntityInteractive		= EntityInteractive.new()
+var inventory : EntityInventory			= EntityInventory.new()
+var stat : EntityStat					= EntityStat.new()
 
-var damageReceived				= {}
-var showName					= false
+# Animation
+func GetNextState(checkSit : bool = false):
+	var newEntityState			= entityState
+	var currentVelocity			= velocity
+	var velocityLengthSquared	= currentVelocity.length_squared()
+	var isWalking				= velocityLengthSquared > 1
+	var actionSitPressed		= Launcher.Action.IsActionPressed("gp_sit") if checkSit else false
+	var actionSitJustPressed	= Launcher.Action.IsActionJustPressed("gp_sit") if checkSit else false
 
-var hasGoal		                = false
-var currentInput				= Vector2.ZERO
-var currentVelocity				= Vector2.ZERO
-var currentDirection			= Vector2(0, 1)
-
-var currentState				= State.IDLE
-
-var lastPositions : Array		= []
-
-#
-func GetNextDirection():
-	if currentVelocity.length_squared() > 1:
-		return currentVelocity.normalized()
-	else:
-		return currentDirection
-
-func GetNextState():
-	var newEnumState			= currentState
-	var isWalking				= currentVelocity.length_squared() > 1
-	match currentState:
+	match entityState:
 		State.IDLE:
 			if isWalking:
-				newEnumState = State.WALK
+				newEntityState = State.WALK
+			elif actionSitPressed:
+				newEntityState = State.SIT
 		State.WALK:
-			if isWalking == false:
-				newEnumState = State.IDLE
+			if not isWalking:
+				newEntityState = State.IDLE
 		State.SIT:
-			if isWalking:
-				newEnumState = State.WALK
+			if not actionSitPressed and isWalking:
+				newEntityState = State.WALK
+			elif actionSitJustPressed:
+				newEntityState = State.IDLE
 
-	return newEnumState
+	return newEntityState
 
-func ApplyNextState(nextState, nextDirection):
-	currentState		= nextState
-	currentDirection	= nextDirection
+func GetNextDirection():
+	if velocity.length_squared() > 1:
+		return velocity.normalized()
+	else:
+		return entityDirection
 
-	animationTree.set("parameters/Idle/blend_position", currentDirection)
-	animationTree.set("parameters/Sit/blend_position", currentDirection)
-	animationTree.set("parameters/Walk/blend_position", currentDirection)
+func ApplyNextState(nextState : State, nextDirection : Vector2):
+	animationTree.set("parameters/Idle/blend_position", nextDirection)
+	animationTree.set("parameters/Sit/blend_position", nextDirection)
+	animationTree.set("parameters/Walk/blend_position", nextDirection)
 
-	match currentState:
+	match nextState:
 		State.IDLE:
 			animationState.travel("Idle")
 		State.WALK:
@@ -72,119 +65,33 @@ func ApplyNextState(nextState, nextDirection):
 		State.SIT:
 			animationState.travel("Sit")
 
-
-func SwitchInputMode(clearCurrentInput : bool):
-	hasGoal = false
-
-	if clearCurrentInput:
-		currentInput = Vector2.ZERO
-
-	if Launcher.Debug:
-		Launcher.Debug.ClearNavLine(self)
-
-func UpdateInput():
-	if hasGoal:
-		if agent && not agent.is_navigation_finished():
-			var newDirection : Vector2 = global_position.direction_to(agent.get_next_location())
-			if newDirection != Vector2.ZERO:
-				currentInput = newDirection
-			lastPositions.push_back(position)
-			if lastPositions.size() > 5:
-				lastPositions.pop_front()
-		else:
-			SwitchInputMode(true)
-
-func UpdateOrientation(deltaTime : float):
-	if currentInput != Vector2.ZERO:
-		var normalizedInput : Vector2 = currentInput.normalized()
-		currentVelocity = currentVelocity.move_toward(normalizedInput * stat.moveSpeed, stat.moveAcceleration * deltaTime)
-	else:
-		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, stat.moveFriction * deltaTime)
-
-func UpdateVelocity():
-	if currentState != State.SIT && currentVelocity != Vector2.ZERO:
-		velocity = currentVelocity
-		move_and_slide()
+	entityState		= nextState
+	entityDirection	= nextDirection
 
 func UpdateState():
-	var nextState		= GetNextState()
-	var nextDirection	= GetNextDirection()
-	var newState		= nextState != currentState
-	var newDirection	= nextDirection != currentDirection
+	var nextState : State			= GetNextState()
+	var nextDirection : Vector2		= GetNextDirection()
+	var hasNewState : bool			= nextState != entityState
+	var hasNewDirection : bool		= nextDirection != entityDirection
 
-	if newState || newDirection:
+	if hasNewState or hasNewDirection:
 		ApplyNextState(nextState, nextDirection)
 
-func WalkToward(pos : Vector2):
-	hasGoal = true
-	lastPositions.clear()
-	if agent:
-		agent.set_target_location(pos)
-
-func ResetNav():
-	WalkToward(position)
-
-func IsStuck() -> bool:
-	var isStuck : bool = false
-	if lastPositions.size() >= 5:
-		var sum : Vector2 = Vector2.ZERO
-		for pos in lastPositions:
-			sum += pos - position
-		isStuck = sum.abs() < Vector2(1, 1)
-	return isStuck
-
-
-func _physics_process(deltaTime : float):
-	if agent:
-		UpdateInput()
-		UpdateOrientation(deltaTime)
-		if agent.get_avoidance_enabled():
-			agent.set_velocity(currentVelocity)
-		else:
-			_velocity_computed(currentVelocity)
-
-func _velocity_computed(safeVelocity : Vector2):
-	currentVelocity = safeVelocity
-	UpdateVelocity()
-	UpdateState()
-
-func _path_changed():
-	Launcher.Debug.UpdateNavLine(self)
-
-func _target_reached():
-	Launcher.Debug.ClearNavLine(self)
-
-func _setup_nav_agent():
-	if agent:
-		if agent.get_avoidance_enabled():
-			var err = agent.velocity_computed.connect(self._velocity_computed)
-			Launcher.Util.Assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
-		if Launcher.Debug:
-			var err = agent.path_changed.connect(self._path_changed)
-			Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _path_changed")
-			err = agent.target_reached.connect(self._target_reached)
-			Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _target_reached")
-
-func _enable_warp():
-	collision_layer |= 1 << 1
-	collision_mask |= 1 << 1
-
-func SetName(_entityID : String, _entityName : String):
-	if _entityName.length() == 0:
-		entityName = _entityID
-		name =  _entityID
+# Init
+func SetKind(_entityKind : String, _entityID : String, _entityName : String):
+	entityName	= _entityName
+	if entityName.length() == 0:
+		set_name(_entityID)
 	else:
-		entityName = _entityName
-		name = _entityName
+		set_name(entityName)
 
+	if _entityKind == "Player":
+		EnableWarp()
 
-func ApplyData(data : Object):
+func SetData(data : Object):
 	# Display
 	entityName		= data._name
 	displayName		= data._displayName
-
-	# Stat
-	stat.moveSpeed	= data._walkSpeed
 
 	# Sprite
 	if !data._ethnicity.is_empty() or !data._gender.is_empty():
@@ -202,12 +109,23 @@ func ApplyData(data : Object):
 			animationTree = animation.get_node("AnimationTree")
 		add_child(animation)
 
-	# Navigation
-	if data._navigationAgent:
-		agent = Launcher.FileSystem.LoadPreset("navigations/" + data._navigationAgent)
-		add_child(agent)	
-
 	# Collision
 	if data._collision:
 		collision = Launcher.FileSystem.LoadPreset("collisions/" + data._collision)
 		add_child(collision)
+
+#
+func SetVelocity(nextVelocity : Vector2):
+	velocity = nextVelocity
+	if velocity != Vector2.ZERO:
+		move_and_slide()
+	UpdateState()
+
+func EnableWarp():
+	collision_layer	|= 1 << 1
+	collision_mask	|= 1 << 1
+
+#
+func _ready():
+	if animationTree:
+		animationState = animationTree.get("parameters/playback")

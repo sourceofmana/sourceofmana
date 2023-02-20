@@ -6,7 +6,7 @@ var mainCamera : Camera2D		= null
 func SetBoundaries():
 	if Launcher.Player && Launcher.Player.camera:
 		mainCamera = Launcher.Player.camera
-		if mainCamera:
+		if Launcher.Map:
 			var mapBoundaries : Rect2i	= Launcher.Map.GetMapBoundaries()
 			mainCamera.limit_left		= int(mapBoundaries.position.x)
 			mainCamera.limit_right		= int(mapBoundaries.end.x)

@@ -1,4 +1,5 @@
 extends Node
+class_name EntityInteractive
 
 #
 var speechInstance : PackedScene	= Launcher.FileSystem.LoadGui("chat/SpeechBubble", false)
@@ -160,12 +161,12 @@ func Interact(selfEntity : BaseEntity):
 
 #
 func _body_entered(body):
-	if body && body is AiEntity && self != body.interactive:
+	if body && (body is NpcEntity || body is MonsterEntity) && self != body.interactive:
 		if canInteractWith.has(body) == false:
 			canInteractWith.append(body)
 
 func _body_exited(body):
-	if body && body is AiEntity && self != body.interactive:
+	if body && (body is NpcEntity || body is MonsterEntity) && self != body.interactive:
 		var bodyPos : int = canInteractWith.find(body)
 		if bodyPos != -1:
 			canInteractWith.remove_at(bodyPos)

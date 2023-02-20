@@ -9,22 +9,19 @@ func FindEntityReference(entityID : String) -> Object:
 			break
 	return ref
 
-func CreateEntity(entityType : String, entityID : String, entityName : String = "") -> BaseEntity:
-	var inst : BaseEntity = null
+func CreateGenericEntity(entityInstance : CharacterBody2D, entityType : String, entityID : String, entityName : String = ""):
 	var template = FindEntityReference(entityID)
-	if template:
-		inst = Launcher.FileSystem.LoadEntity(entityType)
-		if inst:
-			inst.SetData(template)
-			inst.SetKind(entityID, entityName)
-	Launcher.Util.Assert(inst != null, "Could not create the client entity: " + entityID)
-	return inst
+	Launcher.Util.Assert(template and entityInstance, "Could not create the entity: %s" % entityID)
+	if template and entityInstance:
+		entityInstance.SetData(template)
+		entityInstance.SetKind(entityType, entityID, entityName)
+
+func CreateEntity(entityType : String, entityID : String, entityName : String = "") -> BaseEntity:
+	var entityInstance : BaseEntity = Launcher.FileSystem.LoadEntity(entityType)
+	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
+	return entityInstance
 
 func CreateAgent(entityType : String, entityID : String, entityName : String = "") -> BaseAgent:
-	var inst : BaseAgent = BaseAgent.new()
-	var template = FindEntityReference(entityID)
-	if template and inst:
-		inst.SetData(template)
-		inst.SetKind(entityType, entityID, entityName)
-	Launcher.Util.Assert(inst != null, "Could not create the agent entity: " + entityID)
-	return inst
+	var entityInstance : BaseAgent = BaseAgent.new()
+	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
+	return entityInstance
