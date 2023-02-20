@@ -92,6 +92,3 @@ func NetDestroy():
 	uniqueID = 0
 	if Client:
 		Client.Disconnect()
-		Client.queue_free()
-	if Server:
-		Server.queue_free()
