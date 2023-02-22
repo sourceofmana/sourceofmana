@@ -97,5 +97,4 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2):
 	var entity : BaseEntity = entities.get(agentID)
 	if entity:
-		entity.set_position(agentPosition)
-		entity.SetVelocity(agentVelocity)
+		entity.Update(agentVelocity, agentPosition)

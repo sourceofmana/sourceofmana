@@ -115,11 +115,13 @@ func SetData(data : Object):
 		add_child(collision)
 
 #
-func SetVelocity(nextVelocity : Vector2):
+func Update(nextVelocity : Vector2, gardbandPosition : Vector2):
+	if Vector2(position - gardbandPosition).length() >= 16:
+		position = gardbandPosition
 	velocity = nextVelocity
-	if velocity != Vector2.ZERO:
-		move_and_slide()
+
 	UpdateState()
+	move_and_slide()
 
 func EnableWarp():
 	collision_layer	|= 1 << 1
