@@ -121,7 +121,8 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2):
 	velocity = nextVelocity
 
 	UpdateState()
-	move_and_slide()
+	if velocity != Vector2.ZERO:
+		move_and_slide()
 
 func EnableWarp():
 	collision_layer	|= 1 << 1
