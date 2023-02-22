@@ -24,6 +24,21 @@ func SetPlayerInWorld(mapName : String, rpcID : int = -1):
 	if Server:		NetCallClient("SetPlayerInWorld", [mapName], rpcID)
 	elif Client:	Client.SetPlayerInWorld(mapName)
 
+@rpc(any_peer)
+func GetAgents(rpcID : int = -1):
+	if Client:		NetCallServer("GetAgents", [])
+	elif Server:	Server.GetAgents(rpcID)
+
+@rpc
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, rpcID : int = -1):
+	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos], rpcID)
+	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos)
+
+@rpc(unreliable_ordered)
+func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, rpcID : int = -1):
+	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position], rpcID)
+	elif Client:	Client.UpdateEntity(agentID, velocity, position)
+
 #
 func NetCallServer(methodName : String, args : Array):
 	if Server:

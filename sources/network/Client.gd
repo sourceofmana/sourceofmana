@@ -11,13 +11,8 @@ func SetPlayerInWorld(map : String, _rpcID : int = -1):
 		if Launcher.FSM:
 			Launcher.FSM.emit_signal("enter_game")
 
-func GetAgents(mapName : String):
-	if Launcher.Network.Server:
-		Launcher.Network.Server.GetAgents(mapName, Launcher.FSM.playerName)
-
-func SetAgents(agents : Array[BaseAgent]):
-	for agent in agents:
-		Launcher.Map.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position)
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, _rpcID : int = -1):
+	Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityPos)
 
 func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2):
 		Launcher.Map.UpdateEntity(ridAgent, velocity, position)

@@ -189,16 +189,28 @@ func Spawn(newMap : String, agent : Node2D, instID : int = 0):
 
 	Launcher.Util.Assert(not err, "Warp could not proceed, the agent is not found on new map's instances")
 
-func GetAgents(mapName : String, playerName : String):
+func GetInstanceFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNpcs = true, checkMonsters = true) -> Instance:
+	for map in areas.values():
+		for instance in map.instances:
+			if checkPlayers:
+				for agent in instance.players:
+					if agent == checkedAgent:
+						return instance
+			if checkNpcs:
+				for agent in instance.npcs:
+					if agent == checkedAgent:
+						return instance
+			if checkMonsters:
+				for agent in instance.mobs:
+					if agent == checkedAgent:
+						return instance
+	return null
+
+func GetAgents(checkedAgent : BaseAgent):
 	var list : Array = []
-	var area : Map = areas[mapName] if areas.has(mapName) else null
-	Launcher.Util.Assert(area != null, "World can't find the map name " + mapName)
-	if area:
-		for instance in area.instances:
-			for player in instance.players:
-				if player.agentName == playerName:
-					list = instance.npcs + instance.mobs + instance.players
-					break
+	var instance : Instance = GetInstanceFromAgent(checkedAgent)
+	if instance:
+		list = instance.npcs + instance.mobs + instance.players
 	return list
 
 func HasAgent(agentName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
@@ -262,4 +274,4 @@ func _process(_dt : float):
 				for player in instance.players:
 					var playerID : int = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
 					for agent in instance.npcs + instance.mobs + instance.players:
-						Launcher.Network.Server.UpdateEntity(playerID, agent.get_rid().get_id(), agent.currentVelocity, agent.position)
+						Launcher.Network.UpdateEntity(agent.get_rid().get_id(), agent.currentVelocity, agent.position, playerID)

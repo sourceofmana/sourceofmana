@@ -22,27 +22,29 @@ func DisconnectPlayer(playerName : String, rpcID : int = -1):
 		Launcher.World.RemoveEntity(playerName)
 
 #
-func GetAgents(mapName : String, entityName : String):
-	var agents : Array[BaseAgent] = Launcher.World.GetAgents(mapName, entityName)
-	Launcher.Network.Client.SetAgents(agents)
-
-func UpdateEntity(_playerID : int, agentID : int, velocity : Vector2, position : Vector2):
-	Launcher.Network.Client.UpdateEntity(agentID, velocity, position)
+func GetAgents(rpcID : int = -1):
+	if playerMap.has(rpcID):
+		var playerAgentID : int = playerMap.get(rpcID)
+		var playerAgent : BaseAgent = Launcher.World.rids[playerAgentID]
+		if playerAgent:
+			var agents : Array[BaseAgent] = Launcher.World.GetAgents(playerAgent)
+			for agent in agents:
+				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, rpcID)
 
 #
 func SetWarp(entityName : String, oldMapName : String, newMapName : String, newPos : Vector2i):
 	Launcher.World.Warp(entityName, oldMapName, newMapName, newPos)
 
-func SetClickPos(pos : Vector2, senderRpcID : int = -1):
-	if playerMap.has(senderRpcID):
-		var playerAgentID : int = playerMap.get(senderRpcID)
+func SetClickPos(pos : Vector2, rpcID : int = -1):
+	if playerMap.has(rpcID):
+		var playerAgentID : int = playerMap.get(rpcID)
 		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
 		if agent:
 			agent.WalkToward(pos)
 
-func SetMovePos(direction : Vector2, senderRpcID : int = -1):
-	if playerMap.has(senderRpcID):
-		var playerAgentID : int = playerMap.get(senderRpcID)
+func SetMovePos(direction : Vector2, rpcID : int = -1):
+	if playerMap.has(rpcID):
+		var playerAgentID : int = playerMap.get(rpcID)
 		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
 		if agent:
 			if direction != Vector2.ZERO:
@@ -52,7 +54,7 @@ func SetMovePos(direction : Vector2, senderRpcID : int = -1):
 				for i in range(0, path.size() - 1):
 					pathLength += Vector2(path[i] - path[i+1]).length_squared()
 				if pathLength <= 500:
-					SetClickPos(newPos, senderRpcID)
+					SetClickPos(newPos, rpcID)
 				else:
 					print(pathLength)
 
