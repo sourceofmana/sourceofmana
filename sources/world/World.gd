@@ -206,6 +206,23 @@ func GetInstanceFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNp
 						return instance
 	return null
 
+func GetMapFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNpcs = true, checkMonsters = true) -> Map:
+	for map in areas.values():
+		for instance in map.instances:
+			if checkPlayers:
+				for agent in instance.players:
+					if agent == checkedAgent:
+						return map
+			if checkNpcs:
+				for agent in instance.npcs:
+					if agent == checkedAgent:
+						return map
+			if checkMonsters:
+				for agent in instance.mobs:
+					if agent == checkedAgent:
+						return map
+	return null
+
 func GetAgents(checkedAgent : BaseAgent):
 	var list : Array = []
 	var instance : Instance = GetInstanceFromAgent(checkedAgent)

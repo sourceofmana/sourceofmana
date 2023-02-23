@@ -39,11 +39,11 @@ func _process(_deltaTime : float):
 		var timer : Timer = Launcher.Player.timer
 		if timer.is_stopped() and IsActionPressed("gp_click_to"):
 			var mousePos : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
-			Launcher.Network.Client.SetClickPos(mousePos)
+			Launcher.Network.SetClickPos(mousePos)
 			timer.start()
 		else:
 			var movePos : Vector2 = GetMove()
 			if movePos != Vector2.ZERO:
 				if timer.get_time_left() > 0:
 					timer.stop()
-				Launcher.Network.Client.SetMovePos(movePos)
+				Launcher.Network.SetMovePos(movePos)

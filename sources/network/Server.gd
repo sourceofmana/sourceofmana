@@ -14,7 +14,7 @@ func ConnectPlayer(playerName : String, rpcID : int = -1):
 			playerMap[rpcID] = player.get_rid().get_id()
 			Launcher.World.rids[player.get_rid().get_id()] = player
 			Launcher.World.Spawn(map, player)
-			Launcher.Network.SetPlayerInWorld(map, rpcID)
+			Launcher.Network.WarpPlayer(map, rpcID)
 
 func DisconnectPlayer(playerName : String, rpcID : int = -1):
 	if playerMap.has(rpcID):
@@ -32,8 +32,18 @@ func GetAgents(rpcID : int = -1):
 				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, rpcID)
 
 #
-func SetWarp(entityName : String, oldMapName : String, newMapName : String, newPos : Vector2i):
-	Launcher.World.Warp(entityName, oldMapName, newMapName, newPos)
+func TriggerWarp(rpcID : int = -1):
+	if playerMap.has(rpcID):
+		var playerAgentID : int = playerMap.get(rpcID)
+		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
+		if agent && agent.get_parent():
+			var currentMap = Launcher.World.GetMapFromAgent(agent, true, false, false)
+			if currentMap:
+				for warp in currentMap.warps:
+					if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
+						Launcher.World.Warp(agent.agentName, currentMap.name, warp.destinationMap, warp.destinationPos)
+						Launcher.Network.WarpPlayer(warp.destinationMap, rpcID)
+						break
 
 func SetClickPos(pos : Vector2, rpcID : int = -1):
 	if playerMap.has(rpcID):

@@ -82,6 +82,8 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 			Launcher.Player.SetLocalPlayer()
 			if Launcher.Debug:
 				Launcher.Debug.SetPlayerInventory()
+			if Launcher.FSM:
+				Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
 		entity.set_position(entityPos)
