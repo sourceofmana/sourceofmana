@@ -52,11 +52,9 @@ func SetMovePos(direction : Vector2, rpcID : int = -1):
 				var path = NavigationServer2D.map_get_path(agent.agent.get_navigation_map(), agent.position, newPos, true)
 				var pathLength = 0
 				for i in range(0, path.size() - 1):
-					pathLength += Vector2(path[i] - path[i+1]).length_squared()
-				if pathLength <= 500:
+					pathLength += Vector2(path[i] - path[i+1]).length()
+				if pathLength <= 32:
 					SetClickPos(newPos, rpcID)
-				else:
-					print(pathLength)
 
 #
 func ConnectPeer(id : int):
