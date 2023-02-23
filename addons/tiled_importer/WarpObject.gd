@@ -9,13 +9,13 @@ class_name WarpObject
 
 #
 func bodyEntered(body):
-	if body && body is CharacterBody2D:
-		Launcher.Network.Client.SetWarp(Launcher.Map.mapNode.get_name(), destinationMap, destinationPos)
-		Launcher.Map.ReplaceMapNode(destinationMap)
+	if body and body is PlayerEntity and body.isPlayableController :
+		Launcher.Network.TriggerWarp()
+
 #
 func _init():
 	collision_layer = 2
 	collision_mask = 2
 
 	var err = self.body_entered.connect(bodyEntered)
-	Launcher.Util.Assert(err == OK, "Could not connect to Area2D's body_entered signal")
+	assert(err == OK, "Could not connect to Area2D's body_entered signal")

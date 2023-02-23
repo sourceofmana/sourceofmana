@@ -251,10 +251,13 @@ func build_server(source_path) -> Node:
 	# Can't save an array of custom objects, every element will be null when loaded
 #	root.warps = warp_pool
 	for warp in warp_pool:
+		var warp_polygon : PackedVector2Array = []
+		for warp_vertex in warp.polygon:
+			warp_polygon.append(warp_vertex + warp.position)
 		var warp_array : Array = []
 		warp_array.append(warp.destinationMap)
 		warp_array.append(warp.destinationPos)
-		warp_array.append(warp.polygon)
+		warp_array.append(warp_polygon)
 		root.warps.append(warp_array)
 
 	return root
@@ -682,6 +685,8 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 						else:
 							points = shape.points
 #							customObject.build_mode = Polygon2D.BUILD_SOLIDS
+						customObject.position = pos
+
 						if collisionObject:
 							collisionObject.polygon = points
 						customObject.polygon = points
