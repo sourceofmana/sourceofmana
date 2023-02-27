@@ -139,7 +139,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	if instanceID > 0:
 		inst.name += "_" + str(instanceID)
 
-	Launcher.Root.add_child(inst)
+	Launcher.Root.call_deferred("add_child", inst)
 	map.instances.push_back(inst)
 
 # Agent Management
