@@ -2,9 +2,6 @@ extends CharacterBody2D
 class_name BaseEntity
 
 #
-enum Gender { MALE = 0, FEMALE, NONBINARY, COUNT }
-enum State { IDLE = 0, WALK, SIT, UNKNOWN = -1 }
-
 var sprite : Sprite2D					= null
 var animation : Node					= null
 var animationTree : AnimationTree		= null
@@ -13,12 +10,12 @@ var collision : CollisionShape2D		= null
 
 var displayName : bool					= false
 var entityName : String					= "PlayerName"
-var entityState : State					= State.IDLE
+var entityState : EntityEnums.State		= EntityEnums.State.IDLE
 var entityDirection : Vector2			= Vector2(0, 1)
 
 var interactive : EntityInteractive		= EntityInteractive.new()
 var inventory : EntityInventory			= EntityInventory.new()
-var stat : EntityStat					= EntityStat.new()
+var stat : EntityStats					= EntityStats.new()
 
 # Animation
 func GetNextState(checkSit : bool = false):
@@ -30,19 +27,19 @@ func GetNextState(checkSit : bool = false):
 	var actionSitJustPressed	= Launcher.Action.IsActionJustPressed("gp_sit") if checkSit else false
 
 	match entityState:
-		State.IDLE:
+		EntityEnums.State.IDLE:
 			if isWalking:
-				newEntityState = State.WALK
+				newEntityState = EntityEnums.State.WALK
 			elif actionSitPressed:
-				newEntityState = State.SIT
-		State.WALK:
+				newEntityState = EntityEnums.State.SIT
+		EntityEnums.State.WALK:
 			if not isWalking:
-				newEntityState = State.IDLE
-		State.SIT:
+				newEntityState = EntityEnums.State.IDLE
+		EntityEnums.State.SIT:
 			if not actionSitPressed and isWalking:
-				newEntityState = State.WALK
+				newEntityState = EntityEnums.State.WALK
 			elif actionSitJustPressed:
-				newEntityState = State.IDLE
+				newEntityState = EntityEnums.State.IDLE
 
 	return newEntityState
 
@@ -52,24 +49,27 @@ func GetNextDirection():
 	else:
 		return entityDirection
 
-func ApplyNextState(nextState : State, nextDirection : Vector2):
+func ApplyNextState(nextState : EntityEnums.State, nextDirection : Vector2):
+	if not animationTree or animationState:
+		pass
+
 	animationTree.set("parameters/Idle/blend_position", nextDirection)
 	animationTree.set("parameters/Sit/blend_position", nextDirection)
 	animationTree.set("parameters/Walk/blend_position", nextDirection)
 
 	match nextState:
-		State.IDLE:
+		EntityEnums.State.IDLE:
 			animationState.travel("Idle")
-		State.WALK:
+		EntityEnums.State.WALK:
 			animationState.travel("Walk")
-		State.SIT:
+		EntityEnums.State.SIT:
 			animationState.travel("Sit")
 
 	entityState		= nextState
 	entityDirection	= nextDirection
 
 func UpdateState():
-	var nextState : State			= GetNextState()
+	var nextState : EntityEnums.State = GetNextState()
 	var nextDirection : Vector2		= GetNextDirection()
 	var hasNewState : bool			= nextState != entityState
 	var hasNewDirection : bool		= nextDirection != entityDirection

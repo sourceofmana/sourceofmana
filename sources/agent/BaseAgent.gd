@@ -3,19 +3,19 @@ class_name BaseAgent
 
 #
 var agent : NavigationAgent2D			= null
-var agentName							= ""
+var agentName : String					= ""
 var agentType : String					= ""
 var agentID : String					= ""
 var aiTimer : AiTimer					= null
 
-var hasCurrentGoal						= false
-var currentInput						= Vector2.ZERO
-var currentVelocity						= Vector2.ZERO
+var hasCurrentGoal : bool				= false
+var currentInput : Vector2				= Vector2.ZERO
+var currentVelocity : Vector2			= Vector2.ZERO
 
 var lastPositions : Array[Vector2]		= []
 var navigationLine : PackedVector2Array	= []
 
-var stat : EntityStat					= EntityStat.new()
+var stat : EntityStats					= EntityStats.new()
 
 #
 func SwitchInputMode(clearCurrentInput : bool):
