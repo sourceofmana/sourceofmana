@@ -3,8 +3,11 @@ class_name NpcEntity
 
 #
 func Trigger():
-	pass
+	if interactive:
+		interactive.DisplaySpeech("Hello!")
 
 #
 func _ready():
 	super._ready()
+	if interactive:
+		interactive.Setup(self)

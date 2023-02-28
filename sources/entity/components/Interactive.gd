@@ -66,7 +66,7 @@ func RemoveSpeechLabel():
 func AddSpeechLabel(speech : String):
 	var speechLabel : RichTextLabel = speechInstance.instantiate()
 	speechLabel.append_text("[center]" + speech + "[/center]")
-	speechContainer.add_child(speechLabel)
+	speechContainer.call_deferred("add_child", speechLabel)
 	speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
 
 func AddDebugSpeech(speech : String):
@@ -118,11 +118,8 @@ func Update(isPC : bool, entity : BaseEntity):
 func EmoteWindowClicked(selectedEmote : String):
 	DisplayEmote(selectedEmote.to_int())
 
-func SpeechTextTyped(speech : String):
-	DisplaySpeech(speech)
-
 #
-func Setup(entity : Node2D, isPC : bool):
+func Setup(entity : Node2D, isPC : bool = false):
 	if entity.has_node("Interactions/Emote"):
 		emoteSprite = entity.get_node("Interactions/Emote")
 	if entity.has_node("Interactions/SpeechContainer"):
@@ -140,8 +137,8 @@ func Setup(entity : Node2D, isPC : bool):
 		if Launcher.GUI:
 			if Launcher.GUI.emoteContainer && Launcher.GUI.emoteContainer.ItemClicked.is_connected(EmoteWindowClicked) == false:
 				Launcher.GUI.emoteContainer.ItemClicked.connect(EmoteWindowClicked)
-			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(SpeechTextTyped) == false:
-				Launcher.GUI.chatContainer.NewTextTyped.connect(SpeechTextTyped)
+			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(DisplaySpeech) == false:
+				Launcher.GUI.chatContainer.NewTextTyped.connect(DisplaySpeech)
 
 		emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
 		speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)

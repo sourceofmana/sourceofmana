@@ -5,8 +5,6 @@ var triggered : bool = false
 
 #
 func Trigger():
-	super.Trigger()
-
 	if triggered == false:
 		$AnimationPlayer.play("To Trigger")
 		triggered = true
