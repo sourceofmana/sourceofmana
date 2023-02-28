@@ -18,42 +18,42 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ls22y"]
 texture = ExtResource("3")
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 3.0
-margin_bottom = 3.0
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_upuwt"]
 texture = ExtResource("16")
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 3.0
-margin_bottom = 3.0
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2sqft"]
 texture = ExtResource("11")
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 3.0
-margin_bottom = 3.0
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j7syu"]
 texture = ExtResource("5_fw406")
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 4.0
-margin_bottom = 3.0
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 4.0
+texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 8, 8)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w7io8"]
 texture = ExtResource("10")
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 3.0
-margin_bottom = 3.0
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ytr4r"]
@@ -62,10 +62,10 @@ thickness = 2
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xadpl"]
 texture = ExtResource("11_ue8tk")
-margin_left = 6.0
-margin_top = 32.0
-margin_right = 6.0
-margin_bottom = 6.0
+texture_margin_left = 6.0
+texture_margin_top = 32.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
 region_rect = Rect2(0, 0, 16, 39)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f7umf"]
@@ -74,25 +74,25 @@ content_margin_top = 4.0
 content_margin_right = 5.0
 content_margin_bottom = 5.0
 texture = ExtResource("2")
-margin_left = 6.0
-margin_top = 8.0
-margin_right = 6.0
-margin_bottom = 6.0
+texture_margin_left = 6.0
+texture_margin_top = 8.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
 region_rect = Rect2(0, 0, 13, 16)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ik3rj"]
 texture = ExtResource("2")
-margin_left = 6.0
-margin_top = 5.0
-margin_right = 6.0
-margin_bottom = 6.0
+texture_margin_left = 6.0
+texture_margin_top = 5.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
 region_rect = Rect2(0, 0, 13, 16)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4m2pv"]
-margin_left = 6.0
-margin_top = 6.0
-margin_right = 6.0
-margin_bottom = 6.0
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_85tto"]
 content_margin_left = 0.0
@@ -100,20 +100,20 @@ content_margin_top = 5.0
 content_margin_right = 0.0
 content_margin_bottom = 4.0
 texture = ExtResource("5")
-margin_left = 4.0
-margin_top = 10.0
-margin_right = 6.0
-margin_bottom = 10.0
+texture_margin_left = 4.0
+texture_margin_top = 10.0
+texture_margin_right = 6.0
+texture_margin_bottom = 10.0
 region_rect = Rect2(0, 0, 11, 24)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0d0g8"]
 content_margin_top = 5.0
 content_margin_bottom = 4.0
 texture = ExtResource("1")
-margin_left = 4.0
-margin_top = 10.0
-margin_right = 6.0
-margin_bottom = 10.0
+texture_margin_left = 4.0
+texture_margin_top = 10.0
+texture_margin_right = 6.0
+texture_margin_bottom = 10.0
 expand_margin_left = 3.0
 expand_margin_top = 2.0
 expand_margin_right = 3.0
@@ -125,10 +125,10 @@ content_margin_top = 5.0
 content_margin_right = 0.0
 content_margin_bottom = 0.0
 texture = ExtResource("4")
-margin_left = 4.0
-margin_top = 10.0
-margin_right = 6.0
-margin_bottom = 10.0
+texture_margin_left = 4.0
+texture_margin_top = 10.0
+texture_margin_right = 6.0
+texture_margin_bottom = 10.0
 expand_margin_left = 3.0
 region_rect = Rect2(0, 0, 11, 23)
 
