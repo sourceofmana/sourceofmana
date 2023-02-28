@@ -29,7 +29,7 @@ func SwitchInputMode(clearCurrentInput : bool):
 func UpdateInput():
 	if hasCurrentGoal:
 		if agent && not agent.is_navigation_finished():
-			var newDirection : Vector2 = global_position.direction_to(agent.get_next_location())
+			var newDirection : Vector2 = global_position.direction_to(agent.get_next_path_position())
 			if newDirection != Vector2.ZERO:
 				currentInput = newDirection
 			lastPositions.push_back(position)
@@ -54,7 +54,7 @@ func WalkToward(pos : Vector2):
 	hasCurrentGoal = true
 	lastPositions.clear()
 	if agent:
-		agent.set_target_location(pos)
+		agent.target_position = pos
 		navigationLine.clear()
 		navigationLine += agent.get_current_navigation_path()
 

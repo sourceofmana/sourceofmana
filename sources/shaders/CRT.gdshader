@@ -9,8 +9,10 @@ the modified result to godotshaders.com.
 
 shader_type canvas_item;
 
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
 //*** IMPORTANT! ***/ 
-// - If you are using this shader to affect the node it is applied to set 'overlay' to false (unchecked in the instepctor).
+// - If you are using this shader to affect the node it is applied to set 'overlay' to false (unchecked in the inspector).
 // - If you are using this shader as an overlay, and want the shader to affect the nodes below in the Scene hierarchy,
 //   set 'overlay' to true (checked in the inspector).
 // On Mac there is potentially a bug causing this to not work properly. If that is the case and you want to use the shader as an overlay

@@ -9,12 +9,12 @@ var peer : ENetMultiplayerPeer		= ENetMultiplayerPeer.new()
 var uniqueID : int					= 0
 
 #
-@rpc(any_peer)
+@rpc("any_peer")
 func ConnectPlayer(playerName : String, rpcID : int = -1):
 	if Client:		NetCallServer("ConnectPlayer", [playerName])
 	elif Server:	Server.ConnectPlayer(playerName, rpcID)
 
-@rpc(any_peer)
+@rpc("any_peer")
 func DisconnectPlayer(playerName : String, rpcID : int = -1):
 	if Client:		NetCallServer("DisconnectPlayer", [playerName])
 	elif Server:	Server.DisconnectPlayer(playerName, rpcID)
@@ -24,7 +24,7 @@ func WarpPlayer(mapName : String, rpcID : int = -1):
 	if Server:		NetCallClient("WarpPlayer", [mapName], rpcID)
 	elif Client:	Client.WarpPlayer(mapName)
 
-@rpc(any_peer)
+@rpc("any_peer")
 func GetAgents(rpcID : int = -1):
 	if Client:		NetCallServer("GetAgents", [])
 	elif Server:	Server.GetAgents(rpcID)
@@ -34,22 +34,22 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos], rpcID)
 	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos)
 
-@rpc(unreliable_ordered)
+@rpc("authority", "unreliable_ordered")
 func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, rpcID : int = -1):
 	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position], rpcID)
 	elif Client:	Client.UpdateEntity(agentID, velocity, position)
 
-@rpc(any_peer)
+@rpc("any_peer")
 func TriggerWarp(rpcID : int = -1):
 	if Client:		NetCallServer("TriggerWarp", [])
 	elif Server:	Server.TriggerWarp(rpcID)
 
-@rpc(unreliable_ordered, any_peer)
+@rpc("unreliable_ordered", "any_peer")
 func SetClickPos(pos : Vector2, rpcID : int = -1):
 	if Client:		NetCallServer("SetClickPos", [pos])
 	elif Server:	Server.SetClickPos(pos, rpcID)
 
-@rpc(unreliable_ordered, any_peer)
+@rpc("unreliable_ordered", "any_peer")
 func SetMovePos(pos : Vector2, rpcID : int = -1):
 	if Client:		NetCallServer("SetMovePos", [pos])
 	elif Server:	Server.SetMovePos(pos, rpcID)

@@ -224,10 +224,12 @@ func GetMapFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNpcs = 
 	return null
 
 func GetAgents(checkedAgent : BaseAgent):
-	var list : Array = []
+	var list : Array[BaseAgent] = []
 	var instance : Instance = GetInstanceFromAgent(checkedAgent)
 	if instance:
-		list = instance.npcs + instance.mobs + instance.players
+		list.append_array(instance.npcs)
+		list.append_array(instance.mobs)
+		list.append_array(instance.players)
 	return list
 
 func HasAgent(agentName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
