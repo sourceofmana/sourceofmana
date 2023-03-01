@@ -6,7 +6,7 @@ var speechInstance : PackedScene	= Launcher.FileSystem.LoadGui("chat/SpeechBubbl
 var speechContainer : BoxContainer	= null
 var emoteSprite : Sprite2D			= null
 var emoteTimer : Timer				= null
-var speechTimers : Array			= []
+var speechTimers : Array[Timer]		= []
 var nameLabel : Label				= null
 var triggerArea : Area2D			= null
 
@@ -22,10 +22,10 @@ var canInteractWith : Array[BaseEntity]			= []
 func AddTimer(parent : Node, delay : float, callable: Callable) -> Timer:
 	var timer = Timer.new()
 	timer.set_name("InteractiveTimer")
-	parent.add_child(timer)
-	timer.start(delay)
-	timer.autostart = true
+	timer.set_autostart(true)
+	timer.set_wait_time(delay)
 	timer.timeout.connect(callable)
+	parent.add_child(timer)
 	return timer
 
 #
@@ -65,8 +65,9 @@ func RemoveSpeechLabel():
 
 func AddSpeechLabel(speech : String):
 	var speechLabel : RichTextLabel = speechInstance.instantiate()
-	speechLabel.append_text("[center]" + speech + "[/center]")
-	speechContainer.call_deferred("add_child", speechLabel)
+	speechLabel.set_text("[center]%s[/center]" % [speech])
+	speechLabel.set_fit_content(true)
+	speechContainer.add_child(speechLabel)
 	speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
 
 func AddDebugSpeech(speech : String):
@@ -81,7 +82,7 @@ func DisplaySpeech(speech : String):
 func UpdateDelay():
 	if speechDecreaseDelay > 0:
 		for speechChild in speechContainer.get_children():
-			if speechChild.has_node("InteractiveTimer"):
+			if speechChild && speechChild.has_node("InteractiveTimer"):
 				var timeLeft : float			= speechChild.get_node("InteractiveTimer").get_time_left()
 				var speechIncreaseDelay : float	= speechDecreaseDelay
 				var textLength : int			= speechChild.get_total_character_count()
@@ -110,7 +111,7 @@ func UpdateActions(entity : BaseEntity):
 	if Launcher.Action.IsActionJustPressed("smile_26"): DisplayEmote(26)
 	if Launcher.Action.IsActionJustPressed("gp_interact"): Interact(entity)
 
-func Update(isPC : bool, entity : BaseEntity):
+func Update(entity : BaseEntity, isPC : bool = false):
 	UpdateDelay()
 	if isPC:
 		UpdateActions(entity)
@@ -140,10 +141,10 @@ func Setup(entity : Node2D, isPC : bool = false):
 			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(DisplaySpeech) == false:
 				Launcher.GUI.chatContainer.NewTextTyped.connect(DisplaySpeech)
 
-		emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
-		speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)
-		speechDecreaseDelay		= Launcher.Conf.GetFloat("Gameplay", "speechDecreaseDelay", Launcher.Conf.Type.PROJECT)
-		speechIncreaseThreshold	= Launcher.Conf.GetInt("Gameplay", "speechIncreaseThreshold", Launcher.Conf.Type.PROJECT)
+	emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
+	speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)
+	speechDecreaseDelay		= Launcher.Conf.GetFloat("Gameplay", "speechDecreaseDelay", Launcher.Conf.Type.PROJECT)
+	speechIncreaseThreshold	= Launcher.Conf.GetInt("Gameplay", "speechIncreaseThreshold", Launcher.Conf.Type.PROJECT)
 
 func Interact(selfEntity : BaseEntity):
 	var nearestEntity : BaseEntity = null

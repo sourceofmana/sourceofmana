@@ -16,7 +16,7 @@ func SetLocalPlayer():
 #
 func _physics_process(_deltaTime : float):
 	if interactive:
-		interactive.Update(isPlayableController, self)
+		interactive.Update(self, isPlayableController)
 
 func _ready():
 	super._ready()
