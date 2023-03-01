@@ -5,7 +5,6 @@ var playerMap : Dictionary = {}
 #
 func ConnectPlayer(playerName : String, rpcID : int = -1):
 	if not playerMap.has(rpcID):
-
 		if not Launcher.World.HasAgent(playerName):
 			var player : BaseAgent = Launcher.DB.Instantiate.CreateAgent("Player", "Default Entity", playerName)
 			var map : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
@@ -19,7 +18,7 @@ func ConnectPlayer(playerName : String, rpcID : int = -1):
 func DisconnectPlayer(playerName : String, rpcID : int = -1):
 	if playerMap.has(rpcID):
 		playerMap.erase(rpcID)
-		Launcher.World.RemoveEntity(playerName)
+		Launcher.World.RemoveAgent(playerName, true, false, false)
 
 #
 func GetAgents(rpcID : int = -1):
@@ -67,8 +66,11 @@ func SetMovePos(direction : Vector2, rpcID : int = -1):
 					SetClickPos(newPos, rpcID)
 
 #
-func ConnectPeer(id : int):
-	Launcher.Util.PrintLog("[Server] Peer connected: %s" % id)
+func ConnectPeer(rpcID : int):
+	Launcher.Util.PrintLog("[Server] Peer connected: %s" % rpcID)
 
-func DisconnectPeer(id : int):
-	Launcher.Util.PrintLog("[Server] Peer disconnected: %s" % id)
+func DisconnectPeer(rpcID : int):
+	Launcher.Util.PrintLog("[Server] Peer disconnected: %s" % rpcID)
+	if rpcID in playerMap:
+		if playerMap[rpcID] in Launcher.World.rids:
+			DisconnectPlayer(Launcher.World.rids[playerMap[rpcID]].agentName, rpcID)
