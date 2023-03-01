@@ -50,7 +50,7 @@ func GetNextDirection():
 		return entityDirection
 
 func ApplyNextState(nextState : EntityEnums.State, nextDirection : Vector2):
-	if not animationTree or animationState:
+	if not animationTree or not animationState:
 		pass
 
 	animationTree.set("parameters/Idle/blend_position", nextDirection)
