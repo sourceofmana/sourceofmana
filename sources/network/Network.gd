@@ -35,9 +35,9 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos)
 
 @rpc("authority", "reliable")
-func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, rpcID : int = -1):
-	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position], rpcID)
-	elif Client:	Client.UpdateEntity(agentID, velocity, position)
+func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, isSitting : bool, rpcID : int = -1):
+	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, isSitting], rpcID)
+	elif Client:	Client.UpdateEntity(agentID, velocity, position, isSitting)
 
 @rpc("any_peer")
 func TriggerWarp(rpcID : int = -1):
@@ -53,6 +53,11 @@ func SetClickPos(pos : Vector2, rpcID : int = -1):
 func SetMovePos(pos : Vector2, rpcID : int = -1):
 	if Client:		NetCallServer("SetMovePos", [pos])
 	elif Server:	Server.SetMovePos(pos, rpcID)
+
+@rpc("reliable", "any_peer")
+func TriggerSit(rpcID : int = -1):
+	if Client:		NetCallServer("TriggerSit", [])
+	elif Server:	Server.TriggerSit(rpcID)
 
 #
 func NetCallServer(methodName : String, args : Array):

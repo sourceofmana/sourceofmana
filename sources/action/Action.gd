@@ -47,3 +47,6 @@ func _process(_deltaTime : float):
 				if timer.get_time_left() > 0:
 					timer.stop()
 				Launcher.Network.SetMovePos(movePos)
+
+		if Launcher.Action.IsActionJustPressed("gp_sit"):
+			Launcher.Network.TriggerSit()

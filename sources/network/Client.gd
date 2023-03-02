@@ -11,8 +11,8 @@ func WarpPlayer(map : String, _rpcID : int = -1):
 func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, _rpcID : int = -1):
 	Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityPos)
 
-func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2):
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position)
+func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, isSitting : bool):
+		Launcher.Map.UpdateEntity(ridAgent, velocity, position, isSitting)
 
 # Player
 func SetVelocity(velocity : Vector2):
