@@ -7,9 +7,19 @@ class_name WarpObject
 @export var destinationPos : Vector2			= Vector2.ZERO
 @export var polygon : PackedVector2Array 		= []
 
+var isPlayerEntered : bool						= false
+
 #
-func bodyEntered(body):
-	if body and body is PlayerEntity and body.isPlayableController :
+func bodyEntered(body : CollisionObject2D):
+	if body and body is PlayerEntity and body == Launcher.Player:
+		isPlayerEntered = true
+
+func bodyExited(body : CollisionObject2D):
+	if body and body is PlayerEntity and body == Launcher.Player:
+		isPlayerEntered = false
+
+func _physics_process(_delta):
+	if isPlayerEntered:
 		Launcher.Network.TriggerWarp()
 
 #
@@ -17,5 +27,5 @@ func _init():
 	collision_layer = 2
 	collision_mask = 2
 
-	var err = self.body_entered.connect(bodyEntered)
-	assert(err == OK, "Could not connect to Area2D's body_entered signal")
+	self.body_entered.connect(bodyEntered)
+	self.body_exited.connect(bodyExited)
