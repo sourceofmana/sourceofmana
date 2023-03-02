@@ -36,7 +36,6 @@ func GetMapBoundaries() -> Rect2:
 #
 func UnloadMapNode():
 	if mapNode:
-		Launcher.Player.set_physics_process(false)
 		RemoveChilds()
 		Launcher.call_deferred("remove_child", mapNode)
 		mapNode = null
@@ -88,7 +87,6 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 	if entity:
 		entity.set_position(entityPos)
 		AddChild(entity)
-		entity.set_physics_process(true)
 		entities[agentID] = entity
 
 		if isLocalPlayer:
@@ -98,5 +96,5 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2):
 	var entity : BaseEntity = entities.get(agentID)
-	if entity:
+	if entity && entity.get_parent():
 		entity.Update(agentVelocity, agentPosition)

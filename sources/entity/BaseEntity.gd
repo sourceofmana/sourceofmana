@@ -116,7 +116,7 @@ func SetData(data : Object):
 
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2):
-	if Vector2(position - gardbandPosition).length() >= 16:
+	if Vector2(position - gardbandPosition).length() > 16:
 		position = gardbandPosition
 	velocity = nextVelocity
 
