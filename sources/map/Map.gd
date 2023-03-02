@@ -103,6 +103,7 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 				Launcher.Camera.SetBoundaries()
 			emit_signal('PlayerWarped')
 
+
 func RemoveEntity(agentID : int):
 	var entity : BaseEntity = entities[agentID]
 	if entity:
