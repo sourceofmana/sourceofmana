@@ -153,6 +153,12 @@ func Warp(agent : BaseAgent, oldMap : Map, newMap : Map, newPos : Vector2i):
 				arrayRef.remove_at(arrayIdx)
 
 			instance.remove_child(agent)
+			for player in instance.players:
+				if player != agent:
+					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
+					if playerID != null:
+						Launcher.Network.RemoveEntity(agent.get_rid().get_id(), playerID)
+
 			Spawn(newMap, newPos, agent)
 
 func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
@@ -174,6 +180,12 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 				_: Launcher.Util.Assert(false, "Agent type is not valid")
 
 			inst.call_deferred("add_child", agent)
+
+			for player in inst.players:
+				if player != agent:
+					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
+					if playerID != null:
+						Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, playerID)
 
 func GetInstanceFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNpcs = true, checkMonsters = true) -> Instance:
 	for map in areas.values():

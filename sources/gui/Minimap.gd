@@ -4,7 +4,7 @@ extends ScrollContainer
 
 #
 func Warped():
-	if textureRect:
+	if textureRect and Launcher.Map and Launcher.Map.mapNode:
 		var mapName : String = Launcher.Map.mapNode.get_name()
 		Launcher.Util.Assert(mapName.is_empty() == false, "Could not fetch the active map name")
 		if mapName.is_empty() == false:

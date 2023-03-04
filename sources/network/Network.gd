@@ -34,6 +34,11 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos], rpcID)
 	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos)
 
+@rpc
+func RemoveEntity(agentID : int, rpcID : int = -1):
+	if Server:		NetCallClient("RemoveEntity", [agentID], rpcID)
+	elif Client:	Client.RemoveEntity(agentID)
+
 @rpc("authority", "reliable")
 func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, rpcID : int = -1):
 	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position], rpcID)
