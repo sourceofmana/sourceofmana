@@ -130,6 +130,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./maps/phatyna/002-3-4.tmx [Reid]
 ./maps/phatyna/002-3-5.tmx [Reid]
 ./maps/sewer/001-3-0.tmx [Reid]
+./musics/HaelDB - Cave Theme.ogg [HaelDB]
 ./musics/Jose. S & Dakota. D - Lenia.ogg [Chicka-Maria]
 ./musics/Jose. S & Dakota. D - Night is calling.ogg [Chicka-Maria]
 ./press/logo/logo_bw.svg [Kolokolna] [Reid]
