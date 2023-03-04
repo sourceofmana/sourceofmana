@@ -105,89 +105,75 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	var inst : Instance = Instance.new()
 	CreateNavigation(map, inst.get_world_2d().get_navigation_map())
 
-	inst.id = instanceID
-	for spawn in map.spawns:
-		for i in spawn.count:
-			var agent : BaseAgent = Launcher.DB.Instantiate.CreateAgent(spawn.type, spawn.name)
-			rids[agent.get_rid().get_id()] = agent
-
-			Launcher.Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
-			if agent:
-				if spawn.is_global:
-					agent.position = GetRandomPosition(map)
-				else:
-					agent.position = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
-
-				# TODO: use internal Spawn function
-				Launcher.Util.Assert(agent.position != Vector2.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
-				if agent.position != Vector2.ZERO:
-					match spawn.type:
-						"Player":	inst.players.append(agent)
-						"Npc":		inst.npcs.append(agent)
-						"Monster":	inst.mobs.append(agent)
-						"Trigger":	inst.npcs.append(agent)
-						_: Launcher.Util.Assert(false, "Agent type is not valid")
-					inst.add_child(agent)
-
-	for agent in inst.npcs + inst.players + inst.mobs:
-		if agent.agent:
-			agent.agent.set_navigation_map(map.mapRID)
-
 	inst.disable_3d = true
 	inst.gui_disable_input = true
 	inst.name = map.name
-	if instanceID > 0:
-		inst.name += "_" + str(instanceID)
-
-	Launcher.Root.call_deferred("add_child", inst)
+	inst.id = instanceID
+	if inst.id > 0:
+		inst.name += "_" + str(inst.id)
 	map.instances.push_back(inst)
 
-# Agent Management
-func Warp(entityName : String, oldMap : String, newMap : String, newPos : Vector2i):
-	var bOK : bool = areas.has(oldMap)
-	Launcher.Util.Assert(bOK, "Warp could not proceed, previous map not found")
+	for spawn in map.spawns:
+		for i in spawn.count:
+			var agent : BaseAgent = Launcher.DB.Instantiate.CreateAgent(spawn.type, spawn.name)
 
-	if bOK:
-		bOK = false
-
-		for instance in areas[oldMap].instances:
-			var agent : BaseAgent = null
-			for playerAgent in instance.players:
-				if playerAgent && playerAgent.agentName == entityName:
-					agent = playerAgent
-					break
-
+			Launcher.Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
 			if agent:
-				var arrayIdx : int = instance.players.find(agent)
-				if arrayIdx >= 0:
-					instance.players.remove_at(arrayIdx)
-					instance.remove_child(agent)
-					Spawn(newMap, agent)
-					agent.set_position(newPos)
-					agent.ResetNav()
-					bOK = true
+				var pos : Vector2 = Vector2.ZERO
 
-	Launcher.Util.Assert(bOK, "Warp could not proceed, the agent is not found on old map's instances")
+				if spawn.is_global:
+					pos = GetRandomPosition(map)
+				else:
+					pos = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
+				Launcher.Util.Assert(pos != Vector2.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
+				if pos == Vector2.ZERO:
+					agent.queue_free()
+					continue
 
-func Spawn(newMap : String, agent : Node2D, instID : int = 0):
-	var err : bool = false
-	err = err || not areas.has(newMap)
-	err = err || agent == null
-	Launcher.Util.Assert(not err, "Warp could not proceed, one or multiple parameters are invalid")
+				rids[agent.get_rid().get_id()] = agent
+				Spawn(map, pos, agent, instanceID)
 
-	if not err:
-		if agent.agent:
-			agent.agent.set_navigation_map(areas[newMap].mapRID)
+	Launcher.Root.call_deferred("add_child", inst)
 
-		var inst : Instance = areas[newMap].instances[instID]
-		var arrayIdx : int = inst.players.find(agent)
-		if arrayIdx < 0:
-			inst.players.push_back(agent)
-			inst.add_child(agent)
-		else:
-			err = true
+# Agent Management
+func Warp(agent : BaseAgent, oldMap : Map, newMap : Map, newPos : Vector2i):
+	Launcher.Util.Assert(oldMap and newMap and agent, "Warp could not proceed, agent or current map missing")
+	if agent and oldMap:
+		for instance in oldMap.instances:
+			var arrayRef : Array = []
+			match agent.agentType:
+				"Player":	arrayRef = instance.players
+				"Npc":		arrayRef = instance.npcs
+				"Monster":	arrayRef = instance.mobs
+				"Trigger":	arrayRef = instance.npcs
+				_: Launcher.Util.Assert(false, "Agent type is not valid")
 
-	Launcher.Util.Assert(not err, "Warp could not proceed, the agent is not found on new map's instances")
+			var arrayIdx : int = arrayRef.find(agent)
+			if arrayIdx >= 0:
+				arrayRef.remove_at(arrayIdx)
+
+			instance.remove_child(agent)
+			Spawn(newMap, newPos, agent)
+
+func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
+	Launcher.Util.Assert(map and instanceID < map.instances.size() and agent, "Spawn could not proceed, agent or map missing")
+	if map and instanceID < map.instances.size() and agent:
+		var inst : Instance = map.instances[instanceID]
+		Launcher.Util.Assert(inst != null, "Spawn could not proceed, map instance missing")
+		if inst:
+			agent.set_position(pos)
+			agent.ResetNav()
+			if agent.agent:
+				agent.agent.set_navigation_map(map.mapRID)
+
+			match agent.agentType:
+				"Player":	if not agent in inst.players:	inst.players.append(agent)
+				"Npc":		if not agent in inst.npcs:		inst.npcs.append(agent)
+				"Monster":	if not agent in inst.mobs:		inst.mobs.append(agent)
+				"Trigger":	if not agent in inst.npcs:		inst.npcs.append(agent)
+				_: Launcher.Util.Assert(false, "Agent type is not valid")
+
+			inst.call_deferred("add_child", agent)
 
 func GetInstanceFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNpcs = true, checkMonsters = true) -> Instance:
 	for map in areas.values():
