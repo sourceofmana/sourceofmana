@@ -6,14 +6,17 @@ var playerMap : Dictionary = {}
 func ConnectPlayer(playerName : String, rpcID : int = -1):
 	if not playerMap.has(rpcID):
 		if not Launcher.World.HasAgent(playerName):
-			var player : BaseAgent = Launcher.DB.Instantiate.CreateAgent("Player", "Default Entity", playerName)
-			var map : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
-			player.set_position(Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP))
+			var player : BaseAgent	= Launcher.DB.Instantiate.CreateAgent("Player", "Default Entity", playerName)
+			var mapName : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
+			var map : Object		= Launcher.World.areas[mapName]
+			var pos : Vector2		= Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP)
+			var playerID : int		= player.get_rid().get_id()
 
-			playerMap[rpcID] = player.get_rid().get_id()
-			Launcher.World.rids[player.get_rid().get_id()] = player
-			Launcher.World.Spawn(map, player)
-			Launcher.Network.WarpPlayer(map, rpcID)
+			playerMap[rpcID]				= playerID
+			Launcher.World.rids[playerID]	= player
+
+			Launcher.World.Spawn(map, pos, player)
+			Launcher.Network.WarpPlayer(mapName, rpcID)
 
 func DisconnectPlayer(playerName : String, rpcID : int = -1):
 	if playerMap.has(rpcID):
@@ -36,11 +39,13 @@ func TriggerWarp(rpcID : int = -1):
 		var playerAgentID : int = playerMap.get(rpcID)
 		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
 		if agent && agent.get_parent():
-			var currentMap = Launcher.World.GetMapFromAgent(agent, true, false, false)
+			var currentMap : Object = Launcher.World.GetMapFromAgent(agent, true, false, false)
+			Launcher.Util.Assert(currentMap != null, "Could not trigger the warp, current map is invalid")
 			if currentMap:
 				for warp in currentMap.warps:
 					if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
-						Launcher.World.Warp(agent.agentName, currentMap.name, warp.destinationMap, warp.destinationPos)
+						var nextMap : Object = Launcher.World.areas[warp.destinationMap]
+						Launcher.World.Warp(agent, currentMap, nextMap, warp.destinationPos)
 						Launcher.Network.WarpPlayer(warp.destinationMap, rpcID)
 						break
 
