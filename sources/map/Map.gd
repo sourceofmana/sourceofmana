@@ -108,7 +108,8 @@ func RemoveEntity(agentID : int):
 	if entity:
 		RemoveChild(entity)
 
-func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2):
+func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, isSitting : bool):
 	var entity : BaseEntity = entities.get(agentID)
 	if entity && entity.get_parent():
-		entity.Update(agentVelocity, agentPosition)
+		entity.Update(agentVelocity, agentPosition, isSitting)
+

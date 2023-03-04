@@ -11,6 +11,7 @@ var aiTimer : AiTimer					= null
 var hasCurrentGoal : bool				= false
 var currentInput : Vector2				= Vector2.ZERO
 var currentVelocity : Vector2			= Vector2.ZERO
+var isSitting : bool					= false
 
 var lastPositions : Array[Vector2]		= []
 var navigationLine : PackedVector2Array	= []
@@ -48,6 +49,7 @@ func UpdateOrientation(deltaTime : float):
 func SetVelocity():
 	if currentVelocity != Vector2.ZERO:
 		velocity = currentVelocity
+		isSitting = false
 		move_and_slide()
 
 func WalkToward(pos : Vector2):

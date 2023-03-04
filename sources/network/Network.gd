@@ -40,14 +40,19 @@ func RemoveEntity(agentID : int, rpcID : int = -1):
 	elif Client:	Client.RemoveEntity(agentID)
 
 @rpc("authority", "reliable")
-func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, rpcID : int = -1):
-	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position], rpcID)
-	elif Client:	Client.UpdateEntity(agentID, velocity, position)
+func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, isSitting : bool, rpcID : int = -1):
+	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, isSitting], rpcID)
+	elif Client:	Client.UpdateEntity(agentID, velocity, position, isSitting)
 
 @rpc("any_peer")
 func TriggerWarp(rpcID : int = -1):
 	if Client:		NetCallServer("TriggerWarp", [])
 	elif Server:	Server.TriggerWarp(rpcID)
+
+@rpc("reliable", "any_peer")
+func TriggerSit(rpcID : int = -1):
+	if Client:		NetCallServer("TriggerSit", [])
+	elif Server:	Server.TriggerSit(rpcID)
 
 @rpc("reliable", "any_peer")
 func SetClickPos(pos : Vector2, rpcID : int = -1):

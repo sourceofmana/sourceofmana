@@ -70,6 +70,13 @@ func SetMovePos(direction : Vector2, rpcID : int = -1):
 				if pathLength <= 32:
 					SetClickPos(newPos, rpcID)
 
+func TriggerSit(rpcID : int = -1):
+	if playerMap.has(rpcID):
+		var playerAgentID : int = playerMap.get(rpcID)
+		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
+		if agent:
+			agent.isSitting = not agent.isSitting
+
 #
 func ConnectPeer(rpcID : int):
 	Launcher.Util.PrintLog("[Server] Peer connected: %s" % rpcID)

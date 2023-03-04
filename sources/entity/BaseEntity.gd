@@ -12,34 +12,34 @@ var displayName : bool					= false
 var entityName : String					= "PlayerName"
 var entityState : EntityEnums.State		= EntityEnums.State.IDLE
 var entityDirection : Vector2			= Vector2(0, 1)
+var entitySitting : bool				= false
 
 var interactive : EntityInteractive		= EntityInteractive.new()
 var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 
 # Animation
-func GetNextState(checkSit : bool = false):
+func GetNextState():
 	var newEntityState			= entityState
 	var currentVelocity			= velocity
 	var velocityLengthSquared	= currentVelocity.length_squared()
 	var isWalking				= velocityLengthSquared > 1
-	var actionSitPressed		= Launcher.Action.IsActionPressed("gp_sit") if checkSit else false
-	var actionSitJustPressed	= Launcher.Action.IsActionJustPressed("gp_sit") if checkSit else false
 
 	match entityState:
 		EntityEnums.State.IDLE:
 			if isWalking:
 				newEntityState = EntityEnums.State.WALK
-			elif actionSitPressed:
+			elif entitySitting:
 				newEntityState = EntityEnums.State.SIT
 		EntityEnums.State.WALK:
 			if not isWalking:
 				newEntityState = EntityEnums.State.IDLE
 		EntityEnums.State.SIT:
-			if not actionSitPressed and isWalking:
-				newEntityState = EntityEnums.State.WALK
-			elif actionSitJustPressed:
-				newEntityState = EntityEnums.State.IDLE
+			if not entitySitting:
+				if isWalking:
+					newEntityState = EntityEnums.State.WALK
+				else:
+					newEntityState = EntityEnums.State.IDLE
 
 	return newEntityState
 
@@ -115,11 +115,12 @@ func SetData(data : Object):
 		add_child(collision)
 
 #
-func Update(nextVelocity : Vector2, gardbandPosition : Vector2):
+func Update(nextVelocity : Vector2, gardbandPosition : Vector2, isSitting : bool):
 	if Vector2(position - gardbandPosition).length() > 16:
 		position = gardbandPosition
 	velocity = nextVelocity
 
+	entitySitting = isSitting
 	UpdateState()
 	if velocity != Vector2.ZERO:
 		move_and_slide()
