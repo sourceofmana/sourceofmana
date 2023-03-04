@@ -249,14 +249,20 @@ func RemoveAgent(agentName : String, checkPlayers = true, checkNpcs = true, chec
 				for agent in instance.players:
 					if agent.agentName == agentName:
 						instance.players.erase(agent)
+						agent.queue_free()
+						break
 			if checkNpcs:
 				for agent in instance.npcs:
 					if agent.agentName == agentName:
 						instance.npcs.erase(agent)
+						agent.queue_free()
+						break
 			if checkMonsters:
 				for agent in instance.mobs:
 					if agent.agentName == agentName:
 						instance.mobs.erase(agent)
+						agent.queue_free()
+						break
 
 # AI
 func UpdateWalkPaths(agent : Node2D, map : Map):

@@ -18,10 +18,22 @@ func ConnectPlayer(playerName : String, rpcID : int = -1):
 			Launcher.World.Spawn(map, pos, player)
 			Launcher.Network.WarpPlayer(mapName, rpcID)
 
-func DisconnectPlayer(playerName : String, rpcID : int = -1):
+func DisconnectPlayer(rpcID : int = -1):
 	if playerMap.has(rpcID):
-		playerMap.erase(rpcID)
-		Launcher.World.RemoveAgent(playerName, true, false, false)
+		var playerAgentID : int = playerMap.get(rpcID)
+		var disconnectedAgent : BaseAgent = Launcher.World.rids[playerAgentID]
+		if disconnectedAgent:
+			var inst : Object = Launcher.World.GetInstanceFromAgent(disconnectedAgent, true, false, false)
+			if inst:
+				for player in inst.players:
+					if player != disconnectedAgent:
+						var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
+						if playerID != null:
+							Launcher.Network.RemoveEntity(playerAgentID, playerID)
+
+			playerMap.erase(rpcID)
+			Launcher.World.rids.erase(disconnectedAgent)
+			Launcher.World.RemoveAgent(disconnectedAgent.agentName, true, false, false)
 
 #
 func GetAgents(rpcID : int = -1):
@@ -98,4 +110,4 @@ func DisconnectPeer(rpcID : int):
 	Launcher.Util.PrintLog("[Server] Peer disconnected: %s" % rpcID)
 	if rpcID in playerMap:
 		if playerMap[rpcID] in Launcher.World.rids:
-			DisconnectPlayer(Launcher.World.rids[playerMap[rpcID]].agentName, rpcID)
+			DisconnectPlayer(rpcID)
