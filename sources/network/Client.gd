@@ -14,6 +14,9 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, isSitting : bool):
 		Launcher.Map.UpdateEntity(ridAgent, velocity, position, isSitting)
 
+func RemoveEntity(agentID : int, _rpcID : int = -1):
+	Launcher.Map.RemoveEntity(agentID)
+
 # Player
 func SetVelocity(velocity : Vector2):
 	Launcher.Player.SetVelocity(velocity)

@@ -48,14 +48,23 @@ func LoadMapNode(mapName : String):
 
 #
 func RemoveChilds():
-	var tileMap : TileMap = GetTileMap()
-	if tileMap:
-		for entity in tileMap.get_children():
-			tileMap.call_deferred("remove_child", entity)
-
-func AddChild(entity : CharacterBody2D):
 	var tilemap : TileMap = GetTileMap()
-	tilemap.call_deferred("add_child", entity)
+	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not remove a child entity")
+	if tilemap:
+		for entity in tilemap.get_children():
+			tilemap.call_deferred("remove_child", entity)
+
+func RemoveChild(entity : BaseEntity):
+	var tilemap : TileMap = GetTileMap()
+	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not remove a child entity")
+	if tilemap:
+		tilemap.call_deferred("remove_child", entity)
+
+func AddChild(entity : BaseEntity):
+	var tilemap : TileMap = GetTileMap()
+	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not add a child entity")
+	if tilemap:
+		tilemap.call_deferred("add_child", entity)
 
 #
 func ReplaceMapNode(mapName : String):
@@ -93,6 +102,11 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 			if Launcher.Camera:
 				Launcher.Camera.SetBoundaries()
 			emit_signal('PlayerWarped')
+
+func RemoveEntity(agentID : int):
+	var entity : BaseEntity = entities[agentID]
+	if entity:
+		RemoveChild(entity)
 
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, isSitting : bool):
 	var entity : BaseEntity = entities.get(agentID)
