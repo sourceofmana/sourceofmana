@@ -48,5 +48,11 @@ func _process(_deltaTime : float):
 					timer.stop()
 				Launcher.Network.SetMovePos(movePos)
 
-		if Launcher.Action.IsActionJustPressed("gp_sit"):
-			Launcher.Network.TriggerSit()
+		if Launcher.Action.IsActionJustPressed("gp_sit"):		Launcher.Network.TriggerSit()
+
+		if Launcher.Action.IsActionJustPressed("smile_3"):		Launcher.Network.TriggerEmote(3)
+		elif Launcher.Action.IsActionJustPressed("smile_5"):	Launcher.Network.TriggerEmote(5)
+		elif Launcher.Action.IsActionJustPressed("smile_12"):	Launcher.Network.TriggerEmote(12)
+		elif Launcher.Action.IsActionJustPressed("smile_21"):	Launcher.Network.TriggerEmote(21)
+		elif Launcher.Action.IsActionJustPressed("smile_22"):	Launcher.Network.TriggerEmote(22)
+		elif Launcher.Action.IsActionJustPressed("smile_26"):	Launcher.Network.TriggerEmote(26)

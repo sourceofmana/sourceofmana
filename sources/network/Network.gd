@@ -24,6 +24,11 @@ func WarpPlayer(mapName : String, rpcID : int = -1):
 	if Server:		NetCallClient("WarpPlayer", [mapName], rpcID)
 	elif Client:	Client.WarpPlayer(mapName)
 
+@rpc
+func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = -1):
+	if Server:		NetCallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
+	elif Client:	Client.EmotePlayer(senderAgentID, emoteID)
+
 @rpc("any_peer")
 func GetAgents(rpcID : int = -1):
 	if Client:		NetCallServer("GetAgents", [])
@@ -53,6 +58,11 @@ func TriggerWarp(rpcID : int = -1):
 func TriggerSit(rpcID : int = -1):
 	if Client:		NetCallServer("TriggerSit", [])
 	elif Server:	Server.TriggerSit(rpcID)
+
+@rpc("reliable", "any_peer")
+func TriggerEmote(emoteID : int, rpcID : int = -1):
+	if Client:		NetCallServer("TriggerEmote", [emoteID])
+	elif Server:	Server.TriggerEmote(emoteID, rpcID)
 
 @rpc("reliable", "any_peer")
 func SetClickPos(pos : Vector2, rpcID : int = -1):

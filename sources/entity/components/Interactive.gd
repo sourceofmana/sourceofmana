@@ -103,12 +103,6 @@ func UpdateDelay():
 					speechChild.visible_ratio = 1
 
 func UpdateActions(entity : BaseEntity):
-	if Launcher.Action.IsActionJustPressed("smile_3"): DisplayEmote(3)
-	if Launcher.Action.IsActionJustPressed("smile_5"): DisplayEmote(5)
-	if Launcher.Action.IsActionJustPressed("smile_12"): DisplayEmote(12)
-	if Launcher.Action.IsActionJustPressed("smile_21"): DisplayEmote(21)
-	if Launcher.Action.IsActionJustPressed("smile_22"): DisplayEmote(22)
-	if Launcher.Action.IsActionJustPressed("smile_26"): DisplayEmote(26)
 	if Launcher.Action.IsActionJustPressed("gp_interact"): Interact(entity)
 
 func Update(entity : BaseEntity, isPC : bool = false):
