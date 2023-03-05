@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/cave-x1x3.png-0eb6be42ebed5e445f24d992d8a35a9
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

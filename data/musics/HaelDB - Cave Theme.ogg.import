@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://kn8m43rdwpsk"
+path="res://.godot/imported/HaelDB - Cave Theme.ogg-aaabc1f88a9904d0dac6d86777a22577.oggvorbisstr"
+
+[deps]
+
+source_file="res://data/musics/HaelDB - Cave Theme.ogg"
+dest_files=["res://.godot/imported/HaelDB - Cave Theme.ogg-aaabc1f88a9904d0dac6d86777a22577.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

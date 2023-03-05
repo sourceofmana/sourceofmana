@@ -987,11 +987,11 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 			tsAtlas.create_tile(atlasPos, region.size / region.size)
 
 			var tileData : TileData = tsAtlas.get_tile_data(atlasPos, 0)
-			var textureOffset : Vector2i = Vector2i.ZERO
+			var textureOrigin : Vector2i = Vector2i.ZERO
 			if region.size.x > 32 || region.size.y > 32:
-				textureOffset.x = -(region.size.x - 32) / 2
-				textureOffset.y = (region.size.y - 32) / 2
-				tileData.set_texture_offset(textureOffset)
+				textureOrigin.x = -(region.size.x - 32) / 2
+				textureOrigin.y = (region.size.y - 32) / 2
+				tileData.set_texture_origin(textureOrigin)
 
 #			if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
 #				tsAtlas.set_tile_animation_frames_count(region.position / region.size, ts.tiles[rel_id].animation.size() - 1)

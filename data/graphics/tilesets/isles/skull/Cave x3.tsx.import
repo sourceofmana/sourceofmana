@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://dm82mh4sfkkl2"
+path="res://.godot/imported/Cave x3.tsx-3465c6b995bd731f82e30681d0413471.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/isles/skull/Cave x3.tsx"
+dest_files=["res://.godot/imported/Cave x3.tsx-3465c6b995bd731f82e30681d0413471.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
