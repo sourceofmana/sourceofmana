@@ -102,6 +102,19 @@ func TriggerEmote(emoteID : int, rpcID : int = -1):
 					if playerID != null:
 						Launcher.Network.EmotePlayer(senderAgentID, emoteID, playerID)
 
+func SendChat(text : String, rpcID : int = -1):
+	if playerMap.has(rpcID):
+		var senderAgentID : int = playerMap.get(rpcID)
+		var agent : BaseAgent = Launcher.World.rids[senderAgentID]
+		if agent:
+			var inst : Object = Launcher.World.GetInstanceFromAgent(agent, true, false, false)
+			Launcher.Util.Assert(inst != null, "Could not trigger the emote, current map instance is invalid")
+			if inst:
+				for player in inst.players:
+					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
+					if playerID != null:
+						Launcher.Network.DisplaySpeech(senderAgentID, text, playerID)
+
 #
 func ConnectPeer(rpcID : int):
 	Launcher.Util.PrintLog("[Server] Peer connected: %s" % rpcID)

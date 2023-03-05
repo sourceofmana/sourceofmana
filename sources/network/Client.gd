@@ -2,7 +2,8 @@ extends Node
 
 #
 func Disconnect():
-	Launcher.FSM.EnterLogin()
+	if Launcher.FSM:
+		Launcher.FSM.EnterLogin()
 
 func WarpPlayer(map : String, _rpcID : int = -1):
 	if Launcher.Map:
@@ -13,13 +14,26 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = -1):
 		Launcher.Map.EmotePlayer(playerID, emoteID)
 
 func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, _rpcID : int = -1):
-	Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityPos)
+	if Launcher.Map:
+		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityPos)
 
 func RemoveEntity(agentID : int, _rpcID : int = -1):
-	Launcher.Map.RemoveEntity(agentID)
+	if Launcher.Map:
+		Launcher.Map.RemoveEntity(agentID)
 
 func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, isSitting : bool):
+	if Launcher.Map:
 		Launcher.Map.UpdateEntity(ridAgent, velocity, position, isSitting)
 
 func SetVelocity(velocity : Vector2):
-	Launcher.Player.SetVelocity(velocity)
+	if Launcher.Player:
+		Launcher.Player.SetVelocity(velocity)
+
+func DisplaySpeech(ridAgent : int, text : String, _rpcID : int = -1):
+	if Launcher.Map:
+		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
+		if entity && entity.get_parent():
+			if Launcher.GUI:
+				Launcher.GUI.chatContainer.AddPlayerText(entity.entityName, text)
+			if entity.interactive:
+				entity.interactive.DisplaySpeech(text)

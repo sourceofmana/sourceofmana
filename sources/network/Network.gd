@@ -74,6 +74,16 @@ func SetMovePos(pos : Vector2, rpcID : int = -1):
 	if Client:		NetCallServer("SetMovePos", [pos])
 	elif Server:	Server.SetMovePos(pos, rpcID)
 
+@rpc("reliable", "any_peer")
+func SendChat(text : String, rpcID : int = -1):
+	if Client:		NetCallServer("SendChat", [text])
+	elif Server:	Server.SendChat(text, rpcID)
+
+@rpc
+func DisplaySpeech(ridAgent : int, text : String, rpcID : int = -1):
+	if Server:		NetCallClient("DisplaySpeech", [ridAgent, text], rpcID)
+	elif Client:	Client.DisplaySpeech(ridAgent, text)
+
 #
 func NetCallServer(methodName : String, args : Array):
 	if Server:

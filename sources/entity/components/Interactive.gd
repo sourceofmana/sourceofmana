@@ -74,10 +74,10 @@ func AddDebugSpeech(speech : String):
 	RemoveSpeechLabel()
 	AddSpeechLabel(speech)
 
-func DisplaySpeech(speech : String):
+func DisplaySpeech(text : String):
 	Launcher.Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
 	if speechContainer:
-		AddSpeechLabel(speech)
+		AddSpeechLabel(text)
 
 func UpdateDelay():
 	if speechDecreaseDelay > 0:
@@ -132,8 +132,8 @@ func Setup(entity : Node2D, isPC : bool = false):
 		if Launcher.GUI:
 			if Launcher.GUI.emoteContainer && Launcher.GUI.emoteContainer.ItemClicked.is_connected(EmoteWindowClicked) == false:
 				Launcher.GUI.emoteContainer.ItemClicked.connect(EmoteWindowClicked)
-			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(DisplaySpeech) == false:
-				Launcher.GUI.chatContainer.NewTextTyped.connect(DisplaySpeech)
+			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(Launcher.Network.SendChat) == false:
+				Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.SendChat)
 
 	emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
 	speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)

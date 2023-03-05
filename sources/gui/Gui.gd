@@ -11,7 +11,7 @@ extends Node
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
 
-@onready var chatContainer : Container			= $FloatingWindows/Chat/VBoxContainer
+@onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
 
 #

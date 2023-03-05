@@ -1,4 +1,5 @@
 extends VBoxContainer
+class_name ChatContainer
 
 @onready var tabContainer : TabContainer		= $ChatTabContainer
 @onready var lineEdit : LineEdit				= $NewText
@@ -39,7 +40,6 @@ func OnNewTextSubmitted(newText):
 		if newText.is_empty() == false:
 			lineEdit.clear()
 			if Launcher.Player:
-				AddPlayerText(Launcher.Player.entityName, newText)
 				emit_signal('NewTextTyped', newText)
 				SetNewLineEnabled(false)
 		else:
