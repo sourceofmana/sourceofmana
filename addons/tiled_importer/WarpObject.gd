@@ -24,7 +24,6 @@ func _physics_process(_delta):
 
 #
 func _init():
-	collision_layer = 2
 	collision_mask = 2
 
 	self.body_entered.connect(bodyEntered)
