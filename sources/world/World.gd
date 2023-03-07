@@ -288,7 +288,7 @@ func _post_launch():
 		CreateInstance(map)
 		areas[mapName] = map
 
-func _process(_dt : float):
+func _physics_process(_dt : float):
 	for map in areas.values():
 		for instance in map.instances:
 			if Launcher.Debug or instance.players.size() > 0:
@@ -297,4 +297,6 @@ func _process(_dt : float):
 				for player in instance.players:
 					var playerID : int = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
 					for agent in instance.npcs + instance.mobs + instance.players:
-						Launcher.Network.UpdateEntity(agent.get_rid().get_id(), agent.currentVelocity, agent.position, agent.isSitting, playerID)
+						if agent.HasChanged():
+							Launcher.Network.UpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, playerID)
+							agent.UpdateChanged()

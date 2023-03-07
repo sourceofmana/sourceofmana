@@ -6,12 +6,17 @@ var agent : NavigationAgent2D			= null
 var agentName : String					= ""
 var agentType : String					= ""
 var agentID : String					= ""
-var aiTimer : AiTimer					= null
 
+var aiTimer : AiTimer					= null
 var hasCurrentGoal : bool				= false
+
 var currentInput : Vector2				= Vector2.ZERO
 var currentVelocity : Vector2			= Vector2.ZERO
 var isSitting : bool					= false
+
+var pastVelocity : Vector2				= Vector2.ZERO
+var pastPosition : Vector2				= Vector2.ZERO
+var wasSitting : bool					= false
 
 var lastPositions : Array[Vector2]		= []
 var navigationLine : PackedVector2Array	= []
@@ -47,8 +52,8 @@ func UpdateOrientation(deltaTime : float):
 		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, stat.moveFriction * deltaTime)
 
 func SetVelocity():
-	if currentVelocity != Vector2.ZERO:
-		velocity = currentVelocity
+	velocity = currentVelocity
+	if velocity != Vector2.ZERO:
 		isSitting = false
 		move_and_slide()
 
@@ -72,6 +77,14 @@ func IsStuck() -> bool:
 			sum += pos - position
 		isStuck = sum.abs() < Vector2(1, 1)
 	return isStuck
+
+func HasChanged() -> bool:
+	return position != pastPosition || velocity != pastVelocity || isSitting != wasSitting
+
+func UpdateChanged():
+	pastPosition = position
+	pastVelocity = velocity
+	wasSitting = isSitting
 
 #
 func SetKind(entityType : String, entityID : String, entityName : String):
