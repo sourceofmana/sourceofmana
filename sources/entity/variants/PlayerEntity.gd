@@ -14,7 +14,8 @@ func SetLocalPlayer():
 		Launcher.Camera.mainCamera = camera
 
 #
-func _physics_process(_deltaTime : float):
+func _physics_process(deltaTime : float):
+	super._physics_process(deltaTime)
 	if interactive:
 		interactive.Update(self, isPlayableController)
 
@@ -24,6 +25,7 @@ func _ready():
 		interactive.Setup(self, isPlayableController)
 
 func _init():
+	super._init()
 	timer = Timer.new()
 	timer.set_name("ClickTimer")
 	timer.set_wait_time(0.2)

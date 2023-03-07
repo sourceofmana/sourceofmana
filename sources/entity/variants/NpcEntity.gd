@@ -7,7 +7,8 @@ func Trigger():
 		interactive.DisplaySpeech("Hello!")
 
 #
-func _physics_process(_deltaTime : float):
+func _physics_process(deltaTime : float):
+	super._physics_process(deltaTime)
 	if interactive:
 		interactive.Update(self, false)
 

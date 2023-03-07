@@ -122,14 +122,18 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, isSitting : bool
 
 	entitySitting = isSitting
 	UpdateState()
+
+func EnableWarp():
+	collision_layer |= 2
+
+#
+func _physics_process(_delta):
 	if velocity != Vector2.ZERO:
 		move_and_slide()
 
-func EnableWarp():
-	collision_layer	|= 1 << 1
-	collision_mask	|= 1 << 1
-
-#
 func _ready():
 	if animationTree:
 		animationState = animationTree.get("parameters/playback")
+
+func _init():
+	pass
