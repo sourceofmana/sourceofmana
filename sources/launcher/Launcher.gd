@@ -102,6 +102,9 @@ func _post_launch():
 	if FSM:			FSM._post_launch()
 	if Settings:	Settings._post_launch()
 
+func _unhandled_input(event):
+	if Action:		Action._unhandled_input(event)
+
 func _process(delta : float):
 	if Action:		Action._process(delta)
 	if Debug:		Debug._process(delta)

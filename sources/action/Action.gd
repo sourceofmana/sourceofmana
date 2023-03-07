@@ -34,22 +34,26 @@ func GetMove(forceMode : bool = false) -> Vector2:
 	return moveVector
 
 # Local player movement
-func _process(_deltaTime : float):
+func _unhandled_input(_event):
 	if Launcher.Player && Launcher.Player.timer:
 		var timer : Timer = Launcher.Player.timer
 		if timer.is_stopped() and IsActionPressed("gp_click_to"):
 			var mousePos : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
 			Launcher.Network.SetClickPos(mousePos)
 			timer.start()
-		else:
+
+func _process(_deltaTime : float):
+	if Launcher.Player && Launcher.Player.timer:
+		var timer : Timer = Launcher.Player.timer
+		if not IsActionPressed("gp_click_to"):
 			var movePos : Vector2 = GetMove()
 			if movePos != Vector2.ZERO:
 				if timer.get_time_left() > 0:
 					timer.stop()
 				Launcher.Network.SetMovePos(movePos)
-
+#
 		if Launcher.Action.IsActionJustPressed("gp_sit"):		Launcher.Network.TriggerSit()
-
+#
 		if Launcher.Action.IsActionJustPressed("smile_3"):		Launcher.Network.TriggerEmote(3)
 		elif Launcher.Action.IsActionJustPressed("smile_5"):	Launcher.Network.TriggerEmote(5)
 		elif Launcher.Action.IsActionJustPressed("smile_12"):	Launcher.Network.TriggerEmote(12)
