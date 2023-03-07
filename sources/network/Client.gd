@@ -29,7 +29,7 @@ func SetVelocity(velocity : Vector2):
 	if Launcher.Player:
 		Launcher.Player.SetVelocity(velocity)
 
-func DisplaySpeech(ridAgent : int, text : String, _rpcID : int = -1):
+func ChatPlayer(ridAgent : int, text : String, _rpcID : int = -1):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
 		if entity && entity.get_parent():

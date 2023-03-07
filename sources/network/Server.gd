@@ -36,7 +36,7 @@ func DisconnectPlayer(rpcID : int = -1):
 			Launcher.World.RemoveAgent(disconnectedAgent.agentName, true, false, false)
 
 #
-func GetAgents(rpcID : int = -1):
+func GetEntities(rpcID : int = -1):
 	if playerMap.has(rpcID):
 		var playerAgentID : int = playerMap.get(rpcID)
 		var playerAgent : BaseAgent = Launcher.World.rids[playerAgentID]
@@ -102,7 +102,7 @@ func TriggerEmote(emoteID : int, rpcID : int = -1):
 					if playerID != null:
 						Launcher.Network.EmotePlayer(senderAgentID, emoteID, playerID)
 
-func SendChat(text : String, rpcID : int = -1):
+func TriggerChat(text : String, rpcID : int = -1):
 	if playerMap.has(rpcID):
 		var senderAgentID : int = playerMap.get(rpcID)
 		var agent : BaseAgent = Launcher.World.rids[senderAgentID]
@@ -113,7 +113,7 @@ func SendChat(text : String, rpcID : int = -1):
 				for player in inst.players:
 					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
 					if playerID != null:
-						Launcher.Network.DisplaySpeech(senderAgentID, text, playerID)
+						Launcher.Network.ChatPlayer(senderAgentID, text, playerID)
 
 #
 func ConnectPeer(rpcID : int):

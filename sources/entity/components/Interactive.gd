@@ -132,8 +132,8 @@ func Setup(entity : Node2D, isPC : bool = false):
 		if Launcher.GUI:
 			if Launcher.GUI.emoteContainer && Launcher.GUI.emoteContainer.ItemClicked.is_connected(EmoteWindowClicked) == false:
 				Launcher.GUI.emoteContainer.ItemClicked.connect(EmoteWindowClicked)
-			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(Launcher.Network.SendChat) == false:
-				Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.SendChat)
+			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(Launcher.Network.TriggerChat) == false:
+				Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
 
 	emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
 	speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)

@@ -9,80 +9,86 @@ var peer : ENetMultiplayerPeer		= ENetMultiplayerPeer.new()
 var uniqueID : int					= 0
 
 #
-@rpc("any_peer")
+@rpc("any_peer", "reliable")
 func ConnectPlayer(playerName : String, rpcID : int = -1):
 	if Client:		NetCallServer("ConnectPlayer", [playerName])
 	elif Server:	Server.ConnectPlayer(playerName, rpcID)
 
-@rpc("any_peer")
+@rpc("any_peer", "reliable")
 func DisconnectPlayer(playerName : String, rpcID : int = -1):
 	if Client:		NetCallServer("DisconnectPlayer", [playerName])
 	elif Server:	Server.DisconnectPlayer(playerName, rpcID)
 
-@rpc
-func WarpPlayer(mapName : String, rpcID : int = -1):
-	if Server:		NetCallClient("WarpPlayer", [mapName], rpcID)
-	elif Client:	Client.WarpPlayer(mapName)
-
-@rpc
-func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = -1):
-	if Server:		NetCallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
-	elif Client:	Client.EmotePlayer(senderAgentID, emoteID)
-
-@rpc("any_peer")
-func GetAgents(rpcID : int = -1):
-	if Client:		NetCallServer("GetAgents", [])
-	elif Server:	Server.GetAgents(rpcID)
-
-@rpc
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, rpcID : int = -1):
-	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos], rpcID)
-	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos)
-
-@rpc
-func RemoveEntity(agentID : int, rpcID : int = -1):
-	if Server:		NetCallClient("RemoveEntity", [agentID], rpcID)
-	elif Client:	Client.RemoveEntity(agentID)
-
-@rpc("authority", "reliable")
-func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, isSitting : bool, rpcID : int = -1):
-	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, isSitting], rpcID)
-	elif Client:	Client.UpdateEntity(agentID, velocity, position, isSitting)
-
+#
 @rpc("any_peer")
 func TriggerWarp(rpcID : int = -1):
 	if Client:		NetCallServer("TriggerWarp", [])
 	elif Server:	Server.TriggerWarp(rpcID)
 
-@rpc("reliable", "any_peer")
-func TriggerSit(rpcID : int = -1):
-	if Client:		NetCallServer("TriggerSit", [])
-	elif Server:	Server.TriggerSit(rpcID)
+@rpc("authority", "reliable")
+func WarpPlayer(mapName : String, rpcID : int = -1):
+	if Server:		NetCallClient("WarpPlayer", [mapName], rpcID)
+	elif Client:	Client.WarpPlayer(mapName)
 
-@rpc("reliable", "any_peer")
+#
+@rpc("any_peer", "reliable")
 func TriggerEmote(emoteID : int, rpcID : int = -1):
 	if Client:		NetCallServer("TriggerEmote", [emoteID])
 	elif Server:	Server.TriggerEmote(emoteID, rpcID)
 
-@rpc("reliable", "any_peer")
+@rpc("authority", "reliable")
+func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = -1):
+	if Server:		NetCallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
+	elif Client:	Client.EmotePlayer(senderAgentID, emoteID)
+
+#
+@rpc("any_peer", "reliable")
+func GetEntities(rpcID : int = -1):
+	if Client:		NetCallServer("GetEntities", [])
+	elif Server:	Server.GetEntities(rpcID)
+
+@rpc("authority", "reliable")
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, rpcID : int = -1):
+	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos], rpcID)
+	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos)
+
+@rpc("authority", "reliable")
+func RemoveEntity(agentID : int, rpcID : int = -1):
+	if Server:		NetCallClient("RemoveEntity", [agentID], rpcID)
+	elif Client:	Client.RemoveEntity(agentID)
+
+#
+@rpc("any_peer", "unreliable_ordered")
 func SetClickPos(pos : Vector2, rpcID : int = -1):
 	if Client:		NetCallServer("SetClickPos", [pos])
 	elif Server:	Server.SetClickPos(pos, rpcID)
 
-@rpc("reliable", "any_peer")
+@rpc("any_peer", "unreliable_ordered")
 func SetMovePos(pos : Vector2, rpcID : int = -1):
 	if Client:		NetCallServer("SetMovePos", [pos])
 	elif Server:	Server.SetMovePos(pos, rpcID)
 
-@rpc("reliable", "any_peer")
-func SendChat(text : String, rpcID : int = -1):
-	if Client:		NetCallServer("SendChat", [text])
-	elif Server:	Server.SendChat(text, rpcID)
+@rpc("authority", "unreliable_ordered")
+func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, isSitting : bool, rpcID : int = -1):
+	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, isSitting], rpcID)
+	elif Client:	Client.UpdateEntity(agentID, velocity, position, isSitting)
 
-@rpc
-func DisplaySpeech(ridAgent : int, text : String, rpcID : int = -1):
-	if Server:		NetCallClient("DisplaySpeech", [ridAgent, text], rpcID)
-	elif Client:	Client.DisplaySpeech(ridAgent, text)
+#
+@rpc("any_peer", "reliable")
+func TriggerSit(rpcID : int = -1):
+	if Client:		NetCallServer("TriggerSit", [])
+	elif Server:	Server.TriggerSit(rpcID)
+
+#
+@rpc("any_peer", "reliable")
+func TriggerChat(text : String, rpcID : int = -1):
+	if Client:		NetCallServer("TriggerChat", [text])
+	elif Server:	Server.TriggerChat(text, rpcID)
+
+@rpc("authority", "reliable")
+func ChatPlayer(ridAgent : int, text : String, rpcID : int = -1):
+	if Server:		NetCallClient("ChatPlayer", [ridAgent, text], rpcID)
+	elif Client:	Client.ChatPlayer(ridAgent, text)
 
 #
 func NetCallServer(methodName : String, args : Array):

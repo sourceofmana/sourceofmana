@@ -71,7 +71,7 @@ func ReplaceMapNode(mapName : String):
 	if mapNode && mapNode.get_name() != mapName:
 		UnloadMapNode()
 	LoadMapNode(mapName)
-	Launcher.Network.GetAgents()
+	Launcher.Network.GetEntities()
 
 	if mapNode:
 		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
