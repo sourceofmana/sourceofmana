@@ -41,8 +41,8 @@ func LaunchClient():
 	# Load first low-prio services on which the order is important
 	GUI				= Scene.get_node("CanvasLayer")
 
-	if OS.is_debug_build():
-		Debug		= FileSystem.LoadSource("debug/Debug.gd")
+#	if OS.is_debug_build():
+	Debug		= FileSystem.LoadSource("debug/Debug.gd")
 
 	# Load then low-prio services on which the order is not important
 	Action			= FileSystem.LoadSource("action/Action.gd")
