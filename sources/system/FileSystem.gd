@@ -38,11 +38,18 @@ func ResourceInstanceOrLoad(path : String) -> Object:
 
 # File
 func LoadFile(path : String) -> String:
+	var fullPath : String		= Launcher.Path.DataRsc + path
 	var result : String = ""
-	if FileExists(path):
-		var file = FileAccess.open(path, FileAccess.READ)
+
+	var pathExists : bool		= FileExists(fullPath)
+	Launcher.Util.Assert(pathExists, "DB file not found " + path + " should be located at " + fullPath)
+
+	if pathExists:
+		var file = FileAccess.open(fullPath, FileAccess.READ)
+		Launcher.Util.Assert(file != null, "File parsing issue on file " + fullPath)
 		if file:
 			result = file.get_as_text()
+			Launcher.Util.PrintLog("[File] Loading file: " + fullPath)
 	return result
 
 # DB
