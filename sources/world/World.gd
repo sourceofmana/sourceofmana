@@ -288,7 +288,7 @@ func _post_launch():
 		CreateInstance(map)
 		areas[mapName] = map
 
-func _physics_process(_dt : float):
+func _process(_dt : float):
 	for map in areas.values():
 		for instance in map.instances:
 			if Launcher.Debug or instance.players.size() > 0:

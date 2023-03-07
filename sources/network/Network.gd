@@ -20,7 +20,7 @@ func DisconnectPlayer(playerName : String, rpcID : int = -1):
 	elif Server:	Server.DisconnectPlayer(playerName, rpcID)
 
 #
-@rpc("any_peer")
+@rpc("any_peer", "unreliable")
 func TriggerWarp(rpcID : int = -1):
 	if Client:		NetCallServer("TriggerWarp", [])
 	elif Server:	Server.TriggerWarp(rpcID)
