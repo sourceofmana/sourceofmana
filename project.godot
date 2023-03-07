@@ -34,14 +34,11 @@ gdscript/completion/autocomplete_setters_and_getters=true
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/per_pixel_transparency/allowed=true
 mouse_cursor/custom_image="res://data/graphics/gui/misc/mouse.png"
 mouse_cursor/tooltip_position_offset=Vector2(16, 16)
 window/stretch/aspect="ignore"
 window/size/width=1280
 window/size/height=720
-window/vsync/use_vsync=false
-window/per_pixel_transparency/enabled=true
 
 [editor]
 
@@ -238,6 +235,7 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 driver/threads/thread_model=2
+textures/vram_compression/import_etc2_astc=true
 textures/lossless_compression/force_png=true
 anti_aliasing/screen_space_roughness_limiter/enabled=false
 2d/snap/snap_2d_transforms_to_pixel=true
