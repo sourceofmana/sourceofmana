@@ -9,7 +9,7 @@ anchors_preset = 0
 mouse_filter = 1
 
 [node name="Background" type="NinePatchRect" parent="."]
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
@@ -20,14 +20,15 @@ patch_margin_right = 5
 patch_margin_bottom = 5
 
 [node name="Close" type="Control" parent="."]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
+grow_horizontal = 0
 mouse_filter = 1
 
 [node name="CloseButton" type="TextureButton" parent="Close"]
-anchors_preset = -1
+layout_mode = 0
 anchor_left = -11.75
 anchor_top = -0.2
 anchor_right = -11.325
