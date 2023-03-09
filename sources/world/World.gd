@@ -42,7 +42,7 @@ func GetRandomPosition(map : Map) -> Vector2i:
 func GetRandomPositionAABB(map : Map, pos : Vector2i, offset : Vector2i) -> Vector2i:
 	Launcher.Util.Assert(map != null, "Could not create a random position for a non-initialized map")
 	if map != null:
-		for i in Launcher.Conf.GetInt("Navigation", "navigationSpawnTry", Launcher.Conf.Type.SERVER):
+		for i in Launcher.Conf.GetInt("Navigation", "navigationSpawnTry", Launcher.Conf.Type.NETWORK):
 			var randPoint : Vector2i = Vector2i(randi_range(-offset.x, offset.x), randi_range(-offset.y, offset.y))
 			randPoint += pos
 

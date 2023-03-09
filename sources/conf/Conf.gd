@@ -8,7 +8,7 @@ enum Type \
 	MAP, \
 	WINDOW, \
 	GAMEPLAY, \
-	SERVER, \
+	NETWORK, \
 	AUTH \
 }
 

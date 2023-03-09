@@ -50,20 +50,18 @@ func GetNextDirection():
 		return entityDirection
 
 func ApplyNextState(nextState : EntityEnums.State, nextDirection : Vector2):
-	if not animationTree or not animationState:
-		pass
+	if animationTree and animationState:
 
-	animationTree.set("parameters/Idle/blend_position", nextDirection)
-	animationTree.set("parameters/Sit/blend_position", nextDirection)
-	animationTree.set("parameters/Walk/blend_position", nextDirection)
-
-	match nextState:
-		EntityEnums.State.IDLE:
-			animationState.travel("Idle")
-		EntityEnums.State.WALK:
-			animationState.travel("Walk")
-		EntityEnums.State.SIT:
-			animationState.travel("Sit")
+		match nextState:
+			EntityEnums.State.IDLE:
+				animationTree.set("parameters/Idle/blend_position", nextDirection)
+				animationState.travel("Idle")
+			EntityEnums.State.WALK:
+				animationTree.set("parameters/Walk/blend_position", nextDirection)
+				animationState.travel("Walk")
+			EntityEnums.State.SIT:
+				animationTree.set("parameters/Sit/blend_position", nextDirection)
+				animationState.travel("Sit")
 
 	entityState		= nextState
 	entityDirection	= nextDirection
@@ -113,7 +111,8 @@ func SetData(data : Object):
 
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, isSitting : bool):
-	if Vector2(position - gardbandPosition).length() > 16:
+	var dist = Vector2(position - gardbandPosition).length()
+	if dist > Launcher.Conf.GetInt("Guardband", "playerMaxDistance", Launcher.Conf.Type.NETWORK):
 		position = gardbandPosition
 	velocity = nextVelocity
 
