@@ -93,6 +93,7 @@ func _ready():
 
 # Call _post_launch functions for service depending on other services
 func _post_launch():
+	if Camera:		Camera._post_launch()
 	if GUI:			GUI._post_launch()
 	if Debug:		Debug._post_launch()
 	if Audio:		Audio._post_launch()
@@ -105,11 +106,10 @@ func _post_launch():
 func _unhandled_input(event):
 	if Action:		Action._unhandled_input(event)
 
-func _process(delta : float):
-	if Action:		Action._process(delta)
-	if Debug:		Debug._process(delta)
-	if FSM:			FSM._process(delta)
-	if World:		World._process(delta)
+func _physics_process(delta : float):
+	if Action:		Action._physics_process(delta)
+	if FSM:			FSM._physics_process(delta)
+	if World:		World._physics_process(delta)
 
 func _quit():
 	Launcher.Network.NetDestroy()

@@ -2,16 +2,16 @@ extends BaseEntity
 class_name PlayerEntity
 
 var isPlayableController		= false
-var camera : Camera2D			= null
 var timer : Timer				= null
 
 #
 func SetLocalPlayer():
 	isPlayableController = true
-	camera = Launcher.FileSystem.LoadPreset("cameras/Default")
-	if camera:
-		add_child(camera)
-		Launcher.Camera.mainCamera = camera
+	collision_layer |= 2
+
+	Launcher.Camera.mainCamera = Launcher.FileSystem.LoadPreset("cameras/Default")
+	if Launcher.Camera.mainCamera:
+		add_child(Launcher.Camera.mainCamera)
 
 #
 func _physics_process(deltaTime : float):

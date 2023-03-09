@@ -48,9 +48,9 @@ func GetEntities(rpcID : int = -1):
 	elif Server:	Server.GetEntities(rpcID)
 
 @rpc("authority", "reliable")
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, rpcID : int = -1):
-	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos], rpcID)
-	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos)
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityVelocity : Vector2, entityPos : Vector2i, entitySitting : bool, rpcID : int = -1):
+	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityVelocity, entityPos, entitySitting], rpcID)
+	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityVelocity, entityPos, entitySitting)
 
 @rpc("authority", "reliable")
 func RemoveEntity(agentID : int, rpcID : int = -1):

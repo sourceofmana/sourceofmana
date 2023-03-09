@@ -16,8 +16,8 @@ func SetPlayerInventory():
 func _post_launch():
 	projectName = Launcher.Conf.GetString("Default", "projectName", Launcher.Conf.Type.PROJECT)
 
-func _process(_delta : float):
-	pass
+	if Launcher.Map and not Launcher.FSM.enter_game.is_connected(SetPlayerInventory):
+		Launcher.FSM.enter_game.connect(SetPlayerInventory)
 
 #
 func UpdateNavLine(entity : BaseEntity):

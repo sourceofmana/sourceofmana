@@ -75,8 +75,10 @@ func EnterGame():
 
 #
 func _post_launch():
-	Launcher.FSM.enter_login.connect(EnterLoginMenu)
-	Launcher.FSM.enter_game.connect(EnterGame)
+	if Launcher.Map and not Launcher.FSM.enter_login.is_connected(EnterLoginMenu):
+		Launcher.FSM.enter_login.connect(EnterLoginMenu)
+	if Launcher.Map and not Launcher.FSM.enter_game.is_connected(EnterGame):
+		Launcher.FSM.enter_game.connect(EnterGame)
 	get_tree().set_auto_accept_quit(false)
 
 func _process(_delta):

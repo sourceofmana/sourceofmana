@@ -168,6 +168,7 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 		Launcher.Util.Assert(inst != null, "Spawn could not proceed, map instance missing")
 		if inst:
 			agent.set_position(pos)
+			agent._velocity_computed(Vector2.ZERO)
 			agent.ResetNav()
 			if agent.agent:
 				agent.agent.set_navigation_map(map.mapRID)
@@ -185,7 +186,7 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 				if player != agent:
 					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
 					if playerID != null:
-						Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, playerID)
+						Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.velocity, agent.position, agent.isSitting, playerID)
 
 func GetInstanceFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNpcs = true, checkMonsters = true) -> Instance:
 	for map in areas.values():
@@ -288,10 +289,10 @@ func _post_launch():
 		CreateInstance(map)
 		areas[mapName] = map
 
-func _process(_dt : float):
+func _physics_process(_dt : float):
 	for map in areas.values():
 		for instance in map.instances:
-			if Launcher.Debug or instance.players.size() > 0:
+			if instance.players.size() > 0:
 				for agent in instance.npcs + instance.mobs:
 					UpdateAI(agent, map)
 				for player in instance.players:
@@ -299,4 +300,6 @@ func _process(_dt : float):
 					for agent in instance.npcs + instance.mobs + instance.players:
 						if agent.HasChanged():
 							Launcher.Network.UpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, playerID)
-							agent.UpdateChanged()
+				for agent in instance.npcs + instance.mobs + instance.players:
+					if agent.HasChanged():
+						agent.UpdateChanged()

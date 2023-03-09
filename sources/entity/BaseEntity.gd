@@ -85,9 +85,6 @@ func SetKind(_entityKind : String, _entityID : String, _entityName : String):
 	else:
 		set_name(entityName)
 
-	if _entityKind == "Player":
-		EnableWarp()
-
 func SetData(data : Object):
 	# Display
 	entityName		= data._name
@@ -122,9 +119,6 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, isSitting : bool
 
 	entitySitting = isSitting
 	UpdateState()
-
-func EnableWarp():
-	collision_layer |= 2
 
 #
 func _physics_process(_delta):

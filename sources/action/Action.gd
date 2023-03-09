@@ -42,7 +42,7 @@ func _unhandled_input(_event):
 			Launcher.Network.SetClickPos(mousePos)
 			timer.start()
 
-func _process(_deltaTime : float):
+func _physics_process(_deltaTime : float):
 	if Launcher.Player && Launcher.Player.timer:
 		var timer : Timer = Launcher.Player.timer
 		if not IsActionPressed("gp_click_to"):

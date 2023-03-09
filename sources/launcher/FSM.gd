@@ -30,7 +30,7 @@ func EnterGame():
 		Launcher.Network.NetCreate()
 
 #
-func _process(_delta):
+func _physics_process(_delta):
 	if currentState != nextState:
 		currentState = nextState
 		match nextState:
