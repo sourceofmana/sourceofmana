@@ -1,13 +1,12 @@
-[gd_resource type="Resource" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="BaseItem" load_steps=3 format=3 uid="uid://b0jxrp8o7a4fk"]
 
 [ext_resource type="Script" path="res://sources/resource_types/BaseItem.gd" id="1_71cxl"]
 [ext_resource type="Texture2D" uid="uid://cme6adrtp7g37" path="res://data/graphics/items/common/phatina-key1.png" id="1_w35pv"]
 
-
 [resource]
 script = ExtResource("1_71cxl")
-name = "Hungry's Key"
+name = "Grumpy's Key"
 description = "A key that has been hidden a long time ago, seems to open a fancy door"
-stackable = true
 icon = ExtResource("1_w35pv")
+stackable = true
 weight = 15.0
