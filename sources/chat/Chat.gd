@@ -5,6 +5,7 @@ class_name ChatContainer
 @onready var lineEdit : LineEdit				= $NewText
 
 @onready var tabInstance : Object				= Launcher.FileSystem.ResourceLoad("res://scenes/gui/chat/ChatTab.tscn")
+@onready var chatHistory : ChatHistory			= ChatHistory.new()
 var playerColor : Color 						= Color("FFFFDD")
 var systemColor : Color 						= Color("EECC77")
 var enabledLastFrame : bool						= false
@@ -40,6 +41,7 @@ func OnNewTextSubmitted(newText):
 		if newText.is_empty() == false:
 			lineEdit.clear()
 			if Launcher.Player:
+				chatHistory.Add(newText)
 				emit_signal('NewTextTyped', newText)
 				SetNewLineEnabled(false)
 		else:
@@ -47,8 +49,16 @@ func OnNewTextSubmitted(newText):
 
 #
 func _process(_deltaTime : float):
-	if isNewLineEnabled() && Input.is_action_just_pressed("ui_cancel"):
-		SetNewLineEnabled(false)
+	if isNewLineEnabled():
+		if Input.is_action_just_pressed("ui_cancel"):
+			SetNewLineEnabled(false)
+		elif Input.is_action_just_pressed("ui_up"):
+			chatHistory.Up()
+			lineEdit.text = chatHistory.Get()
+		elif Input.is_action_just_pressed("ui_down"):
+			chatHistory.Down()
+			lineEdit.text = chatHistory.Get()
+
 	if enabledLastFrame:
 		enabledLastFrame = false
 
