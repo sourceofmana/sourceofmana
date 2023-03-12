@@ -150,7 +150,7 @@ func NetCreate():
 				Launcher.Root.multiplayer.peer_connected.connect(Server.ConnectPeer)
 			if not Launcher.Root.multiplayer.peer_disconnected.is_connected(Server.DisconnectPeer):
 				Launcher.Root.multiplayer.peer_disconnected.connect(Server.DisconnectPeer)
-			Launcher.Util.PrintLog("[Server] Initialized on port %d" % serverPort)
+			Launcher.Util.PrintLog("Server", "Initialized on port %d" % serverPort)
 
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 

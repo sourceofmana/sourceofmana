@@ -49,7 +49,7 @@ func LoadFile(path : String) -> String:
 		Launcher.Util.Assert(file != null, "File parsing issue on file " + fullPath)
 		if file:
 			result = file.get_as_text()
-			Launcher.Util.PrintLog("[File] Loading file: " + fullPath)
+			Launcher.Util.PrintLog("File", "Loading file: " + fullPath)
 	return result
 
 # DB
@@ -72,7 +72,7 @@ func LoadDB(path : String) -> Dictionary:
 		)
 		if err == OK:
 			result = jsonInstance.get_data()
-			Launcher.Util.PrintLog("[DB] Loading file: " + fullPath)
+			Launcher.Util.PrintLog("DB", "Loading file: " + fullPath)
 
 	return result
 
@@ -87,7 +87,7 @@ func LoadMap(path : String, ext : String) -> Object:
 	Launcher.Util.Assert(pathExists, "Map file not found " + path + Launcher.Path.MapClientExt + " should be located at " + Launcher.Path.MapRsc)
 	if pathExists:
 		mapInstance = ResourceInstanceOrLoad(scenePath)
-		Launcher.Util.PrintLog("[Map] Loading resource: " + scenePath)
+		Launcher.Util.PrintLog("Map", "Loading resource: " + scenePath)
 
 	return mapInstance
 
@@ -101,7 +101,7 @@ func LoadSource(path : String) -> Object:
 
 	if pathExists:
 		srcFile = FileAlloc(fullPath)
-		Launcher.Util.PrintLog("[Source] Loading script: " + fullPath)
+		Launcher.Util.PrintLog("Source", "Loading script: " + fullPath)
 
 	return srcFile
 
@@ -129,7 +129,7 @@ func LoadConfig(path : String) -> ConfigFile:
 			cfgFile.free()
 			cfgFile = null
 		else:
-			Launcher.Util.PrintLog("[Config] Loading file: " + fullPath)
+			Launcher.Util.PrintLog("Config", "Loading file: " + fullPath)
 
 	return cfgFile
 
@@ -144,7 +144,7 @@ func SaveConfig(path : String, cfgFile : ConfigFile):
 		if pathExists:
 			var err = cfgFile.save(fullPath)
 			Launcher.Util.Assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
-			Launcher.Util.PrintLog("[Config] Saving file: " + fullPath)
+			Launcher.Util.PrintLog("Config", "Saving file: " + fullPath)
 
 # Resource
 func LoadResource(fullPath : String, instantiate : bool = true) -> Object:
@@ -190,7 +190,7 @@ func LoadMusic(path : String) -> Resource:
 
 	if pathExists:
 		musicFile = FileLoad(fullPath)
-		Launcher.Util.PrintLog("[Music] Loading file: " + fullPath)
+		Launcher.Util.PrintLog("Music", "Loading file: " + fullPath)
 
 	return musicFile
 
@@ -221,4 +221,4 @@ func SaveScreenshot(image : Image):
 			var ret = image.save_png(savePath)
 			Launcher.Util.Assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
 			if ret == OK:
-				Launcher.Util.PrintLog("[Screenshot] Saving capture: " + savePath)
+				Launcher.Util.PrintLog("Screenshot", "Saving capture: " + savePath)

@@ -117,10 +117,10 @@ func TriggerChat(text : String, rpcID : int = -1):
 
 #
 func ConnectPeer(rpcID : int):
-	Launcher.Util.PrintLog("[Server] Peer connected: %s" % rpcID)
+	Launcher.Util.PrintLog("Server", "Peer connected: %s" % rpcID)
 
 func DisconnectPeer(rpcID : int):
-	Launcher.Util.PrintLog("[Server] Peer disconnected: %s" % rpcID)
+	Launcher.Util.PrintLog("Server", "Peer disconnected: %s" % rpcID)
 	if rpcID in playerMap:
 		if playerMap[rpcID] in Launcher.World.rids:
 			DisconnectPlayer(rpcID)
