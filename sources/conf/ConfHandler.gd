@@ -7,7 +7,8 @@ var confFiles : Array		= \
 	Launcher.FileSystem.LoadConfig("window"),			\
 	Launcher.FileSystem.LoadConfig("gameplay"),			\
 	Launcher.FileSystem.LoadConfig("network"),			\
-	Launcher.FileSystem.LoadConfig("auth")				\
+	Launcher.FileSystem.LoadConfig("auth"),				\
+	Launcher.FileSystem.LoadConfig("debug")				\
 ]
 
 #

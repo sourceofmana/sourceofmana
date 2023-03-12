@@ -9,7 +9,8 @@ enum Type \
 	WINDOW, \
 	GAMEPLAY, \
 	NETWORK, \
-	AUTH \
+	AUTH, \
+	DEBUG \
 }
 
 var ConfHandler				= null

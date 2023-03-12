@@ -19,6 +19,13 @@ func _physics_process(deltaTime : float):
 	if interactive:
 		interactive.Update(self, isPlayableController)
 
+	if Launcher.Debug && isPlayableController:
+		if Launcher.Debug.correctPos:
+			Launcher.Debug.correctPos.position = position + entityPosOffset
+		if Launcher.Debug.wrongPos:
+			Launcher.Debug.wrongPos.position = position
+
+
 func _ready():
 	super._ready()
 	if interactive:
