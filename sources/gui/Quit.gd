@@ -1,13 +1,13 @@
-extends VBoxContainer
+extends WindowPanel
 
-@onready var leaveButton : Button = $ButtonChoice/Leave
+@onready var leaveButton : Button	= $VBoxContainer/ButtonChoice/Leave
 
 #
-func _on_Leave_pressed():
+func _on_leave_pressed():
 	Launcher._quit()
 
-func _on_Stay_pressed():
-	Launcher.GUI.CloseCurrentWindow()
+func _on_stay_pressed():
+	ToggleControl()
 
 func _on_window_draw():
 	if leaveButton:

@@ -16,3 +16,7 @@ func _on_online_pressed():
 func _on_host_pressed():
 	set_visible(false)
 	Launcher.LaunchMode(false, true)
+
+func _on_window_draw():
+	if OnlineButton:
+		OnlineButton.grab_focus()
