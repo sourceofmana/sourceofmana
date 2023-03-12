@@ -4,9 +4,9 @@ class_name EntityStats
 var level : int							= 52
 var experience : float					= 80.569999
 
-var moveAcceleration : int				= 200
-var moveFriction : int					= 300
-var moveSpeed : int						= 125
+var moveAcceleration : int				= 800
+var moveFriction : int					= 1000
+var moveSpeed : int						= 100
 
 var maxHealth : int						= 80
 var maxMana : int						= 50
