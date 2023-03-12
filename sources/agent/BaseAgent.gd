@@ -44,12 +44,12 @@ func UpdateInput():
 		else:
 			SwitchInputMode(true)
 
-func UpdateOrientation(deltaTime : float):
+func UpdateOrientation():
 	if currentInput != Vector2.ZERO:
 		var normalizedInput : Vector2 = currentInput.normalized()
-		currentVelocity = currentVelocity.move_toward(normalizedInput * stat.moveSpeed, stat.moveAcceleration * deltaTime)
+		currentVelocity = normalizedInput * stat.moveSpeed
 	else:
-		currentVelocity = currentVelocity.move_toward(Vector2.ZERO, stat.moveFriction * deltaTime)
+		currentVelocity = Vector2.ZERO
 
 func SetVelocity():
 	velocity = currentVelocity
@@ -67,7 +67,7 @@ func WalkToward(pos : Vector2):
 
 func ResetNav():
 	WalkToward(position)
-	navigationLine = []
+	SwitchInputMode(true)
 
 func IsStuck() -> bool:
 	var isStuck : bool = false
@@ -111,10 +111,10 @@ func SetData(data : Object):
 		add_child(agent)
 
 #
-func _physics_process(deltaTime : float):
-	if agent:
+func _internal_process():
+	if agent and get_parent():
 		UpdateInput()
-		UpdateOrientation(deltaTime)
+		UpdateOrientation()
 		if agent.get_avoidance_enabled():
 			agent.set_velocity(currentVelocity)
 		else:

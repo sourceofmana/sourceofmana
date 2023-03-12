@@ -169,9 +169,9 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 		if inst:
 			agent.set_position(pos)
 			agent._velocity_computed(Vector2.ZERO)
-			agent.ResetNav()
 			if agent.agent:
 				agent.agent.set_navigation_map(map.mapRID)
+			agent.ResetNav()
 
 			match agent.agentType:
 				"Player":	if not agent in inst.players:	inst.players.append(agent)
@@ -272,12 +272,13 @@ func UpdateWalkPaths(agent : Node2D, map : Map):
 	agent.WalkToward(newPos)
 
 func UpdateAI(agent : BaseAgent, map : Map):
-	if agent.hasCurrentGoal == false && agent.aiTimer && agent.aiTimer.is_stopped():
-		agent.aiTimer.StartTimer(randf_range(5, 15), UpdateWalkPaths.bind(agent, map))
-	elif agent.hasCurrentGoal && agent.IsStuck():
-		agent.ResetNav()
-		agent.aiTimer.StartTimer(randf_range(2, 10), UpdateWalkPaths.bind(agent, map))
-	agent.UpdateInput()
+	if not agent.hasCurrentGoal:
+		if agent.aiTimer && agent.aiTimer.is_stopped():
+			agent.aiTimer.StartTimer(randf_range(5, 15), UpdateWalkPaths.bind(agent, map))
+	else:
+		if agent.IsStuck():
+			agent.ResetNav()
+			agent.aiTimer.StartTimer(randf_range(2, 10), UpdateWalkPaths.bind(agent, map))
 
 # Generic
 func _post_launch():
@@ -295,7 +296,9 @@ func _physics_process(_dt : float):
 			if instance.players.size() > 0:
 				for agent in instance.npcs + instance.mobs:
 					UpdateAI(agent, map)
+					agent._internal_process()
 				for player in instance.players:
+					player._internal_process()
 					var playerID : int = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
 					for agent in instance.npcs + instance.mobs + instance.players:
 						if agent.HasChanged():
