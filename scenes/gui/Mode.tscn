@@ -55,6 +55,7 @@ size_flags_horizontal = 3
 text = "Host"
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
+[connection signal="draw" from="VBoxContainer/GridContainer" to="." method="_on_window_draw"]
 [connection signal="pressed" from="VBoxContainer/GridContainer/Offline" to="." method="_on_offline_pressed"]
 [connection signal="pressed" from="VBoxContainer/GridContainer/Online" to="." method="_on_online_pressed"]
 [connection signal="pressed" from="VBoxContainer/GridContainer/Host" to="." method="_on_host_pressed"]
