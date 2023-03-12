@@ -13,9 +13,9 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = -1):
 	if Launcher.Map:
 		Launcher.Map.EmotePlayer(playerID, emoteID)
 
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityVelocity : Vector2, entityPos : Vector2i, entitySitting : bool, _rpcID : int = -1):
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entitySitting : bool, _rpcID : int = -1):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityVelocity, entityPos, entitySitting)
+		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityPos, entitySitting)
 
 func RemoveEntity(agentID : int, _rpcID : int = -1):
 	if Launcher.Map:

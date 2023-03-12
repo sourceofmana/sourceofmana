@@ -12,6 +12,8 @@ var displayName : bool					= false
 var entityName : String					= "PlayerName"
 var entityState : EntityEnums.State		= EntityEnums.State.IDLE
 var entityDirection : Vector2			= Vector2(0, 1)
+var entityVelocity : Vector2			= Vector2.ZERO
+var entityPosOffset : Vector2			= Vector2.ZERO
 var entitySitting : bool				= false
 
 var interactive : EntityInteractive		= EntityInteractive.new()
@@ -21,8 +23,7 @@ var stat : EntityStats					= EntityStats.new()
 # Animation
 func GetNextState():
 	var newEntityState			= entityState
-	var currentVelocity			= velocity
-	var velocityLengthSquared	= currentVelocity.length_squared()
+	var velocityLengthSquared	= velocity.length_squared()
 	var isWalking				= velocityLengthSquared > 1
 
 	match entityState:
@@ -51,7 +52,6 @@ func GetNextDirection():
 
 func ApplyNextState(nextState : EntityEnums.State, nextDirection : Vector2):
 	if animationTree and animationState:
-
 		match nextState:
 			EntityEnums.State.IDLE:
 				animationTree.set("parameters/Idle/blend_position", nextDirection)
@@ -114,13 +114,19 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, isSitting : bool
 	var dist = Vector2(position - gardbandPosition).length()
 	if dist > Launcher.Conf.GetInt("Guardband", "playerMaxDistance", Launcher.Conf.Type.NETWORK):
 		position = gardbandPosition
-	velocity = nextVelocity
 
+	entityPosOffset = position - gardbandPosition
+	entityVelocity = nextVelocity
 	entitySitting = isSitting
-	UpdateState()
 
 #
-func _physics_process(_delta):
+func _physics_process(delta):
+	var posOffsetFix : Vector2 = position - position.move_toward(position + entityPosOffset, delta)
+	entityPosOffset -= posOffsetFix
+	velocity = posOffsetFix + entityVelocity
+
+	UpdateState()
+
 	if velocity != Vector2.ZERO:
 		move_and_slide()
 

@@ -43,7 +43,7 @@ func GetEntities(rpcID : int = -1):
 		if playerAgent:
 			var agents : Array[BaseAgent] = Launcher.World.GetAgents(playerAgent)
 			for agent in agents:
-				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.velocity, agent.position, agent.isSitting, rpcID)
+				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.isSitting, rpcID)
 
 #
 func TriggerWarp(rpcID : int = -1):
@@ -74,12 +74,12 @@ func SetMovePos(direction : Vector2, rpcID : int = -1):
 		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
 		if agent:
 			if direction != Vector2.ZERO:
-				var newPos : Vector2 = direction.normalized() * Vector2(16,16) + agent.position
+				var newPos : Vector2 = direction.normalized() * Vector2(32,32) + agent.position
 				var path = NavigationServer2D.map_get_path(agent.agent.get_navigation_map(), agent.position, newPos, true)
 				var pathLength = 0
 				for i in range(0, path.size() - 1):
 					pathLength += Vector2(path[i] - path[i+1]).length()
-				if pathLength <= 32:
+				if pathLength <= 48:
 					SetClickPos(newPos, rpcID)
 
 func TriggerSit(rpcID : int = -1):

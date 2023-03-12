@@ -78,7 +78,7 @@ func ReplaceMapNode(mapName : String):
 			pool.RefreshPool(mapNode)
 
 #
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityVelocity : Vector2, entityPos : Vector2i, entitySitting : bool):
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entitySitting : bool):
 	var isLocalPlayer : bool = entityName == Launcher.FSM.playerName
 	var entity : BaseEntity = null
 	if isLocalPlayer and Launcher.Player:
@@ -93,7 +93,7 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 
 	if entity:
 		entity.set_position(entityPos)
-		entity.Update(entityVelocity, entityPos, entitySitting)
+		entity.Update(Vector2.ZERO, entityPos, entitySitting)
 
 		AddChild(entity)
 		entities[agentID] = entity
