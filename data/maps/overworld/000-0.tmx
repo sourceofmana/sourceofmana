@@ -314,23 +314,23 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="5" name="Object">
-  <object id="1" name="Warp Phatyna" class="Warp" x="740" y="648">
+  <object id="1" name="Warp Phatyna" class="Warp" x="718" y="635">
    <properties>
     <property name="dest_cellsize" type="int" value="32"/>
     <property name="dest_map" value="Phatyna Entrance"/>
     <property name="dest_pos_x" type="int" value="54"/>
     <property name="dest_pos_y" type="int" value="53"/>
    </properties>
-   <polygon points="26,25 26,12 46,12 46,25"/>
+   <polygon points="41.6,39.497 41.6,18.9586 73.6,18.9586 73.6,39.497"/>
   </object>
-  <object id="2" name="Warp Skull" class="Warp" x="644" y="617">
+  <object id="2" name="Warp Skull" class="Warp" x="620.79" y="602.432">
    <properties>
     <property name="dest_cellsize" type="int" value="32"/>
     <property name="dest_map" value="Skull Chamber"/>
     <property name="dest_pos_x" type="int" value="50"/>
     <property name="dest_pos_y" type="int" value="71"/>
    </properties>
-   <polygon points="26,25 26,12 46,12 46,25"/>
+   <polygon points="42.51,41.568 42.51,19.9527 75.21,19.9527 75.21,41.568"/>
   </object>
  </objectgroup>
 </map>
