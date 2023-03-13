@@ -20,12 +20,10 @@ var interactive : EntityInteractive		= EntityInteractive.new()
 var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 
-var posOffsetFix : Vector2				= Vector2.ZERO 
-
 # Animation
 func GetNextState():
 	var newEntityState			= entityState
-	var velocityLengthSquared	= velocity.length_squared()
+	var velocityLengthSquared	= entityVelocity.length_squared()
 	var isWalking				= velocityLengthSquared > 1
 
 	match entityState:
@@ -47,8 +45,8 @@ func GetNextState():
 	return newEntityState
 
 func GetNextDirection():
-	if velocity.length_squared() > 1:
-		return velocity.normalized()
+	if entityVelocity.length_squared() > 1:
+		return entityVelocity.normalized()
 	else:
 		return entityDirection
 
@@ -113,7 +111,7 @@ func SetData(data : Object):
 
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, isSitting : bool):
-	var dist = Vector2(position - gardbandPosition).length()
+	var dist = Vector2(gardbandPosition - position).length()
 	if dist > Launcher.Conf.GetInt("Guardband", "MaxGuardbandDist", Launcher.Conf.Type.NETWORK):
 		position = gardbandPosition
 
@@ -128,7 +126,8 @@ func _physics_process(delta):
 	var dist = entityPosOffset.length()
 	if dist > Launcher.Conf.GetInt("Guardband", "StartGuardbandDist", Launcher.Conf.Type.NETWORK):
 		var guardbandSpeed : int = Launcher.Conf.GetInt("Guardband", "PatchGuardband", Launcher.Conf.Type.NETWORK)
-		posOffsetFix = Vector2.ZERO.move_toward(entityPosOffset, delta) * guardbandSpeed
+		var posOffsetFix : Vector2 = Vector2.ZERO.move_toward(entityPosOffset, delta) * guardbandSpeed
+		entityPosOffset -= posOffsetFix
 		velocity += posOffsetFix
 
 	UpdateState()

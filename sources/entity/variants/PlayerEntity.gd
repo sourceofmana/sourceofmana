@@ -25,7 +25,6 @@ func _physics_process(deltaTime : float):
 		if Launcher.Debug.wrongPos:
 			Launcher.Debug.wrongPos.position = position
 
-
 func _ready():
 	super._ready()
 	if interactive:
