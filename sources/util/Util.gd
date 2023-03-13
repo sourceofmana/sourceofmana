@@ -7,4 +7,4 @@ func Assert(condition : bool, message : String) -> void:
 		push_warning(message)
 
 func PrintLog(logGroup : String, logString : String):
-	print("[%d.%04d][%s] %s" % [Time.get_ticks_msec() / 1000.0, Time.get_ticks_msec() % 1000, logGroup, logString])
+	print("[%d.%03d][%s] %s" % [Time.get_ticks_msec() / 1000.0, Time.get_ticks_msec() % 1000, logGroup, logString])
