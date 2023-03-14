@@ -8,6 +8,32 @@ The Adventure Begins!
 
 ----------------
 
+Version 0.0.4
+
+Changelog:
+Game:
+- Add a new zone, the skull cave map
+
+Code:
+- Splitting navigation export from the server export and make it optional
+- Remove all function call used by the server that use game nodes else than specific server data, db and conf files
+- Split Entity code for a client/server use
+- Add basic client/server connection (ip:port connection)
+- Add basic entity sync with a client/server (pos, animation)
+- Add state sync with a client/server
+- Add emote sync with a client/server
+- Add chat sync with a client/server
+- Screenshot feature
+- NPC support split from mob support
+- Basic NPC interaction
+- Chat history feature (Up/Down keys)
+
+Production:
+- Generate two binaries through the same project, be able to run in hybrid and in client/server
+- Zoomed viewport for mobile and large screen
+
+----------------
+
 Version 0.0.3
 
 Changelog:
