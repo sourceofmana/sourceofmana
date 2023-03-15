@@ -46,7 +46,7 @@ func GetEntities(rpcID : int = -1):
 			var agents : Array[BaseAgent] = Launcher.World.GetAgents(playerAgent)
 			for agent in agents:
 				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.isSitting, rpcID)
-				Launcher.Network.UpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, rpcID)
+				Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, rpcID)
 
 #
 func TriggerWarp(rpcID : int = -1):

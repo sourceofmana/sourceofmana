@@ -113,6 +113,7 @@ func SetData(data : Object):
 #
 func _internal_process():
 	if agent and get_parent():
+		UpdateChanged()
 		UpdateInput()
 		UpdateOrientation()
 		if agent.get_avoidance_enabled():

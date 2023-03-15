@@ -186,7 +186,8 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 				if player != agent:
 					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
 					if playerID != null:
-						Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.velocity, agent.position, agent.isSitting, playerID)
+						Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.isSitting, playerID)
+						Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, playerID)
 
 func GetInstanceFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNpcs = true, checkMonsters = true) -> Instance:
 	for map in areas.values():
@@ -294,7 +295,10 @@ func _physics_process(_dt : float):
 	for map in areas.values():
 		for instance in map.instances:
 			if instance.players.size() > 0:
-				for agent in instance.npcs + instance.mobs:
+				for agent in instance.mobs:
+					UpdateAI(agent, map)
+					agent._internal_process()
+				for agent in instance.npcs:
 					UpdateAI(agent, map)
 					agent._internal_process()
 				for player in instance.players:
@@ -303,6 +307,3 @@ func _physics_process(_dt : float):
 					for agent in instance.npcs + instance.mobs + instance.players:
 						if agent.HasChanged():
 							Launcher.Network.UpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, playerID)
-				for agent in instance.npcs + instance.mobs + instance.players:
-					if agent.HasChanged():
-						agent.UpdateChanged()
