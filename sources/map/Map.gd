@@ -103,7 +103,7 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 			emit_signal('PlayerWarped')
 
 func RemoveEntity(agentID : int):
-	var entity : BaseEntity = entities[agentID]
+	var entity : BaseEntity = entities.get(agentID)
 	if entity:
 		RemoveChild(entity)
 

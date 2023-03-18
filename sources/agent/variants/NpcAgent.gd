@@ -4,4 +4,6 @@ class_name NpcAgent
 #
 func Trigger(caller : BaseAgent):
 	if caller:
-		Launcher.Network.ChatAgent(get_rid().get_id(), "Hello!", caller.get_rid().get_id())
+		var peerID : int = Launcher.Network.Server.GetRid(caller)
+		var npcAgentID : int = get_rid().get_id()
+		Launcher.Network.ChatAgent(npcAgentID, "Hello!", peerID)

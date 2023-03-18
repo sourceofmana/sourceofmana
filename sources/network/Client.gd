@@ -33,7 +33,7 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = -1):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
 		if entity && entity.get_parent():
-			if Launcher.GUI:
+			if entity is PlayerEntity && Launcher.GUI:
 				Launcher.GUI.chatContainer.AddPlayerText(entity.entityName, text)
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)

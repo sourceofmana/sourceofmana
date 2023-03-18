@@ -117,7 +117,6 @@ func Trigger(_caller : BaseAgent):
 #
 func _internal_process():
 	if agent and get_parent():
-		UpdateChanged()
 		UpdateInput()
 		UpdateOrientation()
 		if agent.get_avoidance_enabled():

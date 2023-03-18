@@ -76,7 +76,7 @@ func TriggerEntity(triggeredAgentID : int, rpcID : int = -1):
 				triggeredAgent.Trigger(player)
 
 #
-func GetRid(player : BaseAgent) -> int:
+func GetRid(player : PlayerAgent) -> int:
 	var agentRid : int = player.get_rid().get_id()
 	return playerMap.find_key(agentRid)
 
@@ -94,12 +94,14 @@ func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName :
 		inst = Launcher.World.GetInstanceFromAgent(agent)
 	Launcher.Util.Assert(inst != null, "Could not notify every peer as this agent (%s) is not connected to any instance!" % agent.agentName)
 	if inst:
-		var currentID = playerMap.find_key(agent.get_rid().get_id())
-		if currentID != null:
+		var currentPlayerID = agent.get_rid().get_id()
+		var currentPeerID = playerMap.find_key(currentPlayerID)
+		if currentPeerID != null and currentPlayerID != null:
 			for player in inst.players:
-				var playerID = playerMap.find_key(player.get_rid().get_id())
-				if playerID != null && (inclusive || playerID != currentID):
-					Launcher.Network.callv(callbackName, [currentID] + args + [playerID])
+				var playerID = player.get_rid().get_id()
+				var peerID = playerMap.find_key(playerID)
+				if peerID != null && (inclusive || playerID != currentPlayerID):
+					Launcher.Network.callv(callbackName, [currentPlayerID] + args + [peerID])
 
 #
 func ConnectPeer(rpcID : int):

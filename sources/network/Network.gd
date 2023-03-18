@@ -78,7 +78,6 @@ func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, is
 	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, isSitting], rpcID)
 	elif Client:	Client.UpdateEntity(agentID, velocity, position, isSitting)
 
-
 #
 @rpc("any_peer", "reliable")
 func TriggerSit(rpcID : int = -1):
