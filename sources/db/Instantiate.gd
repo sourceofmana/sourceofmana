@@ -22,6 +22,11 @@ func CreateEntity(entityType : String, entityID : String, entityName : String = 
 	return entityInstance
 
 func CreateAgent(entityType : String, entityID : String, entityName : String = "") -> BaseAgent:
-	var entityInstance : BaseAgent = BaseAgent.new()
+	var entityInstance : BaseAgent = null
+	match entityType:
+		"Npc": entityInstance = NpcAgent.new()
+		"Monster": entityInstance = MonsterAgent.new()
+		"Player": entityInstance = PlayerAgent.new()
+		_: entityInstance = BaseAgent.new()
 	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
 	return entityInstance

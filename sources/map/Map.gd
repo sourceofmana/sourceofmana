@@ -49,7 +49,7 @@ func LoadMapNode(mapName : String):
 #
 func RemoveChilds():
 	var tilemap : TileMap = GetTileMap()
-	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not remove a child entity")
+	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not remove children")
 	if tilemap:
 		for entity in tilemap.get_children():
 			tilemap.call_deferred("remove_child", entity)
@@ -62,7 +62,7 @@ func RemoveChild(entity : BaseEntity):
 
 func AddChild(entity : BaseEntity):
 	var tilemap : TileMap = GetTileMap()
-	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not add a child entity")
+	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not add a new child entity")
 	if tilemap:
 		tilemap.call_deferred("add_child", entity)
 
@@ -81,15 +81,16 @@ func ReplaceMapNode(mapName : String):
 func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entitySitting : bool):
 	var isLocalPlayer : bool = entityName == Launcher.FSM.playerName
 	var entity : BaseEntity = null
-	if isLocalPlayer and Launcher.Player:
-		entity = Launcher.Player
-	else:
-		entity = Launcher.DB.Instantiate.CreateEntity(entityType, entityID, entityName)
-		if entity && isLocalPlayer:
-			Launcher.Player = entity
-			Launcher.Player.SetLocalPlayer()
-			if Launcher.FSM:
-				Launcher.FSM.emit_signal("enter_game")
+	if GetTileMap():
+		if isLocalPlayer and Launcher.Player:
+			entity = Launcher.Player
+		else:
+			entity = Launcher.DB.Instantiate.CreateEntity(entityType, entityID, entityName)
+			if entity && isLocalPlayer:
+				Launcher.Player = entity
+				Launcher.Player.SetLocalPlayer()
+				if Launcher.FSM:
+					Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
 		entity.set_position(entityPos)

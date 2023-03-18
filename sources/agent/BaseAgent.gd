@@ -111,6 +111,10 @@ func SetData(data : Object):
 		add_child(agent)
 
 #
+func Trigger(_caller : BaseAgent):
+	pass
+
+#
 func _internal_process():
 	if agent and get_parent():
 		UpdateChanged()

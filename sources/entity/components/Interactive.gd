@@ -141,15 +141,18 @@ func Setup(entity : Node2D, isPC : bool = false):
 	speechIncreaseThreshold	= Launcher.Conf.GetInt("Gameplay", "speechIncreaseThreshold", Launcher.Conf.Type.PROJECT)
 
 func Interact(selfEntity : BaseEntity):
-	var nearestEntity : BaseEntity = null
-	var nearestDistance : float = -1
-	for nearEntity in canInteractWith:
-		var distance : float = (nearEntity.position - selfEntity.position).length()
-		if nearestDistance == -1 || distance < nearestDistance:
-			nearestDistance = distance
-			nearestEntity = nearEntity
-	if nearestEntity:
-		nearestEntity.Trigger()
+	if Launcher.Map:
+		var nearestEntity : BaseEntity = null
+		var nearestDistance : float = -1
+		for nearEntity in canInteractWith:
+			var distance : float = (nearEntity.position - selfEntity.position).length()
+			if nearestDistance == -1 || distance < nearestDistance:
+				nearestDistance = distance
+				nearestEntity = nearEntity
+		if nearestEntity:
+			var entityID = Launcher.Map.entities.find_key(nearestEntity)
+			if entityID != null:
+				Launcher.Network.TriggerEntity(entityID)
 
 #
 func _body_entered(body):

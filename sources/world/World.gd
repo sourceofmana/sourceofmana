@@ -6,6 +6,7 @@ class Instance extends SubViewport:
 	var npcs : Array[BaseAgent]				= []
 	var mobs : Array[BaseAgent]				= []
 	var players : Array[BaseAgent]			= []
+	var map : Map							= null
 
 class Map:
 	var name : String						= ""
@@ -109,6 +110,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	inst.gui_disable_input = true
 	inst.name = map.name
 	inst.id = instanceID
+	inst.map = map
 	if inst.id > 0:
 		inst.name += "_" + str(inst.id)
 	map.instances.push_back(inst)
@@ -136,33 +138,25 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	Launcher.Root.call_deferred("add_child", inst)
 
 # Agent Management
-func Warp(agent : BaseAgent, oldMap : Map, newMap : Map, newPos : Vector2i):
-	Launcher.Util.Assert(oldMap and newMap and agent, "Warp could not proceed, agent or current map missing")
-	if agent and oldMap:
-		for instance in oldMap.instances:
-			var arrayRef : Array = []
-			match agent.agentType:
-				"Player":	arrayRef = instance.players
-				"Npc":		arrayRef = instance.npcs
-				"Monster":	arrayRef = instance.mobs
-				"Trigger":	arrayRef = instance.npcs
-				_: Launcher.Util.Assert(false, "Agent type is not valid")
+func CheckWarp(agent : BaseAgent):
+	var prevMap : Object = Launcher.World.GetMapFromAgent(agent)
+	if prevMap:
+		for warp in prevMap.warps:
+			if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
+				var nextMap : Object = areas[warp.destinationMap]
+				var agentID = Launcher.Network.Server.GetRid(agent)
+				Launcher.Network.WarpPlayer(warp.destinationMap, agentID)
+				Warp(agent, nextMap, warp.destinationPos)
+				return
 
-			var arrayIdx : int = arrayRef.find(agent)
-			if arrayIdx >= 0:
-				arrayRef.remove_at(arrayIdx)
-
-			instance.remove_child(agent)
-			for player in instance.players:
-				if player != agent:
-					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
-					if playerID != null:
-						Launcher.Network.RemoveEntity(agent.get_rid().get_id(), playerID)
-
-			Spawn(newMap, newPos, agent)
+func Warp(agent : BaseAgent, newMap : Map, newPos : Vector2i):
+	Launcher.Util.Assert(newMap != null and agent != null, "Warp could not proceed, agent or current map missing")
+	if agent and newMap:
+		PopAgent(agent)
+		Spawn(newMap, newPos, agent)
 
 func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
-	Launcher.Util.Assert(map and instanceID < map.instances.size() and agent, "Spawn could not proceed, agent or map missing")
+	Launcher.Util.Assert(map != null and instanceID < map.instances.size() and agent != null, "Spawn could not proceed, agent or map missing")
 	if map and instanceID < map.instances.size() and agent:
 		var inst : Instance = map.instances[instanceID]
 		Launcher.Util.Assert(inst != null, "Spawn could not proceed, map instance missing")
@@ -173,98 +167,90 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 				agent.agent.set_navigation_map(map.mapRID)
 			agent.ResetNav()
 
-			match agent.agentType:
-				"Player":	if not agent in inst.players:	inst.players.append(agent)
-				"Npc":		if not agent in inst.npcs:		inst.npcs.append(agent)
-				"Monster":	if not agent in inst.mobs:		inst.mobs.append(agent)
-				"Trigger":	if not agent in inst.npcs:		inst.npcs.append(agent)
-				_: Launcher.Util.Assert(false, "Agent type is not valid")
+			PushAgent(agent, inst)
 
-			inst.call_deferred("add_child", agent)
+# Getters
+func GetAgent(agentID : int) -> BaseAgent:
+	var agent : BaseAgent = null
+	if rids.has(agentID):
+		agent = rids.get(agentID)
+	Launcher.Util.Assert(agent != null, "Could not retrieve the world agent with the following ID %d" % [agentID])
+	return agent
 
-			for player in inst.players:
-				if player != agent:
-					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
-					if playerID != null:
-						Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.isSitting, playerID)
-						Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, playerID)
+func GetInstanceFromAgent(agent : BaseAgent) -> SubViewport:
+	var inst = agent.get_parent()
+	Launcher.Util.Assert(inst != null && inst.is_class("SubViewport"), "Agent's base instance is incorrect, is type: " + inst.get_class() if inst else "null" )
+	if inst && inst.is_class("SubViewport"):
+		if not HasAgent(inst, agent):
+			inst = null
+	return inst
 
-func GetInstanceFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNpcs = true, checkMonsters = true) -> Instance:
-	for map in areas.values():
-		for instance in map.instances:
-			if checkPlayers:
-				for agent in instance.players:
-					if agent == checkedAgent:
-						return instance
-			if checkNpcs:
-				for agent in instance.npcs:
-					if agent == checkedAgent:
-						return instance
-			if checkMonsters:
-				for agent in instance.mobs:
-					if agent == checkedAgent:
-						return instance
-	return null
+func GetMapFromAgent(agent : BaseAgent) -> Map:
+	var map : Map = null
+	var inst : Instance = GetInstanceFromAgent(agent)
+	if inst:
+		Launcher.Util.Assert(inst.map != null, "Agent's base map is incorrect, instance is not referenced inside a map")
+		map = inst.map
+	return map
 
-func GetMapFromAgent(checkedAgent : BaseAgent, checkPlayers = true, checkNpcs = true, checkMonsters = true) -> Map:
-	for map in areas.values():
-		for instance in map.instances:
-			if checkPlayers:
-				for agent in instance.players:
-					if agent == checkedAgent:
-						return map
-			if checkNpcs:
-				for agent in instance.npcs:
-					if agent == checkedAgent:
-						return map
-			if checkMonsters:
-				for agent in instance.mobs:
-					if agent == checkedAgent:
-						return map
-	return null
-
-func GetAgents(checkedAgent : BaseAgent):
-	var list : Array[BaseAgent] = []
+func GetAgents(checkedAgent : BaseAgent) -> Array[Array]:
+	var list : Array[Array] = []
 	var instance : Instance = GetInstanceFromAgent(checkedAgent)
 	if instance:
-		list.append_array(instance.npcs)
-		list.append_array(instance.mobs)
-		list.append_array(instance.players)
+		list.append(instance.npcs)
+		list.append(instance.mobs)
+		list.append(instance.players)
 	return list
 
-func HasAgent(agentName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
-	for map in areas.values():
-		for instance in map.instances:
-			if checkPlayers:
-				for agent in \
-				instance.players if checkPlayers else [] + \
-				instance.npcs if checkNpcs else [] + \
-				instance.mobs if checkMonsters else []:
-					if agent.agentName == agentName:
-						return true
-	return false
+func HasAgent(inst : Instance, agent : BaseAgent):
+	var hasAgent : bool = false
+	Launcher.Util.Assert(agent != null and inst != null, "Agent or instance are invalid, could not check if the agent is inside the instance")
+	if agent and inst:
+		if agent is PlayerAgent:
+			hasAgent = inst.players.has(agent)
+		elif agent is MonsterAgent:
+			hasAgent = inst.mobs.has(agent)
+		elif agent is NpcAgent:
+			hasAgent = inst.npcs.has(agent)
+	return hasAgent
 
-func RemoveAgent(agentName : String, checkPlayers = true, checkNpcs = true, checkMonsters = true):
-	for map in areas.values():
-		for instance in map.instances:
-			if checkPlayers:
-				for agent in instance.players:
-					if agent.agentName == agentName:
-						instance.players.erase(agent)
-						agent.queue_free()
-						break
-			if checkNpcs:
-				for agent in instance.npcs:
-					if agent.agentName == agentName:
-						instance.npcs.erase(agent)
-						agent.queue_free()
-						break
-			if checkMonsters:
-				for agent in instance.mobs:
-					if agent.agentName == agentName:
-						instance.mobs.erase(agent)
-						agent.queue_free()
-						break
+func RemoveAgent(agent : BaseAgent):
+	Launcher.Util.Assert(agent != null, "Agent is null, can't remove it")
+	if agent:
+		PopAgent(agent)
+		rids.erase(agent)
+		agent.queue_free()
+
+func PopAgent(agent : BaseAgent):
+	Launcher.Util.Assert(agent != null, "Agent is null, can't pop it")
+	if agent:
+		var inst : Instance = GetInstanceFromAgent(agent)
+		Launcher.Network.Server.NotifyInstancePlayers(inst, agent, "RemoveEntity", [], false)
+		if inst:
+			if agent is PlayerAgent:
+				inst.players.erase(agent)
+			elif agent is MonsterAgent:
+				inst.mobs.erase(agent)
+			elif agent is NpcAgent:
+				inst.npcs.erase(agent)
+			inst.call_deferred("remove_child", agent)
+
+func PushAgent(agent : BaseAgent, inst : Instance):
+	Launcher.Util.Assert(agent != null, "Agent is null, can't push it")
+	Launcher.Util.Assert(inst != null, "Instance is null, can't push the agent in it")		
+	if agent and inst:
+		if not HasAgent(inst, agent):
+			if agent is PlayerAgent:
+				inst.players.push_back(agent)
+			elif agent is MonsterAgent:
+				inst.mobs.push_back(agent)
+			elif agent is NpcAgent:
+				inst.npcs.push_back(agent)
+
+			inst.call_deferred("add_child", agent)
+			Launcher.Network.Server.NotifyInstancePlayers(inst, agent, "AddEntity", [agent.agentType, agent.agentID, agent.agentName, agent.position, agent.isSitting], false)
+	else:
+		RemoveAgent(agent)
 
 # AI
 func UpdateWalkPaths(agent : Node2D, map : Map):
@@ -295,15 +281,25 @@ func _physics_process(_dt : float):
 	for map in areas.values():
 		for instance in map.instances:
 			if instance.players.size() > 0:
-				for agent in instance.mobs:
-					UpdateAI(agent, map)
-					agent._internal_process()
 				for agent in instance.npcs:
-					UpdateAI(agent, map)
-					agent._internal_process()
-				for player in instance.players:
-					player._internal_process()
-					var playerID : int = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
-					for agent in instance.npcs + instance.mobs + instance.players:
+					if agent:
+						UpdateAI(agent, map)
+						agent._internal_process()
 						if agent.HasChanged():
-							Launcher.Network.UpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, playerID)
+							Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "UpdateEntity", [agent.velocity, agent.position, agent.isSitting])
+							agent.UpdateChanged()
+
+				for agent in instance.mobs:
+					if agent:
+						UpdateAI(agent, map)
+						agent._internal_process()
+						if agent.HasChanged():
+							Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "UpdateEntity", [agent.velocity, agent.position, agent.isSitting])
+							agent.UpdateChanged()
+
+				for agent in instance.players:
+					if agent:
+						agent._internal_process()
+						if agent.HasChanged():
+							Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "UpdateEntity", [agent.velocity, agent.position, agent.isSitting])
+							agent.UpdateChanged()

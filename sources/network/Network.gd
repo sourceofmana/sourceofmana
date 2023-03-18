@@ -78,6 +78,7 @@ func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, is
 	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, isSitting], rpcID)
 	elif Client:	Client.UpdateEntity(agentID, velocity, position, isSitting)
 
+
 #
 @rpc("any_peer", "reliable")
 func TriggerSit(rpcID : int = -1):
@@ -91,9 +92,20 @@ func TriggerChat(text : String, rpcID : int = -1):
 	elif Server:	Server.TriggerChat(text, rpcID)
 
 @rpc("authority", "reliable")
-func ChatPlayer(ridAgent : int, text : String, rpcID : int = -1):
-	if Server:		NetCallClient("ChatPlayer", [ridAgent, text], rpcID)
-	elif Client:	Client.ChatPlayer(ridAgent, text)
+func ChatAgent(ridAgent : int, text : String, rpcID : int = -1):
+	if Server:		NetCallClient("ChatAgent", [ridAgent, text], rpcID)
+	elif Client:	Client.ChatAgent(ridAgent, text)
+
+#
+@rpc("any_peer", "reliable")
+func TriggerEntity(entityID : int, rpcID : int = -1):
+	if Client:		NetCallServer("TriggerEntity", [entityID])
+	elif Server:	Server.TriggerEntity(entityID, rpcID)
+
+@rpc("authority", "reliable")
+func KillTriggered(ridAgent : int, rpcID : int = -1):
+	if Server:		NetCallClient("KillTriggered", [ridAgent], rpcID)
+	elif Client:	Client.KillTriggered(ridAgent)
 
 #
 func NetCallServer(methodName : String, args : Array):

@@ -4,119 +4,102 @@ var playerMap : Dictionary = {}
 
 #
 func ConnectPlayer(playerName : String, rpcID : int = -1):
-	if not playerMap.has(rpcID):
-		if not Launcher.World.HasAgent(playerName):
-			var player : BaseAgent	= Launcher.DB.Instantiate.CreateAgent("Player", "Default Entity", playerName)
-			var mapName : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
-			var map : Object		= Launcher.World.areas[mapName]
-			var pos : Vector2		= Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP)
-			var playerID : int		= player.get_rid().get_id()
+	if not GetAgent(rpcID):
+		var player : BaseAgent	= Launcher.DB.Instantiate.CreateAgent("Player", "Default Entity", playerName)
+		var mapName : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
+		var map : Object		= Launcher.World.areas[mapName]
+		var pos : Vector2		= Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP)
+		var playerID : int		= player.get_rid().get_id()
 
-			playerMap[rpcID]				= playerID
-			Launcher.World.rids[playerID]	= player
+		playerMap[rpcID]				= playerID
+		Launcher.World.rids[playerID]	= player
 
-			Launcher.World.Spawn(map, pos, player)
-			Launcher.Network.WarpPlayer(mapName, rpcID)
-			Launcher.Util.PrintLog("Server", "User connected on peer: %s(%d)" % [playerName, rpcID])
+		Launcher.World.Spawn(map, pos, player)
+		Launcher.Network.WarpPlayer(mapName, rpcID)
+		Launcher.Util.PrintLog("Server", "Player connected: %s (%d)" % [playerName, rpcID])
 
 func DisconnectPlayer(rpcID : int = -1):
-	if playerMap.has(rpcID):
-		var playerAgentID : int = playerMap.get(rpcID)
-		var disconnectedAgent : BaseAgent = Launcher.World.rids[playerAgentID]
-		if disconnectedAgent:
-			var inst : Object = Launcher.World.GetInstanceFromAgent(disconnectedAgent, true, false, false)
-			if inst:
-				for player in inst.players:
-					if player != disconnectedAgent:
-						var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
-						if playerID != null:
-							Launcher.Network.RemoveEntity(playerAgentID, playerID)
-
-			playerMap.erase(rpcID)
-			Launcher.World.rids.erase(disconnectedAgent)
-			Launcher.World.RemoveAgent(disconnectedAgent.agentName, true, false, false)
-			Launcher.Util.PrintLog("Server", "User disconnected on peer: %s(%d)" % [disconnectedAgent.agentName, rpcID])
+	var player : BaseAgent = GetAgent(rpcID)
+	if player:
+		Launcher.World.RemoveAgent(player)
+		playerMap.erase(rpcID)
+		Launcher.Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.agentName, rpcID])
 
 #
 func GetEntities(rpcID : int = -1):
-	if playerMap.has(rpcID):
-		var playerAgentID : int = playerMap.get(rpcID)
-		var playerAgent : BaseAgent = Launcher.World.rids[playerAgentID]
-		if playerAgent:
-			var agents : Array[BaseAgent] = Launcher.World.GetAgents(playerAgent)
+	var player : BaseAgent = GetAgent(rpcID)
+	if player:
+		var list : Array[Array] = Launcher.World.GetAgents(player)
+		for agents in list:
 			for agent in agents:
 				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.isSitting, rpcID)
 				Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, rpcID)
 
-#
-func TriggerWarp(rpcID : int = -1):
-	if playerMap.has(rpcID):
-		var playerAgentID : int = playerMap.get(rpcID)
-		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
-		if agent && agent.get_parent():
-			var currentMap : Object = Launcher.World.GetMapFromAgent(agent, true, false, false)
-			Launcher.Util.Assert(currentMap != null, "Could not trigger the warp, current map is invalid")
-			if currentMap:
-				for warp in currentMap.warps:
-					if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
-						var nextMap : Object = Launcher.World.areas[warp.destinationMap]
-						Launcher.World.Warp(agent, currentMap, nextMap, warp.destinationPos)
-						Launcher.Network.WarpPlayer(warp.destinationMap, rpcID)
-						break
-
 func SetClickPos(pos : Vector2, rpcID : int = -1):
-	if playerMap.has(rpcID):
-		var playerAgentID : int = playerMap.get(rpcID)
-		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
-		if agent:
-			agent.WalkToward(pos)
+	var player : BaseAgent = GetAgent(rpcID)
+	if player:
+		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, rpcID : int = -1):
-	if playerMap.has(rpcID):
-		var playerAgentID : int = playerMap.get(rpcID)
-		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
-		if agent:
-			if direction != Vector2.ZERO:
-				var newPos : Vector2 = direction.normalized() * Vector2(32,32) + agent.position
-				var path = NavigationServer2D.map_get_path(agent.agent.get_navigation_map(), agent.position, newPos, true)
-				var pathLength = 0
-				for i in range(0, path.size() - 1):
-					pathLength += Vector2(path[i] - path[i+1]).length()
-				if pathLength <= 48:
-					SetClickPos(newPos, rpcID)
+	var player : BaseAgent = GetAgent(rpcID)
+	if player:
+		var pos : Vector2 = direction.normalized() * Vector2(32,32) + player.position
+		var path = NavigationServer2D.map_get_path(player.agent.get_navigation_map(), player.position, pos, true)
+		var pathLength = 0
+		for i in range(0, path.size() - 1):
+			pathLength += Vector2(path[i] - path[i+1]).length()
+		if pathLength <= 48:
+			player.WalkToward(pos)
+
+func TriggerWarp(rpcID : int = -1):
+	var player : BaseAgent = GetAgent(rpcID)
+	if player:
+		Launcher.World.CheckWarp(player)
 
 func TriggerSit(rpcID : int = -1):
-	if playerMap.has(rpcID):
-		var playerAgentID : int = playerMap.get(rpcID)
-		var agent : BaseAgent = Launcher.World.rids[playerAgentID]
-		if agent:
-			agent.isSitting = not agent.isSitting
+	var player : BaseAgent = GetAgent(rpcID)
+	if player:
+		player.isSitting = not player.isSitting
 
 func TriggerEmote(emoteID : int, rpcID : int = -1):
-	if playerMap.has(rpcID):
-		var senderAgentID : int = playerMap.get(rpcID)
-		var agent : BaseAgent = Launcher.World.rids[senderAgentID]
-		if agent:
-			var inst : Object = Launcher.World.GetInstanceFromAgent(agent, true, false, false)
-			Launcher.Util.Assert(inst != null, "Could not trigger the emote, current map instance is invalid")
-			if inst:
-				for player in inst.players:
-					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
-					if playerID != null:
-						Launcher.Network.EmotePlayer(senderAgentID, emoteID, playerID)
+	NotifyInstancePlayers(null, GetAgent(rpcID), "EmotePlayer", [emoteID])
 
 func TriggerChat(text : String, rpcID : int = -1):
-	if playerMap.has(rpcID):
-		var senderAgentID : int = playerMap.get(rpcID)
-		var agent : BaseAgent = Launcher.World.rids[senderAgentID]
-		if agent:
-			var inst : Object = Launcher.World.GetInstanceFromAgent(agent, true, false, false)
-			Launcher.Util.Assert(inst != null, "Could not trigger the emote, current map instance is invalid")
-			if inst:
-				for player in inst.players:
-					var playerID = Launcher.Network.Server.playerMap.find_key(player.get_rid().get_id())
-					if playerID != null:
-						Launcher.Network.ChatPlayer(senderAgentID, text, playerID)
+	NotifyInstancePlayers(null, GetAgent(rpcID), "ChatAgent", [text])
+
+func TriggerEntity(triggeredAgentID : int, rpcID : int = -1):
+	var player : BaseAgent = GetAgent(rpcID)
+	if player:
+		if Launcher.World.rids.has(triggeredAgentID):
+			var triggeredAgent : BaseAgent = Launcher.World.rids[triggeredAgentID]
+			if triggeredAgent:
+				triggeredAgent.Trigger(player)
+
+#
+func GetRid(player : BaseAgent) -> int:
+	var agentRid : int = player.get_rid().get_id()
+	return playerMap.find_key(agentRid)
+
+func GetAgent(rpcID : int) -> BaseAgent:
+	var agent : BaseAgent	= null
+	var hasRID : bool		= playerMap.has(rpcID)
+	if hasRID:
+		var agentID : int = playerMap.get(rpcID)
+		agent = Launcher.World.GetAgent(agentID)
+		Launcher.Util.Assert(agent != null, "Agent ID %d is not initialized, could not retrieve the base agent" % [agentID])
+	return agent
+
+func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
+	if not inst:
+		inst = Launcher.World.GetInstanceFromAgent(agent)
+	Launcher.Util.Assert(inst != null, "Could not notify every peer as this agent (%s) is not connected to any instance!" % agent.agentName)
+	if inst:
+		var currentID = playerMap.find_key(agent.get_rid().get_id())
+		if currentID != null:
+			for player in inst.players:
+				var playerID = playerMap.find_key(player.get_rid().get_id())
+				if playerID != null && (inclusive || playerID != currentID):
+					Launcher.Network.callv(callbackName, [currentID] + args + [playerID])
 
 #
 func ConnectPeer(rpcID : int):
