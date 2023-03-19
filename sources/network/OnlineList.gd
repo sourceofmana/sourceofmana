@@ -6,10 +6,11 @@ var HTMLFileName : String				= "index.html"
 #
 func GetPlayerNames() -> Array[String]:
 	var players : Array[String] = []
-	for playerID in Launcher.Network.Server.playerMap.values():
-		var agent : PlayerAgent = Launcher.World.GetAgent(playerID)
-		if agent:
-			players.append(agent.agentName)
+	if Launcher.World and Launcher.Network.Server:
+		for playerID in Launcher.Network.Server.playerMap.values():
+			var agent : PlayerAgent = Launcher.World.GetAgent(playerID)
+			if agent:
+				players.append(agent.agentName)
 	return players
 
 func UpdateHtmlPage():

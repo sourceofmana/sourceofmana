@@ -4,7 +4,6 @@ extends Node
 var Client							= null
 var Server							= null
 
-#
 var peer : ENetMultiplayerPeer		= ENetMultiplayerPeer.new()
 var uniqueID : int					= 0
 

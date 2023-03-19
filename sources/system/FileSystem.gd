@@ -39,18 +39,27 @@ func ResourceInstanceOrLoad(path : String) -> Object:
 # File
 func LoadFile(path : String) -> String:
 	var fullPath : String		= Launcher.Path.DataRsc + path
-	var result : String = ""
+	var content : String		= ""
 
 	var pathExists : bool		= FileExists(fullPath)
-	Launcher.Util.Assert(pathExists, "DB file not found " + path + " should be located at " + fullPath)
+	Launcher.Util.Assert(pathExists, "Content file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		var file = FileAccess.open(fullPath, FileAccess.READ)
+		var file : FileAccess = FileAccess.open(fullPath, FileAccess.READ)
 		Launcher.Util.Assert(file != null, "File parsing issue on file " + fullPath)
 		if file:
-			result = file.get_as_text()
+			content = file.get_as_text()
 			Launcher.Util.PrintLog("File", "Loading file: " + fullPath)
-	return result
+			file.close()
+	return content
+
+func SaveFile(fullPath : String, content : String):
+	var file : FileAccess		= FileAccess.open(fullPath, FileAccess.WRITE)
+	Launcher.Util.Assert(file != null, "File parsing issue on file " + fullPath)
+	if file:
+		file.store_string(content)
+		Launcher.Util.PrintLog("File", "Saving file: " + fullPath)
+		file.close()
 
 # DB
 func LoadDB(path : String) -> Dictionary:
@@ -207,7 +216,7 @@ func LoadMinimap(path : String) -> Resource:
 func SaveScreenshot(image : Image):
 	Launcher.Util.Assert(image != null, "Could not get a viewport screenshot")
 	if image:
-		var dir = DirAccess.open(OS.get_user_data_dir())
+		var dir = DirAccess.open(OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS))
 		if not dir.dir_exists("Screenshots"):
 			dir.make_dir("Screenshots")
 		dir.change_dir("Screenshots")

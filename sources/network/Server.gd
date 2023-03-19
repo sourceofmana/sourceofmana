@@ -1,6 +1,7 @@
 extends Node
 
-var playerMap : Dictionary = {}
+var playerMap : Dictionary			= {}
+var onlineList : OnlineList			= OnlineList.new()
 
 #
 func ConnectPlayer(playerName : String, rpcID : int = -1):
@@ -16,6 +17,8 @@ func ConnectPlayer(playerName : String, rpcID : int = -1):
 
 		Launcher.World.Spawn(map, pos, player)
 		Launcher.Network.WarpPlayer(mapName, rpcID)
+
+		onlineList.UpdateHtmlPage()
 		Launcher.Util.PrintLog("Server", "Player connected: %s (%d)" % [playerName, rpcID])
 
 func DisconnectPlayer(rpcID : int = -1):
