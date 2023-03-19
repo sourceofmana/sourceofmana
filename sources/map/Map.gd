@@ -109,7 +109,7 @@ func RemoveEntity(agentID : int):
 
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, isSitting : bool):
 	var entity : BaseEntity = entities.get(agentID)
-	if entity && entity.get_parent():
+	if entity:
 		entity.Update(agentVelocity, agentPosition, isSitting)
 
 func EmotePlayer(agentID : int, emoteID : int):
