@@ -285,21 +285,12 @@ func _physics_process(_dt : float):
 					if agent:
 						UpdateAI(agent, map)
 						agent._internal_process()
-						if agent.HasChanged():
-							Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "UpdateEntity", [agent.velocity, agent.position, agent.isSitting])
-							agent.UpdateChanged()
 
 				for agent in instance.mobs:
 					if agent:
 						UpdateAI(agent, map)
 						agent._internal_process()
-						if agent.HasChanged():
-							Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "UpdateEntity", [agent.velocity, agent.position, agent.isSitting])
-							agent.UpdateChanged()
 
 				for agent in instance.players:
 					if agent:
 						agent._internal_process()
-						if agent.HasChanged():
-							Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "UpdateEntity", [agent.velocity, agent.position, agent.isSitting])
-							agent.UpdateChanged()

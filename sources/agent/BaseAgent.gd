@@ -86,6 +86,10 @@ func UpdateChanged():
 	pastVelocity = velocity
 	wasSitting = isSitting
 
+	if get_parent():
+		var updateFuncName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
+		Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, updateFuncName, [velocity, position, isSitting])
+
 #
 func SetKind(entityType : String, entityID : String, entityName : String):
 	agentName	= entityName
@@ -119,6 +123,7 @@ func _internal_process():
 	if agent and get_parent():
 		UpdateInput()
 		UpdateOrientation()
+
 		if agent.get_avoidance_enabled():
 			agent.set_velocity(currentVelocity)
 		else:
@@ -127,6 +132,9 @@ func _internal_process():
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
 	SetVelocity()
+
+	if HasChanged():
+		UpdateChanged()
 
 func _path_changed():
 	if agent:
