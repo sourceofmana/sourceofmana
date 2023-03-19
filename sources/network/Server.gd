@@ -98,8 +98,7 @@ func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName :
 	Launcher.Util.Assert(inst != null, "Could not notify every peer as this agent (%s) is not connected to any instance!" % agent.agentName)
 	if inst:
 		var currentPlayerID = agent.get_rid().get_id()
-		var currentPeerID = playerMap.find_key(currentPlayerID)
-		if currentPeerID != null and currentPlayerID != null:
+		if currentPlayerID != null:
 			for player in inst.players:
 				var playerID = player.get_rid().get_id()
 				var peerID = playerMap.find_key(playerID)
