@@ -1,0 +1,44 @@
+extends Object
+class_name OnlineList
+
+var HTMLFileName : String				= "index.html"
+
+#
+func GetPlayerNames() -> Array[String]:
+	var players : Array[String] = []
+	for playerID in Launcher.Network.Server.playerMap.values():
+		var agent : PlayerAgent = Launcher.World.GetAgent(playerID)
+		if agent:
+			players.append(agent.agentName)
+	return players
+
+func UpdateHtmlPage():
+	var players : Array[String]	= GetPlayerNames()
+	var content : String		= ""
+
+	content += "<HTML>\n"
+	content += "  <META http-equiv=\"Refresh\" content=\"%d\">\n" % 20
+	content += "  <HEAD>\n"
+	content += "    <TITLE>Online Players on %s</TITLE>\n" % "Source of Mana"
+	content += "  </HEAD>\n"
+	content += "  <BODY>\n"
+	content += "    <H3>Online Players on %s (%s):</H3>\n" % ["Source of Mana", Time.get_datetime_string_from_system(true, true)]
+
+	var playerCount : int = players.size()
+	if playerCount > 0:
+		content += "    <table border=\"1\" cellspacing=\"1\">\n"
+		content += "      <tr>\n"
+		content += "        <th>Name</th>\n"
+		content += "      </tr>\n"
+
+		for player in players:
+			content += "      <tr>\n"
+			content += "        <td>%s</th>\n" % str(player)
+			content += "      </tr>\n"
+
+	content += "    </table>\n"
+	content += "    <p>%d users are online.</p>\n" % playerCount
+	content += "  </BODY>\n"
+	content += "</HTML>\n"
+
+	Launcher.FileSystem.SaveFile(OS.get_executable_path().get_base_dir() + "/" + HTMLFileName, content)
