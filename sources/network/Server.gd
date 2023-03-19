@@ -16,7 +16,6 @@ func ConnectPlayer(playerName : String, rpcID : int = -1):
 		Launcher.World.rids[playerID]	= player
 
 		Launcher.World.Spawn(map, pos, player)
-		Launcher.Network.WarpPlayer(mapName, rpcID)
 
 		onlineList.UpdateHtmlPage()
 		Launcher.Util.PrintLog("Server", "Player connected: %s (%d)" % [playerName, rpcID])

@@ -144,8 +144,6 @@ func CheckWarp(agent : BaseAgent):
 		for warp in prevMap.warps:
 			if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
 				var nextMap : Object = areas[warp.destinationMap]
-				var agentID = Launcher.Network.Server.GetRid(agent)
-				Launcher.Network.WarpPlayer(warp.destinationMap, agentID)
 				Warp(agent, nextMap, warp.destinationPos)
 				return
 
@@ -168,6 +166,9 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 			agent.ResetNav()
 
 			PushAgent(agent, inst)
+			if agent is PlayerAgent:
+				var agentID = Launcher.Network.Server.GetRid(agent)
+				Launcher.Util.OneShotCallback(agent.tree_entered, Launcher.Network.WarpPlayer, [map.name, agentID])
 
 # Getters
 func GetAgent(agentID : int) -> BaseAgent:
