@@ -128,7 +128,15 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	# Default import file when opening the .tmx file
 	if client_scene:
 		if server_scene:
+			server_scene.set_name("ServerData")
 			client_scene.add_child(server_scene)
+			server_scene.set_owner(client_scene)
+		if navigation_tres:
+			var nav_region : NavigationRegion2D = NavigationRegion2D.new()
+			nav_region.navigation_polygon = navigation_tres
+			nav_region.set_name("NavRegion")
+			client_scene.add_child(nav_region)
+			nav_region.set_owner(client_scene)
 		var packed_scene = PackedScene.new()
 		packed_scene.pack(client_scene)
 		saveRet &= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()]) # Mandatory 
