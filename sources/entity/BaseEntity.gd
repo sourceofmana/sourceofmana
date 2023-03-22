@@ -89,9 +89,9 @@ func SetData(data : Object):
 	displayName		= data._displayName
 
 	# Sprite
-	if !data._ethnicity.is_empty() or !data._gender.is_empty():
-		sprite = Launcher.FileSystem.LoadPreset("sprites/" + data._ethnicity + data._gender)
-		if sprite != null && !data._customTexture.is_empty():
+	sprite = Launcher.FileSystem.LoadPreset("sprites/" + data._ethnicity + data._gender)
+	if sprite:
+		if data._customTexture:
 			sprite.texture = Launcher.FileSystem.LoadGfx(data._customTexture)
 		add_child(sprite)
 
@@ -105,8 +105,8 @@ func SetData(data : Object):
 		add_child(animation)
 
 	# Collision
-	if data._collision:
-		collision = Launcher.FileSystem.LoadPreset("collisions/" + data._collision)
+	collision = Launcher.FileSystem.LoadPreset("collisions/" + data._collision)
+	if collision:
 		add_child(collision)
 
 #
