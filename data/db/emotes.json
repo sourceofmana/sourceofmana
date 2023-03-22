@@ -1,25 +1,69 @@
 {
+	"1": {
+		"Name"				: "Dying",
+		"Path"				: "emotes/dying.png",
+	},
+	"2": {
+		"Name"				: "Creeped",
+		"Path"				: "emotes/creeped.png",
+	},
 	"3": {
 		"Name"				: "Smile",
 		"Path"				: "emotes/smile.png",
+	},
+	"4": {
+		"Name"				: "Sad",
+		"Path"				: "emotes/sad.png",
 	},
 	"5": {
 		"Name"				: "Evil",
 		"Path"				: "emotes/evil.png",
 	},
+	"6": {
+		"Name"				: "Wink",
+		"Path"				: "emotes/wink.png",
+	},
+	"7": {
+		"Name"				: "Angel",
+		"Path"				: "emotes/angel.png",
+	},
+	"8": {
+		"Name"				: "Embarrassed",
+		"Path"				: "emotes/embarrassed.png",
+	},
+	"9": {
+		"Name"				: "Amused",
+		"Path"				: "emotes/amused.png",
+	},
+	"10": {
+		"Name"				: "Grin",
+		"Path"				: "emotes/grin.png",
+	},
+	"11": {
+		"Name"				: "Angry",
+		"Path"				: "emotes/angry.png",
+	},
 	"12": {
 		"Name"				: "Bored",
 		"Path"				: "emotes/bored.png",
 	},
-	"21": {
+	"13": {
+		"Name"				: "Bubble",
+		"Path"				: "emotes/bubble.png",
+	},
+	"14": {
+		"Name"				: "Dots",
+		"Path"				: "emotes/dots.png",
+	},
+	"15": {
 		"Name"				: "Whatever",
 		"Path"				: "emotes/whatever.png",
 	},
-	"22": {
+	"16": {
 		"Name"				: "Surprised",
 		"Path"				: "emotes/surprised.png",
 	},
-	"26": {
+	"17": {
 		"Name"				: "Confused",
 		"Path"				: "emotes/confused.png",
 	},
