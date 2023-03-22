@@ -129,6 +129,9 @@ func Setup(entity : Node2D, isPC : bool = false):
 		triggerArea.body_exited.connect(_body_exited)
 
 	if isPC:
+		if triggerArea:
+			triggerArea.monitoring = true
+
 		if Launcher.GUI:
 			if Launcher.GUI.emoteContainer && Launcher.GUI.emoteContainer.ItemClicked.is_connected(EmoteWindowClicked) == false:
 				Launcher.GUI.emoteContainer.ItemClicked.connect(EmoteWindowClicked)

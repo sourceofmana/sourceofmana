@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://f2jxqr5e7i5e" path="res://scenes/presets/entities/components/Interactions.tscn" id="2_dubmo"]
 
 [node name="Monster" type="CharacterBody2D"]
-collision_layer = 4
-collision_mask = 4
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("1_5xspk")
 
 [node name="Interactions" parent="." instance=ExtResource("2_dubmo")]
