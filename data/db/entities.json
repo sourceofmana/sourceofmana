@@ -101,5 +101,16 @@
 		"Animation"			: "Chest",
 		"Collision"			: "Large",
 		"DisplayName"		: true
+	},
+	"2002": {
+		"Name"				: "Elanore",
+		"Ethnicity"			: "KaizeiViro",
+		"Gender"			: "Female",
+		"Hairstyle"			: "Bald",
+		"Animation"			: "Player",
+		"NavigationAgent"	: "NPAgent",
+		"Collision"			: "Small",
+		"WalkSpeed"			: 70,
+		"DisplayName"		: true
 	}
 }
