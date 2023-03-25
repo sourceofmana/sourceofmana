@@ -1,15 +1,17 @@
-extends Node
+extends Node2D
 class_name EntityInteractive
 
 #
 var speechInstance : PackedScene	= Launcher.FileSystem.LoadGui("chat/SpeechBubble", false)
-var generalVBox : BoxContainer		= null
-var speechContainer : BoxContainer	= null
-var emoteSprite : TextureRect		= null
+
+@onready var generalVBox : BoxContainer		= $Visible/VBox
+@onready var speechContainer : BoxContainer	= $Visible/VBox/Panel/SpeechContainer
+@onready var emoteSprite : TextureRect		= $Visible/VBox/Emote
+@onready var nameLabel : Label				= $Name
+@onready var triggerArea : Area2D			= $Area
+
 var emoteTimer : Timer				= null
 var speechTimers : Array[Timer]		= []
-var nameLabel : Label				= null
-var triggerArea : Area2D			= null
 
 var currentEmoteID : int			= -1
 var emoteDelay : float				= 0
@@ -118,12 +120,6 @@ func EmoteWindowClicked(selectedEmote : String):
 
 #
 func Setup(entity : Node2D, isPC : bool = false):
-	generalVBox = entity.get_node_or_null("Interactions/Visible/VBox")
-	emoteSprite = entity.get_node_or_null("Interactions/Visible/VBox/Emote")
-	speechContainer = entity.get_node_or_null("Interactions/Visible/VBox/Panel/SpeechContainer")
-	nameLabel = entity.get_node_or_null("Interactions/Name")
-	triggerArea = entity.get_node_or_null("Interactions/Area")
-
 	if nameLabel:
 		nameLabel.set_text(entity.entityName)
 		nameLabel.set_visible(entity.displayName)

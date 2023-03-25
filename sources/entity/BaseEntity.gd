@@ -7,6 +7,7 @@ var animation : Node					= null
 var animationTree : AnimationTree		= null
 var animationState : Resource			= null
 var collision : CollisionShape2D		= null
+var interactive : EntityInteractive		= null
 
 var displayName : bool					= false
 var entityName : String					= "PlayerName"
@@ -16,7 +17,7 @@ var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
 var entitySitting : bool				= false
 
-var interactive : EntityInteractive		= EntityInteractive.new()
+
 var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 
@@ -108,6 +109,11 @@ func SetData(data : Object):
 	collision = Launcher.FileSystem.LoadPreset("collisions/" + data._collision)
 	if collision:
 		add_child(collision)
+
+	# Interactive
+	interactive = Launcher.FileSystem.LoadPreset("entities/components/Interactions")
+	if interactive:
+		add_child(interactive)
 
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, isSitting : bool):
