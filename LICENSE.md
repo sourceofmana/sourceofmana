@@ -105,6 +105,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/monsters/slime-salt.png [Reid] [Neorice]
 ./graphics/sprites/npcs/razor.png [Reid]
 ./graphics/sprites/npcs/large-chest.png [Reid]
+./graphics/sprites/players/human-female.png [Talaroc] [Modanung, Saphy]
 ./graphics/sprites/players/human-male.png [Talaroc] [Modanung, Saphy]
 ./graphics/tilesets/aemil/aurora/artis/lamps.png [Alige]
 ./graphics/tilesets/aemil/aurora/artis/sewer/sewer-x1x3.png [Reid] [Hal9000, Micksha]

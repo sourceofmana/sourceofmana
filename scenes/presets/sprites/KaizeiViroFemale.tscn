@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1h5mhy1uwb5o"]
+
+[ext_resource type="Texture2D" uid="uid://bwja7gy7wylq3" path="res://data/graphics/sprites/players/human-female.png" id="1_8dg0p"]
+
+[node name="Sprite" type="Sprite2D"]
+texture = ExtResource("1_8dg0p")
+offset = Vector2(0, -32)
+hframes = 16
+vframes = 8
