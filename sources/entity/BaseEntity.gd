@@ -2,12 +2,13 @@ extends CharacterBody2D
 class_name BaseEntity
 
 #
+@onready var interactive : EntityInteractive	= $Interactions
+
 var sprite : Sprite2D					= null
 var animation : Node					= null
 var animationTree : AnimationTree		= null
 var animationState : Resource			= null
 var collision : CollisionShape2D		= null
-var interactive : EntityInteractive		= null
 
 var displayName : bool					= false
 var entityName : String					= "PlayerName"
@@ -110,11 +111,6 @@ func SetData(data : Object):
 	if collision:
 		add_child(collision)
 
-	# Interactive
-	interactive = Launcher.FileSystem.LoadPreset("entities/components/Interactions")
-	if interactive:
-		add_child(interactive)
-
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, isSitting : bool):
 	var dist = Vector2(gardbandPosition - position).length()
@@ -144,6 +140,5 @@ func _physics_process(delta):
 func _ready():
 	if animationTree:
 		animationState = animationTree.get("parameters/playback")
-
-func _init():
-	pass
+	if interactive:
+		interactive.SpecificInit(self, self == Launcher.Player)

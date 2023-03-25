@@ -6,11 +6,11 @@ var Path				= null
 var FileSystem			= null
 var Util				= null
 # Specific services
+var Action				= null
 var Scene				= null
 var GUI					= null
 var Debug				= null
 # Low-prio services
-var Action				= null
 var Audio				= null
 var Camera				= null
 var Conf				= null
@@ -45,7 +45,6 @@ func LaunchClient():
 	Debug		= FileSystem.LoadSource("debug/Debug.gd")
 
 	# Load then low-prio services on which the order is not important
-	Action			= FileSystem.LoadSource("action/Action.gd")
 	Audio			= FileSystem.LoadSource("audio/Audio.gd")
 	Camera			= FileSystem.LoadSource("camera/Camera.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
@@ -71,9 +70,11 @@ func _enter_tree():
 		_quit()
 
 func _ready():
+	Action			= FileSystem.LoadSource("action/Action.gd")
 	Conf			= FileSystem.LoadSource("conf/Conf.gd")
 	DB				= FileSystem.LoadSource("db/DB.gd")
 	Network			= FileSystem.LoadSource("network/Network.gd")
+	add_child(Action)
 	add_child(Network)
 
 	var launchClient : bool = Conf.GetBool("Default", "launchClient", Launcher.Conf.Type.PROJECT)
@@ -103,11 +104,7 @@ func _post_launch():
 	if FSM:			FSM._post_launch()
 	if Settings:	Settings._post_launch()
 
-func _unhandled_input(event):
-	if Action:		Action._unhandled_input(event)
-
 func _physics_process(delta : float):
-	if Action:		Action._physics_process(delta)
 	if FSM:			FSM._physics_process(delta)
 	if World:		World._physics_process(delta)
 
