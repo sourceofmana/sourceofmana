@@ -92,14 +92,14 @@ func UpdateChanged():
 
 #
 func SetKind(entityType : String, entityID : String, entityName : String):
-	agentName	= entityName
 	agentType	= entityType
 	agentID		= entityID
 
-	if agentName.length() == 0:
-		set_name(agentID)
+	if entityName.length() == 0:
+		agentName	= agentID
 	else:
-		set_name(agentName)
+		agentName	= entityName
+	set_name(agentName)
 
 	if agentType == "Monster" or agentType == "Npc":
 		aiTimer = AiTimer.new()
