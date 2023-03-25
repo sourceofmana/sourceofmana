@@ -3,8 +3,9 @@ class_name EntityInteractive
 
 #
 var speechInstance : PackedScene	= Launcher.FileSystem.LoadGui("chat/SpeechBubble", false)
+var generalVBox : BoxContainer		= null
 var speechContainer : BoxContainer	= null
-var emoteSprite : Sprite2D			= null
+var emoteSprite : TextureRect		= null
 var emoteTimer : Timer				= null
 var speechTimers : Array[Timer]		= []
 var nameLabel : Label				= null
@@ -66,9 +67,11 @@ func RemoveSpeechLabel():
 func AddSpeechLabel(speech : String):
 	var speechLabel : RichTextLabel = speechInstance.instantiate()
 	speechLabel.set_text("[center]%s[/center]" % [speech])
-	speechLabel.set_fit_content(true)
 	speechContainer.add_child(speechLabel)
 	speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
+
+	var speechLength : int = speechLabel.get_theme_font("normal_font").get_string_size(speech).x as int
+	speechLabel.custom_minimum_size.x = speechLength + 20
 
 func AddDebugSpeech(speech : String):
 	RemoveSpeechLabel()
@@ -115,16 +118,17 @@ func EmoteWindowClicked(selectedEmote : String):
 
 #
 func Setup(entity : Node2D, isPC : bool = false):
-	if entity.has_node("Interactions/Emote"):
-		emoteSprite = entity.get_node("Interactions/Emote")
-	if entity.has_node("Interactions/SpeechContainer"):
-		speechContainer = entity.get_node("Interactions/SpeechContainer")
-	if entity.has_node("Interactions/Name"):
-		nameLabel = entity.get_node("Interactions/Name")
+	generalVBox = entity.get_node_or_null("Interactions/Visible/VBox")
+	emoteSprite = entity.get_node_or_null("Interactions/Visible/VBox/Emote")
+	speechContainer = entity.get_node_or_null("Interactions/Visible/VBox/Panel/SpeechContainer")
+	nameLabel = entity.get_node_or_null("Interactions/Name")
+	triggerArea = entity.get_node_or_null("Interactions/Area")
+
+	if nameLabel:
 		nameLabel.set_text(entity.entityName)
 		nameLabel.set_visible(entity.displayName)
-	if entity.has_node("Interactions/Area"):
-		triggerArea = entity.get_node("Interactions/Area")
+
+	if triggerArea:
 		triggerArea.body_entered.connect(_body_entered)
 		triggerArea.body_exited.connect(_body_exited)
 

@@ -10,24 +10,32 @@ radius = 64.0
 z_index = 1
 z_as_relative = false
 
-[node name="Emote" type="Sprite2D" parent="."]
-position = Vector2(0, -80)
+[node name="Visible" type="Node2D" parent="."]
+position = Vector2(0, -64)
 
-[node name="SpeechContainer" type="VBoxContainer" parent="."]
+[node name="VBox" type="VBoxContainer" parent="Visible"]
+clip_contents = true
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -80.0
-offset_right = 100.0
-offset_bottom = -80.0
+offset_top = -4.0
 grow_horizontal = 2
 grow_vertical = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 alignment = 1
+
+[node name="Panel" type="PanelContainer" parent="Visible/VBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SpeechContainer" type="VBoxContainer" parent="Visible/VBox/Panel"]
+layout_mode = 2
+alignment = 1
+
+[node name="Emote" type="TextureRect" parent="Visible/VBox"]
+layout_mode = 2
+stretch_mode = 3
 
 [node name="Name" type="Label" parent="."]
 custom_minimum_size = Vector2(0, 10)
@@ -41,6 +49,9 @@ offset_bottom = 33.0
 grow_horizontal = 2
 size_flags_vertical = 8
 theme = ExtResource("1_wehdi")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
 theme_override_fonts/font = ExtResource("2_elci4")
 horizontal_alignment = 1
 

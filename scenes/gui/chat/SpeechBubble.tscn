@@ -1,23 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://b08nojxtfsqny"]
+[gd_scene load_steps=3 format=3 uid="uid://b08nojxtfsqny"]
 
 [ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="1_mc4lb"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_qs0vu"]
 
 [node name="Speech" type="RichTextLabel"]
 clip_contents = false
-custom_minimum_size = Vector2i(200, 0)
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_right = 100.0
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_right = 0.5
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
+theme = ExtResource("1_qs0vu")
+theme_override_colors/default_color = Color(0.843137, 0.717647, 0.482353, 1)
+theme_override_colors/font_shadow_color = Color(0.0627451, 0, 0.0627451, 0.509804)
 theme_override_fonts/normal_font = ExtResource("1_mc4lb")
 bbcode_enabled = true
-fit_content_height = true
+fit_content = true
 scroll_active = false
 visible_characters = 255
