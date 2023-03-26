@@ -1,7 +1,7 @@
-extends ScrollContainer
+extends WindowPanel
 
-@onready var textureRect : TextureRect = $TextureRect
-
+@onready var textureRect : TextureRect = $ScrollContainer/TextureRect
+@onready var scrollContainer : ScrollContainer = $ScrollContainer
 #
 func Warped():
 	if textureRect and Launcher.Map and Launcher.Map.mapNode:
@@ -18,8 +18,8 @@ func Warped():
 
 #
 func _ready():
-	get_h_scroll_bar().scale = Vector2.ZERO
-	get_v_scroll_bar().scale = Vector2.ZERO
+	scrollContainer.get_h_scroll_bar().scale = Vector2.ZERO
+	scrollContainer.get_v_scroll_bar().scale = Vector2.ZERO
 
 func _process(_delta):
 	if Launcher.Camera && Launcher.Camera.mainCamera:
@@ -27,11 +27,11 @@ func _process(_delta):
 		var mapSize : Vector2		= Vector2(Launcher.Camera.mainCamera.limit_right, Launcher.Camera.mainCamera.limit_bottom)
 		if mapSize.x != 0 && mapSize.y != 0:
 			var posRatio : Vector2 = screenCenter / mapSize
-			var minimapWindowSize = get_node("TextureRect").size
+			var minimapWindowSize = textureRect.size
 			var scrollPos : Vector2i = Vector2i(minimapWindowSize * posRatio - size / 2)
-			get_parent().maxSize = minimapWindowSize
-			set_h_scroll(scrollPos.x)
-			set_v_scroll(scrollPos.y)
+			maxSize = minimapWindowSize
+			scrollContainer.set_h_scroll(scrollPos.x)
+			scrollContainer.set_v_scroll(scrollPos.y)
 
 func _on_visibility_changed():
 	if Launcher.Map and not Launcher.Map.PlayerWarped.is_connected(Warped):
