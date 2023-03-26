@@ -101,13 +101,12 @@ func _post_launch():
 	if Conf:		Conf._post_launch()
 	if DB:			DB._post_launch()
 	if World:		World._post_launch()
-	if FSM:			FSM._post_launch()
 	if Settings:	Settings._post_launch()
+	if FSM:			FSM._post_launch()
 
 func _physics_process(delta : float):
 	if FSM:			FSM._physics_process(delta)
 	if World:		World._physics_process(delta)
 
 func _quit():
-	Launcher.Network.NetDestroy()
 	get_tree().quit()

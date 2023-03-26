@@ -39,9 +39,8 @@ func CheckSignInInformation() -> bool:
 #
 func _on_sign_in_pressed():
 	if CheckSignInInformation() == true:
-		SetFloatingWindowToTop()
-		Launcher.GUI.CloseCurrentWindow()
-		Launcher.FSM.ExitLogin(nameTextControl.get_text())
+		Launcher.GUI.ToggleControl(self)
+		Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_SELECTION)
 
 func _ready():
 	FillWarningLabel("")

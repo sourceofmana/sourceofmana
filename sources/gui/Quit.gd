@@ -4,7 +4,10 @@ extends WindowPanel
 
 #
 func _on_leave_pressed():
-	Launcher._quit()
+	if Launcher.Player:
+		Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_CONNECTION)
+	else:
+		Launcher.FSM.EnterState(Launcher.FSM.States.QUIT)
 
 func _on_stay_pressed():
 	ToggleControl()
