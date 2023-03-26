@@ -18,6 +18,8 @@ var emoteDelay : float				= 0
 var speechDelay : float				= 0
 var speechDecreaseDelay : float		= 0
 var speechIncreaseThreshold : int	= 0
+var speechMaxWidth : int			= 0
+var speechExtraWidth : int			= 0
 
 var canInteractWith : Array[BaseEntity]			= []
 
@@ -72,11 +74,9 @@ func RemoveSpeechLabel():
 func AddSpeechLabel(speech : String):
 	var speechLabel : RichTextLabel = speechInstance.instantiate()
 	speechLabel.set_text("[center]%s[/center]" % [speech])
+	speechLabel.set_visible_ratio(0)
 	speechContainer.add_child(speechLabel)
 	speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
-
-	var speechLength : int = speechLabel.get_theme_font("normal_font").get_string_size(speech).x as int
-	speechLabel.custom_minimum_size.x = speechLength + 20
 
 func DisplaySpeech(text : String):
 	Launcher.Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
@@ -103,10 +103,12 @@ func SpecificInit(entity : BaseEntity, isPC : bool = false):
 			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(Launcher.Network.TriggerChat) == false:
 				Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
 
-	emoteDelay				= Launcher.Conf.GetFloat("Gameplay", "emoteDelay", Launcher.Conf.Type.PROJECT)
-	speechDelay				= Launcher.Conf.GetFloat("Gameplay", "speechDelay", Launcher.Conf.Type.PROJECT)
-	speechDecreaseDelay		= Launcher.Conf.GetFloat("Gameplay", "speechDecreaseDelay", Launcher.Conf.Type.PROJECT)
-	speechIncreaseThreshold	= Launcher.Conf.GetInt("Gameplay", "speechIncreaseThreshold", Launcher.Conf.Type.PROJECT)
+	emoteDelay				= Launcher.Conf.GetFloat("Interactive", "emoteDelay", Launcher.Conf.Type.GAMEPLAY)
+	speechDelay				= Launcher.Conf.GetFloat("Interactive", "speechDelay", Launcher.Conf.Type.GAMEPLAY)
+	speechDecreaseDelay		= Launcher.Conf.GetFloat("Interactive", "speechDecreaseDelay", Launcher.Conf.Type.GAMEPLAY)
+	speechIncreaseThreshold	= Launcher.Conf.GetInt("Interactive", "speechIncreaseThreshold", Launcher.Conf.Type.GAMEPLAY)
+	speechMaxWidth			= Launcher.Conf.GetInt("Interactive", "speechMaxWidth", Launcher.Conf.Type.GAMEPLAY)
+	speechExtraWidth		= Launcher.Conf.GetInt("Interactive", "speechExtraWidth", Launcher.Conf.Type.GAMEPLAY)
 
 #
 func _physics_process(_delta : float):
@@ -131,6 +133,12 @@ func _physics_process(_delta : float):
 					speechChild.visible_ratio = ratio
 				else:
 					speechChild.visible_ratio = 1
+
+			var speechContent : String = speechChild.get_parsed_text()
+			var speechLength : float = speechChild.get_theme_font("normal_font").get_string_size(speechContent).x
+			if speechLength > speechMaxWidth:
+				speechLength = speechMaxWidth
+			speechChild.custom_minimum_size.x = speechLength as int + speechExtraWidth
 
 func _body_entered(body):
 	if body && (body is NpcEntity || body is MonsterEntity) && self != body.interactive:

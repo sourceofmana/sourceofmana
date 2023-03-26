@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://f2jxqr5e7i5e"]
+[gd_scene load_steps=6 format=3 uid="uid://f2jxqr5e7i5e"]
 
 [ext_resource type="Script" path="res://sources/entity/components/Interactive.gd" id="1_b3bk6"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_wehdi"]
 [ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="2_elci4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0daf3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dlrhc"]
 radius = 64.0
@@ -30,6 +32,7 @@ alignment = 1
 [node name="Panel" type="PanelContainer" parent="Visible/VBox"]
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0daf3")
 
 [node name="SpeechContainer" type="VBoxContainer" parent="Visible/VBox/Panel"]
 layout_mode = 2
