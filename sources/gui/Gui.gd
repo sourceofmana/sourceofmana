@@ -10,6 +10,9 @@ extends Node
 @onready var welcomeWindow : WindowPanel		= $FloatingWindows/Welcome
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
+@onready var minimapWindow : WindowPanel		= $FloatingWindows/Minimap
+@onready var chatWindow : WindowPanel			= $FloatingWindows/Chat
+@onready var emoteWindow : WindowPanel			= $FloatingWindows/Emote
 
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
@@ -80,16 +83,6 @@ func _post_launch():
 	if Launcher.Map and not Launcher.FSM.enter_game.is_connected(EnterGame):
 		Launcher.FSM.enter_game.connect(EnterGame)
 	get_tree().set_auto_accept_quit(false)
-
-func _process(_delta):
-	if Launcher.Action:
-		if Launcher.Action.IsActionJustPressed("ui_close", true): CloseWindow()
-		if Launcher.Action.IsActionJustPressed("ui_inventory"): ToggleControl($FloatingWindows/Inventory)
-		if Launcher.Action.IsActionJustPressed("ui_minimap"): ToggleControl($FloatingWindows/Minimap)
-		if Launcher.Action.IsActionJustPressed("ui_chat"): ToggleControl($FloatingWindows/Chat)
-		if Launcher.Action.IsActionJustPressed("ui_emote"): ToggleControl($FloatingWindows/Emote)
-		if Launcher.Action.IsActionJustPressed("ui_validate") : ToggleChatNewLine($FloatingWindows/Chat)
-		if Launcher.Action.IsActionJustPressed("ui_screenshot") : Launcher.FileSystem.SaveScreenshot(get_viewport().get_texture().get_image())
 
 func _notification(notif):
 	if notif == Node.NOTIFICATION_WM_CLOSE_REQUEST:

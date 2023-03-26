@@ -25,3 +25,8 @@ func ShootCallback(args : Array):
 		var callback : Callable = args.pop_front()
 		if callback:
 			callback.callv(args)
+
+#
+func GetScreenCapture() -> Image:
+	return Launcher.get_viewport().get_texture().get_image()
+
