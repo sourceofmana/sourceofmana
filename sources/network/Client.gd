@@ -1,10 +1,6 @@
 extends Node
 
 #
-func Disconnect():
-	if Launcher.FSM:
-		Launcher.FSM.EnterLogin()
-
 func WarpPlayer(map : String, _rpcID : int = -1):
 	if Launcher.Map:
 		Launcher.Map.ReplaceMapNode(map)
@@ -37,3 +33,9 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = -1):
 				Launcher.GUI.chatContainer.AddPlayerText(entity.entityName, text)
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
+
+func DisconnectPlayer():
+	if Launcher.Map:
+		Launcher.Map.UnloadMapNode()
+	if Launcher.Player:
+		Launcher.Player = null

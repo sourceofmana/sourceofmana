@@ -14,7 +14,6 @@ func ConnectPlayer(playerName : String, rpcID : int = -1):
 
 		playerMap[rpcID]				= playerID
 		Launcher.World.rids[playerID]	= player
-
 		Launcher.World.Spawn(map, pos, player)
 
 		onlineList.UpdateHtmlPage()

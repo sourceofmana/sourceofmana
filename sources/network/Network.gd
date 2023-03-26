@@ -14,9 +14,9 @@ func ConnectPlayer(playerName : String, rpcID : int = -1):
 	elif Server:	Server.ConnectPlayer(playerName, rpcID)
 
 @rpc("any_peer", "reliable")
-func DisconnectPlayer(playerName : String, rpcID : int = -1):
-	if Client:		NetCallServer("DisconnectPlayer", [playerName])
-	elif Server:	Server.DisconnectPlayer(playerName, rpcID)
+func DisconnectPlayer(rpcID : int = -1):
+	if Client:		NetCallServer("DisconnectPlayer", [])
+	elif Server:	Server.DisconnectPlayer(rpcID)
 
 #
 @rpc("any_peer", "unreliable")
@@ -147,10 +147,10 @@ func NetCreate():
 			var connectedCallback : Callable = ConnectPlayer.bind(Launcher.FSM.playerName) 
 			if not Launcher.Root.multiplayer.connected_to_server.is_connected(connectedCallback):
 				Launcher.Root.multiplayer.connected_to_server.connect(connectedCallback)
-			if not Launcher.Root.multiplayer.connection_failed.is_connected(Client.Disconnect):
-				Launcher.Root.multiplayer.connection_failed.connect(Client.Disconnect)
-			if not Launcher.Root.multiplayer.server_disconnected.is_connected(Client.Disconnect):
-				Launcher.Root.multiplayer.server_disconnected.connect(Client.Disconnect)
+			if not Launcher.Root.multiplayer.connection_failed.is_connected(Client.DisconnectPlayer):
+				Launcher.Root.multiplayer.connection_failed.connect(Client.DisconnectPlayer)
+			if not Launcher.Root.multiplayer.server_disconnected.is_connected(Client.DisconnectPlayer):
+				Launcher.Root.multiplayer.server_disconnected.connect(Client.DisconnectPlayer)
 
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 	elif Server:
@@ -170,6 +170,11 @@ func NetCreate():
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 
 func NetDestroy():
+	if uniqueID == 0:
+		pass
+
+	if Client and Server:
+		Client.DisconnectPlayer()
+
+	peer.close()
 	uniqueID = 0
-	if Client:
-		Client.Disconnect()
