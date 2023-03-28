@@ -21,7 +21,7 @@ func GetTileMap() -> TileMap:
 func GetMapBoundaries() -> Rect2:
 	var boundaries : Rect2 = Rect2()
 	var tilemap : TileMap = GetTileMap()
-	Launcher.Util.Assert(tilemap != null, "Could not find a tilemap on the current scene")
+	Util.Assert(tilemap != null, "Could not find a tilemap on the current scene")
 	if tilemap:
 		var mapLimits			= tilemap.get_used_rect()
 		var mapCellsize			= tilemap.get_tileset().get_tile_size() if tilemap.get_tileset() else Vector2i(32, 32)
@@ -42,27 +42,27 @@ func UnloadMapNode():
 
 func LoadMapNode(mapName : String):
 	mapNode = pool.LoadMapClientData(mapName)
-	Launcher.Util.Assert(mapNode != null, "Map instance could not be created")
+	Util.Assert(mapNode != null, "Map instance could not be created")
 	if mapNode:
 		Launcher.call_deferred("add_child", mapNode)
 
 #
 func RemoveChilds():
 	var tilemap : TileMap = GetTileMap()
-	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not remove children")
+	Util.Assert(tilemap != null, "Current tilemap not found, could not remove children")
 	if tilemap:
 		for entity in tilemap.get_children():
 			tilemap.call_deferred("remove_child", entity)
 
 func RemoveChild(entity : BaseEntity):
 	var tilemap : TileMap = GetTileMap()
-	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not remove a child entity")
+	Util.Assert(tilemap != null, "Current tilemap not found, could not remove a child entity")
 	if tilemap:
 		tilemap.call_deferred("remove_child", entity)
 
 func AddChild(entity : BaseEntity):
 	var tilemap : TileMap = GetTileMap()
-	Launcher.Util.Assert(tilemap != null, "Current tilemap not found, could not add a new child entity")
+	Util.Assert(tilemap != null, "Current tilemap not found, could not add a new child entity")
 	if tilemap:
 		tilemap.call_deferred("add_child", entity)
 

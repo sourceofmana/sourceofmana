@@ -37,12 +37,6 @@ func UpdateAnimation():
 			EntityCommons.State.SIT:
 				animationTree.set("parameters/Sit/blend_position", entityDirection)
 				animationState.travel("Sit")
-			EntityCommons.State.ATTACK:
-				animationTree.set("parameters/Attack/blend_position", entityDirection)
-				animationState.travel("Sit")
-			EntityCommons.State.DEATH:
-				animationTree.set("parameters/Death/blend_position", entityDirection)
-				animationState.travel("Sit")
 
 # Init
 func SetKind(_entityKind : String, _entityID : String, _entityName : String):
@@ -68,7 +62,7 @@ func SetData(data : Object):
 	if data._animation:
 		animation = Launcher.FileSystem.LoadPreset("animations/" + data._animation)
 		var canFetchAnimTree = animation != null && animation.has_node("AnimationTree")
-		Launcher.Util.Assert(canFetchAnimTree, "No AnimationTree found")
+		Util.Assert(canFetchAnimTree, "No AnimationTree found")
 		if canFetchAnimTree:
 			animationTree = animation.get_node("AnimationTree")
 		add_child(animation)

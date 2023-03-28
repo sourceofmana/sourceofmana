@@ -23,7 +23,7 @@ var rids : Dictionary = {}
 
 # Utils
 func GetRandomPosition(map : Map) -> Vector2i:
-	Launcher.Util.Assert(map != null && map.nav_poly != null && map.nav_poly.get_polygon_count() > 0, "No triangulation available")
+	Util.Assert(map != null && map.nav_poly != null && map.nav_poly.get_polygon_count() > 0, "No triangulation available")
 	if map != null && map.nav_poly != null && map.nav_poly.get_polygon_count() > 0:
 		var outlinesList : PackedVector2Array  = map.nav_poly.get_vertices()
 
@@ -37,11 +37,11 @@ func GetRandomPosition(map : Map) -> Vector2i:
 
 		return Vector2i(a + sqrt(randf()) * (-a + b + randf() * (c - b)))
 
-	Launcher.Util.Assert(false, "Mob could not be spawned, no available point on the navigation mesh were found")
+	Util.Assert(false, "Mob could not be spawned, no available point on the navigation mesh were found")
 	return Vector2i.ZERO
 
 func GetRandomPositionAABB(map : Map, pos : Vector2i, offset : Vector2i) -> Vector2i:
-	Launcher.Util.Assert(map != null, "Could not create a random position for a non-initialized map")
+	Util.Assert(map != null, "Could not create a random position for a non-initialized map")
 	if map != null:
 		for i in Launcher.Conf.GetInt("Navigation", "navigationSpawnTry", Launcher.Conf.Type.NETWORK):
 			var randPoint : Vector2i = Vector2i(randi_range(-offset.x, offset.x), randi_range(-offset.y, offset.y))
@@ -65,7 +65,7 @@ func LoadGenericData(map : Map):
 	if node:
 		if "spawns" in node:
 			for spawn in node.spawns:
-				Launcher.Util.Assert(spawn != null, "Warp format is not supported")
+				Util.Assert(spawn != null, "Warp format is not supported")
 				if spawn:
 					var spawnObject = SpawnObject.new()
 					spawnObject.count = spawn[0]
@@ -77,7 +77,7 @@ func LoadGenericData(map : Map):
 					map.spawns.append(spawnObject)
 		if "warps" in node:
 			for warp in node.warps:
-				Launcher.Util.Assert(warp != null, "Warp format is not supported")
+				Util.Assert(warp != null, "Warp format is not supported")
 				if warp:
 					var warpObject = WarpObject.new()
 					warpObject.destinationMap = warp[0]
@@ -119,7 +119,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 		for i in spawn.count:
 			var agent : BaseAgent = Launcher.DB.Instantiate.CreateAgent(spawn.type, spawn.name)
 
-			Launcher.Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
+			Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
 			if agent:
 				var pos : Vector2 = Vector2.ZERO
 
@@ -127,7 +127,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 					pos = GetRandomPosition(map)
 				else:
 					pos = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
-				Launcher.Util.Assert(pos != Vector2.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
+				Util.Assert(pos != Vector2.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
 				if pos == Vector2.ZERO:
 					agent.queue_free()
 					continue
@@ -150,16 +150,16 @@ func CheckWarp(agent : BaseAgent):
 				return
 
 func Warp(agent : BaseAgent, newMap : Map, newPos : Vector2i):
-	Launcher.Util.Assert(newMap != null and agent != null, "Warp could not proceed, agent or current map missing")
+	Util.Assert(newMap != null and agent != null, "Warp could not proceed, agent or current map missing")
 	if agent and newMap:
 		PopAgent(agent)
 		Spawn(newMap, newPos, agent)
 
 func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
-	Launcher.Util.Assert(map != null and instanceID < map.instances.size() and agent != null, "Spawn could not proceed, agent or map missing")
+	Util.Assert(map != null and instanceID < map.instances.size() and agent != null, "Spawn could not proceed, agent or map missing")
 	if map and instanceID < map.instances.size() and agent:
 		var inst : Instance = map.instances[instanceID]
-		Launcher.Util.Assert(inst != null, "Spawn could not proceed, map instance missing")
+		Util.Assert(inst != null, "Spawn could not proceed, map instance missing")
 		if inst:
 			agent.set_position(pos)
 			agent._velocity_computed(Vector2.ZERO)
@@ -177,12 +177,12 @@ func GetAgent(agentID : int) -> BaseAgent:
 	var agent : BaseAgent = null
 	if rids.has(agentID):
 		agent = rids.get(agentID)
-	Launcher.Util.Assert(agent != null, "Could not retrieve the world agent with the following ID %d" % [agentID])
+	Util.Assert(agent != null, "Could not retrieve the world agent with the following ID %d" % [agentID])
 	return agent
 
 func GetInstanceFromAgent(agent : BaseAgent) -> SubViewport:
 	var inst = agent.get_parent()
-	Launcher.Util.Assert(inst != null && inst.is_class("SubViewport"), "Agent's base instance is incorrect, is type: " + inst.get_class() if inst else "null" )
+	Util.Assert(inst != null && inst.is_class("SubViewport"), "Agent's base instance is incorrect, is type: " + inst.get_class() if inst else "null" )
 	if inst && inst.is_class("SubViewport"):
 		if not HasAgent(inst, agent):
 			inst = null
@@ -192,7 +192,7 @@ func GetMapFromAgent(agent : BaseAgent) -> Map:
 	var map : Map = null
 	var inst : Instance = GetInstanceFromAgent(agent)
 	if inst:
-		Launcher.Util.Assert(inst.map != null, "Agent's base map is incorrect, instance is not referenced inside a map")
+		Util.Assert(inst.map != null, "Agent's base map is incorrect, instance is not referenced inside a map")
 		map = inst.map
 	return map
 
@@ -207,7 +207,7 @@ func GetAgents(checkedAgent : BaseAgent) -> Array[Array]:
 
 func HasAgent(inst : Instance, agent : BaseAgent):
 	var hasAgent : bool = false
-	Launcher.Util.Assert(agent != null and inst != null, "Agent or instance are invalid, could not check if the agent is inside the instance")
+	Util.Assert(agent != null and inst != null, "Agent or instance are invalid, could not check if the agent is inside the instance")
 	if agent and inst:
 		if agent is PlayerAgent:
 			hasAgent = inst.players.has(agent)
@@ -218,14 +218,14 @@ func HasAgent(inst : Instance, agent : BaseAgent):
 	return hasAgent
 
 func RemoveAgent(agent : BaseAgent):
-	Launcher.Util.Assert(agent != null, "Agent is null, can't remove it")
+	Util.Assert(agent != null, "Agent is null, can't remove it")
 	if agent:
 		PopAgent(agent)
 		rids.erase(agent)
 		agent.queue_free()
 
 func PopAgent(agent : BaseAgent):
-	Launcher.Util.Assert(agent != null, "Agent is null, can't pop it")
+	Util.Assert(agent != null, "Agent is null, can't pop it")
 	if agent:
 		var inst : Instance = GetInstanceFromAgent(agent)
 		Launcher.Network.Server.NotifyInstancePlayers(inst, agent, "RemoveEntity", [], false)
@@ -239,8 +239,8 @@ func PopAgent(agent : BaseAgent):
 			inst.call_deferred("remove_child", agent)
 
 func PushAgent(agent : BaseAgent, inst : Instance):
-	Launcher.Util.Assert(agent != null, "Agent is null, can't push it")
-	Launcher.Util.Assert(inst != null, "Instance is null, can't push the agent in it")		
+	Util.Assert(agent != null, "Agent is null, can't push it")
+	Util.Assert(inst != null, "Instance is null, can't push the agent in it")		
 	if agent and inst:
 		if not HasAgent(inst, agent):
 			if agent is PlayerAgent:

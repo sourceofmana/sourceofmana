@@ -149,11 +149,11 @@ func _target_reached():
 func _setup_nav_agent():
 	if agent && agent.get_avoidance_enabled():
 		var err = agent.velocity_computed.connect(self._velocity_computed)
-		Launcher.Util.Assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
+		Util.Assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
 		err = agent.path_changed.connect(self._path_changed)
-		Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _path_changed")
+		Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _path_changed")
 		err = agent.target_reached.connect(self._target_reached)
-		Launcher.Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _target_reached")
+		Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _target_reached")
 
 func _ready():
 	_setup_nav_agent()

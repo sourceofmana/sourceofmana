@@ -15,7 +15,7 @@ func FillGridContainer(listOfItem : Dictionary):
 			var itemReference : Object		= listOfItem[item]
 			var itemTexture : Texture2D		= Launcher.FileSystem.LoadGfx(itemReference._path)
 
-			Launcher.Util.Assert(tileInstance.has_node("Icon"), "Could not find the Icon node:" + itemReference._name)
+			Util.Assert(tileInstance.has_node("Icon"), "Could not find the Icon node:" + itemReference._name)
 			if tileInstance.has_node("Icon"):
 				var iconNode = tileInstance.get_node("Icon")
 				iconNode.set_texture_normal(itemTexture)

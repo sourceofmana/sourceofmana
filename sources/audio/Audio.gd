@@ -19,7 +19,7 @@ func Load(soundName : String):
 	assert(audioPlayer, "AudioStreamPlayer could not be found")
 	if audioPlayer && currentTrack != soundName && not soundName.is_empty() && Launcher.DB.MusicsDB[soundName] != null:
 		var soundStream : Resource = Launcher.FileSystem.LoadMusic(Launcher.DB.MusicsDB[soundName]._path)
-		Launcher.Util.Assert(soundStream != null, "Could not load music: " + soundName)
+		Util.Assert(soundStream != null, "Could not load music: " + soundName)
 		if soundStream != null:
 			soundStream.set_loop(true)
 
@@ -36,7 +36,7 @@ func Warped():
 #
 func _post_launch():
 	audioPlayer = Launcher.Scene.get_node("AudioStreamPlayer")
-	Launcher.Util.Assert(audioPlayer != null, "Could not find the AudioStreamPlayer instance")
+	Util.Assert(audioPlayer != null, "Could not find the AudioStreamPlayer instance")
 
 	if Launcher.Map:
 		Launcher.Map.PlayerWarped.connect(self.Warped)

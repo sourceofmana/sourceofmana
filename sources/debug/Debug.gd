@@ -7,7 +7,7 @@ var wrongPos : ColorRect					= null
 #
 func OnPlayerEnterGame():
 	if Launcher.Conf.GetBool("Navigation", "desyncDebug", Launcher.Conf.Type.DEBUG):
-		Launcher.Util.Assert(Launcher.Player != null, "Debug: Player is not accessible")
+		Util.Assert(Launcher.Player != null, "Debug: Player is not accessible")
 		if Launcher.Player:
 			if Launcher.Player.sprite:
 				Launcher.Player.sprite.set_visible(false)
@@ -29,7 +29,7 @@ func OnPlayerEnterGame():
 				Launcher.Player.add_child(col)
 
 	if Launcher.Conf.GetBool("Inventory", "inventoryFill", Launcher.Conf.Type.DEBUG):
-		Launcher.Util.Assert(Launcher.Player != null && Launcher.Player.inventory != null, "Debug: Player inventory is not accessible")
+		Util.Assert(Launcher.Player != null && Launcher.Player.inventory != null, "Debug: Player inventory is not accessible")
 		if Launcher.Player && Launcher.Player.inventory:
 			var inventory : Object = Launcher.Player.inventory
 			inventory.add_item(load("res://data/items/apple.tres"), 14)
@@ -55,7 +55,7 @@ func UpdateNavLine(entity : BaseEntity):
 				var entityNavLine : Line2D = entity.get_node("NavigationLine")
 				entityNavLine.points = entity.agent.get_current_navigation_path()
 			else:
-				Launcher.Util.Assert(false, "Navigation Line2D can't be null, something went wrong")
+				Util.Assert(false, "Navigation Line2D can't be null, something went wrong")
 
 func ClearNavLine(entity : BaseEntity):
 	if entity:

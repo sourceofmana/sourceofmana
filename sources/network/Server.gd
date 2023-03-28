@@ -17,14 +17,14 @@ func ConnectPlayer(playerName : String, rpcID : int = -1):
 		Launcher.World.Spawn(map, pos, player)
 
 		onlineList.UpdateHtmlPage()
-		Launcher.Util.PrintLog("Server", "Player connected: %s (%d)" % [playerName, rpcID])
+		Util.PrintLog("Server", "Player connected: %s (%d)" % [playerName, rpcID])
 
 func DisconnectPlayer(rpcID : int = -1):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
 		Launcher.World.RemoveAgent(player)
 		playerMap.erase(rpcID)
-		Launcher.Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.agentName, rpcID])
+		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.agentName, rpcID])
 
 #
 func GetEntities(rpcID : int = -1):
@@ -87,13 +87,13 @@ func GetAgent(rpcID : int) -> BaseAgent:
 	if hasRID:
 		var agentID : int = playerMap.get(rpcID)
 		agent = Launcher.World.GetAgent(agentID)
-		Launcher.Util.Assert(agent != null, "Agent ID %d is not initialized, could not retrieve the base agent" % [agentID])
+		Util.Assert(agent != null, "Agent ID %d is not initialized, could not retrieve the base agent" % [agentID])
 	return agent
 
 func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
 	if not inst:
 		inst = Launcher.World.GetInstanceFromAgent(agent)
-	Launcher.Util.Assert(inst != null, "Could not notify every peer as this agent (%s) is not connected to any instance!" % agent.agentName)
+	Util.Assert(inst != null, "Could not notify every peer as this agent (%s) is not connected to any instance!" % agent.agentName)
 	if inst:
 		var currentPlayerID = agent.get_rid().get_id()
 		if currentPlayerID != null:
@@ -105,10 +105,10 @@ func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName :
 
 #
 func ConnectPeer(rpcID : int):
-	Launcher.Util.PrintLog("Server", "Peer connected: %d" % rpcID)
+	Util.PrintLog("Server", "Peer connected: %d" % rpcID)
 
 func DisconnectPeer(rpcID : int):
-	Launcher.Util.PrintLog("Server", "Peer disconnected: %d" % rpcID)
+	Util.PrintLog("Server", "Peer disconnected: %d" % rpcID)
 	if rpcID in playerMap:
 		if playerMap[rpcID] in Launcher.World.rids:
 			DisconnectPlayer(rpcID)

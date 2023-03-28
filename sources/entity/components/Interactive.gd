@@ -53,7 +53,7 @@ func AddEmoteResources(emoteID : int):
 		emoteTimer = AddTimer(emoteSprite, emoteDelay, RemoveEmoteResources)
 
 func DisplayEmote(emoteID : int):
-	Launcher.Util.Assert(emoteSprite != null, "No emote sprite found, could not display emote")
+	Util.Assert(emoteSprite != null, "No emote sprite found, could not display emote")
 	if emoteSprite:
 		if currentEmoteID != emoteID:
 			RemoveEmoteResources()
@@ -79,7 +79,7 @@ func AddSpeechLabel(speech : String):
 	speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
 
 func DisplaySpeech(text : String):
-	Launcher.Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
+	Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
 	if speechContainer:
 		AddSpeechLabel(text)
 

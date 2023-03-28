@@ -63,7 +63,7 @@ func _process(_deltaTime : float):
 		enabledLastFrame = false
 
 func _ready():
-	Launcher.Util.Assert(tabContainer && tabInstance, "TabContainer or TabInstance not correctly set")
+	Util.Assert(tabContainer && tabInstance, "TabContainer or TabInstance not correctly set")
 	if tabContainer && tabInstance:
 		var newTab : RichTextLabel = tabInstance.instantiate()
 		newTab.set_name("General")

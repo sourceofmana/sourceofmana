@@ -6,13 +6,13 @@ extends WindowPanel
 func Warped():
 	if textureRect and Launcher.Map and Launcher.Map.mapNode:
 		var mapName : String = Launcher.Map.mapNode.get_name()
-		Launcher.Util.Assert(mapName.is_empty() == false, "Could not fetch the active map name")
+		Util.Assert(mapName.is_empty() == false, "Could not fetch the active map name")
 		if mapName.is_empty() == false:
 			var mapPath : String = Launcher.DB.GetMapPath(mapName)
-			Launcher.Util.Assert(mapPath.is_empty() == false, "Could not fetch the active map path")
+			Util.Assert(mapPath.is_empty() == false, "Could not fetch the active map path")
 			if mapPath.is_empty() == false:
 				var resource : Resource = Launcher.FileSystem.LoadMinimap(mapPath)
-				Launcher.Util.Assert(resource != null, "Could not load the minimap resource")
+				Util.Assert(resource != null, "Could not load the minimap resource")
 				if resource:
 					textureRect.set_texture(resource)
 

@@ -11,7 +11,7 @@ func FindEntityReference(entityID : String) -> Object:
 
 func CreateGenericEntity(entityInstance : CharacterBody2D, entityType : String, entityID : String, entityName : String = ""):
 	var template = FindEntityReference(entityID)
-	Launcher.Util.Assert(template and entityInstance, "Could not create the entity: %s" % entityID)
+	Util.Assert(template and entityInstance, "Could not create the entity: %s" % entityID)
 	if template and entityInstance:
 		entityInstance.SetData(template)
 		entityInstance.SetKind(entityType, entityID, entityName)

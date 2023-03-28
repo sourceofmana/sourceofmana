@@ -141,7 +141,7 @@ func NetCreate():
 		var serverAdress : String	= Launcher.Conf.GetString("Server", "serverAdress", Launcher.Conf.Type.NETWORK)
 
 		var ret = peer.create_client(serverAdress, serverPort)
-		Launcher.Util.Assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAdress, serverPort])
+		Util.Assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAdress, serverPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
 			var connectedCallback : Callable = ConnectPlayer.bind(Launcher.FSM.playerName) 
@@ -158,14 +158,14 @@ func NetCreate():
 		var maxPlayerCount : int	= Launcher.Conf.GetInt("Server", "maxPlayerCount", Launcher.Conf.Type.NETWORK)
 		var ret = peer.create_server(serverPort, maxPlayerCount)
 
-		Launcher.Util.Assert(ret == OK, "Server could not be created, please check if your port %d is valid" % serverPort)
+		Util.Assert(ret == OK, "Server could not be created, please check if your port %d is valid" % serverPort)
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
 			if not Launcher.Root.multiplayer.peer_connected.is_connected(Server.ConnectPeer):
 				Launcher.Root.multiplayer.peer_connected.connect(Server.ConnectPeer)
 			if not Launcher.Root.multiplayer.peer_disconnected.is_connected(Server.DisconnectPeer):
 				Launcher.Root.multiplayer.peer_disconnected.connect(Server.DisconnectPeer)
-			Launcher.Util.PrintLog("Server", "Initialized on port %d" % serverPort)
+			Util.PrintLog("Server", "Initialized on port %d" % serverPort)
 
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 

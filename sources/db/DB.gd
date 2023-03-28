@@ -109,7 +109,7 @@ func GetMapPath(mapName : String) -> String:
 
 	if MapsDB.has(mapName):
 		mapInfo = MapsDB[mapName]
-		Launcher.Util.Assert(mapInfo != null, "Could not find the map " + mapName + " within the db")
+		Util.Assert(mapInfo != null, "Could not find the map " + mapName + " within the db")
 		if mapInfo:
 			path = mapInfo._path
 	return path
