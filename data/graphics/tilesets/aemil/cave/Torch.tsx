@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.2" tiledversion="1.3.1" name="Torch" tilewidth="96" tileheight="64" tilecount="18" columns="6">
  <image source="torch-x3x2.png" width="576" height="192"/>
- <tile id="5">
+ <tile id="0">
   <objectgroup draworder="index" id="2">
    <object id="5" x="42" y="50" width="12" height="12"/>
   </objectgroup>
@@ -14,7 +14,7 @@
    <frame tileid="5" duration="60"/>
   </animation>
  </tile>
- <tile id="11">
+ <tile id="6">
   <objectgroup draworder="index" id="3">
    <object id="7" x="34" y="46" width="28" height="18"/>
   </objectgroup>
@@ -27,7 +27,7 @@
    <frame tileid="11" duration="60"/>
   </animation>
  </tile>
- <tile id="17">
+ <tile id="12">
   <objectgroup draworder="index" id="2">
    <object id="2" x="34" y="46" width="28" height="18"/>
   </objectgroup>
