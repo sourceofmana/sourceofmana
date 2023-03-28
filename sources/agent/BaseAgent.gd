@@ -90,7 +90,7 @@ func UpdateChanged():
 
 	if get_parent():
 		var updateFuncName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
-		Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, updateFuncName, [velocity, position, isSitting])
+		Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, updateFuncName, [velocity, position, currentState])
 
 #
 func SetKind(entityType : String, entityID : String, entityName : String):

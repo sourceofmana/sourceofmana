@@ -34,7 +34,7 @@ func GetEntities(rpcID : int = -1):
 		for agents in list:
 			for agent in agents:
 				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.isSitting, rpcID)
-				Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.isSitting, rpcID)
+				Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.currentState, rpcID)
 
 func SetClickPos(pos : Vector2, rpcID : int = -1):
 	var player : BaseAgent = GetAgent(rpcID)

@@ -47,9 +47,9 @@ func GetEntities(rpcID : int = -1):
 	elif Server:	Server.GetEntities(rpcID)
 
 @rpc("authority", "reliable")
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entitySitting : bool, rpcID : int = -1):
-	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos, entitySitting], rpcID)
-	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos, entitySitting)
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, agentState : EntityCommons.State, rpcID : int = -1):
+	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos, agentState], rpcID)
+	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos, agentState)
 
 @rpc("authority", "reliable")
 func RemoveEntity(agentID : int, rpcID : int = -1):
@@ -68,14 +68,14 @@ func SetMovePos(pos : Vector2, rpcID : int = -1):
 	elif Server:	Server.SetMovePos(pos, rpcID)
 
 @rpc("authority", "unreliable_ordered")
-func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, isSitting : bool, rpcID : int = -1):
-	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, isSitting], rpcID)
-	elif Client:	Client.UpdateEntity(agentID, velocity, position, isSitting)
+func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State, rpcID : int = -1):
+	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, agentState], rpcID)
+	elif Client:	Client.UpdateEntity(agentID, velocity, position, agentState)
 
 @rpc("authority", "reliable")
-func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, isSitting : bool, rpcID : int = -1):
-	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, isSitting], rpcID)
-	elif Client:	Client.UpdateEntity(agentID, velocity, position, isSitting)
+func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State, rpcID : int = -1):
+	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, agentState], rpcID)
+	elif Client:	Client.UpdateEntity(agentID, velocity, position, agentState)
 
 #
 @rpc("any_peer", "reliable")

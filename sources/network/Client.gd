@@ -9,21 +9,17 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = -1):
 	if Launcher.Map:
 		Launcher.Map.EmotePlayer(playerID, emoteID)
 
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entitySitting : bool, _rpcID : int = -1):
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, agentState : EntityCommons.State, _rpcID : int = -1):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityPos, entitySitting)
+		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityPos, agentState)
 
 func RemoveEntity(agentID : int, _rpcID : int = -1):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentID)
 
-func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, isSitting : bool):
+func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position, isSitting)
-
-func SetVelocity(velocity : Vector2):
-	if Launcher.Player:
-		Launcher.Player.SetVelocity(velocity)
+		Launcher.Map.UpdateEntity(ridAgent, velocity, position, agentState)
 
 func ChatAgent(ridAgent : int, text : String, _rpcID : int = -1):
 	if Launcher.Map:

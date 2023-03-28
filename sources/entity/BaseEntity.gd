@@ -12,47 +12,37 @@ var collision : CollisionShape2D		= null
 
 var displayName : bool					= false
 var entityName : String					= "PlayerName"
-var entityState : EntityCommons.State		= EntityCommons.State.IDLE
+var entityState : EntityCommons.State	= EntityCommons.State.IDLE
 var entityDirection : Vector2			= Vector2(0, 1)
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
-var entitySitting : bool				= false
-
 
 var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 
 # Animation
-func GetNextDirection():
+func UpdateDirection():
 	if entityVelocity.length_squared() > 1:
-		return entityVelocity.normalized()
-	else:
-		return entityDirection
+		entityDirection = entityVelocity.normalized()
 
-func ApplyNextState(nextState : EntityCommons.State, nextDirection : Vector2):
+func UpdateAnimation():
 	if animationTree and animationState:
-		match nextState:
+		match entityState:
 			EntityCommons.State.IDLE:
-				animationTree.set("parameters/Idle/blend_position", nextDirection)
+				animationTree.set("parameters/Idle/blend_position", entityDirection)
 				animationState.travel("Idle")
 			EntityCommons.State.WALK:
-				animationTree.set("parameters/Walk/blend_position", nextDirection)
+				animationTree.set("parameters/Walk/blend_position", entityDirection)
 				animationState.travel("Walk")
 			EntityCommons.State.SIT:
-				animationTree.set("parameters/Sit/blend_position", nextDirection)
+				animationTree.set("parameters/Sit/blend_position", entityDirection)
 				animationState.travel("Sit")
-
-	entityState		= nextState
-	entityDirection	= nextDirection
-
-func UpdateState():
-	var nextState : EntityCommons.State = EntityCommons.GetNextState(entityState, entityVelocity, entitySitting)
-	var nextDirection : Vector2		= GetNextDirection()
-	var hasNewState : bool			= nextState != entityState
-	var hasNewDirection : bool		= nextDirection != entityDirection
-
-	if hasNewState or hasNewDirection:
-		ApplyNextState(nextState, nextDirection)
+			EntityCommons.State.ATTACK:
+				animationTree.set("parameters/Attack/blend_position", entityDirection)
+				animationState.travel("Sit")
+			EntityCommons.State.DEATH:
+				animationTree.set("parameters/Death/blend_position", entityDirection)
+				animationState.travel("Sit")
 
 # Init
 func SetKind(_entityKind : String, _entityID : String, _entityName : String):
@@ -89,14 +79,14 @@ func SetData(data : Object):
 		add_child(collision)
 
 #
-func Update(nextVelocity : Vector2, gardbandPosition : Vector2, isSitting : bool):
+func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextState : EntityCommons.State):
 	var dist = Vector2(gardbandPosition - position).length()
 	if dist > Launcher.Conf.GetInt("Guardband", "MaxGuardbandDist", Launcher.Conf.Type.NETWORK):
 		position = gardbandPosition
 
 	entityPosOffset = gardbandPosition - position
 	entityVelocity = nextVelocity
-	entitySitting = isSitting
+	entityState = nextState
 
 #
 func _physics_process(delta):
@@ -109,7 +99,8 @@ func _physics_process(delta):
 		entityPosOffset -= posOffsetFix
 		velocity += posOffsetFix
 
-	UpdateState()
+	UpdateDirection()
+	UpdateAnimation()
 
 	if velocity != Vector2.ZERO:
 		move_and_slide()

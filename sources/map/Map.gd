@@ -78,7 +78,7 @@ func ReplaceMapNode(mapName : String):
 			pool.RefreshPool(mapNode)
 
 #
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entitySitting : bool):
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entityState : EntityCommons.State):
 	var isLocalPlayer : bool = entityName == Launcher.FSM.playerName
 	var entity : BaseEntity = null
 	if GetTileMap():
@@ -94,7 +94,7 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 
 	if entity:
 		entity.set_position(entityPos)
-		entity.Update(Vector2.ZERO, entityPos, entitySitting)
+		entity.Update(Vector2.ZERO, entityPos, entityState)
 
 		AddChild(entity)
 		entities[agentID] = entity
@@ -107,10 +107,10 @@ func RemoveEntity(agentID : int):
 	if entity:
 		RemoveChild(entity)
 
-func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, isSitting : bool):
+func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentState : EntityCommons.State):
 	var entity : BaseEntity = entities.get(agentID)
 	if entity:
-		entity.Update(agentVelocity, agentPosition, isSitting)
+		entity.Update(agentVelocity, agentPosition, agentState)
 
 func EmotePlayer(agentID : int, emoteID : int):
 	var entity : BaseEntity = entities.get(agentID)
