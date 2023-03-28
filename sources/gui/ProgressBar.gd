@@ -117,8 +117,7 @@ func UpdateValue(delta):
 
 #
 func _ready():
-	assert(bar && label, "ProgressBar childs are missing")
-
+	Util.Assert(bar != null, "ProgressBar bar child is missing")
 	if bar:
 		if textureProgress:
 			bar.texture_progress = textureProgress
@@ -126,6 +125,8 @@ func _ready():
 				set_deferred("bar.size", textureProgress.get_size())
 		if textureBackground:
 			bar.texture_under = textureBackground
+
+	Util.Assert(label != null, "ProgressBar label child is missing")
 	if label:
 		if labelScale != 1:
 			label.set_scale(Vector2(labelScale,labelScale))
