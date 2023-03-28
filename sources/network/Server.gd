@@ -33,7 +33,7 @@ func GetEntities(rpcID : int = -1):
 		var list : Array[Array] = Launcher.World.GetAgents(player)
 		for agents in list:
 			for agent in agents:
-				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.isSitting, rpcID)
+				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.currentState, rpcID)
 				Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.currentState, rpcID)
 
 func SetClickPos(pos : Vector2, rpcID : int = -1):
@@ -60,7 +60,7 @@ func TriggerWarp(rpcID : int = -1):
 func TriggerSit(rpcID : int = -1):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
-		player.isSitting = not player.isSitting
+		player.SetState(EntityCommons.State.SIT)
 
 func TriggerEmote(emoteID : int, rpcID : int = -1):
 	NotifyInstancePlayers(null, GetAgent(rpcID), "EmotePlayer", [emoteID])

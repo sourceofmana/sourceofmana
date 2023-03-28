@@ -2,28 +2,32 @@ extends Object
 class_name EntityCommons
 
 #
-enum Gender { MALE = 0, FEMALE, NONBINARY, COUNT }
-enum State { IDLE = 0, WALK, SIT }
+enum Gender
+{
+	MALE = 0,
+	FEMALE,
+	NONBINARY,
+	COUNT
+}
+
+enum State
+{
+	IDLE = 0,
+	WALK,
+	SIT,
+	ATTACK,
+	DEATH
+}
+
+const stateTransitions : Array[Array] = [
+	#	IDLE			WALK			SIT				ATTACK			DEATH
+	[State.IDLE,	State.WALK,		State.SIT,		State.ATTACK,	State.DEATH],	# IDLE
+	[State.IDLE,	State.WALK,		State.WALK,		State.ATTACK,	State.DEATH],	# WALK
+	[State.SIT,		State.WALK,		State.IDLE,		State.ATTACK,	State.DEATH],	# SIT
+	[State.IDLE,	State.WALK,		State.ATTACK,	State.ATTACK,	State.DEATH],	# ATTACK
+	[State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH]	# DEATH
+]
 
 #
-static func GetNextState(currentState : State, currentVelocity : Vector2, isSitting : bool):
-	var newState : State	= currentState
-	var isWalking : bool	= currentVelocity.length_squared() > 1
-
-	match currentState:
-		State.IDLE:
-			if isWalking:
-				newState = State.WALK
-			elif isSitting:
-				newState = State.SIT
-		State.WALK:
-			if not isWalking:
-				newState = State.IDLE
-		State.SIT:
-			if not isSitting:
-				if isWalking:
-					newState = State.WALK
-				else:
-					newState = State.IDLE
-
-	return newState
+static func UpdateEntityFSM(currentState : State, newState : State) -> State:
+	return stateTransitions[currentState][newState]

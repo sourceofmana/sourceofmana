@@ -11,13 +11,15 @@ var aiTimer : AiTimer					= null
 var hasCurrentGoal : bool				= false
 
 var currentState : EntityCommons.State	= EntityCommons.State.IDLE
-var currentInput : Vector2				= Vector2.ZERO
-var currentVelocity : Vector2			= Vector2.ZERO
-var isSitting : bool					= false
+var pastState : EntityCommons.State		= EntityCommons.State.IDLE
 
+var isSitting : bool					= false
+var isAttacking : bool					= false
+
+var currentVelocity : Vector2			= Vector2.ZERO
 var pastVelocity : Vector2				= Vector2.ZERO
+var currentInput : Vector2				= Vector2.ZERO
 var pastPosition : Vector2				= Vector2.ZERO
-var wasSitting : bool					= false
 
 var lastPositions : Array[Vector2]		= []
 var navigationLine : PackedVector2Array	= []
@@ -55,9 +57,13 @@ func UpdateOrientation():
 
 func SetVelocity():
 	velocity = currentVelocity
-	if velocity != Vector2.ZERO:
-		isSitting = false
+
+	if currentState == EntityCommons.State.WALK:
 		move_and_slide()
+
+func SetState(nextState : EntityCommons.State) -> bool:
+	currentState = EntityCommons.UpdateEntityFSM(currentState, nextState)
+	return currentState == nextState
 
 func WalkToward(pos : Vector2):
 	hasCurrentGoal = true
@@ -81,12 +87,12 @@ func IsStuck() -> bool:
 	return isStuck
 
 func HasChanged() -> bool:
-	return position != pastPosition || velocity != pastVelocity || isSitting != wasSitting
+	return position != pastPosition || velocity != pastVelocity || currentState != pastState
 
 func UpdateChanged():
 	pastPosition = position
 	pastVelocity = velocity
-	wasSitting = isSitting
+	pastState = currentState
 
 	if get_parent():
 		var updateFuncName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
@@ -133,7 +139,14 @@ func _internal_process():
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
-	currentState = EntityCommons.GetNextState(currentState, currentVelocity, isSitting)
+
+	if stat.health <= 0:
+		SetState(EntityCommons.State.DEATH)
+	elif currentVelocity == Vector2.ZERO:
+		SetState(EntityCommons.State.IDLE)
+	else:
+		SetState(EntityCommons.State.WALK)
+
 	SetVelocity()
 
 	if HasChanged():

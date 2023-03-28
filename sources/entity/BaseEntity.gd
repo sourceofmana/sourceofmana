@@ -37,6 +37,12 @@ func UpdateAnimation():
 			EntityCommons.State.SIT:
 				animationTree.set("parameters/Sit/blend_position", entityDirection)
 				animationState.travel("Sit")
+			EntityCommons.State.ATTACK:
+				animationTree.set("parameters/Attack/blend_position", entityDirection)
+				animationState.travel("Attack")
+			EntityCommons.State.DEATH:
+				animationTree.set("parameters/Death/blend_position", entityDirection)
+				animationState.travel("Death")
 
 # Init
 func SetKind(_entityKind : String, _entityID : String, _entityName : String):
