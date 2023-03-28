@@ -4,5 +4,5 @@ class_name MonsterAgent
 #
 func Trigger(caller : BaseAgent):
 	if caller:
-		# SetState(EntityEnums.State.DEAD)
+		# SetState(EntityCommons.State.DEAD)
 		Launcher.World.RemoveAgent(self)

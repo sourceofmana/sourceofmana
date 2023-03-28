@@ -12,7 +12,7 @@ var collision : CollisionShape2D		= null
 
 var displayName : bool					= false
 var entityName : String					= "PlayerName"
-var entityState : EntityEnums.State		= EntityEnums.State.IDLE
+var entityState : EntityCommons.State		= EntityCommons.State.IDLE
 var entityDirection : Vector2			= Vector2(0, 1)
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
@@ -23,45 +23,22 @@ var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 
 # Animation
-func GetNextState():
-	var newEntityState			= entityState
-	var velocityLengthSquared	= entityVelocity.length_squared()
-	var isWalking				= velocityLengthSquared > 1
-
-	match entityState:
-		EntityEnums.State.IDLE:
-			if isWalking:
-				newEntityState = EntityEnums.State.WALK
-			elif entitySitting:
-				newEntityState = EntityEnums.State.SIT
-		EntityEnums.State.WALK:
-			if not isWalking:
-				newEntityState = EntityEnums.State.IDLE
-		EntityEnums.State.SIT:
-			if not entitySitting:
-				if isWalking:
-					newEntityState = EntityEnums.State.WALK
-				else:
-					newEntityState = EntityEnums.State.IDLE
-
-	return newEntityState
-
 func GetNextDirection():
 	if entityVelocity.length_squared() > 1:
 		return entityVelocity.normalized()
 	else:
 		return entityDirection
 
-func ApplyNextState(nextState : EntityEnums.State, nextDirection : Vector2):
+func ApplyNextState(nextState : EntityCommons.State, nextDirection : Vector2):
 	if animationTree and animationState:
 		match nextState:
-			EntityEnums.State.IDLE:
+			EntityCommons.State.IDLE:
 				animationTree.set("parameters/Idle/blend_position", nextDirection)
 				animationState.travel("Idle")
-			EntityEnums.State.WALK:
+			EntityCommons.State.WALK:
 				animationTree.set("parameters/Walk/blend_position", nextDirection)
 				animationState.travel("Walk")
-			EntityEnums.State.SIT:
+			EntityCommons.State.SIT:
 				animationTree.set("parameters/Sit/blend_position", nextDirection)
 				animationState.travel("Sit")
 
@@ -69,7 +46,7 @@ func ApplyNextState(nextState : EntityEnums.State, nextDirection : Vector2):
 	entityDirection	= nextDirection
 
 func UpdateState():
-	var nextState : EntityEnums.State = GetNextState()
+	var nextState : EntityCommons.State = EntityCommons.GetNextState(entityState, entityVelocity, entitySitting)
 	var nextDirection : Vector2		= GetNextDirection()
 	var hasNewState : bool			= nextState != entityState
 	var hasNewDirection : bool		= nextDirection != entityDirection
