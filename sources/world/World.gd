@@ -132,6 +132,8 @@ func CreateInstance(map : Map, instanceID : int = 0):
 					agent.queue_free()
 					continue
 
+				agent.spawnInfo = spawn
+
 				rids[agent.get_rid().get_id()] = agent
 				Spawn(map, pos, agent, instanceID)
 

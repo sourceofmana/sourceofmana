@@ -10,6 +10,7 @@ var agentID : String					= ""
 var aiTimer : AiTimer					= null
 var hasCurrentGoal : bool				= false
 
+var currentState : EntityCommons.State	= EntityCommons.State.IDLE
 var currentInput : Vector2				= Vector2.ZERO
 var currentVelocity : Vector2			= Vector2.ZERO
 var isSitting : bool					= false
@@ -21,6 +22,7 @@ var wasSitting : bool					= false
 var lastPositions : Array[Vector2]		= []
 var navigationLine : PackedVector2Array	= []
 
+var spawnInfo : SpawnObject				= null
 var stat : EntityStats					= EntityStats.new()
 
 #
@@ -131,6 +133,7 @@ func _internal_process():
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
+	currentState = EntityCommons.GetNextState(currentState, currentVelocity, isSitting)
 	SetVelocity()
 
 	if HasChanged():
