@@ -965,11 +965,16 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 
 			var rel_id = str(gid - firstgid)
 
-			if has_global_image:
+			if gid in tileDic:
+				i += 1
+				gid += 1
+				continue
+			elif has_global_image:
 				tsAtlas.set_texture(image)
 #				if options.apply_offset:
 #					tsAtlas.set_margins(Vector2(0, 32-tilesize.y))
 			elif not rel_id in ts.tiles:
+				i += 1
 				gid += 1
 				continue
 			else:
@@ -981,10 +986,11 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 				tsAtlas.set_texture(image)
 #				if options.apply_offset:
 #					tsAtlas.set_margins(Vector2(0, 32-image.get_height()))
+
 			var atlasPos : Vector2i = region.position / region.size
 			tileDic[gid] = [layerID, atlasPos]
 			tsAtlas.set_texture_region_size(region.size)
-			tsAtlas.create_tile(atlasPos, region.size / region.size)
+			tsAtlas.create_tile(atlasPos)
 
 			var tileData : TileData = tsAtlas.get_tile_data(atlasPos, 0)
 			var textureOrigin : Vector2i = Vector2i.ZERO
@@ -993,21 +999,23 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 				textureOrigin.y = (region.size.y - 32) / 2
 				tileData.set_texture_origin(textureOrigin)
 
-#			if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
-#				tsAtlas.set_tile_animation_frames_count(region.position / region.size, ts.tiles[rel_id].animation.size() - 1)
-#				tsAtlas.set_tile_animation_columns(region.position / region.size, ts.tiles[rel_id].animation.size() - 1)
-#
-#				var c = 0
-#				# Animated texture wants us to have seperate textures for each frame
-#				# so we have to pull them out of the tileset
-#				var tilesetTexture = image.get_image()
-#				for g in ts.tiles[rel_id].animation:
-#					tsAtlas.set_tile_animation_frame_duration(region.position / region.size, c, g.duration.to_float() * 0.001)
-#					c += 1
+			if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
+				var frame_count: int = 0
+				tsAtlas.set_tile_animation_columns(atlasPos, 0)
+				tsAtlas.set_tile_animation_separation(atlasPos, Vector2.ZERO)
 
-			if "tiles" in ts and rel_id in ts.tiles and "objectgroup" in ts.tiles[rel_id] \
-					and "objects" in ts.tiles[rel_id].objectgroup:
+				for frame in ts.tiles[rel_id].animation:
+					if tsAtlas.has_room_for_tile(atlasPos, Vector2.ONE, 0, Vector2.ZERO, frame_count + 1, atlasPos):
+						tsAtlas.set_tile_animation_frames_count(atlasPos, frame_count + 1)
 
+						var duration : float = frame["duration"].to_float() / 1000.0
+						tsAtlas.set_tile_animation_frame_duration(atlasPos, frame_count, duration)
+
+						tileDic[gid + frame_count] = [layerID, atlasPos]
+
+					frame_count += 1
+
+			if rel_id in ts.tiles && "objectgroup" in ts.tiles[rel_id] and "objects" in ts.tiles[rel_id].objectgroup:
 				for object in ts.tiles[rel_id].objectgroup.objects:
 
 					var shape = shape_from_object(object)
