@@ -29,5 +29,16 @@ const stateTransitions : Array[Array] = [
 ]
 
 #
-static func UpdateEntityFSM(currentState : State, newState : State) -> State:
+static func GetNextTransition(currentState : State, newState : State) -> State:
 	return stateTransitions[currentState][newState]
+
+static func GetStateName(state : State):
+	var stateName : String = ""
+	match state:
+		State.IDLE:		stateName = "Idle"
+		State.WALK:		stateName = "Walk"
+		State.SIT:		stateName = "Sit"
+		State.ATTACK:	stateName = "Attack"
+		State.DEATH:	stateName = "Death"
+		_:				stateName = "Idle"
+	return stateName

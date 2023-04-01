@@ -7,7 +7,6 @@ class_name BaseEntity
 var sprite : Sprite2D					= null
 var animation : Node					= null
 var animationTree : AnimationTree		= null
-var animationState : Resource			= null
 var collision : CollisionShape2D		= null
 
 var displayName : bool					= false
@@ -26,23 +25,12 @@ func UpdateDirection():
 		entityDirection = entityVelocity.normalized()
 
 func UpdateAnimation():
-	if animationTree and animationState:
-		match entityState:
-			EntityCommons.State.IDLE:
-				animationTree.set("parameters/Idle/blend_position", entityDirection)
-				animationState.travel("Idle")
-			EntityCommons.State.WALK:
-				animationTree.set("parameters/Walk/blend_position", entityDirection)
-				animationState.travel("Walk")
-			EntityCommons.State.SIT:
-				animationTree.set("parameters/Sit/blend_position", entityDirection)
-				animationState.travel("Sit")
-			EntityCommons.State.ATTACK:
-				animationTree.set("parameters/Attack/blend_position", entityDirection)
-				animationState.travel("Attack")
-			EntityCommons.State.DEATH:
-				animationTree.set("parameters/Death/blend_position", entityDirection)
-				animationState.travel("Death")
+	if animation and animationTree:
+		var animationState : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
+		var stateName : String = EntityCommons.GetStateName(entityState)
+		if animationState:
+			animationTree.set("parameters/%s/blend_position" % stateName, entityDirection)
+			animationState.travel(stateName)
 
 # Init
 func SetKind(_entityKind : String, _entityID : String, _entityName : String):
@@ -106,7 +94,5 @@ func _physics_process(delta):
 		move_and_slide()
 
 func _ready():
-	if animationTree:
-		animationState = animationTree.get("parameters/playback")
 	if interactive:
 		interactive.SpecificInit(self, self == Launcher.Player)

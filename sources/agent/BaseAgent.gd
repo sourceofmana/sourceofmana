@@ -56,13 +56,14 @@ func UpdateOrientation():
 		currentVelocity = Vector2.ZERO
 
 func SetVelocity():
-	velocity = currentVelocity
-
 	if currentState == EntityCommons.State.WALK:
+		velocity = currentVelocity
 		move_and_slide()
+	else:
+		velocity = Vector2.ZERO
 
 func SetState(nextState : EntityCommons.State) -> bool:
-	currentState = EntityCommons.UpdateEntityFSM(currentState, nextState)
+	currentState = EntityCommons.GetNextTransition(currentState, nextState)
 	return currentState == nextState
 
 func WalkToward(pos : Vector2):
@@ -142,6 +143,10 @@ func _velocity_computed(safeVelocity : Vector2):
 
 	if stat.health <= 0:
 		SetState(EntityCommons.State.DEATH)
+#	elif isSitting:
+#		SetState(EntityCommons.State.SIT)
+#	elif isAttacking:
+#		SetState(EntityCommons.State.ATTACK)
 	elif currentVelocity == Vector2.ZERO:
 		SetState(EntityCommons.State.IDLE)
 	else:
