@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://1hpo8ttqpjoj"]
+[gd_scene load_steps=22 format=3 uid="uid://1hpo8ttqpjoj"]
 
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://scenes/presets/animations/trees/Default.tscn" id="1_fjltp"]
 
@@ -210,8 +210,88 @@ tracks/0/keys = {
 "values": [33, 34, 35, 36, 37, 38]
 }
 
+[sub_resource type="Animation" id="Animation_qisc1"]
+resource_name = "AttackDown"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_jrmcd"]
+resource_name = "AttackRight"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [55, 56, 57, 58]
+}
+
+[sub_resource type="Animation" id="Animation_qxnb1"]
+resource_name = "AttackLeft"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [23, 24, 25, 26]
+}
+
+[sub_resource type="Animation" id="Animation_kodxx"]
+resource_name = "AttackUp"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [39, 40, 41, 42]
+}
+
+[sub_resource type="Animation" id="Animation_m1d7p"]
+resource_name = "Death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [72]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pnwib"]
 _data = {
+"AttackDown": SubResource("Animation_qisc1"),
+"AttackLeft": SubResource("Animation_qxnb1"),
+"AttackRight": SubResource("Animation_jrmcd"),
+"AttackUp": SubResource("Animation_kodxx"),
+"Death": SubResource("Animation_m1d7p"),
 "IdleDown": SubResource("6"),
 "IdleLeft": SubResource("7"),
 "IdleRight": SubResource("8"),
@@ -227,7 +307,7 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_vldf1"]
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_ftpe2"]
 
 [node name="Animation" type="AnimationPlayer"]
 libraries = {
@@ -235,6 +315,4 @@ libraries = {
 }
 
 [node name="AnimationTree" parent="." instance=ExtResource("1_fjltp")]
-anim_player = NodePath("..")
-active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_vldf1")
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_ftpe2")
