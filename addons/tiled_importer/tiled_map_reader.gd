@@ -874,6 +874,8 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 
 	for tileset in tilesets:
 		var tsAtlas = TileSetAtlasSource.new()
+		tsAtlas.use_texture_padding = false
+
 		var layerID = tsGroup.add_source(tsAtlas)
 		var ts = tileset
 		var ts_source_path = source_path
