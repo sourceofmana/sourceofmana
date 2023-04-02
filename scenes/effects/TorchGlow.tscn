@@ -5,6 +5,7 @@
 
 [node name="TorchGlow" type="PointLight2D"]
 position = Vector2(1521, 1272)
+scale = Vector2(1.2, 0.9)
 texture = ExtResource("1_bysqd")
 offset = Vector2(0, -32)
 script = ExtResource("2_7fvb7")
