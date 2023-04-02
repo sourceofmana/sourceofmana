@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.3.1" name="Torch" tilewidth="96" tileheight="64" tilecount="18" columns="6">
+<tileset version="1.9" tiledversion="1.9.2" name="Torch" tilewidth="96" tileheight="64" tilecount="18" columns="6">
  <image source="torch-x3x2.png" width="576" height="192"/>
  <tile id="0">
+  <properties>
+   <property name="glow_scale" type="float" value="1.1"/>
+   <property name="has_glow" type="bool" value="true"/>
+  </properties>
   <objectgroup draworder="index" id="2">
    <object id="5" x="42" y="50" width="12" height="12"/>
   </objectgroup>
@@ -15,6 +19,10 @@
   </animation>
  </tile>
  <tile id="6">
+  <properties>
+   <property name="glow_scale" type="float" value="2"/>
+   <property name="has_glow" type="bool" value="true"/>
+  </properties>
   <objectgroup draworder="index" id="3">
    <object id="7" x="34" y="46" width="28" height="18"/>
   </objectgroup>
@@ -28,6 +36,10 @@
   </animation>
  </tile>
  <tile id="12">
+  <properties>
+   <property name="glow_scale" type="float" value="2"/>
+   <property name="has_glow" type="bool" value="true"/>
+  </properties>
   <objectgroup draworder="index" id="2">
    <object id="2" x="34" y="46" width="28" height="18"/>
   </objectgroup>
