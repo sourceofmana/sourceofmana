@@ -417,10 +417,28 @@ func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, g
 				if caveShadow:
 					var specificInstance = ResourceLoader.load("res://scenes/effects/TorchGlow.tscn").instantiate()
 					if specificInstance:
+						var blendMode : Light2D.BlendMode = Light2D.BLEND_MODE_MIX
+						var textureScale : float = 1
+						var energyScale : float = 1
+
+						if caveShadow.color.v >= 1:
+							blendMode = Light2D.BLEND_MODE_ADD
+							textureScale = 0.15
+							energyScale = 0.2
+						elif caveShadow.color.v > 0.5:
+							blendMode = Light2D.BLEND_MODE_ADD
+							textureScale = 0.5
+							energyScale = 0.5
+
 						if specificGid.size() > 1:
 							specificInstance.set_position(cell_in_map + specificGid[1])
 						if specificGid.size() > 2:
-							specificInstance.set_texture_scale(specificGid[2])
+							textureScale *= specificGid[2]
+
+						specificInstance.set_texture_scale(textureScale)
+						specificInstance.set_energy(energyScale)
+						specificInstance.set_blend_mode(blendMode)
+
 						caveShadow.add_child(specificInstance)
 						specificInstance.set_owner(root)
 
@@ -1082,14 +1100,6 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 
 					specificDic[gid] = ["TorchGlow", region.size / 2, glow_scale]
 
-					if root:
-						var caveShadow : Node2D = root.get_node_or_null("CaveShadow")
-						if caveShadow == null:
-							caveShadow = ResourceLoader.load("res://scenes/effects/CaveShadow.tscn").instantiate()
-							caveShadow.set_name("CaveShadow")
-							root.add_child(caveShadow)
-							caveShadow.set_owner(root)
-
 			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
 					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
 				tile_meta[gid] = get_custom_properties(ts.tileproperties[rel_id], ts.tilepropertytypes[rel_id])
@@ -1361,6 +1371,15 @@ func set_custom_properties(object, tiled_object):
 	var properties = get_custom_properties(tiled_object.properties, tiled_object.propertytypes)
 	for property in properties:
 		object.set_meta(property, properties[property])
+		if property == "shadow":
+			var caveShadow : Node2D = object.get_node_or_null("CaveShadow")
+			if caveShadow == null:
+				caveShadow = ResourceLoader.load("res://scenes/effects/CaveShadow.tscn").instantiate()
+				caveShadow.color.v = properties[property]
+
+				caveShadow.set_name("CaveShadow")
+				object.add_child(caveShadow)
+				caveShadow.set_owner(object)
 
 # Get the custom properties as a dictionary
 # Useful for tile meta, which is not stored directly
