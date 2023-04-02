@@ -83,6 +83,8 @@ var warp_pool : Array = []
 var JSONInstance = JSON.new()
 # Tile DB
 var tileDic : Dictionary = {}
+# Tile Specific Nodes
+var specificDic : Dictionary = {}
 # Navigation mesh variables
 var cell_size = Vector2.ZERO
 var map_width = 0
@@ -405,6 +407,23 @@ func remove_outer_polygons(border : Vector2i):
 	for rem_index in range(polygons_to_remove.size() -1, -1, -1):
 		polygon_pool.remove_at(polygons_to_remove[rem_index])
 
+#
+func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, gid : int):
+	if gid in specificDic and specificDic[gid].size() > 0:
+		var specificGid = specificDic[gid]
+		match specificGid[0]:
+			"TorchGlow":
+				var caveShadow : Node2D = root.get_node_or_null("CaveShadow")
+				if caveShadow:
+					var specificInstance = ResourceLoader.load("res://scenes/effects/TorchGlow.tscn").instantiate()
+					if specificInstance:
+						if specificGid.size() > 1:
+							specificInstance.set_position(cell_in_map + specificGid[1])
+						if specificGid.size() > 2:
+							specificInstance.set_texture_scale(specificGid[2])
+						caveShadow.add_child(specificInstance)
+						specificInstance.set_owner(root)
+
 # Creates a layer node from the data
 # Returns an error code
 func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
@@ -481,6 +500,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 				var cell_in_map = Vector2(cell_pos_x, cell_pos_y)
 
 				level.set_cell(layerID, cell, tileDic[gid][0], tileDic[gid][1])
+				add_specific_nodes(level, root, cell_in_map, gid)
 				fill_polygon_pool(level, cell_in_map, cell_size, gid)
 
 				count += 1
@@ -1053,6 +1073,22 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 						var tilePolygonCount = tileData.get_collision_polygons_count(0)
 						tileData.set_collision_polygons_count(0, tilePolygonCount + 1)
 						tileData.set_collision_polygon_points(0, tilePolygonCount, polygonShape)
+			# Handle some specific features
+			if "tileproperties" in ts and rel_id in ts.tileproperties:
+				if "has_glow" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].has_glow:
+					var glow_scale : float = 1.0
+					if "glow_scale" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].glow_scale:
+						glow_scale = ts.tileproperties[rel_id].glow_scale
+
+					specificDic[gid] = ["TorchGlow", region.size / 2, glow_scale]
+
+					if root:
+						var caveShadow : Node2D = root.get_node_or_null("CaveShadow")
+						if caveShadow == null:
+							caveShadow = ResourceLoader.load("res://scenes/effects/CaveShadow.tscn").instantiate()
+							caveShadow.set_name("CaveShadow")
+							root.add_child(caveShadow)
+							caveShadow.set_owner(root)
 
 			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
 					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
