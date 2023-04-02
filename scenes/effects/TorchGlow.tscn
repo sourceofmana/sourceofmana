@@ -7,4 +7,5 @@
 position = Vector2(1521, 1272)
 blend_mode = 2
 texture = ExtResource("1_bysqd")
+offset = Vector2(0, -32)
 script = ExtResource("2_7fvb7")
