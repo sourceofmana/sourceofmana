@@ -4,6 +4,7 @@
   <property name="author" value="CC BY-SA 4.0 (c) Pydsigner, Jesusalva, Reid"/>
   <property name="music" value="Cave Theme"/>
   <property name="name" value="Skull Chamber"/>
+  <property name="shadow" type="float" value="0.3"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/isles/skull/Cave.tsx"/>
  <tileset firstgid="257" source="../../graphics/tilesets/isles/skull/Cave x2.tsx"/>

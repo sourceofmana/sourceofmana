@@ -4,6 +4,7 @@
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
   <property name="name" value="Phatyna First Room"/>
+  <property name="shadow" type="float" value="0.5"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/aemil/cave/Cave.tsx"/>
  <tileset firstgid="257" source="../../graphics/tilesets/aemil/cave/Cave x2.tsx"/>
