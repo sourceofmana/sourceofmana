@@ -1,11 +1,8 @@
 *.DS_Store
 binary/*
 build/*
-.godot/editor*/
-.godot/shader*/
-.godot/*.bin
-.godot/exported/*
-.godot/\.*
+.godot/*
+*.import
 
 # linux env
 .mono
