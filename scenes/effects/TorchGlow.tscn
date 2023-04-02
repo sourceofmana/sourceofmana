@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpqxr3214t821"]
+
+[ext_resource type="Texture2D" uid="uid://cgmyhq0dighpt" path="res://data/graphics/effects/light.png" id="1_bysqd"]
+[ext_resource type="Script" path="res://sources/effects/TorchGlow.gd" id="2_7fvb7"]
+
+[node name="TorchGlow" type="PointLight2D"]
+position = Vector2(1521, 1272)
+blend_mode = 2
+texture = ExtResource("1_bysqd")
+script = ExtResource("2_7fvb7")
