@@ -1,5 +1,3 @@
 [gd_scene format=3 uid="uid://chfa2rm8sfwc3"]
 
 [node name="PlayerCamera" type="Camera2D"]
-current = true
-smoothing_enabled = true
