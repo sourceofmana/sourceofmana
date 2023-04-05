@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3]
 
 [ext_resource type="Texture2D" uid="uid://cnmxs1n4xeaix" path="res://data/graphics/sprites/npcs/large-chest.png" id="1_ql3k7"]
-[ext_resource type="PackedScene" uid="uid://duky5bv15qjay" path="res://scenes/entities/sprites/animations/Chest.tscn" id="2_uh77a"]
+[ext_resource type="PackedScene" uid="uid://duky5bv15qjay" path="res://presets/entities/sprites/animations/Chest.tscn" id="2_uh77a"]
 
 [sub_resource type="Animation" id="Animation_x1wls"]
 resource_name = "Default"

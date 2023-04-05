@@ -5,7 +5,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pp1k4"]
 shader = ExtResource("1_ojh3w")
-shader_parameter/enabled = null
+shader_parameter/enabled = true
 
 [node name="HQ4x" type="TextureRect"]
 material = SubResource("ShaderMaterial_pp1k4")

@@ -166,11 +166,6 @@ func LoadResource(fullPath : String, instantiate : bool = true) -> Object:
 
 	return rscInstance
 
-# Scene
-func LoadScene(path : String) -> Resource:
-	var fullPath : String = Launcher.Path.Scn + path + Launcher.Path.SceneExt
-	return LoadResource(fullPath)
-
 # Entity
 func LoadEntitySprite(type : String, instantiate : bool = true) -> BaseEntity:
 	var fullPath : String = Launcher.Path.EntitySprite + type + Launcher.Path.SceneExt
@@ -186,7 +181,7 @@ func LoadEntity(type : String, instantiate : bool = true) -> BaseEntity:
 
 # GUI
 func LoadGui(path : String, instantiate : bool = true) -> Object:
-	var fullPath : String = Launcher.Path.GuiScn + path + Launcher.Path.SceneExt
+	var fullPath : String = Launcher.Path.GuiPst + path + Launcher.Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
 # Music

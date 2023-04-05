@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://cv0t25l5uwesy"]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1"]
-[ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://scenes/gui/ProgressBar.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="2"]
 [ext_resource type="Script" path="res://sources/gui/inventory/Inventory.gd" id="2_46jtg"]
 [ext_resource type="Texture2D" uid="uid://bg4lcfpfs8wuo" path="res://data/graphics/gui/inventory/closebutton.png" id="3"]
 [ext_resource type="Script" path="res://sources/gui/ItemGridDisplay.gd" id="6_u84n8"]
 [ext_resource type="Texture2D" uid="uid://n5h5pue2jfn0" path="res://data/graphics/gui/bar.png" id="8"]
+
 
 [node name="Panel" type="PanelContainer"]
 show_behind_parent = true

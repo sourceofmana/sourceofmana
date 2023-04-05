@@ -15,12 +15,12 @@ const ConfRsc : String					= DataRsc + "conf/"
 const Src : String						= Rsc + "sources/"
 const DBInstSrc : String				= Src + "db/instance/"
 
-const Scn : String						= Rsc + "scenes/"
-const GuiScn : String					= Scn + "gui/"
-const EntityScn : String				= Scn + "entities/"
-const EntityVariant : String			= EntityScn + "variants/"
-const EntityComponent : String			= EntityScn + "components/"
-const EntitySprite : String				= EntityScn + "sprites/"
+const Pst : String						= Rsc + "presets/"
+const GuiPst : String					= Pst + "gui/"
+const EntityPst : String				= Pst + "entities/"
+const EntityVariant : String			= EntityPst + "variants/"
+const EntityComponent : String			= EntityPst + "components/"
+const EntitySprite : String				= EntityPst + "sprites/"
 
 # Local
 const Local : String					= "user://"

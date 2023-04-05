@@ -3,7 +3,7 @@ extends GridContainer
 #
 signal ItemClicked
 
-const Tile = preload("res://scenes/gui/emotes/Tile.tscn")
+const Tile = preload("res://presets/gui/emotes/Tile.tscn")
 
 var slots : Array = []
 

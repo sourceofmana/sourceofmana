@@ -11,16 +11,13 @@ mouse_filter = 2
 alignment = 1
 
 [node name="ActionEmptyPanel3" type="Control" parent="."]
-offset_right = 48.0
-offset_bottom = 36.0
+layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
 [node name="Action1" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(36, 36)
-offset_left = 52.0
-offset_right = 88.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 1
 texture = ExtResource("1")
 patch_margin_left = 2
@@ -30,9 +27,7 @@ patch_margin_bottom = 3
 
 [node name="Action2" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(36, 36)
-offset_left = 92.0
-offset_right = 128.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 1
 texture = ExtResource("1")
 patch_margin_left = 2
@@ -42,9 +37,7 @@ patch_margin_bottom = 3
 
 [node name="Action3" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(36, 36)
-offset_left = 132.0
-offset_right = 168.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 1
 texture = ExtResource("1")
 patch_margin_left = 2
@@ -54,9 +47,7 @@ patch_margin_bottom = 3
 
 [node name="Action4" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(36, 36)
-offset_left = 172.0
-offset_right = 208.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 1
 texture = ExtResource("1")
 patch_margin_left = 2
@@ -66,16 +57,12 @@ patch_margin_bottom = 3
 
 [node name="ActionEmptyPanel1" type="Control" parent="."]
 custom_minimum_size = Vector2(36, 0)
-offset_left = 212.0
-offset_right = 248.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 2
 
 [node name="Action5" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(36, 36)
-offset_left = 252.0
-offset_right = 288.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 1
 texture = ExtResource("1")
 patch_margin_left = 2
@@ -85,9 +72,7 @@ patch_margin_bottom = 3
 
 [node name="Action6" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(36, 36)
-offset_left = 292.0
-offset_right = 328.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 1
 texture = ExtResource("1")
 patch_margin_left = 2
@@ -97,16 +82,12 @@ patch_margin_bottom = 3
 
 [node name="ActionEmptyPanel2" type="Control" parent="."]
 custom_minimum_size = Vector2(36, 0)
-offset_left = 332.0
-offset_right = 368.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 2
 
 [node name="Action7" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(36, 36)
-offset_left = 372.0
-offset_right = 408.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 1
 texture = ExtResource("1")
 patch_margin_left = 2
@@ -116,9 +97,7 @@ patch_margin_bottom = 3
 
 [node name="Action8" type="NinePatchRect" parent="."]
 custom_minimum_size = Vector2(36, 36)
-offset_left = 412.0
-offset_right = 448.0
-offset_bottom = 36.0
+layout_mode = 2
 mouse_filter = 1
 texture = ExtResource("1")
 patch_margin_left = 2
@@ -127,8 +106,6 @@ patch_margin_right = 2
 patch_margin_bottom = 3
 
 [node name="ActionEmptyPanel4" type="Control" parent="."]
-offset_left = 452.0
-offset_right = 500.0
-offset_bottom = 36.0
+layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2

@@ -4,7 +4,7 @@ extends WindowPanel
 @onready var itemGrid : GridContainer	= $VBoxContainer/ItemContainer/Grid
 @onready var itemContainer : Container	= $VBoxContainer/ItemContainer
 
-const Tile = preload("res://scenes/gui/inventory/ItemGridTile.tscn")
+const Tile = preload("res://presets/gui/inventory/ItemGridTile.tscn")
 
 
 # Called when the node enters the scene tree for the first time.

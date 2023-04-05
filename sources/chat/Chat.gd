@@ -4,7 +4,7 @@ class_name ChatContainer
 @onready var tabContainer : TabContainer		= $ChatTabContainer
 @onready var lineEdit : LineEdit				= $NewText
 
-@onready var tabInstance : Object				= Launcher.FileSystem.ResourceLoad("res://scenes/gui/chat/ChatTab.tscn")
+@onready var tabInstance : Object				= Launcher.FileSystem.ResourceLoad("res://presets/gui/chat/ChatTab.tscn")
 @onready var chatHistory : ChatHistory			= ChatHistory.new()
 var playerColor : Color 						= Color("FFFFDD")
 var systemColor : Color 						= Color("EECC77")

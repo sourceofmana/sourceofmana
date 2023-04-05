@@ -415,7 +415,7 @@ func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, g
 			"TorchGlow":
 				var caveShadow : Node2D = root.get_node_or_null("CaveShadow")
 				if caveShadow:
-					var specificInstance = ResourceLoader.load("res://scenes/effects/TorchGlow.tscn").instantiate()
+					var specificInstance = ResourceLoader.load("res://presets/effects/TorchGlow.tscn").instantiate()
 					if specificInstance:
 						var blendMode : Light2D.BlendMode = Light2D.BLEND_MODE_MIX
 						var textureScale : float = 1
@@ -1374,7 +1374,7 @@ func set_custom_properties(object, tiled_object):
 		if property == "shadow":
 			var caveShadow : Node2D = object.get_node_or_null("CaveShadow")
 			if caveShadow == null:
-				caveShadow = ResourceLoader.load("res://scenes/effects/CaveShadow.tscn").instantiate()
+				caveShadow = ResourceLoader.load("res://presets/effects/CaveShadow.tscn").instantiate()
 				caveShadow.color.v = properties[property]
 
 				caveShadow.set_name("CaveShadow")

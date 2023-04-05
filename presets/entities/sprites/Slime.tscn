@@ -1,9 +1,9 @@
 [gd_scene load_steps=23 format=3]
 
-[ext_resource type="Texture2D" uid="uid://cwqehwlm65atm" path="res://data/graphics/sprites/monsters/phatyna.png" id="1"]
-[ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://scenes/entities/sprites/animations/Default.tscn" id="2_kn3uj"]
+[ext_resource type="Texture2D" uid="uid://dun8v8tn4oknc" path="res://data/graphics/sprites/monsters/lulea.png" id="1_kcq17"]
+[ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/Default.tscn" id="2_gv6wv"]
 
-[sub_resource type="Animation" id="Animation_k46p5"]
+[sub_resource type="Animation" id="Animation_qks5j"]
 resource_name = "AttackDown"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -12,13 +12,13 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [24, 25, 26, 27, 28, 29, 30, 31]
+"values": [22, 23, 24, 25]
 }
 
-[sub_resource type="Animation" id="Animation_v5vca"]
+[sub_resource type="Animation" id="Animation_apvk4"]
 resource_name = "AttackLeft"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -27,13 +27,13 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [36, 37, 38, 39, 40, 41, 42, 43]
+"values": [4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_4saa4"]
+[sub_resource type="Animation" id="Animation_hrf5s"]
 resource_name = "AttackRight"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -42,13 +42,13 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [24, 25, 26, 27, 28, 29, 30, 31]
+"values": [22, 23, 24, 25]
 }
 
-[sub_resource type="Animation" id="Animation_6ruor"]
+[sub_resource type="Animation" id="Animation_t4ydb"]
 resource_name = "AttackUp"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -57,25 +57,25 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [36, 37, 38, 39, 40, 41, 42, 43]
+"values": [4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_o7dai"]
+[sub_resource type="Animation" id="Animation_ha1pu"]
 resource_name = "Death"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
+tracks/0/path = NodePath(".:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [32]
+"values": [Vector2i(8, 0)]
 }
 
 [sub_resource type="Animation" id="6"]
@@ -107,7 +107,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [12]
+"values": [9]
 }
 
 [sub_resource type="Animation" id="8"]
@@ -123,7 +123,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [6]
+"values": [27]
 }
 
 [sub_resource type="Animation" id="9"]
@@ -153,12 +153,36 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [19]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [Vector2i(8, 0)]
 }
 
 [sub_resource type="Animation" id="35"]
 resource_name = "SitDown"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="36"]
 resource_name = "SitLeft"
@@ -216,10 +240,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [1, 2, 3, 4, 5, 1, 0]
+"values": [1, 2, 3, 0]
 }
 
 [sub_resource type="Animation" id="4"]
@@ -233,10 +257,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [13, 14, 15, 16, 17, 13, 12]
+"values": [10, 11, 12, 9]
 }
 
 [sub_resource type="Animation" id="2"]
@@ -250,10 +274,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [7, 8, 9, 10, 11, 7, 6]
+"values": [28, 29, 30, 27]
 }
 
 [sub_resource type="Animation" id="5"]
@@ -267,19 +291,19 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [19, 20, 21, 22, 23, 19, 18]
+"values": [19, 20, 21, 18]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iko4k"]
 _data = {
-"AttackDown": SubResource("Animation_k46p5"),
-"AttackLeft": SubResource("Animation_v5vca"),
-"AttackRight": SubResource("Animation_4saa4"),
-"AttackUp": SubResource("Animation_6ruor"),
-"Death": SubResource("Animation_o7dai"),
+"AttackDown": SubResource("Animation_qks5j"),
+"AttackLeft": SubResource("Animation_apvk4"),
+"AttackRight": SubResource("Animation_hrf5s"),
+"AttackUp": SubResource("Animation_t4ydb"),
+"Death": SubResource("Animation_ha1pu"),
 "IdleDown": SubResource("6"),
 "IdleLeft": SubResource("7"),
 "IdleRight": SubResource("8"),
@@ -295,18 +319,18 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_38fyr"]
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_xaqvr"]
 
 [node name="Sprite" type="Sprite2D"]
-texture = ExtResource("1")
-offset = Vector2(0, -28)
-hframes = 6
-vframes = 8
+texture = ExtResource("1_kcq17")
+offset = Vector2(0, -5)
+hframes = 9
+vframes = 4
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_iko4k")
 }
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_kn3uj")]
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_38fyr")
+[node name="AnimationTree" parent="Animation" instance=ExtResource("2_gv6wv")]
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_xaqvr")
