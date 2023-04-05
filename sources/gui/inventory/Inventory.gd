@@ -4,9 +4,6 @@ extends WindowPanel
 @onready var itemGrid : GridContainer	= $VBoxContainer/ItemContainer/Grid
 @onready var itemContainer : Container	= $VBoxContainer/ItemContainer
 
-const Tile = preload("res://presets/gui/inventory/ItemGridTile.tscn")
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	itemContainer.resized.connect(_on_panel_resized)
@@ -35,9 +32,10 @@ func update_inventory_ui():
 		itemGrid.remove_child(oldItem)
 		oldItem.disconnect("ItemClicked", _on_item_click)
 		oldItem.queue_free()
-	
+
+	var tilePreset = Launcher.FileSystem.LoadGui("inventory/ItemGridTile", false)
 	for item in Launcher.Player.inventory.items:
-		var tileInstance : InventoryItemGridTile = Tile.instantiate()
+		var tileInstance : InventoryItemGridTile = tilePreset.instantiate()
 		tileInstance.set_data(item)
 		tileInstance.connect("ItemClicked", _on_item_click)
 		itemGrid.add_child(tileInstance)

@@ -11,8 +11,8 @@ var EmotesDB : Dictionary			= {}
 
 
 func ParseMapsDB():
-	var Map = load(Launcher.Path.DBInstSrc + "Map.gd")
-	var result = Launcher.FileSystem.LoadDB("maps.json")
+	var Map		= Launcher.FileSystem.LoadDBInstance("Map.gd")
+	var result	= Launcher.FileSystem.LoadDB("maps.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -22,8 +22,8 @@ func ParseMapsDB():
 			MapsDB[key] = map
 
 func ParseMusicsDB():
-	var Music = load(Launcher.Path.DBInstSrc + "Music.gd")
-	var result = Launcher.FileSystem.LoadDB("musics.json")
+	var Music	= Launcher.FileSystem.LoadDBInstance("Music.gd")
+	var result	= Launcher.FileSystem.LoadDB("musics.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -33,8 +33,8 @@ func ParseMusicsDB():
 			MusicsDB[key] = music
 
 func ParseEthnicitiesDB():
-	var Trait = load(Launcher.Path.DBInstSrc + "Trait.gd")
-	var result = Launcher.FileSystem.LoadDB("ethnicities.json")
+	var Trait	= Launcher.FileSystem.LoadDBInstance("Trait.gd")
+	var result	= Launcher.FileSystem.LoadDB("ethnicities.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -46,8 +46,8 @@ func ParseEthnicitiesDB():
 			EthnicitiesDB[key] = ethnicity
 
 func ParseHairstylesDB():
-	var Trait = load(Launcher.Path.DBInstSrc + "Trait.gd")
-	var result = Launcher.FileSystem.LoadDB("hairstyles.json")
+	var Trait	= Launcher.FileSystem.LoadDBInstance("Trait.gd")
+	var result	= Launcher.FileSystem.LoadDB("hairstyles.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -59,8 +59,8 @@ func ParseHairstylesDB():
 			HairstylesDB[key] = hairstyle
 
 func ParseEntitiesDB():
-	var Entity = load(Launcher.Path.DBInstSrc + "Entity.gd")
-	var result = Launcher.FileSystem.LoadDB("entities.json")
+	var Entity	= Launcher.FileSystem.LoadDBInstance("Entity.gd")
+	var result	= Launcher.FileSystem.LoadDB("entities.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -69,14 +69,8 @@ func ParseEntitiesDB():
 			entity._name = result[key].Name
 			if "Ethnicity" in result[key]:
 				entity._ethnicity = result[key].Ethnicity
-			if "Gender" in result[key]:
-				entity._gender = result[key].Gender
 			if "Hairstyle" in result[key]:
 				entity._hairstyle = result[key].Hairstyle
-			if "Animation" in result[key]:
-				entity._animation = result[key].Animation
-			if "AnimationTree" in result[key]:
-				entity._animationTree = result[key].AnimationTree
 			if "NavigationAgent" in result[key]:
 				entity._navigationAgent = result[key].NavigationAgent
 			if "Collision" in result[key]:
@@ -91,8 +85,8 @@ func ParseEntitiesDB():
 
 #
 func ParseEmotesDB():
-	var Emote = load(Launcher.Path.DBInstSrc + "Emote.gd")
-	var result = Launcher.FileSystem.LoadDB("emotes.json")
+	var Emote	= Launcher.FileSystem.LoadDBInstance("Emote.gd")
+	var result	= Launcher.FileSystem.LoadDB("emotes.json")
 
 	if not result.is_empty():
 		for key in result:

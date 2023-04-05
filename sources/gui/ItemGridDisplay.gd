@@ -3,15 +3,15 @@ extends GridContainer
 #
 signal ItemClicked
 
-const Tile = preload("res://presets/gui/emotes/Tile.tscn")
-
 var slots : Array = []
 
 #
 func FillGridContainer(listOfItem : Dictionary):
 	if listOfItem:
+		var tilePreset = Launcher.FileSystem.LoadGui("emotes/Tile", false)
+
 		for item in listOfItem:
-			var tileInstance : ColorRect	= Tile.instantiate()
+			var tileInstance : ColorRect	= tilePreset.instantiate()
 			var itemReference : Object		= listOfItem[item]
 			var itemTexture : Texture2D		= Launcher.FileSystem.LoadGfx(itemReference._path)
 

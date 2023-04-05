@@ -1,7 +1,6 @@
 extends Node
 
 #
-const WarpObject			= preload("res://addons/tiled_importer/WarpObject.gd")
 var pool : Dictionary		= {}
 
 #

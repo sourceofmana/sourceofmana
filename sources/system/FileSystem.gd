@@ -85,6 +85,10 @@ func LoadDB(path : String) -> Dictionary:
 
 	return result
 
+func LoadDBInstance(path : String) -> Object:
+	var partialPath : String = "db/instance/" + path
+	return LoadSource(partialPath, false)
+
 # Map
 func LoadMap(path : String, ext : String) -> Object:
 	var mapInstance : Object	= null
@@ -101,7 +105,7 @@ func LoadMap(path : String, ext : String) -> Object:
 	return mapInstance
 
 # Source
-func LoadSource(path : String) -> Object:
+func LoadSource(path : String, alloc : bool = true) -> Object:
 	var fullPath : String		= Launcher.Path.Src + path
 	var srcFile : Object		= null
 
@@ -109,7 +113,7 @@ func LoadSource(path : String) -> Object:
 	Util.Assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		srcFile = FileAlloc(fullPath)
+		srcFile = FileAlloc(fullPath) if alloc else FileLoad(fullPath)
 		Util.PrintLog("Source", "Loading script: " + fullPath)
 
 	return srcFile
@@ -180,7 +184,7 @@ func LoadEntity(type : String, instantiate : bool = true) -> BaseEntity:
 	return LoadResource(fullPath, instantiate)
 
 # GUI
-func LoadGui(path : String, instantiate : bool = true) -> Object:
+func LoadGui(path : String, instantiate : bool = true) -> Resource:
 	var fullPath : String = Launcher.Path.GuiPst + path + Launcher.Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
