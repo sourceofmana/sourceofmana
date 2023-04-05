@@ -1,7 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://j77mu6qtn4gs"]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Texture2D" uid="uid://dbwd2qy1p6wur" path="res://data/graphics/sprites/players/human-male.png" id="1_1uku2"]
-[ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://scenes/presets/entities/sprites/animations/Default.tscn" id="2_xsok5"]
+[ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://scenes/entities/sprites/animations/Default.tscn" id="2_xsok5"]
 
 [sub_resource type="Animation" id="Animation_qisc1"]
 resource_name = "AttackDown"

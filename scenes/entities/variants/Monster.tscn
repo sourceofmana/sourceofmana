@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://olg3jfsyvw21"]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://sources/entity/variants/MonsterEntity.gd" id="1_5xspk"]
-[ext_resource type="PackedScene" uid="uid://f2jxqr5e7i5e" path="res://scenes/presets/entities/components/Interactions.tscn" id="2_dubmo"]
+[ext_resource type="PackedScene" uid="uid://f2jxqr5e7i5e" path="res://scenes/entities/components/Interactions.tscn" id="2_dubmo"]
 
 [node name="Monster" type="CharacterBody2D"]
 collision_layer = 5

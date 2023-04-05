@@ -171,14 +171,17 @@ func LoadScene(path : String) -> Resource:
 	var fullPath : String = Launcher.Path.Scn + path + Launcher.Path.SceneExt
 	return LoadResource(fullPath)
 
-# Preset
-func LoadPreset(path : String, instantiate : bool = true) -> Object:
-	var fullPath : String = Launcher.Path.PresetScn + path + Launcher.Path.SceneExt
+# Entity
+func LoadEntitySprite(type : String, instantiate : bool = true) -> BaseEntity:
+	var fullPath : String = Launcher.Path.EntitySprite + type + Launcher.Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
-# Entity
+func LoadEntityComponent(type : String, instantiate : bool = true) -> BaseEntity:
+	var fullPath : String = Launcher.Path.EntityComponent + type + Launcher.Path.SceneExt
+	return LoadResource(fullPath, instantiate)
+
 func LoadEntity(type : String, instantiate : bool = true) -> BaseEntity:
-	var fullPath : String = Launcher.Path.EntityVariantScn + type + Launcher.Path.SceneExt
+	var fullPath : String = Launcher.Path.EntityVariant + type + Launcher.Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
 # GUI

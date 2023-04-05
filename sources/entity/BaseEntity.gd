@@ -46,7 +46,7 @@ func SetData(data : Object):
 	displayName		= data._displayName
 
 	# Sprite
-	sprite = Launcher.FileSystem.LoadPreset("entities/sprites/" + data._ethnicity)
+	sprite = Launcher.FileSystem.LoadEntitySprite(data._ethnicity)
 	if sprite:
 		if data._customTexture:
 			sprite.texture = Launcher.FileSystem.LoadGfx(data._customTexture)
@@ -61,7 +61,7 @@ func SetData(data : Object):
 				animationTree = animation.get_child(0)
 
 	# Collision
-	collision = Launcher.FileSystem.LoadPreset("entities/components/collisions/" + data._collision)
+	collision = Launcher.FileSystem.LoadEntityComponent("collisions/" + data._collision)
 	if collision:
 		add_child(collision)
 
