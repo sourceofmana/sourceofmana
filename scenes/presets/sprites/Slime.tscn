@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://084t8sbio3r2"]
-
-[ext_resource type="Texture2D" uid="uid://dun8v8tn4oknc" path="res://data/graphics/sprites/monsters/lulea.png" id="1_kcq17"]
-
-[node name="Sprite" type="Sprite2D"]
-texture = ExtResource("1_kcq17")
-offset = Vector2(0, -5)
-hframes = 9
-vframes = 4

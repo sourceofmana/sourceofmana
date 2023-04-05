@@ -46,23 +46,22 @@ func SetData(data : Object):
 	displayName		= data._displayName
 
 	# Sprite
-	sprite = Launcher.FileSystem.LoadPreset("sprites/" + data._ethnicity + data._gender)
+	sprite = Launcher.FileSystem.LoadPreset("entities/sprites/" + data._ethnicity)
 	if sprite:
 		if data._customTexture:
 			sprite.texture = Launcher.FileSystem.LoadGfx(data._customTexture)
 		add_child(sprite)
 
-	# Animation
-	if data._animation:
-		animation = Launcher.FileSystem.LoadPreset("animations/" + data._animation)
-		var canFetchAnimTree = animation != null && animation.has_node("AnimationTree")
-		Util.Assert(canFetchAnimTree, "No AnimationTree found")
-		if canFetchAnimTree:
-			animationTree = animation.get_node("AnimationTree")
-		add_child(animation)
+		Util.Assert(sprite.get_child_count() > 0, "No animation available for " + entityName)
+		if sprite.get_child_count() > 0:
+			animation = sprite.get_child(0)
+
+			Util.Assert(animation.get_child_count() > 0, "No animation tree available for " + entityName)
+			if animation.get_child_count() > 0:
+				animationTree = animation.get_child(0)
 
 	# Collision
-	collision = Launcher.FileSystem.LoadPreset("collisions/" + data._collision)
+	collision = Launcher.FileSystem.LoadPreset("entities/components/collisions/" + data._collision)
 	if collision:
 		add_child(collision)
 
