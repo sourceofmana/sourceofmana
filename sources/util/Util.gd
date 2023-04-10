@@ -28,6 +28,13 @@ func ShootCallback(args : Array):
 			callback.callv(args)
 
 #
+static func StartTimer(timer : Timer, delay : float, callable : Callable):
+	if timer:
+		timer.start(delay)
+		if not timer.timeout.is_connected(callable):
+			timer.timeout.connect(callable)
+
+#
 func GetScreenCapture() -> Image:
 	return Launcher.get_viewport().get_texture().get_image()
 

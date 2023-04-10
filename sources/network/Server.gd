@@ -39,17 +39,15 @@ func GetEntities(rpcID : int = -1):
 func SetClickPos(pos : Vector2, rpcID : int = -1):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
+		player.ResetCombat()
 		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, rpcID : int = -1):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
 		var pos : Vector2 = direction.normalized() * Vector2(32,32) + player.position
-		var path = NavigationServer2D.map_get_path(player.agent.get_navigation_map(), player.position, pos, true)
-		var pathLength = 0
-		for i in range(0, path.size() - 1):
-			pathLength += Vector2(path[i] - path[i+1]).length()
-		if pathLength <= 48:
+		if Launcher.World.GetPathLength(player, pos) <= 48:
+			player.ResetCombat()
 			player.WalkToward(pos)
 
 func TriggerWarp(rpcID : int = -1):

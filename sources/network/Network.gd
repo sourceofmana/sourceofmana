@@ -101,9 +101,9 @@ func TriggerEntity(entityID : int, rpcID : int = -1):
 	elif Server:	Server.TriggerEntity(entityID, rpcID)
 
 @rpc("authority", "reliable")
-func KillTriggered(ridAgent : int, rpcID : int = -1):
-	if Server:		NetCallClient("KillTriggered", [ridAgent], rpcID)
-	elif Client:	Client.KillTriggered(ridAgent)
+func DamageDealt(agentID : int, targetID : int, damage : int, rpcID : int = -1):
+	if Server:		NetCallClient("DamageDealt", [agentID, targetID, damage], rpcID)
+	elif Client:	Client.DamageDealt(agentID, targetID, damage)
 
 #
 func NetCallServer(methodName : String, args : Array):

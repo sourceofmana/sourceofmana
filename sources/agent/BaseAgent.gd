@@ -7,7 +7,9 @@ var agentName : String					= ""
 var agentType : String					= ""
 var agentID : String					= ""
 
-var aiTimer : AiTimer					= null
+var aiTimer : Timer						= null
+var combatTimer : Timer					= null
+var deathTimer : Timer					= null
 var hasCurrentGoal : bool				= false
 
 var currentState : EntityCommons.State	= EntityCommons.State.IDLE
@@ -15,6 +17,7 @@ var pastState : EntityCommons.State		= EntityCommons.State.IDLE
 
 var isSitting : bool					= false
 var isAttacking : bool					= false
+var target : BaseAgent					= null
 
 var currentVelocity : Vector2			= Vector2.ZERO
 var pastVelocity : Vector2				= Vector2.ZERO
@@ -87,6 +90,9 @@ func IsStuck() -> bool:
 		isStuck = sum.abs() < Vector2(1, 1)
 	return isStuck
 
+func ResetCombat():
+	target = null
+
 func HasChanged() -> bool:
 	return position != pastPosition || velocity != pastVelocity || currentState != pastState
 
@@ -110,12 +116,21 @@ func SetKind(entityType : String, entityID : String, entityName : String):
 		agentName	= entityName
 	set_name(agentName)
 
-	if agentType == "Monster" or agentType == "Npc":
-		aiTimer = AiTimer.new()
+	if self is MonsterAgent or self is NpcAgent:
+		aiTimer = Timer.new()
+		aiTimer.set_name("AiTimer")
 		add_child(aiTimer)
+	if self is MonsterAgent or self is PlayerAgent:
+		combatTimer = Timer.new()
+		combatTimer.set_name("CombatTimer")
+		add_child(combatTimer)
+		deathTimer = Timer.new()
+		deathTimer.set_name("DeathTimer")
+		add_child(deathTimer)
 
 func SetData(data : Object):
 	# Stat
+	stat.baseMoveSpeed = data._walkSpeed
 	stat.moveSpeed	= data._walkSpeed
 
 	# Navigation
@@ -145,8 +160,8 @@ func _velocity_computed(safeVelocity : Vector2):
 		SetState(EntityCommons.State.DEATH)
 #	elif isSitting:
 #		SetState(EntityCommons.State.SIT)
-#	elif isAttacking:
-#		SetState(EntityCommons.State.ATTACK)
+	elif isAttacking:
+		SetState(EntityCommons.State.ATTACK)
 	elif currentVelocity == Vector2.ZERO:
 		SetState(EntityCommons.State.IDLE)
 	else:

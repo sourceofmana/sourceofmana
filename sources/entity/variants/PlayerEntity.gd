@@ -19,10 +19,11 @@ func Interact():
 	if isPlayableController && interactive && Launcher.Map:
 		var nearestDistance : float = -1
 		for nearEntity in interactive.canInteractWith:
-			var distance : float = (nearEntity.position - position).length()
-			if nearestDistance == -1 || distance < nearestDistance:
-				nearestDistance = distance
-				target = nearEntity
+			if nearEntity && nearEntity.entityState != EntityCommons.State.DEATH:
+				var distance : float = (nearEntity.position - position).length()
+				if nearestDistance == -1 || distance < nearestDistance:
+					nearestDistance = distance
+					target = nearEntity
 
 		if target:
 			var entityID = Launcher.Map.entities.find_key(target)

@@ -30,6 +30,16 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = -1):
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
 
+func DamageDealt(ridAgent : int, targetID : int, damage : int, _rpcID : int = -1):
+	if Launcher.Map:
+		var entity : BaseEntity = Launcher.Map.entities.get(targetID)
+		var caller : BaseEntity = Launcher.Map.entities.get(ridAgent)
+		if caller && entity && entity.get_parent():
+			if entity.interactive:
+				var color : String = "00FF00" if caller == Launcher.Player else "0000FF"
+				var text : String = "[color=#%s]%d[/color]" % [color, damage]
+				entity.interactive.DisplaySpeech(text)
+
 func DisconnectPlayer():
 	if Launcher.Map:
 		Launcher.Map.UnloadMapNode()

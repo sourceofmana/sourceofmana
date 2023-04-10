@@ -29,8 +29,20 @@ func UpdateAnimation():
 		var animationState : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
 		var stateName : String = EntityCommons.GetStateName(entityState)
 		if animationState:
-			animationTree.set("parameters/%s/blend_position" % stateName, entityDirection)
+			animationTree.set("parameters/%s/BlendSpace2D/blend_position" % stateName, entityDirection)
 			animationState.travel(stateName)
+			animationTree.set("parameters/%s/TimeScale/scale" % stateName, GetAnimationScale())
+
+func GetAnimationScale() -> float:
+	var ratio : float = 1.0
+	match entityState:
+		EntityCommons.State.ATTACK:
+			if stat.attackSpeed > 0:
+				ratio = stat.baseAttackSpeed / stat.attackSpeed
+		EntityCommons.State.WALK:
+			if stat.moveSpeed > 0:
+				ratio = stat.baseMoveSpeed / stat.moveSpeed
+	return ratio
 
 # Init
 func SetKind(_entityKind : String, _entityID : String, _entityName : String):
@@ -41,6 +53,10 @@ func SetKind(_entityKind : String, _entityID : String, _entityName : String):
 		set_name(entityName)
 
 func SetData(data : Object):
+	# Stat
+	stat.baseMoveSpeed = data._walkSpeed
+	stat.moveSpeed	= data._walkSpeed
+
 	# Display
 	entityName		= data._name
 	displayName		= data._displayName

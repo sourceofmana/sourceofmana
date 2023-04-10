@@ -173,6 +173,13 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 				Launcher.Util.OneShotCallback(agent.tree_entered, Launcher.Network.WarpPlayer, [map.name, agentID])
 
 # Getters
+func GetPathLength(agent : BaseAgent, pos : Vector2) -> float :
+	var path = NavigationServer2D.map_get_path(agent.agent.get_navigation_map(), agent.position, pos, true)
+	var pathLength = 0
+	for i in range(0, path.size() - 1):
+		pathLength += Vector2(path[i] - path[i+1]).length()
+	return pathLength
+
 func GetAgent(agentID : int) -> BaseAgent:
 	var agent : BaseAgent = null
 	if rids.has(agentID):
@@ -264,11 +271,38 @@ func UpdateWalkPaths(agent : Node2D, map : Map):
 func UpdateAI(agent : BaseAgent, map : Map):
 	if not agent.hasCurrentGoal:
 		if agent.aiTimer && agent.aiTimer.is_stopped():
-			agent.aiTimer.StartTimer(randf_range(5, 15), UpdateWalkPaths.bind(agent, map))
+			Util.StartTimer(agent.aiTimer, randf_range(5, 15), UpdateWalkPaths.bind(agent, map))
 	else:
 		if agent.IsStuck():
 			agent.ResetNav()
-			agent.aiTimer.StartTimer(randf_range(2, 10), UpdateWalkPaths.bind(agent, map))
+			Util.StartTimer(agent.aiTimer, randf_range(2, 10), UpdateWalkPaths.bind(agent, map))
+
+# Combat
+func DealDamage(agent : BaseAgent, map : Map):
+	var canAttack = false
+	if map and agent.target:
+		var target : BaseAgent = agent.target
+		if GetMapFromAgent(target) == map:
+			var pathLength : int = int(GetPathLength(agent, target.position))
+			if pathLength > agent.stat.attackRange:
+				agent.WalkToward(target.position)
+			else:
+				canAttack = true
+				agent.ResetNav()
+
+				var damage : int = min(agent.stat.attackStrength * randf_range(0.9, 1.1), target.stat.health)
+				target.stat.health -= damage
+				Launcher.Network.Server.NotifyInstancePlayers(null, agent, "DamageDealt", [target.get_rid().get_id(), damage])
+
+				if target.stat.health <= 0:
+					Util.StartTimer(target.deathTimer, target.stat.deathDelay, RemoveAgent.bind(target))
+					agent.target = null
+				Util.StartTimer(agent.combatTimer, agent.stat.attackSpeed, DealDamage.bind(agent, map))
+	agent.isAttacking = canAttack
+
+func UpdateCombat(agent : BaseAgent, map : Map):
+	if agent and agent.combatTimer and agent.combatTimer.is_stopped():
+		DealDamage(agent, map)
 
 # Generic
 func _post_launch():
@@ -286,14 +320,17 @@ func _physics_process(_dt : float):
 			if instance.players.size() > 0:
 				for agent in instance.npcs:
 					if agent:
+						UpdateCombat(agent, map)
 						UpdateAI(agent, map)
 						agent._internal_process()
 
 				for agent in instance.mobs:
 					if agent:
+						UpdateCombat(agent, map)
 						UpdateAI(agent, map)
 						agent._internal_process()
 
 				for agent in instance.players:
 					if agent:
+						UpdateCombat(agent, map)
 						agent._internal_process()
