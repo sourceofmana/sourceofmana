@@ -1,10 +1,12 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=23 format=3 uid="uid://bo3one4ic7f58"]
 
 [ext_resource type="Texture2D" uid="uid://dun8v8tn4oknc" path="res://data/graphics/sprites/monsters/lulea.png" id="1_kcq17"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/Default.tscn" id="2_gv6wv"]
 
 [sub_resource type="Animation" id="Animation_qks5j"]
 resource_name = "AttackDown"
+length = 0.4
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -20,6 +22,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_apvk4"]
 resource_name = "AttackLeft"
+length = 0.4
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -35,6 +39,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_hrf5s"]
 resource_name = "AttackRight"
+length = 0.4
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -50,6 +56,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_t4ydb"]
 resource_name = "AttackUp"
+length = 0.4
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -319,13 +327,14 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_xaqvr"]
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_dmo4h"]
 
 [node name="Sprite" type="Sprite2D"]
 texture = ExtResource("1_kcq17")
 offset = Vector2(0, -5)
 hframes = 9
 vframes = 4
+frame = 19
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -333,4 +342,4 @@ libraries = {
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_gv6wv")]
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_xaqvr")
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_dmo4h")
