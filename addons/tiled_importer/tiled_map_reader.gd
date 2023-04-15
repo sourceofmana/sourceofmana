@@ -270,10 +270,9 @@ func build_navigation(source_path, options) -> NavigationPolygon:
 	root.set_name(source_path.get_file().get_basename())
 
 	# Merge algorithm
-	merge_polygons(true)
+	merge_polygons(false)
 	offset_polygons(options.polygon_grow_default)
 	merge_polygons(true)
-	merge_polygons(false)
 	remove_outer_polygons(map_size)
 	# TODO: reduce nearest points
 
@@ -322,44 +321,58 @@ func is_cyclic_polygon(inner_polygon : PackedVector2Array, outer_polygon : Packe
 func both_cyclic_polygon(first : PackedVector2Array, second : PackedVector2Array) -> bool:
 	return is_cyclic_polygon(first, second) || is_cyclic_polygon(second, first)
 
-func merge_polygons(merge_inner_polygons : bool = false, has_debug : bool = false):
+func merge_polygons(create_outer_polygon : bool = false, has_debug : bool = false):
 	while(true):
 		var polygons_to_remove : Array = []
 		var polygons_to_skip : Array = []
+		var polygons_to_clip : Array = []
+		var pool_size = polygon_pool.size()
 
-		for pol_index in polygon_pool.size():
+		if has_debug: print("Size: " + str(pool_size))
+
+		for pol_index in pool_size:
 			if polygons_to_remove.has(pol_index) or polygons_to_skip.has(pol_index):
 				continue
 
-			if has_debug: print("Reducing polygons: ", pol_index, " / ", polygon_pool.size()-1)
-			var current_polygon : PackedVector2Array = polygon_pool[pol_index]
-
-			for pol_subindex in range(pol_index + 1, polygon_pool.size()):
+			for pol_subindex in range(pol_index + 1, pool_size):
 				if polygons_to_remove.has(pol_subindex) or polygons_to_skip.has(pol_subindex):
 					continue
-
+				var current_polygon : PackedVector2Array = polygon_pool[pol_index]
 				var other_polygon : PackedVector2Array = polygon_pool[pol_subindex]
 
-				if merge_inner_polygons && both_cyclic_polygon(current_polygon, other_polygon):
-					if has_debug: print("\t", pol_subindex, " already cycled with ", pol_index)
+				# Check if one is inside another
+				if is_cyclic_polygon(other_polygon, current_polygon):
+					if create_outer_polygon:
+						polygons_to_clip.append(pol_subindex)
+					else:
+						polygons_to_remove.append(pol_subindex)
 					continue
 
-				var merged_polygon : Array = Geometry2D.merge_polygons(current_polygon, other_polygon)
+				# Check if polygon intersect another collision
+				var merged_polygon : Array = []
+				if polygons_to_clip.has(pol_subindex):
+					merged_polygon = Geometry2D.clip_polygons(current_polygon, other_polygon)
+					if merged_polygon[0] != current_polygon:
+						polygon_pool[pol_index] = merged_polygon[0]
+						polygons_to_remove.append(pol_subindex)
+					continue
+
+				merged_polygon = Geometry2D.merge_polygons(current_polygon, other_polygon)
+
+				# Merged one into another
 				if merged_polygon.size() == 1:
-					if has_debug: print("\t", pol_subindex, " merged with ", pol_index)
-					polygon_pool[pol_subindex] = merged_polygon[0]
-					polygons_to_remove.append(pol_index)
-					polygons_to_skip.append(pol_subindex)
-					break
-				elif not merge_inner_polygons && merged_polygon.size() == 2:
-					if both_cyclic_polygon(merged_polygon[0], merged_polygon[1]):
-						if has_debug: print("\t", pol_subindex, " newly cycling with ", pol_index)
+					polygon_pool[pol_index] = merged_polygon[0]
+					polygons_to_remove.append(pol_subindex)
+				elif create_outer_polygon:
+					# Inner/Outer polygon created
+					if merged_polygon.size() == 2:
 						polygon_pool[pol_index] = merged_polygon[0]
 						polygon_pool[pol_subindex] = merged_polygon[1]
-						polygons_to_remove.erase(pol_index)
-						polygons_to_remove.erase(pol_subindex)
-						polygons_to_skip.append(pol_subindex)
-						continue
+					# Merged with kids
+					elif merged_polygon.size() > 2:
+						polygon_pool[pol_index] = merged_polygon[0]
+						polygons_to_remove.append(pol_subindex)
+						polygon_pool.append_array(merged_polygon.slice(1, merged_polygon.size()))
 
 		polygons_to_remove.sort()
 		if polygons_to_remove.size() == 0:
@@ -367,8 +380,6 @@ func merge_polygons(merge_inner_polygons : bool = false, has_debug : bool = fals
 
 		for rem_index in range(polygons_to_remove.size() -1, -1, -1):
 			polygon_pool.remove_at(polygons_to_remove[rem_index])
-
-		if has_debug: print("")
 
 func offset_polygons(offset : int):
 	var offseted_pool : Array = []
