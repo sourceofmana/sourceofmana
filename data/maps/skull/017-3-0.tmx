@@ -568,7 +568,7 @@
   <object id="6" name="Warp Overworld" class="Warp" x="1600" y="2336">
    <properties>
     <property name="dest_cellsize" type="int" value="16"/>
-    <property name="dest_map" value="Overworld"/>
+    <property name="dest_map" value="Debug"/>
     <property name="dest_pos_x" type="int" value="42"/>
     <property name="dest_pos_y" type="int" value="41"/>
    </properties>
