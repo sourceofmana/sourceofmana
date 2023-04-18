@@ -783,20 +783,21 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 				var tile_raw_id = str(object.gid).to_int() & 0xFFFFFFFF
 				var tile_id = tile_raw_id & ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG)
 
-				var is_tile_object = tileset.tile_get_region(tile_id).get_area() == 0
-				var collisions = tileset.tile_get_shape_count(tile_id)
+				var is_tile_object = false # tileset.tile_get_region(tile_id).get_area() == 0
+				var collisions = 0 # tileset.tile_get_shape_count(tile_id)
 				var has_collisions = collisions > 0 && object.has("type") && object.type != "sprite"
 				var sprite = Sprite2D.new()
 				var pos = Vector2()
 				var rot = 0
 				var scale = Vector2(1, 1)
-				sprite.texture = tileset.tile_get_texture(tile_id)
-				var texture_size = sprite.texture.get_size() if sprite.texture != null else Vector2()
+				var ts_atlas : TileSetAtlasSource = level.get_tileset().get_source(level.get_tileset().get_source_count() - 1)
+				sprite.texture = ts_atlas.get_texture()
+				var texture_size : Vector2 = sprite.texture.get_size() if sprite.texture != null else Vector2()
 
 				if not is_tile_object:
 					sprite.region_enabled = true
-					sprite.region_rect = tileset.tile_get_region(tile_id)
-					texture_size = tileset.tile_get_region(tile_id).size
+					sprite.region_rect = Rect2(Vector2.ZERO, ts_atlas.get_texture_region_size())
+					texture_size = ts_atlas.get_texture_region_size()
 
 				sprite.flip_h = bool(tile_raw_id & FLIPPED_HORIZONTALLY_FLAG)
 				sprite.flip_v = bool(tile_raw_id & FLIPPED_VERTICALLY_FLAG)
@@ -855,8 +856,9 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 				obj_root.scale = scale
 				# Translate from Tiled bottom-left position to Godot top-left
 				sprite.centered = false
-				sprite.region_filter_clip = options.uv_clip
-				sprite.offset = Vector2(0, texture_size.y)
+				sprite.region_filter_clip_enabled = options.uv_clip
+				sprite.offset = Vector2(0, -texture_size.y)
+				sprite.z_index = zindex
 
 				if not has_collisions:
 					object_layer.add_child(sprite)
