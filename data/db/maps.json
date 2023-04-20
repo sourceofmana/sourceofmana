@@ -1,5 +1,4 @@
 {
-    "Debug": {							"Path" : "overworld/000-0",},
     "Overworld": {						"Path" : "overworld/000-1",},
     "Phatyna Entrance": {				"Path" : "phatyna/002-3-0",},
     "Phatyna Corridor": {				"Path" : "phatyna/002-3-1",},
