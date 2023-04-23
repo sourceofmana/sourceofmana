@@ -11,8 +11,8 @@
 	},
 
 	"1000": {
-		"Name"				: "Phatyna",
-		"Ethnicity"			: "Phatyna",
+		"Name"				: "Splatyna",
+		"Ethnicity"			: "Splatyna",
 		"NavigationAgent"	: "NPAgent",
 		"Collision"			: "Medium",
 		"WalkSpeed"			: 30,
