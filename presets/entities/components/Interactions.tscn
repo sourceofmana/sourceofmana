@@ -43,6 +43,7 @@ layout_mode = 2
 stretch_mode = 3
 
 [node name="Name" type="Label" parent="."]
+z_index = 255
 custom_minimum_size = Vector2(0, 10)
 anchors_preset = 5
 anchor_left = 0.5
