@@ -309,12 +309,12 @@
    </properties>
    <polygon points="41.6,39.497 41.6,18.9586 73.6,18.9586 73.6,39.497"/>
   </object>
-  <object id="47" name="Warp Skull" class="Warp" x="1374.79" y="3449.43">
+  <object id="47" name="Warp Candor Cave" class="Warp" x="1374.79" y="3449.43">
    <properties>
     <property name="dest_cellsize" type="int" value="32"/>
-    <property name="dest_map" value="Skull Chamber"/>
-    <property name="dest_pos_x" type="int" value="50"/>
-    <property name="dest_pos_y" type="int" value="71"/>
+    <property name="dest_map" value="Candor Cave"/>
+    <property name="dest_pos_x" type="int" value="51"/>
+    <property name="dest_pos_y" type="int" value="30"/>
    </properties>
    <polygon points="42.51,41.568 42.51,19.9527 75.21,19.9527 75.21,41.568"/>
   </object>

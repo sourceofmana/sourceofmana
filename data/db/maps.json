@@ -6,6 +6,7 @@
     "Phatyna Third Room": {				"Path" : "phatyna/002-3-3",},
     "Phatyna Second Room": {			"Path" : "phatyna/002-3-4",},
     "Phatyna First Room": {				"Path" : "phatyna/002-3-5",},
-    "Skull Chamber": {					"Path" : "skull/017-3-0",},
+    "Candor Cave": {					"Path" : "skull/017-3-0",},
+    "Candor Arena": {					"Path" : "candor/012-3-0",},
     "Artis Sewer": {					"Path" : "sewer/001-3-0",},
 }
