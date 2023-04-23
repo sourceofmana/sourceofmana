@@ -16,7 +16,7 @@ func ConnectPlayer(playerName : String, rpcID : int = -1):
 		Launcher.World.rids[playerID]	= player
 		Launcher.World.Spawn(map, pos, player)
 
-		onlineList.UpdateHtmlPage()
+		onlineList.UpdateHtmlPageAndJson()
 		Util.PrintLog("Server", "Player connected: %s (%d)" % [playerName, rpcID])
 
 func DisconnectPlayer(rpcID : int = -1):

@@ -2,6 +2,7 @@ extends Object
 class_name OnlineList
 
 var HTMLFileName : String				= "index.html"
+var JSONFileName : String				= "online.json"
 
 #
 func GetPlayerNames() -> Array[String]:
@@ -13,7 +14,7 @@ func GetPlayerNames() -> Array[String]:
 				players.append(agent.agentName)
 	return players
 
-func UpdateHtmlPage():
+func UpdateHtmlPageAndJson():
 	var players : Array[String]	= GetPlayerNames()
 	var content : String		= ""
 
@@ -39,7 +40,9 @@ func UpdateHtmlPage():
 
 	content += "    </table>\n"
 	content += "    <p>%d users are online.</p>\n" % playerCount
+	content += "    <p>If you look for a machine readable online list: <a href=\"./online.json\">online.json</a></p>\n"
 	content += "  </BODY>\n"
 	content += "</HTML>\n"
 
 	Launcher.FileSystem.SaveFile(OS.get_executable_path().get_base_dir() + "/" + HTMLFileName, content)
+	Launcher.FileSystem.SaveFile(OS.get_executable_path().get_base_dir() + "/" + JSONFileName, JSON.stringify(players))
