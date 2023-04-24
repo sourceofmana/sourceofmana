@@ -75,6 +75,7 @@ func SetData(data : Object):
 			Util.Assert(animation.get_child_count() > 0, "No animation tree available for " + entityName)
 			if animation.get_child_count() > 0:
 				animationTree = animation.get_child(0)
+				animationTree.set_active(true)
 
 	# Collision
 	collision = Launcher.FileSystem.LoadEntityComponent("collisions/" + data._collision)
