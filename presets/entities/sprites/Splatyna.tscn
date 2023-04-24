@@ -1,7 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://cncrlttcrm4i"]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Texture2D" uid="uid://dnp268i5mjvd7" path="res://data/graphics/sprites/monsters/splatyna.png" id="1"]
-[ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/Default.tscn" id="2_kn3uj"]
+[ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_kn3uj"]
 
 [sub_resource type="Animation" id="Animation_k46p5"]
 resource_name = "AttackDown"
