@@ -10,31 +10,32 @@ Contact us at this mail for any inquiry: team [at] sourceofmana.org
 -->
 
 <contributors>
-	<contributor" nick="Ablu"					mailid="ablu.erikschilling"		mailserver="googlemail.com"/>
-	<contributor" nick="Alige"					mailid="alige"					mailserver="evolonline.org"/>
-	<contributor" nick="Bagzie"					mailid="tapani.honkanen"		mailserver="hotmail.com"/>
-	<contributor" nick="Beast"					website="beast-pixels.itch.io"/>
-	<contributor" nick="Bjorn"					mailid="bjorn"					mailserver="lindeijer.nl"/>
-	<contributor" nick="Chicka-Maria"			mailid="fire4light"				mailserver="live.com"/>
-	<contributor" nick="Clint Bellanger"		mailid="clintbellanger"			mailserver="gmail.com"/>
-	<contributor" nick="crush"					mailid="crush"					mailserver="themanaworld.org"/>
-	<contributor" nick="enchilado"				/>
-	<contributor" nick="gumi"					mailid="tmw-forums"				mailserver="gumi.ca"/>
-	<contributor" nick="Hal9000"				mailid="miglietta.francesco"	mailserver="gmail.com"/>
-	<contributor" nick="Hocus"					mailid="hocus"					mailserver="themanaworld.org"/>
-	<contributor" nick="IvanMorve"				mailid="phineasfreakears"		mailserver="gmail.com"/>
-	<contributor" nick="jak1"					mailid="jak1"					mailserver="germantmw.de"/>
-	<contributor" nick="Jesusalva"				mailid="jesusalva"				mailserver="tmw2.org"/>
-	<contributor" nick="Kolokolna"				mailid="uzver777"				mailserver="ya.ru"/>
-	<contributor" nick="LawnCable"				mailid="git"					mailserver="lawncable.net"/>
-	<contributor" nick="Len"					mailid="fatalkai"				mailserver="uymail.com"/>
-	<contributor" nick="Micksha"				mailid="ms-shaman"				mailserver="gmx.de"/>
-	<contributor" nick="Modanung"				mailid="modanung"				mailserver="hotmail.com"/>
-	<contributor" nick="pix3m"					mailid="pix3m00"				mailserver="gmail.com"/>
-	<contributor" nick="pydsigner"				mailid="pydsigner"				mailserver="gmail.com"/>
-	<contributor" nick="Reid"					mailid="reidyaro"				mailserver="gmail.com"/>
-	<contributor" nick="Saphy"					mailid="simotsa"				mailserver="gmail.com"/>
-	<contributor" nick="Talaroc"				mailid="arashi86"				mailserver="gmail.com"/>
-	<contributor" nick="wildx"					mailid="wildx"					mailserver="themanaworld.org"/>
-	<contributor" nick="wushin"					mailid="pasekei"				mailserver="gmail.com"/>
+	<contributor nick="Ablu"					mailid="ablu.erikschilling"		mailserver="googlemail.com"/>
+	<contributor nick="Alige"					mailid="alige"					mailserver="evolonline.org"/>
+	<contributor nick="Bagzie"					mailid="tapani.honkanen"		mailserver="hotmail.com"/>
+	<contributor nick="Beast"					website="beast-pixels.itch.io"/>
+	<contributor nick="Bjorn"					mailid="bjorn"					mailserver="lindeijer.nl"/>
+	<contributor nick="Chicka-Maria"			mailid="fire4light"				mailserver="live.com"/>
+	<contributor nick="Clint Bellanger"			mailid="clintbellanger"			mailserver="gmail.com"/>
+	<contributor nick="crush"					mailid="crush"					mailserver="themanaworld.org"/>
+	<contributor nick="enchilado"				/>
+	<contributor nick="FotherJ"					name="Jarrett Thomas-Huxley"/>
+	<contributor nick="gumi"					mailid="tmw-forums"				mailserver="gumi.ca"/>
+	<contributor nick="Hal9000"					mailid="miglietta.francesco"	mailserver="gmail.com"/>
+	<contributor nick="Hocus"					mailid="hocus"					mailserver="themanaworld.org"/>
+	<contributor nick="IvanMorve"				mailid="phineasfreakears"		mailserver="gmail.com"/>
+	<contributor nick="jak1"					mailid="jak1"					mailserver="germantmw.de"/>
+	<contributor nick="Jesusalva"				mailid="jesusalva"				mailserver="tmw2.org"/>
+	<contributor nick="Kolokolna"				mailid="uzver777"				mailserver="ya.ru"/>
+	<contributor nick="LawnCable"				mailid="git"					mailserver="lawncable.net"/>
+	<contributor nick="Len"						mailid="fatalkai"				mailserver="uymail.com"/>
+	<contributor nick="Micksha"					mailid="ms-shaman"				mailserver="gmx.de"/>
+	<contributor nick="Modanung"				mailid="modanung"				mailserver="hotmail.com"/>
+	<contributor nick="pix3m"					mailid="pix3m00"				mailserver="gmail.com"/>
+	<contributor nick="pydsigner"				mailid="pydsigner"				mailserver="gmail.com"/>
+	<contributor nick="Reid"					mailid="reidyaro"				mailserver="gmail.com"/>
+	<contributor nick="Saphy"					mailid="simotsa"				mailserver="gmail.com"/>
+	<contributor nick="Talaroc"					mailid="arashi86"				mailserver="gmail.com"/>
+	<contributor nick="wildx"					mailid="wildx"					mailserver="themanaworld.org"/>
+	<contributor nick="wushin"					mailid="pasekei"				mailserver="gmail.com"/>
 </contributors>

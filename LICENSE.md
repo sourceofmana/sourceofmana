@@ -104,6 +104,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/monsters/lilah.png [Reid] [Neorice]
 ./graphics/sprites/monsters/lulea.png [Reid] [Neorice]
 ./graphics/sprites/monsters/marvin.png [Reid] [Neorice]
+./graphics/sprites/monsters/piou.png [FotherJ, Reid]
 ./graphics/sprites/monsters/splatyna.png [Reid]
 ./graphics/sprites/monsters/slime-salt.png [Reid] [Neorice]
 ./graphics/sprites/npcs/razor.png [Reid]
