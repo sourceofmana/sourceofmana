@@ -19,6 +19,21 @@ enum State
 	DEATH
 }
 
+enum Slot
+{
+	BODY = 0,
+	CHEST,
+	LEGS,
+	FEET,
+	HANDS,
+	HEAD,
+	FACE,
+	WEAPON,
+	SHIELD,
+	COUNT
+}
+
+#
 const stateTransitions : Array[Array] = [
 	#	IDLE			WALK			SIT				ATTACK			DEATH
 	[State.IDLE,	State.WALK,		State.SIT,		State.ATTACK,	State.DEATH],	# IDLE

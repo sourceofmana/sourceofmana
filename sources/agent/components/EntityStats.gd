@@ -24,3 +24,5 @@ var attackStrength : int				= 6
 var attackRange : int					= 32
 
 var deathDelay : int					= 10
+
+var spirit : String						= "Piou"
