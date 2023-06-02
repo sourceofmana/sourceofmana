@@ -146,6 +146,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/tilesets/isles/skull/cave.png [Micksha] [Reid]
 ./graphics/tilesets/isles/skull/torch-x3x2.png [Modanung] [Reid]
 ./graphics/tilesets/overworld/grass.png [Beast, Reid]
+./graphics/tilesets/overworld/houses.png [Beast]
 ./maps/candor/candor-arena.tmx [Reid]
 ./maps/candor/candor-cave.tmx [pydsigner] [Reid]
 ./maps/overworld/overworld.tmx [Reid]
