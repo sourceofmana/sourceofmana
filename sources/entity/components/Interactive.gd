@@ -4,6 +4,7 @@ class_name EntityInteractive
 #
 var speechInstance : PackedScene	= Launcher.FileSystem.LoadGui("chat/SpeechBubble", false)
 
+@onready var visibleNode : Node2D			= $Visible
 @onready var generalVBox : BoxContainer		= $Visible/VBox
 @onready var speechContainer : BoxContainer	= $Visible/VBox/Panel/SpeechContainer
 @onready var emoteSprite : TextureRect		= $Visible/VBox/Emote

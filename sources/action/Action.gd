@@ -53,6 +53,7 @@ func _physics_process(_deltaTime : float):
 #
 		if IsActionJustPressed("gp_sit"):			Launcher.Network.TriggerSit()
 		elif IsActionJustPressed("gp_interact"):	 Launcher.Player.Interact()
+		elif IsActionJustPressed("gp_morph"):	 	Launcher.Network.TriggerMorph()
 		elif IsActionJustPressed("smile_1"):		Launcher.Network.TriggerEmote(1)
 		elif IsActionJustPressed("smile_2"):		Launcher.Network.TriggerEmote(2)
 		elif IsActionJustPressed("smile_3"):		Launcher.Network.TriggerEmote(3)

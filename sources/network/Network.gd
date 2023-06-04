@@ -106,6 +106,17 @@ func DamageDealt(agentID : int, targetID : int, damage : int, rpcID : int = -1):
 	elif Client:	Client.DamageDealt(agentID, targetID, damage)
 
 #
+@rpc("any_peer", "reliable")
+func TriggerMorph(rpcID : int = -1):
+	if Client:		NetCallServer("TriggerMorph", [])
+	elif Server:	Server.TriggerMorph(rpcID)
+
+@rpc("authority", "reliable")
+func Morphed(agentID : int, morphID : String, rpcID : int = -1):
+	if Server:		NetCallClient("Morphed", [agentID, morphID], rpcID)
+	elif Client:	Client.Morphed(agentID, morphID)
+
+#
 func NetCallServer(methodName : String, args : Array):
 	if Server:
 		Server.callv(methodName, args)

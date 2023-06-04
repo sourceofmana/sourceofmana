@@ -16,21 +16,19 @@ var visual : EntityVisual				= EntityVisual.new()
 
 # Init
 func SetKind(_entityKind : String, _entityID : String, _entityName : String):
-	entityName	= _entityName
-	if entityName.length() == 0:
-		set_name(_entityID)
-	else:
-		set_name(entityName)
+	entityName	= _entityID if _entityName.length() == 0 else _entityName
+	set_name(entityName)
 
 func SetData(data : EntityData):
 	# Stat
-	stat.baseMoveSpeed = data._walkSpeed
-	stat.moveSpeed	= data._walkSpeed
+	stat.baseMoveSpeed	= data._walkSpeed
+	stat.moveSpeed		= data._walkSpeed
 
 	# Display
-	entityName		= data._name
-	displayName		= data._displayName
+	displayName			= data._displayName
+	SetVisual(data)
 
+func SetVisual(data : EntityData):
 	visual.Init(self, data)
 
 #

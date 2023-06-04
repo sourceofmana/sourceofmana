@@ -3,7 +3,7 @@ class_name EntityVisual
 
 var entity : BaseEntity						= null
 var sprites : Array[Sprite2D]				= []
-var animation : Node						= null
+var animationPlayer : AnimationPlayer		= null
 var animationTree : AnimationTree			= null
 var collision : CollisionShape2D			= null
 var orientation : Vector2					= Vector2(0, 1)
@@ -21,7 +21,8 @@ func GetAnimationScale() -> float:
 				ratio = stat.baseMoveSpeed / stat.moveSpeed
 	return ratio
 
-func AddSprite(slot : EntityCommons.Slot, spritePath : String) -> Sprite2D:
+#
+func LoadSprite(slot : EntityCommons.Slot, spritePath : String) -> Sprite2D:
 	var sprite : Sprite2D = null
 	if slot < EntityCommons.Slot.COUNT:
 		if sprites[slot]:
@@ -33,25 +34,43 @@ func AddSprite(slot : EntityCommons.Slot, spritePath : String) -> Sprite2D:
 
 	return sprite
 
-#
-func Init(parentEntity : BaseEntity, data : EntityData):
-	entity = parentEntity
+func ResetData():
+	if collision:
+		collision.queue_free()
+		collision = null
+	if animationTree:
+		animationTree = null
+	if animationPlayer:
+		animationPlayer = null
+	for spriteID in sprites.size():
+		if sprites[spriteID]:
+			sprites[spriteID].queue_free()
+			sprites[spriteID] = null
+	orientation = Vector2(0, 1)
+
+func LoadData(data : EntityData):
+	ResetData()
 
 	# Sprite
 	sprites.resize(EntityCommons.Slot.COUNT)
-	var sprite : Sprite2D = AddSprite(EntityCommons.Slot.BODY, data._ethnicity)
+	var sprite : Sprite2D = LoadSprite(EntityCommons.Slot.BODY, data._ethnicity)
 	if sprite:
 		if data._customTexture:
 			sprite.texture = Launcher.FileSystem.LoadGfx(data._customTexture)
 		entity.call_deferred("add_child", sprite)
 
+		if sprite.vframes > 0:
+			if entity.interactive and entity.interactive.visibleNode:
+				var frameVerticalOffset : int = (int)(sprite.texture.get_size().y / sprite.vframes)
+				entity.interactive.visibleNode.position.y = -frameVerticalOffset if frameVerticalOffset > 32 else -32
+
 		Util.Assert(sprite.get_child_count() > 0, "No animation available for " + entity.entityName)
 		if sprite.get_child_count() > 0:
-			animation = sprite.get_child(0)
+			animationPlayer = sprite.get_child(0)
 
-			Util.Assert(animation.get_child_count() > 0, "No animation tree available for " + entity.entityName)
-			if animation.get_child_count() > 0:
-				animationTree = animation.get_child(0)
+			Util.Assert(animationPlayer.get_child_count() > 0, "No animation tree available for " + entity.entityName)
+			if animationPlayer.get_child_count() > 0:
+				animationTree = animationPlayer.get_child(0)
 				animationTree.set_active(true)
 
 	# Collision
@@ -59,11 +78,16 @@ func Init(parentEntity : BaseEntity, data : EntityData):
 	if collision:
 		entity.add_child(collision)
 
+#
+func Init(parentEntity : BaseEntity, data : EntityData):
+	entity = parentEntity
+	LoadData(data)
+
 func Refresh(_delta : float):
 	if entity.entityVelocity.length_squared() > 1:
 		orientation = entity.entityVelocity.normalized()
 
-	if animation and animationTree:
+	if animationPlayer and animationTree:
 		var animationState : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
 		var stateName : String = EntityCommons.GetStateName(entity.entityState)
 		if animationState:

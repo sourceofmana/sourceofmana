@@ -74,6 +74,13 @@ func TriggerEntity(triggeredAgentID : int, rpcID : int = -1):
 			if triggeredAgent:
 				triggeredAgent.Trigger(player)
 
+func TriggerMorph(rpcID : int = -1):
+	var player : BaseAgent = GetAgent(rpcID)
+	if player and player.stat:
+		player.stat.morphed = not player.stat.morphed
+		var entityID : String = player.stat.spirit if player.stat.morphed else "Default Entity"
+		NotifyInstancePlayers(null, player, "Morphed", [entityID])
+
 #
 func GetRid(player : PlayerAgent) -> int:
 	var agentRid : int = player.get_rid().get_id()

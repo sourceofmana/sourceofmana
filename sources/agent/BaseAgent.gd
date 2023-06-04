@@ -110,10 +110,7 @@ func SetKind(entityType : String, entityID : String, entityName : String):
 	agentType	= entityType
 	agentID		= entityID
 
-	if entityName.length() == 0:
-		agentName	= agentID
-	else:
-		agentName	= entityName
+	agentName	= agentID if entityName.length() == 0 else entityName
 	set_name(agentName)
 
 	if self is MonsterAgent or self is NpcAgent:

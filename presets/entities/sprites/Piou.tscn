@@ -843,7 +843,7 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_hgkrs"]
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_hekn7"]
 
 [node name="Sprite" type="Sprite2D"]
 texture = ExtResource("1_wtqld")
@@ -858,4 +858,4 @@ libraries = {
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_4wmrr")]
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_hgkrs")
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_hekn7")

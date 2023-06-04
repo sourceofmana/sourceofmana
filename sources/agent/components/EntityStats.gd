@@ -26,3 +26,4 @@ var attackRange : int					= 32
 var deathDelay : int					= 10
 
 var spirit : String						= "Piou"
+var morphed : bool						= false
