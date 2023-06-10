@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="51">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="51">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
@@ -480,7 +480,7 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="14" name="Object">
-  <object id="28" name="Warp Cave" class="Warp" x="1504" y="896">
+  <object id="28" name="Warp Cave" type="Warp" x="1504" y="896">
    <properties>
     <property name="dest_map" value="Phatyna Corridor"/>
     <property name="dest_pos_x" type="int" value="70"/>
@@ -488,7 +488,7 @@
    </properties>
    <polygon points="0,32 32,0 64,32"/>
   </object>
-  <object id="44" name="Warp Overworld" class="Warp" x="1728" y="1760">
+  <object id="44" name="Warp Overworld" type="Warp" x="1728" y="1760">
    <properties>
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
@@ -497,7 +497,7 @@
    </properties>
    <polygon points="0,0 32,32 64,0"/>
   </object>
-  <object id="48" name="Becees" class="Spawn" x="1352" y="1287" width="146" height="128">
+  <object id="48" name="Becees" type="Spawn" x="1352" y="1287" width="146" height="128">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="name" value="Becees"/>

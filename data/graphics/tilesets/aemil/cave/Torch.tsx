@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.9.2" name="Torch" tilewidth="96" tileheight="64" tilecount="18" columns="6">
+<tileset version="1.10" tiledversion="1.10.1" name="Torch" tilewidth="96" tileheight="64" tilecount="18" columns="6">
  <image source="torch-x3x2.png" width="576" height="192"/>
  <tile id="0">
   <properties>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.3.1" name="Collision" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+<tileset version="1.10" tiledversion="1.10.1" name="Collision" tilewidth="32" tileheight="32" tilecount="16" columns="4">
  <image source="collision.png" width="128" height="128"/>
  <tile id="0">
   <objectgroup draworder="index" id="2">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="146" height="167" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="39">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="146" height="167" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="39">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
@@ -1041,7 +1041,7 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="16" name="Object">
-  <object id="27" name="Warp Entrance" class="Warp" x="2240" y="1440">
+  <object id="27" name="Warp Entrance" type="Warp" x="2240" y="1440">
    <properties>
     <property name="dest_map" value="Phatyna Entrance"/>
     <property name="dest_pos_x" type="int" value="47"/>
@@ -1049,7 +1049,7 @@
    </properties>
    <polygon points="0,0 32,32 64,0"/>
   </object>
-  <object id="29" name="Warp First" class="Warp" x="1024" y="1216">
+  <object id="29" name="Warp First" type="Warp" x="1024" y="1216">
    <properties>
     <property name="dest_map" value="Phatyna First Room"/>
     <property name="dest_pos_x" type="int" value="38"/>
@@ -1057,7 +1057,7 @@
    </properties>
    <polygon points="0,32 32,0 64,32"/>
   </object>
-  <object id="30" name="Warp Second" class="Warp" x="1408" y="3456">
+  <object id="30" name="Warp Second" type="Warp" x="1408" y="3456">
    <properties>
     <property name="dest_map" value="Phatyna Second Room"/>
     <property name="dest_pos_x" type="int" value="47"/>
@@ -1065,7 +1065,7 @@
    </properties>
    <polygon points="0,0 32,32 64,0"/>
   </object>
-  <object id="31" name="Warp Third" class="Warp" x="2848" y="2624">
+  <object id="31" name="Warp Third" type="Warp" x="2848" y="2624">
    <properties>
     <property name="dest_map" value="Phatyna Third Room"/>
     <property name="dest_pos_x" type="int" value="35"/>
@@ -1073,7 +1073,7 @@
    </properties>
    <polygon points="0,32 32,0 64,32"/>
   </object>
-  <object id="32" name="Warp Boss" class="Warp" x="3520" y="4032">
+  <object id="32" name="Warp Boss" type="Warp" x="3520" y="4032">
    <properties>
     <property name="dest_map" value="Phatyna Boss Room"/>
     <property name="dest_pos_x" type="int" value="46"/>
@@ -1081,7 +1081,7 @@
    </properties>
    <polygon points="0,32 32,0 64,32"/>
   </object>
-  <object id="38" name="Dorian" class="Spawn" x="-200" y="120" width="32" height="32">
+  <object id="38" name="Dorian" type="Spawn" x="-200" y="120" width="32" height="32">
    <properties>
     <property name="count" type="int" value="60"/>
     <property name="name" value="Salt Slime"/>
