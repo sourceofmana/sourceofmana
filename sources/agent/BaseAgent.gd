@@ -187,4 +187,4 @@ func _setup_nav_agent():
 
 func _ready():
 	_setup_nav_agent()
-	name = str(get_rid().get_id())
+	set_name.call_deferred(str(get_rid().get_id()))
