@@ -53,6 +53,12 @@ func LaunchClient():
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
+	# IDEA: we could probably also make a gui for the server 
+	# like the minecraft server where it show logs and how many players are connected,
+	# but I think it makes more sense to just always start it from the terminal, atleast for now
+	var l = Label.new()
+	l.text = "This is the Server if you don't like this window then please start the server from the terminal: ./path/to/source_of_mana --headless --server\n you should do that anyway to see the log messages"
+	self.add_child(l)
 
 #
 # Load all high-prio services, order should not be important
