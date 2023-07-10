@@ -295,7 +295,6 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-driver/threads/thread_model=2
 textures/vram_compression/import_etc2_astc=true
 textures/lossless_compression/force_png=true
 anti_aliasing/screen_space_roughness_limiter/enabled=false
