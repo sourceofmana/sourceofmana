@@ -93,3 +93,44 @@ func _ready():
 	clickTimer.set_wait_time(0.2)
 	clickTimer.set_one_shot(true)
 	add_child(clickTimer)
+	touchpad_is_no_controller()
+	Input.joy_connection_changed.connect(func(device, connected): touchpad_is_no_controller())
+
+
+# re-assign controller input events to first valid controller
+#
+# never use the touchpad as controller, this might need to be extended in the future
+# as the godot issue also talks about LED controllers being mistaken for game controllers
+#
+# this workaround is needed because of https://github.com/godotengine/godot/issues/59250
+func touchpad_is_no_controller():
+	print('touchpad_is_no_controller_workaround: detect joysticks')
+	var input_devices = Input.get_connected_joypads()
+	var valid_controller_id = null
+	for device in input_devices:
+		print("["+str(device)+"]", Input.get_joy_name(device))
+	for device in input_devices:
+		if !Input.get_joy_name(device).contains("Touchpad"):
+			valid_controller_id = device
+			break
+	
+	print("selected:", valid_controller_id)
+	
+	# reset
+	InputMap.load_from_project_settings()
+	
+	if valid_controller_id == null:
+		# if no controller is connected then remove joystick events from actions
+		for action in InputMap.get_actions():
+			for event in InputMap.action_get_events(action):
+				if event is InputEventJoypadMotion or event is InputEventJoypadButton:
+					InputMap.action_erase_event(action, event)
+	else:
+		# if valid controller is connected set it's device id so the touchpad is not used
+		for action in InputMap.get_actions():
+			for event in InputMap.action_get_events(action):
+				if event is InputEventJoypadMotion or event is InputEventJoypadButton:
+					InputMap.action_erase_event(action, event)
+					event.device = valid_controller_id
+					InputMap.action_add_event(action, event)
+
