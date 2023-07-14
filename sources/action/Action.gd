@@ -2,6 +2,7 @@ extends Node
 
 var isEnabled : bool			= true
 var clickTimer : Timer			= null
+const stickDeadzone : float		= 0.2
 
 #
 func Enable(enable : bool):
@@ -31,7 +32,13 @@ func GetMove(forceMode : bool = false) -> Vector2:
 	if IsEnabled() || forceMode:
 		moveVector.x = Input.get_action_strength("gp_move_right") - Input.get_action_strength("gp_move_left")
 		moveVector.y = Input.get_action_strength("gp_move_down") - Input.get_action_strength("gp_move_up")
-		moveVector.normalized()
+
+		var moveLength : float = moveVector.length()
+		if moveLength < stickDeadzone:
+			moveVector = Vector2.ZERO;
+		else:
+			moveVector = moveVector.normalized() * ((moveLength  - stickDeadzone) / (1 - stickDeadzone))
+
 	return moveVector
 
 # Local player movement
