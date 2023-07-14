@@ -85,7 +85,6 @@
 	"2000": {
 		"Name": "Becees",
 		"Ethnicity": "KaizeiViro",
-		"Gender": "Male",
 		"Hairstyle": "Bald",
 		"NavigationAgent": "NPAgent",
 		"Collision": "Small",

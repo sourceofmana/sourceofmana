@@ -11,14 +11,11 @@ var orientation : Vector2					= Vector2(0, 1)
 #
 func GetAnimationScale() -> float:
 	var ratio : float = 1.0
-	var stat = entity.stat
 	match entity.entityState:
 		EntityCommons.State.ATTACK:
-			if stat.attackSpeed > 0:
-				ratio = stat.baseAttackSpeed / stat.attackSpeed
+			ratio = entity.stat.current.attackSpeed / entity.stat.base.attackSpeed
 		EntityCommons.State.WALK:
-			if stat.moveSpeed > 0:
-				ratio = stat.baseMoveSpeed / stat.moveSpeed
+			ratio = entity.stat.current.walkSpeed / entity.stat.base.walkSpeed
 	return ratio
 
 #

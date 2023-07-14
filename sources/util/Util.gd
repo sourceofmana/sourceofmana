@@ -37,4 +37,3 @@ static func StartTimer(timer : Timer, delay : float, callable : Callable):
 #
 func GetScreenCapture() -> Image:
 	return Launcher.get_viewport().get_texture().get_image()
-

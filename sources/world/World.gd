@@ -284,20 +284,20 @@ func DealDamage(agent : BaseAgent, map : Map):
 		var target : BaseAgent = agent.target
 		if GetMapFromAgent(target) == map:
 			var pathLength : int = int(GetPathLength(agent, target.position))
-			if pathLength > agent.stat.attackRange:
+			if pathLength > agent.stat.current.attackRange:
 				agent.WalkToward(target.position)
 			else:
 				canAttack = true
 				agent.ResetNav()
 
-				var damage : int = min(agent.stat.attackStrength * randf_range(0.9, 1.1), target.stat.health)
+				var damage : int = min(agent.stat.current.attackStrength * randf_range(0.9, 1.1), target.stat.health)
 				target.stat.health -= damage
 				Launcher.Network.Server.NotifyInstancePlayers(null, agent, "DamageDealt", [target.get_rid().get_id(), damage])
 
 				if target.stat.health <= 0:
 					Util.StartTimer(target.deathTimer, target.stat.deathDelay, RemoveAgent.bind(target))
 					agent.target = null
-				Util.StartTimer(agent.combatTimer, agent.stat.attackSpeed, DealDamage.bind(agent, map))
+				Util.StartTimer(agent.combatTimer, Formulas.GetAttackSpeedSec(agent.stat), DealDamage.bind(agent, map))
 	agent.isAttacking = canAttack
 
 func UpdateCombat(agent : BaseAgent, map : Map):

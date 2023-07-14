@@ -76,10 +76,12 @@ func TriggerEntity(triggeredAgentID : int, rpcID : int = -1):
 
 func TriggerMorph(rpcID : int = -1):
 	var player : BaseAgent = GetAgent(rpcID)
-	if player and player.stat:
-		player.stat.morphed = not player.stat.morphed
-		var entityID : String = player.stat.spirit if player.stat.morphed else "Default Entity"
-		NotifyInstancePlayers(null, player, "Morphed", [entityID])
+	if player and player.stat and player.stat.spiritShape.length() > 0:
+		var morphID : String = player.stat.spiritShape if not player.stat.morphed else player.stat.entityShape
+		if morphID.length() > 0:
+			var morphData : EntityData = Launcher.DB.Instantiate.FindEntityReference(morphID)
+			player.stat.Morph(morphData)
+			NotifyInstancePlayers(null, player, "Morphed", [morphID])
 
 #
 func GetRid(player : PlayerAgent) -> int:

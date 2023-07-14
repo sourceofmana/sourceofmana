@@ -24,7 +24,7 @@ func update_inventory():
 	# display inventory
 	update_inventory_ui()
 	# update weight
-	weightStat.SetStat(Launcher.Player.inventory.calculate_weight() / 1000, Launcher.Player.stat.maxWeight / 1000)
+	weightStat.SetStat(Formulas.GetWeight(Launcher.Player.inventory), Launcher.Player.stat.current.weightCapacity)
 
 # render inventory items to ui
 func update_inventory_ui():

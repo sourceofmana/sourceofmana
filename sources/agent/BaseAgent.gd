@@ -29,6 +29,7 @@ var navigationLine : PackedVector2Array	= []
 
 var spawnInfo : SpawnObject				= null
 var stat : EntityStats					= EntityStats.new()
+var inventory : EntityInventory			= EntityInventory.new()
 
 #
 func SwitchInputMode(clearCurrentInput : bool):
@@ -54,7 +55,7 @@ func UpdateInput():
 func UpdateOrientation():
 	if currentInput != Vector2.ZERO:
 		var normalizedInput : Vector2 = currentInput.normalized()
-		currentVelocity = normalizedInput * stat.moveSpeed
+		currentVelocity = normalizedInput * stat.current.walkSpeed
 	else:
 		currentVelocity = Vector2.ZERO
 
@@ -127,8 +128,7 @@ func SetKind(entityType : String, entityID : String, entityName : String):
 
 func SetData(data : Object):
 	# Stat
-	stat.baseMoveSpeed = data._walkSpeed
-	stat.moveSpeed	= data._walkSpeed
+	stat.Init(data)
 
 	# Navigation
 	if data._navigationAgent:

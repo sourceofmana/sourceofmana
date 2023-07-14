@@ -21,14 +21,15 @@ func SetKind(_entityKind : String, _entityID : String, _entityName : String):
 
 func SetData(data : EntityData):
 	# Stat
-	stat.baseMoveSpeed	= data._walkSpeed
-	stat.moveSpeed		= data._walkSpeed
+	if data._stats:
+		stat.SetEntityStats(data._stats)
 
 	# Display
 	displayName			= data._displayName
 	SetVisual(data)
 
 func SetVisual(data : EntityData):
+	stat.Morph(data)
 	visual.Init(self, data)
 
 #
