@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name World
+
 # Types
 class Instance extends SubViewport:
 	var id : int							= 0
@@ -19,49 +21,10 @@ class Map:
 
 # Vars
 var areas : Dictionary = {}
-var rids : Dictionary = {}
-
-# Utils
-func GetRandomPosition(map : Map) -> Vector2i:
-	Util.Assert(map != null && map.nav_poly != null && map.nav_poly.get_polygon_count() > 0, "No triangulation available")
-	if map != null && map.nav_poly != null && map.nav_poly.get_polygon_count() > 0:
-		var outlinesList : PackedVector2Array  = map.nav_poly.get_vertices()
-
-		var randPolygonID : int = randi_range(0, map.nav_poly.get_polygon_count() - 1)
-		var randPolygon : PackedInt32Array = map.nav_poly.get_polygon(randPolygonID)
-
-		var randVerticeID : int = randi_range(0, randPolygon.size() - 1)
-		var a : Vector2 = outlinesList[randPolygon[randVerticeID]]
-		var b : Vector2 = outlinesList[randPolygon[(randVerticeID + 1) % randPolygon.size()]]
-		var c : Vector2 = outlinesList[randPolygon[(randVerticeID + 2) % randPolygon.size()]]
-
-		return Vector2i(a + sqrt(randf()) * (-a + b + randf() * (c - b)))
-
-	Util.Assert(false, "Mob could not be spawned, no available point on the navigation mesh were found")
-	return Vector2i.ZERO
-
-func GetRandomPositionAABB(map : Map, pos : Vector2i, offset : Vector2i) -> Vector2i:
-	Util.Assert(map != null, "Could not create a random position for a non-initialized map")
-	if map != null:
-		for i in Launcher.Conf.GetInt("Navigation", "navigationSpawnTry", Launcher.Conf.Type.NETWORK):
-			var randPoint : Vector2i = Vector2i(randi_range(-offset.x, offset.x), randi_range(-offset.y, offset.y))
-			randPoint += pos
-
-			var closestPoint : Vector2i = NavigationServer2D.map_get_closest_point(map.mapRID, randPoint)
-			if randPoint == closestPoint:
-				return randPoint
-
-	return GetRandomPosition(map)
 
 # Instance init
-func LoadMapData(mapName : String, ext : String) -> Object:
-	var mapPath : String			= Launcher.DB.GetMapPath(mapName)
-	var mapInstance : Object		= Launcher.FileSystem.LoadMap(mapPath, ext)
-
-	return mapInstance
-
-func LoadGenericData(map : Map):
-	var node : Node = LoadMapData(map.name, Launcher.Path.MapServerExt)
+func LoadData(map : Map):
+	var node : Node = Instantiate.LoadMapData(map.name, Launcher.Path.MapServerExt)
 	if node:
 		if "spawns" in node:
 			for spawn in node.spawns:
@@ -84,28 +47,11 @@ func LoadGenericData(map : Map):
 					warpObject.destinationPos = warp[1]
 					warpObject.polygon = warp[2]
 					map.warps.append(warpObject)
-
-func LoadNavigationData(map : Map):
-	var obj : Object = LoadMapData(map.name, Launcher.Path.MapNavigationExt)
-	if obj:
-		map.nav_poly = obj
-		map.nav_poly.cell_size = 0.1
-
-func CreateNavigation(map : Map, mapRID : RID):
-	if map.nav_poly:
-		map.mapRID = mapRID if mapRID.is_valid() else NavigationServer2D.map_create()
-		NavigationServer2D.map_set_active(map.mapRID, true)
-		NavigationServer2D.map_set_cell_size(map.mapRID, map.nav_poly.cell_size)
-
-		map.regionRID = NavigationServer2D.region_create()
-		NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
-		NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.nav_poly)
-
-		NavigationServer2D.map_force_update(map.mapRID)
+		WorldNavigation.LoadData(map)
 
 func CreateInstance(map : Map, instanceID : int = 0):
 	var inst : Instance = Instance.new()
-	CreateNavigation(map, inst.get_world_2d().get_navigation_map())
+	WorldNavigation.CreateInstance(map, inst.get_world_2d().get_navigation_map())
 
 	inst.disable_3d = true
 	inst.gui_disable_input = true
@@ -118,16 +64,16 @@ func CreateInstance(map : Map, instanceID : int = 0):
 
 	for spawn in map.spawns:
 		for i in spawn.count:
-			var agent : BaseAgent = Launcher.DB.Instantiate.CreateAgent(spawn.type, spawn.name)
+			var agent : BaseAgent = Instantiate.CreateAgent(spawn.type, spawn.name)
 
 			Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
 			if agent:
 				var pos : Vector2 = Vector2.ZERO
 
 				if spawn.is_global:
-					pos = GetRandomPosition(map)
+					pos = WorldNavigation.GetRandomPosition(map)
 				else:
-					pos = GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
+					pos = WorldNavigation.GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
 				Util.Assert(pos != Vector2.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
 				if pos == Vector2.ZERO:
 					agent.queue_free()
@@ -135,25 +81,28 @@ func CreateInstance(map : Map, instanceID : int = 0):
 
 				agent.spawnInfo = spawn
 
-				rids[agent.get_rid().get_id()] = agent
+				WorldAgent.AddAgent(agent)
 				Spawn(map, pos, agent, instanceID)
 
 	Launcher.Root.call_deferred("add_child", inst)
 
-# Agent Management
-func CheckWarp(agent : BaseAgent):
-	var prevMap : Object = Launcher.World.GetMapFromAgent(agent)
+# Getters
+func CanWarp(agent : BaseAgent) -> WarpObject:
+	var prevMap : Object = WorldAgent.GetMapFromAgent(agent)
 	if prevMap:
 		for warp in prevMap.warps:
 			if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
-				var nextMap : Object = areas[warp.destinationMap]
-				Warp(agent, nextMap, warp.destinationPos)
-				return
+				return warp
+	return null
 
+func GetMap(mapName : String) -> Map:
+	return areas[mapName] if mapName in areas else null
+
+# Core functions
 func Warp(agent : BaseAgent, newMap : Map, newPos : Vector2i):
 	Util.Assert(newMap != null and agent != null, "Warp could not proceed, agent or current map missing")
 	if agent and newMap:
-		PopAgent(agent)
+		WorldAgent.PopAgent(agent)
 		Spawn(newMap, newPos, agent)
 
 func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
@@ -168,150 +117,17 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 				agent.agent.set_navigation_map(map.mapRID)
 			agent.ResetNav()
 
-			PushAgent(agent, inst)
+			WorldAgent.PushAgent(agent, inst)
 			if agent is PlayerAgent:
 				var agentID = Launcher.Network.Server.GetRid(agent)
-				Launcher.Util.OneShotCallback(agent.tree_entered, Launcher.Network.WarpPlayer, [map.name, agentID])
-
-# Getters
-func GetPathLength(agent : BaseAgent, pos : Vector2) -> float :
-	var path = NavigationServer2D.map_get_path(agent.agent.get_navigation_map(), agent.position, pos, true)
-	var pathLength = 0
-	for i in range(0, path.size() - 1):
-		pathLength += Vector2(path[i] - path[i+1]).length()
-	return pathLength
-
-func GetAgent(agentID : int) -> BaseAgent:
-	var agent : BaseAgent = null
-	if rids.has(agentID):
-		agent = rids.get(agentID)
-	Util.Assert(agent != null, "Could not retrieve the world agent with the following ID %d" % [agentID])
-	return agent
-
-func GetInstanceFromAgent(agent : BaseAgent) -> SubViewport:
-	var inst = agent.get_parent()
-	Util.Assert(inst != null && inst.is_class("SubViewport"), "Agent's base instance is incorrect, is type: " + inst.get_class() if inst else "null" )
-	if inst && inst.is_class("SubViewport"):
-		if not HasAgent(inst, agent):
-			inst = null
-	return inst
-
-func GetMapFromAgent(agent : BaseAgent) -> Map:
-	var map : Map = null
-	var inst : Instance = GetInstanceFromAgent(agent)
-	if inst:
-		Util.Assert(inst.map != null, "Agent's base map is incorrect, instance is not referenced inside a map")
-		map = inst.map
-	return map
-
-func GetAgents(checkedAgent : BaseAgent) -> Array[Array]:
-	var list : Array[Array] = []
-	var instance : Instance = GetInstanceFromAgent(checkedAgent)
-	if instance:
-		list.append(instance.npcs)
-		list.append(instance.mobs)
-		list.append(instance.players)
-	return list
-
-func HasAgent(inst : Instance, agent : BaseAgent):
-	var hasAgent : bool = false
-	Util.Assert(agent != null and inst != null, "Agent or instance are invalid, could not check if the agent is inside the instance")
-	if agent and inst:
-		if agent is PlayerAgent:
-			hasAgent = inst.players.has(agent)
-		elif agent is MonsterAgent:
-			hasAgent = inst.mobs.has(agent)
-		elif agent is NpcAgent:
-			hasAgent = inst.npcs.has(agent)
-	return hasAgent
-
-func RemoveAgent(agent : BaseAgent):
-	Util.Assert(agent != null, "Agent is null, can't remove it")
-	if agent:
-		PopAgent(agent)
-		rids.erase(agent)
-		agent.queue_free()
-
-func PopAgent(agent : BaseAgent):
-	Util.Assert(agent != null, "Agent is null, can't pop it")
-	if agent:
-		var inst : Instance = GetInstanceFromAgent(agent)
-		Launcher.Network.Server.NotifyInstancePlayers(inst, agent, "RemoveEntity", [], false)
-		if inst:
-			if agent is PlayerAgent:
-				inst.players.erase(agent)
-			elif agent is MonsterAgent:
-				inst.mobs.erase(agent)
-			elif agent is NpcAgent:
-				inst.npcs.erase(agent)
-			inst.call_deferred("remove_child", agent)
-
-func PushAgent(agent : BaseAgent, inst : Instance):
-	Util.Assert(agent != null, "Agent is null, can't push it")
-	Util.Assert(inst != null, "Instance is null, can't push the agent in it")		
-	if agent and inst:
-		if not HasAgent(inst, agent):
-			if agent is PlayerAgent:
-				inst.players.push_back(agent)
-			elif agent is MonsterAgent:
-				inst.mobs.push_back(agent)
-			elif agent is NpcAgent:
-				inst.npcs.push_back(agent)
-
-			inst.call_deferred("add_child", agent)
-			Launcher.Network.Server.NotifyInstancePlayers(inst, agent, "AddEntity", [agent.agentType, agent.agentID, agent.agentName, agent.position, agent.currentState], false)
-	else:
-		RemoveAgent(agent)
-
-# AI
-func UpdateWalkPaths(agent : Node2D, map : Map):
-	var randAABB : Vector2i = Vector2i(randi_range(30, 200), randi_range(30, 200))
-	var newPos : Vector2i = GetRandomPositionAABB(map, agent.position, randAABB)
-	agent.WalkToward(newPos)
-
-func UpdateAI(agent : BaseAgent, map : Map):
-	if not agent.hasCurrentGoal:
-		if agent.aiTimer && agent.aiTimer.is_stopped():
-			Util.StartTimer(agent.aiTimer, randf_range(5, 15), UpdateWalkPaths.bind(agent, map))
-	else:
-		if agent.IsStuck():
-			agent.ResetNav()
-			Util.StartTimer(agent.aiTimer, randf_range(2, 10), UpdateWalkPaths.bind(agent, map))
-
-# Combat
-func DealDamage(agent : BaseAgent, map : Map):
-	var canAttack = false
-	if map and agent.target:
-		var target : BaseAgent = agent.target
-		if GetMapFromAgent(target) == map:
-			var pathLength : int = int(GetPathLength(agent, target.position))
-			if pathLength > agent.stat.current.attackRange:
-				agent.WalkToward(target.position)
-			else:
-				canAttack = true
-				agent.ResetNav()
-
-				var damage : int = min(agent.stat.current.attackStrength * randf_range(0.9, 1.1), target.stat.health)
-				target.stat.health -= damage
-				Launcher.Network.Server.NotifyInstancePlayers(null, agent, "DamageDealt", [target.get_rid().get_id(), damage])
-
-				if target.stat.health <= 0:
-					Util.StartTimer(target.deathTimer, target.stat.deathDelay, RemoveAgent.bind(target))
-					agent.target = null
-				Util.StartTimer(agent.combatTimer, Formulas.GetAttackSpeedSec(agent.stat), DealDamage.bind(agent, map))
-	agent.isAttacking = canAttack
-
-func UpdateCombat(agent : BaseAgent, map : Map):
-	if agent and agent.combatTimer and agent.combatTimer.is_stopped():
-		DealDamage(agent, map)
+				Util.OneShotCallback(agent.tree_entered, Launcher.Network.WarpPlayer, [map.name, agentID])
 
 # Generic
 func _post_launch():
 	for mapName in Launcher.DB.MapsDB:
 		var map : Map = Map.new()
 		map.name = mapName
-		LoadGenericData(map)
-		LoadNavigationData(map)
+		LoadData(map)
 		CreateInstance(map)
 		areas[mapName] = map
 
@@ -321,17 +137,17 @@ func _physics_process(_dt : float):
 			if instance.players.size() > 0:
 				for agent in instance.npcs:
 					if agent:
-						UpdateCombat(agent, map)
-						UpdateAI(agent, map)
+						Combat.Update(agent, map)
+						AI.Update(agent, map)
 						agent._internal_process()
 
 				for agent in instance.mobs:
 					if agent:
-						UpdateCombat(agent, map)
-						UpdateAI(agent, map)
+						Combat.Update(agent, map)
+						AI.Update(agent, map)
 						agent._internal_process()
 
 				for agent in instance.players:
 					if agent:
-						UpdateCombat(agent, map)
+						Combat.Update(agent, map)
 						agent._internal_process()

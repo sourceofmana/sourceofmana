@@ -85,7 +85,7 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 		if isLocalPlayer and Launcher.Player:
 			entity = Launcher.Player
 		else:
-			entity = Launcher.DB.Instantiate.CreateEntity(entityType, entityID, entityName)
+			entity = Instantiate.CreateEntity(entityType, entityID, entityName)
 			if entity && isLocalPlayer:
 				Launcher.Player = entity
 				Launcher.Player.SetLocalPlayer()

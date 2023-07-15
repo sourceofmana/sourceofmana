@@ -1,7 +1,8 @@
 extends Node
+class_name Instantiate
 
 # Entity
-func FindEntityReference(entityID : String) -> Object:
+static func FindEntityReference(entityID : String) -> Object:
 	var ref : Object = null
 	for entityDB in Launcher.DB.EntitiesDB:
 		if entityDB == entityID || Launcher.DB.EntitiesDB[entityDB]._name == entityID:
@@ -9,19 +10,19 @@ func FindEntityReference(entityID : String) -> Object:
 			break
 	return ref
 
-func CreateGenericEntity(entityInstance : CharacterBody2D, entityType : String, entityID : String, entityName : String = ""):
+static func CreateGenericEntity(entityInstance : CharacterBody2D, entityType : String, entityID : String, entityName : String = ""):
 	var template = FindEntityReference(entityID)
 	Util.Assert(template and entityInstance, "Could not create the entity: %s" % entityID)
 	if template and entityInstance:
 		entityInstance.SetData(template)
 		entityInstance.SetKind(entityType, entityID, entityName)
 
-func CreateEntity(entityType : String, entityID : String, entityName : String = "") -> BaseEntity:
+static func CreateEntity(entityType : String, entityID : String, entityName : String = "") -> BaseEntity:
 	var entityInstance : BaseEntity = Launcher.FileSystem.LoadEntity(entityType)
 	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
 	return entityInstance
 
-func CreateAgent(entityType : String, entityID : String, entityName : String = "") -> BaseAgent:
+static func CreateAgent(entityType : String, entityID : String, entityName : String = "") -> BaseAgent:
 	var entityInstance : BaseAgent = null
 	match entityType:
 		"Npc": entityInstance = NpcAgent.new()
@@ -30,3 +31,10 @@ func CreateAgent(entityType : String, entityID : String, entityName : String = "
 		_: entityInstance = BaseAgent.new()
 	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
 	return entityInstance
+
+# Map
+static func LoadMapData(mapName : String, ext : String) -> Object:
+	var mapPath : String			= Launcher.DB.GetMapPath(mapName)
+	var mapInstance : Object		= Launcher.FileSystem.LoadMap(mapPath, ext)
+
+	return mapInstance

@@ -44,7 +44,7 @@ func Morphed(ridAgent : int, morphID : String, _rpcID : int = -1):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
 		if entity && entity.get_parent():
-			var morphData : EntityData = Launcher.DB.Instantiate.FindEntityReference(morphID)
+			var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 			entity.SetVisual(morphData)
 
 func DisconnectPlayer():

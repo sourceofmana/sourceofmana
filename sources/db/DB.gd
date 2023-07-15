@@ -1,7 +1,5 @@
 extends Node
 
-var Instantiate : Object			= load("res://sources/db/Instantiate.gd").new()
-
 var MapsDB : Dictionary				= {}
 var MusicsDB : Dictionary			= {}
 var EthnicitiesDB : Dictionary		= {}
@@ -9,7 +7,7 @@ var HairstylesDB : Dictionary		= {}
 var EntitiesDB : Dictionary			= {}
 var EmotesDB : Dictionary			= {}
 
-
+#
 func ParseMapsDB():
 	var Map		= Launcher.FileSystem.LoadDBInstance("Map.gd")
 	var result	= Launcher.FileSystem.LoadDB("maps.json")

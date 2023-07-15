@@ -83,10 +83,9 @@ layout_mode = 2
 text = "Emote"
 targetWindow = NodePath("../../../../FloatingWindows/Emote")
 
-[node name="Settings" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Settings" parent="VBoxMain/HBoxTop/HBoxButtons" instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "Settings"
-targetWindow = NodePath("")
 
 [node name="MainPanelContainer" type="Control" parent="VBoxMain"]
 layout_mode = 2
