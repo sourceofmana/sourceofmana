@@ -52,7 +52,7 @@ func SetMovePos(direction : Vector2, rpcID : int = -1):
 func TriggerWarp(rpcID : int = -1):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
-		var warp : WarpObject = Launcher.World.CheckWarp(player)
+		var warp : WarpObject = Launcher.World.CanWarp(player)
 		if warp:
 			var nextMap : World.Map = Launcher.World.GetMap(warp.destinationMap)
 			if nextMap:
