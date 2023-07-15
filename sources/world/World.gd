@@ -89,12 +89,13 @@ func LoadNavigationData(map : Map):
 	var obj : Object = LoadMapData(map.name, Launcher.Path.MapNavigationExt)
 	if obj:
 		map.nav_poly = obj
+		map.nav_poly.cell_size = 0.1
 
 func CreateNavigation(map : Map, mapRID : RID):
 	if map.nav_poly:
 		map.mapRID = mapRID if mapRID.is_valid() else NavigationServer2D.map_create()
 		NavigationServer2D.map_set_active(map.mapRID, true)
-		NavigationServer2D.map_set_cell_size(map.mapRID, 0.1)
+		NavigationServer2D.map_set_cell_size(map.mapRID, map.nav_poly.cell_size)
 
 		map.regionRID = NavigationServer2D.region_create()
 		NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
