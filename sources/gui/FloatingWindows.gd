@@ -26,6 +26,5 @@ func _on_window_resized():
 		if overallRatio != Vector2.ONE:
 			for child in get_children():
 				child.set_position(child.get_position() * overallRatio)
-				child.set_size(child.get_size() * overallRatio)
 				if child.has_method("ResizeWindow"):
 					child.ResizeWindow(child.get_position())
