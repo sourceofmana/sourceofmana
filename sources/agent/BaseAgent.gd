@@ -8,7 +8,8 @@ var agentType : String					= ""
 var agentID : String					= ""
 
 var aiTimer : Timer						= null
-var combatTimer : Timer					= null
+var castTimer : Timer					= null
+var cooldownTimer : Timer				= null
 var deathTimer : Timer					= null
 var hasCurrentGoal : bool				= false
 
@@ -71,6 +72,9 @@ func SetState(nextState : EntityCommons.State) -> bool:
 	return currentState == nextState
 
 func WalkToward(pos : Vector2):
+	if pos != position and (target or isAttacking):
+		Combat.Stop(self)
+
 	hasCurrentGoal = true
 	lastPositions.clear()
 	if agent:
@@ -90,9 +94,6 @@ func IsStuck() -> bool:
 			sum += pos - position
 		isStuck = sum.abs() < Vector2(1, 1)
 	return isStuck
-
-func ResetCombat():
-	target = null
 
 func HasChanged() -> bool:
 	return position != pastPosition || velocity != pastVelocity || currentState != pastState
@@ -119,11 +120,17 @@ func SetKind(entityType : String, entityID : String, entityName : String):
 		aiTimer.set_name("AiTimer")
 		add_child(aiTimer)
 	if self is MonsterAgent or self is PlayerAgent:
-		combatTimer = Timer.new()
-		combatTimer.set_name("CombatTimer")
-		add_child(combatTimer)
+		castTimer = Timer.new()
+		castTimer.set_name("CastTimer")
+		castTimer.set_one_shot(true)
+		add_child(castTimer)
+		cooldownTimer = Timer.new()
+		cooldownTimer.set_name("CooldownTimer")
+		cooldownTimer.set_one_shot(true)
+		add_child(cooldownTimer)
 		deathTimer = Timer.new()
 		deathTimer.set_name("DeathTimer")
+		deathTimer.set_one_shot(true)
 		add_child(deathTimer)
 
 func SetData(data : Object):

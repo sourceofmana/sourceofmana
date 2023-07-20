@@ -4,18 +4,18 @@ class_name Formulas
 #
 static func GetMaxHealth(stat : EntityStats) -> int:
 	var value : float = stat.vitality
-	value += stat.base.health
+	value += stat.base.maxHealth
 	return int(value)
 
 static func GetMaxMana(stat : EntityStats) -> int:
 	var value : float = stat.concentration
-	value += stat.base.mana
+	value += stat.base.maxMana
 	return int(value)
 
 static func GetMaxStamina(stat : EntityStats) -> int:
 	var value : float = stat.endurance * 0.5
 	value += stat.concentration * 0.5
-	value += stat.base.stamina
+	value += stat.base.maxStamina
 	return int(value)
 
 static func GetAttackStrength(stat : EntityStats) -> int:
@@ -28,9 +28,14 @@ static func GetAttackSpeed(stat : EntityStats) -> float:
 	value += stat.base.attackSpeed
 	return value
 
-static func GetAttackSpeedSec(stat : EntityStats) -> float:
+static func GetCastAttackDelay(stat : EntityStats) -> float:
 	var value : float = stat.current.attackSpeed
 	value /= 250
+	return value
+
+static func GetCooldownAttackDelay(stat : EntityStats) -> float:
+	var value : float = stat.current.attackSpeed
+	value /= 500
 	return value
 
 static func GetAttackRange(stat : EntityStats) -> int:
@@ -49,13 +54,19 @@ static func GetWeightCapacity(stat : EntityStats) -> float:
 
 #
 static func ClampHealth(stat : EntityStats) -> int:
-	return clampi(stat.health, 0, stat.base.health)
+	return clampi(stat.health, 0, stat.current.maxHealth)
 
 static func ClampMana(stat : EntityStats) -> int:
-	return clampi(stat.mana, 0, stat.base.mana)
+	return clampi(stat.mana, 0, stat.current.maxMana)
 
 static func ClampStamina(stat : EntityStats) -> int:
-	return clampi(stat.stamina, 0, stat.base.stamina)
+	return clampi(stat.stamina, 0, stat.current.maxStamina)
 
 static func GetWeight(inventory : EntityInventory) -> int:
 	return inventory.calculate_weight() / 1000
+
+#
+static func GetXpBonus(stat : EntityStats):
+	var personalMean : float = float(stat.strength + stat.vitality + stat.agility + stat.endurance + stat.concentration) / 5
+	var bonus : int = int(stat.level * personalMean)
+	return bonus

@@ -16,11 +16,11 @@ func _process(_dt : float):
 		assert(hpStat && manaStat && staminaStat && expText, "Stat controls are missing")
 
 		if hpStat:
-			hpStat.SetStat(Launcher.Player.stat.health, Launcher.Player.stat.current.health)
+			hpStat.SetStat(Launcher.Player.stat.health, Launcher.Player.stat.current.maxHealth)
 		if manaStat:
-			manaStat.SetStat(Launcher.Player.stat.mana, Launcher.Player.stat.current.mana)
+			manaStat.SetStat(Launcher.Player.stat.mana, Launcher.Player.stat.current.maxMana)
 		if staminaStat:
-			staminaStat.SetStat(Launcher.Player.stat.stamina, Launcher.Player.stat.current.stamina)
+			staminaStat.SetStat(Launcher.Player.stat.stamina, Launcher.Player.stat.current.maxStamina)
 		if levelText:
 			levelText.set_text(String.num_int64(Launcher.Player.stat.level))
 		if expText:

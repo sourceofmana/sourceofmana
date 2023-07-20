@@ -137,17 +137,14 @@ func _physics_process(_dt : float):
 			if instance.players.size() > 0:
 				for agent in instance.npcs:
 					if agent:
-						Combat.Update(agent, map)
 						AI.Update(agent, map)
 						agent._internal_process()
 
 				for agent in instance.mobs:
 					if agent:
-						Combat.Update(agent, map)
 						AI.Update(agent, map)
 						agent._internal_process()
 
 				for agent in instance.players:
 					if agent:
-						Combat.Update(agent, map)
 						agent._internal_process()

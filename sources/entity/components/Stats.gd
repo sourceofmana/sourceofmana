@@ -29,26 +29,34 @@ var current : BaseStats					= BaseStats.new()
 var deathDelay : int					= 10
 
 #
+func XpBonus(enemy : BaseAgent):
+	var bonus : int = Formulas.GetXpBonus(enemy.stat)
+	experience += bonus
+	# Todo: add level up
+
+#
 func RefreshStats():
 	# Current Stats
-	current.health			= Formulas.GetMaxHealth(self)
-	current.mana			= Formulas.GetMaxMana(self)
-	current.stamina			= Formulas.GetMaxStamina(self)
+	current.maxHealth		= Formulas.GetMaxHealth(self)
+	current.maxMana			= Formulas.GetMaxMana(self)
+	current.maxStamina		= Formulas.GetMaxStamina(self)
 	current.attackStrength	= Formulas.GetAttackStrength(self)
 	current.attackSpeed		= Formulas.GetAttackSpeed(self)
 	current.attackRange		= Formulas.GetAttackRange(self)
 	current.walkSpeed		= Formulas.GetWalkSpeed(self)
 	current.weightCapacity	= Formulas.GetWeightCapacity(self)
+	ClampStats()
 
+func ClampStats():
 	# Active Stats
 	health					= Formulas.ClampHealth(self)
 	stamina					= Formulas.ClampStamina(self)
 	mana					= Formulas.ClampMana(self)
 
 func SetEntityStats(stats : Dictionary):
-	if "Health" in stats:				base.health			= stats["Health"]
-	if "Mana" in stats:					base.mana			= stats["Mana"]
-	if "Stamina" in stats:				base.stamina		= stats["Stamina"]
+	if "Health" in stats:				base.maxHealth		= stats["Health"]
+	if "Mana" in stats:					base.maxMana		= stats["Mana"]
+	if "Stamina" in stats:				base.maxStamina		= stats["Stamina"]
 	if "AttackStrength" in stats:		base.attackStrength	= stats["AttackStrength"]
 	if "AttackSpeed" in stats:			base.attackSpeed	= stats["AttackSpeed"]
 	if "AttackRange" in stats:			base.attackRange	= stats["AttackRange"]
@@ -71,13 +79,16 @@ func Init(data : EntityData):
 
 	if "Level" in stats:				level				= stats["Level"]
 	if "Experience" in stats:			experience			= stats["Experience"]
-	if "Health" in stats:				health				= stats["Health"]
-	if "Mana" in stats:					mana				= stats["Mana"] 
-	if "Stamina" in stats:				stamina				= stats["Stamina"] 
 	if "Weight" in stats:				weight				= stats["Weight"]
 	if "Spirit" in stats:				spiritShape			= stats["Spirit"]
+
 	SetPersonalStats(stats)
 	SetEntityStats(stats)
+
+	health		= stats["Health"]	if "Health" in stats	else current.maxHealth
+	mana		= stats["Mana"]		if "Mana" in stats		else current.maxMana
+	stamina		= stats["Stamina"]	if "Stamina" in stats	else current.maxStamina
+	ClampStats()
 
 func Morph(data : EntityData):
 	SetPersonalStats(data._stats)

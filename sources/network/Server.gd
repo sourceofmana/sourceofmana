@@ -38,7 +38,6 @@ func GetEntities(rpcID : int = -1):
 func SetClickPos(pos : Vector2, rpcID : int = -1):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
-		player.ResetCombat()
 		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, rpcID : int = -1):
@@ -46,7 +45,6 @@ func SetMovePos(direction : Vector2, rpcID : int = -1):
 	if player:
 		var pos : Vector2 = direction.normalized() * Vector2(32,32) + player.position
 		if WorldNavigation.GetPathLength(player, pos) <= 48:
-			player.ResetCombat()
 			player.WalkToward(pos)
 
 func TriggerWarp(rpcID : int = -1):
