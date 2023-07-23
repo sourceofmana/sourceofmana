@@ -10,116 +10,97 @@ var uniqueID : int					= 0
 #
 @rpc("any_peer", "reliable")
 func ConnectPlayer(playerName : String, rpcID : int = -1):
-	if Client:		NetCallServer("ConnectPlayer", [playerName])
-	elif Server:	Server.ConnectPlayer(playerName, rpcID)
+	NetCallServer("ConnectPlayer", [playerName], rpcID)
 
 @rpc("any_peer", "reliable")
 func DisconnectPlayer(rpcID : int = -1):
-	if Client:		NetCallServer("DisconnectPlayer", [])
-	elif Server:	Server.DisconnectPlayer(rpcID)
+	NetCallServer("DisconnectPlayer", [], rpcID)
 
 #
 @rpc("any_peer", "unreliable")
 func TriggerWarp(rpcID : int = -1):
-	if Client:		NetCallServer("TriggerWarp", [])
-	elif Server:	Server.TriggerWarp(rpcID)
+	NetCallServer("TriggerWarp", [], rpcID)
 
 @rpc("authority", "reliable")
 func WarpPlayer(mapName : String, rpcID : int = -1):
-	if Server:		NetCallClient("WarpPlayer", [mapName], rpcID)
-	elif Client:	Client.WarpPlayer(mapName)
+	NetCallClient("WarpPlayer", [mapName], rpcID)
 
 #
 @rpc("any_peer", "reliable")
 func TriggerEmote(emoteID : int, rpcID : int = -1):
-	if Client:		NetCallServer("TriggerEmote", [emoteID])
-	elif Server:	Server.TriggerEmote(emoteID, rpcID)
+	NetCallServer("TriggerEmote", [emoteID], rpcID)
 
 @rpc("authority", "reliable")
 func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = -1):
-	if Server:		NetCallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
-	elif Client:	Client.EmotePlayer(senderAgentID, emoteID)
+	NetCallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
 
 #
 @rpc("any_peer", "reliable")
 func GetEntities(rpcID : int = -1):
-	if Client:		NetCallServer("GetEntities", [])
-	elif Server:	Server.GetEntities(rpcID)
+	NetCallServer("GetEntities", [], rpcID)
 
 @rpc("authority", "reliable")
 func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, agentState : EntityCommons.State, rpcID : int = -1):
-	if Server:		NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos, agentState], rpcID)
-	elif Client:	Client.AddEntity(agentID, entityType, entityID, entityName, entityPos, agentState)
+	NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, entityPos, agentState], rpcID)
 
 @rpc("authority", "reliable")
 func RemoveEntity(agentID : int, rpcID : int = -1):
-	if Server:		NetCallClient("RemoveEntity", [agentID], rpcID)
-	elif Client:	Client.RemoveEntity(agentID)
+	NetCallClient("RemoveEntity", [agentID], rpcID)
 
 #
 @rpc("any_peer", "unreliable_ordered")
 func SetClickPos(pos : Vector2, rpcID : int = -1):
-	if Client:		NetCallServer("SetClickPos", [pos])
-	elif Server:	Server.SetClickPos(pos, rpcID)
+	NetCallServer("SetClickPos", [pos], rpcID)
 
 @rpc("any_peer", "unreliable_ordered")
 func SetMovePos(pos : Vector2, rpcID : int = -1):
-	if Client:		NetCallServer("SetMovePos", [pos])
-	elif Server:	Server.SetMovePos(pos, rpcID)
+	NetCallServer("SetMovePos", [pos], rpcID)
 
 @rpc("authority", "unreliable_ordered")
 func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State, rpcID : int = -1):
-	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, agentState], rpcID)
-	elif Client:	Client.UpdateEntity(agentID, velocity, position, agentState)
+	NetCallClient("UpdateEntity", [agentID, velocity, position, agentState], rpcID)
 
 @rpc("authority", "reliable")
 func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State, rpcID : int = -1):
-	if Server:		NetCallClient("UpdateEntity", [agentID, velocity, position, agentState], rpcID)
-	elif Client:	Client.UpdateEntity(agentID, velocity, position, agentState)
+	NetCallClient("UpdateEntity", [agentID, velocity, position, agentState], rpcID)
 
 #
 @rpc("any_peer", "reliable")
 func TriggerSit(rpcID : int = -1):
-	if Client:		NetCallServer("TriggerSit", [])
-	elif Server:	Server.TriggerSit(rpcID)
+	NetCallServer("TriggerSit", [], rpcID)
 
 #
 @rpc("any_peer", "reliable")
 func TriggerChat(text : String, rpcID : int = -1):
-	if Client:		NetCallServer("TriggerChat", [text])
-	elif Server:	Server.TriggerChat(text, rpcID)
+	NetCallServer("TriggerChat", [text], rpcID)
 
 @rpc("authority", "reliable")
 func ChatAgent(ridAgent : int, text : String, rpcID : int = -1):
-	if Server:		NetCallClient("ChatAgent", [ridAgent, text], rpcID)
-	elif Client:	Client.ChatAgent(ridAgent, text)
+	NetCallClient("ChatAgent", [ridAgent, text], rpcID)
 
 #
 @rpc("any_peer", "reliable")
 func TriggerEntity(entityID : int, rpcID : int = -1):
-	if Client:		NetCallServer("TriggerEntity", [entityID])
-	elif Server:	Server.TriggerEntity(entityID, rpcID)
+	NetCallServer("TriggerEntity", [entityID], rpcID)
 
 @rpc("authority", "reliable")
 func DamageDealt(agentID : int, targetID : int, damage : int, rpcID : int = -1):
-	if Server:		NetCallClient("DamageDealt", [agentID, targetID, damage], rpcID)
-	elif Client:	Client.DamageDealt(agentID, targetID, damage)
+	NetCallClient("DamageDealt", [agentID, targetID, damage], rpcID)
 
 #
 @rpc("any_peer", "reliable")
 func TriggerMorph(rpcID : int = -1):
-	if Client:		NetCallServer("TriggerMorph", [])
-	elif Server:	Server.TriggerMorph(rpcID)
+	NetCallServer("TriggerMorph", [], rpcID)
+
 
 @rpc("authority", "reliable")
 func Morphed(agentID : int, morphID : String, rpcID : int = -1):
-	if Server:		NetCallClient("Morphed", [agentID, morphID], rpcID)
-	elif Client:	Client.Morphed(agentID, morphID)
+	NetCallClient("Morphed", [agentID, morphID], rpcID)
 
 #
-func NetCallServer(methodName : String, args : Array):
+func NetCallServer(methodName : String, args : Array, rpcID : int):
 	if Server:
-		Server.callv(methodName, args)
+		Server.callv(methodName, args + [rpcID])
 	else:
 		callv("rpc_id", [1, methodName] + args + [uniqueID])
 
