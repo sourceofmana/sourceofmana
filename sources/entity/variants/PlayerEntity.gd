@@ -15,6 +15,9 @@ func SetLocalPlayer():
 			add_child(Launcher.Camera.mainCamera)
 
 func Interact():
+	if entityState != EntityCommons.State.IDLE:
+		return
+
 	target = null
 	if isPlayableController && interactive && Launcher.Map:
 		var nearestDistance : float = -1
