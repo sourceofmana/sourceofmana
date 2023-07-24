@@ -36,7 +36,7 @@ static func Cast(agent : BaseAgent):
 			StartCastDelay(agent)
 			agent.ResetNav()
 		else:
-			agent.WalkToward(agent.target.position)
+			Stop(agent)
 
 static func Stop(agent : BaseAgent):
 	agent.target = null
