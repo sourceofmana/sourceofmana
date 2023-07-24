@@ -143,7 +143,10 @@ func SetData(data : Object):
 		add_child(agent)
 
 #
-func Trigger(_caller : BaseAgent):
+func Damage(_caller : BaseAgent):
+	pass
+
+func Interact(_caller : BaseAgent):
 	pass
 
 #

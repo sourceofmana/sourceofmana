@@ -31,7 +31,10 @@ func Interact():
 		if target:
 			var entityID = Launcher.Map.entities.find_key(target)
 			if entityID != null:
-				Launcher.Network.TriggerEntity(entityID)
+				if target is NpcEntity:
+					Launcher.Network.TriggerInteract(entityID)
+				elif target is MonsterEntity:
+					Launcher.Network.TriggerDamage(entityID)
 
 #
 func _physics_process(deltaTime : float):

@@ -2,7 +2,7 @@ extends BaseAgent
 class_name NpcAgent
 
 #
-func Trigger(caller : BaseAgent):
+func Interact(caller : BaseAgent):
 	if caller:
 		var peerID : int = Launcher.Network.Server.GetRid(caller)
 		if peerID != Launcher.Network.RidUnknown:

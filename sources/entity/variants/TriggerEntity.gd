@@ -4,7 +4,7 @@ class_name TriggerEntity
 var triggered : bool = false
 
 #
-func Trigger():
+func Interact():
 	if triggered == false:
 		$AnimationPlayer.play("To Trigger")
 		triggered = true

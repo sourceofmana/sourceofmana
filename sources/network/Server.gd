@@ -91,12 +91,19 @@ func TriggerEmote(emoteID : int, rpcID : int = Launcher.Network.RidSingleMode):
 func TriggerChat(text : String, rpcID : int = Launcher.Network.RidSingleMode):
 	NotifyInstancePlayers(null, GetAgent(rpcID), "ChatAgent", [text])
 
-func TriggerEntity(triggeredAgentID : int, rpcID : int = Launcher.Network.RidSingleMode):
+func TriggerInteract(triggeredAgentID : int, rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
 		var triggeredAgent : BaseAgent = WorldAgent.GetAgent(triggeredAgentID)
 		if triggeredAgent:
-			triggeredAgent.Trigger(player)
+			triggeredAgent.Interact(player)
+
+func TriggerDamage(triggeredAgentID : int, rpcID : int = Launcher.Network.RidSingleMode):
+	var player : BaseAgent = GetAgent(rpcID)
+	if player:
+		var triggeredAgent : BaseAgent = WorldAgent.GetAgent(triggeredAgentID)
+		if triggeredAgent:
+			triggeredAgent.Damage(player)
 
 func TriggerMorph(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
