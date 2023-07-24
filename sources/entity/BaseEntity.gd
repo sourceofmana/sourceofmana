@@ -22,7 +22,7 @@ func SetKind(_entityKind : String, _entityID : String, _entityName : String):
 func SetData(data : EntityData):
 	# Stat
 	if data._stats:
-		stat.SetEntityStats(data._stats)
+		stat.Init(data)
 
 	# Display
 	displayName			= data._displayName

@@ -44,8 +44,8 @@ static func Stop(agent : BaseAgent):
 
 static func Attack(agent : BaseAgent):
 	if agent.isAttacking and IsTargetable(agent, agent.target) and IsNear(agent, agent.target):
-		var hasStamina : bool			= agent.stat.current.maxStamina >= exhaustPerAttack
-		agent.stat.current.maxStamina	= max(agent.stat.current.maxStamina - exhaustPerAttack, 0)
+		var hasStamina : bool		= agent.stat.stamina >= exhaustPerAttack
+		agent.stat.stamina			= max(agent.stat.stamina - exhaustPerAttack, 0)
 
 		var lowerBound : float		= 0.9 if hasStamina else 0.1
 		var RNGvalue : float		= randf_range(lowerBound, 1.0)

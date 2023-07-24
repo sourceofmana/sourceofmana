@@ -150,6 +150,9 @@ func Interact(_caller : BaseAgent):
 	pass
 
 #
+func _specific_process():
+	pass
+
 func _internal_process():
 	if agent and get_parent():
 		UpdateInput()
@@ -159,6 +162,7 @@ func _internal_process():
 			agent.set_velocity(currentVelocity)
 		else:
 			_velocity_computed(currentVelocity)
+		_specific_process()
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity

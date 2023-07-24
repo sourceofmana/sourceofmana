@@ -11,7 +11,7 @@ const RidDefault : int			= 0
 var peer : ENetMultiplayerPeer		= ENetMultiplayerPeer.new()
 var uniqueID : int					= RidDefault
 
-#
+# Connection
 @rpc("any_peer", "reliable")
 func ConnectPlayer(playerName : String, rpcID : int = RidSingleMode):
 	NetCallServer("ConnectPlayer", [playerName], rpcID)
@@ -20,7 +20,7 @@ func ConnectPlayer(playerName : String, rpcID : int = RidSingleMode):
 func DisconnectPlayer(rpcID : int = RidSingleMode):
 	NetCallServer("DisconnectPlayer", [], rpcID)
 
-#
+# Warp
 @rpc("any_peer", "unreliable")
 func TriggerWarp(rpcID : int = RidSingleMode):
 	NetCallServer("TriggerWarp", [], rpcID)
@@ -29,7 +29,7 @@ func TriggerWarp(rpcID : int = RidSingleMode):
 func WarpPlayer(mapName : String, rpcID : int = RidSingleMode):
 	NetCallClient("WarpPlayer", [mapName], rpcID)
 
-#
+# Emote
 @rpc("any_peer", "reliable")
 func TriggerEmote(emoteID : int, rpcID : int = RidSingleMode):
 	NetCallServer("TriggerEmote", [emoteID], rpcID)
@@ -38,7 +38,7 @@ func TriggerEmote(emoteID : int, rpcID : int = RidSingleMode):
 func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = RidSingleMode):
 	NetCallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
 
-#
+# Entities
 @rpc("any_peer", "reliable")
 func GetEntities(rpcID : int = RidSingleMode):
 	NetCallServer("GetEntities", [], rpcID)
@@ -51,7 +51,7 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 func RemoveEntity(agentID : int, rpcID : int = RidSingleMode):
 	NetCallClient("RemoveEntity", [agentID], rpcID)
 
-#
+# Navigation
 @rpc("any_peer", "unreliable_ordered")
 func SetClickPos(pos : Vector2, rpcID : int = RidSingleMode):
 	NetCallServer("SetClickPos", [pos], rpcID)
@@ -68,12 +68,12 @@ func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, agentSt
 func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State, rpcID : int = RidSingleMode):
 	NetCallClient("UpdateEntity", [agentID, velocity, position, agentState], rpcID)
 
-#
+# Sit
 @rpc("any_peer", "reliable")
 func TriggerSit(rpcID : int = RidSingleMode):
 	NetCallServer("TriggerSit", [], rpcID)
 
-#
+# Chat
 @rpc("any_peer", "reliable")
 func TriggerChat(text : String, rpcID : int = RidSingleMode):
 	NetCallServer("TriggerChat", [text], rpcID)
@@ -82,12 +82,12 @@ func TriggerChat(text : String, rpcID : int = RidSingleMode):
 func ChatAgent(ridAgent : int, text : String, rpcID : int = RidSingleMode):
 	NetCallClient("ChatAgent", [ridAgent, text], rpcID)
 
-#
+# Interact
 @rpc("any_peer", "unreliable_ordered")
 func TriggerInteract(entityID : int, rpcID : int = RidSingleMode):
 	NetCallServer("TriggerInteract", [entityID], rpcID, 1000)
 
-#
+# Damange
 @rpc("any_peer", "unreliable_ordered")
 func TriggerDamage(entityID : int, rpcID : int = RidSingleMode):
 	NetCallServer("TriggerDamage", [entityID], rpcID)
@@ -96,15 +96,27 @@ func TriggerDamage(entityID : int, rpcID : int = RidSingleMode):
 func DamageDealt(agentID : int, targetID : int, damage : int, rpcID : int = RidSingleMode):
 	NetCallClient("DamageDealt", [agentID, targetID, damage], rpcID)
 
-#
+# Morph
 @rpc("any_peer", "reliable")
 func TriggerMorph(rpcID : int = RidSingleMode):
 	NetCallServer("TriggerMorph", [], rpcID)
 
-
 @rpc("authority", "reliable")
 func Morphed(agentID : int, morphID : String, rpcID : int = RidSingleMode):
 	NetCallClient("Morphed", [agentID, morphID], rpcID)
+
+# Stats
+@rpc("any_peer", "unreliable_ordered")
+func UpdatePlayerVars(level : int, experience : int, rpcID : int = RidSingleMode):
+	NetCallClient("UpdatePlayerVars", [level, experience], rpcID)
+
+@rpc("any_peer", "unreliable_ordered")
+func UpdateActiveStats(health : int, mana : int, stamina : int, weight : float, morphed : bool, rpcID : int = RidSingleMode):
+	NetCallClient("UpdateActiveStats", [health, mana, stamina, weight, morphed], rpcID)
+
+@rpc("any_peer", "unreliable_ordered")
+func UpdatePersonalStats(strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = RidSingleMode):
+	NetCallClient("UpdatePersonalStats", [strength, vitality, agility, endurance, concentration], rpcID)
 
 #
 func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:

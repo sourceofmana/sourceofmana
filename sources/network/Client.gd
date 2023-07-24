@@ -47,6 +47,27 @@ func Morphed(ridAgent : int, morphID : String, _rpcID : int = Launcher.Network.R
 			var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 			entity.SetVisual(morphData)
 
+func UpdatePlayerVars(level : int, experience : int, _rpcID : int = Launcher.Network.RidSingleMode):
+	if Launcher.Player:
+		Launcher.Player.stat.level			= level
+		Launcher.Player.stat.experience		= experience
+
+func UpdateActiveStats(health : int, mana : int, stamina : int, weight : float, morphed : bool, _rpcID : int = Launcher.Network.RidSingleMode):
+	if Launcher.Player:
+		Launcher.Player.stat.health			= health
+		Launcher.Player.stat.mana			= mana
+		Launcher.Player.stat.stamina		= stamina
+		Launcher.Player.stat.weight			= weight
+		Launcher.Player.stat.morphed		= morphed
+
+func UpdatePersonalStats(strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = Launcher.Network.RidSingleMode):
+	if Launcher.Player:
+		Launcher.Player.stat.strength		= strength
+		Launcher.Player.stat.vitality		= vitality
+		Launcher.Player.stat.agility		= agility
+		Launcher.Player.stat.endurance		= endurance
+		Launcher.Player.stat.concentration	= concentration
+
 func DisconnectPlayer():
 	if Launcher.Map:
 		Launcher.Map.UnloadMapNode()

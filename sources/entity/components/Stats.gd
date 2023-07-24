@@ -3,7 +3,9 @@ class_name EntityStats
 
 # Player Vars
 var level : int							= 1
-var experience : float					= 0.0
+var experience : int					= 0
+
+# Shapes
 var entityShape : String				= ""
 var spiritShape : String				= ""
 
@@ -22,8 +24,8 @@ var endurance : int						= 1
 var concentration : int					= 1
 
 # Formula Stats
-var base : BaseStats					= BaseStats.new()
-var current : BaseStats					= BaseStats.new()
+var base : BaseStats					= null
+var current : BaseStats					= null
 
 # Constants to move to Conf
 var deathDelay : int					= 10
@@ -75,7 +77,10 @@ func SetPersonalStats(stats : Dictionary):
 #
 func Init(data : EntityData):
 	var stats : Dictionary = data._stats
-	entityShape = data._name
+
+	base		= BaseStats.new()
+	current		= BaseStats.new()
+	entityShape	= data._name
 
 	if "Level" in stats:				level				= stats["Level"]
 	if "Experience" in stats:			experience			= stats["Experience"]
@@ -93,3 +98,12 @@ func Init(data : EntityData):
 func Morph(data : EntityData):
 	SetPersonalStats(data._stats)
 	morphed = not morphed
+
+func UpdatePlayerVars(networkRID : int):
+	Launcher.Network.UpdatePlayerVars(level, experience, networkRID)
+
+func UpdateActiveStats(networkRID : int):
+	Launcher.Network.UpdateActiveStats(health, mana, stamina, weight, morphed, networkRID)
+
+func UpdatePersonalStats(networkRID : int):
+	Launcher.Network.UpdatePersonalStats(strength, vitality, agility, endurance, concentration, networkRID)
