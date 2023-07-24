@@ -7,8 +7,8 @@ var JSONFileName : String				= "online.json"
 func GetPlayerNames() -> Array[String]:
 	var players : Array[String] = []
 	if Launcher.Network.Server:
-		for playerID in Launcher.Network.Server.playerMap.values():
-			var agent : PlayerAgent = WorldAgent.GetAgent(playerID)
+		for playerData in Launcher.Network.Server.playerMap.values():
+			var agent : PlayerAgent = WorldAgent.GetAgent(playerData.agentRID)
 			if agent:
 				players.append(agent.agentName)
 	return players

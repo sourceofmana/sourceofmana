@@ -1,19 +1,19 @@
 extends Node
 
 #
-func WarpPlayer(map : String, _rpcID : int = -1):
+func WarpPlayer(map : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.ReplaceMapNode(map)
 
-func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = -1):
+func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.EmotePlayer(playerID, emoteID)
 
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, agentState : EntityCommons.State, _rpcID : int = -1):
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, agentState : EntityCommons.State, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityPos, agentState)
 
-func RemoveEntity(agentID : int, _rpcID : int = -1):
+func RemoveEntity(agentID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentID)
 
@@ -21,7 +21,7 @@ func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, agentS
 	if Launcher.Map:
 		Launcher.Map.UpdateEntity(ridAgent, velocity, position, agentState)
 
-func ChatAgent(ridAgent : int, text : String, _rpcID : int = -1):
+func ChatAgent(ridAgent : int, text : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
 		if entity && entity.get_parent():
@@ -30,7 +30,7 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = -1):
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
 
-func DamageDealt(ridAgent : int, targetID : int, damage : int, _rpcID : int = -1):
+func DamageDealt(ridAgent : int, targetID : int, damage : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(targetID)
 		var caller : BaseEntity = Launcher.Map.entities.get(ridAgent)
@@ -40,7 +40,7 @@ func DamageDealt(ridAgent : int, targetID : int, damage : int, _rpcID : int = -1
 				var text : String = "[color=#%s]%d[/color]" % [color, damage]
 				entity.interactive.DisplaySpeech(text)
 
-func Morphed(ridAgent : int, morphID : String, _rpcID : int = -1):
+func Morphed(ridAgent : int, morphID : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
 		if entity && entity.get_parent():

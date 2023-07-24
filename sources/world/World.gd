@@ -120,7 +120,8 @@ func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
 			WorldAgent.PushAgent(agent, inst)
 			if agent is PlayerAgent:
 				var agentID = Launcher.Network.Server.GetRid(agent)
-				Util.OneShotCallback(agent.tree_entered, Launcher.Network.WarpPlayer, [map.name, agentID])
+				if agentID != Launcher.Network.RidUnknown:
+					Util.OneShotCallback(agent.tree_entered, Launcher.Network.WarpPlayer, [map.name, agentID])
 
 # Generic
 func _post_launch():

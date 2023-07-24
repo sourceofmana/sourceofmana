@@ -34,7 +34,6 @@ static func GetAgent(agentID : int) -> BaseAgent:
 	var agent : BaseAgent = null
 	if agents.has(agentID):
 		agent = agents.get(agentID)
-	Util.Assert(agent != null, "Could not retrieve the world agent with the following ID %d" % [agentID])
 	return agent
 
 static func AddAgent(agent : BaseAgent):
