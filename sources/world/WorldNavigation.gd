@@ -59,3 +59,13 @@ static func GetRandomPositionAABB(map : World.Map, pos : Vector2i, offset : Vect
 				return randPoint
 
 	return GetRandomPosition(map)
+
+static func GetSpawnPosition(map : World.Map, spawn : SpawnObject) -> Vector2i:
+	var position : Vector2i = Vector2i.ZERO
+	if not spawn.is_global:
+		position = WorldNavigation.GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
+	if position == Vector2i.ZERO:
+		position = WorldNavigation.GetRandomPosition(map)
+
+	Util.Assert(position != Vector2i.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
+	return position

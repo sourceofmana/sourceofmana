@@ -9,3 +9,6 @@ class_name SpawnObject
 @export var spawn_position : Vector2i	= Vector2i.ZERO
 @export var spawn_offset : Vector2i		= Vector2i.ZERO
 @export var is_global : bool			= false
+
+var is_persistant : bool				= false
+var map : World.Map						= null

@@ -27,20 +27,14 @@ func CallMethod(networkRpcID : int, methodName : String, actionDelta : int) -> b
 	return false
 
 #
-func ConnectPlayer(playerName : String, rpcID : int = Launcher.Network.RidSingleMode):
+func ConnectPlayer(nickname : String, rpcID : int = Launcher.Network.RidSingleMode):
 	if not GetAgent(rpcID):
-		var agent : BaseAgent	= Instantiate.CreateAgent("Player", "Default Entity", playerName)
-		var mapName : String	= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
-		var pos : Vector2		= Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP)
-		var map : World.Map		= Launcher.World.GetMap(mapName)
-
+		var agent : BaseAgent = Instantiate.CreateAgent("Player", "Default Entity", nickname)
 		playerMap[rpcID].agentRID = agent.get_rid().get_id()
-
-		WorldAgent.AddAgent(agent)
-		Launcher.World.Spawn(map, pos, agent)
+		WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, agent)
 
 		onlineList.UpdateJson()
-		Util.PrintLog("Server", "Player connected: %s (%d)" % [playerName, rpcID])
+		Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
 
 func DisconnectPlayer(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)

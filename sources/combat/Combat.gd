@@ -55,10 +55,13 @@ static func Attack(agent : BaseAgent):
 		Launcher.Network.Server.NotifyInstancePlayers(null, agent, "DamageDealt", [agent.target.get_rid().get_id(), damage])
 
 		if agent.target.stat.health <= 0:
-			agent.stat.XpBonus(agent.target)
-			Util.StartTimer(agent.target.deathTimer, agent.target.stat.deathDelay, WorldAgent.RemoveAgent.bind(agent.target))
-			agent.target = null
+			Combat.TargetKilled(agent)
 
 		Combat.StartCooldownDelay(agent)
 	else:
 		Combat.Stop(agent)
+
+static func TargetKilled(agent : BaseAgent):
+	agent.stat.XpBonus(agent.target)
+	Util.StartTimer(agent.target.deathTimer, agent.target.stat.deathDelay, WorldAgent.RemoveAgent.bind(agent.target))
+	agent.target = null

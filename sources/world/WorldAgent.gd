@@ -44,6 +44,13 @@ static func AddAgent(agent : BaseAgent):
 static func RemoveAgent(agent : BaseAgent):
 	Util.Assert(agent != null, "Agent is null, can't remove it")
 	if agent:
+		if agent.spawnInfo and agent.spawnInfo.is_persistant:
+			var timer = Timer.new()
+			timer.set_name("SpawnTimer")
+			timer.set_one_shot(true)
+			Launcher.add_child(timer)
+			Util.StartTimer(timer, 1, WorldAgent.CreateAgent.bind(agent.spawnInfo))
+
 		WorldAgent.PopAgent(agent)
 		agents.erase(agent)
 		agent.queue_free()
@@ -90,3 +97,17 @@ static func PushAgent(agent : BaseAgent, inst : World.Instance):
 			Launcher.Network.Server.NotifyInstancePlayers(inst, agent, "AddEntity", [agent.agentType, agent.agentID, agent.agentName, agent.position, agent.currentState], false)
 	else:
 		WorldAgent.RemoveAgent(agent)
+
+static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, agent : BaseAgent = null, nickname : String = ""):
+	if not agent:
+		agent = Instantiate.CreateAgent(spawn.type, spawn.name, nickname)
+	Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
+	if agent:
+		agent.spawnInfo = spawn
+		agent.position = WorldNavigation.GetSpawnPosition(spawn.map, spawn)
+		if Vector2i(agent.position) != Vector2i.ZERO:
+			WorldAgent.AddAgent(agent)
+			Launcher.World.Spawn(spawn.map, agent, instanceID)
+		else:
+			agent.queue_free()
+			agent = null

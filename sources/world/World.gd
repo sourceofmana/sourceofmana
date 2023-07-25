@@ -20,7 +20,8 @@ class Map:
 	var regionRID : RID						= RID()
 
 # Vars
-var areas : Dictionary = {}
+var areas : Dictionary						= {}
+var defaultSpawn : SpawnObject				= SpawnObject.new()
 
 # Instance init
 func LoadData(map : Map):
@@ -63,26 +64,11 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	map.instances.push_back(inst)
 
 	for spawn in map.spawns:
+		spawn.is_persistant = true
+		spawn.map = map
+
 		for i in spawn.count:
-			var agent : BaseAgent = Instantiate.CreateAgent(spawn.type, spawn.name)
-
-			Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
-			if agent:
-				var pos : Vector2 = Vector2.ZERO
-
-				if spawn.is_global:
-					pos = WorldNavigation.GetRandomPosition(map)
-				else:
-					pos = WorldNavigation.GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
-				Util.Assert(pos != Vector2.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
-				if pos == Vector2.ZERO:
-					agent.queue_free()
-					continue
-
-				agent.spawnInfo = spawn
-
-				WorldAgent.AddAgent(agent)
-				Spawn(map, pos, agent, instanceID)
+			WorldAgent.CreateAgent(spawn, instanceID)
 
 	Launcher.Root.call_deferred("add_child", inst)
 
@@ -103,15 +89,15 @@ func Warp(agent : BaseAgent, newMap : Map, newPos : Vector2i):
 	Util.Assert(newMap != null and agent != null, "Warp could not proceed, agent or current map missing")
 	if agent and newMap:
 		WorldAgent.PopAgent(agent)
-		Spawn(newMap, newPos, agent)
+		agent.position = newPos
+		Spawn(newMap, agent)
 
-func Spawn(map : Map, pos : Vector2, agent : BaseAgent, instanceID : int = 0):
+func Spawn(map : Map, agent : BaseAgent, instanceID : int = 0):
 	Util.Assert(map != null and instanceID < map.instances.size() and agent != null, "Spawn could not proceed, agent or map missing")
 	if map and instanceID < map.instances.size() and agent:
 		var inst : Instance = map.instances[instanceID]
 		Util.Assert(inst != null, "Spawn could not proceed, map instance missing")
 		if inst:
-			agent.set_position(pos)
 			agent._velocity_computed(Vector2.ZERO)
 			if agent.agent:
 				agent.agent.set_navigation_map(map.mapRID)
@@ -131,6 +117,12 @@ func _post_launch():
 		LoadData(map)
 		CreateInstance(map)
 		areas[mapName] = map
+
+	var mapName : String			= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
+	defaultSpawn.map				= Launcher.World.GetMap(mapName)
+	defaultSpawn.spawn_position		= Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP)
+	defaultSpawn.type				= "Player"
+	defaultSpawn.name				= "Default Entity"
 
 func _physics_process(_dt : float):
 	for map in areas.values():
