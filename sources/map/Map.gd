@@ -110,8 +110,6 @@ func RemoveEntity(agentID : int):
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentState : EntityCommons.State):
 	var entity : BaseEntity = entities.get(agentID)
 	if entity:
-		if entity == Launcher.Player:
-			print("Client received -> " + str(agentVelocity))
 		entity.Update(agentVelocity, agentPosition, agentState)
 
 func EmotePlayer(agentID : int, emoteID : int):

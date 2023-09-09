@@ -60,13 +60,11 @@ func SetClickPos(pos : Vector2, rpcID : int = Launcher.Network.RidSingleMode):
 		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, rpcID : int = Launcher.Network.RidSingleMode):
-	print("Server received " + str(direction))
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
 		player.SetRelativeMode(true, direction.normalized())
 
 func ClearNavigation(rpcID : int = Launcher.Network.RidSingleMode):
-	print("Server received clean movement")
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
 		player.SetRelativeMode(false, Vector2.ZERO)

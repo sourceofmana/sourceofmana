@@ -90,7 +90,6 @@ func _physics_process(_deltaTime : float):
 				if clickTimer.get_time_left() > 0:
 					clickTimer.stop()
 				if previousMove != move:
-					print("Client send " + str(move))
 					Launcher.Network.SetMovePos(move)
 			else:
 				if previousMove != move:
