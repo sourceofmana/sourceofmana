@@ -11,7 +11,10 @@ var aiTimer : Timer						= null
 var castTimer : Timer					= null
 var cooldownTimer : Timer				= null
 var deathTimer : Timer					= null
+
 var hasCurrentGoal : bool				= false
+var isRelativeMode : bool				= false
+var currentDirection : Vector2			= Vector2.ZERO
 
 var currentState : EntityCommons.State	= EntityCommons.State.IDLE
 var pastState : EntityCommons.State		= EntityCommons.State.IDLE
@@ -20,10 +23,9 @@ var isSitting : bool					= false
 var isAttacking : bool					= false
 var target : BaseAgent					= null
 
-var currentVelocity : Vector2			= Vector2.ZERO
+var currentVelocity : Vector2i			= Vector2i.ZERO
 var pastVelocity : Vector2				= Vector2.ZERO
 var currentInput : Vector2				= Vector2.ZERO
-var pastPosition : Vector2				= Vector2.ZERO
 
 var lastPositions : Array[Vector2]		= []
 var navigationLine : PackedVector2Array	= []
@@ -31,6 +33,8 @@ var navigationLine : PackedVector2Array	= []
 var spawnInfo : SpawnObject				= null
 var stat : EntityStats					= EntityStats.new()
 var inventory : EntityInventory			= EntityInventory.new()
+
+const inputApproximationUnit : int		= 12
 
 #
 func SwitchInputMode(clearCurrentInput : bool):
@@ -42,11 +46,19 @@ func SwitchInputMode(clearCurrentInput : bool):
 	navigationLine = []
 
 func UpdateInput():
+	if isRelativeMode:
+		if currentDirection != Vector2.ZERO:
+			var pos : Vector2i = currentDirection.normalized() * Vector2(32,32) + position
+			if WorldNavigation.GetPathLength(self, pos) <= 64:
+				WalkToward(pos)
+		else:
+			SwitchInputMode(true)
+
 	if hasCurrentGoal:
 		if agent && not agent.is_navigation_finished():
-			var newDirection : Vector2 = global_position.direction_to(agent.get_next_path_position())
-			if newDirection != Vector2.ZERO:
-				currentInput = newDirection
+			var clampedDirection : Vector2 = Vector2(global_position.direction_to(agent.get_next_path_position()).normalized() * inputApproximationUnit)
+			currentInput = Vector2(clampedDirection) / inputApproximationUnit
+
 			lastPositions.push_back(position)
 			if lastPositions.size() > 5:
 				lastPositions.pop_front()
@@ -55,8 +67,7 @@ func UpdateInput():
 
 func UpdateOrientation():
 	if currentInput != Vector2.ZERO:
-		var normalizedInput : Vector2 = currentInput.normalized()
-		currentVelocity = normalizedInput * stat.current.walkSpeed
+		currentVelocity = currentInput * stat.current.walkSpeed
 	else:
 		currentVelocity = Vector2.ZERO
 
@@ -70,6 +81,14 @@ func SetVelocity():
 func SetState(nextState : EntityCommons.State) -> bool:
 	currentState = EntityCommons.GetNextTransition(currentState, nextState)
 	return currentState == nextState
+
+func SetRelativeMode(enable : bool, givenDirection : Vector2):
+	if isRelativeMode != enable:
+		isRelativeMode = enable
+	if givenDirection == Vector2.ZERO:
+		ResetNav()
+		isRelativeMode = false
+	currentDirection = givenDirection
 
 func WalkToward(pos : Vector2):
 	if pos != position and (target or isAttacking):
@@ -96,16 +115,14 @@ func IsStuck() -> bool:
 	return isStuck
 
 func HasChanged() -> bool:
-	return position != pastPosition || velocity != pastVelocity || currentState != pastState
+	return velocity != pastVelocity || currentState != pastState
 
 func UpdateChanged():
-	pastPosition = position
 	pastVelocity = velocity
 	pastState = currentState
 
-	if get_parent():
-		var updateFuncName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
-		Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, updateFuncName, [velocity, position, currentState])
+	var updateFuncName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
+	Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, updateFuncName, [velocity, position, currentState])
 
 #
 func SetKind(entityType : String, entityID : String, entityName : String):
@@ -155,6 +172,8 @@ func _specific_process():
 
 func _internal_process():
 	if agent and get_parent():
+		if agentName != "Reid":
+			pass
 		UpdateInput()
 		UpdateOrientation()
 
@@ -162,6 +181,10 @@ func _internal_process():
 			agent.set_velocity(currentVelocity)
 		else:
 			_velocity_computed(currentVelocity)
+
+		if HasChanged():
+			UpdateChanged()
+
 		_specific_process()
 
 func _velocity_computed(safeVelocity : Vector2):
@@ -173,15 +196,12 @@ func _velocity_computed(safeVelocity : Vector2):
 #		SetState(EntityCommons.State.SIT)
 	elif isAttacking:
 		SetState(EntityCommons.State.ATTACK)
-	elif currentVelocity == Vector2.ZERO:
+	elif currentVelocity == Vector2i.ZERO:
 		SetState(EntityCommons.State.IDLE)
 	else:
 		SetState(EntityCommons.State.WALK)
 
 	SetVelocity()
-
-	if HasChanged():
-		UpdateChanged()
 
 func _path_changed():
 	if agent:

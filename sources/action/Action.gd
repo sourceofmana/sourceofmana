@@ -2,6 +2,7 @@ extends Node
 
 var isEnabled : bool			= true
 var clickTimer : Timer			= null
+var previousMove : Vector2		= Vector2.ZERO
 const stickDeadzone : float		= 0.2
 
 #
@@ -33,11 +34,12 @@ func GetMove(forceMode : bool = false) -> Vector2:
 		moveVector.x = Input.get_action_strength("gp_move_right") - Input.get_action_strength("gp_move_left")
 		moveVector.y = Input.get_action_strength("gp_move_down") - Input.get_action_strength("gp_move_up")
 
+		moveVector = moveVector.normalized()
 		var moveLength : float = moveVector.length()
 		if moveLength < stickDeadzone:
 			moveVector = Vector2.ZERO;
 		else:
-			moveVector = moveVector.normalized() * ((moveLength  - stickDeadzone) / (1 - stickDeadzone))
+			moveVector = moveVector.normalized() * ((moveLength - stickDeadzone) / (1 - stickDeadzone))
 
 	return moveVector
 
@@ -82,12 +84,19 @@ func _unhandled_input(_event):
 
 func _physics_process(_deltaTime : float):
 	if Launcher.Player and Launcher.Network:
-		if clickTimer and not IsActionPressed("gp_click_to"):
-			var movePos : Vector2 = GetMove()
-			if movePos != Vector2.ZERO:
+		if not IsActionPressed("gp_click_to"):
+			var move : Vector2 = GetMove()
+			if move != Vector2.ZERO:
 				if clickTimer.get_time_left() > 0:
 					clickTimer.stop()
-				Launcher.Network.SetMovePos(movePos)
+				if previousMove != move:
+					print("Client send " + str(move))
+					Launcher.Network.SetMovePos(move)
+			else:
+				if previousMove != move:
+					Launcher.Network.ClearNavigation()
+			previousMove = move
+
 #
 		if IsActionJustPressed("gp_sit"):			Launcher.Network.TriggerSit()
 		elif IsActionPressed("gp_interact"):		Launcher.Player.Interact()

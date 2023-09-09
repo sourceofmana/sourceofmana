@@ -56,14 +56,20 @@ func GetEntities(rpcID : int = Launcher.Network.RidSingleMode):
 func SetClickPos(pos : Vector2, rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
+		player.SetRelativeMode(false, Vector2.ZERO)
 		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, rpcID : int = Launcher.Network.RidSingleMode):
+	print("Server received " + str(direction))
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
-		var pos : Vector2 = direction.normalized() * Vector2(32,32) + player.position
-		if WorldNavigation.GetPathLength(player, pos) <= 48:
-			player.WalkToward(pos)
+		player.SetRelativeMode(true, direction.normalized())
+
+func ClearNavigation(rpcID : int = Launcher.Network.RidSingleMode):
+	print("Server received clean movement")
+	var player : BaseAgent = GetAgent(rpcID)
+	if player:
+		player.SetRelativeMode(false, Vector2.ZERO)
 
 func TriggerWarp(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)

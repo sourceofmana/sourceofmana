@@ -98,10 +98,10 @@ func Spawn(map : Map, agent : BaseAgent, instanceID : int = 0):
 		var inst : Instance = map.instances[instanceID]
 		Util.Assert(inst != null, "Spawn could not proceed, map instance missing")
 		if inst:
-			agent._velocity_computed(Vector2.ZERO)
-			if agent.agent:
-				agent.agent.set_navigation_map(map.mapRID)
 			agent.ResetNav()
+			if agent.agent:
+				agent.agent.set_velocity_forced(Vector2.ZERO)
+				agent.agent.set_navigation_map(map.mapRID)
 
 			WorldAgent.PushAgent(agent, inst)
 			if agent is PlayerAgent:

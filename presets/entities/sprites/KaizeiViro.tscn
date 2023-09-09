@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://clvy3m3dxh517"]
+[gd_scene load_steps=69 format=3 uid="uid://clvy3m3dxh517"]
 
 [ext_resource type="Texture2D" uid="uid://dbwd2qy1p6wur" path="res://data/graphics/sprites/players/human-male.png" id="1_1uku2"]
 
@@ -470,15 +470,15 @@ animation = &"WalkUp"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_27jkk"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_cx8vo")
-blend_point_0/pos = Vector2(-1.1, 0)
+blend_point_0/pos = Vector2(-1.2, 0)
 blend_point_1/node = SubResource("AnimationNodeAnimation_5l51p")
 blend_point_1/pos = Vector2(0, 1)
 blend_point_2/node = SubResource("AnimationNodeAnimation_xlnsi")
-blend_point_2/pos = Vector2(1.1, 0)
+blend_point_2/pos = Vector2(1.2, 0)
 blend_point_3/node = SubResource("AnimationNodeAnimation_ddd8a")
-blend_point_3/pos = Vector2(0, -0.9)
-min_space = Vector2(-1.1, -1)
-max_space = Vector2(1.1, 1)
+blend_point_3/pos = Vector2(0, -1)
+min_space = Vector2(-1.2, -1)
+max_space = Vector2(1.2, 1)
 blend_mode = 1
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_gfwha"]
@@ -531,8 +531,6 @@ states/Walk/position = Vector2(389, 299)
 transitions = ["Idle", "Sit", SubResource("AnimationNodeStateMachineTransition_so0lp"), "Sit", "Idle", SubResource("AnimationNodeStateMachineTransition_l0fi0"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_h431x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_56gkn"), "Sit", "Walk", SubResource("AnimationNodeStateMachineTransition_iv2dw"), "Sit", "Death", SubResource("AnimationNodeStateMachineTransition_a0xty"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_vr1f8"), "Death", "Idle", SubResource("AnimationNodeStateMachineTransition_ti5sl"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_0bg4p"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_rnq6v"), "Attack", "Death", SubResource("AnimationNodeStateMachineTransition_1nsiy"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_8teg0")]
 graph_offset = Vector2(0, -71.4492)
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_pa1v1"]
-
 [node name="Sprite" type="Sprite2D"]
 texture = ExtResource("1_1uku2")
 offset = Vector2(0, -32)
@@ -549,7 +547,6 @@ libraries = {
 tree_root = SubResource("22")
 anim_player = NodePath("..")
 active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_pa1v1")
 parameters/Attack/BlendSpace2D/blend_position = Vector2(0, 0)
 parameters/Attack/TimeScale/scale = 1.0
 parameters/Death/BlendSpace2D/blend_position = Vector2(0, 0)
@@ -558,5 +555,5 @@ parameters/Idle/BlendSpace2D/blend_position = Vector2(0, 0)
 parameters/Idle/TimeScale/scale = 1.0
 parameters/Sit/BlendSpace2D/blend_position = Vector2(0, 0)
 parameters/Sit/TimeScale/scale = 1.0
-parameters/Walk/BlendSpace2D/blend_position = Vector2(0, 0)
+parameters/Walk/BlendSpace2D/blend_position = Vector2(-0.901304, 0.0111856)
 parameters/Walk/TimeScale/scale = 1.0

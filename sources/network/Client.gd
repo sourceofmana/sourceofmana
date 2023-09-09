@@ -5,6 +5,9 @@ func WarpPlayer(map : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.ReplaceMapNode(map)
 
+	if Launcher.Player:
+		Launcher.Player.entityVelocity = Vector2.ZERO
+
 func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.EmotePlayer(playerID, emoteID)
@@ -16,6 +19,9 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 func RemoveEntity(agentID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentID)
+
+func ForceUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State):
+	UpdateEntity(ridAgent, velocity, position, agentState)
 
 func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State):
 	if Launcher.Map:

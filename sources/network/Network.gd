@@ -8,6 +8,11 @@ const RidUnknown : int			= -2
 const RidSingleMode : int		= -1
 const RidDefault : int			= 0
 
+const DelayInstant : int		= 0
+const DelayDefault : int		= 50
+
+const LocalhostIP : String = "127.0.0.1"
+
 var peer : ENetMultiplayerPeer		= ENetMultiplayerPeer.new()
 var uniqueID : int					= RidDefault
 
@@ -56,9 +61,9 @@ func RemoveEntity(agentID : int, rpcID : int = RidSingleMode):
 func SetClickPos(pos : Vector2, rpcID : int = RidSingleMode):
 	NetCallServer("SetClickPos", [pos], rpcID)
 
-@rpc("any_peer", "unreliable_ordered")
+@rpc("any_peer", "reliable")
 func SetMovePos(pos : Vector2, rpcID : int = RidSingleMode):
-	NetCallServer("SetMovePos", [pos], rpcID)
+	NetCallServer("SetMovePos", [pos], rpcID, DelayInstant)
 
 @rpc("authority", "unreliable_ordered")
 func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State, rpcID : int = RidSingleMode):
@@ -66,7 +71,11 @@ func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, agentSt
 
 @rpc("authority", "reliable")
 func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, agentState : EntityCommons.State, rpcID : int = RidSingleMode):
-	NetCallClient("UpdateEntity", [agentID, velocity, position, agentState], rpcID)
+	NetCallClient("ForceUpdateEntity", [agentID, velocity, position, agentState], rpcID)
+
+@rpc("any_peer", "reliable")
+func ClearNavigation(rpcID : int = RidSingleMode):
+	NetCallServer("ClearNavigation", [], rpcID)
 
 # Sit
 @rpc("any_peer", "reliable")
@@ -87,7 +96,7 @@ func ChatAgent(ridAgent : int, text : String, rpcID : int = RidSingleMode):
 func TriggerInteract(entityID : int, rpcID : int = RidSingleMode):
 	NetCallServer("TriggerInteract", [entityID], rpcID, 1000)
 
-# Damange
+# Damage
 @rpc("any_peer", "unreliable_ordered")
 func TriggerDamage(entityID : int, rpcID : int = RidSingleMode):
 	NetCallServer("TriggerDamage", [entityID], rpcID)
@@ -127,7 +136,7 @@ func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool
 			return true
 	return false
 
-func NetCallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = 50):
+func NetCallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = DelayDefault):
 	if Server:
 		if NetSpamControl(rpcID, methodName, actionDelta):
 			Server.callv(methodName, args + [rpcID])
@@ -160,10 +169,12 @@ func NetCreate():
 		ConnectPlayer(Launcher.FSM.playerName)
 	elif Client:
 		var serverPort : int		= Launcher.Conf.GetInt("Server", "serverPort", Launcher.Conf.Type.NETWORK)
-		var serverAdress : String	= Launcher.Conf.GetString("Server", "serverAdress", Launcher.Conf.Type.NETWORK)
+		var serverAddress : String	= Launcher.Conf.GetString("Server", "serverAddress", Launcher.Conf.Type.NETWORK)
 
-		var ret = peer.create_client(serverAdress, serverPort)
-		Util.Assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAdress, serverPort])
+		if Launcher.Debug:
+			serverAddress = LocalhostIP
+		var ret = peer.create_client(serverAddress, serverPort)
+		Util.Assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, serverPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
 			var connectedCallback : Callable = ConnectPlayer.bind(Launcher.FSM.playerName) 
