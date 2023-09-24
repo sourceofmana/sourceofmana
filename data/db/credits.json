@@ -1,0 +1,1464 @@
+{
+	"categories": [
+		{
+			"category": "Source of Mana",
+			"entries": [
+				{
+					"title": "Game Direction",
+					"contacts": [
+						{
+							"nick": "Reid",
+							"mailid": "reidyaro",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "William Pine",
+							"nick": "WildX",
+							"mailid": "wildx",
+							"mailprovider": "themanaworld.org"
+						}
+					]
+				},
+				{
+					"title": "Art Department",
+					"contacts": [
+						{
+							"name": "Kurt Kuschinski",
+							"nick": "Hocus",
+							"mailid": "kurt.kuschinski",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "W E Sayers",
+							"nick": "Enchilado"
+						}
+					]
+				},
+				{
+					"title": "Code Department",
+					"contacts": [
+						{
+							"name": "Kurt Kuschinski",
+							"nick": "LawnCable",
+							"mailid": "git",
+							"mailprovider": "lawncable.net"
+						}
+					]
+				},
+				{
+					"title": "Administration & IT",
+					"contacts": [
+						{
+							"nick": "Gumi",
+							"mailid": "tmw-forums",
+							"mailprovider": "gumi.ca"
+						},
+						{
+							"nick": "Jak1",
+							"mailid": "jak1",
+							"mailprovider": "germantmw.de"
+						},
+						{
+							"nick": "Jesusalva",
+							"mailid": "jesusalva",
+							"mailprovider": "tmw2.org"
+						},
+						{
+							"nick": "Wushin",
+							"mailid": "pasekei",
+							"mailprovider": "gmail.com"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "Evol Online",
+			"entries": [
+				{
+					"title": "Game Direction",
+					"contacts": [
+						{
+							"name": "Andrei Karas",
+							"nick": "41444d494e",
+							"mailid": "4144",
+							"mailprovider": "evolonline.org"
+						},
+						{
+							"nick": "Alige",
+							"mailid": "alige",
+							"mailprovider": "evolonline.org"
+						},
+						{
+							"name": "Francesco Miglietta",
+							"nick": "Hal9000",
+							"mailid": "francesco.miglietta",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "Mick",
+							"nick": "Micksha",
+							"mailid": "ms-shaman",
+							"mailprovider": "gmx.de"
+						},
+						{
+							"nick": "Reid",
+							"mailid": "reidyaro",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Padawan"
+						},
+						{
+							"name": "Philippe Groarke",
+							"nick": "Socapex",
+							"mailid": "philippe.groarke",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "William Pine",
+							"nick": "WildX",
+							"mailid": "wildx",
+							"mailprovider": "themanaworld.org"
+						}
+					]
+				},
+				{
+					"title": "Art Department",
+					"contacts": [
+						{
+							"name": "Alex Argumedo",
+							"nick": "AxlTrozz"
+						},
+						{
+							"name": "Lisa",
+							"nick": "CheccoDess"
+						},
+						{
+							"nick": "ChefChelios"
+						},
+						{
+							"nick": "Coolkid782",
+							"mailid": "coolkid782",
+							"mailprovider": "evolonline.org"
+						},
+						{
+							"name": "Philipp Sehmisch",
+							"nick": "Crush",
+							"mailid": "tmw",
+							"mailprovider": "themanaworld.org"
+						},
+						{
+							"name": "Max Isele",
+							"nick": "DerLoisl",
+							"mailid": "der.loisl",
+							"mailprovider": "theavoraproject.org"
+						},
+						{
+							"nick": "EJlol"
+						},
+						{
+							"name": "W E Sayers",
+							"nick": "Enchilado"
+						},
+						{
+							"nick": "Fate"
+						},
+						{
+							"name": "Alexandre Le Corre",
+							"nick": "Fey",
+							"mailid": "fey_29",
+							"mailprovider": "live.fr"
+						},
+						{
+							"name": "Jarrett Thomas-Huxley",
+							"nick": "FotherJ"
+						},
+						{
+							"name": "Krzysztof Daszuta",
+							"nick": "Irukard"
+						},
+						{
+							"name": "Martin",
+							"nick": "IvanMorve"
+						},
+						{
+							"name": "Olga Zhupina",
+							"nick": "Kolokolna",
+							"mailid": "uzver777",
+							"mailprovider": "ya.ru"
+						},
+						{
+							"name": "Grant",
+							"nick": "Kr0n05931"
+						},
+						{
+							"name": "Leonard Pabin III",
+							"nick": "Len"
+						},
+						{
+							"name": "Felix Jely",
+							"nick": "Lien",
+							"mailid": "felixjely",
+							"mailprovider": "hotmail.fr"
+						},
+						{
+							"nick": "LokiF"
+						},
+						{
+							"nick": "Lunovox",
+							"mailid": "rui.gravata",
+							"mailprovider": "hotmail.com"
+						},
+						{
+							"nick": "Minnymart3"
+						},
+						{
+							"name": "Frode Lindeijer",
+							"nick": "Modanung"
+						},
+						{
+							"name": "Vincent Van Beveren",
+							"nick": "Othello",
+							"mailid": "v.van.beveren",
+							"mailprovider": "nikhef.nl"
+						},
+						{
+							"nick": "Pajarico"
+						},
+						{
+							"nick": "Saphy"
+						},
+						{
+							"nick": "Sir_lance"
+						},
+						{
+							"name": "Ryan Voss",
+							"nick": "Talaroc",
+							"mailid": "arashi86",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Teru"
+						},
+						{
+							"nick": "VxD",
+							"mailid": "vxd.michael",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Yosuhara"
+						}
+					]
+				},
+				{
+					"title": "Code Department",
+					"contacts": [
+						{
+							"nick": "Dark_Mage"
+						},
+						{
+							"name": "Elvano Miok",
+							"nick": "Elvano",
+							"mailid": "elvano",
+							"mailprovider": "evolonline.org"
+						},
+						{
+							"nick": "gumi"
+						},
+						{
+							"name": "Mike Wollmann",
+							"nick": "Jak1",
+							"mailid": "jak1",
+							"mailprovider": "germantmw.de"
+						},
+						{
+							"name": "Jonatas L. Nogueira",
+							"nick": "Jesusalva",
+							"mailid": "cpntb1",
+							"mailprovider": "ymail.com"
+						},
+						{
+							"name": "Saidullin Il'shat",
+							"nick": "Kenny690",
+							"mailid": "bio_editor",
+							"mailprovider": "mail.ru"
+						},
+						{
+							"nick": "Kestrel"
+						},
+						{
+							"mailid": "ledmitz",
+							"nick": "Ledmitz",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "Arnau",
+							"nick": "Mas886",
+							"mailid": "arnau.cat.1997",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "Thibault Payet",
+							"nick": "Monwarez",
+							"mailid": "monwarez",
+							"mailprovider": "mailoo.org",
+							"page": "gitlab.com/u/monwarez"
+						},
+						{
+							"name": "Mihail Barer",
+							"nick": "Necromonger"
+						},
+						{
+							"nick": "Tirifto"
+						},
+						{
+							"name": "Dan Sagunov",
+							"nick": "Vasily Makarov",
+							"mailid": "vasily",
+							"mailprovider": "evolonline.org"
+						}
+					]
+				},
+				{
+					"title": "Design Department",
+					"contacts": [
+						{
+							"name": "Antoine Ruck",
+							"nick": "ZeShadok",
+							"mailid": "antoinebcn",
+							"mailprovider": "hotmail.com"
+						},
+						{
+							"nick": "Crevost"
+						},
+						{
+							"name": "Gremly",
+							"nick": "KaTSuo",
+							"mailid": "tlz.katsuo",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "Garett Smith",
+							"nick": "Pihro",
+							"mailid": "theonewhoplayswithfire",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Saweres",
+							"mailid": "onshine20",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Taree"
+						},
+						{
+							"name": "Wushin",
+							"nick": "Wushin",
+							"mailid": "pasekei",
+							"mailprovider": "gmail.com"
+						}
+					]
+				},
+				{
+					"title": "Sound Department",
+					"contacts": [
+						{
+							"name": "David Vecchio",
+							"nick": "Cosmostrator",
+							"mailid": "dave",
+							"mailprovider": "cosmostrator.com"
+						},
+						{
+							"name": "Aasif Chaudry",
+							"nick": "Dariunas",
+							"mailid": "aasif.chaudry",
+							"mailprovider": "infectedmusicdesigns.co.uk"
+						},
+						{
+							"name": "Eric Matyas",
+							"nick": "Eric",
+							"mailid": "ematyas",
+							"mailprovider": "aol.com"
+						},
+						{
+							"nick": "Ezili"
+						},
+						{
+							"nick": "Kineticstorm"
+						},
+						{
+							"name": "Jack Menhorn",
+							"nick": "KomradeJack",
+							"mailid": "jack.menhorn",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "Jordan",
+							"nick": "Magick",
+							"mailid": "admin_magick",
+							"mailprovider": "hotmail.com"
+						},
+						{
+							"name": "Nikola Whallon",
+							"nick": "Saturn",
+							"mailid": "6.saturn.6",
+							"mailprovider": "gmail.com"
+						}
+					]
+				},
+				{
+					"title": "Web Department",
+					"contacts": [
+						{
+							"name": "Thibault Garcia",
+							"nick": "Naj",
+							"mailid": "thibault.garcia",
+							"mailprovider": "revaweb.com"
+						},
+						{
+							"nick": "Salius",
+							"name": "Aleksey S."
+						}
+					]
+				},
+				{
+					"title": "Translation Department",
+					"contacts": [
+						{
+							"name": "Erik Schilling",
+							"nick": "Ablu",
+							"mailid": "ablu.erikschilling",
+							"mailprovider": "googlemail.com"
+						},
+						{
+							"name": "Maarten Vanraes",
+							"nick": "AL13N",
+							"mailid": "alien",
+							"mailprovider": "rmail.be"
+						},
+						{
+							"name": "Antônio",
+							"nick": "Alastrim",
+							"mailid": "alasmirt",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "AlOnS"
+						},
+						{
+							"nick": "Derpella"
+						},
+						{
+							"name": "Bernard Hugonnet",
+							"nick": "Nard",
+							"mailid": "bernard.hugonnet",
+							"mailprovider": "bh28.net"
+						},
+						{
+							"name": "Nelson Martell",
+							"nick": "Nelson6e65",
+							"mailid": "nelson6e65-manaplus",
+							"mailprovider": "yahoo.es"
+						},
+						{
+							"nick": "Petr Varkoček",
+							"name": "Pitriss"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "The Mana World",
+			"entries": [
+				{
+					"title": "Game Direction",
+					"contacts": [
+						{
+							"nick": "Crush",
+							"name": "Philipp Sehmisch",
+							"mailid": "tmw",
+							"mailserver": "crushnet.org"
+						},
+						{
+							"nick": "ElvenProgammer",
+							"name": "Eugenio Favalli",
+							"mailid": "elvenprogrammer",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "Freeyorp"
+						},
+						{
+							"nick": "Gumi"
+						},
+						{
+							"nick": "Jaxed0127",
+							"name": "Jared Adams"
+						},
+						{
+							"nick": "Jenalya",
+							"name": "Jessica Tölke"
+						},
+						{
+							"nick": "Jesusalva",
+							"name": "Jonatas L. Nogueira",
+							"mailid": "cpntb1",
+							"mailserver": "ymail.com"
+						},
+						{
+							"nick": "Ledmitz",
+							"mailid": "ledmitz",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "Platyna",
+							"name": "Zuzanna Karolina Filutowska"
+						},
+						{
+							"nick": "Purple",
+							"name": "Thorbjørn Lindeijer",
+							"mailid": "thorbjorn",
+							"mailserver": "lindeijer.nl"
+						},
+						{
+							"nick": "Rotonen",
+							"name": "Joni Orponen"
+						},
+						{
+							"nick": "Wombat",
+							"mailid": "hpwombat",
+							"mailserver": "yahoo.com",
+							"page": "https://github.com/wombatism"
+						},
+						{
+							"nick": "Wushin",
+							"mailid": "pasekei",
+							"mailserver": "gmail.com"
+						}
+					]
+				},
+				{
+					"title": "Code Department",
+					"contacts": [
+						{
+							"nick": "41444d494E",
+							"name": "Andrei Karas",
+							"mailid": "4144",
+							"mailserver": "evolonline.org"
+						},
+						{
+							"nick": "Ablu",
+							"name": "Erik Schilling",
+							"mailid": "ablu.erikschilling",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "Argul",
+							"name": "Stefan Beller"
+						},
+						{
+							"nick": "Bertram",
+							"name": "Yohann Ferreira"
+						},
+						{
+							"nick": "Big Crunch"
+						},
+						{
+							"nick": "CapitanAwesome"
+						},
+						{
+							"nick": "Cassy",
+							"name": "Cassandra"
+						},
+						{
+							"nick": "Frost"
+						},
+						{
+							"nick": "Jak1",
+							"name": "Mike Wollmann",
+							"mailid": "jak1",
+							"mailserver": "germantmw.de"
+						},
+						{
+							"nick": "Kage",
+							"name": "Chuck Miller",
+							"mailid": "shadowmil",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "Livio",
+							"name": "Livio Recchia"
+						},
+						{
+							"nick": "Maci",
+							"name": "Marcel W. Wysocki"
+						},
+						{
+							"nick": "MadCamel"
+						},
+						{
+							"nick": "Monwarez",
+							"name": "Thibault Payet",
+							"mailid": "monwarez",
+							"mailserver": "mailoo.org",
+							"page": "gitlab.com/u/monwarez"
+						},
+						{
+							"nick": "o11c",
+							"name": "Ben Longbons",
+							"maild": "b.r.longbons",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "Pihro",
+							"name": "Garett Smith",
+							"mailid": "theonewhoplayswithfire",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "QOAL",
+							"name": "Scott Ellis",
+							"mailid": "quiche_on_a_leash",
+							"mailserver": "hotmail.co.uk"
+						},
+						{
+							"nick": "Tezer431"
+						},
+						{
+							"nick": "Turmfalke"
+						},
+						{
+							"nick": "Tux9th"
+						},
+						{
+							"nick": "Vasily Makarov",
+							"name": "Danil Sagunov",
+							"mailid": "vasily",
+							"mailserver": "evolonline.org"
+						}
+					]
+				},
+				{
+					"title": "Content Department",
+					"contacts": [
+						{
+							"nick": "Alige",
+							"mailid": "alige",
+							"mailserver": "evolonline.org"
+						},
+						{
+							"nick": "Arikel"
+						},
+						{
+							"nick": "Bagzie",
+							"mailid": "tapani.honkanen",
+							"mailserver": "hotmail.com"
+						},
+						{
+							"nick": "Coolkid782",
+							"mailid": "coolkid782",
+							"mailserver": "evolonline.org"
+						},
+						{
+							"nick": "Der Loisl",
+							"name": "Max Isele",
+							"mailid": "der.loisl",
+							"mailserver": "theavoraproject.org"
+						},
+						{
+							"nick": "Ejlol",
+							"name": "Oscar Klein Heerenbrink"
+						},
+						{
+							"nick": "Enchilado",
+							"name": "W E Sayers"
+						},
+						{
+							"nick": "FotherJ",
+							"name": "Jarrett Thomas-Huxley"
+						},
+						{
+							"nick": "Hocus Pocus Fidibus",
+							"mailid": "kurt.kuschinski",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "Irukard"
+						},
+						{
+							"nick": "IvanMorve",
+							"name": "Martin"
+						},
+						{
+							"nick": "Len",
+							"name": "Leonard Pabin III"
+						},
+						{
+							"nick": "Lizandra",
+							"name": "Filipa Serra e Silva"
+						},
+						{
+							"nick": "meway",
+							"name": "Andrew Hall"
+						},
+						{
+							"nick": "Micksha",
+							"mailid": "ms-shaman",
+							"mailserver": "gmx.de"
+						},
+						{
+							"nick": "Modanung",
+							"name": "Frode Lindeijer"
+						},
+						{
+							"nick": "Neorice"
+						},
+						{
+							"nick": "Pajarico",
+							"name": "Pajarico Guaje"
+						},
+						{
+							"nick": "Reid",
+							"mailid": "reidyaro",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "salmondine",
+							"name": "Mark Dunbar"
+						},
+						{
+							"nick": "Skipy"
+						},
+						{
+							"nick": "Talaroc",
+							"name": "Jason Ross"
+						},
+						{
+							"nick": "Tametomo",
+							"name": "Ira Rice",
+							"mailid": "irarice",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "V0id",
+							"name": "Vincent Petithory"
+						},
+						{
+							"nick": "Varuna"
+						}
+					]
+				},
+				{
+					"title": "Sound Department",
+					"contacts": [
+						{
+							"nick": "Chicka-Mari",
+							"mailid": "comfycheeks",
+							"mailprovider": "themanaworld.org"
+						},
+						{
+							"nick": "Magick",
+							"name": "Jordan",
+							"mailid": "admin_magick",
+							"mailprovider": "hotmail.com"
+						},
+						{
+							"nick": "Saturn"
+						}
+					]
+				},
+				{
+					"title": "Moderation",
+					"contacts": [
+						{
+							"nick": "AlOnS"
+						},
+						{
+							"nick": "Hello=)"
+						},
+						{
+							"nick": "Katze"
+						},
+						{
+							"nick": "Kytty"
+						},
+						{
+							"nick": "MasterKenobi"
+						},
+						{
+							"nick": "Melkior"
+						},
+						{
+							"nick": "Mrgrey"
+						},
+						{
+							"nick": "Narus",
+							"mailid": "narus.tmw",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Prsm"
+						},
+						{
+							"nick": "Silent Dawn"
+						},
+						{
+							"nick": "Tiana"
+						},
+						{
+							"nick": "Veryape"
+						},
+						{
+							"nick": "Vink"
+						},
+						{
+							"name": "William Pine",
+							"nick": "WildX",
+							"mailid": "wildx",
+							"mailprovider": "themanaworld.org"
+						}
+					]
+				},
+				{
+					"title": "Contributors",
+					"contacts": [
+						{
+							"nick": "Alastrim",
+							"name": "Antônio",
+							"mailid": "alasmirt",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Avaniel",
+							"name": "Rogier Polak"
+						},
+						{
+							"nick": "Bear"
+						},
+						{
+							"nick": "Bernhardt",
+							"name": "Chay"
+						},
+						{
+							"nick": "Catfish_Man"
+						},
+						{
+							"nick": "ChefChelios"
+						},
+						{
+							"nick": "Chetic",
+							"name": "Fredrik Reveny",
+							"mailid": "chetic",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Dabe",
+							"name": "David Del Re"
+						},
+						{
+							"nick": "Delasia"
+						},
+						{
+							"nick": "Demon"
+						},
+						{
+							"nick": "deviexx"
+						},
+						{
+							"nick": "dobey",
+							"name": "Rodney Dawes"
+						},
+						{
+							"nick": "doorsman"
+						},
+						{
+							"nick": "Gnulia"
+						},
+						{
+							"nick": "Golgo"
+						},
+						{
+							"nick": "GonzoDark",
+							"name": "Leif Kildelund"
+						},
+						{
+							"nick": "imorgado",
+							"name": "Igor Morgado"
+						},
+						{
+							"nick": "Javila",
+							"mailid": "javila",
+							"mailprovider": "sourceforge.net"
+						},
+						{
+							"nick": "JoshLangley",
+							"name": "Joshua Langley"
+						},
+						{
+							"nick": "kindjal",
+							"name": "Huynh Ngoc Chau Tran"
+						},
+						{
+							"nick": "Kineticstorm"
+						},
+						{
+							"nick": "kth5/Shura",
+							"name": "Alexander Baldeck"
+						},
+						{
+							"nick": "Kyokai",
+							"name": "Kiyoshi Kyokai"
+						},
+						{
+							"nick": "Maester Pixel"
+						},
+						{
+							"nick": "Mkael"
+						},
+						{
+							"nick": "moi1392",
+							"name": "Cedric Borgese",
+							"mailid": "cedric.borgese",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Mra",
+							"name": "Jan-Fabian Humann",
+							"mailid": "malastare",
+							"mailprovider": "gmx.net"
+						},
+						{
+							"nick": "Neko-mon"
+						},
+						{
+							"nick": "nym"
+						},
+						{
+							"nick": "Omatt",
+							"mailid": "m.vuoso",
+							"mailprovider": "laposte.net"
+						},
+						{
+							"nick": "Pauan"
+						},
+						{
+							"nick": "Peavey",
+							"name": "Dennis Friis",
+							"mailid": "peavey",
+							"mailprovider": "placid.dk"
+						},
+						{
+							"nick": "Pluto",
+							"name": "Arian Asimi"
+						},
+						{
+							"nick": "Pyndragon",
+							"name": "Daniel Foerster"
+						},
+						{
+							"nick": "Qwerty Dragon"
+						},
+						{
+							"nick": "Razor85",
+							"name": "Romulo Fernandes"
+						},
+						{
+							"nick": "Silene",
+							"name": "Guillaume Melquiond"
+						},
+						{
+							"nick": "Simonedw",
+							"name": "Simon Edwardsson",
+							"mailid": "simon",
+							"mailprovider": "crossnet.se"
+						},
+						{
+							"nick": "Sora"
+						},
+						{
+							"nick": "SudoPlatipus"
+						},
+						{
+							"nick": "Sull",
+							"name": "Jean-Francois Lampron",
+							"mailid": "sull.kf",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Superkoop",
+							"name": "John Koopman"
+						},
+						{
+							"nick": "Swimmy"
+						},
+						{
+							"nick": "Tatjana"
+						},
+						{
+							"name": "Ti Sing Hao"
+						},
+						{
+							"nick": "Tirifto"
+						},
+						{
+							"nick": "Tomminator"
+						},
+						{
+							"nick": "Ultramichy"
+						},
+						{
+							"nick": "Usiu",
+							"name": "Mateusz Kaduk"
+						},
+						{
+							"nick": "VictorSan"
+						},
+						{
+							"nick": "Vlady"
+						},
+						{
+							"nick": "zenogais",
+							"name": "Eric Scrivner"
+						},
+						{
+							"nick": "Zipon"
+						},
+						{
+							"name": "Aaron Marks"
+						},
+						{
+							"name": "Andrej Sinicyn"
+						},
+						{
+							"name": "Douglas Boffey"
+						},
+						{
+							"name": "Duane Bailey"
+						},
+						{
+							"name": "Johanne La Liberte"
+						},
+						{
+							"name": "Kess Vargavind",
+							"mailid": "vargavind",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "Lloyd Bryant",
+							"mailid": "lloyd_bryant",
+							"mailprovider": "netzero.net"
+						},
+						{
+							"name": "Matthias Hartmann",
+							"mailid": "hartmann.matthias",
+							"mailprovider": "gmail.com"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "Moubootaur Legends",
+			"entries": [
+				{
+					"title": "Game Direction",
+					"contacts": [
+						{
+							"nick": "jesusalva",
+							"name": "Jonatas L. Nogueira",
+							"mailid": "jesusalva",
+							"mailserver": "tmw2.org"
+						},
+						{
+							"nick": "jak1",
+							"name": "Mike W.",
+							"mailid": "jak1",
+							"mailserver": "germantmw.de"
+						},
+						{
+							"nick": "NetSysFire"
+						},
+						{
+							"nick": "Saulc",
+							"name": "Lucas Helaine",
+							"mailid": "lucashelaine14",
+							"mailserver": "gmail.com"
+						}
+					]
+				},
+				{
+					"title": "Moderation",
+					"contacts": [
+						{
+							"nick": "demure"
+						}
+					]
+				},
+				{
+					"title": "Contributors",
+					"contacts": [
+						{
+							"nick": "acsvln"
+						},
+						{
+							"nick": "ayruss"
+						},
+						{
+							"nick": "danger Duck",
+							"name": "Sean Hulka"
+						},
+						{
+							"nick": "GonzoDark"
+						},
+						{
+							"nick": "LawnCable"
+						},
+						{
+							"nick": "malginsa",
+							"name": "Sergei Malgin"
+						},
+						{
+							"nick": "Povo"
+						},
+						{
+							"nick": "Rakinorf"
+						},
+						{
+							"nick": "Sky Dragon!",
+							"name": "Athirson Caraciolo"
+						},
+						{
+							"nick": "Xanthem",
+							"name": "Cristopher Chay"
+						},
+						{
+							"nick": "Axzell"
+						},
+						{
+							"nick": "Cadis Etrama Di Raizel"
+						},
+						{
+							"nick": "dusty in a bootle"
+						},
+						{
+							"nick": "Hocus"
+						},
+						{
+							"nick": "Ledmitz",
+							"mailid": "ledmitz",
+							"mailprovider": "themanaworld.org"
+						},
+						{
+							"nick": "Manatauro"
+						},
+						{
+							"nick": "Micksha",
+							"name": "Mick",
+							"mailid": "ms-shaman",
+							"mailserver": "gmx.de"
+						},
+						{
+							"nick": "Mishana",
+							"name": "Maria"
+						},
+						{
+							"nick": "Polaczka",
+							"name": "Denis"
+						},
+						{
+							"nick": "+seeds"
+						},
+						{
+							"nick": "YuckFou"
+						},
+						{
+							"nick": "Saulc",
+							"name": "Lucas Helaine",
+							"mailid": "saulc",
+							"mailserver": "moubootaurlegends.org"
+						},
+						{
+							"nick": "Soren"
+						},
+						{
+							"nick": "Kolchak",
+							"name": "Donald G. Horn"
+						},
+						{
+							"nick": "kytty",
+							"name": "Ashley"
+						},
+						{
+							"nick": "Micksha",
+							"mailid": "ms-shaman",
+							"mailserver": "gmx.de"
+						},
+						{
+							"nick": "poppet",
+							"name": "Bleu Tailfly"
+						},
+						{
+							"nick": "41444d494e",
+							"name": "Andrei Karas"
+						},
+						{
+							"nick": "gnulinux"
+						},
+						{
+							"nick": "Crazyfefe",
+							"name": "Lecanu Colin"
+						},
+						{
+							"nick": "+seeds",
+							"name": "A. Hulka"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "Land Of Fire",
+			"entries": [
+				{
+					"title": "Game Direction",
+					"contacts": [
+						{
+							"nick": "Pihro"
+						},
+						{
+							"nick": "Pydsigner",
+							"website": "d48.io",
+							"name": "Daniel Foerster",
+							"mailid": "pydsigner",
+							"mailserver": "gmail.com"
+						},
+						{
+							"nick": "KeeKeeKat"
+						},
+						{
+							"nick": "BronzeEagle"
+						}
+					]
+				},
+				{
+					"title": "Contributors",
+					"contacts": [
+						{
+							"nick": "MrsSolo"
+						},
+						{
+							"nick": "BunnyBear"
+						},
+						{
+							"nick": "Cordo"
+						},
+						{
+							"nick": "demure"
+						},
+						{
+							"nick": "Ozthokk"
+						},
+						{
+							"nick": "Billr"
+						},
+						{
+							"nick": "lavender"
+						},
+						{
+							"nick": "Solo"
+						},
+						{
+							"nick": "Munkar"
+						},
+						{
+							"nick": "DingoDuck"
+						},
+						{
+							"nick": "Pluto"
+						},
+						{
+							"nick": "Pyro"
+						},
+						{
+							"nick": "Kirua"
+						},
+						{
+							"nick": "Itchy Demon"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "German TMW",
+			"entries": [
+				{
+					"title": "Game Direction",
+					"contacts": [
+						{
+							"nick": "Jak1",
+							"name": "Mike W.",
+							"mailid": "jak1",
+							"mailserver": "germantmw.de"
+						},
+						{
+							"nick": "GoNzO",
+							"name": "David W."
+						},
+						{
+							"nick": "Der Loisl"
+						}
+					]
+				},
+				{
+					"title": "Contributors",
+					"contacts": [
+						{
+							"nick": "Calimero"
+						},
+						{
+							"nick": "Goldschuss"
+						},
+						{
+							"nick": "Ivory"
+						},
+						{
+							"nick": "Taya"
+						},
+						{
+							"nick": "VeloxNeb"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "TMW-UFB Contributors",
+			"entries": [
+				{
+					"title": "Game Direction",
+					"contacts": [
+						{
+							"nick": "Arikel"
+						},
+						{
+							"nick": "Hackziner"
+						}
+					]
+				},
+				{
+					"title": "Art Department",
+					"contacts": [
+						{
+							"nick": "Varuna"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "Open Game Art",
+			"entries": [
+				{
+					"title": "Art Department",
+					"contacts": [
+						{
+							"name": "Bart Kelsey",
+							"nick": "BartK",
+							"website": "opengameart.org"
+						},
+						{
+							"name": "Manuel Riecke",
+							"nick": "Beast",
+							"website": "beast-pixels.itch.io",
+							"mailid": "api-beast",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "Clint Bellanger",
+							"website": "beast-pixels.itch.io",
+							"mailid": "clintbellanger",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"nick": "Pix3m",
+							"website": "deviantart.com/pix3m",
+							"mailid": "pix3m00",
+							"mailprovider": "gmail.com"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "Free Sound",
+			"entries": [
+				{
+					"title": "Sound Department",
+					"contacts": [
+						{
+							"nick": "adriann",
+							"website": "http://freesound.org/people/adriann/"
+						},
+						{
+							"nick": "beerbelly38",
+							"website": "http://freesound.org/people/beerbelly38/"
+						},
+						{
+							"nick": "CaptainSiberia",
+							"website": "http://freesound.org/people/CaptainSiberia/"
+						},
+						{
+							"nick": "D W",
+							"website": "http://freesound.org/people/D%20W/"
+						},
+						{
+							"nick": "erkanozan",
+							"website": "http://freesound.org/people/erkanozan/"
+						},
+						{
+							"nick": "Q.K.",
+							"website": "http://freesound.org/people/Q.K./"
+						},
+						{
+							"nick": "sammy214",
+							"website": "http://freesound.org/people/sammy214/"
+						},
+						{
+							"nick": "SkeetMasterFunk69",
+							"website": "http://freesound.org/people/SkeetMasterFunk69/"
+						},
+						{
+							"nick": "speedygonzo",
+							"website": "http://freesound.org/people/speedygonzo/"
+						},
+						{
+							"nick": "spookymodem",
+							"website": "http://freesound.org/people/spookymodem/"
+						},
+						{
+							"nick": "vibe_crc",
+							"website": "http://freesound.org/people/vibe_crc/"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "In Memoriam",
+			"entries": [
+				{
+					"title": "To you who left us, again and again, thank you",
+					"contacts": [
+						{
+							"nick": "Nard",
+							"name": "Bernard Hugonnet"
+						}
+					]
+				}
+			]
+		}
+	]
+}
