@@ -1,0 +1,32 @@
+{
+	"categories": [
+		{
+			"category": "Welcome to Source of Mana!",
+			"entries": [
+				{
+					"content": "\tSource of Mana is a 2D MMORPG using Godot to provide a modern player experience for a classic style of game that never really goes out of fashion.\nIn Source of Mana you can live your medieval fantasy RPG adventure with friends and explore a world of magical tales and just pure silly fun.\n\nWe are still in the very early stages of development and updates will come soon.\nStay tuned and join us on Discord or IRC to discuss the project!\n"
+				},
+				{
+					"title": "Version 0.0.4",
+					"date": "2023-03-15",
+					"content": "Game:\n[ul]Add a new zone, the skull cave map[/ul]\nCode:\n[ul]Splitting navigation export from the server export and make it optional\nRemove all function call used by the server that use game nodes else than specific server data, db and conf files\nSplit Entity code for a client/server use\nAdd basic client/server connection (ip:port connection)\nAdd basic entity sync with a client/server (pos, animation)\nAdd state sync with a client/server\nAdd emote sync with a client/server\nAdd chat sync with a client/server\nScreenshot feature\nNPC support split from mob support\nBasic NPC interaction\nChat history feature (Up/Down keys)[/ul]\nProduction:\n[ul]Generate two binaries through the same project, be able to run in hybrid and in client/server\nZoomed viewport for mobile and large screen\n[/ul]"
+				},
+				{
+					"title": "Version 0.0.3",
+					"date": "2023-01-26",
+					"content": "Game:\n[ul]Add various new slime mobs\nComplete the slime cave design\nAdd an overworld map concept[/ul]\nCode:\n[ul]General UI improvement\nItem management\nChat support (but local only)\nMap import improvement\nEntity refactorisation\nNPC/Monster support\nFull navigation support\nDefault AI\nSplit most of our code to work in client/server[/ul]\nDesign:\n[ul]Game Design Document update\nWorld map concept\nQuest & Narrative design in progress[/ul]\nProject:\n[ul]Create a new Art & Design repository to store most of our assets[/ul]\n"
+				},
+				{
+					"title": "Version 0.0.2",
+					"date": "2022-10-02",
+					"content": "\tHello Manaverse!\nWe bring you the second step in this project, on the second day of the second month from publication!\nToday we're finally releasing the 0.0.2 version of Source of Mana. A lot of things are being built from scratch or are newly adapted for Godot, so most of these changes are designed to prepare the game for a future prototype release. New builds are now available for download. We encourage you to take a look and let us know what you think.\n\nSource of Mana has grown a lot over the past month, our seedling of a project is finally sprouting into the wonderful tree it will one day become. The 0.0.1 release was downloaded nearly 100 times, which we consider pretty good for such a small prototype.\n\nChangelog:\n[ul]Game ported to Godot 4.0 (Beta 2) after initially being built on Godot 3.5;\nAdded minimap support;\nImproved Tiled map imports to work with Godot 4.0;\nAdded various GUI elements including windows, buttons, and fonts;\nAdded support for emotes (as well as new TMW-style emotes that will be coming with future releases!);\nVarious GUI, navigation, and build fixes;\nNew story design in progress for a central storyline and to incorporate Mana into our World.[/ul]\n"
+				},
+				{
+					"title": "Version 0.0.1",
+					"date": "2023-08-31",
+					"content": "\tHello Mana world,\n\nOur prototype and first version of Source of Mana is now available to download on our itch.io page.\n\nFor this first version, the changelog would be pretty large, so instead, I prefer to present you on the main lines what we have been trying to achieve:\n\nOur ambition was to create a working offline prototype of what could be TMW within Godot in 2022, we prepared a basic code, asset, project architectures, and a game design document to support our game development.\n\nOur code rolls with a service system that can be enabled/disabled from a main scene. Multiple scenes will be created within the same Godot project to generate a server, a client, and a launcher.\n\nOur asset regroups what was previously done on TMW and rEvolt, we are preparing a new git repository to work like a giant asset store that features all available content that can be featured on SoM based on the quality and needs of these assets.\n\nOur project will be managed through Gitlab's built-in agile planning with a \"Milestone\" release plan.\n\nOur game design is currently being redacted into a Game Design Document that will feature all of the main designs and focus we will want to address.\n\nAside from all of these plans, our First Playable Preview release features a playable character with basic walk and sit actions that can wander inside a cave by mouse, keyboard, and gamepad.\nGodot's benefits are many but the most important is the easy release process that helps us to prepare builds for different platforms like Linux, MacOS, Windows, and Android.\n"
+				}
+			]
+		}
+	]
+}
