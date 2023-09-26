@@ -1254,6 +1254,14 @@
 					]
 				},
 				{
+					"title": "Chief Moderator & Host",
+					"contacts": [
+						{
+							"nick": "KeeKeeKat"
+						}
+					]
+				},
+				{
 					"title": "Moderation",
 					"contacts": [
 						{
@@ -1295,9 +1303,6 @@
 					"contacts": [
 						{
 							"nick": "BronzeEagle"
-						},
-						{
-							"nick": "KeeKeeKat"
 						},
 						{
 							"nick": "Kirua"
