@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=19 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -15,7 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://6pundiwfj5s1" path="res://presets/shaders/HQ4x.tscn" id="10_id8es"]
 [ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/gui/emotes/Emote.tscn" id="10_q754c"]
 [ext_resource type="PackedScene" uid="uid://bagfvnt2bhttv" path="res://presets/shaders/CRT.tscn" id="11_x7rk2"]
-[ext_resource type="PackedScene" uid="uid://cjapfr57h8nwq" path="res://presets/gui/Welcome.tscn" id="13_73agc"]
+[ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="14_xidsc"]
+[ext_resource type="JSON" path="res://data/db/news.json" id="15_q438c"]
+[ext_resource type="JSON" path="res://data/db/credits.json" id="16_pfh0e"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 layer = 128
@@ -82,6 +84,16 @@ targetWindow = NodePath("../../../../FloatingWindows/Minimap")
 layout_mode = 2
 text = "Emote"
 targetWindow = NodePath("../../../../FloatingWindows/Emote")
+
+[node name="News" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+layout_mode = 2
+text = "News"
+targetWindow = NodePath("../../../../FloatingWindows/News")
+
+[node name="Credits" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+layout_mode = 2
+text = "Credits"
+targetWindow = NodePath("../../../../FloatingWindows/Credit")
 
 [node name="Settings" parent="VBoxMain/HBoxTop/HBoxButtons" instance=ExtResource("3_sl5jl")]
 layout_mode = 2
@@ -184,13 +196,21 @@ offset_right = 0.0
 offset_bottom = 0.0
 metadata/_edit_use_anchors_ = true
 
-[node name="Welcome" parent="FloatingWindows" instance=ExtResource("13_73agc")]
-visible = false
-layout_mode = 0
-offset_left = 819.0
-offset_top = 141.0
-offset_right = 1253.0
-offset_bottom = 694.0
+[node name="News" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
+layout_mode = 2
+offset_left = 827.0
+offset_top = 131.0
+offset_right = 1255.0
+offset_bottom = 692.0
+jsonFile = ExtResource("15_q438c")
+
+[node name="Credit" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
+layout_mode = 2
+offset_left = 34.0
+offset_top = 134.0
+offset_right = 462.0
+offset_bottom = 695.0
+jsonFile = ExtResource("16_pfh0e")
 
 [node name="Shaders" type="Control" parent="."]
 visible = false

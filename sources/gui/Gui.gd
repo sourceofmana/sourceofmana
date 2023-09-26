@@ -7,7 +7,7 @@ extends Node
 @onready var background : TextureRect			= $Background
 
 @onready var modeWindow : WindowPanel			= $FloatingWindows/Mode
-@onready var welcomeWindow : WindowPanel		= $FloatingWindows/Welcome
+@onready var newsWindow : WindowPanel			= $FloatingWindows/News
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
 @onready var minimapWindow : WindowPanel		= $FloatingWindows/Minimap
@@ -55,7 +55,7 @@ func EnterLoginMenu():
 	background.set_visible(true)
 
 	modeWindow.EnableControl(false)
-	welcomeWindow.EnableControl(true)
+	newsWindow.EnableControl(true)
 	loginWindow.EnableControl(true)
 
 func EnterGame():
@@ -74,7 +74,7 @@ func EnterGame():
 				w.targetWindow.EnableControl(true)
 
 		loginWindow.EnableControl(false)
-		welcomeWindow.EnableControl(false)
+		newsWindow.EnableControl(false)
 
 #
 func _post_launch():
