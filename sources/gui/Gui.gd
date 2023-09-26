@@ -13,6 +13,7 @@ extends Node
 @onready var minimapWindow : WindowPanel		= $FloatingWindows/Minimap
 @onready var chatWindow : WindowPanel			= $FloatingWindows/Chat
 @onready var emoteWindow : WindowPanel			= $FloatingWindows/Emote
+@onready var creditWindow : WindowPanel			= $FloatingWindows/Credit
 
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
@@ -70,8 +71,6 @@ func EnterGame():
 
 		for w in buttons.get_children():
 			w.set_visible(true)
-			if w.targetWindow:
-				w.targetWindow.EnableControl(true)
 
 		loginWindow.EnableControl(false)
 		newsWindow.EnableControl(false)
