@@ -38,7 +38,6 @@
 					"title": "Code Department",
 					"contacts": [
 						{
-							"name": "Kurt Kuschinski",
 							"nick": "LawnCable",
 							"mailid": "git",
 							"mailprovider": "lawncable.net"
@@ -54,14 +53,16 @@
 							"mailprovider": "gumi.ca"
 						},
 						{
+							"name": "Mike Wollmann",
 							"nick": "Jak1",
 							"mailid": "jak1",
 							"mailprovider": "germantmw.de"
 						},
 						{
 							"nick": "Jesusalva",
+							"name": "Jonatas L. Nogueira",
 							"mailid": "jesusalva",
-							"mailprovider": "tmw2.org"
+							"mailserver": "tmw2.org"
 						},
 						{
 							"nick": "Wushin",
@@ -80,7 +81,7 @@
 					"contacts": [
 						{
 							"name": "Andrei Karas",
-							"nick": "41444d494e",
+							"nick": "4144",
 							"mailid": "4144",
 							"mailprovider": "evolonline.org"
 						},
@@ -207,6 +208,7 @@
 						},
 						{
 							"nick": "Lunovox",
+							"name": "Rui Gravata",
 							"mailid": "rui.gravata",
 							"mailprovider": "hotmail.com"
 						},
@@ -242,6 +244,9 @@
 							"nick": "Teru"
 						},
 						{
+							"nick": "Tengu"
+						},
+						{
 							"nick": "VxD",
 							"mailid": "vxd.michael",
 							"mailprovider": "gmail.com"
@@ -264,7 +269,9 @@
 							"mailprovider": "evolonline.org"
 						},
 						{
-							"nick": "gumi"
+							"nick": "Gumi",
+							"mailid": "tmw-forums",
+							"mailprovider": "gumi.ca"
 						},
 						{
 							"name": "Mike Wollmann",
@@ -273,10 +280,10 @@
 							"mailprovider": "germantmw.de"
 						},
 						{
-							"name": "Jonatas L. Nogueira",
 							"nick": "Jesusalva",
-							"mailid": "cpntb1",
-							"mailprovider": "ymail.com"
+							"name": "Jonatas L. Nogueira",
+							"mailid": "jesusalva",
+							"mailserver": "tmw2.org"
 						},
 						{
 							"name": "Saidullin Il'shat",
@@ -353,7 +360,6 @@
 							"nick": "Taree"
 						},
 						{
-							"name": "Wushin",
 							"nick": "Wushin",
 							"mailid": "pasekei",
 							"mailprovider": "gmail.com"
@@ -491,7 +497,9 @@
 							"nick": "Freeyorp"
 						},
 						{
-							"nick": "Gumi"
+							"nick": "Gumi",
+							"mailid": "tmw-forums",
+							"mailprovider": "gumi.ca"
 						},
 						{
 							"nick": "Jaxed0127",
@@ -504,8 +512,8 @@
 						{
 							"nick": "Jesusalva",
 							"name": "Jonatas L. Nogueira",
-							"mailid": "cpntb1",
-							"mailserver": "ymail.com"
+							"mailid": "jesusalva",
+							"mailserver": "tmw2.org"
 						},
 						{
 							"nick": "Ledmitz",
@@ -543,10 +551,10 @@
 					"title": "Code Department",
 					"contacts": [
 						{
-							"nick": "41444d494E",
 							"name": "Andrei Karas",
+							"nick": "4144",
 							"mailid": "4144",
-							"mailserver": "evolonline.org"
+							"mailprovider": "evolonline.org"
 						},
 						{
 							"nick": "Ablu",
@@ -563,12 +571,6 @@
 							"name": "Yohann Ferreira"
 						},
 						{
-							"nick": "Big Crunch"
-						},
-						{
-							"nick": "CapitanAwesome"
-						},
-						{
 							"nick": "Cassy",
 							"name": "Cassandra"
 						},
@@ -576,10 +578,10 @@
 							"nick": "Frost"
 						},
 						{
-							"nick": "Jak1",
 							"name": "Mike Wollmann",
+							"nick": "Jak1",
 							"mailid": "jak1",
-							"mailserver": "germantmw.de"
+							"mailprovider": "germantmw.de"
 						},
 						{
 							"nick": "Kage",
@@ -705,6 +707,7 @@
 						},
 						{
 							"nick": "Micksha",
+							"name": "Mick",
 							"mailid": "ms-shaman",
 							"mailserver": "gmx.de"
 						},
@@ -759,6 +762,9 @@
 							"mailprovider": "themanaworld.org"
 						},
 						{
+							"nick": "Doulos"
+						},
+						{
 							"nick": "Magick",
 							"name": "Jordan",
 							"mailid": "admin_magick",
@@ -774,6 +780,15 @@
 					"contacts": [
 						{
 							"nick": "AlOnS"
+						},
+						{
+							"nick": "CapitanAwesome"
+						},
+						{
+							"nick": "Cuoco"
+						},
+						{
+							"nick": "Doorsman"
 						},
 						{
 							"nick": "Hello=)"
@@ -806,6 +821,9 @@
 						},
 						{
 							"nick": "Tiana"
+						},
+						{
+							"nick": "Verdo"
 						},
 						{
 							"nick": "Veryape"
@@ -858,9 +876,6 @@
 							"name": "David Del Re"
 						},
 						{
-							"nick": "Delasia"
-						},
-						{
 							"nick": "Demon"
 						},
 						{
@@ -869,9 +884,6 @@
 						{
 							"nick": "dobey",
 							"name": "Rodney Dawes"
-						},
-						{
-							"nick": "doorsman"
 						},
 						{
 							"nick": "Gnulia"
@@ -1066,16 +1078,16 @@
 					"title": "Game Direction",
 					"contacts": [
 						{
-							"nick": "jesusalva",
+							"nick": "Jesusalva",
 							"name": "Jonatas L. Nogueira",
 							"mailid": "jesusalva",
 							"mailserver": "tmw2.org"
 						},
 						{
-							"nick": "jak1",
-							"name": "Mike W.",
+							"name": "Mike Wollmann",
+							"nick": "Jak1",
 							"mailid": "jak1",
-							"mailserver": "germantmw.de"
+							"mailprovider": "germantmw.de"
 						},
 						{
 							"nick": "NetSysFire"
@@ -1113,7 +1125,9 @@
 							"nick": "GonzoDark"
 						},
 						{
-							"nick": "LawnCable"
+							"nick": "LawnCable",
+							"mailid": "git",
+							"mailprovider": "lawncable.net"
 						},
 						{
 							"nick": "malginsa",
@@ -1192,6 +1206,7 @@
 						},
 						{
 							"nick": "Micksha",
+							"name": "Mick",
 							"mailid": "ms-shaman",
 							"mailserver": "gmx.de"
 						},
@@ -1200,8 +1215,10 @@
 							"name": "Bleu Tailfly"
 						},
 						{
-							"nick": "41444d494e",
-							"name": "Andrei Karas"
+							"name": "Andrei Karas",
+							"nick": "4144",
+							"mailid": "4144",
+							"mailprovider": "evolonline.org"
 						},
 						{
 							"nick": "gnulinux"
@@ -1233,21 +1250,12 @@
 							"name": "Daniel Foerster",
 							"mailid": "pydsigner",
 							"mailserver": "gmail.com"
-						},
-						{
-							"nick": "KeeKeeKat"
-						},
-						{
-							"nick": "BronzeEagle"
 						}
 					]
 				},
 				{
-					"title": "Contributors",
+					"title": "Moderation",
 					"contacts": [
-						{
-							"nick": "MrsSolo"
-						},
 						{
 							"nick": "BunnyBear"
 						},
@@ -1255,20 +1263,50 @@
 							"nick": "Cordo"
 						},
 						{
-							"nick": "demure"
-						},
+							"nick": "Demure"
+						}
+					]
+				},
+				{
+					"title": "Content Department",
+					"contacts": [
 						{
-							"nick": "Ozthokk"
+							"nick": "Axzell"
 						},
 						{
 							"nick": "Billr"
 						},
 						{
-							"nick": "lavender"
+							"nick": "Lavender"
 						},
 						{
-							"nick": "Solo"
+							"nick": "MrsSolo"
 						},
+						{
+							"nick": "Ozthokk"
+						},
+						{
+							"nick": "Pyro"
+						}
+					]
+				},
+				{
+					"title": "IT & Server Support",
+					"contacts": [
+						{
+							"nick": "BronzeEagle"
+						},
+						{
+							"nick": "KeeKeeKat"
+						},
+						{
+							"nick": "Kirua"
+						}
+					]
+				},
+				{
+					"title": "Contributors",
+					"contacts": [
 						{
 							"nick": "Munkar"
 						},
@@ -1279,12 +1317,6 @@
 							"nick": "Pluto"
 						},
 						{
-							"nick": "Pyro"
-						},
-						{
-							"nick": "Kirua"
-						},
-						{
 							"nick": "Itchy Demon"
 						}
 					]
@@ -1292,16 +1324,16 @@
 			]
 		},
 		{
-			"category": "German TMW",
+			"category": "The Mana World - German",
 			"entries": [
 				{
 					"title": "Game Direction",
 					"contacts": [
 						{
+							"name": "Mike Wollmann",
 							"nick": "Jak1",
-							"name": "Mike W.",
 							"mailid": "jak1",
-							"mailserver": "germantmw.de"
+							"mailprovider": "germantmw.de"
 						},
 						{
 							"nick": "GoNzO",
@@ -1335,7 +1367,7 @@
 			]
 		},
 		{
-			"category": "TMW-UFB Contributors",
+			"category": "The Mana World - Unknown Flying Bullet",
 			"entries": [
 				{
 					"title": "Game Direction",
@@ -1353,6 +1385,81 @@
 					"contacts": [
 						{
 							"nick": "Varuna"
+						}
+					]
+				}
+			]
+		},
+		{
+			"category": "The Mana World - Brazil",
+			"entries": [
+				{
+					"title": "Game Direction",
+					"contacts": [
+						{
+							"nick": "Diogo RBG"
+						},
+						{
+							"nick": "Oryon",
+							"name": "Carlos Marlon",
+							"mailid": "carlos-marlon",
+							"mailprovider": "hotmail.com"
+						},
+						{
+							"nick": "Lunovox",
+							"name": "Rui Gravata",
+							"mailid": "rui.gravata",
+							"mailprovider": "hotmail.com"
+						},
+						{
+							"nick": "-Gui-",
+							"name": "Guilherme Agusto Pereira"
+						},
+						{
+							"nick": "Scall"
+						},
+						{
+							"nick": "Dark Knight"
+						}
+					]
+				},
+				{
+					"title": "Moderation",
+					"contacts": [
+						{
+							"nick": "K2F5"
+						}
+					]
+				},
+				{
+					"title": "Art Department",
+					"contacts": [
+						{
+							"nick": "Freya"
+						},
+						{
+							"nick": "Katucha"
+						}
+					]
+				},
+				{
+					"title": "Content Department",
+					"contacts": [
+						{
+							"name": "Antônio",
+							"nick": "Alastrim",
+							"mailid": "alasmirt",
+							"mailprovider": "gmail.com"
+						},
+						{
+							"name": "Carlos Henrique R. Valadares",
+							"nick": "Krlloz",
+							"mailid": "carloshenriquervaladares",
+							"mailprovider": "hotmail.com"
+						},
+						{
+							"name": "Mano Revoltado",
+							"nick": "Madaca"
 						}
 					]
 				}
@@ -1399,11 +1506,11 @@
 					"title": "Sound Department",
 					"contacts": [
 						{
-							"nick": "adriann",
+							"nick": "Adriann",
 							"website": "http://freesound.org/people/adriann/"
 						},
 						{
-							"nick": "beerbelly38",
+							"nick": "Beerbelly38",
 							"website": "http://freesound.org/people/beerbelly38/"
 						},
 						{
@@ -1411,11 +1518,11 @@
 							"website": "http://freesound.org/people/CaptainSiberia/"
 						},
 						{
-							"nick": "D W",
-							"website": "http://freesound.org/people/D%20W/"
+							"nick": "DWOBoyle",
+							"website": "http://freesound.org/people/DWOBoyle/"
 						},
 						{
-							"nick": "erkanozan",
+							"nick": "Erkanozan",
 							"website": "http://freesound.org/people/erkanozan/"
 						},
 						{
@@ -1423,7 +1530,7 @@
 							"website": "http://freesound.org/people/Q.K./"
 						},
 						{
-							"nick": "sammy214",
+							"nick": "Sammy214",
 							"website": "http://freesound.org/people/sammy214/"
 						},
 						{
@@ -1431,15 +1538,15 @@
 							"website": "http://freesound.org/people/SkeetMasterFunk69/"
 						},
 						{
-							"nick": "speedygonzo",
+							"nick": "Speedygonzo",
 							"website": "http://freesound.org/people/speedygonzo/"
 						},
 						{
-							"nick": "spookymodem",
+							"nick": "Spookymodem",
 							"website": "http://freesound.org/people/spookymodem/"
 						},
 						{
-							"nick": "vibe_crc",
+							"nick": "Vibe_crc",
 							"website": "http://freesound.org/people/vibe_crc/"
 						}
 					]
@@ -1452,6 +1559,9 @@
 				{
 					"title": "To you who left us, again and again, thank you",
 					"contacts": [
+						{
+							"nick": "KeeKeeKat"
+						},
 						{
 							"nick": "Nard",
 							"name": "Bernard Hugonnet"
