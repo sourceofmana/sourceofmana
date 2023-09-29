@@ -1,11 +1,11 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://7pyxnk7ge2uw"]
 
 [ext_resource type="Script" path="res://sources/entity/variants/NpcEntity.gd" id="1_6nff1"]
 [ext_resource type="PackedScene" uid="uid://f2jxqr5e7i5e" path="res://presets/entities/components/Interactions.tscn" id="2_myo6m"]
 
 [node name="Npc" type="CharacterBody2D"]
 collision_layer = 5
-collision_mask = 5
+collision_mask = 0
 script = ExtResource("1_6nff1")
 
 [node name="Interactions" parent="." instance=ExtResource("2_myo6m")]

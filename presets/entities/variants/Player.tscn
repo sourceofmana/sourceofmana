@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://dmupihcekthcs"]
 
 [ext_resource type="Script" path="res://sources/entity/variants/PlayerEntity.gd" id="1_prlyl"]
 [ext_resource type="PackedScene" uid="uid://f2jxqr5e7i5e" path="res://presets/entities/components/Interactions.tscn" id="2_6mxeg"]
