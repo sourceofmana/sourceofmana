@@ -8,7 +8,7 @@ static func UpdateWalkPaths(agent : Node2D, map : World.Map):
 
 static func Update(agent : BaseAgent, map : World.Map):
 	if not agent.hasCurrentGoal:
-		if agent.aiTimer && agent.aiTimer.is_stopped():
+		if agent.get_parent() && agent.aiTimer && agent.aiTimer.is_stopped():
 			Util.StartTimer(agent.aiTimer, randf_range(5, 15), AI.UpdateWalkPaths.bind(agent, map))
 	else:
 		if agent.IsStuck():

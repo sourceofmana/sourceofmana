@@ -15,4 +15,4 @@ func GetPlayerNames() -> Array[String]:
 
 func UpdateJson():
 	var players : Array[String]	= GetPlayerNames()
-	Launcher.FileSystem.SaveFile(OS.get_executable_path().get_base_dir() + "/" + JSONFileName, JSON.stringify(players))
+	FileSystem.SaveFile(OS.get_executable_path().get_base_dir() + "/" + JSONFileName, JSON.stringify(players))

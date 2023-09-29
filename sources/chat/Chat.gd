@@ -4,7 +4,7 @@ class_name ChatContainer
 @onready var tabContainer : TabContainer		= $ChatTabContainer
 @onready var lineEdit : LineEdit				= $NewText
 
-@onready var tabInstance : Object				= Launcher.FileSystem.LoadGui("chat/ChatTab", false)
+@onready var tabInstance : Object				= FileSystem.LoadGui("chat/ChatTab", false)
 @onready var chatHistory : ChatHistory			= ChatHistory.new()
 
 var playerColor : Color 						= Color("FFFFDD")

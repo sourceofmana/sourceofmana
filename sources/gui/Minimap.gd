@@ -11,7 +11,7 @@ func Warped():
 			var mapPath : String = Launcher.DB.GetMapPath(mapName)
 			Util.Assert(mapPath.is_empty() == false, "Could not fetch the active map path")
 			if mapPath.is_empty() == false:
-				var resource : Resource = Launcher.FileSystem.LoadMinimap(mapPath)
+				var resource : Resource = FileSystem.LoadMinimap(mapPath)
 				Util.Assert(resource != null, "Could not load the minimap resource")
 				if resource:
 					textureRect.set_texture(resource)

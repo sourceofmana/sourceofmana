@@ -2,13 +2,13 @@ extends Node
 
 var confFiles : Array		= \
 [ \
-	Launcher.FileSystem.LoadConfig("project"),			\
-	Launcher.FileSystem.LoadConfig("map"),				\
-	Launcher.FileSystem.LoadConfig("window"),			\
-	Launcher.FileSystem.LoadConfig("gameplay"),			\
-	Launcher.FileSystem.LoadConfig("network"),			\
-	Launcher.FileSystem.LoadConfig("auth"),				\
-	Launcher.FileSystem.LoadConfig("debug")				\
+	FileSystem.LoadConfig("project"),			\
+	FileSystem.LoadConfig("map"),				\
+	FileSystem.LoadConfig("window"),			\
+	FileSystem.LoadConfig("gameplay"),			\
+	FileSystem.LoadConfig("network"),			\
+	FileSystem.LoadConfig("auth"),				\
+	FileSystem.LoadConfig("debug")				\
 ]
 
 #

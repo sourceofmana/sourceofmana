@@ -20,14 +20,14 @@ static func GetMapFromAgent(agent : BaseAgent) -> World.Map:
 		map = inst.map
 	return map
 
-static func GetAgentsFromAgent(checkedAgent : BaseAgent) -> Array[Array]:
-	var list : Array[Array] = []
+static func GetNeighboursFromAgent(checkedAgent : BaseAgent) -> Array[Array]:
+	var neighbours : Array[Array] = []
 	var instance : World.Instance = WorldAgent.GetInstanceFromAgent(checkedAgent)
 	if instance:
-		list.append(instance.npcs)
-		list.append(instance.mobs)
-		list.append(instance.players)
-	return list
+		neighbours.append(instance.npcs)
+		neighbours.append(instance.mobs)
+		neighbours.append(instance.players)
+	return neighbours
 
 # Basic Agent container handling
 static func GetAgent(agentID : int) -> BaseAgent:

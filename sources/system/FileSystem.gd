@@ -1,32 +1,33 @@
 extends Node
+class_name FileSystem
 
 # Generic
-func FileExists(path : String) -> bool:
+static func FileExists(path : String) -> bool:
 	return FileAccess.file_exists(path)
 
-func ResourceExists(path : String) -> bool:
+static func ResourceExists(path : String) -> bool:
 	return ResourceLoader.exists(path)
 
-func FileLoad(path : String) -> Resource:
+static func FileLoad(path : String) -> Resource:
 	return load(path)
 
-func FileAlloc(path : String) -> Object:
+static func FileAlloc(path : String) -> Object:
 	return FileLoad(path).new()
 
-func CanInstantiateResource(res : Object) -> bool:
+static func CanInstantiateResource(res : Object) -> bool:
 	return res.has_method("can_instantiate") && res.can_instantiate()
 
-func ResourceLoad(path : String) -> Object:
+static func ResourceLoad(path : String) -> Object:
 	return ResourceLoader.load(path)
 
-func ResourceInstance(path : String) -> Object:
+static func ResourceInstance(path : String) -> Object:
 	var resourceLoaded		= ResourceLoad(path)
 	var resourceInstance	= null
 	if resourceLoaded != null && CanInstantiateResource(resourceLoaded):
 		resourceInstance = resourceLoaded.instantiate()
 	return resourceInstance
 
-func ResourceInstanceOrLoad(path : String) -> Object:
+static func ResourceInstanceOrLoad(path : String) -> Object:
 	var resourceLoaded		= ResourceLoad(path)
 	var resource			= null
 	if resourceLoaded != null:
@@ -37,8 +38,8 @@ func ResourceInstanceOrLoad(path : String) -> Object:
 	return resource
 
 # File
-func LoadFile(path : String) -> String:
-	var fullPath : String		= Launcher.Path.DataRsc + path
+static func LoadFile(path : String) -> String:
+	var fullPath : String		= Path.DataRsc + path
 	var content : String		= ""
 
 	var pathExists : bool		= FileExists(fullPath)
@@ -53,7 +54,7 @@ func LoadFile(path : String) -> String:
 			file.close()
 	return content
 
-func SaveFile(fullPath : String, content : String):
+static func SaveFile(fullPath : String, content : String):
 	var file : FileAccess		= FileAccess.open(fullPath, FileAccess.WRITE)
 	Util.Assert(file != null, "File parsing issue on file " + fullPath)
 	if file:
@@ -62,8 +63,8 @@ func SaveFile(fullPath : String, content : String):
 		file.close()
 
 # DB
-func LoadDB(path : String) -> Dictionary:
-	var fullPath : String		= Launcher.Path.DBRsc + path
+static func LoadDB(path : String) -> Dictionary:
+	var fullPath : String		= Path.DBRsc + path
 	var result : Dictionary		= {}
 
 	var pathExists : bool		= FileExists(fullPath)
@@ -85,19 +86,19 @@ func LoadDB(path : String) -> Dictionary:
 
 	return result
 
-func LoadDBInstance(path : String) -> Object:
+static func LoadDBInstance(path : String) -> Object:
 	var partialPath : String = "db/instance/" + path
 	return LoadSource(partialPath, false)
 
 # Map
-func LoadMap(path : String, ext : String) -> Object:
+static func LoadMap(path : String, ext : String) -> Object:
 	var mapInstance : Object	= null
 
-	var filePath : String		= Launcher.Path.MapRsc + path
+	var filePath : String		= Path.MapRsc + path
 	var scenePath : String		= filePath + ext
 	var pathExists : bool		= ResourceExists(scenePath)
 
-	Util.Assert(pathExists, "Map file not found " + path + Launcher.Path.MapClientExt + " should be located at " + Launcher.Path.MapRsc)
+	Util.Assert(pathExists, "Map file not found " + path + Path.MapClientExt + " should be located at " + Path.MapRsc)
 	if pathExists:
 		mapInstance = ResourceInstanceOrLoad(scenePath)
 		Util.PrintLog("Map", "Loading resource: " + scenePath)
@@ -105,8 +106,8 @@ func LoadMap(path : String, ext : String) -> Object:
 	return mapInstance
 
 # Source
-func LoadSource(path : String, alloc : bool = true) -> Object:
-	var fullPath : String		= Launcher.Path.Src + path
+static func LoadSource(path : String, alloc : bool = true) -> Object:
+	var fullPath : String		= Path.Src + path
 	var srcFile : Object		= null
 
 	var pathExists : bool		= ResourceExists(fullPath)
@@ -119,9 +120,9 @@ func LoadSource(path : String, alloc : bool = true) -> Object:
 	return srcFile
 
 # Config
-func LoadConfig(path : String) -> ConfigFile:
-	var fullPath : String		= Launcher.Path.ConfRsc + path + Launcher.Path.ConfExt
-	var localPath : String		= Launcher.Path.ConfLocal + path + Launcher.Path.ConfExt
+static func LoadConfig(path : String) -> ConfigFile:
+	var fullPath : String		= Path.ConfRsc + path + Path.ConfExt
+	var localPath : String		= Path.ConfLocal + path + Path.ConfExt
 	var cfgFile : ConfigFile	= null
 
 	var pathExists : bool = false
@@ -146,8 +147,8 @@ func LoadConfig(path : String) -> ConfigFile:
 
 	return cfgFile
 
-func SaveConfig(path : String, cfgFile : ConfigFile):
-	var fullPath = Launcher.Path.ConfLocal + path
+static func SaveConfig(path : String, cfgFile : ConfigFile):
+	var fullPath = Path.ConfLocal + path
 	Util.Assert(cfgFile != null, "Config file " + path + " not initialized")
 
 	if cfgFile:
@@ -160,7 +161,7 @@ func SaveConfig(path : String, cfgFile : ConfigFile):
 			Util.PrintLog("Config", "Saving file: " + fullPath)
 
 # Resource
-func LoadResource(fullPath : String, instantiate : bool = true) -> Object:
+static func LoadResource(fullPath : String, instantiate : bool = true) -> Object:
 	var rscInstance : Object	= null
 	var pathExists : bool		= ResourceExists(fullPath)
 
@@ -171,26 +172,26 @@ func LoadResource(fullPath : String, instantiate : bool = true) -> Object:
 	return rscInstance
 
 # Entity
-func LoadEntitySprite(type : String, instantiate : bool = true) -> BaseEntity:
-	var fullPath : String = Launcher.Path.EntitySprite + type + Launcher.Path.SceneExt
+static func LoadEntitySprite(type : String, instantiate : bool = true) -> Node:
+	var fullPath : String = Path.EntitySprite + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
-func LoadEntityComponent(type : String, instantiate : bool = true) -> BaseEntity:
-	var fullPath : String = Launcher.Path.EntityComponent + type + Launcher.Path.SceneExt
+static func LoadEntityComponent(type : String, instantiate : bool = true) -> Node:
+	var fullPath : String = Path.EntityComponent + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
-func LoadEntity(type : String, instantiate : bool = true) -> BaseEntity:
-	var fullPath : String = Launcher.Path.EntityVariant + type + Launcher.Path.SceneExt
+static func LoadEntity(type : String, instantiate : bool = true) -> BaseEntity:
+	var fullPath : String = Path.EntityVariant + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
 # GUI
-func LoadGui(path : String, instantiate : bool = true) -> Resource:
-	var fullPath : String = Launcher.Path.GuiPst + path + Launcher.Path.SceneExt
+static func LoadGui(path : String, instantiate : bool = true) -> Resource:
+	var fullPath : String = Path.GuiPst + path + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
 # Music
-func LoadMusic(path : String) -> Resource:
-	var fullPath : String = Launcher.Path.MusicRsc + path
+static func LoadMusic(path : String) -> Resource:
+	var fullPath : String = Path.MusicRsc + path
 	var musicFile : Resource			= null
 
 	var pathExists : bool		= ResourceExists(fullPath)
@@ -203,16 +204,16 @@ func LoadMusic(path : String) -> Resource:
 	return musicFile
 
 # Generic texture loading
-func LoadGfx(path : String) -> Resource:
-	var fullPath : String = Launcher.Path.GfxRsc + path
+static func LoadGfx(path : String) -> Resource:
+	var fullPath : String = Path.GfxRsc + path
 	return LoadResource(fullPath, false)
 
 # Minimap
-func LoadMinimap(path : String) -> Resource:
-	var fullPath : String = Launcher.Path.MinimapRsc + path + Launcher.Path.GfxExt
+static func LoadMinimap(path : String) -> Resource:
+	var fullPath : String = Path.MinimapRsc + path + Path.GfxExt
 	return LoadResource(fullPath, false)
 
-func SaveScreenshot():
+static func SaveScreenshot():
 	var image : Image = Launcher.Util.GetScreenCapture()
 	Util.Assert(image != null, "Could not get a viewport screenshot")
 	if image:
@@ -224,7 +225,7 @@ func SaveScreenshot():
 		var date : Dictionary = Time.get_datetime_dict_from_system()
 		var savePath : String = dir.get_current_dir(true)
 		savePath += "/Screenshot-%d-%02d-%02d_%02d-%02d-%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second]
-		savePath += Launcher.Path.GfxExt
+		savePath += Path.GfxExt
 
 		if not dir.dir_exists(savePath):
 			var ret = image.save_png(savePath)

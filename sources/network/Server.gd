@@ -47,8 +47,8 @@ func DisconnectPlayer(rpcID : int = Launcher.Network.RidSingleMode):
 func GetEntities(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
-		var list : Array[Array] = WorldAgent.GetAgentsFromAgent(player)
-		for agents in list:
+		var neighbours : Array[Array] = WorldAgent.GetNeighboursFromAgent(player)
+		for agents in neighbours:
 			for agent in agents:
 				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.currentState, rpcID)
 				Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.currentState, rpcID)

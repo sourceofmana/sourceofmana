@@ -33,7 +33,7 @@ func update_inventory_ui():
 		oldItem.disconnect("ItemClicked", _on_item_click)
 		oldItem.queue_free()
 
-	var tilePreset = Launcher.FileSystem.LoadGui("inventory/ItemGridTile", false)
+	var tilePreset = FileSystem.LoadGui("inventory/ItemGridTile", false)
 	for item in Launcher.Player.inventory.items:
 		var tileInstance : InventoryItemGridTile = tilePreset.instantiate()
 		tileInstance.set_data(item)

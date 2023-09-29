@@ -10,7 +10,7 @@ func SetLocalPlayer():
 	collision_layer |= 2
 
 	if Launcher.Camera:
-		Launcher.Camera.mainCamera = Launcher.FileSystem.LoadEntityComponent("Camera")
+		Launcher.Camera.mainCamera = FileSystem.LoadEntityComponent("Camera")
 		if Launcher.Camera.mainCamera:
 			add_child(Launcher.Camera.mainCamera)
 

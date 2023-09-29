@@ -2,7 +2,7 @@ extends Node2D
 class_name EntityInteractive
 
 #
-var speechInstance : PackedScene	= Launcher.FileSystem.LoadGui("chat/SpeechBubble", false)
+var speechInstance : PackedScene	= FileSystem.LoadGui("chat/SpeechBubble", false)
 
 @onready var visibleNode : Node2D			= $Visible
 @onready var generalVBox : BoxContainer		= $Visible/VBox
@@ -48,7 +48,7 @@ func AddEmoteResources(emoteID : int):
 	var emoteStringID : String = str(emoteID)
 	currentEmoteID = emoteID
 	if Launcher.DB.EmotesDB && Launcher.DB.EmotesDB[emoteStringID]:
-		var emoteIcon : Resource = Launcher.FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteStringID]._path)
+		var emoteIcon : Resource = FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteStringID]._path)
 		if emoteSprite && emoteIcon:
 			emoteSprite.set_texture(emoteIcon)
 		emoteTimer = AddTimer(emoteSprite, emoteDelay, RemoveEmoteResources)

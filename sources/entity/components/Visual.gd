@@ -26,7 +26,7 @@ func LoadSprite(slot : EntityCommons.Slot, spritePath : String) -> Sprite2D:
 			sprites[slot].queue_free()
 			sprites[slot] = null
 
-		sprite = Launcher.FileSystem.LoadEntitySprite(spritePath)
+		sprite = FileSystem.LoadEntitySprite(spritePath)
 		sprites[slot] = sprite
 
 	return sprite
@@ -53,7 +53,7 @@ func LoadData(data : EntityData):
 	var sprite : Sprite2D = LoadSprite(EntityCommons.Slot.BODY, data._ethnicity)
 	if sprite:
 		if data._customTexture:
-			sprite.texture = Launcher.FileSystem.LoadGfx(data._customTexture)
+			sprite.texture = FileSystem.LoadGfx(data._customTexture)
 		entity.call_deferred("add_child", sprite)
 
 		if sprite.vframes > 0:
@@ -71,7 +71,7 @@ func LoadData(data : EntityData):
 				animationTree.set_active(true)
 
 	# Collision
-	collision = Launcher.FileSystem.LoadEntityComponent("collisions/" + data._collision)
+	collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
 	if collision:
 		entity.add_child(collision)
 

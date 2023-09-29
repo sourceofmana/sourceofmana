@@ -18,7 +18,7 @@ static func CreateGenericEntity(entityInstance : CharacterBody2D, entityType : S
 		entityInstance.SetKind(entityType, entityID, entityName)
 
 static func CreateEntity(entityType : String, entityID : String, entityName : String = "") -> BaseEntity:
-	var entityInstance : BaseEntity = Launcher.FileSystem.LoadEntity(entityType)
+	var entityInstance : BaseEntity = FileSystem.LoadEntity(entityType)
 	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
 	return entityInstance
 
@@ -26,15 +26,16 @@ static func CreateAgent(entityType : String, entityID : String, entityName : Str
 	var entityInstance : BaseAgent = null
 	match entityType:
 		"Npc": entityInstance = NpcAgent.new()
+		"Trigger": entityInstance = NpcAgent.new()
 		"Monster": entityInstance = MonsterAgent.new()
 		"Player": entityInstance = PlayerAgent.new()
-		_: entityInstance = BaseAgent.new()
+		_: Util.Assert(false, "Trying to create an agent with a wrong type: " + entityType)
 	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
 	return entityInstance
 
 # Map
 static func LoadMapData(mapName : String, ext : String) -> Object:
 	var mapPath : String			= Launcher.DB.GetMapPath(mapName)
-	var mapInstance : Object		= Launcher.FileSystem.LoadMap(mapPath, ext)
+	var mapInstance : Object		= FileSystem.LoadMap(mapPath, ext)
 
 	return mapInstance

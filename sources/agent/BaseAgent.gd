@@ -156,7 +156,7 @@ func SetData(data : Object):
 
 	# Navigation
 	if data._navigationAgent:
-		agent = Launcher.FileSystem.LoadEntityComponent("navigations/" + data._navigationAgent)
+		agent = FileSystem.LoadEntityComponent("navigations/" + data._navigationAgent)
 		add_child(agent)
 
 #

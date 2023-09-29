@@ -9,7 +9,7 @@ func LoadMapClientData(mapName : String) -> Node2D:
 	var mapPath : String			= Launcher.DB.GetMapPath(mapName)
 
 	if mapInstance == null:
-		mapInstance = Launcher.FileSystem.LoadMap(mapPath, Launcher.Path.MapClientExt)
+		mapInstance = FileSystem.LoadMap(mapPath, Path.MapClientExt)
 		mapInstance.set_name(mapName)
 		pool[mapName] = mapInstance
 

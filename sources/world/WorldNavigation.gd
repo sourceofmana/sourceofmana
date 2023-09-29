@@ -3,7 +3,7 @@ class_name WorldNavigation
 
 # Instance init
 static func LoadData(map : World.Map):
-	var obj : Object = Instantiate.LoadMapData(map.name, Launcher.Path.MapNavigationExt)
+	var obj : Object = Instantiate.LoadMapData(map.name, Path.MapNavigationExt)
 	if obj:
 		map.nav_poly = obj
 		map.nav_poly.cell_size = 0.1

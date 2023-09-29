@@ -8,12 +8,12 @@ var slots : Array = []
 #
 func FillGridContainer(listOfItem : Dictionary):
 	if listOfItem:
-		var tilePreset = Launcher.FileSystem.LoadGui("emotes/Tile", false)
+		var tilePreset = FileSystem.LoadGui("emotes/Tile", false)
 
 		for item in listOfItem:
 			var tileInstance : ColorRect	= tilePreset.instantiate()
 			var itemReference : Object		= listOfItem[item]
-			var itemTexture : Texture2D		= Launcher.FileSystem.LoadGfx(itemReference._path)
+			var itemTexture : Texture2D		= FileSystem.LoadGfx(itemReference._path)
 
 			Util.Assert(tileInstance.has_node("Icon"), "Could not find the Icon node:" + itemReference._name)
 			if tileInstance.has_node("Icon"):

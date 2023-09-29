@@ -1,4 +1,5 @@
 extends Node
+class_name Path
 
 # Paths
 const Rsc : String						= "res://"
