@@ -28,13 +28,15 @@ func CallMethod(networkRpcID : int, methodName : String, actionDelta : int) -> b
 
 #
 func ConnectPlayer(nickname : String, rpcID : int = Launcher.Network.RidSingleMode):
-	if not GetAgent(rpcID):
+	if not GetAgent(rpcID) and not nickname in onlineList.GetPlayerNames():
 		var agent : BaseAgent = Instantiate.CreateAgent("Player", "Default Entity", nickname)
 		playerMap[rpcID].agentRID = agent.get_rid().get_id()
 		WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, agent)
 
 		onlineList.UpdateJson()
 		Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
+	else:
+		Launcher.Network.peer.disconnect_peer(rpcID)
 
 func DisconnectPlayer(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
