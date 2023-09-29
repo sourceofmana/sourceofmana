@@ -7,9 +7,9 @@
 custom_minimum_size = Vector2(280, 120)
 offset_right = 280.0
 offset_bottom = 120.0
-mouse_filter = 1
 theme = ExtResource("1")
 script = ExtResource("3")
+blockActions = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -41,9 +41,15 @@ language = "en_GB"
 layout_mode = 2
 alignment = 2
 
-[node name="Leave" type="Button" parent="VBoxContainer/ButtonChoice"]
+[node name="Quit" type="Button" parent="VBoxContainer/ButtonChoice"]
 layout_mode = 2
-text = "Leave"
+size_flags_horizontal = 0
+text = "Quit"
+
+[node name="LogOut" type="Button" parent="VBoxContainer/ButtonChoice"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Log Out"
 
 [node name="Stay" type="Button" parent="VBoxContainer/ButtonChoice"]
 layout_mode = 2
@@ -54,5 +60,6 @@ layout_mode = 2
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="draw" from="VBoxContainer/ButtonChoice" to="." method="_on_window_draw"]
-[connection signal="pressed" from="VBoxContainer/ButtonChoice/Leave" to="." method="_on_leave_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonChoice/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonChoice/LogOut" to="." method="_on_logout_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonChoice/Stay" to="." method="_on_stay_pressed"]
