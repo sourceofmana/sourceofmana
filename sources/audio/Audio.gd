@@ -1,4 +1,4 @@
-extends Node
+extends ServiceBase
 
 var audioPlayer : AudioStreamPlayer				= null
 var currentTrack : String = ""
@@ -18,7 +18,7 @@ func Stop():
 func Load(soundName : String):
 	assert(audioPlayer, "AudioStreamPlayer could not be found")
 	if audioPlayer && currentTrack != soundName && not soundName.is_empty() && Launcher.DB.MusicsDB[soundName] != null:
-		var soundStream : Resource = Launcher.FileSystem.LoadMusic(Launcher.DB.MusicsDB[soundName]._path)
+		var soundStream : Resource = FileSystem.LoadMusic(Launcher.DB.MusicsDB[soundName]._path)
 		Util.Assert(soundStream != null, "Could not load music: " + soundName)
 		if soundStream != null:
 			soundStream.set_loop(true)
@@ -41,3 +41,5 @@ func _post_launch():
 	if Launcher.Map:
 		Launcher.Map.PlayerWarped.connect(self.Warped)
 		Warped()
+
+	isInitialized = true

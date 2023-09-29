@@ -1,4 +1,4 @@
-extends Node2D
+extends ServiceBase
 
 class_name World
 
@@ -25,7 +25,7 @@ var defaultSpawn : SpawnObject				= SpawnObject.new()
 
 # Instance init
 func LoadData(map : Map):
-	var node : Node = Instantiate.LoadMapData(map.name, Launcher.Path.MapServerExt)
+	var node : Node = Instantiate.LoadMapData(map.name, Path.MapServerExt)
 	if node:
 		if "spawns" in node:
 			for spawn in node.spawns:
@@ -123,6 +123,8 @@ func _post_launch():
 	defaultSpawn.spawn_position		= Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP)
 	defaultSpawn.type				= "Player"
 	defaultSpawn.name				= "Default Entity"
+
+	isInitialized = true
 
 func _physics_process(_dt : float):
 	for map in areas.values():

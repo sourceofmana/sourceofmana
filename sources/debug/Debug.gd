@@ -1,4 +1,4 @@
-extends Node
+extends ServiceBase
 
 var projectName : String					= ""
 var correctPos : ColorRect					= null
@@ -69,3 +69,5 @@ func _post_launch():
 
 	if Launcher.Map and not Launcher.FSM.enter_game.is_connected(OnPlayerEnterGame):
 		Launcher.FSM.enter_game.connect(OnPlayerEnterGame)
+
+	isInitialized = true

@@ -1,4 +1,4 @@
-extends Node
+extends ServiceBase
 
 #
 var Client							= null
@@ -157,9 +157,9 @@ func NetCallClientGlobal(methodName : String, args : Array):
 
 func NetMode(isClient : bool, isServer : bool):
 	if isClient:
-		Client = Launcher.FileSystem.LoadSource("network/Client.gd")
+		Client = FileSystem.LoadSource("network/Client.gd")
 	if isServer:
-		Server = Launcher.FileSystem.LoadSource("network/Server.gd")
+		Server = FileSystem.LoadSource("network/Server.gd")
 
 func NetCreate():
 	if uniqueID != RidDefault:

@@ -1,4 +1,4 @@
-extends Node
+extends ServiceBase
 
 
 enum Type \
@@ -45,8 +45,10 @@ func _init():
 	notification(NOTIFICATION_READY) 
 
 func _ready():
-	ConfHandler = Launcher.FileSystem.LoadSource("conf/ConfHandler.gd")
+	ConfHandler = FileSystem.LoadSource("conf/ConfHandler.gd")
 
 func _post_launch():
 	if DisplayServer.get_window_list().size() > 0:
 		DisplayServer.window_set_min_size(GetVector2("PresetPC", "minWindowSize", Type.WINDOW), DisplayServer.get_window_list()[0])
+
+	isInitialized = true

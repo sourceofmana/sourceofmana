@@ -1,4 +1,4 @@
-extends Node
+extends ServiceBase
 
 #
 signal enter_login
@@ -35,7 +35,7 @@ func UpdateStates():
 				Phases.ENTER:
 					emit_signal("enter_login")
 				Phases.EXIT:
-					playerName = Launcher.GUI.loginWindow.nameTextControl.get_text()
+					pass
 		States.CHAR_SELECTION:
 			match GetPhase():
 				Phases.ENTER:
@@ -60,3 +60,5 @@ func _physics_process(_delta):
 
 func _post_launch():
 	EnterState(States.LOGIN_CONNECTION)
+
+	isInitialized = true

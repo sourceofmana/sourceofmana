@@ -1,4 +1,4 @@
-extends Node
+extends ServiceBase
 
 var isEnabled : bool			= true
 var clickTimer : Timer			= null
@@ -123,7 +123,7 @@ func _physics_process(_deltaTime : float):
 		elif IsActionJustPressed("ui_chat"):		Launcher.GUI.ToggleControl(Launcher.GUI.chatWindow)
 		elif IsActionJustPressed("ui_emote"):		Launcher.GUI.ToggleControl(Launcher.GUI.emoteWindow)
 		elif IsActionJustPressed("ui_validate"):	Launcher.GUI.ToggleChatNewLine(Launcher.GUI.chatWindow)
-		elif IsActionJustPressed("ui_screenshot"):	Launcher.FileSystem.SaveScreenshot()
+		elif IsActionJustPressed("ui_screenshot"):	FileSystem.SaveScreenshot()
 
 #
 func _ready():

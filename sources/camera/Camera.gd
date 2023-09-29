@@ -1,4 +1,4 @@
-extends Node
+extends ServiceBase
 
 var mainCamera : Camera2D		= null
 
@@ -14,3 +14,5 @@ func SetBoundaries():
 func _post_launch():
 	if Launcher.Map and not Launcher.Map.PlayerWarped.is_connected(SetBoundaries):
 		Launcher.Map.PlayerWarped.connect(SetBoundaries)
+
+	isInitialized = true

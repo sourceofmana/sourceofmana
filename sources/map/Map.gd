@@ -1,10 +1,10 @@
-extends Node2D
+extends ServiceBase
 
 #
 signal PlayerWarped
 
 #
-var pool								= Launcher.FileSystem.LoadSource("map/MapPool.gd")
+var pool								= FileSystem.LoadSource("map/MapPool.gd")
 var mapNode : Node2D					= null
 var entities : Dictionary				= {}
 

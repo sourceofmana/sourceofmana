@@ -1,4 +1,4 @@
-extends Node
+extends ServiceBase
 
 var MapsDB : Dictionary				= {}
 var MusicsDB : Dictionary			= {}
@@ -9,8 +9,8 @@ var EmotesDB : Dictionary			= {}
 
 #
 func ParseMapsDB():
-	var Map		= Launcher.FileSystem.LoadDBInstance("Map.gd")
-	var result	= Launcher.FileSystem.LoadDB("maps.json")
+	var Map		= FileSystem.LoadDBInstance("Map.gd")
+	var result	= FileSystem.LoadDB("maps.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -20,8 +20,8 @@ func ParseMapsDB():
 			MapsDB[key] = map
 
 func ParseMusicsDB():
-	var Music	= Launcher.FileSystem.LoadDBInstance("Music.gd")
-	var result	= Launcher.FileSystem.LoadDB("musics.json")
+	var Music	= FileSystem.LoadDBInstance("Music.gd")
+	var result	= FileSystem.LoadDB("musics.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -31,8 +31,8 @@ func ParseMusicsDB():
 			MusicsDB[key] = music
 
 func ParseEthnicitiesDB():
-	var Trait	= Launcher.FileSystem.LoadDBInstance("Trait.gd")
-	var result	= Launcher.FileSystem.LoadDB("ethnicities.json")
+	var Trait	= FileSystem.LoadDBInstance("Trait.gd")
+	var result	= FileSystem.LoadDB("ethnicities.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -44,8 +44,8 @@ func ParseEthnicitiesDB():
 			EthnicitiesDB[key] = ethnicity
 
 func ParseHairstylesDB():
-	var Trait	= Launcher.FileSystem.LoadDBInstance("Trait.gd")
-	var result	= Launcher.FileSystem.LoadDB("hairstyles.json")
+	var Trait	= FileSystem.LoadDBInstance("Trait.gd")
+	var result	= FileSystem.LoadDB("hairstyles.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -57,8 +57,8 @@ func ParseHairstylesDB():
 			HairstylesDB[key] = hairstyle
 
 func ParseEntitiesDB():
-	var Entity	= Launcher.FileSystem.LoadDBInstance("Entity.gd")
-	var result	= Launcher.FileSystem.LoadDB("entities.json")
+	var Entity	= FileSystem.LoadDBInstance("Entity.gd")
+	var result	= FileSystem.LoadDB("entities.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -83,8 +83,8 @@ func ParseEntitiesDB():
 
 #
 func ParseEmotesDB():
-	var Emote	= Launcher.FileSystem.LoadDBInstance("Emote.gd")
-	var result	= Launcher.FileSystem.LoadDB("emotes.json")
+	var Emote	= FileSystem.LoadDBInstance("Emote.gd")
+	var result	= FileSystem.LoadDB("emotes.json")
 
 	if not result.is_empty():
 		for key in result:
@@ -114,3 +114,5 @@ func _post_launch():
 	ParseHairstylesDB()
 	ParseEntitiesDB()
 	ParseEmotesDB()
+
+	isInitialized = true

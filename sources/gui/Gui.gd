@@ -1,4 +1,4 @@
-extends Node
+extends ServiceBase
 
 @onready var buttons : Container				= $VBoxMain/HBoxTop/HBoxButtons
 @onready var stats : Control					= $VBoxMain/HBoxTop/StatIndicator
@@ -6,7 +6,6 @@ extends Node
 @onready var boxes : Container					= $VBoxMain/ActionBox
 @onready var background : TextureRect			= $Background
 
-@onready var modeWindow : WindowPanel			= $FloatingWindows/Mode
 @onready var newsWindow : WindowPanel			= $FloatingWindows/News
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
@@ -14,6 +13,7 @@ extends Node
 @onready var chatWindow : WindowPanel			= $FloatingWindows/Chat
 @onready var emoteWindow : WindowPanel			= $FloatingWindows/Emote
 @onready var creditWindow : WindowPanel			= $FloatingWindows/Credit
+#@onready var settingWindow : WindowPanel		= $FloatingWindows/Setting
 
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
@@ -55,13 +55,11 @@ func EnterLoginMenu():
 	stats.set_visible(false)
 	background.set_visible(true)
 
-	modeWindow.EnableControl(false)
 	newsWindow.EnableControl(true)
 	loginWindow.EnableControl(true)
 
 func EnterGame():
 	if Launcher.Player:
-		modeWindow.EnableControl(false)
 		inventoryWindow.initialize()
 		emoteContainer.FillGridContainer(Launcher.DB.EmotesDB)
 
@@ -77,11 +75,13 @@ func EnterGame():
 
 #
 func _post_launch():
-	if Launcher.Map and not Launcher.FSM.enter_login.is_connected(EnterLoginMenu):
+	if Launcher.FSM and not Launcher.FSM.enter_login.is_connected(EnterLoginMenu):
 		Launcher.FSM.enter_login.connect(EnterLoginMenu)
-	if Launcher.Map and not Launcher.FSM.enter_game.is_connected(EnterGame):
+	if Launcher.FSM and not Launcher.FSM.enter_game.is_connected(EnterGame):
 		Launcher.FSM.enter_game.connect(EnterGame)
 	get_tree().set_auto_accept_quit(false)
+
+	isInitialized = true
 
 func _notification(notif):
 	if notif == Node.NOTIFICATION_WM_CLOSE_REQUEST:
