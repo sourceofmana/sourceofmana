@@ -1,88 +1,32 @@
 extends Node
 
 # High-prio services
-var Root				= null
-var Path				= null
-var FileSystem			= null
-var Util				= null
+var Root : Node						= null
+
 # Specific services
-var Action				= null
-var Scene				= null
-var GUI					= null
-var Debug				= null
+var Action : ServiceBase			= null
+var Scene : Node2D					= null
+var GUI : ServiceBase				= null
+var Debug : ServiceBase				= null
+
 # Low-prio services
-var Audio				= null
-var Camera				= null
-var Conf				= null
-var DB					= null
-var Player				= null
-var FSM					= null
-var Map					= null
-var Save				= null
-var Settings			= null
-var World				= null
-var Network				= null
+var Audio : ServiceBase				= null
+var Camera : ServiceBase			= null
+var Conf : ServiceBase				= null
+var DB : ServiceBase				= null
+var FSM : ServiceBase				= null
+var Map : ServiceBase				= null
+var Save : ServiceBase				= null
+var Settings : ServiceBase			= null
+var World : ServiceBase				= null
+var Network : ServiceBase			= null
+
+# Accessors
+var Player : PlayerEntity			= null
+
 
 #
-func LaunchMode(isClient : bool = false, isServer : bool = false):
-	if not isClient and not isServer:
-		return
-
-	Network.NetMode(isClient, isServer)
-	if isClient:	LaunchClient()
-	if isServer:	LaunchServer()
-	_post_launch()
-
-	if Scene && not isClient:
-		Scene.queue_free()
-		Network.NetCreate()
-
-func LaunchClient():
-	# Load first low-prio services on which the order is important
-	GUI				= Scene.get_node("CanvasLayer")
-
-#	if OS.is_debug_build():
-	Debug		= FileSystem.LoadSource("debug/Debug.gd")
-
-	# Load then low-prio services on which the order is not important
-	Audio			= FileSystem.LoadSource("audio/Audio.gd")
-	Camera			= FileSystem.LoadSource("camera/Camera.gd")
-	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
-	Map				= FileSystem.LoadSource("map/Map.gd")
-	Settings		= FileSystem.LoadSource("settings/Settings.gd")
-
-func LaunchServer():
-	World			= FileSystem.LoadSource("world/World.gd")
-	# IDEA: we could probably also make a gui for the server 
-	# like the minecraft server where it show logs and how many players are connected,
-	# but I think it makes more sense to just always start it from the terminal, atleast for now
-	var l = Label.new()
-	l.text = "This is the Server if you don't like this window then please start the server from the terminal: ./path/to/source_of_mana --headless --server\n you should do that anyway to see the log messages"
-	self.add_child(l)
-
-#
-# Load all high-prio services, order should not be important
-func _init():
-	Path			= load("res://sources/system/Path.gd").new()
-	FileSystem		= load("res://sources/system/FileSystem.gd").new()
-	Util			= load("res://sources/util/Util.gd").new()
-
-func _enter_tree():
-	Root			= get_tree().get_root()
-	Scene			= Root.get_node("Source")
-
-	if not Root or not Path or not FileSystem or not Util or not Scene:
-		printerr("Could not initialize source's base services")
-		_quit()
-
-func _ready():
-	Action			= FileSystem.LoadSource("action/Action.gd")
-	Conf			= FileSystem.LoadSource("conf/Conf.gd")
-	DB				= FileSystem.LoadSource("db/DB.gd")
-	Network			= FileSystem.LoadSource("network/Network.gd")
-	add_child(Action)
-	add_child(Network)
-
+func ParseLaunchMode():
 	var launchClient : bool = Conf.GetBool("Default", "launchClient", Launcher.Conf.Type.PROJECT)
 	var launchServer : bool = Conf.GetBool("Default", "launchServer", Launcher.Conf.Type.PROJECT)
 
@@ -98,21 +42,74 @@ func _ready():
 
 	LaunchMode(launchClient, launchServer)
 
+func LaunchMode(isClient : bool = false, isServer : bool = false):
+	Network.NetMode(isClient, isServer)
+	if isClient:	LaunchClient()
+	if isServer:	LaunchServer()
+
+	_post_launch()
+
+	if isServer:
+		if not isClient:
+			Scene.queue_free()
+			FSM.queue_free()
+
+			# TODO: add a GUI to display various server stats
+			var l = Label.new()
+			l.text = "Server mode started, to hide this window run this binary from the terminal as follow: ./path/to/source_of_mana --headless --server"
+			add_child(l)
+
+		Network.NetCreate()
+
+func LaunchClient():
+#	if OS.is_debug_build():
+	Debug			= FileSystem.LoadSource("debug/Debug.gd")
+
+	# Load then low-prio services on which the order is not important
+	Audio			= FileSystem.LoadSource("audio/Audio.gd")
+	Camera			= FileSystem.LoadSource("camera/Camera.gd")
+	Map				= FileSystem.LoadSource("map/Map.gd")
+	Settings		= FileSystem.LoadSource("settings/Settings.gd")
+
+func LaunchServer():
+	World			= FileSystem.LoadSource("world/World.gd")
+	add_child(World)
+
+#
+func _enter_tree():
+	Root			= get_tree().get_root()
+	Scene			= Root.get_node("Source")
+	GUI				= Scene.get_node("CanvasLayer")
+
+	if not Root or not Scene or not GUI:
+		printerr("Could not initialize source's base services")
+		_quit()
+
+func _ready():
+	Action			= FileSystem.LoadSource("action/Action.gd")
+	Conf			= FileSystem.LoadSource("conf/Conf.gd")
+	DB				= FileSystem.LoadSource("db/DB.gd")
+	Network			= FileSystem.LoadSource("network/Network.gd")
+	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
+
+	add_child(Action)
+	add_child(Network)
+	add_child(FSM)
+
+	_post_launch()
+	ParseLaunchMode()
+
 # Call _post_launch functions for service depending on other services
 func _post_launch():
-	if Camera:		Camera._post_launch()
-	if GUI:			GUI._post_launch()
-	if Debug:		Debug._post_launch()
-	if Audio:		Audio._post_launch()
-	if Conf:		Conf._post_launch()
-	if DB:			DB._post_launch()
-	if World:		World._post_launch()
-	if Settings:	Settings._post_launch()
-	if FSM:			FSM._post_launch()
-
-func _physics_process(delta : float):
-	if FSM:			FSM._physics_process(delta)
-	if World:		World._physics_process(delta)
+	if Camera and not Camera.isInitialized:		Camera._post_launch()
+	if GUI and not GUI.isInitialized:			GUI._post_launch()
+	if Debug and not Debug.isInitialized:		Debug._post_launch()
+	if Audio and not Audio.isInitialized:		Audio._post_launch()
+	if Conf and not Conf.isInitialized:			Conf._post_launch()
+	if DB and not DB.isInitialized:				DB._post_launch()
+	if World and not World.isInitialized:		World._post_launch()
+	if Settings and not Settings.isInitialized:	Settings._post_launch()
+	if FSM and not FSM.isInitialized:			FSM._post_launch()
 
 func _quit():
 	get_tree().quit()

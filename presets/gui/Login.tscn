@@ -59,7 +59,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 focus_next = NodePath("../../PasswordContainer/PasswordText")
-focus_previous = NodePath("../../../SignBar/SignUp")
+focus_previous = NodePath("../../../SignBar/Register")
 focus_mode = 1
 theme_override_fonts/font = ExtResource("4_c4b63")
 placeholder_text = "Type here"
@@ -69,20 +69,23 @@ caret_blink = true
 caret_blink_interval = 0.5
 
 [node name="PasswordLabel" type="Label" parent="VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 text = "Password"
 vertical_alignment = 1
 
 [node name="PasswordContainer" type="PanelContainer" parent="VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PasswordText" type="LineEdit" parent="VBoxContainer/GridContainer/PasswordContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-focus_next = NodePath("../../../SignBar/SignIn")
+focus_next = NodePath("../../../SignBar/Play")
 focus_previous = NodePath("../../NameContainer/NameText")
 focus_mode = 1
 theme_override_fonts/font = ExtResource("4_c4b63")
@@ -106,23 +109,41 @@ autowrap_mode = 3
 
 [node name="SignBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
-alignment = 2
+alignment = 1
 
-[node name="SignIn" type="Button" parent="VBoxContainer/SignBar"]
+[node name="OnlineButton" type="CheckButton" parent="VBoxContainer/SignBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+button_pressed = true
+text = "Online"
+
+[node name="Control" type="Control" parent="VBoxContainer/SignBar"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_next = NodePath("../SignUp")
-focus_previous = NodePath("../../GridContainer/PasswordContainer/PasswordText")
-text = "Sign In"
 
-[node name="SignUp" type="Button" parent="VBoxContainer/SignBar"]
+[node name="Host" type="Button" parent="VBoxContainer/SignBar"]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_next = NodePath("../Register")
+focus_previous = NodePath("../../GridContainer/PasswordContainer/PasswordText")
+text = "Host"
+
+[node name="Play" type="Button" parent="VBoxContainer/SignBar"]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_next = NodePath("../Register")
+focus_previous = NodePath("../../GridContainer/PasswordContainer/PasswordText")
+text = "Play"
+
+[node name="Register" type="Button" parent="VBoxContainer/SignBar"]
+visible = false
 layout_mode = 2
 focus_next = NodePath("../../GridContainer/NameContainer/NameText")
-focus_previous = NodePath("../SignIn")
-text = "Sign Up"
+focus_previous = NodePath("../Play")
+text = "Register"
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="text_submitted" from="VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_submitted"]
 [connection signal="text_submitted" from="VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_submitted"]
-[connection signal="pressed" from="VBoxContainer/SignBar/SignIn" to="." method="_on_sign_in_pressed"]
+[connection signal="pressed" from="VBoxContainer/SignBar/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="VBoxContainer/SignBar/Play" to="." method="_on_play_pressed"]
