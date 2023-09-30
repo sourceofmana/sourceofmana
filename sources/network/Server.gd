@@ -35,7 +35,7 @@ func ConnectPlayer(nickname : String, rpcID : int = Launcher.Network.RidSingleMo
 
 		onlineList.UpdateJson()
 		Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
-	else:
+	elif rpcID != Launcher.Network.RidSingleMode:
 		Launcher.Network.peer.disconnect_peer(rpcID)
 
 func DisconnectPlayer(rpcID : int = Launcher.Network.RidSingleMode):
