@@ -56,45 +56,51 @@ size_flags_vertical = 0
 mouse_filter = 2
 
 [node name="HBoxButtons" type="HBoxContainer" parent="VBoxMain/HBoxTop"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 0
 alignment = 2
 
-[node name="Iventory" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Inventory" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "Inventory"
 targetWindow = NodePath("../../../../FloatingWindows/Inventory")
+targetShortcut = &"ui_inventory"
 
 [node name="Chat" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "Chat"
 targetWindow = NodePath("../../../../FloatingWindows/Chat")
+targetShortcut = &"ui_chat"
 
 [node name="Minimap" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "Minimap"
 targetWindow = NodePath("../../../../FloatingWindows/Minimap")
+targetShortcut = &"ui_minimap"
 
 [node name="Emote" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "Emote"
 targetWindow = NodePath("../../../../FloatingWindows/Emote")
+targetShortcut = &"ui_emote"
 
 [node name="News" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "News"
 targetWindow = NodePath("../../../../FloatingWindows/News")
+targetShortcut = &"ui_news"
 
 [node name="Credits" parent="VBoxMain/HBoxTop/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "Credits"
 targetWindow = NodePath("../../../../FloatingWindows/Credit")
+targetShortcut = &"ui_credits"
 
 [node name="Settings" parent="VBoxMain/HBoxTop/HBoxButtons" instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 text = "Settings"
+targetShortcut = &"ui_settings"
 
 [node name="MainPanelContainer" type="Control" parent="VBoxMain"]
 layout_mode = 2
