@@ -26,7 +26,8 @@ offset_top = 22.0
 offset_right = 379.0
 offset_bottom = 41.0
 textureProgress = ExtResource("6")
-labelColor = Color(0.6, 0.188235, 0.0392157, 1)
+labelColor = Color(0.52549, 0.105882, 0.0941176, 1)
+labelOffset = Vector2(0, -2)
 
 [node name="Mana" parent="Bars" instance=ExtResource("2")]
 layout_mode = 1
@@ -35,7 +36,8 @@ offset_top = 44.0
 offset_right = 379.0
 offset_bottom = 63.0
 textureProgress = ExtResource("3")
-labelColor = Color(0.196078, 0.466667, 0.698039, 1)
+labelColor = Color(0.227451, 0.333333, 0.513726, 1)
+labelOffset = Vector2(0, -4)
 
 [node name="Stamina" parent="Bars" instance=ExtResource("2")]
 layout_mode = 1
@@ -44,6 +46,8 @@ offset_top = 66.0
 offset_right = 357.0
 offset_bottom = 75.0
 textureProgress = ExtResource("4")
+labelColor = Color(0.415686, 0.262745, 0, 1)
+labelOffset = Vector2(17, -2)
 
 [node name="LevelText" type="Label" parent="."]
 layout_mode = 0
