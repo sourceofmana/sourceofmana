@@ -10,6 +10,7 @@ extends ServiceBase
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
 @onready var settingsWindow : WindowPanel		= $FloatingWindows/Settings
+@onready var quitWindow : WindowPanel			= $FloatingWindows/Quit
 
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
@@ -50,8 +51,9 @@ func EnterLoginMenu():
 	stats.set_visible(false)
 	menu.set_visible(false)
 	boxes.set_visible(false)
-	background.set_visible(true)
+	quitWindow.set_visible(false)
 
+	background.set_visible(true)
 	newsWindow.EnableControl(true)
 	loginWindow.EnableControl(true)
 
@@ -61,15 +63,15 @@ func EnterGame():
 		emoteContainer.FillGridContainer(Launcher.DB.EmotesDB)
 
 		background.set_visible(false)
+		loginWindow.EnableControl(false)
+		newsWindow.EnableControl(false)
+
 		stats.set_visible(true)
 		menu.set_visible(true)
 		boxes.set_visible(true)
 
 		for w in buttons.get_children():
 			w.set_visible(true)
-
-		loginWindow.EnableControl(false)
-		newsWindow.EnableControl(false)
 
 #
 func _post_launch():
@@ -83,7 +85,7 @@ func _post_launch():
 
 func _notification(notif):
 	if notif == Node.NOTIFICATION_WM_CLOSE_REQUEST:
-		ToggleControl($FloatingWindows/Quit)
+		ToggleControl(quitWindow)
 	elif notif == Node.NOTIFICATION_WM_MOUSE_EXIT:
 		if has_node("FloatingWindows"):
 			get_node("FloatingWindows").ClearWindowsModifier()
