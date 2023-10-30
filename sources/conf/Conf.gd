@@ -1,26 +1,34 @@
 extends ServiceBase
 
 
-enum Type \
-{ \
-	NONE = -1, \
-	PROJECT = 0, \
-	MAP, \
-	WINDOW, \
-	GAMEPLAY, \
-	NETWORK, \
-	AUTH, \
-	DEBUG \
+enum Type
+{
+	NONE = -1,
+	PROJECT = 0,
+	MAP,
+	WINDOW,
+	GAMEPLAY,
+	NETWORK,
+	AUTH,
+	DEBUG
 }
 
-var ConfHandler				= null
+var confFiles : Array		= []
 
 #
 func GetVariant(category : String, param : String, type : int, default):
-	var ret = default
-	if ConfHandler:
-		ret = ConfHandler.GetValue(category, param, type, default)
-	return ret
+	var value = default
+
+	if type != Launcher.Conf.Type.NONE\
+	&& confFiles[type]\
+	&& confFiles[type].has_section_key(category, param):
+		value = confFiles[type].get_value(category, param, default)
+	else:
+		for conf in confFiles:
+			if conf && conf.has_section_key(category, param):
+				value = conf.get_value(category, param, default)
+
+	return value
 
 func GetBool(category : String, param : String, type : int = Type.NONE) -> bool:
 	return GetVariant(category, param, type, false)
@@ -45,7 +53,13 @@ func _init():
 	notification(NOTIFICATION_READY) 
 
 func _ready():
-	ConfHandler = FileSystem.LoadSource("conf/ConfHandler.gd")
+	confFiles.append(FileSystem.LoadConfig("project"))
+	confFiles.append(FileSystem.LoadConfig("map"))
+	confFiles.append(FileSystem.LoadConfig("window"))
+	confFiles.append(FileSystem.LoadConfig("gameplay"))
+	confFiles.append(FileSystem.LoadConfig("network"))
+	confFiles.append(FileSystem.LoadConfig("auth"))
+	confFiles.append(FileSystem.LoadConfig("debug"))
 
 func _post_launch():
 	if DisplayServer.get_window_list().size() > 0:
