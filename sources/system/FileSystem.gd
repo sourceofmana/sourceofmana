@@ -59,7 +59,6 @@ static func SaveFile(fullPath : String, content : String):
 	Util.Assert(file != null, "File parsing issue on file " + fullPath)
 	if file:
 		file.store_string(content)
-		Util.PrintLog("File", "Saving file: " + fullPath)
 		file.close()
 
 # DB

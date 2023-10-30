@@ -43,6 +43,8 @@ func DisconnectPlayer(rpcID : int = Launcher.Network.RidSingleMode):
 	if player:
 		WorldAgent.RemoveAgent(player)
 		playerMap.erase(rpcID)
+
+		onlineList.UpdateJson()
 		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.agentName, rpcID])
 
 #
