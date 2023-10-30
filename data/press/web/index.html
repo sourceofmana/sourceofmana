@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON to Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007BFF;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Online Player(s)</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+
+    <script>
+        // Function to fetch and update JSON data
+        function fetchData() {
+            fetch('online.json')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById("data");
+                    tableBody.innerHTML = ''; // Clear the table before populating
+
+                    data.forEach(name => {
+                        const row = document.createElement("tr");
+                        const cell = document.createElement("td");
+                        cell.textContent = name;
+                        row.appendChild(cell);
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON data:', error);
+                });
+        }
+
+        // Initial data fetch
+        fetchData();
+
+        // Auto-refresh every 10 seconds
+        setInterval(fetchData, 10000);
+    </script>
+</body>
+</html>
