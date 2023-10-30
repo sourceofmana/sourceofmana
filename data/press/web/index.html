@@ -1,80 +1,111 @@
 <!DOCTYPE html>
+<!-- Background art by Justin Dalessandro (ColdOneK) -->
+
 <html>
 <head>
-    <title>JSON to Table</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            max-width: 600px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #007BFF;
-            color: #fff;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #e0e0e0;
-        }
-    </style>
+	<title>Online Player List</title>
+	<style>
+		body {
+            font-family: Bitter;
+			color: #fff;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			margin: 0;
+			background-color: #69b4fa;
+			background-image: url('sky_background.png');
+			background-repeat: repeat-x;
+		}
+		.container {
+			background-color: rgba(0, 0, 0, 0.8);
+			border-radius: 15px;
+			padding: 20px;
+			margin: 20px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		table {
+			border-collapse: collapse;
+			margin: 10px;
+			width: 100%;
+		}
+		th, td {
+			padding: 10px;
+			border: 1px solid #fff;
+		}
+		th {
+			background-color: #a1bad9;
+			color: #20252b;
+		}
+		tr:nth-child(even) {
+			background-color: transparent; /* Removed hover effect on table rows */
+		}
+		button {
+			padding: 10px 20px;
+			background-color: #69b4fa; /* Lightened button background color */
+			color: #20252b; /* Button text color */
+			border: none;
+			cursor: pointer;
+            font-family: Bitter;
+			font-size: 16px;
+			margin-top: 20px;
+		}
+		button:hover {
+			background-color: #73b8f8;
+			color: #fff; /* Lightened button text color for better visibility */
+		}
+	</style>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>Online Player(s)</th>
-            </tr>
-        </thead>
-        <tbody id="data">
-        </tbody>
-    </table>
+	<h1>Online Player List</h1>
+	<div class="container">
+		<table>
+			<thead>
+				<tr>
+					<th>Names</th>
+				</tr>
+			</thead>
+			<tbody id="data">
+			</tbody>
+		</table>
+		<button id="refreshButton">Refresh List</button>
+	</div>
 
-    <script>
-        // Function to fetch and update JSON data
-        function fetchData() {
-            fetch('online.json')
-                .then(response => response.json())
-                .then(data => {
-                    const tableBody = document.getElementById("data");
-                    tableBody.innerHTML = ''; // Clear the table before populating
+	<script>
+		// Function to fetch and update JSON data
+		function fetchData() {
+			fetch('online.json')
+				.then(response => response.json())
+				.then(data => {
+					const tableBody = document.getElementById("data");
+					tableBody.innerHTML = ''; // Clear the table before populating
 
-                    data.forEach(name => {
-                        const row = document.createElement("tr");
-                        const cell = document.createElement("td");
-                        cell.textContent = name;
-                        row.appendChild(cell);
-                        tableBody.appendChild(row);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching JSON data:', error);
-                });
-        }
+					data.forEach(name => {
+						const row = document.createElement("tr");
+						const cell = document.createElement("td");
+						cell.textContent = name;
+						row.appendChild(cell);
+						tableBody.appendChild(row);
+					});
+				})
+				.catch(error => {
+					console.error('Error fetching JSON data:', error);
+				});
+		}
 
-        // Initial data fetch
-        fetchData();
+		// Initial data fetch
+		fetchData();
 
-        // Auto-refresh every 10 seconds
-        setInterval(fetchData, 10000);
-    </script>
+		// Auto-refresh every 10 seconds
+		setInterval(fetchData, 10000);
+
+		// Button click to manually refresh
+		const refreshButton = document.getElementById('refreshButton');
+		refreshButton.addEventListener('click', fetchData);
+	</script>
 </body>
 </html>

@@ -176,3 +176,4 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./press/logo/logo_seed.svg [Kolokolna] [Reid]
 ./press/map/worldmap.png [WildX] [Reid]
 ./press/splash/splashscreen.png [Kolokolna] [Reid]
+./press/web/sky_background.png [ColdOneK]
