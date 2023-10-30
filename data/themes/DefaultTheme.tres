@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=29 format=3 uid="uid://dhb6h35g1bk0x"]
+[gd_resource type="Theme" load_steps=30 format=3 uid="uid://dhb6h35g1bk0x"]
 
 [ext_resource type="Texture2D" uid="uid://bh3c7tlihpf45" path="res://data/graphics/gui/tab/tab_fg.png" id="1"]
 [ext_resource type="FontFile" uid="uid://xjlm0vx7cd6y" path="res://data/graphics/fonts/alagard.ttf" id="1_vbxts"]
@@ -132,6 +132,13 @@ texture_margin_bottom = 10.0
 expand_margin_left = 3.0
 region_rect = Rect2(0, 0, 11, 23)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5w3ht"]
+bg_color = Color(0.219608, 0.188235, 0.137255, 0.698039)
+expand_margin_left = 2.0
+expand_margin_top = 1.0
+expand_margin_right = 2.0
+expand_margin_bottom = 1.0
+
 [resource]
 default_font = ExtResource("1_vbxts")
 Button/colors/font_color = Color(0.843137, 0.717647, 0.482353, 1)
@@ -177,3 +184,5 @@ TabContainer/styles/panel = SubResource("StyleBoxTexture_4m2pv")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxTexture_85tto")
 TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_0d0g8")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_4jsee")
+Transparent/base_type = &"Button"
+Transparent/styles/normal = SubResource("StyleBoxFlat_5w3ht")
