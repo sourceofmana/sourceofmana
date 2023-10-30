@@ -62,8 +62,8 @@ func LaunchMode(isClient : bool = false, isServer : bool = false):
 		Network.NetCreate()
 
 func LaunchClient():
-#	if OS.is_debug_build():
-	Debug			= FileSystem.LoadSource("debug/Debug.gd")
+	if OS.is_debug_build():
+		Debug		= FileSystem.LoadSource("debug/Debug.gd")
 
 	# Load then low-prio services on which the order is not important
 	Audio			= FileSystem.LoadSource("audio/Audio.gd")
