@@ -1,22 +1,19 @@
 extends ServiceBase
 
-@onready var buttons : Container				= $VBoxMain/HBoxTop/HBoxButtons
-@onready var stats : Control					= $VBoxMain/HBoxTop/StatIndicator
+@onready var menu : Control						= $UIMargin/VBoxMain/HBoxTop/MenuIndicator
+@onready var stats : Control					= $UIMargin/VBoxMain/HBoxTop/StatIndicator
+@onready var boxes : Container					= $UIMargin/VBoxMain/ActionBox
 @onready var windows : Control					= $FloatingWindows
-@onready var boxes : Container					= $VBoxMain/ActionBox
 @onready var background : TextureRect			= $Background
 
 @onready var newsWindow : WindowPanel			= $FloatingWindows/News
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
-@onready var minimapWindow : WindowPanel		= $FloatingWindows/Minimap
-@onready var chatWindow : WindowPanel			= $FloatingWindows/Chat
-@onready var emoteWindow : WindowPanel			= $FloatingWindows/Emote
-@onready var creditWindow : WindowPanel			= $FloatingWindows/Credit
-#@onready var settingWindow : WindowPanel		= $FloatingWindows/Setting
+@onready var settingsWindow : WindowPanel		= $FloatingWindows/Settings
 
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
+@onready var buttons : Container				= $UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent/HBoxButtons
 
 #
 func CloseWindow():
@@ -50,9 +47,9 @@ func EnterLoginMenu():
 		if w.targetWindow:
 			w.targetWindow.EnableControl(false)
 
-	buttons.set_visible(true)
-	boxes.set_visible(false)
 	stats.set_visible(false)
+	menu.set_visible(false)
+	boxes.set_visible(false)
 	background.set_visible(true)
 
 	newsWindow.EnableControl(true)
@@ -64,8 +61,9 @@ func EnterGame():
 		emoteContainer.FillGridContainer(Launcher.DB.EmotesDB)
 
 		background.set_visible(false)
-		boxes.set_visible(true)
 		stats.set_visible(true)
+		menu.set_visible(true)
+		boxes.set_visible(true)
 
 		for w in buttons.get_children():
 			w.set_visible(true)

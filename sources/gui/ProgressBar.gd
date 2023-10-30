@@ -5,13 +5,14 @@ extends Control
 @export var labelColor : Color
 @export var labelUnit : String
 @export var labelScale : float
+@export var labelOffset : Vector2
 @export var delayToFillSec : float
 @export var delayToInitSec : float
 @export var precisionDivider : int
 @export var numberAfterComma : int
 
-@onready var label		= get_node("Label")
-@onready var bar		= get_node("Bar")
+@onready var bar : TextureProgressBar		= $Bar
+@onready var label : Label					= $Label
 
 var isUpdating			= false
 var remainsToFillSec	= 0.0
@@ -133,6 +134,8 @@ func _ready():
 			label.position.y -= ceil((1 - labelScale) * 10) 
 		if labelColor:
 			label.set("theme_override_colors/font_color", labelColor)
+		if labelOffset != Vector2.ZERO:
+			label.position += labelOffset
 
 func _process(delta):
 	UpdateValue(delta)

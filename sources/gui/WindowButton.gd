@@ -13,3 +13,4 @@ func _ready():
 		if eventList.size() > 0:
 			shortcut = Shortcut.new()
 			shortcut.events = eventList
+			tooltip_text = tooltip_text + " " + name
