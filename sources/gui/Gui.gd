@@ -1,7 +1,8 @@
 extends ServiceBase
 
-@onready var menu : Control						= $UIMargin/VBoxMain/HBoxTop/MenuIndicator
-@onready var stats : Control					= $UIMargin/VBoxMain/HBoxTop/StatIndicator
+@onready var menu : Control						= $UIMargin/VBoxMain/Indicators/Menu
+@onready var notification : Control				= $UIMargin/VBoxMain/Indicators/Notification
+@onready var stats : Control					= $UIMargin/VBoxMain/Indicators/Stat
 @onready var boxes : Container					= $UIMargin/VBoxMain/ActionBox
 @onready var windows : Control					= $FloatingWindows
 @onready var background : TextureRect			= $Background
@@ -11,14 +12,15 @@ extends ServiceBase
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
 @onready var settingsWindow : WindowPanel		= $FloatingWindows/Settings
 @onready var quitWindow : WindowPanel			= $FloatingWindows/Quit
+@onready var chatWindow : WindowPanel			= $FloatingWindows/Chat
 
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
-@onready var buttons : Container				= $UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent/HBoxButtons
+@onready var buttons : Container				= $UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons
 
 #
 func CloseWindow():
-	ToggleControl($FloatingWindows/Quit)
+	ToggleControl(quitWindow)
 
 func GetCurrentWindow() -> Control:
 	if windows && windows.get_child_count() > 0:
@@ -34,10 +36,10 @@ func ToggleControl(control : WindowPanel):
 	if control:
 		control.ToggleControl()
 
-func ToggleChatNewLine(control : WindowPanel):
-	if control:
-		if control.is_visible() == false:
-			ToggleControl(control)
+func ToggleChatNewLine():
+	if chatWindow:
+		if chatWindow.is_visible() == false:
+			ToggleControl(chatWindow)
 		if chatContainer:
 			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
 
