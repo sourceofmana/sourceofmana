@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=30 format=3 uid="uid://dhb6h35g1bk0x"]
+[gd_resource type="Theme" load_steps=26 format=3 uid="uid://dhb6h35g1bk0x"]
 
 [ext_resource type="Texture2D" uid="uid://bh3c7tlihpf45" path="res://data/graphics/gui/tab/tab_fg.png" id="1"]
 [ext_resource type="FontFile" uid="uid://xjlm0vx7cd6y" path="res://data/graphics/fonts/alagard.ttf" id="1_vbxts"]
@@ -9,8 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://cl4eml37ecajb" path="res://data/graphics/gui/button/button.png" id="5_fw406"]
 [ext_resource type="Texture2D" uid="uid://cdut807bkni47" path="res://data/graphics/gui/checkbox/cb_small_enabled.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://d4bhga5kna3u5" path="res://data/graphics/gui/checkbox/cb_small_lock_enabled.png" id="8"]
-[ext_resource type="Texture2D" uid="uid://bka6q7yns78qx" path="res://data/graphics/gui/button/button_pressed.png" id="10"]
-[ext_resource type="Texture2D" uid="uid://dedvehg8nrl3m" path="res://data/graphics/gui/button/button_hover.png" id="11"]
 [ext_resource type="Texture2D" uid="uid://cmr4q17mqa0pb" path="res://data/graphics/gui/window/window_bg_title_full.png" id="11_ue8tk"]
 [ext_resource type="Texture2D" uid="uid://bpdyrnfbw38ey" path="res://data/graphics/gui/checkbox/cb_small_lock_disabled.png" id="13"]
 [ext_resource type="Texture2D" uid="uid://1iem3khoe666" path="res://data/graphics/gui/checkbox/cb_small_disabled.png" id="14"]
@@ -18,22 +16,6 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ls22y"]
 texture = ExtResource("3")
-texture_margin_left = 3.0
-texture_margin_top = 3.0
-texture_margin_right = 3.0
-texture_margin_bottom = 3.0
-region_rect = Rect2(0, 0, 6, 6)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_upuwt"]
-texture = ExtResource("16")
-texture_margin_left = 3.0
-texture_margin_top = 3.0
-texture_margin_right = 3.0
-texture_margin_bottom = 3.0
-region_rect = Rect2(0, 0, 6, 6)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2sqft"]
-texture = ExtResource("11")
 texture_margin_left = 3.0
 texture_margin_top = 3.0
 texture_margin_right = 3.0
@@ -49,7 +31,7 @@ texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 8, 8)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w7io8"]
-texture = ExtResource("10")
+texture = ExtResource("16")
 texture_margin_left = 3.0
 texture_margin_top = 3.0
 texture_margin_right = 3.0
@@ -149,12 +131,11 @@ Button/colors/font_color_pressed = Color(0.843137, 0.717647, 0.482353, 1)
 Button/colors/font_disabled_color = Color(0.8, 0.364706, 0.364706, 1)
 Button/colors/font_focus_color = Color(0.843137, 0.717647, 0.482353, 1)
 Button/colors/font_hover_color = Color(0.843137, 0.717647, 0.482353, 1)
+Button/colors/font_hover_pressed_color = Color(0.843137, 0.717647, 0.482353, 1)
 Button/colors/font_pressed_color = Color(0.843137, 0.717647, 0.482353, 1)
 Button/constants/hseparation = 2
 Button/fonts/font = ExtResource("1_vbxts")
 Button/styles/disabled = SubResource("StyleBoxTexture_ls22y")
-Button/styles/focus = SubResource("StyleBoxTexture_upuwt")
-Button/styles/hover = SubResource("StyleBoxTexture_2sqft")
 Button/styles/normal = SubResource("StyleBoxTexture_j7syu")
 Button/styles/pressed = SubResource("StyleBoxTexture_w7io8")
 CheckButton/icons/off = ExtResource("14")

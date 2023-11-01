@@ -111,7 +111,7 @@ autowrap_mode = 3
 layout_mode = 2
 alignment = 1
 
-[node name="OnlineButton" type="CheckButton" parent="VBoxContainer/SignBar"]
+[node name="OnlineButton" type="CheckBox" parent="VBoxContainer/SignBar"]
 layout_mode = 2
 size_flags_horizontal = 0
 button_pressed = true
