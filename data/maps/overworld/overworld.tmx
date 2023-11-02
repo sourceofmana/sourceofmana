@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="385" height="290" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="58">
+ <properties>
+  <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
+  <property name="spiritOnly" type="bool" value="true"/>
+ </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/overworld/grass.tsx"/>
  <tileset firstgid="145" source="../../graphics/tilesets/overworld/house.tsx"/>
  <layer id="1" name="Ground" width="385" height="290">

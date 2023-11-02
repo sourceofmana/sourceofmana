@@ -89,6 +89,7 @@ var specificDic : Dictionary = {}
 var cell_size = Vector2.ZERO
 var map_width = 0
 var map_height = 0
+var spirit_only = false
 
 func reset_global_memebers():
 	_loaded_templates = {}
@@ -238,6 +239,8 @@ func build_client(source_path, options) -> Node2D:
 func build_server(source_path) -> Node:
 	var root = MapServerData.new()
 	root.set_name(source_path.get_file().get_basename())
+	root.spirit_only = spirit_only
+	print("is spirit ? " + "true " if spirit_only else "false")
 
 	# Can't save an array of custom objects, every element will be null when loaded
 #	root.spawns = spawn_pool
@@ -1393,6 +1396,8 @@ func set_custom_properties(object, tiled_object):
 				caveShadow.set_name("CaveShadow")
 				object.add_child(caveShadow)
 				caveShadow.set_owner(object)
+		elif property == "spiritOnly":
+			spirit_only = bool(properties[property])
 
 # Get the custom properties as a dictionary
 # Useful for tile meta, which is not stored directly
