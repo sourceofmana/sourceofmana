@@ -25,11 +25,11 @@ func SetData(data : EntityData):
 		stat.Init(data)
 
 	# Display
-	displayName			= data._displayName
+	displayName			= data._displayName or self is PlayerEntity
 	SetVisual(data)
 
 func SetVisual(data : EntityData):
-	stat.Morph(data)
+	stat.SetPersonalStats(data._stats)
 	visual.Init(self, data)
 
 #

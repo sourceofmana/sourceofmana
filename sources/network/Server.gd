@@ -54,7 +54,7 @@ func GetEntities(rpcID : int = Launcher.Network.RidSingleMode):
 		var neighbours : Array[Array] = WorldAgent.GetNeighboursFromAgent(player)
 		for agents in neighbours:
 			for agent in agents:
-				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.agentID, agent.agentName, agent.position, agent.currentState, rpcID)
+				Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.GetCurrentShapeID(), agent.agentName, agent.position, agent.currentState, rpcID)
 				Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.currentState, rpcID)
 
 func SetClickPos(pos : Vector2, rpcID : int = Launcher.Network.RidSingleMode):
@@ -109,12 +109,8 @@ func TriggerDamage(triggeredAgentID : int, rpcID : int = Launcher.Network.RidSin
 
 func TriggerMorph(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
-	if player and player.stat and player.stat.spiritShape.length() > 0:
-		var morphID : String = player.stat.spiritShape if not player.stat.morphed else player.stat.entityShape
-		if morphID.length() > 0:
-			var morphData : EntityData = Instantiate.FindEntityReference(morphID)
-			player.stat.Morph(morphData)
-			NotifyInstancePlayers(null, player, "Morphed", [morphID])
+	if player:
+		player.Morph()
 
 #
 func GetRid(player : PlayerAgent) -> int:

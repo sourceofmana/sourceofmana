@@ -2,8 +2,8 @@ extends Node
 class_name Instantiate
 
 # Entity
-static func FindEntityReference(entityID : String) -> Object:
-	var ref : Object = null
+static func FindEntityReference(entityID : String) -> EntityData:
+	var ref : EntityData = null
 	for entityDB in Launcher.DB.EntitiesDB:
 		if entityDB == entityID || Launcher.DB.EntitiesDB[entityDB]._name == entityID:
 			ref = Launcher.DB.EntitiesDB[entityDB]
@@ -11,8 +11,8 @@ static func FindEntityReference(entityID : String) -> Object:
 	return ref
 
 static func CreateGenericEntity(entityInstance : CharacterBody2D, entityType : String, entityID : String, entityName : String = ""):
-	var template = FindEntityReference(entityID)
-	Util.Assert(template and entityInstance, "Could not create the entity: %s" % entityID)
+	var template : EntityData = FindEntityReference(entityID)
+	Util.Assert(template != null and entityInstance != null, "Could not create the entity: %s" % entityID)
 	if template and entityInstance:
 		entityInstance.SetData(template)
 		entityInstance.SetKind(entityType, entityID, entityName)

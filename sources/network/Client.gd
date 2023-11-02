@@ -49,7 +49,7 @@ func DamageDealt(ridAgent : int, targetID : int, damage : int, _rpcID : int = La
 func Morphed(ridAgent : int, morphID : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
-		if entity && entity.get_parent():
+		if entity:
 			var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 			entity.SetVisual(morphData)
 

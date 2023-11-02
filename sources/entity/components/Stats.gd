@@ -96,7 +96,7 @@ func Init(data : EntityData):
 	ClampStats()
 
 func Morph(data : EntityData):
-	SetPersonalStats(data._stats)
+	SetEntityStats(data._stats)
 	morphed = not morphed
 
 func UpdatePlayerVars(networkRID : int):

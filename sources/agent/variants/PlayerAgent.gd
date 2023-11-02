@@ -40,6 +40,22 @@ func UpdateStats():
 		lastStat.endurance			= stat.endurance
 		lastStat.concentration		= stat.concentration
 
+func Morph():
+	if stat.spiritShape.length() == 0:
+		return
+
+	var map : Object = WorldAgent.GetMapFromAgent(self)
+	if map and map.spiritOnly and stat.morphed:
+		return
+
+	var morphID : String = GetNextShapeID()
+	if morphID.length() == 0:
+		return
+
+	var morphData : EntityData = Instantiate.FindEntityReference(morphID)
+	stat.Morph(morphData)
+	Launcher.Network.Server.NotifyInstancePlayers(null, self, "Morphed", [morphID])
+
 #
 func _specific_process():
 	UpdateStats()

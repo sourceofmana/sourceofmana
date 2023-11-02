@@ -18,6 +18,7 @@ class Map:
 	var nav_poly : NavigationPolygon		= null
 	var mapRID : RID						= RID()
 	var regionRID : RID						= RID()
+	var spiritOnly : bool					= false
 
 # Vars
 var areas : Dictionary						= {}
@@ -27,6 +28,8 @@ var defaultSpawn : SpawnObject				= SpawnObject.new()
 func LoadData(map : Map):
 	var node : Node = Instantiate.LoadMapData(map.name, Path.MapServerExt)
 	if node:
+		if "spirit_only" in node:
+			map.spiritOnly = node.spirit_only
 		if "spawns" in node:
 			for spawn in node.spawns:
 				Util.Assert(spawn != null, "Warp format is not supported")
@@ -74,7 +77,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 
 # Getters
 func CanWarp(agent : BaseAgent) -> WarpObject:
-	var prevMap : Object = WorldAgent.GetMapFromAgent(agent)
+	var prevMap : Map = WorldAgent.GetMapFromAgent(agent)
 	if prevMap:
 		for warp in prevMap.warps:
 			if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
@@ -104,10 +107,18 @@ func Spawn(map : Map, agent : BaseAgent, instanceID : int = 0):
 				agent.agent.set_navigation_map(map.mapRID)
 
 			WorldAgent.PushAgent(agent, inst)
+
 			if agent is PlayerAgent:
 				var agentID = Launcher.Network.Server.GetRid(agent)
 				if agentID != Launcher.Network.RidUnknown:
-					Util.OneShotCallback(agent.tree_entered, Launcher.Network.WarpPlayer, [map.name, agentID])
+					Util.OneShotCallback(agent.tree_entered, PlayerWarped, [map, agent])
+
+func PlayerWarped(map : Map, player : PlayerAgent):
+	if map.spiritOnly != player.stat.morphed:
+		player.Morph()
+
+	var playerID = Launcher.Network.Server.GetRid(player)
+	Launcher.Network.WarpPlayer(map.name, playerID)
 
 # Generic
 func _post_launch():
