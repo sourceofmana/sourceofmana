@@ -80,6 +80,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/gui/misc/menubar_button_pressed.png [Reid]
 ./graphics/gui/misc/menubar_content.png [Reid]
 ./graphics/gui/misc/mouse.png [Crush]
+./graphics/gui/notification.png [Reid]
 ./graphics/gui/stat/healthbar.png [Reid]
 ./graphics/gui/stat/manabar.png [Reid]
 ./graphics/gui/stat/staminabar.png [Reid]

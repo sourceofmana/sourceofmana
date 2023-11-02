@@ -1,8 +1,8 @@
 extends ServiceBase
 
 @onready var menu : Control						= $UIMargin/VBoxMain/Indicators/Menu
-@onready var notification : Control				= $UIMargin/VBoxMain/Indicators/Notification
 @onready var stats : Control					= $UIMargin/VBoxMain/Indicators/Stat
+@onready var notification : Control				= $UIMargin/VBoxMain/Notification
 @onready var boxes : Container					= $UIMargin/VBoxMain/ActionBox
 @onready var windows : Control					= $FloatingWindows
 @onready var background : TextureRect			= $Background
@@ -51,6 +51,7 @@ func EnterLoginMenu():
 			w.targetWindow.EnableControl(false)
 
 	stats.set_visible(false)
+	notification.set_visible(false)
 	menu.set_visible(false)
 	boxes.set_visible(false)
 	quitWindow.set_visible(false)

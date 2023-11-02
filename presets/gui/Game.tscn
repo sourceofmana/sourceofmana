@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=35 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c2q5vtkxo04dp" path="res://presets/gui/ActionBox.tscn" id="4"]
 [ext_resource type="Shader" path="res://sources/shaders/ControlMask.gdshader" id="4_60kv4"]
 [ext_resource type="Texture2D" uid="uid://desxm6lbhpunn" path="res://data/graphics/gui/menu/menubar_button.png" id="4_ah7dm"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="4_wx5hs"]
 [ext_resource type="PackedScene" uid="uid://dphlgrm0elh6y" path="res://presets/gui/chat/Chat.tscn" id="5"]
 [ext_resource type="Texture2D" uid="uid://qfpxygkhxldq" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="5_fdh06"]
 [ext_resource type="Texture2D" uid="uid://ch5ego7ihyo0o" path="res://data/graphics/gui/icon/inventory.png" id="5_ntnop"]
@@ -72,22 +73,17 @@ theme_override_constants/margin_bottom = 19
 [node name="VBoxMain" type="VBoxContainer" parent="UIMargin"]
 layout_mode = 2
 
-[node name="HBoxTop" type="HBoxContainer" parent="UIMargin/VBoxMain"]
+[node name="Indicators" type="HBoxContainer" parent="UIMargin/VBoxMain"]
 layout_mode = 2
 alignment = 1
 
-[node name="StatIndicator" parent="UIMargin/VBoxMain/HBoxTop" instance=ExtResource("2")]
+[node name="Stat" parent="UIMargin/VBoxMain/Indicators" instance=ExtResource("2")]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
 mouse_filter = 0
 
-[node name="PanelContainer" type="Control" parent="UIMargin/VBoxMain/HBoxTop"]
-layout_mode = 2
-size_flags_vertical = 0
-mouse_filter = 2
-
-[node name="MenuIndicator" type="Button" parent="UIMargin/VBoxMain/HBoxTop"]
+[node name="Menu" type="Button" parent="UIMargin/VBoxMain/Indicators"]
 custom_minimum_size = Vector2(62, 61)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -99,7 +95,7 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
 script = ExtResource("6_npwx0")
 
-[node name="ButtonContent" type="TextureRect" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator"]
+[node name="ButtonContent" type="TextureRect" parent="UIMargin/VBoxMain/Indicators/Menu"]
 material = SubResource("ShaderMaterial_wjdwk")
 layout_mode = 1
 anchors_preset = 6
@@ -118,7 +114,7 @@ size_flags_vertical = 0
 texture = ExtResource("6_mf0sy")
 stretch_mode = 3
 
-[node name="HBoxButtons" type="HBoxContainer" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent"]
+[node name="HBoxButtons" type="HBoxContainer" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent"]
 use_parent_material = true
 layout_mode = 1
 anchors_preset = 6
@@ -136,7 +132,7 @@ size_flags_vertical = 0
 mouse_filter = 0
 alignment = 2
 
-[node name="Inventory" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Inventory" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("5_ntnop")
@@ -145,7 +141,7 @@ icon_alignment = 1
 targetWindow = NodePath("../../../../../../../FloatingWindows/Inventory")
 targetShortcut = &"ui_inventory"
 
-[node name="Chat" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Chat" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("6_2quic")
@@ -153,7 +149,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Chat")
 targetShortcut = &"ui_chat"
 
-[node name="Minimap" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Minimap" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("7_cv35r")
@@ -161,7 +157,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Minimap")
 targetShortcut = &"ui_minimap"
 
-[node name="Emote" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Emote" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("8_ppxwt")
@@ -169,7 +165,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Emote")
 targetShortcut = &"ui_emote"
 
-[node name="News" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="News" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("9_vtuwx")
@@ -177,7 +173,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/News")
 targetShortcut = &"ui_news"
 
-[node name="Credits" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Credits" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("10_mq57a")
@@ -185,7 +181,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Credit")
 targetShortcut = &"ui_credits"
 
-[node name="Settings" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Settings" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("11_17vy0")
@@ -193,7 +189,19 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Settings")
 targetShortcut = &"ui_settings"
 
-[node name="SubViewport" type="SubViewport" parent="UIMargin/VBoxMain/HBoxTop/MenuIndicator"]
+[node name="SubViewport" type="SubViewport" parent="UIMargin/VBoxMain/Indicators/Menu"]
+
+[node name="Notification" type="RichTextLabel" parent="UIMargin/VBoxMain"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+mouse_filter = 2
+theme = ExtResource("4_wx5hs")
+theme_type_variation = &"NotificationBox"
+bbcode_enabled = true
+text = "[center]Welcome to Source of Mana[/center]"
+fit_content = true
 
 [node name="ActionBox" parent="UIMargin/VBoxMain" instance=ExtResource("4")]
 layout_mode = 2
@@ -325,5 +333,5 @@ anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[connection signal="pressed" from="UIMargin/VBoxMain/HBoxTop/MenuIndicator" to="UIMargin/VBoxMain/HBoxTop/MenuIndicator" method="_on_pressed"]
+[connection signal="pressed" from="UIMargin/VBoxMain/Indicators/Menu" to="UIMargin/VBoxMain/Indicators/Menu" method="_on_pressed"]
 [connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=26 format=3 uid="uid://dhb6h35g1bk0x"]
+[gd_resource type="Theme" load_steps=28 format=3 uid="uid://dhb6h35g1bk0x"]
 
 [ext_resource type="Texture2D" uid="uid://bh3c7tlihpf45" path="res://data/graphics/gui/tab/tab_fg.png" id="1"]
 [ext_resource type="FontFile" uid="uid://xjlm0vx7cd6y" path="res://data/graphics/fonts/alagard.ttf" id="1_vbxts"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cl4eml37ecajb" path="res://data/graphics/gui/button/button.png" id="5_fw406"]
 [ext_resource type="Texture2D" uid="uid://cdut807bkni47" path="res://data/graphics/gui/checkbox/cb_small_enabled.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://d4bhga5kna3u5" path="res://data/graphics/gui/checkbox/cb_small_lock_enabled.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://cr7oxck4xlnae" path="res://data/graphics/gui/notification.png" id="9_5par7"]
 [ext_resource type="Texture2D" uid="uid://cmr4q17mqa0pb" path="res://data/graphics/gui/window/window_bg_title_full.png" id="11_ue8tk"]
 [ext_resource type="Texture2D" uid="uid://bpdyrnfbw38ey" path="res://data/graphics/gui/checkbox/cb_small_lock_disabled.png" id="13"]
 [ext_resource type="Texture2D" uid="uid://1iem3khoe666" path="res://data/graphics/gui/checkbox/cb_small_disabled.png" id="14"]
@@ -41,6 +42,15 @@ region_rect = Rect2(0, 0, 6, 6)
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ytr4r"]
 color = Color(0.780392, 0.6, 0.298039, 1)
 thickness = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kckym"]
+content_margin_top = 10.0
+content_margin_bottom = 11.0
+texture = ExtResource("9_5par7")
+texture_margin_left = 61.0
+texture_margin_top = 14.0
+texture_margin_right = 61.0
+texture_margin_bottom = 14.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xadpl"]
 texture = ExtResource("11_ue8tk")
@@ -152,6 +162,9 @@ LineEdit/colors/cursor_color = Color(0.843137, 0.717647, 0.482353, 1)
 LineEdit/colors/font_color = Color(0.843137, 0.717647, 0.482353, 1)
 LineEdit/colors/font_color_selected = Color(0.2, 0.137255, 0.0431373, 1)
 LineEdit/colors/selection_color = Color(0.32549, 0.305882, 0.290196, 1)
+NotificationBox/base_type = &"RichTextLabel"
+NotificationBox/colors/default_color = Color(0.843137, 0.717647, 0.482353, 1)
+NotificationBox/styles/normal = SubResource("StyleBoxTexture_kckym")
 Panel/styles/panel = SubResource("StyleBoxTexture_xadpl")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_f7umf")
 PopupPanel/styles/panel = SubResource("StyleBoxTexture_ik3rj")
