@@ -2,7 +2,6 @@ extends ServiceBase
 
 @onready var menu : Control						= $UIMargin/VBoxMain/Indicators/Menu
 @onready var stats : Control					= $UIMargin/VBoxMain/Indicators/Stat
-@onready var notification : Control				= $UIMargin/VBoxMain/Notification
 @onready var boxes : Container					= $UIMargin/VBoxMain/ActionBox
 @onready var windows : Control					= $FloatingWindows
 @onready var background : TextureRect			= $Background
@@ -17,6 +16,7 @@ extends ServiceBase
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
 @onready var buttons : Container				= $UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons
+@onready var notificationLabel : RichTextLabel	= $UIMargin/VBoxMain/Notification
 
 #
 func CloseWindow():
@@ -51,7 +51,7 @@ func EnterLoginMenu():
 			w.targetWindow.EnableControl(false)
 
 	stats.set_visible(false)
-	notification.set_visible(false)
+	notificationLabel.set_visible(false)
 	menu.set_visible(false)
 	boxes.set_visible(false)
 	quitWindow.set_visible(false)
@@ -72,6 +72,7 @@ func EnterGame():
 		stats.set_visible(true)
 		menu.set_visible(true)
 		boxes.set_visible(true)
+		notificationLabel.set_visible(true)
 
 		for w in buttons.get_children():
 			w.set_visible(true)

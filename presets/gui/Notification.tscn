@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://lkl6f0td76mu"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_rtteg"]
+[ext_resource type="Script" path="res://sources/gui/Notification.gd" id="2_kd5n5"]
+
+[node name="Notification" type="RichTextLabel"]
+custom_minimum_size = Vector2(500, 0)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+mouse_filter = 2
+theme = ExtResource("1_rtteg")
+theme_type_variation = &"NotificationBox"
+bbcode_enabled = true
+text = "[center]Welcome to Source of Mana[/center]"
+fit_content = true
+script = ExtResource("2_kd5n5")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

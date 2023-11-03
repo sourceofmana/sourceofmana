@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=36 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -31,6 +31,7 @@
 [ext_resource type="JSON" path="res://data/db/news.json" id="15_q438c"]
 [ext_resource type="PackedScene" uid="uid://b5tdyq8opcs0u" path="res://presets/gui/Settings.tscn" id="16_gapih"]
 [ext_resource type="JSON" path="res://data/db/credits.json" id="16_pfh0e"]
+[ext_resource type="Script" path="res://sources/gui/Notification.gd" id="18_ugdlj"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hg7ie"]
 texture = ExtResource("4_ah7dm")
@@ -200,8 +201,10 @@ mouse_filter = 2
 theme = ExtResource("4_wx5hs")
 theme_type_variation = &"NotificationBox"
 bbcode_enabled = true
-text = "[center]Welcome to Source of Mana[/center]"
 fit_content = true
+script = ExtResource("18_ugdlj")
+
+[node name="Timer" type="Timer" parent="UIMargin/VBoxMain/Notification"]
 
 [node name="ActionBox" parent="UIMargin/VBoxMain" instance=ExtResource("4")]
 layout_mode = 2
@@ -334,4 +337,5 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [connection signal="pressed" from="UIMargin/VBoxMain/Indicators/Menu" to="UIMargin/VBoxMain/Indicators/Menu" method="_on_pressed"]
+[connection signal="timeout" from="UIMargin/VBoxMain/Notification/Timer" to="UIMargin/VBoxMain/Notification" method="_on_timer_timeout"]
 [connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]
