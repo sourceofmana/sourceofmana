@@ -60,6 +60,7 @@ static func SaveFile(fullPath : String, content : String):
 	if file:
 		file.store_string(content)
 		file.close()
+		Util.PrintInfo("FileSystem", "Saving file %s" % fullPath)
 
 # DB
 static func LoadDB(path : String) -> Dictionary:
@@ -230,4 +231,4 @@ static func SaveScreenshot():
 			var ret = image.save_png(savePath)
 			Util.Assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
 			if ret == OK:
-				Util.PrintLog("Screenshot", "Saving capture: " + savePath)
+				Util.PrintInfo("FileSystem", "Saving capture: " + savePath)

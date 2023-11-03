@@ -149,10 +149,10 @@ func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName :
 
 #
 func ConnectPeer(rpcID : int):
-	Util.PrintLog("Server", "Peer connected: %d" % rpcID)
+	Util.PrintInfo("Server", "Peer connected: %d" % rpcID)
 
 func DisconnectPeer(rpcID : int):
-	Util.PrintLog("Server", "Peer disconnected: %d" % rpcID)
+	Util.PrintInfo("Server", "Peer disconnected: %d" % rpcID)
 	if rpcID in playerMap:
 		if WorldAgent.GetAgent(playerMap[rpcID].agentRID):
 			DisconnectPlayer(rpcID)
