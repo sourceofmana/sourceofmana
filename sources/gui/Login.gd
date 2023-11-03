@@ -47,6 +47,9 @@ func EnableControl(state : bool):
 	if state == true:
 		if not OS.is_debug_build():
 			hostButton.visible = false
+		else:
+			onlineCheck.button_pressed = false
+
 		if OS.get_name() == "Web":
 			onlineCheck.button_pressed = false
 			onlineCheck.visible = false
