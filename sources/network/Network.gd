@@ -172,6 +172,7 @@ func NetCreate():
 
 	if Client and Server:
 		ConnectPlayer(Launcher.FSM.playerName)
+		uniqueID = RidSingleMode
 	elif Client:
 		var serverPort : int		= Launcher.Conf.GetInt("Server", "serverPort", Launcher.Conf.Type.NETWORK)
 		var serverAddress : String	= Launcher.Conf.GetString("Server", "serverAddress", Launcher.Conf.Type.NETWORK)
@@ -213,6 +214,8 @@ func NetDestroy():
 
 	if Client and Server:
 		Client.DisconnectPlayer()
+		Server.DisconnectPlayer()
+	else:
+		peer.close()
 
-	peer.close()
 	uniqueID = RidDefault
