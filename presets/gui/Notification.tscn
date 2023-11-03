@@ -11,7 +11,6 @@ mouse_filter = 2
 theme = ExtResource("1_rtteg")
 theme_type_variation = &"NotificationBox"
 bbcode_enabled = true
-text = "[center]Welcome to Source of Mana[/center]"
 fit_content = true
 script = ExtResource("2_kd5n5")
 
