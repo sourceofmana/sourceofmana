@@ -127,6 +127,11 @@ func UpdateActiveStats(health : int, mana : int, stamina : int, weight : float, 
 func UpdatePersonalStats(strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = RidSingleMode):
 	NetCallClient("UpdatePersonalStats", [strength, vitality, agility, endurance, concentration], rpcID)
 
+# Notification
+@rpc("any_peer", "unreliable_ordered")
+func PushNotification(notif : String, rpcID : int = RidSingleMode):
+	NetCallClient("PushNotification", [notif], rpcID)
+
 #
 func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:
 	if Server:

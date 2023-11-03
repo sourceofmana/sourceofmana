@@ -74,6 +74,10 @@ func UpdatePersonalStats(strength : int, vitality : int, agility : int, enduranc
 		Launcher.Player.stat.endurance		= endurance
 		Launcher.Player.stat.concentration	= concentration
 
+func PushNotification(notif : String, _rpcID : int = Launcher.Network.RidSingleMode):
+	if Launcher.GUI:
+		Launcher.GUI.notificationLabel.AddNotification(notif)
+
 func DisconnectPlayer():
 	if Launcher.Map:
 		Launcher.Map.UnloadMapNode()

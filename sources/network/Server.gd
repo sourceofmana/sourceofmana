@@ -35,6 +35,9 @@ func ConnectPlayer(nickname : String, rpcID : int = Launcher.Network.RidSingleMo
 
 		onlineList.UpdateJson()
 		Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
+		
+		Launcher.Network.PushNotification("Welcome to Source of Mana")
+
 	elif rpcID != Launcher.Network.RidSingleMode:
 		Launcher.Network.peer.disconnect_peer(rpcID)
 
