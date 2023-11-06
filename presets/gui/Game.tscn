@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=49 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c2q5vtkxo04dp" path="res://presets/gui/ActionBox.tscn" id="4"]
 [ext_resource type="Shader" path="res://sources/shaders/ControlMask.gdshader" id="4_60kv4"]
 [ext_resource type="Texture2D" uid="uid://desxm6lbhpunn" path="res://data/graphics/gui/menu/menubar_button.png" id="4_ah7dm"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="4_wx5hs"]
 [ext_resource type="PackedScene" uid="uid://dphlgrm0elh6y" path="res://presets/gui/chat/Chat.tscn" id="5"]
 [ext_resource type="Texture2D" uid="uid://qfpxygkhxldq" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="5_fdh06"]
 [ext_resource type="Texture2D" uid="uid://ch5ego7ihyo0o" path="res://data/graphics/gui/icon/inventory.png" id="5_ntnop"]
@@ -31,6 +32,19 @@
 [ext_resource type="PackedScene" uid="uid://b5tdyq8opcs0u" path="res://presets/gui/Settings.tscn" id="16_gapih"]
 [ext_resource type="JSON" path="res://data/db/credits.json" id="16_pfh0e"]
 [ext_resource type="PackedScene" uid="uid://lkl6f0td76mu" path="res://presets/gui/Notification.tscn" id="17_64u4l"]
+[ext_resource type="Script" path="res://sources/gui/Sticks.gd" id="18_6nrx4"]
+[ext_resource type="Texture2D" uid="uid://c6vlftjsnocs3" path="res://data/graphics/gui/mobile/background.png" id="18_lb78w"]
+[ext_resource type="Texture2D" uid="uid://cyuj6w585tm0y" path="res://data/graphics/gui/mobile/button.png" id="20_1vdgt"]
+[ext_resource type="BitMap" uid="uid://d77nr3juvbco" path="res://data/graphics/gui/mobile/background_bitmask.png" id="20_rnv11"]
+[ext_resource type="Texture2D" uid="uid://4lbn2136wjw3" path="res://data/graphics/gui/mobile/buttonY.png" id="22_v5bsw"]
+[ext_resource type="Texture2D" uid="uid://bncxvjj4nmem8" path="res://data/graphics/gui/mobile/buttonX.png" id="23_8ulos"]
+[ext_resource type="Texture2D" uid="uid://m862d3fndtf" path="res://data/graphics/gui/mobile/buttonY_pressed.png" id="23_veq0v"]
+[ext_resource type="Texture2D" uid="uid://3vvdehbmo43i" path="res://data/graphics/gui/mobile/buttonB.png" id="24_idf5b"]
+[ext_resource type="Texture2D" uid="uid://dp34vjt8lj8n5" path="res://data/graphics/gui/mobile/buttonA.png" id="25_6cklw"]
+[ext_resource type="Texture2D" uid="uid://dfmkxvhnjsnkw" path="res://data/graphics/gui/mobile/buttonX_pressed.png" id="25_8t8bb"]
+[ext_resource type="BitMap" uid="uid://cl65b4aves6sl" path="res://data/graphics/gui/mobile/button_mask.png" id="25_a6irb"]
+[ext_resource type="Texture2D" uid="uid://reqjw3bt0dtj" path="res://data/graphics/gui/mobile/buttonB_pressed.png" id="27_rgxqc"]
+[ext_resource type="Texture2D" uid="uid://dgiywkj6go44v" path="res://data/graphics/gui/mobile/buttonA_pressed.png" id="29_ioa8a"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hg7ie"]
 texture = ExtResource("4_ah7dm")
@@ -70,20 +84,20 @@ theme_override_constants/margin_top = 19
 theme_override_constants/margin_right = 19
 theme_override_constants/margin_bottom = 19
 
-[node name="VBoxMain" type="VBoxContainer" parent="UIMargin"]
+[node name="UIOverlay" type="VBoxContainer" parent="UIMargin"]
 layout_mode = 2
 
-[node name="Indicators" type="HBoxContainer" parent="UIMargin/VBoxMain"]
+[node name="Indicators" type="HBoxContainer" parent="UIMargin/UIOverlay"]
 layout_mode = 2
 alignment = 1
 
-[node name="Stat" parent="UIMargin/VBoxMain/Indicators" instance=ExtResource("2")]
+[node name="Stat" parent="UIMargin/UIOverlay/Indicators" instance=ExtResource("2")]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
 mouse_filter = 0
 
-[node name="Menu" type="Button" parent="UIMargin/VBoxMain/Indicators"]
+[node name="Menu" type="Button" parent="UIMargin/UIOverlay/Indicators"]
 custom_minimum_size = Vector2(62, 61)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -95,7 +109,7 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
 script = ExtResource("6_npwx0")
 
-[node name="ButtonContent" type="TextureRect" parent="UIMargin/VBoxMain/Indicators/Menu"]
+[node name="ButtonContent" type="TextureRect" parent="UIMargin/UIOverlay/Indicators/Menu"]
 material = SubResource("ShaderMaterial_wjdwk")
 layout_mode = 1
 anchors_preset = 6
@@ -114,7 +128,7 @@ size_flags_vertical = 0
 texture = ExtResource("6_mf0sy")
 stretch_mode = 3
 
-[node name="HBoxButtons" type="HBoxContainer" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent"]
+[node name="HBoxButtons" type="HBoxContainer" parent="UIMargin/UIOverlay/Indicators/Menu/ButtonContent"]
 use_parent_material = true
 layout_mode = 1
 anchors_preset = 6
@@ -132,7 +146,7 @@ size_flags_vertical = 0
 mouse_filter = 0
 alignment = 2
 
-[node name="Inventory" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Inventory" parent="UIMargin/UIOverlay/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("5_ntnop")
@@ -141,7 +155,7 @@ icon_alignment = 1
 targetWindow = NodePath("../../../../../../../FloatingWindows/Inventory")
 targetShortcut = &"ui_inventory"
 
-[node name="Chat" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Chat" parent="UIMargin/UIOverlay/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("6_2quic")
@@ -149,7 +163,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Chat")
 targetShortcut = &"ui_chat"
 
-[node name="Minimap" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Minimap" parent="UIMargin/UIOverlay/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("7_cv35r")
@@ -157,7 +171,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Minimap")
 targetShortcut = &"ui_minimap"
 
-[node name="Emote" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Emote" parent="UIMargin/UIOverlay/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("8_ppxwt")
@@ -165,7 +179,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Emote")
 targetShortcut = &"ui_emote"
 
-[node name="News" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="News" parent="UIMargin/UIOverlay/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("9_vtuwx")
@@ -173,7 +187,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/News")
 targetShortcut = &"ui_news"
 
-[node name="Credits" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Credits" parent="UIMargin/UIOverlay/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("10_mq57a")
@@ -181,7 +195,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Credit")
 targetShortcut = &"ui_credits"
 
-[node name="Settings" parent="UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Settings" parent="UIMargin/UIOverlay/Indicators/Menu/ButtonContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("11_17vy0")
@@ -189,12 +203,126 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Settings")
 targetShortcut = &"ui_settings"
 
-[node name="SubViewport" type="SubViewport" parent="UIMargin/VBoxMain/Indicators/Menu"]
+[node name="SubViewport" type="SubViewport" parent="UIMargin/UIOverlay/Indicators/Menu"]
 
-[node name="Notification" parent="UIMargin/VBoxMain" instance=ExtResource("17_64u4l")]
+[node name="Notification" parent="UIMargin/UIOverlay" instance=ExtResource("17_64u4l")]
 layout_mode = 2
 
-[node name="ActionBox" parent="UIMargin/VBoxMain" instance=ExtResource("4")]
+[node name="Shortcuts" type="MarginContainer" parent="UIMargin/UIOverlay"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Sticks" type="HBoxContainer" parent="UIMargin/UIOverlay/Shortcuts"]
+layout_mode = 2
+script = ExtResource("18_6nrx4")
+
+[node name="Direction" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks"]
+layout_mode = 2
+size_flags_horizontal = 0
+action_mode = 0
+keep_pressed_outside = true
+texture_normal = ExtResource("18_lb78w")
+texture_click_mask = ExtResource("20_rnv11")
+
+[node name="Button" type="TextureRect" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Direction"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -25.5
+offset_right = 26.5
+offset_bottom = 25.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(-26, -26)
+mouse_filter = 2
+theme = ExtResource("4_wx5hs")
+theme_type_variation = &"FilledLosangeButton"
+texture = ExtResource("20_1vdgt")
+
+[node name="Actions" type="TextureRect" parent="UIMargin/UIOverlay/Shortcuts/Sticks"]
+layout_mode = 2
+size_flags_horizontal = 10
+texture = ExtResource("18_lb78w")
+
+[node name="ButtonY" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Actions"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -26.5
+offset_top = 5.0
+offset_right = 26.5
+offset_bottom = 56.0
+grow_horizontal = 2
+theme = ExtResource("4_wx5hs")
+theme_type_variation = &"FilledLosangeButton"
+keep_pressed_outside = true
+texture_normal = ExtResource("22_v5bsw")
+texture_pressed = ExtResource("23_veq0v")
+texture_click_mask = ExtResource("25_a6irb")
+
+[node name="ButtonX" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Actions"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -25.5
+offset_right = 57.0
+offset_bottom = 25.5
+grow_vertical = 2
+theme = ExtResource("4_wx5hs")
+theme_type_variation = &"FilledLosangeButton"
+keep_pressed_outside = true
+texture_normal = ExtResource("23_8ulos")
+texture_pressed = ExtResource("25_8t8bb")
+texture_click_mask = ExtResource("25_a6irb")
+
+[node name="ButtonB" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Actions"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = -25.5
+offset_right = -4.0
+offset_bottom = 25.5
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("4_wx5hs")
+theme_type_variation = &"FilledLosangeButton"
+keep_pressed_outside = true
+texture_normal = ExtResource("24_idf5b")
+texture_pressed = ExtResource("27_rgxqc")
+texture_click_mask = ExtResource("25_a6irb")
+
+[node name="ButtonA" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Actions"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.5
+offset_top = -56.0
+offset_right = 26.5
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_wx5hs")
+theme_type_variation = &"FilledLosangeButton"
+keep_pressed_outside = true
+texture_normal = ExtResource("25_6cklw")
+texture_pressed = ExtResource("29_ioa8a")
+texture_click_mask = ExtResource("25_a6irb")
+
+[node name="Boxes" parent="UIMargin/UIOverlay/Shortcuts" instance=ExtResource("4")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
@@ -205,6 +333,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 2.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -254,6 +386,7 @@ offset_right = 313.0
 offset_bottom = 141.0
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
+visible = false
 layout_mode = 0
 offset_left = 22.0
 offset_top = 511.0
@@ -274,6 +407,7 @@ offset_bottom = 0.0
 metadata/_edit_use_anchors_ = true
 
 [node name="News" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
+visible = false
 layout_mode = 2
 offset_left = 827.0
 offset_top = 163.0
@@ -282,6 +416,7 @@ offset_bottom = 655.0
 jsonFile = ExtResource("15_q438c")
 
 [node name="Credit" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
+visible = false
 layout_mode = 2
 offset_left = 23.0
 offset_top = 163.0
@@ -290,6 +425,7 @@ offset_bottom = 661.0
 jsonFile = ExtResource("16_pfh0e")
 
 [node name="Settings" parent="FloatingWindows" instance=ExtResource("16_gapih")]
+visible = false
 layout_mode = 1
 offset_left = 829.0
 offset_top = 165.0
@@ -324,5 +460,11 @@ anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[connection signal="pressed" from="UIMargin/VBoxMain/Indicators/Menu" to="UIMargin/VBoxMain/Indicators/Menu" method="_on_pressed"]
+[connection signal="pressed" from="UIMargin/UIOverlay/Indicators/Menu" to="UIMargin/UIOverlay/Indicators/Menu" method="_on_pressed"]
+[connection signal="button_down" from="UIMargin/UIOverlay/Shortcuts/Sticks/Direction" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_direction_button_down"]
+[connection signal="button_up" from="UIMargin/UIOverlay/Shortcuts/Sticks/Direction" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_direction_button_up"]
+[connection signal="pressed" from="UIMargin/UIOverlay/Shortcuts/Sticks/Actions/ButtonY" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_button_y_pressed"]
+[connection signal="pressed" from="UIMargin/UIOverlay/Shortcuts/Sticks/Actions/ButtonX" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_button_x_pressed"]
+[connection signal="pressed" from="UIMargin/UIOverlay/Shortcuts/Sticks/Actions/ButtonB" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_button_b_pressed"]
+[connection signal="pressed" from="UIMargin/UIOverlay/Shortcuts/Sticks/Actions/ButtonA" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_button_a_pressed"]
 [connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]
