@@ -240,7 +240,6 @@ func build_server(source_path) -> Node:
 	var root = MapServerData.new()
 	root.set_name(source_path.get_file().get_basename())
 	root.spirit_only = spirit_only
-	print("is spirit ? " + "true " if spirit_only else "false")
 
 	# Can't save an array of custom objects, every element will be null when loaded
 #	root.spawns = spawn_pool
