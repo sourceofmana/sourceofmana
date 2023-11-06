@@ -12,7 +12,7 @@ func SetLocalPlayer():
 	if Launcher.Camera:
 		Launcher.Camera.mainCamera = FileSystem.LoadEntityComponent("Camera")
 		if Launcher.Camera.mainCamera:
-			add_child(Launcher.Camera.mainCamera)
+			call_deferred("add_child", Launcher.Camera.mainCamera)
 
 func Interact():
 	if entityState != EntityCommons.State.IDLE:
@@ -37,8 +37,8 @@ func Interact():
 					Launcher.Network.TriggerDamage(entityID)
 
 #
-func _physics_process(deltaTime : float):
-	super._physics_process(deltaTime)
+func _process(deltaTime : float):
+	super._process(deltaTime)
 
 	if Launcher.Debug && isPlayableController:
 		if Launcher.Debug.correctPos:

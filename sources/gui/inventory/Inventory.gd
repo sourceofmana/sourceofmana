@@ -38,7 +38,7 @@ func update_inventory_ui():
 		var tileInstance : InventoryItemGridTile = tilePreset.instantiate()
 		tileInstance.set_data(item)
 		tileInstance.connect("ItemClicked", _on_item_click)
-		itemGrid.add_child(tileInstance)
+		itemGrid.call_deferred("add_child", tileInstance)
 
 func _on_item_click(item: InventoryItem):
 	Launcher.Player.inventory.use_item(item)

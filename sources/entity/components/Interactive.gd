@@ -31,7 +31,7 @@ func AddTimer(parent : Node, delay : float, callable: Callable) -> Timer:
 	timer.set_autostart(true)
 	timer.set_wait_time(delay)
 	timer.timeout.connect(callable)
-	parent.add_child(timer)
+	parent.call_deferred("add_child", timer)
 	return timer
 
 #
@@ -76,7 +76,7 @@ func AddSpeechLabel(speech : String):
 	var speechLabel : RichTextLabel = speechInstance.instantiate()
 	speechLabel.set_text("[center]%s[/center]" % [speech])
 	speechLabel.set_visible_ratio(0)
-	speechContainer.add_child(speechLabel)
+	speechContainer.call_deferred("add_child", speechLabel)
 	speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
 
 func DisplaySpeech(text : String):

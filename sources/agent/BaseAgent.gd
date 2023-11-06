@@ -135,20 +135,20 @@ func SetKind(entityType : String, entityID : String, entityName : String):
 	if self is MonsterAgent or self is NpcAgent:
 		aiTimer = Timer.new()
 		aiTimer.set_name("AiTimer")
-		add_child(aiTimer)
+		call_deferred("add_child", aiTimer)
 	if self is MonsterAgent or self is PlayerAgent:
 		castTimer = Timer.new()
 		castTimer.set_name("CastTimer")
 		castTimer.set_one_shot(true)
-		add_child(castTimer)
+		call_deferred("add_child", castTimer)
 		cooldownTimer = Timer.new()
 		cooldownTimer.set_name("CooldownTimer")
 		cooldownTimer.set_one_shot(true)
-		add_child(cooldownTimer)
+		call_deferred("add_child", cooldownTimer)
 		deathTimer = Timer.new()
 		deathTimer.set_name("DeathTimer")
 		deathTimer.set_one_shot(true)
-		add_child(deathTimer)
+		call_deferred("add_child", deathTimer)
 
 func SetData(data : Object):
 	# Stat
@@ -157,7 +157,7 @@ func SetData(data : Object):
 	# Navigation
 	if data._navigationAgent:
 		agent = FileSystem.LoadEntityComponent("navigations/" + data._navigationAgent)
-		add_child(agent)
+		call_deferred("add_child", agent)
 
 #
 func Damage(_caller : BaseAgent):

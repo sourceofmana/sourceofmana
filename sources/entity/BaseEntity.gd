@@ -35,7 +35,7 @@ func SetVisual(data : EntityData):
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextState : EntityCommons.State):
 	var dist = Vector2(gardbandPosition - position).length()
-	if dist > Launcher.Conf.GetInt("Guardband", "MaxGuardbandDist", Launcher.Conf.Type.NETWORK):
+	if dist > EntityCommons.MaxGuardbandDist:
 		position = gardbandPosition
 
 	entityPosOffset = gardbandPosition - position
@@ -47,16 +47,16 @@ func _physics_process(delta):
 	velocity = entityVelocity
 
 	var dist = entityPosOffset.length()
-	if dist > Launcher.Conf.GetInt("Guardband", "StartGuardbandDist", Launcher.Conf.Type.NETWORK):
-		var guardbandSpeed : int = Launcher.Conf.GetInt("Guardband", "PatchGuardband", Launcher.Conf.Type.NETWORK)
-		var posOffsetFix : Vector2 = Vector2.ZERO.move_toward(entityPosOffset, delta) * guardbandSpeed
+	if dist > EntityCommons.StartGuardbandDist:
+		var posOffsetFix : Vector2 = entityPosOffset * delta * EntityCommons.PatchGuardband
 		entityPosOffset -= posOffsetFix
 		velocity += posOffsetFix
 
-	visual.Refresh(delta)
-
 	if velocity != Vector2.ZERO:
 		move_and_slide()
+
+func _process(delta):
+	visual.Refresh(delta)
 
 func _ready():
 	if interactive:

@@ -12,6 +12,7 @@ enum Gender
 
 enum State
 {
+	UNKNOWN = -1,
 	IDLE = 0,
 	WALK,
 	SIT,
@@ -57,3 +58,13 @@ static func GetStateName(state : State):
 		State.DEATH:	stateName = "Death"
 		_:				stateName = "Idle"
 	return stateName
+
+# Guardband static vars
+static var StartGuardbandDist : int				= 0
+static var PatchGuardband : int					= 0
+static var MaxGuardbandDist : int				= 0
+
+static func InitVars():
+	EntityCommons.StartGuardbandDist = Launcher.Conf.GetInt("Guardband", "StartGuardbandDist", Launcher.Conf.Type.NETWORK)
+	EntityCommons.PatchGuardband = Launcher.Conf.GetInt("Guardband", "PatchGuardband", Launcher.Conf.Type.NETWORK)
+	EntityCommons.MaxGuardbandDist = Launcher.Conf.GetInt("Guardband", "MaxGuardbandDist", Launcher.Conf.Type.NETWORK)

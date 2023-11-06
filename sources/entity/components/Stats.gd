@@ -27,6 +27,10 @@ var concentration : int					= 1
 var base : BaseStats					= null
 var current : BaseStats					= null
 
+# Animation Ratios
+var walkRatio : float					= 1.0
+var attackRatio : float					= 1.0
+
 # Constants to move to Conf
 var deathDelay : int					= 10
 
@@ -47,7 +51,13 @@ func RefreshStats():
 	current.attackRange		= Formulas.GetAttackRange(self)
 	current.walkSpeed		= Formulas.GetWalkSpeed(self)
 	current.weightCapacity	= Formulas.GetWeightCapacity(self)
+
 	ClampStats()
+	RefreshAnimation()
+
+func RefreshAnimation():
+	walkRatio				= Formulas.GetWalkRatio(self)
+	attackRatio				= Formulas.GetAttackRatio(self)
 
 func ClampStats():
 	# Active Stats

@@ -55,9 +55,9 @@ func LaunchMode(isClient : bool = false, isServer : bool = false):
 			FSM.queue_free()
 
 			# TODO: add a GUI to display various server stats
-			var l = Label.new()
-			l.text = "Server mode started, to hide this window run this binary from the terminal as follow: ./path/to/source_of_mana --headless --server"
-			add_child(l)
+			var label = Label.new()
+			label.text = "Server mode started, to hide this window run this binary from the terminal as follow: ./path/to/source_of_mana --headless --server"
+			call_deferred("add_child", label)
 
 		Network.NetCreate()
 
@@ -73,7 +73,7 @@ func LaunchClient():
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
-	add_child(World)
+	call_deferred("add_child", World)
 
 #
 func _enter_tree():

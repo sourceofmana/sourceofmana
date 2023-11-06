@@ -66,6 +66,13 @@ static func GetWeight(inventory : EntityInventory) -> int:
 	return inventory.calculate_weight() / 1000
 
 #
+static func GetAttackRatio(stat : EntityStats) -> float:
+			return stat.current.attackSpeed / stat.base.attackSpeed
+
+static func GetWalkRatio(stat : EntityStats) -> float:
+	return stat.current.walkSpeed / stat.base.walkSpeed
+
+#
 static func GetXpBonus(stat : EntityStats):
 	var personalMean : float = float(stat.strength + stat.vitality + stat.agility + stat.endurance + stat.concentration) / 5
 	var bonus : int = int(stat.level * personalMean)

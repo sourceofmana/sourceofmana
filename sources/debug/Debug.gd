@@ -18,7 +18,7 @@ func OnPlayerEnterGame():
 				col.color = Color.GREEN
 				col.top_level = true
 				correctPos = col
-				Launcher.Player.add_child(col)
+				Launcher.Player.call_deferred("add_child", col)
 
 			if wrongPos == null:
 				var col : ColorRect = ColorRect.new()
@@ -26,7 +26,7 @@ func OnPlayerEnterGame():
 				col.color = Color.MAGENTA
 				col.top_level = true
 				wrongPos = col
-				Launcher.Player.add_child(col)
+				Launcher.Player.call_deferred("add_child", col)
 
 	if Launcher.Conf.GetBool("Inventory", "inventoryFill", Launcher.Conf.Type.DEBUG):
 		Util.Assert(Launcher.Player != null && Launcher.Player.inventory != null, "Debug: Player inventory is not accessible")
@@ -49,7 +49,7 @@ func UpdateNavLine(entity : BaseEntity):
 				navLine.set_default_color(Color(Color.WHITE, 0.4))
 				navLine.set_antialiased(true)
 				navLine.set_as_top_level(true)
-				entity.add_child(navLine)
+				entity.call_deferred("add_child", navLine)
 
 			if entity.has_node("NavigationLine"):
 				var entityNavLine : Line2D = entity.get_node("NavigationLine")
@@ -65,7 +65,7 @@ func ClearNavLine(entity : BaseEntity):
 
 #
 func _post_launch():
-	projectName = Launcher.Conf.GetString("Default", "projectName", Launcher.Conf.Type.DEBUG)
+	projectName = Launcher.Conf.GetString("Default", "projectName", Launcher.Conf.Type.PROJECT)
 
 	if Launcher.Map and not Launcher.FSM.enter_game.is_connected(OnPlayerEnterGame):
 		Launcher.FSM.enter_game.connect(OnPlayerEnterGame)

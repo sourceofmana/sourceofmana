@@ -5,18 +5,18 @@ var entity : BaseEntity						= null
 var sprites : Array[Sprite2D]				= []
 var animationPlayer : AnimationPlayer		= null
 var animationTree : AnimationTree			= null
+
 var collision : CollisionShape2D			= null
 var orientation : Vector2					= Vector2(0, 1)
+var previousState : EntityCommons.State		= EntityCommons.State.UNKNOWN
 
 #
 func GetAnimationScale() -> float:
-	var ratio : float = 1.0
-	match entity.entityState:
-		EntityCommons.State.ATTACK:
-			ratio = entity.stat.current.attackSpeed / entity.stat.base.attackSpeed
-		EntityCommons.State.WALK:
-			ratio = entity.stat.current.walkSpeed / entity.stat.base.walkSpeed
-	return ratio
+	if entity.entityState ==  3:
+		return entity.stat.attackRatio
+	elif entity.entityState == 1:
+		return entity.stat.walkRatio
+	return 1.0
 
 #
 func LoadSprite(slot : EntityCommons.Slot, spritePath : String) -> Sprite2D:
@@ -71,9 +71,10 @@ func LoadData(data : EntityData):
 				animationTree.set_active(true)
 
 	# Collision
-	collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
-	if collision:
-		entity.add_child(collision)
+	if data._collision:
+		collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
+		if collision:
+			entity.call_deferred("add_child", collision)
 
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
@@ -81,13 +82,20 @@ func Init(parentEntity : BaseEntity, data : EntityData):
 	LoadData(data)
 
 func Refresh(_delta : float):
+	var hasNewOrientation = false
 	if entity.entityVelocity.length_squared() > 1:
-		orientation = entity.entityVelocity.normalized()
+		var newOrientation : Vector2 = entity.entityVelocity.normalized()
+		hasNewOrientation = orientation != newOrientation
+		orientation = newOrientation
 
-	if animationPlayer and animationTree:
-		var animationState : AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
-		var stateName : String = EntityCommons.GetStateName(entity.entityState)
-		if animationState:
-			animationTree.set("parameters/%s/BlendSpace2D/blend_position" % stateName, orientation)
-			animationState.travel(stateName)
-			animationTree.set("parameters/%s/TimeScale/scale" % stateName, GetAnimationScale())
+	var hasNewState = previousState != entity.entityState
+
+	if not hasNewState and not hasNewOrientation:
+		return
+
+	var stateName : String = EntityCommons.GetStateName(entity.entityState)
+	animationTree["parameters/%s/BlendSpace2D/blend_position" % stateName] = orientation
+
+	if hasNewState:
+		animationTree["parameters/playback"].travel(stateName)
+		animationTree["parameters/%s/TimeScale/scale" % stateName] = GetAnimationScale()

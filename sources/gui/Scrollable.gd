@@ -23,7 +23,7 @@ func _ready():
 					categoryLabel.add_theme_font_size_override("normal_font_size", 16)
 					categoryLabel.add_theme_constant_override("line_separation", 5)
 					categoryLabel.text = "[center][color=#" + categoryColor.to_html(false) + "]" + category["category"] + "[/color][/center]\n"
-					textContainer.add_child(categoryLabel)
+					textContainer.call_deferred("add_child", categoryLabel)
 
 				if "entries" in category:
 					for entry in category["entries"]:
@@ -38,7 +38,7 @@ func _ready():
 							else:
 								titleLabel.text += entry["title"] + "[/color]\n" 
 							titleLabel.size_flags_horizontal = RichTextLabel.SIZE_SHRINK_CENTER | RichTextLabel.SIZE_EXPAND
-							textContainer.add_child(titleLabel)
+							textContainer.call_deferred("add_child", titleLabel)
 
 						if "content" in entry:
 							var contentLabel = RichTextLabel.new()
@@ -47,7 +47,7 @@ func _ready():
 							contentLabel.add_theme_font_size_override("normal_font_size", 14)
 							contentLabel.add_theme_constant_override("line_separation", 5)
 							contentLabel.text = "[color=#" + contentColor.to_html(false) + "]" + entry["content"] + "[/color]\n"
-							textContainer.add_child(contentLabel)
+							textContainer.call_deferred("add_child", contentLabel)
 
 						if "contacts" in entry:
 							var contactLabel = RichTextLabel.new()
@@ -80,7 +80,7 @@ func _ready():
 								else:
 									contactLabel.text += contactName + "\n"
 							contactLabel.text += "[/color][/center]"
-							textContainer.add_child(contactLabel)
+							textContainer.call_deferred("add_child", contactLabel)
 
 func _richtextlabel_on_meta_clicked(meta):
 	OS.shell_open(str(meta))
