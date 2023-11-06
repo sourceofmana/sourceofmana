@@ -343,15 +343,14 @@ mouse_filter = 2
 script = ExtResource("7")
 
 [node name="Quit" parent="FloatingWindows" instance=ExtResource("8")]
-layout_mode = 0
-anchor_left = 0.390625
-anchor_top = 0.416667
-anchor_right = 0.609375
-anchor_bottom = 0.583333
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.40625
+anchor_top = 0.427778
+anchor_right = 0.625
+anchor_bottom = 0.594444
 offset_right = 0.0
 offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_anchors_ = true
 
@@ -361,32 +360,32 @@ layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 1057.0
-offset_top = 257.0
-offset_right = 1237.0
-offset_bottom = 357.0
+offset_left = 973.0
+offset_top = 213.0
+offset_right = 1255.0
+offset_bottom = 482.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
 custom_minimum_size = Vector2(200, 125)
 layout_mode = 0
-offset_left = 1061.0
-offset_top = 83.0
-offset_right = 1261.0
-offset_bottom = 208.0
+offset_left = 1058.0
+offset_top = 84.0
+offset_right = 1258.0
+offset_bottom = 209.0
 blockActions = null
 
 [node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 0
-offset_left = 75.0
-offset_top = 98.0
-offset_right = 313.0
-offset_bottom = 141.0
+offset_left = 68.0
+offset_top = 103.0
+offset_right = 306.0
+offset_bottom = 146.0
+blockActions = false
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
-visible = false
 layout_mode = 0
 offset_left = 22.0
 offset_top = 511.0
@@ -407,16 +406,16 @@ offset_bottom = 0.0
 metadata/_edit_use_anchors_ = true
 
 [node name="News" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
-visible = false
 layout_mode = 2
 offset_left = 827.0
 offset_top = 163.0
 offset_right = 1258.0
 offset_bottom = 655.0
+grow_horizontal = 2
+grow_vertical = 2
 jsonFile = ExtResource("15_q438c")
 
 [node name="Credit" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
-visible = false
 layout_mode = 2
 offset_left = 23.0
 offset_top = 163.0
@@ -425,7 +424,6 @@ offset_bottom = 661.0
 jsonFile = ExtResource("16_pfh0e")
 
 [node name="Settings" parent="FloatingWindows" instance=ExtResource("16_gapih")]
-visible = false
 layout_mode = 1
 offset_left = 829.0
 offset_top = 165.0
@@ -433,7 +431,6 @@ offset_right = -24.0
 offset_bottom = -66.0
 
 [node name="Shaders" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -444,15 +441,9 @@ mouse_filter = 2
 
 [node name="HQ4x" parent="Shaders" instance=ExtResource("10_id8es")]
 visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 1
 
 [node name="CRT" parent="Shaders" instance=ExtResource("11_x7rk2")]
-visible = false
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
@@ -460,6 +451,7 @@ anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 
+[connection signal="resized" from="UIMargin" to="." method="_on_ui_margin_resized"]
 [connection signal="pressed" from="UIMargin/UIOverlay/Indicators/Menu" to="UIMargin/UIOverlay/Indicators/Menu" method="_on_pressed"]
 [connection signal="button_down" from="UIMargin/UIOverlay/Shortcuts/Sticks/Direction" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_direction_button_down"]
 [connection signal="button_up" from="UIMargin/UIOverlay/Shortcuts/Sticks/Direction" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_direction_button_up"]

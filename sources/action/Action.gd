@@ -31,8 +31,11 @@ func IsActionJustReleased(action : String, forceMode : bool = false) -> bool:
 func GetMove(forceMode : bool = false) -> Vector2:
 	var moveVector : Vector2 = Vector2.ZERO
 	if IsEnabled() || forceMode:
-		moveVector.x = Input.get_action_strength("gp_move_right") - Input.get_action_strength("gp_move_left")
-		moveVector.y = Input.get_action_strength("gp_move_down") - Input.get_action_strength("gp_move_up")
+		if Launcher.Settings.HasUIOverlay():
+			moveVector = Launcher.GUI.sticks.GetMove()
+		else:
+			moveVector.x = Input.get_action_strength("gp_move_right") - Input.get_action_strength("gp_move_left")
+			moveVector.y = Input.get_action_strength("gp_move_down") - Input.get_action_strength("gp_move_up")
 
 		moveVector = moveVector.normalized()
 		var moveLength : float = moveVector.length()
@@ -76,6 +79,9 @@ func NewJoystickConnectionState(_deviceID: int = -1, _connected: bool = false):
 
 # Local player movement
 func _unhandled_input(_event):
+	if Launcher.Settings and Launcher.Settings.HasUIOverlay():
+		return
+
 	if get_viewport() and Launcher.Camera and Launcher.Camera.mainCamera and clickTimer:
 		if clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
 			var mousePos : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
@@ -84,17 +90,16 @@ func _unhandled_input(_event):
 
 func _physics_process(_deltaTime : float):
 	if Launcher.Player and Launcher.Network:
-		if not IsActionPressed("gp_click_to"):
-			var move : Vector2 = GetMove()
-			if move != Vector2.ZERO:
-				if clickTimer.get_time_left() > 0:
-					clickTimer.stop()
-				if previousMove != move:
-					Launcher.Network.SetMovePos(move)
-			else:
-				if previousMove != move:
-					Launcher.Network.ClearNavigation()
-			previousMove = move
+		var move : Vector2 = Launcher.GUI.sticks.GetMove() if IsActionPressed("gp_click_to") and Launcher.Settings.HasUIOverlay() else GetMove()
+		if move != Vector2.ZERO:
+			if clickTimer.get_time_left() > 0:
+				clickTimer.stop()
+			if previousMove != move:
+				Launcher.Network.SetMovePos(move)
+		else:
+			if previousMove != move:
+				Launcher.Network.ClearNavigation()
+		previousMove = move
 
 #
 		if IsActionJustPressed("gp_sit"):			Launcher.Network.TriggerSit()

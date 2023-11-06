@@ -1,11 +1,15 @@
 extends ServiceBase
 
-@onready var menu : Control						= $UIMargin/VBoxMain/Indicators/Menu
-@onready var stats : Control					= $UIMargin/VBoxMain/Indicators/Stat
-@onready var boxes : Container					= $UIMargin/VBoxMain/ActionBox
-@onready var windows : Control					= $FloatingWindows
+@onready var menu : Control						= $UIMargin/UIOverlay/Indicators/Menu
+@onready var stats : Control					= $UIMargin/UIOverlay/Indicators/Stat
+@onready var shortcuts : Container				= $UIMargin/UIOverlay/Shortcuts
+
+@onready var boxes : Container					= $UIMargin/UIOverlay/Shortcuts/Boxes
+@onready var sticks : Container					= $UIMargin/UIOverlay/Shortcuts/Sticks
+
 @onready var background : TextureRect			= $Background
 
+@onready var windows : Control					= $FloatingWindows
 @onready var newsWindow : WindowPanel			= $FloatingWindows/News
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
@@ -15,8 +19,12 @@ extends ServiceBase
 
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
-@onready var buttons : Container				= $UIMargin/VBoxMain/Indicators/Menu/ButtonContent/HBoxButtons
-@onready var notificationLabel : RichTextLabel	= $UIMargin/VBoxMain/Notification
+
+@onready var menuButtons : Container			= $UIMargin/UIOverlay/Indicators/Menu/ButtonContent/HBoxButtons
+@onready var notificationLabel : RichTextLabel	= $UIMargin/UIOverlay/Notification
+
+@onready var CRTShader : TextureRect			= $Shaders/CRT
+@onready var HQ4xShader : TextureRect			= $Shaders/HQ4x
 
 #
 func CloseWindow():
@@ -45,7 +53,7 @@ func ToggleChatNewLine():
 
 #
 func EnterLoginMenu():
-	for w in buttons.get_children():
+	for w in menuButtons.get_children():
 		w.set_visible(false)
 		if w.targetWindow:
 			w.targetWindow.EnableControl(false)
@@ -54,6 +62,7 @@ func EnterLoginMenu():
 	notificationLabel.set_visible(false)
 	menu.set_visible(false)
 	boxes.set_visible(false)
+	sticks.set_visible(false)
 	quitWindow.set_visible(false)
 
 	background.set_visible(true)
@@ -71,10 +80,14 @@ func EnterGame():
 
 		stats.set_visible(true)
 		menu.set_visible(true)
-		boxes.set_visible(true)
 		notificationLabel.set_visible(true)
 
-		for w in buttons.get_children():
+		if Launcher.Settings.HasUIOverlay():
+			sticks.set_visible(true)
+		else:
+			boxes.set_visible(true)
+
+		for w in menuButtons.get_children():
 			w.set_visible(true)
 
 #
@@ -93,3 +106,11 @@ func _notification(notif):
 	elif notif == Node.NOTIFICATION_WM_MOUSE_EXIT:
 		if has_node("FloatingWindows"):
 			get_node("FloatingWindows").ClearWindowsModifier()
+
+func _ready():
+	Util.Assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
+	CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
+
+func _on_ui_margin_resized():
+	if CRTShader and CRTShader.material:
+		CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
