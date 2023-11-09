@@ -23,7 +23,7 @@ func _on_button_y_pressed():
 
 func _on_button_b_pressed():
 	if Launcher.Network:
-		Launcher.GUI.CloseWindow()
+		Launcher.Network.TriggerEmote(3)
 
 func _on_button_x_pressed():
 	if Launcher.GUI:
