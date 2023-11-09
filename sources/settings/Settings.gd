@@ -14,12 +14,12 @@ func EnableHQ4x():
 
 #
 func _post_launch():
-#	match OS.get_name():
-#		"Android":
-	EnableHQ4x()
-	Launcher.GUI.shortcuts.add_theme_constant_override("margin_left", 80) # [0;160]
-	Launcher.GUI.shortcuts.add_theme_constant_override("margin_right", 80) # [0;160]
+	match OS.get_name():
+		"Android":
+			EnableHQ4x()
+			Launcher.GUI.shortcuts.add_theme_constant_override("margin_left", 80) # [0;160]
+			Launcher.GUI.shortcuts.add_theme_constant_override("margin_right", 80) # [0;160]
 
-	hasUIOverlay = true
+			hasUIOverlay = true
 
 	isInitialized = true
