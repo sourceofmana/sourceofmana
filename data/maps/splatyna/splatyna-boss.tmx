@@ -577,7 +577,7 @@
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="name" value="Old Chest"/>
-    <property name="type" value="Trigger"/>
+    <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="39" name="Lilah" type="Spawn" x="-191" y="296" width="32" height="32">
