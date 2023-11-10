@@ -10,13 +10,8 @@ var collision : CollisionShape2D			= null
 var orientation : Vector2					= Vector2(0, 1)
 var previousState : EntityCommons.State		= EntityCommons.State.UNKNOWN
 
-#
-func GetAnimationScale() -> float:
-	if entity.entityState ==  3:
-		return entity.stat.attackRatio
-	elif entity.entityState == 1:
-		return entity.stat.walkRatio
-	return 1.0
+var blendSpacePaths : Dictionary			= {}
+var timeScalePaths : Dictionary				= {}
 
 #
 func LoadSprite(slot : EntityCommons.Slot, spritePath : String) -> Sprite2D:
@@ -76,26 +71,64 @@ func LoadData(data : EntityData):
 		if collision:
 			entity.call_deferred("add_child", collision)
 
+func LoadAnimationPaths():
+	for i in EntityCommons.State.COUNT:
+		var stateName : String		= EntityCommons.GetStateName(i)
+		var blendSpace : String		= "parameters/%s/BlendSpace2D/blend_position" % [stateName]
+		var timeScale : String		= "parameters/%s/TimeScale/scale" % [stateName]
+
+		if blendSpace in animationTree:
+			blendSpacePaths[i] = blendSpace
+		# Only set dynamic time scale for attack and walk as other can stay static
+		if i == EntityCommons.State.ATTACK or i == EntityCommons.State.WALK:
+			if timeScale in animationTree:
+				timeScalePaths[i] = timeScale
+
+func SetScale():
+	if not entity or not animationTree:
+		return
+
+	if EntityCommons.State.WALK in timeScalePaths:
+		animationTree[timeScalePaths[EntityCommons.State.WALK]] = entity.stat.walkRatio
+	if EntityCommons.State.ATTACK in timeScalePaths:
+		animationTree[timeScalePaths[EntityCommons.State.ATTACK]] = entity.stat.attackRatio
+
+func ResetAnimationValue():
+	LoadAnimationPaths()
+	SetScale()
+
+	if entity and animationTree:
+		var stateName = EntityCommons.GetStateName(EntityCommons.State.IDLE)
+		animationTree[EntityCommons.playbackParameter].travel(stateName)
+		if EntityCommons.State.IDLE in blendSpacePaths:
+			var blendSpacePath = blendSpacePaths[EntityCommons.State.IDLE]
+			animationTree[blendSpacePath] = Vector2.ZERO
+
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
 	entity = parentEntity
 	LoadData(data)
+	ResetAnimationValue()
 
-func Refresh(_delta : float):
-	var hasNewOrientation = false
-	if entity.entityVelocity.length_squared() > 1:
-		var newOrientation : Vector2 = entity.entityVelocity.normalized()
+func Refresh(_delta: float):
+	var currentEntityState = entity.entityState
+	var entityVelocity = entity.entityVelocity
+
+	# Check for changes in entity state and orientation
+	var hasNewOrientation : bool = false
+	if entityVelocity.length_squared() > 1:
+		var newOrientation: Vector2 = entityVelocity.normalized()
 		hasNewOrientation = orientation != newOrientation
 		orientation = newOrientation
 
-	var hasNewState = previousState != entity.entityState
-
-	if not hasNewState and not hasNewOrientation:
+	if previousState == currentEntityState and not hasNewOrientation:
 		return
 
-	var stateName : String = EntityCommons.GetStateName(entity.entityState)
-	animationTree["parameters/%s/BlendSpace2D/blend_position" % stateName] = orientation
+	if currentEntityState in blendSpacePaths:
+		var blendSpacePath = blendSpacePaths[currentEntityState]
+		animationTree[blendSpacePath] = orientation
 
-	if hasNewState:
-		animationTree["parameters/playback"].travel(stateName)
-		animationTree["parameters/%s/TimeScale/scale" % stateName] = GetAnimationScale()
+	if currentEntityState != previousState:
+		var stateName = EntityCommons.GetStateName(currentEntityState)
+		animationTree[EntityCommons.playbackParameter].travel(stateName)
+		previousState = currentEntityState

@@ -17,7 +17,11 @@ enum State
 	WALK,
 	SIT,
 	ATTACK,
-	DEATH
+	DEATH,
+	TO_TRIGGER,
+	TRIGGER,
+	FROM_TRIGGER,
+	COUNT
 }
 
 enum Slot
@@ -34,14 +38,17 @@ enum Slot
 	COUNT
 }
 
-#
+static var playbackParameter : String = "parameters/playback"
+
+# Skip TO_TRIGGER & FROM_TRIGGER as they are only used as transition steps between idle/trigger.
 const stateTransitions : Array[Array] = [
-	#	IDLE			WALK			SIT				ATTACK			DEATH
-	[State.IDLE,	State.WALK,		State.SIT,		State.ATTACK,	State.DEATH],	# IDLE
-	[State.IDLE,	State.WALK,		State.WALK,		State.ATTACK,	State.DEATH],	# WALK
-	[State.SIT,		State.WALK,		State.IDLE,		State.ATTACK,	State.DEATH],	# SIT
-	[State.IDLE,	State.WALK,		State.ATTACK,	State.ATTACK,	State.DEATH],	# ATTACK
-	[State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH]	# DEATH
+#	IDLE			WALK			SIT				ATTACK			DEATH			TRIGGER				< To/From v
+	[State.IDLE,	State.WALK,		State.SIT,		State.ATTACK,	State.DEATH,	State.TRIGGER],		# IDLE
+	[State.IDLE,	State.WALK,		State.WALK,		State.ATTACK,	State.DEATH,	State.TRIGGER],		# WALK
+	[State.SIT,		State.WALK,		State.IDLE,		State.ATTACK,	State.DEATH,	State.TRIGGER],		# SIT
+	[State.IDLE,	State.WALK,		State.ATTACK,	State.ATTACK,	State.DEATH,	State.ATTACK],		# ATTACK
+	[State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH],		# DEATH
+	[State.IDLE,	State.IDLE,		State.IDLE,		State.IDLE,		State.DEATH,	State.TRIGGER]		# TRIGGER
 ]
 
 #
@@ -51,12 +58,15 @@ static func GetNextTransition(currentState : State, newState : State) -> State:
 static func GetStateName(state : State):
 	var stateName : String = ""
 	match state:
-		State.IDLE:		stateName = "Idle"
-		State.WALK:		stateName = "Walk"
-		State.SIT:		stateName = "Sit"
-		State.ATTACK:	stateName = "Attack"
-		State.DEATH:	stateName = "Death"
-		_:				stateName = "Idle"
+		State.IDLE:			stateName = "Idle"
+		State.WALK:			stateName = "Walk"
+		State.SIT:			stateName = "Sit"
+		State.ATTACK:		stateName = "Attack"
+		State.DEATH:		stateName = "Death"
+		State.TO_TRIGGER:	stateName = "To Trigger"
+		State.TRIGGER:		stateName = "Trigger"
+		State.FROM_TRIGGER:	stateName = "From Trigger"
+		_:					stateName = "Idle"
 	return stateName
 
 # Guardband static vars
