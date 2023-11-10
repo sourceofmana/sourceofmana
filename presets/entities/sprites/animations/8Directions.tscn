@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://oxrams6nup8i"]
+[gd_scene load_steps=74 format=3 uid="uid://oxrams6nup8i"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a5i8o"]
 animation = &"AttackLeft"
@@ -91,6 +91,19 @@ nodes/TimeScale/position = Vector2(620, 200)
 nodes/output/position = Vector2(820, 200)
 node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jlgjl"]
+animation = &"IdleDown"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ywc2f"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_60jk4"]
+nodes/Animation/node = SubResource("AnimationNodeAnimation_jlgjl")
+nodes/Animation/position = Vector2(220, 220)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_ywc2f")
+nodes/TimeScale/position = Vector2(440, 180)
+nodes/output/position = Vector2(640, 180)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dysp1"]
 animation = &"IdleLeft"
 
@@ -182,6 +195,32 @@ nodes/TimeScale/position = Vector2(480, 180)
 nodes/output/position = Vector2(680, 180)
 node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s81yu"]
+animation = &"IdleDown"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_jb8d4"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_kuuox"]
+nodes/Animation/node = SubResource("AnimationNodeAnimation_s81yu")
+nodes/Animation/position = Vector2(240, 220)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_jb8d4")
+nodes/TimeScale/position = Vector2(460, 180)
+nodes/output/position = Vector2(660, 180)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8cdfo"]
+animation = &"IdleDown"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_pl3m0"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_32j6h"]
+nodes/Animation/node = SubResource("AnimationNodeAnimation_8cdfo")
+nodes/Animation/position = Vector2(280, 240)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_pl3m0")
+nodes/TimeScale/position = Vector2(480, 200)
+nodes/output/position = Vector2(680, 200)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cx8vo"]
 animation = &"WalkLeft"
 
@@ -261,35 +300,49 @@ node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8teg0"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2h2nm"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7q5m5"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8qcjj"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xc7ic"]
+
 [sub_resource type="AnimationNodeStateMachine" id="22"]
 states/Attack/node = SubResource("AnimationNodeBlendTree_vioql")
-states/Attack/position = Vector2(271, 31.1887)
+states/Attack/position = Vector2(567, 31.1887)
 states/Death/node = SubResource("AnimationNodeBlendTree_hdypo")
-states/Death/position = Vector2(652, 203)
-states/End/position = Vector2(848, 203)
+states/Death/position = Vector2(948, 203)
+states/End/position = Vector2(1144, 203)
+"states/From Trigger/node" = SubResource("AnimationNodeBlendTree_60jk4")
+"states/From Trigger/position" = Vector2(457, 299)
 states/Idle/node = SubResource("AnimationNodeBlendTree_d274k")
-states/Idle/position = Vector2(271, 203)
+states/Idle/position = Vector2(567, 203)
 states/Sit/node = SubResource("AnimationNodeBlendTree_ilqyv")
-states/Sit/position = Vector2(271, 438.551)
-states/Start/position = Vector2(80, 203)
+states/Sit/position = Vector2(567, 438.551)
+states/Start/position = Vector2(130, 203)
+"states/To Trigger/node" = SubResource("AnimationNodeBlendTree_kuuox")
+"states/To Trigger/position" = Vector2(457, 109.848)
+states/Trigger/node = SubResource("AnimationNodeBlendTree_32j6h")
+states/Trigger/position = Vector2(354, 203)
 states/Walk/node = SubResource("AnimationNodeBlendTree_18lfr")
-states/Walk/position = Vector2(389, 299)
-transitions = ["Idle", "Sit", SubResource("AnimationNodeStateMachineTransition_so0lp"), "Sit", "Idle", SubResource("AnimationNodeStateMachineTransition_l0fi0"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_h431x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_56gkn"), "Sit", "Walk", SubResource("AnimationNodeStateMachineTransition_iv2dw"), "Sit", "Death", SubResource("AnimationNodeStateMachineTransition_a0xty"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_vr1f8"), "Death", "Idle", SubResource("AnimationNodeStateMachineTransition_ti5sl"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_0bg4p"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_rnq6v"), "Attack", "Death", SubResource("AnimationNodeStateMachineTransition_1nsiy"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_8teg0")]
+states/Walk/position = Vector2(685, 299)
+transitions = ["Idle", "Sit", SubResource("AnimationNodeStateMachineTransition_so0lp"), "Sit", "Idle", SubResource("AnimationNodeStateMachineTransition_l0fi0"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_h431x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_56gkn"), "Sit", "Walk", SubResource("AnimationNodeStateMachineTransition_iv2dw"), "Sit", "Death", SubResource("AnimationNodeStateMachineTransition_a0xty"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_vr1f8"), "Death", "Idle", SubResource("AnimationNodeStateMachineTransition_ti5sl"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_0bg4p"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_rnq6v"), "Attack", "Death", SubResource("AnimationNodeStateMachineTransition_1nsiy"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_8teg0"), "Idle", "To Trigger", SubResource("AnimationNodeStateMachineTransition_2h2nm"), "To Trigger", "Trigger", SubResource("AnimationNodeStateMachineTransition_7q5m5"), "Trigger", "From Trigger", SubResource("AnimationNodeStateMachineTransition_8qcjj"), "From Trigger", "Idle", SubResource("AnimationNodeStateMachineTransition_xc7ic")]
 graph_offset = Vector2(0, -63.1516)
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_wom2k"]
 
 [node name="AnimationTree" type="AnimationTree"]
 tree_root = SubResource("22")
 anim_player = NodePath("..")
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_wom2k")
 parameters/Attack/BlendSpace2D/blend_position = Vector2(0, 0)
 parameters/Attack/TimeScale/scale = 1.0
 parameters/Death/BlendSpace2D/blend_position = Vector2(0, 0)
 parameters/Death/TimeScale/scale = 1.0
+"parameters/From Trigger/TimeScale/scale" = 1.0
 parameters/Idle/BlendSpace2D/blend_position = Vector2(0.43435, 0.624454)
 parameters/Idle/TimeScale/scale = 1.0
 parameters/Sit/BlendSpace2D/blend_position = Vector2(0, 0)
 parameters/Sit/TimeScale/scale = 1.0
+"parameters/To Trigger/TimeScale/scale" = 1.0
+parameters/Trigger/TimeScale/scale = 1.0
 parameters/Walk/BlendSpace2D/blend_position = Vector2(0, 0)
 parameters/Walk/TimeScale/scale = 1.0

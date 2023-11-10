@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cesdnjj67k3c"]
+[gd_scene load_steps=22 format=3 uid="uid://cesdnjj67k3c"]
 
 [ext_resource type="Texture2D" uid="uid://dun8v8tn4oknc" path="res://data/graphics/sprites/monsters/lulea.png" id="1_kcq17"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_gv6wv"]
@@ -327,8 +327,6 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_vbywg"]
-
 [node name="Sprite" type="Sprite2D"]
 texture = ExtResource("1_kcq17")
 offset = Vector2(0, -5)
@@ -342,4 +340,3 @@ libraries = {
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_gv6wv")]
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_vbywg")

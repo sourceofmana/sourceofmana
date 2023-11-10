@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dxixywo1th1gv"]
+[gd_scene load_steps=34 format=3 uid="uid://dxixywo1th1gv"]
 
 [ext_resource type="Texture2D" uid="uid://bja0dvxyqvcu1" path="res://data/graphics/sprites/monsters/piou.png" id="1_wtqld"]
 [ext_resource type="PackedScene" uid="uid://oxrams6nup8i" path="res://presets/entities/sprites/animations/8Directions.tscn" id="2_4wmrr"]
@@ -843,9 +843,8 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_y8j7i"]
-
 [node name="Sprite" type="Sprite2D"]
+position = Vector2(0, 5.33333)
 texture = ExtResource("1_wtqld")
 offset = Vector2(0, -5)
 hframes = 5
@@ -858,4 +857,3 @@ libraries = {
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_4wmrr")]
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_y8j7i")
