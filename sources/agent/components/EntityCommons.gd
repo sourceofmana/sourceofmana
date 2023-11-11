@@ -42,13 +42,15 @@ static var playbackParameter : String = "parameters/playback"
 
 # Skip TO_TRIGGER & FROM_TRIGGER as they are only used as transition steps between idle/trigger.
 const stateTransitions : Array[Array] = [
-#	IDLE			WALK			SIT				ATTACK			DEATH			TRIGGER				< To/From v
-	[State.IDLE,	State.WALK,		State.SIT,		State.ATTACK,	State.DEATH,	State.TRIGGER],		# IDLE
-	[State.IDLE,	State.WALK,		State.WALK,		State.ATTACK,	State.DEATH,	State.TRIGGER],		# WALK
-	[State.SIT,		State.WALK,		State.IDLE,		State.ATTACK,	State.DEATH,	State.TRIGGER],		# SIT
-	[State.IDLE,	State.WALK,		State.ATTACK,	State.ATTACK,	State.DEATH,	State.ATTACK],		# ATTACK
-	[State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH],		# DEATH
-	[State.IDLE,	State.IDLE,		State.IDLE,		State.IDLE,		State.DEATH,	State.TRIGGER]		# TRIGGER
+#	IDLE			WALK			SIT				ATTACK			DEATH			TO_TRIGGER		TRIGGER			FROM_TRIGGER		< To/From v
+	[State.IDLE,	State.WALK,		State.SIT,		State.ATTACK,	State.DEATH,	State.IDLE,		State.TRIGGER,	State.IDLE],		# IDLE
+	[State.IDLE,	State.WALK,		State.WALK,		State.ATTACK,	State.DEATH,	State.IDLE,		State.TRIGGER,	State.IDLE],		# WALK
+	[State.SIT,		State.WALK,		State.IDLE,		State.ATTACK,	State.DEATH,	State.IDLE,		State.TRIGGER,	State.IDLE],		# SIT
+	[State.IDLE,	State.WALK,		State.ATTACK,	State.ATTACK,	State.DEATH,	State.IDLE,		State.TRIGGER,	State.IDLE],		# ATTACK
+	[State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH],		# DEATH
+	[],																																	# TO_TRIGGER
+	[State.TRIGGER,	State.TRIGGER,	State.SIT,		State.ATTACK,	State.DEATH,	State.TRIGGER,	State.IDLE,		State.TRIGGER],		# TRIGGER
+	[]																																	# FROM_TRIGGER
 ]
 
 #

@@ -178,8 +178,6 @@ func _specific_process():
 
 func _internal_process():
 	if agent and get_parent():
-		if agentName != "Reid":
-			pass
 		UpdateInput()
 		UpdateOrientation()
 
@@ -188,18 +186,16 @@ func _internal_process():
 		else:
 			_velocity_computed(currentVelocity)
 
-		if HasChanged():
-			UpdateChanged()
+	if HasChanged():
+		UpdateChanged()
 
-		_specific_process()
+	_specific_process()
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
 
 	if stat.health <= 0:
 		SetState(EntityCommons.State.DEATH)
-#	elif isSitting:
-#		SetState(EntityCommons.State.SIT)
 	elif isAttacking:
 		SetState(EntityCommons.State.ATTACK)
 	elif currentVelocity == Vector2i.ZERO:
