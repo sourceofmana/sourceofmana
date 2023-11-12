@@ -27,4 +27,4 @@ func _init():
 	_collision = ""
 	_customTexture = ""
 	_displayName = false
-	_stats = { "WalkSpeed"=125, "Spirit"="Piou" }
+	_stats = {}

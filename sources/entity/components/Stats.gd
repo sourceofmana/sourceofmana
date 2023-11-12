@@ -70,15 +70,12 @@ func ClampStats():
 	mana					= Formulas.ClampMana(self)
 
 func SetEntityStats(stats : Dictionary, isMorphed : bool):
-	if "Health" in stats:				base.maxHealth		= (base.maxHealth		+ stats["Health"]) / 2			if isMorphed else stats["Health"]
-	if "Mana" in stats:					base.maxMana		= (base.maxMana			+ stats["Mana"]) / 2			if isMorphed else stats["Mana"]
-	if "Stamina" in stats:				base.maxStamina		= (base.maxStamina		+ stats["Stamina"]) / 2			if isMorphed else stats["Stamina"]
-	if "AttackStrength" in stats:		base.attackStrength	= (base.attackStrength	+ stats["AttackStrength"]) / 2	if isMorphed else stats["AttackStrength"]
-	if "AttackSpeed" in stats:			base.attackSpeed	= (base.attackSpeed		+ stats["AttackSpeed"]) / 2		if isMorphed else stats["AttackSpeed"]
-	if "AttackRange" in stats:			base.attackRange	= (base.attackRange		+ stats["AttackRange"]) / 2		if isMorphed else stats["AttackRange"]
-	if "WalkSpeed" in stats:			base.walkSpeed		= (base.walkSpeed		+ stats["WalkSpeed"]) / 2		if isMorphed else stats["WalkSpeed"]
-	if "WeightCapacity" in stats:		base.weightCapacity	= (base.weightCapacity	+ stats["WeightCapacity"]) / 2	if isMorphed else stats["WeightCapacity"]
+	for modifier in stats:
+		if modifier in base:
+			base[modifier] = (base[modifier] + stats[modifier]) / 2 if isMorphed else stats[modifier]
 	RefreshStats()
+
+
 
 func SetPersonalStats(stats : Dictionary):
 	if "Strength" in stats:				strength			= stats["Strength"] 
@@ -99,7 +96,7 @@ func Init(data : EntityData):
 	if "Level" in stats:				level				= stats["Level"]
 	if "Experience" in stats:			experience			= stats["Experience"]
 	if "Weight" in stats:				weight				= stats["Weight"]
-	if "Spirit" in stats:				spiritShape			= stats["Spirit"]
+	if "spirit" in stats:				spiritShape			= stats["spirit"]
 
 	SetPersonalStats(stats)
 	SetEntityStats(stats, morphed)
