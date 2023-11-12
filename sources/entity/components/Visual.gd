@@ -98,11 +98,11 @@ func ResetAnimationValue():
 	UpdateScale()
 
 	if entity and animationTree:
-		var stateName = EntityCommons.GetStateName(EntityCommons.State.IDLE)
+		var stateName = EntityCommons.GetStateName(previousState)
 		animationTree[EntityCommons.playbackParameter].travel(stateName)
-		if EntityCommons.State.IDLE in blendSpacePaths:
-			var blendSpacePath = blendSpacePaths[EntityCommons.State.IDLE]
-			animationTree[blendSpacePath] = Vector2.ZERO
+		if previousState in blendSpacePaths:
+			var blendSpacePath = blendSpacePaths[previousState]
+			animationTree[blendSpacePath] = orientation
 
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
