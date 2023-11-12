@@ -29,7 +29,6 @@ func SetData(data : EntityData):
 	SetVisual(data)
 
 func SetVisual(data : EntityData):
-	stat.SetPersonalStats(data._stats)
 	visual.Init(self, data)
 
 #

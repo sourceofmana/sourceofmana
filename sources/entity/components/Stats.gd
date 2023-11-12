@@ -69,15 +69,15 @@ func ClampStats():
 	stamina					= Formulas.ClampStamina(self)
 	mana					= Formulas.ClampMana(self)
 
-func SetEntityStats(stats : Dictionary):
-	if "Health" in stats:				base.maxHealth		= stats["Health"]
-	if "Mana" in stats:					base.maxMana		= stats["Mana"]
-	if "Stamina" in stats:				base.maxStamina		= stats["Stamina"]
-	if "AttackStrength" in stats:		base.attackStrength	= stats["AttackStrength"]
-	if "AttackSpeed" in stats:			base.attackSpeed	= stats["AttackSpeed"]
-	if "AttackRange" in stats:			base.attackRange	= stats["AttackRange"]
-	if "WalkSpeed" in stats:			base.walkSpeed		= stats["WalkSpeed"]
-	if "WeightCapacity" in stats:		base.weightCapacity	= stats["WeightCapacity"]
+func SetEntityStats(stats : Dictionary, isMorphed : bool):
+	if "Health" in stats:				base.maxHealth		= (base.maxHealth		+ stats["Health"]) / 2			if isMorphed else stats["Health"]
+	if "Mana" in stats:					base.maxMana		= (base.maxMana			+ stats["Mana"]) / 2			if isMorphed else stats["Mana"]
+	if "Stamina" in stats:				base.maxStamina		= (base.maxStamina		+ stats["Stamina"]) / 2			if isMorphed else stats["Stamina"]
+	if "AttackStrength" in stats:		base.attackStrength	= (base.attackStrength	+ stats["AttackStrength"]) / 2	if isMorphed else stats["AttackStrength"]
+	if "AttackSpeed" in stats:			base.attackSpeed	= (base.attackSpeed		+ stats["AttackSpeed"]) / 2		if isMorphed else stats["AttackSpeed"]
+	if "AttackRange" in stats:			base.attackRange	= (base.attackRange		+ stats["AttackRange"]) / 2		if isMorphed else stats["AttackRange"]
+	if "WalkSpeed" in stats:			base.walkSpeed		= (base.walkSpeed		+ stats["WalkSpeed"]) / 2		if isMorphed else stats["WalkSpeed"]
+	if "WeightCapacity" in stats:		base.weightCapacity	= (base.weightCapacity	+ stats["WeightCapacity"]) / 2	if isMorphed else stats["WeightCapacity"]
 	RefreshStats()
 
 func SetPersonalStats(stats : Dictionary):
@@ -102,7 +102,7 @@ func Init(data : EntityData):
 	if "Spirit" in stats:				spiritShape			= stats["Spirit"]
 
 	SetPersonalStats(stats)
-	SetEntityStats(stats)
+	SetEntityStats(stats, morphed)
 
 	health		= stats["Health"]	if "Health" in stats	else current.maxHealth
 	mana		= stats["Mana"]		if "Mana" in stats		else current.maxMana
@@ -110,8 +110,8 @@ func Init(data : EntityData):
 	ClampStats()
 
 func Morph(data : EntityData):
-	SetEntityStats(data._stats)
 	morphed = not morphed
+	SetEntityStats(data._stats, morphed)
 
 func UpdatePlayerVars(networkRID : int):
 	Launcher.Network.UpdatePlayerVars(level, experience, networkRID)

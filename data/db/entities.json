@@ -79,7 +79,7 @@
 		"Ethnicity": "Piou",
 		"NavigationAgent": "NPAgent",
 		"Collision": "VerySmall",
-		"WalkSpeed": 50
+		"WalkSpeed": 30
 	},
 
 	"2000": {
