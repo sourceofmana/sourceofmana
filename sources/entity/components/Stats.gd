@@ -34,6 +34,9 @@ var attackRatio : float					= 1.0
 # Constants to move to Conf
 var deathDelay : int					= 10
 
+# Signals
+signal ratio_updated
+
 #
 func XpBonus(enemy : BaseAgent):
 	var bonus : int = Formulas.GetXpBonus(enemy.stat)
@@ -58,6 +61,7 @@ func RefreshStats():
 func RefreshAnimation():
 	walkRatio				= Formulas.GetWalkRatio(self)
 	attackRatio				= Formulas.GetAttackRatio(self)
+	ratio_updated.emit()
 
 func ClampStats():
 	# Active Stats

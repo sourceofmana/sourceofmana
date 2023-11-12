@@ -84,7 +84,7 @@ func LoadAnimationPaths():
 			if timeScale in animationTree:
 				timeScalePaths[i] = timeScale
 
-func SetScale():
+func UpdateScale():
 	if not entity or not animationTree:
 		return
 
@@ -95,7 +95,7 @@ func SetScale():
 
 func ResetAnimationValue():
 	LoadAnimationPaths()
-	SetScale()
+	UpdateScale()
 
 	if entity and animationTree:
 		var stateName = EntityCommons.GetStateName(EntityCommons.State.IDLE)
@@ -106,7 +106,14 @@ func ResetAnimationValue():
 
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
+	if entity:
+		entity.stat.ratio_updated.disconnect(self.UpdateScale)
+
 	entity = parentEntity
+
+	if entity and entity.stat:
+		entity.stat.ratio_updated.connect(self.UpdateScale)
+
 	LoadData(data)
 	ResetAnimationValue()
 
