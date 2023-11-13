@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://yu8g2up7l0jq"]
+
+[ext_resource type="Shader" path="res://sources/shaders/EntityOutline.gdshader" id="1_p22ft"]
+
+[resource]
+shader = ExtResource("1_p22ft")
+shader_parameter/outline_color = Color(0.741176, 0.321569, 0.258824, 1)
+shader_parameter/blink_speed = 7.0
