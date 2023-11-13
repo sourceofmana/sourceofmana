@@ -82,3 +82,7 @@ static func InitVars():
 	EntityCommons.PatchGuardband = Launcher.Conf.GetInt("Guardband", "PatchGuardband", Launcher.Conf.Type.NETWORK)
 	EntityCommons.MaxGuardbandDist = Launcher.Conf.GetInt("Guardband", "MaxGuardbandDist", Launcher.Conf.Type.NETWORK)
 	EntityCommons.MaxGuardbandDistVec = Vector2(EntityCommons.MaxGuardbandDist, EntityCommons.MaxGuardbandDist)
+
+# Visual
+static var allyTarget : String					= "res://presets/entities/components/targets/Ally.tres"
+static var enemyTarget : String					= "res://presets/entities/components/targets/Enemy.tres"

@@ -14,10 +14,17 @@ func SetLocalPlayer():
 		if Launcher.Camera.mainCamera:
 			call_deferred("add_child", Launcher.Camera.mainCamera)
 
+func ClearTarget():
+	if target:
+		if target.visual.sprites[EntityCommons.Slot.BODY].material:
+			target.visual.sprites[EntityCommons.Slot.BODY].material = null
+		target = null
+
 func Interact():
 	if entityState != EntityCommons.State.IDLE:
 		return
 
+	ClearTarget()
 	target = null
 	if isPlayableController && interactive && Launcher.Map:
 		var nearestDistance : float = -1
@@ -33,8 +40,10 @@ func Interact():
 			if entityID != null:
 				if target is NpcEntity:
 					Launcher.Network.TriggerInteract(entityID)
+					target.visual.SetMaterial(EntityCommons.allyTarget)
 				elif target is MonsterEntity:
 					Launcher.Network.TriggerDamage(entityID)
+					target.visual.SetMaterial(EntityCommons.enemyTarget)
 
 #
 func _process(deltaTime : float):
