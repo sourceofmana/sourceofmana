@@ -75,8 +75,10 @@ static func GetStateName(state : State):
 static var StartGuardbandDist : int				= 0
 static var PatchGuardband : int					= 0
 static var MaxGuardbandDist : int				= 0
+static var MaxGuardbandDistVec : Vector2		= Vector2.ZERO
 
 static func InitVars():
 	EntityCommons.StartGuardbandDist = Launcher.Conf.GetInt("Guardband", "StartGuardbandDist", Launcher.Conf.Type.NETWORK)
 	EntityCommons.PatchGuardband = Launcher.Conf.GetInt("Guardband", "PatchGuardband", Launcher.Conf.Type.NETWORK)
 	EntityCommons.MaxGuardbandDist = Launcher.Conf.GetInt("Guardband", "MaxGuardbandDist", Launcher.Conf.Type.NETWORK)
+	EntityCommons.MaxGuardbandDistVec = Vector2(EntityCommons.MaxGuardbandDist, EntityCommons.MaxGuardbandDist)
