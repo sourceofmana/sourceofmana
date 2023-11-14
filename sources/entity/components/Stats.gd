@@ -3,7 +3,7 @@ class_name EntityStats
 
 # Player Vars
 var level : int							= 1
-var experience : int					= 0
+var experience : float					= 0
 
 # Shapes
 var entityShape : String				= ""
@@ -39,7 +39,7 @@ signal ratio_updated
 
 #
 func XpBonus(enemy : BaseAgent):
-	var bonus : int = Formulas.GetXpBonus(enemy.stat)
+	var bonus : float = Formulas.GetXpBonus(enemy.stat)
 	experience += bonus
 	# Todo: add level up
 

@@ -95,6 +95,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/gui/mobile/buttonY_pressed.png [Reid]
 ./graphics/gui/mobile/stick.png [Reid]
 ./graphics/gui/notification.png [Reid]
+./graphics/gui/stat/expbar.png [Reid]
 ./graphics/gui/stat/healthbar.png [Reid]
 ./graphics/gui/stat/manabar.png [Reid]
 ./graphics/gui/stat/staminabar.png [Reid]

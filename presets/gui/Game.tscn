@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dphlgrm0elh6y" path="res://presets/gui/chat/Chat.tscn" id="5"]
 [ext_resource type="Texture2D" uid="uid://qfpxygkhxldq" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="5_fdh06"]
 [ext_resource type="Texture2D" uid="uid://ch5ego7ihyo0o" path="res://data/graphics/gui/icon/inventory.png" id="5_ntnop"]
-[ext_resource type="PackedScene" path="res://presets/gui/inventory/Inventory.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://u31xl3ap3wd8" path="res://presets/gui/inventory/Inventory.tscn" id="6"]
 [ext_resource type="Texture2D" uid="uid://c3hjdee3hxsoy" path="res://data/graphics/gui/icon/chat.png" id="6_2quic"]
 [ext_resource type="Texture2D" uid="uid://qaut55ogln33" path="res://data/graphics/gui/menu/menubar_content.png" id="6_mf0sy"]
 [ext_resource type="Script" path="res://sources/gui/MenuIndicator.gd" id="6_npwx0"]

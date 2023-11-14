@@ -73,7 +73,7 @@ static func GetWalkRatio(stat : EntityStats) -> float:
 	return stat.current.walkSpeed / stat.base.walkSpeed
 
 #
-static func GetXpBonus(stat : EntityStats):
+static func GetXpBonus(stat : EntityStats) -> float:
 	var personalMean : float = float(stat.strength + stat.vitality + stat.agility + stat.endurance + stat.concentration) / 5
-	var bonus : int = int(stat.level * personalMean)
+	var bonus : float = float(stat.level * personalMean)
 	return bonus

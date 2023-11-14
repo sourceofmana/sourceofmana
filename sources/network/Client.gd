@@ -53,7 +53,7 @@ func Morphed(ridAgent : int, morphID : String, _rpcID : int = Launcher.Network.R
 			var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 			entity.SetVisual(morphData)
 
-func UpdatePlayerVars(level : int, experience : int, _rpcID : int = Launcher.Network.RidSingleMode):
+func UpdatePlayerVars(level : int, experience : float, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Player:
 		Launcher.Player.stat.level			= level
 		Launcher.Player.stat.experience		= experience

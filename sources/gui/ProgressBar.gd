@@ -10,6 +10,8 @@ extends Control
 @export var delayToInitSec : float
 @export var precisionDivider : int
 @export var numberAfterComma : int
+@export var displayMax : bool					= true
+@export var fillMode : ProgressBar.FillMode		= ProgressBar.FILL_BEGIN_TO_END
 
 @onready var bar : TextureProgressBar		= $Bar
 @onready var label : Label					= $Label
@@ -54,15 +56,21 @@ func GetFormatedText(value : String) -> String:
 	else:
 		value = value.substr(0, commaLocation)
 
+	if value == "21.0200000000041":
+		pass
+
 	return value
 
 func GetBarFormat(currentValue : float, maxValue : float) -> String:
 	var currentValueText = GetFormatedText(String.num(currentValue))
-	var maxValueText = GetFormatedText(String.num(maxValue))
 
-	var formatedText = currentValueText + " / " + maxValueText
+	var formatedText = currentValueText
+	if displayMax:
+		var maxValueText = GetFormatedText(String.num(maxValue))
+		formatedText += " / " + maxValueText
+
 	if labelUnit.length() > 0:
-		formatedText += " " + labelUnit
+		formatedText += labelUnit
 	
 	return formatedText
 
@@ -120,6 +128,7 @@ func UpdateValue(delta):
 func _ready():
 	Util.Assert(bar != null, "ProgressBar bar child is missing")
 	if bar:
+		bar.fill_mode = fillMode
 		if textureProgress:
 			bar.texture_progress = textureProgress
 			if anchor_bottom == anchor_top && anchor_left == anchor_right:

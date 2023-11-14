@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dtoeo3xx4wyyp"]
+[gd_scene load_steps=10 format=3 uid="uid://dtoeo3xx4wyyp"]
 
 [ext_resource type="Texture2D" uid="uid://cvps8apmh5ldl" path="res://data/graphics/gui/stat/statindicator.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://djt2bg4a6r3wj" path="res://data/graphics/gui/stat/staminabar.png" id="4"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="5"]
 [ext_resource type="Texture2D" uid="uid://rxnq0fxuvc88" path="res://data/graphics/gui/stat/healthbar.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://ddqw46t4kryhb" path="res://data/graphics/gui/stat/expbar.png" id="6_6rl1b"]
 [ext_resource type="Script" path="res://sources/gui/StatIndicator.gd" id="7"]
 [ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="8_jf846"]
 
@@ -19,56 +20,59 @@ script = ExtResource("7")
 layout_mode = 1
 anchors_preset = 0
 
+[node name="Exp" parent="Bars" instance=ExtResource("2")]
+offset_left = 4.0
+offset_top = 6.0
+offset_right = 60.0
+offset_bottom = 58.0
+textureProgress = ExtResource("6_6rl1b")
+labelColor = Color(0.843137, 0.717647, 0.482353, 1)
+labelUnit = "%"
+labelOffset = Vector2(0, -2)
+precisionDivider = 100
+numberAfterComma = 2
+displayMax = false
+fillMode = 3
+
 [node name="HP" parent="Bars" instance=ExtResource("2")]
 layout_mode = 1
-offset_left = 67.0
-offset_top = 22.0
-offset_right = 379.0
-offset_bottom = 41.0
+offset_left = 51.0
+offset_top = 16.0
+offset_right = 274.0
+offset_bottom = 30.0
 textureProgress = ExtResource("6")
-labelColor = Color(0.52549, 0.105882, 0.0941176, 1)
+labelColor = Color(0.9, 0.744, 0.72, 1)
 labelOffset = Vector2(0, -2)
 
 [node name="Mana" parent="Bars" instance=ExtResource("2")]
 layout_mode = 1
-offset_left = 67.0
-offset_top = 44.0
-offset_right = 379.0
-offset_bottom = 63.0
+offset_left = 51.0
+offset_top = 33.0
+offset_right = 274.0
+offset_bottom = 47.0
 textureProgress = ExtResource("3")
-labelColor = Color(0.227451, 0.333333, 0.513726, 1)
+labelColor = Color(0.72, 0.864, 0.9, 1)
 labelOffset = Vector2(0, -4)
 
 [node name="Stamina" parent="Bars" instance=ExtResource("2")]
 layout_mode = 1
-offset_left = 55.0
-offset_top = 66.0
-offset_right = 357.0
-offset_bottom = 75.0
+offset_left = 40.0
+offset_top = 50.0
+offset_right = 254.0
+offset_bottom = 58.0
 textureProgress = ExtResource("4")
-labelColor = Color(0.415686, 0.262745, 0, 1)
-labelOffset = Vector2(17, -2)
+labelColor = Color(0.783, 0.9, 0.72, 1)
+labelOffset = Vector2(17, -3)
 
 [node name="LevelText" type="Label" parent="."]
+visible = false
 layout_mode = 0
-offset_left = 14.0
-offset_top = 6.0
-offset_right = 77.0
-offset_bottom = 67.0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 65.0
+offset_bottom = 62.0
 theme_override_fonts/font = ExtResource("8_jf846")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 32
 text = "256"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ExpText" type="Label" parent="."]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 44.0
-offset_right = 79.0
-offset_bottom = 68.0
-theme_override_fonts/font = ExtResource("8_jf846")
-theme_override_font_sizes/font_size = 16
-text = "100.00%"
 horizontal_alignment = 1
 vertical_alignment = 1

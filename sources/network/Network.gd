@@ -116,7 +116,7 @@ func Morphed(agentID : int, morphID : String, rpcID : int = RidSingleMode):
 
 # Stats
 @rpc("any_peer", "unreliable_ordered")
-func UpdatePlayerVars(level : int, experience : int, rpcID : int = RidSingleMode):
+func UpdatePlayerVars(level : int, experience : float, rpcID : int = RidSingleMode):
 	NetCallClient("UpdatePlayerVars", [level, experience], rpcID)
 
 @rpc("any_peer", "unreliable_ordered")

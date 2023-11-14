@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://u31xl3ap3wd8"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="2"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bg4lcfpfs8wuo" path="res://data/graphics/gui/inventory/closebutton.png" id="3"]
 [ext_resource type="Script" path="res://sources/gui/ItemGridDisplay.gd" id="6_u84n8"]
 [ext_resource type="Texture2D" uid="uid://n5h5pue2jfn0" path="res://data/graphics/gui/bar.png" id="8"]
-
 
 [node name="Panel" type="PanelContainer"]
 show_behind_parent = true
@@ -88,7 +87,7 @@ grow_horizontal = 2
 grow_vertical = 2
 textureProgress = null
 labelColor = Color(0.32549, 0.305882, 0.290196, 1)
-labelUnit = "kg"
+labelUnit = " kg"
 delayToFillSec = 2.0
 precisionDivider = 100
 numberAfterComma = 2
