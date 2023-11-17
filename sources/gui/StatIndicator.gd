@@ -1,9 +1,9 @@
 extends TextureRect
 
-@onready var hpStat				= $Bars/HP
-@onready var manaStat			= $Bars/Mana
-@onready var staminaStat		= $Bars/Stamina
-@onready var expStat			= $Bars/Exp
+@onready var hpStat				= $HP
+@onready var manaStat			= $Mana
+@onready var staminaStat		= $Stamina
+@onready var expStat			= $Exp
 
 #
 func GetPercentFormat(value : int) -> String:

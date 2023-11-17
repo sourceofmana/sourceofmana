@@ -113,31 +113,32 @@ alignment = 1
 
 [node name="OnlineButton" type="CheckBox" parent="VBoxContainer/SignBar"]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 2
+focus_previous = NodePath("../../GridContainer/NameContainer/NameText")
 button_pressed = true
 text = "Online"
 
-[node name="Control" type="Control" parent="VBoxContainer/SignBar"]
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="Host" type="Button" parent="VBoxContainer/SignBar"]
 layout_mode = 2
-size_flags_horizontal = 8
-focus_next = NodePath("../Register")
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_next = NodePath("../Play")
 focus_previous = NodePath("../../GridContainer/PasswordContainer/PasswordText")
 text = "Host"
 
 [node name="Play" type="Button" parent="VBoxContainer/SignBar"]
 layout_mode = 2
-size_flags_horizontal = 8
-focus_next = NodePath("../Register")
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_next = NodePath("../../GridContainer/NameContainer/NameText")
 focus_previous = NodePath("../../GridContainer/PasswordContainer/PasswordText")
 text = "Play"
 
 [node name="Register" type="Button" parent="VBoxContainer/SignBar"]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 focus_next = NodePath("../../GridContainer/NameContainer/NameText")
 focus_previous = NodePath("../Play")
 text = "Register"
