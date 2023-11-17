@@ -23,7 +23,7 @@ CC BY-SA 4.0: licensed under Creative Commons Attribution-ShareAlike 4.0 Interna
 https://creativecommons.org/licenses/by-sa/4.0/
 See also the "CC BY-SA 4.0" file.
 
-You must include a link to https://gitlab.com/sourceofmana in your credits along with appropriate author references and attributions. Artists information is found on the CONTRIBUTOR.xml file next to this one.
+You must include a link to https://gitlab.com/sourceofmana in your credits along with appropriate author references and attributions. Artists information is found on data/db/credits.json file.
 
 #./path/to/file [Author] [Contributors]
 ./graphics/default.png [Reid]
