@@ -31,13 +31,11 @@ func IsActionJustReleased(action : String, forceMode : bool = false) -> bool:
 func GetMove(forceMode : bool = false) -> Vector2:
 	var moveVector : Vector2 = Vector2.ZERO
 	if IsEnabled() || forceMode:
-		if Launcher.Settings.HasUIOverlay():
-			moveVector = Launcher.GUI.sticks.GetMove()
-		else:
-			moveVector.x = Input.get_action_strength("gp_move_right") - Input.get_action_strength("gp_move_left")
-			moveVector.y = Input.get_action_strength("gp_move_down") - Input.get_action_strength("gp_move_up")
-
+		moveVector.x = Input.get_action_strength("gp_move_right") - Input.get_action_strength("gp_move_left")
+		moveVector.y = Input.get_action_strength("gp_move_down") - Input.get_action_strength("gp_move_up")
+		moveVector += Launcher.GUI.sticks.GetMove()
 		moveVector = moveVector.normalized()
+
 		var moveLength : float = moveVector.length()
 		if moveLength < stickDeadzone:
 			moveVector = Vector2.ZERO;
@@ -90,7 +88,7 @@ func _unhandled_input(_event):
 
 func _physics_process(_deltaTime : float):
 	if Launcher.Player and Launcher.Network:
-		var move : Vector2 = Launcher.GUI.sticks.GetMove() if IsActionPressed("gp_click_to") and Launcher.Settings.HasUIOverlay() else GetMove()
+		var move : Vector2 = GetMove()
 		if move != Vector2.ZERO:
 			if clickTimer.get_time_left() > 0:
 				clickTimer.stop()
