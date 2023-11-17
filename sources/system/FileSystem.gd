@@ -214,7 +214,7 @@ static func LoadMinimap(path : String) -> Resource:
 	return LoadResource(fullPath, false)
 
 static func SaveScreenshot():
-	var image : Image = Launcher.Util.GetScreenCapture()
+	var image : Image = Util.GetScreenCapture()
 	Util.Assert(image != null, "Could not get a viewport screenshot")
 	if image:
 		var dir = DirAccess.open(OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS))

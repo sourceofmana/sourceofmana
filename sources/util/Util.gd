@@ -39,5 +39,5 @@ static func StartTimer(timer : Timer, delay : float, callable : Callable):
 			timer.timeout.connect(callable)
 
 #
-func GetScreenCapture() -> Image:
+static func GetScreenCapture() -> Image:
 	return Launcher.get_viewport().get_texture().get_image()
