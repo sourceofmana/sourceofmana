@@ -844,9 +844,8 @@ _data = {
 }
 
 [node name="Sprite" type="Sprite2D"]
-position = Vector2(0, 5.33333)
 texture = ExtResource("1_wtqld")
-offset = Vector2(0, -5)
+offset = Vector2(0, -4)
 hframes = 5
 vframes = 8
 frame = 19

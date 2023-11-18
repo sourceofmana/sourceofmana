@@ -329,7 +329,7 @@ _data = {
 
 [node name="Sprite" type="Sprite2D"]
 texture = ExtResource("1_kcq17")
-offset = Vector2(0, -5)
+offset = Vector2(0, -12)
 hframes = 9
 vframes = 4
 frame = 19
