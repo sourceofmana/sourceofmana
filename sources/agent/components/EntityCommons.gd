@@ -86,3 +86,4 @@ static func InitVars():
 # Visual
 static var allyTarget : String					= "res://presets/entities/components/targets/Ally.tres"
 static var enemyTarget : String					= "res://presets/entities/components/targets/Enemy.tres"
+static var damageLabel : Resource				= preload("res://presets/gui/DamageLabel.tscn")

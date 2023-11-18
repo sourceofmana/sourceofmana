@@ -72,17 +72,22 @@ func RemoveSpeechLabel():
 		speechContainer.get_child(0).queue_free()
 		speechTimers.pop_back().queue_free()
 
-func AddSpeechLabel(speech : String):
-	var speechLabel : RichTextLabel = speechInstance.instantiate()
-	speechLabel.set_text("[center]%s[/center]" % [speech])
-	speechLabel.set_visible_ratio(0)
-	speechContainer.call_deferred("add_child", speechLabel)
-	speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
-
-func DisplaySpeech(text : String):
+func DisplaySpeech(speech : String):
 	Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
 	if speechContainer:
-		AddSpeechLabel(text)
+		var speechLabel : RichTextLabel = speechInstance.instantiate()
+		speechLabel.set_text("[center]%s[/center]" % [speech])
+		speechLabel.set_visible_ratio(0)
+		speechContainer.add_child(speechLabel)
+		speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
+
+#
+func DisplayDamage(target : BaseEntity, dealer : BaseEntity, damage : int, isCrit : bool = false):
+	if Launcher.Map.mapNode:
+		var newLabel : Label = EntityCommons.damageLabel.instantiate()
+		newLabel.set_position(target.get_position())
+		newLabel.SetDamage(damage, target == Launcher.Player, dealer == Launcher.Player, target.visual.spriteOffset, isCrit)
+		Launcher.Map.mapNode.add_child(newLabel)
 
 #
 func SpecificInit(entity : BaseEntity, isPC : bool = false):

@@ -13,6 +13,8 @@ var previousState : EntityCommons.State		= EntityCommons.State.UNKNOWN
 var blendSpacePaths : Dictionary			= {}
 var timeScalePaths : Dictionary				= {}
 
+var spriteOffset : int						= 0
+
 #
 func LoadSprite(slot : EntityCommons.Slot, spritePath : String) -> Sprite2D:
 	var sprite : Sprite2D = null
@@ -47,6 +49,7 @@ func LoadData(data : EntityData):
 	sprites.resize(EntityCommons.Slot.COUNT)
 	var sprite : Sprite2D = LoadSprite(EntityCommons.Slot.BODY, data._ethnicity)
 	if sprite:
+		spriteOffset = int(sprite.offset.y) * 2
 		if data._customTexture:
 			sprite.texture = FileSystem.LoadGfx(data._customTexture)
 		entity.call_deferred("add_child", sprite)

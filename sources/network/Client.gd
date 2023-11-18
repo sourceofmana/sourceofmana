@@ -34,17 +34,14 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = Launcher.Network.Ri
 			if entity is PlayerEntity && Launcher.GUI:
 				Launcher.GUI.chatContainer.AddPlayerText(entity.entityName, text)
 			if entity.interactive:
-				entity.interactive.DisplaySpeech(text)
+				entity.interactive.call_deferred("DisplaySpeech", text)
 
 func DamageDealt(ridAgent : int, targetID : int, damage : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(targetID)
 		var caller : BaseEntity = Launcher.Map.entities.get(ridAgent)
-		if caller && entity && entity.get_parent():
-			if entity.interactive:
-				var color : String = "00FF00" if caller == Launcher.Player else "0000FF"
-				var text : String = "[color=#%s]%d[/color]" % [color, damage]
-				entity.interactive.DisplaySpeech(text)
+		if caller && entity && entity.get_parent() and entity.interactive:
+			entity.interactive.call_deferred("DisplayDamage", entity, caller, damage, false)
 
 func Morphed(ridAgent : int, morphID : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:

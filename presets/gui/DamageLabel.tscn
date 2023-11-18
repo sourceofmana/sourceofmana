@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://wnjimpdbdy3q"]
+
+[ext_resource type="Script" path="res://sources/gui/DamageLabel.gd" id="1_myjk3"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_xiqiq"]
+[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="2_lphq3"]
+
+[node name="DamageLabel" type="Label"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_xiqiq")
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("2_lphq3")
+script = ExtResource("1_myjk3")
