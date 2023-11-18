@@ -53,23 +53,31 @@ const stateTransitions : Array[Array] = [
 	[]																																	# FROM_TRIGGER
 ]
 
+const stateIdle : String					= "Idle"
+const stateWalk : String					= "Walk"
+const stateSit : String						= "Sit"
+const stateAttack : String					= "Attack"
+const stateDeath : String					= "Death"
+const stateToTrigger : String				= "To Trigger"
+const stateTrigger : String					= "Trigger"
+const stateFromTrigger : String				= "From Trigger"
+
+
 #
 static func GetNextTransition(currentState : State, newState : State) -> State:
 	return stateTransitions[currentState][newState]
 
 static func GetStateName(state : State):
-	var stateName : String = ""
 	match state:
-		State.IDLE:			stateName = "Idle"
-		State.WALK:			stateName = "Walk"
-		State.SIT:			stateName = "Sit"
-		State.ATTACK:		stateName = "Attack"
-		State.DEATH:		stateName = "Death"
-		State.TO_TRIGGER:	stateName = "To Trigger"
-		State.TRIGGER:		stateName = "Trigger"
-		State.FROM_TRIGGER:	stateName = "From Trigger"
-		_:					stateName = "Idle"
-	return stateName
+		State.IDLE:			return stateIdle
+		State.WALK:			return stateWalk
+		State.SIT:			return stateSit
+		State.ATTACK:		return stateAttack
+		State.DEATH:		return stateDeath
+		State.TO_TRIGGER:	return stateToTrigger
+		State.TRIGGER:		return stateTrigger
+		State.FROM_TRIGGER:	return stateFromTrigger
+		_:					return stateIdle
 
 # Guardband static vars
 static var StartGuardbandDist : int				= 0
@@ -77,13 +85,14 @@ static var PatchGuardband : int					= 0
 static var MaxGuardbandDist : int				= 0
 static var MaxGuardbandDistVec : Vector2		= Vector2.ZERO
 
+# Visual
+static var allyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
+static var enemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")
+static var damageLabel : Resource				= preload("res://presets/gui/DamageLabel.tscn")
+
+
 static func InitVars():
 	EntityCommons.StartGuardbandDist = Launcher.Conf.GetInt("Guardband", "StartGuardbandDist", Launcher.Conf.Type.NETWORK)
 	EntityCommons.PatchGuardband = Launcher.Conf.GetInt("Guardband", "PatchGuardband", Launcher.Conf.Type.NETWORK)
 	EntityCommons.MaxGuardbandDist = Launcher.Conf.GetInt("Guardband", "MaxGuardbandDist", Launcher.Conf.Type.NETWORK)
 	EntityCommons.MaxGuardbandDistVec = Vector2(EntityCommons.MaxGuardbandDist, EntityCommons.MaxGuardbandDist)
-
-# Visual
-static var allyTarget : String					= "res://presets/entities/components/targets/Ally.tres"
-static var enemyTarget : String					= "res://presets/entities/components/targets/Enemy.tres"
-static var damageLabel : Resource				= preload("res://presets/gui/DamageLabel.tscn")

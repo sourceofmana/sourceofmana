@@ -107,9 +107,9 @@ func ResetAnimationValue():
 			var blendSpacePath = blendSpacePaths[previousState]
 			animationTree[blendSpacePath] = orientation
 
-func SetMaterial(matPath : String):
+func SetMaterial(matRes : Resource):
 	if sprites[EntityCommons.Slot.BODY]:
-		sprites[EntityCommons.Slot.BODY].material = FileSystem.FileLoad(matPath)
+		sprites[EntityCommons.Slot.BODY].material = matRes
 
 #
 func Init(parentEntity : BaseEntity, data : EntityData):

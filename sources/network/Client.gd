@@ -14,7 +14,7 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = Launcher.Network.
 
 func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, agentState : EntityCommons.State, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, entityPos, agentState)
+		Launcher.Map.call_deferred("AddEntity", agentID, entityType, entityID, entityName, entityPos, agentState)
 
 func RemoveEntity(agentID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
