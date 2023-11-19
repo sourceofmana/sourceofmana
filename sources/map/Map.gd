@@ -6,25 +6,22 @@ signal PlayerWarped
 #
 var pool								= FileSystem.LoadSource("map/MapPool.gd")
 var mapNode : Node2D					= null
+var tilemapNode : TileMap				= null
 var entities : Dictionary				= {}
 
 #
-func GetTileMap() -> TileMap:
-	var tilemap : TileMap = null
-	if mapNode:
-		for child in mapNode.get_children():
-			if child is TileMap:
-				tilemap = child
-				break
-	return tilemap
+func RefreshTileMap():
+	for child in mapNode.get_children():
+		if child is TileMap:
+			tilemapNode = child
+			break
 
 func GetMapBoundaries() -> Rect2:
 	var boundaries : Rect2 = Rect2()
-	var tilemap : TileMap = GetTileMap()
-	Util.Assert(tilemap != null, "Could not find a tilemap on the current scene")
-	if tilemap:
-		var mapLimits			= tilemap.get_used_rect()
-		var mapCellsize			= tilemap.get_tileset().get_tile_size() if tilemap.get_tileset() else Vector2i(32, 32)
+	Util.Assert(tilemapNode != null, "Could not find a tilemap on the current scene")
+	if tilemapNode:
+		var mapLimits			= tilemapNode.get_used_rect()
+		var mapCellsize			= tilemapNode.get_tileset().get_tile_size() if tilemapNode.get_tileset() else Vector2i(32, 32)
 
 		boundaries.position.x	= mapCellsize.x * mapLimits.position.x
 		boundaries.end.x		= mapCellsize.x * mapLimits.end.x
@@ -34,57 +31,55 @@ func GetMapBoundaries() -> Rect2:
 	return boundaries
 
 #
+func EmplaceMapNode(mapName : String):
+	Launcher.Network.GetEntities()
+
+	if mapNode && mapNode.get_name() != mapName:
+		UnloadMapNode()
+	LoadMapNode(mapName)
+
+	if mapNode:
+		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
+			pool.RefreshPool.call_deferred(mapNode)
+
 func UnloadMapNode():
 	if mapNode:
-		RemoveChilds()
+		RemoveChildren()
 		Launcher.call_deferred("remove_child", mapNode)
 		mapNode = null
+		tilemapNode = null
 
 func LoadMapNode(mapName : String):
 	mapNode = pool.LoadMapClientData(mapName)
 	Util.Assert(mapNode != null, "Map instance could not be created")
 	if mapNode:
+		RefreshTileMap()
 		Launcher.call_deferred("add_child", mapNode)
 
 #
-func RemoveChilds():
-	var tilemap : TileMap = GetTileMap()
-	Util.Assert(tilemap != null, "Current tilemap not found, could not remove children")
-	if tilemap:
-		for entity in tilemap.get_children():
-			tilemap.call_deferred("remove_child", entity)
+func RemoveChildren():
+	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove children")
+	if tilemapNode:
+		for entity in tilemapNode.get_children():
+			tilemapNode.call_deferred("remove_child", entity)
 
 func RemoveChild(entity : BaseEntity):
-	var tilemap : TileMap = GetTileMap()
-	Util.Assert(tilemap != null, "Current tilemap not found, could not remove a child entity")
-	if tilemap:
-		tilemap.call_deferred("remove_child", entity)
+	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove a child entity")
+	if tilemapNode:
+		tilemapNode.call_deferred("remove_child", entity)
 
 func AddChild(entity : BaseEntity):
-	var tilemap : TileMap = GetTileMap()
-	Util.Assert(tilemap != null, "Current tilemap not found, could not add a new child entity")
-	if tilemap:
-		tilemap.call_deferred("add_child", entity)
-
-#
-func EnplaceMapNode(mapName : String):
-	if mapNode && mapNode.get_name() != mapName:
-		UnloadMapNode()
-	LoadMapNode(mapName)
-	Launcher.Network.GetEntities()
-
-	if mapNode:
-		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
-			pool.RefreshPool(mapNode)
+	Util.Assert(tilemapNode != null, "Current tilemap not found, could not add a new child entity")
+	if tilemapNode:
+		tilemapNode.call_deferred("add_child", entity)
 
 #
 func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entityState : EntityCommons.State):
 	var isLocalPlayer : bool = entityName == Launcher.FSM.playerName and entityType == "Player"
 	var entity : BaseEntity = null
-	if GetTileMap():
+	if tilemapNode:
 		if isLocalPlayer and Launcher.Player:
 			entity = Launcher.Player
-			entity.Update(Vector2.ZERO, entityPos, EntityCommons.State.IDLE)
 		else:
 			entity = Instantiate.CreateEntity(entityType, entityID, entityName)
 			if entity && isLocalPlayer:

@@ -127,9 +127,9 @@ func Init(parentEntity : BaseEntity, data : EntityData):
 func Refresh(_delta: float):
 	var currentEntityState = entity.entityState
 	var entityVelocity = entity.entityVelocity
-
 	# Check for changes in entity state and orientation
 	var hasNewOrientation : bool = false
+
 	if entityVelocity.length_squared() > 1:
 		var newOrientation: Vector2 = entityVelocity.normalized()
 		hasNewOrientation = orientation != newOrientation
