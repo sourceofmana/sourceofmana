@@ -46,11 +46,9 @@ func _physics_process(delta):
 	velocity = entityVelocity
 
 	if entityPosOffset.length() > EntityCommons.StartGuardbandDist:
-		var ratioOffsetToApply : float = EntityCommons.PatchGuardband * delta
-		var posOffsetFix : Vector2 = Vector2(ratioOffsetToApply, ratioOffsetToApply).clamp(Vector2.ZERO, entityPosOffset.abs()) * sign(entityPosOffset)
-		entityPosOffset -= posOffsetFix
+		var posOffsetFix : Vector2 = entityPosOffset * EntityCommons.PatchGuardband * delta
+		entityPosOffset -= posOffsetFix * delta
 		velocity += posOffsetFix
-
 
 	if velocity != Vector2.ZERO:
 		move_and_slide()

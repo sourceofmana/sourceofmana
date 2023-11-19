@@ -93,6 +93,7 @@ func Warp(agent : BaseAgent, newMap : Map, newPos : Vector2i):
 	if agent and newMap:
 		WorldAgent.PopAgent(agent)
 		agent.position = newPos
+		agent.SwitchInputMode(true)
 		Spawn(newMap, agent)
 
 func Spawn(map : Map, agent : BaseAgent, instanceID : int = 0):

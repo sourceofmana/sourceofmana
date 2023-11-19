@@ -42,6 +42,7 @@ func SwitchInputMode(clearCurrentInput : bool):
 
 	if clearCurrentInput:
 		currentInput = Vector2.ZERO
+		currentDirection = Vector2.ZERO
 
 	navigationLine = []
 
@@ -69,7 +70,7 @@ func UpdateOrientation():
 	if currentInput != Vector2.ZERO:
 		currentVelocity = currentInput * stat.current.walkSpeed
 	else:
-		currentVelocity = Vector2.ZERO
+		currentVelocity = Vector2i.ZERO
 
 func SetVelocity():
 	if currentState == EntityCommons.State.WALK:

@@ -67,7 +67,7 @@ func AddChild(entity : BaseEntity):
 		tilemap.call_deferred("add_child", entity)
 
 #
-func ReplaceMapNode(mapName : String):
+func EnplaceMapNode(mapName : String):
 	if mapNode && mapNode.get_name() != mapName:
 		UnloadMapNode()
 	LoadMapNode(mapName)
@@ -79,11 +79,12 @@ func ReplaceMapNode(mapName : String):
 
 #
 func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entityState : EntityCommons.State):
-	var isLocalPlayer : bool = entityName == Launcher.FSM.playerName
+	var isLocalPlayer : bool = entityName == Launcher.FSM.playerName and entityType == "Player"
 	var entity : BaseEntity = null
 	if GetTileMap():
 		if isLocalPlayer and Launcher.Player:
 			entity = Launcher.Player
+			entity.Update(Vector2.ZERO, entityPos, EntityCommons.State.IDLE)
 		else:
 			entity = Instantiate.CreateEntity(entityType, entityID, entityName)
 			if entity && isLocalPlayer:

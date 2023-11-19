@@ -3,7 +3,7 @@ extends Node
 #
 func WarpPlayer(map : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.ReplaceMapNode(map)
+		Launcher.Map.call_deferred("EnplaceMapNode", map)
 
 	if Launcher.Player:
 		Launcher.Player.entityVelocity = Vector2.ZERO
