@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="385" height="290" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="60">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="385" height="290" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="61">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="spiritOnly" type="bool" value="true"/>
@@ -1183,15 +1183,6 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="5" name="Object" opacity="0.22">
-  <object id="46" name="Warp Phatyna" type="Warp" x="4315" y="2074">
-   <properties>
-    <property name="dest_cellsize" type="int" value="32"/>
-    <property name="dest_map" value="Phatyna Entrance"/>
-    <property name="dest_pos_x" type="int" value="54"/>
-    <property name="dest_pos_y" type="int" value="53"/>
-   </properties>
-   <polygon points="41.6,39.497 41.6,18.9586 73.6,18.9586 73.6,39.497"/>
-  </object>
   <object id="47" name="Warp Candor Cave" type="Warp" x="1789" y="2059">
    <properties>
     <property name="dest_cellsize" type="int" value="32"/>
@@ -1226,10 +1217,10 @@
    </properties>
    <polygon points="42.51,41.568 42.51,19.9527 75.21,19.9527 75.21,41.568"/>
   </object>
-  <object id="56" name="Warp Phatyna" type="Warp" x="1168" y="3468">
+  <object id="56" name="Splatyna Cave Entrance" type="Warp" x="1168" y="3468">
    <properties>
     <property name="dest_cellsize" type="int" value="32"/>
-    <property name="dest_map" value="Phatyna Entrance"/>
+    <property name="dest_map" value="Splatyna Cave Entrance"/>
     <property name="dest_pos_x" type="int" value="54"/>
     <property name="dest_pos_y" type="int" value="53"/>
    </properties>
@@ -1243,6 +1234,15 @@
     <property name="dest_pos_y" type="int" value="47"/>
    </properties>
    <polygon points="39.364,35.4293 39.364,17.0061 69.644,17.0061 69.644,35.4293"/>
+  </object>
+  <object id="60" name="Splatyna Cave Entrance" type="Warp" x="4320" y="2046">
+   <properties>
+    <property name="dest_cellsize" type="int" value="32"/>
+    <property name="dest_map" value="Splatyna Cave Entrance"/>
+    <property name="dest_pos_x" type="int" value="54"/>
+    <property name="dest_pos_y" type="int" value="53"/>
+   </properties>
+   <polygon points="41.6,39.497 41.6,18.9586 73.6,18.9586 73.6,39.497"/>
   </object>
  </objectgroup>
 </map>

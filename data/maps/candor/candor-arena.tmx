@@ -3,7 +3,7 @@
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
-  <property name="name" value="Candor Battle Cave"/>
+  <property name="name" value="Candor Arena"/>
   <property name="shadow" type="float" value="0.5"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/isles/cave/Cave.tsx"/>

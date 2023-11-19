@@ -3,7 +3,7 @@
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
-  <property name="name" value="Phatyna Corridor"/>
+  <property name="name" value="Splatyna's Corridor"/>
   <property name="shadow" type="float" value="0.8"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/aemil/cave/Cave.tsx"/>
@@ -1041,41 +1041,41 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="16" name="Object">
-  <object id="27" name="Warp Entrance" type="Warp" x="2240" y="1440">
+  <object id="27" name="Splatyna Cave Entrance" type="Warp" x="2240" y="1440">
    <properties>
-    <property name="dest_map" value="Phatyna Entrance"/>
+    <property name="dest_map" value="Splatyna Cave Entrance"/>
     <property name="dest_pos_x" type="int" value="47"/>
     <property name="dest_pos_y" type="int" value="31"/>
    </properties>
    <polygon points="0,0 32,32 64,0"/>
   </object>
-  <object id="29" name="Warp First" type="Warp" x="1024" y="1216">
+  <object id="29" name="Splatyna's Marvin Hole" type="Warp" x="1024" y="1216">
    <properties>
-    <property name="dest_map" value="Phatyna First Room"/>
+    <property name="dest_map" value="Splatyna's Marvin Hole"/>
     <property name="dest_pos_x" type="int" value="38"/>
     <property name="dest_pos_y" type="int" value="53"/>
    </properties>
    <polygon points="0,32 32,0 64,32"/>
   </object>
-  <object id="30" name="Warp Second" type="Warp" x="1408" y="3456">
+  <object id="30" name="Splatyna's Dorian Dead End" type="Warp" x="1408" y="3456">
    <properties>
-    <property name="dest_map" value="Phatyna Second Room"/>
+    <property name="dest_map" value="Splatyna's Dorian Dead End"/>
     <property name="dest_pos_x" type="int" value="47"/>
     <property name="dest_pos_y" type="int" value="34"/>
    </properties>
    <polygon points="0,0 32,32 64,0"/>
   </object>
-  <object id="31" name="Warp Third" type="Warp" x="2848" y="2624">
+  <object id="31" name="Splatyna's Gabriel Pit" type="Warp" x="2848" y="2624">
    <properties>
-    <property name="dest_map" value="Phatyna Third Room"/>
+    <property name="dest_map" value="Splatyna's Gabriel Pit"/>
     <property name="dest_pos_x" type="int" value="35"/>
     <property name="dest_pos_y" type="int" value="55"/>
    </properties>
    <polygon points="0,32 32,0 64,32"/>
   </object>
-  <object id="32" name="Warp Boss" type="Warp" x="3520" y="4032">
+  <object id="32" name="Splatyna's Chamber" type="Warp" x="3520" y="4032">
    <properties>
-    <property name="dest_map" value="Phatyna Boss Room"/>
+    <property name="dest_map" value="Splatyna's Chamber"/>
     <property name="dest_pos_x" type="int" value="46"/>
     <property name="dest_pos_y" type="int" value="70"/>
    </properties>

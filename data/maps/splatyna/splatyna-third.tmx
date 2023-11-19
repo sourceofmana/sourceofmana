@@ -3,7 +3,7 @@
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Lenia"/>
-  <property name="name" value="Phatyna Third Room"/>
+  <property name="name" value="Splatyna's Gabriel Pit"/>
   <property name="shadow" type="float" value="0.5"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/aemil/cave/Cave.tsx"/>
@@ -460,9 +460,9 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="14" name="Object">
-  <object id="27" name="Warp Entrance" type="Warp" x="1120" y="1792">
+  <object id="27" name="Splatyna Cave" type="Warp" x="1120" y="1792">
    <properties>
-    <property name="dest_map" value="Phatyna Corridor"/>
+    <property name="dest_map" value="Splatyna Cave"/>
     <property name="dest_pos_x" type="int" value="89"/>
     <property name="dest_pos_y" type="int" value="84"/>
    </properties>
