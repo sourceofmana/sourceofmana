@@ -18,62 +18,43 @@ var isResizing				= false
 var selectedEdge			= EdgeOrientation.NONE
 
 #
-func ClampViewport(globalPos, moveLimit):
+func ClampViewport(globalPos : Vector2, moveLimit : Vector2):
 	if selectedEdge == EdgeOrientation.BOTTOM_LEFT || selectedEdge == EdgeOrientation.LEFT || selectedEdge == EdgeOrientation.TOP_LEFT:
 		moveLimit.x -= custom_minimum_size.x
 	elif selectedEdge == EdgeOrientation.TOP_LEFT || selectedEdge == EdgeOrientation.TOP || selectedEdge == EdgeOrientation.TOP_RIGHT:
 		moveLimit.y -= custom_minimum_size.y
 	return Vector2( clamp(globalPos.x, 0, moveLimit.x), clamp(globalPos.y, 0, moveLimit.y))
 
-func ResizeWindow(globalPos):
+func ResizeWindow(pos : Vector2, globalPos : Vector2):
 	var rectSize = size
 	var rectPos = position
 
 	match selectedEdge:
 		EdgeOrientation.RIGHT:
-			rectSize.x = globalPos.x - rectPos.x
+			rectSize.x = pos.x
 		EdgeOrientation.BOTTOM_RIGHT:
-			rectSize.x = globalPos.x - rectPos.x
-			rectSize.y = globalPos.y - rectPos.y
+			rectSize = pos
 		EdgeOrientation.BOTTOM:
-			rectSize.y = globalPos.y - rectPos.y
+			rectSize.y = pos.y
 		EdgeOrientation.BOTTOM_LEFT:
-			rectSize.x += rectPos.x - globalPos.x
-			if rectSize.x < custom_minimum_size.x:
-				rectPos.x = globalPos.x + (rectSize.x - custom_minimum_size.x)
-			else:
-				rectPos.x = globalPos.x
-			rectSize.y = globalPos.y - rectPos.y
+			rectSize.x -= globalPos.x - rectPos.x
+			rectPos.x = globalPos.x
+			rectSize.y = pos.y
 		EdgeOrientation.LEFT:
-			rectSize.x += rectPos.x - globalPos.x
-			if rectSize.x < custom_minimum_size.x:
-				rectPos.x = globalPos.x + (rectSize.x - custom_minimum_size.x)
-			else:
-				rectPos.x = globalPos.x
+			rectSize.x -= globalPos.x - rectPos.x
+			rectPos.x = globalPos.x
 		EdgeOrientation.TOP_LEFT:
-			rectSize.x += rectPos.x - globalPos.x
-			if rectSize.x < custom_minimum_size.x:
-				rectPos.x = globalPos.x + (rectSize.x - custom_minimum_size.x)
-			else:
-				rectPos.x = globalPos.x
-			rectSize.y += rectPos.y - globalPos.y
-			if rectSize.y < custom_minimum_size.y:
-				rectPos.y = globalPos.y + (rectSize.y - custom_minimum_size.y)
-			else:
-				rectPos.y = globalPos.y
+			rectSize.x -= globalPos.x - rectPos.x
+			rectPos.x = globalPos.x
+			rectSize.y -= globalPos.y - rectPos.y
+			rectPos.y = globalPos.y
 		EdgeOrientation.TOP:
-			rectSize.y += rectPos.y - globalPos.y
-			if rectSize.y < custom_minimum_size.y:
-				rectPos.y = globalPos.y + (rectSize.y - custom_minimum_size.y)
-			else:
-				rectPos.y = globalPos.y
+			rectSize.y -= globalPos.y - rectPos.y
+			rectPos.y = globalPos.y
 		EdgeOrientation.TOP_RIGHT:
-			rectSize.x = globalPos.x - rectPos.x
-			rectSize.y += rectPos.y - globalPos.y
-			if rectSize.y < custom_minimum_size.y:
-				rectPos.y = globalPos.y + (rectSize.y - custom_minimum_size.y)
-			else:
-				rectPos.y = globalPos.y
+			rectSize.y -= globalPos.y - rectPos.y
+			rectPos.y = globalPos.y
+			rectSize.x = pos.x
 
 	if maxSize.x != -1:
 		rectSize.x = clamp(rectSize.x, custom_minimum_size.x, maxSize.x)
@@ -83,7 +64,7 @@ func ResizeWindow(globalPos):
 	size = rectSize
 	position = rectPos
 
-func GetEdgeOrientation(pos):
+func GetEdgeOrientation(pos : Vector2):
 	var cornersArray = []
 	var edgesArray = []
 
@@ -143,28 +124,31 @@ func CanBlockActions():
 	return blockActions
 
 #
-func OnGuiInput(event):
+func OnGuiInput(event : InputEvent):
 	if event is InputEventMouseButton:
-		var rescaledPanelPosition = event.global_position - position
-		var isInPanel = rescaledPanelPosition >= Vector2(0,0) && rescaledPanelPosition <= size
+		var isInPanel = event.position >= Vector2.ZERO && event.position <= size
 		if isInPanel:
 			if event.pressed:
-				clickPosition = event.global_position - global_position
-				GetEdgeOrientation(rescaledPanelPosition)
+				clickPosition = event.position
+				GetEdgeOrientation(event.position)
 				SetFloatingWindowToTop()
 			else:
 				ResetWindowModifier()
+		else:
+			ResetWindowModifier()
 
 	if event is InputEventMouseMotion:
 		if clickPosition:
-			var viewport = get_viewport().get_size()
-			var globalPosition = event.global_position
+			var scaleFactor : int = Launcher.Root.get_content_scale_factor()
+			var viewportSize : Vector2 = get_viewport().get_size()
+			if scaleFactor > 0:
+				viewportSize /= scaleFactor
+
 			if isResizing:
-				ResizeWindow(ClampViewport(globalPosition, viewport))
+				ResizeWindow(ClampViewport(event.position, viewportSize), event.position + position)
 			else:
-				viewport -= (Vector2i) (get_size())
-				globalPosition -= clickPosition
-				global_position = ClampViewport(globalPosition, viewport)
+				var newPosition : Vector2 = position + event.position - clickPosition
+				position = ClampViewport(newPosition, viewportSize - get_size())
 
 func _on_CloseButton_pressed():
 	set_visible(false)

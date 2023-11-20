@@ -27,4 +27,4 @@ func _on_window_resized():
 			for child in get_children():
 				child.set_position(child.get_position() * overallRatio)
 				if child.has_method("ResizeWindow"):
-					child.ResizeWindow(child.get_position())
+					child.ResizeWindow(child.get_position(), child.get_global_position())

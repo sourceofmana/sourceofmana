@@ -14,6 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("1_sbb0g")
 theme_override_fonts/bold_font = ExtResource("1_sbb0g")
 theme_override_fonts/italics_font = ExtResource("1_sbb0g")
