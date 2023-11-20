@@ -14,22 +14,17 @@ const minVelocitySpeed : float				= 0.4
 const maxVelocitySpeed : float				= 1.0
 const overheadOffset : int					= -10
 
-const missAttackColor : float				= 0.2
-const localAttackColor : float				= 0.35
-const entityAttackColor : float				= 0.65
-const localDamageColor : float				= 0.0
-
 #
 func SetDamage(damage : int, isTargetLocal : bool, isDealerLocal : bool, isCrit : bool):
 	var hue : float = 0.0
 	if damage == 0:
-		hue = missAttackColor
+		hue = EntityCommons.MissAttackColor
 	elif isDealerLocal:
-		hue = localAttackColor
+		hue = EntityCommons.LocalAttackColor
 	elif isTargetLocal:
-		hue = localDamageColor
+		hue = EntityCommons.LocalDamageColor
 	else:
-		hue = entityAttackColor
+		hue = EntityCommons.EntityAttackColor
 
 	HSVA = Vector4(hue, 0.7, 1.0, 1.0)
 	criticalDamage = isCrit

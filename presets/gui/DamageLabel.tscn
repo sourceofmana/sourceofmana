@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="2_lphq3"]
 
 [node name="DamageLabel" type="Label"]
+z_index = 10
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

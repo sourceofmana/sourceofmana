@@ -84,7 +84,7 @@ func DisplaySpeech(speech : String):
 #
 func DisplayDamage(target : BaseEntity, dealer : BaseEntity, damage : int, isCrit : bool = false):
 	if Launcher.Map.mapNode:
-		var newLabel : Label = EntityCommons.damageLabel.instantiate()
+		var newLabel : Label = EntityCommons.DamageLabel.instantiate()
 		newLabel.set_position(visibleNode.get_global_position())
 		newLabel.SetDamage(damage, target == Launcher.Player, dealer == Launcher.Player, isCrit)
 		Launcher.Map.mapNode.add_child(newLabel)

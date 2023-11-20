@@ -404,6 +404,9 @@ blockActions = false
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
 layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
 offset_left = 22.0
 offset_top = 511.0
 offset_right = 420.0

@@ -86,13 +86,22 @@ static var MaxGuardbandDist : int				= 0
 static var MaxGuardbandDistVec : Vector2		= Vector2.ZERO
 
 # Visual
-static var allyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
-static var enemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")
-static var damageLabel : Resource				= preload("res://presets/gui/DamageLabel.tscn")
+static var AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
+static var EnemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")
+static var DamageLabel : Resource				= preload("res://presets/gui/DamageLabel.tscn")
 
+static var EntityAttackColor : float			= 0.65
+static var LocalAttackColor : float				= 0.35
+static var LocalDamageColor : float				= 0.0
+static var MissAttackColor : float				= 0.2
 
 static func InitVars():
-	EntityCommons.StartGuardbandDist = Launcher.Conf.GetInt("Guardband", "StartGuardbandDist", Launcher.Conf.Type.NETWORK)
-	EntityCommons.PatchGuardband = Launcher.Conf.GetInt("Guardband", "PatchGuardband", Launcher.Conf.Type.NETWORK)
-	EntityCommons.MaxGuardbandDist = Launcher.Conf.GetInt("Guardband", "MaxGuardbandDist", Launcher.Conf.Type.NETWORK)
+	EntityCommons.StartGuardbandDist = Launcher.Conf.GetInt("Guardband", "startGuardbandDist", Launcher.Conf.Type.NETWORK)
+	EntityCommons.PatchGuardband = Launcher.Conf.GetInt("Guardband", "patchGuardband", Launcher.Conf.Type.NETWORK)
+	EntityCommons.MaxGuardbandDist = Launcher.Conf.GetInt("Guardband", "maxGuardbandDist", Launcher.Conf.Type.NETWORK)
 	EntityCommons.MaxGuardbandDistVec = Vector2(EntityCommons.MaxGuardbandDist, EntityCommons.MaxGuardbandDist)
+
+	EntityCommons.EntityAttackColor = Launcher.Conf.GetFloat("Visual", "entityAttackColor", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.LocalAttackColor = Launcher.Conf.GetFloat("Visual", "localAttackColor", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.LocalDamageColor = Launcher.Conf.GetFloat("Visual", "localDamageColor", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.MissAttackColor = Launcher.Conf.GetFloat("Visual", "missAttackColor", Launcher.Conf.Type.GAMEPLAY)
