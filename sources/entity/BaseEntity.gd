@@ -58,4 +58,5 @@ func _process(delta):
 
 func _ready():
 	if interactive:
-		interactive.SpecificInit(self, self == Launcher.Player)
+		interactive.Ready(self, self == Launcher.Player)
+		visual.Ready()

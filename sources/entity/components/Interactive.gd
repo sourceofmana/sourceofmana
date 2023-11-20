@@ -85,12 +85,12 @@ func DisplaySpeech(speech : String):
 func DisplayDamage(target : BaseEntity, dealer : BaseEntity, damage : int, isCrit : bool = false):
 	if Launcher.Map.mapNode:
 		var newLabel : Label = EntityCommons.damageLabel.instantiate()
-		newLabel.set_position(target.get_position())
-		newLabel.SetDamage(damage, target == Launcher.Player, dealer == Launcher.Player, target.visual.spriteOffset, isCrit)
+		newLabel.set_position(visibleNode.get_global_position())
+		newLabel.SetDamage(damage, target == Launcher.Player, dealer == Launcher.Player, isCrit)
 		Launcher.Map.mapNode.add_child(newLabel)
 
 #
-func SpecificInit(entity : BaseEntity, isPC : bool = false):
+func Ready(entity : BaseEntity, isPC : bool = false):
 	if nameLabel:
 		nameLabel.set_text(entity.entityName)
 		nameLabel.set_visible(entity.displayName)

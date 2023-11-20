@@ -53,11 +53,7 @@ func LoadData(data : EntityData):
 		if data._customTexture:
 			sprite.texture = FileSystem.LoadGfx(data._customTexture)
 		entity.call_deferred("add_child", sprite)
-
-		if sprite.vframes > 0:
-			if entity.interactive and entity.interactive.visibleNode:
-				var frameVerticalOffset : int = (int)(sprite.texture.get_size().y / sprite.vframes)
-				entity.interactive.visibleNode.position.y = -frameVerticalOffset if frameVerticalOffset > 32 else -32
+		ApplySpriteOffset()
 
 		Util.Assert(sprite.get_child_count() > 0, "No animation available for " + entity.entityName)
 		if sprite.get_child_count() > 0:
@@ -96,6 +92,10 @@ func UpdateScale():
 	if EntityCommons.State.ATTACK in timeScalePaths:
 		animationTree[timeScalePaths[EntityCommons.State.ATTACK]] = entity.stat.attackRatio
 
+func ApplySpriteOffset():
+	if entity.interactive and entity.interactive.visibleNode:
+		entity.interactive.visibleNode.position.y = min(-32, spriteOffset)
+
 func ResetAnimationValue():
 	LoadAnimationPaths()
 	UpdateScale()
@@ -123,6 +123,9 @@ func Init(parentEntity : BaseEntity, data : EntityData):
 
 	LoadData(data)
 	ResetAnimationValue()
+
+func Ready():
+	ApplySpriteOffset()
 
 func Refresh(_delta: float):
 	var currentEntityState = entity.entityState

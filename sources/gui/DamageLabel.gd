@@ -20,7 +20,7 @@ const entityAttackColor : float				= 0.65
 const localDamageColor : float				= 0.0
 
 #
-func SetDamage(damage : int, isTargetLocal : bool, isDealerLocal : bool, spriteOffset : int, isCrit : bool):
+func SetDamage(damage : int, isTargetLocal : bool, isDealerLocal : bool, isCrit : bool):
 	var hue : float = 0.0
 	if damage == 0:
 		hue = missAttackColor
@@ -35,7 +35,6 @@ func SetDamage(damage : int, isTargetLocal : bool, isDealerLocal : bool, spriteO
 	criticalDamage = isCrit
 
 	floorPosition = position.y
-	position.y += overheadOffset + spriteOffset
 	velocity.x = randf_range(-maxVelocityAngle, maxVelocityAngle)
 	velocity.y = randf_range(minVelocitySpeed, maxVelocitySpeed)
 
