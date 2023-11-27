@@ -1095,8 +1095,8 @@
    <properties>
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="71"/>
-    <property name="dest_pos_y" type="int" value="225"/>
+    <property name="dest_pos_x" type="int" value="89"/>
+    <property name="dest_pos_y" type="int" value="214"/>
    </properties>
    <polygon points="0,0 0,21 64,21 64,0"/>
   </object>
