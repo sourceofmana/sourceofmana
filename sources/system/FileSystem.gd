@@ -172,7 +172,7 @@ static func LoadResource(fullPath : String, instantiate : bool = true) -> Object
 	return rscInstance
 
 # Entity
-static func LoadEntitySprite(type : String, instantiate : bool = true) -> Node:
+static func LoadEntitySprite(type : String, instantiate : bool = true) -> Node2D:
 	var fullPath : String = Path.EntitySprite + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
@@ -180,7 +180,7 @@ static func LoadEntityComponent(type : String, instantiate : bool = true) -> Nod
 	var fullPath : String = Path.EntityComponent + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
-static func LoadEntity(type : String, instantiate : bool = true) -> BaseEntity:
+static func LoadEntityVariant(type : String, instantiate : bool = true) -> BaseEntity:
 	var fullPath : String = Path.EntityVariant + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 

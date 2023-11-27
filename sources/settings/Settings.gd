@@ -10,7 +10,7 @@ func HasUIOverlay() -> bool:
 
 func EnableHQ4x():
 	Launcher.Root.set_content_scale_factor(2) # [1,2,4] + shader
-#	Launcher.GUI.HQ4xShader.set_visible(true)
+	Launcher.GUI.HQ4xShader.set_visible(true)
 
 #
 func _post_launch():

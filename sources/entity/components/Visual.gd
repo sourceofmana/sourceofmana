@@ -3,7 +3,7 @@ class_name EntityVisual
 
 var entity : BaseEntity						= null
 var sprites : Array[Sprite2D]				= []
-var animationPlayer : AnimationPlayer		= null
+var animation : AnimationPlayer				= null
 var animationTree : AnimationTree			= null
 
 var collision : CollisionShape2D			= null
@@ -16,17 +16,30 @@ var timeScalePaths : Dictionary				= {}
 var spriteOffset : int						= 0
 
 #
-func LoadSprite(slot : EntityCommons.Slot, spritePath : String) -> Sprite2D:
-	var sprite : Sprite2D = null
-	if slot < EntityCommons.Slot.COUNT:
-		if sprites[slot]:
-			sprites[slot].queue_free()
-			sprites[slot] = null
+func SetMainMaterial(materialResource : Resource):
+	Util.Assert(sprites[EntityCommons.Slot.BODY] != null, "Trying to assign a shader material to a non-existant texture")
+	if sprites[EntityCommons.Slot.BODY]:
+		sprites[EntityCommons.Slot.BODY].material = materialResource
 
-		sprite = FileSystem.LoadEntitySprite(spritePath)
-		sprites[slot] = sprite
+func LoadSprite(slot : EntityCommons.Slot, sprite : Sprite2D, customTexturePath : String = ""):
+	var materialResource : Resource = null
+	if sprites[slot]:
+		materialResource = sprites[slot].material
+		sprites[slot].queue_free()
+		sprites[slot] = null
 
-	return sprite
+	if not sprite:
+		sprite = Sprite2D.new()
+		animation.call_deferred("add_child", sprite)
+
+	sprites[slot] = sprite
+	sprites[slot].material = materialResource
+
+	if customTexturePath.length() > 0:
+		sprite.texture = FileSystem.LoadGfx(customTexturePath)
+
+	spriteOffset = int(sprite.offset.y) - 10
+	ApplySpriteOffset()
 
 func ResetData():
 	if collision:
@@ -34,41 +47,46 @@ func ResetData():
 		collision = null
 	if animationTree:
 		animationTree = null
-	if animationPlayer:
-		animationPlayer = null
+	if animation:
+		animation.queue_free()
+		animation = null
 	for spriteID in sprites.size():
 		if sprites[spriteID]:
 			sprites[spriteID].queue_free()
 			sprites[spriteID] = null
+	sprites.resize(EntityCommons.Slot.COUNT)
 	orientation = Vector2(0, 1)
 
 func LoadData(data : EntityData):
 	ResetData()
-
-	# Sprite
-	sprites.resize(EntityCommons.Slot.COUNT)
-	var sprite : Sprite2D = LoadSprite(EntityCommons.Slot.BODY, data._ethnicity)
-	if sprite:
-		spriteOffset = int(sprite.offset.y) * 2
-		if data._customTexture:
-			sprite.texture = FileSystem.LoadGfx(data._customTexture)
-		entity.call_deferred("add_child", sprite)
-		ApplySpriteOffset()
-
-		Util.Assert(sprite.get_child_count() > 0, "No animation available for " + entity.entityName)
-		if sprite.get_child_count() > 0:
-			animationPlayer = sprite.get_child(0)
-
-			Util.Assert(animationPlayer.get_child_count() > 0, "No animation tree available for " + entity.entityName)
-			if animationPlayer.get_child_count() > 0:
-				animationTree = animationPlayer.get_child(0)
-				animationTree.set_active(true)
 
 	# Collision
 	if data._collision:
 		collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
 		if collision:
 			entity.call_deferred("add_child", collision)
+
+	# Animation
+	if data._ethnicity:
+		var preset : Node2D = FileSystem.LoadEntitySprite(data._ethnicity)
+		entity.add_child(preset)
+		animation = preset.get_node("Animation")
+		if animation:
+			# Animation Tree
+			Util.Assert(animation.has_node("AnimationTree"), "No animation tree available for " + entity.entityName)
+			if animation.has_node("AnimationTree"):
+				animationTree = animation.get_node("AnimationTree")
+				if animationTree:
+					animationTree.set_active(true)
+
+		# Body Sprite
+		Util.Assert(preset.has_node("Sprite"), "No sprite available for " + entity.entityName)
+		if preset.has_node("Sprite"):
+			var sprite : Sprite2D = preset.get_node("Sprite")
+			if sprite:
+				LoadSprite(EntityCommons.Slot.BODY, sprite, data._customTexture)
+
+	ResetAnimationValue()
 
 func LoadAnimationPaths():
 	for i in EntityCommons.State.COUNT:
@@ -107,10 +125,6 @@ func ResetAnimationValue():
 			var blendSpacePath = blendSpacePaths[previousState]
 			animationTree[blendSpacePath] = orientation
 
-func SetMaterial(matRes : Resource):
-	if sprites[EntityCommons.Slot.BODY]:
-		sprites[EntityCommons.Slot.BODY].material = matRes
-
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
 	if entity:
@@ -122,7 +136,6 @@ func Init(parentEntity : BaseEntity, data : EntityData):
 		entity.stat.ratio_updated.connect(self.UpdateScale)
 
 	LoadData(data)
-	ResetAnimationValue()
 
 func Ready():
 	ApplySpriteOffset()

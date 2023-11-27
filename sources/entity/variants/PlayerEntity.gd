@@ -40,10 +40,10 @@ func Interact():
 			if entityID != null:
 				if target is NpcEntity:
 					Launcher.Network.TriggerInteract(entityID)
-					target.visual.call_deferred("SetMaterial", EntityCommons.AllyTarget)
+					target.visual.call_deferred("SetMainMaterial", EntityCommons.AllyTarget)
 				elif target is MonsterEntity:
 					Launcher.Network.TriggerDamage(entityID)
-					target.visual.call_deferred("SetMaterial", EntityCommons.EnemyTarget)
+					target.visual.call_deferred("SetMainMaterial", EntityCommons.EnemyTarget)
 
 #
 func _process(deltaTime : float):

@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://clvy3m3dxh517"]
 
-[ext_resource type="Texture2D" uid="uid://dbwd2qy1p6wur" path="res://data/graphics/sprites/players/human-male.png" id="1_1uku2"]
-[ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_0o8f5"]
+[ext_resource type="Texture2D" uid="uid://dbwd2qy1p6wur" path="res://data/graphics/sprites/players/human-male.png" id="1_66oof"]
+[ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_mvwfv"]
 
 [sub_resource type="Animation" id="Animation_qisc1"]
 resource_name = "AttackDown"
@@ -226,6 +226,22 @@ tracks/0/keys = {
 "values": [66]
 }
 
+[sub_resource type="Animation" id="Animation_3p26o"]
+resource_name = "Trigger"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="3"]
 resource_name = "WalkDown"
 length = 0.6
@@ -294,22 +310,6 @@ tracks/0/keys = {
 "values": [33, 34, 35, 36, 37, 38]
 }
 
-[sub_resource type="Animation" id="Animation_3p26o"]
-resource_name = "Trigger"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pnwib"]
 _data = {
 "AttackDown": SubResource("Animation_qisc1"),
@@ -333,16 +333,19 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[node name="Sprite" type="Sprite2D"]
-texture = ExtResource("1_1uku2")
+[node name="Player" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_66oof")
 offset = Vector2(0, -32)
 hframes = 16
 vframes = 8
 frame = 64
 
 [node name="Animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
 libraries = {
 "": SubResource("AnimationLibrary_pnwib")
 }
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_0o8f5")]
+[node name="AnimationTree" parent="Animation" instance=ExtResource("2_mvwfv")]

@@ -18,7 +18,7 @@ static func CreateGenericEntity(entityInstance : CharacterBody2D, entityType : S
 		entityInstance.SetKind(entityType, entityID, entityName)
 
 static func CreateEntity(entityType : String, entityID : String, entityName : String = "") -> BaseEntity:
-	var entityInstance : BaseEntity = FileSystem.LoadEntity(entityType)
+	var entityInstance : BaseEntity = FileSystem.LoadEntityVariant(entityType)
 	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
 	return entityInstance
 

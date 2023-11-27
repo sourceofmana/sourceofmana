@@ -843,7 +843,9 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[node name="Sprite" type="Sprite2D"]
+[node name="Piou" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_wtqld")
 offset = Vector2(0, -4)
 hframes = 5
@@ -851,6 +853,7 @@ vframes = 8
 frame = 19
 
 [node name="Animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
 libraries = {
 "": SubResource("AnimationLibrary_iko4k")
 }
