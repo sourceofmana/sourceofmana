@@ -15,6 +15,10 @@ const maxVelocitySpeed : float				= 1.0
 const overheadOffset : int					= -10
 
 #
+func SetPosition(startPos : Vector2, floorPos : Vector2):
+	position = startPos
+	floorPosition = floorPos.y
+
 func SetDamage(damage : int, isTargetLocal : bool, isDealerLocal : bool, isCrit : bool):
 	var hue : float = 0.0
 	if damage == 0:
@@ -29,7 +33,6 @@ func SetDamage(damage : int, isTargetLocal : bool, isDealerLocal : bool, isCrit 
 	HSVA = Vector4(hue, 0.7, 1.0, 1.0)
 	criticalDamage = isCrit
 
-	floorPosition = position.y
 	velocity.x = randf_range(-maxVelocityAngle, maxVelocityAngle)
 	velocity.y = randf_range(minVelocitySpeed, maxVelocitySpeed)
 
