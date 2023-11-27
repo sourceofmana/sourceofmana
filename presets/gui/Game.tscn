@@ -328,32 +328,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 10
 mouse_filter = 0
 
-[node name="Shaders" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="HQ4x" parent="Shaders" instance=ExtResource("10_id8es")]
-visible = false
-layout_mode = 1
-
-[node name="CRT" parent="Shaders" instance=ExtResource("11_x7rk2")]
-top_level = true
-layout_mode = 1
-
 [node name="FloatingWindows" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = 10.0
-offset_right = 2.0
-offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -449,6 +428,15 @@ offset_left = 829.0
 offset_top = 165.0
 offset_right = -24.0
 offset_bottom = -66.0
+
+[node name="Shaders" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="HQ4x" parent="Shaders" instance=ExtResource("10_id8es")]
+visible = false
+
+[node name="CRT" parent="Shaders" instance=ExtResource("11_x7rk2")]
+top_level = true
 
 [connection signal="resized" from="UIMargin" to="." method="_on_ui_margin_resized"]
 [connection signal="pressed" from="UIMargin/UIOverlay/Indicators/Menu" to="UIMargin/UIOverlay/Indicators/Menu" method="_on_pressed"]
