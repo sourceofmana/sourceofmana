@@ -1,7 +1,7 @@
 {
 	"0": {
 		"Name": "Default Entity",
-		"Ethnicity": "KaizeiViro",
+		"Ethnicity": "Player",
 		"Gender": "Male",
 		"Hairstyle": "Bald",
 		"NavigationAgent": "PlayerAgent",
@@ -89,7 +89,7 @@
 		"Texture": "sprites/monsters/slime-drain.png",
 		"NavigationAgent": "NPAgent",
 		"Collision": "VerySmall",
-		"walkSpeed": 40
+		"walkSpeed": 70
 	},
 	"1010": {
 		"Name": "Fire Skull",
@@ -97,13 +97,13 @@
 		"Texture": "sprites/monsters/skull-fire.png",
 		"NavigationAgent": "NPAgent",
 		"Collision": "VerySmall",
-		"walkSpeed": 30
+		"walkSpeed": 50
 	},
 
 
 	"2000": {
 		"Name": "Becees",
-		"Ethnicity": "KaizeiViro",
+		"Ethnicity": "Player",
 		"Hairstyle": "Bald",
 		"NavigationAgent": "NPAgent",
 		"Collision": "Small",
@@ -118,7 +118,7 @@
 	},
 	"2002": {
 		"Name": "Elanore",
-		"Ethnicity": "KaizeiViro",
+		"Ethnicity": "Player",
 		"Texture": "sprites/players/human-female.png",
 		"Hairstyle": "Bald",
 		"NavigationAgent": "NPAgent",
