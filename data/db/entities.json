@@ -83,6 +83,23 @@
 		"Collision": "VerySmall",
 		"walkSpeed": 30
 	},
+	"1009": {
+		"Name": "Drain Slime",
+		"Ethnicity": "Slime",
+		"Texture": "sprites/monsters/slime-drain.png",
+		"NavigationAgent": "NPAgent",
+		"Collision": "VerySmall",
+		"walkSpeed": 40
+	},
+	"1010": {
+		"Name": "Fire Skull",
+		"Ethnicity": "Skull",
+		"Texture": "sprites/monsters/skull-fire.png",
+		"NavigationAgent": "NPAgent",
+		"Collision": "VerySmall",
+		"walkSpeed": 30
+	},
+
 
 	"2000": {
 		"Name": "Becees",

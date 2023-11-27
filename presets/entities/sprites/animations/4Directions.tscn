@@ -72,11 +72,12 @@ nodes/output/position = Vector2(820, 200)
 node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_71xax"]
-animation = &"IdleDown"
+animation = &"Trigger"
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_4qedw"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_gmro1"]
+graph_offset = Vector2(0, 118.8)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_71xax")
 nodes/Animation/position = Vector2(375, 222)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_4qedw")
@@ -155,11 +156,12 @@ nodes/output/position = Vector2(680, 180)
 node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1spn8"]
-animation = &"IdleDown"
+animation = &"Trigger"
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_bavah"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_27hwn"]
+graph_offset = Vector2(0, 91.208)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_1spn8")
 nodes/Animation/position = Vector2(382, 199)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_bavah")
@@ -168,11 +170,12 @@ nodes/output/position = Vector2(780, 160)
 node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sa6ck"]
-animation = &"IdleDown"
+animation = &"Trigger"
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_rjptr"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_h4jtk"]
+graph_offset = Vector2(0, 111.744)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_sa6ck")
 nodes/Animation/position = Vector2(325, 195)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_rjptr")
@@ -260,13 +263,11 @@ node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8teg0"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bp3vt"]
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2bva4"]
 switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sokie"]
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hy1hk"]
 switch_mode = 2
@@ -291,7 +292,7 @@ states/Trigger/position = Vector2(382, 203)
 states/Walk/node = SubResource("AnimationNodeBlendTree_18lfr")
 states/Walk/position = Vector2(693, 299)
 transitions = ["Idle", "Sit", SubResource("AnimationNodeStateMachineTransition_so0lp"), "Sit", "Idle", SubResource("AnimationNodeStateMachineTransition_l0fi0"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_h431x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_56gkn"), "Sit", "Walk", SubResource("AnimationNodeStateMachineTransition_iv2dw"), "Sit", "Death", SubResource("AnimationNodeStateMachineTransition_a0xty"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_vr1f8"), "Death", "Idle", SubResource("AnimationNodeStateMachineTransition_ti5sl"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_0bg4p"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_rnq6v"), "Attack", "Death", SubResource("AnimationNodeStateMachineTransition_1nsiy"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_8teg0"), "Idle", "To Trigger", SubResource("AnimationNodeStateMachineTransition_bp3vt"), "To Trigger", "Trigger", SubResource("AnimationNodeStateMachineTransition_2bva4"), "Trigger", "From Trigger", SubResource("AnimationNodeStateMachineTransition_sokie"), "From Trigger", "Idle", SubResource("AnimationNodeStateMachineTransition_hy1hk")]
-graph_offset = Vector2(0, -71.4492)
+graph_offset = Vector2(0, 49.4196)
 
 [node name="AnimationTree" type="AnimationTree"]
 tree_root = SubResource("22")
