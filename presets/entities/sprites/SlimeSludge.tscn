@@ -1,7 +1,9 @@
-[gd_scene load_steps=34 format=3 uid="uid://cc7dl0ctjviwq"]
+[gd_scene load_steps=36 format=3 uid="uid://cc7dl0ctjviwq"]
 
 [ext_resource type="Texture2D" uid="uid://m6mbsufgna48" path="res://data/graphics/sprites/monsters/slime-sludge.png" id="1_vcu2t"]
 [ext_resource type="Texture2D" uid="uid://dsvan8j08fa4b" path="res://data/graphics/sprites/accessories/fire.png" id="2_j05ha"]
+[ext_resource type="Script" path="res://sources/entity/sprites/AnimatedSprite2DRandomnizer.gd" id="3_4et6q"]
+[ext_resource type="PackedScene" uid="uid://bpqxr3214t821" path="res://presets/effects/TorchGlow.tscn" id="3_7jtt6"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="3_mg0gu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7mdqg"]
@@ -164,10 +166,10 @@ tracks/1/path = NodePath("../Fire:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="6"]
@@ -443,6 +445,11 @@ animation = &"Idle"
 autoplay = "Idle"
 frame_progress = 0.815769
 offset = Vector2(0, -22)
+script = ExtResource("3_4et6q")
+
+[node name="TorchGlow" parent="Fire" instance=ExtResource("3_7jtt6")]
+position = Vector2(0, 0)
+blend_mode = 2
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite")

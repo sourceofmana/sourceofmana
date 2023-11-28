@@ -99,6 +99,14 @@
 		"Collision": "VerySmall",
 		"walkSpeed": 50
 	},
+	"1011": {
+		"Name": "Sludge Slime",
+		"Ethnicity": "SlimeSludge",
+		"Texture": "sprites/monsters/slime-sludge.png",
+		"NavigationAgent": "NPAgent",
+		"Collision": "VerySmall",
+		"walkSpeed": 50
+	},
 
 
 	"2000": {
