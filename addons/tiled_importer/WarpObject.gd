@@ -23,7 +23,7 @@ func _physics_process(_delta):
 		Launcher.Network.TriggerWarp()
 
 #
-func _init():
+func _ready():
 	collision_mask = 2
 
 	self.body_entered.connect(bodyEntered)
