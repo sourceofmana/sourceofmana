@@ -1,7 +1,8 @@
 extends PointLight2D
 
+@export var generalSpeed : float		= 10
+
 var value : float						= 0
-var generalSpeed : float				= 10
 var positionSpeed : float				= 2
 var baseEnergy : float					= 0.9
 var baseScale : float					= 0.9
