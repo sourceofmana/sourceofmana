@@ -160,10 +160,10 @@ offset = Vector2(0, -16)
 hframes = 4
 frame = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite")
 libraries = {
 "": SubResource("AnimationLibrary_gf7hs")
 }
 
-[node name="AnimationTree" parent="AnimationPlayer" instance=ExtResource("2_dex3v")]
+[node name="AnimationTree" parent="Animation" instance=ExtResource("2_dex3v")]
