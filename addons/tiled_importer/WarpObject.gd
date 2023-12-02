@@ -6,6 +6,11 @@ class_name WarpObject
 @export var destinationMap : String 			= ""
 @export var destinationPos : Vector2			= Vector2.ZERO
 @export var polygon : PackedVector2Array 		= []
+@export var areaSize : float					= 1.0
+@export var randomPoints : PackedVector2Array	= []
+
+const defaultParticlesCount : int				= 12
+const particlePreset : PackedScene				= preload("res://presets/effects/particles/WarpParticles.tscn")
 
 var isPlayerEntered : bool						= false
 
@@ -28,3 +33,12 @@ func _ready():
 
 	self.body_entered.connect(bodyEntered)
 	self.body_exited.connect(bodyExited)
+
+	var particle : CPUParticles2D = particlePreset.instantiate()
+	call_deferred("add_child", particle)
+
+	particle.emission_shape = CPUParticles2D.EmissionShape.EMISSION_SHAPE_POINTS
+	particle.emission_points = randomPoints
+
+	var areaRatio : float = areaSize / (32*32)
+	particle.amount = int(float(defaultParticlesCount) * areaRatio)

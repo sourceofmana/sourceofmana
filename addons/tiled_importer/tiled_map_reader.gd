@@ -740,6 +740,30 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 						if collisionObject:
 							collisionObject.polygon = points
+
+							var area : float = 0.0
+							var areaMin : Vector2 = Vector2.ZERO
+							var areaMax : Vector2 = Vector2.ZERO
+							for i in range(points.size() - 1):
+								areaMin.x = min(areaMin.x, points[i].x)
+								areaMin.y = min(areaMin.y, points[i].y)
+								areaMax.x = max(areaMax.x, points[i].x)
+								areaMax.y = max(areaMax.y, points[i].y)
+								area += points[i].x * points[i + 1].y - points[i + 1].x * points[i].y
+
+							area += points[points.size() - 1].x * points[0].y - points[0].x * points[points.size() - 1].y
+							area = abs(area) / 2
+							customObject.areaSize = area
+
+							var pointsInPolygon: Array = []
+							var numPoints : int = area / (32*32) * 4
+							pointsInPolygon.append_array(points)
+							while pointsInPolygon.size() < numPoints:
+								var randomPoint : Vector2 = Vector2(randf_range(areaMin.x, areaMax.x), randf_range(areaMin.y, areaMax.y))
+								if Geometry2D.is_point_in_polygon(randomPoint, points):
+									pointsInPolygon.append(randomPoint)
+							customObject.randomPoints = pointsInPolygon
+
 						customObject.polygon = points
 
 #					customObject.one_way_collision = object.type == "one-way"
