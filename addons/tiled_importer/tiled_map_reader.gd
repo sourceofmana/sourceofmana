@@ -431,26 +431,39 @@ func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, g
 					var specificInstance = ResourceLoader.load("res://presets/effects/TorchGlow.tscn").instantiate()
 					if specificInstance:
 						var blendMode : Light2D.BlendMode = Light2D.BLEND_MODE_MIX
-						var textureScale : float = 1
-						var energyScale : float = 1
+						var scaleFactor : float = 1.0
+						var energyFactor : float = 1.0
+						var speedFactor : float = 1.0
 
 						if caveShadow.color.v >= 1:
 							blendMode = Light2D.BLEND_MODE_ADD
-							textureScale = 0.15
-							energyScale = 0.2
+							scaleFactor = 0.15
+							energyFactor = 0.2
 						elif caveShadow.color.v > 0.5:
 							blendMode = Light2D.BLEND_MODE_ADD
-							textureScale = 0.5
-							energyScale = 0.5
+							scaleFactor = 0.5
+							energyFactor = 0.5
 
 						if specificGid.size() > 1:
-							specificInstance.set_position(cell_in_map + specificGid[1])
+							var glowPos : Vector2 = cell_in_map
+							glowPos.x += specificGid[1].x
+							specificInstance.set_position(glowPos)
 						if specificGid.size() > 2:
-							textureScale *= specificGid[2]
+							scaleFactor *= specificGid[2]
+						if specificGid.size() > 3:
+							energyFactor = specificGid[3]
+						if specificGid.size() > 4:
+							speedFactor = specificGid[4] 
+						if specificGid.size() > 5:
+							match specificGid[5]:
+								"Add": blendMode = Light2D.BLEND_MODE_ADD
+								"Mix": blendMode = Light2D.BLEND_MODE_MIX
+								_: pass
 
-						specificInstance.set_texture_scale(textureScale)
-						specificInstance.set_energy(energyScale)
+						specificInstance.set_texture_scale(scaleFactor)
+						specificInstance.set_energy(energyFactor)
 						specificInstance.set_blend_mode(blendMode)
+						specificInstance.generalSpeed *= speedFactor
 
 						caveShadow.add_child(specificInstance)
 						specificInstance.set_owner(root)
@@ -1137,7 +1150,19 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 					if "glow_scale" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].glow_scale:
 						glow_scale = ts.tileproperties[rel_id].glow_scale
 
-					specificDic[gid] = ["TorchGlow", region.size / 2, glow_scale]
+					var glow_energy : float = 1.0
+					if "glow_energy" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].glow_energy:
+						glow_energy = ts.tileproperties[rel_id].glow_energy
+
+					var glow_speed : float = 1.0
+					if "glow_speed" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].glow_speed:
+						glow_speed = ts.tileproperties[rel_id].glow_speed
+
+					var glow_blend_mode : String = ""
+					if "glow_blend_mode" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].glow_blend_mode:
+						glow_blend_mode = ts.tileproperties[rel_id].glow_blend_mode
+
+					specificDic[gid] = ["TorchGlow", region.size / 2, glow_scale, glow_energy, glow_speed, glow_blend_mode]
 
 			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
 					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
