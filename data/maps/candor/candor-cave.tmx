@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="100" height="105" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="9">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="100" height="105" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="10">
  <properties>
   <property name="author" value="CC BY-SA 4.0 (c) Pydsigner, Jesusalva, Reid"/>
   <property name="music" value="Lenia"/>
@@ -569,10 +569,10 @@
    <properties>
     <property name="dest_cellsize" type="int" value="32"/>
     <property name="dest_map" value="Candor Arena"/>
-    <property name="dest_pos_x" type="int" value="64"/>
+    <property name="dest_pos_x" type="int" value="63"/>
     <property name="dest_pos_y" type="int" value="23"/>
    </properties>
-   <polygon points="0,0 32,32 64,0"/>
+   <polygon points="0,0 32,32 64,0 96,-64 96,-80 -32,-80 -32,-64"/>
   </object>
   <object id="7" name="Elanore" type="Spawn" x="1557" y="1148" width="146" height="128">
    <properties>
@@ -581,14 +581,14 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="8" name="Warp Overworld" type="Warp" x="1600" y="832">
+  <object id="9" name="Warp Overworld" type="Warp" x="1600" y="832">
    <properties>
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
     <property name="dest_pos_x" type="int" value="84"/>
     <property name="dest_pos_y" type="int" value="220"/>
    </properties>
-   <polygon points="0,32 32,0 64,32"/>
+   <polygon points="0,32 32,0 64,32 80,64 80,110 -16,110 -16,64"/>
   </object>
  </objectgroup>
 </map>

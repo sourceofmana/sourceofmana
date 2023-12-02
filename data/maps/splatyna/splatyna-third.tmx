@@ -464,9 +464,9 @@
    <properties>
     <property name="dest_map" value="Splatyna Cave"/>
     <property name="dest_pos_x" type="int" value="89"/>
-    <property name="dest_pos_y" type="int" value="84"/>
+    <property name="dest_pos_y" type="int" value="85"/>
    </properties>
-   <polygon points="0,0 32,32 64,0"/>
+   <polygon points="0,0 32,32 64,0 80,-32 -16,-32"/>
   </object>
   <object id="29" name="Gabriel" type="Spawn" x="1126" y="1111" width="32" height="32">
    <properties>
