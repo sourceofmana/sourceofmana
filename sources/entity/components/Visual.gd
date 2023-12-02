@@ -38,7 +38,7 @@ func LoadSprite(slot : EntityCommons.Slot, sprite : Sprite2D, customTexturePath 
 	if customTexturePath.length() > 0:
 		sprite.texture = FileSystem.LoadGfx(customTexturePath)
 
-	spriteOffset = int(sprite.offset.y) - 10
+	spriteOffset = int(sprite.offset.y) - 30
 	ApplySpriteOffset()
 
 func ResetData():
@@ -115,15 +115,17 @@ func ApplySpriteOffset():
 		entity.interactive.visibleNode.position.y = min(-32, spriteOffset)
 
 func ResetAnimationValue():
+	if not entity or not animationTree:
+		return
+
 	LoadAnimationPaths()
 	UpdateScale()
 
-	if entity and animationTree:
-		var stateName = EntityCommons.GetStateName(previousState)
-		animationTree[EntityCommons.playbackParameter].travel(stateName)
-		if previousState in blendSpacePaths:
-			var blendSpacePath = blendSpacePaths[previousState]
-			animationTree[blendSpacePath] = orientation
+	var stateName = EntityCommons.GetStateName(previousState)
+	animationTree[EntityCommons.playbackParameter].travel(stateName)
+	if previousState in blendSpacePaths:
+		var blendSpacePath = blendSpacePaths[previousState]
+		animationTree[blendSpacePath] = orientation
 
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
@@ -141,6 +143,9 @@ func Ready():
 	ApplySpriteOffset()
 
 func Refresh(_delta: float):
+	if not animationTree:
+		return
+
 	var currentEntityState = entity.entityState
 	var entityVelocity = entity.entityVelocity
 	# Check for changes in entity state and orientation
