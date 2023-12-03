@@ -10,8 +10,8 @@ custom_minimum_size = Vector2(180, 100)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -940.0
-offset_bottom = -555.0
+offset_right = -992.0
+offset_bottom = -367.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_al365")
@@ -50,35 +50,105 @@ texture_normal = ExtResource("3_7x8vi")
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Offset" type="Control" parent="VBoxContainer"]
+[node name="Offset" type="MarginContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="Scroll" type="ScrollContainer" parent="VBoxContainer"]
+[node name="TabBar" type="TabContainer" parent="VBoxContainer/Offset"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Margin" type="MarginContainer" parent="VBoxContainer/Scroll"]
+[node name="Render" type="ScrollContainer" parent="VBoxContainer/Offset/TabBar"]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 3
-theme_override_constants/margin_bottom = 3
 
-[node name="VBox" type="VBoxContainer" parent="VBoxContainer/Scroll/Margin"]
+[node name="RenderVBox" type="VBoxContainer" parent="VBoxContainer/Offset/TabBar/Render"]
 clip_contents = true
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
 
-[node name="Test Check" type="CheckButton" parent="VBoxContainer/Scroll/Margin/VBox"]
-layout_mode = 2
-text = "Test Option"
-
-[node name="Button" type="Button" parent="VBoxContainer/Scroll/Margin/VBox"]
+[node name="Preset" type="HBoxContainer" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox"]
 layout_mode = 2
 size_flags_vertical = 10
-text = "Reset"
+
+[node name="Label" type="Label" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/Preset"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Preset"
+
+[node name="Option" type="OptionButton" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/Preset"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 2
+selected = 0
+popup/item_0/text = "PC"
+popup/item_0/id = 0
+popup/item_1/text = "Mobile"
+popup/item_1/id = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox"]
+layout_mode = 2
+
+[node name="VisualVBox" type="VBoxContainer" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox"]
+layout_mode = 2
+
+[node name="Visual" type="Label" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox"]
+layout_mode = 2
+text = "Visual"
+
+[node name="Scale" type="CheckButton" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox"]
+layout_mode = 2
+text = "Double Resolution"
+
+[node name="Fullscreen" type="CheckButton" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox"]
+layout_mode = 2
+text = "Fullscreen Mode"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox"]
+layout_mode = 2
+
+[node name="ShaderVBox" type="VBoxContainer" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox"]
+layout_mode = 2
+
+[node name="Shader" type="Label" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/ShaderVBox"]
+layout_mode = 2
+text = "Shader"
+
+[node name="HQx4" type="CheckButton" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/ShaderVBox"]
+layout_mode = 2
+text = "High Quality Scale"
+
+[node name="CRT" type="CheckButton" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/ShaderVBox"]
+layout_mode = 2
+text = "Cathode Ray Tube"
+
+[node name="Audio" type="ScrollContainer" parent="VBoxContainer/Offset/TabBar"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Offset/TabBar/Audio"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Music Volume" type="HBoxContainer" parent="VBoxContainer/Offset/TabBar/Audio/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/Offset/TabBar/Audio/VBoxContainer/Music Volume"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Volume"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Offset/TabBar/Audio/VBoxContainer/Music Volume"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="VBoxContainer/TitleBar/CloseButton" to="." method="_on_CloseButton_pressed"]

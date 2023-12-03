@@ -405,6 +405,7 @@ offset_bottom = 0.0
 metadata/_edit_use_anchors_ = true
 
 [node name="News" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
+visible = false
 layout_mode = 2
 offset_left = 827.0
 offset_top = 163.0
@@ -424,10 +425,10 @@ jsonFile = ExtResource("16_pfh0e")
 
 [node name="Settings" parent="FloatingWindows" instance=ExtResource("16_gapih")]
 layout_mode = 1
-offset_left = 829.0
-offset_top = 165.0
-offset_right = -24.0
-offset_bottom = -66.0
+offset_left = 488.0
+offset_top = 192.0
+offset_right = -453.0
+offset_bottom = -221.0
 
 [node name="Shaders" type="CanvasLayer" parent="."]
 layer = 128
