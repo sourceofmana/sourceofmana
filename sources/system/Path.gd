@@ -25,7 +25,6 @@ const EntitySprite : String				= EntityPst + "sprites/"
 
 # Local
 const Local : String					= "user://"
-const ConfLocal : String				= Local + "conf/"
 
 # Extentions
 const GfxExt: String					= ".png"

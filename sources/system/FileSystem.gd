@@ -120,45 +120,34 @@ static func LoadSource(path : String, alloc : bool = true) -> Object:
 	return srcFile
 
 # Config
-static func LoadConfig(path : String) -> ConfigFile:
-	var fullPath : String		= Path.ConfRsc + path + Path.ConfExt
-	var localPath : String		= Path.ConfLocal + path + Path.ConfExt
+static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
+	var fullPath : String		= (Path.Local if userDir else Path.ConfRsc) + path + Path.ConfExt
 	var cfgFile : ConfigFile	= null
 
-	var pathExists : bool = false
-	if FileExists(localPath):
-		pathExists = true
-		fullPath = localPath
-	else:
-		pathExists = FileExists(fullPath)
+	var pathExists : bool = FileExists(fullPath)
 	Util.Assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
-
-	if pathExists:
+	if pathExists or userDir:
 		cfgFile = ConfigFile.new()
+		if pathExists:
+			var err = cfgFile.load(fullPath)
+			Util.Assert(err == OK, "Error loading the config file " + path + " located at " + fullPath)
 
-		var err = cfgFile.load(fullPath)
-		Util.Assert(err == OK, "Error loading the config file " + path + " located at " + fullPath)
-
-		if err != OK:
-			cfgFile.free()
-			cfgFile = null
-		else:
-			Util.PrintLog("Config", "Loading file: " + fullPath)
+			if err != OK:
+				cfgFile.free()
+				cfgFile = null
+			else:
+				Util.PrintLog("Config", "Loading file: " + fullPath)
 
 	return cfgFile
 
 static func SaveConfig(path : String, cfgFile : ConfigFile):
-	var fullPath = Path.ConfLocal + path
 	Util.Assert(cfgFile != null, "Config file " + path + " not initialized")
 
 	if cfgFile:
-		var pathExists : bool = FileExists(fullPath)
-		Util.Assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
-
-		if pathExists:
-			var err = cfgFile.save(fullPath)
-			Util.Assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
-			Util.PrintLog("Config", "Saving file: " + fullPath)
+		var fullPath = Path.Local + path + Path.ConfExt
+		var err = cfgFile.save(fullPath)
+		Util.Assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
+		Util.PrintLog("Config", "Saving file: " + fullPath)
 
 # Resource
 static func LoadResource(fullPath : String, instantiate : bool = true) -> Object:
