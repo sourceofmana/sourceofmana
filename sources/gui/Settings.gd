@@ -10,6 +10,8 @@ const userSection : String						= "User"
 		"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
 		"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
 		"Render-WindowResolution": [init_resolution, set_resolution, apply_resolution, $VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
+		"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, null],
+		"Render-CRT": [init_crt, set_crt, apply_crt, null],
 	}
 ]
 
@@ -42,7 +44,6 @@ func apply_fullscreen(pressed : bool):
 		clear_resolution_labels()
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
-		init_minwinsize(true)
 		populate_resolution_labels()
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
@@ -58,7 +59,7 @@ func clear_resolution_labels():
 	accessors[CATEGORY.RENDER]["Render-WindowResolution"][ACC_TYPE.LABEL].clear()
 func populate_resolution_labels():
 	var resolutionIndex : int = GetVal("Render-WindowResolution")
-	var minScreenSize : Vector2 = DisplayServer.window_get_min_size(0)
+	var minScreenSize : Vector2 = GetVal("Render-MinWindowSize")
 	var maxScreenSize : Vector2 = DisplayServer.screen_get_size()
 	for i in range(0, 11):
 		var item : Vector2i = calculate_resolution_item(i, minScreenSize, maxScreenSize)
@@ -70,7 +71,7 @@ func set_resolution(resolutionIndex : int):
 	SetVal("Render-WindowResolution", resolutionIndex)
 	apply_resolution(resolutionIndex)
 func apply_resolution(resolutionIndex : int):
-	var minScreenSize : Vector2 = DisplayServer.window_get_min_size(0)
+	var minScreenSize : Vector2 = GetVal("Render-MinWindowSize")
 	var maxScreenSize : Vector2 = DisplayServer.screen_get_size()
 	var newWindowSize : Vector2 = calculate_resolution_item(resolutionIndex, minScreenSize, maxScreenSize)
 	var newPosition : Vector2 = clamp((maxScreenSize - newWindowSize) / 2.0, Vector2.ZERO, maxScreenSize)
@@ -88,6 +89,26 @@ func set_scaling(mode : int):
 	apply_scaling(mode)
 func apply_scaling(mode : int):
 	Launcher.Root.set_content_scale_factor(mode + 1)
+
+# HQ4x
+func init_hq4x(apply : bool):
+	if apply:
+		apply_hq4x(GetVal("Render-HQ4x"))
+func set_hq4x(enable : bool):
+	SetVal("Render-HQ4x", enable)
+	apply_hq4x(enable)
+func apply_hq4x(enable : bool):
+	Launcher.GUI.HQ4xShader.set_visible(enable)
+
+# CRT
+func init_crt(apply : bool):
+	if apply:
+		apply_crt(GetVal("Render-CRT"))
+func set_crt(enable : bool):
+	SetVal("Render-CRT", enable)
+	apply_crt(enable)
+func apply_crt(enable : bool):
+	Launcher.GUI.CRTShader.set_visible(enable)
 
 #
 func _on_visibility_changed():
