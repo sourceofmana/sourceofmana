@@ -16,6 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://o8yiy2cccwpp" path="res://data/graphics/gui/button/button_focus.png" id="16"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ls22y"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
 texture = ExtResource("3")
 texture_margin_left = 3.0
 texture_margin_top = 3.0
@@ -24,6 +28,10 @@ texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 6, 6)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t6qf4"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
 texture = ExtResource("5_fw406")
 texture_margin_left = 3.0
 texture_margin_top = 3.0
@@ -32,6 +40,10 @@ texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 8, 8)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mk8ke"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
 texture = ExtResource("5_fw406")
 texture_margin_left = 3.0
 texture_margin_top = 3.0
@@ -40,6 +52,10 @@ texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 8, 8)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j7syu"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
 texture = ExtResource("5_fw406")
 texture_margin_left = 3.0
 texture_margin_top = 3.0
@@ -48,6 +64,10 @@ texture_margin_bottom = 3.0
 region_rect = Rect2(0, 0, 8, 8)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w7io8"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
 texture = ExtResource("16")
 texture_margin_left = 3.0
 texture_margin_top = 3.0
@@ -347,7 +367,6 @@ Button/colors/font_focus_color = Color(0.843137, 0.717647, 0.482353, 1)
 Button/colors/font_hover_color = Color(0.843137, 0.717647, 0.482353, 1)
 Button/colors/font_hover_pressed_color = Color(0.843137, 0.717647, 0.482353, 1)
 Button/colors/font_pressed_color = Color(0.843137, 0.717647, 0.482353, 1)
-Button/constants/hseparation = 2
 Button/fonts/font = ExtResource("1_vbxts")
 Button/styles/disabled = SubResource("StyleBoxTexture_ls22y")
 Button/styles/focus = SubResource("StyleBoxTexture_t6qf4")

@@ -348,7 +348,6 @@ anchor_bottom = 0.594444
 offset_right = 0.0
 offset_bottom = 0.0
 metadata/_edit_layout_mode = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
 show_behind_parent = false
@@ -402,10 +401,8 @@ anchor_right = 0.384375
 anchor_bottom = 0.597222
 offset_right = 0.0
 offset_bottom = 0.0
-metadata/_edit_use_anchors_ = true
 
 [node name="News" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
-visible = false
 layout_mode = 2
 offset_left = 827.0
 offset_top = 163.0

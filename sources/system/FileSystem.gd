@@ -125,7 +125,6 @@ static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
 	var cfgFile : ConfigFile	= null
 
 	var pathExists : bool = FileExists(fullPath)
-	Util.Assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
 	if pathExists or userDir:
 		cfgFile = ConfigFile.new()
 		if pathExists:
@@ -137,6 +136,8 @@ static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
 				cfgFile = null
 			else:
 				Util.PrintLog("Config", "Loading file: " + fullPath)
+	else:
+		Util.Assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
 
 	return cfgFile
 

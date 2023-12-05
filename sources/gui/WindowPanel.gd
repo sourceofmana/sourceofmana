@@ -139,16 +139,23 @@ func OnGuiInput(event : InputEvent):
 
 	if event is InputEventMouseMotion:
 		if clickPosition:
-			var scaleFactor : int = Launcher.Root.get_content_scale_factor()
-			var viewportSize : Vector2 = get_viewport().get_size()
-			if scaleFactor > 0:
-				viewportSize /= scaleFactor
+			UpdateWindow(event.position)
 
-			if isResizing:
-				ResizeWindow(ClampViewport(event.position, viewportSize), event.position + position)
-			else:
-				var newPosition : Vector2 = position + event.position - clickPosition
-				position = ClampViewport(newPosition, viewportSize - get_size())
+func UpdateWindow(eventPosition : Vector2):
+	var scaleFactor : int = Launcher.Root.get_content_scale_factor()
+	var viewportSize : Vector2 = get_viewport().get_size()
+	if scaleFactor > 0:
+		viewportSize /= scaleFactor
+
+	if isResizing:
+		ResizeWindow(ClampViewport(eventPosition, viewportSize), eventPosition + position)
+	else:
+		var newPosition : Vector2 = position
+		if clickPosition != null:
+			newPosition += eventPosition - clickPosition
+		size.x = clamp(size.x, get_minimum_size().x, viewportSize.x)
+		size.y = clamp(size.y, get_minimum_size().y, viewportSize.y)
+		position = ClampViewport(newPosition, viewportSize - get_size())
 
 func _on_CloseButton_pressed():
 	set_visible(false)

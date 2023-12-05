@@ -19,6 +19,7 @@ func _on_pressed():
 func _ready():
 	Util.Assert(content != null and content.material != null and buttons != null, "Menu Indicator nodes are not set correctly")
 	content.material.set_shader_parameter("progress", progress_speed)
+	buttons.set_visible(false)
 
 func _process(delta):
 	if is_playing:
