@@ -141,6 +141,10 @@ popup/item_1/id = 1
 popup/item_2/text = "x3"
 popup/item_2/id = 2
 
+[node name="ActionOverlay" type="CheckButton" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox"]
+layout_mode = 2
+text = "Action Overlay"
+
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox"]
 layout_mode = 2
 
@@ -159,10 +163,6 @@ text = "High Quality Scale"
 layout_mode = 2
 text = "Cathode Ray Tube"
 
-[node name="Lighting" type="CheckButton" parent="VBoxContainer/Offset/TabBar/Render/RenderVBox/EffectVBox"]
-layout_mode = 2
-text = "Lighting"
-
 [node name="Audio" type="ScrollContainer" parent="VBoxContainer/Offset/TabBar"]
 visible = false
 layout_mode = 2
@@ -171,18 +171,22 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Music Volume" type="HBoxContainer" parent="VBoxContainer/Offset/TabBar/Audio/VBoxContainer"]
+[node name="Global Volume" type="HBoxContainer" parent="VBoxContainer/Offset/TabBar/Audio/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/Offset/TabBar/Audio/VBoxContainer/Music Volume"]
+[node name="Label" type="Label" parent="VBoxContainer/Offset/TabBar/Audio/VBoxContainer/Global Volume"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Music Volume"
+text = "Global Volume"
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/Offset/TabBar/Audio/VBoxContainer/Music Volume"]
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Offset/TabBar/Audio/VBoxContainer/Global Volume"]
 layout_mode = 2
 size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+tick_count = 10
+ticks_on_borders = true
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
@@ -190,5 +194,7 @@ size_flags_horizontal = 3
 [connection signal="toggled" from="VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/Fullscreen" to="." method="set_fullscreen"]
 [connection signal="item_selected" from="VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option" to="." method="set_resolution"]
 [connection signal="item_selected" from="VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option" to="." method="set_scaling"]
+[connection signal="toggled" from="VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay" to="." method="set_actionoverlay"]
 [connection signal="toggled" from="VBoxContainer/Offset/TabBar/Render/RenderVBox/EffectVBox/HQx4" to="." method="set_hq4x"]
 [connection signal="toggled" from="VBoxContainer/Offset/TabBar/Render/RenderVBox/EffectVBox/CRT" to="." method="set_crt"]
+[connection signal="value_changed" from="VBoxContainer/Offset/TabBar/Audio/VBoxContainer/Global Volume/HSlider" to="." method="set_audiogeneral"]

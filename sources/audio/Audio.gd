@@ -16,7 +16,7 @@ func Stop():
 		audioPlayer.Stop()
 
 func Load(soundName : String):
-	assert(audioPlayer, "AudioStreamPlayer could not be found")
+	Util.Assert(audioPlayer != null, "AudioStreamPlayer could not be found")
 	if audioPlayer && currentTrack != soundName && not soundName.is_empty() && Launcher.DB.MusicsDB[soundName] != null:
 		var soundStream : Resource = FileSystem.LoadMusic(Launcher.DB.MusicsDB[soundName]._path)
 		Util.Assert(soundStream != null, "Could not load music: " + soundName)
@@ -28,6 +28,11 @@ func Load(soundName : String):
 
 			audioPlayer.set_autoplay(true)
 			audioPlayer.play()
+
+func SetVolume(volume : float):
+	Util.Assert(audioPlayer != null, "AudioStreamPlayer could not be found")
+	if audioPlayer:
+		audioPlayer.set_volume_db(volume)
 
 func Warped():
 	if Launcher.Map.mapNode && Launcher.Map.mapNode.has_meta("music"):

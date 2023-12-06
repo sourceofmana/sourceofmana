@@ -1,6 +1,7 @@
 extends ServiceBase
 
 var isEnabled : bool			= true
+var supportMouse : bool			= true
 var clickTimer : Timer			= null
 var previousMove : Vector2		= Vector2.ZERO
 const stickDeadzone : float		= 0.2
@@ -77,7 +78,7 @@ func NewJoystickConnectionState(_deviceID: int = -1, _connected: bool = false):
 
 # Local player movement
 func _unhandled_input(_event):
-	if Launcher.Settings and Launcher.Settings.HasUIOverlay():
+	if not supportMouse:
 		return
 
 	if get_viewport() and Launcher.Camera and Launcher.Camera.mainCamera and clickTimer:

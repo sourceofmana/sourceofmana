@@ -17,7 +17,6 @@ var DB : ServiceBase				= null
 var FSM : ServiceBase				= null
 var Map : ServiceBase				= null
 var Save : ServiceBase				= null
-var Settings : ServiceBase			= null
 var World : ServiceBase				= null
 var Network : ServiceBase			= null
 
@@ -69,7 +68,6 @@ func LaunchClient():
 	Audio			= FileSystem.LoadSource("audio/Audio.gd")
 	Camera			= FileSystem.LoadSource("camera/Camera.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
-	Settings		= FileSystem.LoadSource("settings/Settings.gd")
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
@@ -108,7 +106,6 @@ func _post_launch():
 	if Conf and not Conf.isInitialized:			Conf._post_launch()
 	if DB and not DB.isInitialized:				DB._post_launch()
 	if World and not World.isInitialized:		World._post_launch()
-	if Settings and not Settings.isInitialized:	Settings._post_launch()
 	if FSM and not FSM.isInitialized:			FSM._post_launch()
 
 func _quit():

@@ -61,8 +61,7 @@ func EnterLoginMenu():
 	stats.set_visible(false)
 	notificationLabel.set_visible(false)
 	menu.set_visible(false)
-	boxes.set_visible(false)
-	sticks.set_visible(false)
+	shortcuts.set_visible(false)
 	quitWindow.set_visible(false)
 
 	background.set_visible(true)
@@ -80,12 +79,8 @@ func EnterGame():
 
 		stats.set_visible(true)
 		menu.set_visible(true)
+		shortcuts.set_visible(true)
 		notificationLabel.set_visible(true)
-
-		if Launcher.Settings.HasUIOverlay():
-			sticks.set_visible(true)
-		else:
-			boxes.set_visible(true)
 
 		for w in menuButtons.get_children():
 			w.set_visible(true)
