@@ -32,8 +32,6 @@ func GetMapBoundaries() -> Rect2:
 
 #
 func EmplaceMapNode(mapName : String):
-	Launcher.Network.GetEntities()
-
 	if mapNode && mapNode.get_name() != mapName:
 		UnloadMapNode()
 	LoadMapNode(mapName)
@@ -74,7 +72,7 @@ func AddChild(entity : BaseEntity):
 		tilemapNode.call_deferred("add_child", entity)
 
 #
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityPos : Vector2i, entityState : EntityCommons.State):
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, entityState : EntityCommons.State):
 	var isLocalPlayer : bool = entityName == Launcher.FSM.playerName and entityType == "Player"
 	var entity : BaseEntity = null
 	if tilemapNode:
@@ -89,8 +87,8 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 					Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
-		entity.set_position(entityPos)
-		entity.Update(Vector2.ZERO, entityPos, entityState)
+		entity.set_position(entityPosition)
+		entity.Update(entityVelocity, entityPosition, entityOrientation, entityState)
 
 		AddChild(entity)
 		entities[agentID] = entity
@@ -103,10 +101,10 @@ func RemoveEntity(agentID : int):
 	if entity:
 		RemoveChild(entity)
 
-func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentState : EntityCommons.State):
+func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : EntityCommons.State):
 	var entity : BaseEntity = entities.get(agentID)
 	if entity:
-		entity.Update(agentVelocity, agentPosition, agentState)
+		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState)
 
 func EmotePlayer(agentID : int, emoteID : int):
 	var entity : BaseEntity = entities.get(agentID)

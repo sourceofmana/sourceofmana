@@ -7,7 +7,7 @@ var animation : AnimationPlayer				= null
 var animationTree : AnimationTree			= null
 
 var collision : CollisionShape2D			= null
-var orientation : Vector2					= Vector2(0, 1)
+var previousOrientation : Vector2			= Vector2.ZERO
 var previousState : EntityCommons.State		= EntityCommons.State.UNKNOWN
 
 var blendSpacePaths : Dictionary			= {}
@@ -55,7 +55,6 @@ func ResetData():
 			sprites[spriteID].queue_free()
 			sprites[spriteID] = null
 	sprites.resize(EntityCommons.Slot.COUNT)
-	orientation = Vector2(0, 1)
 
 func LoadData(data : EntityData):
 	ResetData()
@@ -96,6 +95,7 @@ func LoadAnimationPaths():
 
 		if blendSpace in animationTree:
 			blendSpacePaths[i] = blendSpace
+
 		# Only set dynamic time scale for attack and walk as other can stay static
 		if i == EntityCommons.State.ATTACK or i == EntityCommons.State.WALK:
 			if timeScale in animationTree:
@@ -120,12 +120,7 @@ func ResetAnimationValue():
 
 	LoadAnimationPaths()
 	UpdateScale()
-
-	var stateName = EntityCommons.GetStateName(previousState)
-	animationTree[EntityCommons.playbackParameter].travel(stateName)
-	if previousState in blendSpacePaths:
-		var blendSpacePath = blendSpacePaths[previousState]
-		animationTree[blendSpacePath] = orientation
+	RefreshTree(previousState)
 
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
@@ -143,27 +138,24 @@ func Ready():
 	ApplySpriteOffset()
 
 func Refresh(_delta: float):
-	if not animationTree:
+	if not animationTree or not entity:
 		return
 
-	var currentEntityState = entity.entityState
+	var currentEntityState : EntityCommons.State = entity.entityState
 	var entityVelocity = entity.entityVelocity
-	# Check for changes in entity state and orientation
-	var hasNewOrientation : bool = false
 
-	if entityVelocity.length_squared() > 1:
-		var newOrientation: Vector2 = entityVelocity.normalized()
-		hasNewOrientation = orientation != newOrientation
-		orientation = newOrientation
+	var newOrientation : Vector2 = entityVelocity.normalized() if entityVelocity.length_squared() > 1 else entity.entityOrientation
+	var hasNewOrientation : bool = newOrientation != previousOrientation
 
-	if previousState == currentEntityState and not hasNewOrientation:
-		return
+	if previousState != currentEntityState or hasNewOrientation:
+		previousOrientation = newOrientation
+		RefreshTree(currentEntityState)
 
+func RefreshTree(currentEntityState : EntityCommons.State):
 	if currentEntityState in blendSpacePaths:
 		var blendSpacePath = blendSpacePaths[currentEntityState]
-		animationTree[blendSpacePath] = orientation
+		animationTree[blendSpacePath] = previousOrientation
 
-	if currentEntityState != previousState:
-		var stateName = EntityCommons.GetStateName(currentEntityState)
-		animationTree[EntityCommons.playbackParameter].travel(stateName)
-		previousState = currentEntityState
+	var stateName = EntityCommons.GetStateName(currentEntityState)
+	animationTree[EntityCommons.playbackParameter].travel(stateName)
+	previousState = currentEntityState

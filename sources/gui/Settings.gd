@@ -164,6 +164,7 @@ func _on_visibility_changed():
 
 func _ready():
 	RefreshSettings(true)
+	Launcher.FSM.enter_game.connect(RefreshSettings.bind(true))
 
 func _exit_tree():
 	SaveSettings()

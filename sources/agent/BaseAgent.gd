@@ -5,7 +5,6 @@ class_name BaseAgent
 var agent : NavigationAgent2D			= null
 var agentName : String					= ""
 var agentType : String					= ""
-var agentID : String					= ""
 
 var aiTimer : Timer						= null
 var castTimer : Timer					= null
@@ -15,6 +14,7 @@ var deathTimer : Timer					= null
 var hasCurrentGoal : bool				= false
 var isRelativeMode : bool				= false
 var currentDirection : Vector2			= Vector2.ZERO
+var currentOrientation : Vector2		= Vector2.ZERO
 
 var currentState : EntityCommons.State	= EntityCommons.State.IDLE
 var pastState : EntityCommons.State		= EntityCommons.State.IDLE
@@ -66,7 +66,6 @@ func UpdateInput():
 		else:
 			SwitchInputMode(true)
 
-func UpdateOrientation():
 	if currentInput != Vector2.ZERO:
 		currentVelocity = currentInput * stat.current.walkSpeed
 	else:
@@ -78,6 +77,16 @@ func SetVelocity():
 		move_and_slide()
 	else:
 		velocity = Vector2.ZERO
+
+func SetCurrentState():
+	if stat.health <= 0:
+		SetState(EntityCommons.State.DEATH)
+	elif isAttacking:
+		SetState(EntityCommons.State.ATTACK)
+	elif currentVelocity == Vector2i.ZERO:
+		SetState(EntityCommons.State.IDLE)
+	else:
+		SetState(EntityCommons.State.WALK)
 
 func SetState(nextState : EntityCommons.State) -> bool:
 	currentState = EntityCommons.GetNextTransition(currentState, nextState)
@@ -116,21 +125,30 @@ func IsStuck() -> bool:
 	return isStuck
 
 func HasChanged() -> bool:
-	return velocity != pastVelocity || currentState != pastState
+	if currentState != pastState:
+		return true
+	if velocity != pastVelocity:
+		if velocity == Vector2.ZERO or pastVelocity == Vector2.ZERO:
+			return true
+		if (velocity - pastVelocity).abs() > Vector2(5, 5):
+			return true
+	return false
 
 func UpdateChanged():
 	pastVelocity = velocity
 	pastState = currentState
+	if currentInput != Vector2.ZERO:
+		currentOrientation = Vector2(currentVelocity).normalized()
 
-	var updateFuncName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
-	Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, updateFuncName, [velocity, position, currentState])
+	var functionName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
+	Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, functionName, [velocity, position, currentOrientation, currentState])
+
 
 #
 func SetKind(entityType : String, entityID : String, entityName : String):
 	agentType	= entityType
-	agentID		= entityID
 
-	agentName	= agentID if entityName.length() == 0 else entityName
+	agentName	= entityID if entityName.length() == 0 else entityName
 	set_name(agentName)
 
 	if self is MonsterAgent or self is NpcAgent:
@@ -180,7 +198,6 @@ func _specific_process():
 func _internal_process():
 	if agent and get_parent():
 		UpdateInput()
-		UpdateOrientation()
 
 		if agent.get_avoidance_enabled():
 			agent.set_velocity(currentVelocity)
@@ -195,15 +212,7 @@ func _internal_process():
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
 
-	if stat.health <= 0:
-		SetState(EntityCommons.State.DEATH)
-	elif isAttacking:
-		SetState(EntityCommons.State.ATTACK)
-	elif currentVelocity == Vector2i.ZERO:
-		SetState(EntityCommons.State.IDLE)
-	else:
-		SetState(EntityCommons.State.WALK)
-
+	SetCurrentState()
 	SetVelocity()
 
 func _path_changed():

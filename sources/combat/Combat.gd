@@ -22,8 +22,11 @@ static func IsNear(agent : BaseAgent, enemy : BaseAgent) -> bool:
 
 #
 static func StartCastDelay(agent : BaseAgent):
-	Util.StartTimer(agent.castTimer, Formulas.GetCastAttackDelay(agent.stat), Combat.Attack.bind(agent))
-	agent.isAttacking = true
+	if agent and agent.target:
+		Util.StartTimer(agent.castTimer, Formulas.GetCastAttackDelay(agent.stat), Combat.Attack.bind(agent))
+		agent.isAttacking = true
+		agent.currentOrientation = Vector2(agent.target.position - agent.position).normalized()
+		agent.UpdateChanged()
 
 static func StartCooldownDelay(agent : BaseAgent):
 	Util.StartTimer(agent.cooldownTimer, Formulas.GetCooldownAttackDelay(agent.stat), Combat.Cast.bind(agent))

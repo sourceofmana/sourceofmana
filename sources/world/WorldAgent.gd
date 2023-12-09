@@ -94,7 +94,6 @@ static func PushAgent(agent : BaseAgent, inst : World.Instance):
 				inst.npcs.push_back(agent)
 
 			inst.call_deferred("add_child", agent)
-			Launcher.Network.Server.NotifyInstancePlayers(inst, agent, "AddEntity", [agent.agentType, agent.agentID, agent.agentName, agent.position, agent.currentState], false)
 	else:
 		WorldAgent.RemoveAgent(agent)
 

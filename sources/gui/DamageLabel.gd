@@ -8,10 +8,10 @@ var criticalDamage : bool					= false
 var HSVA : Vector4							= Vector4.ZERO
 var floorPosition : float					= 0.0
 
-const gravityRedux : float					= 3.0
-const maxVelocityAngle : float				= 0.6
-const minVelocitySpeed : float				= 0.4
-const maxVelocitySpeed : float				= 1.0
+const gravityRedux : float					= 180.0
+const maxVelocityAngle : float				= 36
+const minVelocitySpeed : float				= 24.0
+const maxVelocitySpeed : float				= 60.0
 const overheadOffset : int					= -10
 
 #
@@ -28,9 +28,9 @@ func SetDamage(damage : int, isTargetLocal : bool, isDealerLocal : bool, isCrit 
 	elif isTargetLocal:
 		hue = EntityCommons.LocalDamageColor
 	else:
-		hue = EntityCommons.EntityAttackColor
+		hue = 0.55
 
-	HSVA = Vector4(hue, 0.7, 1.0, 1.0)
+	HSVA = Vector4(hue, 0.8, 1.0, 1.0)
 	criticalDamage = isCrit
 
 	velocity.x = randf_range(-maxVelocityAngle, maxVelocityAngle)
@@ -50,7 +50,7 @@ func _process(delta):
 	if timeLeft < fadingTime:
 		modulate.a = timeLeft / fadingTime
 
-	var deltaVelocity : Vector2 = velocity * 1.0
+	var deltaVelocity : Vector2 = velocity * delta
 	if position.y - deltaVelocity.y >= floorPosition:
 		velocity.y = -velocity.y
 		velocity.y *= 0.66

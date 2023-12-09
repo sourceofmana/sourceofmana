@@ -49,19 +49,6 @@ func DisconnectPlayer(rpcID : int = Launcher.Network.RidSingleMode):
 		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.agentName, rpcID])
 
 #
-func GetEntities(rpcID : int = Launcher.Network.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
-	if player:
-		Launcher.Network.AddEntity(player.get_rid().get_id(), player.agentType, player.GetCurrentShapeID(), player.agentName, player.position, player.currentState, rpcID)
-		Launcher.Network.ForceUpdateEntity(player.get_rid().get_id(), player.velocity, player.position, player.currentState, rpcID)
-
-		var neighbours : Array[Array] = WorldAgent.GetNeighboursFromAgent(player)
-		for agents in neighbours:
-			for agent in agents:
-				if agent != player:
-					Launcher.Network.AddEntity(agent.get_rid().get_id(), agent.agentType, agent.GetCurrentShapeID(), agent.agentName, agent.position, agent.currentState, rpcID)
-					Launcher.Network.ForceUpdateEntity(agent.get_rid().get_id(), agent.velocity, agent.position, agent.currentState, rpcID)
-
 func SetClickPos(pos : Vector2, rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:

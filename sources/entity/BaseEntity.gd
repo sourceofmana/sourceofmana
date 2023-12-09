@@ -8,6 +8,7 @@ var entityName : String					= "PlayerName"
 var entityState : EntityCommons.State	= EntityCommons.State.IDLE
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
+var entityOrientation : Vector2			= Vector2.ZERO
 
 @onready var interactive : EntityInteractive	= $Interactions
 var inventory : EntityInventory			= EntityInventory.new()
@@ -32,7 +33,7 @@ func SetVisual(data : EntityData):
 	visual.Init(self, data)
 
 #
-func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextState : EntityCommons.State):
+func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : EntityCommons.State):
 	var dist = Vector2(gardbandPosition - position).length()
 	if dist > EntityCommons.MaxGuardbandDist:
 		position = gardbandPosition
@@ -40,6 +41,7 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextState : Enti
 	entityPosOffset = gardbandPosition - position
 	entityVelocity = nextVelocity
 	entityState = nextState
+	entityOrientation = nextOrientation
 
 #
 func _physics_process(delta):

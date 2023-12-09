@@ -106,20 +106,33 @@ func Spawn(map : Map, agent : BaseAgent, instanceID : int = 0):
 			if agent.agent:
 				agent.agent.set_velocity_forced(Vector2.ZERO)
 				agent.agent.set_navigation_map(map.mapRID)
+			agent.currentVelocity = Vector2.ZERO
+			agent.currentState = EntityCommons.State.IDLE
 
 			WorldAgent.PushAgent(agent, inst)
+			Util.OneShotCallback(agent.tree_entered, AgentWarped, [map, inst, agent])
 
-			if agent is PlayerAgent:
-				var agentID = Launcher.Network.Server.GetRid(agent)
-				if agentID != Launcher.Network.RidUnknown:
-					Util.OneShotCallback(agent.tree_entered, PlayerWarped, [map, agent])
+func AgentWarped(map : Map, instance : Instance, agent : BaseAgent):
+	if agent == null:
+		return
 
-func PlayerWarped(map : Map, player : PlayerAgent):
-	if map.spiritOnly != player.stat.morphed:
-		player.Morph()
+	if agent is PlayerAgent:
+		var playerID = Launcher.Network.Server.GetRid(agent)
+		if playerID == Launcher.Network.RidUnknown:
+			return
 
-	var playerID = Launcher.Network.Server.GetRid(player)
-	Launcher.Network.WarpPlayer(map.name, playerID)
+		if map.spiritOnly != agent.stat.morphed:
+			agent.Morph()
+
+		Launcher.Network.WarpPlayer(map.name, playerID)
+
+		var categories : Array[Array] = WorldAgent.GetNeighboursFromAgent(agent)
+		for neighbours in categories:
+			for neighbour in neighbours:
+				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.agentType, neighbour.GetCurrentShapeID(), neighbour.agentName, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.currentState, playerID)
+
+	Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "AddEntity", [agent.agentType, agent.GetCurrentShapeID(), agent.agentName, agent.velocity, agent.position, agent.currentOrientation, agent.currentState], false)
+
 
 # Generic
 func _post_launch():
