@@ -35,6 +35,7 @@ gdscript/completion/autocomplete_setters_and_getters=true
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/aspect="ignore"
+window/vsync/vsync_mode=0
 mouse_cursor/custom_image="res://data/graphics/gui/misc/mouse.png"
 mouse_cursor/tooltip_position_offset=Vector2(16, 16)
 window/size/width=1280
@@ -57,7 +58,6 @@ import/fbx/enabled=false
 
 [gui]
 
-fonts/dynamic_fonts/use_oversampling=false
 theme/default_font_subpixel_positioning=0
 theme/default_font_antialiased=false
 
@@ -311,13 +311,15 @@ textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 textures/lossless_compression/force_png=true
+camera/depth_of_field/depth_of_field_bokeh_shape=0
 anti_aliasing/screen_space_roughness_limiter/enabled=false
+textures/decals/filter=0
+textures/light_projectors/filter=0
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
 quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
 2d/snapping/use_gpu_pixel_snap=true
-threads/thread_model=2
 threads/thread_safe_bvh=true
 vram_compression/import_etc=true
 vram_compression/import_pvrtc=true

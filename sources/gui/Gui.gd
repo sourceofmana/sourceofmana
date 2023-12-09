@@ -20,7 +20,7 @@ extends ServiceBase
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
 
-@onready var menuButtons : Container			= $UIMargin/UIOverlay/Indicators/Menu/ButtonContent/HBoxButtons
+@onready var menuButtons : Container			= $UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxButtons
 @onready var notificationLabel : RichTextLabel	= $UIMargin/UIOverlay/Notification
 
 @onready var CRTShader : TextureRect			= $Shaders/CRT

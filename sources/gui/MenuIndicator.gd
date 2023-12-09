@@ -1,7 +1,7 @@
 extends Button
 
-@onready var content : Control				= $ButtonContent
-@onready var buttons : Control				= $ButtonContent/HBoxButtons
+@onready var content : Control				= $"../MenuContent"
+@onready var buttons : Control				= $"../MenuContent/HBoxButtons"
 
 var progress_speed : float = 0.0
 var is_playing : bool = false
