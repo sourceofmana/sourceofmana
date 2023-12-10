@@ -3,7 +3,7 @@ extends Node
 #
 func WarpPlayer(map : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.call_deferred("EmplaceMapNode", map)
+		Launcher.Map.EmplaceMapNode(map)
 		PushNotification(map, _rpcID)
 
 	if Launcher.Player:
@@ -15,7 +15,7 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = Launcher.Network.
 
 func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.call_deferred("AddEntity", agentID, entityType, entityID, entityName, velocity, position, orientation, entityState)
+		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, velocity, position, orientation, entityState)
 
 func RemoveEntity(agentID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
@@ -36,14 +36,14 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = Launcher.Network.Ri
 			if entity is PlayerEntity && Launcher.GUI:
 				Launcher.GUI.chatContainer.AddPlayerText(entity.entityName, text)
 			if entity.interactive:
-				entity.interactive.call_deferred("DisplaySpeech", text)
+				entity.interactive.DisplaySpeech(text)
 
 func DamageDealt(ridAgent : int, targetID : int, damage : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(targetID)
 		var caller : BaseEntity = Launcher.Map.entities.get(ridAgent)
 		if caller && entity && entity.get_parent() and entity.interactive:
-			entity.interactive.call_deferred("DisplayDamage", entity, caller, damage, false)
+			entity.interactive.DisplayDamage(entity, caller, damage, false)
 
 func Morphed(ridAgent : int, morphID : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:

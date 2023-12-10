@@ -120,7 +120,7 @@ func ResetAnimationValue():
 
 	LoadAnimationPaths()
 	UpdateScale()
-	RefreshTree(previousState)
+	RefreshTree()
 
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
@@ -141,21 +141,19 @@ func Refresh(_delta: float):
 	if not animationTree or not entity:
 		return
 
-	var currentEntityState : EntityCommons.State = entity.entityState
 	var entityVelocity = entity.entityVelocity
-
 	var newOrientation : Vector2 = entityVelocity.normalized() if entityVelocity.length_squared() > 1 else entity.entityOrientation
-	var hasNewOrientation : bool = newOrientation != previousOrientation
+	var newState : EntityCommons.State = EntityCommons.State.WALK if entityVelocity.length_squared() > 1 else entity.entityState
 
-	if previousState != currentEntityState or hasNewOrientation:
+	if previousState != newState or previousOrientation != newOrientation:
+		previousState = newState
 		previousOrientation = newOrientation
-		RefreshTree(currentEntityState)
+		RefreshTree()
 
-func RefreshTree(currentEntityState : EntityCommons.State):
-	if currentEntityState in blendSpacePaths:
-		var blendSpacePath = blendSpacePaths[currentEntityState]
+func RefreshTree():
+	if previousState in blendSpacePaths:
+		var blendSpacePath = blendSpacePaths[previousState]
 		animationTree[blendSpacePath] = previousOrientation
 
-	var stateName = EntityCommons.GetStateName(currentEntityState)
+	var stateName = EntityCommons.GetStateName(previousState)
 	animationTree[EntityCommons.playbackParameter].travel(stateName)
-	previousState = currentEntityState

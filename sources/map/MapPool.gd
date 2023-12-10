@@ -26,6 +26,7 @@ func FreeMap(map : String):
 	if map:
 		if pool.get(map) != null:
 			pool[map].queue_free()
+			pool[map] = null
 			var ret : bool = pool.erase(map)
 			Util.Assert(ret, "Could not remove map (" + map + ") from the pool")
 

@@ -32,18 +32,21 @@ func GetMapBoundaries() -> Rect2:
 
 #
 func EmplaceMapNode(mapName : String):
+	PhysicsServer2D.set_active(false)
+
 	if mapNode && mapNode.get_name() != mapName:
 		UnloadMapNode()
 	LoadMapNode(mapName)
 
-	if mapNode:
-		if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
-			pool.RefreshPool.call_deferred(mapNode)
+	PhysicsServer2D.set_active(true)
+
+	if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
+		pool.RefreshPool(mapNode)
 
 func UnloadMapNode():
 	if mapNode:
 		RemoveChildren()
-		Launcher.call_deferred("remove_child", mapNode)
+		Launcher.remove_child(mapNode)
 		mapNode = null
 		tilemapNode = null
 
@@ -52,24 +55,24 @@ func LoadMapNode(mapName : String):
 	Util.Assert(mapNode != null, "Map instance could not be created")
 	if mapNode:
 		RefreshTileMap()
-		Launcher.call_deferred("add_child", mapNode)
+		Launcher.add_child(mapNode)
 
 #
 func RemoveChildren():
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove children")
 	if tilemapNode:
 		for entity in tilemapNode.get_children():
-			tilemapNode.call_deferred("remove_child", entity)
+			tilemapNode.remove_child(entity)
 
 func RemoveChild(entity : BaseEntity):
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove a child entity")
 	if tilemapNode:
-		tilemapNode.call_deferred("remove_child", entity)
+		tilemapNode.remove_child(entity)
 
 func AddChild(entity : BaseEntity):
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not add a new child entity")
 	if tilemapNode:
-		tilemapNode.call_deferred("add_child", entity)
+		tilemapNode.add_child(entity)
 
 #
 func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, entityState : EntityCommons.State):
