@@ -30,3 +30,10 @@ func _ready():
 
 	modulateEnergy	= energy - baseEnergy
 	modulateScale	= texture_scale - baseScale
+
+func _enter_tree():
+	visible = Effects.shadowEnabled
+	Effects.shadowPool.push_back(self)
+
+func _exit_tree():
+	Effects.shadowPool.erase(self)
