@@ -4,7 +4,7 @@ extends WindowPanel
 @onready var passwordTextControl : LineEdit	= $VBoxContainer/GridContainer/PasswordContainer/PasswordText
 @onready var warningLabel : Label			= $VBoxContainer/Warning
 
-@onready var onlineCheck : CheckBox			= $"VBoxContainer/SignBar/OnlineButton"
+@onready var onlineCheck : CheckButton		= $VBoxContainer/SignBar/OnlineButton
 @onready var hostButton : Button			= $VBoxContainer/SignBar/Host
 @onready var playButton : Button			= $VBoxContainer/SignBar/Play
 @onready var registerButton : Button		= $VBoxContainer/SignBar/Register
