@@ -60,14 +60,15 @@ func LoadMapNode(mapName : String):
 #
 func RemoveChildren():
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove children")
-	if tilemapNode:
-		for entity in tilemapNode.get_children():
-			tilemapNode.remove_child(entity)
+	for entity in tilemapNode.get_children():
+		RemoveChild(entity)
+
 
 func RemoveChild(entity : BaseEntity):
-	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove a child entity")
 	if tilemapNode:
 		tilemapNode.remove_child(entity)
+	if Launcher.Player != entity:
+		entity.queue_free()
 
 func AddChild(entity : BaseEntity):
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not add a new child entity")
