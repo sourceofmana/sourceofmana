@@ -15,7 +15,7 @@ func SetLocalPlayer():
 			call_deferred("add_child", Launcher.Camera.mainCamera)
 
 func ClearTarget():
-	if target:
+	if target != null:
 		if target.visual.sprites[EntityCommons.Slot.BODY].material:
 			target.visual.sprites[EntityCommons.Slot.BODY].material = null
 		target = null

@@ -91,7 +91,6 @@ func AddEntity(agentID : int, entityType : String, entityID : String, entityName
 					Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
-		entity.set_position(entityPosition)
 		entity.Update(entityVelocity, entityPosition, entityOrientation, entityState)
 
 		AddChild(entity)

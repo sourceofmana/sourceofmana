@@ -52,6 +52,7 @@ func UpdateInput():
 			var pos : Vector2i = currentDirection.normalized() * Vector2(32,32) + position
 			if WorldNavigation.GetPathLength(self, pos) <= 64:
 				WalkToward(pos)
+				currentInput = currentDirection
 		else:
 			SwitchInputMode(true)
 
