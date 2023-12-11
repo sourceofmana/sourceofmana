@@ -8,5 +8,5 @@ static var shadowEnabled : bool				= false
 static func EnableShadow(enable : bool):
 	shadowEnabled = enable
 	for shadow in Effects.shadowPool:
-		print(shadow)
-		shadow.set_visible(enable)
+		if shadow:
+			shadow.set_visible(enable)
