@@ -290,8 +290,8 @@
  </tile>
  <tile id="60">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="0">
-    <polygon points="0,0 0,32 32,32 32,0"/>
+   <object id="2" x="0" y="0">
+    <polygon points="0,0 32,0 32,26 0,26"/>
    </object>
   </objectgroup>
  </tile>
