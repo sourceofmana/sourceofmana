@@ -18,7 +18,7 @@ var isResizing				= false
 var selectedEdge			= EdgeOrientation.NONE
 
 #
-func ClampViewport(globalPos : Vector2, moveLimit : Vector2):
+func ClampFloatingWindow(globalPos : Vector2, moveLimit : Vector2):
 	if selectedEdge == EdgeOrientation.BOTTOM_LEFT || selectedEdge == EdgeOrientation.LEFT || selectedEdge == EdgeOrientation.TOP_LEFT:
 		moveLimit.x -= custom_minimum_size.x
 	elif selectedEdge == EdgeOrientation.TOP_LEFT || selectedEdge == EdgeOrientation.TOP || selectedEdge == EdgeOrientation.TOP_RIGHT:
@@ -143,19 +143,19 @@ func OnGuiInput(event : InputEvent):
 
 func UpdateWindow(eventPosition : Vector2):
 	var scaleFactor : int = Launcher.Root.get_content_scale_factor()
-	var viewportSize : Vector2 = get_viewport().get_size()
+	var floatingWindowSize : Vector2 = Launcher.GUI.windows.get_size()
 	if scaleFactor > 0:
-		viewportSize /= scaleFactor
+		floatingWindowSize /= scaleFactor
 
 	if isResizing:
-		ResizeWindow(ClampViewport(eventPosition, viewportSize), eventPosition + position)
+		ResizeWindow(ClampFloatingWindow(eventPosition, floatingWindowSize), eventPosition + position)
 	else:
 		var newPosition : Vector2 = position
 		if clickPosition != null:
 			newPosition += eventPosition - clickPosition
-		size.x = clamp(size.x, get_minimum_size().x, viewportSize.x)
-		size.y = clamp(size.y, get_minimum_size().y, viewportSize.y)
-		position = ClampViewport(newPosition, viewportSize - get_size())
+		size.x = clamp(size.x, get_minimum_size().x, Launcher.GUI.windows.get_size().x)
+		size.y = clamp(size.y, get_minimum_size().y, Launcher.GUI.windows.get_size().y)
+		position = ClampFloatingWindow(newPosition, Launcher.GUI.windows.get_size() - get_size())
 
 func _on_CloseButton_pressed():
 	set_visible(false)

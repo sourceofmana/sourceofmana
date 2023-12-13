@@ -44,6 +44,7 @@ func set_fullscreen(pressed : bool):
 	apply_fullscreen(pressed)
 func apply_fullscreen(pressed : bool):
 	if pressed:
+		apply_resolution(10)
 		clear_resolution_labels()
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
