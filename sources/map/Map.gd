@@ -49,6 +49,7 @@ func UnloadMapNode():
 		Launcher.remove_child(mapNode)
 		mapNode = null
 		tilemapNode = null
+		entities.clear()
 
 func LoadMapNode(mapName : String):
 	mapNode = pool.LoadMapClientData(mapName)
@@ -67,7 +68,7 @@ func RemoveChildren():
 func RemoveChild(entity : BaseEntity):
 	if tilemapNode:
 		tilemapNode.remove_child(entity)
-	if Launcher.Player != entity:
+	if not entity is PlayerEntity:
 		entity.queue_free()
 
 func AddChild(entity : BaseEntity):
@@ -103,6 +104,7 @@ func RemoveEntity(agentID : int):
 	var entity : BaseEntity = entities.get(agentID)
 	if entity:
 		RemoveChild(entity)
+		entities.erase(agentID)
 
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : EntityCommons.State):
 	var entity : BaseEntity = entities.get(agentID)
