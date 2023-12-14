@@ -20,7 +20,6 @@ extends ServiceBase
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
 
-@onready var menuButtons : Container			= $UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxButtons
 @onready var notificationLabel : RichTextLabel	= $UIMargin/UIOverlay/Notification
 
 @onready var CRTShader : TextureRect			= $Shaders/CRT
@@ -53,10 +52,7 @@ func ToggleChatNewLine():
 
 #
 func EnterLoginMenu():
-	for w in menuButtons.get_children():
-		w.set_visible(false)
-		if w.targetWindow:
-			w.targetWindow.EnableControl(false)
+	menu.SetItemsVisible(false)
 
 	stats.set_visible(false)
 	notificationLabel.set_visible(false)
@@ -82,8 +78,7 @@ func EnterGame():
 		shortcuts.set_visible(true)
 		notificationLabel.set_visible(true)
 
-		for w in menuButtons.get_children():
-			w.set_visible(true)
+		menu.SetItemsVisible(true)
 
 #
 func _post_launch():

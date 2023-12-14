@@ -99,6 +99,7 @@ mouse_filter = 0
 
 [node name="Menu" type="Control" parent="UIMargin/UIOverlay/Indicators"]
 layout_mode = 2
+script = ExtResource("6_npwx0")
 
 [node name="MenuContent" type="TextureRect" parent="UIMargin/UIOverlay/Indicators/Menu"]
 material = SubResource("ShaderMaterial_wjdwk")
@@ -114,7 +115,7 @@ size_flags_vertical = 0
 texture = ExtResource("6_mf0sy")
 stretch_mode = 3
 
-[node name="HBoxButtons" type="HBoxContainer" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent"]
+[node name="HBoxItems" type="HBoxContainer" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent"]
 use_parent_material = true
 layout_mode = 1
 anchors_preset = 6
@@ -132,7 +133,7 @@ size_flags_vertical = 0
 mouse_filter = 0
 alignment = 2
 
-[node name="Inventory" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Inventory" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("5_ntnop")
@@ -141,7 +142,7 @@ icon_alignment = 1
 targetWindow = NodePath("../../../../../../../FloatingWindows/Inventory")
 targetShortcut = &"ui_inventory"
 
-[node name="Chat" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Chat" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("6_2quic")
@@ -149,7 +150,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Chat")
 targetShortcut = &"ui_chat"
 
-[node name="Minimap" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Minimap" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("7_cv35r")
@@ -157,7 +158,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Minimap")
 targetShortcut = &"ui_minimap"
 
-[node name="Emote" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Emote" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("8_ppxwt")
@@ -165,7 +166,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Emote")
 targetShortcut = &"ui_emote"
 
-[node name="News" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="News" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("9_vtuwx")
@@ -173,7 +174,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/News")
 targetShortcut = &"ui_news"
 
-[node name="Credits" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Credits" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("10_mq57a")
@@ -181,7 +182,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../FloatingWindows/Credit")
 targetShortcut = &"ui_credits"
 
-[node name="Settings" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxButtons" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Settings" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("11_17vy0")
@@ -202,7 +203,6 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_w48pk")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
-script = ExtResource("6_npwx0")
 
 [node name="Notification" parent="UIMargin/UIOverlay" instance=ExtResource("17_64u4l")]
 layout_mode = 2
@@ -439,7 +439,7 @@ visible = false
 top_level = true
 
 [connection signal="resized" from="UIMargin" to="." method="_on_ui_margin_resized"]
-[connection signal="pressed" from="UIMargin/UIOverlay/Indicators/Menu/MenuButton" to="UIMargin/UIOverlay/Indicators/Menu/MenuButton" method="_on_pressed"]
+[connection signal="pressed" from="UIMargin/UIOverlay/Indicators/Menu/MenuButton" to="UIMargin/UIOverlay/Indicators/Menu" method="_on_button_pressed"]
 [connection signal="button_down" from="UIMargin/UIOverlay/Shortcuts/Sticks/Direction" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_direction_button_down"]
 [connection signal="button_up" from="UIMargin/UIOverlay/Shortcuts/Sticks/Direction" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_direction_button_up"]
 [connection signal="pressed" from="UIMargin/UIOverlay/Shortcuts/Sticks/Actions/ButtonY" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_button_y_pressed"]
