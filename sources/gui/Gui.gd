@@ -13,9 +13,12 @@ extends ServiceBase
 @onready var newsWindow : WindowPanel			= $FloatingWindows/News
 @onready var loginWindow : WindowPanel			= $FloatingWindows/Login
 @onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
-@onready var settingsWindow : WindowPanel		= $FloatingWindows/Settings
-@onready var quitWindow : WindowPanel			= $FloatingWindows/Quit
+@onready var minimapWindow : WindowPanel		= $FloatingWindows/Minimap
 @onready var chatWindow : WindowPanel			= $FloatingWindows/Chat
+@onready var settingsWindow : WindowPanel		= $FloatingWindows/Settings
+@onready var emoteWindow : WindowPanel			= $FloatingWindows/Emote
+@onready var quitWindow : WindowPanel			= $FloatingWindows/Quit
+
 
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
