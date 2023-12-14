@@ -180,6 +180,10 @@ func _ready():
 	RefreshSettings(true)
 	Launcher.FSM.enter_game.connect(RefreshSettings.bind(true))
 
+	if OS.get_name() == "Android" or OS.get_name() == "iOS" or OS.get_name() == "Web":
+		accessors[CATEGORY.RENDER]["Render-WindowResolution"][ACC_TYPE.LABEL].get_parent().set_visible(false)
+		accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
+
 func _exit_tree():
 	SaveSettings()
 
