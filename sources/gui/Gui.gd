@@ -90,15 +90,17 @@ func _post_launch():
 	if Launcher.FSM and not Launcher.FSM.enter_game.is_connected(EnterGame):
 		Launcher.FSM.enter_game.connect(EnterGame)
 	get_tree().set_auto_accept_quit(false)
+	get_tree().set_quit_on_go_back(false)
 
 	isInitialized = true
 
 func _notification(notif):
-	if notif == Node.NOTIFICATION_WM_CLOSE_REQUEST:
-		ToggleControl(quitWindow)
-	elif notif == Node.NOTIFICATION_WM_MOUSE_EXIT:
-		if has_node("FloatingWindows"):
-			get_node("FloatingWindows").ClearWindowsModifier()
+	match notif:
+		Node.NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_WM_GO_BACK_REQUEST:
+			ToggleControl(quitWindow)
+		Node.NOTIFICATION_WM_MOUSE_EXIT:
+			if has_node("FloatingWindows"):
+				get_node("FloatingWindows").ClearWindowsModifier()
 
 func _ready():
 	Util.Assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
