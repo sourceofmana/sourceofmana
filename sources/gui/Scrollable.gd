@@ -18,6 +18,7 @@ func _ready():
 			for category in jsonData["categories"]:
 				if "category" in category:
 					var categoryLabel = RichTextLabel.new()
+					categoryLabel.set_mouse_filter(MOUSE_FILTER_IGNORE)
 					categoryLabel.bbcode_enabled = true
 					categoryLabel.fit_content = true
 					categoryLabel.add_theme_font_size_override("normal_font_size", 16)
@@ -29,6 +30,7 @@ func _ready():
 					for entry in category["entries"]:
 						if "title" in entry:
 							var titleLabel = RichTextLabel.new()
+							titleLabel.set_mouse_filter(MOUSE_FILTER_IGNORE)
 							titleLabel.bbcode_enabled = true
 							titleLabel.fit_content = true
 							titleLabel.autowrap_mode = TextServer.AUTOWRAP_OFF
@@ -42,6 +44,7 @@ func _ready():
 
 						if "content" in entry:
 							var contentLabel = RichTextLabel.new()
+							contentLabel.set_mouse_filter(MOUSE_FILTER_IGNORE)
 							contentLabel.bbcode_enabled = true
 							contentLabel.fit_content = true
 							contentLabel.add_theme_font_size_override("normal_font_size", 14)
