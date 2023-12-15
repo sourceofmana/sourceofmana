@@ -131,10 +131,11 @@ func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName :
 		var currentPlayerID = agent.get_rid().get_id()
 		if currentPlayerID != null:
 			for player in inst.players:
-				var playerID = player.get_rid().get_id()
-				var peerID = GetRid(player)
-				if peerID != Launcher.Network.RidUnknown && (inclusive || playerID != currentPlayerID):
-					Launcher.Network.callv(callbackName, [currentPlayerID] + args + [peerID])
+				if player != null:
+					var playerID = player.get_rid().get_id()
+					var peerID = GetRid(player)
+					if peerID != Launcher.Network.RidUnknown && (inclusive || playerID != currentPlayerID):
+						Launcher.Network.callv(callbackName, [currentPlayerID] + args + [peerID])
 
 #
 func ConnectPeer(rpcID : int):
