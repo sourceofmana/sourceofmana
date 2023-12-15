@@ -141,9 +141,9 @@ func Refresh(_delta: float):
 	if not animationTree or not entity:
 		return
 
-	var entityVelocity = entity.entityVelocity
-	var newOrientation : Vector2 = entityVelocity.normalized() if entityVelocity.length_squared() > 1 else entity.entityOrientation
-	var newState : EntityCommons.State = EntityCommons.State.WALK if entityVelocity.length_squared() > 1 else entity.entityState
+	var currentVelocity = entity.velocity
+	var newOrientation : Vector2 = currentVelocity.normalized() if currentVelocity.length_squared() > 1 else entity.entityOrientation
+	var newState : EntityCommons.State = EntityCommons.State.WALK if currentVelocity.length_squared() > 1 else entity.entityState
 
 	if previousState != newState or previousOrientation != newOrientation:
 		previousState = newState
