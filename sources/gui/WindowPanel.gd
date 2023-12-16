@@ -61,6 +61,11 @@ func ResizeWindow(pos : Vector2, globalPos : Vector2):
 	if maxSize.y != -1:
 		rectSize.y = clamp(rectSize.y, custom_minimum_size.y, maxSize.y)
 
+	if rectPos.x < 0:
+		rectPos.x = 0
+	if rectPos.y < 0:
+		rectPos.y = 0
+
 	size = rectSize
 	position = rectPos
 
