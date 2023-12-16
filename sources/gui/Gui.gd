@@ -19,8 +19,7 @@ extends ServiceBase
 @onready var emoteWindow : WindowPanel			= $FloatingWindows/Emote
 @onready var quitWindow : WindowPanel			= $FloatingWindows/Quit
 
-
-@onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/VBoxContainer
+@onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/Margin/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
 
 @onready var notificationLabel : RichTextLabel	= $UIMargin/UIOverlay/Notification

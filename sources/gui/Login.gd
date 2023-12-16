@@ -1,13 +1,13 @@
 extends WindowPanel
 
-@onready var nameTextControl : LineEdit		= $VBoxContainer/GridContainer/NameContainer/NameText
-@onready var passwordTextControl : LineEdit	= $VBoxContainer/GridContainer/PasswordContainer/PasswordText
-@onready var warningLabel : Label			= $VBoxContainer/Warning
+@onready var nameTextControl : LineEdit		= $Margin/VBoxContainer/GridContainer/NameContainer/NameText
+@onready var passwordTextControl : LineEdit	= $Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText
+@onready var warningLabel : Label			= $Margin/VBoxContainer/Warning
 
-@onready var onlineCheck : CheckButton		= $VBoxContainer/SignBar/OnlineButton
-@onready var hostButton : Button			= $VBoxContainer/SignBar/Host
-@onready var playButton : Button			= $VBoxContainer/SignBar/Play
-@onready var registerButton : Button		= $VBoxContainer/SignBar/Register
+@onready var onlineCheck : CheckButton		= $Margin/VBoxContainer/SignBar/OnlineButton
+@onready var hostButton : Button			= $Margin/VBoxContainer/SignBar/Host
+@onready var playButton : Button			= $Margin/VBoxContainer/SignBar/Play
+@onready var registerButton : Button		= $Margin/VBoxContainer/SignBar/Register
 
 #
 func FillWarningLabel(warn : String):

@@ -1,8 +1,8 @@
 extends WindowPanel
 
-@onready var stayButton : Button	= $VBoxContainer/ButtonChoice/Stay
-@onready var logOutButton : Button	= $VBoxContainer/ButtonChoice/LogOut
-@onready var quitButton : Button	= $VBoxContainer/ButtonChoice/Quit
+@onready var stayButton : Button	= $Margin/VBoxContainer/ButtonChoice/Stay
+@onready var logOutButton : Button	= $Margin/VBoxContainer/ButtonChoice/LogOut
+@onready var quitButton : Button	= $Margin/VBoxContainer/ButtonChoice/Quit
 
 #
 func EnableControl(state : bool):

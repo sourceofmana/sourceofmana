@@ -7,14 +7,14 @@ const userSection : String						= "User"
 @onready var accessors : Array						= [
 	{
 		"Render-MinWindowSize": [init_minwinsize, set_minwinsize, apply_minwinsize, null],
-		"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
-		"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
-		"Render-WindowResolution": [init_resolution, set_resolution, apply_resolution, $VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
-		"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $VBoxContainer/Offset/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
-		"Render-Shadow": [init_shadow, set_shadow, apply_shadow, $VBoxContainer/Offset/TabBar/Render/RenderVBox/EffectVBox/Shadow],
-		"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $VBoxContainer/Offset/TabBar/Render/RenderVBox/EffectVBox/HQx4],
-		"Render-CRT": [init_crt, set_crt, apply_crt, $VBoxContainer/Offset/TabBar/Render/RenderVBox/EffectVBox/CRT],
-		"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"VBoxContainer/Offset/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
+		"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
+		"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
+		"Render-WindowResolution": [init_resolution, set_resolution, apply_resolution, $Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
+		"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
+		"Render-Shadow": [init_shadow, set_shadow, apply_shadow, $Margin/TabBar/Render/RenderVBox/EffectVBox/Shadow],
+		"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
+		"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
+		"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
 	}
 ]
 

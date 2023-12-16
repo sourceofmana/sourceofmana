@@ -340,19 +340,22 @@ script = ExtResource("7")
 
 [node name="Quit" parent="FloatingWindows" instance=ExtResource("8")]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.40625
-anchor_top = 0.427778
-anchor_right = 0.625
-anchor_bottom = 0.594444
-offset_top = -78.0
-offset_right = 0.0
-offset_bottom = -64.6662
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -60.0
+offset_right = 140.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
 show_behind_parent = false
-layout_mode = 0
+layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -365,7 +368,7 @@ grow_vertical = 1
 
 [node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
 custom_minimum_size = Vector2(200, 125)
-layout_mode = 0
+layout_mode = 2
 offset_left = 1058.0
 offset_top = 6.0
 offset_right = 1258.0
@@ -374,7 +377,7 @@ blockActions = null
 
 [node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
 custom_minimum_size = Vector2(38, 38)
-layout_mode = 0
+layout_mode = 2
 offset_left = 68.0
 offset_top = 25.0
 offset_right = 306.0
@@ -382,7 +385,7 @@ offset_bottom = 68.0
 blockActions = false
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
-layout_mode = 0
+layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -394,15 +397,14 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Login" parent="FloatingWindows" instance=ExtResource("7_lrq68")]
-layout_mode = 1
-anchors_preset = -1
+layout_mode = 2
 anchor_left = 0.165625
 anchor_top = 0.427778
 anchor_right = 0.384375
 anchor_bottom = 0.597222
-offset_top = -78.0
+offset_top = -77.7779
 offset_right = 0.0
-offset_bottom = -59.4441
+offset_bottom = -80.222
 
 [node name="News" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
 layout_mode = 2
@@ -423,7 +425,8 @@ offset_bottom = 583.0
 jsonFile = ExtResource("16_pfh0e")
 
 [node name="Settings" parent="FloatingWindows" instance=ExtResource("16_gapih")]
-layout_mode = 1
+layout_mode = 2
+anchors_preset = 0
 offset_left = 488.0
 offset_top = 114.0
 offset_right = -453.0

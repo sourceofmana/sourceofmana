@@ -6,56 +6,41 @@
 
 [node name="Login" type="PanelContainer"]
 show_behind_parent = true
-custom_minimum_size = Vector2(280, 120)
+custom_minimum_size = Vector2(280, 100)
 offset_right = 280.0
-offset_bottom = 120.0
+offset_bottom = 106.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_dds2y")
 script = ExtResource("2_2pjk7")
 blockActions = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
 metadata/_edit_use_custom_anchors = true
 
-[node name="TitleBar" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="WindowName" type="Label" parent="VBoxContainer/TitleBar"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_filter = 1
-text = "Login"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Offset" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="Margin/VBoxContainer"]
 layout_mode = 2
 columns = 2
 
-[node name="NameLabel" type="Label" parent="VBoxContainer/GridContainer"]
+[node name="NameLabel" type="Label" parent="Margin/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Name"
 vertical_alignment = 1
 
-[node name="NameContainer" type="PanelContainer" parent="VBoxContainer/GridContainer"]
+[node name="NameContainer" type="PanelContainer" parent="Margin/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NameText" type="LineEdit" parent="VBoxContainer/GridContainer/NameContainer"]
+[node name="NameText" type="LineEdit" parent="Margin/VBoxContainer/GridContainer/NameContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_next = NodePath("../../PasswordContainer/PasswordText")
@@ -68,19 +53,19 @@ clear_button_enabled = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="PasswordLabel" type="Label" parent="VBoxContainer/GridContainer"]
+[node name="PasswordLabel" type="Label" parent="Margin/VBoxContainer/GridContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 text = "Password"
 vertical_alignment = 1
 
-[node name="PasswordContainer" type="PanelContainer" parent="VBoxContainer/GridContainer"]
+[node name="PasswordContainer" type="PanelContainer" parent="Margin/VBoxContainer/GridContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PasswordText" type="LineEdit" parent="VBoxContainer/GridContainer/PasswordContainer"]
+[node name="PasswordText" type="LineEdit" parent="Margin/VBoxContainer/GridContainer/PasswordContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
@@ -97,28 +82,26 @@ select_all_on_focus = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="Empty" type="Control" parent="VBoxContainer"]
+[node name="Control" type="Control" parent="Margin/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
 
-[node name="Warning" type="Label" parent="VBoxContainer"]
+[node name="Warning" type="Label" parent="Margin/VBoxContainer"]
 layout_mode = 2
 autowrap_mode = 3
 
-[node name="SignBar" type="HBoxContainer" parent="VBoxContainer"]
+[node name="SignBar" type="HBoxContainer" parent="Margin/VBoxContainer"]
 layout_mode = 2
-alignment = 1
+alignment = 2
 
-[node name="OnlineButton" type="CheckButton" parent="VBoxContainer/SignBar"]
+[node name="OnlineButton" type="CheckButton" parent="Margin/VBoxContainer/SignBar"]
 layout_mode = 2
 size_flags_horizontal = 2
 focus_previous = NodePath("../../GridContainer/NameContainer/NameText")
 button_pressed = true
 text = "Online"
 
-[node name="Host" type="Button" parent="VBoxContainer/SignBar"]
+[node name="Host" type="Button" parent="Margin/VBoxContainer/SignBar"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -126,7 +109,7 @@ focus_next = NodePath("../Play")
 focus_previous = NodePath("../../GridContainer/PasswordContainer/PasswordText")
 text = "Host"
 
-[node name="Play" type="Button" parent="VBoxContainer/SignBar"]
+[node name="Play" type="Button" parent="Margin/VBoxContainer/SignBar"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -134,7 +117,7 @@ focus_next = NodePath("../../GridContainer/NameContainer/NameText")
 focus_previous = NodePath("../../GridContainer/PasswordContainer/PasswordText")
 text = "Play"
 
-[node name="Register" type="Button" parent="VBoxContainer/SignBar"]
+[node name="Register" type="Button" parent="Margin/VBoxContainer/SignBar"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 0
@@ -143,8 +126,7 @@ focus_next = NodePath("../../GridContainer/NameContainer/NameText")
 focus_previous = NodePath("../Play")
 text = "Register"
 
-[connection signal="gui_input" from="." to="." method="OnGuiInput"]
-[connection signal="text_submitted" from="VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_submitted"]
-[connection signal="text_submitted" from="VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_submitted"]
-[connection signal="pressed" from="VBoxContainer/SignBar/Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="VBoxContainer/SignBar/Play" to="." method="_on_play_pressed"]
+[connection signal="text_submitted" from="Margin/VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_submitted"]
+[connection signal="text_submitted" from="Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_submitted"]
+[connection signal="pressed" from="Margin/VBoxContainer/SignBar/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/SignBar/Play" to="." method="_on_play_pressed"]

@@ -1,8 +1,8 @@
 extends WindowPanel
 
-@onready var weightStat : Control		= $VBoxContainer/Weight/BgTex/Weight
-@onready var itemGrid : GridContainer	= $VBoxContainer/ItemContainer/Grid
-@onready var itemContainer : Container	= $VBoxContainer/ItemContainer
+@onready var weightStat : Control		= $Margin/VBoxContainer/Weight/BgTex/Weight
+@onready var itemGrid : GridContainer	= $Margin/VBoxContainer/ItemContainer/Grid
+@onready var itemContainer : Container	= $Margin/VBoxContainer/ItemContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -11,24 +11,17 @@ theme = ExtResource("1")
 script = ExtResource("3")
 blockActions = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
 
-[node name="TitleBar" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-metadata/_edit_layout_mode = 1
-
-[node name="WindowName" type="Label" parent="VBoxContainer/TitleBar"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "Quit"
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="Margin/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 text = "Any time spent in the real world is less time spent in the mana world!"
@@ -37,29 +30,29 @@ vertical_alignment = 1
 autowrap_mode = 2
 language = "en_GB"
 
-[node name="ButtonChoice" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ButtonChoice" type="HBoxContainer" parent="Margin/VBoxContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="Quit" type="Button" parent="VBoxContainer/ButtonChoice"]
+[node name="Quit" type="Button" parent="Margin/VBoxContainer/ButtonChoice"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Quit"
 
-[node name="LogOut" type="Button" parent="VBoxContainer/ButtonChoice"]
+[node name="LogOut" type="Button" parent="Margin/VBoxContainer/ButtonChoice"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Log Out"
 
-[node name="Stay" type="Button" parent="VBoxContainer/ButtonChoice"]
+[node name="Stay" type="Button" parent="Margin/VBoxContainer/ButtonChoice"]
 layout_mode = 2
 text = "Stay"
 
-[node name="Container" type="MarginContainer" parent="VBoxContainer"]
+[node name="Container" type="MarginContainer" parent="Margin/VBoxContainer"]
 layout_mode = 2
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
-[connection signal="draw" from="VBoxContainer/ButtonChoice" to="." method="_on_window_draw"]
-[connection signal="pressed" from="VBoxContainer/ButtonChoice/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonChoice/LogOut" to="." method="_on_logout_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonChoice/Stay" to="." method="_on_stay_pressed"]
+[connection signal="draw" from="Margin/VBoxContainer/ButtonChoice" to="." method="_on_window_draw"]
+[connection signal="pressed" from="Margin/VBoxContainer/ButtonChoice/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/ButtonChoice/LogOut" to="." method="_on_logout_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/ButtonChoice/Stay" to="." method="_on_stay_pressed"]
