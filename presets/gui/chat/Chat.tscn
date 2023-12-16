@@ -38,7 +38,6 @@ theme = ExtResource("1_qmu1c")
 drag_to_rearrange_enabled = true
 
 [node name="NewText" type="LineEdit" parent="Margin/VBoxContainer"]
-visible = false
 layout_mode = 2
 focus_mode = 1
 theme_override_fonts/font = ExtResource("4_0mdev")

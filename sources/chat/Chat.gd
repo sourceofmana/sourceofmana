@@ -29,8 +29,9 @@ func isNewLineEnabled():
 
 func SetNewLineEnabled(enable : bool):
 	if lineEdit && enabledLastFrame == false:
-		lineEdit.set_visible(enable)
-		Launcher.Action.Enable(!enable)
+		if OS.get_name() != "Android" and OS.get_name() != "iOS":
+			lineEdit.set_visible(enable)
+			Launcher.Action.Enable(!enable)
 		if enable:
 			lineEdit.grab_focus()
 		else:
@@ -71,3 +72,4 @@ func _ready():
 		tabContainer.add_child(newTab)
 
 		AddSystemText("Welcome to " + Launcher.Conf.GetString("Default", "projectName", Launcher.Conf.Type.PROJECT))
+		SetNewLineEnabled(false)
