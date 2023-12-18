@@ -26,4 +26,4 @@ func set_data(p_item: InventoryItem):
 
 
 func _on_icon_button_up():
-	emit_signal('ItemClicked', item)
+	ItemClicked.emit(item)

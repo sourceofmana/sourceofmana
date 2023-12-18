@@ -21,15 +21,15 @@ static func ResourceLoad(path : String) -> Object:
 	return ResourceLoader.load(path)
 
 static func ResourceInstance(path : String) -> Object:
-	var resourceLoaded		= ResourceLoad(path)
-	var resourceInstance	= null
+	var resourceLoaded : Object		= ResourceLoad(path)
+	var resourceInstance : Object	= null
 	if resourceLoaded != null && CanInstantiateResource(resourceLoaded):
 		resourceInstance = resourceLoaded.instantiate()
 	return resourceInstance
 
 static func ResourceInstanceOrLoad(path : String) -> Object:
-	var resourceLoaded		= ResourceLoad(path)
-	var resource			= null
+	var resourceLoaded : Object		= ResourceLoad(path)
+	var resource : Object			= null
 	if resourceLoaded != null:
 		if CanInstantiateResource(resourceLoaded):
 			resource = resourceLoaded.instantiate()
@@ -86,10 +86,6 @@ static func LoadDB(path : String) -> Dictionary:
 
 	return result
 
-static func LoadDBInstance(path : String) -> Object:
-	var partialPath : String = "db/instance/" + path
-	return LoadSource(partialPath, false)
-
 # Map
 static func LoadMap(path : String, ext : String) -> Object:
 	var mapInstance : Object	= null
@@ -128,7 +124,7 @@ static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
 	if pathExists or userDir:
 		cfgFile = ConfigFile.new()
 		if pathExists:
-			var err = cfgFile.load(fullPath)
+			var err : Error = cfgFile.load(fullPath)
 			Util.Assert(err == OK, "Error loading the config file " + path + " located at " + fullPath)
 
 			if err != OK:
@@ -145,8 +141,8 @@ static func SaveConfig(path : String, cfgFile : ConfigFile):
 	Util.Assert(cfgFile != null, "Config file " + path + " not initialized")
 
 	if cfgFile:
-		var fullPath = Path.Local + path + Path.ConfExt
-		var err = cfgFile.save(fullPath)
+		var fullPath : String = Path.Local + path + Path.ConfExt
+		var err : Error = cfgFile.save(fullPath)
 		Util.Assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
 		Util.PrintLog("Config", "Saving file: " + fullPath)
 
@@ -218,7 +214,7 @@ static func SaveScreenshot():
 		savePath += Path.GfxExt
 
 		if not dir.dir_exists(savePath):
-			var ret = image.save_png(savePath)
+			var ret : Error = image.save_png(savePath)
 			Util.Assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
 			if ret == OK:
 				Util.PrintInfo("FileSystem", "Saving capture: " + savePath)

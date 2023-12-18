@@ -26,7 +26,7 @@ func _on_timer_timeout():
 	ClearNotification()
 
 #
-func _physics_process(delta):
+func _physics_process(delta : float):
 	if modulateWay > 0 and modulate.a < 1.0:
 		modulate.a = clampf(modulate.a + delta * modulateInScaler, 0.0, 1.0)
 	elif modulateWay < 0 and modulate.a > 0.0:

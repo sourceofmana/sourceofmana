@@ -35,7 +35,7 @@ func _ready():
 	self.body_exited.connect(bodyExited)
 
 	var particle : CPUParticles2D = particlePreset.instantiate()
-	call_deferred("add_child", particle)
+	add_child.call_deferred(particle)
 
 	particle.emission_shape = CPUParticles2D.EmissionShape.EMISSION_SHAPE_POINTS
 	particle.emission_points = randomPoints

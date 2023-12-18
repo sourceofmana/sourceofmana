@@ -30,15 +30,15 @@ func update_inventory():
 func update_inventory_ui():
 	for oldItem in itemGrid.get_children():
 		itemGrid.remove_child(oldItem)
-		oldItem.disconnect("ItemClicked", _on_item_click)
+		oldItem.ItemClicked.disconnect(_on_item_click)
 		oldItem.queue_free()
 
 	var tilePreset = FileSystem.LoadGui("inventory/ItemGridTile", false)
 	for item in Launcher.Player.inventory.items:
 		var tileInstance : InventoryItemGridTile = tilePreset.instantiate()
 		tileInstance.set_data(item)
-		tileInstance.connect("ItemClicked", _on_item_click)
-		itemGrid.call_deferred("add_child", tileInstance)
+		tileInstance.ItemClicked.connect(_on_item_click)
+		itemGrid.add_child.call_deferred(tileInstance)
 
 func _on_item_click(item: InventoryItem):
 	Launcher.Player.inventory.use_item(item)

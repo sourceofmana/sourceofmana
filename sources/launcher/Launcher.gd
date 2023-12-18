@@ -56,7 +56,7 @@ func LaunchMode(isClient : bool = false, isServer : bool = false):
 			# TODO: add a GUI to display various server stats
 			var label = Label.new()
 			label.text = "Server mode started, to hide this window run this binary from the terminal as follow: ./path/to/source_of_mana --headless --server"
-			call_deferred("add_child", label)
+			add_child.call_deferred(label)
 
 		Network.NetCreate()
 
@@ -71,7 +71,7 @@ func LaunchClient():
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
-	call_deferred("add_child", World)
+	add_child.call_deferred(World)
 
 #
 func _enter_tree():

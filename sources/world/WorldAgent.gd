@@ -79,7 +79,7 @@ static func PopAgent(agent : BaseAgent):
 				inst.mobs.erase(agent)
 			elif agent is NpcAgent:
 				inst.npcs.erase(agent)
-			inst.call_deferred("remove_child", agent)
+			inst.remove_child.call_deferred(agent)
 
 static func PushAgent(agent : BaseAgent, inst : World.Instance):
 	Util.Assert(agent != null, "Agent is null, can't push it")
@@ -93,7 +93,7 @@ static func PushAgent(agent : BaseAgent, inst : World.Instance):
 			elif agent is NpcAgent:
 				inst.npcs.push_back(agent)
 
-			inst.call_deferred("add_child", agent)
+			inst.add_child.call_deferred(agent)
 	else:
 		WorldAgent.RemoveAgent(agent)
 

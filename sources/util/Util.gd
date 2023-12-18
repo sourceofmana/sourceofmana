@@ -44,12 +44,12 @@ static func GetScreenCapture() -> Image:
 
 #
 static func ColorToHSVA(color : Color) -> Vector4:
-	var maxc = max(color.r, max(color.g, color.b))
-	var minc = min(color.r, min(color.g, color.b))
-	var delta = maxc - minc
-	var h = 0.0
-	var s = 0.0
-	var v = maxc
+	var maxc : float = max(color.r, max(color.g, color.b))
+	var minc : float = min(color.r, min(color.g, color.b))
+	var delta : float = maxc - minc
+	var h : float = 0.0
+	var s : float = 0.0
+	var v : float = maxc
 
 	if delta > 0.00001:
 		s = delta / maxc

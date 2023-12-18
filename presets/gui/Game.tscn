@@ -373,7 +373,6 @@ offset_left = 1058.0
 offset_top = 6.0
 offset_right = 1258.0
 offset_bottom = 131.0
-blockActions = null
 
 [node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
 custom_minimum_size = Vector2(38, 38)

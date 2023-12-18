@@ -30,7 +30,7 @@ func LoadSprite(slot : EntityCommons.Slot, sprite : Sprite2D, customTexturePath 
 
 	if not sprite:
 		sprite = Sprite2D.new()
-		animation.call_deferred("add_child", sprite)
+		animation.add_child.call_deferred(sprite)
 
 	sprites[slot] = sprite
 	sprites[slot].material = materialResource
@@ -63,7 +63,7 @@ func LoadData(data : EntityData):
 	if data._collision:
 		collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
 		if collision:
-			entity.call_deferred("add_child", collision)
+			entity.add_child.call_deferred(collision)
 
 	# Animation
 	if data._ethnicity:

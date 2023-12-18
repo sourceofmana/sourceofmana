@@ -12,7 +12,7 @@ func SetLocalPlayer():
 	if Launcher.Camera:
 		Launcher.Camera.mainCamera = FileSystem.LoadEntityComponent("Camera")
 		if Launcher.Camera.mainCamera:
-			call_deferred("add_child", Launcher.Camera.mainCamera)
+			add_child.call_deferred(Launcher.Camera.mainCamera)
 
 func ClearTarget():
 	if target != null:
@@ -40,10 +40,10 @@ func Interact():
 			if entityID != null:
 				if target is NpcEntity:
 					Launcher.Network.TriggerInteract(entityID)
-					target.visual.call_deferred("SetMainMaterial", EntityCommons.AllyTarget)
+					target.visual.SetMainMaterial.call_deferred(EntityCommons.AllyTarget)
 				elif target is MonsterEntity:
 					Launcher.Network.TriggerDamage(entityID)
-					target.visual.call_deferred("SetMainMaterial", EntityCommons.EnemyTarget)
+					target.visual.SetMainMaterial.call_deferred(EntityCommons.EnemyTarget)
 
 #
 func _process(deltaTime : float):

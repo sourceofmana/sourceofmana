@@ -29,7 +29,7 @@ func FillGridContainer(listOfItem : Dictionary):
 		_on_panel_resized()
 
 func OnItemPressed(item : String):
-	emit_signal('ItemClicked', item)
+	ItemClicked.emit(item)
 
 #
 func _on_panel_resized():

@@ -56,7 +56,7 @@ func GetString(section : String, key : String, type : Type = Type.NONE) -> Strin
 	return GetVariant(section, key, type, "")
 
 func SetValue(section : String, key : String, type : Type, value):
-	Util.Assert(type < Type.COUNT and confFiles[type], "Can't find %s within our loaded conf files")
+	Util.Assert(type < Type.COUNT and confFiles[type] != null, "Can't find %s within our loaded conf files")
 	if type >= Type.COUNT or not confFiles[type]:
 		return
 

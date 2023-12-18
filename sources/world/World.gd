@@ -73,7 +73,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 		for i in spawn.count:
 			WorldAgent.CreateAgent(spawn, instanceID)
 
-	Launcher.Root.call_deferred("add_child", inst)
+	Launcher.Root.add_child.call_deferred(inst)
 
 # Getters
 func CanWarp(agent : BaseAgent) -> WarpObject:

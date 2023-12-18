@@ -31,7 +31,7 @@ func AddTimer(parent : Node, delay : float, callable: Callable) -> Timer:
 	timer.set_autostart(true)
 	timer.set_wait_time(delay)
 	timer.timeout.connect(callable)
-	parent.call_deferred("add_child", timer)
+	parent.add_child.call_deferred(timer)
 	return timer
 
 #
@@ -48,7 +48,7 @@ func AddEmoteResources(emoteID : int):
 	var emoteStringID : String = str(emoteID)
 	currentEmoteID = emoteID
 	if Launcher.DB.EmotesDB && Launcher.DB.EmotesDB[emoteStringID]:
-		var emoteIcon : Resource = FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteStringID]._path)
+		var emoteIcon : Texture2D = FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteStringID]._path)
 		if emoteSprite && emoteIcon:
 			emoteSprite.set_texture(emoteIcon)
 		emoteTimer = AddTimer(emoteSprite, emoteDelay, RemoveEmoteResources)

@@ -175,7 +175,7 @@ func NetCreate():
 
 		if Launcher.Debug:
 			serverAddress = LocalhostIP
-		var ret = peer.create_client(serverAddress, serverPort)
+		var ret : Error = peer.create_client(serverAddress, serverPort)
 		Util.Assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, serverPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer

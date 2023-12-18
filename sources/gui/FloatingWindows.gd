@@ -26,4 +26,4 @@ func _on_window_resized():
 		if overallRatio != Vector2.ONE:
 			for child in get_children():
 				child.set_position(child.get_position() * overallRatio)
-				child.call_deferred("UpdateWindow", Vector2.ZERO)
+				child.UpdateWindow.call_deferred(Vector2.ZERO)
