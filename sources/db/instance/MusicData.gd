@@ -1,4 +1,5 @@
 extends Node
+class_name MusicData
 
 @export var _name : String
 @export var _path : String

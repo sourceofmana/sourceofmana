@@ -9,34 +9,31 @@ var EmotesDB : Dictionary			= {}
 
 #
 func ParseMapsDB():
-	var Map		= FileSystem.LoadDBInstance("Map.gd")
-	var result	= FileSystem.LoadDB("maps.json")
+	var result = FileSystem.LoadDB("maps.json")
 
 	if not result.is_empty():
 		for key in result:
-			var map = Map.new()
+			var map : MapData = MapData.new()
 			map._name = key
 			map._path = result[key].Path
 			MapsDB[key] = map
 
 func ParseMusicsDB():
-	var Music	= FileSystem.LoadDBInstance("Music.gd")
-	var result	= FileSystem.LoadDB("musics.json")
+	var result = FileSystem.LoadDB("musics.json")
 
 	if not result.is_empty():
 		for key in result:
-			var music = Music.new()
+			var music : MusicData = MusicData.new()
 			music._name = key
 			music._path = result[key].Path
 			MusicsDB[key] = music
 
 func ParseEthnicitiesDB():
-	var Trait	= FileSystem.LoadDBInstance("Trait.gd")
-	var result	= FileSystem.LoadDB("ethnicities.json")
+	var result = FileSystem.LoadDB("ethnicities.json")
 
 	if not result.is_empty():
 		for key in result:
-			var ethnicity = Trait.new()
+			var ethnicity : TraitData = TraitData.new()
 			ethnicity._name = key
 			ethnicity._path.append(result[key].Male)
 			ethnicity._path.append(result[key].Female)
@@ -44,12 +41,11 @@ func ParseEthnicitiesDB():
 			EthnicitiesDB[key] = ethnicity
 
 func ParseHairstylesDB():
-	var Trait	= FileSystem.LoadDBInstance("Trait.gd")
-	var result	= FileSystem.LoadDB("hairstyles.json")
+	var result = FileSystem.LoadDB("hairstyles.json")
 
 	if not result.is_empty():
 		for key in result:
-			var hairstyle = Trait.new()
+			var hairstyle : TraitData = TraitData.new()
 			hairstyle._name = key
 			hairstyle._path.append(result[key].Male)
 			hairstyle._path.append(result[key].Female)
@@ -57,12 +53,11 @@ func ParseHairstylesDB():
 			HairstylesDB[key] = hairstyle
 
 func ParseEntitiesDB():
-	var Entity	= FileSystem.LoadDBInstance("Entity.gd")
-	var result	= FileSystem.LoadDB("entities.json")
+	var result = FileSystem.LoadDB("entities.json")
 
 	if not result.is_empty():
 		for key in result:
-			var entity = Entity.new()
+			var entity : EntityData = EntityData.new()
 			entity._id = key.to_int()
 			entity._name = result[key].Name
 			if "Ethnicity" in result[key]:
@@ -85,12 +80,11 @@ func ParseEntitiesDB():
 
 #
 func ParseEmotesDB():
-	var Emote	= FileSystem.LoadDBInstance("Emote.gd")
-	var result	= FileSystem.LoadDB("emotes.json")
+	var result = FileSystem.LoadDB("emotes.json")
 
 	if not result.is_empty():
 		for key in result:
-			var emote = Emote.new()
+			var emote : EmoteData = EmoteData.new()
 			emote._id = key.to_int()
 			emote._name = result[key].Name
 			emote._path = result[key].Path

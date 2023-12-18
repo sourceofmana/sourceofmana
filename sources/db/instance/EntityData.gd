@@ -1,5 +1,4 @@
 extends Node
-
 class_name EntityData
 
 @export var _id : int
