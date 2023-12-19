@@ -62,12 +62,12 @@ static func ClampMana(stat : EntityStats) -> int:
 static func ClampStamina(stat : EntityStats) -> int:
 	return clampi(stat.stamina, 0, stat.current.maxStamina)
 
-static func GetWeight(inventory : EntityInventory) -> int:
-	return inventory.calculate_weight() / 1000
+static func GetWeight(inventory : EntityInventory) -> float:
+	return inventory.calculate_weight() / 1000.0
 
 #
 static func GetAttackRatio(stat : EntityStats) -> float:
-			return stat.current.attackSpeed / stat.base.attackSpeed
+	return stat.current.attackSpeed / stat.base.attackSpeed
 
 static func GetWalkRatio(stat : EntityStats) -> float:
 	return stat.current.walkSpeed / stat.base.walkSpeed

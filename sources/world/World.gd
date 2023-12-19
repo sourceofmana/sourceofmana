@@ -1,6 +1,6 @@
 extends ServiceBase
 
-class_name World
+class_name WorldService
 
 # Types
 class Instance extends SubViewport:
@@ -144,7 +144,7 @@ func _post_launch():
 		areas[mapName] = map
 
 	var mapName : String			= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
-	defaultSpawn.map				= Launcher.World.GetMap(mapName)
+	defaultSpawn.map				= GetMap(mapName)
 	defaultSpawn.spawn_position		= Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP)
 	defaultSpawn.type				= "Player"
 	defaultSpawn.name				= "Default Entity"

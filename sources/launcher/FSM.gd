@@ -10,7 +10,7 @@ enum States { NONE = 0, LOGIN_CONNECTION, CHAR_SELECTION, IN_GAME, QUIT }
 enum Phases { ENTER = 0, UPDATE, EXIT }
 
 #
-var playerName						= ""
+var playerName : String				= ""
 
 var lastState : States				= States.NONE
 var currentState : States			= States.NONE

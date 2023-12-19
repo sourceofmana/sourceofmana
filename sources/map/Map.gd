@@ -62,7 +62,7 @@ func LoadMapNode(mapName : String):
 func RemoveChildren():
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove children")
 	for entity in tilemapNode.get_children():
-		RemoveChild(entity)
+		RemoveChild(entity as BaseEntity)
 
 
 func RemoveChild(entity : BaseEntity):

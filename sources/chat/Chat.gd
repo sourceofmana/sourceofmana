@@ -24,7 +24,7 @@ func AddText(speech : String, color : Color):
 	if tabContainer && tabContainer.get_current_tab_control():
 		tabContainer.get_current_tab_control().text += "[color=#" + color.to_html(false) + "]" + speech + "[/color]\n"
 
-func isNewLineEnabled():
+func isNewLineEnabled() -> bool:
 	return lineEdit.is_visible() if lineEdit else false 
 
 func SetNewLineEnabled(enable : bool):
@@ -38,7 +38,7 @@ func SetNewLineEnabled(enable : bool):
 			enabledLastFrame = true
 
 #
-func OnNewTextSubmitted(newText):
+func OnNewTextSubmitted(newText : String):
 	if lineEdit:
 		if newText.is_empty() == false:
 			lineEdit.clear()

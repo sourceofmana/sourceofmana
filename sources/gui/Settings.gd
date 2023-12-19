@@ -167,7 +167,7 @@ func set_audiogeneral(volumeRatio : float):
 	apply_audiogeneral(volumeRatio)
 func apply_audiogeneral(volumeRatio : float):
 	if Launcher.Audio:
-		var interpolation : float = clamp((log(clamp(volumeRatio, 0.0, 1.0)) + 5.0) / 5.0, 0.0, 1.06)
+		var interpolation : float = clamp((log(clampf(volumeRatio, 0.0, 1.0)) + 5.0) / 5.0, 0.0, 1.06)
 		Launcher.Audio.SetVolume((1.0 - interpolation) * -80.0)
 
 #

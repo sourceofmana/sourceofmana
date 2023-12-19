@@ -70,7 +70,7 @@ func TriggerWarp(rpcID : int = Launcher.Network.RidSingleMode):
 	if player:
 		var warp : WarpObject = Launcher.World.CanWarp(player)
 		if warp:
-			var nextMap : World.Map = Launcher.World.GetMap(warp.destinationMap)
+			var nextMap : WorldService.Map = Launcher.World.GetMap(warp.destinationMap)
 			if nextMap:
 				Launcher.World.Warp(player, nextMap, warp.destinationPos)
 

@@ -13,20 +13,20 @@ extends Control
 @export var displayMax : bool					= true
 @export var fillMode : ProgressBar.FillMode		= ProgressBar.FILL_BEGIN_TO_END
 
-@onready var bar : TextureProgressBar		= $Bar
-@onready var label : Label					= $Label
+@onready var bar : TextureProgressBar			= $Bar
+@onready var label : Label						= $Label
 
-var isUpdating			= false
-var remainsToFillSec	= 0.0
-var initDelayToFillSec	= 0.0
-var valueFrom			= 0
-var valueTo				= 0
-var valueMax			= 0
-var valueTmp			= 0
+var isUpdating : bool							= false
+var remainsToFillSec : float					= 0.0
+var initDelayToFillSec : float					= 0.0
+var valueFrom : float							= 0.0
+var valueTo : float								= 0.0
+var valueMax : float							= 0.0
+var valueTmp : float							= 0.0
 
 #
 func GetRatio(currentValue : float, maxValue : float) -> float:
-	var ratio = 0.0
+	var ratio : float = 0.0
 	if maxValue > 0:
 		ratio = currentValue / maxValue * 100.0
 	return ratio
@@ -56,43 +56,40 @@ func GetFormatedText(value : String) -> String:
 	else:
 		value = value.substr(0, commaLocation)
 
-	if value == "21.0200000000041":
-		pass
-
 	return value
 
 func GetBarFormat(currentValue : float, maxValue : float) -> String:
-	var currentValueText = GetFormatedText(String.num(currentValue))
+	var currentValueText : String = GetFormatedText(String.num(currentValue))
 
-	var formatedText = currentValueText
+	var formatedText : String = currentValueText
 	if displayMax:
-		var maxValueText = GetFormatedText(String.num(maxValue))
+		var maxValueText : String = GetFormatedText(String.num(maxValue))
 		formatedText += " / " + maxValueText
 
-	if labelUnit.length() > 0:
+	if labelUnit.length() > 0.0:
 		formatedText += labelUnit
-	
+
 	return formatedText
 
 #
-func SetStat(newValue, maxValue):
-	assert(bar && label, "ProgressBar childs are missing")
+func SetStat(newValue : float, maxValue : float):
+	Util.Assert(bar != null && label != null, "ProgressBar childs are missing")
 	if valueTo != newValue || valueMax != maxValue:
 		valueFrom = valueTo
 		valueTo = newValue
 		isUpdating = true
 		valueMax = maxValue
 
-		if valueFrom == 0:
+		if valueFrom == 0.0:
 			remainsToFillSec = delayToInitSec
 			initDelayToFillSec = delayToInitSec
 		else:
 			remainsToFillSec = delayToFillSec
 			initDelayToFillSec = delayToFillSec
 
-		UpdateValue(0)
+		UpdateValue(0.0)
 
-func UpdateValue(delta):
+func UpdateValue(delta : float):
 	if isUpdating:
 		remainsToFillSec -= delta
 
@@ -101,7 +98,7 @@ func UpdateValue(delta):
 			ratioToFinish = (initDelayToFillSec - remainsToFillSec) / initDelayToFillSec
 			ratioToFinish = ease(ratioToFinish, 0.3)
 
-		valueTmp = lerpf(float(valueFrom), float(valueTo), ratioToFinish)
+		valueTmp = lerpf(valueFrom, valueTo, ratioToFinish)
 		if bar:
 			bar.set_value(GetRatio(valueTmp, valueMax))
 
@@ -146,5 +143,5 @@ func _ready():
 		if labelOffset != Vector2.ZERO:
 			label.position += labelOffset
 
-func _process(delta):
+func _process(delta : float):
 	UpdateValue(delta)

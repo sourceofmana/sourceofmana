@@ -40,7 +40,7 @@ func RefreshPool(currentMap : Node2D):
 
 	for mapName in adjacentMaps:
 		if pool.has(mapName) == false:
-			pool[mapName] = LoadMapClientData(mapName)
+			pool[mapName] = LoadMapClientData(mapName as String)
 
 	var poolMaxSize : int		= Launcher.Conf.GetInt("MapPool", "maxSize", Launcher.Conf.Type.MAP)
 	var poolCurrentSize : int	= pool.size()

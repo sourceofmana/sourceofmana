@@ -5,16 +5,16 @@ static var agents : Dictionary = {}
 
 # From Agent getters
 static func GetInstanceFromAgent(agent : BaseAgent) -> SubViewport:
-	var inst = agent.get_parent()
+	var inst : WorldService.Instance = agent.get_parent()
 	Util.Assert(inst != null && inst.is_class("SubViewport"), "Agent's base instance is incorrect, is type: " + inst.get_class() if inst else "null" )
 	if inst && inst.is_class("SubViewport"):
 		if not WorldAgent.HasAgent(inst, agent):
 			inst = null
 	return inst
 
-static func GetMapFromAgent(agent : BaseAgent) -> World.Map:
-	var map : World.Map = null
-	var inst : World.Instance = WorldAgent.GetInstanceFromAgent(agent)
+static func GetMapFromAgent(agent : BaseAgent) -> WorldService.Map:
+	var map : WorldService.Map = null
+	var inst : WorldService.Instance = WorldAgent.GetInstanceFromAgent(agent)
 	if inst:
 		Util.Assert(inst.map != null, "Agent's base map is incorrect, instance is not referenced inside a map")
 		map = inst.map
@@ -22,7 +22,7 @@ static func GetMapFromAgent(agent : BaseAgent) -> World.Map:
 
 static func GetNeighboursFromAgent(checkedAgent : BaseAgent) -> Array[Array]:
 	var neighbours : Array[Array] = []
-	var instance : World.Instance = WorldAgent.GetInstanceFromAgent(checkedAgent)
+	var instance : WorldService.Instance = WorldAgent.GetInstanceFromAgent(checkedAgent)
 	if instance:
 		neighbours.append(instance.npcs)
 		neighbours.append(instance.mobs)
@@ -45,17 +45,17 @@ static func RemoveAgent(agent : BaseAgent):
 	Util.Assert(agent != null, "Agent is null, can't remove it")
 	if agent:
 		if agent.spawnInfo and agent.spawnInfo.is_persistant:
-			var timer = Timer.new()
+			var timer : Timer = Timer.new()
 			timer.set_name("SpawnTimer")
 			timer.set_one_shot(true)
-			Launcher.add_child(timer)
+			Launcher.add_child.call_deferred(timer)
 			Util.StartTimer(timer, 1, WorldAgent.CreateAgent.bind(agent.spawnInfo))
 
 		WorldAgent.PopAgent(agent)
 		agents.erase(agent)
 		agent.queue_free()
 
-static func HasAgent(inst : World.Instance, agent : BaseAgent):
+static func HasAgent(inst : WorldService.Instance, agent : BaseAgent):
 	var hasAgent : bool = false
 	Util.Assert(agent != null and inst != null, "Agent or instance are invalid, could not check if the agent is inside the instance")
 	if agent and inst:
@@ -70,7 +70,7 @@ static func HasAgent(inst : World.Instance, agent : BaseAgent):
 static func PopAgent(agent : BaseAgent):
 	Util.Assert(agent != null, "Agent is null, can't pop it")
 	if agent:
-		var inst : World.Instance = WorldAgent.GetInstanceFromAgent(agent)
+		var inst : WorldService.Instance = WorldAgent.GetInstanceFromAgent(agent)
 		Launcher.Network.Server.NotifyInstancePlayers(inst, agent, "RemoveEntity", [], false)
 		if inst:
 			if agent is PlayerAgent:
@@ -81,7 +81,7 @@ static func PopAgent(agent : BaseAgent):
 				inst.npcs.erase(agent)
 			inst.remove_child.call_deferred(agent)
 
-static func PushAgent(agent : BaseAgent, inst : World.Instance):
+static func PushAgent(agent : BaseAgent, inst : WorldService.Instance):
 	Util.Assert(agent != null, "Agent is null, can't push it")
 	Util.Assert(inst != null, "Instance is null, can't push the agent in it")		
 	if agent and inst:

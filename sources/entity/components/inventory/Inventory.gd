@@ -28,8 +28,8 @@ func add_item(type: BaseItem, count: int = 1):
 	content_changed.emit()
 
 
-func calculate_weight():
-	var weight = 0
+func calculate_weight() -> float:
+	var weight : float = 0.0
 	for item in items:
 		weight += item.type.weight * item.count
 	return weight
@@ -37,7 +37,7 @@ func calculate_weight():
 
 func use_item(item: InventoryItem):
 	var inv_item_index = items.find(item)
-	var inv_item = items[inv_item_index]
+	var inv_item : InventoryItem = items[inv_item_index]
 
 	if inv_item:
 		inv_item.type.use()

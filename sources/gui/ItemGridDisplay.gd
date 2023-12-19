@@ -34,7 +34,7 @@ func OnItemPressed(item : String):
 #
 func _on_panel_resized():
 	if get_child_count() > 0:
-		var tileSize = get_child(0).size.x + get("theme_override_constants/h_separation")
+		var tileSize : int = get_child(0).size.x + get("theme_override_constants/h_separation")
 		columns = max(1, int(get_parent().get_size().x / tileSize))
 	else:
 		columns = 100

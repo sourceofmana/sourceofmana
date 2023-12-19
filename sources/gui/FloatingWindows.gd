@@ -3,7 +3,7 @@ extends Control
 @onready var prevSize				= size
 
 #
-func MoveWindow(window):
+func MoveWindow(window : WindowPanel):
 	move_child(window, get_child_count() - 1)
 
 func ClearWindowsModifier():

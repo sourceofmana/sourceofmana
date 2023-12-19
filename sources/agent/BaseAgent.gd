@@ -170,12 +170,12 @@ func SetKind(entityType : String, entityID : String, entityName : String):
 		deathTimer.set_one_shot(true)
 		add_child.call_deferred(deathTimer)
 
-func SetData(data : Object):
+func SetData(data : EntityData):
 	# Stat
 	stat.Init(data)
 
 	# Navigation
-	if data._navigationAgent:
+	if data._navigationAgent.length() > 0:
 		agent = FileSystem.LoadEntityComponent("navigations/" + data._navigationAgent)
 		add_child.call_deferred(agent)
 
@@ -225,7 +225,7 @@ func _target_reached():
 
 func _setup_nav_agent():
 	if agent && agent.get_avoidance_enabled():
-		var err = agent.velocity_computed.connect(self._velocity_computed)
+		var err : int = agent.velocity_computed.connect(self._velocity_computed)
 		Util.Assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
 		err = agent.path_changed.connect(self._path_changed)
 		Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _path_changed")

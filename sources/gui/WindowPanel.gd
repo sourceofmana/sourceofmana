@@ -23,7 +23,7 @@ func ClampFloatingWindow(globalPos : Vector2, moveLimit : Vector2):
 		moveLimit.x -= custom_minimum_size.x
 	elif selectedEdge == EdgeOrientation.TOP_LEFT || selectedEdge == EdgeOrientation.TOP || selectedEdge == EdgeOrientation.TOP_RIGHT:
 		moveLimit.y -= custom_minimum_size.y
-	return Vector2( clamp(globalPos.x, 0, moveLimit.x), clamp(globalPos.y, 0, moveLimit.y))
+	return Vector2( clampf(globalPos.x, 0.0, moveLimit.x), clampf(globalPos.y, 0.0, moveLimit.y))
 
 func ResizeWindow(pos : Vector2, globalPos : Vector2):
 	var rectSize = size

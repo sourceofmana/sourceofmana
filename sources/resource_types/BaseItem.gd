@@ -12,7 +12,7 @@ class_name BaseItem
 @export_category("Item Properties")
 @export var stackable : bool
 # weight in grams
-@export var weight : float = 1
+@export var weight : float = 1.0
 
 
 func use():

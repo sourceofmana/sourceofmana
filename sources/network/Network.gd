@@ -191,7 +191,7 @@ func NetCreate():
 	elif Server:
 		var serverPort : int		= Launcher.Conf.GetInt("Server", "serverPort", Launcher.Conf.Type.NETWORK)
 		var maxPlayerCount : int	= Launcher.Conf.GetInt("Server", "maxPlayerCount", Launcher.Conf.Type.NETWORK)
-		var ret = peer.create_server(serverPort, maxPlayerCount)
+		var ret : Error				= peer.create_server(serverPort, maxPlayerCount)
 
 		Util.Assert(ret == OK, "Server could not be created, please check if your port %d is valid" % serverPort)
 		if ret == OK:

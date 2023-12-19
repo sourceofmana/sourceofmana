@@ -55,7 +55,7 @@ func _physics_process(delta):
 	if velocity != Vector2.ZERO:
 		move_and_slide()
 
-func _process(delta):
+func _process(delta : float):
 	visual.Refresh(delta)
 
 func _ready():

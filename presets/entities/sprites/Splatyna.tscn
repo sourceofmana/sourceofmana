@@ -335,3 +335,7 @@ libraries = {
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_kn3uj")]
+root_node = NodePath("../../Sprite")
+libraries = {
+"": SubResource("AnimationLibrary_iko4k")
+}
