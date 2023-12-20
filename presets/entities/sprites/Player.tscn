@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://clvy3m3dxh517"]
+[gd_scene load_steps=24 format=3 uid="uid://clvy3m3dxh517"]
 
 [ext_resource type="Texture2D" uid="uid://dbwd2qy1p6wur" path="res://data/graphics/sprites/players/human-male.png" id="1_66oof"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_mvwfv"]
+[ext_resource type="PackedScene" uid="uid://dwgxr70dkhrro" path="res://presets/effects/particles/MorphParticles.tscn" id="3_rabs8"]
 
 [sub_resource type="Animation" id="Animation_qisc1"]
 resource_name = "AttackDown"
@@ -353,3 +354,5 @@ root_node = NodePath("../../Sprite")
 libraries = {
 "": SubResource("AnimationLibrary_pnwib")
 }
+
+[node name="MorphParticles" parent="." instance=ExtResource("3_rabs8")]

@@ -40,7 +40,7 @@ func UpdateStats():
 		lastStat.endurance			= stat.endurance
 		lastStat.concentration		= stat.concentration
 
-func Morph():
+func Morph(notifyMorphing : bool):
 	if stat.spiritShape.length() == 0:
 		return
 
@@ -54,7 +54,7 @@ func Morph():
 
 	var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 	stat.Morph(morphData)
-	Launcher.Network.Server.NotifyInstancePlayers(null, self, "Morphed", [morphID])
+	Launcher.Network.Server.NotifyInstancePlayers(null, self, "Morphed", [morphID, notifyMorphing])
 
 #
 func _specific_process():

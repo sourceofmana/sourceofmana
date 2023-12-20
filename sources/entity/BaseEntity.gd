@@ -29,8 +29,11 @@ func SetData(data : EntityData):
 	displayName			= data._displayName or self is PlayerEntity
 	SetVisual(data)
 
-func SetVisual(data : EntityData):
-	visual.Init(self, data)
+func SetVisual(data : EntityData, morphed : bool = false):
+	if morphed:
+		interactive.DisplayMorph(visual.Init.bind(self, data))
+	else:
+		visual.Init(self, data)
 
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : EntityCommons.State):
@@ -61,4 +64,4 @@ func _process(delta : float):
 func _ready():
 	if interactive:
 		interactive.Ready(self, self == Launcher.Player)
-		visual.Ready()
+

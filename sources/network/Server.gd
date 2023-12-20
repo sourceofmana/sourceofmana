@@ -102,7 +102,7 @@ func TriggerDamage(triggeredAgentID : int, rpcID : int = Launcher.Network.RidSin
 func TriggerMorph(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
-		player.Morph()
+		player.Morph(true)
 
 #
 func GetRid(player : PlayerAgent) -> int:

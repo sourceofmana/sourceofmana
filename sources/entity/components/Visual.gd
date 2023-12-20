@@ -124,17 +124,12 @@ func ResetAnimationValue():
 
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
-	if entity:
-		entity.stat.ratio_updated.disconnect(self.UpdateScale)
-
 	entity = parentEntity
 
-	if entity and entity.stat:
-		entity.stat.ratio_updated.connect(self.UpdateScale)
+	if entity and entity.stat and not entity.stat.ratio_updated.is_connected(UpdateScale):
+		entity.stat.ratio_updated.connect(UpdateScale)
 
 	LoadData(data)
-
-func Ready():
 	ApplySpriteOffset()
 
 func Refresh(_delta: float):

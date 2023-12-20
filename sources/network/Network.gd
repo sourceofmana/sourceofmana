@@ -107,8 +107,8 @@ func TriggerMorph(rpcID : int = RidSingleMode):
 	NetCallServer("TriggerMorph", [], rpcID)
 
 @rpc("authority", "reliable")
-func Morphed(agentID : int, morphID : String, rpcID : int = RidSingleMode):
-	NetCallClient("Morphed", [agentID, morphID], rpcID)
+func Morphed(agentID : int, morphID : String, notifyMorphing : bool, rpcID : int = RidSingleMode):
+	NetCallClient("Morphed", [agentID, morphID, notifyMorphing], rpcID)
 
 # Stats
 @rpc("any_peer", "unreliable_ordered")

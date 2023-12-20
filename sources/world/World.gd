@@ -122,7 +122,7 @@ func AgentWarped(map : Map, instance : Instance, agent : BaseAgent):
 			return
 
 		if map.spiritOnly != agent.stat.morphed:
-			agent.Morph()
+			agent.Morph(false)
 
 		Launcher.Network.WarpPlayer(map.name, playerID)
 

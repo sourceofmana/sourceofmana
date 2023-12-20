@@ -29,6 +29,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/default.png [Reid]
 ./graphics/effects/light.png [Reid]
 ./graphics/effects/light-uni.png [Reid]
+./graphics/effects/particles/fog.png [Reid]
 ./graphics/effects/particles/sparkle.png [Reid]
 ./graphics/emotes/amused.png [Modanung]
 ./graphics/emotes/angel.png [Modanung]

@@ -8,14 +8,17 @@ var speechInstance : PackedScene	= FileSystem.LoadGui("chat/SpeechBubble", false
 @onready var generalVBox : BoxContainer		= $Visible/VBox
 @onready var speechContainer : BoxContainer	= $Visible/VBox/Panel/SpeechContainer
 @onready var emoteSprite : TextureRect		= $Visible/VBox/Emote
+@onready var morphFx : CPUParticles2D		= $MorphParticles
 @onready var nameLabel : Label				= $Name
 @onready var triggerArea : Area2D			= $Area
 
 var emoteTimer : Timer				= null
+var morphTimer : Timer				= null
 var speechTimers : Array[Timer]		= []
 
 var currentEmoteID : int			= -1
 var emoteDelay : float				= 0
+var morphDelay : float				= 0
 var speechDelay : float				= 0
 var speechDecreaseDelay : float		= 0
 var speechIncreaseThreshold : int	= 0
@@ -28,6 +31,7 @@ var canInteractWith : Array[BaseEntity]			= []
 func AddTimer(parent : Node, delay : float, callable: Callable) -> Timer:
 	var timer = Timer.new()
 	timer.set_name("InteractiveTimer")
+	timer.set_one_shot(true)
 	timer.set_autostart(true)
 	timer.set_wait_time(delay)
 	timer.timeout.connect(callable)
@@ -65,6 +69,20 @@ func DisplayEmote(emoteID : int):
 
 func EmoteWindowClicked(selectedEmote : String):
 	DisplayEmote(selectedEmote.to_int())
+
+#
+func RemoveMorphResource():
+	if morphTimer != null:
+		morphTimer.queue_free()
+		morphTimer = null
+
+func DisplayMorph(callback : Callable):
+	Util.Assert(morphFx != null, "No emote sprite found, could not display emote")
+	if morphFx:
+		morphFx.restart()
+		morphFx.emitting = true
+		RemoveMorphResource()
+		morphTimer = AddTimer(morphFx, morphDelay, callback)
 
 #
 func RemoveSpeechLabel():
@@ -110,6 +128,7 @@ func Ready(entity : BaseEntity, isPC : bool = false):
 				Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
 
 	emoteDelay				= Launcher.Conf.GetFloat("Interactive", "emoteDelay", Launcher.Conf.Type.GAMEPLAY)
+	morphDelay				= Launcher.Conf.GetFloat("Interactive", "morphDelay", Launcher.Conf.Type.GAMEPLAY)
 	speechDelay				= Launcher.Conf.GetFloat("Interactive", "speechDelay", Launcher.Conf.Type.GAMEPLAY)
 	speechDecreaseDelay		= Launcher.Conf.GetFloat("Interactive", "speechDecreaseDelay", Launcher.Conf.Type.GAMEPLAY)
 	speechIncreaseThreshold	= Launcher.Conf.GetInt("Interactive", "speechIncreaseThreshold", Launcher.Conf.Type.GAMEPLAY)

@@ -1775,13 +1775,6 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="5" name="Object" opacity="0.22">
-  <object id="50" name="Piou" type="Spawn" x="1158" y="3532" width="665" height="289">
-   <properties>
-    <property name="count" type="int" value="30"/>
-    <property name="name" value="Piou"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
   <object id="53" name="Warp Candor Cave" type="Warp" x="1255" y="3495">
    <properties>
     <property name="dest_cellsize" type="int" value="32"/>

@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwgxr70dkhrro"]
+
+[ext_resource type="Texture2D" uid="uid://cp18pe8ihj8mt" path="res://data/graphics/effects/particles/fog.png" id="1_kfqh0"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1pdty"]
+
+[sub_resource type="Curve" id="Curve_a7adj"]
+_data = [Vector2(0, 0.0349693), 0.0, 6.73742, 0, 0, Vector2(0.377709, 1), 0.348118, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_jt0pk"]
+offsets = PackedFloat32Array(0, 0.515254, 0.752542, 0.945763)
+colors = PackedColorArray(1, 1, 0.46, 1, 0.74902, 0.376471, 0.423529, 1, 0.89, 0.4539, 0.570193, 1, 1, 0.45098, 0.623529, 0)
+
+[node name="MorphParticles" type="CPUParticles2D"]
+material = SubResource("CanvasItemMaterial_1pdty")
+emitting = false
+amount = 30
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.3
+randomness = 0.25
+lifetime_randomness = 0.15
+texture = ExtResource("1_kfqh0")
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, -40)
+initial_velocity_min = 20.0
+initial_velocity_max = 20.0
+angular_velocity_max = 720.0
+tangential_accel_min = -5.0
+tangential_accel_max = 5.0
+angle_max = 360.0
+scale_amount_curve = SubResource("Curve_a7adj")
+color_ramp = SubResource("Gradient_jt0pk")
