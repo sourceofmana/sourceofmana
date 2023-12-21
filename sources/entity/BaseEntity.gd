@@ -60,8 +60,3 @@ func _physics_process(delta):
 
 func _process(delta : float):
 	visual.Refresh(delta)
-
-func _ready():
-	if interactive:
-		interactive.Ready(self, self == Launcher.Player)
-

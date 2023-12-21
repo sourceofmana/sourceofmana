@@ -8,23 +8,13 @@ var speechInstance : PackedScene	= FileSystem.LoadGui("chat/SpeechBubble", false
 @onready var generalVBox : BoxContainer		= $Visible/VBox
 @onready var speechContainer : BoxContainer	= $Visible/VBox/Panel/SpeechContainer
 @onready var emoteSprite : TextureRect		= $Visible/VBox/Emote
-@onready var morphFx : CPUParticles2D		= $MorphParticles
 @onready var nameLabel : Label				= $Name
 @onready var triggerArea : Area2D			= $Area
 
 var emoteTimer : Timer				= null
-var morphTimer : Timer				= null
 var speechTimers : Array[Timer]		= []
 
 var currentEmoteID : int			= -1
-var emoteDelay : float				= 0
-var morphDelay : float				= 0
-var speechDelay : float				= 0
-var speechDecreaseDelay : float		= 0
-var speechIncreaseThreshold : int	= 0
-var speechMaxWidth : int			= 0
-var speechExtraWidth : int			= 0
-
 var canInteractWith : Array[BaseEntity]			= []
 
 #
@@ -37,6 +27,11 @@ func AddTimer(parent : Node, delay : float, callable: Callable) -> Timer:
 	timer.timeout.connect(callable)
 	parent.add_child.call_deferred(timer)
 	return timer
+
+func RemoveParticle(particle : GPUParticles2D):
+	if particle != null:
+		remove_child(particle)
+		particle.queue_free()
 
 #
 func RemoveEmoteResources():
@@ -55,7 +50,7 @@ func AddEmoteResources(emoteID : int):
 		var emoteIcon : Texture2D = FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteStringID]._path)
 		if emoteSprite && emoteIcon:
 			emoteSprite.set_texture(emoteIcon)
-		emoteTimer = AddTimer(emoteSprite, emoteDelay, RemoveEmoteResources)
+		emoteTimer = AddTimer(emoteSprite, EntityCommons.emoteDelay, RemoveEmoteResources)
 
 func DisplayEmote(emoteID : int):
 	Util.Assert(emoteSprite != null, "No emote sprite found, could not display emote")
@@ -65,24 +60,32 @@ func DisplayEmote(emoteID : int):
 			AddEmoteResources(emoteID)
 		elif emoteTimer && emoteTimer.get_time_left() > 0:
 			emoteTimer.stop()
-			emoteTimer.start(emoteDelay)
+			emoteTimer.start(EntityCommons.emoteDelay)
 
 func EmoteWindowClicked(selectedEmote : String):
 	DisplayEmote(selectedEmote.to_int())
 
 #
-func RemoveMorphResource():
-	if morphTimer != null:
-		morphTimer.queue_free()
-		morphTimer = null
-
 func DisplayMorph(callback : Callable):
-	Util.Assert(morphFx != null, "No emote sprite found, could not display emote")
+	var morphFx : GPUParticles2D = load("res://presets/effects/particles/Morph.tscn").instantiate()
 	if morphFx:
-		morphFx.restart()
+		Util.SelfDestructTimer(self, EntityCommons.morphDelay, callback)
+		morphFx.finished.connect(RemoveParticle.bind(morphFx))
 		morphFx.emitting = true
-		RemoveMorphResource()
-		morphTimer = AddTimer(morphFx, morphDelay, callback)
+		add_child(morphFx)
+
+#
+func DisplayCast(castID : int, color : Color, delay : float):
+	var castFx : GPUParticles2D = load("res://presets/effects/particles/CastSpell.tscn").instantiate()
+	if castFx:
+		castFx.finished.connect(RemoveParticle.bind(castFx))
+		castFx.lifetime = delay
+		castFx.texture = load("res://data/graphics/effects/particles/cast" + str(castID) + ".png")
+		Util.Assert(castFx.texture != null, "Could not initialize the cast fx texture for this cast ID: " + str(castID))
+		if color != Color.BLACK:
+			castFx.process_material.set("color", color)
+		castFx.emitting = true
+		add_child(castFx)
 
 #
 func RemoveSpeechLabel():
@@ -97,7 +100,7 @@ func DisplaySpeech(speech : String):
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
-		speechTimers.push_front(AddTimer(speechLabel, speechDelay, RemoveSpeechLabel))
+		speechTimers.push_front(AddTimer(speechLabel, EntityCommons.speechDelay, RemoveSpeechLabel))
 
 #
 func DisplayDamage(target : BaseEntity, dealer : BaseEntity, damage : int, isCrit : bool = false):
@@ -108,16 +111,17 @@ func DisplayDamage(target : BaseEntity, dealer : BaseEntity, damage : int, isCri
 		Launcher.Map.mapNode.add_child(newLabel)
 
 #
-func Ready(entity : BaseEntity, isPC : bool = false):
+func _ready():
+	var entity : BaseEntity = get_parent()
+	Util.Assert(entity != null, "No BaseEntity is found as parent for this Interactive node")
+	if not entity:
+		return
+
 	if nameLabel:
 		nameLabel.set_text(entity.entityName)
 		nameLabel.set_visible(entity.displayName)
 
-	if triggerArea:
-		triggerArea.body_entered.connect(_body_entered)
-		triggerArea.body_exited.connect(_body_exited)
-
-	if isPC:
+	if entity == Launcher.Player:
 		if triggerArea:
 			triggerArea.monitoring = true
 
@@ -127,32 +131,24 @@ func Ready(entity : BaseEntity, isPC : bool = false):
 			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(Launcher.Network.TriggerChat) == false:
 				Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
 
-	emoteDelay				= Launcher.Conf.GetFloat("Interactive", "emoteDelay", Launcher.Conf.Type.GAMEPLAY)
-	morphDelay				= Launcher.Conf.GetFloat("Interactive", "morphDelay", Launcher.Conf.Type.GAMEPLAY)
-	speechDelay				= Launcher.Conf.GetFloat("Interactive", "speechDelay", Launcher.Conf.Type.GAMEPLAY)
-	speechDecreaseDelay		= Launcher.Conf.GetFloat("Interactive", "speechDecreaseDelay", Launcher.Conf.Type.GAMEPLAY)
-	speechIncreaseThreshold	= Launcher.Conf.GetInt("Interactive", "speechIncreaseThreshold", Launcher.Conf.Type.GAMEPLAY)
-	speechMaxWidth			= Launcher.Conf.GetInt("Interactive", "speechMaxWidth", Launcher.Conf.Type.GAMEPLAY)
-	speechExtraWidth		= Launcher.Conf.GetInt("Interactive", "speechExtraWidth", Launcher.Conf.Type.GAMEPLAY)
-
 #
 func _physics_process(_delta : float):
-	if speechDecreaseDelay > 0:
+	if EntityCommons.speechDecreaseDelay > 0:
 		for speechChild in speechContainer.get_children():
 			if speechChild && speechChild.has_node("InteractiveTimer"):
 				var timeLeft : float			= speechChild.get_node("InteractiveTimer").get_time_left()
-				var speechIncreaseDelay : float	= speechDecreaseDelay
+				var speechIncreaseDelay : float	= EntityCommons.speechDecreaseDelay
 				var textLength : int			= speechChild.get_total_character_count()
 
-				if textLength < speechIncreaseThreshold:
-					speechIncreaseDelay = speechDecreaseDelay / (speechIncreaseThreshold - textLength)
+				if textLength < EntityCommons.speechIncreaseThreshold:
+					speechIncreaseDelay = EntityCommons.speechDecreaseDelay / (EntityCommons.speechIncreaseThreshold - textLength)
 
-				if timeLeft > speechDelay - speechIncreaseDelay:
-					var ratio : float = ((speechDelay - timeLeft) / speechIncreaseDelay)
+				if timeLeft > EntityCommons.speechDelay - speechIncreaseDelay:
+					var ratio : float = ((EntityCommons.speechDelay - timeLeft) / speechIncreaseDelay)
 					speechChild.set_visible_characters_behavior(TextServer.VC_GLYPHS_LTR)
 					speechChild.visible_ratio = ratio
-				elif timeLeft > 0 && timeLeft < speechDecreaseDelay:
-					var ratio : float = (timeLeft / speechDecreaseDelay)
+				elif timeLeft > 0 && timeLeft < EntityCommons.speechDecreaseDelay:
+					var ratio : float = (timeLeft / EntityCommons.speechDecreaseDelay)
 					speechChild.modulate.a = ratio
 					speechChild.set_visible_characters_behavior(TextServer.VC_GLYPHS_RTL)
 					speechChild.visible_ratio = ratio
@@ -161,9 +157,9 @@ func _physics_process(_delta : float):
 
 			var speechContent : String = speechChild.get_parsed_text()
 			var speechLength : float = speechChild.get_theme_font("normal_font").get_string_size(speechContent).x
-			if speechLength > speechMaxWidth:
-				speechLength = speechMaxWidth
-			speechChild.custom_minimum_size.x = speechLength as int + speechExtraWidth
+			if speechLength > EntityCommons.speechMaxWidth:
+				speechLength = EntityCommons.speechMaxWidth
+			speechChild.custom_minimum_size.x = speechLength as int + EntityCommons.speechExtraWidth
 
 func _body_entered(body):
 	if body && (body is NpcEntity || body is MonsterEntity) && self != body.interactive:

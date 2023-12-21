@@ -10,7 +10,7 @@ class_name WarpObject
 @export var randomPoints : PackedVector2Array	= []
 
 const defaultParticlesCount : int				= 12
-const particlePreset : PackedScene				= preload("res://presets/effects/particles/WarpParticles.tscn")
+const particlePreset : PackedScene				= preload("res://presets/effects/particles/WarpLocation.tscn")
 
 var isPlayerEntered : bool						= false
 

@@ -95,13 +95,33 @@ static var LocalAttackColor : float				= 0.35
 static var LocalDamageColor : float				= 0.0
 static var MissAttackColor : float				= 0.2
 
+# Interactive
+static var emoteDelay : float					= 0
+static var morphDelay : float					= 0
+static var speechDelay : float					= 0
+static var speechDecreaseDelay : float			= 0
+static var speechIncreaseThreshold : int		= 0
+static var speechMaxWidth : int					= 0
+static var speechExtraWidth : int				= 0
+
 static func InitVars():
+	# Guardband
 	EntityCommons.StartGuardbandDist = Launcher.Conf.GetInt("Guardband", "startGuardbandDist", Launcher.Conf.Type.NETWORK)
 	EntityCommons.PatchGuardband = Launcher.Conf.GetInt("Guardband", "patchGuardband", Launcher.Conf.Type.NETWORK)
 	EntityCommons.MaxGuardbandDist = Launcher.Conf.GetInt("Guardband", "maxGuardbandDist", Launcher.Conf.Type.NETWORK)
 	EntityCommons.MaxGuardbandDistVec = Vector2(EntityCommons.MaxGuardbandDist, EntityCommons.MaxGuardbandDist)
 
+	# Visual
 	EntityCommons.EntityAttackColor = Launcher.Conf.GetFloat("Visual", "entityAttackColor", Launcher.Conf.Type.GAMEPLAY)
 	EntityCommons.LocalAttackColor = Launcher.Conf.GetFloat("Visual", "localAttackColor", Launcher.Conf.Type.GAMEPLAY)
 	EntityCommons.LocalDamageColor = Launcher.Conf.GetFloat("Visual", "localDamageColor", Launcher.Conf.Type.GAMEPLAY)
 	EntityCommons.MissAttackColor = Launcher.Conf.GetFloat("Visual", "missAttackColor", Launcher.Conf.Type.GAMEPLAY)
+
+	# Interactive
+	EntityCommons.emoteDelay = Launcher.Conf.GetFloat("Interactive", "emoteDelay", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.morphDelay = Launcher.Conf.GetFloat("Interactive", "morphDelay", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.speechDelay = Launcher.Conf.GetFloat("Interactive", "speechDelay", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.speechDecreaseDelay = Launcher.Conf.GetFloat("Interactive", "speechDecreaseDelay", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.speechIncreaseThreshold = Launcher.Conf.GetInt("Interactive", "speechIncreaseThreshold", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.speechMaxWidth = Launcher.Conf.GetInt("Interactive", "speechMaxWidth", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.speechExtraWidth = Launcher.Conf.GetInt("Interactive", "speechExtraWidth", Launcher.Conf.Type.GAMEPLAY)
