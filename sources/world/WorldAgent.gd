@@ -48,7 +48,7 @@ static func RemoveAgent(agent : BaseAgent):
 			var timer : Timer = Timer.new()
 			timer.set_name("SpawnTimer")
 			timer.set_one_shot(true)
-			Launcher.add_child.call_deferred(timer)
+			Launcher.add_child(timer)
 			Util.StartTimer(timer, 1, WorldAgent.CreateAgent.bind(agent.spawnInfo))
 
 		WorldAgent.PopAgent(agent)
