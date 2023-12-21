@@ -32,6 +32,22 @@ static func ShootCallback(args : Array):
 			callback.callv(args)
 
 #
+static func SelfDestructCallback(parent : Node2D, timer : Timer, callback : Callable):
+	if parent:
+		parent.remove_child(timer)
+		timer.queue_free()
+	callback.call()
+
+static func SelfDestructTimer(parent : Node2D, delay : float, callback : Callable):
+	if parent:
+		var timer : Timer = Timer.new()
+		timer.one_shot = true
+		timer.autostart = true
+		timer.timeout.connect(Util.SelfDestructCallback.bind(parent, timer, callback))
+		parent.add_child(timer)
+		timer.start(delay)
+
+#
 static func StartTimer(timer : Timer, delay : float, callable : Callable):
 	if timer:
 		timer.start(delay)
