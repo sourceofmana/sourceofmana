@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://08v0t5i6hvef"]
+
+[ext_resource type="Texture2D" uid="uid://wid4pebjio5y" path="res://data/graphics/emotes/smile.png" id="1_hqcqi"]
+
+[sub_resource type="Curve" id="Curve_e4xou"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0508475, 1), 0.0, 0.0, 0, 0, Vector2(0.949153, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_kbr4m"]
+curve = SubResource("Curve_e4xou")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dwn11"]
+particle_flag_disable_z = true
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_kbr4m")
+
+[node name="Emote" type="GPUParticles2D"]
+position = Vector2(0, -4)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_dwn11")
+texture = ExtResource("1_hqcqi")
+lifetime = 4.0

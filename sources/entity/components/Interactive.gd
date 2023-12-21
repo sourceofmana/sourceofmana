@@ -7,14 +7,11 @@ var speechInstance : PackedScene	= FileSystem.LoadGui("chat/SpeechBubble", false
 @onready var visibleNode : Node2D			= $Visible
 @onready var generalVBox : BoxContainer		= $Visible/VBox
 @onready var speechContainer : BoxContainer	= $Visible/VBox/Panel/SpeechContainer
-@onready var emoteSprite : TextureRect		= $Visible/VBox/Emote
+@onready var emoteFx : GPUParticles2D		= $Visible/Emote
 @onready var nameLabel : Label				= $Name
 @onready var triggerArea : Area2D			= $Area
 
-var emoteTimer : Timer				= null
 var speechTimers : Array[Timer]		= []
-
-var currentEmoteID : int			= -1
 var canInteractWith : Array[BaseEntity]			= []
 
 #
@@ -34,33 +31,14 @@ func RemoveParticle(particle : GPUParticles2D):
 		particle.queue_free()
 
 #
-func RemoveEmoteResources():
-	currentEmoteID = -1
-	if emoteSprite:
-		if emoteTimer:
-			emoteTimer.queue_free()
-			emoteTimer = null
-		if emoteSprite.get_texture() != null:
-			emoteSprite.texture = null
-
-func AddEmoteResources(emoteID : int):
-	var emoteStringID : String = str(emoteID)
-	currentEmoteID = emoteID
-	if Launcher.DB.EmotesDB && Launcher.DB.EmotesDB[emoteStringID]:
-		var emoteIcon : Texture2D = FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteStringID]._path)
-		if emoteSprite && emoteIcon:
-			emoteSprite.set_texture(emoteIcon)
-		emoteTimer = AddTimer(emoteSprite, EntityCommons.emoteDelay, RemoveEmoteResources)
-
 func DisplayEmote(emoteID : int):
-	Util.Assert(emoteSprite != null, "No emote sprite found, could not display emote")
-	if emoteSprite:
-		if currentEmoteID != emoteID:
-			RemoveEmoteResources()
-			AddEmoteResources(emoteID)
-		elif emoteTimer && emoteTimer.get_time_left() > 0:
-			emoteTimer.stop()
-			emoteTimer.start(EntityCommons.emoteDelay)
+	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
+	if emoteFx:
+		var emoteStringID : String = str(emoteID)
+		if Launcher.DB.EmotesDB && Launcher.DB.EmotesDB[emoteStringID]:
+			emoteFx.texture = FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteStringID]._path)
+			emoteFx.lifetime = EntityCommons.emoteDelay
+			emoteFx.restart()
 
 func EmoteWindowClicked(selectedEmote : String):
 	DisplayEmote(selectedEmote.to_int())

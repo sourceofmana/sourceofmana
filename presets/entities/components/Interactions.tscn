@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://f2jxqr5e7i5e"]
+[gd_scene load_steps=7 format=3 uid="uid://f2jxqr5e7i5e"]
 
 [ext_resource type="Script" path="res://sources/entity/components/Interactive.gd" id="1_b3bk6"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_wehdi"]
 [ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="2_elci4"]
+[ext_resource type="PackedScene" uid="uid://08v0t5i6hvef" path="res://presets/effects/particles/Emote.tscn" id="2_gghi1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0daf3"]
 
@@ -16,6 +17,12 @@ script = ExtResource("1_b3bk6")
 
 [node name="Visible" type="Node2D" parent="."]
 position = Vector2(0, -64)
+
+[node name="Emote" parent="Visible" instance=ExtResource("2_gghi1")]
+position = Vector2(0, -16)
+emitting = false
+one_shot = true
+local_coords = true
 
 [node name="VBox" type="VBoxContainer" parent="Visible"]
 clip_contents = true
@@ -37,10 +44,6 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_0daf3")
 [node name="SpeechContainer" type="VBoxContainer" parent="Visible/VBox/Panel"]
 layout_mode = 2
 alignment = 1
-
-[node name="Emote" type="TextureRect" parent="Visible/VBox"]
-layout_mode = 2
-stretch_mode = 3
 
 [node name="Name" type="Label" parent="."]
 z_index = 255
