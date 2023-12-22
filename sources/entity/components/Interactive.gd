@@ -11,37 +11,22 @@ var speechInstance : PackedScene	= FileSystem.LoadGui("chat/SpeechBubble", false
 @onready var nameLabel : Label				= $Name
 @onready var triggerArea : Area2D			= $Area
 
-var speechTimers : Array[Timer]		= []
 var canInteractWith : Array[BaseEntity]			= []
 
 #
-func AddTimer(parent : Node, delay : float, callable: Callable) -> Timer:
-	var timer = Timer.new()
-	timer.set_name("InteractiveTimer")
-	timer.set_one_shot(true)
-	timer.set_autostart(true)
-	timer.set_wait_time(delay)
-	timer.timeout.connect(callable)
-	parent.add_child.call_deferred(timer)
-	return timer
-
 func RemoveParticle(particle : GPUParticles2D):
 	if particle != null:
 		remove_child(particle)
 		particle.queue_free()
 
 #
-func DisplayEmote(emoteID : int):
+func DisplayEmote(emoteID : String):
 	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
 	if emoteFx:
-		var emoteStringID : String = str(emoteID)
-		if Launcher.DB.EmotesDB && Launcher.DB.EmotesDB[emoteStringID]:
-			emoteFx.texture = FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteStringID]._path)
+		if Launcher.DB.EmotesDB && Launcher.DB.EmotesDB[emoteID]:
+			emoteFx.texture = FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteID]._path)
 			emoteFx.lifetime = EntityCommons.emoteDelay
 			emoteFx.restart()
-
-func EmoteWindowClicked(selectedEmote : String):
-	DisplayEmote(selectedEmote.to_int())
 
 #
 func DisplayMorph(callback : Callable):
@@ -66,10 +51,11 @@ func DisplayCast(castID : int, color : Color, delay : float):
 		add_child(castFx)
 
 #
-func RemoveSpeechLabel():
-	if speechContainer && speechContainer.get_child_count() > 0:
-		speechContainer.get_child(0).queue_free()
-		speechTimers.pop_back().queue_free()
+func RemoveSpeechLabel(speechLabel : RichTextLabel):
+	if speechContainer:
+		if speechLabel:
+			speechContainer.remove_child(speechLabel)
+			speechLabel.queue_free()
 
 func DisplaySpeech(speech : String):
 	Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
@@ -78,7 +64,7 @@ func DisplaySpeech(speech : String):
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
-		speechTimers.push_front(AddTimer(speechLabel, EntityCommons.speechDelay, RemoveSpeechLabel))
+		Util.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, RemoveSpeechLabel.bind(speechLabel))
 
 #
 func DisplayDamage(target : BaseEntity, dealer : BaseEntity, damage : int, isCrit : bool = false):
@@ -104,8 +90,8 @@ func _ready():
 			triggerArea.monitoring = true
 
 		if Launcher.GUI:
-			if Launcher.GUI.emoteContainer && Launcher.GUI.emoteContainer.ItemClicked.is_connected(EmoteWindowClicked) == false:
-				Launcher.GUI.emoteContainer.ItemClicked.connect(EmoteWindowClicked)
+			if Launcher.GUI.emoteContainer && Launcher.GUI.emoteContainer.ItemClicked.is_connected(DisplayEmote) == false:
+				Launcher.GUI.emoteContainer.ItemClicked.connect(DisplayEmote)
 			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(Launcher.Network.TriggerChat) == false:
 				Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
 
@@ -113,8 +99,8 @@ func _ready():
 func _physics_process(_delta : float):
 	if EntityCommons.speechDecreaseDelay > 0:
 		for speechChild in speechContainer.get_children():
-			if speechChild && speechChild.has_node("InteractiveTimer"):
-				var timeLeft : float			= speechChild.get_node("InteractiveTimer").get_time_left()
+			if speechChild && speechChild.has_node("Timer"):
+				var timeLeft : float			= speechChild.get_node("Timer").get_time_left()
 				var speechIncreaseDelay : float	= EntityCommons.speechDecreaseDelay
 				var textLength : int			= speechChild.get_total_character_count()
 

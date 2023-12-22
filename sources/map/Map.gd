@@ -114,4 +114,4 @@ func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector
 func EmotePlayer(agentID : int, emoteID : int):
 	var entity : BaseEntity = entities.get(agentID)
 	if entity && entity.get_parent() && entity.interactive:
-		entity.interactive.DisplayEmote(emoteID)
+		entity.interactive.DisplayEmote(str(emoteID))
