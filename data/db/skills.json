@@ -1,0 +1,22 @@
+{
+	"0": {
+		"Name": "Mana Burst",
+		"IconPath": "items/skill/spell.png",
+		"CastPresetPath": "particles/CastSpell",
+		"CastTextureOverride": "effects/particles/cast1.png",
+		"CastColor": "FFFF99",
+		"CastTime": 4.0,
+		"StaminaCost": 5,
+		"ManaCost": 10
+	},
+	"1": {
+		"Name": "Flar",
+		"IconPath": "items/skill/spell.png",
+		"CastPresetPath": "particles/CastSpell",
+		"CastTextureOverride": "effects/particles/cast2.png",
+		"CastColor": "FF9999",
+		"CastTime": 1.0,
+		"StaminaCost": 5,
+		"ManaCost": 10
+	}
+}

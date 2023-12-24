@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://x0nnrhog4d3x"]
 
-[ext_resource type="Texture2D" uid="uid://bdin14a0kdwng" path="res://data/graphics/effects/particles/cast.png" id="1_c4gs0"]
+[ext_resource type="Texture2D" uid="uid://bhe0q1s2sqa2i" path="res://data/graphics/effects/particles/cast.png" id="1_c4gs0"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1pdty"]
 blend_mode = 1
@@ -39,6 +39,7 @@ z_index = -1
 z_as_relative = false
 material = SubResource("CanvasItemMaterial_1pdty")
 position = Vector2(0, -10)
+scale = Vector2(1, 0.7)
 emitting = false
 amount = 1
 process_material = SubResource("ParticleProcessMaterial_a4rd1")
@@ -48,5 +49,5 @@ one_shot = true
 explosiveness = 0.3
 randomness = 0.25
 fixed_fps = 0
-visibility_rect = Rect2(-64, -64, 128, 128)
+visibility_rect = Rect2(0, 0, 0, 0)
 local_coords = true

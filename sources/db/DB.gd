@@ -6,6 +6,7 @@ var EthnicitiesDB : Dictionary		= {}
 var HairstylesDB : Dictionary		= {}
 var EntitiesDB : Dictionary			= {}
 var EmotesDB : Dictionary			= {}
+var SkillsDB : Dictionary			= {}
 
 #
 func ParseMapsDB():
@@ -91,6 +92,24 @@ func ParseEmotesDB():
 			EmotesDB[key] = emote
 
 #
+func ParseSkillsDB():
+	var result = FileSystem.LoadDB("skills.json")
+
+	if not result.is_empty():
+		for key in result:
+			var skill : SkillData = SkillData.new()
+			skill._id = key.to_int()
+			skill._name = result[key].Name
+			skill._iconPath = result[key].IconPath
+			skill._castPresetPath = result[key].CastPresetPath
+			skill._castTextureOverride = result[key].CastTextureOverride
+			skill._castColor = result[key].CastColor
+			skill._castTime = result[key].CastTime
+			skill._staminaCost = result[key].StaminaCost
+			skill._manaCost = result[key].ManaCost
+			SkillsDB[key] = skill
+
+#
 func GetMapPath(mapName : String) -> String:
 	var path : String = ""
 	var mapInfo = null
@@ -110,5 +129,6 @@ func _post_launch():
 	ParseHairstylesDB()
 	ParseEntitiesDB()
 	ParseEmotesDB()
+	ParseSkillsDB()
 
 	isInitialized = true

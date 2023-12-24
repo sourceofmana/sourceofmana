@@ -157,6 +157,11 @@ static func LoadResource(fullPath : String, instantiate : bool = true) -> Object
 
 	return rscInstance
 
+# Effect
+static func LoadEffect(path : String, instantiate : bool = true) -> Node2D:
+	var fullPath : String = Path.EffectsPst + path + Path.SceneExt
+	return LoadResource(fullPath, instantiate)
+
 # Entity
 static func LoadEntitySprite(type : String, instantiate : bool = true) -> Node2D:
 	var fullPath : String = Path.EntitySprite + type + Path.SceneExt

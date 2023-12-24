@@ -38,17 +38,17 @@ func DisplayMorph(callback : Callable):
 		add_child(morphFx)
 
 #
-func DisplayCast(castID : int, color : Color, delay : float):
-	var castFx : GPUParticles2D = load("res://presets/effects/particles/CastSpell.tscn").instantiate()
-	if castFx:
-		castFx.finished.connect(RemoveParticle.bind(castFx))
-		castFx.lifetime = delay
-		castFx.texture = load("res://data/graphics/effects/particles/cast" + str(castID) + ".png")
-		Util.Assert(castFx.texture != null, "Could not initialize the cast fx texture for this cast ID: " + str(castID))
-		if color != Color.BLACK:
-			castFx.process_material.set("color", color)
-		castFx.emitting = true
-		add_child(castFx)
+func DisplayCast(skillID : String):
+	if Launcher.DB.SkillsDB && Launcher.DB.SkillsDB[skillID]:
+		var skillRef : SkillData = Launcher.DB.SkillsDB[skillID]
+		var castFx : GPUParticles2D = FileSystem.LoadEffect(skillRef._castPresetPath)
+		if castFx:
+			castFx.finished.connect(RemoveParticle.bind(castFx))
+			castFx.lifetime = skillRef._castTime
+			castFx.texture = FileSystem.LoadGfx(skillRef._castTextureOverride)
+			castFx.process_material.set("color", skillRef._castColor)
+			castFx.emitting = true
+			add_child(castFx)
 
 #
 func RemoveSpeechLabel(speechLabel : RichTextLabel):
