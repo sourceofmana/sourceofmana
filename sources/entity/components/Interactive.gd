@@ -9,7 +9,7 @@ class_name EntityInteractive
 @onready var nameLabel : Label				= $Name
 @onready var triggerArea : Area2D			= $Area
 
-var canInteractWith : Array[BaseEntity]			= []
+var canInteractWith : Array[BaseEntity]		= []
 
 #
 func DisplayEmote(emoteID : String):
@@ -72,52 +72,19 @@ func _ready():
 		nameLabel.set_visible(entity.displayName)
 
 	if entity == Launcher.Player:
+		Launcher.GUI.emoteContainer.ItemClicked.connect(DisplayEmote)
+		Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
 		if triggerArea:
 			triggerArea.monitoring = true
 
-		if Launcher.GUI:
-			if Launcher.GUI.emoteContainer && Launcher.GUI.emoteContainer.ItemClicked.is_connected(DisplayEmote) == false:
-				Launcher.GUI.emoteContainer.ItemClicked.connect(DisplayEmote)
-			if Launcher.GUI.chatContainer && Launcher.GUI.chatContainer.NewTextTyped.is_connected(Launcher.Network.TriggerChat) == false:
-				Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
-
 #
-func _physics_process(_delta : float):
-	if EntityCommons.speechDecreaseDelay > 0:
-		for speechChild in speechContainer.get_children():
-			if speechChild && speechChild.has_node("Timer"):
-				var timeLeft : float			= speechChild.get_node("Timer").get_time_left()
-				var speechIncreaseDelay : float	= EntityCommons.speechDecreaseDelay
-				var textLength : int			= speechChild.get_total_character_count()
-
-				if textLength < EntityCommons.speechIncreaseThreshold:
-					speechIncreaseDelay = EntityCommons.speechDecreaseDelay / (EntityCommons.speechIncreaseThreshold - textLength)
-
-				if timeLeft > EntityCommons.speechDelay - speechIncreaseDelay:
-					var ratio : float = ((EntityCommons.speechDelay - timeLeft) / speechIncreaseDelay)
-					speechChild.set_visible_characters_behavior(TextServer.VC_GLYPHS_LTR)
-					speechChild.visible_ratio = ratio
-				elif timeLeft > 0 && timeLeft < EntityCommons.speechDecreaseDelay:
-					var ratio : float = (timeLeft / EntityCommons.speechDecreaseDelay)
-					speechChild.modulate.a = ratio
-					speechChild.set_visible_characters_behavior(TextServer.VC_GLYPHS_RTL)
-					speechChild.visible_ratio = ratio
-				else:
-					speechChild.visible_ratio = 1
-
-			var speechContent : String = speechChild.get_parsed_text()
-			var speechLength : float = speechChild.get_theme_font("normal_font").get_string_size(speechContent).x
-			if speechLength > EntityCommons.speechMaxWidth:
-				speechLength = EntityCommons.speechMaxWidth
-			speechChild.custom_minimum_size.x = speechLength as int + EntityCommons.speechExtraWidth
-
 func _body_entered(body):
-	if body && (body is NpcEntity || body is MonsterEntity) && self != body.interactive:
+	if body and (body is NpcEntity || body is MonsterEntity) && self != body.interactive:
 		if canInteractWith.has(body) == false:
 			canInteractWith.append(body)
 
 func _body_exited(body):
-	if body && (body is NpcEntity || body is MonsterEntity) && self != body.interactive:
+	if body and (body is NpcEntity || body is MonsterEntity) && self != body.interactive:
 		var bodyPos : int = canInteractWith.find(body)
 		if bodyPos != -1:
 			canInteractWith.remove_at(bodyPos)

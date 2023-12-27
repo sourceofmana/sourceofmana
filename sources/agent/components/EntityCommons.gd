@@ -88,7 +88,7 @@ static var MaxGuardbandDistVec : Vector2		= Vector2.ZERO
 # Visual
 static var AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
 static var EnemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")
-static var DamageLabel : Resource				= preload("res://presets/gui/DamageLabel.tscn")
+static var DamageLabel : PackedScene			= preload("res://presets/gui/DamageLabel.tscn")
 static var SpeechLabel : PackedScene			= preload("res://presets/gui/chat/SpeechBubble.tscn")
 
 static var EntityAttackColor : float			= 0.65
