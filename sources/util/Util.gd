@@ -48,6 +48,12 @@ static func SelfDestructTimer(parent : Node, delay : float, callback : Callable,
 		parent.add_child(timer)
 		timer.start(delay)
 
+static func RemoveNode(node : Node, parent : Node):
+	if node != null:
+		if parent != null:
+			parent.remove_child(node)
+		node.queue_free()
+
 #
 static func StartTimer(timer : Timer, delay : float, callable : Callable):
 	if timer:

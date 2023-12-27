@@ -2,8 +2,6 @@ extends Node2D
 class_name EntityInteractive
 
 #
-var speechInstance : PackedScene	= FileSystem.LoadGui("chat/SpeechBubble", false)
-
 @onready var visibleNode : Node2D			= $Visible
 @onready var generalVBox : BoxContainer		= $Visible/VBox
 @onready var speechContainer : BoxContainer	= $Visible/VBox/Panel/SpeechContainer
@@ -12,12 +10,6 @@ var speechInstance : PackedScene	= FileSystem.LoadGui("chat/SpeechBubble", false
 @onready var triggerArea : Area2D			= $Area
 
 var canInteractWith : Array[BaseEntity]			= []
-
-#
-func RemoveParticle(particle : GPUParticles2D):
-	if particle != null:
-		remove_child(particle)
-		particle.queue_free()
 
 #
 func DisplayEmote(emoteID : String):
@@ -33,7 +25,7 @@ func DisplayMorph(callback : Callable):
 	var morphFx : GPUParticles2D = load("res://presets/effects/particles/Morph.tscn").instantiate()
 	if morphFx:
 		Util.SelfDestructTimer(self, EntityCommons.morphDelay, callback)
-		morphFx.finished.connect(RemoveParticle.bind(morphFx))
+		morphFx.finished.connect(Util.RemoveNode.bind(morphFx, self))
 		morphFx.emitting = true
 		add_child(morphFx)
 
@@ -43,7 +35,7 @@ func DisplayCast(skillID : String):
 		var skillRef : SkillData = Launcher.DB.SkillsDB[skillID]
 		var castFx : GPUParticles2D = FileSystem.LoadEffect(skillRef._castPresetPath)
 		if castFx:
-			castFx.finished.connect(RemoveParticle.bind(castFx))
+			castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
 			castFx.lifetime = skillRef._castTime
 			castFx.texture = FileSystem.LoadGfx(skillRef._castTextureOverride)
 			castFx.process_material.set("color", skillRef._castColor)
@@ -51,20 +43,14 @@ func DisplayCast(skillID : String):
 			add_child(castFx)
 
 #
-func RemoveSpeechLabel(speechLabel : RichTextLabel):
-	if speechContainer:
-		if speechLabel:
-			speechContainer.remove_child(speechLabel)
-			speechLabel.queue_free()
-
 func DisplaySpeech(speech : String):
 	Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
 	if speechContainer:
-		var speechLabel : RichTextLabel = speechInstance.instantiate()
+		var speechLabel : RichTextLabel = EntityCommons.SpeechLabel.instantiate()
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
-		Util.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, RemoveSpeechLabel.bind(speechLabel))
+		Util.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
 
 #
 func DisplayDamage(target : BaseEntity, dealer : BaseEntity, damage : int, isCrit : bool = false):
