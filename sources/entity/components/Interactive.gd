@@ -61,6 +61,10 @@ func DisplayDamage(target : BaseEntity, dealer : BaseEntity, damage : int, isCri
 		Launcher.Map.mapNode.add_child(newLabel)
 
 #
+func RefreshVisibleNodeOffset(offset : int):
+	visibleNode.position.y = (-EntityCommons.interactionDisplayOffset) + offset
+
+#
 func _ready():
 	var entity : BaseEntity = get_parent()
 	Util.Assert(entity != null, "No BaseEntity is found as parent for this Interactive node")
@@ -76,6 +80,10 @@ func _ready():
 		Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
 		if triggerArea:
 			triggerArea.monitoring = true
+
+	if visibleNode and entity.visual:
+		entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
+		entity.visual.SyncPlayerOffset()
 
 #
 func _body_entered(body):

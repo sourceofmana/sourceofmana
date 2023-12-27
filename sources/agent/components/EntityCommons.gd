@@ -97,6 +97,7 @@ static var LocalDamageColor : float				= 0.0
 static var MissAttackColor : float				= 0.2
 
 # Interactive
+static var interactionDisplayOffset : int		= 0
 static var emoteDelay : float					= 0
 static var morphDelay : float					= 0
 static var speechDelay : float					= 0
@@ -119,6 +120,7 @@ static func InitVars():
 	EntityCommons.MissAttackColor = Launcher.Conf.GetFloat("Visual", "missAttackColor", Launcher.Conf.Type.GAMEPLAY)
 
 	# Interactive
+	EntityCommons.interactionDisplayOffset = Launcher.Conf.GetInt("Interactive", "interactionDisplayOffset", Launcher.Conf.Type.GAMEPLAY)
 	EntityCommons.emoteDelay = Launcher.Conf.GetFloat("Interactive", "emoteDelay", Launcher.Conf.Type.GAMEPLAY)
 	EntityCommons.morphDelay = Launcher.Conf.GetFloat("Interactive", "morphDelay", Launcher.Conf.Type.GAMEPLAY)
 	EntityCommons.speechDelay = Launcher.Conf.GetFloat("Interactive", "speechDelay", Launcher.Conf.Type.GAMEPLAY)

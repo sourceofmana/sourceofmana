@@ -1,6 +1,10 @@
 extends Node2D
 class_name EntityVisual
 
+#
+signal spriteOffsetUpdate
+
+#
 var entity : BaseEntity						= null
 var sprites : Array[Sprite2D]				= []
 var animation : AnimationPlayer				= null
@@ -12,8 +16,6 @@ var previousState : EntityCommons.State		= EntityCommons.State.UNKNOWN
 
 var blendSpacePaths : Dictionary			= {}
 var timeScalePaths : Dictionary				= {}
-
-var spriteOffset : int						= 0
 
 #
 func SetMainMaterial(materialResource : Resource):
@@ -37,9 +39,6 @@ func LoadSprite(slot : EntityCommons.Slot, sprite : Sprite2D, customTexturePath 
 
 	if customTexturePath.length() > 0:
 		sprite.texture = FileSystem.LoadGfx(customTexturePath)
-
-	spriteOffset = int(sprite.offset.y) - 30
-	ApplySpriteOffset()
 
 func ResetData():
 	if collision:
@@ -110,10 +109,6 @@ func UpdateScale():
 	if EntityCommons.State.ATTACK in timeScalePaths:
 		animationTree[timeScalePaths[EntityCommons.State.ATTACK]] = entity.stat.attackRatio
 
-func ApplySpriteOffset():
-	if entity.interactive and entity.interactive.visibleNode:
-		entity.interactive.visibleNode.position.y = min(-32, spriteOffset)
-
 func ResetAnimationValue():
 	if not entity or not animationTree:
 		return
@@ -121,6 +116,13 @@ func ResetAnimationValue():
 	LoadAnimationPaths()
 	UpdateScale()
 	RefreshTree()
+
+func SyncPlayerOffset():
+	var spriteOffset : int = 0
+	if sprites[EntityCommons.Slot.BODY]:
+		spriteOffset = int(sprites[EntityCommons.Slot.BODY].offset.y)
+
+	spriteOffsetUpdate.emit(spriteOffset)
 
 #
 func Init(parentEntity : BaseEntity, data : EntityData):
@@ -130,7 +132,7 @@ func Init(parentEntity : BaseEntity, data : EntityData):
 		entity.stat.ratio_updated.connect(UpdateScale)
 
 	LoadData(data)
-	ApplySpriteOffset()
+	SyncPlayerOffset()
 
 func Refresh(_delta: float):
 	if not animationTree or not entity:

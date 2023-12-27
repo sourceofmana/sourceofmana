@@ -30,10 +30,11 @@ func SetData(data : EntityData):
 	SetVisual(data)
 
 func SetVisual(data : EntityData, morphed : bool = false):
+	var visualInitCallback : Callable = visual.Init.bind(self, data)
 	if morphed:
-		interactive.DisplayMorph(visual.Init.bind(self, data))
+		interactive.DisplayMorph(visualInitCallback)
 	else:
-		visual.Init(self, data)
+		visualInitCallback.call()
 
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : EntityCommons.State):
