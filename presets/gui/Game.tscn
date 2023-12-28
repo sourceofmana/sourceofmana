@@ -48,8 +48,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
 shader = ExtResource("4_60kv4")
-shader_parameter/offset = 0.2
-shader_parameter/progress = 2.0
+shader_parameter/progress = 0.0
 shader_parameter/inverted = true
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hg7ie"]
