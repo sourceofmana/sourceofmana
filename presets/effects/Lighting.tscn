@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhxp5shmhixr3"]
+
+[ext_resource type="Script" path="res://sources/effects/Lighting.gd" id="1_75w83"]
+[ext_resource type="Shader" path="res://sources/shaders/Lighting.gdshader" id="1_tfhei"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xkjp1"]
+shader = ExtResource("1_tfhei")
+shader_parameter/global_transform = null
+shader_parameter/n_lights = 0
+shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
+shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
+shader_parameter/light_level = 0.5
+shader_parameter/deadband = 4.0
+
+[node name="LightingLayer" type="CanvasLayer"]
+script = ExtResource("1_75w83")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_xkjp1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

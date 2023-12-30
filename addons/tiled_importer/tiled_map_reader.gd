@@ -425,48 +425,19 @@ func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, g
 	if gid in specificDic and specificDic[gid].size() > 0:
 		var specificGid = specificDic[gid]
 		match specificGid[0]:
-			"TorchGlow":
-				var caveShadow : Node2D = root.get_node_or_null("CaveShadow")
-				if caveShadow:
-					var specificInstance = ResourceLoader.load("res://presets/effects/TorchGlow.tscn").instantiate()
-					if specificInstance:
-						var blendMode : Light2D.BlendMode = Light2D.BLEND_MODE_MIX
-						var scaleFactor : float = 1.0
-						var energyFactor : float = 1.0
-						var speedFactor : float = 1.0
-
-						if caveShadow.color.v >= 1:
-							blendMode = Light2D.BLEND_MODE_ADD
-							scaleFactor = 0.15
-							energyFactor = 0.2
-						elif caveShadow.color.v > 0.5:
-							blendMode = Light2D.BLEND_MODE_ADD
-							scaleFactor = 0.5
-							energyFactor = 0.5
-
-						if specificGid.size() > 1:
-							var glowPos : Vector2 = cell_in_map
-							glowPos.x += specificGid[1].x
-							specificInstance.set_position(glowPos)
-						if specificGid.size() > 2:
-							scaleFactor *= specificGid[2]
-						if specificGid.size() > 3:
-							energyFactor = specificGid[3]
-						if specificGid.size() > 4:
-							speedFactor = specificGid[4] 
-						if specificGid.size() > 5:
-							match specificGid[5]:
-								"Add": blendMode = Light2D.BLEND_MODE_ADD
-								"Mix": blendMode = Light2D.BLEND_MODE_MIX
-								_: pass
-
-						specificInstance.set_texture_scale(scaleFactor)
-						specificInstance.set_energy(energyFactor)
-						specificInstance.set_blend_mode(blendMode)
-						specificInstance.generalSpeed *= speedFactor
-
-						caveShadow.add_child(specificInstance)
-						specificInstance.set_owner(root)
+			"LightSource":
+				var lighting : CanvasLayer = root.get_node_or_null("LightingLayer")
+				if lighting:
+					var lightSource : LightSource = LightSource.new()
+					if lightSource:
+						lightSource.speed = specificGid[1]
+						lightSource.position = cell_in_map
+						lightSource.position.x += specificGid[2].x
+						lightSource.position.y -= specificGid[2].y / 2.0
+						lightSource.radius = specificGid[3]
+						lightSource.color = specificGid[4]
+						lighting.add_child(lightSource)
+						lightSource.set_owner(root)
 
 # Creates a layer node from the data
 # Returns an error code
@@ -1145,24 +1116,20 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 						tileData.set_collision_polygon_points(0, tilePolygonCount, polygonShape)
 			# Handle some specific features
 			if "tileproperties" in ts and rel_id in ts.tileproperties:
-				if "has_glow" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].has_glow:
-					var glow_scale : float = 1.0
-					if "glow_scale" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].glow_scale:
-						glow_scale = ts.tileproperties[rel_id].glow_scale
+				if "is_lightsource" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].is_lightsource:
+					var light_radius : float = 64.0
+					if "light_radius" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_radius:
+						light_radius = ts.tileproperties[rel_id].light_radius
 
-					var glow_energy : float = 1.0
-					if "glow_energy" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].glow_energy:
-						glow_energy = ts.tileproperties[rel_id].glow_energy
+					var light_color : Color = Color.WHITE
+					if "light_color" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_color:
+						light_color = Color(ts.tileproperties[rel_id].light_color)
 
-					var glow_speed : float = 1.0
-					if "glow_speed" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].glow_speed:
-						glow_speed = ts.tileproperties[rel_id].glow_speed
+					var light_speed : float = 20.0
+					if "light_speed" in ts.tileproperties[rel_id]:
+						light_speed = ts.tileproperties[rel_id].light_speed
 
-					var glow_blend_mode : String = ""
-					if "glow_blend_mode" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].glow_blend_mode:
-						glow_blend_mode = ts.tileproperties[rel_id].glow_blend_mode
-
-					specificDic[gid] = ["TorchGlow", region.size / 2, glow_scale, glow_energy, glow_speed, glow_blend_mode]
+					specificDic[gid] = ["LightSource", light_speed, region.size / 2, light_radius, light_color]
 
 			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
 					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
@@ -1435,15 +1402,14 @@ func set_custom_properties(object, tiled_object):
 	var properties = get_custom_properties(tiled_object.properties, tiled_object.propertytypes)
 	for property in properties:
 		object.set_meta(property, properties[property])
-		if property == "shadow":
-			var caveShadow : Node2D = object.get_node_or_null("CaveShadow")
-			if caveShadow == null:
-				caveShadow = ResourceLoader.load("res://presets/effects/CaveShadow.tscn").instantiate()
-				caveShadow.color.v = properties[property]
-
-				caveShadow.set_name("CaveShadow")
-				object.add_child(caveShadow)
-				caveShadow.set_owner(object)
+		if property == "lighting":
+			var lighting : CanvasLayer = object.get_node_or_null("LightingLayer")
+			if lighting == null:
+				lighting = ResourceLoader.load("res://presets/effects/Lighting.tscn").instantiate()
+				lighting.set_name("LightingLayer")
+				lighting.lightLevel = properties[property]
+				object.add_child(lighting)
+				lighting.set_owner(object)
 		elif property == "spiritOnly":
 			spirit_only = bool(properties[property])
 

@@ -11,7 +11,7 @@ const userSection : String						= "User"
 		"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
 		"Render-WindowResolution": [init_resolution, set_resolution, apply_resolution, $Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
 		"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
-		"Render-Shadow": [init_shadow, set_shadow, apply_shadow, $Margin/TabBar/Render/RenderVBox/EffectVBox/Shadow],
+		"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
 		"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
 		"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
 		"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
@@ -120,17 +120,17 @@ func apply_actionoverlay(enable : bool):
 			Launcher.GUI.boxes.set_visible(true)
 			Launcher.Action.supportMouse = true
 
-# Shadow
-func init_shadow(apply : bool):
-	var enable : bool = GetVal("Render-Shadow")
-	accessors[CATEGORY.RENDER]["Render-Shadow"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
+# Lighting
+func init_lighting(apply : bool):
+	var enable : bool = GetVal("Render-Lighting")
+	accessors[CATEGORY.RENDER]["Render-Lighting"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
 	if apply:
-		apply_shadow(enable)
-func set_shadow(enable : bool):
-	SetVal("Render-Shadow", enable)
-	apply_shadow(enable)
-func apply_shadow(enable : bool):
-	Effects.EnableShadow(enable)
+		apply_lighting(enable)
+func set_lighting(enable : bool):
+	SetVal("Render-Lighting", enable)
+	apply_lighting(enable)
+func apply_lighting(enable : bool):
+	Effects.EnableLighting(enable)
 
 # HQ4x
 func init_hq4x(apply : bool):

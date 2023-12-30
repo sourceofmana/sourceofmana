@@ -5,9 +5,9 @@
  </editorsettings>
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
+  <property name="lighting" type="float" value="0.5"/>
   <property name="music" value="Lenia"/>
   <property name="name" value="Artis Sewer"/>
-  <property name="shadow" type="float" value="0.5"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/aemil/aurora/artis/sewer/Sunlight.tsx"/>
  <tileset firstgid="6" source="../../graphics/tilesets/aemil/aurora/artis/sewer/Sewer.tsx"/>

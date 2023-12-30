@@ -3,11 +3,10 @@
  <image source="sunlight-x1x5.png" width="160" height="160"/>
  <tile id="2">
   <properties>
-   <property name="glow_blend_mode" value="Add"/>
-   <property name="glow_energy" type="float" value="0.5"/>
-   <property name="glow_scale_factor" type="float" value="1.5"/>
-   <property name="glow_speed_factor" type="float" value="0.1"/>
-   <property name="has_glow" type="bool" value="true"/>
+   <property name="is_lightsource" type="bool" value="true"/>
+   <property name="light_color" value="FFFFFFAA"/>
+   <property name="light_radius" type="int" value="192"/>
+   <property name="light_speed" type="float" value="0"/>
   </properties>
  </tile>
 </tileset>
