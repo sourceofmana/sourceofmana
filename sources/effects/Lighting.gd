@@ -24,7 +24,8 @@ func UpdateTexture():
 	var viewportRadius : Vector2 = colorRect.get_viewport_rect().size / 2.0
 
 	var lights = get_tree().get_nodes_in_group("lights")
-	var lightCount : int = 0
+	var lightData : Array[Vector4] = []
+	var colorData : Array[Color] = []
 
 	for light in lights:
 		if light and light is LightSource:
@@ -32,18 +33,14 @@ func UpdateTexture():
 				Vector2(cameraCenter - viewportRadius - Vector2(light.radius, light.radius) / 2), \
 				Vector2(viewportRadius * 2 + Vector2(light.radius, light.radius)) \
 			).has_point(light.global_position):
-				# Store the x and y position in the red and green channels
-				# How luminious the light is in the blue
-				# And the light's radius in the alpha channel
 				var light_position : Vector2 = light.global_position.floor()
-				image.set_pixel(lightCount, 0, Color(light_position.x, light_position.y, light.speed, light.radius))
-				# Store the light's color in the 2nd row
-				image.set_pixel(lightCount, 1, light.color)
-				lightCount += 1
+				lightData.append(Vector4(light_position.x, light_position.y, light.speed, light.radius))
+				colorData.append(light.color)
 
 	imageTexture.set_image(image)
-	colorRect.material.set_shader_parameter("n_lights", lightCount)
-	colorRect.material.set_shader_parameter("light_data", imageTexture)
+	colorRect.material.set_shader_parameter("n_lights", lightData.size())
+	colorRect.material.set_shader_parameter("light_data", lightData)
+	colorRect.material.set_shader_parameter("color_data", colorData)
 	colorRect.material.set_shader_parameter("light_level", lightLevel)
 
 #

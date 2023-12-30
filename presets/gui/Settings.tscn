@@ -161,7 +161,7 @@ ticks_on_borders = true
 [connection signal="item_selected" from="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option" to="." method="set_resolution"]
 [connection signal="item_selected" from="Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option" to="." method="set_scaling"]
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay" to="." method="set_actionoverlay"]
-[connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting" to="." method="set_shadow"]
+[connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting" to="." method="set_lighting"]
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4" to="." method="set_hq4x"]
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/CRT" to="." method="set_crt"]
 [connection signal="value_changed" from="Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider" to="." method="set_audiogeneral"]
