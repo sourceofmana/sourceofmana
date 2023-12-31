@@ -26,6 +26,7 @@ func UpdateTexture():
 	var lights = get_tree().get_nodes_in_group("lights")
 	var lightData : Array[Vector4] = []
 	var colorData : Array[Color] = []
+	var time : float = Time.get_ticks_msec() / 1000.0
 
 	for light in lights:
 		if light and light is LightSource:
@@ -33,8 +34,8 @@ func UpdateTexture():
 				Vector2(cameraCenter - viewportRadius - Vector2(light.radius, light.radius) / 2), \
 				Vector2(viewportRadius * 2 + Vector2(light.radius, light.radius)) \
 			).has_point(light.global_position):
-				var light_position : Vector2 = light.global_position.floor()
-				lightData.append(Vector4(light_position.x, light_position.y, light.speed, light.radius))
+				var light_oscillation : float = sin(light.speed * time + light.randomSeed)
+				lightData.append(Vector4(light.global_position.x, light.global_position.y, light_oscillation, light.radius))
 				colorData.append(light.color)
 
 	imageTexture.set_image(image)

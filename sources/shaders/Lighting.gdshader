@@ -27,25 +27,22 @@ void fragment()
 
 	for (int i = 0; i < n_lights; ++i)
 	{
-		float custom_radius = light_data[i].w;
-		vec2 normalized_position = light_data[i].xy - frag_position;
+		vec4 light_instance = light_data[i];
+		vec2 normalized_position = light_instance.xy - frag_position;
 		normalized_position.y *= 1.3;
-
-		float dist = length(normalized_position) / custom_radius;
-		if (dist < 1.0f)
+		float squared_dist = dot(normalized_position, normalized_position);
+		float squared_radius = pow(light_instance.w, 2);
+		if (squared_dist < squared_radius)
 		{
-			float speed = light_data[i].z;
-			float seed = speed * TIME + light_data[i].x + light_data[i].y;
-			float oscillation = sin(seed);
-			float custom_deadband = deadband + oscillation * 0.2;
-			float parabolization = -(dist - 1.0) * (dist - 1.0) * custom_deadband + 1.0;
-			float value = dist < 0.5 ? 0.0 : parabolization;
+			float dist = sqrt(squared_dist) / sqrt(squared_radius);
+			float value = dist < 0.5 ? 0.0 : -pow(dist - 1.0, 2) * (deadband + light_instance.z * 0.2) + 1.0;
 			if (value < m_value)
 			{
 				vec4 new_color = color_data[i];
 				light_color.rgb = mix(light_color.rgb, new_color.rgb, m_value);
 				light_color.a = max(light_color.r, new_color.r);
 			}
+
 			m_value *= value;
 			if (m_value <= 0.0)
 				break;
