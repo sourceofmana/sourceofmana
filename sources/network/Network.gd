@@ -92,14 +92,15 @@ func ChatAgent(ridAgent : int, text : String, rpcID : int = RidSingleMode):
 func TriggerInteract(entityID : int, rpcID : int = RidSingleMode):
 	NetCallServer("TriggerInteract", [entityID], rpcID, 1000)
 
-# Damage
-@rpc("any_peer", "unreliable_ordered")
-func TriggerDamage(entityID : int, rpcID : int = RidSingleMode):
-	NetCallServer("TriggerDamage", [entityID], rpcID)
+# Combat
+@rpc("any_peer", "reliable")
+func TriggerCast(entityID : int, rpcID : int = RidSingleMode):
+	NetCallServer("TriggerCast", [entityID], rpcID)
 
 @rpc("authority", "reliable")
-func DamageDealt(agentID : int, targetID : int, damage : int, rpcID : int = RidSingleMode):
-	NetCallClient("DamageDealt", [agentID, targetID, damage], rpcID)
+func TargetDamaged(agentID : int, targetID : int, damage : int, damageType : EntityCommons.DamageType, rpcID : int = RidSingleMode):
+	NetCallClient("TargetDamaged", [agentID, targetID, damage, damageType], rpcID)
+
 
 # Morph
 @rpc("any_peer", "reliable")

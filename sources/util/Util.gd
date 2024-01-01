@@ -58,8 +58,9 @@ static func RemoveNode(node : Node, parent : Node):
 static func StartTimer(timer : Timer, delay : float, callable : Callable):
 	if timer:
 		timer.start(delay)
-		if not timer.timeout.is_connected(callable):
-			timer.timeout.connect(callable)
+		if timer.timeout.is_connected(callable):
+			timer.timeout.disconnect(callable)
+		timer.timeout.connect(callable)
 
 #
 static func GetScreenCapture() -> Image:

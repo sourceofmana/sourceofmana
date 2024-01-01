@@ -21,7 +21,6 @@ var pastState : EntityCommons.State		= EntityCommons.State.IDLE
 
 var isSitting : bool					= false
 var isAttacking : bool					= false
-var target : BaseAgent					= null
 
 var currentVelocity : Vector2i			= Vector2i.ZERO
 var pastVelocity : Vector2				= Vector2.ZERO
@@ -102,15 +101,19 @@ func SetRelativeMode(enable : bool, givenDirection : Vector2):
 	currentDirection = givenDirection
 
 func WalkToward(pos : Vector2):
-	if pos != position and (target or isAttacking):
-		Combat.Stop(self)
+	if pos == position:
+		return
+	if isAttacking:
+		Combat.TargetStopped(self)
+	if isAttacking:
+		return
 
 	hasCurrentGoal = true
 	lastPositions.clear()
 	if agent:
 		agent.target_position = pos
 		navigationLine.clear()
-		navigationLine += agent.get_current_navigation_path()
+		navigationLine = agent.get_current_navigation_path()
 
 func ResetNav():
 	WalkToward(position)

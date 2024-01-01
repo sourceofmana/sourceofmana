@@ -42,7 +42,7 @@ func Interact():
 					Launcher.Network.TriggerInteract(entityID)
 					target.visual.SetMainMaterial.call_deferred(EntityCommons.AllyTarget)
 				elif target is MonsterEntity:
-					Launcher.Network.TriggerDamage(entityID)
+					Launcher.Network.TriggerCast(entityID)
 					target.visual.SetMainMaterial.call_deferred(EntityCommons.EnemyTarget)
 
 #

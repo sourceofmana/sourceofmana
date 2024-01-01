@@ -91,10 +91,20 @@ static var EnemyTarget : Resource				= preload("res://presets/entities/component
 static var DamageLabel : PackedScene			= preload("res://presets/gui/DamageLabel.tscn")
 static var SpeechLabel : PackedScene			= preload("res://presets/gui/chat/SpeechBubble.tscn")
 
-static var EntityAttackColor : float			= 0.65
+# Damage
+enum DamageType
+{
+	HIT = 0,
+	CRIT,
+	MISS,
+	DODGE
+}
+
+static var DodgeAttackColor : float				= 0.8
 static var LocalAttackColor : float				= 0.35
-static var LocalDamageColor : float				= 0.0
 static var MissAttackColor : float				= 0.2
+static var MonsterAttackColor : float			= 0.0
+static var PlayerAttackColor : float			= 0.65
 
 # Interactive
 static var interactionDisplayOffset : int		= 0
@@ -114,10 +124,11 @@ static func InitVars():
 	EntityCommons.MaxGuardbandDistVec = Vector2(EntityCommons.MaxGuardbandDist, EntityCommons.MaxGuardbandDist)
 
 	# Visual
-	EntityCommons.EntityAttackColor = Launcher.Conf.GetFloat("Visual", "entityAttackColor", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.DodgeAttackColor = Launcher.Conf.GetFloat("Visual", "dodgeAttackColor", Launcher.Conf.Type.GAMEPLAY)
 	EntityCommons.LocalAttackColor = Launcher.Conf.GetFloat("Visual", "localAttackColor", Launcher.Conf.Type.GAMEPLAY)
-	EntityCommons.LocalDamageColor = Launcher.Conf.GetFloat("Visual", "localDamageColor", Launcher.Conf.Type.GAMEPLAY)
 	EntityCommons.MissAttackColor = Launcher.Conf.GetFloat("Visual", "missAttackColor", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.MonsterAttackColor = Launcher.Conf.GetFloat("Visual", "monsterAttackColor", Launcher.Conf.Type.GAMEPLAY)
+	EntityCommons.PlayerAttackColor = Launcher.Conf.GetFloat("Visual", "playerAttackColor", Launcher.Conf.Type.GAMEPLAY)
 
 	# Interactive
 	EntityCommons.interactionDisplayOffset = Launcher.Conf.GetInt("Interactive", "interactionDisplayOffset", Launcher.Conf.Type.GAMEPLAY)

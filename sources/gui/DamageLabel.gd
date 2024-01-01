@@ -19,26 +19,34 @@ func SetPosition(startPos : Vector2, floorPos : Vector2):
 	position = startPos
 	floorPosition = floorPos.y
 
-func SetDamage(damage : int, isTargetLocal : bool, isDealerLocal : bool, isCrit : bool):
+func SetDamage(dealer : BaseEntity, damage : int, damageType : EntityCommons.DamageType):
 	var hue : float = 0.0
-	if damage == 0:
-		hue = EntityCommons.MissAttackColor
-	elif isDealerLocal:
-		hue = EntityCommons.LocalAttackColor
-	elif isTargetLocal:
-		hue = EntityCommons.LocalDamageColor
-	else:
-		hue = 0.55
+	match damageType:
+		EntityCommons.DamageType.CRIT:
+			criticalDamage = true
+			set_text(str(damage))
+		EntityCommons.DamageType.DODGE:
+			hue = EntityCommons.DodgeAttackColor
+			set_text("dodge")
+		EntityCommons.DamageType.HIT:
+			if dealer == Launcher.Player:
+				hue = EntityCommons.LocalAttackColor
+			elif dealer is PlayerEntity:
+				hue = EntityCommons.PlayerAttackColor
+			else:
+				hue = EntityCommons.MonsterAttackColor
+			set_text(str(damage))
+		EntityCommons.DamageType.MISS:
+			hue = EntityCommons.MissAttackColor
+			set_text("miss")
 
 	HSVA = Vector4(hue, 0.8, 1.0, 1.0)
-	criticalDamage = isCrit
 
 	velocity.x = randf_range(-maxVelocityAngle, maxVelocityAngle)
 	velocity.y = randf_range(minVelocitySpeed, maxVelocitySpeed)
 
 	add_theme_color_override("font_color", Color.from_hsv(HSVA.x, HSVA.y, HSVA.z, HSVA.w))
 	add_theme_color_override("font_outline_color", Color.from_hsv(HSVA.x, HSVA.y, 0.0, HSVA.w))
-	set_text(str(damage) if damage > 0 else "miss")
 
 #
 func _process(delta):
