@@ -4,9 +4,6 @@ extends CanvasLayer
 @onready var colorRect : ColorRect = $ColorRect
 @export var lightLevel : float = 0.5
 
-var image = Image.create(128, 2, false, Image.FORMAT_RGBAH)
-var imageTexture : ImageTexture = ImageTexture.new()
-
 #
 func UpdateTransform():
 	var t = Transform2D(0, Vector2())
@@ -38,16 +35,12 @@ func UpdateTexture():
 				lightData.append(Vector4(light.global_position.x, light.global_position.y, light_oscillation, light.radius))
 				colorData.append(light.color)
 
-	imageTexture.set_image(image)
 	colorRect.material.set_shader_parameter("n_lights", lightData.size())
 	colorRect.material.set_shader_parameter("light_data", lightData)
 	colorRect.material.set_shader_parameter("color_data", colorData)
 	colorRect.material.set_shader_parameter("light_level", lightLevel)
 
 #
-func _ready():
-	imageTexture = ImageTexture.create_from_image(image)
-
 func _physics_process(_delta):
 	UpdateTransform()
 	UpdateTexture()
