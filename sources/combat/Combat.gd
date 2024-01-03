@@ -47,7 +47,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent):
 		var damage : int			= int(agent.stat.current.attackStrength * RNGvalue)
 		var damageType : EntityCommons.DamageType = EntityCommons.DamageType.HIT
 		if damage == 0:
-			damageType = EntityCommons.DamageType.MISS
+			damageType = EntityCommons.DamageType.DODGE
 
 		target.stat.health = max(target.stat.health - damage, 0)
 		Combat.TargetDamaged(agent, target, damage, damageType)

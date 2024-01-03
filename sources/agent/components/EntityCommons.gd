@@ -100,7 +100,7 @@ enum DamageType
 	DODGE
 }
 
-static var DodgeAttackColor : float				= 0.8
+static var DodgeAttackColor : float				= 0.15
 static var LocalAttackColor : float				= 0.35
 static var MissAttackColor : float				= 0.2
 static var MonsterAttackColor : float			= 0.0
