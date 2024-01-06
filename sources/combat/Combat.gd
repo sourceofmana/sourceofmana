@@ -4,6 +4,14 @@ class_name Combat
 # To move to stats
 const exhaustPerAttack : int = 5
 
+enum CastType
+{
+	NONE = -1,
+	DEFAULT = 0,
+	MANA_BURST,
+	FLAR
+}
+
 #
 static func IsTargetable(agent : BaseAgent, enemy : BaseAgent) -> bool:
 	return agent != enemy and agent and enemy and \
@@ -16,28 +24,28 @@ static func IsNear(agent : BaseAgent, enemy : BaseAgent) -> bool:
 	return WorldNavigation.GetPathLength(agent, enemy.position) <= agent.stat.current.attackRange
 
 #
-static func StartCastDelay(agent : BaseAgent, target : BaseAgent):
+static func StartCastDelay(agent : BaseAgent, target : BaseAgent, castType : CastType):
 	if agent:
-		Util.StartTimer(agent.castTimer, Formulas.GetCastAttackDelay(agent.stat), Combat.Attack.bind(agent, target))
+		Util.StartTimer(agent.castTimer, Formulas.GetCastAttackDelay(agent.stat), Combat.Attack.bind(agent, target, castType))
 		agent.isAttacking = true
 		if target:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
 		agent.UpdateChanged()
 
-static func StartCooldownDelay(agent : BaseAgent, target : BaseAgent):
-	Util.StartTimer(agent.cooldownTimer, Formulas.GetCooldownAttackDelay(agent.stat), Combat.Cast.bind(agent, target))
+static func StartCooldownDelay(agent : BaseAgent, target : BaseAgent, castType : CastType):
+	Util.StartTimer(agent.cooldownTimer, Formulas.GetCooldownAttackDelay(agent.stat), Combat.Cast.bind(agent, target, castType))
 	agent.isAttacking = false
 
 #
-static func Cast(agent : BaseAgent, target : BaseAgent):
+static func Cast(agent : BaseAgent, target : BaseAgent, castType : CastType):
 	if agent and not agent.isAttacking and IsTargetable(agent, target):
 		if IsNear(agent, target):
-			StartCastDelay(agent, target)
+			StartCastDelay(agent, target, castType)
 			agent.ResetNav()
 		else:
 			TargetStopped(agent)
 
-static func Attack(agent : BaseAgent, target : BaseAgent):
+static func Attack(agent : BaseAgent, target : BaseAgent, castType : CastType):
 	if agent.isAttacking and IsTargetable(agent, target) and IsNear(agent, target):
 		var hasStamina : bool		= agent.stat.stamina >= exhaustPerAttack
 		agent.stat.stamina			= max(agent.stat.stamina - exhaustPerAttack, 0)
@@ -55,7 +63,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent):
 		if target.stat.health <= 0:
 			Combat.TargetKilled(agent, target)
 
-		Combat.StartCooldownDelay(agent, target)
+		Combat.StartCooldownDelay(agent, target, castType)
 	else:
 		Combat.TargetDamaged(agent, target, 0, EntityCommons.DamageType.MISS)
 		Combat.TargetStopped(agent)
