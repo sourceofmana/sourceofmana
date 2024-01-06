@@ -5,6 +5,7 @@ class_name LightSource
 @export var color : Color = Color("#FFD28D")
 @export var radius : int = 128
 @export_range (0.0, 100.0) var speed : float = 20.0
+var currentOscillation : float = 0.0
 
 #
 func _ready():

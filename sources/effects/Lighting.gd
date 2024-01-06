@@ -1,46 +1,48 @@
 extends CanvasLayer
 
 #
-@onready var colorRect : ColorRect = $ColorRect
+@onready var colorRectArrays : Array[ColorRect] = [$GridContainer/HBoxContainer/ColorRect, $GridContainer/HBoxContainer/ColorRect2, $GridContainer/HBoxContainer/ColorRect3, $GridContainer/HBoxContainer/ColorRect4, $GridContainer/HBoxContainer2/ColorRect5, $GridContainer/HBoxContainer2/ColorRect6, $GridContainer/HBoxContainer2/ColorRect7, $GridContainer/HBoxContainer2/ColorRect8]
 @export var lightLevel : float = 0.5
 
 #
 func UpdateTransform():
-	var t = Transform2D(0, Vector2())
-	if Launcher.Camera != null and Launcher.Camera.mainCamera != null:
-		var canvas_transform = Launcher.Camera.mainCamera.get_canvas_transform()
-		var top_left = -canvas_transform.origin / canvas_transform.get_scale()
-		t = Transform2D(0, top_left)
-	colorRect.material.set_shader_parameter("global_transform", t)
+	var canvas_transform = Launcher.Camera.mainCamera.get_canvas_transform()
+	for colorRect in colorRectArrays:
+		var topLeft = (-canvas_transform.origin + colorRect.global_position) / canvas_transform.get_scale()
+		colorRect.material.set_shader_parameter("global_transform", Transform2D(0, topLeft))
 
 func UpdateTexture():
-	if Launcher.Camera == null or Launcher.Camera.mainCamera == null:
-		return
-
-	var cameraCenter : Vector2 = Launcher.Camera.mainCamera.get_target_position()
-	var viewportRadius : Vector2 = colorRect.get_viewport_rect().size / 2.0
-
 	var lights = get_tree().get_nodes_in_group("lights")
-	var lightData : Array[Vector4] = []
-	var colorData : Array[Color] = []
 	var time : float = Time.get_ticks_msec() / 1000.0
+	var cameraTopLeft : Vector2 = Launcher.Camera.mainCamera.get_target_position() - Launcher.Camera.mainCamera.get_viewport_rect().size / 2.0
 
-	for light in lights:
-		if light and light is LightSource:
-			if Rect2( \
-				Vector2(cameraCenter - viewportRadius - Vector2(light.radius, light.radius) / 2), \
-				Vector2(viewportRadius * 2 + Vector2(light.radius, light.radius)) \
-			).has_point(light.global_position):
-				var light_oscillation : float = sin(light.speed * time + light.randomSeed)
-				lightData.append(Vector4(light.global_position.x, light.global_position.y, light_oscillation, light.radius))
-				colorData.append(light.color)
+	var updatedLights = {}
 
-	colorRect.material.set_shader_parameter("n_lights", lightData.size())
-	colorRect.material.set_shader_parameter("light_data", lightData)
-	colorRect.material.set_shader_parameter("color_data", colorData)
-	colorRect.material.set_shader_parameter("light_level", lightLevel)
+	for colorRect in colorRectArrays:
+		var lightData : Array[Vector4] = []
+		var colorData : Array[Color] = []
+
+		for light in lights:
+			if light and light is LightSource:
+				if Rect2( \
+					Vector2(cameraTopLeft + colorRect.global_position - Vector2(light.radius, light.radius)), \
+					Vector2(colorRect.size + Vector2(light.radius, light.radius) * 2) \
+				).has_point(light.global_position):
+					if not updatedLights.has(light):
+						updatedLights[light] = true
+						light.currentOscillation = sin(light.speed * time + light.randomSeed)
+					lightData.append(Vector4(light.global_position.x, light.global_position.y, light.currentOscillation, light.radius))
+					colorData.append(light.color)
+
+		colorRect.material.set_shader_parameter("n_lights", lightData.size())
+		colorRect.material.set_shader_parameter("light_data", lightData)
+		colorRect.material.set_shader_parameter("color_data", colorData)
 
 #
+func _ready():
+	for colorRect in colorRectArrays:
+		colorRect.material.set_shader_parameter("light_level", lightLevel)
+
 func _physics_process(_delta):
 	UpdateTransform()
 	UpdateTexture()
