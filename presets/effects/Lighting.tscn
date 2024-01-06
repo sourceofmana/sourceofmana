@@ -37,10 +37,10 @@ void fragment()
 		vec2 normalized_position = light_instance.xy - frag_position;
 		normalized_position.y *= 1.3;
 		float squared_dist = dot(normalized_position, normalized_position);
-		float squared_radius = pow(light_instance.w, 2);
+		float squared_radius = light_instance.w * light_instance.w;
 		if (squared_dist < squared_radius)
 		{
-			float dist = sqrt(squared_dist) / sqrt(squared_radius);
+			float dist = sqrt(squared_dist) / light_instance.w;
 			float value = dist < 0.5 ? 0.0 : -pow(dist - 1.0, 2) * (deadband + light_instance.z * 0.2) + 1.0;
 			if (value < m_value)
 			{
