@@ -111,6 +111,8 @@ func ParseSkillsDB():
 				skill._castTime = result[key].CastTime
 			if "CooldownTime" in result[key]:
 				skill._cooldownTime = result[key].CooldownTime
+			if "State" in result[key]:
+				skill._state = EntityCommons.State[result[key].State]
 			if "StaminaCost" in result[key]:
 				skill.stamina = result[key].StaminaCost
 			if "ManaCost" in result[key]:

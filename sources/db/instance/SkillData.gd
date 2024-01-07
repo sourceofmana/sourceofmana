@@ -9,6 +9,7 @@ class_name SkillData
 @export var _castColor : Color
 @export var _castTime : float
 @export var _cooldownTime : float
+@export var _state : EntityCommons.State
 
 # Stats, must have the same name than their relatives in EntityStats
 @export var stamina : int
@@ -23,5 +24,6 @@ func _init():
 	_castColor = Color.PINK
 	_castTime = 0.0
 	_cooldownTime = 0.0
+	_state = EntityCommons.State.IDLE
 	stamina = 0
 	mana = 0

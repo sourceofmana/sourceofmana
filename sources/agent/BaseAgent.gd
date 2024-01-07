@@ -20,7 +20,7 @@ var currentState : EntityCommons.State	= EntityCommons.State.IDLE
 var pastState : EntityCommons.State		= EntityCommons.State.IDLE
 
 var isSitting : bool					= false
-var isAttacking : bool					= false
+var currentSkillCast : int				= -1
 
 var currentVelocity : Vector2i			= Vector2i.ZERO
 var pastVelocity : Vector2				= Vector2.ZERO
@@ -81,8 +81,8 @@ func SetVelocity():
 func SetCurrentState():
 	if stat.health <= 0:
 		SetState(EntityCommons.State.DEATH)
-	elif isAttacking:
-		SetState(EntityCommons.State.ATTACK)
+	elif currentSkillCast >= 0:
+		SetState(Launcher.DB.SkillsDB[str(currentSkillCast)]._state)
 	elif currentVelocity == Vector2i.ZERO:
 		SetState(EntityCommons.State.IDLE)
 	else:
@@ -103,9 +103,9 @@ func SetRelativeMode(enable : bool, givenDirection : Vector2):
 func WalkToward(pos : Vector2):
 	if pos == position:
 		return
-	if isAttacking:
-		Combat.TargetStopped(self)
-	if isAttacking:
+	if currentSkillCast >= 0:
+		Combat.Stopped(self)
+	if currentSkillCast >= 0:
 		return
 
 	hasCurrentGoal = true

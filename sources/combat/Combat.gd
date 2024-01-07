@@ -19,7 +19,8 @@ static func SetConsume(agent : BaseAgent, stat : String, skill : SkillData) -> b
 
 	return canConsume
 
-static func GetDamage(agent : BaseAgent, target : BaseAgent, info : DamageInfo, skill : SkillData):
+static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillData) -> DamageInfo:
+	var info : DamageInfo		= DamageInfo.new()
 	var hasStamina : bool		= SetConsume(agent, "stamina", skill)
 	var lowerBound : float		= 0.9 if hasStamina else 0.1
 	var RNGValue : float		= randf_range(lowerBound, 1.0)
@@ -35,6 +36,8 @@ static func GetDamage(agent : BaseAgent, target : BaseAgent, info : DamageInfo, 
 		info.damage = int(agent.stat.current.attackStrength * RNGValue)
 		info.type = EntityCommons.DamageType.DODGE if info.damage == 0 else EntityCommons.DamageType.HIT
 
+	return info
+
 # Checks
 static func IsAlive(agent : BaseAgent) -> bool:
 	return agent and agent.currentState != EntityCommons.State.DEATH
@@ -46,57 +49,61 @@ static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:
 	return WorldAgent.GetMapFromAgent(agent) == WorldAgent.GetMapFromAgent(target)
 static func IsTargetable(agent : BaseAgent, target : BaseAgent) -> bool:
 	return IsNotSelf(agent, target) and IsAlive(agent) and IsAlive(target) and IsSameMap(agent, target)
+static func IsAttacking(agent : BaseAgent) -> bool:
+	return agent.currentSkillCast >= 0
 
 # Attack Flow
-static func Cast(agent : BaseAgent, target : BaseAgent, castID : int):
-	# To remove isAttacking, store cast ID instead
-	if not agent.isAttacking and IsTargetable(agent, target):
+static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
+	if not IsAttacking(agent) and IsTargetable(agent, target):
 		if IsNear(agent, target):
-			Casting(agent, target, castID)
+			Casting(agent, target, skill)
 			agent.ResetNav()
 		else:
-			TargetStopped(agent)
+			Stopped(agent)
 
-static func Casting(agent : BaseAgent, target : BaseAgent, castID : int):
+static func Casting(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if agent:
-		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay, Combat.Attack.bind(agent, target, castID))
-		agent.isAttacking = true
+		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay, Combat.Attack.bind(agent, target, skill))
+		agent.currentSkillCast = skill._id
 		if target:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
 		agent.UpdateChanged()
 
-static func Attack(agent : BaseAgent, target : BaseAgent, castID : int):
-	var info : DamageInfo = DamageInfo.new()
-	if agent.isAttacking and IsTargetable(agent, target) and IsNear(agent, target):
-		var castIDStr : String = str(castID)
-		var hasMana : bool = SetConsume(agent, "mana", Launcher.DB.SkillsDB[castIDStr])
-		if hasMana:
-			GetDamage(agent, target, info, Launcher.DB.SkillsDB[castIDStr])
-			TargetDamaged(agent, target, info)
-			Attacked(agent, target, castID)
+static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
+	if IsAttacking(agent) and IsTargetable(agent, target) and IsNear(agent, target):
+		if SetConsume(agent, "mana", skill):
+			var info : DamageInfo = GetDamage(agent, target, skill)
+			Damaged(agent, target, info)
+			Attacked(agent, target, skill)
 			return
 
-	TargetDamaged(agent, target, info)
-	TargetStopped(agent)
+	Missed(agent, target)
 
-static func Attacked(agent : BaseAgent, target : BaseAgent, castID : int):
-	Util.StartTimer(agent.cooldownTimer, agent.stat.current.cooldownAttackDelay, Combat.Cast.bind(agent, target, castID))
-	agent.isAttacking = false
+# Handling
+static func Attacked(agent : BaseAgent, target : BaseAgent, skill : SkillData):
+	Util.StartTimer(agent.cooldownTimer, agent.stat.current.cooldownAttackDelay, Combat.Cast.bind(agent, target, skill))
+	agent.currentSkillCast = -1
 
-# Target Handling
-static func TargetDamaged(agent : BaseAgent, target : BaseAgent, info : DamageInfo):
+static func Damaged(agent : BaseAgent, target : BaseAgent, info : DamageInfo):
 	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetDamaged", [target.get_rid().get_id(), info.damage, info.type])
 	target.stat.health = max(target.stat.health - info.damage, 0)
 	if target.stat.health <= 0:
-		TargetKilled(agent, target)
+		Killed(agent, target)
 
-static func TargetKilled(agent : BaseAgent, target : BaseAgent):
+static func Killed(agent : BaseAgent, target : BaseAgent):
 	agent.stat.XpBonus(target)
 	Util.StartTimer(target.deathTimer, target.stat.deathDelay, WorldAgent.RemoveAgent.bind(target))
-	TargetStopped(agent)
+	Stopped(agent)
 
-static func TargetStopped(agent : BaseAgent):
+static func Stopped(agent : BaseAgent):
 	if agent.cooldownTimer.is_stopped():
-		agent.isAttacking = false
+		agent.currentSkillCast = -1
 		if not agent.castTimer.is_stopped():
 			agent.castTimer.stop()
+
+static func Missed(agent : BaseAgent, target : BaseAgent):
+	var info : DamageInfo = DamageInfo.new()
+	info.type = EntityCommons.DamageType.MISS
+	info.damage = 0
+	Damaged(agent, target, info)
+	Stopped(agent)
