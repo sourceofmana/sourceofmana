@@ -94,8 +94,8 @@ func TriggerInteract(entityID : int, rpcID : int = RidSingleMode):
 
 # Combat
 @rpc("any_peer", "reliable")
-func TriggerCast(entityID : int, castType : Combat.CastType, rpcID : int = RidSingleMode):
-	NetCallServer("TriggerCast", [entityID, castType], rpcID)
+func TriggerCast(entityID : int, castID : int, rpcID : int = RidSingleMode):
+	NetCallServer("TriggerCast", [entityID, castID], rpcID)
 
 @rpc("authority", "reliable")
 func TargetDamaged(agentID : int, targetID : int, damage : int, damageType : EntityCommons.DamageType, rpcID : int = RidSingleMode):

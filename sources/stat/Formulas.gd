@@ -28,6 +28,11 @@ static func GetAttackSpeed(stat : EntityStats) -> float:
 	value += stat.base.attackSpeed
 	return value
 
+static func GetCritRate(stat : EntityStats) -> float:
+	var value : float = 1 + int(stat.concentration * 0.2)
+	value *= stat.base.critRate
+	return value
+
 static func GetCastAttackDelay(stat : EntityStats) -> float:
 	var value : float = stat.current.attackSpeed
 	value /= 250

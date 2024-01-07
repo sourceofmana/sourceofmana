@@ -101,12 +101,20 @@ func ParseSkillsDB():
 			skill._id = key.to_int()
 			skill._name = result[key].Name
 			skill._iconPath = result[key].IconPath
-			skill._castPresetPath = result[key].CastPresetPath
-			skill._castTextureOverride = result[key].CastTextureOverride
-			skill._castColor = result[key].CastColor
-			skill._castTime = result[key].CastTime
-			skill._staminaCost = result[key].StaminaCost
-			skill._manaCost = result[key].ManaCost
+			if "CastPresetPath" in result[key]:
+				skill._castPresetPath = result[key].CastPresetPath
+			if "CastTextureOverride" in result[key]:
+				skill._castTextureOverride = result[key].CastTextureOverride
+			if "CastColor" in result[key]:
+				skill._castColor = result[key].CastColor
+			if "CastTime" in result[key]:
+				skill._castTime = result[key].CastTime
+			if "CooldownTime" in result[key]:
+				skill._cooldownTime = result[key].CooldownTime
+			if "StaminaCost" in result[key]:
+				skill.stamina = result[key].StaminaCost
+			if "ManaCost" in result[key]:
+				skill.mana = result[key].ManaCost
 			SkillsDB[key] = skill
 
 #

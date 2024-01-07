@@ -92,12 +92,12 @@ func TriggerInteract(triggeredAgentID : int, rpcID : int = Launcher.Network.RidS
 		if triggeredAgent:
 			triggeredAgent.Interact(player)
 
-func TriggerCast(targetID : int, castType : Combat.CastType, rpcID : int = Launcher.Network.RidSingleMode):
+func TriggerCast(targetID : int, castID : int, rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
 		var target : BaseAgent = WorldAgent.GetAgent(targetID)
 		if target:
-			Combat.Cast(player, target, castType)
+			Combat.Cast(player, target, castID)
 
 func TriggerMorph(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)

@@ -52,6 +52,9 @@ func RefreshStats():
 	current.attackStrength	= Formulas.GetAttackStrength(self)
 	current.attackSpeed		= Formulas.GetAttackSpeed(self)
 	current.attackRange		= Formulas.GetAttackRange(self)
+	current.critRate		= Formulas.GetCritRate(self)
+	current.castAttackDelay	= Formulas.GetCastAttackDelay(self)
+	current.cooldownAttackDelay = Formulas.GetCooldownAttackDelay(self)
 	current.walkSpeed		= Formulas.GetWalkSpeed(self)
 	current.weightCapacity	= Formulas.GetWeightCapacity(self)
 
