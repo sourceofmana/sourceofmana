@@ -6,6 +6,9 @@
 		"CooldownTime": 0.2,
 		"StaminaCost": 5,
 		"State": "ATTACK",
+		"Range": 1,
+		"Target": "TARGET",
+		"Damage": 1,
 	},
 	"1": {
 		"Name": "Mana Burst",
@@ -17,6 +20,9 @@
 		"CooldownTime": 3.0,
 		"StaminaCost": 5,
 		"ManaCost": 10,
+		"Range": 2,
+		"Target": "ZONE",
+		"Damage": 20,
 	},
 	"2": {
 		"Name": "Flar",
@@ -28,5 +34,8 @@
 		"CooldownTime": 1.0,
 		"StaminaCost": 5,
 		"ManaCost": 10,
+		"Range": 5,
+		"Target": "TARGET",
+		"Damage": 50,
 	}
 }

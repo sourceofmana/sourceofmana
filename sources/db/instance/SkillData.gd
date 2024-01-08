@@ -10,6 +10,9 @@ class_name SkillData
 @export var _castTime : float
 @export var _cooldownTime : float
 @export var _state : EntityCommons.State
+@export var _mode : Combat.TargetMode
+@export var _damage : int
+@export var _heal : int
 
 # Stats, must have the same name than their relatives in EntityStats
 @export var stamina : int
@@ -18,12 +21,15 @@ class_name SkillData
 func _init():
 	_id = 0
 	_name = "Unknown"
-	_iconPath = "res://data/graphics/default.png"
+	_iconPath = "res://data/graphics/items/skill/spell.png"
 	_castPresetPath = ""
 	_castTextureOverride = ""
 	_castColor = Color.PINK
 	_castTime = 0.0
 	_cooldownTime = 0.0
 	_state = EntityCommons.State.IDLE
+	_mode = Combat.TargetMode.SINGLE
+	_damage = 0
+	_heal = 0
 	stamina = 0
 	mana = 0
