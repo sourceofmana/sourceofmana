@@ -10,7 +10,7 @@ class_name SkillData
 @export var _castTime : float
 @export var _cooldownTime : float
 @export var _state : EntityCommons.State
-@export var _mode : Combat.TargetMode
+@export var _mode : Skill.TargetMode
 @export var _damage : int
 @export var _heal : int
 
@@ -28,7 +28,7 @@ func _init():
 	_castTime = 0.0
 	_cooldownTime = 0.0
 	_state = EntityCommons.State.IDLE
-	_mode = Combat.TargetMode.SINGLE
+	_mode = Skill.TargetMode.SINGLE
 	_damage = 0
 	_heal = 0
 	stamina = 0

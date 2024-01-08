@@ -1,5 +1,5 @@
 extends Node2D
-class_name Combat
+class_name Skill
 
 #
 class DamageInfo:
@@ -74,7 +74,7 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 
 static func Casting(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if agent:
-		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay, Combat.Attack.bind(agent, target, skill))
+		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
 		agent.currentSkillCast = skill._id
 		if target:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
@@ -103,7 +103,7 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	Util.StartTimer(agent.cooldownTimer, agent.stat.current.cooldownAttackDelay, Combat.Cast.bind(agent, target, skill))
+	Util.StartTimer(agent.cooldownTimer, agent.stat.current.cooldownAttackDelay, Skill.Cast.bind(agent, target, skill))
 	agent.currentSkillCast = -1
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData):

@@ -104,7 +104,7 @@ func WalkToward(pos : Vector2):
 	if pos == position:
 		return
 	if currentSkillCast >= 0:
-		Combat.Stopped(self)
+		Skill.Stopped(self)
 	if currentSkillCast >= 0:
 		return
 
