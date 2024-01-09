@@ -38,7 +38,7 @@ static func SelfDestructCallback(parent : Node, timer : Timer, callback : Callab
 		timer.queue_free()
 	callback.call()
 
-static func SelfDestructTimer(parent : Node, delay : float, callback : Callable, timerName = "Timer"):
+static func SelfDestructTimer(parent : Node, delay : float, callback : Callable, timerName = "Timer") -> Timer:
 	if parent:
 		var timer : Timer = Timer.new()
 		timer.one_shot = true
@@ -47,6 +47,8 @@ static func SelfDestructTimer(parent : Node, delay : float, callback : Callable,
 		timer.name = timerName
 		parent.add_child(timer)
 		timer.start(delay)
+		return timer
+	return null
 
 static func RemoveNode(node : Node, parent : Node):
 	if node != null:

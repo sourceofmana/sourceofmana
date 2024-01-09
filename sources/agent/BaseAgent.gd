@@ -8,7 +8,7 @@ var agentType : String					= ""
 
 var aiTimer : Timer						= null
 var castTimer : Timer					= null
-var cooldownTimer : Timer				= null
+var cooldownTimers : Dictionary			= {}
 var deathTimer : Timer					= null
 
 var hasCurrentGoal : bool				= false
@@ -164,10 +164,6 @@ func SetKind(entityType : String, entityID : String, entityName : String):
 		castTimer.set_name("CastTimer")
 		castTimer.set_one_shot(true)
 		add_child.call_deferred(castTimer)
-		cooldownTimer = Timer.new()
-		cooldownTimer.set_name("CooldownTimer")
-		cooldownTimer.set_one_shot(true)
-		add_child.call_deferred(cooldownTimer)
 		deathTimer = Timer.new()
 		deathTimer.set_name("DeathTimer")
 		deathTimer.set_one_shot(true)

@@ -60,28 +60,31 @@ static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:
 	return WorldAgent.GetMapFromAgent(agent) == WorldAgent.GetMapFromAgent(target)
 static func IsTargetable(agent : BaseAgent, target : BaseAgent) -> bool:
 	return IsNotSelf(agent, target) and IsAlive(agent) and IsAlive(target) and IsSameMap(agent, target)
-static func IsAttacking(agent : BaseAgent) -> bool:
+static func IsCasting(agent : BaseAgent) -> bool:
 	return agent.currentSkillCast >= 0
+static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
+	return agent.cooldownTimers.has(skill._id) and agent.cooldownTimers[skill._id] != null and not agent.cooldownTimers[skill._id].is_queued_for_deletion()
 
 # Skill Flow
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if not IsAttacking(agent) and IsTargetable(agent, target):
-		if IsNear(agent, target):
-			Casting(agent, target, skill)
-			agent.ResetNav()
-		else:
-			Stopped(agent)
+	if IsCasting(agent) or IsCoolingDown(agent, skill):
+		return
+	if skill._mode == TargetMode.SINGLE and (not IsTargetable(agent, target) or not IsNear(agent, target)):
+		Stopped(agent)
+		return
+	Casting(agent, target, skill)
 
 static func Casting(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if agent:
-		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
+		agent.ResetNav()
 		agent.currentSkillCast = skill._id
-		if target:
+		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
+		if skill._mode == TargetMode.SINGLE:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
 		agent.UpdateChanged()
 
 static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if IsAttacking(agent) and SetConsume(agent, "mana", skill):
+	if IsCasting(agent) and SetConsume(agent, "mana", skill):
 		match skill._mode:
 			TargetMode.SINGLE:
 				if IsTargetable(agent, target) and IsNear(agent, target):
@@ -103,7 +106,8 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	Util.StartTimer(agent.cooldownTimer, agent.stat.current.cooldownAttackDelay, Skill.Cast.bind(agent, target, skill))
+	var timer : Timer = Util.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay, Skill.Cast.bind(agent, target, skill), skill._name + " CoolDown")
+	agent.cooldownTimers[agent.currentSkillCast] = timer
 	agent.currentSkillCast = -1
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData):
@@ -123,10 +127,9 @@ static func Killed(agent : BaseAgent, target : BaseAgent):
 	Stopped(agent)
 
 static func Stopped(agent : BaseAgent):
-	if agent.cooldownTimer.is_stopped():
-		agent.currentSkillCast = -1
-		if not agent.castTimer.is_stopped():
-			agent.castTimer.stop()
+	agent.currentSkillCast = -1
+	if not agent.castTimer.is_stopped():
+		agent.castTimer.stop()
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetDamaged", [target.get_rid().get_id(), 0, EntityCommons.DamageType.MISS])
