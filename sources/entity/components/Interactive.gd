@@ -53,11 +53,11 @@ func DisplaySpeech(speech : String):
 		Util.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
 
 #
-func DisplayDamage(target : BaseEntity, dealer : BaseEntity, damage : int, damageType : EntityCommons.DamageType):
+func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration):
 	if Launcher.Map.mapNode:
-		var newLabel : Label = EntityCommons.DamageLabel.instantiate()
+		var newLabel : Label = EntityCommons.AlterationLabel.instantiate()
 		newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
-		newLabel.SetDamage(dealer, damage, damageType)
+		newLabel.SetValue(dealer, value, alteration)
 		Launcher.Map.mapNode.add_child(newLabel)
 
 #

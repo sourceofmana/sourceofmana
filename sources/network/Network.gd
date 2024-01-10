@@ -98,9 +98,8 @@ func TriggerCast(entityID : int, castID : int, rpcID : int = RidSingleMode):
 	NetCallServer("TriggerCast", [entityID, castID], rpcID)
 
 @rpc("authority", "reliable")
-func TargetDamaged(agentID : int, targetID : int, damage : int, damageType : EntityCommons.DamageType, rpcID : int = RidSingleMode):
-	NetCallClient("TargetDamaged", [agentID, targetID, damage, damageType], rpcID)
-
+func TargetAlteration(agentID : int, targetID : int, value : int, alteration : EntityCommons.Alteration, rpcID : int = RidSingleMode):
+	NetCallClient("TargetAlteration", [agentID, targetID, value, alteration], rpcID)
 
 # Morph
 @rpc("any_peer", "reliable")

@@ -2,9 +2,9 @@ extends Node2D
 class_name Skill
 
 #
-class DamageInfo:
-	var damage : int					= 0
-	var type : EntityCommons.DamageType	= EntityCommons.DamageType.MISS
+class AlterationInfo:
+	var value : int						= 0
+	var type : EntityCommons.Alteration	= EntityCommons.Alteration.MISS
 
 enum TargetMode
 {
@@ -26,24 +26,30 @@ static func SetConsume(agent : BaseAgent, stat : String, skill : SkillData) -> b
 
 	return canConsume
 
-static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillData) -> DamageInfo:
-	var info : DamageInfo		= DamageInfo.new()
-	var hasStamina : bool		= SetConsume(agent, "stamina", skill)
-	var lowerBound : float		= 0.9 if hasStamina else 0.1
-	var RNGValue : float		= randf_range(lowerBound, 1.0)
+static func GetDamage(agent : BaseAgent, target : BaseAgent, _skill : SkillData, rng : float) -> AlterationInfo:
+	var info : AlterationInfo = AlterationInfo.new()
 
-	var critMaster : bool		= agent.stat.current.critRate >= target.stat.current.critRate
-	if critMaster and RNGValue > 1.0 - agent.stat.current.critRate:
-		info.type = EntityCommons.DamageType.CRIT
-		info.damage = int(agent.stat.current.attackStrength * 2)
-	elif not critMaster and RNGValue > 1.0 - target.stat.current.critRate:
-		info.type = EntityCommons.DamageType.DODGE
-		info.damage = 0
+	var critMaster : bool = agent.stat.current.critRate >= target.stat.current.critRate
+	if critMaster and rng > 1.0 - agent.stat.current.critRate:
+		info.type = EntityCommons.Alteration.CRIT
+		info.value = int(agent.stat.current.attackStrength * 2)
+	elif not critMaster and rng > 1.0 - target.stat.current.critRate:
+		info.type = EntityCommons.Alteration.DODGE
+		info.value = 0
 	else:
-		info.damage = int(agent.stat.current.attackStrength * RNGValue)
-		info.type = EntityCommons.DamageType.DODGE if info.damage == 0 else EntityCommons.DamageType.HIT
+		info.type = EntityCommons.Alteration.HIT
+		info.value = int(agent.stat.current.attackStrength * rng)
+
+	info.value += min(0, target.stat.health - info.value)
+	if info.value == 0:
+		info.type = EntityCommons.Alteration.DODGE
 
 	return info
+
+static func GetHeal(agent : BaseAgent, target : BaseAgent, _skill : SkillData, rng : float) -> int:
+	var healValue : int = int(agent.stat.current.attackStrength * rng)
+	healValue -= max(0, target.stat.health - healValue)
+	return healValue
 
 static func GetSurroundingTargets(_agent : BaseAgent, _skill : SkillData) -> Array[BaseAgent]:
 	Util.Assert(false, "Not implemented")
@@ -85,23 +91,26 @@ static func Casting(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 
 static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if IsCasting(agent) and SetConsume(agent, "mana", skill):
+		var hasStamina : bool		= SetConsume(agent, "stamina", skill)
+		var rng : float				= randf_range(0.9 if hasStamina else 0.1, 1.0)
+
 		match skill._mode:
 			TargetMode.SINGLE:
 				if IsTargetable(agent, target) and IsNear(agent, target):
-					Handle(agent, target, skill)
+					Handle(agent, target, skill, rng)
 					return
 			TargetMode.ZONE:
 				for zoneTarget in GetSurroundingTargets(agent, skill):
-					Handle(agent, zoneTarget, skill)
+					Handle(agent, zoneTarget, skill, rng)
 				return
 			TargetMode.SELF:
-				Handle(agent, agent, skill)
+				Handle(agent, agent, skill, rng)
 				return
 	Missed(agent, target)
 
-static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if skill._damage > 0:		Damaged(agent, target, skill)
-	if skill._heal > 0:			Healed(agent, target, skill)
+static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
+	if skill._damage > 0:		Damaged(agent, target, skill, rng)
+	if skill._heal > 0:			Healed(agent, target, skill, rng)
 	Casted(agent, target, skill)
 
 # Handling
@@ -110,16 +119,17 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	agent.cooldownTimers[agent.currentSkillCast] = timer
 	agent.currentSkillCast = -1
 
-static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	var info : DamageInfo = GetDamage(agent, target, skill)
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetDamaged", [target.get_rid().get_id(), info.damage, info.type])
-	target.stat.health = max(target.stat.health - info.damage, 0)
+static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
+	var info : AlterationInfo = GetDamage(agent, target, skill, rng)
+	target.stat.health = max(target.stat.health - info.value, 0)
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type])
 	if target.stat.health <= 0:
 		Killed(agent, target)
 
-static func Healed(_agent : BaseAgent, _target : BaseAgent, _skill : SkillData):
-	Util.Assert(false, "Not implemented")
-	pass
+static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
+	var heal : int = GetHeal(agent, target, skill, rng)
+	target.stat.health = min(target.stat.health + heal, target.stat.current.maxHealth)
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), heal, EntityCommons.Alteration.HEAL])
 
 static func Killed(agent : BaseAgent, target : BaseAgent):
 	agent.stat.XpBonus(target)
@@ -132,5 +142,5 @@ static func Stopped(agent : BaseAgent):
 		agent.castTimer.stop()
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetDamaged", [target.get_rid().get_id(), 0, EntityCommons.DamageType.MISS])
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS])
 	Stopped(agent)

@@ -4,7 +4,7 @@ extends Label
 var timeLeft : float						= 3.0
 var fadingTime : float						= 1.0
 var velocity : Vector2						= Vector2.ZERO
-var criticalDamage : bool					= false
+var criticalHit : bool					= false
 var HSVA : Vector4							= Vector4.ZERO
 var floorPosition : float					= 0.0
 
@@ -19,26 +19,31 @@ func SetPosition(startPos : Vector2, floorPos : Vector2):
 	position = startPos
 	floorPosition = floorPos.y
 
-func SetDamage(dealer : BaseEntity, damage : int, damageType : EntityCommons.DamageType):
+func SetValue(dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration):
 	var hue : float = 0.0
-	match damageType:
-		EntityCommons.DamageType.CRIT:
-			criticalDamage = true
-			set_text(str(damage))
-		EntityCommons.DamageType.DODGE:
+	match alteration:
+		EntityCommons.Alteration.CRIT:
+			criticalHit = true
+			set_text(str(value))
+		EntityCommons.Alteration.DODGE:
 			hue = EntityCommons.DodgeAttackColor
 			set_text("dodge")
-		EntityCommons.DamageType.HIT:
+		EntityCommons.Alteration.HIT:
 			if dealer == Launcher.Player:
 				hue = EntityCommons.LocalAttackColor
 			elif dealer is PlayerEntity:
 				hue = EntityCommons.PlayerAttackColor
 			else:
 				hue = EntityCommons.MonsterAttackColor
-			set_text(str(damage))
-		EntityCommons.DamageType.MISS:
+			set_text(str(value))
+		EntityCommons.Alteration.MISS:
 			hue = EntityCommons.MissAttackColor
 			set_text("miss")
+		EntityCommons.Alteration.HEAL:
+			hue = EntityCommons.HealColor
+			set_text(str(value))
+		_:
+			Util.Assert(false, "Alteration type not handled: " + str(alteration))
 
 	HSVA = Vector4(hue, 0.8, 1.0, 1.0)
 
@@ -65,7 +70,7 @@ func _process(delta):
 	position -= deltaVelocity
 	velocity.y -= gravityRedux * delta
 
-	if criticalDamage:
+	if criticalHit:
 		HSVA.x = HSVA.x + delta * 2
 		if HSVA.x > 1.0:
 			HSVA.x = 0.0

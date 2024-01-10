@@ -88,19 +88,21 @@ static var MaxGuardbandDistVec : Vector2		= Vector2.ZERO
 # Visual
 static var AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
 static var EnemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")
-static var DamageLabel : PackedScene			= preload("res://presets/gui/DamageLabel.tscn")
+static var AlterationLabel : PackedScene		= preload("res://presets/gui/AlterationLabel.tscn")
 static var SpeechLabel : PackedScene			= preload("res://presets/gui/chat/SpeechBubble.tscn")
 
-# Damage
-enum DamageType
+# Skill
+enum Alteration
 {
 	HIT = 0,
 	CRIT,
 	MISS,
-	DODGE
+	DODGE,
+	HEAL
 }
 
 static var DodgeAttackColor : float				= 0.15
+static var HealColor : float					= 0.45
 static var LocalAttackColor : float				= 0.35
 static var MissAttackColor : float				= 0.2
 static var MonsterAttackColor : float			= 0.0

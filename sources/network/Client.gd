@@ -38,12 +38,12 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = Launcher.Network.Ri
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
 
-func TargetDamaged(ridAgent : int, targetID : int, damage : int, damageType : EntityCommons.DamageType, _rpcID : int = Launcher.Network.RidSingleMode):
+func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : EntityCommons.Alteration, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(targetID)
 		var caller : BaseEntity = Launcher.Map.entities.get(ridAgent)
 		if caller && entity && entity.get_parent() and entity.interactive:
-			entity.interactive.DisplayDamage(entity, caller, damage, damageType)
+			entity.interactive.DisplayAlteration(entity, caller, value, alteration)
 
 func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
