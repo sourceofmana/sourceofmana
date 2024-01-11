@@ -46,9 +46,9 @@ static func GetDamage(agent : BaseAgent, target : BaseAgent, _skill : SkillData,
 
 	return info
 
-static func GetHeal(agent : BaseAgent, target : BaseAgent, _skill : SkillData, rng : float) -> int:
-	var healValue : int = int(agent.stat.current.attackStrength * rng)
-	healValue -= max(0, target.stat.health - healValue)
+static func GetHeal(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float) -> int:
+	var healValue : int = int(agent.stat.concentration + skill._heal * rng)
+	healValue = min(healValue, target.stat.current.maxHealth - target.stat.health)
 	return healValue
 
 static func GetSurroundingTargets(_agent : BaseAgent, _skill : SkillData) -> Array[BaseAgent]:
