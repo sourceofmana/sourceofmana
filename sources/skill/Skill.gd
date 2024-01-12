@@ -51,21 +51,38 @@ static func GetHeal(agent : BaseAgent, target : BaseAgent, skill : SkillData, rn
 	healValue = min(healValue, target.stat.current.maxHealth - target.stat.health)
 	return healValue
 
-static func GetSurroundingTargets(_agent : BaseAgent, _skill : SkillData) -> Array[BaseAgent]:
-	Util.Assert(false, "Not implemented")
-	return []
+static func GetSurroundingTargets(agent : BaseAgent, skill : SkillData) -> Array[BaseAgent]:
+	var targets : Array[BaseAgent] = []
+	var neighbours : Array[Array] = WorldAgent.GetNeighboursFromAgent(agent)
+
+	if skill._damage > 0:
+		for neighbour in neighbours[1]:
+			if IsAlive(neighbour) and IsNear(agent, neighbour, GetRange(agent, skill)):
+				targets.append(neighbour)
+	if skill._heal > 0:
+		for neighbour in neighbours[2]:
+			if IsAlive(neighbour) and IsNotSelf(agent, neighbour) and IsNear(agent, neighbour, GetRange(agent, skill)):
+				targets.append(neighbour)
+
+	return targets
+
+static func GetRNG(hasStamina : bool) -> float:
+	return randf_range(0.9 if hasStamina else 0.1, 1.0)
+
+static func GetRange(agent : BaseAgent, skill : SkillData) -> int:
+	return agent.stat.current.attackRange + skill._range
 
 # Checks
 static func IsAlive(agent : BaseAgent) -> bool:
 	return agent and agent.currentState != EntityCommons.State.DEATH
 static func IsNotSelf(agent : BaseAgent, target : BaseAgent) -> bool:
 	return agent != target
-static func IsNear(agent : BaseAgent, target : BaseAgent) -> bool:
-	return WorldNavigation.GetPathLength(agent, target.position) <= agent.stat.current.attackRange
+static func IsNear(agent : BaseAgent, target : BaseAgent, skillRange : int) -> bool:
+	return WorldNavigation.GetPathLength(agent, target.position) <= skillRange
 static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:
 	return WorldAgent.GetMapFromAgent(agent) == WorldAgent.GetMapFromAgent(target)
 static func IsTargetable(agent : BaseAgent, target : BaseAgent) -> bool:
-	return IsNotSelf(agent, target) and IsAlive(agent) and IsAlive(target) and IsSameMap(agent, target)
+	return IsNotSelf(agent, target) and IsAlive(target) and IsSameMap(agent, target)
 static func IsCasting(agent : BaseAgent) -> bool:
 	return agent.currentSkillCast >= 0
 static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
@@ -73,9 +90,9 @@ static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
 
 # Skill Flow
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if IsCasting(agent) or IsCoolingDown(agent, skill):
+	if not IsAlive(agent) or IsCasting(agent) or IsCoolingDown(agent, skill):
 		return
-	if skill._mode == TargetMode.SINGLE and (not IsTargetable(agent, target) or not IsNear(agent, target)):
+	if skill._mode == TargetMode.SINGLE and (not IsTargetable(agent, target) or not IsNear(agent, target, GetRange(agent, skill))):
 		Stopped(agent)
 		return
 	Casting(agent, target, skill)
@@ -92,19 +109,18 @@ static func Casting(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if IsCasting(agent) and SetConsume(agent, "mana", skill):
 		var hasStamina : bool		= SetConsume(agent, "stamina", skill)
-		var rng : float				= randf_range(0.9 if hasStamina else 0.1, 1.0)
 
 		match skill._mode:
 			TargetMode.SINGLE:
-				if IsTargetable(agent, target) and IsNear(agent, target):
-					Handle(agent, target, skill, rng)
+				if IsTargetable(agent, target) and IsNear(agent, target, GetRange(agent, skill)):
+					Handle(agent, target, skill, GetRNG(hasStamina))
 					return
 			TargetMode.ZONE:
 				for zoneTarget in GetSurroundingTargets(agent, skill):
-					Handle(agent, zoneTarget, skill, rng)
+					Handle(agent, zoneTarget, skill, GetRNG(hasStamina))
 				return
 			TargetMode.SELF:
-				Handle(agent, agent, skill, rng)
+				Handle(agent, agent, skill, GetRNG(hasStamina))
 				return
 	Missed(agent, target)
 

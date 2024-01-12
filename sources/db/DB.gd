@@ -115,6 +115,8 @@ func ParseSkillsDB():
 				skill._state = EntityCommons.State[result[key].State]
 			if "Mode" in result[key]:
 				skill._mode = Skill.TargetMode[result[key].Mode]
+			if "Range" in result[key]:
+				skill._range = result[key].Range
 			if "Damage" in result[key]:
 				skill._damage = result[key].Damage
 			if "Heal" in result[key]:
