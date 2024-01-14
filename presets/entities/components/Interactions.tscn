@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://f2jxqr5e7i5e"]
+[gd_scene load_steps=6 format=3 uid="uid://f2jxqr5e7i5e"]
 
 [ext_resource type="Script" path="res://sources/entity/components/Interactive.gd" id="1_b3bk6"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_wehdi"]
@@ -6,9 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://08v0t5i6hvef" path="res://presets/effects/particles/Emote.tscn" id="2_gghi1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0daf3"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_dlrhc"]
-radius = 64.0
 
 [node name="Interactions" type="Node2D"]
 z_index = 1
@@ -62,15 +59,3 @@ theme_override_colors/font_outline_color = Color(0.0627451, 0, 0.0627451, 1)
 theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("2_elci4")
 horizontal_alignment = 1
-
-[node name="Area" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 4
-monitoring = false
-
-[node name="Trigger" type="CollisionShape2D" parent="Area"]
-position = Vector2(0, -19)
-shape = SubResource("CircleShape2D_dlrhc")
-
-[connection signal="body_entered" from="Area" to="." method="_body_entered"]
-[connection signal="body_exited" from="Area" to="." method="_body_exited"]

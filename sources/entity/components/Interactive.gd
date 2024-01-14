@@ -7,9 +7,6 @@ class_name EntityInteractive
 @onready var speechContainer : BoxContainer	= $Visible/VBox/Panel/SpeechContainer
 @onready var emoteFx : GPUParticles2D		= $Visible/Emote
 @onready var nameLabel : Label				= $Name
-@onready var triggerArea : Area2D			= $Area
-
-var canInteractWith : Array[BaseEntity]		= []
 
 #
 func DisplayEmote(emoteID : String):
@@ -78,21 +75,7 @@ func _ready():
 	if entity == Launcher.Player:
 		Launcher.GUI.emoteContainer.ItemClicked.connect(DisplayEmote)
 		Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
-		if triggerArea:
-			triggerArea.monitoring = true
 
 	if visibleNode and entity.visual:
 		entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
 		entity.visual.SyncPlayerOffset()
-
-#
-func _body_entered(body):
-	if body and (body is NpcEntity || body is MonsterEntity) && self != body.interactive:
-		if canInteractWith.has(body) == false:
-			canInteractWith.append(body)
-
-func _body_exited(body):
-	if body and (body is NpcEntity || body is MonsterEntity) && self != body.interactive:
-		var bodyPos : int = canInteractWith.find(body)
-		if bodyPos != -1:
-			canInteractWith.remove_at(bodyPos)
