@@ -2,13 +2,12 @@
 	"0": {
 		"Name": "Melee Attack",
 		"IconPath": "items/skill/melee.png",
-		"CastTime": 0.5,
-		"CooldownTime": 0.2,
 		"StaminaCost": 5,
 		"State": "ATTACK",
 		"Range": 32,
 		"Mode": "SINGLE",
 		"Damage": 1,
+		"Repeat": true,
 	},
 	"1": {
 		"Name": "Mana Burst",

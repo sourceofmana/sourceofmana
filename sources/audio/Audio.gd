@@ -9,7 +9,6 @@ func Play(pause : bool = false):
 		audioPlayer.pause()
 	else:
 		audioPlayer.play()
-	pass
 
 func Stop():
 	if audioPlayer.is_playing():

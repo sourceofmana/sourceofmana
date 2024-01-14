@@ -129,9 +129,9 @@ func AgentWarped(map : Map, instance : Instance, agent : BaseAgent):
 		var categories : Array[Array] = WorldAgent.GetNeighboursFromAgent(agent)
 		for neighbours in categories:
 			for neighbour in neighbours:
-				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.agentType, neighbour.GetCurrentShapeID(), neighbour.agentName, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.currentState, playerID)
+				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.agentType, neighbour.GetCurrentShapeID(), neighbour.agentName, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.currentState, neighbour.currentSkillCastID, playerID)
 
-	Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "AddEntity", [agent.agentType, agent.GetCurrentShapeID(), agent.agentName, agent.velocity, agent.position, agent.currentOrientation, agent.currentState], false)
+	Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "AddEntity", [agent.agentType, agent.GetCurrentShapeID(), agent.agentName, agent.velocity, agent.position, agent.currentOrientation, agent.currentState, agent.currentSkillCastID], false)
 
 
 # Generic

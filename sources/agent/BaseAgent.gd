@@ -17,13 +17,12 @@ var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
 
 var currentState : EntityCommons.State	= EntityCommons.State.IDLE
-var pastState : EntityCommons.State		= EntityCommons.State.IDLE
+var forceUpdate : bool					= false
 
 var isSitting : bool					= false
-var currentSkillCast : int				= -1
+var currentSkillCastID : int			= -1
 
 var currentVelocity : Vector2i			= Vector2i.ZERO
-var pastVelocity : Vector2				= Vector2.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 
 var lastPositions : Array[Vector2]		= []
@@ -72,25 +71,34 @@ func UpdateInput():
 		currentVelocity = Vector2i.ZERO
 
 func SetVelocity():
+	var nextVelocity : Vector2 = Vector2.ZERO
 	if currentState == EntityCommons.State.WALK:
-		velocity = currentVelocity
+		nextVelocity = currentVelocity
 		move_and_slide()
-	else:
-		velocity = Vector2.ZERO
+	forceUpdate = forceUpdate or \
+		((nextVelocity - velocity).abs() > Vector2(5, 5)) or \
+		(velocity != nextVelocity and (velocity.is_zero_approx() or nextVelocity.is_zero_approx()))
+	velocity = nextVelocity
 
 func SetCurrentState():
 	if stat.health <= 0:
 		SetState(EntityCommons.State.DEATH)
-	elif currentSkillCast >= 0:
-		SetState(Launcher.DB.SkillsDB[str(currentSkillCast)]._state)
+	elif currentSkillCastID >= 0:
+		SetState(Launcher.DB.SkillsDB[str(currentSkillCastID)]._state)
 	elif currentVelocity == Vector2i.ZERO:
 		SetState(EntityCommons.State.IDLE)
 	else:
 		SetState(EntityCommons.State.WALK)
 
-func SetState(nextState : EntityCommons.State) -> bool:
-	currentState = EntityCommons.GetNextTransition(currentState, nextState)
-	return currentState == nextState
+func SetState(wantedState : EntityCommons.State) -> bool:
+	var nextState : EntityCommons.State = EntityCommons.GetNextTransition(currentState, wantedState)
+	forceUpdate = forceUpdate or nextState != currentState
+	currentState = nextState
+	return currentState == wantedState
+
+func SetSkillCastID(skillID : int):
+	forceUpdate = forceUpdate or skillID != currentSkillCastID
+	currentSkillCastID = skillID
 
 func SetRelativeMode(enable : bool, givenDirection : Vector2):
 	if isRelativeMode != enable:
@@ -104,7 +112,7 @@ func WalkToward(pos : Vector2):
 	if pos == position:
 		return
 
-	if currentSkillCast >= 0:
+	if currentSkillCastID >= 0:
 		Skill.Stopped(self)
 
 	hasCurrentGoal = true
@@ -127,30 +135,16 @@ func IsStuck() -> bool:
 		isStuck = sum.abs() < Vector2(1, 1)
 	return isStuck
 
-func HasChanged() -> bool:
-	if currentState != pastState:
-		return true
-	if velocity != pastVelocity:
-		if velocity == Vector2.ZERO or pastVelocity == Vector2.ZERO:
-			return true
-		if (velocity - pastVelocity).abs() > Vector2(5, 5):
-			return true
-	return false
-
 func UpdateChanged():
-	pastVelocity = velocity
-	pastState = currentState
+	forceUpdate = false
 	if currentInput != Vector2.ZERO:
 		currentOrientation = Vector2(currentVelocity).normalized()
-
 	var functionName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
-	Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, functionName, [velocity, position, currentOrientation, currentState])
-
+	Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, functionName, [velocity, position, currentOrientation, currentState, currentSkillCastID])
 
 #
 func SetKind(entityType : String, entityID : String, entityName : String):
 	agentType	= entityType
-
 	agentName	= entityID if entityName.length() == 0 else entityName
 	set_name(agentName)
 
@@ -203,7 +197,7 @@ func _internal_process():
 		else:
 			_velocity_computed(currentVelocity)
 
-	if HasChanged():
+	if forceUpdate:
 		UpdateChanged()
 
 	_specific_process()

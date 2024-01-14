@@ -14,6 +14,7 @@ class_name SkillData
 @export var _range : int
 @export var _damage : int
 @export var _heal : int
+@export var _repeat : bool
 
 # Stats, must have the same name than their relatives in EntityStats
 @export var stamina : int
@@ -33,5 +34,6 @@ func _init():
 	_range = 32
 	_damage = 0
 	_heal = 0
+	_repeat = false
 	stamina = 0
 	mana = 0

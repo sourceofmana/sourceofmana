@@ -13,21 +13,21 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = Launcher.Network.
 	if Launcher.Map:
 		Launcher.Map.EmotePlayer(playerID, emoteID)
 
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, _rpcID : int = Launcher.Network.RidSingleMode):
+func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, velocity, position, orientation, entityState)
+		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, velocity, position, orientation, entityState, skillCastID)
 
 func RemoveEntity(agentID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentID)
 
-func ForceUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, entityState : EntityCommons.State):
+func ForceUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, entityState)
+		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, entityState, skillCastID)
 
-func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, entityState : EntityCommons.State):
+func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, entityState)
+		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, entityState, skillCastID)
 
 func ChatAgent(ridAgent : int, text : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:

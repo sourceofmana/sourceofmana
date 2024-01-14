@@ -17,6 +17,8 @@ var previousState : EntityCommons.State		= EntityCommons.State.UNKNOWN
 var blendSpacePaths : Dictionary			= {}
 var timeScalePaths : Dictionary				= {}
 
+var skillCastID : int						= -1
+
 #
 func SetMainMaterial(materialResource : Resource):
 	Util.Assert(sprites[EntityCommons.Slot.BODY] != null, "Trying to assign a shader material to a non-existant texture")

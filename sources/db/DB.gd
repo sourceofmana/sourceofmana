@@ -121,6 +121,8 @@ func ParseSkillsDB():
 				skill._damage = result[key].Damage
 			if "Heal" in result[key]:
 				skill._heal = result[key].Heal
+			if "Repeat" in result[key]:
+				skill._repeat = result[key].Repeat
 			if "StaminaCost" in result[key]:
 				skill.stamina = result[key].StaminaCost
 			if "ManaCost" in result[key]:

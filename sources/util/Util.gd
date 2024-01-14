@@ -36,7 +36,8 @@ static func SelfDestructCallback(parent : Node, timer : Timer, callback : Callab
 	if parent:
 		parent.remove_child(timer)
 		timer.queue_free()
-	callback.call()
+	if not callback.is_null():
+		callback.call()
 
 static func SelfDestructTimer(parent : Node, delay : float, callback : Callable, timerName = "Timer") -> Timer:
 	if parent:

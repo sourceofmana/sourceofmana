@@ -84,7 +84,7 @@ static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:
 static func IsTargetable(agent : BaseAgent, target : BaseAgent) -> bool:
 	return IsNotSelf(agent, target) and IsAlive(target) and IsSameMap(agent, target)
 static func IsCasting(agent : BaseAgent) -> bool:
-	return agent.currentSkillCast >= 0
+	return agent.currentSkillCastID >= 0
 static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
 	return agent.cooldownTimers.has(skill._id) and agent.cooldownTimers[skill._id] != null and not agent.cooldownTimers[skill._id].is_queued_for_deletion()
 
@@ -95,18 +95,16 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if skill._mode == TargetMode.SINGLE and (not IsTargetable(agent, target) or not IsNear(agent, target, GetRange(agent, skill))):
 		Stopped(agent)
 		return
-	Casting(agent, target, skill)
 
-static func Casting(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if agent:
-		agent.currentSkillCast = skill._id
-		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
+	if SetConsume(agent, "mana", skill):
+		agent.SetSkillCastID(skill._id)
+		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay + skill._castTime, Skill.Attack.bind(agent, target, skill))
 		if skill._mode == TargetMode.SINGLE:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
 		agent.UpdateChanged()
 
 static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if IsCasting(agent) and SetConsume(agent, "mana", skill):
+	if IsCasting(agent):
 		var hasStamina : bool		= SetConsume(agent, "stamina", skill)
 
 		match skill._mode:
@@ -130,9 +128,10 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	var timer : Timer = Util.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay, Skill.Cast.bind(agent, target, skill), skill._name + " CoolDown")
-	agent.cooldownTimers[agent.currentSkillCast] = timer
-	agent.currentSkillCast = -1
+	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill._repeat else Callable()
+	var timer : Timer = Util.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay + skill._cooldownTime, callable, skill._name + " CoolDown")
+	agent.cooldownTimers[agent.currentSkillCastID] = timer
+	agent.SetSkillCastID(-1)
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var info : AlterationInfo = GetDamage(agent, target, skill, rng)
@@ -152,7 +151,7 @@ static func Killed(agent : BaseAgent, target : BaseAgent):
 	Stopped(agent)
 
 static func Stopped(agent : BaseAgent):
-	agent.currentSkillCast = -1
+	agent.SetSkillCastID(-1)
 	agent.castTimer.stop()
 
 static func Missed(agent : BaseAgent, target : BaseAgent):

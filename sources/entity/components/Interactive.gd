@@ -33,7 +33,7 @@ func DisplayCast(skillID : String):
 		var castFx : GPUParticles2D = FileSystem.LoadEffect(skillRef._castPresetPath)
 		if castFx:
 			castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-			castFx.lifetime = skillRef._castTime
+			castFx.lifetime = skillRef._castTime + 
 			castFx.texture = FileSystem.LoadGfx(skillRef._castTextureOverride)
 			castFx.process_material.set("color", skillRef._castColor)
 			castFx.emitting = true
