@@ -99,7 +99,6 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 
 static func Casting(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if agent:
-		agent.ResetNav()
 		agent.currentSkillCast = skill._id
 		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
 		if skill._mode == TargetMode.SINGLE:
@@ -154,8 +153,7 @@ static func Killed(agent : BaseAgent, target : BaseAgent):
 
 static func Stopped(agent : BaseAgent):
 	agent.currentSkillCast = -1
-	if not agent.castTimer.is_stopped():
-		agent.castTimer.stop()
+	agent.castTimer.stop()
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS])

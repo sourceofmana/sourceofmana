@@ -103,10 +103,9 @@ func SetRelativeMode(enable : bool, givenDirection : Vector2):
 func WalkToward(pos : Vector2):
 	if pos == position:
 		return
+
 	if currentSkillCast >= 0:
 		Skill.Stopped(self)
-	if currentSkillCast >= 0:
-		return
 
 	hasCurrentGoal = true
 	lastPositions.clear()
