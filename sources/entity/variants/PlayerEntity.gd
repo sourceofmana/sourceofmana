@@ -20,30 +20,42 @@ func ClearTarget():
 			target.visual.sprites[EntityCommons.Slot.BODY].material = null
 		target = null
 
-func Interact():
-	if entityState != EntityCommons.State.IDLE:
+func Target(pos : Vector2):
+	if not interactive:
 		return
 
-	ClearTarget()
-	target = null
-	if isPlayableController && interactive && Launcher.Map:
-		var nearestDistance : float = -1
-		for nearEntity in interactive.canInteractWith:
-			if nearEntity && nearEntity.entityState != EntityCommons.State.DEATH:
-				var distance : float = (nearEntity.position - position).length()
-				if nearestDistance == -1 || distance < nearestDistance:
-					nearestDistance = distance
-					target = nearEntity
+	var nearestDistance : float = -1
 
-		if target:
-			var entityID = Launcher.Map.entities.find_key(target)
-			if entityID != null:
-				if target is NpcEntity:
-					Launcher.Network.TriggerInteract(entityID)
-					target.visual.SetMainMaterial.call_deferred(EntityCommons.AllyTarget)
-				elif target is MonsterEntity:
-					Launcher.Network.TriggerCast(entityID, 0)
-					target.visual.SetMainMaterial.call_deferred(EntityCommons.EnemyTarget)
+	ClearTarget()
+	for entityID in Launcher.Map.entities:
+		var entity : BaseEntity = Launcher.Map.entities[entityID]
+		if entity and entity != self and entity.entityState != EntityCommons.State.DEATH:
+			var distance : float = (entity.position - pos).length()
+			if nearestDistance == -1 || distance < nearestDistance:
+				nearestDistance = distance
+				target = entity
+
+	if target:
+		if target is NpcEntity:
+			target.visual.SetMainMaterial.call_deferred(EntityCommons.AllyTarget)
+		elif target is MonsterEntity:
+			target.visual.SetMainMaterial.call_deferred(EntityCommons.EnemyTarget)
+
+
+func Interact(skillID : int = 0):
+	if not isPlayableController or entityState != EntityCommons.State.IDLE:
+		return
+
+	if not target or target.entityState == EntityCommons.State.DEATH:
+		Target(position)
+
+	if target:
+		var entityID = Launcher.Map.entities.find_key(target)
+		if entityID != null:
+			if target is NpcEntity:
+				Launcher.Network.TriggerInteract(entityID)
+			elif target is MonsterEntity:
+				Launcher.Network.TriggerCast(entityID, skillID)
 
 #
 func _process(deltaTime : float):
