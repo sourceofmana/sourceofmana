@@ -44,12 +44,8 @@ static func AddAgent(agent : BaseAgent):
 static func RemoveAgent(agent : BaseAgent):
 	Util.Assert(agent != null, "Agent is null, can't remove it")
 	if agent:
-		if agent.spawnInfo and agent.spawnInfo.is_persistant:
-			var timer : Timer = Timer.new()
-			timer.set_name("SpawnTimer")
-			timer.set_one_shot(true)
-			Launcher.add_child(timer)
-			Util.StartTimer(timer, 1, WorldAgent.CreateAgent.bind(agent.spawnInfo))
+		if agent.get_parent() and agent.spawnInfo and agent.spawnInfo.is_persistant:
+			Util.SelfDestructTimer(agent.get_parent(), agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent.bind(agent.spawnInfo), "RespawnTimer")
 
 		WorldAgent.PopAgent(agent)
 		agents.erase(agent)

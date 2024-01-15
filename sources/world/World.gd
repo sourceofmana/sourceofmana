@@ -40,6 +40,7 @@ func LoadData(map : Map):
 					spawnObject.type = spawn[2]
 					spawnObject.spawn_position = spawn[3]
 					spawnObject.spawn_offset = spawn[4]
+					spawnObject.respawn_delay = spawn[5]
 					spawnObject.is_global = spawnObject.spawn_position < Vector2i.LEFT
 					map.spawns.append(spawnObject)
 		if "warps" in node:
