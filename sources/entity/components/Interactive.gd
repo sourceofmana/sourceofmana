@@ -27,13 +27,13 @@ func DisplayMorph(callback : Callable):
 		add_child(morphFx)
 
 #
-func DisplayCast(skillID : String):
+func DisplayCast(caster : BaseEntity, skillID : String):
 	if Launcher.DB.SkillsDB && Launcher.DB.SkillsDB[skillID]:
 		var skillRef : SkillData = Launcher.DB.SkillsDB[skillID]
 		var castFx : GPUParticles2D = FileSystem.LoadEffect(skillRef._castPresetPath)
 		if castFx:
 			castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-			castFx.lifetime = skillRef._castTime + 
+			castFx.lifetime = skillRef._castTime + caster.stat.current.castAttackDelay
 			castFx.texture = FileSystem.LoadGfx(skillRef._castTextureOverride)
 			castFx.process_material.set("color", skillRef._castColor)
 			castFx.emitting = true

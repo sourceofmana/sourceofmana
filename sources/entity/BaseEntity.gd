@@ -50,7 +50,7 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	if visual.skillCastID != nextSkillCastID:
 		visual.skillCastID = nextSkillCastID
 		if nextSkillCastID > 0:
-			interactive.DisplayCast(str(nextSkillCastID))
+			interactive.DisplayCast(self, str(nextSkillCastID))
 
 #
 func _physics_process(delta):
