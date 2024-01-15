@@ -93,16 +93,14 @@ static func PushAgent(agent : BaseAgent, inst : WorldService.Instance):
 	else:
 		WorldAgent.RemoveAgent(agent)
 
-static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, agent : BaseAgent = null, nickname : String = ""):
-	if not agent:
-		agent = Instantiate.CreateAgent(spawn.type, spawn.name, nickname)
-	Util.Assert(agent != null, "Agent %s (type: %s) could not be created" % [spawn.name, spawn.type])
-	if agent:
-		agent.spawnInfo = spawn
-		agent.position = WorldNavigation.GetSpawnPosition(spawn.map, spawn)
-		if Vector2i(agent.position) != Vector2i.ZERO:
-			WorldAgent.AddAgent(agent)
-			Launcher.World.Spawn(spawn.map, agent, instanceID)
-		else:
-			agent.queue_free()
-			agent = null
+static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : String = "") -> BaseAgent:
+	var agent : BaseAgent = Instantiate.CreateAgent(spawn.type, spawn.name, nickname)
+	agent.spawnInfo = spawn
+	agent.position = WorldNavigation.GetSpawnPosition(spawn.map, spawn)
+	if Vector2i(agent.position) != Vector2i.ZERO:
+		WorldAgent.AddAgent(agent)
+		Launcher.World.Spawn(spawn.map, agent, instanceID)
+	else:
+		agent.queue_free()
+		agent = null
+	return agent
