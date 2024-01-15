@@ -1116,10 +1116,11 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="123" name="Drain Slime" type="Spawn" x="1935" y="1696" width="49" height="49">
+  <object id="123" name="Fire Skull" type="Spawn" x="1935" y="1696" width="185" height="147">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="name" value="Fire Skull"/>
+    <property name="respawn_delay" type="float" value="10"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
