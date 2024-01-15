@@ -8,7 +8,6 @@ enum Type
 	MAP,
 	SETTINGS,
 	USERSETTINGS,
-	GAMEPLAY,
 	NETWORK,
 	AUTH,
 	DEBUG,
@@ -84,7 +83,6 @@ func _post_launch():
 	confFiles.append(FileSystem.LoadConfig("map"))
 	confFiles.append(FileSystem.LoadConfig("settings"))
 	confFiles.append(FileSystem.LoadConfig("settings", true))
-	confFiles.append(FileSystem.LoadConfig("gameplay"))
 	confFiles.append(FileSystem.LoadConfig("network"))
 	confFiles.append(FileSystem.LoadConfig("auth"))
 	confFiles.append(FileSystem.LoadConfig("debug"))
