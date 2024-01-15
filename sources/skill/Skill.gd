@@ -26,19 +26,20 @@ static func SetConsume(agent : BaseAgent, stat : String, skill : SkillData) -> b
 
 	return canConsume
 
-static func GetDamage(agent : BaseAgent, target : BaseAgent, _skill : SkillData, rng : float) -> AlterationInfo:
+static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float) -> AlterationInfo:
 	var info : AlterationInfo = AlterationInfo.new()
+	info.value = agent.stat.current.attackStrength + skill._damage
 
 	var critMaster : bool = agent.stat.current.critRate >= target.stat.current.critRate
 	if critMaster and rng > 1.0 - agent.stat.current.critRate:
 		info.type = EntityCommons.Alteration.CRIT
-		info.value = int(agent.stat.current.attackStrength * 2)
+		info.value *= 2
 	elif not critMaster and rng > 1.0 - target.stat.current.critRate:
 		info.type = EntityCommons.Alteration.DODGE
 		info.value = 0
 	else:
 		info.type = EntityCommons.Alteration.HIT
-		info.value = int(agent.stat.current.attackStrength * rng)
+		info.value = int(info.value * rng)
 
 	info.value += min(0, target.stat.health - info.value)
 	if info.value == 0:
