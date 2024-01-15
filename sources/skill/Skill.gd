@@ -148,7 +148,7 @@ static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng
 
 static func Killed(agent : BaseAgent, target : BaseAgent):
 	agent.stat.XpBonus(target)
-	Util.StartTimer(target.deathTimer, target.stat.deathDelay, WorldAgent.RemoveAgent.bind(target))
+	Util.SelfDestructTimer(target, target.stat.deathDelay, WorldAgent.RemoveAgent.bind(target))
 	Stopped(agent)
 
 static func Stopped(agent : BaseAgent):
