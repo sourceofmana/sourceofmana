@@ -5,18 +5,18 @@ class_name WorldNavigation
 static func LoadData(map : WorldService.Map):
 	var obj : Object = Instantiate.LoadMapData(map.name, Path.MapNavigationExt)
 	if obj:
-		map.nav_poly = obj
-		map.nav_poly.cell_size = 0.1
+		map.navPoly = obj
+		map.navPoly.cell_size = 0.1
 
 static func CreateInstance(map : WorldService.Map, mapRID : RID):
-	if map.nav_poly:
+	if map.navPoly:
 		map.mapRID = mapRID if mapRID.is_valid() else NavigationServer2D.map_create()
 		NavigationServer2D.map_set_active(map.mapRID, true)
-		NavigationServer2D.map_set_cell_size(map.mapRID, map.nav_poly.cell_size)
+		NavigationServer2D.map_set_cell_size(map.mapRID, map.navPoly.cell_size)
 
 		map.regionRID = NavigationServer2D.region_create()
 		NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
-		NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.nav_poly)
+		NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.navPoly)
 
 		NavigationServer2D.map_force_update(map.mapRID)
 
@@ -30,12 +30,12 @@ static func GetPathLength(agent : BaseAgent, pos : Vector2) -> float :
 
 # Utils
 static func GetRandomPosition(map : WorldService.Map) -> Vector2i:
-	Util.Assert(map != null && map.nav_poly != null && map.nav_poly.get_polygon_count() > 0, "No triangulation available")
-	if map != null && map.nav_poly != null && map.nav_poly.get_polygon_count() > 0:
-		var outlinesList : PackedVector2Array  = map.nav_poly.get_vertices()
+	Util.Assert(map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0, "No triangulation available")
+	if map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0:
+		var outlinesList : PackedVector2Array  = map.navPoly.get_vertices()
 
-		var randPolygonID : int = randi_range(0, map.nav_poly.get_polygon_count() - 1)
-		var randPolygon : PackedInt32Array = map.nav_poly.get_polygon(randPolygonID)
+		var randPolygonID : int = randi_range(0, map.navPoly.get_polygon_count() - 1)
+		var randPolygon : PackedInt32Array = map.navPoly.get_polygon(randPolygonID)
 
 		var randVerticeID : int = randi_range(0, randPolygon.size() - 1)
 		var a : Vector2 = outlinesList[randPolygon[randVerticeID]]

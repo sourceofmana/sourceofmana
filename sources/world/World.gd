@@ -15,7 +15,7 @@ class Map:
 	var instances : Array[Instance]			= []
 	var spawns : Array[SpawnObject]			= []
 	var warps : Array[WarpObject]			= []
-	var nav_poly : NavigationPolygon		= null
+	var navPoly : NavigationPolygon			= null
 	var mapRID : RID						= RID()
 	var regionRID : RID						= RID()
 	var spiritOnly : bool					= false
@@ -151,21 +151,3 @@ func _post_launch():
 	defaultSpawn.name				= "Default Entity"
 
 	isInitialized = true
-
-func _physics_process(_dt : float):
-	for map in areas.values():
-		for instance in map.instances:
-			if instance.players.size() > 0:
-				for agent in instance.npcs:
-					if agent != null:
-						AI.Update(agent, map)
-						agent._internal_process()
-
-				for agent in instance.mobs:
-					if agent != null:
-						AI.Update(agent, map)
-						agent._internal_process()
-
-				for agent in instance.players:
-					if agent != null:
-						agent._internal_process()

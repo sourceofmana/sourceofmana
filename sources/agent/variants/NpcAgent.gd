@@ -9,3 +9,9 @@ func Interact(caller : BaseAgent):
 			var npcAgentID : int = get_rid().get_id()
 			if SetState(EntityCommons.State.TRIGGER) and currentState == EntityCommons.State.TRIGGER:
 				Launcher.Network.ChatAgent(npcAgentID, "Hello %s!" % caller.agentName, peerID)
+
+#
+func _specific_process():
+	var parent : Node = get_parent()
+	if parent != null and parent is WorldService.Instance:
+		AI.Update(self, parent.map)
