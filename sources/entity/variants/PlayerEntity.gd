@@ -1,12 +1,10 @@
 extends BaseEntity
 class_name PlayerEntity
 
-var isPlayableController : bool	= false
 var target : BaseEntity			= null
 
 #
 func SetLocalPlayer():
-	isPlayableController = true
 	collision_layer |= 2
 
 	if Launcher.Camera:
@@ -43,9 +41,6 @@ func Target(pos : Vector2):
 
 
 func Interact(skillID : int = 0):
-	if not isPlayableController or entityState != EntityCommons.State.IDLE:
-		return
-
 	if not target or target.entityState == EntityCommons.State.DEATH:
 		Target(position)
 
@@ -61,7 +56,7 @@ func Interact(skillID : int = 0):
 func _process(deltaTime : float):
 	super._process(deltaTime)
 
-	if Launcher.Debug && isPlayableController:
+	if Launcher.Debug and Launcher.Player == self:
 		if Launcher.Debug.correctPos:
 			Launcher.Debug.correctPos.position = position + entityPosOffset
 		if Launcher.Debug.wrongPos:

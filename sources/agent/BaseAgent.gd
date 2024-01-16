@@ -12,17 +12,14 @@ var cooldownTimers : Dictionary			= {}
 
 var hasCurrentGoal : bool				= false
 var isRelativeMode : bool				= false
+
 var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
-
 var currentState : EntityCommons.State	= EntityCommons.State.IDLE
-var forceUpdate : bool					= false
-
-var isSitting : bool					= false
 var currentSkillCastID : int			= -1
-
 var currentVelocity : Vector2i			= Vector2i.ZERO
 var currentInput : Vector2				= Vector2.ZERO
+var forceUpdate : bool					= false
 
 var lastPositions : Array[Vector2]		= []
 var navigationLine : PackedVector2Array	= []

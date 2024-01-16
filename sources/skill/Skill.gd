@@ -82,22 +82,23 @@ static func IsNear(agent : BaseAgent, target : BaseAgent, skillRange : int) -> b
 	return WorldNavigation.GetPathLength(agent, target.position) <= skillRange
 static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:
 	return WorldAgent.GetMapFromAgent(agent) == WorldAgent.GetMapFromAgent(target)
-static func IsTargetable(agent : BaseAgent, target : BaseAgent) -> bool:
-	return IsNotSelf(agent, target) and IsAlive(target) and IsSameMap(agent, target)
-static func IsCasting(agent : BaseAgent) -> bool:
-	return agent.currentSkillCastID >= 0
+static func IsTargetable(agent : BaseAgent, target : BaseAgent, skill : SkillData) -> bool:
+	return IsNotSelf(agent, target) and IsAlive(target) and IsSameMap(agent, target) and IsNear(agent, target, GetRange(agent, skill))
+static func IsCasting(agent : BaseAgent, skill : SkillData = null) -> bool:
+	return (agent.currentSkillCastID == skill._id) if skill else (agent.currentSkillCastID >= 0 )
 static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
 	return agent.cooldownTimers.has(skill._id) and agent.cooldownTimers[skill._id] != null and not agent.cooldownTimers[skill._id].is_queued_for_deletion()
 
 # Skill Flow
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if not IsAlive(agent) or IsCasting(agent) or IsCoolingDown(agent, skill):
+	if not IsAlive(agent) or IsCoolingDown(agent, skill) or IsCasting(agent, skill):
 		return
-	if skill._mode == TargetMode.SINGLE and (not IsTargetable(agent, target) or not IsNear(agent, target, GetRange(agent, skill))):
+	if skill._mode == TargetMode.SINGLE and not IsTargetable(agent, target, skill):
 		Stopped(agent)
 		return
 
 	if SetConsume(agent, "mana", skill):
+		Stopped(agent)
 		agent.SetSkillCastID(skill._id)
 		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay + skill._castTime, Skill.Attack.bind(agent, target, skill))
 		if skill._mode == TargetMode.SINGLE:
@@ -110,7 +111,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 
 		match skill._mode:
 			TargetMode.SINGLE:
-				if IsTargetable(agent, target) and IsNear(agent, target, GetRange(agent, skill)):
+				if IsTargetable(agent, target, skill):
 					Handle(agent, target, skill, GetRNG(hasStamina))
 					return
 			TargetMode.ZONE:
