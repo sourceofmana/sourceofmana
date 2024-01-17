@@ -109,6 +109,12 @@ func ParseSkillsDB():
 				skill._castColor = result[key].CastColor
 			if "CastTime" in result[key]:
 				skill._castTime = result[key].CastTime
+			if "SkillPresetPath" in result[key]:
+				skill._skillPresetPath = result[key].SkillPresetPath
+			if "SkillColor" in result[key]:
+				skill._skillColor = result[key].SkillColor
+			if "SkillTime" in result[key]:
+				skill._skillTime = result[key].SkillTime
 			if "CooldownTime" in result[key]:
 				skill._cooldownTime = result[key].CooldownTime
 			if "State" in result[key]:

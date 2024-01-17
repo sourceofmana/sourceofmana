@@ -8,6 +8,9 @@ class_name SkillData
 @export var _castTextureOverride : String
 @export var _castColor : Color
 @export var _castTime : float
+@export var _skillPresetPath : String
+@export var _skillColor : Color
+@export var _skillTime : float
 @export var _cooldownTime : float
 @export var _state : EntityCommons.State
 @export var _mode : Skill.TargetMode
@@ -26,8 +29,11 @@ func _init():
 	_iconPath = "res://data/graphics/items/skill/spell.png"
 	_castPresetPath = ""
 	_castTextureOverride = ""
-	_castColor = Color.PINK
+	_castColor = Color.BLACK
 	_castTime = 0.0
+	_skillPresetPath = ""
+	_skillColor = Color.BLACK
+	_skillTime = 0.0
 	_cooldownTime = 0.0
 	_state = EntityCommons.State.IDLE
 	_mode = Skill.TargetMode.SINGLE
