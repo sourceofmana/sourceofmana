@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://clx56dfofwfhy"]
+
+[ext_resource type="Texture2D" uid="uid://clt3g13cp3ag8" path="res://data/graphics/effects/particles/sparkle.png" id="1_dmemp"]
+
+[sub_resource type="Curve" id="Curve_k7fev"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.688474, 1), 0.0, 0.0, 0, 0, Vector2(0.993769, 0), -8.2664, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_f3016"]
+curve = SubResource("Curve_k7fev")
+
+[sub_resource type="Curve" id="Curve_tfwdr"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.999, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_vgmh4"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_1wv7a"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_t80j1"]
+curve_x = SubResource("Curve_tfwdr")
+curve_y = SubResource("Curve_vgmh4")
+curve_z = SubResource("Curve_1wv7a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mag5b"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -5, 0)
+emission_shape_scale = Vector3(10, 5, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = -5.0
+angle_max = 5.0
+gravity = Vector3(0, -40, 0)
+scale_min = 0.3
+scale_curve = SubResource("CurveTexture_f3016")
+scale_over_velocity_curve = SubResource("CurveXYZTexture_t80j1")
+color = Color(1, 0.933333, 0.780392, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+emitting = false
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_mag5b")
+texture = ExtResource("1_dmemp")
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.2
+randomness = 0.15
