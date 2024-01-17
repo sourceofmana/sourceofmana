@@ -15,6 +15,8 @@ var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 var visual : EntityVisual				= EntityVisual.new()
 
+var target : BaseEntity					= null
+
 # Init
 func SetKind(_entityKind : String, _entityID : String, _entityName : String):
 	entityName	= _entityID if _entityName.length() == 0 else _entityName

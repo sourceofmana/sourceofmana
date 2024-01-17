@@ -29,15 +29,32 @@ func DisplayMorph(callback : Callable):
 #
 func DisplayCast(caster : BaseEntity, skillID : String):
 	if Launcher.DB.SkillsDB && Launcher.DB.SkillsDB[skillID]:
-		var skillRef : SkillData = Launcher.DB.SkillsDB[skillID]
-		var castFx : GPUParticles2D = FileSystem.LoadEffect(skillRef._castPresetPath)
+		var skill : SkillData = Launcher.DB.SkillsDB[skillID]
+
+		var castFx : GPUParticles2D = FileSystem.LoadEffect(skill._castPresetPath)
 		if castFx:
 			castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-			castFx.lifetime = skillRef._castTime + caster.stat.current.castAttackDelay
-			castFx.texture = FileSystem.LoadGfx(skillRef._castTextureOverride)
-			castFx.process_material.set("color", skillRef._castColor)
+			castFx.lifetime = skill._castTime
+			castFx.texture = FileSystem.LoadGfx(skill._castTextureOverride)
+			if skill._castColor != Color.BLACK:
+				castFx.process_material.set("color", skill._castColor)
 			castFx.emitting = true
 			add_child(castFx)
+			Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(caster, skill), "CastTimer")
+
+func DisplaySkill(caster : BaseEntity, skill : SkillData):
+	if skill and skill._skillPresetPath.length() > 0:
+		var skillFx : GPUParticles2D = FileSystem.LoadEffect(skill._skillPresetPath)
+		if skillFx:
+			var skillTarget : BaseEntity = get_parent().target if skill._mode == Skill.TargetMode.SINGLE else get_parent() 
+
+			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, skillTarget))
+			skillFx.lifetime = caster.stat.current.castAttackDelay + skill._skillTime
+			if skill._skillColor != Color.BLACK:
+				skillFx.process_material.set("color", skill._skillColor)
+			skillFx.emitting = true
+
+			skillTarget.add_child(skillFx)
 
 #
 func DisplaySpeech(speech : String):
