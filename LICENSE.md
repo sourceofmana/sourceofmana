@@ -27,6 +27,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 
 #./path/to/file [Author] [Contributors]
 ./graphics/default.png [Reid]
+./graphics/effects/particles/arc.png [Reid]
 ./graphics/effects/particles/cast.png [Reid]
 ./graphics/effects/particles/cast1.png [Reid]
 ./graphics/effects/particles/cast2.png [Reid]
