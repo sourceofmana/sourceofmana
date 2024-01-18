@@ -138,14 +138,14 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var info : AlterationInfo = GetDamage(agent, target, skill, rng)
 	target.stat.health = max(target.stat.health - info.value, 0)
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type])
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill._id])
 	if target.stat.health <= 0:
 		Killed(agent, target)
 
 static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var heal : int = GetHeal(agent, target, skill, rng)
 	target.stat.health = min(target.stat.health + heal, target.stat.current.maxHealth)
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), heal, EntityCommons.Alteration.HEAL])
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), heal, EntityCommons.Alteration.HEAL, skill._id])
 
 static func Killed(agent : BaseAgent, target : BaseAgent):
 	agent.stat.XpBonus(target)
@@ -157,5 +157,5 @@ static func Stopped(agent : BaseAgent):
 	agent.castTimer.stop()
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS])
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS, -1])
 	Stopped(agent)

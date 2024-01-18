@@ -15,8 +15,6 @@ var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 var visual : EntityVisual				= EntityVisual.new()
 
-var target : BaseEntity					= null
-
 # Init
 func SetKind(_entityKind : String, _entityID : String, _entityName : String):
 	entityName	= _entityID if _entityName.length() == 0 else _entityName
@@ -52,7 +50,7 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	if visual.skillCastID != nextSkillCastID:
 		visual.skillCastID = nextSkillCastID
 		if nextSkillCastID > 0:
-			interactive.DisplayCast(self, str(nextSkillCastID))
+			interactive.DisplayCast(str(nextSkillCastID))
 
 #
 func _physics_process(delta):

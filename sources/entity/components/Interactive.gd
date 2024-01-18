@@ -27,8 +27,8 @@ func DisplayMorph(callback : Callable):
 		add_child(morphFx)
 
 #
-func DisplayCast(caster : BaseEntity, skillID : String):
-	if Launcher.DB.SkillsDB && Launcher.DB.SkillsDB[skillID]:
+func DisplayCast(skillID : String):
+	if Launcher.DB.SkillsDB.has(skillID):
 		var skill : SkillData = Launcher.DB.SkillsDB[skillID]
 
 		var castFx : GPUParticles2D = FileSystem.LoadEffect(skill._castPresetPath)
@@ -40,21 +40,28 @@ func DisplayCast(caster : BaseEntity, skillID : String):
 				castFx.process_material.set("color", skill._castColor)
 			castFx.emitting = true
 			add_child(castFx)
-			Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(caster, skill), "CastTimer")
 
-func DisplaySkill(caster : BaseEntity, skill : SkillData):
+func DisplaySkill(node : Node, skill : SkillData):
 	if skill and skill._skillPresetPath.length() > 0:
 		var skillFx : GPUParticles2D = FileSystem.LoadEffect(skill._skillPresetPath)
 		if skillFx:
-			var skillTarget : BaseEntity = get_parent().target if skill._mode == Skill.TargetMode.SINGLE else get_parent() 
-
-			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, skillTarget))
-			skillFx.lifetime = caster.stat.current.castAttackDelay + skill._skillTime
+			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, node))
+			skillFx.lifetime = skill._skillTime
 			if skill._skillColor != Color.BLACK:
 				skillFx.process_material.set("color", skill._skillColor)
 			skillFx.emitting = true
+			node.add_child(skillFx)
 
-			skillTarget.add_child(skillFx)
+func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration, skillID : String):
+	if Launcher.Map.mapNode:
+		var newLabel : Label = EntityCommons.AlterationLabel.instantiate()
+		newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
+		newLabel.SetValue(dealer, value, alteration)
+		Launcher.Map.mapNode.add_child(newLabel)
+
+		if Launcher.DB.SkillsDB.has(skillID):
+			var skill : SkillData = Launcher.DB.SkillsDB[skillID]
+			DisplaySkill(target, skill)
 
 #
 func DisplaySpeech(speech : String):
@@ -65,14 +72,6 @@ func DisplaySpeech(speech : String):
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
 		Util.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
-
-#
-func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration):
-	if Launcher.Map.mapNode:
-		var newLabel : Label = EntityCommons.AlterationLabel.instantiate()
-		newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
-		newLabel.SetValue(dealer, value, alteration)
-		Launcher.Map.mapNode.add_child(newLabel)
 
 #
 func RefreshVisibleNodeOffset(offset : int):

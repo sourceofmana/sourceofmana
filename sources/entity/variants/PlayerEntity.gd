@@ -2,6 +2,9 @@ extends BaseEntity
 class_name PlayerEntity
 
 #
+var target : BaseEntity					= null
+
+#
 func SetLocalPlayer():
 	collision_layer |= 2
 
