@@ -40,6 +40,8 @@ func DisplayCast(skillID : String):
 				castFx.process_material.set("color", skill._castColor)
 			castFx.emitting = true
 			add_child(castFx)
+			if skill._mode == Skill.TargetMode.ZONE:
+				Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(self, skill), "CastTimer")
 
 func DisplaySkill(node : Node, skill : SkillData):
 	if skill and skill._skillPresetPath.length() > 0:
@@ -61,7 +63,8 @@ func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, al
 
 		if Launcher.DB.SkillsDB.has(skillID):
 			var skill : SkillData = Launcher.DB.SkillsDB[skillID]
-			DisplaySkill(target, skill)
+			if skill._mode != Skill.TargetMode.ZONE:
+				DisplaySkill(target, skill)
 
 #
 func DisplaySpeech(speech : String):
