@@ -41,30 +41,42 @@ func DisplayCast(skillID : String):
 			castFx.emitting = true
 			add_child(castFx)
 			if skill._mode == Skill.TargetMode.ZONE:
-				Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(self, skill), "CastTimer")
+				Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(get_parent(), skill), "CastTimer")
 
-func DisplaySkill(node : Node, skill : SkillData):
+func DisplaySkill(entity : BaseEntity, skill : SkillData):
 	if skill and skill._skillPresetPath.length() > 0:
 		var skillFx : GPUParticles2D = FileSystem.LoadEffect(skill._skillPresetPath)
 		if skillFx:
-			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, node))
+			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, entity))
 			skillFx.lifetime = skill._skillTime
 			if skill._skillColor != Color.BLACK:
 				skillFx.process_material.set("color", skill._skillColor)
 			skillFx.emitting = true
-			node.add_child(skillFx)
+			entity.add_child(skillFx)
+
+func DisplayProjectile(dealer : BaseEntity, skill : SkillData):
+	if skill and skill._projectilePath.length() > 0:
+		var projectileNode : Node2D = FileSystem.LoadEffect(skill._projectilePath)
+		if projectileNode:
+			projectileNode.origin = dealer.position
+			projectileNode.destination = get_parent().position
+			projectileNode.delay = dealer.stat.current.castAttackDelay
+			Launcher.Map.mapNode.add_child(projectileNode)
 
 func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration, skillID : String):
 	if Launcher.Map.mapNode:
-		var newLabel : Label = EntityCommons.AlterationLabel.instantiate()
-		newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
-		newLabel.SetValue(dealer, value, alteration)
-		Launcher.Map.mapNode.add_child(newLabel)
+		if alteration != EntityCommons.Alteration.PROJECTILE:
+			var newLabel : Label = EntityCommons.AlterationLabel.instantiate()
+			newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
+			newLabel.SetValue(dealer, value, alteration)
+			Launcher.Map.mapNode.add_child(newLabel)
 
 		if Launcher.DB.SkillsDB.has(skillID):
 			var skill : SkillData = Launcher.DB.SkillsDB[skillID]
 			if skill._mode != Skill.TargetMode.ZONE:
-				DisplaySkill(target, skill)
+				DisplaySkill(dealer, skill)
+				if alteration == EntityCommons.Alteration.PROJECTILE:
+					DisplayProjectile(dealer, skill)
 
 #
 func DisplaySpeech(speech : String):

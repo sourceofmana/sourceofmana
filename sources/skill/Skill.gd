@@ -88,6 +88,9 @@ static func IsCasting(agent : BaseAgent, skill : SkillData = null) -> bool:
 	return (agent.currentSkillCastID == skill._id) if skill else (agent.currentSkillCastID >= 0 )
 static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
 	return agent.cooldownTimers.has(skill._id) and agent.cooldownTimers[skill._id] != null and not agent.cooldownTimers[skill._id].is_queued_for_deletion()
+static func IsDelayed(skill : SkillData) -> bool:
+	return skill._projectilePath.length() > 0
+
 
 # Skill Flow
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
@@ -100,7 +103,7 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if SetConsume(agent, "mana", skill):
 		Stopped(agent)
 		agent.SetSkillCastID(skill._id)
-		Util.StartTimer(agent.castTimer, agent.stat.current.castAttackDelay + skill._castTime, Skill.Attack.bind(agent, target, skill))
+		Util.StartTimer(agent.castTimer, skill._castTime, Skill.Attack.bind(agent, target, skill))
 		if skill._mode == TargetMode.SINGLE:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
 		agent.UpdateChanged()
@@ -112,7 +115,12 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 		match skill._mode:
 			TargetMode.SINGLE:
 				if IsTargetable(agent, target, skill):
-					Handle(agent, target, skill, GetRNG(hasStamina))
+					var handle : Callable = Skill.Handle.bind(agent, target, skill, GetRNG(hasStamina))
+					if IsDelayed(skill):
+						Util.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle)
+						Delayed(agent, target, skill)
+					else:
+						handle.call()
 					return
 			TargetMode.ZONE:
 				for zoneTarget in GetSurroundingTargets(agent, skill):
@@ -159,3 +167,6 @@ static func Stopped(agent : BaseAgent):
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS, -1])
 	Stopped(agent)
+
+static func Delayed(agent : BaseAgent, target : BaseAgent, skill : SkillData):
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.PROJECTILE, skill._id])

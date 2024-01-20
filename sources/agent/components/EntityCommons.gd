@@ -98,7 +98,8 @@ enum Alteration
 	CRIT,
 	MISS,
 	DODGE,
-	HEAL
+	HEAL,
+	PROJECTILE,
 }
 
 static var DodgeAttackColor : float				= 0.15

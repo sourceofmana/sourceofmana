@@ -11,6 +11,7 @@ class_name SkillData
 @export var _skillPresetPath : String
 @export var _skillColor : Color
 @export var _skillTime : float
+@export var _projectilePath : String
 @export var _cooldownTime : float
 @export var _state : EntityCommons.State
 @export var _mode : Skill.TargetMode
@@ -34,6 +35,7 @@ func _init():
 	_skillPresetPath = ""
 	_skillColor = Color.BLACK
 	_skillTime = 0.0
+	_projectilePath = ""
 	_cooldownTime = 0.0
 	_state = EntityCommons.State.IDLE
 	_mode = Skill.TargetMode.SINGLE

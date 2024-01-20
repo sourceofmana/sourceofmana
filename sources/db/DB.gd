@@ -115,6 +115,8 @@ func ParseSkillsDB():
 				skill._skillColor = result[key].SkillColor
 			if "SkillTime" in result[key]:
 				skill._skillTime = result[key].SkillTime
+			if "ProjectilePath" in result[key]:
+				skill._projectilePath = result[key].ProjectilePath
 			if "CooldownTime" in result[key]:
 				skill._cooldownTime = result[key].CooldownTime
 			if "State" in result[key]:
