@@ -32,6 +32,7 @@
 		"CastTextureOverride": "effects/particles/cast2.png",
 		"CastColor": "FF9999",
 		"CastTime": 1.0,
+		"ProjectilePath": "particles/Flar",
 		"CooldownTime": 3.0,
 		"StaminaCost": 5,
 		"ManaCost": 10,
