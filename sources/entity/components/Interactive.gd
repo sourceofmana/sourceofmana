@@ -54,13 +54,16 @@ func DisplaySkill(entity : BaseEntity, skill : SkillData):
 			skillFx.emitting = true
 			entity.add_child(skillFx)
 
-func DisplayProjectile(dealer : BaseEntity, skill : SkillData):
+func DisplayProjectile(dealer : BaseEntity, skill : SkillData, callable : Callable):
 	if skill and skill._projectilePath.length() > 0:
 		var projectileNode : Node2D = FileSystem.LoadEffect(skill._projectilePath)
 		if projectileNode:
-			projectileNode.origin = dealer.position
-			projectileNode.destination = get_parent().position
+			projectileNode.origin = dealer.interactive.visibleNode.global_position
+			projectileNode.origin.y += EntityCommons.interactionDisplayOffset
+			projectileNode.destination = get_parent().interactive.visibleNode.global_position
+			projectileNode.destination.y += EntityCommons.interactionDisplayOffset
 			projectileNode.delay = dealer.stat.current.castAttackDelay
+			projectileNode.callable = callable
 			Launcher.Map.mapNode.add_child(projectileNode)
 
 func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration, skillID : String):
@@ -74,9 +77,11 @@ func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, al
 		if Launcher.DB.SkillsDB.has(skillID):
 			var skill : SkillData = Launcher.DB.SkillsDB[skillID]
 			if skill._mode != Skill.TargetMode.ZONE:
-				DisplaySkill(dealer, skill)
+				var callable : Callable = DisplaySkill.bind(dealer, skill)
 				if alteration == EntityCommons.Alteration.PROJECTILE:
-					DisplayProjectile(dealer, skill)
+					DisplayProjectile(dealer, skill, callable)
+				else:
+					callable.call()
 
 #
 func DisplaySpeech(speech : String):
