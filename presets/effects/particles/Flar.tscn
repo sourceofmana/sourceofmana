@@ -36,4 +36,5 @@ local_coords = true
 script = ExtResource("2_ggro7")
 
 [node name="LightSource" parent="." instance=ExtResource("2_dg8t3")]
-radius = 64
+position = Vector2(0, 0)
+radius = 96

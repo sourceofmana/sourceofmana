@@ -90,3 +90,12 @@ static func ColorToHSVA(color : Color) -> Vector4:
 	h /= 6.0
 
 	return Vector4(h, s, v, 1.0)
+
+#
+static func FadeInOutRatio(value : float, maxValue : float, fadeIn : float, fadeOut : float) -> float:
+	var ratio : float = 1.0
+	if value < fadeIn:
+		ratio = min(value / fadeIn, ratio)
+	if value > maxValue - fadeOut:
+		ratio = min((fadeOut - (value - (maxValue - fadeOut))) / fadeOut, ratio)
+	return ratio

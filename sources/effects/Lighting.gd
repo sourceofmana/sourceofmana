@@ -24,14 +24,16 @@ func UpdateTexture():
 
 		for light in lights:
 			if light and light is LightSource:
+				if light.color == Color("FF00FF"):
+					pass
 				if Rect2( \
-					Vector2(cameraTopLeft + colorRect.global_position - Vector2(light.radius, light.radius)), \
-					Vector2(colorRect.size + Vector2(light.radius, light.radius) * 2) \
+					Vector2(cameraTopLeft + colorRect.global_position - Vector2(light.currentRadius, light.currentRadius)), \
+					Vector2(colorRect.size + Vector2(light.currentRadius, light.currentRadius) * 2) \
 				).has_point(light.global_position):
 					if not updatedLights.has(light):
 						updatedLights[light] = true
 						light.currentOscillation = sin(light.speed * time + light.randomSeed)
-					lightData.append(Vector4(light.global_position.x, light.global_position.y, light.currentOscillation, light.radius))
+					lightData.append(Vector4(light.global_position.x, light.global_position.y, light.currentOscillation, light.currentRadius))
 					colorData.append(light.color)
 
 		colorRect.material.set_shader_parameter("n_lights", lightData.size())
