@@ -76,7 +76,7 @@ func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, al
 		if Launcher.DB.SkillsDB.has(skillID):
 			var skill : SkillData = Launcher.DB.SkillsDB[skillID]
 			if skill._mode != Skill.TargetMode.ZONE:
-				var callable : Callable = DisplaySkill.bind(dealer, skill)
+				var callable : Callable = DisplaySkill.bind(target, skill)
 				if alteration == EntityCommons.Alteration.PROJECTILE:
 					DisplayProjectile(dealer, skill, callable)
 				else:
