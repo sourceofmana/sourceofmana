@@ -59,7 +59,9 @@ static func RemoveNode(node : Node, parent : Node):
 
 #
 static func StartTimer(timer : Timer, delay : float, callable : Callable):
-	if timer:
+	if delay == 0.0:
+		callable.call()
+	elif timer:
 		timer.start(delay)
 		if timer.timeout.is_connected(callable):
 			timer.timeout.disconnect(callable)

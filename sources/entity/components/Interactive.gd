@@ -27,21 +27,20 @@ func DisplayMorph(callback : Callable):
 		add_child(morphFx)
 
 #
-func DisplayCast(skillID : String):
+func DisplayCast(entity : BaseEntity, skillID : String):
 	if Launcher.DB.SkillsDB.has(skillID):
 		var skill : SkillData = Launcher.DB.SkillsDB[skillID]
-
 		var castFx : GPUParticles2D = FileSystem.LoadEffect(skill._castPresetPath)
 		if castFx:
 			castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-			castFx.lifetime = skill._castTime
+			castFx.lifetime = skill._castTime + entity.stat.current.castAttackDelay
 			castFx.texture = FileSystem.LoadGfx(skill._castTextureOverride)
 			if skill._castColor != Color.BLACK:
 				castFx.process_material.set("color", skill._castColor)
 			castFx.emitting = true
 			add_child(castFx)
 			if skill._mode == Skill.TargetMode.ZONE:
-				Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(get_parent(), skill), "CastTimer")
+				Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(entity, skill), "CastTimer")
 
 func DisplaySkill(entity : BaseEntity, skill : SkillData):
 	if skill and skill._skillPresetPath.length() > 0:

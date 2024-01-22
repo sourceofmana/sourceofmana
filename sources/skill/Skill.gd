@@ -103,7 +103,7 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if SetConsume(agent, "mana", skill):
 		Stopped(agent)
 		agent.SetSkillCastID(skill._id)
-		Util.StartTimer(agent.castTimer, skill._castTime, Skill.Attack.bind(agent, target, skill))
+		Util.StartTimer(agent.castTimer, skill._castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
 		if skill._mode == TargetMode.SINGLE:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
 		agent.UpdateChanged()

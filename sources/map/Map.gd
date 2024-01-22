@@ -68,7 +68,7 @@ func RemoveChildren():
 func RemoveChild(entity : BaseEntity):
 	if tilemapNode:
 		tilemapNode.remove_child(entity)
-	if not entity is PlayerEntity:
+	if entity and not entity is PlayerEntity:
 		entity.queue_free()
 
 func AddChild(entity : BaseEntity):

@@ -78,8 +78,6 @@ func SetEntityStats(stats : Dictionary, isMorphed : bool):
 			base[modifier] = (base[modifier] + stats[modifier]) / 2 if isMorphed else stats[modifier]
 	RefreshStats()
 
-
-
 func SetPersonalStats(stats : Dictionary):
 	if "Strength" in stats:				strength			= stats["Strength"] 
 	if "Vitality" in stats:				vitality			= stats["Vitality"] 
