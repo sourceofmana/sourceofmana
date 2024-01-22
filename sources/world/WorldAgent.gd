@@ -71,6 +71,8 @@ static func PopAgent(agent : BaseAgent):
 		if inst:
 			if agent is PlayerAgent:
 				inst.players.erase(agent)
+				if inst.players.size() == 0:
+					inst.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
 			elif agent is MonsterAgent:
 				inst.mobs.erase(agent)
 			elif agent is NpcAgent:
@@ -83,6 +85,8 @@ static func PushAgent(agent : BaseAgent, inst : WorldService.Instance):
 	if agent and inst:
 		if not WorldAgent.HasAgent(inst, agent):
 			if agent is PlayerAgent:
+				if inst.players.size() == 0:
+					inst.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
 				inst.players.push_back(agent)
 			elif agent is MonsterAgent:
 				inst.mobs.push_back(agent)

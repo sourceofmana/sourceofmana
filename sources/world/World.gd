@@ -63,6 +63,7 @@ func CreateInstance(map : Map, instanceID : int = 0):
 	inst.name = map.name
 	inst.id = instanceID
 	inst.map = map
+	inst.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
 	if inst.id > 0:
 		inst.name += "_" + str(inst.id)
 	map.instances.push_back(inst)

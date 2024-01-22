@@ -181,9 +181,6 @@ func _specific_process():
 	pass
 
 func _physics_process(_delta):
-	if get_parent() == null or get_parent().players.size() == 0:
-		return
-
 	if agent:
 		UpdateInput()
 
