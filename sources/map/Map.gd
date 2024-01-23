@@ -66,10 +66,11 @@ func RemoveChildren():
 
 
 func RemoveChild(entity : BaseEntity):
-	if tilemapNode:
-		tilemapNode.remove_child(entity)
-	if entity and not entity is PlayerEntity:
-		entity.queue_free()
+	if entity:
+		if tilemapNode:
+			tilemapNode.remove_child(entity)
+		if not entity is PlayerEntity:
+			entity.queue_free()
 
 func AddChild(entity : BaseEntity):
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not add a new child entity")

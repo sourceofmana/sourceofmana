@@ -19,7 +19,7 @@ func ClearTarget():
 			target.visual.sprites[EntityCommons.Slot.BODY].material = null
 		target = null
 
-func Target(pos : Vector2):
+func Target(pos : Vector2, canInteract : bool = true):
 	if not interactive:
 		return
 
@@ -28,30 +28,38 @@ func Target(pos : Vector2):
 	ClearTarget()
 	for entityID in Launcher.Map.entities:
 		var entity : BaseEntity = Launcher.Map.entities[entityID]
-		if entity and entity != self and entity.entityState != EntityCommons.State.DEATH:
-			var distance : float = (entity.position - pos).length()
-			if nearestDistance == -1 || distance < nearestDistance:
-				nearestDistance = distance
-				target = entity
+		if entity and entity.entityState != EntityCommons.State.DEATH:
+			if entity is MonsterEntity or (canInteract and entity is NpcEntity):
+				var distance : float = (entity.position - pos).length()
+				if nearestDistance == -1 or distance < nearestDistance:
+					nearestDistance = distance
+					target = entity
 
 	if target:
-		if target is NpcEntity:
+		if canInteract and target is NpcEntity:
 			target.visual.SetMainMaterial.call_deferred(EntityCommons.AllyTarget)
 		elif target is MonsterEntity:
 			target.visual.SetMainMaterial.call_deferred(EntityCommons.EnemyTarget)
 
 
 func Interact(skillID : int = 0):
-	if not target or target.entityState == EntityCommons.State.DEATH:
-		Target(position)
+	var skill : SkillData = Launcher.DB.SkillsDB[str(skillID)]
+	Util.Assert(skill != null, "Skill ID is not found, can't cast it")
+	if skill == null:
+		return
 
-	if target:
-		var entityID = Launcher.Map.entities.find_key(target)
-		if entityID != null:
-			if target is NpcEntity:
+	if skill._mode == Skill.TargetMode.SINGLE:
+		var canInteract : bool = skillID == 0
+		if not target or target.entityState == EntityCommons.State.DEATH:
+			Target(position, canInteract)
+		if target:
+			var entityID : int = Launcher.Map.entities.find_key(target)
+			if canInteract and target is NpcEntity:
 				Launcher.Network.TriggerInteract(entityID)
 			elif target is MonsterEntity:
 				Launcher.Network.TriggerCast(entityID, skillID)
+	else:
+		Launcher.Network.TriggerCast(0, skillID)
 
 #
 func _process(deltaTime : float):
