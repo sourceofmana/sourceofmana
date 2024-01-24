@@ -3,16 +3,9 @@ extends ServiceBase
 class_name WorldService
 
 # Types
-class Instance extends SubViewport:
-	var id : int							= 0
-	var npcs : Array[BaseAgent]				= []
-	var mobs : Array[BaseAgent]				= []
-	var players : Array[BaseAgent]			= []
-	var map : Map							= null
-
-class Map:
+class Map extends Object:
 	var name : String						= ""
-	var instances : Array[Instance]			= []
+	var instances : Array[WorldInstance]			= []
 	var spawns : Array[SpawnObject]			= []
 	var warps : Array[WarpObject]			= []
 	var navPoly : NavigationPolygon			= null
@@ -53,35 +46,28 @@ func LoadData(map : Map):
 					warpObject.polygon = warp[2]
 					map.warps.append(warpObject)
 		WorldNavigation.LoadData(map)
+		CreateInstance(map)
 
 func CreateInstance(map : Map, instanceID : int = 0):
-	var inst : Instance = Instance.new()
-	WorldNavigation.CreateInstance(map, inst.get_world_2d().get_navigation_map())
-
-	inst.disable_3d = true
-	inst.gui_disable_input = true
-	inst.name = map.name
+	var inst : WorldInstance = WorldInstance.new()
 	inst.id = instanceID
 	inst.map = map
-	inst.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
-	if inst.id > 0:
-		inst.name += "_" + str(inst.id)
+
+	WorldNavigation.CreateInstance(map, inst.get_world_2d().get_navigation_map())
 	map.instances.push_back(inst)
+	Launcher.Root.add_child.call_deferred(inst)
 
 	for spawn in map.spawns:
 		spawn.is_persistant = true
 		spawn.map = map
-
 		for i in spawn.count:
 			WorldAgent.CreateAgent(spawn, instanceID)
 
-	Launcher.Root.add_child.call_deferred(inst)
-
 # Getters
 func CanWarp(agent : BaseAgent) -> WarpObject:
-	var prevMap : Map = WorldAgent.GetMapFromAgent(agent)
-	if prevMap:
-		for warp in prevMap.warps:
+	var map : Map = WorldAgent.GetMapFromAgent(agent)
+	if map:
+		for warp in map.warps:
 			if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
 				return warp
 	return null
@@ -101,7 +87,7 @@ func Warp(agent : BaseAgent, newMap : Map, newPos : Vector2i):
 func Spawn(map : Map, agent : BaseAgent, instanceID : int = 0):
 	Util.Assert(map != null and instanceID < map.instances.size() and agent != null, "Spawn could not proceed, agent or map missing")
 	if map and instanceID < map.instances.size() and agent:
-		var inst : Instance = map.instances[instanceID]
+		var inst : WorldInstance = map.instances[instanceID]
 		Util.Assert(inst != null, "Spawn could not proceed, map instance missing")
 		if inst:
 			agent.ResetNav()
@@ -114,7 +100,7 @@ func Spawn(map : Map, agent : BaseAgent, instanceID : int = 0):
 			WorldAgent.PushAgent(agent, inst)
 			Util.OneShotCallback(agent.tree_entered, AgentWarped, [map, inst, agent])
 
-func AgentWarped(map : Map, instance : Instance, agent : BaseAgent):
+func AgentWarped(map : Map, instance : WorldInstance, agent : BaseAgent):
 	if agent == null:
 		return
 
@@ -127,14 +113,11 @@ func AgentWarped(map : Map, instance : Instance, agent : BaseAgent):
 			agent.Morph(false)
 
 		Launcher.Network.WarpPlayer(map.name, playerID)
-
-		var categories : Array[Array] = WorldAgent.GetNeighboursFromAgent(agent)
-		for neighbours in categories:
+		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
 				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.agentType, neighbour.GetCurrentShapeID(), neighbour.agentName, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.currentState, neighbour.currentSkillCastID, playerID)
 
 	Launcher.Network.Server.NotifyInstancePlayers(instance, agent, "AddEntity", [agent.agentType, agent.GetCurrentShapeID(), agent.agentName, agent.velocity, agent.position, agent.currentOrientation, agent.currentState, agent.currentSkillCastID], false)
-
 
 # Generic
 func _post_launch():
@@ -142,7 +125,6 @@ func _post_launch():
 		var map : Map = Map.new()
 		map.name = mapName
 		LoadData(map)
-		CreateInstance(map)
 		areas[mapName] = map
 
 	var mapName : String			= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
