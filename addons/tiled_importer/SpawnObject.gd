@@ -12,4 +12,4 @@ class_name SpawnObject
 @export var is_global : bool			= false
 
 var is_persistant : bool				= false
-var map : WorldService.Map						= null
+var map : WorldMap						= null

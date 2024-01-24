@@ -12,8 +12,8 @@ static func GetInstanceFromAgent(agent : BaseAgent) -> SubViewport:
 			inst = null
 	return inst
 
-static func GetMapFromAgent(agent : BaseAgent) -> WorldService.Map:
-	var map : WorldService.Map = null
+static func GetMapFromAgent(agent : BaseAgent) -> WorldMap:
+	var map : WorldMap = null
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	if inst:
 		Util.Assert(inst.map != null, "Agent's base map is incorrect, instance is not referenced inside a map")
@@ -49,7 +49,7 @@ static func RemoveAgent(agent : BaseAgent):
 
 		WorldAgent.PopAgent(agent)
 		agents.erase(agent)
-		agent.queue_free()
+		agent.free()
 
 static func HasAgent(inst : WorldInstance, agent : BaseAgent):
 	var hasAgent : bool = false
@@ -77,7 +77,7 @@ static func PopAgent(agent : BaseAgent):
 				inst.mobs.erase(agent)
 			elif agent is NpcAgent:
 				inst.npcs.erase(agent)
-			inst.remove_child.call_deferred(agent)
+			inst.remove_child(agent)
 
 static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 	Util.Assert(agent != null, "Agent is null, can't push it")

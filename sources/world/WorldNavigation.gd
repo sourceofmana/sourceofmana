@@ -2,13 +2,13 @@ extends Node
 class_name WorldNavigation
 
 # Instance init
-static func LoadData(map : WorldService.Map):
+static func LoadData(map : WorldMap):
 	var obj : Object = Instantiate.LoadMapData(map.name, Path.MapNavigationExt)
 	if obj:
 		map.navPoly = obj
 		map.navPoly.cell_size = 0.1
 
-static func CreateInstance(map : WorldService.Map, mapRID : RID):
+static func CreateInstance(map : WorldMap, mapRID : RID):
 	if map.navPoly:
 		map.mapRID = mapRID if mapRID.is_valid() else NavigationServer2D.map_create()
 		NavigationServer2D.map_set_active(map.mapRID, true)
@@ -29,7 +29,7 @@ static func GetPathLength(agent : BaseAgent, pos : Vector2) -> float :
 	return pathLength
 
 # Utils
-static func GetRandomPosition(map : WorldService.Map) -> Vector2i:
+static func GetRandomPosition(map : WorldMap) -> Vector2i:
 	Util.Assert(map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0, "No triangulation available")
 	if map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0:
 		var outlinesList : PackedVector2Array  = map.navPoly.get_vertices()
@@ -47,7 +47,7 @@ static func GetRandomPosition(map : WorldService.Map) -> Vector2i:
 	Util.Assert(false, "Mob could not be spawned, no available point on the navigation mesh were found")
 	return Vector2i.ZERO
 
-static func GetRandomPositionAABB(map : WorldService.Map, pos : Vector2i, offset : Vector2i) -> Vector2i:
+static func GetRandomPositionAABB(map : WorldMap, pos : Vector2i, offset : Vector2i) -> Vector2i:
 	Util.Assert(map != null, "Could not create a random position for a non-initialized map")
 	if map != null:
 		for i in Launcher.Conf.GetInt("Navigation", "navigationSpawnTry", Launcher.Conf.Type.NETWORK):
@@ -60,7 +60,7 @@ static func GetRandomPositionAABB(map : WorldService.Map, pos : Vector2i, offset
 
 	return GetRandomPosition(map)
 
-static func GetSpawnPosition(map : WorldService.Map, spawn : SpawnObject) -> Vector2i:
+static func GetSpawnPosition(map : WorldMap, spawn : SpawnObject) -> Vector2i:
 	var position : Vector2i = Vector2i.ZERO
 	if not spawn.is_global:
 		position = WorldNavigation.GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)

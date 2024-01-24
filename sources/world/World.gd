@@ -2,81 +2,24 @@ extends ServiceBase
 
 class_name WorldService
 
-# Types
-class Map extends Object:
-	var name : String						= ""
-	var instances : Array[WorldInstance]			= []
-	var spawns : Array[SpawnObject]			= []
-	var warps : Array[WarpObject]			= []
-	var navPoly : NavigationPolygon			= null
-	var mapRID : RID						= RID()
-	var regionRID : RID						= RID()
-	var spiritOnly : bool					= false
-
 # Vars
 var areas : Dictionary						= {}
 var defaultSpawn : SpawnObject				= SpawnObject.new()
 
-# Instance init
-func LoadData(map : Map):
-	var node : Node = Instantiate.LoadMapData(map.name, Path.MapServerExt)
-	if node:
-		if "spirit_only" in node:
-			map.spiritOnly = node.spirit_only
-		if "spawns" in node:
-			for spawn in node.spawns:
-				Util.Assert(spawn != null, "Warp format is not supported")
-				if spawn:
-					var spawnObject = SpawnObject.new()
-					spawnObject.count = spawn[0]
-					spawnObject.name = spawn[1]
-					spawnObject.type = spawn[2]
-					spawnObject.spawn_position = spawn[3]
-					spawnObject.spawn_offset = spawn[4]
-					spawnObject.respawn_delay = spawn[5]
-					spawnObject.is_global = spawnObject.spawn_position < Vector2i.LEFT
-					map.spawns.append(spawnObject)
-		if "warps" in node:
-			for warp in node.warps:
-				Util.Assert(warp != null, "Warp format is not supported")
-				if warp:
-					var warpObject = WarpObject.new()
-					warpObject.destinationMap = warp[0]
-					warpObject.destinationPos = warp[1]
-					warpObject.polygon = warp[2]
-					map.warps.append(warpObject)
-		WorldNavigation.LoadData(map)
-		CreateInstance(map)
-
-func CreateInstance(map : Map, instanceID : int = 0):
-	var inst : WorldInstance = WorldInstance.new()
-	inst.id = instanceID
-	inst.map = map
-
-	WorldNavigation.CreateInstance(map, inst.get_world_2d().get_navigation_map())
-	map.instances.push_back(inst)
-	Launcher.Root.add_child.call_deferred(inst)
-
-	for spawn in map.spawns:
-		spawn.is_persistant = true
-		spawn.map = map
-		for i in spawn.count:
-			WorldAgent.CreateAgent(spawn, instanceID)
-
 # Getters
 func CanWarp(agent : BaseAgent) -> WarpObject:
-	var map : Map = WorldAgent.GetMapFromAgent(agent)
+	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map:
 		for warp in map.warps:
 			if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
 				return warp
 	return null
 
-func GetMap(mapName : String) -> Map:
+func GetMap(mapName : String) -> WorldMap:
 	return areas[mapName] if mapName in areas else null
 
 # Core functions
-func Warp(agent : BaseAgent, newMap : Map, newPos : Vector2i):
+func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i):
 	Util.Assert(newMap != null and agent != null, "Warp could not proceed, agent or current map missing")
 	if agent and newMap:
 		WorldAgent.PopAgent(agent)
@@ -84,7 +27,7 @@ func Warp(agent : BaseAgent, newMap : Map, newPos : Vector2i):
 		agent.SwitchInputMode(true)
 		Spawn(newMap, agent)
 
-func Spawn(map : Map, agent : BaseAgent, instanceID : int = 0):
+func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
 	Util.Assert(map != null and instanceID < map.instances.size() and agent != null, "Spawn could not proceed, agent or map missing")
 	if map and instanceID < map.instances.size() and agent:
 		var inst : WorldInstance = map.instances[instanceID]
@@ -100,7 +43,7 @@ func Spawn(map : Map, agent : BaseAgent, instanceID : int = 0):
 			WorldAgent.PushAgent(agent, inst)
 			Util.OneShotCallback(agent.tree_entered, AgentWarped, [map, inst, agent])
 
-func AgentWarped(map : Map, instance : WorldInstance, agent : BaseAgent):
+func AgentWarped(map : WorldMap, instance : WorldInstance, agent : BaseAgent):
 	if agent == null:
 		return
 
@@ -122,10 +65,7 @@ func AgentWarped(map : Map, instance : WorldInstance, agent : BaseAgent):
 # Generic
 func _post_launch():
 	for mapName in Launcher.DB.MapsDB:
-		var map : Map = Map.new()
-		map.name = mapName
-		LoadData(map)
-		areas[mapName] = map
+		areas[mapName] = WorldMap.Create(mapName)
 
 	var mapName : String			= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
 	defaultSpawn.map				= GetMap(mapName)

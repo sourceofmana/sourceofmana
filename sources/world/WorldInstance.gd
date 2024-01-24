@@ -6,18 +6,30 @@ var id : int							= 0
 var npcs : Array[BaseAgent]				= []
 var mobs : Array[BaseAgent]				= []
 var players : Array[BaseAgent]			= []
-var map : WorldService.Map				= null
+var map : WorldMap						= null
 
 #
-func _init():
-	disable_3d = true
-	gui_disable_input = true
-	set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
-
 func _ready():
-	Util.Assert(map != null, "No map associated to this ghost instance, should never happen")
-	name = map.name + "_" + str(id)
-	RefreshProcessMode()
+	for spawn in map.spawns:
+		for i in spawn.count:
+			WorldAgent.CreateAgent(spawn, id)
+
+#
+static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:
+	Util.Assert(_map != null, "Could not create an instance on a non-valid map")
+	if _map == null:
+		return
+
+	var inst : WorldInstance = WorldInstance.new()
+	inst.id = instanceID
+	inst.map = _map
+	inst.name = _map.name + "_" + str(instanceID)
+	inst.RefreshProcessMode()
+
+	WorldNavigation.CreateInstance(_map, inst.get_world_2d().get_navigation_map())
+	Launcher.Root.add_child.call_deferred(inst)
+
+	return inst
 
 #
 func QueryProcessMode():

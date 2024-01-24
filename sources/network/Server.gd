@@ -41,11 +41,10 @@ func ConnectPlayer(nickname : String, rpcID : int = Launcher.Network.RidSingleMo
 func DisconnectPlayer(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
+		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.agentName, rpcID])
 		WorldAgent.RemoveAgent(player)
 		playerMap.erase(rpcID)
-
 		onlineList.UpdateJson()
-		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.agentName, rpcID])
 
 #
 func SetClickPos(pos : Vector2, rpcID : int = Launcher.Network.RidSingleMode):
@@ -69,7 +68,7 @@ func TriggerWarp(rpcID : int = Launcher.Network.RidSingleMode):
 	if player:
 		var warp : WarpObject = Launcher.World.CanWarp(player)
 		if warp:
-			var nextMap : WorldService.Map = Launcher.World.GetMap(warp.destinationMap)
+			var nextMap : WorldMap = Launcher.World.GetMap(warp.destinationMap)
 			if nextMap:
 				Launcher.World.Warp(player, nextMap, warp.destinationPos)
 
