@@ -117,7 +117,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 				if IsTargetable(agent, target, skill):
 					var handle : Callable = Skill.Handle.bind(agent, target, skill, GetRNG(hasStamina))
 					if IsDelayed(skill):
-						Util.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle)
+						Util.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle, "SKILL_" + skill._name)
 						Delayed(agent, target, skill)
 					else:
 						handle.call()
