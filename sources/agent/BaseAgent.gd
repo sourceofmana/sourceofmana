@@ -145,16 +145,6 @@ func SetKind(entityType : String, entityID : String, entityName : String):
 	agentName	= entityID if entityName.length() == 0 else entityName
 	set_name(agentName)
 
-	if self is MonsterAgent or self is NpcAgent:
-		aiTimer = Timer.new()
-		aiTimer.set_name("AiTimer")
-		add_child.call_deferred(aiTimer)
-	if self is MonsterAgent or self is PlayerAgent:
-		castTimer = Timer.new()
-		castTimer.set_name("CastTimer")
-		castTimer.set_one_shot(true)
-		add_child.call_deferred(castTimer)
-
 func SetData(data : EntityData):
 	# Stat
 	stat.Init(data)
