@@ -10,16 +10,23 @@ static func FindEntityReference(entityID : String) -> EntityData:
 			break
 	return ref
 
-static func CreateGenericEntity(entityInstance : CharacterBody2D, entityType : String, entityID : String, entityName : String = ""):
+static func CreateGenericEntity(entityInstance : CharacterBody2D, entityID : String, entityName : String = ""):
 	var template : EntityData = FindEntityReference(entityID)
 	Util.Assert(template != null and entityInstance != null, "Could not create the entity: %s" % entityID)
 	if template and entityInstance:
 		entityInstance.SetData(template)
-		entityInstance.SetKind(entityType, entityID, entityName)
+		entityInstance.set_name(entityID if entityName.length() == 0 else entityName)
 
-static func CreateEntity(entityType : String, entityID : String, entityName : String = "") -> BaseEntity:
-	var entityInstance : BaseEntity = FileSystem.LoadEntityVariant(entityType)
-	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
+static func CreateEntity(entityType : EntityCommons.Type, entityID : String, entityName : String = "") -> BaseEntity:
+	var entityPreset : String = ""
+	match entityType:
+		EntityCommons.Type.PLAYER: entityPreset = "Player"
+		EntityCommons.Type.MONSTER: entityPreset = "Monster"
+		EntityCommons.Type.NPC: entityPreset = "Npc"
+		_: Util.Assert(false, "Trying to create an entity with a wrong type: " + str(entityType))
+
+	var entityInstance : BaseEntity = FileSystem.LoadEntityVariant(entityPreset)
+	CreateGenericEntity(entityInstance, entityID, entityName)
 	return entityInstance
 
 static func CreateAgent(entityType : String, entityID : String, entityName : String = "") -> BaseAgent:
@@ -30,7 +37,7 @@ static func CreateAgent(entityType : String, entityID : String, entityName : Str
 		"Monster": entityInstance = MonsterAgent.new()
 		"Player": entityInstance = PlayerAgent.new()
 		_: Util.Assert(false, "Trying to create an agent with a wrong type: " + entityType)
-	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
+	CreateGenericEntity(entityInstance, entityID, entityName)
 	return entityInstance
 
 # Map

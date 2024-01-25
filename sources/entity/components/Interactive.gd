@@ -104,7 +104,7 @@ func _ready():
 		return
 
 	if nameLabel:
-		nameLabel.set_text(entity.entityName)
+		nameLabel.set_text(entity.get_name())
 		nameLabel.set_visible(entity.displayName)
 
 	if entity == Launcher.Player:

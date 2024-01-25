@@ -2,6 +2,9 @@ extends BaseAgent
 class_name MonsterAgent
 
 #
+static func GetEntityType() -> EntityCommons.Type: return EntityCommons.Type.MONSTER
+
+#
 func _specific_process():
 	var parent : Node = get_parent()
 	if parent != null and parent is WorldInstance:

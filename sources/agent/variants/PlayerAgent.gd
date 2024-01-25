@@ -5,6 +5,9 @@ class_name PlayerAgent
 var lastStat : EntityStats				= EntityStats.new()
 
 #
+static func GetEntityType() -> EntityCommons.Type: return EntityCommons.Type.PLAYER
+
+#
 func UpdateStats():
 	var peerID : int = Launcher.Network.Server.GetRid(self)
 	if peerID == Launcher.Network.RidUnknown:

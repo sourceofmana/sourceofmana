@@ -45,7 +45,7 @@ func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = RidSingleMode
 
 # Entities
 @rpc("authority", "reliable")
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int, rpcID : int = RidSingleMode):
+func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int, rpcID : int = RidSingleMode):
 	NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, velocity, position, orientation, entityState, skillCastID], rpcID)
 
 @rpc("authority", "reliable")

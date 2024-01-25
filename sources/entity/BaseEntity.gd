@@ -2,24 +2,20 @@ extends CharacterBody2D
 class_name BaseEntity
 
 #
+@onready var interactive : EntityInteractive	= $Interactions
+
 var displayName : bool					= false
-var entityName : String					= "PlayerName"
 
 var entityState : EntityCommons.State	= EntityCommons.State.IDLE
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
 var entityOrientation : Vector2			= Vector2.ZERO
 
-@onready var interactive : EntityInteractive	= $Interactions
 var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 var visual : EntityVisual				= EntityVisual.new()
 
 # Init
-func SetKind(_entityKind : String, _entityID : String, _entityName : String):
-	entityName	= _entityID if _entityName.length() == 0 else _entityName
-	set_name(entityName)
-
 func SetData(data : EntityData):
 	# Stat
 	if data._stats:

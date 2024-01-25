@@ -73,14 +73,14 @@ func LoadData(data : EntityData):
 		animation = preset.get_node("Animation")
 		if animation:
 			# Animation Tree
-			Util.Assert(animation.has_node("AnimationTree"), "No animation tree available for " + entity.entityName)
+			Util.Assert(animation.has_node("AnimationTree"), "No animation tree available for " + entity.get_name())
 			if animation.has_node("AnimationTree"):
 				animationTree = animation.get_node("AnimationTree")
 				if animationTree:
 					animationTree.set_active(true)
 
 		# Body Sprite
-		Util.Assert(preset.has_node("Sprite"), "No sprite available for " + entity.entityName)
+		Util.Assert(preset.has_node("Sprite"), "No sprite available for " + entity.get_name())
 		if preset.has_node("Sprite"):
 			var sprite : Sprite2D = preset.get_node("Sprite")
 			if sprite:

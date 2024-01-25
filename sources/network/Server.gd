@@ -41,7 +41,7 @@ func ConnectPlayer(nickname : String, rpcID : int = Launcher.Network.RidSingleMo
 func DisconnectPlayer(rpcID : int = Launcher.Network.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
-		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.agentName, rpcID])
+		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
 		WorldAgent.RemoveAgent(player)
 		playerMap.erase(rpcID)
 		onlineList.UpdateJson()
@@ -124,7 +124,7 @@ func GetAgent(rpcID : int) -> BaseAgent:
 func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
 	if not inst:
 		inst = WorldAgent.GetInstanceFromAgent(agent)
-	Util.Assert(inst != null, "Could not notify every peer as this agent (%s) is not connected to any instance!" % agent.agentName)
+	Util.Assert(inst != null, "Could not notify every peer as this agent (%s) is not connected to any instance!" % agent.get_name())
 	if inst:
 		var currentPlayerID = agent.get_rid().get_id()
 		if currentPlayerID != null:

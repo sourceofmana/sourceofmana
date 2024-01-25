@@ -13,7 +13,7 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = Launcher.Network.
 	if Launcher.Map:
 		Launcher.Map.EmotePlayer(playerID, emoteID)
 
-func AddEntity(agentID : int, entityType : String, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int, _rpcID : int = Launcher.Network.RidSingleMode):
+func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, velocity, position, orientation, entityState, skillCastID)
 
@@ -34,7 +34,7 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = Launcher.Network.Ri
 		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
 		if entity && entity.get_parent():
 			if entity is PlayerEntity && Launcher.GUI:
-				Launcher.GUI.chatContainer.AddPlayerText(entity.entityName, text)
+				Launcher.GUI.chatContainer.AddPlayerText(entity.get_name(), text)
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
 

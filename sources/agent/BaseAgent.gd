@@ -3,8 +3,6 @@ class_name BaseAgent
 
 #
 var agent : NavigationAgent2D			= null
-var agentName : String					= ""
-var agentType : String					= ""
 
 var aiTimer : Timer						= null
 var castTimer : Timer					= null
@@ -140,11 +138,6 @@ func UpdateChanged():
 	Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, functionName, [velocity, position, currentOrientation, currentState, currentSkillCastID])
 
 #
-func SetKind(entityType : String, entityID : String, entityName : String):
-	agentType	= entityType
-	agentName	= entityID if entityName.length() == 0 else entityName
-	set_name(agentName)
-
 func SetData(data : EntityData):
 	# Stat
 	stat.Init(data)

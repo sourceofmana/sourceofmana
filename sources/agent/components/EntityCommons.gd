@@ -2,6 +2,13 @@ extends Object
 class_name EntityCommons
 
 #
+enum Type
+{
+	PLAYER = 0,
+	MONSTER,
+	NPC
+}
+
 enum Gender
 {
 	MALE = 0,
