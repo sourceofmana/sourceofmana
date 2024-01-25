@@ -22,12 +22,14 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Margin/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 6
+theme_override_constants/line_spacing = 0
 text = "Any time spent in the real world is less time spent in the mana world!"
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 1
 language = "en_GB"
 
 [node name="ButtonChoice" type="HBoxContainer" parent="Margin/VBoxContainer"]
