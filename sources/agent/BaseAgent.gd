@@ -121,15 +121,6 @@ func ResetNav():
 	WalkToward(position)
 	SwitchInputMode(true)
 
-func IsStuck() -> bool:
-	var isStuck : bool = false
-	if lastPositions.size() >= 5:
-		var sum : Vector2 = Vector2.ZERO
-		for pos in lastPositions:
-			sum += pos - position
-		isStuck = sum.abs() < Vector2(1, 1)
-	return isStuck
-
 func UpdateChanged():
 	forceUpdate = false
 	if currentInput != Vector2.ZERO:
