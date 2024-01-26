@@ -129,7 +129,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 			TargetMode.SELF:
 				Handle(agent, agent, skill, GetRNG(hasStamina))
 				return
-	Missed(agent, target)
+		Missed(agent, target)
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	if skill._damage > 0:		Damaged(agent, target, skill, rng)
@@ -165,6 +165,8 @@ static func Stopped(agent : BaseAgent):
 	agent.castTimer.stop()
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
+	if target == null:
+		return
 	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS, -1])
 	Stopped(agent)
 

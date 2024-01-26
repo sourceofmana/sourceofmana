@@ -5,12 +5,7 @@ static var agents : Dictionary = {}
 
 # From Agent getters
 static func GetInstanceFromAgent(agent : BaseAgent) -> SubViewport:
-	var inst : WorldInstance = agent.get_parent()
-	Util.Assert(inst != null && inst.is_class("SubViewport"), "Agent's base instance is incorrect, is type: " + inst.get_class() if inst else "null" )
-	if inst && inst.is_class("SubViewport"):
-		if not WorldAgent.HasAgent(inst, agent):
-			inst = null
-	return inst
+	return agent.get_parent()
 
 static func GetMapFromAgent(agent : BaseAgent) -> WorldMap:
 	var map : WorldMap = null
