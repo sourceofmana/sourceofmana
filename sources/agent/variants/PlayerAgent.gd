@@ -68,3 +68,4 @@ func _ready():
 	castTimer.set_name("CastTimer")
 	castTimer.set_one_shot(true)
 	add_child.call_deferred(castTimer)
+	super._ready()

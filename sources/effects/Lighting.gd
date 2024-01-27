@@ -6,17 +6,17 @@ extends CanvasLayer
 
 #
 func UpdateTransform():
-	var canvas_transform = Launcher.Camera.mainCamera.get_canvas_transform()
+	var canvas_transform : Transform2D = Launcher.Camera.mainCamera.get_canvas_transform()
 	for colorRect in colorRectArrays:
 		var topLeft = (-canvas_transform.origin + colorRect.global_position) / canvas_transform.get_scale()
 		colorRect.material.set_shader_parameter("global_transform", Transform2D(0, topLeft))
 
 func UpdateTexture():
-	var lights = get_tree().get_nodes_in_group("lights")
+	var lights : Array[Node]= get_tree().get_nodes_in_group("lights")
 	var time : float = Time.get_ticks_msec() / 1000.0
 	var cameraTopLeft : Vector2 = Launcher.Camera.mainCamera.get_target_position() - Launcher.Camera.mainCamera.get_viewport_rect().size / 2.0
 
-	var updatedLights = {}
+	var updatedLights : Dictionary = {}
 
 	for colorRect in colorRectArrays:
 		var lightData : Array[Vector4] = []

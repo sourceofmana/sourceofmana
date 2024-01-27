@@ -58,7 +58,8 @@ static func GetRandomPositionAABB(map : WorldMap, pos : Vector2i, offset : Vecto
 			if randPoint == closestPoint:
 				return randPoint
 
-	return GetRandomPosition(map)
+		return GetRandomPosition(map)
+	return Vector2i.ZERO
 
 static func GetSpawnPosition(map : WorldMap, spawn : SpawnObject) -> Vector2i:
 	var position : Vector2i = Vector2i.ZERO

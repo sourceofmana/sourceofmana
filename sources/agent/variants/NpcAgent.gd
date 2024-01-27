@@ -15,11 +15,12 @@ func Interact(caller : BaseAgent):
 
 #
 func _specific_process():
-	var parent : Node = get_parent()
-	if parent != null and parent is WorldInstance:
-		AI.Update(self, parent.map)
+	pass
 
 func _ready():
 	aiTimer = Timer.new()
 	aiTimer.set_name("AiTimer")
+	aiTimer.set_one_shot(true)
+	aiTimer.tree_entered.connect(AI.Init.bind(self))
 	add_child.call_deferred(aiTimer)
+	super._ready()

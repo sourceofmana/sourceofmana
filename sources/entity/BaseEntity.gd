@@ -5,6 +5,7 @@ class_name BaseEntity
 @onready var interactive : EntityInteractive	= $Interactions
 
 var displayName : bool					= false
+var entityName : String					= ""
 
 var entityState : EntityCommons.State	= EntityCommons.State.IDLE
 var entityVelocity : Vector2			= Vector2.ZERO
@@ -22,7 +23,7 @@ func SetData(data : EntityData):
 		stat.Init(data)
 
 	# Display
-	displayName			= data._displayName or self is PlayerEntity
+	displayName = displayName or data._displayName
 	SetVisual(data)
 
 func SetVisual(data : EntityData, morphed : bool = false):

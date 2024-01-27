@@ -3,6 +3,7 @@ class_name BaseAgent
 
 #
 var agent : NavigationAgent2D			= null
+var entityName : String					= ""
 
 var aiTimer : Timer						= null
 var castTimer : Timer					= null
@@ -10,6 +11,7 @@ var cooldownTimers : Dictionary			= {}
 
 var hasCurrentGoal : bool				= false
 var isRelativeMode : bool				= false
+var lastPositions : Array[float]		= []
 
 var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
@@ -18,9 +20,6 @@ var currentSkillCastID : int			= -1
 var currentVelocity : Vector2i			= Vector2i.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var forceUpdate : bool					= false
-
-var lastPositions : Array[Vector2]		= []
-var navigationLine : PackedVector2Array	= []
 
 var spawnInfo : SpawnObject				= null
 var stat : EntityStats					= EntityStats.new()
@@ -35,8 +34,6 @@ func SwitchInputMode(clearCurrentInput : bool):
 	if clearCurrentInput:
 		currentInput = Vector2.ZERO
 		currentDirection = Vector2.ZERO
-
-	navigationLine = []
 
 func UpdateInput():
 	if isRelativeMode:
@@ -53,7 +50,7 @@ func UpdateInput():
 			var clampedDirection : Vector2 = Vector2(global_position.direction_to(agent.get_next_path_position()).normalized() * inputApproximationUnit)
 			currentInput = Vector2(clampedDirection) / inputApproximationUnit
 
-			lastPositions.push_back(position)
+			lastPositions.push_back(agent.distance_to_target())
 			if lastPositions.size() > 5:
 				lastPositions.pop_front()
 		else:
@@ -114,8 +111,6 @@ func WalkToward(pos : Vector2):
 	lastPositions.clear()
 	if agent:
 		agent.target_position = pos
-		navigationLine.clear()
-		navigationLine = agent.get_current_navigation_path()
 
 func ResetNav():
 	WalkToward(position)
@@ -175,21 +170,10 @@ func _velocity_computed(safeVelocity : Vector2):
 	SetCurrentState()
 	SetVelocity()
 
-func _path_changed():
-	if agent:
-		navigationLine = agent.get_current_navigation_path()
-
-func _target_reached():
-	navigationLine = []
-
 func _setup_nav_agent():
 	if agent && agent.get_avoidance_enabled():
 		var err : int = agent.velocity_computed.connect(self._velocity_computed)
 		Util.Assert(err == OK, "Could not connect the signal velocity_computed to the navigation agent")
-		err = agent.path_changed.connect(self._path_changed)
-		Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _path_changed")
-		err = agent.target_reached.connect(self._target_reached)
-		Util.Assert(err == OK, "Could not connect the signal path_changed to the local function _target_reached")
 
 func _ready():
 	_setup_nav_agent()

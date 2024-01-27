@@ -40,8 +40,8 @@ func OnPlayerEnterGame():
 #
 func UpdateNavLine(entity : BaseEntity):
 	if Launcher.Conf.GetBool("Navigation", "lineDebug", Launcher.Conf.Type.DEBUG):
-		if entity && entity.agent:
-			if entity.has_node("NavigationLine") == false:
+		if entity and entity.agent:
+			if not entity.has_node("NavigationLine"):
 				var lineWidth : float = Launcher.Conf.GetFloat("Navigation", "lineWidth", Launcher.Conf.Type.DEBUG)
 				var navLine : Line2D = Line2D.new()
 				navLine.set_name("NavigationLine")

@@ -70,3 +70,6 @@ func _process(deltaTime : float):
 			Launcher.Debug.correctPos.position = position + entityPosOffset
 		if Launcher.Debug.wrongPos:
 			Launcher.Debug.wrongPos.position = position
+
+func _ready():
+	displayName = true
