@@ -5,6 +5,7 @@ class_name BaseAgent
 var agent : NavigationAgent2D			= null
 var entityName : String					= ""
 
+var aiState : AI.State					= AI.State.IDLE
 var aiTimer : Timer						= null
 var castTimer : Timer					= null
 var cooldownTimers : Dictionary			= {}
