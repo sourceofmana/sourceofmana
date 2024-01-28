@@ -23,9 +23,4 @@ func _ready():
 	Util.OneShotCallback(aiTimer.tree_entered, AI.Reset, [self])
 	add_child.call_deferred(aiTimer)
 
-	castTimer = Timer.new()
-	castTimer.set_name("CastTimer")
-	castTimer.set_one_shot(true)
-	add_child.call_deferred(castTimer)
-
 	super._ready()

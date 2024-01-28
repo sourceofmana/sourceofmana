@@ -103,7 +103,7 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if SetConsume(agent, "mana", skill):
 		Stopped(agent)
 		agent.SetSkillCastID(skill._id)
-		Util.StartTimer(agent.castTimer, skill._castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
+		Util.StartTimer(agent.actionTimer, skill._castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
 		if skill._mode == TargetMode.SINGLE:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
 		agent.UpdateChanged()
@@ -162,7 +162,7 @@ static func Killed(agent : BaseAgent, target : BaseAgent):
 
 static func Stopped(agent : BaseAgent):
 	agent.SetSkillCastID(-1)
-	agent.castTimer.stop()
+	agent.actionTimer.stop()
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:

@@ -42,7 +42,7 @@ static func GetUnstuckTimer() -> float:
 static func IsStuck(agent : BaseAgent) -> bool:
 	return agent.lastPositions.size() >= 5 and abs(agent.lastPositions[0] - agent.lastPositions[4]) < 1
 static func IsActionInProgress(agent : BaseAgent) -> bool:
-	return agent.castTimer and not agent.castTimer.is_stopped()
+	return agent.actionTimer and not agent.actionTimer.is_stopped()
 
 #
 static func SetState(agent : BaseAgent, state : State, force : bool = false):
@@ -71,13 +71,13 @@ static func Refresh(agent : BaseAgent):
 #
 static func StateIdle(agent : BaseAgent):
 	if not IsActionInProgress(agent):
-		Util.StartTimer(agent.castTimer, GetWalkTimer(), AI.ToWalk.bind(agent))
+		Util.StartTimer(agent.actionTimer, GetWalkTimer(), AI.ToWalk.bind(agent))
 
 static func StateWalk(agent : BaseAgent):
 	if IsActionInProgress(agent) and agent.hasCurrentGoal:
 		if IsStuck(agent):
 			agent.ResetNav()
-			Util.StartTimer(agent.castTimer, GetUnstuckTimer(), AI.ToWalk.bind(agent))
+			Util.StartTimer(agent.actionTimer, GetUnstuckTimer(), AI.ToWalk.bind(agent))
 
 static func StateAttack(_agent : BaseAgent):
 	pass

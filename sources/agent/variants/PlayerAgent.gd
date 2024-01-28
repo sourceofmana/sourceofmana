@@ -63,9 +63,3 @@ func Morph(notifyMorphing : bool):
 func _specific_process():
 	UpdateStats()
 
-func _ready():
-	castTimer = Timer.new()
-	castTimer.set_name("CastTimer")
-	castTimer.set_one_shot(true)
-	add_child.call_deferred(castTimer)
-	super._ready()

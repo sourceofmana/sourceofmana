@@ -40,7 +40,7 @@ func DisplayCast(entity : BaseEntity, skillID : String):
 			castFx.emitting = true
 			add_child(castFx)
 			if skill._mode == Skill.TargetMode.ZONE:
-				Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(entity, skill), "CastTimer")
+				Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(entity, skill), "ActionTimer")
 
 func DisplaySkill(entity : BaseEntity, skill : SkillData):
 	if skill and skill._skillPresetPath.length() > 0:

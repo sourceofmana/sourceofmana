@@ -7,7 +7,7 @@ var entityName : String					= ""
 
 var aiState : AI.State					= AI.State.IDLE
 var aiTimer : Timer						= null
-var castTimer : Timer					= null
+var actionTimer : Timer					= null
 var cooldownTimers : Dictionary			= {}
 
 var hasCurrentGoal : bool				= false
@@ -179,3 +179,8 @@ func _setup_nav_agent():
 func _ready():
 	_setup_nav_agent()
 	set_name.call_deferred(str(get_rid().get_id()))
+
+	actionTimer = Timer.new()
+	actionTimer.set_name("ActionTimer")
+	actionTimer.set_one_shot(true)
+	add_child.call_deferred(actionTimer)
