@@ -62,4 +62,3 @@ func Morph(notifyMorphing : bool):
 #
 func _specific_process():
 	UpdateStats()
-

@@ -147,6 +147,10 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rn
 	var info : AlterationInfo = GetDamage(agent, target, skill, rng)
 	target.stat.health = max(target.stat.health - info.value, 0)
 	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill._id])
+
+	target.AddAttacker(agent, info.value)
+	AI.SetState(target, AI.State.ATTACK)
+
 	if target.stat.health <= 0:
 		Killed(agent, target)
 
@@ -157,7 +161,9 @@ static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng
 
 static func Killed(agent : BaseAgent, target : BaseAgent):
 	agent.stat.XpBonus(target)
-	Util.SelfDestructTimer(target, target.stat.deathDelay, WorldAgent.RemoveAgent.bind(target))
+	if target.aiTimer:
+		AI.SetState(target, AI.State.HALT)
+		Util.SelfDestructTimer(target, target.stat.deathDelay, WorldAgent.RemoveAgent.bind(target))
 	Stopped(agent)
 
 static func Stopped(agent : BaseAgent):

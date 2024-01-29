@@ -65,6 +65,12 @@ static func RemoveNode(node : Node, parent : Node):
 		node.queue_free()
 
 #
+static func ClearTimer(timer : Timer):
+	if timer:
+		for sig in timer.timeout.get_connections():
+			Util.RemoveCallback(timer.timeout, sig["callable"])
+		timer.stop()
+
 static func StartTimer(timer : Timer, delay : float, callable : Callable):
 	if delay == 0.0:
 		callable.call()

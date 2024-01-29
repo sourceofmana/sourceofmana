@@ -43,13 +43,31 @@ static func IsStuck(agent : BaseAgent) -> bool:
 	return agent.lastPositions.size() >= 5 and abs(agent.lastPositions[0] - agent.lastPositions[4]) < 1
 static func IsActionInProgress(agent : BaseAgent) -> bool:
 	return agent.actionTimer and not agent.actionTimer.is_stopped()
+static func GetMostValuableTarget(agent) -> BaseAgent:
+	var target : BaseAgent = null
+	var maxDamage : int = -1
+	for attacker in agent.attackers:
+		if attacker != null and not attacker.is_queued_for_deletion() and maxDamage < agent.attackers[attacker][0]:
+			maxDamage = agent.attackers[attacker][0]
+			target = attacker
+	return target
 
 #
 static func SetState(agent : BaseAgent, state : State, force : bool = false):
-	agent.aiState = state if force else transitions[agent.aiState][state]
+	var newState : State = state if force else transitions[agent.aiState][state]
+
+	if agent.aiState != newState:
+		if IsActionInProgress(agent):
+			Util.ClearTimer(agent.actionTimer)
+		if agent.hasCurrentGoal:
+			agent.ResetNav()
+		if newState == State.HALT:
+			Reset(agent)
+
+	agent.aiState = newState
 
 static func Reset(agent : BaseAgent):
-	agent.aiState = State.IDLE
+	SetState(agent, State.IDLE, true)
 	Util.StartTimer(agent.aiTimer, refreshDelay, AI.Refresh.bind(agent))
 
 static func Refresh(agent : BaseAgent):
@@ -64,7 +82,10 @@ static func Refresh(agent : BaseAgent):
 		State.ATTACK:
 			StateAttack(agent)
 		State.HALT:
-			StateHalt(agent)
+			Util.ClearTimer(agent.aiTimer)
+			return
+		_:
+			Util.Assert(false, "AI state not handled")
 
 	Util.LoopTimer(agent.aiTimer, refreshDelay)
 
@@ -79,12 +100,10 @@ static func StateWalk(agent : BaseAgent):
 			agent.ResetNav()
 			Util.StartTimer(agent.actionTimer, GetUnstuckTimer(), AI.ToWalk.bind(agent))
 
-static func StateAttack(_agent : BaseAgent):
-	pass
-
-static func StateHalt(agent : BaseAgent):
-	for sig in agent.aiTimer.timeout.get_connections():
-		Util.RemoveCallback(agent.aiTimer.timeout, sig["callable"])
+static func StateAttack(agent : BaseAgent):
+	if not IsActionInProgress(agent):
+		var target : BaseAgent = GetMostValuableTarget(agent)
+		Skill.Cast(agent, target, Launcher.DB.SkillsDB["0"])
 
 #
 static func ToWalk(agent : BaseAgent):

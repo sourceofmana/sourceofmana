@@ -9,6 +9,7 @@ var aiState : AI.State					= AI.State.IDLE
 var aiTimer : Timer						= null
 var actionTimer : Timer					= null
 var cooldownTimers : Dictionary			= {}
+var attackers : Dictionary				= {}
 
 var hasCurrentGoal : bool				= false
 var isRelativeMode : bool				= false
@@ -146,6 +147,15 @@ func GetCurrentShapeID() -> String:
 
 func GetNextShapeID() -> String:
 	return stat.spiritShape if not stat.morphed else stat.entityShape
+
+#
+func AddAttacker(attacker : BaseAgent, damage : int):
+	if attacker:
+		if attackers.has(attacker):
+			attackers[attacker][0] += damage
+			attackers[attacker][1] = Time.get_ticks_msec()
+		else:
+			attackers[attacker] = [damage, Time.get_ticks_msec()]
 
 #
 func _specific_process():
