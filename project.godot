@@ -47,7 +47,7 @@ convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/tiled_importer/plugin.cfg")
+enabled=PackedStringArray("res://addons/game_data_manager/plugin.cfg", "res://addons/tiled_importer/plugin.cfg")
 
 [filesystem]
 
