@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://ba3neou6jerhw"
+path="res://.godot/imported/Box x1x2.tsx-535b4fd85b6308633f7d840e652bb478.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/aemil/aurora/artis/sewer/Box x1x2.tsx"
+dest_files=["res://.godot/imported/Box x1x2.tsx-535b4fd85b6308633f7d840e652bb478.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

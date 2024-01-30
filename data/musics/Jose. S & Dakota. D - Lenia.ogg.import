@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bom4cjg5mncvq"
+path="res://.godot/imported/Jose. S & Dakota. D - Lenia.ogg-a6fdbdeb3d01772558d62e8ebf3f5c78.oggvorbisstr"
+
+[deps]
+
+source_file="res://data/musics/Jose. S & Dakota. D - Lenia.ogg"
+dest_files=["res://.godot/imported/Jose. S & Dakota. D - Lenia.ogg-a6fdbdeb3d01772558d62e8ebf3f5c78.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

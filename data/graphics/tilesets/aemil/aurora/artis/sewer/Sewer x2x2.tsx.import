@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://bry5phi11xh6n"
+path="res://.godot/imported/Sewer x2x2.tsx-2aafd94588cf4a262c3e517933bedded.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/aemil/aurora/artis/sewer/Sewer x2x2.tsx"
+dest_files=["res://.godot/imported/Sewer x2x2.tsx-2aafd94588cf4a262c3e517933bedded.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

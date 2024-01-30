@@ -1,0 +1,16 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+uid="uid://d77nr3juvbco"
+path="res://.godot/imported/background_bitmask.png-66951b67ec3f1951f790c62fc2166ff3.res"
+
+[deps]
+
+source_file="res://data/graphics/gui/mobile/background_bitmask.png"
+dest_files=["res://.godot/imported/background_bitmask.png-66951b67ec3f1951f790c62fc2166ff3.res"]
+
+[params]
+
+create_from=0
+threshold=0.5
