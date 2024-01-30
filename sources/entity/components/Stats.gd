@@ -38,12 +38,6 @@ var deathDelay : int					= 10
 signal ratio_updated
 
 #
-func XpBonus(enemy : BaseAgent):
-	var bonus : float = Formulas.GetXpBonus(enemy.stat)
-	experience += bonus
-	# Todo: add level up
-
-#
 func RefreshStats():
 	# Current Stats
 	current.maxHealth		= Formulas.GetMaxHealth(self)

@@ -157,6 +157,21 @@ func AddAttacker(attacker : BaseAgent, damage : int):
 		else:
 			attackers[attacker] = [damage, Time.get_ticks_msec()]
 
+func GetMostValuableAttacker() -> BaseAgent:
+	var target : BaseAgent = null
+	var maxDamage : int = -1
+	for attacker in attackers:
+		if attacker != null and not attacker.is_queued_for_deletion() and maxDamage < attackers[attacker][0]:
+			maxDamage = attackers[attacker][0]
+			target = attacker
+	return target
+
+func GetDamageRatio(attacker : BaseAgent) -> float:
+	if attacker != null and not attacker.is_queued_for_deletion() and attackers.has(attacker):
+		if attackers[attacker][1] > Time.get_ticks_msec() - EntityCommons.AttackTimestampLimit and stat.current.maxHealth > 0:
+			return float(attackers[attacker][0]) / float(stat.current.maxHealth)
+	return 0.0
+
 #
 func _specific_process():
 	pass

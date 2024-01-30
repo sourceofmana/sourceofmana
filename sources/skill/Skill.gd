@@ -160,7 +160,7 @@ static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng
 	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), heal, EntityCommons.Alteration.HEAL, skill._id])
 
 static func Killed(agent : BaseAgent, target : BaseAgent):
-	agent.stat.XpBonus(target)
+	Formulas.ApplyXp(target)
 	if target.aiTimer:
 		AI.SetState(target, AI.State.HALT)
 		Util.SelfDestructTimer(target, target.stat.deathDelay, WorldAgent.RemoveAgent.bind(target))

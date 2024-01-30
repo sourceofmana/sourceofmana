@@ -71,5 +71,5 @@ func _process(deltaTime : float):
 		if Launcher.Debug.wrongPos:
 			Launcher.Debug.wrongPos.position = position
 
-func _ready():
+func _init():
 	displayName = true

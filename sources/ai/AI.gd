@@ -43,14 +43,6 @@ static func IsStuck(agent : BaseAgent) -> bool:
 	return agent.lastPositions.size() >= 5 and abs(agent.lastPositions[0] - agent.lastPositions[4]) < 1
 static func IsActionInProgress(agent : BaseAgent) -> bool:
 	return agent.actionTimer and not agent.actionTimer.is_stopped()
-static func GetMostValuableTarget(agent) -> BaseAgent:
-	var target : BaseAgent = null
-	var maxDamage : int = -1
-	for attacker in agent.attackers:
-		if attacker != null and not attacker.is_queued_for_deletion() and maxDamage < agent.attackers[attacker][0]:
-			maxDamage = agent.attackers[attacker][0]
-			target = attacker
-	return target
 
 #
 static func SetState(agent : BaseAgent, state : State, force : bool = false):
@@ -102,7 +94,7 @@ static func StateWalk(agent : BaseAgent):
 
 static func StateAttack(agent : BaseAgent):
 	if not IsActionInProgress(agent):
-		var target : BaseAgent = GetMostValuableTarget(agent)
+		var target : BaseAgent = agent.GetMostValuableAttacker()
 		Skill.Cast(agent, target, Launcher.DB.SkillsDB["0"])
 
 #

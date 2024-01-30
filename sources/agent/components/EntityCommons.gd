@@ -126,6 +126,10 @@ static var speechIncreaseThreshold : int		= 15
 static var speechMaxWidth : int					= 256
 static var speechExtraWidth : int				= 20
 
+#
+static var AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
+
+#
 static func InitVars():
 	# Guardband
 	EntityCommons.StartGuardbandDist = Launcher.Conf.GetInt("Guardband", "startGuardbandDist", Launcher.Conf.Type.NETWORK)
