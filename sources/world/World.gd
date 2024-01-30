@@ -41,7 +41,7 @@ func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
 			agent.currentState = EntityCommons.State.IDLE
 
 			WorldAgent.PushAgent(agent, inst)
-			Util.OneShotCallback(agent.tree_entered, AgentWarped, [map, inst, agent])
+			Callback.OneShotCallback(agent.tree_entered, AgentWarped, [map, inst, agent])
 
 func AgentWarped(map : WorldMap, instance : WorldInstance, agent : BaseAgent):
 	if agent == null:

@@ -20,7 +20,7 @@ func _specific_process():
 func _ready():
 	aiTimer = Timer.new()
 	aiTimer.set_name("AiTimer")
-	Util.OneShotCallback(aiTimer.tree_entered, AI.Reset, [self])
+	Callback.OneShotCallback(aiTimer.tree_entered, AI.Reset, [self])
 	add_child.call_deferred(aiTimer)
 
 	super._ready()

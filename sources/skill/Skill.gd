@@ -103,7 +103,7 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if SetConsume(agent, "mana", skill):
 		Stopped(agent)
 		agent.SetSkillCastID(skill._id)
-		Util.StartTimer(agent.actionTimer, skill._castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
+		Callback.StartTimer(agent.actionTimer, skill._castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
 		if skill._mode == TargetMode.SINGLE:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
 		agent.UpdateChanged()
@@ -117,7 +117,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 				if IsTargetable(agent, target, skill):
 					var handle : Callable = Skill.Handle.bind(agent, target, skill, GetRNG(hasStamina))
 					if IsDelayed(skill):
-						Util.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle, "SKILL_" + skill._name)
+						Callback.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle, "SKILL_" + skill._name)
 						Delayed(agent, target, skill)
 					else:
 						handle.call()
@@ -139,7 +139,7 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill._repeat else Callable()
-	var timer : Timer = Util.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay + skill._cooldownTime, callable, skill._name + " CoolDown")
+	var timer : Timer = Callback.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay + skill._cooldownTime, callable, skill._name + " CoolDown")
 	agent.cooldownTimers[agent.currentSkillCastID] = timer
 	agent.SetSkillCastID(-1)
 
@@ -163,7 +163,7 @@ static func Killed(agent : BaseAgent, target : BaseAgent):
 	Formulas.ApplyXp(target)
 	if target.aiTimer:
 		AI.SetState(target, AI.State.HALT)
-		Util.SelfDestructTimer(target, target.stat.deathDelay, WorldAgent.RemoveAgent.bind(target))
+		Callback.SelfDestructTimer(target, target.stat.deathDelay, WorldAgent.RemoveAgent.bind(target))
 	Stopped(agent)
 
 static func Stopped(agent : BaseAgent):

@@ -21,7 +21,7 @@ func DisplayEmote(emoteID : String):
 func DisplayMorph(callback : Callable):
 	var morphFx : GPUParticles2D = load("res://presets/effects/particles/Morph.tscn").instantiate()
 	if morphFx:
-		Util.SelfDestructTimer(self, EntityCommons.morphDelay, callback)
+		Callback.SelfDestructTimer(self, EntityCommons.morphDelay, callback)
 		morphFx.finished.connect(Util.RemoveNode.bind(morphFx, self))
 		morphFx.emitting = true
 		add_child(morphFx)
@@ -40,7 +40,7 @@ func DisplayCast(entity : BaseEntity, skillID : String):
 			castFx.emitting = true
 			add_child(castFx)
 			if skill._mode == Skill.TargetMode.ZONE:
-				Util.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(entity, skill), "ActionTimer")
+				Callback.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(entity, skill), "ActionTimer")
 
 func DisplaySkill(entity : BaseEntity, skill : SkillData):
 	if skill and skill._skillPresetPath.length() > 0:
@@ -90,7 +90,7 @@ func DisplaySpeech(speech : String):
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
-		Util.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
+		Callback.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
 
 #
 func RefreshVisibleNodeOffset(offset : int):

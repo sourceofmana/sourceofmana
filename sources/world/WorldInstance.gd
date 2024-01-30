@@ -33,7 +33,7 @@ static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:
 
 #
 func QueryProcessMode():
-	Util.SelfDestructTimer(Launcher, 10, RefreshProcessMode, "ProcessMode_" + name)
+	Callback.SelfDestructTimer(Launcher, 10, RefreshProcessMode, "ProcessMode_" + name)
 
 func RefreshProcessMode():
 	set_process_mode(ProcessMode.PROCESS_MODE_DISABLED if players.size() == 0 else ProcessMode.PROCESS_MODE_INHERIT)

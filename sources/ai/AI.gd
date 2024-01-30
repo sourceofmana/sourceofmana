@@ -50,7 +50,7 @@ static func SetState(agent : BaseAgent, state : State, force : bool = false):
 
 	if agent.aiState != newState:
 		if IsActionInProgress(agent):
-			Util.ClearTimer(agent.actionTimer)
+			Callback.ClearTimer(agent.actionTimer)
 		if agent.hasCurrentGoal:
 			agent.ResetNav()
 		if newState == State.HALT:
@@ -60,7 +60,7 @@ static func SetState(agent : BaseAgent, state : State, force : bool = false):
 
 static func Reset(agent : BaseAgent):
 	SetState(agent, State.IDLE, true)
-	Util.StartTimer(agent.aiTimer, refreshDelay, AI.Refresh.bind(agent))
+	Callback.StartTimer(agent.aiTimer, refreshDelay, AI.Refresh.bind(agent))
 
 static func Refresh(agent : BaseAgent):
 	if not agent or not agent.get_parent():
@@ -74,23 +74,23 @@ static func Refresh(agent : BaseAgent):
 		State.ATTACK:
 			StateAttack(agent)
 		State.HALT:
-			Util.ClearTimer(agent.aiTimer)
+			Callback.ClearTimer(agent.aiTimer)
 			return
 		_:
 			Util.Assert(false, "AI state not handled")
 
-	Util.LoopTimer(agent.aiTimer, refreshDelay)
+	Callback.LoopTimer(agent.aiTimer, refreshDelay)
 
 #
 static func StateIdle(agent : BaseAgent):
 	if not IsActionInProgress(agent):
-		Util.StartTimer(agent.actionTimer, GetWalkTimer(), AI.ToWalk.bind(agent))
+		Callback.StartTimer(agent.actionTimer, GetWalkTimer(), AI.ToWalk.bind(agent))
 
 static func StateWalk(agent : BaseAgent):
 	if IsActionInProgress(agent) and agent.hasCurrentGoal:
 		if IsStuck(agent):
 			agent.ResetNav()
-			Util.StartTimer(agent.actionTimer, GetUnstuckTimer(), AI.ToWalk.bind(agent))
+			Callback.StartTimer(agent.actionTimer, GetUnstuckTimer(), AI.ToWalk.bind(agent))
 
 static func StateAttack(agent : BaseAgent):
 	if not IsActionInProgress(agent):
@@ -104,7 +104,7 @@ static func ToWalk(agent : BaseAgent):
 		var position : Vector2i = WorldNavigation.GetRandomPositionAABB(map, agent.position, GetOffset())
 		agent.WalkToward(position)
 		agent.aiState = State.WALK
-		Util.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, State.IDLE, false])
+		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, State.IDLE, false])
 
 static func ToAttack(_agent : BaseAgent):
 	pass
