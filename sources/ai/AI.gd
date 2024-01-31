@@ -43,6 +43,8 @@ static func IsStuck(agent : BaseAgent) -> bool:
 	return agent.lastPositions.size() >= 5 and abs(agent.lastPositions[0] - agent.lastPositions[4]) < 1
 static func IsActionInProgress(agent : BaseAgent) -> bool:
 	return agent.actionTimer and not agent.actionTimer.is_stopped()
+static func IsAgentMoving(agent : BaseAgent):
+	return agent.hasCurrentGoal
 
 #
 static func SetState(agent : BaseAgent, state : State, force : bool = false):
@@ -51,10 +53,8 @@ static func SetState(agent : BaseAgent, state : State, force : bool = false):
 	if agent.aiState != newState:
 		if IsActionInProgress(agent):
 			Callback.ClearTimer(agent.actionTimer)
-		if agent.hasCurrentGoal:
+		if IsAgentMoving(agent):
 			agent.ResetNav()
-		if newState == State.HALT:
-			Reset(agent)
 
 	agent.aiState = newState
 
@@ -63,8 +63,10 @@ static func Reset(agent : BaseAgent):
 	Callback.StartTimer(agent.aiTimer, refreshDelay, AI.Refresh.bind(agent))
 
 static func Refresh(agent : BaseAgent):
-	if not agent or not agent.get_parent():
+	if not agent:
 		return
+	if not WorldAgent.GetMapFromAgent(agent):
+		SetState(agent, State.HALT)
 
 	match agent.aiState:
 		State.IDLE:
@@ -87,17 +89,21 @@ static func StateIdle(agent : BaseAgent):
 		Callback.StartTimer(agent.actionTimer, GetWalkTimer(), AI.ToWalk.bind(agent))
 
 static func StateWalk(agent : BaseAgent):
-	if IsActionInProgress(agent) and agent.hasCurrentGoal:
+	if IsActionInProgress(agent) and IsAgentMoving(agent):
 		if IsStuck(agent):
 			agent.ResetNav()
 			Callback.StartTimer(agent.actionTimer, GetUnstuckTimer(), AI.ToWalk.bind(agent))
 
 static func StateAttack(agent : BaseAgent):
-	if not IsActionInProgress(agent):
-		var target : BaseAgent = agent.GetMostValuableAttacker()
-		Skill.Cast(agent, target, Launcher.DB.SkillsDB["0"])
+	var target : BaseAgent = agent.GetMostValuableAttacker()
 
-#
+	if not IsActionInProgress(agent):
+		if Skill.IsTargetable(agent, target, Launcher.DB.SkillsDB["0"]):
+			ToAttack(agent, target)
+		else:
+			ToChase(agent, target)
+
+# Could be delayed, always check if agent is inside a map
 static func ToWalk(agent : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map:
@@ -106,8 +112,14 @@ static func ToWalk(agent : BaseAgent):
 		agent.aiState = State.WALK
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, State.IDLE, false])
 
-static func ToAttack(_agent : BaseAgent):
-	pass
+static func ToAttack(agent : BaseAgent, target : BaseAgent):
+	if IsAgentMoving(agent):
+		agent.ResetNav()
+	if WorldAgent.GetMapFromAgent(agent):
+		Skill.Cast(agent, target, Launcher.DB.SkillsDB["0"])
 
-static func ToChase(_agent : BaseAgent):
-	pass
+static func ToChase(agent : BaseAgent, target : BaseAgent):
+	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
+	if map and Skill.IsSameMap(agent, target):
+		agent.WalkToward(target.position)
+		Callback.OneShotCallback(agent.agent.navigation_finished, AI.Refresh, [agent])

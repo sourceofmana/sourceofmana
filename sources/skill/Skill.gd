@@ -91,7 +91,6 @@ static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
 static func IsDelayed(skill : SkillData) -> bool:
 	return skill._projectilePath.length() > 0
 
-
 # Skill Flow
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if not IsAlive(agent) or IsCoolingDown(agent, skill) or IsCasting(agent, skill):
