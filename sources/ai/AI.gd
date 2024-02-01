@@ -45,6 +45,8 @@ static func IsActionInProgress(agent : BaseAgent) -> bool:
 	return agent.actionTimer and not agent.actionTimer.is_stopped()
 static func IsAgentMoving(agent : BaseAgent):
 	return agent.hasCurrentGoal
+static func CanWalk(agent: BaseAgent):
+	return agent.agent != null
 
 #
 static func SetState(agent : BaseAgent, state : State, force : bool = false):
@@ -86,7 +88,8 @@ static func Refresh(agent : BaseAgent):
 #
 static func StateIdle(agent : BaseAgent):
 	if not IsActionInProgress(agent):
-		Callback.StartTimer(agent.actionTimer, GetWalkTimer(), AI.ToWalk.bind(agent))
+		if CanWalk(agent):
+			Callback.StartTimer(agent.actionTimer, GetWalkTimer(), AI.ToWalk.bind(agent))
 
 static func StateWalk(agent : BaseAgent):
 	if IsActionInProgress(agent) and IsAgentMoving(agent):
@@ -100,7 +103,7 @@ static func StateAttack(agent : BaseAgent):
 	if not IsActionInProgress(agent):
 		if Skill.IsTargetable(agent, target, Launcher.DB.SkillsDB["0"]):
 			ToAttack(agent, target)
-		else:
+		elif CanWalk(agent):
 			ToChase(agent, target)
 
 # Could be delayed, always check if agent is inside a map

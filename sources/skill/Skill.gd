@@ -95,9 +95,6 @@ static func IsDelayed(skill : SkillData) -> bool:
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if not IsAlive(agent) or IsCoolingDown(agent, skill) or IsCasting(agent, skill):
 		return
-	if skill._mode == TargetMode.SINGLE and not IsTargetable(agent, target, skill):
-		Stopped(agent)
-		return
 
 	if SetConsume(agent, "mana", skill):
 		Stopped(agent)
