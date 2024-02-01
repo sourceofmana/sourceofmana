@@ -45,6 +45,12 @@ func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : 
 		if caller && entity && entity.get_parent() and entity.interactive:
 			entity.interactive.DisplayAlteration(entity, caller, value, alteration, str(skillID))
 
+func TargetLevelUp(targetID : int, _rpcID : int = Launcher.Network.RidSingleMode):
+	if Launcher.Map:
+		var entity : BaseEntity = Launcher.Map.entities.get(targetID)
+		if entity and entity.get_parent() and entity.interactive:
+			entity.interactive.DisplayLevelUp()
+
 func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)

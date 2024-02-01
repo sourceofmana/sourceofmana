@@ -27,6 +27,13 @@ func DisplayMorph(callback : Callable):
 		add_child(morphFx)
 
 #
+func DisplayLevelUp():
+	var levelUpFx : GPUParticles2D = load("res://presets/effects/particles/LevelUp.tscn").instantiate()
+	if levelUpFx:
+		levelUpFx.emitting = true
+		add_child(levelUpFx)
+
+#
 func DisplayCast(entity : BaseEntity, skillID : String):
 	if Launcher.DB.SkillsDB.has(skillID):
 		var skill : SkillData = Launcher.DB.SkillsDB[skillID]

@@ -123,6 +123,10 @@ func UpdateActiveStats(health : int, mana : int, stamina : int, weight : float, 
 func UpdatePersonalStats(strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = RidSingleMode):
 	NetCallClient("UpdatePersonalStats", [strength, vitality, agility, endurance, concentration], rpcID)
 
+@rpc("any_peer", "reliable")
+func TargetLevelUp(targetID : int, rpcID : int = RidSingleMode):
+	NetCallClient("TargetLevelUp", [targetID], rpcID)
+
 # Notification
 @rpc("any_peer", "unreliable_ordered")
 func PushNotification(notif : String, rpcID : int = RidSingleMode):
