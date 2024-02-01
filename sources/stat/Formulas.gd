@@ -87,7 +87,4 @@ static func ApplyXp(agent : BaseAgent):
 	var bonus : float = Formulas.GetXpBonus(agent.stat)
 	for attacker in agent.attackers:
 		var bonusScaled : int = int(bonus * agent.GetDamageRatio(attacker))
-		# Add a new function: BaseAgent::AddXp(bonus : float)
-		attacker.stat.experience += bonusScaled
-		# Manage level up
-		# Network notify of level up
+		EntityStats.addExperience(attacker, bonusScaled)

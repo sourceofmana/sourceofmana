@@ -113,3 +113,21 @@ func UpdateActiveStats(networkRID : int):
 
 func UpdatePersonalStats(networkRID : int):
 	Launcher.Network.UpdatePersonalStats(strength, vitality, agility, endurance, concentration, networkRID)
+
+#region Level and Experience
+
+static func addExperience(agent: BaseAgent, points: float):
+	agent.stat.experience += points
+	# Manage level up
+	var levelUpHappened = false
+	var experiencelNeeded = Experience.GetNeededExperienceForNextLevel(agent.stat.level)
+	while experiencelNeeded != Experience.MAX_LEVEL_REACHED and agent.stat.experience >= experiencelNeeded:
+		agent.stat.experience -= experiencelNeeded
+		agent.stat.level += 1
+		levelUpHappened = true
+		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(agent.stat.level)
+	if levelUpHappened:
+		# Network notify of level up
+		Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetLevelUp", [])
+
+#endregion
