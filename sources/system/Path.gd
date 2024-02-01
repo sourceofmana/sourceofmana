@@ -1,3 +1,4 @@
+@tool 
 extends Node
 class_name Path
 
@@ -7,6 +8,7 @@ const Rsc : String						= "res://"
 const DataRsc : String					= Rsc + "data/"
 const GfxRsc : String					= DataRsc + "graphics/"
 const ItemRsc : String					= GfxRsc + "items/"
+const ItemDataRsc : String				= DataRsc + "items/"
 const MinimapRsc : String				= GfxRsc + "minimaps/"
 const MapRsc : String					= DataRsc + "maps/"
 const MusicRsc : String					= DataRsc + "musics/"
