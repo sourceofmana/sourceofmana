@@ -32,9 +32,11 @@ func UpdateTexture():
 				).has_point(light.global_position):
 					if not updatedLights.has(light):
 						updatedLights[light] = true
-						light.currentOscillation = sin(light.speed * time + light.randomSeed)
-					lightData.append(Vector4(light.global_position.x, light.global_position.y, light.currentOscillation, light.currentRadius))
-					colorData.append(light.color)
+						light.currentDeadband = sin(light.speed * time + light.randomSeed) * 0.008 + 0.5 if light.speed > 0 else 0.5
+
+					if light.currentDeadband > 0.0:
+						lightData.append(Vector4(light.global_position.x, light.global_position.y, light.currentDeadband, light.currentRadius))
+						colorData.append(light.color)
 
 		colorRect.material.set_shader_parameter("n_lights", lightData.size())
 		colorRect.material.set_shader_parameter("light_data", lightData)

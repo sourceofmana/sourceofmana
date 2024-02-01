@@ -6,7 +6,6 @@ uniform int n_lights = 0;
 uniform vec4 dark_color : source_color = vec4(0.1, 0.08, 0.15, 1.0);
 uniform vec4 default_light_color : source_color;
 uniform float light_level : hint_range(0.0, 1.0) = 0.0;
-uniform float deadband : hint_range(1.0, 100.0) = 4.0;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 varying vec2 world_position;
 
@@ -30,10 +29,12 @@ void fragment()
 		vec4 light_instance = light_data[i];
 		vec2 normalized_position = light_instance.xy - frag_position;
 		normalized_position.y *= 1.3;
-		float dist = length(normalized_position) / light_instance.w;
-		if (dist < 1.0)
+		float squared_dist = dot(normalized_position, normalized_position);
+		float squared_radius = light_instance.w * light_instance.w;
+		if (squared_dist < squared_radius)
 		{
-			float value = dist < 0.5 ? 0.0 : -(dist - 1.0) * (dist - 1.0) * (deadband + light_instance.z * 0.2) + 1.0;
+			float dist = squared_dist / squared_radius;
+			float value = dist < light_instance.z ? 0.0 : 1.0/light_instance.z*(dist-light_instance.z);
 			if (value < m_value)
 			{
 				vec4 new_color = color_data[i];
@@ -46,6 +47,8 @@ void fragment()
 				break;
 		}
 	}
+
+	light_color.rgb = mix(light_color.rgb, dark_color.rgb, max(-0.2, (m_value - 0.5) / 0.5));
 
 	vec4 ambient_color = mix(light_color, dark_color, m_value);
 	ambient_color.a *= 1.0 - light_level;

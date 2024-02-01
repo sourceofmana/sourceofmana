@@ -9,7 +9,7 @@ class_name LightSource
 @export var rescale : float = 1.0
 
 #
-var currentOscillation : float = 0.0
+var currentDeadband : float = 0.0
 var currentRadius : int = 128
 
 #
