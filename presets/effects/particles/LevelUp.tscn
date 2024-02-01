@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://bwcss86fsbspu"]
+
+[ext_resource type="Texture2D" uid="uid://clt3g13cp3ag8" path="res://data/graphics/effects/particles/sparkle.png" id="1_8gcyb"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1pdty"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_iwmu7"]
+colors = PackedColorArray(0.517186, 1, 0.138887, 1, 0.953125, 0.944687, 0.655553, 0.321809)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fefxr"]
+gradient = SubResource("Gradient_iwmu7")
+
+[sub_resource type="Curve" id="Curve_8fcf5"]
+_data = [Vector2(0, 0), 0.0, 5.89079, 0, 0, Vector2(1, 0.484211), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b2ljg"]
+curve = SubResource("Curve_8fcf5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l3heo"]
+lifetime_randomness = 0.15
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 10.0
+angle_max = 360.0
+direction = Vector3(0, -1, 0)
+spread = 10.0
+initial_velocity_min = 20.0
+initial_velocity_max = 25.0
+angular_velocity_min = 180.0
+angular_velocity_max = 360.0
+gravity = Vector3(0, -1, 0)
+scale_min = 0.5
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_b2ljg")
+color_ramp = SubResource("GradientTexture1D_fefxr")
+hue_variation_min = -0.1
+hue_variation_max = 0.44
+
+[node name="LevelUpParticles" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_1pdty")
+emitting = false
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_l3heo")
+texture = ExtResource("1_8gcyb")
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.5
+randomness = 0.25
+fixed_fps = 0
+visibility_rect = Rect2(-50, -90, 100, 100)
+local_coords = true
