@@ -9,7 +9,15 @@
 		"Collision": "Medium",
 		"walkSpeed": 125,
 		"spirit": "Piou",
-		"DisplayName": true
+		"DisplayName": true,
+		"SkillSet": {
+			"Melee Attack": true,
+			"Mana Burst": true,
+			"Flar": true,
+			"Lum": true,
+			"Inma": true,
+		},
+
 	},
 
 	"1000": {
@@ -97,7 +105,10 @@
 		"Texture": "sprites/monsters/skull-fire.png",
 		"NavigationAgent": "NPAgent",
 		"Collision": "VerySmall",
-		"walkSpeed": 50
+		"walkSpeed": 50,
+		"Skills": {
+			"Flar": true,
+		},
 	},
 	"1011": {
 		"Name": "Sludge Slime",

@@ -77,6 +77,12 @@ func ParseEntitiesDB():
 				entity._stats["spirit"] = result[key].spirit
 			if "DisplayName" in result[key]:
 				entity._displayName = result[key].DisplayName
+			if "SkillSet" in result[key]:
+				for skillName in result[key].SkillSet:
+					if result[key].SkillSet[skillName]:
+						for skillID in SkillsDB:
+							if SkillsDB[skillID]._name == skillName:
+								entity._skillSet.append(SkillsDB[skillID])
 			EntitiesDB[key] = entity
 
 #
@@ -155,8 +161,9 @@ func _post_launch():
 	ParseMusicsDB()
 	ParseEthnicitiesDB()
 	ParseHairstylesDB()
+	ParseSkillsDB()
 	ParseEntitiesDB()
 	ParseEmotesDB()
-	ParseSkillsDB()
+
 
 	isInitialized = true

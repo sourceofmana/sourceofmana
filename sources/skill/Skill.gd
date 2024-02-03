@@ -90,10 +90,12 @@ static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
 	return agent.cooldownTimers.has(skill._id) and agent.cooldownTimers[skill._id] != null and not agent.cooldownTimers[skill._id].is_queued_for_deletion()
 static func IsDelayed(skill : SkillData) -> bool:
 	return skill._projectilePath.length() > 0
+static func HasSkill(agent : BaseAgent, skill : SkillData) -> bool:
+	return agent.skillSet.find(skill) != -1
 
 # Skill Flow
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if not IsAlive(agent) or IsCoolingDown(agent, skill) or IsCasting(agent, skill):
+	if not IsAlive(agent) or not HasSkill(agent, skill) or IsCoolingDown(agent, skill) or IsCasting(agent, skill):
 		return
 
 	if SetConsume(agent, "mana", skill):
@@ -105,8 +107,8 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 		agent.UpdateChanged()
 
 static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if IsCasting(agent):
-		var hasStamina : bool		= SetConsume(agent, "stamina", skill)
+	if IsCasting(agent) and HasSkill(agent, skill):
+		var hasStamina : bool = SetConsume(agent, "stamina", skill)
 
 		match skill._mode:
 			TargetMode.SINGLE:

@@ -13,6 +13,7 @@ class_name EntityData
 @export var _customTexture : String
 @export var _displayName : bool
 @export var _stats : Dictionary
+@export var _skillSet : Array[SkillData]
 
 func _init():
 	_id = -1
@@ -27,3 +28,4 @@ func _init():
 	_customTexture = ""
 	_displayName = false
 	_stats = {}
+	_skillSet = []

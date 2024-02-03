@@ -15,3 +15,5 @@ func _ready():
 	add_child.call_deferred(aiTimer)
 
 	super._ready()
+
+	skillSet.append(Launcher.DB.SkillsDB["0"])

@@ -26,6 +26,7 @@ var forceUpdate : bool					= false
 var spawnInfo : SpawnObject				= null
 var stat : EntityStats					= EntityStats.new()
 var inventory : EntityInventory			= EntityInventory.new()
+var skillSet : Array[SkillData]			= []
 
 const inputApproximationUnit : int		= 12
 
@@ -127,8 +128,8 @@ func UpdateChanged():
 
 #
 func SetData(data : EntityData):
-	# Stat
 	stat.Init(data)
+	skillSet.append_array(data._skillSet)
 
 	# Navigation
 	if data._navigationAgent.length() > 0:

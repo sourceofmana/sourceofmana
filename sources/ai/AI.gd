@@ -103,7 +103,7 @@ static func StateAttack(agent : BaseAgent):
 	if not IsActionInProgress(agent):
 		if Skill.IsTargetable(agent, target, Launcher.DB.SkillsDB["0"]):
 			ToAttack(agent, target)
-		elif CanWalk(agent):
+		elif target and CanWalk(agent):
 			ToChase(agent, target)
 
 # Could be delayed, always check if agent is inside a map
