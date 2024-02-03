@@ -19,6 +19,10 @@ boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://data/press/splash/splashscreen.png"
 config/icon="res://data/press/logo/logo_seed.svg"
 
+[audio]
+
+buses/default_bus_layout="res://presets/audio/default_bus_layout.tres"
+
 [autoload]
 
 Launcher="*res://sources/launcher/Launcher.gd"
