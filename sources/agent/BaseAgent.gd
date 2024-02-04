@@ -18,7 +18,7 @@ var lastPositions : Array[float]		= []
 var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
 var currentState : EntityCommons.State	= EntityCommons.State.IDLE
-var currentSkillCastID : int			= -1
+var currentSkillName : String			= ""
 var currentVelocity : Vector2i			= Vector2i.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var forceUpdate : bool					= false
@@ -78,8 +78,8 @@ func SetVelocity():
 func SetCurrentState():
 	if stat.health <= 0:
 		SetState(EntityCommons.State.DEATH)
-	elif currentSkillCastID >= 0:
-		SetState(Launcher.DB.SkillsDB[str(currentSkillCastID)]._state)
+	elif Launcher.DB.SkillsDB.has(currentSkillName):
+		SetState(Launcher.DB.SkillsDB[currentSkillName]._state)
 	elif currentVelocity == Vector2i.ZERO:
 		SetState(EntityCommons.State.IDLE)
 	else:
@@ -91,9 +91,13 @@ func SetState(wantedState : EntityCommons.State) -> bool:
 	currentState = nextState
 	return currentState == wantedState
 
-func SetSkillCastID(skillID : int):
-	forceUpdate = forceUpdate or skillID != currentSkillCastID
-	currentSkillCastID = skillID
+func SetSkillCastName(skillName : String):
+	forceUpdate = forceUpdate or Launcher.DB.SkillsDB.has(currentSkillName)
+	currentSkillName = skillName
+
+func AddSkill(skill : SkillData):
+	if skill and not skillSet.has(skill):
+		skillSet.append(skill)
 
 func SetRelativeMode(enable : bool, givenDirection : Vector2):
 	if isRelativeMode != enable:
@@ -107,7 +111,7 @@ func WalkToward(pos : Vector2):
 	if pos == position:
 		return
 
-	if currentSkillCastID >= 0:
+	if Launcher.DB.SkillsDB.has(currentSkillName):
 		Skill.Stopped(self)
 
 	hasCurrentGoal = true
@@ -124,12 +128,13 @@ func UpdateChanged():
 	if currentInput != Vector2.ZERO:
 		currentOrientation = Vector2(currentVelocity).normalized()
 	var functionName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
-	Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, functionName, [velocity, position, currentOrientation, currentState, currentSkillCastID])
+	Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, functionName, [velocity, position, currentOrientation, currentState, currentSkillName])
 
 #
 func SetData(data : EntityData):
 	stat.Init(data)
-	skillSet.append_array(data._skillSet)
+	for skill in data._skillSet:
+		AddSkill(skill)
 
 	# Navigation
 	if data._navigationAgent.length() > 0:

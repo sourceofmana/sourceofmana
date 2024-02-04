@@ -86,5 +86,6 @@ static func GetXpBonus(stat : EntityStats) -> float:
 static func ApplyXp(agent : BaseAgent):
 	var bonus : float = Formulas.GetXpBonus(agent.stat)
 	for attacker in agent.attackers:
-		var bonusScaled : int = int(bonus * agent.GetDamageRatio(attacker))
-		EntityStats.addExperience(attacker, bonusScaled)
+		if attacker != null and not attacker.is_queued_for_deletion():
+			var bonusScaled : int = int(bonus * agent.GetDamageRatio(attacker))
+			EntityStats.addExperience(attacker, bonusScaled)

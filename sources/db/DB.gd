@@ -78,11 +78,9 @@ func ParseEntitiesDB():
 			if "DisplayName" in result[key]:
 				entity._displayName = result[key].DisplayName
 			if "SkillSet" in result[key]:
-				for skillName in result[key].SkillSet:
-					if result[key].SkillSet[skillName]:
-						for skillID in SkillsDB:
-							if SkillsDB[skillID]._name == skillName:
-								entity._skillSet.append(SkillsDB[skillID])
+				for skillSetName in result[key].SkillSet:
+					if result[key].SkillSet[skillSetName] and SkillsDB.has(skillSetName):
+						entity._skillSet.append(SkillsDB[skillSetName])
 			EntitiesDB[key] = entity
 
 #
@@ -104,8 +102,7 @@ func ParseSkillsDB():
 	if not result.is_empty():
 		for key in result:
 			var skill : SkillData = SkillData.new()
-			skill._id = key.to_int()
-			skill._name = result[key].Name
+			skill._name = key
 			skill._iconPath = result[key].IconPath
 			if "CastPresetPath" in result[key]:
 				skill._castPresetPath = result[key].CastPresetPath

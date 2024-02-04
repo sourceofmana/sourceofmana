@@ -13,21 +13,21 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = Launcher.Network.
 	if Launcher.Map:
 		Launcher.Map.EmotePlayer(playerID, emoteID)
 
-func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int, _rpcID : int = Launcher.Network.RidSingleMode):
+func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastName : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, velocity, position, orientation, entityState, skillCastID)
+		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, velocity, position, orientation, entityState, skillCastName)
 
 func RemoveEntity(agentID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentID)
 
-func ForceUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int):
+func ForceUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, entityState : EntityCommons.State, skillCastName : String):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, entityState, skillCastID)
+		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, entityState, skillCastName)
 
-func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int):
+func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, entityState : EntityCommons.State, skillCastName : String):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, entityState, skillCastID)
+		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, entityState, skillCastName)
 
 func ChatAgent(ridAgent : int, text : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
@@ -38,12 +38,12 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = Launcher.Network.Ri
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
 
-func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : EntityCommons.Alteration, skillID : int, _rpcID : int = Launcher.Network.RidSingleMode):
+func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : EntityCommons.Alteration, skillName : String, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Launcher.Map.entities.get(targetID)
 		var caller : BaseEntity = Launcher.Map.entities.get(ridAgent)
 		if caller && entity && entity.get_parent() and entity.interactive:
-			entity.interactive.DisplayAlteration(entity, caller, value, alteration, str(skillID))
+			entity.interactive.DisplayAlteration(entity, caller, value, alteration, skillName)
 
 func TargetLevelUp(targetID : int, _rpcID : int = Launcher.Network.RidSingleMode):
 	if Launcher.Map:

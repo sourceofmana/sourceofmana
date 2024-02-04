@@ -34,7 +34,7 @@ func SetVisual(data : EntityData, morphed : bool = false):
 		visualInitCallback.call()
 
 #
-func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : EntityCommons.State, nextSkillCastID : int):
+func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : EntityCommons.State, nextSkillCastName : String):
 	var dist = Vector2(gardbandPosition - position).length()
 	if dist > EntityCommons.MaxGuardbandDist:
 		position = gardbandPosition
@@ -44,10 +44,9 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	entityState = nextState
 	entityOrientation = nextOrientation
 
-	if visual.skillCastID != nextSkillCastID:
-		visual.skillCastID = nextSkillCastID
-		if nextSkillCastID > 0:
-			interactive.DisplayCast(self, str(nextSkillCastID))
+	if visual.skillCastName != nextSkillCastName:
+		visual.skillCastName = nextSkillCastName
+		interactive.DisplayCast(self, nextSkillCastName)
 
 #
 func _physics_process(delta):

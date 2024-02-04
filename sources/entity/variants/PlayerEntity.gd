@@ -42,24 +42,31 @@ func Target(pos : Vector2, canInteract : bool = true):
 			target.visual.SetMainMaterial.call_deferred(EntityCommons.EnemyTarget)
 
 
-func Interact(skillID : int = 0):
-	var skill : SkillData = Launcher.DB.SkillsDB[str(skillID)]
+func Interact():
+	if not target or target.entityState == EntityCommons.State.DEATH:
+		Target(position, true)
+	if not target:
+		return
+
+	if target is NpcEntity:
+		Launcher.Network.TriggerInteract(Launcher.Map.entities.find_key(target))
+	elif target is MonsterEntity:
+		Cast("Melee")
+
+func Cast(skillName : String):
+	var skill : SkillData = Launcher.DB.SkillsDB[skillName]
 	Util.Assert(skill != null, "Skill ID is not found, can't cast it")
 	if skill == null:
 		return
 
+	var entityID : int = 0
 	if skill._mode == Skill.TargetMode.SINGLE:
-		var canInteract : bool = skillID == 0
 		if not target or target.entityState == EntityCommons.State.DEATH:
-			Target(position, canInteract)
-		if target:
-			var entityID : int = Launcher.Map.entities.find_key(target)
-			if canInteract and target is NpcEntity:
-				Launcher.Network.TriggerInteract(entityID)
-			elif target is MonsterEntity:
-				Launcher.Network.TriggerCast(entityID, skillID)
-	else:
-		Launcher.Network.TriggerCast(0, skillID)
+			Target(position, false)
+		if target and target is MonsterEntity:
+			entityID = Launcher.Map.entities.find_key(target)
+
+	Launcher.Network.TriggerCast(entityID, skillName)
 
 #
 func _process(deltaTime : float):

@@ -17,7 +17,7 @@ var previousState : EntityCommons.State		= EntityCommons.State.UNKNOWN
 var blendSpacePaths : Dictionary			= {}
 var timeScalePaths : Dictionary				= {}
 
-var skillCastID : int						= -1
+var skillCastName : String					= ""
 
 #
 func SetMainMaterial(materialResource : Resource):

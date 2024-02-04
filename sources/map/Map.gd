@@ -78,7 +78,7 @@ func AddChild(entity : BaseEntity):
 		tilemapNode.add_child(entity)
 
 #
-func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, entityState : EntityCommons.State, skillCastID : int):
+func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, entityState : EntityCommons.State, skillCastName : String):
 	var isLocalPlayer : bool = entityType == EntityCommons.Type.PLAYER and entityName == Launcher.FSM.playerName
 	var entity : BaseEntity = null
 	if tilemapNode:
@@ -93,7 +93,7 @@ func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String
 					Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
-		entity.Update(entityVelocity, entityPosition, entityOrientation, entityState, skillCastID)
+		entity.Update(entityVelocity, entityPosition, entityOrientation, entityState, skillCastName)
 
 		AddChild(entity)
 		entities[agentID] = entity
@@ -107,10 +107,10 @@ func RemoveEntity(agentID : int):
 		RemoveChild(entity)
 		entities.erase(agentID)
 
-func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : EntityCommons.State, skillCastID : int):
+func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : EntityCommons.State, skillCastName : String):
 	var entity : BaseEntity = entities.get(agentID)
 	if entity:
-		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID)
+		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastName)
 
 func EmotePlayer(agentID : int, emoteID : int):
 	var entity : BaseEntity = entities.get(agentID)

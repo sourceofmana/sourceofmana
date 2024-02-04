@@ -11,7 +11,7 @@
 		"spirit": "Piou",
 		"DisplayName": true,
 		"SkillSet": {
-			"Melee Attack": true,
+			"Melee": true,
 			"Mana Burst": true,
 			"Flar": true,
 			"Lum": true,

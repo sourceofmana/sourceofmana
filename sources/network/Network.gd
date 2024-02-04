@@ -45,8 +45,8 @@ func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = RidSingleMode
 
 # Entities
 @rpc("authority", "reliable")
-func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastID : int, rpcID : int = RidSingleMode):
-	NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, velocity, position, orientation, entityState, skillCastID], rpcID)
+func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastName : String, rpcID : int = RidSingleMode):
+	NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, velocity, position, orientation, entityState, skillCastName], rpcID)
 
 @rpc("authority", "reliable")
 func RemoveEntity(agentID : int, rpcID : int = RidSingleMode):
@@ -62,12 +62,12 @@ func SetMovePos(pos : Vector2, rpcID : int = RidSingleMode):
 	NetCallServer("SetMovePos", [pos], rpcID, DelayInstant)
 
 @rpc("authority", "unreliable_ordered")
-func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : EntityCommons.State, skillCastID : int, rpcID : int = RidSingleMode):
-	NetCallClient("UpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastID], rpcID)
+func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : EntityCommons.State, skillCastName : String, rpcID : int = RidSingleMode):
+	NetCallClient("UpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastName], rpcID)
 
 @rpc("authority", "reliable")
-func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : EntityCommons.State, skillCastID : int,  rpcID : int = RidSingleMode):
-	NetCallClient("ForceUpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastID], rpcID)
+func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : EntityCommons.State, skillCastName : String,  rpcID : int = RidSingleMode):
+	NetCallClient("ForceUpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastName], rpcID)
 
 @rpc("any_peer", "reliable")
 func ClearNavigation(rpcID : int = RidSingleMode):
@@ -94,12 +94,12 @@ func TriggerInteract(entityID : int, rpcID : int = RidSingleMode):
 
 # Combat
 @rpc("any_peer", "reliable")
-func TriggerCast(entityID : int, castID : int, rpcID : int = RidSingleMode):
-	NetCallServer("TriggerCast", [entityID, castID], rpcID)
+func TriggerCast(entityID : int, skillName : String, rpcID : int = RidSingleMode):
+	NetCallServer("TriggerCast", [entityID, skillName], rpcID)
 
 @rpc("authority", "reliable")
-func TargetAlteration(agentID : int, targetID : int, value : int, alteration : EntityCommons.Alteration, skillID : int, rpcID : int = RidSingleMode):
-	NetCallClient("TargetAlteration", [agentID, targetID, value, alteration, skillID], rpcID)
+func TargetAlteration(agentID : int, targetID : int, value : int, alteration : EntityCommons.Alteration, skillName : String, rpcID : int = RidSingleMode):
+	NetCallClient("TargetAlteration", [agentID, targetID, value, alteration, skillName], rpcID)
 
 # Morph
 @rpc("any_peer", "reliable")

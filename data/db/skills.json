@@ -1,6 +1,5 @@
 {
-	"0": {
-		"Name": "Melee Attack",
+	"Melee": {
 		"IconPath": "items/skill/melee.png",
 		"StaminaCost": 5,
 		"State": "ATTACK",
@@ -9,8 +8,7 @@
 		"Damage": 1,
 		"Repeat": true,
 	},
-	"1": {
-		"Name": "Mana Burst",
+	"Mana Burst": {
 		"IconPath": "items/skill/mana-burst.png",
 		"CastPresetPath": "particles/CastSpell",
 		"CastTextureOverride": "effects/particles/cast1.png",
@@ -25,8 +23,7 @@
 		"Mode": "ZONE",
 		"Damage": 30,
 	},
-	"2": {
-		"Name": "Flar",
+	"Flar": {
 		"IconPath": "items/skill/flar.png",
 		"CastPresetPath": "particles/CastSpell",
 		"CastTextureOverride": "effects/particles/cast2.png",
@@ -40,8 +37,7 @@
 		"Mode": "SINGLE",
 		"Damage": 50,
 	},
-	"3": {
-		"Name": "Lum",
+	"Lum": {
 		"IconPath": "items/skill/skill.png",
 		"CastPresetPath": "particles/CastSpell",
 		"CastTextureOverride": "effects/particles/cast3.png",
@@ -55,8 +51,7 @@
 		"Mode": "SELF",
 		"Heal": 50,
 	},
-	"4": {
-		"Name": "Inma",
+	"Inma": {
 		"IconPath": "items/skill/skill.png",
 		"CastPresetPath": "particles/CastSpell",
 		"CastTextureOverride": "effects/particles/cast4.png",

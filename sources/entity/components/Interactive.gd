@@ -34,20 +34,21 @@ func DisplayLevelUp():
 		add_child(levelUpFx)
 
 #
-func DisplayCast(entity : BaseEntity, skillID : String):
-	if Launcher.DB.SkillsDB.has(skillID):
-		var skill : SkillData = Launcher.DB.SkillsDB[skillID]
-		var castFx : GPUParticles2D = FileSystem.LoadEffect(skill._castPresetPath)
-		if castFx:
-			castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-			castFx.lifetime = skill._castTime + entity.stat.current.castAttackDelay
-			castFx.texture = FileSystem.LoadGfx(skill._castTextureOverride)
-			if skill._castColor != Color.BLACK:
-				castFx.process_material.set("color", skill._castColor)
-			castFx.emitting = true
-			add_child(castFx)
-			if skill._mode == Skill.TargetMode.ZONE:
-				Callback.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(entity, skill), "ActionTimer")
+func DisplayCast(entity : BaseEntity, skillName : String):
+	if Launcher.DB.SkillsDB.has(skillName):
+		var skill : SkillData = Launcher.DB.SkillsDB[skillName]
+		if skill._castPresetPath.length() > 0:
+			var castFx : GPUParticles2D = FileSystem.LoadEffect(skill._castPresetPath)
+			if castFx:
+				castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
+				castFx.lifetime = skill._castTime + entity.stat.current.castAttackDelay
+				castFx.texture = FileSystem.LoadGfx(skill._castTextureOverride)
+				if skill._castColor != Color.BLACK:
+					castFx.process_material.set("color", skill._castColor)
+				castFx.emitting = true
+				add_child(castFx)
+				if skill._mode == Skill.TargetMode.ZONE:
+					Callback.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(entity, skill), "ActionTimer")
 
 func DisplaySkill(entity : BaseEntity, skill : SkillData):
 	if skill and skill._skillPresetPath.length() > 0:
@@ -72,7 +73,7 @@ func DisplayProjectile(dealer : BaseEntity, skill : SkillData, callable : Callab
 			projectileNode.callable = callable
 			Launcher.Map.tilemapNode.add_child(projectileNode)
 
-func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration, skillID : String):
+func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration, skillName : String):
 	if Launcher.Map.tilemapNode:
 		if alteration != EntityCommons.Alteration.PROJECTILE:
 			var newLabel : Label = EntityCommons.AlterationLabel.instantiate()
@@ -80,8 +81,8 @@ func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, al
 			newLabel.SetValue(dealer, value, alteration)
 			Launcher.Map.tilemapNode.add_child(newLabel)
 
-		if Launcher.DB.SkillsDB.has(skillID):
-			var skill : SkillData = Launcher.DB.SkillsDB[skillID]
+		if Launcher.DB.SkillsDB.has(skillName):
+			var skill : SkillData = Launcher.DB.SkillsDB[skillName]
 			if skill._mode != Skill.TargetMode.ZONE:
 				var callable : Callable = DisplaySkill.bind(target, skill)
 				if alteration == EntityCommons.Alteration.PROJECTILE:

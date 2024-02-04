@@ -85,9 +85,9 @@ static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:
 static func IsTargetable(agent : BaseAgent, target : BaseAgent, skill : SkillData) -> bool:
 	return IsNotSelf(agent, target) and IsAlive(target) and IsSameMap(agent, target) and IsNear(agent, target, GetRange(agent, skill))
 static func IsCasting(agent : BaseAgent, skill : SkillData = null) -> bool:
-	return (agent.currentSkillCastID == skill._id) if skill else (agent.currentSkillCastID >= 0 )
+	return (agent.currentSkillName == skill._name) if skill else Launcher.DB.SkillsDB.has(agent.currentSkillName)
 static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
-	return agent.cooldownTimers.has(skill._id) and agent.cooldownTimers[skill._id] != null and not agent.cooldownTimers[skill._id].is_queued_for_deletion()
+	return agent.cooldownTimers.has(skill._name) and agent.cooldownTimers[skill._name] != null and not agent.cooldownTimers[skill._name].is_queued_for_deletion()
 static func IsDelayed(skill : SkillData) -> bool:
 	return skill._projectilePath.length() > 0
 static func HasSkill(agent : BaseAgent, skill : SkillData) -> bool:
@@ -97,17 +97,19 @@ static func HasSkill(agent : BaseAgent, skill : SkillData) -> bool:
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if not IsAlive(agent) or not HasSkill(agent, skill) or IsCoolingDown(agent, skill) or IsCasting(agent, skill):
 		return
+	if skill._mode == TargetMode.SINGLE and not target:
+		return
 
 	if SetConsume(agent, "mana", skill):
 		Stopped(agent)
-		agent.SetSkillCastID(skill._id)
+		agent.SetSkillCastName(skill._name)
 		Callback.StartTimer(agent.actionTimer, skill._castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
 		if skill._mode == TargetMode.SINGLE:
 			agent.currentOrientation = Vector2(target.position - agent.position).normalized()
 		agent.UpdateChanged()
 
 static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if IsCasting(agent) and HasSkill(agent, skill):
+	if IsAlive(agent) and IsCasting(agent) and HasSkill(agent, skill):
 		var hasStamina : bool = SetConsume(agent, "stamina", skill)
 
 		match skill._mode:
@@ -138,13 +140,13 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill._repeat else Callable()
 	var timer : Timer = Callback.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay + skill._cooldownTime, callable, skill._name + " CoolDown")
-	agent.cooldownTimers[agent.currentSkillCastID] = timer
-	agent.SetSkillCastID(-1)
+	agent.cooldownTimers[agent.currentSkillName] = timer
+	agent.SetSkillCastName("")
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var info : AlterationInfo = GetDamage(agent, target, skill, rng)
 	target.stat.health = max(target.stat.health - info.value, 0)
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill._id])
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill._name])
 
 	target.AddAttacker(agent, info.value)
 	AI.SetState(target, AI.State.ATTACK)
@@ -155,7 +157,7 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rn
 static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var heal : int = GetHeal(agent, target, skill, rng)
 	target.stat.health = min(target.stat.health + heal, target.stat.current.maxHealth)
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), heal, EntityCommons.Alteration.HEAL, skill._id])
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), heal, EntityCommons.Alteration.HEAL, skill._name])
 
 static func Killed(agent : BaseAgent, target : BaseAgent):
 	Formulas.ApplyXp(target)
@@ -165,14 +167,14 @@ static func Killed(agent : BaseAgent, target : BaseAgent):
 	Stopped(agent)
 
 static func Stopped(agent : BaseAgent):
-	agent.SetSkillCastID(-1)
+	agent.SetSkillCastName("")
 	agent.actionTimer.stop()
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:
 		return
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS, -1])
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS, ""])
 	Stopped(agent)
 
 static func Delayed(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.PROJECTILE, skill._id])
+	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.PROJECTILE, skill._name])

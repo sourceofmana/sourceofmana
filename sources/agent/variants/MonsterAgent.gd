@@ -16,4 +16,4 @@ func _ready():
 
 	super._ready()
 
-	skillSet.append(Launcher.DB.SkillsDB["0"])
+	AddSkill(Launcher.DB.SkillsDB["Melee"])

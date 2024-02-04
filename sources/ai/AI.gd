@@ -101,7 +101,7 @@ static func StateAttack(agent : BaseAgent):
 	var target : BaseAgent = agent.GetMostValuableAttacker()
 
 	if not IsActionInProgress(agent):
-		if Skill.IsTargetable(agent, target, Launcher.DB.SkillsDB["0"]):
+		if Skill.IsTargetable(agent, target, Launcher.DB.SkillsDB["Melee"]):
 			ToAttack(agent, target)
 		elif target and CanWalk(agent):
 			ToChase(agent, target)
@@ -119,7 +119,7 @@ static func ToAttack(agent : BaseAgent, target : BaseAgent):
 	if IsAgentMoving(agent):
 		agent.ResetNav()
 	if WorldAgent.GetMapFromAgent(agent):
-		Skill.Cast(agent, target, Launcher.DB.SkillsDB["0"])
+		Skill.Cast(agent, target, Launcher.DB.SkillsDB["Melee"])
 
 static func ToChase(agent : BaseAgent, target : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)

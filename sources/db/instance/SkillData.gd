@@ -1,7 +1,6 @@
 extends Node
 class_name SkillData
 
-@export var _id : int
 @export var _name : String
 @export var _iconPath : String
 @export var _castPresetPath : String
@@ -25,7 +24,6 @@ class_name SkillData
 @export var mana : int
 
 func _init():
-	_id = 0
 	_name = "Unknown"
 	_iconPath = "res://data/graphics/items/skill/spell.png"
 	_castPresetPath = ""
