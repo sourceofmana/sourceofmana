@@ -53,14 +53,13 @@ static func GetRandomSkill(agent : BaseAgent) -> SkillData:
 #
 static func SetState(agent : BaseAgent, state : State, force : bool = false):
 	var newState : State = state if force else transitions[agent.aiState][state]
-
 	if agent.aiState != newState:
+		agent.aiState = newState
 		if IsActionInProgress(agent):
 			Callback.ClearTimer(agent.actionTimer)
 		if IsAgentMoving(agent):
 			agent.ResetNav()
 
-	agent.aiState = newState
 
 static func Reset(agent : BaseAgent):
 	SetState(agent, State.IDLE, true)
@@ -101,11 +100,9 @@ static func StateWalk(agent : BaseAgent):
 
 static func StateAttack(agent : BaseAgent):
 	var target : BaseAgent = agent.GetMostValuableAttacker()
-
 	if not Skill.IsAlive(target):
 		SetState(agent, State.IDLE, true)
-
-	if not IsActionInProgress(agent):
+	elif not IsActionInProgress(agent):
 		var randomSkill : SkillData = GetRandomSkill(agent)
 		if Skill.IsTargetable(agent, target, randomSkill):
 			ToAttack(agent, target, randomSkill)

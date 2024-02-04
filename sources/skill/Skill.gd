@@ -92,12 +92,14 @@ static func IsDelayed(skill : SkillData) -> bool:
 	return skill._projectilePath.length() > 0
 static func HasSkill(agent : BaseAgent, skill : SkillData) -> bool:
 	return agent.skillSet.find(skill) != -1
+static func HasActionInProgress(agent : BaseAgent) -> bool:
+	return agent.currentSkillName.length() > 0 or not agent.actionTimer.is_stopped()
 
 # Skill Flow
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if not IsAlive(agent) or not HasSkill(agent, skill) or IsCoolingDown(agent, skill) or IsCasting(agent, skill):
 		return
-	if skill._mode == TargetMode.SINGLE and not target:
+	if skill._mode == TargetMode.SINGLE and (not target or not IsAlive(target)):
 		return
 
 	if SetConsume(agent, "mana", skill):
@@ -114,6 +116,9 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 
 		match skill._mode:
 			TargetMode.SINGLE:
+				if not IsAlive(target):
+					Stopped(agent)
+					return
 				if IsTargetable(agent, target, skill):
 					var handle : Callable = Skill.Handle.bind(agent, target, skill, GetRNG(hasStamina))
 					if IsDelayed(skill):
@@ -138,7 +143,7 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill._repeat else Callable()
+	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill._repeat and IsAlive(target) else Callable()
 	var timer : Timer = Callback.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay + skill._cooldownTime, callable, skill._name + " CoolDown")
 	agent.cooldownTimers[agent.currentSkillName] = timer
 	agent.SetSkillCastName("")
@@ -148,8 +153,9 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rn
 	target.stat.health = max(target.stat.health - info.value, 0)
 	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill._name])
 
-	target.AddAttacker(agent, info.value)
-	AI.SetState(target, AI.State.ATTACK)
+	if target.aiTimer:
+		target.AddAttacker(agent, info.value)
+		AI.SetState(target, AI.State.ATTACK)
 
 	if target.stat.health <= 0:
 		Killed(agent, target)
@@ -167,8 +173,11 @@ static func Killed(agent : BaseAgent, target : BaseAgent):
 	Stopped(agent)
 
 static func Stopped(agent : BaseAgent):
-	agent.SetSkillCastName("")
-	agent.actionTimer.stop()
+	if HasActionInProgress(agent):
+		agent.SetSkillCastName("")
+		agent.actionTimer.stop()
+		if agent.aiTimer:
+			AI.SetState(agent, AI.State.IDLE)
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:
