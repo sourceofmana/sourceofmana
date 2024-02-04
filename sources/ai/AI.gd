@@ -47,6 +47,8 @@ static func IsAgentMoving(agent : BaseAgent):
 	return agent.hasCurrentGoal
 static func CanWalk(agent: BaseAgent):
 	return agent.agent != null
+static func GetRandomSkill(agent : BaseAgent) -> SkillData:
+	return agent.skillSet[randi() % agent.skillSet.size()] if agent.skillSet.size() > 0 else null
 
 #
 static func SetState(agent : BaseAgent, state : State, force : bool = false):
@@ -100,9 +102,13 @@ static func StateWalk(agent : BaseAgent):
 static func StateAttack(agent : BaseAgent):
 	var target : BaseAgent = agent.GetMostValuableAttacker()
 
+	if not Skill.IsAlive(target):
+		SetState(agent, State.IDLE, true)
+
 	if not IsActionInProgress(agent):
-		if Skill.IsTargetable(agent, target, Launcher.DB.SkillsDB["Melee"]):
-			ToAttack(agent, target)
+		var randomSkill : SkillData = GetRandomSkill(agent)
+		if Skill.IsTargetable(agent, target, randomSkill):
+			ToAttack(agent, target, randomSkill)
 		elif target and CanWalk(agent):
 			ToChase(agent, target)
 
@@ -115,11 +121,11 @@ static func ToWalk(agent : BaseAgent):
 		agent.aiState = State.WALK
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, State.IDLE, false])
 
-static func ToAttack(agent : BaseAgent, target : BaseAgent):
+static func ToAttack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if IsAgentMoving(agent):
 		agent.ResetNav()
 	if WorldAgent.GetMapFromAgent(agent):
-		Skill.Cast(agent, target, Launcher.DB.SkillsDB["Melee"])
+		Skill.Cast(agent, target, skill)
 
 static func ToChase(agent : BaseAgent, target : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)

@@ -106,7 +106,7 @@
 		"NavigationAgent": "NPAgent",
 		"Collision": "VerySmall",
 		"walkSpeed": 50,
-		"Skills": {
+		"SkillSet": {
 			"Flar": true,
 		},
 	},
