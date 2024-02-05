@@ -69,7 +69,6 @@ const stateToTrigger : String				= "To Trigger"
 const stateTrigger : String					= "Trigger"
 const stateFromTrigger : String				= "From Trigger"
 
-
 #
 static func GetNextTransition(currentState : State, newState : State) -> State:
 	return stateTransitions[currentState][newState]
@@ -85,12 +84,6 @@ static func GetStateName(state : State):
 		State.TRIGGER:		return stateTrigger
 		State.FROM_TRIGGER:	return stateFromTrigger
 		_:					return stateIdle
-
-# Guardband static vars
-static var StartGuardbandDist : int				= 0
-static var PatchGuardband : int					= 0
-static var MaxGuardbandDist : int				= 0
-static var MaxGuardbandDistVec : Vector2		= Vector2.ZERO
 
 # Visual
 static var AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
@@ -128,11 +121,3 @@ static var speechExtraWidth : int				= 20
 
 #
 static var AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
-
-#
-static func InitVars():
-	# Guardband
-	EntityCommons.StartGuardbandDist = Launcher.Conf.GetInt("Guardband", "startGuardbandDist", Launcher.Conf.Type.NETWORK)
-	EntityCommons.PatchGuardband = Launcher.Conf.GetInt("Guardband", "patchGuardband", Launcher.Conf.Type.NETWORK)
-	EntityCommons.MaxGuardbandDist = Launcher.Conf.GetInt("Guardband", "maxGuardbandDist", Launcher.Conf.Type.NETWORK)
-	EntityCommons.MaxGuardbandDistVec = Vector2(EntityCommons.MaxGuardbandDist, EntityCommons.MaxGuardbandDist)

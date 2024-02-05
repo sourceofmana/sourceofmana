@@ -8,7 +8,6 @@ enum Type
 	MAP,
 	SETTINGS,
 	USERSETTINGS,
-	NETWORK,
 	AUTH,
 	DEBUG,
 	COUNT
@@ -83,11 +82,9 @@ func _post_launch():
 	confFiles.append(FileSystem.LoadConfig("map"))
 	confFiles.append(FileSystem.LoadConfig("settings"))
 	confFiles.append(FileSystem.LoadConfig("settings", true))
-	confFiles.append(FileSystem.LoadConfig("network"))
 	confFiles.append(FileSystem.LoadConfig("auth"))
 	confFiles.append(FileSystem.LoadConfig("debug"))
 
 	Util.Assert(confFiles.size() == Type.COUNT, "Config files count mismatch")
 
 	isInitialized = true
-	EntityCommons.InitVars()

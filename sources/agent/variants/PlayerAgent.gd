@@ -10,7 +10,7 @@ static func GetEntityType() -> EntityCommons.Type: return EntityCommons.Type.PLA
 #
 func UpdateStats():
 	var peerID : int = Launcher.Network.Server.GetRid(self)
-	if peerID == Launcher.Network.RidUnknown:
+	if peerID == NetworkCommons.RidUnknown:
 		return
 
 	if lastStat.level != stat.level or \

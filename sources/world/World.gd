@@ -49,7 +49,7 @@ func AgentWarped(map : WorldMap, instance : WorldInstance, agent : BaseAgent):
 
 	if agent is PlayerAgent:
 		var playerID = Launcher.Network.Server.GetRid(agent)
-		if playerID == Launcher.Network.RidUnknown:
+		if playerID == NetworkCommons.RidUnknown:
 			return
 
 		if map.spiritOnly != agent.stat.morphed:
