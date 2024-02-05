@@ -26,8 +26,8 @@ var Player : PlayerEntity			= null
 
 #
 func ParseLaunchMode():
-	var launchClient : bool = Conf.GetBool("Default", "launchClient", Launcher.Conf.Type.PROJECT)
-	var launchServer : bool = Conf.GetBool("Default", "launchServer", Launcher.Conf.Type.PROJECT)
+	var launchClient : bool = false
+	var launchServer : bool = false
 
 	if "--hybrid" in OS.get_cmdline_args():
 		launchClient = true

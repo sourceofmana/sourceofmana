@@ -26,3 +26,8 @@ static var DelayDefault : int				= 50
 static var Timeout : int					= 1000
 static var TimeoutMin : int					= 30000
 static var TimeoutMax : int					= 60000
+
+# Auth
+static var PlayerNameMinSize : int			= 3
+static var PlayerNameMaxSize : int			= 30
+static var PlayerNameInvalidChar : String	= "[^\\w\\h]+"

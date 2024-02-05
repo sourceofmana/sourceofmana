@@ -40,7 +40,7 @@ func EmplaceMapNode(mapName : String):
 
 	PhysicsServer2D.set_active(true)
 
-	if Launcher.Conf.GetBool("MapPool", "enable", Launcher.Conf.Type.MAP):
+	if LauncherCommons.EnableMapPool:
 		pool.RefreshPool(mapNode)
 
 func UnloadMapNode():

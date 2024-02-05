@@ -4,12 +4,8 @@ extends ServiceBase
 enum Type
 {
 	NONE = -1,
-	PROJECT = 0,
-	MAP,
-	SETTINGS,
+	SETTINGS = 0,
 	USERSETTINGS,
-	AUTH,
-	DEBUG,
 	COUNT
 }
 
@@ -78,12 +74,8 @@ func SaveType(fileName : String, type : Type):
 
 #
 func _post_launch():
-	confFiles.append(FileSystem.LoadConfig("project"))
-	confFiles.append(FileSystem.LoadConfig("map"))
 	confFiles.append(FileSystem.LoadConfig("settings"))
 	confFiles.append(FileSystem.LoadConfig("settings", true))
-	confFiles.append(FileSystem.LoadConfig("auth"))
-	confFiles.append(FileSystem.LoadConfig("debug"))
 
 	Util.Assert(confFiles.size() == Type.COUNT, "Config files count mismatch")
 

@@ -71,5 +71,5 @@ func _ready():
 		newTab.set_name("General")
 		tabContainer.add_child(newTab)
 
-		AddSystemText("Welcome to " + Launcher.Conf.GetString("Default", "projectName", Launcher.Conf.Type.PROJECT))
+		AddSystemText("Welcome to " + LauncherCommons.ProjectName)
 		SetNewLineEnabled(false)

@@ -39,18 +39,17 @@ func RefreshPool(currentMap : Node2D):
 				adjacentMaps.append(object.destinationMap)
 
 	for mapName in adjacentMaps:
-		if pool.has(mapName) == false:
+		if not pool.has(mapName):
 			pool[mapName] = LoadMapClientData(mapName as String)
 
-	var poolMaxSize : int		= Launcher.Conf.GetInt("MapPool", "maxSize", Launcher.Conf.Type.MAP)
 	var poolCurrentSize : int	= pool.size()
-	if poolCurrentSize > poolMaxSize:
-		ClearUnused(currentMap, adjacentMaps, poolCurrentSize - poolMaxSize)
+	if poolCurrentSize > LauncherCommons.MapPoolMaxSize:
+		ClearUnused(currentMap, adjacentMaps, poolCurrentSize - LauncherCommons.MapPoolMaxSize)
 
 func ClearUnused(currentMap : Node2D, adjacentMaps : Array, nbToRemove : int):
 	var mapToFree : Array = []
 	for map in pool:
-		if adjacentMaps.has(map) == false && map != currentMap.name:
+		if not adjacentMaps.has(map) && map != currentMap.name:
 			mapToFree.append(map)
 
 	for map in mapToFree:

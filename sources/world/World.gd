@@ -67,9 +67,8 @@ func _post_launch():
 	for mapName in Launcher.DB.MapsDB:
 		areas[mapName] = WorldMap.Create(mapName)
 
-	var mapName : String			= Launcher.Conf.GetString("Default", "startMap", Launcher.Conf.Type.MAP)
-	defaultSpawn.map				= GetMap(mapName)
-	defaultSpawn.spawn_position		= Launcher.Conf.GetVector2i("Default", "startPos", Launcher.Conf.Type.MAP)
+	defaultSpawn.map				= GetMap(LauncherCommons.DefaultStartMap)
+	defaultSpawn.spawn_position		= LauncherCommons.DefaultStartPos
 	defaultSpawn.type				= "Player"
 	defaultSpawn.name				= "Default Entity"
 

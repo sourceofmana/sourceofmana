@@ -15,15 +15,12 @@ func FillWarningLabel(warn : String):
 
 #
 func CheckNameSize(s : String) -> bool:
-	var minNameSize : int = Launcher.Conf.GetInt("Login", "playerNameMinSize", Launcher.Conf.Type.AUTH)
-	var maxNameSize : int = Launcher.Conf.GetInt("Login", "playerNameMaxSize", Launcher.Conf.Type.AUTH)
 	var currentSize : int = s.length()
-	return (currentSize >= minNameSize && currentSize <= maxNameSize)
+	return (currentSize >= NetworkCommons.PlayerNameMinSize && currentSize <= NetworkCommons.PlayerNameMaxSize)
 
 func CheckNameValid(s : String) -> bool:
-	var invalidCharRegex : String = Launcher.Conf.GetString("Login", "playerNameInvalidChar", Launcher.Conf.Type.AUTH)
 	var regex = RegEx.new()
-	regex.compile(invalidCharRegex)
+	regex.compile(NetworkCommons.PlayerNameInvalidChar)
 	var result = regex.search(s)
 	return result == null
 
@@ -31,9 +28,7 @@ func CheckSignInInformation() -> bool:
 	var ret : bool = true
 	var nameText : String = nameTextControl.get_text()
 	if not CheckNameSize(nameText):
-		var minNameSize : int = Launcher.Conf.GetInt("Login", "playerNameMinSize", Launcher.Conf.Type.AUTH)
-		var maxNameSize : int = Launcher.Conf.GetInt("Login", "playerNameMaxSize", Launcher.Conf.Type.AUTH)
-		FillWarningLabel("Name length should be inbetween %s and %s character long" % [minNameSize, maxNameSize])
+		FillWarningLabel("Name length should be inbetween %s and %s character long" % [NetworkCommons.PlayerNameMinSize, NetworkCommons.PlayerNameMaxSize])
 		ret = false
 	elif not CheckNameValid(nameText):
 		FillWarningLabel("Name should not include non alpha-numeric character")

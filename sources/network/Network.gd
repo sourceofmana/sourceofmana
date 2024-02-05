@@ -180,7 +180,7 @@ func NetCreate():
 
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 	elif Server:
-		var ret : Error				= peer.create_server(NetworkCommons.ServerPort, NetworkCommons.MaxPlayerCount)
+		var ret : Error = peer.create_server(NetworkCommons.ServerPort, NetworkCommons.MaxPlayerCount)
 		Util.Assert(ret == OK, "Server could not be created, please check if your port %d is valid" % NetworkCommons.ServerPort)
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
