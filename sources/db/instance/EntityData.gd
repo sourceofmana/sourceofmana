@@ -14,6 +14,7 @@ class_name EntityData
 @export var _displayName : bool
 @export var _stats : Dictionary
 @export var _skillSet : Array[SkillData]
+@export var _skillProba : Dictionary
 
 func _init():
 	_id = -1
@@ -29,3 +30,4 @@ func _init():
 	_displayName = false
 	_stats = {}
 	_skillSet = []
+	_skillProba = {}

@@ -27,6 +27,9 @@ var spawnInfo : SpawnObject				= null
 var stat : EntityStats					= EntityStats.new()
 var inventory : EntityInventory			= EntityInventory.new()
 var skillSet : Array[SkillData]			= []
+var skillProba : Dictionary				= {}
+var skillProbaSum : float				= 0.0
+var skillSelected : SkillData			= null
 
 const inputApproximationUnit : int		= 12
 
@@ -94,10 +97,14 @@ func SetState(wantedState : EntityCommons.State) -> bool:
 func SetSkillCastName(skillName : String):
 	forceUpdate = forceUpdate or Launcher.DB.SkillsDB.has(currentSkillName)
 	currentSkillName = skillName
+	if skillName.length() > 0:
+		skillSelected = null
 
-func AddSkill(skill : SkillData):
+func AddSkill(skill : SkillData, proba : float):
 	if skill and not skillSet.has(skill):
 		skillSet.append(skill)
+	skillProba[skill] = proba
+	skillProbaSum += proba
 
 func SetRelativeMode(enable : bool, givenDirection : Vector2):
 	if isRelativeMode != enable:
@@ -134,7 +141,7 @@ func UpdateChanged():
 func SetData(data : EntityData):
 	stat.Init(data)
 	for skill in data._skillSet:
-		AddSkill(skill)
+		AddSkill(skill, data._skillProba[skill])
 
 	# Navigation
 	if data._navigationAgent.length() > 0:

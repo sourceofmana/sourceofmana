@@ -48,7 +48,13 @@ static func IsAgentMoving(agent : BaseAgent):
 static func CanWalk(agent: BaseAgent):
 	return agent.agent != null
 static func GetRandomSkill(agent : BaseAgent) -> SkillData:
-	return agent.skillSet[randi() % agent.skillSet.size()] if agent.skillSet.size() > 0 else null
+	if agent.skillSet.size() > 0 and agent.skillProbaSum > 0.0:
+		var randProba : float = randf_range(0.0, agent.skillProbaSum)
+		for skill in agent.skillSet:
+			randProba -= agent.skillProba[skill]
+			if randProba <= 0.0:
+				return skill
+	return null
 
 #
 static func SetState(agent : BaseAgent, state : State, force : bool = false):
@@ -59,7 +65,6 @@ static func SetState(agent : BaseAgent, state : State, force : bool = false):
 			Callback.ClearTimer(agent.actionTimer)
 		if IsAgentMoving(agent):
 			agent.ResetNav()
-
 
 static func Reset(agent : BaseAgent):
 	SetState(agent, State.IDLE, true)
@@ -103,9 +108,10 @@ static func StateAttack(agent : BaseAgent):
 	if not Skill.IsAlive(target):
 		SetState(agent, State.IDLE, true)
 	elif not IsActionInProgress(agent):
-		var randomSkill : SkillData = GetRandomSkill(agent)
-		if Skill.IsTargetable(agent, target, randomSkill):
-			ToAttack(agent, target, randomSkill)
+		agent.skillSelected = GetRandomSkill(agent)
+
+		if Skill.IsTargetable(agent, target, agent.skillSelected):
+			ToAttack(agent, target)
 		elif target and CanWalk(agent):
 			ToChase(agent, target)
 
@@ -118,11 +124,11 @@ static func ToWalk(agent : BaseAgent):
 		agent.aiState = State.WALK
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, State.IDLE, false])
 
-static func ToAttack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
+static func ToAttack(agent : BaseAgent, target : BaseAgent):
 	if IsAgentMoving(agent):
 		agent.ResetNav()
 	if WorldAgent.GetMapFromAgent(agent):
-		Skill.Cast(agent, target, skill)
+		Skill.Cast(agent, target, agent.skillSelected)
 
 static func ToChase(agent : BaseAgent, target : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)

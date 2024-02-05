@@ -11,11 +11,11 @@
 		"spirit": "Piou",
 		"DisplayName": true,
 		"SkillSet": {
-			"Melee": true,
-			"Mana Burst": true,
-			"Flar": true,
-			"Lum": true,
-			"Inma": true,
+			"Melee": 1.0,
+			"Mana Burst": 1.0,
+			"Flar": 1.0,
+			"Lum": 1.0,
+			"Inma": 1.0,
 		},
 
 	},
@@ -107,7 +107,7 @@
 		"Collision": "VerySmall",
 		"walkSpeed": 50,
 		"SkillSet": {
-			"Flar": true,
+			"Flar": 1.0,
 		},
 	},
 	"1011": {

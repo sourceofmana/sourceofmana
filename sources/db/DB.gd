@@ -79,8 +79,9 @@ func ParseEntitiesDB():
 				entity._displayName = result[key].DisplayName
 			if "SkillSet" in result[key]:
 				for skillSetName in result[key].SkillSet:
-					if result[key].SkillSet[skillSetName] and SkillsDB.has(skillSetName):
+					if SkillsDB.has(skillSetName):
 						entity._skillSet.append(SkillsDB[skillSetName])
+						entity._skillProba[SkillsDB[skillSetName]] = result[key].SkillSet[skillSetName]
 			EntitiesDB[key] = entity
 
 #

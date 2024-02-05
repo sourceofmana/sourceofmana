@@ -144,9 +144,9 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill._repeat and IsAlive(target) else Callable()
+	agent.SetSkillCastName("")
 	var timer : Timer = Callback.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay + skill._cooldownTime, callable, skill._name + " CoolDown")
 	agent.cooldownTimers[agent.currentSkillName] = timer
-	agent.SetSkillCastName("")
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var info : AlterationInfo = GetDamage(agent, target, skill, rng)

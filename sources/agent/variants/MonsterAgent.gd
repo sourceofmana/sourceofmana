@@ -16,4 +16,4 @@ func _ready():
 
 	super._ready()
 
-	AddSkill(Launcher.DB.SkillsDB["Melee"])
+	AddSkill(Launcher.DB.SkillsDB["Melee"], 1.0)
