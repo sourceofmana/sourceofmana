@@ -59,12 +59,12 @@ static func StateWalk(agent : BaseAgent):
 
 static func StateAttack(agent : BaseAgent):
 	var target : BaseAgent = agent.GetMostValuableAttacker()
-	if not Skill.IsAlive(target):
+	if not SkillCommons.IsAlive(target):
 		SetState(agent, State.IDLE, true)
 	elif not AICommons.IsActionInProgress(agent):
 		agent.skillSelected = AICommons.GetRandomSkill(agent)
 
-		if Skill.IsTargetable(agent, target, agent.skillSelected):
+		if SkillCommons.IsTargetable(agent, target, agent.skillSelected):
 			ToAttack(agent, target)
 		elif target and AICommons.CanWalk(agent):
 			ToChase(agent, target)
@@ -86,6 +86,6 @@ static func ToAttack(agent : BaseAgent, target : BaseAgent):
 
 static func ToChase(agent : BaseAgent, target : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
-	if map and Skill.IsSameMap(agent, target):
+	if map and SkillCommons.IsSameMap(agent, target):
 		agent.WalkToward(target.position)
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.Refresh, [agent])
