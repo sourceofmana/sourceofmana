@@ -11,64 +11,18 @@ enum State
 }
 
 #
-const transitions : Array[Array] = [
-#	IDLE			WALK			ATTACK			HALT			< To/From v
-	[State.IDLE,	State.WALK,		State.ATTACK,	State.HALT],	# IDLE
-	[State.IDLE,	State.WALK,		State.ATTACK,	State.HALT],	# WALK
-	[State.ATTACK,	State.ATTACK,	State.ATTACK,	State.HALT],	# ATTACK
-	[State.HALT,	State.HALT,		State.HALT,		State.HALT],	# HALT
-]
-
-const minDistance : int				= 30
-const maxDistance : int				= 200
-
-const minWalkTimer : int			= 5
-const maxWalkTimer : int			= 20
-
-const minUnstuckTimer : int			= 2
-const maxUnstuckTimer : int			= 10
-
-const refreshDelay : float			= 1.0
-
-#
-static func GetOffset() -> Vector2i:
-	return Vector2i(
-		randi_range(minDistance, maxDistance),
-		randi_range(minDistance, maxDistance))
-static func GetWalkTimer() -> float:
-	return randf_range(minWalkTimer, maxWalkTimer)
-static func GetUnstuckTimer() -> float:
-	return randf_range(minUnstuckTimer, maxUnstuckTimer)
-static func IsStuck(agent : BaseAgent) -> bool:
-	return agent.lastPositions.size() >= 5 and abs(agent.lastPositions[0] - agent.lastPositions[4]) < 1
-static func IsActionInProgress(agent : BaseAgent) -> bool:
-	return agent.actionTimer and not agent.actionTimer.is_stopped()
-static func IsAgentMoving(agent : BaseAgent):
-	return agent.hasCurrentGoal
-static func CanWalk(agent: BaseAgent):
-	return agent.agent != null
-static func GetRandomSkill(agent : BaseAgent) -> SkillData:
-	if agent.skillSet.size() > 0 and agent.skillProbaSum > 0.0:
-		var randProba : float = randf_range(0.0, agent.skillProbaSum)
-		for skill in agent.skillSet:
-			randProba -= agent.skillProba[skill]
-			if randProba <= 0.0:
-				return skill
-	return null
-
-#
 static func SetState(agent : BaseAgent, state : State, force : bool = false):
-	var newState : State = state if force else transitions[agent.aiState][state]
+	var newState : State = state if force else AICommons.GetTransition(agent.aiState, state)
 	if agent.aiState != newState:
 		agent.aiState = newState
-		if IsActionInProgress(agent):
+		if AICommons.IsActionInProgress(agent):
 			Callback.ClearTimer(agent.actionTimer)
-		if IsAgentMoving(agent):
+		if AICommons.IsAgentMoving(agent):
 			agent.ResetNav()
 
 static func Reset(agent : BaseAgent):
 	SetState(agent, State.IDLE, true)
-	Callback.StartTimer(agent.aiTimer, refreshDelay, AI.Refresh.bind(agent))
+	Callback.StartTimer(agent.aiTimer, AICommons.refreshDelay, AI.Refresh.bind(agent))
 
 static func Refresh(agent : BaseAgent):
 	if not agent:
@@ -89,43 +43,43 @@ static func Refresh(agent : BaseAgent):
 		_:
 			Util.Assert(false, "AI state not handled")
 
-	Callback.LoopTimer(agent.aiTimer, refreshDelay)
+	Callback.LoopTimer(agent.aiTimer, AICommons.refreshDelay)
 
 #
 static func StateIdle(agent : BaseAgent):
-	if not IsActionInProgress(agent):
-		if CanWalk(agent):
-			Callback.StartTimer(agent.actionTimer, GetWalkTimer(), AI.ToWalk.bind(agent))
+	if not AICommons.IsActionInProgress(agent):
+		if AICommons.CanWalk(agent):
+			Callback.StartTimer(agent.actionTimer, AICommons.GetWalkTimer(), AI.ToWalk.bind(agent))
 
 static func StateWalk(agent : BaseAgent):
-	if IsActionInProgress(agent) and IsAgentMoving(agent):
-		if IsStuck(agent):
+	if AICommons.IsActionInProgress(agent) and AICommons.IsAgentMoving(agent):
+		if AICommons.IsStuck(agent):
 			agent.ResetNav()
-			Callback.StartTimer(agent.actionTimer, GetUnstuckTimer(), AI.ToWalk.bind(agent))
+			Callback.StartTimer(agent.actionTimer, AICommons.GetUnstuckTimer(), AI.ToWalk.bind(agent))
 
 static func StateAttack(agent : BaseAgent):
 	var target : BaseAgent = agent.GetMostValuableAttacker()
 	if not Skill.IsAlive(target):
 		SetState(agent, State.IDLE, true)
-	elif not IsActionInProgress(agent):
-		agent.skillSelected = GetRandomSkill(agent)
+	elif not AICommons.IsActionInProgress(agent):
+		agent.skillSelected = AICommons.GetRandomSkill(agent)
 
 		if Skill.IsTargetable(agent, target, agent.skillSelected):
 			ToAttack(agent, target)
-		elif target and CanWalk(agent):
+		elif target and AICommons.CanWalk(agent):
 			ToChase(agent, target)
 
 # Could be delayed, always check if agent is inside a map
 static func ToWalk(agent : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map:
-		var position : Vector2i = WorldNavigation.GetRandomPositionAABB(map, agent.position, GetOffset())
+		var position : Vector2i = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.GetOffset())
 		agent.WalkToward(position)
 		agent.aiState = State.WALK
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, State.IDLE, false])
 
 static func ToAttack(agent : BaseAgent, target : BaseAgent):
-	if IsAgentMoving(agent):
+	if AICommons.IsAgentMoving(agent):
 		agent.ResetNav()
 	if WorldAgent.GetMapFromAgent(agent):
 		Skill.Cast(agent, target, agent.skillSelected)
