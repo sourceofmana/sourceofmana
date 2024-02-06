@@ -8,6 +8,9 @@ class_name EntityInteractive
 @onready var emoteFx : GPUParticles2D		= $Visible/Emote
 @onready var nameLabel : Label				= $Name
 
+static var MorphFx : PackedScene			= preload("res://presets/effects/particles/Morph.tscn")
+static var LevelUpFx : PackedScene			= preload("res://presets/effects/particles/LevelUp.tscn")
+
 #
 func DisplayEmote(emoteID : String):
 	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
@@ -19,30 +22,30 @@ func DisplayEmote(emoteID : String):
 
 #
 func DisplayMorph(callback : Callable):
-	var morphFx : GPUParticles2D = load("res://presets/effects/particles/Morph.tscn").instantiate()
-	if morphFx:
+	var particle : GPUParticles2D = MorphFx.instantiate()
+	if particle:
 		Callback.SelfDestructTimer(self, EntityCommons.morphDelay, callback)
-		morphFx.finished.connect(Util.RemoveNode.bind(morphFx, self))
-		morphFx.emitting = true
-		add_child(morphFx)
+		particle.finished.connect(Util.RemoveNode.bind(particle, self))
+		particle.emitting = true
+		add_child(particle)
 
 #
 func DisplayLevelUp():
-	var levelUpFx : GPUParticles2D = load("res://presets/effects/particles/LevelUp.tscn").instantiate()
-	if levelUpFx:
-		levelUpFx.emitting = true
-		add_child(levelUpFx)
+	var particle : GPUParticles2D = LevelUpFx.instantiate()
+	if particle:
+		particle.emitting = true
+		add_child(particle)
 
 #
 func DisplayCast(entity : BaseEntity, skillName : String):
 	if Launcher.DB.SkillsDB.has(skillName):
 		var skill : SkillData = Launcher.DB.SkillsDB[skillName]
-		if skill._castPresetPath.length() > 0:
-			var castFx : GPUParticles2D = FileSystem.LoadEffect(skill._castPresetPath)
+		if skill._castPreset:
+			var castFx : GPUParticles2D = skill._castPreset.instantiate()
 			if castFx:
 				castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
 				castFx.lifetime = skill._castTime + entity.stat.current.castAttackDelay
-				castFx.texture = FileSystem.LoadGfx(skill._castTextureOverride)
+				castFx.texture = skill._castTextureOverride
 				if skill._castColor != Color.BLACK:
 					castFx.process_material.set("color", skill._castColor)
 				castFx.emitting = true
@@ -51,8 +54,8 @@ func DisplayCast(entity : BaseEntity, skillName : String):
 					Callback.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(entity, skill), "ActionTimer")
 
 func DisplaySkill(entity : BaseEntity, skill : SkillData):
-	if skill and skill._skillPresetPath.length() > 0:
-		var skillFx : GPUParticles2D = FileSystem.LoadEffect(skill._skillPresetPath)
+	if skill and skill._skillPreset:
+		var skillFx : GPUParticles2D = skill._skillPreset.instantiate()
 		if skillFx:
 			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, entity))
 			skillFx.lifetime = skill._skillTime
@@ -62,8 +65,8 @@ func DisplaySkill(entity : BaseEntity, skill : SkillData):
 			entity.add_child(skillFx)
 
 func DisplayProjectile(dealer : BaseEntity, skill : SkillData, callable : Callable):
-	if Launcher.Map.tilemapNode and skill and skill._projectilePath.length() > 0:
-		var projectileNode : Node2D = FileSystem.LoadEffect(skill._projectilePath)
+	if Launcher.Map.tilemapNode and skill and skill._projectilePreset:
+		var projectileNode : Node2D = skill._projectilePreset.instantiate()
 		if projectileNode:
 			projectileNode.origin = dealer.interactive.visibleNode.global_position
 			projectileNode.origin.y += EntityCommons.interactionDisplayOffset

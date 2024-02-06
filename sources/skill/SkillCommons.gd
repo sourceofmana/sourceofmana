@@ -84,7 +84,7 @@ static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
 	return agent.cooldownTimers.has(skill._name) and agent.cooldownTimers[skill._name] != null and not agent.cooldownTimers[skill._name].is_queued_for_deletion()
 
 static func IsDelayed(skill : SkillData) -> bool:
-	return skill._projectilePath.length() > 0
+	return skill._projectilePreset != null
 
 static func HasSkill(agent : BaseAgent, skill : SkillData) -> bool:
 	return agent.skillSet.find(skill) != -1

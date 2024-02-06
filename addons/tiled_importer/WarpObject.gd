@@ -1,6 +1,5 @@
 @tool
 extends Area2D
-
 class_name WarpObject
 
 @export var destinationMap : String 			= ""
@@ -10,9 +9,9 @@ class_name WarpObject
 @export var randomPoints : PackedVector2Array	= []
 
 const defaultParticlesCount : int				= 12
-const particlePreset : PackedScene				= preload("res://presets/effects/particles/WarpLocation.tscn")
-
 var isPlayerEntered : bool						= false
+
+static var WarpFx : PackedScene					= preload("res://presets/effects/particles/WarpLocation.tscn")
 
 #
 func bodyEntered(body : CollisionObject2D):
@@ -34,11 +33,10 @@ func _ready():
 	self.body_entered.connect(bodyEntered)
 	self.body_exited.connect(bodyExited)
 
-	var particle : CPUParticles2D = particlePreset.instantiate()
-	add_child.call_deferred(particle)
-
+	var particle : CPUParticles2D = WarpFx.instantiate()
 	particle.emission_shape = CPUParticles2D.EmissionShape.EMISSION_SHAPE_POINTS
 	particle.emission_points = randomPoints
+	add_child.call_deferred(particle)
 
 	var areaRatio : float = areaSize / (32*32)
 	particle.amount = int(float(defaultParticlesCount) * areaRatio)
