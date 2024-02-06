@@ -38,7 +38,7 @@
 		"Damage": 50,
 	},
 	"Lum": {
-		"IconPath": "items/skill/skill.png",
+		"IconPath": "items/skill/spell.png",
 		"CastPresetPath": "particles/CastSpell",
 		"CastTextureOverride": "effects/particles/cast3.png",
 		"CastColor": "99FFFF",
@@ -52,7 +52,7 @@
 		"Heal": 50,
 	},
 	"Inma": {
-		"IconPath": "items/skill/skill.png",
+		"IconPath": "items/skill/spell.png",
 		"CastPresetPath": "particles/CastSpell",
 		"CastTextureOverride": "effects/particles/cast4.png",
 		"CastColor": "FFFF99",
