@@ -8,27 +8,21 @@ static func FileExists(path : String) -> bool:
 static func ResourceExists(path : String) -> bool:
 	return ResourceLoader.exists(path)
 
-static func FileLoad(path : String) -> Resource:
-	return load(path)
-
 static func FileAlloc(path : String) -> Object:
-	return FileLoad(path).new()
+	return ResourceLoader.load(path).new()
 
 static func CanInstantiateResource(res : Object) -> bool:
 	return res.has_method("can_instantiate") && res.can_instantiate()
 
-static func ResourceLoad(path : String) -> Object:
-	return ResourceLoader.load(path)
-
 static func ResourceInstance(path : String) -> Object:
-	var resourceLoaded : Object		= ResourceLoad(path)
+	var resourceLoaded : Object		= ResourceLoader.load(path)
 	var resourceInstance : Object	= null
 	if resourceLoaded != null && CanInstantiateResource(resourceLoaded):
 		resourceInstance = resourceLoaded.instantiate()
 	return resourceInstance
 
 static func ResourceInstanceOrLoad(path : String) -> Object:
-	var resourceLoaded : Object		= ResourceLoad(path)
+	var resourceLoaded : Object		= ResourceLoader.load(path)
 	var resource : Object			= null
 	if resourceLoaded != null:
 		if CanInstantiateResource(resourceLoaded):
@@ -110,7 +104,7 @@ static func LoadSource(path : String, alloc : bool = true) -> Object:
 	Util.Assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		srcFile = FileAlloc(fullPath) if alloc else FileLoad(fullPath)
+		srcFile = FileAlloc(fullPath) if alloc else ResourceLoader.load(fullPath)
 		Util.PrintLog("Source", "Loading script: " + fullPath)
 
 	return srcFile
@@ -153,7 +147,7 @@ static func LoadResource(fullPath : String, instantiate : bool = true) -> Object
 
 	Util.Assert(pathExists, "Resource file not found at: " + fullPath)
 	if pathExists:
-		rscInstance = ResourceInstance(fullPath) if instantiate else ResourceLoad(fullPath)
+		rscInstance = ResourceInstance(fullPath) if instantiate else ResourceLoader.load(fullPath)
 
 	return rscInstance
 
@@ -189,7 +183,7 @@ static func LoadMusic(path : String) -> Resource:
 	Util.Assert(pathExists, "Music file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
-		musicFile = FileLoad(fullPath)
+		musicFile = ResourceLoader.load(fullPath)
 		Util.PrintLog("Music", "Loading file: " + fullPath)
 
 	return musicFile
