@@ -35,11 +35,15 @@ func OnPlayerEnterGame():
 	if  inventoryFill:
 		Util.Assert(Launcher.Player != null && Launcher.Player.inventory != null, "Debug: Player inventory is not accessible")
 		if Launcher.Player && Launcher.Player.inventory:
+			ResourceLoader.load_threaded_request("res://data/items/apple.tres")
+			ResourceLoader.load_threaded_request("res://data/items/pettys_key.tres")
+			ResourceLoader.load_threaded_request("res://data/items/grumpys_key.tres")
+			ResourceLoader.load_threaded_request("res://data/items/hungrys_key.tres")
 			var inventory : Object = Launcher.Player.inventory
-			inventory.add_item(load("res://data/items/apple.tres"), 14)
-			inventory.add_item(load("res://data/items/pettys_key.tres"), 3)
-			inventory.add_item(load("res://data/items/grumpys_key.tres"))
-			inventory.add_item(load("res://data/items/hungrys_key.tres"), 2)
+			inventory.add_item(ResourceLoader.load_threaded_get("res://data/items/apple.tres"), 14)
+			inventory.add_item(ResourceLoader.load_threaded_get("res://data/items/pettys_key.tres"), 3)
+			inventory.add_item(ResourceLoader.load_threaded_get("res://data/items/grumpys_key.tres"))
+			inventory.add_item(ResourceLoader.load_threaded_get("res://data/items/hungrys_key.tres"), 2)
 
 #
 func UpdateNavLine(entity : BaseEntity):
