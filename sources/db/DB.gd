@@ -1,15 +1,16 @@
-extends ServiceBase
+extends Object
+class_name DB
 
-var MapsDB : Dictionary				= {}
-var MusicsDB : Dictionary			= {}
-var EthnicitiesDB : Dictionary		= {}
-var HairstylesDB : Dictionary		= {}
-var EntitiesDB : Dictionary			= {}
-var EmotesDB : Dictionary			= {}
-var SkillsDB : Dictionary			= {}
+static var MapsDB : Dictionary				= {}
+static var MusicsDB : Dictionary			= {}
+static var EthnicitiesDB : Dictionary		= {}
+static var HairstylesDB : Dictionary		= {}
+static var EntitiesDB : Dictionary			= {}
+static var EmotesDB : Dictionary			= {}
+static var SkillsDB : Dictionary			= {}
 
 #
-func ParseMapsDB():
+static func ParseMapsDB():
 	var result = FileSystem.LoadDB("maps.json")
 
 	if not result.is_empty():
@@ -19,7 +20,7 @@ func ParseMapsDB():
 			map._path = result[key].Path
 			MapsDB[key] = map
 
-func ParseMusicsDB():
+static func ParseMusicsDB():
 	var result = FileSystem.LoadDB("musics.json")
 
 	if not result.is_empty():
@@ -29,7 +30,7 @@ func ParseMusicsDB():
 			music._path = result[key].Path
 			MusicsDB[key] = music
 
-func ParseEthnicitiesDB():
+static func ParseEthnicitiesDB():
 	var result = FileSystem.LoadDB("ethnicities.json")
 
 	if not result.is_empty():
@@ -41,7 +42,7 @@ func ParseEthnicitiesDB():
 			ethnicity._path.append(result[key].Nonbinary)
 			EthnicitiesDB[key] = ethnicity
 
-func ParseHairstylesDB():
+static func ParseHairstylesDB():
 	var result = FileSystem.LoadDB("hairstyles.json")
 
 	if not result.is_empty():
@@ -53,15 +54,14 @@ func ParseHairstylesDB():
 			hairstyle._path.append(result[key].Nonbinary)
 			HairstylesDB[key] = hairstyle
 
-func ParseEntitiesDB():
+static func ParseEntitiesDB():
 	var result = FileSystem.LoadDB("entities.json")
 
 	if not result.is_empty():
 		for key in result:
 			EntitiesDB[key] = EntityData.Create(key, result[key])
 
-#
-func ParseEmotesDB():
+static func ParseEmotesDB():
 	var result = FileSystem.LoadDB("emotes.json")
 
 	if not result.is_empty():
@@ -72,8 +72,7 @@ func ParseEmotesDB():
 			emote._path = result[key].Path
 			EmotesDB[key] = emote
 
-#
-func ParseSkillsDB():
+static func ParseSkillsDB():
 	var result = FileSystem.LoadDB("skills.json")
 
 	if not result.is_empty():
@@ -81,7 +80,7 @@ func ParseSkillsDB():
 			SkillsDB[key] = SkillData.Create(key, result[key])
 
 #
-func GetMapPath(mapName : String) -> String:
+static func GetMapPath(mapName : String) -> String:
 	var path : String = ""
 	var mapInfo = null
 
@@ -93,7 +92,7 @@ func GetMapPath(mapName : String) -> String:
 	return path
 
 #
-func _post_launch():
+static func Init():
 	ParseMapsDB()
 	ParseMusicsDB()
 	ParseEthnicitiesDB()
@@ -101,6 +100,3 @@ func _post_launch():
 	ParseSkillsDB()
 	ParseEntitiesDB()
 	ParseEmotesDB()
-
-
-	isInitialized = true

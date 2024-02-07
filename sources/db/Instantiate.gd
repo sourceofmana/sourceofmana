@@ -4,9 +4,9 @@ class_name Instantiate
 # Entity
 static func FindEntityReference(entityID : String) -> EntityData:
 	var ref : EntityData = null
-	for entityDB in Launcher.DB.EntitiesDB:
-		if entityDB == entityID || Launcher.DB.EntitiesDB[entityDB]._name == entityID:
-			ref = Launcher.DB.EntitiesDB[entityDB]
+	for entityDB in DB.EntitiesDB:
+		if entityDB == entityID || DB.EntitiesDB[entityDB]._name == entityID:
+			ref = DB.EntitiesDB[entityDB]
 			break
 	return ref
 
@@ -42,7 +42,7 @@ static func CreateAgent(entityType : String, entityID : String, entityName : Str
 
 # Map
 static func LoadMapData(mapName : String, ext : String) -> Object:
-	var mapPath : String			= Launcher.DB.GetMapPath(mapName)
+	var mapPath : String			= DB.GetMapPath(mapName)
 	var mapInstance : Object		= FileSystem.LoadMap(mapPath, ext)
 
 	return mapInstance

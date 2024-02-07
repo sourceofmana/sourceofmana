@@ -97,9 +97,9 @@ func TriggerInteract(triggeredAgentID : int, rpcID : int = NetworkCommons.RidSin
 
 func TriggerCast(targetID : int, skillName : String, rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
-	if player and Launcher.DB.SkillsDB.has(skillName):
+	if player and DB.SkillsDB.has(skillName):
 		var target : BaseAgent = WorldAgent.GetAgent(targetID)
-		Skill.Cast(player, target, Launcher.DB.SkillsDB[skillName])
+		Skill.Cast(player, target, DB.SkillsDB[skillName])
 
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)

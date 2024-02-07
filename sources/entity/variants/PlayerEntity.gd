@@ -56,7 +56,7 @@ func Interact():
 		Cast("Melee")
 
 func Cast(skillName : String):
-	var skill : SkillData = Launcher.DB.SkillsDB[skillName]
+	var skill : SkillData = DB.SkillsDB[skillName]
 	Util.Assert(skill != null, "Skill ID is not found, can't cast it")
 	if skill == null:
 		return

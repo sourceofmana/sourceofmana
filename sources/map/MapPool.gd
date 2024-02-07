@@ -6,7 +6,7 @@ var pool : Dictionary		= {}
 #
 func LoadMapClientData(mapName : String) -> Node2D:
 	var mapInstance : Node2D		= GetMap(mapName)
-	var mapPath : String			= Launcher.DB.GetMapPath(mapName)
+	var mapPath : String			= DB.GetMapPath(mapName)
 
 	if mapInstance == null:
 		mapInstance = FileSystem.LoadMap(mapPath, Path.MapClientExt)

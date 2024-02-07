@@ -35,8 +35,8 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 		entity._displayName = result.DisplayName
 	if "SkillSet" in result:
 		for skillSetName in result.SkillSet:
-			if Launcher.DB.SkillsDB.has(skillSetName):
-				entity._skillSet.append(Launcher.DB.SkillsDB[skillSetName])
-				entity._skillProba[Launcher.DB.SkillsDB[skillSetName]] = result.SkillSet[skillSetName]
+			if DB.SkillsDB.has(skillSetName):
+				entity._skillSet.append(DB.SkillsDB[skillSetName])
+				entity._skillProba[DB.SkillsDB[skillSetName]] = result.SkillSet[skillSetName]
 
 	return entity

@@ -64,7 +64,7 @@ func AgentWarped(map : WorldMap, instance : WorldInstance, agent : BaseAgent):
 
 # Generic
 func _post_launch():
-	for mapName in Launcher.DB.MapsDB:
+	for mapName in DB.MapsDB:
 		areas[mapName] = WorldMap.Create(mapName)
 
 	defaultSpawn.map				= GetMap(LauncherCommons.DefaultStartMap)

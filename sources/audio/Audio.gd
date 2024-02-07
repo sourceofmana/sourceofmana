@@ -16,8 +16,8 @@ func Stop():
 
 func Load(soundName : String):
 	Util.Assert(audioPlayer != null, "AudioStreamPlayer could not be found")
-	if audioPlayer && currentTrack != soundName && not soundName.is_empty() && Launcher.DB.MusicsDB[soundName] != null:
-		var soundStream : Resource = FileSystem.LoadMusic(Launcher.DB.MusicsDB[soundName]._path as String)
+	if audioPlayer && currentTrack != soundName && not soundName.is_empty() && DB.MusicsDB[soundName] != null:
+		var soundStream : Resource = FileSystem.LoadMusic(DB.MusicsDB[soundName]._path as String)
 		Util.Assert(soundStream != null, "Could not load music: " + soundName)
 		if soundStream != null:
 			soundStream.set_loop(true)

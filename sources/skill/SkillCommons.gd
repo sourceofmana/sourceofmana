@@ -78,7 +78,7 @@ static func IsTargetable(agent : BaseAgent, target : BaseAgent, skill : SkillDat
 	return IsNotSelf(agent, target) and IsAlive(target) and IsSameMap(agent, target) and IsNear(agent, target, GetRange(agent, skill))
 
 static func IsCasting(agent : BaseAgent, skill : SkillData = null) -> bool:
-	return (agent.currentSkillName == skill._name) if skill else Launcher.DB.SkillsDB.has(agent.currentSkillName)
+	return (agent.currentSkillName == skill._name) if skill else DB.SkillsDB.has(agent.currentSkillName)
 
 static func IsCoolingDown(agent : BaseAgent, skill : SkillData) -> bool:
 	return agent.cooldownTimers.has(skill._name) and agent.cooldownTimers[skill._name] != null and not agent.cooldownTimers[skill._name].is_queued_for_deletion()

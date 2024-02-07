@@ -81,8 +81,8 @@ func SetVelocity():
 func SetCurrentState():
 	if stat.health <= 0:
 		SetState(EntityCommons.State.DEATH)
-	elif Launcher.DB.SkillsDB.has(currentSkillName):
-		SetState(Launcher.DB.SkillsDB[currentSkillName]._state)
+	elif DB.SkillsDB.has(currentSkillName):
+		SetState(DB.SkillsDB[currentSkillName]._state)
 	elif currentVelocity == Vector2i.ZERO:
 		SetState(EntityCommons.State.IDLE)
 	else:
@@ -95,7 +95,7 @@ func SetState(wantedState : EntityCommons.State) -> bool:
 	return currentState == wantedState
 
 func SetSkillCastName(skillName : String):
-	forceUpdate = forceUpdate or Launcher.DB.SkillsDB.has(currentSkillName)
+	forceUpdate = forceUpdate or DB.SkillsDB.has(currentSkillName)
 	currentSkillName = skillName
 	if skillName.length() > 0:
 		skillSelected = null
@@ -118,7 +118,7 @@ func WalkToward(pos : Vector2):
 	if pos == position:
 		return
 
-	if Launcher.DB.SkillsDB.has(currentSkillName):
+	if DB.SkillsDB.has(currentSkillName):
 		Skill.Stopped(self)
 
 	hasCurrentGoal = true

@@ -15,8 +15,8 @@ static var LevelUpFx : PackedScene			= preload("res://presets/effects/particles/
 func DisplayEmote(emoteID : String):
 	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
 	if emoteFx:
-		if Launcher.DB.EmotesDB && Launcher.DB.EmotesDB[emoteID]:
-			emoteFx.texture = FileSystem.LoadGfx(Launcher.DB.EmotesDB[emoteID]._path)
+		if DB.EmotesDB && DB.EmotesDB[emoteID]:
+			emoteFx.texture = FileSystem.LoadGfx(DB.EmotesDB[emoteID]._path)
 			emoteFx.lifetime = EntityCommons.emoteDelay
 			emoteFx.restart()
 
@@ -38,8 +38,8 @@ func DisplayLevelUp():
 
 #
 func DisplayCast(entity : BaseEntity, skillName : String):
-	if Launcher.DB.SkillsDB.has(skillName):
-		var skill : SkillData = Launcher.DB.SkillsDB[skillName]
+	if DB.SkillsDB.has(skillName):
+		var skill : SkillData = DB.SkillsDB[skillName]
 		if skill._castPreset:
 			var castFx : GPUParticles2D = skill._castPreset.instantiate()
 			if castFx:
@@ -84,8 +84,8 @@ func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, al
 			newLabel.SetValue(dealer, value, alteration)
 			Launcher.Map.tilemapNode.add_child(newLabel)
 
-		if Launcher.DB.SkillsDB.has(skillName):
-			var skill : SkillData = Launcher.DB.SkillsDB[skillName]
+		if DB.SkillsDB.has(skillName):
+			var skill : SkillData = DB.SkillsDB[skillName]
 			if skill._mode != Skill.TargetMode.ZONE:
 				var callable : Callable = DisplaySkill.bind(target, skill)
 				if alteration == EntityCommons.Alteration.PROJECTILE:

@@ -18,7 +18,7 @@ extends ServiceBase
 @onready var settingsWindow : WindowPanel		= $FloatingWindows/Settings
 @onready var emoteWindow : WindowPanel			= $FloatingWindows/Emote
 @onready var quitWindow : WindowPanel			= $FloatingWindows/Quit
-@onready var respawnWindow : WindowPanel		= $FloatingWindows/RespawnWindow
+@onready var respawnWindow : WindowPanel		= $FloatingWindows/Respawn
 
 @onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/Margin/VBoxContainer
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
@@ -71,7 +71,7 @@ func EnterLoginMenu():
 func EnterGame():
 	if Launcher.Player:
 		inventoryWindow.initialize()
-		emoteContainer.FillGridContainer(Launcher.DB.EmotesDB)
+		emoteContainer.FillGridContainer(DB.EmotesDB)
 
 		background.set_visible(false)
 		loginWindow.EnableControl(false)

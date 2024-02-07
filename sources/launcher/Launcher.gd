@@ -13,7 +13,6 @@ var Debug : ServiceBase				= null
 var Audio : ServiceBase				= null
 var Camera : ServiceBase			= null
 var Conf : ServiceBase				= null
-var DB : ServiceBase				= null
 var FSM : ServiceBase				= null
 var Map : ServiceBase				= null
 var Save : ServiceBase				= null
@@ -86,7 +85,6 @@ func _enter_tree():
 func _ready():
 	Action			= FileSystem.LoadSource("action/Action.gd")
 	Conf			= FileSystem.LoadSource("conf/Conf.gd")
-	DB				= FileSystem.LoadSource("db/DB.gd")
 	Network			= FileSystem.LoadSource("network/Network.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 
@@ -99,12 +97,13 @@ func _ready():
 
 # Call _post_launch functions for service depending on other services
 func _post_launch():
+	DB.Init()
+
 	if Camera and not Camera.isInitialized:		Camera._post_launch()
 	if GUI and not GUI.isInitialized:			GUI._post_launch()
 	if Debug and not Debug.isInitialized:		Debug._post_launch()
 	if Audio and not Audio.isInitialized:		Audio._post_launch()
 	if Conf and not Conf.isInitialized:			Conf._post_launch()
-	if DB and not DB.isInitialized:				DB._post_launch()
 	if World and not World.isInitialized:		World._post_launch()
 	if FSM and not FSM.isInitialized:			FSM._post_launch()
 

@@ -8,7 +8,7 @@ func Warped():
 		var mapName : String = Launcher.Map.mapNode.get_name()
 		Util.Assert(mapName.is_empty() == false, "Could not fetch the active map name")
 		if mapName.is_empty() == false:
-			var mapPath : String = Launcher.DB.GetMapPath(mapName)
+			var mapPath : String = DB.GetMapPath(mapName)
 			Util.Assert(mapPath.is_empty() == false, "Could not fetch the active map path")
 			if mapPath.is_empty() == false:
 				var resource : Texture2D = FileSystem.LoadMinimap(mapPath)
