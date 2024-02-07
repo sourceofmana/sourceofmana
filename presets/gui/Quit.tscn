@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://sources/gui/Quit.gd" id="3"]
 
 [node name="Panel" type="PanelContainer"]
-custom_minimum_size = Vector2(280, 120)
+custom_minimum_size = Vector2(290, 120)
 offset_right = 280.0
 offset_bottom = 120.0
 theme = ExtResource("1")
@@ -29,7 +29,7 @@ theme_override_constants/line_spacing = 0
 text = "Any time spent in the real world is less time spent in the mana world!"
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 1
+autowrap_mode = 2
 language = "en_GB"
 
 [node name="ButtonChoice" type="HBoxContainer" parent="Margin/VBoxContainer"]

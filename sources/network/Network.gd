@@ -16,6 +16,11 @@ func ConnectPlayer(playerName : String, rpcID : int = NetworkCommons.RidSingleMo
 func DisconnectPlayer(rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("DisconnectPlayer", [], rpcID)
 
+# Respawn
+@rpc("authority", "reliable")
+func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("TriggerRespawn", [], rpcID)
+
 # Warp
 @rpc("any_peer", "unreliable")
 func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):

@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8frfkv2y8x6"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_xw25t"]
+[ext_resource type="Script" path="res://sources/gui/RespawnDialog.gd" id="2_l0vfw"]
+
+[node name="Respawn" type="PanelContainer"]
+custom_minimum_size = Vector2(280, 64)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -189.0
+offset_top = -40.0
+offset_right = 91.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_xw25t")
+script = ExtResource("2_l0vfw")
+
+[node name="Margin" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Margin/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 6
+text = "Right now, you would just love to be resurrected."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Respawn" type="Button" parent="Margin/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Respawn"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="Margin/VBoxContainer/Respawn" to="." method="_on_respawn_pressed"]

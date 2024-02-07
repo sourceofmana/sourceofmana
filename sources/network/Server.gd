@@ -77,6 +77,11 @@ func TriggerSit(rpcID : int = NetworkCommons.RidSingleMode):
 	if player:
 		player.SetState(EntityCommons.State.SIT)
 
+func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
+	var player : BaseAgent = GetAgent(rpcID)
+	if player is PlayerAgent:
+		player.Respawn()
+
 func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	NotifyInstancePlayers(null, GetAgent(rpcID), "EmotePlayer", [emoteID])
 

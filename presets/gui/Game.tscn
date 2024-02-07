@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=50 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -45,6 +45,7 @@
 [ext_resource type="BitMap" uid="uid://cl65b4aves6sl" path="res://data/graphics/gui/mobile/button_mask.png" id="25_a6irb"]
 [ext_resource type="Texture2D" uid="uid://reqjw3bt0dtj" path="res://data/graphics/gui/mobile/buttonB_pressed.png" id="27_rgxqc"]
 [ext_resource type="Texture2D" uid="uid://dgiywkj6go44v" path="res://data/graphics/gui/mobile/buttonA_pressed.png" id="29_ioa8a"]
+[ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
 shader = ExtResource("4_60kv4")
@@ -429,6 +430,9 @@ offset_left = 488.0
 offset_top = 114.0
 offset_right = -453.0
 offset_bottom = -299.0
+
+[node name="Respawn" parent="FloatingWindows" instance=ExtResource("44_7o5pa")]
+layout_mode = 1
 
 [node name="Shaders" type="CanvasLayer" parent="."]
 layer = 128

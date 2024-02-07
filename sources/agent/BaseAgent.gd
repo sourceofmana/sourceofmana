@@ -185,6 +185,11 @@ func GetDamageRatio(attacker : BaseAgent) -> float:
 			return float(attackers[attacker][0]) / float(stat.current.maxHealth)
 	return 0.0
 
+func Killed(_attacker: BaseAgent):
+	if aiTimer:
+		AI.SetState(self, AI.State.HALT)
+		Callback.SelfDestructTimer(self, stat.deathDelay, WorldAgent.RemoveAgent.bind(self))
+
 #
 func _specific_process():
 	pass

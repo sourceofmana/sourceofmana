@@ -5,3 +5,5 @@ build/*
 
 # linux env
 .mono
+
+.vscode

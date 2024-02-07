@@ -16,6 +16,9 @@ var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 var visual : EntityVisual				= EntityVisual.new()
 
+
+signal entity_died
+
 # Init
 func SetData(data : EntityData):
 	# Stat
@@ -41,12 +44,16 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 
 	entityPosOffset = gardbandPosition - position
 	entityVelocity = nextVelocity
+	var previousState = entityState
 	entityState = nextState
 	entityOrientation = nextOrientation
 
-	if visual.skillCastName != nextSkillCastName:
+	if visual and interactive and visual.skillCastName != nextSkillCastName:
 		visual.skillCastName = nextSkillCastName
 		interactive.DisplayCast(self, nextSkillCastName)
+
+	if previousState != nextState and nextState == EntityCommons.State.DEATH:
+		entity_died.emit()
 
 #
 func _physics_process(delta):

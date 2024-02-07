@@ -116,7 +116,8 @@ func ToggleControl():
 
 func EnableControl(state : bool):
 	set_visible(state)
-	SetFloatingWindowToTop()
+	if state:
+		SetFloatingWindowToTop()
 
 	if Launcher.Action && blockActions:
 		Launcher.Action.Enable(!state)
@@ -161,6 +162,10 @@ func UpdateWindow(eventPosition : Vector2):
 		size.x = clamp(size.x, get_minimum_size().x, Launcher.GUI.windows.get_size().x)
 		size.y = clamp(size.y, get_minimum_size().y, Launcher.GUI.windows.get_size().y)
 		position = ClampFloatingWindow(newPosition, Launcher.GUI.windows.get_size() - get_size())
+
+func Center():
+	reset_size()
+	global_position = get_viewport_rect().size / 2 - get_rect().size / 2
 
 func _on_CloseButton_pressed():
 	set_visible(false)

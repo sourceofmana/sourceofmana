@@ -12,6 +12,8 @@ func SetLocalPlayer():
 		Launcher.Camera.mainCamera = FileSystem.LoadEntityComponent("Camera")
 		if Launcher.Camera.mainCamera:
 			add_child.call_deferred(Launcher.Camera.mainCamera)
+	
+	entity_died.connect(func (): Launcher.GUI.respawnWindow.EnableControl(true))
 
 func ClearTarget():
 	if target != null:

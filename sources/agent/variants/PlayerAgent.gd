@@ -62,3 +62,19 @@ func Morph(notifyMorphing : bool):
 #
 func _specific_process():
 	UpdateStats()
+
+#
+func Respawn():
+	if SkillCommons.IsAlive(self):
+		return
+	WorldAgent.PopAgent(self)
+	var spawn: SpawnObject = Launcher.World.defaultSpawn
+	position = spawn.spawn_position
+	ResetNav()
+
+	# Reset stats that were affected by death
+	stat.health  = int(Launcher.Player.stat.current.maxHealth / 2.0)
+	stat.mana 	 = int(Launcher.Player.stat.current.maxMana / 2.0)
+	stat.stamina = int(Launcher.Player.stat.current.maxStamina / 2.0)
+
+	Launcher.World.Spawn(spawn.map, self)
