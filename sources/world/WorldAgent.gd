@@ -9,7 +9,7 @@ static func GetInstanceFromAgent(agent : BaseAgent) -> SubViewport:
 
 static func GetMapFromAgent(agent : BaseAgent) -> WorldMap:
 	var map : WorldMap = null
-	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+	var inst : WorldInstance = GetInstanceFromAgent(agent)
 	if inst:
 		Util.Assert(inst.map != null, "Agent's base map is incorrect, instance is not referenced inside a map")
 		map = inst.map
@@ -17,7 +17,7 @@ static func GetMapFromAgent(agent : BaseAgent) -> WorldMap:
 
 static func GetNeighboursFromAgent(checkedAgent : BaseAgent) -> Array[Array]:
 	var neighbours : Array[Array] = []
-	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(checkedAgent)
+	var instance : WorldInstance = GetInstanceFromAgent(checkedAgent)
 	if instance:
 		neighbours.append(instance.npcs)
 		neighbours.append(instance.mobs)
@@ -42,9 +42,9 @@ static func RemoveAgent(agent : BaseAgent):
 		if agent.get_parent() and agent.spawnInfo and agent.spawnInfo.is_persistant:
 			Callback.SelfDestructTimer(agent.get_parent(), agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent.bind(agent.spawnInfo))
 
-		WorldAgent.PopAgent(agent)
+		PopAgent(agent)
 		agents.erase(agent)
-		agent.free()
+		agent.queue_free()
 
 static func HasAgent(inst : WorldInstance, agent : BaseAgent):
 	var hasAgent : bool = false
@@ -61,7 +61,7 @@ static func HasAgent(inst : WorldInstance, agent : BaseAgent):
 static func PopAgent(agent : BaseAgent):
 	Util.Assert(agent != null, "Agent is null, can't pop it")
 	if agent:
-		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+		var inst : WorldInstance = GetInstanceFromAgent(agent)
 		Launcher.Network.Server.NotifyInstancePlayers(inst, agent, "RemoveEntity", [], false)
 		if inst:
 			if agent is PlayerAgent:
@@ -78,7 +78,7 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 	Util.Assert(agent != null, "Agent is null, can't push it")
 	Util.Assert(inst != null, "Instance is null, can't push the agent in it")		
 	if agent and inst:
-		if not WorldAgent.HasAgent(inst, agent):
+		if not HasAgent(inst, agent):
 			if agent is PlayerAgent:
 				var prevPlayerCount : int = inst.players.size()
 				inst.players.push_back(agent)
@@ -91,7 +91,7 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 
 			inst.add_child.call_deferred(agent)
 	else:
-		WorldAgent.RemoveAgent(agent)
+		RemoveAgent(agent)
 
 static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : String = "") -> BaseAgent:
 	var position : Vector2 = WorldNavigation.GetSpawnPosition(spawn.map, spawn)
@@ -102,7 +102,7 @@ static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : St
 	agent.spawnInfo = spawn
 	agent.position = position
 
-	WorldAgent.AddAgent(agent)
+	AddAgent(agent)
 	Launcher.World.Spawn(spawn.map, agent, instanceID)
 
 	return agent
