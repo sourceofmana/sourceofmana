@@ -194,16 +194,16 @@ func RefreshSettings(apply : bool):
 			category[option][ACC_TYPE.INIT].call_deferred(apply)
 
 func SaveSettings():
-	Launcher.Conf.SaveType("settings", Launcher.Conf.Type.USERSETTINGS)
+	Conf.SaveType("settings", Conf.Type.USERSETTINGS)
 
 func SetVal(key : String, value):
-	Launcher.Conf.SetValue(userSection, key, Launcher.Conf.Type.USERSETTINGS, value)
+	Conf.SetValue(userSection, key, Conf.Type.USERSETTINGS, value)
 
 func GetVal(key : String):
-	var value = Launcher.Conf.GetVariant(userSection, key, Launcher.Conf.Type.USERSETTINGS, null)
+	var value = Conf.GetVariant(userSection, key, Conf.Type.USERSETTINGS, null)
 	if value == null:
-		value = Launcher.Conf.GetVariant(platformSection, key, Launcher.Conf.Type.SETTINGS, null)
+		value = Conf.GetVariant(platformSection, key, Conf.Type.SETTINGS, null)
 	if value == null:
-		value = Launcher.Conf.GetVariant(defaultSection, key, Launcher.Conf.Type.SETTINGS, null)
+		value = Conf.GetVariant(defaultSection, key, Conf.Type.SETTINGS, null)
 
 	return value

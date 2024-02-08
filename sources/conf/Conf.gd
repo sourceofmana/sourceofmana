@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name Conf
 
 #
 enum Type
@@ -9,15 +10,16 @@ enum Type
 	COUNT
 }
 
-var confFiles : Array		= []
-var cache : Dictionary		= {}
+static var confFiles : Array		= []
+static var cache : Dictionary		= {}
 
 #
-func GetCacheID(section : String, key : String, type : Type) -> String:
+static func GetCacheID(section : String, key : String, type : Type) -> String:
 	return "%s%s%d" % [section, key, type]
 
-func GetVariant(section : String, key : String, type : Type, default = null):
+static func GetVariant(section : String, key : String, type : Type, default = null):
 	if not confFiles[type] or type >= Type.COUNT:
+		Util.Assert(false, "Config type is not valid, returning default value")
 		return default
 
 	var value = default
@@ -31,25 +33,25 @@ func GetVariant(section : String, key : String, type : Type, default = null):
 
 	return value
 
-func GetBool(section : String, key : String, type : Type = Type.NONE) -> bool:
+static func GetBool(section : String, key : String, type : Type = Type.NONE) -> bool:
 	return GetVariant(section, key, type, false)
 
-func GetInt(section : String, key : String, type : Type = Type.NONE) -> int:
+static func GetInt(section : String, key : String, type : Type = Type.NONE) -> int:
 	return GetVariant(section, key, type, 0)
 
-func GetFloat(section : String, key : String, type : Type = Type.NONE) -> float:
+static func GetFloat(section : String, key : String, type : Type = Type.NONE) -> float:
 	return GetVariant(section, key, type, 0.0)
 
-func GetVector2(section : String, key : String, type : Type = Type.NONE) -> Vector2:
+static func GetVector2(section : String, key : String, type : Type = Type.NONE) -> Vector2:
 	return GetVariant(section, key, type, Vector2.ZERO)
 
-func GetVector2i(section : String, key : String, type : Type = Type.NONE) -> Vector2i:
+static func GetVector2i(section : String, key : String, type : Type = Type.NONE) -> Vector2i:
 	return GetVariant(section, key, type, Vector2i.ZERO)
 
-func GetString(section : String, key : String, type : Type = Type.NONE) -> String:
+static func GetString(section : String, key : String, type : Type = Type.NONE) -> String:
 	return GetVariant(section, key, type, "")
 
-func SetValue(section : String, key : String, type : Type, value):
+static func SetValue(section : String, key : String, type : Type, value):
 	Util.Assert(type < Type.COUNT and confFiles[type] != null, "Can't find %s within our loaded conf files")
 	if type >= Type.COUNT or not confFiles[type]:
 		return
@@ -59,24 +61,22 @@ func SetValue(section : String, key : String, type : Type, value):
 	if cacheID in cache:
 		cache[cacheID] = value
 
-func HasSection(section : String, type : Type) -> bool:
+static func HasSection(section : String, type : Type) -> bool:
 	Util.Assert(type < Type.COUNT, "Can't find %s within our loaded conf files")
 	return type < Type.COUNT and confFiles[type].has_section(section)
 
-func HasSectionKey(section : String, key : String, type : Type) -> bool:
+static func HasSectionKey(section : String, key : String, type : Type) -> bool:
 	Util.Assert(type < Type.COUNT, "Can't find %s within our loaded conf files")
 	return type < Type.COUNT and confFiles[type].has_section_key(section, key)
 
-func SaveType(fileName : String, type : Type):
+static func SaveType(fileName : String, type : Type):
 	Util.Assert(type < Type.COUNT, "Can't find %s within our loaded conf files")
 	if type < Type.COUNT:
 		FileSystem.SaveConfig(fileName, confFiles[type])
 
 #
-func _post_launch():
+static func Init():
 	confFiles.append(FileSystem.LoadConfig("settings"))
 	confFiles.append(FileSystem.LoadConfig("settings", true))
 
 	Util.Assert(confFiles.size() == Type.COUNT, "Config files count mismatch")
-
-	isInitialized = true
