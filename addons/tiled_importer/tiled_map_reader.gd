@@ -188,6 +188,7 @@ func build_client(source_path, options) -> Node2D:
 	level.set_owner(root)
 	level.set_name(source_path.get_file().get_basename())
 	level.set_y_sort_enabled(true)
+	level.remove_layer(0)
 
 	for tmxLayer in map.layers:
 		if tmxLayer.name == "Fringe":
@@ -198,11 +199,11 @@ func build_client(source_path, options) -> Node2D:
 	for tmxLayer in map.layers:
 		level.add_layer(layerID)
 		err = make_layer(level, tmxLayer, root, root, map_data, zOrder, layerID)
-		layerID +=1
-		zOrder += 1
-
-		if err != OK:
-			return err
+		if err == OK:
+			layerID +=1
+			zOrder += 1
+		else:
+			level.remove_layer(layerID)
 
 	if options.add_background and "backgroundcolor" in map:
 		var bg_color = str(map.backgroundcolor)
@@ -460,6 +461,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 	var visible = bool(tmxLayer.visible) if "visible" in tmxLayer else true
 
 	level.set_layer_name(layerID, tmxLayer.name)
+	level.set_layer_navigation_enabled(layerID, false)
 	if tmxLayer.type == "tilelayer":
 		var layer_size = Vector2(int(tmxLayer.width), int(tmxLayer.height))
 		level.set_layer_modulate(layerID, Color(1.0, 1.0, 1.0, opacity))
@@ -886,6 +888,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 							for prop in tile_meta[tile_id]:
 								obj_root.set_meta(prop, tile_meta[tile_id][prop])
 					set_custom_properties(obj_root, object)
+		return ERR_SKIP
 
 	elif tmxLayer.type == "group":
 		var group = Node2D.new()
