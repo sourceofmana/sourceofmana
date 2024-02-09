@@ -73,8 +73,8 @@ func Respawn():
 	ResetNav()
 
 	# Reset stats that were affected by death
-	stat.health  = int(Launcher.Player.stat.current.maxHealth / 2.0)
-	stat.mana 	 = int(Launcher.Player.stat.current.maxMana / 2.0)
-	stat.stamina = int(Launcher.Player.stat.current.maxStamina / 2.0)
+	stat.health  = int(stat.current.maxHealth / 2.0)
+	stat.mana 	 = int(stat.current.maxMana / 2.0)
+	stat.stamina = int(stat.current.maxStamina / 2.0)
 
 	Launcher.World.Spawn(spawn.map, self)
