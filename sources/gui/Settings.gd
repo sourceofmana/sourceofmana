@@ -15,6 +15,7 @@ const userSection : String						= "User"
 		"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
 		"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
 		"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
+		"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
 	}
 ]
 
@@ -169,6 +170,18 @@ func apply_audiogeneral(volumeRatio : float):
 	if Launcher.Audio:
 		var interpolation : float = clamp((log(clampf(volumeRatio, 0.0, 1.0)) + 5.0) / 5.0, 0.0, 1.06)
 		Launcher.Audio.SetVolume((1.0 - interpolation) * -80.0)
+
+# MinWindowSize
+func init_sessionaccountname(apply : bool):
+	if apply:
+		var accountName : String = GetVal("Session-AccountName")
+		apply_sessionaccountname(accountName)
+func set_sessionaccountname(accountName : String):
+	SetVal("Session-AccountName", accountName)
+	apply_sessionaccountname(accountName)
+func apply_sessionaccountname(accountName : String):
+	if Launcher.GUI and Launcher.GUI.loginWindow:
+		Launcher.GUI.loginWindow.nameTextControl.set_text(accountName)
 
 #
 func _on_visibility_changed():

@@ -49,16 +49,11 @@ func EnableControl(state : bool):
 			onlineCheck.button_pressed = false
 			onlineCheck.visible = false
 
-		if nameTextControl.get_text().length() == 0:
-			nameTextControl.grab_focus()
-		elif passwordTextControl.get_text().length() == 0:
-			passwordTextControl.grab_focus()
-		else:
-			playButton.grab_focus()
-
 #
 func _on_play_pressed():
 	if CheckSignInInformation() == true:
+		if Launcher.GUI.settingsWindow:
+			Launcher.GUI.settingsWindow.set_sessionaccountname(nameTextControl.get_text())
 		Launcher.GUI.ToggleControl(self)
 		Launcher.FSM.playerName = nameTextControl.get_text()
 		Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_SELECTION)
@@ -82,3 +77,12 @@ func _on_text_submitted(_new_text):
 #
 func _ready():
 	FillWarningLabel("")
+
+func _on_visibility_changed():
+	if visible:
+		if nameTextControl and nameTextControl.is_visible() and nameTextControl.get_text().length() == 0:
+			nameTextControl.grab_focus()
+		elif passwordTextControl and passwordTextControl.is_visible() and passwordTextControl.get_text().length() == 0:
+			passwordTextControl.grab_focus()
+		elif playButton and playButton.is_visible():
+			playButton.grab_focus()
