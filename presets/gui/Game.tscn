@@ -339,6 +339,7 @@ mouse_filter = 2
 script = ExtResource("7")
 
 [node name="Quit" parent="FloatingWindows" instance=ExtResource("8")]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -354,6 +355,7 @@ grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
 [node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
+visible = false
 show_behind_parent = false
 layout_mode = 2
 anchors_preset = 0
@@ -367,6 +369,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
+visible = false
 custom_minimum_size = Vector2(200, 125)
 layout_mode = 2
 offset_left = 1058.0
@@ -375,6 +378,7 @@ offset_right = 1258.0
 offset_bottom = 131.0
 
 [node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
+visible = false
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
 offset_left = 68.0
@@ -384,6 +388,7 @@ offset_bottom = 68.0
 blockActions = false
 
 [node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
+visible = false
 layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
@@ -396,6 +401,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Login" parent="FloatingWindows" instance=ExtResource("7_lrq68")]
+visible = false
 layout_mode = 2
 anchor_left = 0.165625
 anchor_top = 0.427778
@@ -406,6 +412,7 @@ offset_right = 0.0
 offset_bottom = -80.222
 
 [node name="News" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
+visible = false
 layout_mode = 2
 offset_left = 827.0
 offset_top = 85.0
@@ -416,6 +423,7 @@ grow_vertical = 2
 jsonFile = ExtResource("15_q438c")
 
 [node name="Credit" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
+visible = false
 layout_mode = 2
 offset_left = 23.0
 offset_top = 85.0
@@ -424,6 +432,7 @@ offset_bottom = 583.0
 jsonFile = ExtResource("16_pfh0e")
 
 [node name="Settings" parent="FloatingWindows" instance=ExtResource("16_gapih")]
+visible = false
 layout_mode = 2
 anchors_preset = 0
 offset_left = 488.0
@@ -432,6 +441,7 @@ offset_right = -453.0
 offset_bottom = -299.0
 
 [node name="Respawn" parent="FloatingWindows" instance=ExtResource("44_7o5pa")]
+visible = false
 layout_mode = 1
 
 [node name="Shaders" type="CanvasLayer" parent="."]
