@@ -28,18 +28,17 @@ func isNewLineEnabled() -> bool:
 	return lineEdit.is_visible() if lineEdit else false 
 
 func SetNewLineEnabled(enable : bool):
-	if lineEdit && enabledLastFrame == false:
+	if lineEdit and not enabledLastFrame:
+		enabledLastFrame = true
 		if OS.get_name() != "Android" and OS.get_name() != "iOS":
 			lineEdit.set_visible(enable)
 			Launcher.Action.Enable(!enable)
 		if enable:
 			lineEdit.grab_focus()
-		else:
-			enabledLastFrame = true
 
 #
 func OnNewTextSubmitted(newText : String):
-	if lineEdit:
+	if not Launcher.Action.IsActionOnlyPressed("ui_validate", true) and lineEdit:
 		if newText.is_empty() == false:
 			lineEdit.clear()
 			if Launcher.Player:
@@ -61,6 +60,7 @@ func _process(_deltaTime : float):
 			chatHistory.Down()
 			lineEdit.text = chatHistory.Get()
 
+func _physics_process(_delta):
 	if enabledLastFrame:
 		enabledLastFrame = false
 
