@@ -16,6 +16,7 @@ const userSection : String						= "User"
 		"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
 		"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
 		"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
+		"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
 	}
 ]
 
@@ -171,7 +172,7 @@ func apply_audiogeneral(volumeRatio : float):
 		var interpolation : float = clamp((log(clampf(volumeRatio, 0.0, 1.0)) + 5.0) / 5.0, 0.0, 1.06)
 		Launcher.Audio.SetVolume((1.0 - interpolation) * -80.0)
 
-# MinWindowSize
+# Session Account Name
 func init_sessionaccountname(apply : bool):
 	if apply:
 		var accountName : String = GetVal("Session-AccountName")
@@ -182,6 +183,32 @@ func set_sessionaccountname(accountName : String):
 func apply_sessionaccountname(accountName : String):
 	if Launcher.GUI and Launcher.GUI.loginWindow:
 		Launcher.GUI.loginWindow.nameTextControl.set_text(accountName)
+
+# Session Windows Overlay placement
+enum ESessionOverlay { NAME = 0, POSITION, SIZE, COUNT}
+func init_sessionoverlay(apply : bool):
+	if apply:
+		var overlay : Array = GetVal("Session-Overlay")
+		apply_sessionoverlay(overlay)
+func save_sessionoverlay():
+	var overlay : Array = []
+	if Launcher.GUI and Launcher.GUI.windows:
+		for window in Launcher.GUI.windows.get_children():
+			if window.is_visible() and not window.blockActions:
+				overlay.append([window.get_name().get_file(), window.get_position(), window.get_size()])
+		set_sessionoverlay(overlay)
+func set_sessionoverlay(overlay : Array):
+	SetVal("Session-Overlay", overlay)
+	apply_sessionoverlay(overlay)
+func apply_sessionoverlay(overlay : Array):
+	if Launcher.GUI and Launcher.GUI.windows:
+		for window in overlay:
+			if window.size() >= ESessionOverlay.COUNT:
+				var floatingWindow : WindowPanel = Launcher.GUI.windows.get_node(window[ESessionOverlay.NAME])
+				if floatingWindow:
+					floatingWindow.set_visible(true)
+					floatingWindow.set_size(window[ESessionOverlay.SIZE])
+					floatingWindow.UpdateWindow(window[ESessionOverlay.POSITION])
 
 #
 func _on_visibility_changed():
@@ -198,6 +225,7 @@ func _ready():
 		accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
 
 func _exit_tree():
+	save_sessionoverlay()
 	SaveSettings()
 
 # Conf accessors
