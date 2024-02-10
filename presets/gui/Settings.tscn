@@ -158,7 +158,7 @@ ticks_on_borders = true
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen" to="." method="set_fullscreen"]
-[connection signal="item_selected" from="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option" to="." method="set_resolution"]
+[connection signal="item_selected" from="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option" to="." method="set_resolutionIdx"]
 [connection signal="item_selected" from="Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option" to="." method="set_scaling"]
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay" to="." method="set_actionoverlay"]
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting" to="." method="set_lighting"]

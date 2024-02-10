@@ -9,7 +9,7 @@ const userSection : String						= "User"
 		"Render-MinWindowSize": [init_minwinsize, set_minwinsize, apply_minwinsize, null],
 		"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
 		"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
-		"Render-WindowResolution": [init_resolution, set_resolution, apply_resolution, $Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
+		"Render-WindowSize": [init_resolution, set_resolution, apply_resolution, $Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
 		"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
 		"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
 		"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
@@ -32,8 +32,7 @@ func set_minwinsize(minSize : Vector2):
 	SetVal("Render-MinWindowSize", minSize)
 	apply_minwinsize(minSize)
 func apply_minwinsize(minSize : Vector2):
-	if DisplayServer.get_window_list().size() > 0:
-		DisplayServer.window_set_min_size(minSize, DisplayServer.get_window_list()[0])
+	DisplayServer.window_set_min_size(minSize, 0)
 
 # FullScreen
 func init_fullscreen(apply : bool):
@@ -46,44 +45,57 @@ func set_fullscreen(pressed : bool):
 	apply_fullscreen(pressed)
 func apply_fullscreen(pressed : bool):
 	if pressed:
-		apply_resolution(10)
+		apply_resolution(DisplayServer.screen_get_size())
 		clear_resolution_labels()
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		if DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_FULLSCREEN:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
-		populate_resolution_labels()
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		populate_resolution_labels(DisplayServer.screen_get_size())
+		if DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_FULLSCREEN:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
-# WindowResolution
+# Window Resolution
+const resolutionEntriesCount : int = 5
 func init_resolution(apply : bool):
-	clear_resolution_labels()
-	if DisplayServer.get_window_list().size() > 0 and DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
-		populate_resolution_labels()
+	var resolution : Vector2i = GetVal("Render-WindowSize")
+	populate_resolution_labels(resolution)
 	if apply:
-		var resolutionIndex : int = GetVal("Render-WindowResolution")
-		apply_resolution(resolutionIndex)
+		apply_resolution(resolution)
 func clear_resolution_labels():
-	accessors[CATEGORY.RENDER]["Render-WindowResolution"][ACC_TYPE.LABEL].clear()
-func populate_resolution_labels():
-	var resolutionIndex : int = GetVal("Render-WindowResolution")
-	var minScreenSize : Vector2 = GetVal("Render-MinWindowSize")
-	var maxScreenSize : Vector2 = DisplayServer.screen_get_size()
-	for i in range(0, 11):
-		var item : Vector2i = calculate_resolution_item(i, minScreenSize, maxScreenSize)
-		accessors[CATEGORY.RENDER]["Render-WindowResolution"][ACC_TYPE.LABEL].add_item(str(item))
-	accessors[CATEGORY.RENDER]["Render-WindowResolution"][ACC_TYPE.LABEL].selected = resolutionIndex
-func calculate_resolution_item(index : int, minScreenSize : Vector2, maxScreenSize : Vector2) -> Vector2i:
-	return index * 10.0 / 100.0 * (maxScreenSize - minScreenSize) + minScreenSize
-func set_resolution(resolutionIndex : int):
-	SetVal("Render-WindowResolution", resolutionIndex)
-	apply_resolution(resolutionIndex)
-func apply_resolution(resolutionIndex : int):
-	var minScreenSize : Vector2 = GetVal("Render-MinWindowSize")
-	var maxScreenSize : Vector2 = DisplayServer.screen_get_size()
-	var newWindowSize : Vector2 = calculate_resolution_item(resolutionIndex, minScreenSize, maxScreenSize)
-	var newPosition : Vector2 = clamp((maxScreenSize - newWindowSize) / 2.0, Vector2.ZERO, maxScreenSize)
-	get_viewport().set_size(newWindowSize)
-	get_viewport().set_position(newPosition)
+	accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL].clear()
+func populate_resolution_labels(resolution : Vector2i):
+	clear_resolution_labels()
+	if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
+		var minScreenSize : Vector2i = GetVal("Render-MinWindowSize")
+		var maxScreenSize : Vector2i = DisplayServer.screen_get_size()
+		var label : OptionButton = accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL]
+		for i in range(0, resolutionEntriesCount):
+			var item : Vector2i = calculate_resolution(i, minScreenSize, maxScreenSize)
+			label.add_item(str(item))
+		label.add_separator()
+		label.add_item(str(resolution))
+		label.selected = label.item_count - 1
+func calculate_resolution(index : int, minScreenSize : Vector2, maxScreenSize : Vector2) -> Vector2i:
+	return lerp(minScreenSize, maxScreenSize, index / maxf(resolutionEntriesCount - 1, 1.0))
+func set_resolutionIdx(resolutionIdx : int):
+	var minScreenSize : Vector2i = GetVal("Render-MinWindowSize")
+	var maxScreenSize : Vector2i = DisplayServer.screen_get_size()
+	var resolution : Vector2i = calculate_resolution(resolutionIdx, minScreenSize, maxScreenSize)
+	set_resolution(resolution)
+func set_resolution(resolution : Vector2i):
+	SetVal("Render-WindowSize", resolution)
+	apply_resolution(resolution)
+func apply_resolution(resolution : Vector2i):
+	var windowSize : Vector2i = DisplayServer.screen_get_size()
+	var minScreenSize : Vector2i = DisplayServer.window_get_min_size()
+
+	var newSize : Vector2i = clamp(resolution, minScreenSize, windowSize)
+	var currentPos : Vector2i = get_viewport().get_position()
+	var newPosition : Vector2i = Vector2i(clampi(currentPos.x, 0, (windowSize - resolution).x), clampi(currentPos.y, 0, (windowSize - resolution).y))
+	DisplayServer.window_set_size(newSize)
+	DisplayServer.window_set_position(newPosition)
 	init_actionoverlay(true)
+	populate_resolution_labels(resolution)
 
 # DoubleResolution
 func init_scaling(apply : bool):
@@ -221,7 +233,7 @@ func _ready():
 	Launcher.FSM.enter_game.connect(RefreshSettings.bind(true))
 
 	if OS.get_name() == "Android" or OS.get_name() == "iOS" or OS.get_name() == "Web":
-		accessors[CATEGORY.RENDER]["Render-WindowResolution"][ACC_TYPE.LABEL].get_parent().set_visible(false)
+		accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL].get_parent().set_visible(false)
 		accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
 
 func _exit_tree():

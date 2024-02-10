@@ -50,8 +50,7 @@ func ToggleChatNewLine():
 	if chatWindow:
 		if chatWindow.is_visible() == false:
 			ToggleControl(chatWindow)
-		if chatContainer:
-			chatContainer.SetNewLineEnabled(!chatContainer.isNewLineEnabled())
+		chatContainer.SetNewLineEnabled(true)
 
 #
 func EnterLoginMenu():
@@ -110,3 +109,7 @@ func _ready():
 func _on_ui_margin_resized():
 	if CRTShader and CRTShader.material:
 		CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
+
+	if settingsWindow:
+		settingsWindow.set_fullscreen(DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_FULLSCREEN)
+		settingsWindow.set_resolution(DisplayServer.window_get_size(0))

@@ -159,9 +159,11 @@ func UpdateWindow(eventPosition : Vector2):
 		var newPosition : Vector2 = position
 		if clickPosition != null:
 			newPosition += eventPosition - clickPosition
-		size.x = clamp(size.x, get_minimum_size().x, Launcher.GUI.windows.get_size().x)
-		size.y = clamp(size.y, get_minimum_size().y, Launcher.GUI.windows.get_size().y)
-		position = ClampFloatingWindow(newPosition, Launcher.GUI.windows.get_size() - get_size())
+
+		if get_minimum_size().x > 0 and get_minimum_size().y > 0:
+			size.x = clamp(size.x, get_minimum_size().x, max(get_minimum_size().x, Launcher.GUI.windows.get_size().x))
+			size.y = clamp(size.y, get_minimum_size().y, max(get_minimum_size().y, Launcher.GUI.windows.get_size().y))
+			position = ClampFloatingWindow(newPosition, Launcher.GUI.windows.get_size() - get_size())
 
 func Center():
 	reset_size()
