@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://ti8obbg4a52j"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_w051p"]
+[ext_resource type="Texture2D" uid="uid://kdvvvo6gr8sf" path="res://data/graphics/gui/tips.png" id="2_ys2y3"]
+[ext_resource type="Texture2D" uid="uid://dp34vjt8lj8n5" path="res://data/graphics/gui/mobile/buttonA.png" id="3_lckb0"]
+[ext_resource type="Script" path="res://sources/gui/Tips.gd" id="3_tdwo6"]
+[ext_resource type="Texture2D" uid="uid://3vvdehbmo43i" path="res://data/graphics/gui/mobile/buttonB.png" id="4_pkcse"]
+[ext_resource type="Texture2D" uid="uid://bncxvjj4nmem8" path="res://data/graphics/gui/mobile/buttonX.png" id="5_lji8k"]
+[ext_resource type="Texture2D" uid="uid://4lbn2136wjw3" path="res://data/graphics/gui/mobile/buttonY.png" id="6_m6n4y"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qs8w4"]
+texture = ExtResource("2_ys2y3")
+texture_margin_left = 8.0
+texture_margin_top = 12.0
+texture_margin_right = 64.0
+texture_margin_bottom = 12.0
+
+[node name="Tips" type="PanelContainer"]
+size_flags_horizontal = 0
+size_flags_vertical = 10
+theme = ExtResource("1_w051p")
+theme_override_styles/panel = SubResource("StyleBoxTexture_qs8w4")
+script = ExtResource("3_tdwo6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="TipsList" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Interact" type="HBoxContainer" parent="MarginContainer/TipsList"]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="MarginContainer/TipsList/Interact"]
+layout_mode = 2
+texture = ExtResource("3_lckb0")
+
+[node name="Label" type="Label" parent="MarginContainer/TipsList/Interact"]
+layout_mode = 2
+text = "Interact"
+
+[node name="Target" type="HBoxContainer" parent="MarginContainer/TipsList"]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="MarginContainer/TipsList/Target"]
+layout_mode = 2
+texture = ExtResource("4_pkcse")
+
+[node name="Label" type="Label" parent="MarginContainer/TipsList/Target"]
+layout_mode = 2
+text = "Target"
+
+[node name="Morph" type="HBoxContainer" parent="MarginContainer/TipsList"]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="MarginContainer/TipsList/Morph"]
+layout_mode = 2
+texture = ExtResource("5_lji8k")
+
+[node name="Label" type="Label" parent="MarginContainer/TipsList/Morph"]
+layout_mode = 2
+text = "Morph"
+
+[node name="Sit" type="HBoxContainer" parent="MarginContainer/TipsList"]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="MarginContainer/TipsList/Sit"]
+layout_mode = 2
+texture = ExtResource("6_m6n4y")
+
+[node name="Label" type="Label" parent="MarginContainer/TipsList/Sit"]
+layout_mode = 2
+text = "Sit"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

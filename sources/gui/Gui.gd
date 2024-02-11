@@ -24,6 +24,7 @@ extends ServiceBase
 @onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
 
 @onready var notificationLabel : RichTextLabel	= $UIMargin/UIOverlay/Notification
+@onready var tipsLabel : PanelContainer			= $UIMargin/UIOverlay/Tips
 
 @onready var CRTShader : TextureRect			= $Shaders/CRT
 @onready var HQ4xShader : TextureRect			= $Shaders/HQ4x
@@ -69,6 +70,7 @@ func EnterLoginMenu():
 
 func EnterGame():
 	if Launcher.Player:
+		tipsLabel.initialize()
 		inventoryWindow.initialize()
 		emoteContainer.FillGridContainer(DB.EmotesDB)
 
@@ -85,12 +87,12 @@ func EnterGame():
 
 #
 func _post_launch():
-	if Launcher.FSM and not Launcher.FSM.enter_login.is_connected(EnterLoginMenu):
-		Launcher.FSM.enter_login.connect(EnterLoginMenu)
-	if Launcher.FSM and not Launcher.FSM.enter_game.is_connected(EnterGame):
-		Launcher.FSM.enter_game.connect(EnterGame)
 	get_tree().set_auto_accept_quit(false)
 	get_tree().set_quit_on_go_back(false)
+
+	if Launcher.FSM:
+		Launcher.FSM.enter_login.connect(EnterLoginMenu)
+		Launcher.FSM.enter_game.connect(EnterGame)
 
 	isInitialized = true
 

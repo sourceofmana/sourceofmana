@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=51 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -33,6 +33,7 @@
 [ext_resource type="JSON" path="res://data/db/credits.json" id="16_pfh0e"]
 [ext_resource type="PackedScene" uid="uid://lkl6f0td76mu" path="res://presets/gui/Notification.tscn" id="17_64u4l"]
 [ext_resource type="Script" path="res://sources/gui/Sticks.gd" id="18_6nrx4"]
+[ext_resource type="PackedScene" uid="uid://ti8obbg4a52j" path="res://presets/gui/Tips.tscn" id="18_88m73"]
 [ext_resource type="Texture2D" uid="uid://c6vlftjsnocs3" path="res://data/graphics/gui/mobile/background.png" id="18_lb78w"]
 [ext_resource type="Texture2D" uid="uid://cyuj6w585tm0y" path="res://data/graphics/gui/mobile/button.png" id="20_1vdgt"]
 [ext_resource type="BitMap" uid="uid://d77nr3juvbco" path="res://data/graphics/gui/mobile/background_bitmask.png" id="20_rnv11"]
@@ -206,6 +207,10 @@ theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
 
 [node name="Notification" parent="UIMargin/UIOverlay" instance=ExtResource("17_64u4l")]
 layout_mode = 2
+size_flags_vertical = 2
+
+[node name="Tips" parent="UIMargin/UIOverlay" instance=ExtResource("18_88m73")]
+layout_mode = 2
 
 [node name="Shortcuts" type="MarginContainer" parent="UIMargin/UIOverlay"]
 layout_mode = 2
@@ -332,7 +337,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 80.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
