@@ -119,6 +119,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/gui/tab/tab_close.png [Reid]
 ./graphics/gui/tab/tab_disabled.png [Reid]
 ./graphics/gui/tab/tab_fg.png [Reid]
+./graphics/gui/tips.png [Reid]
 ./graphics/gui/window/window_bg.png [Reid]
 ./graphics/gui/window/window_bg_soft.png [Reid]
 ./graphics/gui/window/window_bg_title.png [Reid]
