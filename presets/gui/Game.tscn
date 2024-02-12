@@ -211,6 +211,7 @@ size_flags_vertical = 2
 
 [node name="Tips" parent="UIMargin/UIOverlay" instance=ExtResource("18_88m73")]
 layout_mode = 2
+actions = Array[StringName]([&"gp_interact", &"gp_target", &"gp_morph", &"gp_sit"])
 
 [node name="Shortcuts" type="MarginContainer" parent="UIMargin/UIOverlay"]
 layout_mode = 2
