@@ -90,6 +90,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/gui/inventory/closebutton.png [Reid]
 ./graphics/gui/inventory/selection.png [Reid]
 ./graphics/gui/item.png [Reid]
+./graphics/gui/key.png [Reid]
 ./graphics/gui/misc/menubar_button.png [Reid]
 ./graphics/gui/misc/menubar_button_pressed.png [Reid]
 ./graphics/gui/misc/menubar_content.png [Reid]
