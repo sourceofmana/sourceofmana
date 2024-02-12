@@ -42,37 +42,6 @@ func GetMove(forceMode : bool = false) -> Vector2:
 
 	return moveVector
 
-# Re-assign controller input events to first valid controller
-#
-# never use the touchpad as controller, this might need to be extended in the future
-# as the godot issue also talks about LED controllers being mistaken for game controllers
-#
-# this workaround is needed because of https://github.com/godotengine/godot/issues/59250
-func NewJoystickConnectionState(_deviceID: int = -1, _connected: bool = false):
-	var valid_controller_id : int	= -1
-	for device in Input.get_connected_joypads():
-		if !Input.get_joy_name(device).contains("Touchpad"):
-			valid_controller_id = device
-			break
-
-	# reset
-	InputMap.load_from_project_settings()
-
-	if valid_controller_id != -1:
-		# if valid controller is connected set it's device id so the touchpad is not used
-		for action in InputMap.get_actions():
-			for event in InputMap.action_get_events(action):
-				if event is InputEventJoypadMotion or event is InputEventJoypadButton:
-					InputMap.action_erase_event(action, event)
-					event.device = valid_controller_id
-					InputMap.action_add_event(action, event)
-	else:
-		# if no controller is connected then remove joystick events from actions
-		for action in InputMap.get_actions():
-			for event in InputMap.action_get_events(action):
-				if event is InputEventJoypadMotion or event is InputEventJoypadButton:
-					InputMap.action_erase_event(action, event)
-
 # Local player movement
 func _unhandled_input(_event):
 	if not supportMouse:
@@ -141,5 +110,4 @@ func _ready():
 	clickTimer.set_one_shot(true)
 	add_child(clickTimer)
 
-	NewJoystickConnectionState()
-	Input.joy_connection_changed.connect(NewJoystickConnectionState)
+	DeviceManager.Init()
