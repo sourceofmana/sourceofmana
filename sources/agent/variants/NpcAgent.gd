@@ -14,9 +14,6 @@ func Interact(caller : BaseAgent):
 				Launcher.Network.ChatAgent(npcAgentID, "Hello %s!" % caller.entityName, peerID)
 
 #
-func _specific_process():
-	pass
-
 func _ready():
 	aiTimer = Timer.new()
 	aiTimer.set_name("AiTimer")

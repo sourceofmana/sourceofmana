@@ -5,9 +5,6 @@ class_name MonsterAgent
 static func GetEntityType() -> EntityCommons.Type: return EntityCommons.Type.MONSTER
 
 #
-func _specific_process():
-	pass
-
 func _ready():
 	aiTimer = Timer.new()
 	aiTimer.set_name("AiTimer")

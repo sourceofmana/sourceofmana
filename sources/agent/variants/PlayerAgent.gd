@@ -60,7 +60,8 @@ func Morph(notifyMorphing : bool):
 	Launcher.Network.Server.NotifyInstancePlayers(null, self, "Morphed", [morphID, notifyMorphing])
 
 #
-func _specific_process():
+func _physics_process(delta):
+	super._physics_process(delta)
 	UpdateStats()
 
 #

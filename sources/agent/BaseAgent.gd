@@ -192,9 +192,6 @@ func Killed(_attacker: BaseAgent):
 		Callback.SelfDestructTimer(self, stat.deathDelay, WorldAgent.RemoveAgent.bind(self))
 
 #
-func _specific_process():
-	pass
-
 func _physics_process(_delta):
 	if agent:
 		UpdateInput()
@@ -206,8 +203,6 @@ func _physics_process(_delta):
 
 	if forceUpdate:
 		UpdateChanged()
-
-	_specific_process()
 
 func _velocity_computed(safeVelocity : Vector2):
 	currentVelocity = safeVelocity
