@@ -82,7 +82,7 @@ func _enter_tree():
 		_quit()
 
 func _ready():
-	Action			= FileSystem.LoadSource("action/Action.gd")
+	Action			= FileSystem.LoadSource("input/Action.gd")
 	Network			= FileSystem.LoadSource("network/Network.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 
