@@ -147,7 +147,7 @@ func OnGuiInput(event : InputEvent):
 		if clickPosition:
 			UpdateWindow(event.position)
 
-func UpdateWindow(eventPosition : Vector2):
+func UpdateWindow(eventPosition : Vector2 = Vector2.ZERO):
 	var scaleFactor : int = Launcher.Root.get_content_scale_factor()
 	var floatingWindowSize : Vector2 = Launcher.GUI.windows.get_size()
 	if scaleFactor > 0:

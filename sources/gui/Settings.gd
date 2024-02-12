@@ -220,7 +220,8 @@ func apply_sessionoverlay(overlay : Array):
 				if floatingWindow:
 					floatingWindow.set_visible(true)
 					floatingWindow.set_size(window[ESessionOverlay.SIZE])
-					floatingWindow.UpdateWindow(window[ESessionOverlay.POSITION])
+					floatingWindow.set_position(window[ESessionOverlay.POSITION])
+					floatingWindow.UpdateWindow()
 
 #
 func _on_visibility_changed():
