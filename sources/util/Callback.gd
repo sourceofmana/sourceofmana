@@ -27,8 +27,8 @@ static func SelfDestructCallback(parent : Node, timer : Timer, callback : Callab
 		timer.queue_free()
 	if not callback.is_null():
 		callback.call()
-#
 
+#
 static func SelfDestructTimer(parent : Node, delay : float, callback : Callable, timerName = "") -> Timer:
 	if parent:
 		var hasSpecialName : bool = timerName.length() > 0
@@ -44,12 +44,16 @@ static func SelfDestructTimer(parent : Node, delay : float, callback : Callable,
 			return timer
 	return null
 
-
 #
+static func ResetTimer(timer : Timer, delay : float, callable : Callable):
+	ClearTimer(timer)
+	StartTimer(timer, delay, callable)
+
 static func ClearTimer(timer : Timer):
 	if timer:
-		for sig in timer.timeout.get_connections():
-			Callback.RemoveCallback(timer.timeout, sig["callable"])
+		for sig in timer.get_signal_list():
+			for connection in timer.get_signal_connection_list(sig["name"]):
+				Callback.RemoveCallback(timer.get(sig["name"]), connection["callable"])
 		timer.stop()
 
 static func StartTimer(timer : Timer, delay : float, callable : Callable):
