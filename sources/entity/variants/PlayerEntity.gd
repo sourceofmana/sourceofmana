@@ -13,7 +13,7 @@ func SetLocalPlayer():
 		if Launcher.Camera.mainCamera:
 			add_child.call_deferred(Launcher.Camera.mainCamera)
 	
-	entity_died.connect(func (): Launcher.GUI.respawnWindow.EnableControl(true))
+	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
 
 func ClearTarget():
 	if target != null:
