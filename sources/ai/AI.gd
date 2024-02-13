@@ -22,7 +22,7 @@ static func SetState(agent : BaseAgent, state : State, force : bool = false):
 
 static func Reset(agent : BaseAgent):
 	SetState(agent, State.IDLE, true)
-	Callback.ResetTimer(agent.aiTimer, AICommons.refreshDelay, AI.Refresh.bind(agent))
+	Callback.StartTimer(agent.aiTimer, AICommons.refreshDelay, AI.Refresh.bind(agent))
 
 static func Refresh(agent : BaseAgent):
 	if not agent:

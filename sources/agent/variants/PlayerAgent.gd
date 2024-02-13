@@ -8,7 +8,7 @@ var lastStat : EntityStats				= EntityStats.new()
 static func GetEntityType() -> EntityCommons.Type: return EntityCommons.Type.PLAYER
 
 #
-func UpdateStats():
+func UpdateLastStats():
 	var peerID : int = Launcher.Network.Server.GetRid(self)
 	if peerID == NetworkCommons.RidUnknown:
 		return
@@ -62,7 +62,15 @@ func Morph(notifyMorphing : bool):
 #
 func _physics_process(delta):
 	super._physics_process(delta)
-	UpdateStats()
+	UpdateLastStats()
+
+func _ready():
+	regenTimer = Timer.new()
+	regenTimer.set_name("RegenTimer")
+	Callback.OneShotCallback(regenTimer.tree_entered, Callback.ResetTimer, [regenTimer, EntityCommons.RegenDelay, EntityStats.Regen.bind(self)])
+	add_child.call_deferred(regenTimer)
+
+	super._ready()
 
 #
 func Respawn():
@@ -75,7 +83,5 @@ func Respawn():
 
 	# Reset stats that were affected by death
 	stat.health  = int(stat.current.maxHealth / 2.0)
-	stat.mana 	 = int(stat.current.maxMana / 2.0)
-	stat.stamina = int(stat.current.maxStamina / 2.0)
 
 	Launcher.World.Spawn(spawn.map, self)

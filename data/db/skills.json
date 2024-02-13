@@ -1,7 +1,7 @@
 {
 	"Melee": {
 		"IconPath": "items/skill/melee.png",
-		"StaminaCost": 5,
+		"StaminaCost": 10,
 		"State": "ATTACK",
 		"Range": 32,
 		"Mode": "SINGLE",
@@ -46,7 +46,7 @@
 		"SkillPresetPath": "particles/Heal",
 		"SkillTime": 2.0,
 		"CooldownTime": 5.0,
-		"StaminaCost": 0,
+		"StaminaCost": 15,
 		"ManaCost": 5,
 		"Mode": "SELF",
 		"Heal": 50,
@@ -60,7 +60,7 @@
 		"SkillPresetPath": "particles/Heal",
 		"SkillTime": 2.0,
 		"CooldownTime": 5.0,
-		"StaminaCost": 0,
+		"StaminaCost": 15,
 		"ManaCost": 10,
 		"Range": 96,
 		"Mode": "SINGLE",

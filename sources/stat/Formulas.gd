@@ -78,6 +78,16 @@ static func GetWalkRatio(stat : EntityStats) -> float:
 	return stat.current.walkSpeed / stat.base.walkSpeed
 
 #
+static func GetRegenHealth(stat : EntityStats) -> int:
+	return max(1, stat.current.maxHealth * 0.01)
+
+static func GetRegenMana(stat : EntityStats) -> int:
+	return max(1, stat.current.maxMana * 0.01)
+
+static func GetRegenStamina(stat : EntityStats) -> int:
+	return max(1, stat.current.maxStamina * 0.05)
+
+#
 static func GetXpBonus(stat : EntityStats) -> float:
 	var personalMean : float = float(stat.strength + stat.vitality + stat.agility + stat.endurance + stat.concentration) / 5
 	var bonus : float = float(stat.level * personalMean)

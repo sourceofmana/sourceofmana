@@ -8,6 +8,7 @@ var entityName : String					= ""
 var aiState : AI.State					= AI.State.IDLE
 var aiTimer : Timer						= null
 var actionTimer : Timer					= null
+var regenTimer : Timer					= null
 var cooldownTimers : Dictionary			= {}
 var attackers : Dictionary				= {}
 

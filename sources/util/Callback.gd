@@ -61,6 +61,7 @@ static func StartTimer(timer : Timer, delay : float, callable : Callable):
 		callable.call()
 	elif timer:
 		timer.start(delay)
+		timer.set_autostart(true)
 		if timer.timeout.is_connected(callable):
 			timer.timeout.disconnect(callable)
 		timer.timeout.connect(callable)
