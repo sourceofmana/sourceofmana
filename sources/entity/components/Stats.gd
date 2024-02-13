@@ -108,11 +108,11 @@ func Morph(data : EntityData):
 static func Regen(agent : BaseAgent):
 	if SkillCommons.IsAlive(agent):
 		if agent.stat.health < agent.stat.current.maxHealth:
-			agent.stat.health  = min(agent.stat.health + Formulas.GetRegenHealth(agent.stat), agent.stat.current.maxHealth)
+			agent.stat.health  = min(agent.stat.health + Formulas.GetRegenHealth(agent), agent.stat.current.maxHealth)
 		if agent.stat.mana < agent.stat.current.maxMana:
-			agent.stat.mana  = min(agent.stat.mana + Formulas.GetRegenMana(agent.stat), agent.stat.current.maxMana)
+			agent.stat.mana  = min(agent.stat.mana + Formulas.GetRegenMana(agent), agent.stat.current.maxMana)
 		if agent.stat.stamina < agent.stat.current.maxStamina:
-			agent.stat.stamina  = min(agent.stat.stamina + Formulas.GetRegenStamina(agent.stat), agent.stat.current.maxStamina)
+			agent.stat.stamina  = min(agent.stat.stamina + Formulas.GetRegenStamina(agent), agent.stat.current.maxStamina)
 	Callback.LoopTimer(agent.regenTimer, EntityCommons.RegenDelay)
 
 #

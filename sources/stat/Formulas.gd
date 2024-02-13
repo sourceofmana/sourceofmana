@@ -78,14 +78,23 @@ static func GetWalkRatio(stat : EntityStats) -> float:
 	return stat.current.walkSpeed / stat.base.walkSpeed
 
 #
-static func GetRegenHealth(stat : EntityStats) -> int:
-	return max(1, stat.current.maxHealth * 0.01)
+static func GetRegenHealth(agent : BaseAgent) -> int:
+	var regen : float = agent.stat.current.maxHealth * 0.01
+	if agent.currentState == EntityCommons.State.SIT:
+		regen *= 2.0
+	return max(1, regen)
 
-static func GetRegenMana(stat : EntityStats) -> int:
-	return max(1, stat.current.maxMana * 0.01)
+static func GetRegenMana(agent : BaseAgent) -> int:
+	var regen : float = agent.stat.current.maxMana * 0.01
+	if agent.currentState == EntityCommons.State.SIT:
+		regen *= 2.0
+	return max(1, regen)
 
-static func GetRegenStamina(stat : EntityStats) -> int:
-	return max(1, stat.current.maxStamina * 0.05)
+static func GetRegenStamina(agent : BaseAgent) -> int:
+	var regen : float = agent.stat.current.maxStamina * 0.01
+	if agent.currentState == EntityCommons.State.SIT:
+		regen *= 2.0
+	return max(1, regen)
 
 #
 static func GetXpBonus(stat : EntityStats) -> float:
