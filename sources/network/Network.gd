@@ -122,16 +122,16 @@ func Morphed(agentID : int, morphID : String, notifyMorphing : bool, rpcID : int
 
 # Stats
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdatePlayerVars(level : int, experience : float, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("UpdatePlayerVars", [level, experience], rpcID)
+func UpdatePlayerVars(agentID : int, level : int, experience : float, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("UpdatePlayerVars", [agentID, level, experience], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdateActiveStats(health : int, mana : int, stamina : int, weight : float, morphed : bool, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("UpdateActiveStats", [health, mana, stamina, weight, morphed], rpcID)
+func UpdateActiveStats(agentID : int, health : int, mana : int, stamina : int, weight : float, morphed : bool, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("UpdateActiveStats", [agentID, health, mana, stamina, weight, morphed], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdatePersonalStats(strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("UpdatePersonalStats", [strength, vitality, agility, endurance, concentration], rpcID)
+func UpdatePersonalStats(agentID : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("UpdatePersonalStats", [agentID, strength, vitality, agility, endurance, concentration], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func TargetLevelUp(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):

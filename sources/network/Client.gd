@@ -59,26 +59,32 @@ func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = Ne
 			entity.SetVisual(morphData, morphed)
 
 
-func UpdatePlayerVars(level : int, experience : float, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Player:
-		Launcher.Player.stat.level			= level
-		Launcher.Player.stat.experience		= experience
+func UpdatePlayerVars(ridAgent : int, level : int, experience : float, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Map:
+		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
+		if entity and entity.get_parent() and entity.stat:
+			entity.stat.level			= level
+			entity.stat.experience		= experience
 
-func UpdateActiveStats(health : int, mana : int, stamina : int, weight : float, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Player:
-		Launcher.Player.stat.health			= health
-		Launcher.Player.stat.mana			= mana
-		Launcher.Player.stat.stamina		= stamina
-		Launcher.Player.stat.weight			= weight
-		Launcher.Player.stat.morphed		= morphed
+func UpdateActiveStats(ridAgent : int, health : int, mana : int, stamina : int, weight : float, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Map:
+		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
+		if entity and entity.get_parent() and entity.stat:
+			entity.stat.health			= health
+			entity.stat.mana			= mana
+			entity.stat.stamina			= stamina
+			entity.stat.weight			= weight
+			entity.stat.morphed			= morphed
 
-func UpdatePersonalStats(strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Player:
-		Launcher.Player.stat.strength		= strength
-		Launcher.Player.stat.vitality		= vitality
-		Launcher.Player.stat.agility		= agility
-		Launcher.Player.stat.endurance		= endurance
-		Launcher.Player.stat.concentration	= concentration
+func UpdatePersonalStats(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Map:
+		var entity : BaseEntity = Launcher.Map.entities.get(ridAgent)
+		if entity and entity.get_parent() and entity.stat:
+			entity.stat.strength		= strength
+			entity.stat.vitality		= vitality
+			entity.stat.agility			= agility
+			entity.stat.endurance		= endurance
+			entity.stat.concentration	= concentration
 
 func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:

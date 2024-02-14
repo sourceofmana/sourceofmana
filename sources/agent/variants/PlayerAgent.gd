@@ -15,7 +15,7 @@ func UpdateLastStats():
 
 	if lastStat.level != stat.level or \
 	lastStat.experience != stat.experience:
-		Launcher.Network.UpdatePlayerVars(stat.level, stat.experience, peerID)
+		Launcher.Network.UpdatePlayerVars(get_rid().get_id(), stat.level, stat.experience, peerID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 
@@ -24,7 +24,7 @@ func UpdateLastStats():
 	lastStat.stamina != stat.stamina or \
 	lastStat.weight != stat.weight or \
 	lastStat.morphed != stat.morphed:
-		Launcher.Network.UpdateActiveStats(stat.health, stat.mana, stat.stamina, stat.weight, stat.morphed, peerID)
+		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.health, stat.mana, stat.stamina, stat.weight, stat.morphed, peerID)
 		lastStat.health				= stat.health
 		lastStat.mana				= stat.mana
 		lastStat.stamina			= stat.stamina
@@ -36,7 +36,7 @@ func UpdateLastStats():
 	lastStat.agility != stat.agility or \
 	lastStat.endurance != stat.endurance or \
 	lastStat.concentration != stat.concentration:
-		Launcher.Network.UpdatePersonalStats(stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, peerID)
+		Launcher.Network.UpdatePersonalStats(get_rid().get_id(), stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, peerID)
 		lastStat.strength			= stat.strength
 		lastStat.vitality			= stat.vitality
 		lastStat.agility			= stat.agility
