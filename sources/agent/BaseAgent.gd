@@ -190,7 +190,7 @@ func Killed(_attacker: BaseAgent):
 	SetSkillCastName("")
 	if aiTimer:
 		AI.SetState(self, AI.State.HALT)
-		Callback.SelfDestructTimer(self, stat.deathDelay, WorldAgent.RemoveAgent.bind(self))
+		Callback.SelfDestructTimer(self, EntityCommons.DeathDelay, WorldAgent.RemoveAgent.bind(self))
 
 #
 func _physics_process(_delta):

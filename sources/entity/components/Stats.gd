@@ -31,9 +31,6 @@ var current : BaseStats					= null
 var walkRatio : float					= 1.0
 var attackRatio : float					= 1.0
 
-# Constants to move to Conf
-var deathDelay : int					= 10
-
 # Signals
 signal ratio_updated
 
@@ -114,16 +111,6 @@ static func Regen(agent : BaseAgent):
 		if agent.stat.stamina < agent.stat.current.maxStamina:
 			agent.stat.stamina  = min(agent.stat.stamina + Formulas.GetRegenStamina(agent), agent.stat.current.maxStamina)
 	Callback.LoopTimer(agent.regenTimer, EntityCommons.RegenDelay)
-
-#
-func UpdatePlayerVars(networkRID : int):
-	Launcher.Network.UpdatePlayerVars(level, experience, networkRID)
-
-func UpdateActiveStats(networkRID : int):
-	Launcher.Network.UpdateActiveStats(health, mana, stamina, weight, morphed, networkRID)
-
-func UpdatePersonalStats(networkRID : int):
-	Launcher.Network.UpdatePersonalStats(strength, vitality, agility, endurance, concentration, networkRID)
 
 #region Level and Experience
 

@@ -122,3 +122,4 @@ static var speechExtraWidth : int				= 20
 #
 static var AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
 static var RegenDelay : float					= 1.0
+static var DeathDelay : float					= 10.0
