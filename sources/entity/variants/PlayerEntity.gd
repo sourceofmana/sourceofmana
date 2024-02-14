@@ -42,7 +42,7 @@ func Target(pos : Vector2, canInteract : bool = true):
 			target.visual.SetMainMaterial.call_deferred(EntityCommons.AllyTarget)
 		elif target is MonsterEntity:
 			target.visual.SetMainMaterial.call_deferred(EntityCommons.EnemyTarget)
-
+			Launcher.Network.TriggerSelect(Launcher.Map.entities.find_key(target))
 
 func Interact():
 	if not target or target.entityState == EntityCommons.State.DEATH:

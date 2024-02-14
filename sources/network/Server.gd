@@ -106,6 +106,12 @@ func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 	if player:
 		player.Morph(true)
 
+func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	var target : BaseAgent = WorldAgent.GetAgent(targetID)
+	if target:
+		Launcher.Network.UpdatePlayerVars(targetID, target.stat.level, target.stat.experience, rpcID)
+		Launcher.Network.UpdateActiveStats(targetID, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.morphed, rpcID)
+
 #
 func GetRid(player : PlayerAgent) -> int:
 	var playerRid : int = player.get_rid().get_id()

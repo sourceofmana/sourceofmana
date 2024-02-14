@@ -137,6 +137,10 @@ func UpdatePersonalStats(agentID : int, strength : int, vitality : int, agility 
 func TargetLevelUp(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("TargetLevelUp", [targetID], rpcID)
 
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TriggerSelect(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("TriggerSelect", [entityID], rpcID)
+
 #
 func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:
 	if Server:
