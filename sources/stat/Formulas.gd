@@ -91,7 +91,7 @@ static func GetRegenMana(agent : BaseAgent) -> int:
 	return max(1, regen)
 
 static func GetRegenStamina(agent : BaseAgent) -> int:
-	var regen : float = agent.stat.current.maxStamina * 0.01
+	var regen : float = agent.stat.current.maxStamina * 0.05
 	if agent.currentState == EntityCommons.State.SIT:
 		regen *= 2.0
 	return max(1, regen)
