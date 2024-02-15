@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://f2jxqr5e7i5e"]
+[gd_scene load_steps=7 format=3 uid="uid://f2jxqr5e7i5e"]
 
 [ext_resource type="Script" path="res://sources/entity/components/Interactive.gd" id="1_b3bk6"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_wehdi"]
+[ext_resource type="PackedScene" uid="uid://c0wuhrlsdwo8s" path="res://presets/gui/HealthBar.tscn" id="2_5opbf"]
 [ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="2_elci4"]
 [ext_resource type="PackedScene" uid="uid://08v0t5i6hvef" path="res://presets/effects/particles/Emote.tscn" id="2_gghi1"]
 
@@ -14,6 +15,12 @@ script = ExtResource("1_b3bk6")
 
 [node name="Visible" type="Node2D" parent="."]
 position = Vector2(0, -64)
+
+[node name="HealthBar" parent="Visible" instance=ExtResource("2_5opbf")]
+offset_left = -26.0
+offset_top = -3.0
+offset_right = 26.0
+offset_bottom = 3.0
 
 [node name="Emote" parent="Visible" instance=ExtResource("2_gghi1")]
 position = Vector2(0, -16)
