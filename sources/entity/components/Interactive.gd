@@ -6,6 +6,7 @@ class_name EntityInteractive
 @onready var generalVBox : BoxContainer		= $Visible/VBox
 @onready var speechContainer : BoxContainer	= $Visible/VBox/Panel/SpeechContainer
 @onready var emoteFx : GPUParticles2D		= $Visible/Emote
+@onready var healthBar : TextureProgressBar	= $Visible/HealthBar
 @onready var nameLabel : Label				= $Name
 
 static var MorphFx : PackedScene			= preload("res://presets/effects/particles/Morph.tscn")
@@ -83,6 +84,8 @@ func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, al
 			newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
 			newLabel.SetValue(dealer, value, alteration)
 			Launcher.Map.tilemapNode.add_child(newLabel)
+			target.stat.health += value if alteration == EntityCommons.Alteration.HEAL else -value
+			target.stat.ClampStats()
 
 		if DB.SkillsDB.has(skillName):
 			var skill : SkillData = DB.SkillsDB[skillName]
@@ -102,6 +105,28 @@ func DisplaySpeech(speech : String):
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
 		Callback.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
+
+#
+func DisplayHP(health : int, maxHealth : int = 0):
+	Util.Assert(healthBar != null, "No health bar found, could not display health info")
+	if healthBar:
+		if health == 0 or (maxHealth == 0 and healthBar.max_value == 0):
+			healthBar.visible = false
+			return
+
+		if not healthBar.visible:
+			healthBar.visible = true
+		if maxHealth != 0:
+			healthBar.max_value = maxHealth
+		if healthBar.max_value > 0:
+			healthBar.value = health
+			var ratio : float = healthBar.value / healthBar.max_value
+			if ratio <= 0.33:
+				healthBar.tint_progress = Color.RED.lerp(Color.YELLOW, ratio * 3.0)
+			elif ratio <= 0.66:
+				healthBar.tint_progress = Color.YELLOW.lerp(Color.GREEN, (ratio-0.33) * 3.0)
+			else:
+				healthBar.tint_progress = Color.GREEN
 
 #
 func RefreshVisibleNodeOffset(offset : int):

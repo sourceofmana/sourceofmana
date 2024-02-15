@@ -33,6 +33,7 @@ var attackRatio : float					= 1.0
 
 # Signals
 signal ratio_updated
+signal health_updated
 
 #
 func RefreshStats():
@@ -62,6 +63,7 @@ func ClampStats():
 	health					= Formulas.ClampHealth(self)
 	stamina					= Formulas.ClampStamina(self)
 	mana					= Formulas.ClampMana(self)
+	health_updated.emit(health, current.maxHealth)
 
 func SetEntityStats(stats : Dictionary, isMorphed : bool):
 	for modifier in stats:

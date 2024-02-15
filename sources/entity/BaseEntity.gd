@@ -69,3 +69,7 @@ func _physics_process(delta):
 
 func _process(delta : float):
 	visual.Refresh(delta)
+
+func _ready():
+	if Launcher.Player != self:
+		stat.health_updated.connect(interactive.DisplayHP)
