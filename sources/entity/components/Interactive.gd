@@ -2,15 +2,11 @@ extends Node2D
 class_name EntityInteractive
 
 #
-@onready var visibleNode : Node2D			= $Visible
-@onready var generalVBox : BoxContainer		= $Visible/VBox
-@onready var speechContainer : BoxContainer	= $Visible/VBox/Panel/SpeechContainer
-@onready var emoteFx : GPUParticles2D		= $Visible/Emote
-@onready var healthBar : TextureProgressBar	= $Visible/HealthBar
-@onready var nameLabel : Label				= $Name
-
-static var MorphFx : PackedScene			= preload("res://presets/effects/particles/Morph.tscn")
-static var LevelUpFx : PackedScene			= preload("res://presets/effects/particles/LevelUp.tscn")
+@onready var visibleNode : Node2D			= $TopOffset
+@onready var speechContainer : BoxContainer	= $TopOffset/TopBox/Panel/SpeechContainer
+@onready var emoteFx : GPUParticles2D		= $TopOffset/Emote
+@onready var healthBar : TextureProgressBar	= $UnderBox/HealthBar
+@onready var nameLabel : Label				= $UnderBox/Name
 
 #
 func DisplayEmote(emoteID : String):
@@ -23,7 +19,7 @@ func DisplayEmote(emoteID : String):
 
 #
 func DisplayMorph(callback : Callable):
-	var particle : GPUParticles2D = MorphFx.instantiate()
+	var particle : GPUParticles2D = EntityCommons.MorphFx.instantiate()
 	if particle:
 		Callback.SelfDestructTimer(self, EntityCommons.morphDelay, callback)
 		particle.finished.connect(Util.RemoveNode.bind(particle, self))
@@ -32,7 +28,7 @@ func DisplayMorph(callback : Callable):
 
 #
 func DisplayLevelUp():
-	var particle : GPUParticles2D = LevelUpFx.instantiate()
+	var particle : GPUParticles2D = EntityCommons.LevelUpFx.instantiate()
 	if particle:
 		particle.emitting = true
 		add_child(particle)

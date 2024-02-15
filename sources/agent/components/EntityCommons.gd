@@ -90,6 +90,8 @@ static var AllyTarget : Resource 				= preload("res://presets/entities/component
 static var EnemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")
 static var AlterationLabel : PackedScene		= preload("res://presets/gui/AlterationLabel.tscn")
 static var SpeechLabel : PackedScene			= preload("res://presets/gui/chat/SpeechBubble.tscn")
+static var MorphFx : PackedScene				= preload("res://presets/effects/particles/Morph.tscn")
+static var LevelUpFx : PackedScene				= preload("res://presets/effects/particles/LevelUp.tscn")
 
 # Skill
 enum Alteration

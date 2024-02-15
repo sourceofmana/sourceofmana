@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://bjd7x0b027d7o" path="res://data/graphics/gui/smallbarprogress.png" id="2_8b3ae"]
 
 [node name="HealthBar" type="TextureProgressBar"]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -12,17 +11,17 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -640.0
 offset_top = -360.0
-offset_right = -588.0
-offset_bottom = -354.0
+offset_right = -585.0
+offset_bottom = -355.0
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 1.0
 value = 1.0
 nine_patch_stretch = true
-stretch_margin_left = 2
-stretch_margin_top = 2
-stretch_margin_right = 2
-stretch_margin_bottom = 2
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
 texture_under = ExtResource("1_qbml5")
 texture_progress = ExtResource("2_8b3ae")
 tint_progress = Color(0, 1, 0, 1)
