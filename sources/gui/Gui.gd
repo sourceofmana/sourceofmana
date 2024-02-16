@@ -1,31 +1,35 @@
 extends ServiceBase
 
-@onready var menu : Control						= $UIMargin/UIOverlay/Indicators/Menu
-@onready var stats : Control					= $UIMargin/UIOverlay/Indicators/Stat
-@onready var shortcuts : Container				= $UIMargin/UIOverlay/Shortcuts
-
-@onready var boxes : Container					= $UIMargin/UIOverlay/Shortcuts/Boxes
-@onready var sticks : Container					= $UIMargin/UIOverlay/Shortcuts/Sticks
-
 @onready var background : TextureRect			= $Background
 
-@onready var windows : Control					= $FloatingWindows
-@onready var newsWindow : WindowPanel			= $FloatingWindows/News
-@onready var loginWindow : WindowPanel			= $FloatingWindows/Login
-@onready var inventoryWindow : WindowPanel		= $FloatingWindows/Inventory
-@onready var minimapWindow : WindowPanel		= $FloatingWindows/Minimap
-@onready var chatWindow : WindowPanel			= $FloatingWindows/Chat
-@onready var settingsWindow : WindowPanel		= $FloatingWindows/Settings
-@onready var emoteWindow : WindowPanel			= $FloatingWindows/Emote
-@onready var quitWindow : WindowPanel			= $FloatingWindows/Quit
-@onready var respawnWindow : WindowPanel		= $FloatingWindows/Respawn
+# Overlay
+@onready var menu : Control						= $Overlay/Sections/Indicators/Menu
+@onready var stats : Control					= $Overlay/Sections/Indicators/Stat
 
-@onready var chatContainer : ChatContainer		= $FloatingWindows/Chat/Margin/VBoxContainer
-@onready var emoteContainer : Container			= $FloatingWindows/Emote/ItemContainer/Grid
+@onready var shortcuts : Container				= $Overlay/Sections/Shortcuts
+@onready var boxes : Container					= $Overlay/Sections/Shortcuts/Boxes
+@onready var sticks : Container					= $Overlay/Sections/Shortcuts/Sticks
 
-@onready var notificationLabel : RichTextLabel	= $UIMargin/UIOverlay/Notification
-@onready var tipsLabel : PanelContainer			= $UIMargin/UIOverlay/Tips
+@onready var notificationLabel : RichTextLabel	= $Overlay/Sections/Notification
+@onready var tipsLabel : PanelContainer			= $Overlay/Sections/Tips
 
+# Windows
+@onready var windows : Control					= $Windows/Floating
+
+@onready var newsWindow : WindowPanel			= $Windows/Floating/News
+@onready var loginWindow : WindowPanel			= $Windows/Floating/Login
+@onready var inventoryWindow : WindowPanel		= $Windows/Floating/Inventory
+@onready var minimapWindow : WindowPanel		= $Windows/Floating/Minimap
+@onready var chatWindow : WindowPanel			= $Windows/Floating/Chat
+@onready var settingsWindow : WindowPanel		= $Windows/Floating/Settings
+@onready var emoteWindow : WindowPanel			= $Windows/Floating/Emote
+@onready var quitWindow : WindowPanel			= $Windows/Floating/Quit
+@onready var respawnWindow : WindowPanel		= $Windows/Floating/Respawn
+
+@onready var chatContainer : ChatContainer		= $Windows/Floating/Chat/Margin/VBoxContainer
+@onready var emoteContainer : Container			= $Windows/Floating/Emote/ItemContainer/Grid
+
+# Shaders
 @onready var CRTShader : TextureRect			= $Shaders/CRT
 @onready var HQ4xShader : TextureRect			= $Shaders/HQ4x
 
@@ -101,8 +105,8 @@ func _notification(notif):
 		Node.NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_WM_GO_BACK_REQUEST:
 			ToggleControl(quitWindow)
 		Node.NOTIFICATION_WM_MOUSE_EXIT:
-			if has_node("FloatingWindows"):
-				get_node("FloatingWindows").ClearWindowsModifier()
+			if windows:
+				windows.ClearWindowsModifier()
 
 func _ready():
 	Util.Assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")

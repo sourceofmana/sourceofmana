@@ -17,13 +17,12 @@ func _ready():
 		window.MoveFloatingWindowToTop.connect(self.MoveWindow)
 
 func _on_window_resized():
-	if prevSize != null:
-		var overallRatio = Vector2.ONE
-		if size != Vector2.ZERO:
-			overallRatio = size / prevSize
-		prevSize = size
+	var overallRatio = Vector2.ONE
+	if prevSize != null and prevSize.x != 0 and prevSize.y != 0:
+		overallRatio = size / prevSize
+	prevSize = size
 
-		if overallRatio != Vector2.ONE:
-			for child in get_children():
-				child.set_position(child.get_position() * overallRatio)
-				child.UpdateWindow.call_deferred(Vector2.ZERO)
+	if overallRatio != Vector2.ONE:
+		for child in get_children():
+			child.set_position(child.get_position() * overallRatio)
+			child.UpdateWindow.call_deferred(Vector2.ZERO)

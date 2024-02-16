@@ -72,7 +72,7 @@ grow_vertical = 2
 texture = ExtResource("2_u1iab")
 expand_mode = 1
 
-[node name="UIMargin" type="MarginContainer" parent="."]
+[node name="Overlay" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -85,24 +85,24 @@ theme_override_constants/margin_top = 19
 theme_override_constants/margin_right = 19
 theme_override_constants/margin_bottom = 19
 
-[node name="UIOverlay" type="VBoxContainer" parent="UIMargin"]
+[node name="Sections" type="VBoxContainer" parent="Overlay"]
 layout_mode = 2
 
-[node name="Indicators" type="HBoxContainer" parent="UIMargin/UIOverlay"]
+[node name="Indicators" type="HBoxContainer" parent="Overlay/Sections"]
 layout_mode = 2
 alignment = 1
 
-[node name="Stat" parent="UIMargin/UIOverlay/Indicators" instance=ExtResource("2")]
+[node name="Stat" parent="Overlay/Sections/Indicators" instance=ExtResource("2")]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
 mouse_filter = 0
 
-[node name="Menu" type="Control" parent="UIMargin/UIOverlay/Indicators"]
+[node name="Menu" type="Control" parent="Overlay/Sections/Indicators"]
 layout_mode = 2
 script = ExtResource("6_npwx0")
 
-[node name="MenuContent" type="TextureRect" parent="UIMargin/UIOverlay/Indicators/Menu"]
+[node name="MenuContent" type="TextureRect" parent="Overlay/Sections/Indicators/Menu"]
 material = SubResource("ShaderMaterial_wjdwk")
 layout_mode = 2
 offset_left = -511.0
@@ -116,7 +116,7 @@ size_flags_vertical = 0
 texture = ExtResource("6_mf0sy")
 stretch_mode = 3
 
-[node name="HBoxItems" type="HBoxContainer" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent"]
+[node name="HBoxItems" type="HBoxContainer" parent="Overlay/Sections/Indicators/Menu/MenuContent"]
 use_parent_material = true
 layout_mode = 1
 anchors_preset = 6
@@ -134,64 +134,64 @@ size_flags_vertical = 0
 mouse_filter = 0
 alignment = 2
 
-[node name="Inventory" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Inventory" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("5_ntnop")
 flat = true
 icon_alignment = 1
-targetWindow = NodePath("../../../../../../../FloatingWindows/Inventory")
+targetWindow = NodePath("../../../../../../../Windows/Floating/Inventory")
 targetShortcut = &"ui_inventory"
 
-[node name="Chat" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Chat" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("6_2quic")
 flat = true
-targetWindow = NodePath("../../../../../../../FloatingWindows/Chat")
+targetWindow = NodePath("../../../../../../../Windows/Floating/Chat")
 targetShortcut = &"ui_chat"
 
-[node name="Minimap" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Minimap" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("7_cv35r")
 flat = true
-targetWindow = NodePath("../../../../../../../FloatingWindows/Minimap")
+targetWindow = NodePath("../../../../../../../Windows/Floating/Minimap")
 targetShortcut = &"ui_minimap"
 
-[node name="Emote" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Emote" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("8_ppxwt")
 flat = true
-targetWindow = NodePath("../../../../../../../FloatingWindows/Emote")
+targetWindow = NodePath("../../../../../../../Windows/Floating/Emote")
 targetShortcut = &"ui_emote"
 
-[node name="News" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="News" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("9_vtuwx")
 flat = true
-targetWindow = NodePath("../../../../../../../FloatingWindows/News")
+targetWindow = NodePath("../../../../../../../Windows/Floating/News")
 targetShortcut = &"ui_news"
 
-[node name="Credits" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Credits" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("10_mq57a")
 flat = true
-targetWindow = NodePath("../../../../../../../FloatingWindows/Credit")
+targetWindow = NodePath("../../../../../../../Windows/Floating/Credit")
 targetShortcut = &"ui_credits"
 
-[node name="Settings" parent="UIMargin/UIOverlay/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Settings" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("11_17vy0")
 flat = true
-targetWindow = NodePath("../../../../../../../FloatingWindows/Settings")
+targetWindow = NodePath("../../../../../../../Windows/Floating/Settings")
 targetShortcut = &"ui_settings"
 
-[node name="MenuButton" type="Button" parent="UIMargin/UIOverlay/Indicators/Menu"]
+[node name="MenuButton" type="Button" parent="Overlay/Sections/Indicators/Menu"]
 custom_minimum_size = Vector2(62, 61)
 layout_direction = 3
 layout_mode = 2
@@ -205,23 +205,23 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_w48pk")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
 
-[node name="Notification" parent="UIMargin/UIOverlay" instance=ExtResource("17_64u4l")]
+[node name="Notification" parent="Overlay/Sections" instance=ExtResource("17_64u4l")]
 layout_mode = 2
 size_flags_vertical = 2
 
-[node name="Tips" parent="UIMargin/UIOverlay" instance=ExtResource("18_88m73")]
+[node name="Tips" parent="Overlay/Sections" instance=ExtResource("18_88m73")]
 layout_mode = 2
 actions = Array[StringName]([&"gp_interact", &"gp_target", &"gp_morph", &"gp_sit"])
 
-[node name="Shortcuts" type="MarginContainer" parent="UIMargin/UIOverlay"]
+[node name="Shortcuts" type="MarginContainer" parent="Overlay/Sections"]
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="Sticks" type="HBoxContainer" parent="UIMargin/UIOverlay/Shortcuts"]
+[node name="Sticks" type="HBoxContainer" parent="Overlay/Sections/Shortcuts"]
 layout_mode = 2
 script = ExtResource("18_6nrx4")
 
-[node name="Direction" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks"]
+[node name="Direction" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks"]
 layout_mode = 2
 size_flags_horizontal = 0
 action_mode = 0
@@ -229,7 +229,7 @@ keep_pressed_outside = true
 texture_normal = ExtResource("18_lb78w")
 texture_click_mask = ExtResource("20_rnv11")
 
-[node name="Button" type="TextureRect" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Direction"]
+[node name="Button" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/Direction"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -248,12 +248,12 @@ theme = ExtResource("4_wx5hs")
 theme_type_variation = &"FilledLosangeButton"
 texture = ExtResource("20_1vdgt")
 
-[node name="Actions" type="TextureRect" parent="UIMargin/UIOverlay/Shortcuts/Sticks"]
+[node name="Actions" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks"]
 layout_mode = 2
 size_flags_horizontal = 10
 texture = ExtResource("18_lb78w")
 
-[node name="ButtonY" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Actions"]
+[node name="ButtonY" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -270,7 +270,7 @@ texture_normal = ExtResource("22_v5bsw")
 texture_pressed = ExtResource("23_veq0v")
 texture_click_mask = ExtResource("25_a6irb")
 
-[node name="ButtonX" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Actions"]
+[node name="ButtonX" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -287,7 +287,7 @@ texture_normal = ExtResource("23_8ulos")
 texture_pressed = ExtResource("25_8t8bb")
 texture_click_mask = ExtResource("25_a6irb")
 
-[node name="ButtonB" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Actions"]
+[node name="ButtonB" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -307,7 +307,7 @@ texture_normal = ExtResource("24_idf5b")
 texture_pressed = ExtResource("27_rgxqc")
 texture_click_mask = ExtResource("25_a6irb")
 
-[node name="ButtonA" type="TextureButton" parent="UIMargin/UIOverlay/Shortcuts/Sticks/Actions"]
+[node name="ButtonA" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -327,23 +327,27 @@ texture_normal = ExtResource("25_6cklw")
 texture_pressed = ExtResource("29_ioa8a")
 texture_click_mask = ExtResource("25_a6irb")
 
-[node name="Boxes" parent="UIMargin/UIOverlay/Shortcuts" instance=ExtResource("4")]
+[node name="Boxes" parent="Overlay/Sections/Shortcuts" instance=ExtResource("4")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
 mouse_filter = 0
 
-[node name="FloatingWindows" type="Control" parent="."]
-layout_mode = 3
+[node name="Windows" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_constants/margin_top = 80
+
+[node name="Floating" type="Control" parent="Windows"]
+layout_mode = 2
+mouse_filter = 2
 script = ExtResource("7")
 
-[node name="Quit" parent="FloatingWindows" instance=ExtResource("8")]
+[node name="Quit" parent="Windows/Floating" instance=ExtResource("8")]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -359,7 +363,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
-[node name="Inventory" parent="FloatingWindows" instance=ExtResource("6")]
+[node name="Inventory" parent="Windows/Floating" instance=ExtResource("6")]
 visible = false
 show_behind_parent = false
 layout_mode = 2
@@ -373,7 +377,7 @@ offset_bottom = 404.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="Minimap" parent="FloatingWindows" instance=ExtResource("9_myjuo")]
+[node name="Minimap" parent="Windows/Floating" instance=ExtResource("9_myjuo")]
 visible = false
 custom_minimum_size = Vector2(200, 125)
 layout_mode = 2
@@ -382,7 +386,7 @@ offset_top = 6.0
 offset_right = 1258.0
 offset_bottom = 131.0
 
-[node name="Emote" parent="FloatingWindows" instance=ExtResource("10_q754c")]
+[node name="Emote" parent="Windows/Floating" instance=ExtResource("10_q754c")]
 visible = false
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
@@ -392,7 +396,7 @@ offset_right = 306.0
 offset_bottom = 68.0
 blockActions = false
 
-[node name="Chat" parent="FloatingWindows" instance=ExtResource("5")]
+[node name="Chat" parent="Windows/Floating" instance=ExtResource("5")]
 visible = false
 layout_mode = 2
 anchors_preset = 0
@@ -405,7 +409,7 @@ offset_bottom = 622.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="Login" parent="FloatingWindows" instance=ExtResource("7_lrq68")]
+[node name="Login" parent="Windows/Floating" instance=ExtResource("7_lrq68")]
 visible = false
 layout_mode = 2
 anchor_left = 0.165625
@@ -416,7 +420,7 @@ offset_top = -77.7779
 offset_right = 0.0
 offset_bottom = -80.222
 
-[node name="News" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
+[node name="News" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false
 layout_mode = 2
 offset_left = 827.0
@@ -427,7 +431,7 @@ grow_horizontal = 2
 grow_vertical = 2
 jsonFile = ExtResource("15_q438c")
 
-[node name="Credit" parent="FloatingWindows" instance=ExtResource("14_xidsc")]
+[node name="Credit" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false
 layout_mode = 2
 offset_left = 23.0
@@ -436,7 +440,7 @@ offset_right = 451.0
 offset_bottom = 583.0
 jsonFile = ExtResource("16_pfh0e")
 
-[node name="Settings" parent="FloatingWindows" instance=ExtResource("16_gapih")]
+[node name="Settings" parent="Windows/Floating" instance=ExtResource("16_gapih")]
 visible = false
 layout_mode = 2
 anchors_preset = 0
@@ -446,7 +450,7 @@ offset_right = -453.0
 offset_bottom = -299.0
 blockActions = true
 
-[node name="Respawn" parent="FloatingWindows" instance=ExtResource("44_7o5pa")]
+[node name="Respawn" parent="Windows/Floating" instance=ExtResource("44_7o5pa")]
 visible = false
 layout_mode = 1
 
@@ -459,12 +463,12 @@ visible = false
 [node name="CRT" parent="Shaders" instance=ExtResource("11_x7rk2")]
 top_level = true
 
-[connection signal="resized" from="UIMargin" to="." method="_on_ui_margin_resized"]
-[connection signal="pressed" from="UIMargin/UIOverlay/Indicators/Menu/MenuButton" to="UIMargin/UIOverlay/Indicators/Menu" method="_on_button_pressed"]
-[connection signal="button_down" from="UIMargin/UIOverlay/Shortcuts/Sticks/Direction" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_direction_button_down"]
-[connection signal="button_up" from="UIMargin/UIOverlay/Shortcuts/Sticks/Direction" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_direction_button_up"]
-[connection signal="pressed" from="UIMargin/UIOverlay/Shortcuts/Sticks/Actions/ButtonY" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_button_y_pressed"]
-[connection signal="pressed" from="UIMargin/UIOverlay/Shortcuts/Sticks/Actions/ButtonX" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_button_x_pressed"]
-[connection signal="pressed" from="UIMargin/UIOverlay/Shortcuts/Sticks/Actions/ButtonB" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_button_b_pressed"]
-[connection signal="pressed" from="UIMargin/UIOverlay/Shortcuts/Sticks/Actions/ButtonA" to="UIMargin/UIOverlay/Shortcuts/Sticks" method="_on_button_a_pressed"]
-[connection signal="resized" from="FloatingWindows" to="FloatingWindows" method="_on_window_resized"]
+[connection signal="resized" from="Overlay" to="." method="_on_ui_margin_resized"]
+[connection signal="pressed" from="Overlay/Sections/Indicators/Menu/MenuButton" to="Overlay/Sections/Indicators/Menu" method="_on_button_pressed"]
+[connection signal="button_down" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]
+[connection signal="button_up" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_up"]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonY" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_y_pressed"]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonX" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_x_pressed"]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonB" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_b_pressed"]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonA" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_a_pressed"]
+[connection signal="resized" from="Windows/Floating" to="Windows/Floating" method="_on_window_resized"]
