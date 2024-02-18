@@ -148,8 +148,8 @@ func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName :
 #
 func ConnectPeer(rpcID : int):
 	Util.PrintInfo("Server", "Peer connected: %d" % rpcID)
-	var clientPeer = Launcher.Network.peer.get_peer(rpcID)
-	if clientPeer:
+	var clientPeer : PacketPeer = Launcher.Network.peer.get_peer(rpcID)
+	if clientPeer and clientPeer is ENetPacketPeer:
 		clientPeer.set_timeout(NetworkCommons.Timeout, NetworkCommons.TimeoutMin, NetworkCommons.TimeoutMax)
 
 func DisconnectPeer(rpcID : int):

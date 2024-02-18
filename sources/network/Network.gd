@@ -4,7 +4,7 @@ extends ServiceBase
 var Client							= null
 var Server							= null
 
-var peer : ENetMultiplayerPeer		= ENetMultiplayerPeer.new()
+var peer : MultiplayerPeer			= null
 var uniqueID : int					= NetworkCommons.RidDefault
 
 enum EChannel
@@ -179,12 +179,28 @@ func NetCreate():
 	if uniqueID != NetworkCommons.RidDefault:
 		pass
 
+	if NetworkCommons.EnableWebSocket:
+		peer = WebSocketMultiplayerPeer.new()
+	else:
+		peer = ENetMultiplayerPeer.new()
+
 	if Client and Server:
 		ConnectPlayer(Launcher.FSM.playerName)
 		uniqueID = NetworkCommons.RidSingleMode
 	elif Client:
+		var ret : Error = FAILED
 		var serverAddress : String = NetworkCommons.LocalServerAddress if Launcher.Debug else NetworkCommons.ServerAddress
-		var ret : Error = peer.create_client(serverAddress, NetworkCommons.ServerPort)
+		if NetworkCommons.EnableWebSocket:
+			var tlsOptions : TLSOptions = null
+			var prefix : String = "ws://"
+			if ResourceLoader.exists(NetworkCommons.ClientTrustedCAPath):
+				var clientTrustedCA : X509Certificate = ResourceLoader.load(NetworkCommons.ClientTrustedCAPath)
+				tlsOptions = TLSOptions.client(clientTrustedCA)
+				prefix = "wss://"
+			ret = peer.create_client(prefix + serverAddress + ":" + str(NetworkCommons.ServerPort), tlsOptions)
+		else:
+			ret = peer.create_client(serverAddress, NetworkCommons.ServerPort)
+
 		Util.Assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
@@ -198,7 +214,18 @@ func NetCreate():
 
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 	elif Server:
-		var ret : Error = peer.create_server(NetworkCommons.ServerPort, NetworkCommons.MaxPlayerCount)
+		var ret : Error = FAILED
+		if NetworkCommons.EnableWebSocket:
+			var serverKey : CryptoKey = null
+			var serverCerts : X509Certificate = null
+			var tlsOptions : TLSOptions = null
+			if ResourceLoader.exists(NetworkCommons.ServerKeyPath) and ResourceLoader.exists(NetworkCommons.ServerCertsPath):
+				serverKey = ResourceLoader.load(NetworkCommons.ServerKeyPath)
+				serverCerts = ResourceLoader.load(NetworkCommons.ServerCertsPath)
+				tlsOptions = TLSOptions.server(serverKey, serverCerts)
+			ret = peer.create_server(NetworkCommons.ServerPort, "*", tlsOptions)
+		else:
+			ret = peer.create_server(NetworkCommons.ServerPort)
 		Util.Assert(ret == OK, "Server could not be created, please check if your port %d is valid" % NetworkCommons.ServerPort)
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer

@@ -4,7 +4,7 @@ class_name NetworkCommons
 # Server
 static var ServerPort : int					= 6109
 static var LocalServerAddress : String		= "127.0.0.1"
-static var ServerAddress : String			= "75.119.128.234"
+static var ServerAddress : String			= "213.202.247.189"
 static var MaxPlayerCount : int				= 32
 
 # Navigation
@@ -31,3 +31,9 @@ static var TimeoutMax : int					= 60000
 static var PlayerNameMinSize : int			= 3
 static var PlayerNameMaxSize : int			= 30
 static var PlayerNameInvalidChar : String	= "[^\\w\\h]+"
+
+# Peer
+static var EnableWebSocket : bool			= true
+static var ClientTrustedCAPath : String		= "res://publishing/my_trusted_cas.crt"
+static var ServerKeyPath : String			= "res://publishing/private_key.key"
+static var ServerCertsPath : String			= "res://publishing/my_server_cas.crt"
