@@ -83,10 +83,10 @@ func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
 		player.Respawn()
 
 func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NotifyInstancePlayers(null, GetAgent(rpcID), "EmotePlayer", [emoteID])
+	NotifyInstance(GetAgent(rpcID), "EmotePlayer", [emoteID])
 
 func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NotifyInstancePlayers(null, GetAgent(rpcID), "ChatAgent", [text])
+	NotifyInstance(GetAgent(rpcID), "ChatAgent", [text])
 
 func TriggerInteract(triggeredAgentID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
@@ -131,19 +131,19 @@ func GetAgent(rpcID : int) -> BaseAgent:
 
 	return agent
 
-func NotifyInstancePlayers(inst : SubViewport, agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
-	if not inst:
-		inst = WorldAgent.GetInstanceFromAgent(agent)
-	Util.Assert(inst != null, "Could not notify every peer as this agent (%s) is not connected to any instance!" % agent.get_name())
-	if inst:
-		var currentPlayerID = agent.get_rid().get_id()
-		if currentPlayerID != null:
-			for player in inst.players:
-				if player != null:
-					var playerID = player.get_rid().get_id()
-					var peerID = GetRid(player)
-					if peerID != NetworkCommons.RidUnknown && (inclusive || playerID != currentPlayerID):
-						Launcher.Network.callv(callbackName, [currentPlayerID] + args + [peerID])
+func NotifyInstance(agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
+	if not agent or not agent.get_parent():
+		Util.Assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
+		return
+
+	var currentPlayerID = agent.get_rid().get_id()
+	if currentPlayerID != null:
+		for player in agent.get_parent().players:
+			if player != null:
+				var playerID = player.get_rid().get_id()
+				var peerID = GetRid(player)
+				if peerID != NetworkCommons.RidUnknown && (inclusive || playerID != currentPlayerID):
+					Launcher.Network.callv(callbackName, [currentPlayerID] + args + [peerID])
 
 #
 func ConnectPeer(rpcID : int):

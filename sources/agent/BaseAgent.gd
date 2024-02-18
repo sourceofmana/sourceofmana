@@ -136,7 +136,7 @@ func UpdateChanged():
 	if currentInput != Vector2.ZERO:
 		currentOrientation = Vector2(currentVelocity).normalized()
 	var functionName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
-	Launcher.Network.Server.NotifyInstancePlayers(get_parent(), self, functionName, [velocity, position, currentOrientation, currentState, currentSkillName])
+	Launcher.Network.Server.NotifyInstance(self, functionName, [velocity, position, currentOrientation, currentState, currentSkillName])
 
 #
 func SetData(data : EntityData):

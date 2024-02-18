@@ -128,6 +128,6 @@ static func addExperience(agent: BaseAgent, points: float):
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(agent.stat.level)
 	if levelUpHappened:
 		# Network notify of level up
-		Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetLevelUp", [])
+		Launcher.Network.Server.NotifyInstance(agent, "TargetLevelUp", [])
 
 #endregion

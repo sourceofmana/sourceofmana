@@ -69,7 +69,7 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var info : AlterationInfo = SkillCommons.GetDamage(agent, target, skill, rng)
 	target.stat.health = max(target.stat.health - info.value, 0)
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill._name])
+	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill._name])
 
 	if target.aiTimer:
 		target.AddAttacker(agent, info.value)
@@ -81,7 +81,7 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rn
 static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var heal : int = SkillCommons.GetHeal(agent, target, skill, rng)
 	target.stat.health = min(target.stat.health + heal, target.stat.current.maxHealth)
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), heal, EntityCommons.Alteration.HEAL, skill._name])
+	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), heal, EntityCommons.Alteration.HEAL, skill._name])
 
 static func Killed(agent : BaseAgent, target : BaseAgent):
 	Formulas.ApplyXp(target)
@@ -99,8 +99,8 @@ static func Stopped(agent : BaseAgent):
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:
 		return
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS, ""])
+	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS, ""])
 	Stopped(agent)
 
 static func Delayed(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	Launcher.Network.Server.NotifyInstancePlayers(null, agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.PROJECTILE, skill._name])
+	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.PROJECTILE, skill._name])
