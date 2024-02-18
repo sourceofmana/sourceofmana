@@ -15,7 +15,7 @@ var entityOrientation : Vector2			= Vector2.ZERO
 var inventory : EntityInventory			= EntityInventory.new()
 var stat : EntityStats					= EntityStats.new()
 var visual : EntityVisual				= EntityVisual.new()
-
+var agentID : int						= -1
 
 signal entity_died
 

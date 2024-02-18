@@ -21,28 +21,19 @@ func ClearTarget():
 			target.visual.sprites[EntityCommons.Slot.BODY].material = null
 		target = null
 
-func Target(pos : Vector2, canInteract : bool = true):
+func Target(source : Vector2, interactable : bool = true):
 	if not interactive:
 		return
 
-	var nearestDistance : float = -1
-
 	ClearTarget()
-	for entityID in Launcher.Map.entities:
-		var entity : BaseEntity = Launcher.Map.entities[entityID]
-		if entity and entity.entityState != EntityCommons.State.DEATH:
-			if entity is MonsterEntity or (canInteract and entity is NpcEntity):
-				var distance : float = (entity.position - pos).length()
-				if nearestDistance == -1 or distance < nearestDistance:
-					nearestDistance = distance
-					target = entity
+	target = Entities.GetNearestTarget(source, interactable)
 
 	if target:
-		if canInteract and target is NpcEntity:
+		if interactable and target is NpcEntity:
 			target.visual.SetMainMaterial.call_deferred(EntityCommons.AllyTarget)
 		elif target is MonsterEntity:
 			target.visual.SetMainMaterial.call_deferred(EntityCommons.EnemyTarget)
-			Launcher.Network.TriggerSelect(Launcher.Map.entities.find_key(target))
+			Launcher.Network.TriggerSelect(target.agentID)
 
 func Interact():
 	if not target or target.entityState == EntityCommons.State.DEATH:
@@ -51,7 +42,7 @@ func Interact():
 		return
 
 	if target is NpcEntity:
-		Launcher.Network.TriggerInteract(Launcher.Map.entities.find_key(target))
+		Launcher.Network.TriggerInteract(target.agentID)
 	elif target is MonsterEntity:
 		Cast("Melee")
 
@@ -66,7 +57,7 @@ func Cast(skillName : String):
 		if not target or target.entityState == EntityCommons.State.DEATH:
 			Target(position, false)
 		if target and target is MonsterEntity:
-			entityID = Launcher.Map.entities.find_key(target)
+			entityID = target.agentID
 
 	Launcher.Network.TriggerCast(entityID, skillName)
 

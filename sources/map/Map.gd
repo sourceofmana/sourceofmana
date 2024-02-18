@@ -7,7 +7,6 @@ signal PlayerWarped
 var pool								= FileSystem.LoadSource("map/MapPool.gd")
 var mapNode : Node2D					= null
 var tilemapNode : TileMap				= null
-var entities : Dictionary				= {}
 
 #
 func RefreshTileMap():
@@ -49,7 +48,7 @@ func UnloadMapNode():
 		Launcher.remove_child(mapNode)
 		mapNode = null
 		tilemapNode = null
-		entities.clear()
+		Entities.Clear()
 
 func LoadMapNode(mapName : String):
 	mapNode = pool.LoadMapClientData(mapName)
@@ -63,7 +62,6 @@ func RemoveChildren():
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove children")
 	for entity in tilemapNode.get_children():
 		RemoveChild(entity as BaseEntity)
-
 
 func RemoveChild(entity : BaseEntity):
 	if entity:
@@ -86,6 +84,7 @@ func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String
 			entity = Launcher.Player
 		else:
 			entity = Instantiate.CreateEntity(entityType, entityID, entityName)
+			entity.agentID = agentID
 			if entity && isLocalPlayer:
 				Launcher.Player = entity
 				Launcher.Player.SetLocalPlayer()
@@ -94,25 +93,24 @@ func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String
 
 	if entity:
 		entity.Update(entityVelocity, entityPosition, entityOrientation, entityState, skillCastName)
-
 		AddChild(entity)
-		entities[agentID] = entity
+		Entities.Add(entity, agentID)
 
 		if isLocalPlayer:
 			emit_signal('PlayerWarped')
 
 func RemoveEntity(agentID : int):
-	var entity : BaseEntity = entities.get(agentID)
+	var entity : BaseEntity = Entities.Get(agentID)
 	if entity:
 		RemoveChild(entity)
-		entities.erase(agentID)
+		Entities.Erase(agentID)
 
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : EntityCommons.State, skillCastName : String):
-	var entity : BaseEntity = entities.get(agentID)
+	var entity : BaseEntity = Entities.Get(agentID)
 	if entity:
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastName)
 
 func EmotePlayer(agentID : int, emoteID : int):
-	var entity : BaseEntity = entities.get(agentID)
+	var entity : BaseEntity = Entities.Get(agentID)
 	if entity && entity.get_parent() && entity.interactive:
 		entity.interactive.DisplayEmote(str(emoteID))
