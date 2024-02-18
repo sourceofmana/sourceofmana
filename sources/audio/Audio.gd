@@ -12,7 +12,8 @@ func Play(pause : bool = false):
 
 func Stop():
 	if audioPlayer.is_playing():
-		audioPlayer.Stop()
+		audioPlayer.stop()
+	currentTrack = ""
 
 func Load(soundName : String):
 	Util.Assert(audioPlayer != null, "AudioStreamPlayer could not be found")
@@ -36,6 +37,8 @@ func SetVolume(volume : float):
 func Warped():
 	if Launcher.Map.mapNode && Launcher.Map.mapNode.has_meta("music"):
 		Load(Launcher.Map.mapNode.get_meta("music") as String)
+	else:
+		Stop()
 
 #
 func _post_launch():
