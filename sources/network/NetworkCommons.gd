@@ -33,7 +33,7 @@ static var PlayerNameMaxSize : int			= 30
 static var PlayerNameInvalidChar : String	= "[^\\w\\h]+"
 
 # Peer
-static var EnableWebSocket : bool			= true
+static var EnableWebSocket : bool			= false
 static var ClientTrustedCAPath : String		= "res://publishing/my_trusted_cas.crt"
 static var ServerKeyPath : String			= "res://publishing/private_key.key"
 static var ServerCertsPath : String			= "res://publishing/my_server_cas.crt"

@@ -22,7 +22,7 @@ func _on_window_resized():
 		overallRatio = size / prevSize
 	prevSize = size
 
-	if overallRatio != Vector2.ONE:
-		for child in get_children():
+	for child in get_children():
+		if overallRatio != Vector2.ONE:
 			child.set_position(child.get_position() * overallRatio)
-			child.UpdateWindow.call_deferred(Vector2.ZERO)
+		child.ClampToMargin(get_size())

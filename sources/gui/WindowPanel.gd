@@ -25,6 +25,10 @@ func ClampFloatingWindow(globalPos : Vector2, moveLimit : Vector2):
 		moveLimit.y -= custom_minimum_size.y
 	return Vector2( clampf(globalPos.x, 0.0, moveLimit.x), clampf(globalPos.y, 0.0, moveLimit.y))
 
+func ClampToMargin(marginSize : Vector2):
+	if anchors_preset != LayoutPreset.PRESET_CENTER:
+		position = ClampFloatingWindow(position, marginSize - size)
+
 func ResizeWindow(pos : Vector2, globalPos : Vector2):
 	var rectSize = size
 	var rectPos = position
@@ -156,14 +160,13 @@ func UpdateWindow(eventPosition : Vector2 = Vector2.ZERO):
 	if isResizing:
 		ResizeWindow(ClampFloatingWindow(eventPosition, floatingWindowSize), eventPosition + position)
 	else:
-		var newPosition : Vector2 = position
 		if clickPosition != null:
-			newPosition += eventPosition - clickPosition
+			position += eventPosition - clickPosition
 
 		if get_minimum_size().x > 0 and get_minimum_size().y > 0:
 			size.x = clamp(size.x, get_minimum_size().x, max(get_minimum_size().x, Launcher.GUI.windows.get_size().x))
 			size.y = clamp(size.y, get_minimum_size().y, max(get_minimum_size().y, Launcher.GUI.windows.get_size().y))
-			position = ClampFloatingWindow(newPosition, Launcher.GUI.windows.get_size() - get_size())
+			ClampToMargin(Launcher.GUI.windows.get_size())
 
 func Center():
 	reset_size()
