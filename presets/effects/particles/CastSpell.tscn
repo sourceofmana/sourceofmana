@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bdin14a0kdwng" path="res://data/graphics/effects/particles/cast.png" id="1_c4gs0"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1pdty"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i21r2"]
 blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_jt0pk"]
@@ -37,7 +37,7 @@ color_ramp = SubResource("GradientTexture1D_lucto")
 [node name="CastParticles" type="GPUParticles2D"]
 z_index = -1
 z_as_relative = false
-material = SubResource("CanvasItemMaterial_1pdty")
+material = SubResource("CanvasItemMaterial_i21r2")
 position = Vector2(0, -10)
 scale = Vector2(1, 0.7)
 emitting = false

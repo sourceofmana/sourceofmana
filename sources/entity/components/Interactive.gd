@@ -44,7 +44,7 @@ func DisplayCast(entity : BaseEntity, skillName : String):
 				castFx.lifetime = skill._castTime + entity.stat.current.castAttackDelay
 				castFx.texture = skill._castTextureOverride
 				if skill._castColor != Color.BLACK:
-					castFx.process_material.set("color", skill._castColor)
+					castFx.self_modulate = skill._castColor
 				castFx.emitting = true
 				add_child(castFx)
 				if skill._mode == Skill.TargetMode.ZONE:
