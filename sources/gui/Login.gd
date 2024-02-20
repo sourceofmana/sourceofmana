@@ -4,7 +4,7 @@ extends WindowPanel
 @onready var passwordTextControl : LineEdit	= $Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText
 @onready var warningLabel : Label			= $Margin/VBoxContainer/Warning
 
-@onready var onlineCheck : CheckButton		= $Margin/VBoxContainer/SignBar/OnlineButton
+@onready var onlineCheck : CheckBox			= $Margin/VBoxContainer/SignBar/OnlineButton
 @onready var hostButton : Button			= $Margin/VBoxContainer/SignBar/Host
 @onready var playButton : Button			= $Margin/VBoxContainer/SignBar/Play
 @onready var registerButton : Button		= $Margin/VBoxContainer/SignBar/Register
@@ -43,10 +43,10 @@ func EnableControl(state : bool):
 		if not OS.is_debug_build():
 			hostButton.visible = false
 		else:
-			onlineCheck.button_pressed = false
+			_on_online_button_toggled(false)
 
 		if OS.get_name() == "Web":
-			onlineCheck.button_pressed = false
+			_on_online_button_toggled(false)
 			onlineCheck.visible = false
 
 #
@@ -86,3 +86,7 @@ func _on_visibility_changed():
 			passwordTextControl.grab_focus()
 		elif playButton and playButton.is_visible():
 			playButton.grab_focus()
+
+func _on_online_button_toggled(toggled):
+	onlineCheck.button_pressed = toggled
+	onlineCheck.text = "Online" if toggled else "Offline"
