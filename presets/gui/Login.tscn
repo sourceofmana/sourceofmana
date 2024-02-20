@@ -47,7 +47,6 @@ focus_next = NodePath("../../PasswordContainer/PasswordText")
 focus_previous = NodePath("../../../SignBar/Register")
 focus_mode = 1
 theme_override_fonts/font = ExtResource("4_c4b63")
-placeholder_text = "Type here"
 max_length = 255
 clear_button_enabled = true
 caret_blink = true

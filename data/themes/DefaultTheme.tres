@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=62 format=3 uid="uid://dhb6h35g1bk0x"]
+[gd_resource type="Theme" load_steps=64 format=3 uid="uid://dhb6h35g1bk0x"]
 
 [ext_resource type="Texture2D" uid="uid://bh3c7tlihpf45" path="res://data/graphics/gui/tab/tab_fg.png" id="1"]
 [ext_resource type="FontFile" uid="uid://xjlm0vx7cd6y" path="res://data/graphics/fonts/alagard.ttf" id="1_vbxts"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cr7oxck4xlnae" path="res://data/graphics/gui/notification.png" id="9_5par7"]
 [ext_resource type="Texture2D" uid="uid://b8iqfegulwe6t" path="res://data/graphics/gui/button.png" id="10_bgoy4"]
 [ext_resource type="Texture2D" uid="uid://dtxvc2wfgaia6" path="res://data/graphics/gui/key.png" id="10_rveh2"]
+[ext_resource type="Texture2D" uid="uid://b2q6bhuhqnp80" path="res://data/graphics/gui/window/close.png" id="11_ilveh"]
 [ext_resource type="Texture2D" uid="uid://cmr4q17mqa0pb" path="res://data/graphics/gui/window/window_bg_title_full.png" id="11_ue8tk"]
 [ext_resource type="Texture2D" uid="uid://bpdyrnfbw38ey" path="res://data/graphics/gui/checkbox/cb_small_lock_disabled.png" id="13"]
 [ext_resource type="Texture2D" uid="uid://1iem3khoe666" path="res://data/graphics/gui/checkbox/cb_small_disabled.png" id="14"]
@@ -124,6 +125,15 @@ texture_margin_left = 5.0
 texture_margin_top = 2.0
 texture_margin_right = 5.0
 texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ia7e2"]
+bg_color = Color(0.152941, 0.152941, 0.152941, 1)
+border_width_left = 5
+border_width_top = 2
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.152941, 0.152941, 0.152941, 1)
+corner_detail = 1
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kckym"]
 content_margin_top = 10.0
@@ -424,12 +434,15 @@ KeyTip/base_type = &"Label"
 KeyTip/styles/normal = SubResource("StyleBoxTexture_itdwx")
 Label/colors/font_color = Color(0.843137, 0.717647, 0.482353, 1)
 Label/constants/line_spacing = 3
-LineEdit/colors/clear_button_color = Color(0.843137, 0.717647, 0.482353, 1)
 LineEdit/colors/clear_button_color_pressed = Color(0.843137, 0.717647, 0.482353, 1)
 LineEdit/colors/cursor_color = Color(0.843137, 0.717647, 0.482353, 1)
 LineEdit/colors/font_color = Color(0.843137, 0.717647, 0.482353, 1)
 LineEdit/colors/font_color_selected = Color(0.2, 0.137255, 0.0431373, 1)
 LineEdit/colors/selection_color = Color(0.32549, 0.305882, 0.290196, 1)
+LineEdit/icons/clear = ExtResource("11_ilveh")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_ia7e2")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_ia7e2")
+LineEdit/styles/read_only = SubResource("StyleBoxFlat_ia7e2")
 NotificationBox/base_type = &"RichTextLabel"
 NotificationBox/colors/default_color = Color(0.843137, 0.717647, 0.482353, 1)
 NotificationBox/styles/normal = SubResource("StyleBoxTexture_kckym")

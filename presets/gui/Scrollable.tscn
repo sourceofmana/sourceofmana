@@ -26,7 +26,4 @@ theme_override_constants/margin_bottom = 3
 clip_contents = true
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Scroll/Margin/VBox"]
-layout_mode = 2
-
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
