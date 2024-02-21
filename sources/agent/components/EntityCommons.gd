@@ -92,6 +92,7 @@ static var AlterationLabel : PackedScene		= preload("res://presets/gui/Alteratio
 static var SpeechLabel : PackedScene			= preload("res://presets/gui/chat/SpeechBubble.tscn")
 static var MorphFx : PackedScene				= preload("res://presets/effects/particles/Morph.tscn")
 static var LevelUpFx : PackedScene				= preload("res://presets/effects/particles/LevelUp.tscn")
+static var TargetToolTip : PackedScene			= preload("res://presets/gui/TargetToolTip.tscn")
 
 # Skill
 enum Alteration

@@ -125,6 +125,17 @@ func DisplayHP(health : int, maxHealth : int = 0):
 				healthBar.tint_progress = Color.GREEN
 
 #
+func DisplayTooltip(_shapeID : int, display : bool):
+	if display:
+		var entity : BaseEntity = get_parent()
+		if entity:
+			var tooltip : Control = EntityCommons.TargetToolTip.instantiate()
+			tooltip.visible = false
+			tooltip.position = position
+			tooltip.entity = entity
+			add_child.call_deferred(tooltip)
+
+#
 func RefreshVisibleNodeOffset(offset : int):
 	visibleNode.position.y = (-EntityCommons.interactionDisplayOffset) + offset
 
