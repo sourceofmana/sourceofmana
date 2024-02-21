@@ -10,6 +10,3 @@ input_pickable = true
 script = ExtResource("1_5xspk")
 
 [node name="Interactions" parent="." instance=ExtResource("2_dubmo")]
-
-[connection signal="mouse_shape_entered" from="." to="Interactions" method="DisplayTooltip" binds= [true]]
-[connection signal="mouse_shape_exited" from="." to="Interactions" method="DisplayTooltip" binds= [false]]

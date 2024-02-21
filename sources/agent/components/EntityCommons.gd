@@ -92,7 +92,6 @@ static var AlterationLabel : PackedScene		= preload("res://presets/gui/Alteratio
 static var SpeechLabel : PackedScene			= preload("res://presets/gui/chat/SpeechBubble.tscn")
 static var MorphFx : PackedScene				= preload("res://presets/effects/particles/Morph.tscn")
 static var LevelUpFx : PackedScene				= preload("res://presets/effects/particles/LevelUp.tscn")
-static var TargetToolTip : PackedScene			= preload("res://presets/gui/TargetToolTip.tscn")
 
 # Skill
 enum Alteration
@@ -111,6 +110,7 @@ static var LocalAttackColor : float				= 0.35
 static var MissAttackColor : float				= 0.2
 static var MonsterAttackColor : float			= 0.0
 static var PlayerAttackColor : float			= 0.6
+static var LevelDifferenceColor : float			= 5.0
 
 # Interactive
 static var interactionDisplayOffset : int		= 32
@@ -122,7 +122,7 @@ static var speechIncreaseThreshold : int		= 15
 static var speechMaxWidth : int					= 256
 static var speechExtraWidth : int				= 20
 
-#
+# Lifetime
 static var AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
 static var RegenDelay : float					= 1.0
 static var DeathDelay : float					= 10.0

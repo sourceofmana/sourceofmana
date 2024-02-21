@@ -63,7 +63,7 @@ func ClampStats():
 	health					= Formulas.ClampHealth(self)
 	stamina					= Formulas.ClampStamina(self)
 	mana					= Formulas.ClampMana(self)
-	health_updated.emit(health, current.maxHealth)
+	health_updated.emit()
 
 func SetEntityStats(stats : Dictionary, isMorphed : bool):
 	for modifier in stats:

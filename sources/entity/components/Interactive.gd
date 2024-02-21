@@ -103,19 +103,25 @@ func DisplaySpeech(speech : String):
 		Callback.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
 
 #
-func DisplayHP(health : int, maxHealth : int = 0):
-	Util.Assert(healthBar != null, "No health bar found, could not display health info")
-	if healthBar:
-		if health == 0 or (maxHealth == 0 and healthBar.max_value == 0):
+func DisplayHP():
+	var entity : BaseEntity = get_parent()
+	Util.Assert(entity != null and healthBar != null, "No health bar found, could not display health info")
+	if entity and healthBar:
+		if entity.stat.health == 0 or (entity.stat.current.maxHealth == 0 and healthBar.max_value == 0):
 			healthBar.visible = false
+			nameLabel.visible = entity.displayName
 			return
+
+		if Launcher.Player and entity.stat.level >= Launcher.Player.stat.level and EntityCommons.LevelDifferenceColor:
+			nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / EntityCommons.LevelDifferenceColor)
 
 		if not healthBar.visible:
 			healthBar.visible = true
-		if maxHealth != 0:
-			healthBar.max_value = maxHealth
+			nameLabel.visible = true
+		if entity.stat.current.maxHealth != 0:
+			healthBar.max_value = entity.stat.current.maxHealth
 		if healthBar.max_value > 0:
-			healthBar.value = health
+			healthBar.value = entity.stat.health
 			var ratio : float = healthBar.value / healthBar.max_value
 			if ratio <= 0.33:
 				healthBar.tint_progress = Color.RED.lerp(Color.YELLOW, ratio * 3.0)
@@ -123,17 +129,6 @@ func DisplayHP(health : int, maxHealth : int = 0):
 				healthBar.tint_progress = Color.YELLOW.lerp(Color.GREEN, (ratio-0.33) * 3.0)
 			else:
 				healthBar.tint_progress = Color.GREEN
-
-#
-func DisplayTooltip(_shapeID : int, display : bool):
-	if display:
-		var entity : BaseEntity = get_parent()
-		if entity:
-			var tooltip : Control = EntityCommons.TargetToolTip.instantiate()
-			tooltip.visible = false
-			tooltip.position = position
-			tooltip.entity = entity
-			add_child.call_deferred(tooltip)
 
 #
 func RefreshVisibleNodeOffset(offset : int):
