@@ -90,7 +90,7 @@ func Init(data : EntityData):
 	if "Level" in stats:				level				= stats["Level"]
 	if "Experience" in stats:			experience			= stats["Experience"]
 	if "Weight" in stats:				weight				= stats["Weight"]
-	if "spirit" in stats:				spiritShape			= stats["spirit"]
+	if "Spirit" in stats:				spiritShape			= stats["Spirit"]
 
 	SetPersonalStats(stats)
 	SetEntityStats(stats, morphed)

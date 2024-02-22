@@ -27,12 +27,11 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 		entity._collision = result.Collision
 	if "Texture" in result:
 		entity._customTexture = result.Texture
-	if "walkSpeed" in result:
-		entity._stats["walkSpeed"] = result.walkSpeed
-	if "spirit" in result:
-		entity._stats["spirit"] = result.spirit
 	if "DisplayName" in result:
 		entity._displayName = result.DisplayName
+	if "Stat" in result:
+		for statName in result.Stat:
+			entity._stats[statName] = result.Stat[statName]
 	if "SkillSet" in result:
 		for skillSetName in result.SkillSet:
 			if DB.SkillsDB.has(skillSetName):
