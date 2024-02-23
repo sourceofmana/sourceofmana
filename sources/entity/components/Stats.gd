@@ -1,7 +1,7 @@
 extends Object
 class_name EntityStats
 
-# Player Vars
+# General Vars
 var level : int							= 1
 var experience : float					= 0
 
@@ -17,15 +17,15 @@ var weight : float						= 0.0
 var morphed : bool						= false
 
 # Personal Stats
-var strength : int						= 1
-var vitality : int						= 1
-var agility : int						= 1
-var endurance : int						= 1
-var concentration : int					= 1
+var strength : int						= 0
+var vitality : int						= 0
+var agility : int						= 0
+var endurance : int						= 0
+var concentration : int					= 0
 
 # Formula Stats
-var base : BaseStats					= null
-var current : BaseStats					= null
+var base : BaseStats					= BaseStats.new()
+var current : BaseStats					= BaseStats.new()
 
 # Animation Ratios
 var walkRatio : float					= 1.0
@@ -71,20 +71,28 @@ func SetEntityStats(stats : Dictionary, isMorphed : bool):
 			base[modifier] = (base[modifier] + stats[modifier]) / 2 if isMorphed else stats[modifier]
 	RefreshStats()
 
-func SetPersonalStats(stats : Dictionary):
-	if "Strength" in stats:				strength			= stats["Strength"] 
-	if "Vitality" in stats:				vitality			= stats["Vitality"] 
-	if "Agility" in stats:				agility				= stats["Agility"] 
-	if "Endurance" in stats:			endurance			= stats["Endurance"]
-	if "Concentration" in stats:		concentration		= stats["Concentration"]
+func SetPersonalStats(personalStats : Dictionary):
+	for modifier in personalStats:
+		if modifier in self:
+			self[modifier] = personalStats[modifier]
 	RefreshStats()
 
+func FillRandomPersonalStats():
+	var maxPoints : int			= Formulas.GetMaxPersonalPoints(self)
+	var assignedPoints : int	= Formulas.GetAssignedPersonalPoints(self)
+	if maxPoints > assignedPoints:
+		var pointToDispatch : int = maxPoints - assignedPoints
+		var stats = ["strength", "vitality", "agility", "endurance", "concentration"]
+		for modifier in stats:
+			var r : int = randi_range(0, pointToDispatch)
+			pointToDispatch -= r
+			self[modifier] += r
+			if pointToDispatch == 0:
+				break
+	RefreshStats()
 #
 func Init(data : EntityData):
 	var stats : Dictionary = data._stats
-
-	base		= BaseStats.new()
-	current		= BaseStats.new()
 	entityShape	= data._name
 
 	if "Level" in stats:				level				= stats["Level"]
@@ -114,9 +122,7 @@ static func Regen(agent : BaseAgent):
 			agent.stat.stamina  = min(agent.stat.stamina + Formulas.GetRegenStamina(agent), agent.stat.current.maxStamina)
 	Callback.LoopTimer(agent.regenTimer, EntityCommons.RegenDelay)
 
-#region Level and Experience
-
-static func addExperience(agent: BaseAgent, points: float):
+static func AddExperience(agent: BaseAgent, points: float):
 	agent.stat.experience += points
 	# Manage level up
 	var levelUpHappened = false
@@ -129,5 +135,3 @@ static func addExperience(agent: BaseAgent, points: float):
 	if levelUpHappened:
 		# Network notify of level up
 		Launcher.Network.Server.NotifyInstance(agent, "TargetLevelUp", [])
-
-#endregion

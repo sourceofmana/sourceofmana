@@ -5,6 +5,11 @@ class_name MonsterAgent
 static func GetEntityType() -> EntityCommons.Type: return EntityCommons.Type.MONSTER
 
 #
+func SetData(data : EntityData):
+	super.SetData(data)
+	stat.FillRandomPersonalStats()
+
+#
 func _ready():
 	aiTimer = Timer.new()
 	aiTimer.set_name("AiTimer")
