@@ -63,6 +63,7 @@ grow_vertical = 2
 textureProgress = null
 labelColor = Color(0.32549, 0.305882, 0.290196, 1)
 labelUnit = " kg"
+labelOffset = Vector2(0, -4)
 delayToFillSec = 2.0
 precisionDivider = 100
 numberAfterComma = 2

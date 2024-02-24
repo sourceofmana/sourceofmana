@@ -4,7 +4,7 @@ extends WindowPanel
 @onready var itemGrid : GridContainer	= $Margin/VBoxContainer/ItemContainer/Grid
 @onready var itemContainer : Container	= $Margin/VBoxContainer/ItemContainer
 
-# Called when the node enters the scene tree for the first time.
+#
 func _ready():
 	itemContainer.resized.connect(_on_panel_resized)
 	
@@ -15,8 +15,8 @@ func initialize():
 func _on_panel_resized():
 	if itemGrid.get_child_count() > 0:
 		var h_separation = itemGrid.get("theme_override_constants/h_separation")
-		var tileSize : float = get_child(0).size.x + h_separation
-		itemGrid.columns = max(1, int(get_parent().get_size().x / tileSize))
+		var tileSize : float = itemGrid.get_child(0).size.x + h_separation
+		itemGrid.columns = max(1, int(itemGrid.size.x / tileSize))
 	else:
 		itemGrid.columns = 100
 
