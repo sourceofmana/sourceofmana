@@ -64,7 +64,7 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill._repeat and SkillCommons.IsAlive(target) else Callable()
 	agent.SetSkillCastName("")
 	var timer : Timer = Callback.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay + skill._cooldownTime, callable, skill._name + " CoolDown")
-	agent.cooldownTimers[agent.currentSkillName] = timer
+	agent.cooldownTimers[skill._name] = timer
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var info : AlterationInfo = SkillCommons.GetDamage(agent, target, skill, rng)
