@@ -13,5 +13,5 @@ var castAttackDelay : float				= 0.0
 var cooldownAttackDelay : float			= 0.0
 
 var maxHealth : int						= 100
-var maxStamina : int					= 100
-var maxMana : int						= 100
+var maxStamina : int					= 50
+var maxMana : int						= 50
