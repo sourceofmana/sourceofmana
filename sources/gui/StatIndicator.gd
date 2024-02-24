@@ -21,4 +21,4 @@ func _process(_dt : float):
 		if staminaStat:
 			staminaStat.SetStat(Launcher.Player.stat.stamina, Launcher.Player.stat.current.maxStamina)
 		if expStat:
-			expStat.SetStat(Launcher.Player.stat.experience, 100.00)
+			expStat.SetStat(Launcher.Player.stat.experience, Experience.GetNeededExperienceForNextLevel(Launcher.Player.stat.level))

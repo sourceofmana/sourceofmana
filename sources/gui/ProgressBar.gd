@@ -11,6 +11,7 @@ extends Control
 @export var precisionDivider : int
 @export var numberAfterComma : int
 @export var displayMax : bool					= true
+@export var displayRatio : bool					= false
 @export var fillMode : ProgressBar.FillMode		= ProgressBar.FILL_BEGIN_TO_END
 
 @onready var bar : TextureProgressBar			= $Bar
@@ -59,9 +60,8 @@ func GetFormatedText(value : String) -> String:
 	return value
 
 func GetBarFormat(currentValue : float, maxValue : float) -> String:
-	var currentValueText : String = GetFormatedText(String.num(currentValue))
+	var formatedText : String = GetFormatedText("%.2f" % ((currentValue / maxValue * 100.0) if displayRatio else currentValue))
 
-	var formatedText : String = currentValueText
 	if displayMax:
 		var maxValueText : String = GetFormatedText(String.num(maxValue))
 		formatedText += " / " + maxValueText
@@ -87,9 +87,9 @@ func SetStat(newValue : float, maxValue : float):
 			remainsToFillSec = delayToFillSec
 			initDelayToFillSec = delayToFillSec
 
-		UpdateValue(0.0)
+		UpdateValue()
 
-func UpdateValue(delta : float):
+func UpdateValue(delta : float = 0.0):
 	if isUpdating:
 		remainsToFillSec -= delta
 
