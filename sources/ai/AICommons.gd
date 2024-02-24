@@ -11,6 +11,7 @@ const _transitions : Array[Array] = [
 ]
 
 const refreshDelay : float			= 1.0
+const fleeDistance : float			= 200
 
 #
 static func GetOffset() -> Vector2i:
