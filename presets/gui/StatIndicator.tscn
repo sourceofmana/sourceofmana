@@ -27,6 +27,7 @@ labelOffset = Vector2(0, -2)
 precisionDivider = 100
 numberAfterComma = 2
 displayMax = false
+displayRatio = true
 fillMode = 3
 
 [node name="HP" parent="." instance=ExtResource("2")]
