@@ -18,6 +18,7 @@ var blendSpacePaths : Dictionary			= {}
 var timeScalePaths : Dictionary				= {}
 
 var skillCastName : String					= ""
+var attackAnimLength : float				= 1.0
 
 #
 func SetMainMaterial(materialResource : Resource):
@@ -93,6 +94,8 @@ func LoadAnimationPaths():
 		var stateName : String		= EntityCommons.GetStateName(i)
 		var blendSpace : String		= "parameters/%s/BlendSpace2D/blend_position" % [stateName]
 		var timeScale : String		= "parameters/%s/TimeScale/scale" % [stateName]
+		var attackAnim : Animation	= animation.get_animation("AttackDown")
+		attackAnimLength = attackAnim.length if attackAnim else 1.0
 
 		if blendSpace in animationTree:
 			blendSpacePaths[i] = blendSpace
@@ -107,9 +110,10 @@ func UpdateScale():
 		return
 
 	if EntityCommons.State.WALK in timeScalePaths:
-		animationTree[timeScalePaths[EntityCommons.State.WALK]] = entity.stat.walkRatio
-	if EntityCommons.State.ATTACK in timeScalePaths:
-		animationTree[timeScalePaths[EntityCommons.State.ATTACK]] = entity.stat.attackRatio
+		animationTree[timeScalePaths[EntityCommons.State.WALK]] = Formulas.GetWalkRatio(entity.stat)
+	if EntityCommons.State.ATTACK in timeScalePaths and attackAnimLength > 0:
+		var test = attackAnimLength / entity.stat.current.castAttackDelay
+		animationTree[timeScalePaths[EntityCommons.State.ATTACK]] = test
 
 func ResetAnimationValue():
 	if not entity or not animationTree:
@@ -130,8 +134,8 @@ func SyncPlayerOffset():
 func Init(parentEntity : BaseEntity, data : EntityData):
 	entity = parentEntity
 
-	if entity and entity.stat and not entity.stat.ratio_updated.is_connected(UpdateScale):
-		entity.stat.ratio_updated.connect(UpdateScale)
+	if entity and entity.stat:
+		Callback.PlugCallback(entity.stat.entity_stats_updated, self.UpdateScale)
 
 	LoadData(data)
 	SyncPlayerOffset()

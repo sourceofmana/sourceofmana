@@ -15,6 +15,10 @@ static func ShootCallback(args : Array):
 		if callback:
 			callback.callv(args)
 
+static func PlugCallback(objectSignal : Signal, callback : Callable, args : Array = []):
+	RemoveCallback(objectSignal, callback)
+	AddCallback(objectSignal, callback, args)
+
 #
 static func OneShotCallback(objectSignal : Signal, callback : Callable, args : Array):
 	RemoveCallback(objectSignal, Callback.ShootCallback)

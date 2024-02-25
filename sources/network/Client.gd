@@ -58,24 +58,18 @@ func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = Ne
 			var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 			entity.SetVisual(morphData, morphed)
 
-func UpdatePlayerVars(ridAgent : int, level : int, experience : float, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdateActiveStats(ridAgent : int, level : int, experience : float, health : int, mana : int, stamina : int, weight : float, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Entities.Get(ridAgent)
 		if entity and entity.get_parent() and entity.stat:
 			entity.stat.level			= level
 			entity.stat.experience		= experience
-			entity.stat.RefreshStats()
-
-func UpdateActiveStats(ridAgent : int, health : int, mana : int, stamina : int, weight : float, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Map:
-		var entity : BaseEntity = Entities.Get(ridAgent)
-		if entity and entity.get_parent() and entity.stat:
 			entity.stat.health			= health
 			entity.stat.mana			= mana
 			entity.stat.stamina			= stamina
 			entity.stat.weight			= weight
 			entity.stat.morphed			= morphed
-			entity.stat.RefreshStats()
+			entity.stat.RefreshEntityStats()
 
 func UpdatePersonalStats(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -86,7 +80,7 @@ func UpdatePersonalStats(ridAgent : int, strength : int, vitality : int, agility
 			entity.stat.agility			= agility
 			entity.stat.endurance		= endurance
 			entity.stat.concentration	= concentration
-			entity.stat.RefreshStats()
+			entity.stat.RefreshEntityStats()
 
 func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:

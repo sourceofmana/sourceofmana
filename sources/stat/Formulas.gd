@@ -23,25 +23,20 @@ static func GetAttackStrength(stat : EntityStats) -> int:
 	value += stat.base.attackStrength
 	return int(value)
 
-static func GetAttackSpeed(stat : EntityStats) -> float:
-	var value : float = stat.agility * 2
-	value += stat.base.attackSpeed
-	return value
-
 static func GetCritRate(stat : EntityStats) -> float:
 	var value : float = 1 + int(stat.concentration * 0.2)
 	value *= stat.base.critRate
 	return value
 
 static func GetCastAttackDelay(stat : EntityStats) -> float:
-	var value : float = stat.current.attackSpeed
-	value /= 250
-	return value
+	var value : float = stat.base.castAttackDelay
+	value -= stat.concentration / 100.0
+	return maxf(value, 0.001)
 
 static func GetCooldownAttackDelay(stat : EntityStats) -> float:
-	var value : float = stat.current.attackSpeed
-	value /= 500
-	return value
+	var value : float = stat.base.cooldownAttackDelay
+	value -= stat.agility * 2
+	return maxf(value, 0.001)
 
 static func GetAttackRange(stat : EntityStats) -> int:
 	return stat.base.attackRange
@@ -71,11 +66,11 @@ static func GetWeight(inventory : EntityInventory) -> float:
 	return inventory.calculate_weight() / 1000.0
 
 #
-static func GetAttackRatio(stat : EntityStats) -> float:
-	return stat.current.attackSpeed / stat.base.attackSpeed
+static func GetCastAttackRatio(stat : EntityStats) -> float:
+	return stat.base.castAttackDelay / stat.current.castAttackDelay if stat.current.castAttackDelay > 0 else 1.0
 
 static func GetWalkRatio(stat : EntityStats) -> float:
-	return stat.current.walkSpeed / stat.base.walkSpeed
+	return stat.base.walkSpeed / stat.current.walkSpeed if stat.current.walkSpeed > 0 else 1.0
 
 #
 static func GetRegenHealth(agent : BaseAgent) -> int:

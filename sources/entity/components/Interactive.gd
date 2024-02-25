@@ -81,7 +81,7 @@ func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, al
 			newLabel.SetValue(dealer, value, alteration)
 			Launcher.Map.tilemapNode.add_child(newLabel)
 			target.stat.health += value if alteration == EntityCommons.Alteration.HEAL else -value
-			target.stat.ClampStats()
+			target.stat.RefreshActiveStats()
 
 		if DB.SkillsDB.has(skillName):
 			var skill : SkillData = DB.SkillsDB[skillName]

@@ -72,4 +72,4 @@ func _process(delta : float):
 
 func _ready():
 	if Launcher.Player != self:
-		stat.health_updated.connect(interactive.DisplayHP)
+		stat.active_stats_updated.connect(interactive.DisplayHP)
