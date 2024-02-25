@@ -238,8 +238,9 @@ func _ready():
 		accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
 
 func _exit_tree():
-	save_sessionoverlay()
-	SaveSettings()
+	if Launcher.Player:
+		save_sessionoverlay()
+		SaveSettings()
 
 # Conf accessors
 func RefreshSettings(apply : bool):
