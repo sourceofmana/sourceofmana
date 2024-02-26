@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=52 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -46,6 +46,7 @@
 [ext_resource type="BitMap" uid="uid://cl65b4aves6sl" path="res://data/graphics/gui/mobile/button_mask.png" id="25_a6irb"]
 [ext_resource type="Texture2D" uid="uid://reqjw3bt0dtj" path="res://data/graphics/gui/mobile/buttonB_pressed.png" id="27_rgxqc"]
 [ext_resource type="Texture2D" uid="uid://dgiywkj6go44v" path="res://data/graphics/gui/mobile/buttonA_pressed.png" id="29_ioa8a"]
+[ext_resource type="PackedScene" uid="uid://dhdq88so6g3yh" path="res://presets/gui/Stats.tscn" id="35_d1kq3"]
 [ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
@@ -457,6 +458,14 @@ layout_mode = 1
 offset_left = -140.0
 offset_right = 140.0
 
+[node name="Stat" parent="Windows/Floating" instance=ExtResource("35_d1kq3")]
+visible = false
+layout_mode = 0
+offset_left = 439.0
+offset_top = 46.0
+offset_right = 839.0
+offset_bottom = 427.0
+
 [node name="Shaders" type="CanvasLayer" parent="."]
 layer = 128
 
@@ -475,3 +484,4 @@ top_level = true
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonB" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_b_pressed"]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonA" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_a_pressed"]
 [connection signal="resized" from="Windows/Floating" to="Windows/Floating" method="_on_window_resized"]
+[connection signal="gui_input" from="Windows/Floating/Stat" to="Windows/Floating/Stat" method="OnGuiInput"]

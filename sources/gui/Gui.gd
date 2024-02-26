@@ -25,6 +25,7 @@ extends ServiceBase
 @onready var emoteWindow : WindowPanel			= $Windows/Floating/Emote
 @onready var quitWindow : WindowPanel			= $Windows/Floating/Quit
 @onready var respawnWindow : WindowPanel		= $Windows/Floating/Respawn
+@onready var statWindow : WindowPanel			= $Windows/Floating/Stat
 
 @onready var chatContainer : ChatContainer		= $Windows/Floating/Chat/Margin/VBoxContainer
 @onready var emoteContainer : Container			= $Windows/Floating/Emote/ItemContainer/Grid
@@ -88,7 +89,10 @@ func EnterGame():
 		notificationLabel.set_visible(true)
 
 		menu.SetItemsVisible(true)
-		Callback.PlugCallback(Launcher.Player.stat.active_stats_updated, Launcher.GUI.stats.Refresh)
+		Callback.PlugCallback(Launcher.Player.stat.active_stats_updated, stats.Refresh)
+		Callback.PlugCallback(Launcher.Player.stat.active_stats_updated, statWindow.RefreshActiveStats.bind(Launcher.Player))
+		Callback.PlugCallback(Launcher.Player.stat.personal_stats_updated, statWindow.RefreshPersonalStats.bind(Launcher.Player))
+		Callback.PlugCallback(Launcher.Player.stat.entity_stats_updated, statWindow.RefreshEntityStats.bind(Launcher.Player))
 
 #
 func _post_launch():

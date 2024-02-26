@@ -99,6 +99,7 @@ func _physics_process(_deltaTime : float):
 		elif IsActionJustPressed("ui_chat"):		Launcher.GUI.ToggleControl(Launcher.GUI.chatWindow)
 		elif IsActionJustPressed("ui_emote"):		Launcher.GUI.ToggleControl(Launcher.GUI.emoteWindow)
 		elif IsActionJustPressed("ui_settings"):	Launcher.GUI.ToggleControl(Launcher.GUI.settingsWindow)
+		elif IsActionJustPressed("ui_stat"):		Launcher.GUI.ToggleControl(Launcher.GUI.statWindow)
 		elif IsActionJustPressed("ui_menu"):		Launcher.GUI.menu._on_button_pressed()
 		elif IsActionJustPressed("ui_validate"):	Launcher.GUI.ToggleChatNewLine()
 		elif IsActionJustPressed("ui_screenshot"):	FileSystem.SaveScreenshot()
