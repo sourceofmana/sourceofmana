@@ -45,6 +45,15 @@ enum Slot
 	COUNT
 }
 
+enum PersonalStat
+{
+	STRENGTH = 0,
+	VITALITY,
+	AGILITY,
+	ENDURANCE,
+	CONCENTRATION,
+}
+
 static var playbackParameter : String = "parameters/playback"
 
 # Skip TO_TRIGGER & FROM_TRIGGER as they are only used as transition steps between idle/trigger.
@@ -126,3 +135,6 @@ static var speechExtraWidth : int				= 20
 static var AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
 static var RegenDelay : float					= 1.0
 static var DeathDelay : float					= 10.0
+
+# Stats
+static var MaxPointPerPersonalStat : int		= 20

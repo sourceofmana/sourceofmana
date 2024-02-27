@@ -12,3 +12,7 @@ func Refresh():
 		manaStat.SetStat(Launcher.Player.stat.mana, Launcher.Player.stat.current.maxMana)
 		staminaStat.SetStat(Launcher.Player.stat.stamina, Launcher.Player.stat.current.maxStamina)
 		expStat.SetStat(Launcher.Player.stat.experience, Experience.GetNeededExperienceForNextLevel(Launcher.Player.stat.level))
+
+func Init():
+	Callback.PlugCallback(Launcher.Player.stat.active_stats_updated, Refresh)
+	Refresh()

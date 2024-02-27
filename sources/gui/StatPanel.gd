@@ -32,22 +32,26 @@ extends WindowPanel
 
 #
 func IncreaseStrength():
-	lStrength.set_text(str(lStrength.get_text().to_int() + 1))
+	Launcher.Network.AddPersonalStat(EntityCommons.PersonalStat.STRENGTH)
 
 func IncreaseVitality():
-	lVitality.set_text(str(lVitality.get_text().to_int() + 1))
+	Launcher.Network.AddPersonalStat(EntityCommons.PersonalStat.VITALITY)
 
 func IncreaseAgility():
-	lAgility.set_text(str(lAgility.get_text().to_int() + 1))
+	Launcher.Network.AddPersonalStat(EntityCommons.PersonalStat.AGILITY)
 
 func IncreaseEndurance():
-	lEndurance.set_text(str(lEndurance.get_text().to_int() + 1))
+	Launcher.Network.AddPersonalStat(EntityCommons.PersonalStat.ENDURANCE)
 
 func IncreaseConcentration():
-	lConcentration.set_text(str(lConcentration.get_text().to_int() + 1))
+	Launcher.Network.AddPersonalStat(EntityCommons.PersonalStat.CONCENTRATION)
 
 #
-func Refresh(entity : BaseEntity):
+func Init(entity : BaseEntity):
+	Callback.PlugCallback(entity.stat.active_stats_updated, RefreshActiveStats.bind(entity))
+	Callback.PlugCallback(entity.stat.personal_stats_updated, RefreshPersonalStats.bind(entity))
+	Callback.PlugCallback(entity.stat.entity_stats_updated, RefreshEntityStats.bind(entity))
+
 	RefreshActiveStats(entity)
 	RefreshPersonalStats(entity)
 	RefreshEntityStats(entity)
@@ -76,6 +80,14 @@ func RefreshPersonalStats(entity : BaseEntity):
 	lEndurance.set_text(str(entity.stat.endurance))
 	lConcentration.set_text(str(entity.stat.concentration))
 
+	var availablePoints : int = Formulas.GetMaxPersonalPoints(entity.stat) - Formulas.GetAssignedPersonalPoints(entity.stat)
+	lAvailablePoints.set_text(str(availablePoints))
+
+	bStrength.set_disabled(availablePoints <= 0 or entity.stat.strength >= EntityCommons.MaxPointPerPersonalStat)
+	bVitality.set_disabled(availablePoints <= 0 or entity.stat.vitality >= EntityCommons.MaxPointPerPersonalStat)
+	bAgility.set_disabled(availablePoints <= 0 or entity.stat.agility >= EntityCommons.MaxPointPerPersonalStat)
+	bEndurance.set_disabled(availablePoints <= 0 or entity.stat.endurance >= EntityCommons.MaxPointPerPersonalStat)
+	bConcentration.set_disabled(availablePoints <= 0 or entity.stat.concentration >= EntityCommons.MaxPointPerPersonalStat)
 
 func RefreshEntityStats(entity : BaseEntity):
 	if not entity:

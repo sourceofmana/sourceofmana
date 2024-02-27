@@ -111,6 +111,11 @@ func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	if target:
 		Launcher.Network.UpdateActiveStats(targetID, target.stat.level, target.stat.experience, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.morphed, rpcID)
 
+func AddPersonalStat(stat : EntityCommons.PersonalStat, rpcID : int = NetworkCommons.RidSingleMode):
+	var player : BaseAgent = GetAgent(rpcID)
+	if player and player.stat:
+		player.stat.AddPersonalStat(stat)
+
 #
 func GetRid(player : PlayerAgent) -> int:
 	var playerRid : int = player.get_rid().get_id()

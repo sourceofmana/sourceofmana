@@ -54,13 +54,16 @@ func RefreshEntityStats():
 
 	RefreshActiveStats()
 
+func RefreshPersonalStats():
+	RefreshEntityStats()
+	personal_stats_updated.emit()
+
 #
 func SetPersonalStats(personalStats : Dictionary):
 	for modifier in personalStats:
 		if modifier in self:
 			self[modifier] = personalStats[modifier]
-	personal_stats_updated.emit()
-	RefreshEntityStats()
+	RefreshPersonalStats()
 
 func SetEntityStats(entityStats : Dictionary, isMorphed : bool):
 	for modifier in entityStats:
@@ -105,6 +108,20 @@ func Morph(data : EntityData):
 	morphed = not morphed
 	SetEntityStats(data._stats, morphed)
 
+func AddPersonalStat(stat : EntityCommons.PersonalStat):
+	if Formulas.GetMaxPersonalPoints(self) - Formulas.GetAssignedPersonalPoints(self) > 0:
+		match stat:
+			EntityCommons.PersonalStat.STRENGTH:
+				strength = min(EntityCommons.MaxPointPerPersonalStat, strength + 1)
+			EntityCommons.PersonalStat.VITALITY:
+				vitality = min(EntityCommons.MaxPointPerPersonalStat, vitality + 1)
+			EntityCommons.PersonalStat.AGILITY:
+				agility = min(EntityCommons.MaxPointPerPersonalStat, agility + 1)
+			EntityCommons.PersonalStat.ENDURANCE:
+				endurance = min(EntityCommons.MaxPointPerPersonalStat, endurance + 1)
+			EntityCommons.PersonalStat.CONCENTRATION:
+				concentration = min(EntityCommons.MaxPointPerPersonalStat, concentration + 1)
+
 static func Regen(agent : BaseAgent):
 	if SkillCommons.IsAlive(agent):
 		if agent.stat.health < agent.stat.current.maxHealth:
@@ -115,7 +132,7 @@ static func Regen(agent : BaseAgent):
 			agent.stat.stamina  = min(agent.stat.stamina + Formulas.GetRegenStamina(agent), agent.stat.current.maxStamina)
 	Callback.LoopTimer(agent.regenTimer, EntityCommons.RegenDelay)
 
-static func AddExperience(agent: BaseAgent, points: float):
+static func AddExperience(agent : BaseAgent, points : float):
 	agent.stat.experience += points
 	# Manage level up
 	var levelUpHappened = false

@@ -89,10 +89,8 @@ func EnterGame():
 		notificationLabel.set_visible(true)
 
 		menu.SetItemsVisible(true)
-		Callback.PlugCallback(Launcher.Player.stat.active_stats_updated, stats.Refresh)
-		Callback.PlugCallback(Launcher.Player.stat.active_stats_updated, statWindow.RefreshActiveStats.bind(Launcher.Player))
-		Callback.PlugCallback(Launcher.Player.stat.personal_stats_updated, statWindow.RefreshPersonalStats.bind(Launcher.Player))
-		Callback.PlugCallback(Launcher.Player.stat.entity_stats_updated, statWindow.RefreshEntityStats.bind(Launcher.Player))
+		stats.Init()
+		statWindow.Init(Launcher.Player)
 
 #
 func _post_launch():
