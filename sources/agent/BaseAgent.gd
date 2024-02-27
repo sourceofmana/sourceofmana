@@ -140,7 +140,6 @@ func UpdateChanged():
 
 #
 func SetData(data : EntityData):
-	stat.Init(data)
 	for skill in data._skillSet:
 		AddSkill(skill, data._skillProba[skill])
 

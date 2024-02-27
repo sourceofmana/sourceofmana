@@ -21,10 +21,6 @@ signal entity_died
 
 # Init
 func SetData(data : EntityData):
-	# Stat
-	if data._stats:
-		stat.Init(data)
-
 	# Display
 	displayName = displayName or data._displayName
 	SetVisual(data)

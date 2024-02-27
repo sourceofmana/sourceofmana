@@ -14,6 +14,7 @@ static func CreateGenericEntity(entityInstance : CharacterBody2D, entityID : Str
 	var template : EntityData = FindEntityReference(entityID)
 	Util.Assert(template != null and entityInstance != null, "Could not create the entity: %s" % entityID)
 	if template and entityInstance:
+		entityInstance.stat.Init(template)
 		entityInstance.SetData(template)
 		entityInstance.entityName = entityID if entityName.length() == 0 else entityName
 
