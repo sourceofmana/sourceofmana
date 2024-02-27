@@ -1,9 +1,9 @@
-extends TextureRect
+extends Control
 
-@onready var hpStat				= $HP
-@onready var manaStat			= $Mana
-@onready var staminaStat		= $Stamina
-@onready var expStat			= $Exp
+@onready var hpStat				= $StatContent/HP
+@onready var manaStat			= $StatContent/Mana
+@onready var staminaStat		= $StatContent/Stamina
+@onready var expStat			= $StatContent/Exp
 
 #
 func Refresh():
@@ -16,3 +16,7 @@ func Refresh():
 func Init():
 	Callback.PlugCallback(Launcher.Player.stat.active_stats_updated, Refresh)
 	Refresh()
+
+#
+func _on_button_pressed():
+	Launcher.GUI.ToggleControl(Launcher.GUI.statWindow)

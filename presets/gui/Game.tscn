@@ -1,8 +1,9 @@
-[gd_scene load_steps=52 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=53 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
 [ext_resource type="Script" path="res://sources/gui/Gui.gd" id="3"]
+[ext_resource type="Script" path="res://sources/gui/StatIndicator.gd" id="3_5uo3f"]
 [ext_resource type="PackedScene" uid="uid://dml4oic211pyo" path="res://presets/gui/WindowButton.tscn" id="3_sl5jl"]
 [ext_resource type="PackedScene" uid="uid://c2q5vtkxo04dp" path="res://presets/gui/ActionBox.tscn" id="4"]
 [ext_resource type="Shader" path="res://sources/shaders/ControlMask.gdshader" id="4_60kv4"]
@@ -93,11 +94,27 @@ layout_mode = 2
 layout_mode = 2
 alignment = 1
 
-[node name="Stat" parent="Overlay/Sections/Indicators" instance=ExtResource("2")]
+[node name="Stat" type="Control" parent="Overlay/Sections/Indicators"]
 layout_mode = 2
+size_flags_horizontal = 2
+script = ExtResource("3_5uo3f")
+
+[node name="StatContent" parent="Overlay/Sections/Indicators/Stat" instance=ExtResource("2")]
+layout_mode = 2
+offset_right = 273.0
+offset_bottom = 61.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 mouse_filter = 0
+script = null
+
+[node name="StatButton" type="TextureButton" parent="Overlay/Sections/Indicators/Stat"]
+custom_minimum_size = Vector2(62, 61)
+layout_mode = 0
+offset_right = 62.0
+offset_bottom = 61.0
+size_flags_horizontal = 10
+size_flags_vertical = 0
 
 [node name="Menu" type="Control" parent="Overlay/Sections/Indicators"]
 layout_mode = 2
@@ -465,7 +482,6 @@ offset_left = 439.0
 offset_top = 46.0
 offset_right = 839.0
 offset_bottom = 427.0
-blockActions = null
 
 [node name="Shaders" type="CanvasLayer" parent="."]
 layer = 128
@@ -477,6 +493,7 @@ visible = false
 top_level = true
 
 [connection signal="resized" from="Overlay" to="." method="_on_ui_margin_resized"]
+[connection signal="pressed" from="Overlay/Sections/Indicators/Stat/StatButton" to="Overlay/Sections/Indicators/Stat" method="_on_button_pressed"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Menu/MenuButton" to="Overlay/Sections/Indicators/Menu" method="_on_button_pressed"]
 [connection signal="button_down" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]
 [connection signal="button_up" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_up"]
