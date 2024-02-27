@@ -19,14 +19,18 @@ func UpdateLastStats():
 	lastStat.mana != stat.mana or \
 	lastStat.stamina != stat.stamina or \
 	lastStat.weight != stat.weight or \
+	lastStat.entityShape != stat.entityShape or \
+	lastStat.spiritShape != stat.spiritShape or \
 	lastStat.morphed != stat.morphed:
-		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.health, stat.mana, stat.stamina, stat.weight, stat.morphed, peerID)
+		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.morphed, peerID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 		lastStat.health				= stat.health
 		lastStat.mana				= stat.mana
 		lastStat.stamina			= stat.stamina
 		lastStat.weight				= stat.weight
+		lastStat.entityShape		= stat.entityShape
+		lastStat.spiritShape		= stat.spiritShape
 		lastStat.morphed			= stat.morphed
 
 	if lastStat.strength != stat.strength or \

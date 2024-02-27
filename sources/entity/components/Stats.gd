@@ -9,6 +9,8 @@ var health : int						= 1
 var mana : int							= 0
 var stamina : int						= 0
 var weight : float						= 0.0
+var entityShape : String				= ""
+var spiritShape : String				= ""
 var morphed : bool						= false
 
 # Personal Stats
@@ -21,10 +23,6 @@ var concentration : int					= 0
 # Entity Stats
 var base : BaseStats					= BaseStats.new()
 var current : BaseStats					= BaseStats.new()
-
-# WIP: Unsync
-var entityShape : String				= ""
-var spiritShape : String				= ""
 
 # Signals
 signal active_stats_updated
