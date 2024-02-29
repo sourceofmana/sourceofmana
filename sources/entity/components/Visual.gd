@@ -94,8 +94,9 @@ func LoadAnimationPaths():
 		var stateName : String		= EntityCommons.GetStateName(i)
 		var blendSpace : String		= "parameters/%s/BlendSpace2D/blend_position" % [stateName]
 		var timeScale : String		= "parameters/%s/TimeScale/scale" % [stateName]
-		var attackAnim : Animation	= animation.get_animation("AttackDown")
-		attackAnimLength = attackAnim.length if attackAnim else 1.0
+		if animation.has_animation("AttackDown"):
+			var attackAnim : Animation	= animation.get_animation("AttackDown")
+			attackAnimLength = attackAnim.length if attackAnim else 1.0
 
 		if blendSpace in animationTree:
 			blendSpacePaths[i] = blendSpace
