@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://2r8d45jgc1r5"
-path="res://.godot/imported/romulus.ttf-b2bc6244c65f17e9109c575f036c4b01.fontdata"
+path="res://.godot/imported/romulus-16.ttf-b317c5c3b1c22cdc48bb26d63e72d6d2.fontdata"
 
 [deps]
 
-source_file="res://data/graphics/fonts/romulus.ttf"
-dest_files=["res://.godot/imported/romulus.ttf-b2bc6244c65f17e9109c575f036c4b01.fontdata"]
+source_file="res://data/graphics/fonts/romulus-16.ttf"
+dest_files=["res://.godot/imported/romulus-16.ttf-b317c5c3b1c22cdc48bb26d63e72d6d2.fontdata"]
 
 [params]
 

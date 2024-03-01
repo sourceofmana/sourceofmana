@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://uiwxfl4dyoyw"]
 
-[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="1_sbb0g"]
+[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus-16.ttf" id="1_sbb0g"]
+
 
 [node name="Tab" type="RichTextLabel"]
 anchors_preset = 15

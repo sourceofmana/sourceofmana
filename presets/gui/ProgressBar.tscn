@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://sources/gui/ProgressBar.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dg7bdxr15avbp" path="res://data/graphics/gui/barprogressdefault.png" id="2"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="3"]
-[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus.ttf" id="4_a4hnx"]
+[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus-16.ttf" id="4_a4hnx"]
 
 [node name="ProgressBar" type="Control"]
 layout_mode = 3

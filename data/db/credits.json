@@ -1477,6 +1477,10 @@
 					"title": "Art Department",
 					"contacts": [
 						{
+							"nick": "Arynoc",
+							"website": "reddit.com/user/arynoc"
+						},
+						{
 							"name": "Bart Kelsey",
 							"nick": "BartK",
 							"website": "opengameart.org"
@@ -1495,15 +1499,15 @@
 							"mailprovider": "gmail.com"
 						},
 						{
+							"name": "Justin Dalessandro",
+							"nick": "ColdOneK",
+							"website": "patreon.com/ColdOneK"
+						},
+						{
 							"nick": "Pix3m",
 							"website": "deviantart.com/pix3m",
 							"mailid": "pix3m00",
 							"mailprovider": "gmail.com"
-						},
-						{
-							"name": "Justin Dalessandro",
-							"nick": "ColdOneK",
-							"website": "patreon.com/ColdOneK"
 						},
 						{
 							"name": "Lanea Zimmerman",
