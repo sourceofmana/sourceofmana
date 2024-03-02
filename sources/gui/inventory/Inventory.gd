@@ -5,20 +5,9 @@ extends WindowPanel
 @onready var itemContainer : Container	= $Margin/VBoxContainer/ItemContainer
 
 #
-func _ready():
-	itemContainer.resized.connect(_on_panel_resized)
-	
 func initialize():
 	Launcher.Player.inventory.content_changed.connect(update_inventory)
 	update_inventory()
-
-func _on_panel_resized():
-	if itemGrid.get_child_count() > 0:
-		var h_separation = itemGrid.get("theme_override_constants/h_separation")
-		var tileSize : float = itemGrid.get_child(0).size.x + h_separation
-		itemGrid.columns = max(1, int(itemGrid.size.x / tileSize))
-	else:
-		itemGrid.columns = 100
 
 func update_inventory():
 	# display inventory
@@ -42,4 +31,3 @@ func update_inventory_ui():
 
 func _on_item_click(item: InventoryItem):
 	Launcher.Player.inventory.use_item(item)
-

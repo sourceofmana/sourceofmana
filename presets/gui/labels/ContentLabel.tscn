@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bq66pltgf5nhp"]
 
-[ext_resource type="FontFile" uid="uid://cgxhdg8re7okp" path="res://data/graphics/fonts/jupiterc.ttf" id="1_00b8c"]
+[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus-16.ttf" id="1_eawn0"]
 
 [node name="2" type="RichTextLabel"]
 anchors_preset = 15
@@ -9,7 +9,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("1_00b8c")
-theme_override_font_sizes/normal_font_size = 20
+theme_override_constants/line_separation = 5
+theme_override_fonts/normal_font = ExtResource("1_eawn0")
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 fit_content = true

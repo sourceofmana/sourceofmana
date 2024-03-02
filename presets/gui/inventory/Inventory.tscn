@@ -85,3 +85,4 @@ columns = 4
 script = ExtResource("6_u84n8")
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
+[connection signal="resized" from="Margin/VBoxContainer/ItemContainer/Grid" to="Margin/VBoxContainer/ItemContainer/Grid" method="_on_panel_resized"]
