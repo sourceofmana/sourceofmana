@@ -64,6 +64,7 @@ func UpdateActiveStats(ridAgent : int, level : int, experience : float, health :
 	if Launcher.Map:
 		var entity : BaseEntity = Entities.Get(ridAgent)
 		if entity and entity.get_parent() and entity.stat:
+			var updatePersonalStats : bool = entity.stat.level != level
 			entity.stat.level			= level
 			entity.stat.experience		= experience
 			entity.stat.health			= health
@@ -73,7 +74,8 @@ func UpdateActiveStats(ridAgent : int, level : int, experience : float, health :
 			entity.stat.morphed			= morphed
 			entity.stat.entityShape		= entityShape
 			entity.stat.spiritShape		= spiritShape
-			entity.stat.RefreshEntityStats()
+			if updatePersonalStats:
+				entity.stat.RefreshPersonalStats()
 
 func UpdatePersonalStats(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
