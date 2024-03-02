@@ -8,6 +8,8 @@ class_name EntityInteractive
 @onready var healthBar : TextureProgressBar	= $UnderBox/HealthBar
 @onready var nameLabel : Label				= $UnderBox/Name
 
+@onready var entity : BaseEntity			= get_parent()
+
 #
 func DisplayEmote(emoteID : String):
 	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
@@ -34,51 +36,51 @@ func DisplayLevelUp():
 		add_child(particle)
 
 #
-func DisplayCast(entity : BaseEntity, skillName : String):
+func DisplayCast(emitter : BaseEntity, skillName : String):
 	if DB.SkillsDB.has(skillName):
 		var skill : SkillData = DB.SkillsDB[skillName]
 		if skill._castPreset:
 			var castFx : GPUParticles2D = skill._castPreset.instantiate()
 			if castFx:
 				castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-				castFx.lifetime = skill._castTime + entity.stat.current.castAttackDelay
+				castFx.lifetime = skill._castTime + emitter.stat.current.castAttackDelay
 				castFx.texture = skill._castTextureOverride
 				if skill._castColor != Color.BLACK:
 					castFx.self_modulate = skill._castColor
 				castFx.emitting = true
 				add_child(castFx)
 				if skill._mode == Skill.TargetMode.ZONE:
-					Callback.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(entity, skill), "ActionTimer")
+					Callback.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(emitter, skill), "ActionTimer")
 
-func DisplaySkill(entity : BaseEntity, skill : SkillData):
+func DisplaySkill(emitter : BaseEntity, skill : SkillData):
 	if skill and skill._skillPreset:
 		var skillFx : GPUParticles2D = skill._skillPreset.instantiate()
 		if skillFx:
-			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, entity))
+			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, emitter))
 			skillFx.lifetime = skill._skillTime
 			if skill._skillColor != Color.BLACK:
 				skillFx.process_material.set("color", skill._skillColor)
 			skillFx.emitting = true
-			entity.add_child(skillFx)
+			emitter.add_child(skillFx)
 
-func DisplayProjectile(dealer : BaseEntity, skill : SkillData, callable : Callable):
+func DisplayProjectile(emitter : BaseEntity, skill : SkillData, callable : Callable):
 	if Launcher.Map.tilemapNode and skill and skill._projectilePreset:
 		var projectileNode : Node2D = skill._projectilePreset.instantiate()
 		if projectileNode:
-			projectileNode.origin = dealer.interactive.visibleNode.global_position
+			projectileNode.origin = emitter.interactive.visibleNode.global_position
 			projectileNode.origin.y += EntityCommons.interactionDisplayOffset
 			projectileNode.destination = get_parent().interactive.visibleNode.global_position
 			projectileNode.destination.y += EntityCommons.interactionDisplayOffset
-			projectileNode.delay = dealer.stat.current.castAttackDelay
+			projectileNode.delay = emitter.stat.current.castAttackDelay
 			projectileNode.callable = callable
 			Launcher.Map.tilemapNode.add_child(projectileNode)
 
-func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration, skillName : String):
+func DisplayAlteration(target : BaseEntity, emitter : BaseEntity, value : int, alteration : EntityCommons.Alteration, skillName : String):
 	if Launcher.Map.tilemapNode:
 		if alteration != EntityCommons.Alteration.PROJECTILE:
 			var newLabel : Label = EntityCommons.AlterationLabel.instantiate()
 			newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
-			newLabel.SetValue(dealer, value, alteration)
+			newLabel.SetValue(emitter, value, alteration)
 			Launcher.Map.tilemapNode.add_child(newLabel)
 			target.stat.health += value if alteration == EntityCommons.Alteration.HEAL else -value
 			target.stat.RefreshActiveStats()
@@ -88,7 +90,7 @@ func DisplayAlteration(target : BaseEntity, dealer : BaseEntity, value : int, al
 			if skill._mode != Skill.TargetMode.ZONE:
 				var callable : Callable = DisplaySkill.bind(target, skill)
 				if alteration == EntityCommons.Alteration.PROJECTILE:
-					DisplayProjectile(dealer, skill, callable)
+					DisplayProjectile(emitter, skill, callable)
 				else:
 					callable.call()
 
@@ -104,39 +106,49 @@ func DisplaySpeech(speech : String):
 
 #
 func DisplayHP():
-	var entity : BaseEntity = get_parent()
-	Util.Assert(entity != null and healthBar != null, "No health bar found, could not display health info")
-	if entity and healthBar:
-		if entity.stat.health == 0 or (entity.stat.current.maxHealth == 0 and healthBar.max_value == 0):
-			healthBar.visible = false
-			nameLabel.visible = entity.displayName
-			return
+	if entity.stat.health == 0 or (entity.stat.current.maxHealth == 0 and healthBar.max_value == 0):
+		HideHP()
+		return
 
-		if Launcher.Player and entity.stat.level >= Launcher.Player.stat.level and EntityCommons.LevelDifferenceColor:
-			nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / EntityCommons.LevelDifferenceColor)
+	Callback.SelfDestructTimer(healthBar, EntityCommons.DisplayHPDelay, HideHP, "HideHP")
+	if Launcher.Player and entity.stat.level >= Launcher.Player.stat.level and EntityCommons.LevelDifferenceColor:
+		nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / EntityCommons.LevelDifferenceColor)
 
-		if not healthBar.visible:
-			healthBar.visible = true
-			nameLabel.visible = true
-		if entity.stat.current.maxHealth != 0:
-			healthBar.max_value = entity.stat.current.maxHealth
-		if healthBar.max_value > 0:
-			healthBar.value = entity.stat.health
-			var ratio : float = healthBar.value / healthBar.max_value
-			if ratio <= 0.33:
-				healthBar.tint_progress = Color.RED.lerp(Color.YELLOW, ratio * 3.0)
-			elif ratio <= 0.66:
-				healthBar.tint_progress = Color.YELLOW.lerp(Color.GREEN, (ratio-0.33) * 3.0)
-			else:
-				healthBar.tint_progress = Color.GREEN
+	if not healthBar.visible:
+		healthBar.visible = true
+		healthBar.modulate.a = 1
+		nameLabel.visible = true
+		nameLabel.modulate.a = 1
+	if entity.stat.current.maxHealth != 0:
+		healthBar.max_value = entity.stat.current.maxHealth
+	if healthBar.max_value > 0:
+		healthBar.value = entity.stat.health
+		var ratio : float = healthBar.value / healthBar.max_value
+		if ratio <= 0.33:
+			healthBar.tint_progress = Color.RED.lerp(Color.YELLOW, ratio * 3.0)
+		elif ratio <= 0.66:
+			healthBar.tint_progress = Color.YELLOW.lerp(Color.GREEN, (ratio-0.33) * 3.0)
+		else:
+			healthBar.tint_progress = Color.GREEN
+
+func HideHP():
+	healthBar.modulate.a = 0.99
 
 #
 func RefreshVisibleNodeOffset(offset : int):
 	visibleNode.position.y = (-EntityCommons.interactionDisplayOffset) + offset
 
 #
+func _physics_process(delta):
+	if healthBar.visible and healthBar.modulate.a < 1:
+		healthBar.modulate.a = max(0, healthBar.modulate.a - delta * 2)
+		if not entity.displayName:
+			nameLabel.modulate.a = healthBar.modulate.a
+		if healthBar.modulate.a == 0:
+			healthBar.visible = false
+			nameLabel.visible = entity.displayName
+
 func _ready():
-	var entity : BaseEntity = get_parent()
 	Util.Assert(entity != null, "No BaseEntity is found as parent for this Interactive node")
 	if not entity:
 		return
