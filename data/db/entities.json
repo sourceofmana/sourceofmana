@@ -9,7 +9,7 @@
 		"Collision": "Medium",
 		"DisplayName": true,
 		"Stat": {
-			"walkSpeed": 125,
+			"walkSpeed": 150,
 			"Spirit": "Piou",
 		},
 		"SkillSet": {
