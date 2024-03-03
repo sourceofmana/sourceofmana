@@ -7,6 +7,7 @@ class_name BaseEntity
 var displayName : bool					= false
 var entityName : String					= ""
 
+var gender : EntityCommons.Gender		= EntityCommons.Gender.MALE
 var entityState : EntityCommons.State	= EntityCommons.State.IDLE
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO

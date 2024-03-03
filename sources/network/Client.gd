@@ -76,6 +76,8 @@ func UpdateActiveStats(ridAgent : int, level : int, experience : float, health :
 			entity.stat.spiritShape		= spiritShape
 			if updatePersonalStats:
 				entity.stat.RefreshPersonalStats()
+			else:
+				entity.stat.RefreshActiveStats()
 
 func UpdatePersonalStats(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:

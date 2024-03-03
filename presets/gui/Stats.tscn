@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhdq88so6g3yh"]
+[gd_scene load_steps=11 format=3 uid="uid://dhdq88so6g3yh"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_dhni5"]
 [ext_resource type="Script" path="res://sources/gui/StatPanel.gd" id="2_v116i"]
 [ext_resource type="PackedScene" uid="uid://p70cqs28fvau" path="res://presets/gui/emotes/Tile.tscn" id="3_45pqp"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="3_kjg3f"]
+[ext_resource type="Texture2D" uid="uid://wcw0ycx4hntu" path="res://data/graphics/gui/stat/spirit-hook.png" id="4_de8qp"]
 [ext_resource type="Texture2D" uid="uid://6a6qcdorvi4r" path="res://data/graphics/gui/pixeldark.png" id="4_fxktc"]
+[ext_resource type="Texture2D" uid="uid://dal37y5vr31pu" path="res://data/graphics/gui/pixelbrown.png" id="6_2hq2a"]
+[ext_resource type="Texture2D" uid="uid://c2tpw7e1yvm6g" path="res://data/graphics/gui/pixelred.png" id="8_egmig"]
+[ext_resource type="Texture2D" uid="uid://cf1r33imp2x15" path="res://data/graphics/gui/pixelblue.png" id="9_q6igb"]
+[ext_resource type="Texture2D" uid="uid://c5tm0t6gbrc32" path="res://data/graphics/gui/pixelgreen.png" id="10_h4ygu"]
 
 [node name="Stat" type="PanelContainer"]
 show_behind_parent = true
@@ -38,21 +43,30 @@ layout_mode = 2
 
 [node name="Name" type="Label" parent="Margin/Layout/Stats/Information"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 0
+
+[node name="Gender" type="TextureRect" parent="Margin/Layout/Stats/Information"]
+layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="Level" type="Label" parent="Margin/Layout/Stats/Information"]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
 
+[node name="SpiritSymbol" type="TextureRect" parent="Margin/Layout/Stats/Information"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("4_de8qp")
+
 [node name="Spirit" type="Label" parent="Margin/Layout/Stats/Information"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 8
 horizontal_alignment = 2
 
 [node name="HSeparator2" type="HSeparator" parent="Margin/Layout/Stats"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 10
 
 [node name="StatBox" type="VBoxContainer" parent="Margin/Layout/Stats"]
 layout_mode = 2
@@ -70,8 +84,10 @@ text = "Strength"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Margin/Layout/Stats/StatBox/StrengthBox"]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
@@ -88,8 +104,10 @@ text = "Vitality"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Margin/Layout/Stats/StatBox/VitalityBox"]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
@@ -106,8 +124,10 @@ text = "Agility"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Margin/Layout/Stats/StatBox/AgilityBox"]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
@@ -124,8 +144,10 @@ text = "Endurance"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Margin/Layout/Stats/StatBox/EnduranceBox"]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
@@ -142,8 +164,10 @@ text = "Concentration"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Margin/Layout/Stats/StatBox/ConcentrationBox"]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
@@ -164,6 +188,7 @@ text = "Available points"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Empty" type="Control" parent="Margin/Layout/Stats/StatBox/AvailablePointsBox"]
 layout_mode = 2
@@ -190,9 +215,9 @@ text = "Experience"
 
 [node name="ProgressBar" parent="Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox" instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("4_fxktc")
+textureProgress = ExtResource("6_2hq2a")
+textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
-labelUnit = "HP"
 labelOffset = Vector2(0, -3)
 
 [node name="HealthBox" type="HBoxContainer" parent="Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
@@ -205,9 +230,9 @@ text = "Health"
 
 [node name="ProgressBar" parent="Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox" instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("4_fxktc")
+textureProgress = ExtResource("8_egmig")
+textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
-labelUnit = "HP"
 labelOffset = Vector2(0, -3)
 
 [node name="ManaBox" type="HBoxContainer" parent="Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
@@ -220,9 +245,9 @@ text = "Mana"
 
 [node name="ProgressBar" parent="Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox" instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("4_fxktc")
+textureProgress = ExtResource("9_q6igb")
+textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
-labelUnit = "HP"
 labelOffset = Vector2(0, -3)
 
 [node name="StaminaBox" type="HBoxContainer" parent="Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
@@ -235,9 +260,9 @@ text = "Stamina"
 
 [node name="ProgressBar" parent="Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox" instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("4_fxktc")
+textureProgress = ExtResource("10_h4ygu")
+textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
-labelUnit = "HP"
 labelOffset = Vector2(0, -3)
 
 [node name="WeightBox" type="HBoxContainer" parent="Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
@@ -250,9 +275,9 @@ text = "Weight"
 
 [node name="ProgressBar" parent="Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox" instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("4_fxktc")
+textureProgress = ExtResource("6_2hq2a")
+textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
-labelUnit = "HP"
 labelOffset = Vector2(0, -3)
 
 [node name="VSeparator" type="VSeparator" parent="Margin/Layout/Stats/PreciseStats"]

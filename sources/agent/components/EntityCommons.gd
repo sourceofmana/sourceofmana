@@ -101,6 +101,9 @@ static var AlterationLabel : PackedScene		= preload("res://presets/gui/Alteratio
 static var SpeechLabel : PackedScene			= preload("res://presets/gui/chat/SpeechBubble.tscn")
 static var MorphFx : PackedScene				= preload("res://presets/effects/particles/Morph.tscn")
 static var LevelUpFx : PackedScene				= preload("res://presets/effects/particles/LevelUp.tscn")
+static var GenderMaleTexture					= preload("res://data/graphics/gui/stat/gender-male.png")
+static var GenderFemaleTexture					= preload("res://data/graphics/gui/stat/gender-female.png")
+static var GenderNonBinaryTexture				= preload("res://data/graphics/gui/stat/gender-nonbinary.png")
 
 # Skill
 enum Alteration

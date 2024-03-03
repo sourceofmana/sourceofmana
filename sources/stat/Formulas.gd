@@ -35,7 +35,7 @@ static func GetCastAttackDelay(stat : EntityStats) -> float:
 
 static func GetCooldownAttackDelay(stat : EntityStats) -> float:
 	var value : float = stat.base.cooldownAttackDelay
-	value -= stat.agility * 2
+	value -= stat.agility / 100.0
 	return maxf(value, 0.001)
 
 static func GetAttackRange(stat : EntityStats) -> int:

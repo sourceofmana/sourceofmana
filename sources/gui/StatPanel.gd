@@ -1,6 +1,7 @@
 extends WindowPanel
 
 @onready var lName : Label						= $Margin/Layout/Stats/Information/Name
+@onready var tGender : TextureRect				= $Margin/Layout/Stats/Information/Gender
 @onready var lLevel : Label						= $Margin/Layout/Stats/Information/Level
 @onready var lSpirit : Label					= $Margin/Layout/Stats/Information/Spirit
 
@@ -56,10 +57,22 @@ func Init(entity : BaseEntity):
 	RefreshPersonalStats(entity)
 	RefreshEntityStats(entity)
 
+func RefreshGender(entity : BaseEntity):
+	var texture : Texture2D = null
+	match entity.gender:
+		EntityCommons.Gender.MALE:
+			texture = EntityCommons.GenderMaleTexture
+		EntityCommons.Gender.FEMALE:
+			texture = EntityCommons.GenderFemaleTexture
+		EntityCommons.Gender.NONBINARY:
+			texture = EntityCommons.GenderNonBinaryTexture
+	tGender.set_texture(texture)
+
 func RefreshActiveStats(entity : BaseEntity):
 	if not entity:
 		pass
 
+	RefreshGender(entity)
 	lName.set_text(entity.entityName)
 	lLevel.set_text("Lv. %d" % entity.stat.level)
 	lSpirit.set_text(entity.stat.spiritShape)
@@ -93,9 +106,13 @@ func RefreshEntityStats(entity : BaseEntity):
 	if not entity:
 		pass
 
-	lAtkStrength.set_text(str(entity.stat.current.attackStrength))
-	lAtkRange.set_text(str(entity.stat.current.attackRange))
-	lCastDelay.set_text(str(entity.stat.current.castAttackDelay))
-	lCooldownDelay.set_text(str(entity.stat.current.cooldownAttackDelay))
-	lCritRate.set_text(str(entity.stat.current.critRate))
-	lWalkSpeed.set_text(str(entity.stat.current.walkSpeed))
+	lAtkStrength.set_text(GetPercentString(entity.stat.current.attackStrength, entity.stat.base.attackStrength))
+	lAtkRange.set_text(GetPercentString(entity.stat.current.attackRange, entity.stat.base.attackRange))
+	lCastDelay.set_text(GetPercentString(entity.stat.base.castAttackDelay, entity.stat.current.castAttackDelay))
+	lCooldownDelay.set_text(GetPercentString(entity.stat.base.cooldownAttackDelay, entity.stat.current.cooldownAttackDelay))
+	lCritRate.set_text(GetPercentString(entity.stat.current.critRate, entity.stat.base.critRate))
+	lWalkSpeed.set_text(GetPercentString(entity.stat.current.walkSpeed, entity.stat.base.walkSpeed))
+
+#
+func GetPercentString(current : float, base : float) -> String:
+	return "%d" % (int(current / base * 100.0) if base > 0 else 100)
