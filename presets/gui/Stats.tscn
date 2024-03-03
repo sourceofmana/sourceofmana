@@ -20,7 +20,6 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource("1_dhni5")
 script = ExtResource("2_v116i")
-blockActions = null
 
 [node name="Margin" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(0, 1)

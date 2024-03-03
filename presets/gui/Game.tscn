@@ -482,6 +482,7 @@ offset_left = 439.0
 offset_top = 46.0
 offset_right = 839.0
 offset_bottom = 427.0
+blockActions = false
 
 [node name="Shaders" type="CanvasLayer" parent="."]
 layer = 128

@@ -10,6 +10,7 @@ const userSection : String						= "User"
 		"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
 		"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
 		"Render-WindowSize": [init_resolution, set_resolution, apply_resolution, $Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
+		"Render-WindowPos": [init_windowPos, set_windowPos, apply_windowPos, null],
 		"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
 		"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
 		"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
@@ -93,9 +94,23 @@ func apply_resolution(resolution : Vector2i):
 	var currentPos : Vector2i = get_viewport().get_position()
 	var newPosition : Vector2i = Vector2i(clampi(currentPos.x, 0, (windowSize - resolution).x), clampi(currentPos.y, 0, (windowSize - resolution).y))
 	DisplayServer.window_set_size(newSize)
-	DisplayServer.window_set_position(newPosition)
+	apply_windowPos(newPosition)
 	init_actionoverlay(true)
 	populate_resolution_labels(resolution)
+
+# Window Position
+func init_windowPos(apply : bool):
+	if apply:
+		var pos : Vector2 = GetVal("Render-WindowPos")
+		apply_windowPos(pos)
+func set_windowPos(pos : Vector2):
+	SetVal("Render-WindowPos", pos)
+	apply_windowPos(pos)
+func save_windowPos():
+	set_windowPos(get_viewport().get_position())
+func apply_windowPos(pos : Vector2):
+	if pos != Vector2(-1, -1):
+		DisplayServer.window_set_position(pos)
 
 # DoubleResolution
 func init_scaling(apply : bool):
@@ -238,8 +253,9 @@ func _ready():
 		accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
 
 func _exit_tree():
-	if Launcher.Player:
+	if not Launcher.FSM.playerName.is_empty():
 		save_sessionoverlay()
+		save_windowPos()
 		SaveSettings()
 
 # Conf accessors

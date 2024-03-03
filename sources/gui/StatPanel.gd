@@ -115,4 +115,4 @@ func RefreshEntityStats(entity : BaseEntity):
 
 #
 func GetPercentString(current : float, base : float) -> String:
-	return "%d" % (int(current / base * 100.0) if base > 0 else 100)
+	return "%d%%" % (int(current / base * 100.0) if base > 0 else 100)
