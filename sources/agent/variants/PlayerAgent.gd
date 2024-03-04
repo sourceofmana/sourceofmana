@@ -2,10 +2,10 @@ extends BaseAgent
 class_name PlayerAgent
 
 #
-var lastStat : EntityStats				= EntityStats.new()
+var lastStat : ActorStats				= ActorStats.new()
 
 #
-static func GetEntityType() -> EntityCommons.Type: return EntityCommons.Type.PLAYER
+static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
 
 #
 func UpdateLastStats():
@@ -69,7 +69,7 @@ func _physics_process(delta):
 func _ready():
 	regenTimer = Timer.new()
 	regenTimer.set_name("RegenTimer")
-	Callback.OneShotCallback(regenTimer.tree_entered, Callback.ResetTimer, [regenTimer, EntityCommons.RegenDelay, EntityStats.Regen.bind(self)])
+	Callback.OneShotCallback(regenTimer.tree_entered, Callback.ResetTimer, [regenTimer, ActorCommons.RegenDelay, ActorStats.Regen.bind(self)])
 	add_child.call_deferred(regenTimer)
 
 	super._ready()

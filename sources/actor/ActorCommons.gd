@@ -1,5 +1,5 @@
 extends Object
-class_name EntityCommons
+class_name ActorCommons
 
 #
 enum Type

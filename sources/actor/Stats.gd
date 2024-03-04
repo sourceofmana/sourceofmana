@@ -1,10 +1,9 @@
 extends Object
-class_name EntityStats
-
+class_name ActorStats
 
 # Active Stats
 var level : int							= 1
-var experience : float					= 0
+var experience : int					= 0
 var health : int						= 1
 var mana : int							= 0
 var stamina : int						= 0
@@ -31,26 +30,32 @@ signal entity_stats_updated
 
 #
 func RefreshActiveStats():
-	health					= Formulas.ClampHealth(self)
-	stamina					= Formulas.ClampStamina(self)
-	mana					= Formulas.ClampMana(self)
+	health					= Formula.ClampHealth(self)
+	stamina					= Formula.ClampStamina(self)
+	mana					= Formula.ClampMana(self)
 	active_stats_updated.emit()
+
+func RefreshRegenStats():
+	current.regenHealth		= Formula.GetRegenHealth(self)
+	current.regenMana		= Formula.GetRegenMana(self)
+	current.regenStamina	= Formula.GetRegenStamina(self)
 
 func RefreshEntityStats():
 	# Current Stats
-	current.maxHealth		= Formulas.GetMaxHealth(self)
-	current.maxMana			= Formulas.GetMaxMana(self)
-	current.maxStamina		= Formulas.GetMaxStamina(self)
-	current.attackStrength	= Formulas.GetAttackStrength(self)
-	current.attackRange		= Formulas.GetAttackRange(self)
-	current.critRate		= Formulas.GetCritRate(self)
-	current.castAttackDelay	= Formulas.GetCastAttackDelay(self)
-	current.cooldownAttackDelay = Formulas.GetCooldownAttackDelay(self)
-	current.walkSpeed		= Formulas.GetWalkSpeed(self)
-	current.weightCapacity	= Formulas.GetWeightCapacity(self)
+	current.maxHealth		= Formula.GetMaxHealth(self)
+	current.maxMana			= Formula.GetMaxMana(self)
+	current.maxStamina		= Formula.GetMaxStamina(self)
+	current.attackStrength	= Formula.GetAttackStrength(self)
+	current.attackRange		= Formula.GetAttackRange(self)
+	current.critRate		= Formula.GetCritRate(self)
+	current.castAttackDelay	= Formula.GetCastAttackDelay(self)
+	current.cooldownAttackDelay = Formula.GetCooldownAttackDelay(self)
+	current.walkSpeed		= Formula.GetWalkSpeed(self)
+	current.weightCapacity	= Formula.GetWeightCapacity(self)
 	entity_stats_updated.emit()
 
 	RefreshActiveStats()
+	RefreshRegenStats()
 
 func RefreshPersonalStats():
 	RefreshEntityStats()
@@ -88,8 +93,8 @@ func Init(data : EntityData):
 	RefreshActiveStats()
 
 func FillRandomPersonalStats():
-	var maxPoints : int			= Formulas.GetMaxPersonalPoints(self)
-	var assignedPoints : int	= Formulas.GetAssignedPersonalPoints(self)
+	var maxPoints : int			= Formula.GetMaxPersonalPoints(self)
+	var assignedPoints : int	= Formula.GetAssignedPersonalPoints(self)
 	if maxPoints > assignedPoints:
 		const stats = ["strength", "vitality", "agility", "endurance", "concentration"]
 		var personalStats : Dictionary = {}
@@ -106,32 +111,42 @@ func Morph(data : EntityData):
 	morphed = not morphed
 	SetEntityStats(data._stats, morphed)
 
-func AddPersonalStat(stat : EntityCommons.PersonalStat):
-	if Formulas.GetMaxPersonalPoints(self) - Formulas.GetAssignedPersonalPoints(self) > 0:
+func AddPersonalStat(stat : ActorCommons.PersonalStat):
+	if Formula.GetMaxPersonalPoints(self) - Formula.GetAssignedPersonalPoints(self) > 0:
 		match stat:
-			EntityCommons.PersonalStat.STRENGTH:
-				strength = min(EntityCommons.MaxPointPerPersonalStat, strength + 1)
-			EntityCommons.PersonalStat.VITALITY:
-				vitality = min(EntityCommons.MaxPointPerPersonalStat, vitality + 1)
-			EntityCommons.PersonalStat.AGILITY:
-				agility = min(EntityCommons.MaxPointPerPersonalStat, agility + 1)
-			EntityCommons.PersonalStat.ENDURANCE:
-				endurance = min(EntityCommons.MaxPointPerPersonalStat, endurance + 1)
-			EntityCommons.PersonalStat.CONCENTRATION:
-				concentration = min(EntityCommons.MaxPointPerPersonalStat, concentration + 1)
+			ActorCommons.PersonalStat.STRENGTH:
+				strength = min(ActorCommons.MaxPointPerPersonalStat, strength + 1)
+			ActorCommons.PersonalStat.VITALITY:
+				vitality = min(ActorCommons.MaxPointPerPersonalStat, vitality + 1)
+			ActorCommons.PersonalStat.AGILITY:
+				agility = min(ActorCommons.MaxPointPerPersonalStat, agility + 1)
+			ActorCommons.PersonalStat.ENDURANCE:
+				endurance = min(ActorCommons.MaxPointPerPersonalStat, endurance + 1)
+			ActorCommons.PersonalStat.CONCENTRATION:
+				concentration = min(ActorCommons.MaxPointPerPersonalStat, concentration + 1)
 
 static func Regen(agent : BaseAgent):
 	if SkillCommons.IsAlive(agent):
 		if agent.stat.health < agent.stat.current.maxHealth:
-			agent.stat.health  = min(agent.stat.health + Formulas.GetRegenHealth(agent), agent.stat.current.maxHealth)
+			SetHealth(agent, Modifier.GetRegenHealth(agent))
 		if agent.stat.mana < agent.stat.current.maxMana:
-			agent.stat.mana  = min(agent.stat.mana + Formulas.GetRegenMana(agent), agent.stat.current.maxMana)
+			SetMana(agent, Modifier.GetRegenMana(agent))
 		if agent.stat.stamina < agent.stat.current.maxStamina:
-			agent.stat.stamina  = min(agent.stat.stamina + Formulas.GetRegenStamina(agent), agent.stat.current.maxStamina)
-	Callback.LoopTimer(agent.regenTimer, EntityCommons.RegenDelay)
+			SetStamina(agent, Modifier.GetRegenStamina(agent))
 
-static func AddExperience(agent : BaseAgent, points : float):
-	agent.stat.experience += points
+	Callback.LoopTimer(agent.regenTimer, ActorCommons.RegenDelay)
+
+static func SetHealth(agent : BaseAgent, bonus : int):
+	agent.stat.health = clampi(agent.stat.health + bonus, 0, agent.stat.current.maxHealth)
+
+static func SetMana(agent : BaseAgent, bonus : int):
+	agent.stat.mana = clampi(agent.stat.mana + bonus, 0, agent.stat.current.maxMana)
+
+static func SetStamina(agent : BaseAgent, bonus : int):
+	agent.stat.stamina = clampi(agent.stat.stamina + bonus, 0, agent.stat.current.maxStamina)
+
+static func AddExperience(agent : BaseAgent, bonus : int):
+	agent.stat.experience += bonus
 	# Manage level up
 	var levelUpHappened = false
 	var experiencelNeeded = Experience.GetNeededExperienceForNextLevel(agent.stat.level)

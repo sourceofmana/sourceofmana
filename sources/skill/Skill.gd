@@ -4,7 +4,7 @@ class_name Skill
 #
 class AlterationInfo:
 	var value : int						= 0
-	var type : EntityCommons.Alteration	= EntityCommons.Alteration.MISS
+	var type : ActorCommons.Alteration	= ActorCommons.Alteration.MISS
 
 enum TargetMode
 {
@@ -81,10 +81,10 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rn
 static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var heal : int = SkillCommons.GetHeal(agent, target, skill, rng)
 	target.stat.health = min(target.stat.health + heal, target.stat.current.maxHealth)
-	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), heal, EntityCommons.Alteration.HEAL, skill._name])
+	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), heal, ActorCommons.Alteration.HEAL, skill._name])
 
 static func Killed(agent : BaseAgent, target : BaseAgent):
-	Formulas.ApplyXp(target)
+	Formula.ApplyXp(target)
 	target.Killed(agent)
 	Stopped(agent)
 
@@ -99,8 +99,8 @@ static func Stopped(agent : BaseAgent):
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:
 		return
-	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.MISS, ""])
+	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), 0, ActorCommons.Alteration.MISS, ""])
 	Stopped(agent)
 
 static func Delayed(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), 0, EntityCommons.Alteration.PROJECTILE, skill._name])
+	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), 0, ActorCommons.Alteration.PROJECTILE, skill._name])

@@ -19,28 +19,28 @@ func SetPosition(startPos : Vector2, floorPos : Vector2):
 	position = startPos
 	floorPosition = floorPos.y
 
-func SetValue(dealer : BaseEntity, value : int, alteration : EntityCommons.Alteration):
+func SetValue(dealer : BaseEntity, value : int, alteration : ActorCommons.Alteration):
 	var hue : float = 0.0
 	match alteration:
-		EntityCommons.Alteration.CRIT:
+		ActorCommons.Alteration.CRIT:
 			criticalHit = true
 			set_text(str(value))
-		EntityCommons.Alteration.DODGE:
-			hue = EntityCommons.DodgeAttackColor
+		ActorCommons.Alteration.DODGE:
+			hue = ActorCommons.DodgeAttackColor
 			set_text("dodge")
-		EntityCommons.Alteration.HIT:
+		ActorCommons.Alteration.HIT:
 			if dealer == Launcher.Player:
-				hue = EntityCommons.LocalAttackColor
+				hue = ActorCommons.LocalAttackColor
 			elif dealer is PlayerEntity:
-				hue = EntityCommons.PlayerAttackColor
+				hue = ActorCommons.PlayerAttackColor
 			else:
-				hue = EntityCommons.MonsterAttackColor
+				hue = ActorCommons.MonsterAttackColor
 			set_text(str(value))
-		EntityCommons.Alteration.MISS:
-			hue = EntityCommons.MissAttackColor
+		ActorCommons.Alteration.MISS:
+			hue = ActorCommons.MissAttackColor
 			set_text("miss")
-		EntityCommons.Alteration.HEAL:
-			hue = EntityCommons.HealColor
+		ActorCommons.Alteration.HEAL:
+			hue = ActorCommons.HealColor
 			set_text(str(value))
 		_:
 			Util.Assert(false, "Alteration type not handled: " + str(alteration))

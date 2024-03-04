@@ -12,14 +12,14 @@ class_name SkillData
 @export var _skillTime : float						= 0.0
 @export var _projectilePreset : PackedScene			= null
 @export var _cooldownTime : float					= 0.0
-@export var _state : EntityCommons.State			= EntityCommons.State.IDLE
+@export var _state : ActorCommons.State			= ActorCommons.State.IDLE
 @export var _mode : Skill.TargetMode				= Skill.TargetMode.SINGLE
 @export var _range : int							= 32
 @export var _damage : int							= 0
 @export var _heal : int								= 0
 @export var _repeat : bool							= false
 
-# Stats, must have the same name than their relatives in EntityStats
+# Stats, must have the same name than their relatives in ActorStats
 @export var stamina : int							= 0
 @export var mana : int								= 0
 
@@ -46,7 +46,7 @@ static func Create(key : String, result : Dictionary) -> SkillData:
 	if "CooldownTime" in result:
 		skill._cooldownTime = result.CooldownTime
 	if "State" in result:
-		skill._state = EntityCommons.State[result.State]
+		skill._state = ActorCommons.State[result.State]
 	if "Mode" in result:
 		skill._mode = Skill.TargetMode[result.Mode]
 	if "Range" in result:

@@ -38,7 +38,7 @@ func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
 				agent.agent.set_velocity_forced(Vector2.ZERO)
 				agent.agent.set_navigation_map(map.mapRID)
 			agent.currentVelocity = Vector2.ZERO
-			agent.currentState = EntityCommons.State.IDLE
+			agent.state = ActorCommons.State.IDLE
 
 			WorldAgent.PushAgent(agent, inst)
 			Callback.OneShotCallback(agent.tree_entered, AgentWarped, [map, agent])
@@ -58,9 +58,9 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		Launcher.Network.WarpPlayer(map.name, playerID)
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
-				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.GetCurrentShapeID(), neighbour.entityName, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.currentState, neighbour.currentSkillName, playerID)
+				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.GetCurrentShapeID(), neighbour.entityName, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillName, playerID)
 
-	Launcher.Network.Server.NotifyInstance(agent, "AddEntity", [agent.GetEntityType(), agent.GetCurrentShapeID(), agent.entityName, agent.velocity, agent.position, agent.currentOrientation, agent.currentState, agent.currentSkillName], false)
+	Launcher.Network.Server.NotifyInstance(agent, "AddEntity", [agent.GetEntityType(), agent.GetCurrentShapeID(), agent.entityName, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillName], false)
 
 # Generic
 func _post_launch():

@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Actor
 class_name BaseAgent
 
 #
@@ -18,15 +18,12 @@ var lastPositions : Array[float]		= []
 
 var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
-var currentState : EntityCommons.State	= EntityCommons.State.IDLE
 var currentSkillName : String			= ""
 var currentVelocity : Vector2i			= Vector2i.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var forceUpdate : bool					= false
 
 var spawnInfo : SpawnObject				= null
-var stat : EntityStats					= EntityStats.new()
-var inventory : EntityInventory			= EntityInventory.new()
 var skillSet : Array[SkillData]			= []
 var skillProba : Dictionary				= {}
 var skillProbaSum : float				= 0.0
@@ -70,7 +67,7 @@ func UpdateInput():
 
 func SetVelocity():
 	var nextVelocity : Vector2 = Vector2.ZERO
-	if currentState == EntityCommons.State.WALK:
+	if state == ActorCommons.State.WALK:
 		nextVelocity = currentVelocity
 		move_and_slide()
 
@@ -81,19 +78,19 @@ func SetVelocity():
 
 func SetCurrentState():
 	if stat.health <= 0:
-		SetState(EntityCommons.State.DEATH)
+		SetState(ActorCommons.State.DEATH)
 	elif DB.SkillsDB.has(currentSkillName):
 		SetState(DB.SkillsDB[currentSkillName]._state)
 	elif currentVelocity == Vector2i.ZERO:
-		SetState(EntityCommons.State.IDLE)
+		SetState(ActorCommons.State.IDLE)
 	else:
-		SetState(EntityCommons.State.WALK)
+		SetState(ActorCommons.State.WALK)
 
-func SetState(wantedState : EntityCommons.State) -> bool:
-	var nextState : EntityCommons.State = EntityCommons.GetNextTransition(currentState, wantedState)
-	forceUpdate = forceUpdate or nextState != currentState
-	currentState = nextState
-	return currentState == wantedState
+func SetState(wantedState : ActorCommons.State) -> bool:
+	var nextState : ActorCommons.State = ActorCommons.GetNextTransition(state, wantedState)
+	forceUpdate = forceUpdate or nextState != state
+	state = nextState
+	return state == wantedState
 
 func SetSkillCastName(skillName : String):
 	forceUpdate = forceUpdate or DB.SkillsDB.has(currentSkillName)
@@ -136,7 +133,7 @@ func UpdateChanged():
 	if currentInput != Vector2.ZERO:
 		currentOrientation = Vector2(currentVelocity).normalized()
 	var functionName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
-	Launcher.Network.Server.NotifyInstance(self, functionName, [velocity, position, currentOrientation, currentState, currentSkillName])
+	Launcher.Network.Server.NotifyInstance(self, functionName, [velocity, position, currentOrientation, state, currentSkillName])
 
 #
 func SetData(data : EntityData):
@@ -181,7 +178,7 @@ func GetMostValuableAttacker() -> BaseAgent:
 
 func GetDamageRatio(attacker : BaseAgent) -> float:
 	if attacker != null and not attacker.is_queued_for_deletion() and attackers.has(attacker):
-		if attackers[attacker][1] > Time.get_ticks_msec() - EntityCommons.AttackTimestampLimit and stat.current.maxHealth > 0:
+		if attackers[attacker][1] > Time.get_ticks_msec() - ActorCommons.AttackTimestampLimit and stat.current.maxHealth > 0:
 			return float(attackers[attacker][0]) / float(stat.current.maxHealth)
 	return 0.0
 
@@ -189,7 +186,7 @@ func Killed(_attacker: BaseAgent):
 	SetSkillCastName("")
 	if aiTimer:
 		AI.SetState(self, AI.State.HALT)
-		Callback.SelfDestructTimer(self, EntityCommons.DeathDelay, WorldAgent.RemoveAgent.bind(self))
+		Callback.SelfDestructTimer(self, ActorCommons.DeathDelay, WorldAgent.RemoveAgent.bind(self))
 
 #
 func _physics_process(_delta):

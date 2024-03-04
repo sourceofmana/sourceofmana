@@ -23,7 +23,7 @@ static func GetNearestTarget(source : Vector2, interactable : bool) -> BaseEntit
 	var target : BaseEntity		= null
 	for entityID in entities:
 		var entity : BaseEntity = Get(entityID)
-		if entity and entity.entityState != EntityCommons.State.DEATH:
+		if entity and entity.state != ActorCommons.State.DEATH:
 			if entity is MonsterEntity or (interactable and entity is NpcEntity):
 				var distance : float = source.distance_squared_to(entity.position)
 				if nearestDistance == -1 or distance < nearestDistance:

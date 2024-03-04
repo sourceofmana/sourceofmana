@@ -6,24 +6,24 @@ extends RichTextLabel
 func _ready():
 	var speechContent : String = get_parsed_text()
 	var speechLength : float = get_theme_font("normal_font").get_string_size(speechContent).x
-	if speechLength > EntityCommons.speechMaxWidth:
-		speechLength = EntityCommons.speechMaxWidth
-	custom_minimum_size.x = speechLength as int + EntityCommons.speechExtraWidth
+	if speechLength > ActorCommons.speechMaxWidth:
+		speechLength = ActorCommons.speechMaxWidth
+	custom_minimum_size.x = speechLength as int + ActorCommons.speechExtraWidth
 
 func _process(_delta : float):
 	if has_node("Timer"):
 		var timeLeft : float = get_node("Timer").get_time_left()
-		var speechIncreaseDelay : float = EntityCommons.speechDecreaseDelay
+		var speechIncreaseDelay : float = ActorCommons.speechDecreaseDelay
 
-		if textLength < EntityCommons.speechIncreaseThreshold:
-			speechIncreaseDelay = EntityCommons.speechDecreaseDelay / (EntityCommons.speechIncreaseThreshold - textLength)
+		if textLength < ActorCommons.speechIncreaseThreshold:
+			speechIncreaseDelay = ActorCommons.speechDecreaseDelay / (ActorCommons.speechIncreaseThreshold - textLength)
 
-		if timeLeft > EntityCommons.speechDelay - speechIncreaseDelay:
-			var ratio : float = (EntityCommons.speechDelay - timeLeft) / speechIncreaseDelay
+		if timeLeft > ActorCommons.speechDelay - speechIncreaseDelay:
+			var ratio : float = (ActorCommons.speechDelay - timeLeft) / speechIncreaseDelay
 			visible_characters_behavior = TextServer.VC_GLYPHS_LTR
 			visible_ratio = ratio
-		elif timeLeft > 0 && timeLeft < EntityCommons.speechDecreaseDelay:
-			var ratio : float = timeLeft / EntityCommons.speechDecreaseDelay
+		elif timeLeft > 0 && timeLeft < ActorCommons.speechDecreaseDelay:
+			var ratio : float = timeLeft / ActorCommons.speechDecreaseDelay
 			modulate.a = ratio
 			visible_characters_behavior = TextServer.VC_GLYPHS_RTL
 			visible_ratio = ratio

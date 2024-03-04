@@ -2,7 +2,7 @@ extends BaseAgent
 class_name MonsterAgent
 
 #
-static func GetEntityType() -> EntityCommons.Type: return EntityCommons.Type.MONSTER
+static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.MONSTER
 
 #
 func SetData(data : EntityData):

@@ -17,8 +17,8 @@ func SetLocalPlayer():
 
 func ClearTarget():
 	if target != null:
-		if target.visual.sprites[EntityCommons.Slot.BODY].material:
-			target.visual.sprites[EntityCommons.Slot.BODY].material = null
+		if target.visual.sprites[ActorCommons.Slot.BODY].material:
+			target.visual.sprites[ActorCommons.Slot.BODY].material = null
 		target = null
 
 func Target(source : Vector2, interactable : bool = true):
@@ -30,13 +30,13 @@ func Target(source : Vector2, interactable : bool = true):
 
 	if target:
 		if interactable and target is NpcEntity:
-			target.visual.SetMainMaterial.call_deferred(EntityCommons.AllyTarget)
+			target.visual.SetMainMaterial.call_deferred(ActorCommons.AllyTarget)
 		elif target is MonsterEntity:
-			target.visual.SetMainMaterial.call_deferred(EntityCommons.EnemyTarget)
+			target.visual.SetMainMaterial.call_deferred(ActorCommons.EnemyTarget)
 			Launcher.Network.TriggerSelect(target.agentID)
 
 func Interact():
-	if not target or target.entityState == EntityCommons.State.DEATH:
+	if not target or target.state == ActorCommons.State.DEATH:
 		Target(position, true)
 	if not target:
 		return
@@ -54,7 +54,7 @@ func Cast(skillName : String):
 
 	var entityID : int = 0
 	if skill._mode == Skill.TargetMode.SINGLE:
-		if not target or target.entityState == EntityCommons.State.DEATH:
+		if not target or target.state == ActorCommons.State.DEATH:
 			Target(position, false)
 		if target and target is MonsterEntity:
 			entityID = target.agentID

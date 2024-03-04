@@ -16,21 +16,21 @@ func DisplayEmote(emoteID : String):
 	if emoteFx:
 		if DB.EmotesDB && DB.EmotesDB[emoteID]:
 			emoteFx.texture = FileSystem.LoadGfx(DB.EmotesDB[emoteID]._path)
-			emoteFx.lifetime = EntityCommons.emoteDelay
+			emoteFx.lifetime = ActorCommons.emoteDelay
 			emoteFx.restart()
 
 #
 func DisplayMorph(callback : Callable):
-	var particle : GPUParticles2D = EntityCommons.MorphFx.instantiate()
+	var particle : GPUParticles2D = ActorCommons.MorphFx.instantiate()
 	if particle:
-		Callback.SelfDestructTimer(self, EntityCommons.morphDelay, callback)
+		Callback.SelfDestructTimer(self, ActorCommons.morphDelay, callback)
 		particle.finished.connect(Util.RemoveNode.bind(particle, self))
 		particle.emitting = true
 		add_child(particle)
 
 #
 func DisplayLevelUp():
-	var particle : GPUParticles2D = EntityCommons.LevelUpFx.instantiate()
+	var particle : GPUParticles2D = ActorCommons.LevelUpFx.instantiate()
 	if particle:
 		particle.emitting = true
 		add_child(particle)
@@ -68,28 +68,28 @@ func DisplayProjectile(emitter : BaseEntity, skill : SkillData, callable : Calla
 		var projectileNode : Node2D = skill._projectilePreset.instantiate()
 		if projectileNode:
 			projectileNode.origin = emitter.interactive.visibleNode.global_position
-			projectileNode.origin.y += EntityCommons.interactionDisplayOffset
+			projectileNode.origin.y += ActorCommons.interactionDisplayOffset
 			projectileNode.destination = get_parent().interactive.visibleNode.global_position
-			projectileNode.destination.y += EntityCommons.interactionDisplayOffset
+			projectileNode.destination.y += ActorCommons.interactionDisplayOffset
 			projectileNode.delay = emitter.stat.current.castAttackDelay
 			projectileNode.callable = callable
 			Launcher.Map.tilemapNode.add_child(projectileNode)
 
-func DisplayAlteration(target : BaseEntity, emitter : BaseEntity, value : int, alteration : EntityCommons.Alteration, skillName : String):
+func DisplayAlteration(target : BaseEntity, emitter : BaseEntity, value : int, alteration : ActorCommons.Alteration, skillName : String):
 	if Launcher.Map.tilemapNode:
-		if alteration != EntityCommons.Alteration.PROJECTILE:
-			var newLabel : Label = EntityCommons.AlterationLabel.instantiate()
+		if alteration != ActorCommons.Alteration.PROJECTILE:
+			var newLabel : Label = ActorCommons.AlterationLabel.instantiate()
 			newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
 			newLabel.SetValue(emitter, value, alteration)
 			Launcher.Map.tilemapNode.add_child(newLabel)
-			target.stat.health += value if alteration == EntityCommons.Alteration.HEAL else -value
+			target.stat.health += value if alteration == ActorCommons.Alteration.HEAL else -value
 			target.stat.RefreshActiveStats()
 
 		if DB.SkillsDB.has(skillName):
 			var skill : SkillData = DB.SkillsDB[skillName]
 			if skill._mode != Skill.TargetMode.ZONE:
 				var callable : Callable = DisplaySkill.bind(target, skill)
-				if alteration == EntityCommons.Alteration.PROJECTILE:
+				if alteration == ActorCommons.Alteration.PROJECTILE:
 					DisplayProjectile(emitter, skill, callable)
 				else:
 					callable.call()
@@ -98,11 +98,11 @@ func DisplayAlteration(target : BaseEntity, emitter : BaseEntity, value : int, a
 func DisplaySpeech(speech : String):
 	Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
 	if speechContainer:
-		var speechLabel : RichTextLabel = EntityCommons.SpeechLabel.instantiate()
+		var speechLabel : RichTextLabel = ActorCommons.SpeechLabel.instantiate()
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
-		Callback.SelfDestructTimer(speechLabel, EntityCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
+		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
 
 #
 func DisplayHP():
@@ -110,9 +110,9 @@ func DisplayHP():
 		HideHP()
 		return
 
-	Callback.SelfDestructTimer(healthBar, EntityCommons.DisplayHPDelay, HideHP, "HideHP")
-	if Launcher.Player and entity.stat.level >= Launcher.Player.stat.level and EntityCommons.LevelDifferenceColor:
-		nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / EntityCommons.LevelDifferenceColor)
+	Callback.SelfDestructTimer(healthBar, ActorCommons.DisplayHPDelay, HideHP, "HideHP")
+	if Launcher.Player and entity.stat.level >= Launcher.Player.stat.level and ActorCommons.LevelDifferenceColor:
+		nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / ActorCommons.LevelDifferenceColor)
 
 	if not healthBar.visible:
 		healthBar.visible = true
@@ -136,7 +136,7 @@ func HideHP():
 
 #
 func RefreshVisibleNodeOffset(offset : int):
-	visibleNode.position.y = (-EntityCommons.interactionDisplayOffset) + offset
+	visibleNode.position.y = (-ActorCommons.interactionDisplayOffset) + offset
 
 #
 func _physics_process(delta):

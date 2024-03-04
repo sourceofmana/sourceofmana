@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Actor
 class_name BaseEntity
 
 #
@@ -7,14 +7,11 @@ class_name BaseEntity
 var displayName : bool					= false
 var entityName : String					= ""
 
-var gender : EntityCommons.Gender		= EntityCommons.Gender.MALE
-var entityState : EntityCommons.State	= EntityCommons.State.IDLE
+var gender : ActorCommons.Gender		= ActorCommons.Gender.MALE
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
 var entityOrientation : Vector2			= Vector2.ZERO
 
-var inventory : EntityInventory			= EntityInventory.new()
-var stat : EntityStats					= EntityStats.new()
 var visual : EntityVisual				= EntityVisual.new()
 var agentID : int						= -1
 
@@ -34,22 +31,22 @@ func SetVisual(data : EntityData, morphed : bool = false):
 		visualInitCallback.call()
 
 #
-func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : EntityCommons.State, nextSkillCastName : String):
+func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextSkillCastName : String):
 	var dist = Vector2(gardbandPosition - position).length()
 	if dist > NetworkCommons.MaxGuardbandDist:
 		position = gardbandPosition
 
 	entityPosOffset = gardbandPosition - position
 	entityVelocity = nextVelocity
-	var previousState = entityState
-	entityState = nextState
+	var previousState = state
+	state = nextState
 	entityOrientation = nextOrientation
 
 	if visual and interactive and visual.skillCastName != nextSkillCastName:
 		visual.skillCastName = nextSkillCastName
 		interactive.DisplayCast(self, nextSkillCastName)
 
-	if previousState != nextState and nextState == EntityCommons.State.DEATH:
+	if previousState != nextState and nextState == ActorCommons.State.DEATH:
 		entity_died.emit()
 
 #

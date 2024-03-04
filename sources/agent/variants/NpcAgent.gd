@@ -2,7 +2,7 @@ extends BaseAgent
 class_name NpcAgent
 
 #
-static func GetEntityType() -> EntityCommons.Type: return EntityCommons.Type.NPC
+static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.NPC
 
 #
 func Interact(caller : BaseAgent):
@@ -10,7 +10,7 @@ func Interact(caller : BaseAgent):
 		var peerID : int = Launcher.Network.Server.GetRid(caller)
 		if peerID != NetworkCommons.RidUnknown:
 			var npcAgentID : int = get_rid().get_id()
-			if SetState(EntityCommons.State.TRIGGER) and currentState == EntityCommons.State.TRIGGER:
+			if SetState(ActorCommons.State.TRIGGER) and state == ActorCommons.State.TRIGGER:
 				Launcher.Network.ChatAgent(npcAgentID, "Hello %s!" % caller.entityName, peerID)
 
 #

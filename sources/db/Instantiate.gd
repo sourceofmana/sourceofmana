@@ -18,12 +18,12 @@ static func CreateGenericEntity(entityInstance : CharacterBody2D, entityID : Str
 		entityInstance.SetData(template)
 		entityInstance.entityName = entityID if entityName.length() == 0 else entityName
 
-static func CreateEntity(entityType : EntityCommons.Type, entityID : String, entityName : String = "") -> BaseEntity:
+static func CreateEntity(entityType : ActorCommons.Type, entityID : String, entityName : String = "") -> BaseEntity:
 	var entityPreset : String = ""
 	match entityType:
-		EntityCommons.Type.PLAYER: entityPreset = "Player"
-		EntityCommons.Type.MONSTER: entityPreset = "Monster"
-		EntityCommons.Type.NPC: entityPreset = "Npc"
+		ActorCommons.Type.PLAYER: entityPreset = "Player"
+		ActorCommons.Type.MONSTER: entityPreset = "Monster"
+		ActorCommons.Type.NPC: entityPreset = "Npc"
 		_: Util.Assert(false, "Trying to create an entity with a wrong type: " + str(entityType))
 
 	var entityInstance : BaseEntity = FileSystem.LoadEntityVariant(entityPreset)

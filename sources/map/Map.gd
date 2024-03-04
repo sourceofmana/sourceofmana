@@ -76,8 +76,8 @@ func AddChild(entity : BaseEntity):
 		tilemapNode.add_child(entity)
 
 #
-func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, entityState : EntityCommons.State, skillCastName : String):
-	var isLocalPlayer : bool = entityType == EntityCommons.Type.PLAYER and entityName == Launcher.FSM.playerName
+func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, entityName : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastName : String):
+	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and entityName == Launcher.FSM.playerName
 	var entity : BaseEntity = null
 	if tilemapNode:
 		if isLocalPlayer and Launcher.Player:
@@ -92,7 +92,7 @@ func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String
 					Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
-		entity.Update(entityVelocity, entityPosition, entityOrientation, entityState, skillCastName)
+		entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastName)
 		AddChild(entity)
 		Entities.Add(entity, agentID)
 
@@ -105,7 +105,7 @@ func RemoveEntity(agentID : int):
 		RemoveChild(entity)
 		Entities.Erase(agentID)
 
-func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : EntityCommons.State, skillCastName : String):
+func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastName : String):
 	var entity : BaseEntity = Entities.Get(agentID)
 	if entity:
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastName)

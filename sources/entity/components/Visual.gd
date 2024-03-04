@@ -12,7 +12,7 @@ var animationTree : AnimationTree			= null
 
 var collision : CollisionShape2D			= null
 var previousOrientation : Vector2			= Vector2.ZERO
-var previousState : EntityCommons.State		= EntityCommons.State.UNKNOWN
+var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
 
 var blendSpacePaths : Dictionary			= {}
 var timeScalePaths : Dictionary				= {}
@@ -22,11 +22,11 @@ var attackAnimLength : float				= 1.0
 
 #
 func SetMainMaterial(materialResource : Resource):
-	Util.Assert(sprites[EntityCommons.Slot.BODY] != null, "Trying to assign a shader material to a non-existant texture")
-	if sprites[EntityCommons.Slot.BODY]:
-		sprites[EntityCommons.Slot.BODY].material = materialResource
+	Util.Assert(sprites[ActorCommons.Slot.BODY] != null, "Trying to assign a shader material to a non-existant texture")
+	if sprites[ActorCommons.Slot.BODY]:
+		sprites[ActorCommons.Slot.BODY].material = materialResource
 
-func LoadSprite(slot : EntityCommons.Slot, sprite : Sprite2D, customTexturePath : String = ""):
+func LoadSprite(slot : ActorCommons.Slot, sprite : Sprite2D, customTexturePath : String = ""):
 	var materialResource : Resource = null
 	if sprites[slot]:
 		materialResource = sprites[slot].material
@@ -56,7 +56,7 @@ func ResetData():
 		if sprites[spriteID]:
 			sprites[spriteID].queue_free()
 			sprites[spriteID] = null
-	sprites.resize(EntityCommons.Slot.COUNT)
+	sprites.resize(ActorCommons.Slot.COUNT)
 
 func LoadData(data : EntityData):
 	ResetData()
@@ -85,13 +85,13 @@ func LoadData(data : EntityData):
 		if preset.has_node("Sprite"):
 			var sprite : Sprite2D = preset.get_node("Sprite")
 			if sprite:
-				LoadSprite(EntityCommons.Slot.BODY, sprite, data._customTexture)
+				LoadSprite(ActorCommons.Slot.BODY, sprite, data._customTexture)
 
 	ResetAnimationValue()
 
 func LoadAnimationPaths():
-	for i in EntityCommons.State.COUNT:
-		var stateName : String		= EntityCommons.GetStateName(i)
+	for i in ActorCommons.State.COUNT:
+		var stateName : String		= ActorCommons.GetStateName(i)
 		var blendSpace : String		= "parameters/%s/BlendSpace2D/blend_position" % [stateName]
 		var timeScale : String		= "parameters/%s/TimeScale/scale" % [stateName]
 		if animation.has_animation("AttackDown"):
@@ -102,7 +102,7 @@ func LoadAnimationPaths():
 			blendSpacePaths[i] = blendSpace
 
 		# Only set dynamic time scale for attack and walk as other can stay static
-		if i == EntityCommons.State.ATTACK or i == EntityCommons.State.WALK:
+		if i == ActorCommons.State.ATTACK or i == ActorCommons.State.WALK:
 			if timeScale in animationTree:
 				timeScalePaths[i] = timeScale
 
@@ -110,11 +110,11 @@ func UpdateScale():
 	if not entity or not animationTree:
 		return
 
-	if EntityCommons.State.WALK in timeScalePaths:
-		animationTree[timeScalePaths[EntityCommons.State.WALK]] = Formulas.GetWalkRatio(entity.stat)
-	if EntityCommons.State.ATTACK in timeScalePaths and attackAnimLength > 0:
+	if ActorCommons.State.WALK in timeScalePaths:
+		animationTree[timeScalePaths[ActorCommons.State.WALK]] = Formula.GetWalkRatio(entity.stat)
+	if ActorCommons.State.ATTACK in timeScalePaths and attackAnimLength > 0:
 		var test = attackAnimLength / entity.stat.current.castAttackDelay
-		animationTree[timeScalePaths[EntityCommons.State.ATTACK]] = test
+		animationTree[timeScalePaths[ActorCommons.State.ATTACK]] = test
 
 func ResetAnimationValue():
 	if not entity or not animationTree:
@@ -126,8 +126,8 @@ func ResetAnimationValue():
 
 func SyncPlayerOffset():
 	var spriteOffset : int = 0
-	if sprites[EntityCommons.Slot.BODY]:
-		spriteOffset = int(sprites[EntityCommons.Slot.BODY].offset.y)
+	if sprites[ActorCommons.Slot.BODY]:
+		spriteOffset = int(sprites[ActorCommons.Slot.BODY].offset.y)
 
 	spriteOffsetUpdate.emit(spriteOffset)
 
@@ -147,7 +147,7 @@ func Refresh(_delta: float):
 
 	var currentVelocity = entity.velocity
 	var newOrientation : Vector2 = currentVelocity.normalized() if currentVelocity.length_squared() > 1 else entity.entityOrientation
-	var newState : EntityCommons.State = EntityCommons.State.WALK if currentVelocity.length_squared() > 1 else entity.entityState
+	var newState : ActorCommons.State = ActorCommons.State.WALK if currentVelocity.length_squared() > 1 else entity.state
 
 	if previousState != newState or previousOrientation != newOrientation:
 		previousState = newState
@@ -159,5 +159,5 @@ func RefreshTree():
 		var blendSpacePath = blendSpacePaths[previousState]
 		animationTree[blendSpacePath] = previousOrientation
 
-	var stateName = EntityCommons.GetStateName(previousState)
-	animationTree[EntityCommons.playbackParameter].travel(stateName)
+	var stateName = ActorCommons.GetStateName(previousState)
+	animationTree[ActorCommons.playbackParameter].travel(stateName)

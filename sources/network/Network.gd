@@ -41,8 +41,8 @@ func WarpPlayer(mapName : String, rpcID : int = NetworkCommons.RidSingleMode):
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
-func AddEntity(agentID : int, entityType : EntityCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, entityState : EntityCommons.State, skillCastName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, velocity, position, orientation, entityState, skillCastName], rpcID)
+func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastName : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, velocity, position, orientation, state, skillCastName], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
 func RemoveEntity(agentID : int, rpcID : int = NetworkCommons.RidSingleMode):
@@ -63,11 +63,11 @@ func SetMovePos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("SetMovePos", [pos], rpcID, NetworkCommons.DelayInstant)
 
 @rpc("authority", "call_remote", "unreliable_ordered", EChannel.NAVIGATION)
-func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : EntityCommons.State, skillCastName : String, rpcID : int = NetworkCommons.RidSingleMode):
+func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastName : String, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("UpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastName], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.NAVIGATION)
-func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : EntityCommons.State, skillCastName : String,  rpcID : int = NetworkCommons.RidSingleMode):
+func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastName : String,  rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("ForceUpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastName], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
@@ -108,7 +108,7 @@ func TriggerCast(entityID : int, skillName : String, rpcID : int = NetworkCommon
 	NetCallServer("TriggerCast", [entityID, skillName], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func TargetAlteration(agentID : int, targetID : int, value : int, alteration : EntityCommons.Alteration, skillName : String, rpcID : int = NetworkCommons.RidSingleMode):
+func TargetAlteration(agentID : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillName : String, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("TargetAlteration", [agentID, targetID, value, alteration, skillName], rpcID)
 
 # Morph
@@ -122,7 +122,7 @@ func Morphed(agentID : int, morphID : String, notifyMorphing : bool, rpcID : int
 
 # Stats
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdateActiveStats(agentID : int, level : int, experience : float, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, morphed : bool, rpcID : int = NetworkCommons.RidSingleMode):
+func UpdateActiveStats(agentID : int, level : int, experience : int, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, morphed : bool, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("UpdateActiveStats", [agentID, level, experience, health, mana, stamina, weight, entityShape, spiritShape, morphed], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
@@ -138,7 +138,7 @@ func TriggerSelect(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("TriggerSelect", [entityID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func AddPersonalStat(stat : EntityCommons.PersonalStat, rpcID : int = NetworkCommons.RidSingleMode):
+func AddPersonalStat(stat : ActorCommons.PersonalStat, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("AddPersonalStat", [stat], rpcID)
 
 #

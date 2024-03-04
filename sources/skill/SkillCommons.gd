@@ -20,18 +20,18 @@ static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillData, 
 
 	var critMaster : bool = agent.stat.current.critRate >= target.stat.current.critRate
 	if critMaster and rng > 1.0 - agent.stat.current.critRate:
-		info.type = EntityCommons.Alteration.CRIT
+		info.type = ActorCommons.Alteration.CRIT
 		info.value *= 2
 	elif not critMaster and rng > 1.0 - target.stat.current.critRate:
-		info.type = EntityCommons.Alteration.DODGE
+		info.type = ActorCommons.Alteration.DODGE
 		info.value = 0
 	else:
-		info.type = EntityCommons.Alteration.HIT
+		info.type = ActorCommons.Alteration.HIT
 		info.value = int(info.value * rng)
 
 	info.value += min(0, target.stat.health - info.value)
 	if info.value == 0:
-		info.type = EntityCommons.Alteration.DODGE
+		info.type = ActorCommons.Alteration.DODGE
 
 	return info
 
@@ -63,7 +63,7 @@ static func GetRange(agent : BaseAgent, skill : SkillData) -> int:
 
 # Checks
 static func IsAlive(agent : BaseAgent) -> bool:
-	return agent and agent.currentState != EntityCommons.State.DEATH
+	return agent and agent.state != ActorCommons.State.DEATH
 
 static func IsNotSelf(agent : BaseAgent, target : BaseAgent) -> bool:
 	return agent != target

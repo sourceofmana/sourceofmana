@@ -2,7 +2,7 @@ extends Object
 class_name BaseStats
 
 # Base Stats
-var weightCapacity : float				= 30.0
+var weightCapacity : float				= 10.0
 var walkSpeed : float					= 100.0
 
 var attackStrength : int				= 6
@@ -14,3 +14,7 @@ var cooldownAttackDelay : float			= 0.5
 var maxHealth : int						= 100
 var maxStamina : int					= 50
 var maxMana : int						= 50
+
+var regenHealth : int					= 1
+var regenStamina : int					= 1
+var regenMana : int						= 1
