@@ -22,6 +22,7 @@ var concentration : int					= 0
 # Entity Stats
 var base : BaseStats					= BaseStats.new()
 var current : BaseStats					= BaseStats.new()
+var actor : Actor						= null
 
 # Signals
 signal active_stats_updated
@@ -75,7 +76,10 @@ func SetEntityStats(entityStats : Dictionary, isMorphed : bool):
 	RefreshEntityStats()
 
 #
-func Init(data : EntityData):
+func Init(actorNode : Actor, data : EntityData):
+	Util.Assert(actorNode != null, "Caller actor node should never be null")
+	actor = actorNode
+
 	var stats : Dictionary = data._stats
 	entityShape	= data._name
 
@@ -124,37 +128,37 @@ func AddPersonalStat(stat : ActorCommons.PersonalStat):
 				endurance = min(ActorCommons.MaxPointPerPersonalStat, endurance + 1)
 			ActorCommons.PersonalStat.CONCENTRATION:
 				concentration = min(ActorCommons.MaxPointPerPersonalStat, concentration + 1)
+		RefreshPersonalStats()
 
-static func Regen(agent : BaseAgent):
-	if SkillCommons.IsAlive(agent):
-		if agent.stat.health < agent.stat.current.maxHealth:
-			SetHealth(agent, Modifier.GetRegenHealth(agent))
-		if agent.stat.mana < agent.stat.current.maxMana:
-			SetMana(agent, Modifier.GetRegenMana(agent))
-		if agent.stat.stamina < agent.stat.current.maxStamina:
-			SetStamina(agent, Modifier.GetRegenStamina(agent))
+func Regen():
+	if SkillCommons.IsAlive(actor):
+		if actor.stat.health < actor.stat.current.maxHealth:
+			SetHealth(Modifier.GetRegenHealth(actor))
+		if actor.stat.mana < actor.stat.current.maxMana:
+			SetMana(Modifier.GetRegenMana(actor))
+		if actor.stat.stamina < actor.stat.current.maxStamina:
+			SetStamina(Modifier.GetRegenStamina(actor))
 
-	Callback.LoopTimer(agent.regenTimer, ActorCommons.RegenDelay)
+	Callback.LoopTimer(actor.regenTimer, ActorCommons.RegenDelay)
 
-static func SetHealth(agent : BaseAgent, bonus : int):
-	agent.stat.health = clampi(agent.stat.health + bonus, 0, agent.stat.current.maxHealth)
+func SetHealth(bonus : int):
+	health = clampi(health + bonus, 0, current.maxHealth)
 
-static func SetMana(agent : BaseAgent, bonus : int):
-	agent.stat.mana = clampi(agent.stat.mana + bonus, 0, agent.stat.current.maxMana)
+func SetMana(bonus : int):
+	mana = clampi(mana + bonus, 0, current.maxMana)
 
-static func SetStamina(agent : BaseAgent, bonus : int):
-	agent.stat.stamina = clampi(agent.stat.stamina + bonus, 0, agent.stat.current.maxStamina)
+func SetStamina(bonus : int):
+	stamina = clampi(stamina + bonus, 0, current.maxStamina)
 
-static func AddExperience(agent : BaseAgent, bonus : int):
-	agent.stat.experience += bonus
+func AddExperience(bonus : int):
+	experience += bonus
 	# Manage level up
 	var levelUpHappened = false
-	var experiencelNeeded = Experience.GetNeededExperienceForNextLevel(agent.stat.level)
-	while experiencelNeeded != Experience.MAX_LEVEL_REACHED and agent.stat.experience >= experiencelNeeded:
-		agent.stat.experience -= experiencelNeeded
-		agent.stat.level += 1
+	var experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
+	while experiencelNeeded != Experience.MAX_LEVEL_REACHED and experience >= experiencelNeeded:
+		experience -= experiencelNeeded
+		level += 1
 		levelUpHappened = true
-		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(agent.stat.level)
-	if levelUpHappened:
-		# Network notify of level up
-		Launcher.Network.Server.NotifyInstance(agent, "TargetLevelUp", [])
+		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
+	if levelUpHappened and Launcher.Network.Server:
+		Launcher.Network.Server.NotifyInstance(actor, "TargetLevelUp", [])

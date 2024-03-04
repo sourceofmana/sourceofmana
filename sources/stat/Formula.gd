@@ -96,7 +96,7 @@ static func ApplyXp(agent : BaseAgent):
 	for attacker in agent.attackers:
 		if attacker != null and not attacker.is_queued_for_deletion():
 			var bonusScaled : int = int(bonus * agent.GetDamageRatio(attacker))
-			ActorStats.AddExperience(attacker, bonusScaled)
+			attacker.stat.AddExperience(bonusScaled)
 
 #
 static func GetMaxPersonalPoints(stat : ActorStats) -> int:

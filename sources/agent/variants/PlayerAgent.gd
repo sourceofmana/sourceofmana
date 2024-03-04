@@ -69,7 +69,7 @@ func _physics_process(delta):
 func _ready():
 	regenTimer = Timer.new()
 	regenTimer.set_name("RegenTimer")
-	Callback.OneShotCallback(regenTimer.tree_entered, Callback.ResetTimer, [regenTimer, ActorCommons.RegenDelay, ActorStats.Regen.bind(self)])
+	Callback.OneShotCallback(regenTimer.tree_entered, Callback.ResetTimer, [regenTimer, ActorCommons.RegenDelay, stat.Regen])
 	add_child.call_deferred(regenTimer)
 
 	super._ready()

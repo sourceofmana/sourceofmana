@@ -10,13 +10,13 @@ static func FindEntityReference(entityID : String) -> EntityData:
 			break
 	return ref
 
-static func CreateGenericEntity(entityInstance : CharacterBody2D, entityID : String, entityName : String = ""):
+static func CreateGenericEntity(actor : Actor, entityID : String, entityName : String = ""):
 	var template : EntityData = FindEntityReference(entityID)
-	Util.Assert(template != null and entityInstance != null, "Could not create the entity: %s" % entityID)
-	if template and entityInstance:
-		entityInstance.stat.Init(template)
-		entityInstance.SetData(template)
-		entityInstance.entityName = entityID if entityName.length() == 0 else entityName
+	Util.Assert(template != null and actor != null, "Could not create the entity: %s" % entityID)
+	if template and actor:
+		actor.stat.Init(actor, template)
+		actor.SetData(template)
+		actor.entityName = entityID if entityName.length() == 0 else entityName
 
 static func CreateEntity(entityType : ActorCommons.Type, entityID : String, entityName : String = "") -> BaseEntity:
 	var entityPreset : String = ""
