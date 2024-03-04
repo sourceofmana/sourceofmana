@@ -133,11 +133,11 @@ func AddPersonalStat(stat : ActorCommons.PersonalStat):
 func Regen():
 	if SkillCommons.IsAlive(actor):
 		if actor.stat.health < actor.stat.current.maxHealth:
-			SetHealth(Modifier.GetRegenHealth(actor))
+			SetHealth(Formula.GetRegenHealth(self))
 		if actor.stat.mana < actor.stat.current.maxMana:
-			SetMana(Modifier.GetRegenMana(actor))
+			SetMana(Formula.GetRegenMana(self))
 		if actor.stat.stamina < actor.stat.current.maxStamina:
-			SetStamina(Modifier.GetRegenStamina(actor))
+			SetStamina(Formula.GetRegenStamina(self))
 
 	Callback.LoopTimer(actor.regenTimer, ActorCommons.RegenDelay)
 

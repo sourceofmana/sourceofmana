@@ -75,14 +75,20 @@ static func GetWalkRatio(stat : ActorStats) -> float:
 #
 static func GetRegenHealth(stat : ActorStats) -> int:
 	var regen : float = stat.current.maxHealth * 0.01
+	if stat.actor.state == ActorCommons.State.SIT:
+		regen *= 2
 	return max(stat.base.regenHealth, regen)
 
 static func GetRegenMana(stat : ActorStats) -> int:
 	var regen : float = stat.current.maxMana * 0.007
+	if stat.actor.state == ActorCommons.State.SIT:
+		regen *= 2
 	return max(stat.base.regenMana, regen)
 
 static func GetRegenStamina(stat : ActorStats) -> int:
 	var regen : float = stat.current.maxStamina * 0.07
+	if stat.actor.state == ActorCommons.State.SIT:
+		regen *= 2
 	return max(stat.base.regenStamina, regen)
 
 #
