@@ -184,6 +184,7 @@ func GetDamageRatio(attacker : BaseAgent) -> float:
 
 func Killed():
 	SetSkillCastName("")
+	Formula.ApplyXp(self)
 	if aiTimer:
 		AI.SetState(self, AI.State.HALT)
 		Callback.SelfDestructTimer(self, ActorCommons.DeathDelay, WorldAgent.RemoveAgent.bind(self))
