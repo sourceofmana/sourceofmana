@@ -64,7 +64,7 @@ func UpdateActiveStats(ridAgent : int, level : int, experience : int, health : i
 	if Launcher.Map:
 		var entity : BaseEntity = Entities.Get(ridAgent)
 		if entity and entity.get_parent() and entity.stat:
-			var updatePersonalStats : bool = entity.stat.level != level
+			var levelUp : bool = entity.stat.level != level
 			entity.stat.level			= level
 			entity.stat.experience		= experience
 			entity.stat.health			= health
@@ -74,7 +74,8 @@ func UpdateActiveStats(ridAgent : int, level : int, experience : int, health : i
 			entity.stat.morphed			= morphed
 			entity.stat.entityShape		= entityShape
 			entity.stat.spiritShape		= spiritShape
-			if updatePersonalStats:
+			if levelUp:
+				PushNotification("Level %d reached.\nFeel the mana power growing inside you!" % (level))
 				entity.stat.RefreshPersonalStats()
 			else:
 				entity.stat.RefreshActiveStats()
