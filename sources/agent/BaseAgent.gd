@@ -182,7 +182,7 @@ func GetDamageRatio(attacker : BaseAgent) -> float:
 			return float(attackers[attacker][0]) / float(stat.current.maxHealth)
 	return 0.0
 
-func Killed(_attacker: BaseAgent):
+func Killed():
 	SetSkillCastName("")
 	if aiTimer:
 		AI.SetState(self, AI.State.HALT)

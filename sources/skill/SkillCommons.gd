@@ -2,17 +2,35 @@ extends Object
 class_name SkillCommons
 
 # Actions
-static func SetConsume(agent : BaseAgent, stat : String, skill : SkillData) -> bool:
-	var canConsume : bool = false
-	if stat in agent.stat and stat in skill:
-		var value : int = agent.stat.get(stat)
-		var exhaust : int = skill.get(stat)
+enum ConsomeType
+{
+	HEALTH = 0,
+	MANA,
+	STAMINA,
+}
 
-		canConsume = value >= exhaust
-		if value >= exhaust:
-			agent.stat.set(stat, value - exhaust)
+static func TryConsume(agent : BaseAgent, stat : SkillCommons.ConsomeType, skill : SkillData) -> bool:
+	var callable : Callable
+	var canConsome : bool		= false
+	var exhaust : int			= 0
+	match stat:
+		SkillCommons.ConsomeType.HEALTH:
+			callable = agent.stat.SetHealth
+			exhaust = skill.health
+			canConsome = agent.stat.health >= exhaust
+		SkillCommons.ConsomeType.MANA:
+			callable = agent.stat.SetMana
+			exhaust = skill.mana
+			canConsome = agent.stat.mana >= exhaust
+		SkillCommons.ConsomeType.STAMINA:
+			callable = agent.stat.SetStamina
+			exhaust = skill.stamina
+			canConsome = agent.stat.stamina >= exhaust
 
-	return canConsume
+	if canConsome:
+		callable.call(-exhaust)
+
+	return canConsome
 
 static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float) -> Skill.AlterationInfo:
 	var info : Skill.AlterationInfo = Skill.AlterationInfo.new()

@@ -20,7 +20,7 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if skill._mode == TargetMode.SINGLE and (not target or not SkillCommons.IsAlive(target)):
 		return
 
-	if SkillCommons.SetConsume(agent, "mana", skill):
+	if SkillCommons.TryConsume(agent, SkillCommons.ConsomeType.MANA, skill):
 		Stopped(agent)
 		agent.SetSkillCastName(skill._name)
 		Callback.StartTimer(agent.actionTimer, skill._castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill))
@@ -30,7 +30,7 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 
 static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 	if SkillCommons.IsAlive(agent) and SkillCommons.IsCasting(agent) and SkillCommons.HasSkill(agent, skill):
-		var hasStamina : bool = SkillCommons.SetConsume(agent, "stamina", skill)
+		var hasStamina : bool = SkillCommons.TryConsume(agent, SkillCommons.ConsomeType.STAMINA, skill)
 
 		match skill._mode:
 			TargetMode.SINGLE:
@@ -68,25 +68,16 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var info : AlterationInfo = SkillCommons.GetDamage(agent, target, skill, rng)
-	target.stat.health = max(target.stat.health - info.value, 0)
-	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill._name])
-
 	if target.aiTimer:
 		target.AddAttacker(agent, info.value)
 		AI.SetState(target, AI.State.ATTACK)
-
-	if target.stat.health <= 0:
-		Killed(agent, target)
+	target.stat.SetHealth(-info.value)
+	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill._name])
 
 static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float):
 	var heal : int = SkillCommons.GetHeal(agent, target, skill, rng)
-	target.stat.health = min(target.stat.health + heal, target.stat.current.maxHealth)
+	target.stat.SetHealth(heal)
 	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), heal, ActorCommons.Alteration.HEAL, skill._name])
-
-static func Killed(agent : BaseAgent, target : BaseAgent):
-	Formula.ApplyXp(target)
-	target.Killed(agent)
-	Stopped(agent)
 
 static func Stopped(agent : BaseAgent):
 	if SkillCommons.HasActionInProgress(agent):
@@ -94,7 +85,6 @@ static func Stopped(agent : BaseAgent):
 		Callback.ClearTimer(agent.actionTimer)
 		if agent.aiTimer:
 			AI.SetState(agent, AI.State.IDLE)
-
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:

@@ -143,6 +143,8 @@ func Regen():
 
 func SetHealth(bonus : int):
 	health = clampi(health + bonus, 0, current.maxHealth)
+	if health <= 0:
+		actor.Killed()
 
 func SetMana(bonus : int):
 	mana = clampi(mana + bonus, 0, current.maxMana)
