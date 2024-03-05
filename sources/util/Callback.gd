@@ -35,17 +35,17 @@ static func SelfDestructCallback(parent : Node, timer : Timer, callback : Callab
 #
 static func SelfDestructTimer(parent : Node, delay : float, callback : Callable, timerName = "") -> Timer:
 	if parent:
-		var hasSpecialName : bool = timerName.length() > 0
-		if not hasSpecialName or parent.get_node_or_null(timerName) == null:
-			var timer : Timer = Timer.new()
+		var timer : Timer = null if timerName.is_empty() else parent.get_node_or_null(timerName)
+		if not timer:
+			timer = Timer.new()
 			timer.one_shot = true
 			timer.autostart = true
 			timer.timeout.connect(Callback.SelfDestructCallback.bind(parent, timer, callback))
-			if hasSpecialName:
+			if not timerName.is_empty():
 				timer.name = timerName
 			parent.add_child(timer)
-			timer.start(delay)
-			return timer
+		timer.start(delay)
+		return timer
 	return null
 
 #
