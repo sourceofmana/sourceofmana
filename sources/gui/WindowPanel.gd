@@ -152,10 +152,7 @@ func OnGuiInput(event : InputEvent):
 			UpdateWindow(event.position)
 
 func UpdateWindow(eventPosition : Vector2 = Vector2.ZERO):
-	var scaleFactor : int = Launcher.Root.get_content_scale_factor()
 	var floatingWindowSize : Vector2 = Launcher.GUI.windows.get_size()
-	if scaleFactor > 0:
-		floatingWindowSize /= scaleFactor
 
 	if isResizing:
 		ResizeWindow(ClampFloatingWindow(eventPosition, floatingWindowSize), eventPosition + position)
