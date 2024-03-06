@@ -1,111 +1,127 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2q5vtkxo04dp"]
+[gd_scene load_steps=7 format=3 uid="uid://c2q5vtkxo04dp"]
 
-[ext_resource type="Texture2D" uid="uid://da0magqi2o4ro" path="res://data/graphics/gui/item.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://desxm6lbhpunn" path="res://data/graphics/gui/menu/menubar_button.png" id="1_pcpv2"]
+[ext_resource type="Texture2D" uid="uid://qfpxygkhxldq" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="2_7lddn"]
+[ext_resource type="Texture2D" uid="uid://cql3pd7w0dcrw" path="res://data/graphics/items/skill/mana-burst.png" id="4_f0s7q"]
+[ext_resource type="Texture2D" uid="uid://778ukqslteuy" path="res://data/graphics/items/skill/flar.png" id="5_mjh5m"]
+[ext_resource type="Texture2D" uid="uid://cj2x2kwnfcla3" path="res://data/graphics/items/skill/spell.png" id="6_qlcce"]
+[ext_resource type="Texture2D" uid="uid://do0uijp3cppaj" path="res://data/graphics/items/skill/melee.png" id="7_e2fmm"]
 
-[node name="ActionBox" type="HBoxContainer"]
-offset_right = 500.0
-offset_bottom = 34.0
-size_flags_horizontal = 0
+[node name="ActionBox" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = -640.0
+offset_bottom = -360.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
 size_flags_vertical = 0
 mouse_filter = 2
-alignment = 1
 
-[node name="ActionEmptyPanel3" type="Control" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(-211, 0)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
 
-[node name="Action1" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-mouse_filter = 1
-texture = ExtResource("1")
-patch_margin_left = 2
-patch_margin_top = 2
-patch_margin_right = 2
-patch_margin_bottom = 3
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="."]
+position = Vector2(-175, -35)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
 
-[node name="Action2" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-mouse_filter = 1
-texture = ExtResource("1")
-patch_margin_left = 2
-patch_margin_top = 2
-patch_margin_right = 2
-patch_margin_bottom = 3
+[node name="TouchScreenButton3" type="TouchScreenButton" parent="."]
+position = Vector2(-139, 0)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
 
-[node name="Action3" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-mouse_filter = 1
-texture = ExtResource("1")
-patch_margin_left = 2
-patch_margin_top = 2
-patch_margin_right = 2
-patch_margin_bottom = 3
+[node name="TouchScreenButton4" type="TouchScreenButton" parent="."]
+position = Vector2(-103, -35)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
 
-[node name="Action4" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-mouse_filter = 1
-texture = ExtResource("1")
-patch_margin_left = 2
-patch_margin_top = 2
-patch_margin_right = 2
-patch_margin_bottom = 3
+[node name="TouchScreenButton5" type="TouchScreenButton" parent="."]
+position = Vector2(-67, 0)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
 
-[node name="ActionEmptyPanel1" type="Control" parent="."]
-custom_minimum_size = Vector2(36, 0)
-layout_mode = 2
-mouse_filter = 2
+[node name="TouchScreenButton6" type="TouchScreenButton" parent="."]
+position = Vector2(5, 0)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
 
-[node name="Action5" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-mouse_filter = 1
-texture = ExtResource("1")
-patch_margin_left = 2
-patch_margin_top = 2
-patch_margin_right = 2
-patch_margin_bottom = 3
+[node name="TouchScreenButton7" type="TouchScreenButton" parent="."]
+position = Vector2(41, -35)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
+action = "gp_skill_4"
 
-[node name="Action6" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-mouse_filter = 1
-texture = ExtResource("1")
-patch_margin_left = 2
-patch_margin_top = 2
-patch_margin_right = 2
-patch_margin_bottom = 3
+[node name="TextureRect" type="TextureRect" parent="TouchScreenButton7"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_qlcce")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
 
-[node name="ActionEmptyPanel2" type="Control" parent="."]
-custom_minimum_size = Vector2(36, 0)
-layout_mode = 2
-mouse_filter = 2
+[node name="TouchScreenButton8" type="TouchScreenButton" parent="."]
+position = Vector2(77, 0)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
+action = "gp_skill_3"
 
-[node name="Action7" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-mouse_filter = 1
-texture = ExtResource("1")
-patch_margin_left = 2
-patch_margin_top = 2
-patch_margin_right = 2
-patch_margin_bottom = 3
+[node name="TextureRect" type="TextureRect" parent="TouchScreenButton8"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("7_e2fmm")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
 
-[node name="Action8" type="NinePatchRect" parent="."]
-custom_minimum_size = Vector2(36, 36)
-layout_mode = 2
-mouse_filter = 1
-texture = ExtResource("1")
-patch_margin_left = 2
-patch_margin_top = 2
-patch_margin_right = 2
-patch_margin_bottom = 3
+[node name="TouchScreenButton9" type="TouchScreenButton" parent="."]
+position = Vector2(113, -35)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
+action = "gp_skill_1"
 
-[node name="ActionEmptyPanel4" type="Control" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
+[node name="TextureRect" type="TextureRect" parent="TouchScreenButton9"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_f0s7q")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="TouchScreenButton10" type="TouchScreenButton" parent="."]
+position = Vector2(149, 0)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
+action = "gp_skill_2"
+
+[node name="TextureRect" type="TextureRect" parent="TouchScreenButton10"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_mjh5m")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true

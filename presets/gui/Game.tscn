@@ -239,10 +239,14 @@ size_flags_vertical = 10
 layout_mode = 2
 script = ExtResource("18_6nrx4")
 
-[node name="Direction" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks"]
+[node name="Direction" type="Control" parent="Overlay/Sections/Shortcuts/Sticks"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Direction" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Direction"]
 texture_normal = ExtResource("18_lb78w")
 
-[node name="Button" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/Direction"]
+[node name="Button" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/Direction/Direction"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -292,7 +296,7 @@ action = "gp_interact"
 [node name="Boxes" parent="Overlay/Sections/Shortcuts" instance=ExtResource("4")]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 10
+size_flags_vertical = 4
 mouse_filter = 0
 
 [node name="Windows" type="MarginContainer" parent="."]
@@ -439,7 +443,7 @@ top_level = true
 [connection signal="resized" from="Overlay" to="." method="_on_ui_margin_resized"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Stat/StatButton" to="Overlay/Sections/Indicators/Stat" method="_on_button_pressed"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Menu/MenuButton" to="Overlay/Sections/Indicators/Menu" method="_on_button_pressed"]
-[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]
-[connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_up"]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Direction/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]
+[connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Direction/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_up"]
 [connection signal="resized" from="Windows/Floating" to="Windows/Floating" method="_on_window_resized"]
 [connection signal="gui_input" from="Windows/Floating/Stat" to="Windows/Floating/Stat" method="OnGuiInput"]

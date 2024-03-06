@@ -140,13 +140,11 @@ func apply_actionoverlay(enable : bool):
 			Launcher.GUI.shortcuts.add_theme_constant_override("margin_left", 80) # [0;160]
 			Launcher.GUI.shortcuts.add_theme_constant_override("margin_right", 80) # [0;160]
 			Launcher.GUI.sticks.set_visible(true)
-			Launcher.GUI.boxes.set_visible(false)
 			Launcher.Action.supportMouse = false
 		else:
 			Launcher.GUI.shortcuts.add_theme_constant_override("margin_left", 0) # [0;160]
 			Launcher.GUI.shortcuts.add_theme_constant_override("margin_right", 0) # [0;160]
 			Launcher.GUI.sticks.set_visible(false)
-			Launcher.GUI.boxes.set_visible(true)
 			Launcher.Action.supportMouse = true
 
 # Lighting

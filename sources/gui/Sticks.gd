@@ -1,7 +1,7 @@
 extends HBoxContainer
 
 #
-@onready var DirectionButton : Control			= $Direction/Button
+@onready var DirectionButton : Control			= $Direction/Direction/Button
 @onready var DefaultStickPosition : Vector2		= DirectionButton.get_position()
 
 var leftStickPressed : bool				= false
