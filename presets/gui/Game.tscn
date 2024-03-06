@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=51 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -37,14 +37,12 @@
 [ext_resource type="PackedScene" uid="uid://ti8obbg4a52j" path="res://presets/gui/Tips.tscn" id="18_88m73"]
 [ext_resource type="Texture2D" uid="uid://c6vlftjsnocs3" path="res://data/graphics/gui/mobile/background.png" id="18_lb78w"]
 [ext_resource type="Texture2D" uid="uid://cyuj6w585tm0y" path="res://data/graphics/gui/mobile/button.png" id="20_1vdgt"]
-[ext_resource type="BitMap" uid="uid://d77nr3juvbco" path="res://data/graphics/gui/mobile/background_bitmask.png" id="20_rnv11"]
 [ext_resource type="Texture2D" uid="uid://4lbn2136wjw3" path="res://data/graphics/gui/mobile/buttonY.png" id="22_v5bsw"]
 [ext_resource type="Texture2D" uid="uid://bncxvjj4nmem8" path="res://data/graphics/gui/mobile/buttonX.png" id="23_8ulos"]
 [ext_resource type="Texture2D" uid="uid://m862d3fndtf" path="res://data/graphics/gui/mobile/buttonY_pressed.png" id="23_veq0v"]
 [ext_resource type="Texture2D" uid="uid://3vvdehbmo43i" path="res://data/graphics/gui/mobile/buttonB.png" id="24_idf5b"]
 [ext_resource type="Texture2D" uid="uid://dp34vjt8lj8n5" path="res://data/graphics/gui/mobile/buttonA.png" id="25_6cklw"]
 [ext_resource type="Texture2D" uid="uid://dfmkxvhnjsnkw" path="res://data/graphics/gui/mobile/buttonX_pressed.png" id="25_8t8bb"]
-[ext_resource type="BitMap" uid="uid://cl65b4aves6sl" path="res://data/graphics/gui/mobile/button_mask.png" id="25_a6irb"]
 [ext_resource type="Texture2D" uid="uid://reqjw3bt0dtj" path="res://data/graphics/gui/mobile/buttonB_pressed.png" id="27_rgxqc"]
 [ext_resource type="Texture2D" uid="uid://dgiywkj6go44v" path="res://data/graphics/gui/mobile/buttonA_pressed.png" id="29_ioa8a"]
 [ext_resource type="PackedScene" uid="uid://dhdq88so6g3yh" path="res://presets/gui/Stats.tscn" id="35_d1kq3"]
@@ -241,16 +239,10 @@ size_flags_vertical = 10
 layout_mode = 2
 script = ExtResource("18_6nrx4")
 
-[node name="Direction" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks"]
-layout_mode = 2
-size_flags_horizontal = 0
-action_mode = 0
-keep_pressed_outside = true
+[node name="Direction" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks"]
 texture_normal = ExtResource("18_lb78w")
-texture_click_mask = ExtResource("20_rnv11")
 
 [node name="Button" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/Direction"]
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -273,79 +265,29 @@ layout_mode = 2
 size_flags_horizontal = 10
 texture = ExtResource("18_lb78w")
 
-[node name="ButtonY" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -26.5
-offset_top = 5.0
-offset_right = 26.5
-offset_bottom = 56.0
-grow_horizontal = 2
-theme = ExtResource("4_wx5hs")
-theme_type_variation = &"FilledLosangeButton"
-keep_pressed_outside = true
+[node name="ButtonY" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
+position = Vector2(51, 5)
 texture_normal = ExtResource("22_v5bsw")
 texture_pressed = ExtResource("23_veq0v")
-texture_click_mask = ExtResource("25_a6irb")
+action = "gp_sit"
 
-[node name="ButtonX" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 4.0
-offset_top = -25.5
-offset_right = 57.0
-offset_bottom = 25.5
-grow_vertical = 2
-theme = ExtResource("4_wx5hs")
-theme_type_variation = &"FilledLosangeButton"
-keep_pressed_outside = true
+[node name="ButtonX" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
+position = Vector2(4, 52)
 texture_normal = ExtResource("23_8ulos")
 texture_pressed = ExtResource("25_8t8bb")
-texture_click_mask = ExtResource("25_a6irb")
+action = "gp_morph"
 
-[node name="ButtonB" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -57.0
-offset_top = -25.5
-offset_right = -4.0
-offset_bottom = 25.5
-grow_horizontal = 0
-grow_vertical = 2
-theme = ExtResource("4_wx5hs")
-theme_type_variation = &"FilledLosangeButton"
-keep_pressed_outside = true
+[node name="ButtonB" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
+position = Vector2(98, 52)
 texture_normal = ExtResource("24_idf5b")
 texture_pressed = ExtResource("27_rgxqc")
-texture_click_mask = ExtResource("25_a6irb")
+action = "gp_target"
 
-[node name="ButtonA" type="TextureButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -26.5
-offset_top = -56.0
-offset_right = 26.5
-offset_bottom = -5.0
-grow_horizontal = 2
-grow_vertical = 0
-theme = ExtResource("4_wx5hs")
-theme_type_variation = &"FilledLosangeButton"
-keep_pressed_outside = true
+[node name="ButtonA" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
+position = Vector2(51, 99)
 texture_normal = ExtResource("25_6cklw")
 texture_pressed = ExtResource("29_ioa8a")
-texture_click_mask = ExtResource("25_a6irb")
+action = "gp_interact"
 
 [node name="Boxes" parent="Overlay/Sections/Shortcuts" instance=ExtResource("4")]
 layout_mode = 2
@@ -497,11 +439,7 @@ top_level = true
 [connection signal="resized" from="Overlay" to="." method="_on_ui_margin_resized"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Stat/StatButton" to="Overlay/Sections/Indicators/Stat" method="_on_button_pressed"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Menu/MenuButton" to="Overlay/Sections/Indicators/Menu" method="_on_button_pressed"]
-[connection signal="button_down" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]
-[connection signal="button_up" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_up"]
-[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonY" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_y_pressed"]
-[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonX" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_x_pressed"]
-[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonB" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_b_pressed"]
-[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonA" to="Overlay/Sections/Shortcuts/Sticks" method="_on_button_a_pressed"]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]
+[connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_up"]
 [connection signal="resized" from="Windows/Floating" to="Windows/Floating" method="_on_window_resized"]
 [connection signal="gui_input" from="Windows/Floating/Stat" to="Windows/Floating/Stat" method="OnGuiInput"]
