@@ -25,37 +25,37 @@ size_flags_vertical = 0
 mouse_filter = 2
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="."]
-position = Vector2(-211, 0)
+position = Vector2(-211, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
 [node name="TouchScreenButton2" type="TouchScreenButton" parent="."]
-position = Vector2(-175, -35)
+position = Vector2(-175, -18)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
 [node name="TouchScreenButton3" type="TouchScreenButton" parent="."]
-position = Vector2(-139, 0)
+position = Vector2(-139, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
 [node name="TouchScreenButton4" type="TouchScreenButton" parent="."]
-position = Vector2(-103, -35)
+position = Vector2(-103, -18)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
 [node name="TouchScreenButton5" type="TouchScreenButton" parent="."]
-position = Vector2(-67, 0)
+position = Vector2(-67, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
 [node name="TouchScreenButton6" type="TouchScreenButton" parent="."]
-position = Vector2(5, 0)
+position = Vector2(5, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
 [node name="TouchScreenButton7" type="TouchScreenButton" parent="."]
-position = Vector2(41, -35)
+position = Vector2(41, -18)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 action = "gp_skill_4"
@@ -73,7 +73,7 @@ stretch_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="TouchScreenButton8" type="TouchScreenButton" parent="."]
-position = Vector2(77, 0)
+position = Vector2(77, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 action = "gp_skill_3"
@@ -91,7 +91,7 @@ stretch_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="TouchScreenButton9" type="TouchScreenButton" parent="."]
-position = Vector2(113, -35)
+position = Vector2(113, -18)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 action = "gp_skill_1"
@@ -109,7 +109,7 @@ stretch_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="TouchScreenButton10" type="TouchScreenButton" parent="."]
-position = Vector2(149, 0)
+position = Vector2(149, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 action = "gp_skill_2"

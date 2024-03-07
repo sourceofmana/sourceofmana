@@ -228,10 +228,10 @@ layout_mode = 2
 
 [node name="Tips" parent="Overlay/Sections" instance=ExtResource("18_88m73")]
 layout_mode = 2
-size_flags_vertical = 8
 actions = Array[StringName]([&"gp_interact", &"gp_target", &"gp_morph", &"gp_sit"])
 
 [node name="Shortcuts" type="MarginContainer" parent="Overlay/Sections"]
+custom_minimum_size = Vector2(0, 155)
 layout_mode = 2
 size_flags_vertical = 10
 
