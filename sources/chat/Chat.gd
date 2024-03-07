@@ -7,18 +7,16 @@ class_name ChatContainer
 @onready var tabInstance : Object				= FileSystem.LoadGui("chat/ChatTab", false)
 @onready var chatHistory : ChatHistory			= ChatHistory.new()
 
-var playerColor : Color 						= Color("FFFFDD")
-var systemColor : Color 						= Color("EECC77")
 var enabledLastFrame : bool						= false
 
 signal NewTextTyped(text : String)
 
 #
 func AddPlayerText(playerName : String, speech : String):
-	AddText(playerName + ": " + speech, playerColor)
+	AddText(playerName + ": " + speech, UICommons.LightTextColor)
 
 func AddSystemText(speech : String):
-	AddText(speech, systemColor)
+	AddText(speech, UICommons.TextColor)
 
 func AddText(speech : String, color : Color):
 	if tabContainer && tabContainer.get_current_tab_control():

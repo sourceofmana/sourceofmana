@@ -3,9 +3,7 @@ extends WindowPanel
 @export var jsonFile: Resource						= null
 @onready var textContainer : VBoxContainer			= $Scroll/Margin/VBox
 
-const categoryColor : Color 						= Color("FFFFDD")
-const nameColor : Color 							= Color("FFDDBB")
-const contentColor : Color 							= Color("EECC77")
+
 const single_line_mode : bool						= false
 
 const categoryLabel : PackedScene					= preload("res://presets/gui/labels/CategoryLabel.tscn")
@@ -23,14 +21,14 @@ func _ready():
 			for category in jsonData["categories"]:
 				if "category" in category:
 					var label : RichTextLabel = categoryLabel.instantiate()
-					label.text = "[center][color=#" + categoryColor.to_html(false) + "]" + category["category"] + "[/color][/center]\n"
+					label.text = "[center][color=#" + UICommons.LightTextColor.to_html(false) + "]" + category["category"] + "[/color][/center]\n"
 					textContainer.add_child.call_deferred(label)
 
 				if "entries" in category:
 					for entry in category["entries"]:
 						if "title" in entry:
 							var label : RichTextLabel = titleLabel.instantiate()
-							label.text = "[color=#" + nameColor.to_html(false) + "]" + entry["title"]
+							label.text = "[color=#" + UICommons.LightTextColor.to_html(false) + "]" + entry["title"]
 							if "date" in entry:
 								label.text += " ~ " + entry["date"]
 							label.text += "[/color]\n"
@@ -38,12 +36,12 @@ func _ready():
 
 						if "content" in entry:
 							var label : RichTextLabel = contentLabel.instantiate()
-							label.text = "[color=#" + contentColor.to_html(false) + "]" + entry["content"] + "[/color]\n"
+							label.text = "[color=#" + UICommons.TextColor.to_html(false) + "]" + entry["content"] + "[/color]\n"
 							textContainer.add_child.call_deferred(label)
 
 						if "contacts" in entry:
 							var label : RichTextLabel = contactLabel.instantiate()
-							label.text += "[center][color=#" + contentColor.to_html(false) + "]"
+							label.text += "[center][color=#" + UICommons.TextColor.to_html(false) + "]"
 							for contact in entry["contacts"]:
 								var contactName : String
 								if "name" in contact and "nick" in contact:
