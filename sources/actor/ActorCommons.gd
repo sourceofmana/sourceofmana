@@ -54,7 +54,7 @@ enum PersonalStat
 	CONCENTRATION,
 }
 
-static var playbackParameter : String = "parameters/playback"
+const playbackParameter : String = "parameters/playback"
 
 # Skip TO_TRIGGER & FROM_TRIGGER as they are only used as transition steps between idle/trigger.
 const stateTransitions : Array[Array] = [
@@ -95,15 +95,15 @@ static func GetStateName(state : State):
 		_:					return stateIdle
 
 # Visual
-static var AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
-static var EnemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")
-static var AlterationLabel : PackedScene		= preload("res://presets/gui/AlterationLabel.tscn")
-static var SpeechLabel : PackedScene			= preload("res://presets/gui/chat/SpeechBubble.tscn")
-static var MorphFx : PackedScene				= preload("res://presets/effects/particles/Morph.tscn")
-static var LevelUpFx : PackedScene				= preload("res://presets/effects/particles/LevelUp.tscn")
-static var GenderMaleTexture					= preload("res://data/graphics/gui/stat/gender-male.png")
-static var GenderFemaleTexture					= preload("res://data/graphics/gui/stat/gender-female.png")
-static var GenderNonBinaryTexture				= preload("res://data/graphics/gui/stat/gender-nonbinary.png")
+const AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
+const EnemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")
+const AlterationLabel : PackedScene			= preload("res://presets/gui/AlterationLabel.tscn")
+const SpeechLabel : PackedScene				= preload("res://presets/gui/chat/SpeechBubble.tscn")
+const MorphFx : PackedScene					= preload("res://presets/effects/particles/Morph.tscn")
+const LevelUpFx : PackedScene				= preload("res://presets/effects/particles/LevelUp.tscn")
+const GenderMaleTexture						= preload("res://data/graphics/gui/stat/gender-male.png")
+const GenderFemaleTexture					= preload("res://data/graphics/gui/stat/gender-female.png")
+const GenderNonBinaryTexture				= preload("res://data/graphics/gui/stat/gender-nonbinary.png")
 
 # Skill
 enum Alteration
@@ -116,29 +116,29 @@ enum Alteration
 	PROJECTILE,
 }
 
-static var DodgeAttackColor : float				= 0.15
-static var HealColor : float					= 0.42
-static var LocalAttackColor : float				= 0.35
-static var MissAttackColor : float				= 0.2
-static var MonsterAttackColor : float			= 0.0
-static var PlayerAttackColor : float			= 0.6
-static var LevelDifferenceColor : float			= 5.0
+const DodgeAttackColor : float				= 0.15
+const HealColor : float						= 0.42
+const LocalAttackColor : float				= 0.35
+const MissAttackColor : float				= 0.2
+const MonsterAttackColor : float			= 0.0
+const PlayerAttackColor : float				= 0.6
+const LevelDifferenceColor : float			= 5.0
 
 # Interactive
-static var interactionDisplayOffset : int		= 32
-static var emoteDelay : float					= 4.0
-static var morphDelay : float					= 1.2
-static var speechDelay : float					= 6.0
-static var speechDecreaseDelay : float			= 1.5
-static var speechIncreaseThreshold : int		= 15
-static var speechMaxWidth : int					= 256
-static var speechExtraWidth : int				= 20
+const interactionDisplayOffset : int		= 32
+const emoteDelay : float					= 4.0
+const morphDelay : float					= 1.2
+const speechDelay : float					= 6.0
+const speechDecreaseDelay : float			= 1.5
+const speechIncreaseThreshold : int			= 15
+const speechMaxWidth : int					= 256
+const speechExtraWidth : int				= 20
 
 # Lifetime
-static var AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
-static var RegenDelay : float					= 1.0
-static var DeathDelay : float					= 10.0
-static var DisplayHPDelay : float				= 7.0
+const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
+const RegenDelay : float					= 1.0
+const DeathDelay : float					= 10.0
+const DisplayHPDelay : float				= 7.0
 
 # Stats
-static var MaxPointPerPersonalStat : int		= 20
+const MaxPointPerPersonalStat : int			= 20

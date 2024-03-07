@@ -2,12 +2,12 @@ extends Object
 class_name LauncherCommons
 
 # Project
-static var ProjectName : String				= "Source of Mana"
+const ProjectName : String				= "Source of Mana"
 
 # Map
-static var DefaultStartMap : String			= "Overworld"
-static var DefaultStartPos : Vector2		= Vector2(1456, 3504)
+const DefaultStartMap : String			= "Overworld"
+const DefaultStartPos : Vector2			= Vector2(1456, 3504)
 
 # MapPool
-static var EnableMapPool : bool				= false
-static var MapPoolMaxSize : int				= 10
+const EnableMapPool : bool				= false
+const MapPoolMaxSize : int				= 10
