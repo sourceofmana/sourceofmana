@@ -12,31 +12,31 @@ func UpdateTransform():
 		colorRect.material.set_shader_parameter("global_transform", Transform2D(0, topLeft))
 
 func UpdateTexture():
-	var lights : Array[Node]= get_tree().get_nodes_in_group("lights")
+	var lights : Array[Node] = get_tree().get_nodes_in_group("lights")
+	var visibleLights : Array[Node] = []
 	var time : float = Time.get_ticks_msec() / 1000.0
-	var cameraTopLeft : Vector2 = Launcher.Camera.mainCamera.get_target_position() - Launcher.Camera.mainCamera.get_viewport_rect().size / 2.0
+	var viewportSize : Vector2 = Launcher.Camera.mainCamera.get_viewport_rect().size
+	var cameraTopLeft : Vector2 = Launcher.Camera.mainCamera.global_position - viewportSize * 0.5
+	var cameraRect : Rect2 = Rect2(cameraTopLeft, viewportSize)
 
-	var updatedLights : Dictionary = {}
+	for light in lights:
+		if light and light is LightSource:
+			if cameraRect.grow(light.currentRadius).has_point(light.global_position):
+				light.currentDeadband = sin(light.speed * time + light.randomSeed) * 0.008 + 0.5 if light.speed > 0 else 0.5
+				if light.currentDeadband > 0:
+					visibleLights.append(light)
 
 	for colorRect in colorRectArrays:
 		var lightData : Array[Vector4] = []
 		var colorData : Array[Color] = []
 
-		for light in lights:
-			if light and light is LightSource:
-				if light.color == Color("FF00FF"):
-					pass
-				if Rect2( \
-					Vector2(cameraTopLeft + colorRect.global_position - Vector2(light.currentRadius, light.currentRadius)), \
-					Vector2(colorRect.size + Vector2(light.currentRadius, light.currentRadius) * 2) \
-				).has_point(light.global_position):
-					if not updatedLights.has(light):
-						updatedLights[light] = true
-						light.currentDeadband = sin(light.speed * time + light.randomSeed) * 0.008 + 0.5 if light.speed > 0 else 0.5
-
-					if light.currentDeadband > 0.0:
-						lightData.append(Vector4(light.global_position.x, light.global_position.y, light.currentDeadband, light.currentRadius))
-						colorData.append(light.color)
+		for light in visibleLights:
+			if Rect2( \
+				Vector2(cameraTopLeft + colorRect.global_position), \
+				Vector2(colorRect.size) \
+			).grow(light.currentRadius).has_point(light.global_position):
+					lightData.append(Vector4(light.global_position.x, light.global_position.y, light.currentDeadband, light.currentRadius))
+					colorData.append(light.color)
 
 		colorRect.material.set_shader_parameter("n_lights", lightData.size())
 		colorRect.material.set_shader_parameter("light_data", lightData)
@@ -47,7 +47,7 @@ func _ready():
 	for colorRect in colorRectArrays:
 		colorRect.material.set_shader_parameter("light_level", lightLevel)
 
-func _physics_process(_delta):
+func _process(_delta : float):
 	if Launcher.Camera.mainCamera and Launcher.Camera.mainCamera.is_inside_tree():
 		UpdateTransform()
 		UpdateTexture()
