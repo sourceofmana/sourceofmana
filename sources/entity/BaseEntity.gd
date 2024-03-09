@@ -32,8 +32,8 @@ func SetVisual(data : EntityData, morphed : bool = false):
 
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextSkillCastName : String):
-	var dist = Vector2(gardbandPosition - position).length()
-	if dist > NetworkCommons.MaxGuardbandDist:
+	var dist = Vector2(gardbandPosition - position).length_squared()
+	if dist > NetworkCommons.MaxGuardbandDistSquared:
 		position = gardbandPosition
 
 	entityPosOffset = gardbandPosition - position
@@ -53,9 +53,11 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 func _physics_process(delta):
 	velocity = entityVelocity
 
-	if entityPosOffset.length() > NetworkCommons.StartGuardbandDist:
-		var posOffsetFix : Vector2 = entityPosOffset * NetworkCommons.PatchGuardband * delta
-		entityPosOffset -= posOffsetFix * delta
+	if entityPosOffset.length_squared() > NetworkCommons.StartGuardbandDistSquared:
+		var signOffset = sign(entityPosOffset)
+		var posOffsetFix : Vector2 = stat.current.walkSpeed * delta * signOffset
+		entityPosOffset.x = max(0, entityPosOffset.x - posOffsetFix.x) if signOffset.x > 0 else min(0, entityPosOffset.x - posOffsetFix.x)
+		entityPosOffset.y = max(0, entityPosOffset.y - posOffsetFix.y) if signOffset.y > 0 else min(0, entityPosOffset.y - posOffsetFix.y)
 		velocity += posOffsetFix
 
 	if velocity != Vector2.ZERO:

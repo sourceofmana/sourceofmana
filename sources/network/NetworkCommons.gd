@@ -11,9 +11,8 @@ const MaxPlayerCount : int				= 32
 const NavigationSpawnTry : int			= 10
 
 # Guardband
-const StartGuardbandDist : float		= 6.0
-const MaxGuardbandDist : float			= 64.0
-const PatchGuardband : float			= 100.0
+const StartGuardbandDistSquared : float	= 6.0 * 6.0
+const MaxGuardbandDistSquared : float	= 64.0 * 64.0
 
 # Connection
 const RidUnknown : int					= -2
