@@ -50,15 +50,15 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 		entity_died.emit()
 
 #
-func _physics_process(delta):
+func _physics_process(delta : float):
 	velocity = entityVelocity
 
-	if entityPosOffset.length_squared() > NetworkCommons.StartGuardbandDistSquared:
+	if entityPosOffset.length_squared() > NetworkCommons.StartGuardbandDistSquared and delta > 0:
 		var signOffset = sign(entityPosOffset)
-		var posOffsetFix : Vector2 = stat.current.walkSpeed * delta * signOffset
+		var posOffsetFix : Vector2 = stat.current.walkSpeed * 0.5 * delta * signOffset
 		entityPosOffset.x = max(0, entityPosOffset.x - posOffsetFix.x) if signOffset.x > 0 else min(0, entityPosOffset.x - posOffsetFix.x)
 		entityPosOffset.y = max(0, entityPosOffset.y - posOffsetFix.y) if signOffset.y > 0 else min(0, entityPosOffset.y - posOffsetFix.y)
-		velocity += posOffsetFix
+		velocity += posOffsetFix / delta
 
 	if velocity != Vector2.ZERO:
 		move_and_slide()
