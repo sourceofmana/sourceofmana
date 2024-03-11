@@ -15,6 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_al365")
 script = ExtResource("2_wg4ki")
+blockActions = true
 
 [node name="Margin" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(0, 1)

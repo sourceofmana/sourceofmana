@@ -238,8 +238,6 @@ func apply_sessionoverlay(overlay : Array):
 
 #
 func _on_visibility_changed():
-	if Launcher.Action:
-		Launcher.Action.Enable(not visible)
 	RefreshSettings(false)
 
 func _ready():
