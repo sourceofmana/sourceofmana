@@ -113,8 +113,7 @@ func UpdateScale():
 	if ActorCommons.State.WALK in timeScalePaths:
 		animationTree[timeScalePaths[ActorCommons.State.WALK]] = Formula.GetWalkRatio(entity.stat)
 	if ActorCommons.State.ATTACK in timeScalePaths and entity.stat.current.castAttackDelay > 0:
-		var test = attackAnimLength / entity.stat.current.castAttackDelay
-		animationTree[timeScalePaths[ActorCommons.State.ATTACK]] = test
+		animationTree[timeScalePaths[ActorCommons.State.ATTACK]] = attackAnimLength / entity.stat.current.castAttackDelay
 
 func ResetAnimationValue():
 	if not entity or not animationTree:

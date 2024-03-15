@@ -33,28 +33,28 @@ extends WindowPanel
 
 #
 func IncreaseStrength():
-	Launcher.Network.AddPersonalStat(ActorCommons.PersonalStat.STRENGTH)
+	Launcher.Network.AddAttribute(ActorCommons.Attribute.STRENGTH)
 
 func IncreaseVitality():
-	Launcher.Network.AddPersonalStat(ActorCommons.PersonalStat.VITALITY)
+	Launcher.Network.AddAttribute(ActorCommons.Attribute.VITALITY)
 
 func IncreaseAgility():
-	Launcher.Network.AddPersonalStat(ActorCommons.PersonalStat.AGILITY)
+	Launcher.Network.AddAttribute(ActorCommons.Attribute.AGILITY)
 
 func IncreaseEndurance():
-	Launcher.Network.AddPersonalStat(ActorCommons.PersonalStat.ENDURANCE)
+	Launcher.Network.AddAttribute(ActorCommons.Attribute.ENDURANCE)
 
 func IncreaseConcentration():
-	Launcher.Network.AddPersonalStat(ActorCommons.PersonalStat.CONCENTRATION)
+	Launcher.Network.AddAttribute(ActorCommons.Attribute.CONCENTRATION)
 
 #
 func Init(entity : BaseEntity):
 	Callback.PlugCallback(entity.stat.active_stats_updated, RefreshActiveStats.bind(entity))
-	Callback.PlugCallback(entity.stat.personal_stats_updated, RefreshPersonalStats.bind(entity))
+	Callback.PlugCallback(entity.stat.attributes_updated, RefreshAttributes.bind(entity))
 	Callback.PlugCallback(entity.stat.entity_stats_updated, RefreshEntityStats.bind(entity))
 
 	RefreshActiveStats(entity)
-	RefreshPersonalStats(entity)
+	RefreshAttributes(entity)
 	RefreshEntityStats(entity)
 
 func RefreshGender(entity : BaseEntity):
@@ -83,7 +83,7 @@ func RefreshActiveStats(entity : BaseEntity):
 	pStamina.SetStat(entity.stat.stamina, entity.stat.current.maxStamina)
 	pWeight.SetStat(entity.stat.weight, entity.stat.current.weightCapacity)
 
-func RefreshPersonalStats(entity : BaseEntity):
+func RefreshAttributes(entity : BaseEntity):
 	if not entity:
 		pass
 
@@ -93,14 +93,14 @@ func RefreshPersonalStats(entity : BaseEntity):
 	lEndurance.set_text(str(entity.stat.endurance))
 	lConcentration.set_text(str(entity.stat.concentration))
 
-	var availablePoints : int = Formula.GetMaxPersonalPoints(entity.stat) - Formula.GetAssignedPersonalPoints(entity.stat)
+	var availablePoints : int = Formula.GetMaxAttributePoints(entity.stat) - Formula.GetAssignedAttributePoints(entity.stat)
 	lAvailablePoints.set_text(str(availablePoints))
 
-	bStrength.set_disabled(availablePoints <= 0 or entity.stat.strength >= ActorCommons.MaxPointPerPersonalStat)
-	bVitality.set_disabled(availablePoints <= 0 or entity.stat.vitality >= ActorCommons.MaxPointPerPersonalStat)
-	bAgility.set_disabled(availablePoints <= 0 or entity.stat.agility >= ActorCommons.MaxPointPerPersonalStat)
-	bEndurance.set_disabled(availablePoints <= 0 or entity.stat.endurance >= ActorCommons.MaxPointPerPersonalStat)
-	bConcentration.set_disabled(availablePoints <= 0 or entity.stat.concentration >= ActorCommons.MaxPointPerPersonalStat)
+	bStrength.set_disabled(availablePoints <= 0 or entity.stat.strength >= ActorCommons.MaxPointPerAttributes)
+	bVitality.set_disabled(availablePoints <= 0 or entity.stat.vitality >= ActorCommons.MaxPointPerAttributes)
+	bAgility.set_disabled(availablePoints <= 0 or entity.stat.agility >= ActorCommons.MaxPointPerAttributes)
+	bEndurance.set_disabled(availablePoints <= 0 or entity.stat.endurance >= ActorCommons.MaxPointPerAttributes)
+	bConcentration.set_disabled(availablePoints <= 0 or entity.stat.concentration >= ActorCommons.MaxPointPerAttributes)
 
 func RefreshEntityStats(entity : BaseEntity):
 	if not entity:

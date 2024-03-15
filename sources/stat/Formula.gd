@@ -2,6 +2,9 @@ extends Object
 class_name Formula
 
 #
+const attributePointPerLevel : int				= 3
+
+#
 static func GetMaxHealth(stat : ActorStats) -> int:
 	var value : float = stat.vitality
 	value += stat.base.maxHealth
@@ -65,14 +68,11 @@ static func ClampStamina(stat : ActorStats) -> int:
 static func GetWeight(inventory : EntityInventory) -> float:
 	return inventory.calculate_weight() / 1000.0
 
-#
-static func GetCastAttackRatio(stat : ActorStats) -> float:
-	return stat.base.castAttackDelay / stat.current.castAttackDelay if stat.current.castAttackDelay > 0 else 1.0
-
+# Animation ratios
 static func GetWalkRatio(stat : ActorStats) -> float:
 	return stat.base.walkSpeed / stat.current.walkSpeed if stat.current.walkSpeed > 0 else 1.0
 
-#
+# Stat regen
 static func GetRegenHealth(stat : ActorStats) -> int:
 	var regen : float = stat.current.maxHealth * 0.01
 	if stat.actor.state == ActorCommons.State.SIT:
@@ -91,11 +91,9 @@ static func GetRegenStamina(stat : ActorStats) -> int:
 		regen *= 2
 	return max(stat.base.regenStamina, regen)
 
-#
+# Experience management
 static func GetXpBonus(stat : ActorStats) -> float:
-	var personalMean : float = float(stat.strength + stat.vitality + stat.agility + stat.endurance + stat.concentration) / 5
-	var bonus : float = float(stat.level * personalMean)
-	return bonus
+	return GetAssignedAttributePoints(stat) * 1.2
 
 static func ApplyXp(agent : BaseAgent):
 	var bonus : float = Formula.GetXpBonus(agent.stat)
@@ -104,9 +102,9 @@ static func ApplyXp(agent : BaseAgent):
 			var bonusScaled : int = int(bonus * agent.GetDamageRatio(attacker))
 			attacker.stat.AddExperience(bonusScaled)
 
-#
-static func GetMaxPersonalPoints(stat : ActorStats) -> int:
-	return stat.level * 3 + 5
+# Attribute points
+static func GetMaxAttributePoints(stat : ActorStats) -> int:
+	return stat.level * attributePointPerLevel
 
-static func GetAssignedPersonalPoints(stat : ActorStats) -> int:
+static func GetAssignedAttributePoints(stat : ActorStats) -> int:
 	return stat.agility + stat.vitality + stat.strength + stat.endurance + stat.concentration

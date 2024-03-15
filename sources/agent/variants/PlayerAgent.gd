@@ -38,7 +38,7 @@ func UpdateLastStats():
 	lastStat.agility != stat.agility or \
 	lastStat.endurance != stat.endurance or \
 	lastStat.concentration != stat.concentration:
-		Launcher.Network.UpdatePersonalStats(get_rid().get_id(), stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, peerID)
+		Launcher.Network.UpdateAttributes(get_rid().get_id(), stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, peerID)
 		lastStat.strength			= stat.strength
 		lastStat.vitality			= stat.vitality
 		lastStat.agility			= stat.agility

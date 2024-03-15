@@ -126,8 +126,8 @@ func UpdateActiveStats(agentID : int, level : int, experience : int, health : in
 	NetCallClient("UpdateActiveStats", [agentID, level, experience, health, mana, stamina, weight, entityShape, spiritShape, morphed], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdatePersonalStats(agentID : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("UpdatePersonalStats", [agentID, strength, vitality, agility, endurance, concentration], rpcID)
+func UpdateAttributes(agentID : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("UpdateAttributes", [agentID, strength, vitality, agility, endurance, concentration], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func TargetLevelUp(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
@@ -138,8 +138,8 @@ func TriggerSelect(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("TriggerSelect", [entityID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func AddPersonalStat(stat : ActorCommons.PersonalStat, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("AddPersonalStat", [stat], rpcID)
+func AddAttribute(stat : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("AddAttribute", [stat], rpcID)
 
 #
 func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:

@@ -50,7 +50,7 @@ func TargetLevelUp(targetID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 		var entity : BaseEntity = Entities.Get(targetID)
 		if entity and entity.get_parent() and entity.interactive:
 			entity.interactive.DisplayLevelUp()
-			entity.stat.personal_stats_updated.emit()
+			entity.stat.attributes_updated.emit()
 
 func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -76,11 +76,11 @@ func UpdateActiveStats(ridAgent : int, level : int, experience : int, health : i
 			entity.stat.spiritShape		= spiritShape
 			if levelUp:
 				PushNotification("Level %d reached.\nFeel the mana power growing inside you!" % (level))
-				entity.stat.RefreshPersonalStats()
+				entity.stat.RefreshAttributes()
 			else:
 				entity.stat.RefreshActiveStats()
 
-func UpdatePersonalStats(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : BaseEntity = Entities.Get(ridAgent)
 		if entity and entity.get_parent() and entity.stat:
@@ -89,7 +89,7 @@ func UpdatePersonalStats(ridAgent : int, strength : int, vitality : int, agility
 			entity.stat.agility			= agility
 			entity.stat.endurance		= endurance
 			entity.stat.concentration	= concentration
-			entity.stat.RefreshPersonalStats()
+			entity.stat.RefreshAttributes()
 
 func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:

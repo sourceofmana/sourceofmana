@@ -45,7 +45,7 @@ enum Slot
 	COUNT
 }
 
-enum PersonalStat
+enum Attribute
 {
 	STRENGTH = 0,
 	VITALITY,
@@ -141,4 +141,4 @@ const DeathDelay : float					= 10.0
 const DisplayHPDelay : float				= 7.0
 
 # Stats
-const MaxPointPerPersonalStat : int			= 20
+const MaxPointPerAttributes : int			= 20

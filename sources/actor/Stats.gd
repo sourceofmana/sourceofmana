@@ -12,7 +12,7 @@ var entityShape : String				= ""
 var spiritShape : String				= ""
 var morphed : bool						= false
 
-# Personal Stats
+# Attributes
 var strength : int						= 0
 var vitality : int						= 0
 var agility : int						= 0
@@ -26,7 +26,7 @@ var actor : Actor						= null
 
 # Signals
 signal active_stats_updated
-signal personal_stats_updated
+signal attributes_updated
 signal entity_stats_updated
 
 #
@@ -58,16 +58,16 @@ func RefreshEntityStats():
 	RefreshActiveStats()
 	RefreshRegenStats()
 
-func RefreshPersonalStats():
+func RefreshAttributes():
 	RefreshEntityStats()
-	personal_stats_updated.emit()
+	attributes_updated.emit()
 
 #
-func SetPersonalStats(personalStats : Dictionary):
-	for modifier in personalStats:
-		if modifier in self:
-			self[modifier] = personalStats[modifier]
-	RefreshPersonalStats()
+func SetAttributes(attributes : Dictionary):
+	for attribute in attributes:
+		if attribute in self:
+			self[attribute] = attributes[attribute]
+	RefreshAttributes()
 
 func SetEntityStats(entityStats : Dictionary, isMorphed : bool):
 	for modifier in entityStats:
@@ -88,7 +88,7 @@ func Init(actorNode : Actor, data : EntityData):
 	if "Weight" in stats:				weight				= stats["Weight"]
 	if "Spirit" in stats:				spiritShape			= stats["Spirit"]
 
-	SetPersonalStats(stats)
+	SetAttributes(stats)
 	SetEntityStats(stats, morphed)
 
 	health		= stats["Health"]	if "Health" in stats	else current.maxHealth
@@ -96,48 +96,48 @@ func Init(actorNode : Actor, data : EntityData):
 	stamina		= stats["Stamina"]	if "Stamina" in stats	else current.maxStamina
 	RefreshActiveStats()
 
-func FillRandomPersonalStats():
-	var maxPoints : int			= Formula.GetMaxPersonalPoints(self)
-	var assignedPoints : int	= Formula.GetAssignedPersonalPoints(self)
+func FillRandomAttributes():
+	var maxPoints : int			= Formula.GetMaxAttributePoints(self)
+	var assignedPoints : int	= Formula.GetAssignedAttributePoints(self)
 	if maxPoints > assignedPoints:
-		const stats = ["strength", "vitality", "agility", "endurance", "concentration"]
-		var personalStats : Dictionary = {}
+		const attributeNames = ["strength", "vitality", "agility", "endurance", "concentration"]
+		var attributes : Dictionary = {}
 		var pointToDispatch : int = maxPoints - assignedPoints
-		for modifier in stats:
-			var r : int = randi_range(0, pointToDispatch)
-			pointToDispatch -= r
-			personalStats[modifier] = self[modifier] + r
+		for att in attributeNames:
+			var points : int = randi_range(0, pointToDispatch)
+			pointToDispatch -= points
+			attributes[att] = self[att] + points
 			if pointToDispatch == 0:
 				break
-		SetPersonalStats(personalStats)
+		SetAttributes(attributes)
 
 func Morph(data : EntityData):
 	morphed = not morphed
 	SetEntityStats(data._stats, morphed)
 
-func AddPersonalStat(stat : ActorCommons.PersonalStat):
-	if Formula.GetMaxPersonalPoints(self) - Formula.GetAssignedPersonalPoints(self) > 0:
-		match stat:
-			ActorCommons.PersonalStat.STRENGTH:
-				strength = min(ActorCommons.MaxPointPerPersonalStat, strength + 1)
-			ActorCommons.PersonalStat.VITALITY:
-				vitality = min(ActorCommons.MaxPointPerPersonalStat, vitality + 1)
-			ActorCommons.PersonalStat.AGILITY:
-				agility = min(ActorCommons.MaxPointPerPersonalStat, agility + 1)
-			ActorCommons.PersonalStat.ENDURANCE:
-				endurance = min(ActorCommons.MaxPointPerPersonalStat, endurance + 1)
-			ActorCommons.PersonalStat.CONCENTRATION:
-				concentration = min(ActorCommons.MaxPointPerPersonalStat, concentration + 1)
-		RefreshPersonalStats()
+func AddAttribute(attribute : ActorCommons.Attribute):
+	if Formula.GetMaxAttributePoints(self) - Formula.GetAssignedAttributePoints(self) > 0:
+		match attribute:
+			ActorCommons.Attribute.STRENGTH:
+				strength = min(ActorCommons.MaxPointPerAttributes, strength + 1)
+			ActorCommons.Attribute.VITALITY:
+				vitality = min(ActorCommons.MaxPointPerAttributes, vitality + 1)
+			ActorCommons.Attribute.AGILITY:
+				agility = min(ActorCommons.MaxPointPerAttributes, agility + 1)
+			ActorCommons.Attribute.ENDURANCE:
+				endurance = min(ActorCommons.MaxPointPerAttributes, endurance + 1)
+			ActorCommons.Attribute.CONCENTRATION:
+				concentration = min(ActorCommons.MaxPointPerAttributes, concentration + 1)
+		RefreshAttributes()
 
 func Regen():
 	if SkillCommons.IsAlive(actor):
 		if actor.stat.health < actor.stat.current.maxHealth:
-			SetHealth(Formula.GetRegenHealth(self))
+			SetHealth(current.regenHealth)
 		if actor.stat.mana < actor.stat.current.maxMana:
-			SetMana(Formula.GetRegenMana(self))
+			SetMana(current.regenMana)
 		if actor.stat.stamina < actor.stat.current.maxStamina:
-			SetStamina(Formula.GetRegenStamina(self))
+			SetStamina(current.regenStamina)
 
 	Callback.LoopTimer(actor.regenTimer, ActorCommons.RegenDelay)
 

@@ -7,7 +7,7 @@ static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.MONST
 #
 func SetData(data : EntityData):
 	super.SetData(data)
-	stat.FillRandomPersonalStats()
+	stat.FillRandomAttributes()
 
 #
 func _ready():
