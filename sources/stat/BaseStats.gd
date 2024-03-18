@@ -5,9 +5,11 @@ class_name BaseStats
 var weightCapacity : float				= 10.0
 var walkSpeed : float					= 100.0
 
-var attackStrength : int				= 6
+var attack : int						= 10
+var defense : int						= 5
 var attackRange : int					= 48
 var critRate : float					= 0.01
+var dodgeRate : float					= 0.01
 var castAttackDelay : float				= 0.7
 var cooldownAttackDelay : float			= 0.5
 

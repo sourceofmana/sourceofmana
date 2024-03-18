@@ -76,7 +76,7 @@ func _ready():
 
 #
 func Respawn():
-	if SkillCommons.IsAlive(self):
+	if ActorCommons.IsAlive(self):
 		return
 	WorldAgent.PopAgent(self)
 	var spawn: SpawnObject = Launcher.World.defaultSpawn

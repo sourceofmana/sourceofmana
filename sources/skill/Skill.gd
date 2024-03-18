@@ -15,9 +15,9 @@ enum TargetMode
 
 # Skill Flow
 static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if not SkillCommons.IsAlive(agent) or not SkillCommons.HasSkill(agent, skill) or SkillCommons.IsCoolingDown(agent, skill) or SkillCommons.IsCasting(agent, skill):
+	if not ActorCommons.IsAlive(agent) or not SkillCommons.HasSkill(agent, skill) or SkillCommons.IsCoolingDown(agent, skill) or SkillCommons.IsCasting(agent, skill):
 		return
-	if skill._mode == TargetMode.SINGLE and (not target or not SkillCommons.IsAlive(target)):
+	if skill._mode == TargetMode.SINGLE and (not target or not ActorCommons.IsAlive(target)):
 		return
 
 	if SkillCommons.TryConsume(agent, SkillCommons.ConsomeType.MANA, skill):
@@ -29,12 +29,12 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillData):
 		agent.UpdateChanged()
 
 static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	if SkillCommons.IsAlive(agent) and SkillCommons.IsCasting(agent) and SkillCommons.HasSkill(agent, skill):
+	if ActorCommons.IsAlive(agent) and SkillCommons.IsCasting(agent) and SkillCommons.HasSkill(agent, skill):
 		var hasStamina : bool = SkillCommons.TryConsume(agent, SkillCommons.ConsomeType.STAMINA, skill)
 
 		match skill._mode:
 			TargetMode.SINGLE:
-				if not SkillCommons.IsAlive(target):
+				if not ActorCommons.IsAlive(target):
 					Stopped(agent)
 					return
 				if SkillCommons.IsTargetable(agent, target, skill):
@@ -61,7 +61,7 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillData):
-	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill._repeat and SkillCommons.IsAlive(target) else Callable()
+	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill._repeat and ActorCommons.IsAlive(target) else Callable()
 	agent.SetSkillCastName("")
 	var timer : Timer = Callback.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay + skill._cooldownTime, callable, skill._name + " CoolDown")
 	agent.cooldownTimers[skill._name] = timer

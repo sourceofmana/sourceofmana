@@ -24,11 +24,13 @@ extends WindowPanel
 @onready var bEndurance : Button				= $Margin/Layout/Stats/StatBox/EnduranceBox/Button
 @onready var bConcentration : Button			= $Margin/Layout/Stats/StatBox/ConcentrationBox/Button
 
-@onready var lAtkStrength : Label				= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkStrengthBox/Value
+@onready var lAtk : Label						= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox/Value
+@onready var lDef : Label						= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox/Value
 @onready var lAtkRange : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox/Value
 @onready var lCastDelay : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox/Value
 @onready var lCooldownDelay : Label				= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox/Value
 @onready var lCritRate : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox/Value
+@onready var lDodgeRate : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox/Value
 @onready var lWalkSpeed : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox/Value
 
 #
@@ -106,11 +108,13 @@ func RefreshEntityStats(entity : BaseEntity):
 	if not entity:
 		pass
 
-	lAtkStrength.set_text(GetPercentString(entity.stat.current.attackStrength, entity.stat.base.attackStrength))
+	lAtk.set_text(GetPercentString(entity.stat.current.attack, entity.stat.base.attack))
+	lDef.set_text(GetPercentString(entity.stat.current.defense, entity.stat.base.defense))
 	lAtkRange.set_text(GetPercentString(entity.stat.current.attackRange, entity.stat.base.attackRange))
 	lCastDelay.set_text(GetPercentString(entity.stat.base.castAttackDelay, entity.stat.current.castAttackDelay))
 	lCooldownDelay.set_text(GetPercentString(entity.stat.base.cooldownAttackDelay, entity.stat.current.cooldownAttackDelay))
 	lCritRate.set_text(GetPercentString(entity.stat.current.critRate, entity.stat.base.critRate))
+	lDodgeRate.set_text(GetPercentString(entity.stat.current.dodgeRate, entity.stat.base.dodgeRate))
 	lWalkSpeed.set_text(GetPercentString(entity.stat.current.walkSpeed, entity.stat.base.walkSpeed))
 
 #

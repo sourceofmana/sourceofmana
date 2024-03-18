@@ -78,7 +78,7 @@ const stateToTrigger : String				= "To Trigger"
 const stateTrigger : String					= "Trigger"
 const stateFromTrigger : String				= "From Trigger"
 
-#
+# State
 static func GetNextTransition(currentState : State, newState : State) -> State:
 	return stateTransitions[currentState][newState]
 
@@ -93,6 +93,12 @@ static func GetStateName(state : State):
 		State.TRIGGER:		return stateTrigger
 		State.FROM_TRIGGER:	return stateFromTrigger
 		_:					return stateIdle
+
+static func IsAlive(agent : Actor) -> bool:
+	return agent and agent.state != State.DEATH
+
+static func IsSitting(agent : Actor) -> bool:
+	return agent and agent.state != State.SIT
 
 # Visual
 const AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")

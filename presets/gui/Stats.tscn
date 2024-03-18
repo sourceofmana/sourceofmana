@@ -287,15 +287,28 @@ theme_override_constants/separation = 30
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="AtkStrengthBox" type="HBoxContainer" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="AtkBox" type="HBoxContainer" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkStrengthBox"]
+[node name="Name" type="Label" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Attack Strength"
+text = "Attack"
 
-[node name="Value" type="Label" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkStrengthBox"]
+[node name="Value" type="Label" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+
+[node name="DefBox" type="HBoxContainer" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Defense"
+
+[node name="Value" type="Label" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
@@ -348,6 +361,19 @@ size_flags_horizontal = 3
 text = "Crit Rate"
 
 [node name="Value" type="Label" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+
+[node name="DodgeRateBox" type="HBoxContainer" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Dodge Rate"
+
+[node name="Value" type="Label" parent="Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2

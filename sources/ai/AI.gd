@@ -59,7 +59,7 @@ static func StateWalk(agent : BaseAgent):
 
 static func StateAttack(agent : BaseAgent):
 	var target : BaseAgent = agent.GetMostValuableAttacker()
-	if not SkillCommons.IsAlive(target):
+	if not ActorCommons.IsAlive(target):
 		SetState(agent, State.IDLE, true)
 	elif not AICommons.IsActionInProgress(agent):
 		agent.skillSelected = AICommons.GetRandomSkill(agent)

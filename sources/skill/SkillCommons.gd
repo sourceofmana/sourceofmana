@@ -34,21 +34,21 @@ static func TryConsume(agent : BaseAgent, stat : SkillCommons.ConsomeType, skill
 
 static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillData, rng : float) -> Skill.AlterationInfo:
 	var info : Skill.AlterationInfo = Skill.AlterationInfo.new()
-	info.value = agent.stat.current.attackStrength + skill._damage
+	info.value = max(1, agent.stat.current.attack + skill._damage - target.stat.current.defense)
 
-	var critMaster : bool = agent.stat.current.critRate >= target.stat.current.critRate
+	var critMaster : bool = agent.stat.current.critRate > target.stat.current.dodgeRate
 	if critMaster and rng > 1.0 - agent.stat.current.critRate:
 		info.type = ActorCommons.Alteration.CRIT
 		info.value *= 2
-	elif not critMaster and rng > 1.0 - target.stat.current.critRate:
+	elif not critMaster and rng > 1.0 - target.stat.current.dodgeRate:
 		info.type = ActorCommons.Alteration.DODGE
 		info.value = 0
 	else:
 		info.type = ActorCommons.Alteration.HIT
-		info.value = int(info.value * rng)
+		info.value = ceili(info.value * rng)
 
 	info.value += min(0, target.stat.health - info.value)
-	if info.value == 0:
+	if info.value <= 0:
 		info.type = ActorCommons.Alteration.DODGE
 
 	return info
@@ -64,11 +64,11 @@ static func GetSurroundingTargets(agent : BaseAgent, skill : SkillData) -> Array
 
 	if skill._damage > 0:
 		for neighbour in neighbours[1]:
-			if IsAlive(neighbour) and IsNear(agent, neighbour, GetRange(agent, skill)):
+			if ActorCommons.IsAlive(neighbour) and IsNear(agent, neighbour, GetRange(agent, skill)):
 				targets.append(neighbour)
 	if skill._heal > 0:
 		for neighbour in neighbours[2]:
-			if IsAlive(neighbour) and IsNotSelf(agent, neighbour) and IsNear(agent, neighbour, GetRange(agent, skill)):
+			if ActorCommons.IsAlive(neighbour) and IsNotSelf(agent, neighbour) and IsNear(agent, neighbour, GetRange(agent, skill)):
 				targets.append(neighbour)
 
 	return targets
@@ -80,9 +80,6 @@ static func GetRange(agent : BaseAgent, skill : SkillData) -> int:
 	return agent.stat.current.attackRange + skill._range
 
 # Checks
-static func IsAlive(agent : BaseAgent) -> bool:
-	return agent and agent.state != ActorCommons.State.DEATH
-
 static func IsNotSelf(agent : BaseAgent, target : BaseAgent) -> bool:
 	return agent != target
 
@@ -93,7 +90,7 @@ static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:
 	return WorldAgent.GetMapFromAgent(agent) == WorldAgent.GetMapFromAgent(target)
 
 static func IsTargetable(agent : BaseAgent, target : BaseAgent, skill : SkillData) -> bool:
-	return IsNotSelf(agent, target) and IsAlive(target) and IsSameMap(agent, target) and IsNear(agent, target, GetRange(agent, skill))
+	return IsNotSelf(agent, target) and ActorCommons.IsAlive(target) and IsSameMap(agent, target) and IsNear(agent, target, GetRange(agent, skill))
 
 static func IsCasting(agent : BaseAgent, skill : SkillData = null) -> bool:
 	return (agent.currentSkillName == skill._name) if skill else DB.SkillsDB.has(agent.currentSkillName)

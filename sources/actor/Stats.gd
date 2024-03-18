@@ -12,6 +12,9 @@ var entityShape : String				= ""
 var spiritShape : String				= ""
 var morphed : bool						= false
 
+# Inactive Stats
+var baseExp : int						= 1
+
 # Attributes
 var strength : int						= 0
 var vitality : int						= 0
@@ -46,9 +49,11 @@ func RefreshEntityStats():
 	current.maxHealth		= Formula.GetMaxHealth(self)
 	current.maxMana			= Formula.GetMaxMana(self)
 	current.maxStamina		= Formula.GetMaxStamina(self)
-	current.attackStrength	= Formula.GetAttackStrength(self)
+	current.attack			= Formula.GetAttack(self)
 	current.attackRange		= Formula.GetAttackRange(self)
+	current.defense			= Formula.GetDefense(self)
 	current.critRate		= Formula.GetCritRate(self)
+	current.dodgeRate		= Formula.GetDodgeRate(self)
 	current.castAttackDelay	= Formula.GetCastAttackDelay(self)
 	current.cooldownAttackDelay = Formula.GetCooldownAttackDelay(self)
 	current.walkSpeed		= Formula.GetWalkSpeed(self)
@@ -87,6 +92,7 @@ func Init(actorNode : Actor, data : EntityData):
 	if "Experience" in stats:			experience			= stats["Experience"]
 	if "Weight" in stats:				weight				= stats["Weight"]
 	if "Spirit" in stats:				spiritShape			= stats["Spirit"]
+	if "BaseExp" in stats:				baseExp				= stats["BaseExp"]
 
 	SetAttributes(stats)
 	SetEntityStats(stats, morphed)
@@ -131,13 +137,17 @@ func AddAttribute(attribute : ActorCommons.Attribute):
 		RefreshAttributes()
 
 func Regen():
-	if SkillCommons.IsAlive(actor):
+	if ActorCommons.IsAlive(actor):
+		var bonus : float = 1.0
+		if ActorCommons.IsSitting(actor):
+			bonus *= 2.0
+		RefreshRegenStats()
 		if actor.stat.health < actor.stat.current.maxHealth:
-			SetHealth(current.regenHealth)
+			SetHealth(floori(current.regenHealth * bonus))
 		if actor.stat.mana < actor.stat.current.maxMana:
-			SetMana(current.regenMana)
+			SetMana(floori(current.regenMana * bonus))
 		if actor.stat.stamina < actor.stat.current.maxStamina:
-			SetStamina(current.regenStamina)
+			SetStamina(floori(current.regenStamina * bonus))
 
 	Callback.LoopTimer(actor.regenTimer, ActorCommons.RegenDelay)
 

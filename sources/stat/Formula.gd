@@ -2,58 +2,89 @@ extends Object
 class_name Formula
 
 #
+const attributePointsBase : int					= 10
 const attributePointPerLevel : int				= 3
+const coefMaxMana : float						= 1.5
+const coefRegenMana : float						= 0.05
+const coefMaxStamina : float					= 1.8
+const coefRegenStamina : float					= 0.7
+const coefMaxHealth : float						= 2.0
+const coefRegenHealth : float					= 0.01
+const coefDefense : float						= 2.0
+const coefAttack : float						= 2.0
+const weightSnap : float						= 0.001
 
-#
-static func GetMaxHealth(stat : ActorStats) -> int:
-	var value : float = stat.vitality
-	value += stat.base.maxHealth
-	return int(value)
+# Base formulas functions
+static func F(val) -> int:
+	return floori(val)
 
+static func Percent(val) -> int:
+	return val * 0.01
+
+static func FPercent(val) -> int:
+	return F(Percent(val))
+
+static func Fifth(val) -> int:
+	return val * 0.2
+
+static func FFifth(val) -> int:
+	return F(Fifth(val))
+
+static func Half(val) -> int:
+	return val * 0.5
+
+static func FHalf(val) -> int:
+	return F(Half(val))
+
+# Concentration related stats
 static func GetMaxMana(stat : ActorStats) -> int:
-	var value : float = stat.concentration
-	value += stat.base.maxMana
-	return int(value)
+	return stat.base.maxMana + F((stat.concentration + stat.level) * coefMaxMana)
 
-static func GetMaxStamina(stat : ActorStats) -> int:
-	var value : float = stat.endurance * 0.5
-	value += stat.concentration * 0.5
-	value += stat.base.maxStamina
-	return int(value)
-
-static func GetAttackStrength(stat : ActorStats) -> int:
-	var value : float = stat.strength * 2
-	value += stat.base.attackStrength
-	return int(value)
+static func GetRegenMana(stat : ActorStats) -> int:
+	return 1 + FFifth(stat.concentration) + FPercent(GetMaxMana(stat) * coefRegenMana)
 
 static func GetCritRate(stat : ActorStats) -> float:
-	var value : float = 1 + int(stat.concentration * 0.2)
-	value *= stat.base.critRate
-	return value
+	return Percent(stat.base.critRate + Fifth(stat.concentration + stat.level))
 
-static func GetCastAttackDelay(stat : ActorStats) -> float:
-	var value : float = stat.base.castAttackDelay
-	value -= stat.concentration / 100.0
-	return maxf(value, 0.001)
+# Endurance related stats
+static func GetMaxStamina(stat : ActorStats) -> int:
+	return stat.base.maxStamina + F((stat.endurance + stat.level) * coefMaxStamina)
+
+static func GetRegenStamina(stat : ActorStats) -> int:
+	return 1 + FFifth(stat.endurance) + FPercent(GetMaxStamina(stat) * coefRegenStamina)
 
 static func GetCooldownAttackDelay(stat : ActorStats) -> float:
-	var value : float = stat.base.cooldownAttackDelay
-	value -= stat.agility / 100.0
-	return maxf(value, 0.001)
+	return maxf(0.001, stat.base.cooldownAttackDelay - Percent(stat.endurance + stat.level))
+
+# Vitality related stats
+static func GetMaxHealth(stat : ActorStats) -> int:
+	return stat.base.maxHealth + F((stat.vitality + stat.level) * coefMaxHealth)
+
+static func GetRegenHealth(stat : ActorStats) -> int:
+	return 1 + FFifth(stat.vitality) + FPercent(GetMaxHealth(stat) * coefRegenHealth)
+
+static func GetDefense(stat : ActorStats) -> int:
+	return stat.base.defense + F(stat.vitality * coefDefense) + stat.level
+
+# Agility related stats
+static func GetCastAttackDelay(stat : ActorStats) -> float:
+	return max(0.001, stat.base.castAttackDelay - Percent(stat.agility + stat.level))
+
+static func GetDodgeRate(stat : ActorStats) -> float:
+	return Percent(stat.base.dodgeRate + Fifth(stat.agility + stat.level))
 
 static func GetAttackRange(stat : ActorStats) -> int:
-	return stat.base.attackRange
+	return stat.base.attackRange + FFifth(stat.agility)
 
+# Strength related stats
 static func GetWalkSpeed(stat : ActorStats) -> float:
-	var value : float = stat.level * 0.1
-	value += stat.base.walkSpeed
-	return value
+	return stat.base.walkSpeed + Fifth(stat.strength + stat.level)
 
 static func GetWeightCapacity(stat : ActorStats) -> float:
-	var value : float = stat.level
-	value += stat.strength * 2
-	value += stat.base.weightCapacity
-	return snappedf(value, 0.001)
+	return snappedf(stat.base.weightCapacity + Half(stat.strength + stat.level), weightSnap)
+
+static func GetAttack(stat : ActorStats) -> int:
+	return stat.base.attack + F(stat.strength * coefAttack) + stat.level
 
 #
 static func ClampHealth(stat : ActorStats) -> int:
@@ -66,34 +97,15 @@ static func ClampStamina(stat : ActorStats) -> int:
 	return clampi(stat.stamina, 0, stat.current.maxStamina)
 
 static func GetWeight(inventory : EntityInventory) -> float:
-	return inventory.calculate_weight() / 1000.0
+	return snappedf(inventory.calculate_weight() / 1000.0, weightSnap)
 
 # Animation ratios
 static func GetWalkRatio(stat : ActorStats) -> float:
 	return stat.base.walkSpeed / stat.current.walkSpeed if stat.current.walkSpeed > 0 else 1.0
 
-# Stat regen
-static func GetRegenHealth(stat : ActorStats) -> int:
-	var regen : float = stat.current.maxHealth * 0.01
-	if stat.actor.state == ActorCommons.State.SIT:
-		regen *= 2
-	return max(stat.base.regenHealth, regen)
-
-static func GetRegenMana(stat : ActorStats) -> int:
-	var regen : float = stat.current.maxMana * 0.007
-	if stat.actor.state == ActorCommons.State.SIT:
-		regen *= 2
-	return max(stat.base.regenMana, regen)
-
-static func GetRegenStamina(stat : ActorStats) -> int:
-	var regen : float = stat.current.maxStamina * 0.07
-	if stat.actor.state == ActorCommons.State.SIT:
-		regen *= 2
-	return max(stat.base.regenStamina, regen)
-
 # Experience management
 static func GetXpBonus(stat : ActorStats) -> float:
-	return GetAssignedAttributePoints(stat) * 1.2
+	return stat.baseExp * pow(stat.level, 1.7)
 
 static func ApplyXp(agent : BaseAgent):
 	var bonus : float = Formula.GetXpBonus(agent.stat)
@@ -104,7 +116,7 @@ static func ApplyXp(agent : BaseAgent):
 
 # Attribute points
 static func GetMaxAttributePoints(stat : ActorStats) -> int:
-	return stat.level * attributePointPerLevel
+	return attributePointsBase + stat.level * attributePointPerLevel
 
 static func GetAssignedAttributePoints(stat : ActorStats) -> int:
 	return stat.agility + stat.vitality + stat.strength + stat.endurance + stat.concentration
