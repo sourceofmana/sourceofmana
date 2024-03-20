@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://cophligva7rhp"
+path="res://.godot/imported/Tree x3x3.tsx-273d619967f760ebacde73d0c7a80b12.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/isles/tropical/Tree x3x3.tsx"
+dest_files=["res://.godot/imported/Tree x3x3.tsx-273d619967f760ebacde73d0c7a80b12.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

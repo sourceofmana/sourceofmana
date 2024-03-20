@@ -8,5 +8,6 @@
     "Splatyna's Gabriel Pit": {			"Path" : "splatyna/splatyna-third",},
     "Candor Cave": {					"Path" : "candor/candor-cave",},
     "Candor Arena": {					"Path" : "candor/candor-arena",},
+    "Drazil": {							"Path" : "drazil/drazil",},
     "Artis Sewer": {					"Path" : "sewer/artis-sewer",},
 }

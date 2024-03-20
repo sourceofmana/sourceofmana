@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://d1fb13koog88l"
+path="res://.godot/imported/Box x1x2.tsx-d5a200ee2e9348e68f6b74aff4dc50cc.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/isles/tropical/Box x1x2.tsx"
+dest_files=["res://.godot/imported/Box x1x2.tsx-d5a200ee2e9348e68f6b74aff4dc50cc.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
