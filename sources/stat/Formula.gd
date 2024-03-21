@@ -18,19 +18,19 @@ const weightSnap : float						= 0.001
 static func F(val) -> int:
 	return floori(val)
 
-static func Percent(val) -> int:
+static func Percent(val) -> float:
 	return val * 0.01
 
 static func FPercent(val) -> int:
 	return F(Percent(val))
 
-static func Fifth(val) -> int:
+static func Fifth(val) -> float:
 	return val * 0.2
 
 static func FFifth(val) -> int:
 	return F(Fifth(val))
 
-static func Half(val) -> int:
+static func Half(val) -> float:
 	return val * 0.5
 
 static func FHalf(val) -> int:
@@ -44,7 +44,7 @@ static func GetRegenMana(stat : ActorStats) -> int:
 	return 1 + FFifth(stat.concentration) + FPercent(GetMaxMana(stat) * coefRegenMana)
 
 static func GetCritRate(stat : ActorStats) -> float:
-	return Percent(stat.base.critRate + Fifth(stat.concentration + stat.level))
+	return stat.base.critRate + Percent(FFifth(stat.concentration + stat.level))
 
 # Endurance related stats
 static func GetMaxStamina(stat : ActorStats) -> int:
@@ -71,7 +71,7 @@ static func GetCastAttackDelay(stat : ActorStats) -> float:
 	return max(0.001, stat.base.castAttackDelay - Percent(stat.agility + stat.level))
 
 static func GetDodgeRate(stat : ActorStats) -> float:
-	return Percent(stat.base.dodgeRate + Fifth(stat.agility + stat.level))
+	return stat.base.dodgeRate + Percent(FFifth(stat.agility + stat.level))
 
 static func GetAttackRange(stat : ActorStats) -> int:
 	return stat.base.attackRange + FFifth(stat.agility)

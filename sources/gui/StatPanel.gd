@@ -108,13 +108,13 @@ func RefreshEntityStats(entity : BaseEntity):
 	if not entity:
 		pass
 
-	lAtk.set_text(GetPercentString(entity.stat.current.attack, entity.stat.base.attack))
-	lDef.set_text(GetPercentString(entity.stat.current.defense, entity.stat.base.defense))
-	lAtkRange.set_text(GetPercentString(entity.stat.current.attackRange, entity.stat.base.attackRange))
-	lCastDelay.set_text(GetPercentString(entity.stat.base.castAttackDelay, entity.stat.current.castAttackDelay))
-	lCooldownDelay.set_text(GetPercentString(entity.stat.base.cooldownAttackDelay, entity.stat.current.cooldownAttackDelay))
-	lCritRate.set_text(GetPercentString(entity.stat.current.critRate, entity.stat.base.critRate))
-	lDodgeRate.set_text(GetPercentString(entity.stat.current.dodgeRate, entity.stat.base.dodgeRate))
+	lAtk.set_text(str(entity.stat.current.attack))
+	lDef.set_text(str(entity.stat.current.defense))
+	lAtkRange.set_text(str(entity.stat.current.attackRange))
+	lCastDelay.set_text("%0.2fs" % entity.stat.current.castAttackDelay)
+	lCooldownDelay.set_text("%0.2fs" % entity.stat.current.cooldownAttackDelay)
+	lCritRate.set_text("%.d%%" % (entity.stat.current.critRate * 100.0))
+	lDodgeRate.set_text("%.d%%" % (entity.stat.current.dodgeRate * 100.0))
 	lWalkSpeed.set_text(GetPercentString(entity.stat.current.walkSpeed, entity.stat.base.walkSpeed))
 
 #
