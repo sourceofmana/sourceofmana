@@ -60,8 +60,9 @@ func ToggleChatNewLine():
 #
 func EnterLoginMenu():
 	menu.SetItemsVisible(false)
-
 	stats.set_visible(false)
+	statWindow.set_visible(false)
+
 	notificationLabel.set_visible(false)
 	menu.set_visible(false)
 	shortcuts.set_visible(false)
