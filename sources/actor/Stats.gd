@@ -146,7 +146,7 @@ func Regen():
 			SetHealth(floori(current.regenHealth * bonus))
 		if actor.stat.mana < actor.stat.current.maxMana:
 			SetMana(floori(current.regenMana * bonus))
-		if actor.stat.stamina < actor.stat.current.maxStamina:
+		if not ActorCommons.IsAttacking(actor) and actor.stat.stamina < actor.stat.current.maxStamina:
 			SetStamina(floori(current.regenStamina * bonus))
 
 	Callback.LoopTimer(actor.regenTimer, ActorCommons.RegenDelay)

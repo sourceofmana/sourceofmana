@@ -97,8 +97,11 @@ static func GetStateName(state : State):
 static func IsAlive(agent : Actor) -> bool:
 	return agent and agent.state != State.DEATH
 
+static func IsAttacking(agent : Actor) -> bool:
+	return agent and agent.state == State.ATTACK
+
 static func IsSitting(agent : Actor) -> bool:
-	return agent and agent.state != State.SIT
+	return agent and agent.state == State.SIT
 
 # Visual
 const AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
