@@ -9,7 +9,7 @@ var lastMove : Vector2 = Vector2.ZERO
 
 #
 func GetMove() -> Vector2:
-	if leftStickPressed:
+	if leftStickPressed and DefaultStickPosition.x != 0.0 and DefaultStickPosition.y != 0.0:
 		var move : Vector2 = DirectionButton.get_position() / DefaultStickPosition - Vector2.ONE
 		lastMove = move
 		return move
