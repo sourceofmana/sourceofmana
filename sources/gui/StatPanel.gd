@@ -1,37 +1,37 @@
 extends WindowPanel
 
-@onready var lName : Label						= $Margin/Layout/Stats/Information/Name
-@onready var tGender : TextureRect				= $Margin/Layout/Stats/Information/Gender
-@onready var lLevel : Label						= $Margin/Layout/Stats/Information/Level
-@onready var lSpirit : Label					= $Margin/Layout/Stats/Information/Spirit
+@onready var lName : Label						= $Scroll/Margin/Layout/Stats/Information/Name
+@onready var tGender : TextureRect				= $Scroll/Margin/Layout/Stats/Information/Gender
+@onready var lLevel : Label						= $Scroll/Margin/Layout/Stats/Information/Level
+@onready var lSpirit : Label					= $Scroll/Margin/Layout/Stats/Information/Spirit
 
-@onready var pExperience : Control				= $Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox/ProgressBar
-@onready var pHealth : Control					= $Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox/ProgressBar
-@onready var pMana : Control					= $Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox/ProgressBar
-@onready var pStamina : Control					= $Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox/ProgressBar
-@onready var pWeight : Control					= $Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox/ProgressBar
+@onready var pExperience : Control				= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox/ProgressBar
+@onready var pHealth : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox/ProgressBar
+@onready var pMana : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox/ProgressBar
+@onready var pStamina : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox/ProgressBar
+@onready var pWeight : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox/ProgressBar
 
-@onready var lStrength : Label					= $Margin/Layout/Stats/StatBox/StrengthBox/Current
-@onready var lVitality : Label					= $Margin/Layout/Stats/StatBox/VitalityBox/Current
-@onready var lAgility : Label					= $Margin/Layout/Stats/StatBox/AgilityBox/Current
-@onready var lEndurance : Label					= $Margin/Layout/Stats/StatBox/EnduranceBox/Current
-@onready var lConcentration : Label				= $Margin/Layout/Stats/StatBox/ConcentrationBox/Current
-@onready var lAvailablePoints : Label			= $Margin/Layout/Stats/StatBox/AvailablePointsBox/Value
+@onready var lStrength : Label					= $Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Current
+@onready var lVitality : Label					= $Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Current
+@onready var lAgility : Label					= $Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Current
+@onready var lEndurance : Label					= $Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Current
+@onready var lConcentration : Label				= $Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Current
+@onready var lAvailablePoints : Label			= $Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/Value
 
-@onready var bStrength : Button					= $Margin/Layout/Stats/StatBox/StrengthBox/Button
-@onready var bVitality : Button					= $Margin/Layout/Stats/StatBox/VitalityBox/Button
-@onready var bAgility : Button					= $Margin/Layout/Stats/StatBox/AgilityBox/Button
-@onready var bEndurance : Button				= $Margin/Layout/Stats/StatBox/EnduranceBox/Button
-@onready var bConcentration : Button			= $Margin/Layout/Stats/StatBox/ConcentrationBox/Button
+@onready var bStrength : Button					= $Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Button
+@onready var bVitality : Button					= $Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Button
+@onready var bAgility : Button					= $Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Button
+@onready var bEndurance : Button				= $Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Button
+@onready var bConcentration : Button			= $Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Button
 
-@onready var lAtk : Label						= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox/Value
-@onready var lDef : Label						= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox/Value
-@onready var lAtkRange : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox/Value
-@onready var lCastDelay : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox/Value
-@onready var lCooldownDelay : Label				= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox/Value
-@onready var lCritRate : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox/Value
-@onready var lDodgeRate : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox/Value
-@onready var lWalkSpeed : Label					= $Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox/Value
+@onready var lAtk : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox/Value
+@onready var lDef : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox/Value
+@onready var lAtkRange : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox/Value
+@onready var lCastDelay : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox/Value
+@onready var lCooldownDelay : Label				= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox/Value
+@onready var lCritRate : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox/Value
+@onready var lDodgeRate : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox/Value
+@onready var lWalkSpeed : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox/Value
 
 #
 func IncreaseStrength():
