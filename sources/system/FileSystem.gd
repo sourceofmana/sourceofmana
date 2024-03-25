@@ -165,8 +165,14 @@ static func LoadEntityComponent(type : String, instantiate : bool = true) -> Nod
 	var fullPath : String = Path.EntityComponent + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
-static func LoadEntityVariant(type : String, instantiate : bool = true) -> BaseEntity:
-	var fullPath : String = Path.EntityVariant + type + Path.SceneExt
+static func LoadEntityVariant(type : ActorCommons.Type, instantiate : bool = true) -> BaseEntity:
+	var entityPreset : String = ""
+	match type:
+		ActorCommons.Type.PLAYER: entityPreset = "Player"
+		ActorCommons.Type.MONSTER: entityPreset = "Monster"
+		ActorCommons.Type.NPC: entityPreset = "Npc"
+		_: Util.Assert(false, "Trying to create an entity with a wrong type: " + str(type))
+	var fullPath : String = Path.EntityVariant + entityPreset + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
 # GUI
@@ -187,6 +193,11 @@ static func LoadMusic(path : String) -> Resource:
 		Util.PrintLog("Music", "Loading file: " + fullPath)
 
 	return musicFile
+
+# Cell
+static func LoadCell(path : String) -> Cell:
+	var fullPath : String = Path.CellPst + path + Path.RscExt
+	return LoadResource(fullPath, false)
 
 # Generic texture loading
 static func LoadGfx(path : String) -> Resource:

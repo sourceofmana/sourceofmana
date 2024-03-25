@@ -10,35 +10,38 @@ static func FindEntityReference(entityID : String) -> EntityData:
 			break
 	return ref
 
-static func CreateGenericEntity(actor : Actor, entityID : String, entityName : String = ""):
+static func CreateGenericEntity(actor : Actor, entityType : ActorCommons.Type, entityID : String, entityName : String = ""):
 	var template : EntityData = FindEntityReference(entityID)
 	Util.Assert(template != null and actor != null, "Could not create the entity: %s" % entityID)
 	if template and actor:
+		actor.type = entityType
 		actor.stat.Init(actor, template)
 		actor.SetData(template)
 		actor.entityName = entityID if entityName.length() == 0 else entityName
 
 static func CreateEntity(entityType : ActorCommons.Type, entityID : String, entityName : String = "") -> BaseEntity:
-	var entityPreset : String = ""
-	match entityType:
-		ActorCommons.Type.PLAYER: entityPreset = "Player"
-		ActorCommons.Type.MONSTER: entityPreset = "Monster"
-		ActorCommons.Type.NPC: entityPreset = "Npc"
-		_: Util.Assert(false, "Trying to create an entity with a wrong type: " + str(entityType))
-
-	var entityInstance : BaseEntity = FileSystem.LoadEntityVariant(entityPreset)
-	CreateGenericEntity(entityInstance, entityID, entityName)
+	var entityInstance : BaseEntity = FileSystem.LoadEntityVariant(entityType)
+	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
 	return entityInstance
 
-static func CreateAgent(entityType : String, entityID : String, entityName : String = "") -> BaseAgent:
+static func CreateAgent(entityTypeStr : String, entityID : String, entityName : String = "") -> BaseAgent:
 	var entityInstance : BaseAgent = null
-	match entityType:
-		"Npc": entityInstance = NpcAgent.new()
-		"Trigger": entityInstance = NpcAgent.new()
-		"Monster": entityInstance = MonsterAgent.new()
-		"Player": entityInstance = PlayerAgent.new()
-		_: Util.Assert(false, "Trying to create an agent with a wrong type: " + entityType)
-	CreateGenericEntity(entityInstance, entityID, entityName)
+	var entityType : ActorCommons.Type = ActorCommons.Type.NPC
+	match entityTypeStr:
+		"Npc":
+			entityInstance = NpcAgent.new()
+			entityType = ActorCommons.Type.NPC
+		"Trigger":
+			entityInstance = NpcAgent.new()
+			entityType = ActorCommons.Type.NPC
+		"Monster":
+			entityInstance = MonsterAgent.new()
+			entityType = ActorCommons.Type.MONSTER
+		"Player":
+			entityInstance = PlayerAgent.new()
+			entityType = ActorCommons.Type.PLAYER
+		_: Util.Assert(false, "Trying to create an agent with a wrong type: " + entityTypeStr)
+	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
 	return entityInstance
 
 # Map

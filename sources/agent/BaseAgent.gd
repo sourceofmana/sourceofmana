@@ -179,7 +179,7 @@ func GetMostValuableAttacker() -> BaseAgent:
 func GetDamageRatio(attacker : BaseAgent) -> float:
 	if attacker != null and not attacker.is_queued_for_deletion() and attackers.has(attacker):
 		if attackers[attacker][1] > Time.get_ticks_msec() - ActorCommons.AttackTimestampLimit and stat.current.maxHealth > 0:
-			return float(attackers[attacker][0]) / float(stat.current.maxHealth)
+			return float(attackers[attacker][0]) / float(stat.current.maxHealth) if attackers[attacker][0] >= stat.current.maxHealth else 1.0
 	return 0.0
 
 func Killed():

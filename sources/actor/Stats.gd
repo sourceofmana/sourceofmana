@@ -72,6 +72,8 @@ func SetAttributes(attributes : Dictionary):
 	for attribute in attributes:
 		if attribute in self:
 			self[attribute] = attributes[attribute]
+	if actor.type == ActorCommons.Type.MONSTER:
+		FillRandomAttributes()
 	RefreshAttributes()
 
 func SetEntityStats(entityStats : Dictionary, isMorphed : bool):
