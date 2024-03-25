@@ -5,7 +5,6 @@
 		"Gender": "Male",
 		"Hairstyle": "Bald",
 		"NavigationAgent": "PlayerAgent",
-		"Camera": "Default",
 		"Collision": "Medium",
 		"DisplayName": true,
 		"Stat": {
