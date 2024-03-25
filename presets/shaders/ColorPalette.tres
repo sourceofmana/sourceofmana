@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://blf3myvr126kw"]
+
+[ext_resource type="Shader" path="res://sources/shaders/ColorPalette.gdshader" id="1_lf2b5"]
+
+[resource]
+shader = ExtResource("1_lf2b5")
+shader_parameter/num_colors = 1

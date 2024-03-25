@@ -38,7 +38,8 @@ func LoadSprite(slot : ActorCommons.Slot, sprite : Sprite2D, customTexturePath :
 		animation.add_child.call_deferred(sprite)
 
 	sprites[slot] = sprite
-	sprites[slot].material = materialResource
+	if materialResource:
+		sprites[slot].material = materialResource
 
 	if customTexturePath.length() > 0:
 		sprite.texture = FileSystem.LoadGfx(customTexturePath)
