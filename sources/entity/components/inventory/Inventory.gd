@@ -11,7 +11,7 @@ func _init():
 	# fill inventory
 	pass
 
-func add_item(type: BaseItem, count: int = 1):
+func add_item(type: Cell, count: int = 1):
 	# add to existing item "pile" if it is stackable
 	if type.stackable:
 		for item in items:
@@ -41,7 +41,7 @@ func use_item(item: InventoryItem):
 
 	if inv_item:
 		inv_item.type.use()
-		if inv_item.type is FoodItem:
+		if inv_item.type is Item:
 			_remove_one_item(inv_item)
 
 func _remove_one_item(item: InventoryItem):

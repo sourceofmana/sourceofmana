@@ -1,7 +1,7 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dceoi6qxtd7sg"]
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://dceoi6qxtd7sg"]
 
 [ext_resource type="Texture2D" uid="uid://ipj5b4ar8xuv" path="res://data/graphics/items/usable/apple.png" id="1_y6bh1"]
-[ext_resource type="Script" path="res://sources/resource_types/FoodItem.gd" id="1_ywd5u"]
+[ext_resource type="Script" path="res://sources/cell/Item.gd" id="1_ywd5u"]
 
 [resource]
 script = ExtResource("1_ywd5u")
@@ -9,5 +9,7 @@ HealthPoints = 6
 name = "Apple"
 description = "An apple a day keeps the doctor away."
 icon = ExtResource("1_y6bh1")
+dyeCMD = PackedColorArray()
 stackable = true
 weight = 140.0
+usable = false

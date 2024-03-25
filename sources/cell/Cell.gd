@@ -1,18 +1,15 @@
 extends Resource
-class_name BaseItem
+class_name Cell
 
-
-@export_category("Item Metadata")
 @export var name : String
-@export_multiline var description : String
-
+@export var description : String
 @export var icon : Texture2D
-# later: @export var dyeCMDShaderSteps : 
+@export var dyeCMD : PackedColorArray
 
 @export_category("Item Properties")
 @export var stackable : bool
-# weight in grams
 @export var weight : float = 1.0
+@export var usable : bool
 
 
 func use():
