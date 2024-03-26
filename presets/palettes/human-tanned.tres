@@ -1,9 +1,0 @@
-[gd_resource type="GradientTexture1D" load_steps=2 format=3 uid="uid://va1515cl5oeh"]
-
-[sub_resource type="Gradient" id="Gradient_aur1d"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1)
-colors = PackedColorArray(0.352941, 0.2, 0.176471, 1, 0.494118, 0.32549, 0.203922, 1, 0.580392, 0.415686, 0.258824, 1, 0.639216, 0.490196, 0.345098, 1, 0.713726, 0.576471, 0.403922, 1, 0.803922, 0.65098, 0.466667, 1, 0.890196, 0.729412, 0.517647, 1, 0.917647, 0.792157, 0.564706, 1, 0.960784, 0.862745, 0.713726, 1, 0.976471, 0.913725, 0.764706, 1, 0.992157, 0.972549, 0.894118, 1)
-
-[resource]
-gradient = SubResource("Gradient_aur1d")
