@@ -1,2 +1,0 @@
-extends BaseEntity
-class_name NpcEntity

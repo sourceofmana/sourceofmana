@@ -61,16 +61,16 @@ func LoadMapNode(mapName : String):
 func RemoveChildren():
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove children")
 	for entity in tilemapNode.get_children():
-		RemoveChild(entity as BaseEntity)
+		RemoveChild(entity as Entity)
 
-func RemoveChild(entity : BaseEntity):
+func RemoveChild(entity : Entity):
 	if entity:
 		if tilemapNode:
 			tilemapNode.remove_child(entity)
-		if not entity is PlayerEntity:
+		if not entity.type == ActorCommons.Type.PLAYER:
 			entity.queue_free()
 
-func AddChild(entity : BaseEntity):
+func AddChild(entity : Entity):
 	Util.Assert(tilemapNode != null, "Current tilemap not found, could not add a new child entity")
 	if tilemapNode:
 		tilemapNode.add_child(entity)
@@ -78,7 +78,7 @@ func AddChild(entity : BaseEntity):
 #
 func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, entityName : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastName : String):
 	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and entityName == Launcher.FSM.playerName
-	var entity : BaseEntity = null
+	var entity : Entity = null
 	if tilemapNode:
 		if isLocalPlayer and Launcher.Player:
 			entity = Launcher.Player
@@ -92,7 +92,7 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 					Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
-		entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastName)
+		Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastName])
 		AddChild(entity)
 		Entities.Add(entity, agentID)
 
@@ -100,17 +100,17 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 			emit_signal('PlayerWarped')
 
 func RemoveEntity(agentID : int):
-	var entity : BaseEntity = Entities.Get(agentID)
+	var entity : Entity = Entities.Get(agentID)
 	if entity:
 		RemoveChild(entity)
 		Entities.Erase(agentID)
 
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastName : String):
-	var entity : BaseEntity = Entities.Get(agentID)
+	var entity : Entity = Entities.Get(agentID)
 	if entity:
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastName)
 
 func EmotePlayer(agentID : int, emoteID : int):
-	var entity : BaseEntity = Entities.Get(agentID)
+	var entity : Entity = Entities.Get(agentID)
 	if entity && entity.get_parent() && entity.interactive:
 		entity.interactive.DisplayEmote(str(emoteID))

@@ -322,20 +322,20 @@ _data = {
 
 [node name="Splatyna" type="Node2D"]
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("1")
 offset = Vector2(0, -28)
 hframes = 6
 vframes = 8
 
 [node name="Animation" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprite")
+root_node = NodePath("../Body")
 libraries = {
 "": SubResource("AnimationLibrary_iko4k")
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_kn3uj")]
-root_node = NodePath("../../Sprite")
+root_node = NodePath("../../Body")
 libraries = {
 "": SubResource("AnimationLibrary_iko4k")
 }

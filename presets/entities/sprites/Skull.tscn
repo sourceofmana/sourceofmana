@@ -350,20 +350,20 @@ _data = {
 
 [node name="Skull" type="Node2D"]
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("1_55yx2")
 offset = Vector2(0, -30)
 hframes = 10
 vframes = 4
 
 [node name="Animation" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprite")
+root_node = NodePath("../Body")
 libraries = {
 "": SubResource("AnimationLibrary_iko4k")
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_323v4")]
-root_node = NodePath("../../Sprite")
+root_node = NodePath("../../Body")
 libraries = {
 "": SubResource("AnimationLibrary_iko4k")
 }

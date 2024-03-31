@@ -41,7 +41,7 @@ func OnPlayerEnterGame():
 			Launcher.Player.inventory.add_item(FileSystem.LoadCell("items/hungrys_key"), 2)
 
 #
-func UpdateNavLine(entity : BaseEntity):
+func UpdateNavLine(entity : Entity):
 	if navLineDebug:
 		if entity and entity.agent:
 			if not entity.has_node("NavigationLine"):
@@ -59,7 +59,7 @@ func UpdateNavLine(entity : BaseEntity):
 			else:
 				Util.Assert(false, "Navigation Line2D can't be null, something went wrong")
 
-func ClearNavLine(entity : BaseEntity):
+func ClearNavLine(entity : Entity):
 	if entity:
 		if entity.has_node("NavigationLine"):
 			var entityNavLine : Line2D = entity.get_node("NavigationLine")
@@ -71,3 +71,10 @@ func _post_launch():
 		Launcher.FSM.enter_game.connect(OnPlayerEnterGame)
 
 	isInitialized = true
+
+func Refresh(_delta : float):
+	if Launcher.Player:
+		if correctPos:
+			correctPos.position = Launcher.Player.position + Launcher.Player.entityPosOffset
+		if wrongPos:
+			wrongPos.position = Launcher.Player.position

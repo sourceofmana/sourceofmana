@@ -165,14 +165,8 @@ static func LoadEntityComponent(type : String, instantiate : bool = true) -> Nod
 	var fullPath : String = Path.EntityComponent + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
-static func LoadEntityVariant(type : ActorCommons.Type, instantiate : bool = true) -> BaseEntity:
-	var entityPreset : String = ""
-	match type:
-		ActorCommons.Type.PLAYER: entityPreset = "Player"
-		ActorCommons.Type.MONSTER: entityPreset = "Monster"
-		ActorCommons.Type.NPC: entityPreset = "Npc"
-		_: Util.Assert(false, "Trying to create an entity with a wrong type: " + str(type))
-	var fullPath : String = Path.EntityVariant + entityPreset + Path.SceneExt
+static func LoadEntityVariant(instantiate : bool = true) -> Entity:
+	var fullPath : String = Path.EntityPst + "Entity" + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
 # GUI

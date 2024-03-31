@@ -1,16 +1,15 @@
-extends Node2D
+extends CanvasGroup
 class_name EntityVisual
 
 #
 signal spriteOffsetUpdate
 
 #
-var entity : BaseEntity						= null
-var sprites : Array[Sprite2D]				= []
+var collision : CollisionShape2D			= null
 var animation : AnimationPlayer				= null
 var animationTree : AnimationTree			= null
+var sprites : Array[Sprite2D]				= []
 
-var collision : CollisionShape2D			= null
 var previousOrientation : Vector2			= Vector2.ZERO
 var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
 
@@ -21,70 +20,53 @@ var skillCastName : String					= ""
 var attackAnimLength : float				= 1.0
 
 #
-func SetMainMaterial(materialResource : Resource):
-	Util.Assert(sprites[ActorCommons.Slot.BODY] != null, "Trying to assign a shader material to a non-existant texture")
-	if sprites[ActorCommons.Slot.BODY]:
-		sprites[ActorCommons.Slot.BODY].material = materialResource
-
 func LoadSprite(slot : ActorCommons.Slot, sprite : Sprite2D, customTexturePath : String = ""):
-	var materialResource : Resource = null
 	if sprites[slot]:
-		materialResource = sprites[slot].material
 		sprites[slot].queue_free()
 		sprites[slot] = null
 
-	if not sprite:
-		sprite = Sprite2D.new()
-		animation.add_child.call_deferred(sprite)
-
 	sprites[slot] = sprite
-	if materialResource:
-		sprites[slot].material = materialResource
 
 	if customTexturePath.length() > 0:
 		sprite.texture = FileSystem.LoadGfx(customTexturePath)
 
 func ResetData():
+	for child in get_children():
+		child.queue_free()
+	for spriteID in sprites.size():
+		sprites[spriteID] = null
 	if collision:
 		collision.queue_free()
 		collision = null
-	if animationTree:
-		animationTree = null
-	if animation:
-		animation.queue_free()
-		animation = null
-	for spriteID in sprites.size():
-		if sprites[spriteID]:
-			sprites[spriteID].queue_free()
-			sprites[spriteID] = null
-	sprites.resize(ActorCommons.Slot.COUNT)
 
 func LoadData(data : EntityData):
 	ResetData()
 
 	# Collision
-	if data._collision:
+	if data._collision and get_parent().type == ActorCommons.Type.PLAYER:
 		collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
 		if collision:
-			entity.add_child.call_deferred(collision)
+			get_parent().add_child(collision)
 
-	# Animation
+	# Sprite Preset
 	if data._ethnicity:
 		var preset : Node2D = FileSystem.LoadEntitySprite(data._ethnicity)
-		entity.add_child(preset)
-		animation = preset.get_node("Animation")
-		if animation:
-			# Animation Tree
-			Util.Assert(animation.has_node("AnimationTree"), "No animation tree available for " + entity.get_name())
-			if animation.has_node("AnimationTree"):
-				animationTree = animation.get_node("AnimationTree")
-				if animationTree:
-					animationTree.set_active(true)
+		if preset:
+			add_child(preset)
 
-		# Body Sprite
-		Util.Assert(preset.has_node("Sprite"), "No sprite available for " + entity.get_name())
-		if preset.has_node("Sprite"):
-			var sprite : Sprite2D = preset.get_node("Sprite")
+		# Animation
+		if preset and preset.has_node("Animation"):
+			animation = preset.get_node("Animation")
+
+		# Animation Tree
+		if animation and animation.has_node("AnimationTree"):
+			animationTree = animation.get_node("AnimationTree")
+			if animationTree:
+				animationTree.set_active(true)
+
+		# Sprites
+		if preset and preset.has_node("Body"):
+			var sprite : Sprite2D = preset.get_node("Body")
 			if sprite:
 				LoadSprite(ActorCommons.Slot.BODY, sprite, data._customTexture)
 
@@ -108,16 +90,16 @@ func LoadAnimationPaths():
 				timeScalePaths[i] = timeScale
 
 func UpdateScale():
-	if not entity or not animationTree:
+	if not animationTree:
 		return
 
 	if ActorCommons.State.WALK in timeScalePaths:
-		animationTree[timeScalePaths[ActorCommons.State.WALK]] = Formula.GetWalkRatio(entity.stat)
-	if ActorCommons.State.ATTACK in timeScalePaths and entity.stat.current.castAttackDelay > 0:
-		animationTree[timeScalePaths[ActorCommons.State.ATTACK]] = attackAnimLength / entity.stat.current.castAttackDelay
+		animationTree[timeScalePaths[ActorCommons.State.WALK]] = Formula.GetWalkRatio(get_parent().stat)
+	if ActorCommons.State.ATTACK in timeScalePaths and get_parent().stat.current.castAttackDelay > 0:
+		animationTree[timeScalePaths[ActorCommons.State.ATTACK]] = attackAnimLength / get_parent().stat.current.castAttackDelay
 
 func ResetAnimationValue():
-	if not entity or not animationTree:
+	if not animationTree:
 		return
 
 	LoadAnimationPaths()
@@ -132,22 +114,21 @@ func SyncPlayerOffset():
 	spriteOffsetUpdate.emit(spriteOffset)
 
 #
-func Init(parentEntity : BaseEntity, data : EntityData):
-	entity = parentEntity
-
-	if entity and entity.stat:
-		Callback.PlugCallback(entity.stat.entity_stats_updated, self.UpdateScale)
+func Init(data : EntityData):
+	Callback.PlugCallback(get_parent().stat.entity_stats_updated, self.UpdateScale)
+	sprites.resize(ActorCommons.Slot.COUNT)
 
 	LoadData(data)
 	SyncPlayerOffset()
 
-func Refresh(_delta: float):
-	if not animationTree or not entity:
+func _process(_delta):
+	if not animationTree:
 		return
 
-	var currentVelocity = entity.velocity
-	var newOrientation : Vector2 = currentVelocity.normalized() if currentVelocity.length_squared() > 1 else entity.entityOrientation
-	var newState : ActorCommons.State = ActorCommons.State.WALK if currentVelocity.length_squared() > 1 else entity.state
+	var currentVelocity : Vector2 = get_parent().velocity
+	var isMoving : bool = currentVelocity.length_squared() > 1
+	var newOrientation : Vector2 = currentVelocity.normalized() if isMoving else get_parent().entityOrientation
+	var newState : ActorCommons.State = ActorCommons.State.WALK if isMoving else get_parent().state
 
 	if previousState != newState or previousOrientation != newOrientation:
 		previousState = newState

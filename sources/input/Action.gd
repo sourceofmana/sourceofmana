@@ -54,7 +54,7 @@ func _unhandled_input(_event):
 			clickTimer.start()
 
 func _physics_process(_deltaTime : float):
-	if Launcher.Player and Launcher.Network:
+	if Launcher.Player:
 		var move : Vector2 = GetMove()
 		if move != Vector2.ZERO:
 			if clickTimer.get_time_left() > 0:

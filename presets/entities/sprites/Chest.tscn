@@ -153,7 +153,7 @@ _data = {
 
 [node name="Chest" type="Node2D"]
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="."]
 position = Vector2(0, -4)
 texture = ExtResource("1_ql3k7")
 offset = Vector2(0, -16)
@@ -161,9 +161,13 @@ hframes = 4
 frame = 3
 
 [node name="Animation" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprite")
+root_node = NodePath("../Body")
 libraries = {
 "": SubResource("AnimationLibrary_gf7hs")
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_dex3v")]
+root_node = NodePath("../../Body")
+libraries = {
+"": SubResource("AnimationLibrary_gf7hs")
+}

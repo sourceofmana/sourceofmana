@@ -50,7 +50,7 @@ func IncreaseConcentration():
 	Launcher.Network.AddAttribute(ActorCommons.Attribute.CONCENTRATION)
 
 #
-func Init(entity : BaseEntity):
+func Init(entity : Entity):
 	Callback.PlugCallback(entity.stat.active_stats_updated, RefreshActiveStats.bind(entity))
 	Callback.PlugCallback(entity.stat.attributes_updated, RefreshAttributes.bind(entity))
 	Callback.PlugCallback(entity.stat.entity_stats_updated, RefreshEntityStats.bind(entity))
@@ -59,7 +59,7 @@ func Init(entity : BaseEntity):
 	RefreshAttributes(entity)
 	RefreshEntityStats(entity)
 
-func RefreshGender(entity : BaseEntity):
+func RefreshGender(entity : Entity):
 	var texture : Texture2D = null
 	match entity.gender:
 		ActorCommons.Gender.MALE:
@@ -70,7 +70,7 @@ func RefreshGender(entity : BaseEntity):
 			texture = ActorCommons.GenderNonBinaryTexture
 	tGender.set_texture(texture)
 
-func RefreshActiveStats(entity : BaseEntity):
+func RefreshActiveStats(entity : Entity):
 	if not entity:
 		pass
 
@@ -85,7 +85,7 @@ func RefreshActiveStats(entity : BaseEntity):
 	pStamina.SetStat(entity.stat.stamina, entity.stat.current.maxStamina)
 	pWeight.SetStat(entity.stat.weight, entity.stat.current.weightCapacity)
 
-func RefreshAttributes(entity : BaseEntity):
+func RefreshAttributes(entity : Entity):
 	if not entity:
 		pass
 
@@ -104,7 +104,7 @@ func RefreshAttributes(entity : BaseEntity):
 	bEndurance.set_disabled(availablePoints <= 0 or entity.stat.endurance >= ActorCommons.MaxPointPerAttributes)
 	bConcentration.set_disabled(availablePoints <= 0 or entity.stat.concentration >= ActorCommons.MaxPointPerAttributes)
 
-func RefreshEntityStats(entity : BaseEntity):
+func RefreshEntityStats(entity : Entity):
 	if not entity:
 		pass
 

@@ -19,7 +19,7 @@ func SetPosition(startPos : Vector2, floorPos : Vector2):
 	position = startPos
 	floorPosition = floorPos.y
 
-func SetValue(dealer : BaseEntity, value : int, alteration : ActorCommons.Alteration):
+func SetValue(dealer : Entity, value : int, alteration : ActorCommons.Alteration):
 	var hue : float = 0.0
 	match alteration:
 		ActorCommons.Alteration.CRIT:
@@ -31,7 +31,7 @@ func SetValue(dealer : BaseEntity, value : int, alteration : ActorCommons.Altera
 		ActorCommons.Alteration.HIT:
 			if dealer == Launcher.Player:
 				hue = ActorCommons.LocalAttackColor
-			elif dealer is PlayerEntity:
+			elif dealer.type == ActorCommons.Type.PLAYER:
 				hue = ActorCommons.PlayerAttackColor
 			else:
 				hue = ActorCommons.MonsterAttackColor

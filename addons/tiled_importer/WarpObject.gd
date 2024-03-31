@@ -15,11 +15,11 @@ static var WarpFx : PackedScene					= preload("res://presets/effects/particles/W
 
 #
 func bodyEntered(body : CollisionObject2D):
-	if body and body is PlayerEntity and body == Launcher.Player:
+	if body and body == Launcher.Player:
 		isPlayerEntered = true
 
 func bodyExited(body : CollisionObject2D):
-	if body and body is PlayerEntity and body == Launcher.Player:
+	if body and body == Launcher.Player:
 		isPlayerEntered = false
 
 func _physics_process(_delta):

@@ -19,7 +19,7 @@ var World : ServiceBase				= null
 var Network : ServiceBase			= null
 
 # Accessors
-var Player : PlayerEntity			= null
+var Player : Entity					= null
 
 
 #

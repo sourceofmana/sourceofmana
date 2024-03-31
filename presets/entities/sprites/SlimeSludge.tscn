@@ -445,7 +445,7 @@ _data = {
 
 [node name="Slime" type="Node2D"]
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("1_vcu2t")
 offset = Vector2(0, -12)
 hframes = 9
@@ -465,13 +465,13 @@ position = Vector2(0, -15)
 radius = 96
 
 [node name="Animation" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprite")
+root_node = NodePath("../Body")
 libraries = {
 "": SubResource("AnimationLibrary_iko4k")
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("3_mg0gu")]
-root_node = NodePath("../../Sprite")
+root_node = NodePath("../../Body")
 libraries = {
 "": SubResource("AnimationLibrary_iko4k")
 }

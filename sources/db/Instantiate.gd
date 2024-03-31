@@ -15,12 +15,12 @@ static func CreateGenericEntity(actor : Actor, entityType : ActorCommons.Type, e
 	Util.Assert(template != null and actor != null, "Could not create the entity: %s" % entityID)
 	if template and actor:
 		actor.type = entityType
-		actor.stat.Init(actor, template)
-		actor.SetData(template)
 		actor.entityName = entityID if entityName.length() == 0 else entityName
+		actor.stat.Init(actor, template)
+		Callback.PlugCallback(actor.ready, actor.SetData, [template])
 
-static func CreateEntity(entityType : ActorCommons.Type, entityID : String, entityName : String = "") -> BaseEntity:
-	var entityInstance : BaseEntity = FileSystem.LoadEntityVariant(entityType)
+static func CreateEntity(entityType : ActorCommons.Type, entityID : String, entityName : String = "") -> Entity:
+	var entityInstance : Entity = FileSystem.LoadEntityVariant()
 	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
 	return entityInstance
 

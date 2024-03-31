@@ -23,7 +23,6 @@ const EffectsPst : String				= Pst + "effects/"
 const GuiPst : String					= Pst + "gui/"
 const EntityPst : String				= Pst + "entities/"
 const CellPst : String					= Pst + "cells/"
-const EntityVariant : String			= EntityPst + "variants/"
 const EntityComponent : String			= EntityPst + "components/"
 const EntitySprite : String				= EntityPst + "sprites/"
 

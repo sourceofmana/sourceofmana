@@ -8,7 +8,7 @@ class_name EntityInteractive
 @onready var healthBar : TextureProgressBar	= $UnderBox/HealthBar
 @onready var nameLabel : Label				= $UnderBox/Name
 
-@onready var entity : BaseEntity			= get_parent()
+@onready var entity : Entity				= get_parent()
 
 #
 func DisplayEmote(emoteID : String):
@@ -36,7 +36,7 @@ func DisplayLevelUp():
 		add_child(particle)
 
 #
-func DisplayCast(emitter : BaseEntity, skillName : String):
+func DisplayCast(emitter : Entity, skillName : String):
 	if DB.SkillsDB.has(skillName):
 		var skill : SkillData = DB.SkillsDB[skillName]
 		if skill._castPreset:
@@ -52,7 +52,7 @@ func DisplayCast(emitter : BaseEntity, skillName : String):
 				if skill._mode == Skill.TargetMode.ZONE:
 					Callback.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(emitter, skill), "ActionTimer")
 
-func DisplaySkill(emitter : BaseEntity, skill : SkillData):
+func DisplaySkill(emitter : Entity, skill : SkillData):
 	if skill and skill._skillPreset:
 		var skillFx : GPUParticles2D = skill._skillPreset.instantiate()
 		if skillFx:
@@ -63,7 +63,7 @@ func DisplaySkill(emitter : BaseEntity, skill : SkillData):
 			skillFx.emitting = true
 			emitter.add_child(skillFx)
 
-func DisplayProjectile(emitter : BaseEntity, skill : SkillData, callable : Callable):
+func DisplayProjectile(emitter : Entity, skill : SkillData, callable : Callable):
 	if Launcher.Map.tilemapNode and skill and skill._projectilePreset:
 		var projectileNode : Node2D = skill._projectilePreset.instantiate()
 		if projectileNode:
@@ -75,7 +75,7 @@ func DisplayProjectile(emitter : BaseEntity, skill : SkillData, callable : Calla
 			projectileNode.callable = callable
 			Launcher.Map.tilemapNode.add_child(projectileNode)
 
-func DisplayAlteration(target : BaseEntity, emitter : BaseEntity, value : int, alteration : ActorCommons.Alteration, skillName : String):
+func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteration : ActorCommons.Alteration, skillName : String):
 	if Launcher.Map.tilemapNode:
 		if alteration != ActorCommons.Alteration.PROJECTILE:
 			var newLabel : Label = ActorCommons.AlterationLabel.instantiate()
@@ -148,7 +148,7 @@ func _physics_process(delta):
 			nameLabel.visible = entity.displayName
 
 func _ready():
-	Util.Assert(entity != null, "No BaseEntity is found as parent for this Interactive node")
+	Util.Assert(entity != null, "No Entity is found as parent for this Interactive node")
 	if not entity:
 		return
 

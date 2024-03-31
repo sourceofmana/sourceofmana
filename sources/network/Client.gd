@@ -31,30 +31,30 @@ func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orient
 
 func ChatAgent(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		var entity : BaseEntity = Entities.Get(ridAgent)
+		var entity : Entity = Entities.Get(ridAgent)
 		if entity && entity.get_parent():
-			if entity is PlayerEntity && Launcher.GUI:
+			if entity.type == ActorCommons.Type.PLAYER && Launcher.GUI:
 				Launcher.GUI.chatContainer.AddPlayerText(entity.get_name(), text)
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
 
 func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillName : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		var entity : BaseEntity = Entities.Get(targetID)
-		var caller : BaseEntity = Entities.Get(ridAgent)
+		var entity : Entity = Entities.Get(targetID)
+		var caller : Entity = Entities.Get(ridAgent)
 		if caller && entity && entity.get_parent() and entity.interactive:
 			entity.interactive.DisplayAlteration(entity, caller, value, alteration, skillName)
 
 func TargetLevelUp(targetID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		var entity : BaseEntity = Entities.Get(targetID)
+		var entity : Entity = Entities.Get(targetID)
 		if entity and entity.get_parent() and entity.interactive:
 			entity.interactive.DisplayLevelUp()
 			entity.stat.attributes_updated.emit()
 
 func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		var entity : BaseEntity = Entities.Get(ridAgent)
+		var entity : Entity = Entities.Get(ridAgent)
 		if entity:
 			var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 			entity.stat.Morph(morphData)
@@ -62,7 +62,7 @@ func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = Ne
 
 func UpdateActiveStats(ridAgent : int, level : int, experience : int, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		var entity : BaseEntity = Entities.Get(ridAgent)
+		var entity : Entity = Entities.Get(ridAgent)
 		if entity and entity.get_parent() and entity.stat:
 			var levelUp : bool = entity.stat.level != level
 			entity.stat.level			= level
@@ -82,7 +82,7 @@ func UpdateActiveStats(ridAgent : int, level : int, experience : int, health : i
 
 func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		var entity : BaseEntity = Entities.Get(ridAgent)
+		var entity : Entity = Entities.Get(ridAgent)
 		if entity and entity.get_parent() and entity.stat:
 			entity.stat.strength		= strength
 			entity.stat.vitality		= vitality

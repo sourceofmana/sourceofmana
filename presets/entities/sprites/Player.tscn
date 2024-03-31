@@ -1,6 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://clvy3m3dxh517"]
+[gd_scene load_steps=24 format=3 uid="uid://clvy3m3dxh517"]
 
 [ext_resource type="Texture2D" uid="uid://dbwd2qy1p6wur" path="res://data/graphics/sprites/players/human-male.png" id="1_66oof"]
+[ext_resource type="Material" uid="uid://dcmk5wpu8gpct" path="res://presets/palettes/human-skin-tanned.tres" id="1_wun8i"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_mvwfv"]
 
 [sub_resource type="Animation" id="Animation_qisc1"]
@@ -333,9 +334,10 @@ _data = {
 "WalkUp": SubResource("5")
 }
 
-[node name="Player" type="Node2D"]
+[node name="Node" type="Node2D"]
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="."]
+material = ExtResource("1_wun8i")
 texture = ExtResource("1_66oof")
 offset = Vector2(0, -32)
 hframes = 16
@@ -343,13 +345,13 @@ vframes = 8
 frame = 64
 
 [node name="Animation" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprite")
+root_node = NodePath("../Body")
 libraries = {
 "": SubResource("AnimationLibrary_pnwib")
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_mvwfv")]
-root_node = NodePath("../../Sprite")
+root_node = NodePath("../../Body")
 libraries = {
 "": SubResource("AnimationLibrary_pnwib")
 }
