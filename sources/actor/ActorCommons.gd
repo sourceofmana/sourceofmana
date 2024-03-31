@@ -103,6 +103,43 @@ static func IsAttacking(agent : Actor) -> bool:
 static func IsSitting(agent : Actor) -> bool:
 	return agent and agent.state == State.SIT
 
+#
+const slotBody : String						= "Body"
+const slotChest : String					= "Chest"
+const slotLegs : String						= "Legs"
+const slotFeet : String						= "Feet"
+const slotHands : String					= "Hands"
+const slotHead : String						= "Head"
+const slotFace : String						= "Face"
+const slotWeapon : String					= "Weapon"
+const slotShield : String					= "Shield"
+
+static func GetSlotName(slot : Slot) -> String:
+	match slot:
+		Slot.BODY:				return slotBody
+		Slot.CHEST:				return slotChest
+		Slot.LEGS:				return slotLegs
+		Slot.FEET:				return slotFeet
+		Slot.HANDS:				return slotHands
+		Slot.HEAD:				return slotHead
+		Slot.FACE:				return slotFace
+		Slot.WEAPON:			return slotWeapon
+		Slot.SHIELD:			return slotShield
+		_:						return slotBody
+
+static func GetSlotID(slot : String) -> Slot:
+	match slot:
+		slotBody:					return Slot.BODY
+		slotChest:					return Slot.CHEST
+		slotLegs:					return Slot.LEGS
+		slotFeet:					return Slot.FEET
+		slotHands:					return Slot.HANDS
+		slotHead:					return Slot.HEAD
+		slotFace:					return Slot.FACE
+		slotWeapon:					return Slot.WEAPON
+		slotShield:					return Slot.SHIELD
+		_:							return Slot.BODY
+
 # Visual
 const AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
 const EnemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")

@@ -20,15 +20,13 @@ var skillCastName : String					= ""
 var attackAnimLength : float				= 1.0
 
 #
-func LoadSprite(slot : ActorCommons.Slot, sprite : Sprite2D, customTexturePath : String = ""):
+func LoadSpriteSlot(slot : ActorCommons.Slot, sprite : Sprite2D):
 	if sprites[slot]:
 		sprites[slot].queue_free()
 		sprites[slot] = null
 
-	sprites[slot] = sprite
-
-	if customTexturePath.length() > 0:
-		sprite.texture = FileSystem.LoadGfx(customTexturePath)
+	if sprite:
+		sprites[slot] = sprite
 
 func ResetData():
 	for child in get_children():
@@ -65,10 +63,24 @@ func LoadData(data : EntityData):
 				animationTree.set_active(true)
 
 		# Sprites
-		if preset and preset.has_node("Body"):
-			var sprite : Sprite2D = preset.get_node("Body")
-			if sprite:
-				LoadSprite(ActorCommons.Slot.BODY, sprite, data._customTexture)
+		if preset:
+			for slot in ActorCommons.Slot.COUNT:
+				var slotName : String = ActorCommons.GetSlotName(slot)
+				var sprite : Sprite2D = null
+				if preset.has_node(slotName):
+					sprite = preset.get_node(slotName)
+				elif data._customTextures[slot]:
+					sprite = Sprite2D.new()
+					sprite.set_name(slotName)
+					preset.add_child(sprite)
+
+				if sprite:
+					if data._customTextures[slot]:
+						sprite.texture = FileSystem.LoadGfx(data._customTextures[slot])
+					if data._customShaders[slot]:
+						var mat = FileSystem.LoadResource(data._customShaders[slot], false)
+						sprite.material = mat
+					LoadSpriteSlot(slot, sprite)
 
 	ResetAnimationValue()
 
