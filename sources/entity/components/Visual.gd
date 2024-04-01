@@ -88,7 +88,6 @@ func LoadAnimationPaths():
 	for i in ActorCommons.State.COUNT:
 		var stateName : String		= ActorCommons.GetStateName(i)
 		var blendSpace : String		= "parameters/%s/BlendSpace2D/blend_position" % [stateName]
-		var timeScale : String		= "parameters/%s/TimeScale/scale" % [stateName]
 		if animation.has_animation("AttackDown"):
 			var attackAnim : Animation	= animation.get_animation("AttackDown")
 			attackAnimLength = attackAnim.length if attackAnim else 1.0
@@ -98,6 +97,7 @@ func LoadAnimationPaths():
 
 		# Only set dynamic time scale for attack and walk as other can stay static
 		if i == ActorCommons.State.ATTACK or i == ActorCommons.State.WALK:
+			var timeScale : String = "parameters/%s/TimeScale/scale" % [stateName]
 			if timeScale in animationTree:
 				timeScalePaths[i] = timeScale
 

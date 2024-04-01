@@ -77,7 +77,7 @@ static func ParseSkillsDB():
 
 	if not result.is_empty():
 		for key in result:
-			SkillsDB[key] = SkillData.Create(key, result[key])
+			SkillsDB[key] = FileSystem.LoadCell(result[key])
 
 #
 static func GetMapPath(mapName : String) -> String:

@@ -4,6 +4,7 @@ class_name BaseAgent
 #
 var agent : NavigationAgent2D			= null
 var entityName : String					= ""
+var entityRadius : int				= 0
 
 var aiState : AI.State					= AI.State.IDLE
 var aiTimer : Timer						= null
@@ -24,10 +25,10 @@ var currentInput : Vector2				= Vector2.ZERO
 var forceUpdate : bool					= false
 
 var spawnInfo : SpawnObject				= null
-var skillSet : Array[SkillData]			= []
+var skillSet : Array[SkillCell]			= []
 var skillProba : Dictionary				= {}
 var skillProbaSum : float				= 0.0
-var skillSelected : SkillData			= null
+var skillSelected : SkillCell			= null
 
 const inputApproximationUnit : int		= 12
 
@@ -80,7 +81,7 @@ func SetCurrentState():
 	if stat.health <= 0:
 		SetState(ActorCommons.State.DEATH)
 	elif DB.SkillsDB.has(currentSkillName):
-		SetState(DB.SkillsDB[currentSkillName]._state)
+		SetState(DB.SkillsDB[currentSkillName].state)
 	elif currentVelocity == Vector2i.ZERO:
 		SetState(ActorCommons.State.IDLE)
 	else:
@@ -98,7 +99,7 @@ func SetSkillCastName(skillName : String):
 	if skillName.length() > 0:
 		skillSelected = null
 
-func AddSkill(skill : SkillData, proba : float):
+func AddSkill(skill : SkillCell, proba : float):
 	if skill and not skillSet.has(skill):
 		skillSet.append(skill)
 	skillProba[skill] = proba
@@ -139,6 +140,8 @@ func UpdateChanged():
 func SetData(data : EntityData):
 	for skill in data._skillSet:
 		AddSkill(skill, data._skillProba[skill])
+
+	entityRadius = data._radius
 
 	# Navigation
 	if data._navigationAgent.length() > 0:

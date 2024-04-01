@@ -90,13 +90,13 @@ func Interact():
 		Cast("Melee")
 
 func Cast(skillName : String):
-	var skill : SkillData = DB.SkillsDB[skillName]
+	var skill : SkillCell = DB.SkillsDB[skillName]
 	Util.Assert(skill != null, "Skill ID is not found, can't cast it")
 	if skill == null:
 		return
 
 	var entityID : int = 0
-	if skill._mode == Skill.TargetMode.SINGLE:
+	if skill.mode == Skill.TargetMode.SINGLE:
 		if not target or target.state == ActorCommons.State.DEATH:
 			Target(position, false)
 		if target and target.type == ActorCommons.Type.MONSTER:

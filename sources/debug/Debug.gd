@@ -6,7 +6,6 @@ var wrongPos : ColorRect					= null
 var navLineDebug : bool						= false
 var navlineWidth : int 						= 2
 var desyncDebug : bool						= false
-var inventoryFill : bool					= true
 
 #
 func OnPlayerEnterGame():
@@ -31,14 +30,6 @@ func OnPlayerEnterGame():
 				col.top_level = true
 				wrongPos = col
 				Launcher.Player.add_child.call_deferred(col)
-
-	if inventoryFill:
-		Util.Assert(Launcher.Player != null && Launcher.Player.inventory != null, "Debug: Player inventory is not accessible")
-		if Launcher.Player && Launcher.Player.inventory:
-			Launcher.Player.inventory.add_item(FileSystem.LoadCell("items/apple"), 14)
-			Launcher.Player.inventory.add_item(FileSystem.LoadCell("items/pettys_key"), 3)
-			Launcher.Player.inventory.add_item(FileSystem.LoadCell("items/grumpys_key"))
-			Launcher.Player.inventory.add_item(FileSystem.LoadCell("items/hungrys_key"), 2)
 
 #
 func UpdateNavLine(entity : Entity):

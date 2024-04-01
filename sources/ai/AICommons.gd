@@ -43,7 +43,7 @@ static func IsAgentMoving(agent : BaseAgent):
 static func CanWalk(agent: BaseAgent):
 	return agent.agent != null
 
-static func GetRandomSkill(agent : BaseAgent) -> SkillData:
+static func GetRandomSkill(agent : BaseAgent) -> SkillCell:
 	if agent.skillSet.size() > 0 and agent.skillProbaSum > 0.0:
 		var randProba : float = randf_range(0.0, agent.skillProbaSum)
 		for skill in agent.skillSet:

@@ -189,7 +189,7 @@ static func LoadMusic(path : String) -> Resource:
 	return musicFile
 
 # Cell
-static func LoadCell(path : String) -> Cell:
+static func LoadCell(path : String) -> BaseCell:
 	var fullPath : String = Path.CellPst + path + Path.RscExt
 	return LoadResource(fullPath, false)
 

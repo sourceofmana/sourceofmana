@@ -6,6 +6,7 @@
 		"Hairstyle": "Bald",
 		"NavigationAgent": "PlayerAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 150,
@@ -25,6 +26,7 @@
 		"Ethnicity": "Splatyna",
 		"NavigationAgent": "NPAgent",
 		"Collision": "Large",
+		"Radius": "32",
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 40,
@@ -39,6 +41,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
 		},
@@ -52,6 +55,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
 		},
@@ -65,6 +69,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
 		},
@@ -78,6 +83,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
 		},
@@ -91,6 +97,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
 		},
@@ -104,6 +111,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
 		},
@@ -117,6 +125,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
 		},
@@ -126,6 +135,7 @@
 		"Ethnicity": "Piou",
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 30,
 		},
@@ -139,6 +149,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 70,
 		},
@@ -152,6 +163,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 50,
 			"Level": 10,
@@ -169,6 +181,7 @@
 		},
 		"NavigationAgent": "NPAgent",
 		"Collision": "Medium",
+		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 50,
 		},
@@ -181,6 +194,7 @@
 		"Hairstyle": "Bald",
 		"NavigationAgent": "NPAgent",
 		"Collision": "Small",
+		"Radius": "16",
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 70,
@@ -190,6 +204,7 @@
 		"Name": "Old Chest",
 		"Ethnicity": "Chest",
 		"Collision": "Large",
+		"Radius": "32",
 		"DisplayName": true,
 	},
 	"2002": {
@@ -206,6 +221,7 @@
 		"Hairstyle": "Bald",
 		"NavigationAgent": "NPAgent",
 		"Collision": "Small",
+		"Radius": "16",
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 50,

@@ -11,7 +11,28 @@ extends PanelContainer
 var currentDelay : float					= 0.0
 
 #
-func initialize():
+func Display():
+	currentDelay = 0.0
+	visible = true
+
+#
+func _process(delta):
+	currentDelay += delta
+	if currentDelay <= fadeInDelay:
+		if fadeInDelay > 0.0:
+			modulate.a = currentDelay / fadeInDelay
+	elif currentDelay <= displayDelay:
+		if displayDelay > 0.0:
+			modulate.a = 1.0
+	elif currentDelay <= fadeOutDelay:
+		if fadeOutDelay > 0.0:
+			modulate.a = 1.0 - (currentDelay - displayDelay) / (fadeOutDelay - displayDelay)
+	else:
+		visible = false
+
+func _ready():
+	visible = false
+
 	for child in tips.get_children():
 		tips.remove_child(child)
 
@@ -33,23 +54,3 @@ func initialize():
 					tipIcon.set_text(actionInfo[DeviceManager.ActionInfo.NAME])
 					tipLabel.set_text(DeviceManager.GetActionName(action))
 					tips.add_child.call_deferred(tip)
-
-	currentDelay = 0.0
-	visible = true
-
-func _process(delta):
-	currentDelay += delta
-	if currentDelay <= fadeInDelay:
-		if fadeInDelay > 0.0:
-			modulate.a = currentDelay / fadeInDelay
-	elif currentDelay <= displayDelay:
-		if displayDelay > 0.0:
-			modulate.a = 1.0
-	elif currentDelay <= fadeOutDelay:
-		if fadeOutDelay > 0.0:
-			modulate.a = 1.0 - (currentDelay - displayDelay) / (fadeOutDelay - displayDelay)
-	else:
-		visible = false
-
-func _ready():
-	visible = false

@@ -38,34 +38,34 @@ func DisplayLevelUp():
 #
 func DisplayCast(emitter : Entity, skillName : String):
 	if DB.SkillsDB.has(skillName):
-		var skill : SkillData = DB.SkillsDB[skillName]
-		if skill._castPreset:
-			var castFx : GPUParticles2D = skill._castPreset.instantiate()
+		var skill : SkillCell = DB.SkillsDB[skillName]
+		if skill.castPreset:
+			var castFx : GPUParticles2D = skill.castPreset.instantiate()
 			if castFx:
 				castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-				castFx.lifetime = skill._castTime + emitter.stat.current.castAttackDelay
-				castFx.texture = skill._castTextureOverride
-				if skill._castColor != Color.BLACK:
-					castFx.self_modulate = skill._castColor
+				castFx.lifetime = skill.castTime + emitter.stat.current.castAttackDelay
+				castFx.texture = skill.castTextureOverride
+				if skill.castColor != Color.BLACK:
+					castFx.self_modulate = skill.castColor
 				castFx.emitting = true
 				add_child(castFx)
-				if skill._mode == Skill.TargetMode.ZONE:
-					Callback.SelfDestructTimer(self, skill._castTime, DisplaySkill.bind(emitter, skill), "ActionTimer")
+				if skill.mode == Skill.TargetMode.ZONE:
+					Callback.SelfDestructTimer(self, skill.castTime, DisplaySkill.bind(emitter, skill), "ActionTimer")
 
-func DisplaySkill(emitter : Entity, skill : SkillData):
-	if skill and skill._skillPreset:
-		var skillFx : GPUParticles2D = skill._skillPreset.instantiate()
+func DisplaySkill(emitter : Entity, skill : SkillCell):
+	if skill and skill.skillPreset:
+		var skillFx : GPUParticles2D = skill.skillPreset.instantiate()
 		if skillFx:
 			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, emitter))
-			skillFx.lifetime = skill._skillTime
-			if skill._skillColor != Color.BLACK:
-				skillFx.process_material.set("color", skill._skillColor)
+			skillFx.lifetime = skill.skillTime
+			if skill.skillColor != Color.BLACK:
+				skillFx.process_material.set("color", skill.skillColor)
 			skillFx.emitting = true
 			emitter.add_child(skillFx)
 
-func DisplayProjectile(emitter : Entity, skill : SkillData, callable : Callable):
-	if Launcher.Map.tilemapNode and skill and skill._projectilePreset:
-		var projectileNode : Node2D = skill._projectilePreset.instantiate()
+func DisplayProjectile(emitter : Entity, skill : SkillCell, callable : Callable):
+	if Launcher.Map.tilemapNode and skill and skill.projectilePreset:
+		var projectileNode : Node2D = skill.projectilePreset.instantiate()
 		if projectileNode:
 			projectileNode.origin = emitter.interactive.visibleNode.global_position
 			projectileNode.origin.y += ActorCommons.interactionDisplayOffset
@@ -86,8 +86,8 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			target.stat.RefreshActiveStats()
 
 		if DB.SkillsDB.has(skillName):
-			var skill : SkillData = DB.SkillsDB[skillName]
-			if skill._mode != Skill.TargetMode.ZONE:
+			var skill : SkillCell = DB.SkillsDB[skillName]
+			if skill.mode != Skill.TargetMode.ZONE:
 				var callable : Callable = DisplaySkill.bind(target, skill)
 				if alteration == ActorCommons.Alteration.PROJECTILE:
 					DisplayProjectile(emitter, skill, callable)
@@ -155,10 +155,6 @@ func _ready():
 	if nameLabel:
 		nameLabel.set_text(entity.entityName)
 		nameLabel.set_visible(entity.displayName)
-
-	if entity == Launcher.Player:
-		Launcher.GUI.emoteContainer.ItemClicked.connect(DisplayEmote)
-		Launcher.GUI.chatContainer.NewTextTyped.connect(Launcher.Network.TriggerChat)
 
 	if visibleNode and entity.visual:
 		entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)

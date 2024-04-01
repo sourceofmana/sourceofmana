@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="SkillCell" load_steps=6 format=3 uid="uid://dvgbbk4l2m11q"]
+
+[ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_f6vbr"]
+[ext_resource type="Texture2D" uid="uid://kgybcxq2ss5x" path="res://data/graphics/effects/particles/cast4.png" id="2_llpnr"]
+[ext_resource type="Texture2D" uid="uid://cj2x2kwnfcla3" path="res://data/graphics/items/skill/spell.png" id="3_ru0q0"]
+[ext_resource type="Script" path="res://sources/cell/SkillCell.gd" id="4_p55re"]
+[ext_resource type="PackedScene" uid="uid://676e7kfvces4" path="res://presets/effects/particles/Heal.tscn" id="5_0vmmd"]
+
+[resource]
+script = ExtResource("4_p55re")
+state = 0
+cellRange = 128
+mode = 0
+repeat = false
+cooldownTime = 5.0
+castPreset = ExtResource("1_f6vbr")
+castTextureOverride = ExtResource("2_llpnr")
+castColor = Color(1, 1, 0.6, 1)
+castTime = 3.0
+skillPreset = ExtResource("5_0vmmd")
+skillColor = Color(0, 0, 0, 1)
+skillTime = 2.0
+name = "Lum"
+description = "Heal yourself with a burst of restorative energy."
+icon = ExtResource("3_ru0q0")
+type = 2
+weight = 0.0
+stackable = false
+usable = true
+effects = {
+"HP": 50,
+"Mana": -10,
+"Stamina": -15
+}

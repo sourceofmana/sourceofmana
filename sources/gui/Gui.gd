@@ -75,8 +75,7 @@ func EnterLoginMenu():
 
 func EnterGame():
 	if Launcher.Player:
-		tipsLabel.initialize()
-		inventoryWindow.initialize()
+		tipsLabel.Display()
 		emoteContainer.FillGridContainer(DB.EmotesDB)
 
 		background.set_visible(false)

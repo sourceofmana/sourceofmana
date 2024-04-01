@@ -9,8 +9,6 @@ class_name ChatContainer
 
 var enabledLastFrame : bool						= false
 
-signal NewTextTyped(text : String)
-
 #
 func AddPlayerText(playerName : String, speech : String):
 	AddText(playerName + ": " + speech, UICommons.LightTextColor)
@@ -41,7 +39,7 @@ func OnNewTextSubmitted(newText : String):
 			lineEdit.clear()
 			if Launcher.Player:
 				chatHistory.Add(newText)
-				emit_signal('NewTextTyped', newText)
+				Launcher.Network.TriggerChat(newText)
 				SetNewLineEnabled(false)
 		else:
 			SetNewLineEnabled(false)
