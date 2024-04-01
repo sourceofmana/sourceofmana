@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BaseCell" load_steps=3 format=3 uid="uid://chf6ixy1fjcvb"]
+
+[ext_resource type="Texture2D" uid="uid://c26nj2su8seyy" path="res://data/graphics/emotes/grin.png" id="1_tebwm"]
+[ext_resource type="Script" path="res://sources/cell/BaseCell.gd" id="2_mo7fq"]
+
+[resource]
+script = ExtResource("2_mo7fq")
+name = "Grin"
+description = ""
+icon = ExtResource("1_tebwm")
+type = 1
+weight = 0.0
+stackable = false
+usable = true
+effects = {}

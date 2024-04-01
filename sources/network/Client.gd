@@ -9,9 +9,9 @@ func WarpPlayer(map : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player:
 		Launcher.Player.entityVelocity = Vector2.ZERO
 
-func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func EmotePlayer(playerID : int, emote : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.EmotePlayer(playerID, emoteID)
+		Launcher.Map.EmotePlayer(playerID, emote)
 
 func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastName : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BaseCell" load_steps=3 format=3 uid="uid://cggwiouberwva"]
+
+[ext_resource type="Texture2D" uid="uid://clouebs1llbb2" path="res://data/graphics/emotes/angry.png" id="1_gvhfr"]
+[ext_resource type="Script" path="res://sources/cell/BaseCell.gd" id="2_lfv2e"]
+
+[resource]
+script = ExtResource("2_lfv2e")
+name = "Angry"
+description = ""
+icon = ExtResource("1_gvhfr")
+type = 1
+weight = 0.0
+stackable = false
+usable = true
+effects = {}

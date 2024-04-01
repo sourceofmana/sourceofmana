@@ -7,6 +7,7 @@ static var EthnicitiesDB : Dictionary		= {}
 static var HairstylesDB : Dictionary		= {}
 static var EntitiesDB : Dictionary			= {}
 static var EmotesDB : Dictionary			= {}
+static var ItemsDB : Dictionary				= {}
 static var SkillsDB : Dictionary			= {}
 
 #
@@ -62,22 +63,22 @@ static func ParseEntitiesDB():
 			EntitiesDB[key] = EntityData.Create(key, result[key])
 
 static func ParseEmotesDB():
-	var result = FileSystem.LoadDB("emotes.json")
+	for file in FileSystem.GetFiles(Path.EmotePst):
+		var cell : BaseCell = FileSystem.LoadCell(Path.EmotePst + file)
+		if cell:
+			EmotesDB[cell.name] = cell
 
-	if not result.is_empty():
-		for key in result:
-			var emote : EmoteData = EmoteData.new()
-			emote._id = key.to_int()
-			emote._name = result[key].Name
-			emote._path = result[key].Path
-			EmotesDB[key] = emote
+static func ParseItemsDB():
+	for file in FileSystem.GetFiles(Path.ItemPst):
+		var cell : BaseCell = FileSystem.LoadCell(Path.ItemPst + file)
+		if cell:
+			ItemsDB[cell.name] = cell
 
 static func ParseSkillsDB():
-	var result = FileSystem.LoadDB("skills.json")
-
-	if not result.is_empty():
-		for key in result:
-			SkillsDB[key] = FileSystem.LoadCell(result[key])
+	for file in FileSystem.GetFiles(Path.SkillPst):
+		var cell : SkillCell = FileSystem.LoadCell(Path.SkillPst + file)
+		if cell:
+			SkillsDB[cell.name] = cell
 
 #
 static func GetMapPath(mapName : String) -> String:
@@ -97,6 +98,7 @@ static func Init():
 	ParseMusicsDB()
 	ParseEthnicitiesDB()
 	ParseHairstylesDB()
+	ParseEmotesDB()
+	ParseItemsDB()
 	ParseSkillsDB()
 	ParseEntitiesDB()
-	ParseEmotesDB()

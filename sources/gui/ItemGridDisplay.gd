@@ -1,35 +1,26 @@
 extends GridContainer
 
 #
-signal ItemClicked
-
-var slots : Array = []
+@onready var tilePreset : Resource		= FileSystem.LoadGui("emotes/Tile", false)
+var slots : Array						= []
 
 #
-func FillGridContainer(listOfItem : Dictionary):
-	if listOfItem:
-		var tilePreset = FileSystem.LoadGui("emotes/Tile", false)
+func FillGridContainer(cells : Dictionary):
+	for cell in cells:
+		var tileInstance : ColorRect	= tilePreset.instantiate()
+		Util.Assert(tileInstance.has_node("Icon"), "Could not find the Icon node:" + cell)
 
-		for item in listOfItem:
-			var tileInstance : ColorRect	= tilePreset.instantiate()
-			var itemReference : Object		= listOfItem[item]
-			var itemTexture : Texture2D		= FileSystem.LoadGfx(itemReference._path)
+		if tileInstance.has_node("Icon"):
+			var iconNode : Node = tileInstance.get_node("Icon")
+			iconNode.set_texture_normal(cells[cell].icon)
+			Callback.PlugCallback(iconNode.button_down, cells[cell].Use)
 
-			Util.Assert(tileInstance.has_node("Icon"), "Could not find the Icon node:" + itemReference._name)
-			if tileInstance.has_node("Icon"):
-				var iconNode = tileInstance.get_node("Icon")
-				iconNode.set_texture_normal(itemTexture)
-				iconNode.button_down.connect(OnItemPressed.bind(item))
+		tileInstance.set_tooltip_text(cell)
+		tileInstance.set_name(cell)
 
-			tileInstance.set_tooltip_text(itemReference._name)
-			tileInstance.set_name(item)
-
-			add_child(tileInstance)
-			slots.append(tileInstance)
-		_on_panel_resized()
-
-func OnItemPressed(item : String):
-	ItemClicked.emit(item)
+		add_child(tileInstance)
+		slots.append(tileInstance)
+	_on_panel_resized()
 
 #
 func _on_panel_resized():

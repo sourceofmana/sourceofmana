@@ -190,7 +190,7 @@ static func LoadMusic(path : String) -> Resource:
 
 # Cell
 static func LoadCell(path : String) -> BaseCell:
-	var fullPath : String = Path.CellPst + path + Path.RscExt
+	var fullPath : String = path
 	return LoadResource(fullPath, false)
 
 # Generic texture loading
@@ -202,6 +202,9 @@ static func LoadGfx(path : String) -> Resource:
 static func LoadMinimap(path : String) -> Resource:
 	var fullPath : String = Path.MinimapRsc + path + Path.GfxExt
 	return LoadResource(fullPath, false)
+
+static func GetFiles(path : String) -> PackedStringArray:
+	return DirAccess.get_files_at(path)
 
 static func SaveScreenshot():
 	var image : Image = Util.GetScreenCapture()

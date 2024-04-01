@@ -15,7 +15,7 @@ func DisplayEmote(emoteID : String):
 	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
 	if emoteFx:
 		if DB.EmotesDB && DB.EmotesDB[emoteID]:
-			emoteFx.texture = FileSystem.LoadGfx(DB.EmotesDB[emoteID]._path)
+			emoteFx.texture = DB.EmotesDB[emoteID].icon
 			emoteFx.lifetime = ActorCommons.emoteDelay
 			emoteFx.restart()
 

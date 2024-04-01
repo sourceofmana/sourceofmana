@@ -76,12 +76,12 @@ func ClearNavigation(rpcID : int = NetworkCommons.RidSingleMode):
 
 # Emote
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerEmote", [emoteID], rpcID)
+func TriggerEmote(emote : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("TriggerEmote", [emote], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION) 
-func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
+func EmotePlayer(senderAgentID : int, emote : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("EmotePlayer", [senderAgentID, emote], rpcID)
 
 # Sit
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)

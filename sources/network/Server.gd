@@ -82,8 +82,8 @@ func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
 	if player is PlayerAgent:
 		player.Respawn()
 
-func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NotifyInstance(GetAgent(rpcID), "EmotePlayer", [emoteID])
+func TriggerEmote(emote : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NotifyInstance(GetAgent(rpcID), "EmotePlayer", [emote])
 
 func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
 	NotifyInstance(GetAgent(rpcID), "ChatAgent", [text])
