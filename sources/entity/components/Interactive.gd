@@ -153,7 +153,7 @@ func _ready():
 		return
 
 	if nameLabel:
-		nameLabel.set_text(entity.entityName)
+		nameLabel.set_text(entity.nick)
 		nameLabel.set_visible(entity.displayName)
 
 	if visibleNode and entity.visual:

@@ -7,7 +7,6 @@ class_name Entity
 
 var target : Entity						= null
 var displayName : bool					= false
-var entityName : String					= ""
 
 var gender : ActorCommons.Gender		= ActorCommons.Gender.MALE
 var entityVelocity : Vector2			= Vector2.ZERO
@@ -60,6 +59,7 @@ func SetLocalPlayer():
 			add_child.call_deferred(Launcher.Camera.mainCamera)
 	
 	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
+	Launcher.Network.RetrieveInventory()
 
 func ClearTarget():
 	if target != null:

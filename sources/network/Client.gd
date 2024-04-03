@@ -13,9 +13,9 @@ func EmotePlayer(playerID : int, emote : String, _rpcID : int = NetworkCommons.R
 	if Launcher.Map:
 		Launcher.Map.EmotePlayer(playerID, emote)
 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastName : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastName : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, entityID, entityName, velocity, position, orientation, state, skillCastName)
+		Launcher.Map.AddEntity(agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastName)
 
 func RemoveEntity(agentID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -90,6 +90,22 @@ func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : 
 			entity.stat.endurance		= endurance
 			entity.stat.concentration	= concentration
 			entity.stat.RefreshAttributes()
+
+func ItemAdded(cell : BaseCell, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player:
+		Launcher.Player.inventory.PushItem(cell, count)
+	if Launcher.GUI and Launcher.GUI.inventoryWindow:
+		Launcher.GUI.inventoryWindow.Refresh()
+
+func ItemRemoved(cell : BaseCell, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player:
+		Launcher.Player.inventory.PopItem(cell, count)
+	if Launcher.GUI and Launcher.GUI.inventoryWindow:
+		Launcher.GUI.inventoryWindow.Refresh()
+
+func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player and Launcher.Player.inventory:
+		Launcher.Player.inventory.ImportInventory(cells)
 
 func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:

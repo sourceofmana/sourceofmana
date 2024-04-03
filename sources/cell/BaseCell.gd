@@ -11,8 +11,9 @@ class_name BaseCell
 @export var usable : bool						= false
 @export var effects : Dictionary				= {}
 
+#
 func Use():
-	if usable:
+	if Launcher.Network.Client and usable:
 		match type:
 			CellCommons.Type.ITEM:
 				Launcher.Network.UseItem(name)

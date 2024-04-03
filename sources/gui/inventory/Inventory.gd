@@ -6,3 +6,6 @@ extends WindowPanel
 @onready var tilePreset : Resource		= FileSystem.LoadGui("inventory/ItemGridTile", false)
 
 #
+# Update Weight Stat with Formula.GetWeight
+func Refresh():
+	pass

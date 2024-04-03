@@ -116,6 +116,17 @@ func AddAttribute(attribute : ActorCommons.Attribute, rpcID : int = NetworkCommo
 	if player and player.stat:
 		player.stat.AddAttribute(attribute)
 
+func UseItem(cell : BaseCell, rpcID : int = NetworkCommons.RidSingleMode):
+	if cell and cell.usable:
+		var player : BaseAgent = GetAgent(rpcID)
+		if player and player.inventory:
+			player.inventory.UseItem(cell)
+
+func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
+	var player : BaseAgent = GetAgent(rpcID)
+	if player and player.inventory:
+		Launcher.Network.RefreshInventory(player.inventory.ExportInventory(), rpcID)
+
 #
 func GetRid(player : PlayerAgent) -> int:
 	var playerRid : int = player.get_rid().get_id()

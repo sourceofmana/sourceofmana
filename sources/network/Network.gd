@@ -41,8 +41,8 @@ func WarpPlayer(mapName : String, rpcID : int = NetworkCommons.RidSingleMode):
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, entityName : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("AddEntity", [agentID, entityType, entityID, entityName, velocity, position, orientation, state, skillCastName], rpcID)
+func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastName : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("AddEntity", [agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastName], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
 func RemoveEntity(agentID : int, rpcID : int = NetworkCommons.RidSingleMode):
@@ -141,6 +141,26 @@ func TriggerSelect(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
 func AddAttribute(stat : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("AddAttribute", [stat], rpcID)
 
+# Items
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func ItemAdded(cell : BaseCell, count : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ItemAdded", [cell, count], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func ItemRemoved(cell : BaseCell, count : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ItemRemoved", [cell, count], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
+func UseItem(cell : BaseCell, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("UseItem", [cell], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
+func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("RetrieveInventory", [], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func RefreshInventory(cells : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("RefreshInventory", [cells], rpcID)
 #
 func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:
 	if Server:

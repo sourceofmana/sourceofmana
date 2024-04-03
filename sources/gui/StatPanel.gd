@@ -75,7 +75,7 @@ func RefreshActiveStats(entity : Entity):
 		pass
 
 	RefreshGender(entity)
-	lName.set_text(entity.entityName)
+	lName.set_text(entity.nick)
 	lLevel.set_text("Lv. %d" % entity.stat.level)
 	lSpirit.set_text(entity.stat.spiritShape)
 

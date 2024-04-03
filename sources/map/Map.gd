@@ -76,14 +76,14 @@ func AddChild(entity : Entity):
 		tilemapNode.add_child(entity)
 
 #
-func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, entityName : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastName : String):
-	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and entityName == Launcher.FSM.playerName
+func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastName : String):
+	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.FSM.playerName
 	var entity : Entity = null
 	if tilemapNode:
 		if isLocalPlayer and Launcher.Player:
 			entity = Launcher.Player
 		else:
-			entity = Instantiate.CreateEntity(entityType, entityID, entityName)
+			entity = Instantiate.CreateEntity(entityType, entityID, nick)
 			entity.agentID = agentID
 			if entity && isLocalPlayer:
 				Launcher.Player = entity

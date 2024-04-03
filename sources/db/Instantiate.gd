@@ -10,39 +10,33 @@ static func FindEntityReference(entityID : String) -> EntityData:
 			break
 	return ref
 
-static func CreateGenericEntity(actor : Actor, entityType : ActorCommons.Type, entityID : String, entityName : String = ""):
-	var template : EntityData = FindEntityReference(entityID)
-	Util.Assert(template != null and actor != null, "Could not create the entity: %s" % entityID)
-	if template and actor:
-		actor.type = entityType
-		actor.entityName = entityID if entityName.length() == 0 else entityName
-		actor.stat.Init(actor, template)
-		Callback.PlugCallback(actor.ready, actor.SetData, [template])
+static func CreateEntity(entityType : ActorCommons.Type, entityID : String, nick : String = "") -> Entity:
+	var actor : Entity = FileSystem.LoadEntityVariant()
+	if actor:
+		actor.Init(entityType, entityID, nick)
+	return actor
 
-static func CreateEntity(entityType : ActorCommons.Type, entityID : String, entityName : String = "") -> Entity:
-	var entityInstance : Entity = FileSystem.LoadEntityVariant()
-	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
-	return entityInstance
-
-static func CreateAgent(entityTypeStr : String, entityID : String, entityName : String = "") -> BaseAgent:
-	var entityInstance : BaseAgent = null
+static func CreateAgent(entityTypeStr : String, entityID : String, nick : String = "") -> BaseAgent:
+	var actor : BaseAgent = null
 	var entityType : ActorCommons.Type = ActorCommons.Type.NPC
 	match entityTypeStr:
 		"Npc":
-			entityInstance = NpcAgent.new()
+			actor = NpcAgent.new()
 			entityType = ActorCommons.Type.NPC
 		"Trigger":
-			entityInstance = NpcAgent.new()
+			actor = NpcAgent.new()
 			entityType = ActorCommons.Type.NPC
 		"Monster":
-			entityInstance = MonsterAgent.new()
+			actor = MonsterAgent.new()
 			entityType = ActorCommons.Type.MONSTER
 		"Player":
-			entityInstance = PlayerAgent.new()
+			actor = PlayerAgent.new()
 			entityType = ActorCommons.Type.PLAYER
 		_: Util.Assert(false, "Trying to create an agent with a wrong type: " + entityTypeStr)
-	CreateGenericEntity(entityInstance, entityType, entityID, entityName)
-	return entityInstance
+
+	if actor:
+		actor.Init(entityType, entityID, nick)
+	return actor
 
 # Map
 static func LoadMapData(mapName : String, ext : String) -> Object:

@@ -162,6 +162,7 @@ enum Alteration
 	PROJECTILE,
 }
 
+# Colors
 const DodgeAttackColor : float				= 0.15
 const HealColor : float						= 0.42
 const LocalAttackColor : float				= 0.35
@@ -188,3 +189,4 @@ const DisplayHPDelay : float				= 7.0
 
 # Stats
 const MaxPointPerAttributes : int			= 20
+const InventorySize : int					= 100

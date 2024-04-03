@@ -3,7 +3,6 @@ class_name BaseAgent
 
 #
 var agent : NavigationAgent2D			= null
-var entityName : String					= ""
 var entityRadius : int				= 0
 
 var aiState : AI.State					= AI.State.IDLE

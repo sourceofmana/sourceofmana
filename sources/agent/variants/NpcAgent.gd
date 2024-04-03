@@ -11,7 +11,7 @@ func Interact(caller : BaseAgent):
 		if peerID != NetworkCommons.RidUnknown:
 			var npcAgentID : int = get_rid().get_id()
 			if SetState(ActorCommons.State.TRIGGER) and state == ActorCommons.State.TRIGGER:
-				Launcher.Network.ChatAgent(npcAgentID, "Hello %s!" % caller.entityName, peerID)
+				Launcher.Network.ChatAgent(npcAgentID, "Hello %s!" % caller.nick, peerID)
 
 #
 func _ready():
