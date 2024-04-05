@@ -95,17 +95,19 @@ func ItemAdded(cell : BaseCell, count : int, _rpcID : int = NetworkCommons.RidSi
 	if Launcher.Player:
 		Launcher.Player.inventory.PushItem(cell, count)
 	if Launcher.GUI and Launcher.GUI.inventoryWindow:
-		Launcher.GUI.inventoryWindow.Refresh()
+		Launcher.GUI.inventoryWindow.RefreshInventory()
 
 func ItemRemoved(cell : BaseCell, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player:
 		Launcher.Player.inventory.PopItem(cell, count)
 	if Launcher.GUI and Launcher.GUI.inventoryWindow:
-		Launcher.GUI.inventoryWindow.Refresh()
+		Launcher.GUI.inventoryWindow.RefreshInventory()
 
 func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and Launcher.Player.inventory:
 		Launcher.Player.inventory.ImportInventory(cells)
+	if Launcher.GUI and Launcher.GUI.inventoryWindow:
+		Launcher.GUI.inventoryWindow.RefreshInventory()
 
 func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:

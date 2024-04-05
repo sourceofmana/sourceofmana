@@ -116,7 +116,8 @@ func AddAttribute(attribute : ActorCommons.Attribute, rpcID : int = NetworkCommo
 	if player and player.stat:
 		player.stat.AddAttribute(attribute)
 
-func UseItem(cell : BaseCell, rpcID : int = NetworkCommons.RidSingleMode):
+func UseItem(itemName : String, rpcID : int = NetworkCommons.RidSingleMode):
+	var cell : BaseCell = DB.ItemsDB[itemName] if DB.ItemsDB.has(itemName) else null
 	if cell and cell.usable:
 		var player : BaseAgent = GetAgent(rpcID)
 		if player and player.inventory:

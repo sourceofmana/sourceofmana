@@ -92,7 +92,6 @@ func Init(actorNode : Actor, data : EntityData):
 
 	if "Level" in stats:				level				= stats["Level"]
 	if "Experience" in stats:			experience			= stats["Experience"]
-	if "Weight" in stats:				weight				= stats["Weight"]
 	if "Spirit" in stats:				spiritShape			= stats["Spirit"]
 	if "BaseExp" in stats:				baseExp				= stats["BaseExp"]
 

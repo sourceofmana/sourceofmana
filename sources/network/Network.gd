@@ -151,8 +151,8 @@ func ItemRemoved(cell : BaseCell, count : int, rpcID : int = NetworkCommons.RidS
 	NetCallClient("ItemRemoved", [cell, count], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func UseItem(cell : BaseCell, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("UseItem", [cell], rpcID)
+func UseItem(itemName : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("UseItem", [itemName], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):

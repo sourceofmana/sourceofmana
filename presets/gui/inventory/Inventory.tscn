@@ -18,6 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1")
 script = ExtResource("2_46jtg")
+blockActions = null
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -69,12 +70,12 @@ precisionDivider = 100
 numberAfterComma = 2
 metadata/_edit_layout_mode = 1
 
-[node name="ItemContainer" type="ScrollContainer" parent="Margin/VBoxContainer"]
+[node name="Container" type="ScrollContainer" parent="Margin/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
 
-[node name="Grid" type="GridContainer" parent="Margin/VBoxContainer/ItemContainer"]
+[node name="Grid" type="GridContainer" parent="Margin/VBoxContainer/Container"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -85,4 +86,4 @@ columns = 4
 script = ExtResource("6_u84n8")
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
-[connection signal="resized" from="Margin/VBoxContainer/ItemContainer/Grid" to="Margin/VBoxContainer/ItemContainer/Grid" method="_on_panel_resized"]
+[connection signal="resized" from="Margin/VBoxContainer/Container/Grid" to="Margin/VBoxContainer/Container/Grid" method="_on_panel_resized"]
