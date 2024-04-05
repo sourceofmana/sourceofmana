@@ -31,6 +31,7 @@ func ConnectPlayer(nickname : String, rpcID : int = NetworkCommons.RidSingleMode
 	if not GetAgent(rpcID) and not nickname in onlineList.GetPlayerNames():
 		var agent : BaseAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
 		playerMap[rpcID].agentRID = agent.get_rid().get_id()
+		agent.inventory.ImportInventory({"Apple": 5, "Dorian's Key": 2})
 
 		onlineList.UpdateJson()
 		Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])

@@ -11,7 +11,7 @@ func PushItem(cell : BaseCell, count : int) -> bool:
 
 	if cell.stackable:
 		for item in items:
-			if item.cell == cell:
+			if item.cell.name == cell.name:
 				item.count += count
 				return true
 
@@ -31,7 +31,7 @@ func PushItem(cell : BaseCell, count : int) -> bool:
 func PopItem(cell : BaseCell, count : int) -> bool:
 	var toRemove : Array[Item] = []
 	for item in items:
-		if item.cell == cell:
+		if item.cell.name == cell.name:
 			if cell.stackable:
 				if item.count >= count:
 					item.count -= count
@@ -75,11 +75,13 @@ func AddItem(cell : BaseCell, count : int = 1):
 			Launcher.Network.ItemAdded(cell, count, peerID)
 
 
-func RemoveItem(cell : BaseCell, count : int = 1):
+func RemoveItem(cell : BaseCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
 		var peerID : int = Launcher.Network.Server.GetRid(actor)
 		if peerID != NetworkCommons.RidUnknown:
 			Launcher.Network.ItemRemoved(cell, count, peerID)
+		return true
+	return false
 
 #
 func ImportInventory(data : Dictionary):
@@ -99,5 +101,3 @@ func ExportInventory() -> Dictionary:
 func Init(actorNode : Actor):
 	Util.Assert(actorNode != null, "Caller actor node should never be null")
 	actor = actorNode
-
-	ImportInventory({"Apple": 5, "Dorian's Key": 2})
