@@ -1,11 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2q5vtkxo04dp"]
+[gd_scene load_steps=4 format=3 uid="uid://c2q5vtkxo04dp"]
 
 [ext_resource type="Texture2D" uid="uid://desxm6lbhpunn" path="res://data/graphics/gui/menu/menubar_button.png" id="1_pcpv2"]
 [ext_resource type="Texture2D" uid="uid://qfpxygkhxldq" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="2_7lddn"]
-[ext_resource type="Texture2D" uid="uid://cql3pd7w0dcrw" path="res://data/graphics/items/skill/mana-burst.png" id="4_f0s7q"]
-[ext_resource type="Texture2D" uid="uid://778ukqslteuy" path="res://data/graphics/items/skill/flar.png" id="5_mjh5m"]
-[ext_resource type="Texture2D" uid="uid://cj2x2kwnfcla3" path="res://data/graphics/items/skill/spell.png" id="6_qlcce"]
-[ext_resource type="Texture2D" uid="uid://do0uijp3cppaj" path="res://data/graphics/items/skill/melee.png" id="7_e2fmm"]
+[ext_resource type="PackedScene" uid="uid://cq76gfx44nn6q" path="res://presets/gui/inventory/ItemTile.tscn" id="3_gpxeb"]
 
 [node name="ActionBox" type="Control"]
 layout_mode = 3
@@ -29,99 +26,211 @@ position = Vector2(-211, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
+[node name="CellSlot" parent="TouchScreenButton" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+draggable = true
+
 [node name="TouchScreenButton2" type="TouchScreenButton" parent="."]
 position = Vector2(-175, -18)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
+
+[node name="CellSlot2" parent="TouchScreenButton2" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+draggable = true
 
 [node name="TouchScreenButton3" type="TouchScreenButton" parent="."]
 position = Vector2(-139, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
+[node name="CellSlot3" parent="TouchScreenButton3" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+draggable = true
+
 [node name="TouchScreenButton4" type="TouchScreenButton" parent="."]
 position = Vector2(-103, -18)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
+
+[node name="CellSlot4" parent="TouchScreenButton4" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+draggable = true
 
 [node name="TouchScreenButton5" type="TouchScreenButton" parent="."]
 position = Vector2(-67, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
+[node name="CellSlot5" parent="TouchScreenButton5" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0)
+draggable = true
+
 [node name="TouchScreenButton6" type="TouchScreenButton" parent="."]
 position = Vector2(5, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="TouchScreenButton7" type="TouchScreenButton" parent="."]
-position = Vector2(41, -18)
-texture_normal = ExtResource("1_pcpv2")
-texture_pressed = ExtResource("2_7lddn")
-action = "gp_skill_4"
-
-[node name="TextureRect" type="TextureRect" parent="TouchScreenButton7"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="CellSlot6" parent="TouchScreenButton6" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("6_qlcce")
-stretch_mode = 3
-metadata/_edit_use_anchors_ = true
+color = Color(1, 1, 1, 0)
+draggable = true
+
+[node name="TouchScreenButton7" type="TouchScreenButton" parent="."]
+position = Vector2(41, -18)
+texture_normal = ExtResource("1_pcpv2")
+texture_pressed = ExtResource("2_7lddn")
+
+[node name="CellSlot7" parent="TouchScreenButton7" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0)
+draggable = true
 
 [node name="TouchScreenButton8" type="TouchScreenButton" parent="."]
 position = Vector2(77, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-action = "gp_skill_3"
 
-[node name="TextureRect" type="TextureRect" parent="TouchScreenButton8"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="CellSlot8" parent="TouchScreenButton8" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("7_e2fmm")
-stretch_mode = 3
-metadata/_edit_use_anchors_ = true
+color = Color(1, 1, 1, 0)
+draggable = true
 
 [node name="TouchScreenButton9" type="TouchScreenButton" parent="."]
 position = Vector2(113, -18)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-action = "gp_skill_1"
 
-[node name="TextureRect" type="TextureRect" parent="TouchScreenButton9"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="CellSlot9" parent="TouchScreenButton9" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("4_f0s7q")
-stretch_mode = 3
-metadata/_edit_use_anchors_ = true
+color = Color(1, 1, 1, 0)
+draggable = true
 
 [node name="TouchScreenButton10" type="TouchScreenButton" parent="."]
 position = Vector2(149, 17)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-action = "gp_skill_2"
 
-[node name="TextureRect" type="TextureRect" parent="TouchScreenButton10"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="CellSlot10" parent="TouchScreenButton10" instance=ExtResource("3_gpxeb")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("5_mjh5m")
-stretch_mode = 3
-metadata/_edit_use_anchors_ = true
+color = Color(1, 1, 1, 0)
+draggable = true
+
+[connection signal="pressed" from="TouchScreenButton" to="TouchScreenButton/CellSlot" method="UseCell"]

@@ -13,7 +13,7 @@ offset_bottom = 32.0
 color = Color(0.32549, 0.305882, 0.290196, 1)
 script = ExtResource("1_ec554")
 
-[node name="Icon" type="TextureButton" parent="."]
+[node name="Icon" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
 anchor_left = 0.5
@@ -27,6 +27,7 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
+mouse_filter = 2
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="."]
@@ -40,10 +41,7 @@ offset_top = -19.0
 offset_bottom = 3.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "12"
 label_settings = SubResource("LabelSettings_s0bqm")
 horizontal_alignment = 2
 vertical_alignment = 2
 clip_text = true
-
-[connection signal="button_up" from="Icon" to="." method="_on_icon_button_up"]

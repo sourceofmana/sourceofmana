@@ -415,7 +415,6 @@ offset_right = 764.0
 offset_bottom = 486.0
 grow_horizontal = 1
 grow_vertical = 1
-blockActions = true
 
 [node name="Respawn" parent="Windows/Floating" instance=ExtResource("44_7o5pa")]
 visible = false

@@ -1,7 +1,8 @@
 extends ColorRect
 class_name ItemTile
 
-@onready var icon : TextureButton		= $Icon
+@export var draggable : bool			= false
+@onready var icon : TextureRect			= $Icon
 @onready var label : Label				= $Label
 var cell : BaseCell						= null
 
@@ -30,15 +31,31 @@ func SetCountLabel(count : int):
 func SetData(sourceCell : BaseCell, count : int = 1):
 	cell = sourceCell
 	if icon:
-		icon.set_texture_normal(cell.icon if cell else null)
+		icon.set_texture(cell.icon if cell else null)
 	SetCountLabel(count)
 	SetToolTip()
 	set_visible(count > 0 and cell != null)
 
-# Default
-func _on_icon_button_up():
+func UseCell():
 	if cell:
 		cell.Use()
 
-func _ready():
-	visible = false
+# Drag
+func _get_drag_data(_position : Vector2):
+	if cell and cell.usable:
+		if icon:
+			set_drag_preview(icon.duplicate())
+		return cell
+	return null
+
+func _can_drop_data(_at_position : Vector2, data):
+	return draggable and data is BaseCell and data != cell and data.usable
+
+func _drop_data(_at_position : Vector2, data):
+	SetData(data)
+
+# Default
+func _gui_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
+			UseCell()

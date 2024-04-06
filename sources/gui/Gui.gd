@@ -109,6 +109,10 @@ func _notification(notif):
 		Node.NOTIFICATION_WM_MOUSE_EXIT:
 			if windows:
 				windows.ClearWindowsModifier()
+		Node.NOTIFICATION_DRAG_BEGIN:
+			Launcher.Action.Enable(false)
+		Node.NOTIFICATION_DRAG_END:
+			Launcher.Action.Enable(true)
 
 func _ready():
 	Util.Assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
