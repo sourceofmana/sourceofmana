@@ -16,6 +16,7 @@ func RefreshInventory():
 
 	for item in Launcher.Player.inventory.items:
 		if item and item.cell:
+			ItemTile.RefreshShortcuts(item.cell, item.count)
 			if item.cell.stackable:
 				if tile:
 					tile.SetData(item.cell, item.count)

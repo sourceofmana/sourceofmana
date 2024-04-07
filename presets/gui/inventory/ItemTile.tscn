@@ -6,7 +6,7 @@
 line_spacing = 0.0
 font_size = 15
 
-[node name="Background" type="ColorRect"]
+[node name="Background" type="ColorRect" groups=["CellTile"]]
 custom_minimum_size = Vector2(34, 34)
 offset_right = 32.0
 offset_bottom = 32.0

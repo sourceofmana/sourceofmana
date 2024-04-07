@@ -34,7 +34,25 @@ func SetData(sourceCell : BaseCell, count : int = 1):
 		icon.set_texture(cell.icon if cell else null)
 	SetCountLabel(count)
 	SetToolTip()
-	set_visible(count > 0 and cell != null)
+	if not draggable:
+		set_visible(count > 0 and cell != null)
+
+static func RefreshShortcuts(baseCell : BaseCell, baseCount : int = -1):
+	if baseCell == null:
+		return
+
+	if baseCount < 0:
+		for item in Launcher.Player.inventory.items:
+			if item and item.cell and item.cell == baseCell:
+				baseCount = item.count
+				break
+
+	var tiles : Array[Node] = Launcher.GUI.get_tree().get_nodes_in_group("CellTile")
+	for shortcutTile in tiles:
+		if shortcutTile and shortcutTile.is_visible() and shortcutTile.draggable and shortcutTile.cell == baseCell:
+			shortcutTile.SetCountLabel(baseCount)
+			shortcutTile.icon.modulate = Color.BLACK if baseCount <= 0 else Color.WHITE
+			shortcutTile.icon.modulate.a = 0.5 if baseCount <= 0 else 1.0
 
 func UseCell():
 	if cell:
@@ -53,6 +71,7 @@ func _can_drop_data(_at_position : Vector2, data):
 
 func _drop_data(_at_position : Vector2, data):
 	SetData(data)
+	ItemTile.RefreshShortcuts(data)
 
 # Default
 func _gui_input(event):

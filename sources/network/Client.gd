@@ -102,6 +102,7 @@ func ItemRemoved(cell : BaseCell, count : int, _rpcID : int = NetworkCommons.Rid
 		Launcher.Player.inventory.PopItem(cell, count)
 	if Launcher.GUI and Launcher.GUI.inventoryWindow:
 		Launcher.GUI.inventoryWindow.RefreshInventory()
+		ItemTile.RefreshShortcuts(cell)
 
 func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and Launcher.Player.inventory:
