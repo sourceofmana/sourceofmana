@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://dphlgrm0elh6y" path="res://presets/gui/chat/Chat.tscn" id="5"]
 [ext_resource type="Texture2D" uid="uid://qfpxygkhxldq" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="5_fdh06"]
 [ext_resource type="Texture2D" uid="uid://ch5ego7ihyo0o" path="res://data/graphics/gui/icon/inventory.png" id="5_ntnop"]
-[ext_resource type="PackedScene" uid="uid://u31xl3ap3wd8" path="res://presets/gui/inventory/Inventory.tscn" id="6"]
 [ext_resource type="Texture2D" uid="uid://c3hjdee3hxsoy" path="res://data/graphics/gui/icon/chat.png" id="6_2quic"]
 [ext_resource type="Texture2D" uid="uid://qaut55ogln33" path="res://data/graphics/gui/menu/menubar_content.png" id="6_mf0sy"]
 [ext_resource type="Script" path="res://sources/gui/MenuIndicator.gd" id="6_npwx0"]
@@ -25,7 +24,6 @@
 [ext_resource type="Texture2D" uid="uid://dwnxstfs54r7t" path="res://data/graphics/gui/icon/quests.png" id="9_vtuwx"]
 [ext_resource type="PackedScene" uid="uid://6pundiwfj5s1" path="res://presets/shaders/HQ4x.tscn" id="10_id8es"]
 [ext_resource type="Texture2D" uid="uid://b7iy5lm8t328h" path="res://data/graphics/gui/icon/glossary.png" id="10_mq57a"]
-[ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/gui/emotes/Emote.tscn" id="10_q754c"]
 [ext_resource type="Texture2D" uid="uid://dbps18wiv7vlh" path="res://data/graphics/gui/icon/settings.png" id="11_17vy0"]
 [ext_resource type="PackedScene" uid="uid://bagfvnt2bhttv" path="res://presets/shaders/CRT.tscn" id="11_x7rk2"]
 [ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="14_xidsc"]
@@ -46,6 +44,8 @@
 [ext_resource type="Texture2D" uid="uid://reqjw3bt0dtj" path="res://data/graphics/gui/mobile/buttonB_pressed.png" id="27_rgxqc"]
 [ext_resource type="Texture2D" uid="uid://dgiywkj6go44v" path="res://data/graphics/gui/mobile/buttonA_pressed.png" id="29_ioa8a"]
 [ext_resource type="PackedScene" uid="uid://dhdq88so6g3yh" path="res://presets/gui/Stats.tscn" id="35_d1kq3"]
+[ext_resource type="PackedScene" uid="uid://u31xl3ap3wd8" path="res://presets/gui/Inventory.tscn" id="35_j05ha"]
+[ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/Emote.tscn" id="37_v7lrk"]
 [ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
@@ -329,7 +329,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
-[node name="Inventory" parent="Windows/Floating" instance=ExtResource("6")]
+[node name="Inventory" parent="Windows/Floating" instance=ExtResource("35_j05ha")]
 visible = false
 show_behind_parent = false
 layout_mode = 2
@@ -352,7 +352,7 @@ offset_top = 6.0
 offset_right = 1258.0
 offset_bottom = 131.0
 
-[node name="Emote" parent="Windows/Floating" instance=ExtResource("10_q754c")]
+[node name="Emote" parent="Windows/Floating" instance=ExtResource("37_v7lrk")]
 visible = false
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 2

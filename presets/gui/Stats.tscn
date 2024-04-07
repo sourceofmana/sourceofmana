@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhdq88so6g3yh"]
+[gd_scene load_steps=10 format=3 uid="uid://dhdq88so6g3yh"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_dhni5"]
 [ext_resource type="Script" path="res://sources/gui/StatPanel.gd" id="2_v116i"]
-[ext_resource type="PackedScene" uid="uid://p70cqs28fvau" path="res://presets/gui/emotes/Tile.tscn" id="3_45pqp"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="3_kjg3f"]
 [ext_resource type="Texture2D" uid="uid://wcw0ycx4hntu" path="res://data/graphics/gui/stat/spirit-hook.png" id="4_de8qp"]
 [ext_resource type="Texture2D" uid="uid://6a6qcdorvi4r" path="res://data/graphics/gui/pixeldark.png" id="4_fxktc"]
@@ -394,135 +393,6 @@ text = "Walk Speed"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
-
-[node name="VSeparator" type="VSeparator" parent="Scroll/Margin/Layout"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 30
-
-[node name="Attributes" type="VBoxContainer" parent="Scroll/Margin/Layout"]
-visible = false
-layout_mode = 2
-
-[node name="EquipmentLabel" type="Label" parent="Scroll/Margin/Layout/Attributes"]
-layout_mode = 2
-text = "Equipments"
-
-[node name="EquipmentGrid" type="GridContainer" parent="Scroll/Margin/Layout/Attributes"]
-layout_mode = 2
-size_flags_horizontal = 4
-columns = 3
-
-[node name="Empty" type="Control" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid"]
-layout_mode = 2
-
-[node name="Background" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="Empty2" type="Control" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid"]
-layout_mode = 2
-
-[node name="Background2" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="Background3" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="Background4" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="Background5" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="Background6" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="Background7" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="Background8" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="Empty3" type="Control" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid"]
-layout_mode = 2
-
-[node name="Background9" parent="Scroll/Margin/Layout/Attributes/EquipmentGrid" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="Scroll/Margin/Layout/Attributes"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="Label2" type="Label" parent="Scroll/Margin/Layout/Attributes"]
-layout_mode = 2
-text = "Skills"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Scroll/Margin/Layout/Attributes"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="SkillsVBox" type="VBoxContainer" parent="Scroll/Margin/Layout/Attributes/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="ManaBurstBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox/ManaBurstBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Mana Burst"
-
-[node name="Background" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox/ManaBurstBox" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="FlarBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox/FlarBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Flar"
-
-[node name="Background" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox/FlarBox" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="LumBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox/LumBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Lum"
-
-[node name="Background" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox/LumBox" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
-
-[node name="InmaBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox/InmaBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Inma"
-
-[node name="Background" parent="Scroll/Margin/Layout/Attributes/ScrollContainer/SkillsVBox/InmaBox" instance=ExtResource("3_45pqp")]
-custom_minimum_size = Vector2(34, 34)
-layout_mode = 2
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Button" to="." method="IncreaseStrength"]

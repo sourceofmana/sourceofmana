@@ -77,7 +77,6 @@ func EnterLoginMenu():
 func EnterGame():
 	if Launcher.Player:
 		tipsLabel.Display()
-		emoteContainer.FillGridContainer(DB.EmotesDB)
 
 		background.set_visible(false)
 		loginWindow.EnableControl(false)

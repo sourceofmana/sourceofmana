@@ -169,5 +169,6 @@ func Center():
 	reset_size()
 	global_position = get_viewport_rect().size / 2 - get_rect().size / 2
 
+#
 func _on_CloseButton_pressed():
 	set_visible(false)

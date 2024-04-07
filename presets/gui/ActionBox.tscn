@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://sources/gui/ActionBox.gd" id="1_ao5ox"]
 [ext_resource type="Texture2D" uid="uid://desxm6lbhpunn" path="res://data/graphics/gui/menu/menubar_button.png" id="1_pcpv2"]
 [ext_resource type="Texture2D" uid="uid://qfpxygkhxldq" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="2_7lddn"]
-[ext_resource type="PackedScene" uid="uid://cq76gfx44nn6q" path="res://presets/gui/inventory/ItemTile.tscn" id="3_gpxeb"]
+[ext_resource type="PackedScene" uid="uid://cq76gfx44nn6q" path="res://presets/gui/CellTile.tscn" id="3_gpxeb"]
 
 [node name="ActionBox" type="Control"]
 layout_mode = 3

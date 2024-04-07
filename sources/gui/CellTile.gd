@@ -1,5 +1,5 @@
 extends ColorRect
-class_name ItemTile
+class_name CellTile
 
 @export var draggable : bool			= false
 @onready var icon : TextureRect			= $Icon
@@ -71,7 +71,7 @@ func _can_drop_data(_at_position : Vector2, data):
 
 func _drop_data(_at_position : Vector2, data):
 	SetData(data)
-	ItemTile.RefreshShortcuts(data)
+	CellTile.RefreshShortcuts(data)
 
 # Default
 func _gui_input(event):

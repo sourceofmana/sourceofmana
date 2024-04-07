@@ -1,6 +1,6 @@
 extends Control
 
-@onready var slots : Array[ItemTile] = [
+@onready var slots : Array[CellTile] = [
 	$TouchScreenButton/CellSlot,
 	$TouchScreenButton2/CellSlot2,
 	$TouchScreenButton3/CellSlot3,
