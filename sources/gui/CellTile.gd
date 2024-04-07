@@ -41,7 +41,9 @@ static func RefreshShortcuts(baseCell : BaseCell, baseCount : int = -1):
 	if baseCell == null or not Launcher.Player or not Launcher.Player.inventory:
 		return
 
-	if baseCount < 0:
+	if baseCell.type != CellCommons.Type.ITEM:
+		baseCount = 1
+	elif baseCount < 0:
 		for item in Launcher.Player.inventory.items:
 			if item and item.cell and item.cell == baseCell:
 				baseCount = item.count
