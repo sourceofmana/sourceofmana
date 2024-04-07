@@ -8,6 +8,7 @@ extends ServiceBase
 
 @onready var shortcuts : Container				= $Overlay/Sections/Shortcuts
 @onready var sticks : Container					= $Overlay/Sections/Shortcuts/Sticks
+@onready var boxes : Control					= $Overlay/Sections/Shortcuts/Boxes
 
 @onready var notificationLabel : RichTextLabel	= $Overlay/Sections/Notification
 @onready var tipsLabel : PanelContainer			= $Overlay/Sections/Tips
