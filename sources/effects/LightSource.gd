@@ -17,7 +17,7 @@ func _ready():
 	add_to_group("lights")
 
 	if Effects.lightLayer:
-		radius = radius * (1 - Effects.lightLayer.lightLevel) * (2 + Effects.lightLayer.lightLevel)
+		radius = radius * (1 - Effects.lightLayer.lightLevel) * (2.5 + Effects.lightLayer.lightLevel)
 
 func _physics_process(_delta):
 	currentRadius = int(radius * rescale)
