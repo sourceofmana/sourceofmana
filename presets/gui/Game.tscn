@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=53 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://b7iy5lm8t328h" path="res://data/graphics/gui/icon/glossary.png" id="10_mq57a"]
 [ext_resource type="Texture2D" uid="uid://dbps18wiv7vlh" path="res://data/graphics/gui/icon/settings.png" id="11_17vy0"]
 [ext_resource type="PackedScene" uid="uid://bagfvnt2bhttv" path="res://presets/shaders/CRT.tscn" id="11_x7rk2"]
+[ext_resource type="Texture2D" uid="uid://cqqe5ynqasynu" path="res://data/graphics/gui/icon/skills.png" id="13_h6wc7"]
 [ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="14_xidsc"]
 [ext_resource type="JSON" path="res://data/db/news.json" id="15_q438c"]
 [ext_resource type="PackedScene" uid="uid://b5tdyq8opcs0u" path="res://presets/gui/Settings.tscn" id="16_gapih"]
@@ -46,6 +47,7 @@
 [ext_resource type="PackedScene" uid="uid://dhdq88so6g3yh" path="res://presets/gui/Stats.tscn" id="35_d1kq3"]
 [ext_resource type="PackedScene" uid="uid://u31xl3ap3wd8" path="res://presets/gui/Inventory.tscn" id="35_j05ha"]
 [ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/Emote.tscn" id="37_v7lrk"]
+[ext_resource type="PackedScene" uid="uid://b5jgfu2dukotm" path="res://presets/gui/Skill.tscn" id="38_ompay"]
 [ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
@@ -184,6 +186,14 @@ icon = ExtResource("8_ppxwt")
 flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Emote")
 targetShortcut = &"ui_emote"
+
+[node name="Skill" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+use_parent_material = true
+layout_mode = 2
+icon = ExtResource("13_h6wc7")
+flat = true
+targetWindow = NodePath("../../../../../../../Windows/Floating/Skill")
+targetShortcut = &"ui_skill"
 
 [node name="News" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
@@ -360,7 +370,12 @@ offset_left = 68.0
 offset_top = 25.0
 offset_right = 306.0
 offset_bottom = 68.0
-blockActions = false
+
+[node name="Skill" parent="Windows/Floating" instance=ExtResource("38_ompay")]
+layout_mode = 0
+offset_top = 71.0
+offset_right = 213.0
+offset_bottom = 114.0
 
 [node name="Chat" parent="Windows/Floating" instance=ExtResource("5")]
 visible = false

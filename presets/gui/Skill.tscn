@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5jgfu2dukotm"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_5ty27"]
+[ext_resource type="Script" path="res://sources/gui/Skill.gd" id="2_m74ld"]
+[ext_resource type="Script" path="res://sources/gui/CellGrid.gd" id="3_vf0uc"]
+
+[node name="Skill" type="PanelContainer"]
+visible = false
+custom_minimum_size = Vector2(38, 38)
+offset_left = 68.0
+offset_top = 25.0
+offset_right = 306.0
+offset_bottom = 68.0
+theme = ExtResource("1_5ty27")
+script = ExtResource("2_m74ld")
+
+[node name="ItemContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+
+[node name="Grid" type="GridContainer" parent="ItemContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+script = ExtResource("3_vf0uc")
+maxCount = 17
+
+[connection signal="gui_input" from="." to="." method="OnGuiInput"]

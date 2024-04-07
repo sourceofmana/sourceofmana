@@ -23,6 +23,7 @@ extends ServiceBase
 @onready var chatWindow : WindowPanel			= $Windows/Floating/Chat
 @onready var settingsWindow : WindowPanel		= $Windows/Floating/Settings
 @onready var emoteWindow : WindowPanel			= $Windows/Floating/Emote
+@onready var skillWindow : WindowPanel			= $Windows/Floating/Skill
 @onready var quitWindow : WindowPanel			= $Windows/Floating/Quit
 @onready var respawnWindow : WindowPanel		= $Windows/Floating/Respawn
 @onready var statWindow : WindowPanel			= $Windows/Floating/Stat
