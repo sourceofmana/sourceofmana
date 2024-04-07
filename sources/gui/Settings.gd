@@ -18,6 +18,7 @@ const userSection : String						= "User"
 		"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
 		"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
 		"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
+		"Session-ShortcutCells": [init_shortcutcells, set_shortcutcells, apply_shortcutcells, null],
 	}
 ]
 
@@ -238,6 +239,45 @@ func apply_sessionoverlay(overlay : Array):
 					floatingWindow.set_position(window[ESessionOverlay.POSITION])
 					floatingWindow.UpdateWindow()
 
+# Shortcut cells
+func init_shortcutcells(apply : bool):
+	if apply:
+		var cells : Array = GetVal("Session-ShortcutCells")
+		apply_shortcutcells(cells)
+func save_shortcutcells():
+	var cells : Array = []
+	if Launcher.GUI:
+		for tile in Launcher.GUI.get_tree().get_nodes_in_group("CellTile"):
+			if tile and tile.is_visible() and tile.draggable and tile.cell:
+				cells.append([tile.name, tile.cell.name, tile.cell.type])
+		set_shortcutcells(cells)
+func set_shortcutcells(cells : Array):
+	SetVal("Session-ShortcutCells", cells)
+func apply_shortcutcells(cells : Array):
+	if Launcher.GUI and Launcher.GUI:
+		for tile in Launcher.GUI.get_tree().get_nodes_in_group("CellTile"):
+			if cells.size() == 0:
+				break
+			if tile and tile.draggable:
+				for cellInfo in cells:
+					if cellInfo and cellInfo is Array and cellInfo.size() >= 3 and cellInfo[0] == tile.name:
+						var cell : BaseCell = null
+						match cellInfo[2]:
+							CellCommons.Type.ITEM:
+								if DB.ItemsDB.has(cellInfo[1]):
+									cell = DB.ItemsDB[cellInfo[1]]
+							CellCommons.Type.EMOTE:
+								if DB.EmotesDB.has(cellInfo[1]):
+									cell = DB.EmotesDB[cellInfo[1]]
+							CellCommons.Type.SKILL:
+								if DB.SkillsDB.has(cellInfo[1]):
+									cell = DB.SkillsDB[cellInfo[1]]
+						if cell:
+							tile.SetData(cell)
+							ItemTile.RefreshShortcuts(cell)
+						cells.erase(cellInfo)
+						break
+
 #
 func _on_visibility_changed():
 	RefreshSettings(false)
@@ -254,6 +294,7 @@ func _exit_tree():
 	if not Launcher.FSM.playerName.is_empty():
 		save_sessionoverlay()
 		save_windowPos()
+		save_shortcutcells()
 		SaveSettings()
 
 # Conf accessors

@@ -38,7 +38,7 @@ func SetData(sourceCell : BaseCell, count : int = 1):
 		set_visible(count > 0 and cell != null)
 
 static func RefreshShortcuts(baseCell : BaseCell, baseCount : int = -1):
-	if baseCell == null:
+	if baseCell == null or not Launcher.Player or not Launcher.Player.inventory:
 		return
 
 	if baseCount < 0:
