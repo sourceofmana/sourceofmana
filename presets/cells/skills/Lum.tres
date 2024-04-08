@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_cyfet"]
 [ext_resource type="Texture2D" uid="uid://beopkthljhi86" path="res://data/graphics/effects/particles/cast3.png" id="2_h2x4c"]
-[ext_resource type="Texture2D" uid="uid://cj2x2kwnfcla3" path="res://data/graphics/items/skill/spell.png" id="3_m17ad"]
+[ext_resource type="Texture2D" uid="uid://b18hg2xpjuv4k" path="res://data/graphics/items/skill/lum.png" id="3_uxkv0"]
 [ext_resource type="Script" path="res://sources/cell/SkillCell.gd" id="4_7n1yh"]
 [ext_resource type="PackedScene" uid="uid://676e7kfvces4" path="res://presets/effects/particles/Heal.tscn" id="5_me0na"]
 
@@ -22,7 +22,7 @@ skillColor = Color(0, 0, 0, 1)
 skillTime = 2.0
 name = "Lum"
 description = "Heal yourself with a burst of restorative energy."
-icon = ExtResource("3_m17ad")
+icon = ExtResource("3_uxkv0")
 type = 2
 weight = 0.0
 stackable = false
