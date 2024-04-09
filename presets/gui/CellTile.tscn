@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cq76gfx44nn6q"]
+[gd_scene load_steps=4 format=3 uid="uid://cq76gfx44nn6q"]
 
 [ext_resource type="Script" path="res://sources/gui/CellTile.gd" id="1_ec554"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_nr8t2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_s0bqm"]
 line_spacing = 0.0
@@ -10,6 +11,7 @@ font_size = 15
 custom_minimum_size = Vector2(34, 34)
 offset_right = 32.0
 offset_bottom = 32.0
+theme = ExtResource("1_nr8t2")
 color = Color(0.32549, 0.305882, 0.290196, 1)
 script = ExtResource("1_ec554")
 

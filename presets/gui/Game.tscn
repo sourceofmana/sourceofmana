@@ -373,6 +373,7 @@ offset_bottom = 68.0
 
 [node name="Skill" parent="Windows/Floating" instance=ExtResource("38_ompay")]
 layout_mode = 0
+offset_left = 0.0
 offset_top = 71.0
 offset_right = 213.0
 offset_bottom = 114.0

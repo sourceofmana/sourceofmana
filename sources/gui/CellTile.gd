@@ -8,15 +8,14 @@ var cell : BaseCell						= null
 
 # Private
 func SetToolTip():
-	if icon:
-		var tooltip : String = ""
-		if cell:
-			tooltip = cell.name
-			if cell.description:
-				tooltip += "\n" + cell.description
-			if cell.weight == 0:
-				tooltip += "\n\nWeight: " + str(cell.weight) + "g"
-		icon.set_tooltip_text(tooltip)
+	var tooltip : String = ""
+	if cell:
+		tooltip = cell.name
+		if cell.description:
+			tooltip += "\n" + cell.description
+		if cell.weight == 0:
+			tooltip += "\n\nWeight: " + str(cell.weight) + "g"
+	set_tooltip_text(tooltip)
 
 func SetCountLabel(count : int):
 	if label:
