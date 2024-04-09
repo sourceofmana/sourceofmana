@@ -191,6 +191,10 @@
 	"2000": {
 		"Name": "Becees",
 		"Ethnicity": "Player",
+		"Shaders":
+		{
+			"Body": "presets/palettes/human-skin-dark.tres",
+		},
 		"Hairstyle": "Bald",
 		"NavigationAgent": "NPAgent",
 		"Collision": "Small",
@@ -216,7 +220,7 @@
 		},
 		"Shaders":
 		{
-			"Body": "presets/palettes/human-skin-dark.tres",
+			"Body": "presets/palettes/human-skin-tanned.tres",
 		},
 		"Hairstyle": "Bald",
 		"NavigationAgent": "NPAgent",
