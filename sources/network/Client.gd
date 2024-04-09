@@ -34,7 +34,7 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidS
 		var entity : Entity = Entities.Get(ridAgent)
 		if entity && entity.get_parent():
 			if entity.type == ActorCommons.Type.PLAYER && Launcher.GUI:
-				Launcher.GUI.chatContainer.AddPlayerText(entity.get_name(), text)
+				Launcher.GUI.chatContainer.AddPlayerText(entity.nick, text)
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
 

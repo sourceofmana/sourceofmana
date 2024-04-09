@@ -6,7 +6,6 @@ class_name Entity
 @onready var visual : EntityVisual				= $Visual
 
 var target : Entity						= null
-var displayName : bool					= false
 
 var gender : ActorCommons.Gender		= ActorCommons.Gender.MALE
 var entityVelocity : Vector2			= Vector2.ZERO
@@ -19,9 +18,8 @@ signal entity_died
 
 # Init
 func SetData(data : EntityData):
-	# Display
-	displayName = type == ActorCommons.Type.PLAYER or data._displayName
 	SetVisual(data)
+	interactive.Init(data)
 
 func SetVisual(data : EntityData, morphed : bool = false):
 	var visualInitCallback : Callable = visual.Init.bind(data)

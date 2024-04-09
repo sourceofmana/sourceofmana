@@ -10,6 +10,8 @@ class_name EntityInteractive
 
 @onready var entity : Entity				= get_parent()
 
+var displayName : bool						= false
+
 #
 func DisplayEmote(emoteID : String):
 	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
@@ -147,14 +149,16 @@ func _physics_process(delta):
 			healthBar.visible = false
 			nameLabel.visible = entity.displayName
 
+func Init(data : EntityData):
+	displayName = entity.type == ActorCommons.Type.PLAYER or data._displayName
+	if nameLabel:
+		nameLabel.set_text(entity.nick)
+		nameLabel.set_visible(displayName)
+
 func _ready():
 	Util.Assert(entity != null, "No Entity is found as parent for this Interactive node")
 	if not entity:
 		return
-
-	if nameLabel:
-		nameLabel.set_text(entity.nick)
-		nameLabel.set_visible(entity.displayName)
 
 	if visibleNode and entity.visual:
 		entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
