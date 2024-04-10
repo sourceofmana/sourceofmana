@@ -41,8 +41,8 @@ func WarpPlayer(mapName : String, rpcID : int = NetworkCommons.RidSingleMode):
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("AddEntity", [agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastName], rpcID)
+func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("AddEntity", [agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
 func RemoveEntity(agentID : int, rpcID : int = NetworkCommons.RidSingleMode):
@@ -63,12 +63,12 @@ func SetMovePos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("SetMovePos", [pos], rpcID, NetworkCommons.DelayInstant)
 
 @rpc("authority", "call_remote", "unreliable_ordered", EChannel.NAVIGATION)
-func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("UpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastName], rpcID)
+func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("UpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.NAVIGATION)
-func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastName : String,  rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ForceUpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastName], rpcID)
+func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int,  rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ForceUpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
 func ClearNavigation(rpcID : int = NetworkCommons.RidSingleMode):
@@ -76,12 +76,12 @@ func ClearNavigation(rpcID : int = NetworkCommons.RidSingleMode):
 
 # Emote
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerEmote(emote : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerEmote", [emote], rpcID)
+func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("TriggerEmote", [emoteID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION) 
-func EmotePlayer(senderAgentID : int, emote : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("EmotePlayer", [senderAgentID, emote], rpcID)
+func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
 
 # Sit
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
@@ -104,12 +104,12 @@ func TriggerInteract(entityID : int, rpcID : int = NetworkCommons.RidSingleMode)
 
 # Combat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerCast(entityID : int, skillName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerCast", [entityID, skillName], rpcID)
+func TriggerCast(entityID : int, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("TriggerCast", [entityID, skillID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func TargetAlteration(agentID : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("TargetAlteration", [agentID, targetID, value, alteration, skillName], rpcID)
+func TargetAlteration(agentID : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("TargetAlteration", [agentID, targetID, value, alteration, skillID], rpcID)
 
 # Morph
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
@@ -143,16 +143,16 @@ func AddAttribute(stat : ActorCommons.Attribute, rpcID : int = NetworkCommons.Ri
 
 # Items
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemAdded(cell : BaseCell, count : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ItemAdded", [cell, count], rpcID)
+func ItemAdded(itemID : int, count : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ItemAdded", [itemID, count], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemRemoved(cell : BaseCell, count : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ItemRemoved", [cell, count], rpcID)
+func ItemRemoved(itemID : int, count : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ItemRemoved", [itemID, count], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func UseItem(itemName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("UseItem", [itemName], rpcID)
+func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("UseItem", [itemID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
@@ -161,6 +161,7 @@ func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func RefreshInventory(cells : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("RefreshInventory", [cells], rpcID)
+
 #
 func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:
 	if Server:

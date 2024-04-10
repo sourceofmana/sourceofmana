@@ -18,7 +18,7 @@ var lastPositions : Array[float]		= []
 
 var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
-var currentSkillName : String			= ""
+var currentSkillID : int				= -1
 var currentVelocity : Vector2i			= Vector2i.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var forceUpdate : bool					= false
@@ -79,8 +79,8 @@ func SetVelocity():
 func SetCurrentState():
 	if stat.health <= 0:
 		SetState(ActorCommons.State.DEATH)
-	elif DB.SkillsDB.has(currentSkillName):
-		SetState(DB.SkillsDB[currentSkillName].state)
+	elif DB.SkillsDB.has(currentSkillID):
+		SetState(DB.SkillsDB[currentSkillID].state)
 	elif currentVelocity == Vector2i.ZERO:
 		SetState(ActorCommons.State.IDLE)
 	else:
@@ -92,10 +92,10 @@ func SetState(wantedState : ActorCommons.State) -> bool:
 	state = nextState
 	return state == wantedState
 
-func SetSkillCastName(skillName : String):
-	forceUpdate = forceUpdate or DB.SkillsDB.has(currentSkillName)
-	currentSkillName = skillName
-	if skillName.length() > 0:
+func SetSkillCastID(skillID : int):
+	forceUpdate = forceUpdate or DB.SkillsDB.has(currentSkillID)
+	currentSkillID = skillID
+	if skillID >= SkillCommons.SkillDefaultAttack:
 		skillSelected = null
 
 func AddSkill(skill : SkillCell, proba : float):
@@ -116,7 +116,7 @@ func WalkToward(pos : Vector2):
 	if pos == position:
 		return
 
-	if DB.SkillsDB.has(currentSkillName):
+	if DB.SkillsDB.has(currentSkillID):
 		Skill.Stopped(self)
 
 	hasCurrentGoal = true
@@ -133,12 +133,12 @@ func UpdateChanged():
 	if currentInput != Vector2.ZERO:
 		currentOrientation = Vector2(currentVelocity).normalized()
 	var functionName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
-	Launcher.Network.Server.NotifyInstance(self, functionName, [velocity, position, currentOrientation, state, currentSkillName])
+	Launcher.Network.Server.NotifyInstance(self, functionName, [velocity, position, currentOrientation, state, currentSkillID])
 
 #
 func SetData(data : EntityData):
-	for skill in data._skillSet:
-		AddSkill(skill, data._skillProba[skill])
+	for skillID in data._skillSet:
+		AddSkill(DB.SkillsDB[skillID], data._skillProba[skillID])
 
 	entityRadius = data._radius
 
@@ -185,7 +185,7 @@ func GetDamageRatio(attacker : BaseAgent) -> float:
 	return 0.0
 
 func Killed():
-	SetSkillCastName("")
+	SetSkillCastID(-1)
 	Formula.ApplyXp(self)
 	if aiTimer:
 		AI.SetState(self, AI.State.HALT)

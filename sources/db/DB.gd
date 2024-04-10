@@ -63,22 +63,31 @@ static func ParseEntitiesDB():
 			EntitiesDB[key] = EntityData.Create(key, result[key])
 
 static func ParseEmotesDB():
-	for file in FileSystem.GetFiles(Path.EmotePst):
-		var cell : BaseCell = FileSystem.LoadCell(Path.EmotePst + file)
-		if cell:
-			EmotesDB[cell.name] = cell
+	var result = FileSystem.LoadDB("emotes.json")
+
+	if not result.is_empty():
+		for key in result:
+			var cell : BaseCell = FileSystem.LoadCell(Path.EmotePst + result[key].Path + Path.RscExt)
+			cell.id = key
+			EmotesDB[int(cell.id)] = cell
 
 static func ParseItemsDB():
-	for file in FileSystem.GetFiles(Path.ItemPst):
-		var cell : BaseCell = FileSystem.LoadCell(Path.ItemPst + file)
-		if cell:
-			ItemsDB[cell.name] = cell
+	var result = FileSystem.LoadDB("items.json")
+
+	if not result.is_empty():
+		for key in result:
+			var cell : BaseCell = FileSystem.LoadCell(Path.ItemPst + result[key].Path + Path.RscExt)
+			cell.id = key
+			ItemsDB[int(cell.id)] = cell
 
 static func ParseSkillsDB():
-	for file in FileSystem.GetFiles(Path.SkillPst):
-		var cell : SkillCell = FileSystem.LoadCell(Path.SkillPst + file)
-		if cell:
-			SkillsDB[cell.name] = cell
+	var result = FileSystem.LoadDB("skills.json")
+
+	if not result.is_empty():
+		for key in result:
+			var cell : BaseCell = FileSystem.LoadCell(Path.SkillPst + result[key].Path + Path.RscExt)
+			cell.id = key
+			SkillsDB[int(cell.id)] = cell
 
 #
 static func GetMapPath(mapName : String) -> String:

@@ -91,10 +91,10 @@ func ImportInventory(data : Dictionary):
 func ExportInventory() -> Dictionary:
 	var data : Dictionary = {}
 	for item in items:
-		if data.has(item.cell.name):
-			data[item.cell.name] += item.count
+		if data.has(item.cell.id):
+			data[item.cell.id] += item.count
 		else:
-			data[item.cell.name] = item.count
+			data[item.cell.id] = item.count
 	return data
 
 #

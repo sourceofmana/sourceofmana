@@ -21,4 +21,4 @@ class_name SkillCell
 #
 func Use():
 	if usable:
-		Launcher.Player.Cast(name)
+		Launcher.Player.Cast(self.id)

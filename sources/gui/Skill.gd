@@ -7,8 +7,8 @@ func RefreshSkills():
 	var tileIdx : int		= 0
 	var tile : CellTile		= grid.tiles[tileIdx]
 
-	for skillName in DB.SkillsDB:
-		var skill : BaseCell = DB.SkillsDB[skillName]
+	for skillID in DB.SkillsDB:
+		var skill : BaseCell = DB.SkillsDB[skillID]
 		if skill is BaseCell:
 			CellTile.RefreshShortcuts(skill, 1)
 			if tile:

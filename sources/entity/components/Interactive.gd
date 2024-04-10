@@ -13,7 +13,7 @@ class_name EntityInteractive
 var displayName : bool						= false
 
 #
-func DisplayEmote(emoteID : String):
+func DisplayEmote(emoteID : int):
 	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
 	if emoteFx:
 		if DB.EmotesDB && DB.EmotesDB[emoteID]:
@@ -38,9 +38,9 @@ func DisplayLevelUp():
 		add_child(particle)
 
 #
-func DisplayCast(emitter : Entity, skillName : String):
-	if DB.SkillsDB.has(skillName):
-		var skill : SkillCell = DB.SkillsDB[skillName]
+func DisplayCast(emitter : Entity, skillID : int):
+	if DB.SkillsDB.has(skillID):
+		var skill : SkillCell = DB.SkillsDB[skillID]
 		if skill.castPreset:
 			var castFx : GPUParticles2D = skill.castPreset.instantiate()
 			if castFx:
@@ -77,7 +77,7 @@ func DisplayProjectile(emitter : Entity, skill : SkillCell, callable : Callable)
 			projectileNode.callable = callable
 			Launcher.Map.tilemapNode.add_child(projectileNode)
 
-func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteration : ActorCommons.Alteration, skillName : String):
+func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteration : ActorCommons.Alteration, skillID : int):
 	if Launcher.Map.tilemapNode:
 		if alteration != ActorCommons.Alteration.PROJECTILE:
 			var newLabel : Label = ActorCommons.AlterationLabel.instantiate()
@@ -87,8 +87,8 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			target.stat.health += value if alteration == ActorCommons.Alteration.HEAL else -value
 			target.stat.RefreshActiveStats()
 
-		if DB.SkillsDB.has(skillName):
-			var skill : SkillCell = DB.SkillsDB[skillName]
+		if DB.SkillsDB.has(skillID):
+			var skill : SkillCell = DB.SkillsDB[skillID]
 			if skill.mode != Skill.TargetMode.ZONE:
 				var callable : Callable = DisplaySkill.bind(target, skill)
 				if alteration == ActorCommons.Alteration.PROJECTILE:
@@ -143,11 +143,11 @@ func RefreshVisibleNodeOffset(offset : int):
 func _physics_process(delta):
 	if healthBar.visible and healthBar.modulate.a < 1:
 		healthBar.modulate.a = max(0, healthBar.modulate.a - delta * 2)
-		if not entity.displayName:
+		if not displayName:
 			nameLabel.modulate.a = healthBar.modulate.a
 		if healthBar.modulate.a == 0:
 			healthBar.visible = false
-			nameLabel.visible = entity.displayName
+			nameLabel.visible = displayName
 
 func Init(data : EntityData):
 	displayName = entity.type == ActorCommons.Type.PLAYER or data._displayName

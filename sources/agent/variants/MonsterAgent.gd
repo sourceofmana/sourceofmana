@@ -13,4 +13,4 @@ func _ready():
 
 	super._ready()
 
-	AddSkill(DB.SkillsDB["Melee"], 1.0)
+	AddSkill(DB.SkillsDB[SkillCommons.SkillDefaultAttack], 1.0)

@@ -29,7 +29,7 @@ func SetVisual(data : EntityData, morphed : bool = false):
 		visualInitCallback.call()
 
 #
-func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextSkillCastName : String):
+func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextskillCastID : int):
 	var dist = Vector2(gardbandPosition - position).length_squared()
 	if dist > NetworkCommons.MaxGuardbandDistSquared:
 		position = gardbandPosition
@@ -40,9 +40,9 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	state = nextState
 	entityOrientation = nextOrientation
 
-	if visual and visual.skillCastName != nextSkillCastName:
-		visual.skillCastName = nextSkillCastName
-		interactive.DisplayCast(self, nextSkillCastName)
+	if visual and visual.skillCastID != nextskillCastID:
+		visual.skillCastID = nextskillCastID
+		interactive.DisplayCast(self, nextskillCastID)
 
 	if previousState != nextState and nextState == ActorCommons.State.DEATH:
 		entity_died.emit()
@@ -85,10 +85,10 @@ func Interact():
 	if target.type == ActorCommons.Type.NPC:
 		Launcher.Network.TriggerInteract(target.agentID)
 	elif target.type == ActorCommons.Type.MONSTER:
-		Cast("Melee")
+		Cast(SkillCommons.SkillDefaultAttack)
 
-func Cast(skillName : String):
-	var skill : SkillCell = DB.SkillsDB[skillName]
+func Cast(skillID : int):
+	var skill : SkillCell = DB.SkillsDB[skillID]
 	Util.Assert(skill != null, "Skill ID is not found, can't cast it")
 	if skill == null:
 		return
@@ -100,7 +100,7 @@ func Cast(skillName : String):
 		if target and target.type == ActorCommons.Type.MONSTER:
 			entityID = target.agentID
 
-	Launcher.Network.TriggerCast(entityID, skillName)
+	Launcher.Network.TriggerCast(entityID, skillID)
 
 #
 func _physics_process(delta : float):

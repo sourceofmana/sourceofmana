@@ -76,7 +76,7 @@ func AddChild(entity : Entity):
 		tilemapNode.add_child(entity)
 
 #
-func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastName : String):
+func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int):
 	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.FSM.playerName
 	var entity : Entity = null
 	if tilemapNode:
@@ -92,7 +92,7 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 					Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
-		Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastName])
+		Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastID])
 		AddChild(entity)
 		Entities.Add(entity, agentID)
 
@@ -105,12 +105,12 @@ func RemoveEntity(agentID : int):
 		RemoveChild(entity)
 		Entities.Erase(agentID)
 
-func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastName : String):
+func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int):
 	var entity : Entity = Entities.Get(agentID)
 	if entity:
-		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastName)
+		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID)
 
-func EmotePlayer(agentID : int, emote : String):
+func EmotePlayer(agentID : int, emoteID : int):
 	var entity : Entity = Entities.Get(agentID)
 	if entity && entity.get_parent() && entity.interactive:
-		entity.interactive.DisplayEmote(emote)
+		entity.interactive.DisplayEmote(emoteID)

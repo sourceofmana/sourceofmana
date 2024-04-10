@@ -31,7 +31,7 @@ func ConnectPlayer(nickname : String, rpcID : int = NetworkCommons.RidSingleMode
 	if not GetAgent(rpcID) and not nickname in onlineList.GetPlayerNames():
 		var agent : BaseAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
 		playerMap[rpcID].agentRID = agent.get_rid().get_id()
-		agent.inventory.ImportInventory({"Apple": 5, "Dorian's Key": 2})
+		agent.inventory.ImportInventory({0: 5, 1: 2})
 
 		onlineList.UpdateJson()
 		Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
@@ -83,8 +83,8 @@ func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
 	if player is PlayerAgent:
 		player.Respawn()
 
-func TriggerEmote(emote : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NotifyInstance(GetAgent(rpcID), "EmotePlayer", [emote])
+func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NotifyInstance(GetAgent(rpcID), "EmotePlayer", [emoteID])
 
 func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
 	NotifyInstance(GetAgent(rpcID), "ChatAgent", [text])
@@ -96,11 +96,11 @@ func TriggerInteract(triggeredAgentID : int, rpcID : int = NetworkCommons.RidSin
 		if triggeredAgent:
 			triggeredAgent.Interact(player)
 
-func TriggerCast(targetID : int, skillName : String, rpcID : int = NetworkCommons.RidSingleMode):
+func TriggerCast(targetID : int, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
-	if player and DB.SkillsDB.has(skillName):
+	if player and DB.SkillsDB.has(skillID):
 		var target : BaseAgent = WorldAgent.GetAgent(targetID)
-		Skill.Cast(player, target, DB.SkillsDB[skillName])
+		Skill.Cast(player, target, DB.SkillsDB[skillID])
 
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
@@ -117,8 +117,8 @@ func AddAttribute(attribute : ActorCommons.Attribute, rpcID : int = NetworkCommo
 	if player and player.stat:
 		player.stat.AddAttribute(attribute)
 
-func UseItem(itemName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	var cell : BaseCell = DB.ItemsDB[itemName] if DB.ItemsDB.has(itemName) else null
+func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
 	if cell and cell.usable:
 		var player : BaseAgent = GetAgent(rpcID)
 		if player and player.inventory:

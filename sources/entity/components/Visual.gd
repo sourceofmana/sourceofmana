@@ -16,7 +16,7 @@ var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
 var blendSpacePaths : Dictionary			= {}
 var timeScalePaths : Dictionary				= {}
 
-var skillCastName : String					= ""
+var skillCastID : int						= SkillCommons.SkillNone
 var attackAnimLength : float				= 1.0
 
 #

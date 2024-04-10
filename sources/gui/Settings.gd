@@ -249,7 +249,7 @@ func save_shortcutcells():
 	if Launcher.GUI:
 		for tile in Launcher.GUI.get_tree().get_nodes_in_group("CellTile"):
 			if tile and tile.is_visible() and tile.draggable and tile.cell:
-				cells.append([tile.name, tile.cell.name, tile.cell.type])
+				cells.append([tile.name, tile.cell.id, tile.cell.type])
 		set_shortcutcells(cells)
 func set_shortcutcells(cells : Array):
 	SetVal("Session-ShortcutCells", cells)

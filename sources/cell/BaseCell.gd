@@ -1,6 +1,7 @@
 extends Resource
 class_name BaseCell
 
+@export var id : int							= -1
 @export var name : String						= "Unknown"
 @export var description : String				= ""
 @export var icon : Texture2D					= null
@@ -16,10 +17,10 @@ func Use():
 	if Launcher.Network.Client and usable:
 		match type:
 			CellCommons.Type.ITEM:
-				Launcher.Network.UseItem(name)
+				Launcher.Network.UseItem(id)
 			CellCommons.Type.EMOTE:
-				Launcher.Network.TriggerEmote(name)
+				Launcher.Network.TriggerEmote(id)
 			CellCommons.Type.SKILL:
-				Launcher.Player.Cast(name)
+				Launcher.Player.Cast(id)
 			_:
 				Util.Assert(false, "Cell type not recognized")

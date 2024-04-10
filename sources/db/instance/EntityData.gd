@@ -12,7 +12,7 @@ class_name EntityData
 @export var _customShaders : Array[String]		= []
 @export var _displayName : bool					= false
 @export var _stats : Dictionary					= {}
-@export var _skillSet : Array[SkillCell]		= []
+@export var _skillSet : Array[int]				= []
 @export var _skillProba : Dictionary			= {}
 
 func _init():
@@ -46,8 +46,9 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 			entity._stats[statName] = result.Stat[statName]
 	if "SkillSet" in result:
 		for skillSetName in result.SkillSet:
-			if DB.SkillsDB.has(skillSetName):
-				entity._skillSet.append(DB.SkillsDB[skillSetName])
-				entity._skillProba[DB.SkillsDB[skillSetName]] = result.SkillSet[skillSetName]
+			var skillSetID : int = int(skillSetName)
+			if DB.SkillsDB.has(skillSetID):
+				entity._skillSet.append(skillSetID)
+				entity._skillProba[skillSetID] = result.SkillSet[skillSetName]
 
 	return entity

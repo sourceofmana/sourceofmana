@@ -9,25 +9,25 @@ func WarpPlayer(map : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player:
 		Launcher.Player.entityVelocity = Vector2.ZERO
 
-func EmotePlayer(playerID : int, emote : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.EmotePlayer(playerID, emote)
+		Launcher.Map.EmotePlayer(playerID, emoteID)
 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastName : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastName)
+		Launcher.Map.AddEntity(agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastID)
 
 func RemoveEntity(agentID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentID)
 
-func ForceUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastName : String):
+func ForceUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, state, skillCastName)
+		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, state, skillCastID)
 
-func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastName : String):
+func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, state, skillCastName)
+		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, state, skillCastID)
 
 func ChatAgent(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -38,12 +38,12 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidS
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
 
-func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillName : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(targetID)
 		var caller : Entity = Entities.Get(ridAgent)
 		if caller && entity && entity.get_parent() and entity.interactive:
-			entity.interactive.DisplayAlteration(entity, caller, value, alteration, skillName)
+			entity.interactive.DisplayAlteration(entity, caller, value, alteration, skillID)
 
 func TargetLevelUp(targetID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -91,18 +91,20 @@ func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : 
 			entity.stat.concentration	= concentration
 			entity.stat.RefreshAttributes()
 
-func ItemAdded(cell : BaseCell, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Player:
+func ItemAdded(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player and DB.ItemsDB.has(itemID):
+		var cell : BaseCell = DB.ItemsDB[itemID]
 		Launcher.Player.inventory.PushItem(cell, count)
-	if Launcher.GUI and Launcher.GUI.inventoryWindow:
-		Launcher.GUI.inventoryWindow.RefreshInventory()
+		if Launcher.GUI and Launcher.GUI.inventoryWindow:
+			Launcher.GUI.inventoryWindow.RefreshInventory()
 
-func ItemRemoved(cell : BaseCell, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Player:
+func ItemRemoved(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player and DB.ItemsDB.has(itemID):
+		var cell : BaseCell = DB.ItemsDB[itemID]
 		Launcher.Player.inventory.PopItem(cell, count)
-	if Launcher.GUI and Launcher.GUI.inventoryWindow:
-		Launcher.GUI.inventoryWindow.RefreshInventory()
-		CellTile.RefreshShortcuts(cell)
+		if Launcher.GUI and Launcher.GUI.inventoryWindow:
+			Launcher.GUI.inventoryWindow.RefreshInventory()
+			CellTile.RefreshShortcuts(cell)
 
 func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and Launcher.Player.inventory:

@@ -1,6 +1,10 @@
 extends Object
 class_name SkillCommons
 
+# Constants
+const SkillNone : int					= -1
+const SkillDefaultAttack : int			= 0
+
 # Actions
 enum ConsomeType
 {
@@ -99,7 +103,7 @@ static func IsTargetable(agent : BaseAgent, target : BaseAgent, skill : SkillCel
 	return IsNotSelf(agent, target) and ActorCommons.IsAlive(target) and IsSameMap(agent, target) and IsNear(agent, target, GetRange(agent, skill))
 
 static func IsCasting(agent : BaseAgent, skill : SkillCell = null) -> bool:
-	return (agent.currentSkillName == skill.name) if skill else DB.SkillsDB.has(agent.currentSkillName)
+	return (agent.currentSkillID == skill.id) if skill else DB.SkillsDB.has(agent.currentSkillID)
 
 static func IsCoolingDown(agent : BaseAgent, skill : SkillCell) -> bool:
 	return agent.cooldownTimers.has(skill.name) and agent.cooldownTimers[skill.name] != null and not agent.cooldownTimers[skill.name].is_queued_for_deletion()
@@ -111,4 +115,4 @@ static func HasSkill(agent : BaseAgent, skill : SkillCell) -> bool:
 	return agent.skillSet.find(skill) != -1
 
 static func HasActionInProgress(agent : BaseAgent) -> bool:
-	return agent.currentSkillName.length() > 0 or not agent.actionTimer.is_stopped()
+	return agent.currentSkillID >= SkillDefaultAttack or not agent.actionTimer.is_stopped()
