@@ -62,7 +62,6 @@ texture = ExtResource("4_ah7dm")
 texture = ExtResource("5_fdh06")
 
 [node name="CanvasLayer" type="CanvasLayer"]
-layer = 128
 script = ExtResource("3")
 
 [node name="Background" type="TextureRect" parent="."]
