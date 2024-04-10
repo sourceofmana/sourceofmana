@@ -108,7 +108,7 @@ func DisplaySpeech(speech : String):
 
 #
 func DisplayHP():
-	if entity.stat.health == 0 or (entity.stat.current.maxHealth == 0 and healthBar.max_value == 0):
+	if not ActorCommons.IsAlive(entity) or entity.stat.health == 0 or (entity.stat.current.maxHealth == 0 and healthBar.max_value == 0):
 		HideHP()
 		return
 

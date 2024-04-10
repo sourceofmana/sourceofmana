@@ -72,14 +72,14 @@ func AddItem(cell : BaseCell, count : int = 1):
 	if PushItem(cell, count):
 		var peerID : int = Launcher.Network.Server.GetRid(actor)
 		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ItemAdded(cell, count, peerID)
+			Launcher.Network.ItemAdded(cell.id, count, peerID)
 
 
 func RemoveItem(cell : BaseCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
 		var peerID : int = Launcher.Network.Server.GetRid(actor)
 		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ItemRemoved(cell, count, peerID)
+			Launcher.Network.ItemRemoved(cell.id, count, peerID)
 		return true
 	return false
 

@@ -119,3 +119,4 @@ func _physics_process(delta : float):
 func _ready():
 	if Launcher.Player != self:
 		stat.active_stats_updated.connect(interactive.DisplayHP)
+	entity_died.connect(interactive.DisplayHP)
