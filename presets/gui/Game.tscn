@@ -378,7 +378,6 @@ offset_right = 213.0
 offset_bottom = 114.0
 
 [node name="Chat" parent="Windows/Floating" instance=ExtResource("5")]
-visible = false
 layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
@@ -408,6 +407,7 @@ offset_bottom = 547.0
 grow_horizontal = 2
 grow_vertical = 2
 jsonFile = ExtResource("15_q438c")
+blockActions = false
 
 [node name="Credit" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false
@@ -417,6 +417,7 @@ offset_top = 85.0
 offset_right = 451.0
 offset_bottom = 583.0
 jsonFile = ExtResource("16_pfh0e")
+blockActions = false
 
 [node name="Settings" parent="Windows/Floating" instance=ExtResource("16_gapih")]
 visible = false

@@ -46,10 +46,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton"]
-offset_left = 29.0
-offset_top = 60.0
-offset_right = 48.0
-offset_bottom = 83.0
+offset_left = 10.0
+offset_top = 25.0
+offset_right = 29.0
+offset_bottom = 48.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -76,10 +76,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton2"]
-offset_left = 28.0
-offset_top = 59.0
-offset_right = 48.0
-offset_bottom = 82.0
+offset_left = 9.0
+offset_top = 24.0
+offset_right = 29.0
+offset_bottom = 47.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -106,10 +106,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton3"]
-offset_left = 28.0
-offset_top = 59.0
-offset_right = 48.0
-offset_bottom = 82.0
+offset_left = 9.0
+offset_top = 24.0
+offset_right = 29.0
+offset_bottom = 47.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -136,10 +136,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton4"]
-offset_left = 28.0
-offset_top = 59.0
-offset_right = 48.0
-offset_bottom = 82.0
+offset_left = 9.0
+offset_top = 24.0
+offset_right = 29.0
+offset_bottom = 47.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -168,10 +168,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton5"]
-offset_left = 28.0
-offset_top = 59.0
-offset_right = 48.0
-offset_bottom = 82.0
+offset_left = 9.0
+offset_top = 24.0
+offset_right = 29.0
+offset_bottom = 47.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -200,10 +200,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton6"]
-offset_left = 28.0
-offset_top = 59.0
-offset_right = 48.0
-offset_bottom = 82.0
+offset_left = 9.0
+offset_top = 24.0
+offset_right = 29.0
+offset_bottom = 47.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -232,10 +232,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton7"]
-offset_left = 28.0
-offset_top = 59.0
-offset_right = 48.0
-offset_bottom = 82.0
+offset_left = 9.0
+offset_top = 24.0
+offset_right = 29.0
+offset_bottom = 47.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -264,10 +264,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton8"]
-offset_left = 28.0
-offset_top = 59.0
-offset_right = 48.0
-offset_bottom = 82.0
+offset_left = 9.0
+offset_top = 24.0
+offset_right = 29.0
+offset_bottom = 47.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -296,10 +296,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton9"]
-offset_left = 28.0
-offset_top = 59.0
-offset_right = 48.0
-offset_bottom = 82.0
+offset_left = 9.0
+offset_top = 24.0
+offset_right = 29.0
+offset_bottom = 47.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -328,10 +328,10 @@ color = Color(1, 1, 1, 0)
 draggable = true
 
 [node name="ButtonLabel" type="Label" parent="TouchScreenButton10"]
-offset_left = 28.0
-offset_top = 59.0
-offset_right = 48.0
-offset_bottom = 82.0
+offset_left = 9.0
+offset_top = 24.0
+offset_right = 29.0
+offset_bottom = 47.0
 theme = ExtResource("1_btsj0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
