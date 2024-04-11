@@ -45,6 +45,16 @@ grow_vertical = 2
 color = Color(1, 1, 1, 0)
 draggable = true
 
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton"]
+offset_left = 29.0
+offset_top = 60.0
+offset_right = 48.0
+offset_bottom = 83.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "1"
+
 [node name="TouchScreenButton2" type="TouchScreenButton" parent="."]
 position = Vector2(-175, -18)
 texture_normal = ExtResource("1_pcpv2")
@@ -64,6 +74,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 draggable = true
+
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton2"]
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 48.0
+offset_bottom = 82.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "2"
 
 [node name="TouchScreenButton3" type="TouchScreenButton" parent="."]
 position = Vector2(-139, 17)
@@ -85,6 +105,16 @@ grow_vertical = 2
 color = Color(1, 1, 1, 0)
 draggable = true
 
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton3"]
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 48.0
+offset_bottom = 82.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "3"
+
 [node name="TouchScreenButton4" type="TouchScreenButton" parent="."]
 position = Vector2(-103, -18)
 texture_normal = ExtResource("1_pcpv2")
@@ -104,6 +134,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 draggable = true
+
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton4"]
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 48.0
+offset_bottom = 82.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "4"
 
 [node name="TouchScreenButton5" type="TouchScreenButton" parent="."]
 position = Vector2(-67, 17)
@@ -127,6 +167,16 @@ size_flags_vertical = 4
 color = Color(1, 1, 1, 0)
 draggable = true
 
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton5"]
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 48.0
+offset_bottom = 82.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "5"
+
 [node name="TouchScreenButton6" type="TouchScreenButton" parent="."]
 position = Vector2(5, 17)
 texture_normal = ExtResource("1_pcpv2")
@@ -148,6 +198,16 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(1, 1, 1, 0)
 draggable = true
+
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton6"]
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 48.0
+offset_bottom = 82.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "6"
 
 [node name="TouchScreenButton7" type="TouchScreenButton" parent="."]
 position = Vector2(41, -18)
@@ -171,6 +231,16 @@ size_flags_vertical = 4
 color = Color(1, 1, 1, 0)
 draggable = true
 
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton7"]
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 48.0
+offset_bottom = 82.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "7"
+
 [node name="TouchScreenButton8" type="TouchScreenButton" parent="."]
 position = Vector2(77, 17)
 texture_normal = ExtResource("1_pcpv2")
@@ -192,6 +262,16 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(1, 1, 1, 0)
 draggable = true
+
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton8"]
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 48.0
+offset_bottom = 82.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "8"
 
 [node name="TouchScreenButton9" type="TouchScreenButton" parent="."]
 position = Vector2(113, -18)
@@ -215,6 +295,16 @@ size_flags_vertical = 4
 color = Color(1, 1, 1, 0)
 draggable = true
 
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton9"]
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 48.0
+offset_bottom = 82.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "9"
+
 [node name="TouchScreenButton10" type="TouchScreenButton" parent="."]
 position = Vector2(149, 17)
 texture_normal = ExtResource("1_pcpv2")
@@ -236,5 +326,15 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(1, 1, 1, 0)
 draggable = true
+
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton10"]
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 48.0
+offset_bottom = 82.0
+theme = ExtResource("1_btsj0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "0"
 
 [connection signal="pressed" from="TouchScreenButton" to="TouchScreenButton/CellSlot" method="UseCell"]
