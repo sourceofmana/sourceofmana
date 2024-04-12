@@ -112,9 +112,12 @@ func DisplayHP():
 		HideHP()
 		return
 
-	Callback.SelfDestructTimer(healthBar, ActorCommons.DisplayHPDelay, HideHP, "HideHP")
-	if Launcher.Player and entity.stat.level >= Launcher.Player.stat.level and ActorCommons.LevelDifferenceColor:
-		nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / ActorCommons.LevelDifferenceColor)
+	if Launcher.Player:
+		if Launcher.Player.target != entity:
+			Callback.SelfDestructTimer(healthBar, ActorCommons.DisplayHPDelay, HideHP, "HideHP")
+		if entity.stat.level >= Launcher.Player.stat.level and ActorCommons.LevelDifferenceColor:
+			nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / ActorCommons.LevelDifferenceColor)
+
 	healthBar.visible = true
 	healthBar.modulate.a = 1
 	nameLabel.visible = true

@@ -1,38 +1,22 @@
 shader_type canvas_item;
 
-uniform vec4 outline_color : source_color = vec4(1.0, 0.0, 0.0, 1.0); // Red
+uniform vec3 outline_color : source_color = vec3(1.0, 0.0, 0.0); // Red
 uniform float blink_speed : hint_range(0, 10) = 1.0;
-uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
 const vec2 OFFSETS[8] = {
 	vec2(-1, -1), vec2(-1, 0), vec2(-1, 1), vec2(0, -1), vec2(0, 1), 
 	vec2(1, -1), vec2(1, 0), vec2(1, 1)
 };
+void vertex() {
+    // Nothing here for 2D sprite
+}
 
 void fragment() {
-	float outline = 0.0;
-	
-	for (int i = 0; i < OFFSETS.length(); i++) {
-		outline += texture(screen_texture, SCREEN_UV + SCREEN_PIXEL_SIZE * OFFSETS[i]).a;
-	}
-
-	vec4 c = textureLod(screen_texture, SCREEN_UV, 0.0);
-	if (c.a > 0.0001) {
-		c.rgb /= c.a;
-	}
-
-	COLOR *= c;
-
-	if (outline >= 2.0)
+	if (COLOR.r < 0.01 && COLOR.g < 0.01 && COLOR.b < 0.01)
 	{
-		outline = min(outline, 1.0);
-
 		float sintime = sin(TIME * blink_speed);
 
-		vec4 interpolated_color = outline_color;
-		interpolated_color.a = 0.5 + 0.5 * sintime;
-
 	    // Output the final color
-	    COLOR = mix(c, interpolated_color, outline - c.a);
+	    COLOR.rgb = mix(COLOR.rgb, outline_color, 0.5 + 0.5 * sintime);
 	}
 }

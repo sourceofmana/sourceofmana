@@ -11,5 +11,5 @@ script = ExtResource("1_h5sc8")
 
 [node name="Interactive" parent="." instance=ExtResource("2_5gxse")]
 
-[node name="Visual" type="CanvasGroup" parent="."]
+[node name="Visual" type="Node2D" parent="."]
 script = ExtResource("4_d0h8p")

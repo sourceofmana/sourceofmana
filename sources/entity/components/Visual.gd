@@ -1,4 +1,4 @@
-extends CanvasGroup
+extends Node2D
 class_name EntityVisual
 
 #
@@ -78,8 +78,7 @@ func LoadData(data : EntityData):
 					if data._customTextures[slot]:
 						sprite.texture = FileSystem.LoadGfx(data._customTextures[slot])
 					if data._customShaders[slot]:
-						var mat = FileSystem.LoadResource(data._customShaders[slot], false)
-						sprite.material = mat
+						sprite.material = FileSystem.LoadResource(data._customShaders[slot], false)
 					LoadSpriteSlot(slot, sprite)
 
 	ResetAnimationValue()

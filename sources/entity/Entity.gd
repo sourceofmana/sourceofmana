@@ -61,8 +61,9 @@ func SetLocalPlayer():
 
 func ClearTarget():
 	if target != null:
-		if target.visual.material:
-			target.visual.material = null
+		if target.interactive.nameLabel.material:
+			target.interactive.nameLabel.material = null
+		Callback.SelfDestructTimer(target.interactive.healthBar, ActorCommons.DisplayHPDelay, target.interactive.HideHP, "HideHP")
 		target = null
 
 func Target(source : Vector2, interactable : bool = true):
@@ -71,9 +72,9 @@ func Target(source : Vector2, interactable : bool = true):
 
 	if target:
 		if interactable and target.type == ActorCommons.Type.NPC:
-			target.visual.material = ActorCommons.AllyTarget
+			target.interactive.nameLabel.material = ActorCommons.AllyTarget
 		elif target.type == ActorCommons.Type.MONSTER:
-			target.visual.material = ActorCommons.EnemyTarget
+			target.interactive.nameLabel.material = ActorCommons.EnemyTarget
 			Launcher.Network.TriggerSelect(target.agentID)
 
 func Interact():
