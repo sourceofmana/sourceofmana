@@ -338,3 +338,12 @@ theme_override_constants/outline_size = 2
 text = "0"
 
 [connection signal="pressed" from="TouchScreenButton" to="TouchScreenButton/CellSlot" method="UseCell"]
+[connection signal="pressed" from="TouchScreenButton2" to="TouchScreenButton2/CellSlot2" method="UseCell"]
+[connection signal="pressed" from="TouchScreenButton3" to="TouchScreenButton3/CellSlot3" method="UseCell"]
+[connection signal="pressed" from="TouchScreenButton4" to="TouchScreenButton4/CellSlot4" method="UseCell"]
+[connection signal="pressed" from="TouchScreenButton5" to="TouchScreenButton5/CellSlot5" method="UseCell"]
+[connection signal="pressed" from="TouchScreenButton6" to="TouchScreenButton6/CellSlot6" method="UseCell"]
+[connection signal="pressed" from="TouchScreenButton7" to="TouchScreenButton7/CellSlot7" method="UseCell"]
+[connection signal="pressed" from="TouchScreenButton8" to="TouchScreenButton8/CellSlot8" method="UseCell"]
+[connection signal="pressed" from="TouchScreenButton9" to="TouchScreenButton9/CellSlot9" method="UseCell"]
+[connection signal="pressed" from="TouchScreenButton10" to="TouchScreenButton10/CellSlot10" method="UseCell"]
