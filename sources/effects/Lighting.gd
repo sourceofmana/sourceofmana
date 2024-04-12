@@ -48,7 +48,7 @@ func _ready():
 		colorRect.material.set_shader_parameter("light_level", lightLevel)
 
 func _process(_delta : float):
-	if Launcher.Camera.mainCamera and Launcher.Camera.mainCamera.is_inside_tree():
+	if visible and Launcher.Camera.mainCamera and Launcher.Camera.mainCamera.is_inside_tree():
 		UpdateTransform()
 		UpdateTexture()
 
