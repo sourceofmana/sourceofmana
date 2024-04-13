@@ -89,7 +89,7 @@ func set_resolution(resolution : Vector2i):
 	apply_resolution(resolution)
 func apply_resolution(resolution : Vector2i):
 	var windowSize : Vector2i = DisplayServer.screen_get_size()
-	var minScreenSize : Vector2i = DisplayServer.window_get_min_size()
+	var minScreenSize : Vector2i = GetVal("Render-MinWindowSize")
 
 	var newSize : Vector2i = clamp(resolution, minScreenSize, windowSize)
 	var currentPos : Vector2i = get_viewport().get_position()
@@ -139,7 +139,7 @@ func apply_actionoverlay(enable : bool):
 	if Launcher.GUI:
 		if enable:
 			var rescaledWindowSize : float = float(DisplayServer.window_get_size().x / Launcher.Root.get_content_scale_factor())
-			var horizontalMargin : int = lerp(0, 160, max(0, rescaledWindowSize - DisplayServer.window_get_min_size().x * 1.5) / rescaledWindowSize)
+			var horizontalMargin : int = lerp(0, 160, max(0, rescaledWindowSize - GetVal("Render-MinWindowSize").x * 1.5) / rescaledWindowSize)
 			Launcher.GUI.shortcuts.add_theme_constant_override("margin_left", horizontalMargin)
 			Launcher.GUI.shortcuts.add_theme_constant_override("margin_right", horizontalMargin)
 			Launcher.GUI.sticks.set_visible(true)
