@@ -13,6 +13,25 @@ extends Control
 	$TouchScreenButton10/CellSlot10,
 ]
 
+@onready var labels : Array[Label] = [
+	$TouchScreenButton/ButtonLabel,
+	$TouchScreenButton2/ButtonLabel,
+	$TouchScreenButton3/ButtonLabel,
+	$TouchScreenButton4/ButtonLabel,
+	$TouchScreenButton5/ButtonLabel,
+	$TouchScreenButton6/ButtonLabel,
+	$TouchScreenButton7/ButtonLabel,
+	$TouchScreenButton8/ButtonLabel,
+	$TouchScreenButton9/ButtonLabel,
+	$TouchScreenButton10/ButtonLabel,
+]
+
+#
 func Trigger(idx : int):
 	if idx < slots.size():
 		slots[idx].UseCell()
+
+func _ready():
+	if OS.get_name() == "Android" or OS.get_name() == "iOS":
+		for label in labels:
+			label.set_visible(false)
