@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://dj8uvnu1kbn8o"
+path="res://.godot/imported/tree x4x5.tsx-14c810bb8eb98a88fd59bce644df77a8.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/aemil/aurora/tree x4x5.tsx"
+dest_files=["res://.godot/imported/tree x4x5.tsx-14c810bb8eb98a88fd59bce644df77a8.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://c0tp7kujkojnv"
+path="res://.godot/imported/archway x1x4.tsx-08e6bafb8d401eda19482d7cae7a8269.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/aemil/aurora/artis/archway x1x4.tsx"
+dest_files=["res://.godot/imported/archway x1x4.tsx-08e6bafb8d401eda19482d7cae7a8269.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

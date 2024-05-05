@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://coh44ajj55mbp"
+path="res://.godot/imported/lamps x1x3.tsx-09c6213c3cf370212ea30cd053b7328d.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/aemil/aurora/artis/lamps x1x3.tsx"
+dest_files=["res://.godot/imported/lamps x1x3.tsx-09c6213c3cf370212ea30cd053b7328d.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

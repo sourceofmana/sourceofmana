@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://bjt1ltvtjm3fm"
+path="res://.godot/imported/harbour x4x6.tsx-42a56daaa45a9e9cf825022ddb0f1fc6.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/aemil/aurora/artis/harbour x4x6.tsx"
+dest_files=["res://.godot/imported/harbour x4x6.tsx-42a56daaa45a9e9cf825022ddb0f1fc6.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
