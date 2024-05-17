@@ -264,6 +264,7 @@ func build_server(source_path) -> Node:
 		warp_array.append(warp.destinationMap)
 		warp_array.append(warp.destinationPos)
 		warp_array.append(warp_polygon)
+		warp_array.append(warp.autoWarp)
 		root.warps.append(warp_array)
 
 	return root
@@ -789,6 +790,8 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 								customObject.destinationMap = object.properties.dest_map
 							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
 								customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
+							if "auto_warp" in object.properties:
+								customObject.autoWarp = object.properties.auto_warp
 						warp_pool.append(customObject)
 
 					customObject.visible = bool(object.visible) if "visible" in object else true

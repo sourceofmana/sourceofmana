@@ -1775,32 +1775,35 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="5" name="Object" opacity="0.22">
-  <object id="53" name="Warp Candor Cave" type="Warp" x="1255" y="3495">
+  <object id="53" name="Warp Candor Cave" type="Warp" x="1237.07" y="3486.29">
    <properties>
+    <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
     <property name="dest_map" value="Candor Cave"/>
     <property name="dest_pos_x" type="int" value="50"/>
     <property name="dest_pos_y" type="int" value="30"/>
    </properties>
-   <polygon points="42.51,41.568 42.51,19.9527 75.21,19.9527 75.21,41.568"/>
+   <polygon points="60.437,59.7065 60.437,28.6592 106.927,28.6592 106.927,59.7065"/>
   </object>
-  <object id="56" name="Splatyna Cave Entrance" type="Warp" x="1560" y="3502">
+  <object id="56" name="Splatyna Cave Entrance" type="Warp" x="1554.28" y="3502">
    <properties>
+    <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
     <property name="dest_map" value="Splatyna Cave Entrance"/>
     <property name="dest_pos_x" type="int" value="54"/>
     <property name="dest_pos_y" type="int" value="51"/>
    </properties>
-   <polygon points="41.6,39.497 41.6,18.9586 73.6,18.9586 73.6,39.497"/>
+   <polygon points="47.32,39.497 47.32,18.9586 83.72,18.9586 83.72,39.497"/>
   </object>
-  <object id="57" name="Warp Sewer" type="Warp" x="1349.94" y="3356.09">
+  <object id="57" name="Warp Sewer" type="Warp" x="1333" y="3351.48">
    <properties>
+    <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
     <property name="dest_map" value="Artis Sewer"/>
     <property name="dest_pos_x" type="int" value="62"/>
     <property name="dest_pos_y" type="int" value="47"/>
    </properties>
-   <polygon points="55.4268,51.9114 55.4268,24.9175 98.0628,24.9175 98.0628,51.9114"/>
+   <polygon points="65.0036,61.5241 65.0036,29.5316 115.006,29.5316 115.006,61.5241"/>
   </object>
  </objectgroup>
 </map>

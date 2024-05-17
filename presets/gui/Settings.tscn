@@ -131,6 +131,9 @@ text = "High Quality Scale"
 layout_mode = 2
 text = "Cathode Ray Tube"
 
+[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox"]
+layout_mode = 2
+
 [node name="Audio" type="ScrollContainer" parent="Margin/TabBar"]
 visible = false
 layout_mode = 2

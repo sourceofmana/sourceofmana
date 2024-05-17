@@ -498,6 +498,7 @@
   </object>
   <object id="52" name="Overworld" type="Warp" x="1728" y="1760">
    <properties>
+    <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
     <property name="dest_pos_x" type="int" value="100"/>

@@ -60,11 +60,19 @@ static var actionNames : Dictionary = {
 	"smile_17" : "Emote",
 	"gp_morph" : "Emote",
 	"ui_settings" : "Settings",
-	"gp_skill_1" : "Skill",
-	"gp_skill_2" : "Skill",
-	"gp_skill_3" : "Skill",
-	"gp_skill_4" : "Skill",
+	"ui_stat": "Stat",
+	"gp_shortcut_1" : "Shortcut 1",
+	"gp_shortcut_2" : "Shortcut 2",
+	"gp_shortcut_3" : "Shortcut 3",
+	"gp_shortcut_4" : "Shortcut 4",
+	"gp_shortcut_5" : "Shortcut 5",
+	"gp_shortcut_6" : "Shortcut 6",
+	"gp_shortcut_7" : "Shortcut 7",
+	"gp_shortcut_8" : "Shortcut 8",
+	"gp_shortcut_9" : "Shortcut 9",
+	"gp_shortcut_10" : "Shortcut 10",
 	"gp_target" : "Target",
+	"ui_skill": "Skill"
 }
 
 # Re-assign controller input events to first valid controller

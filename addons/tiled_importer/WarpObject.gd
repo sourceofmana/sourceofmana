@@ -5,26 +5,79 @@ class_name WarpObject
 @export var destinationMap : String 			= ""
 @export var destinationPos : Vector2			= Vector2.ZERO
 @export var polygon : PackedVector2Array 		= []
+@export var autoWarp : bool						= true
 @export var areaSize : float					= 1.0
 @export var randomPoints : PackedVector2Array	= []
 
-const defaultParticlesCount : int				= 12
-var isPlayerEntered : bool						= false
+var currentTip : RichTextLabel					= null
+var hasPlayerWithin : bool						= false
+var lastPlayerPos : Vector2						= Vector2.ZERO
 
-static var WarpFx : PackedScene					= preload("res://presets/effects/particles/WarpLocation.tscn")
+const defaultParticlesCount : int				= 12
+const WarpFx : PackedScene						= preload("res://presets/effects/particles/WarpLocation.tscn")
+const WarpTip : PackedScene						= preload("res://presets/gui/WarpTip.tscn")
 
 #
 func bodyEntered(body : CollisionObject2D):
 	if body and body == Launcher.Player:
-		isPlayerEntered = true
+		hasPlayerWithin = true
 
 func bodyExited(body : CollisionObject2D):
 	if body and body == Launcher.Player:
-		isPlayerEntered = false
+		hasPlayerWithin = false
+		lastPlayerPos = Vector2.ZERO
+		HideLabel()
 
 func _physics_process(_delta):
-	if isPlayerEntered:
-		Launcher.Network.TriggerWarp()
+	if hasPlayerWithin:
+		if lastPlayerPos != Launcher.Player.get_position():
+			lastPlayerPos = Launcher.Player.get_position()
+			var canWarp : bool = Geometry2D.is_point_in_polygon(Launcher.Player.get_global_position() - get_global_position(), polygon)
+
+			if autoWarp:
+				if canWarp:
+					ConfirmWarp()
+			else:
+				if canWarp:
+					DisplayLabel()
+				else:
+					HideLabel()
+
+func _input(event):
+	if not currentTip:
+		return
+
+	for tip in currentTip.get_children():
+		if tip and tip is ButtonTip and event.is_action_pressed(tip.action):
+			ConfirmWarp()
+			get_viewport().set_input_as_handled()
+			return
+
+func ConfirmWarp():
+	Launcher.Network.TriggerWarp()
+
+func DisplayLabel():
+	if not currentTip:
+		currentTip = WarpTip.instantiate()
+		currentTip.set_text(destinationMap)
+
+		var xmin : float = INF
+		var xmax : float = -INF
+		for point in polygon:
+			if point.x < xmin:
+				xmin = point.x
+			elif point.x > xmax:
+				xmax = point.x
+		currentTip.position.x += (xmax + xmin) / 2
+
+		add_child(currentTip)
+
+	if currentTip:
+		currentTip.set_visible(true)
+
+func HideLabel():
+	if currentTip:
+		currentTip.set_visible(false)
 
 #
 func _ready():

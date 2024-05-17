@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqkyebisda4de"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_kuilo"]
+[ext_resource type="PackedScene" uid="uid://ef10hudas2sx" path="res://presets/gui/ButtonTip.tscn" id="2_a1wpp"]
+
+[node name="Label" type="RichTextLabel"]
+z_index = 1000
+z_as_relative = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -61.0
+offset_top = -21.0
+offset_right = 61.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme = ExtResource("1_kuilo")
+theme_type_variation = &"NotificationBox"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="ButtonTip" parent="." instance=ExtResource("2_a1wpp")]
+layout_mode = 1
+anchors_preset = 2
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 20.5
+offset_top = -27.0
+offset_right = 50.5
+offset_bottom = -8.0
+grow_horizontal = 1
+action = &"gp_interact"

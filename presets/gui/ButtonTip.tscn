@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ef10hudas2sx"]
+
+[ext_resource type="Texture2D" uid="uid://dedvehg8nrl3m" path="res://data/graphics/gui/button/button_hover.png" id="1_laqiq"]
+[ext_resource type="Script" path="res://sources/gui/ButtonTip.gd" id="2_q13u4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_baw6c"]
+texture = ExtResource("1_laqiq")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 4.0
+texture_margin_bottom = 3.0
+
+[node name="ButtonTip" type="Button" groups=["tips"]]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -42.0
+offset_top = -18.0
+offset_right = -12.0
+offset_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_baw6c")
+script = ExtResource("2_q13u4")

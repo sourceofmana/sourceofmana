@@ -49,4 +49,6 @@ func LoadMapData():
 					warpObject.destinationMap = warp[0]
 					warpObject.destinationPos = warp[1]
 					warpObject.polygon = warp[2]
+					if warp.size() > 3:
+						warpObject.autoWarp = warp[3]
 					warps.append(warpObject)
