@@ -186,6 +186,16 @@
 			"walkSpeed": 50,
 		},
 	},
+	"1012": {
+		"Name": "Ratto",
+		"Ethnicity": "Ratto",
+		"NavigationAgent": "NPAgent",
+		"Collision": "Medium",
+		"Radius": "10",
+		"Stat": {
+			"walkSpeed": 90,
+		},
+	},
 
 
 	"2000": {
