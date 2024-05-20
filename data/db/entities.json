@@ -196,6 +196,18 @@
 			"walkSpeed": 90,
 		},
 	},
+	"1013": {
+		"Name": "Turtle",
+		"Ethnicity": "Turtle",
+		"NavigationAgent": "NPAgent",
+		"Collision": "Medium",
+		"Radius": "10",
+		"Stat": {
+			"walkSpeed": 30,
+			"attack": 1,
+			"defense": 10,
+		},
+	},
 
 
 	"2000": {
