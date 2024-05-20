@@ -15,11 +15,12 @@ func SetData(_data : EntityData):
 func Init(_type : ActorCommons.Type, _ID : String, _nick : String = ""):
 	var data : EntityData = Instantiate.FindEntityReference(_ID)
 	Util.Assert(data != null, "Could not create the actor: %s" % _ID)
-	if data:
-		type = _type
-		nick = _ID if _nick.length() == 0 else _nick
+	if not data:
+		return
 
-		Callback.PlugCallback(ready, SetData, [data])
+	type = _type
+	nick = _ID if _nick.length() == 0 else _nick
+	Callback.PlugCallback(ready, SetData, [data])
 
 	if type == ActorCommons.Type.PLAYER:
 		inventory = EntityInventory.new()

@@ -11,8 +11,9 @@ var map : WorldMap						= null
 #
 func _ready():
 	for spawn in map.spawns:
-		for i in spawn.count:
-			WorldAgent.CreateAgent(spawn, id)
+		if spawn and Instantiate.FindEntityReference(spawn.name) != null:
+			for i in spawn.count:
+				WorldAgent.CreateAgent(spawn, id)
 
 #
 static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:
