@@ -10,4 +10,5 @@
     "Candor Arena": {					"Path" : "candor/candor-arena",},
     "Drazil": {							"Path" : "drazil/drazil",},
     "Artis Sewer": {					"Path" : "sewer/artis-sewer",},
+    "Artis": {							"Path" : "artis/artis",},
 }
