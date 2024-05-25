@@ -433,14 +433,31 @@ func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, g
 				if lighting:
 					var lightSource : LightSource = LightSource.new()
 					if lightSource:
-						lightSource.speed = specificGid[1]
 						lightSource.position = cell_in_map
-						lightSource.position.x += specificGid[2].x
-						lightSource.position.y -= specificGid[2].y / 2.0
+						lightSource.position.x += specificGid[1].x
+						lightSource.position.y -= specificGid[1].y / 2.0
+						lightSource.speed = specificGid[2]
 						lightSource.radius = specificGid[3]
 						lightSource.color = specificGid[4]
 						lighting.add_child(lightSource)
 						lightSource.set_owner(root)
+			"FX":
+				var fx : CPUParticles2D = FileSystem.LoadEffect(specificGid[2])
+				if fx:
+					fx.z_index = 10
+					fx.position = cell_in_map
+					fx.position.x += specificGid[1].x
+					fx.position.y += specificGid[1].y
+
+					var effects : Node2D = root.get_node_or_null("Effects")
+					if not effects:
+						effects = Node2D.new()
+						effects.name = "Effects"
+						root.add_child(effects)
+						effects.set_owner(root)
+
+					effects.add_child(fx)
+					fx.set_owner(root)
 
 # Creates a layer node from the data
 # Returns an error code
@@ -1125,20 +1142,22 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 						tileData.set_collision_polygon_points(0, tilePolygonCount, polygonShape)
 			# Handle some specific features
 			if "tileproperties" in ts and rel_id in ts.tileproperties:
-				if "is_lightsource" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].is_lightsource:
-					var light_radius : float = 64.0
-					if "light_radius" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_radius:
-						light_radius = ts.tileproperties[rel_id].light_radius
-
-					var light_color : Color = Color.WHITE
-					if "light_color" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_color:
-						light_color = Color(ts.tileproperties[rel_id].light_color)
-
-					var light_speed : float = 20.0
-					if "light_speed" in ts.tileproperties[rel_id]:
-						light_speed = ts.tileproperties[rel_id].light_speed
-
-					specificDic[gid] = ["LightSource", light_speed, region.size / 2, light_radius, light_color]
+				if "custom" in ts.tileproperties[rel_id]:
+					match ts.tileproperties[rel_id].custom:
+						"LightSource":
+							var light_radius : float = 64.0
+							var light_color : Color = Color.WHITE
+							var light_speed : float = 20.0
+							if "light_radius" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_radius:
+								light_radius = ts.tileproperties[rel_id].light_radius
+							if "light_color" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_color:
+								light_color = Color(ts.tileproperties[rel_id].light_color)
+							if "light_speed" in ts.tileproperties[rel_id]:
+								light_speed = ts.tileproperties[rel_id].light_speed
+							specificDic[gid] = ["LightSource", region.size / 2, light_speed, light_radius, light_color]
+						"FX":
+							var fx_path : String = "particles/" + ts.tileproperties[rel_id].FX if "FX" in ts.tileproperties[rel_id] else ""
+							specificDic[gid] = ["FX", region.size / 2, fx_path]
 
 			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
 					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
@@ -1412,9 +1431,9 @@ func set_custom_properties(object, tiled_object):
 	for property in properties:
 		object.set_meta(property, properties[property])
 		if property == "lighting":
-			var lighting : CanvasLayer = object.get_node_or_null("LightingLayer")
+			var lighting : Node = object.get_node_or_null("LightingLayer")
 			if lighting == null:
-				lighting = ResourceLoader.load("res://presets/effects/Lighting.tscn").instantiate()
+				lighting = FileSystem.LoadEffect("Lighting")
 				lighting.set_name("LightingLayer")
 				lighting.lightLevel = properties[property]
 				object.add_child(lighting)
