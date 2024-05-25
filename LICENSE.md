@@ -153,6 +153,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/items/skill/melee.png [Reid]
 ./graphics/items/skill/spell.png [Reid]
 ./graphics/items/usable/apple.png [Enchilado]
+./graphics/minimaps/artis/artis.png [Reid]
 ./graphics/minimaps/candor/candor-arena.png [Reid]
 ./graphics/minimaps/candor/candor-cave.png [Reid]
 ./graphics/minimaps/candor/candor-cave.png [Reid]
