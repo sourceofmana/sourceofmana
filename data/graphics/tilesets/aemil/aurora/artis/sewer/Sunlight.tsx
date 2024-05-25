@@ -3,7 +3,7 @@
  <image source="sunlight-x1x5.png" width="160" height="160"/>
  <tile id="2">
   <properties>
-   <property name="is_lightsource" type="bool" value="true"/>
+   <property name="custom" value="LightSource"/>
    <property name="light_color" value="FFFFFFAA"/>
    <property name="light_radius" type="int" value="192"/>
    <property name="light_speed" type="float" value="0"/>

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://t3krourvcrh"
-path="res://.godot/imported/chimney-x3x4.png-9af99f5b02bea9f6946558aea9a9289a.ctex"
+uid="uid://h6h0vrtwrnfl"
+path="res://.godot/imported/smoke.png-133fcc8f5fe6ac23c229fcc97299f166.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/tilesets/aemil/aurora/artis/chimney-x3x4.png"
-dest_files=["res://.godot/imported/chimney-x3x4.png-9af99f5b02bea9f6946558aea9a9289a.ctex"]
+source_file="res://data/graphics/effects/particles/smoke.png"
+dest_files=["res://.godot/imported/smoke.png-133fcc8f5fe6ac23c229fcc97299f166.ctex"]
 
 [params]
 
