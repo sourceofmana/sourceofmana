@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://c7swsvf2fkcft"]
+
+[ext_resource type="Texture2D" uid="uid://bvuajpbmtysmq" path="res://data/graphics/effects/particles/leaf.png" id="1_cfro2"]
+
+[sub_resource type="Curve" id="Curve_pnx33"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.846626, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_08cts"]
+curve = SubResource("Curve_pnx33")
+
+[sub_resource type="Curve" id="Curve_040w4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.340491, 0.526699), 108.008, 108.008, 0, 0, Vector2(0.509202, 0.558252), 146.581, 146.581, 0, 0, Vector2(0.674847, 0.439927), -30.8591, -30.8591, 0, 0, Vector2(1, 0.0218446), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_gm6fj"]
+curve_x = SubResource("Curve_040w4")
+
+[sub_resource type="Curve" id="Curve_bvdh8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.705521, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.495146), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_shfc4"]
+curve = SubResource("Curve_bvdh8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4x7xa"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(10, 3, 1)
+angular_velocity_min = -105.77
+angular_velocity_max = 142.37
+directional_velocity_min = -10.0
+directional_velocity_max = 10.0
+directional_velocity_curve = SubResource("CurveXYZTexture_gm6fj")
+gravity = Vector3(0, 5, 0)
+tangential_accel_min = -1.0
+tangential_accel_max = 1.0
+scale_min = 0.6
+scale_curve = SubResource("CurveTexture_shfc4")
+alpha_curve = SubResource("CurveTexture_08cts")
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_4x7xa")
+texture = ExtResource("1_cfro2")
+lifetime = 5.0
+preprocess = 5.0
