@@ -5,6 +5,8 @@
   <properties>
    <property name="FX" value="ChimneySmoke"/>
    <property name="custom" value="FX"/>
+   <property name="offset_x" type="int" value="12"/>
+   <property name="offset_y" type="int" value="17"/>
   </properties>
  </tile>
 </tileset>

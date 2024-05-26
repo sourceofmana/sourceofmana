@@ -442,7 +442,7 @@ func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, g
 						lighting.add_child(lightSource)
 						lightSource.set_owner(root)
 			"FX":
-				var fx : CPUParticles2D = FileSystem.LoadEffect(specificGid[2])
+				var fx : Node2D = FileSystem.LoadEffect(specificGid[2])
 				if fx:
 					fx.z_index = 10
 					fx.position = cell_in_map
@@ -1157,7 +1157,13 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 							specificDic[gid] = ["LightSource", region.size / 2, light_speed, light_radius, light_color]
 						"FX":
 							var fx_path : String = "particles/" + ts.tileproperties[rel_id].FX if "FX" in ts.tileproperties[rel_id] else ""
-							specificDic[gid] = ["FX", region.size / 2, fx_path]
+							var inner_offset : Vector2 = Vector2.ZERO
+
+							if "offset_x" in ts.tileproperties[rel_id]:
+								inner_offset.x = ts.tileproperties[rel_id].offset_x
+							if "offset_y" in ts.tileproperties[rel_id]:
+								inner_offset.y = ts.tileproperties[rel_id].offset_y
+							specificDic[gid] = ["FX", inner_offset, fx_path]
 
 			if options.custom_properties and options.tile_metadata and "tileproperties" in ts \
 					and "tilepropertytypes" in ts and rel_id in ts.tileproperties and rel_id in ts.tilepropertytypes:
