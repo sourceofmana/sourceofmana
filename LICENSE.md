@@ -169,6 +169,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/minimaps/splatyna/splatyna-third.png [Reid]
 ./graphics/sprites/accessories/fire.png [Sharm] [Reid]
 ./graphics/sprites/accessories/ratto-tail.png [Coolkid782]
+./graphics/sprites/monsters/bat.png [Bagzie]
 ./graphics/sprites/monsters/bigpiou.png [Hocus]
 ./graphics/sprites/monsters/croc.png [Reid] [Coolkid782, Enchilado]
 ./graphics/sprites/monsters/dorian.png [Neorice] [Reid]

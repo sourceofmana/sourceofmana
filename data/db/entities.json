@@ -220,6 +220,18 @@
 			"defense": 10,
 		},
 	},
+	"1015": {
+		"Name": "Bat",
+		"Ethnicity": "Bat",
+		"NavigationAgent": "NPAgent",
+		"Collision": "Medium",
+		"Radius": "10",
+		"Stat": {
+			"walkSpeed": 100,
+			"attack": 5,
+			"defense": 1,
+		},
+	},
 
 
 	"2000": {
