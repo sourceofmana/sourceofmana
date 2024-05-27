@@ -208,6 +208,18 @@
 			"defense": 10,
 		},
 	},
+	"1014": {
+		"Name": "Croc",
+		"Ethnicity": "Croc",
+		"NavigationAgent": "NPAgent",
+		"Collision": "Medium",
+		"Radius": "12",
+		"Stat": {
+			"walkSpeed": 80,
+			"attack": 10,
+			"defense": 10,
+		},
+	},
 
 
 	"2000": {

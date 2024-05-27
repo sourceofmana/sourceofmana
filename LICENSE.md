@@ -170,6 +170,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/accessories/fire.png [Sharm] [Reid]
 ./graphics/sprites/accessories/ratto-tail.png [Coolkid782]
 ./graphics/sprites/monsters/bigpiou.png [Hocus]
+./graphics/sprites/monsters/croc.png [Reid] [Coolkid782, Enchilado]
 ./graphics/sprites/monsters/dorian.png [Neorice] [Reid]
 ./graphics/sprites/monsters/emil.png [Neorice] [Reid]
 ./graphics/sprites/monsters/gabriel.png [Reid] [Neorice]
