@@ -238,6 +238,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/tilesets/generic/cave/spiderweb-x1x2.png [Reid]
 ./graphics/tilesets/generic/cave/spiderweb-x4x3.png [Reid]
 ./graphics/tilesets/generic/collision.png [Reid]
+./graphics/tilesets/generic/water-sparkle.png [Len]
 ./graphics/tilesets/isles/candor/cave/cave-x1x2.png [Micksha] [Reid]
 ./graphics/tilesets/isles/candor/cave/cave.png [Micksha] [Reid]
 ./graphics/tilesets/isles/candor/cave/chess.png [Crush] [Reid]
