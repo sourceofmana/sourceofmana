@@ -20,6 +20,18 @@
 			"4": 1.0,
 		},
 	},
+	"1": {
+		"Name": "Ship",
+		"Ethnicity": "Ship",
+		"NavigationAgent": "NPAgent",
+		"Collision": "Medium",
+		"Radius": "10",
+		"Stat": {
+			"walkSpeed": 20,
+			"attack": 0,
+			"defense": 0,
+		},
+	},
 
 	"1000": {
 		"Name": "Splatyna",
