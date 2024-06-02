@@ -57,7 +57,7 @@ func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = Ne
 		var entity : Entity = Entities.Get(ridAgent)
 		if entity:
 			var morphData : EntityData = Instantiate.FindEntityReference(morphID)
-			entity.stat.Morph(morphData)
+			entity.stat.Morph(morphData, morphed)
 			entity.SetVisual(morphData, morphed)
 
 func UpdateActiveStats(ridAgent : int, level : int, experience : int, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):

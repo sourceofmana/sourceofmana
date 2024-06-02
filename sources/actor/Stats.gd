@@ -76,10 +76,10 @@ func SetAttributes(attributes : Dictionary):
 		FillRandomAttributes()
 	RefreshAttributes()
 
-func SetEntityStats(entityStats : Dictionary, isMorphed : bool):
+func SetEntityStats(entityStats : Dictionary):
 	for modifier in entityStats:
 		if modifier in base:
-			base[modifier] = (base[modifier] + entityStats[modifier]) / 2 if isMorphed else entityStats[modifier]
+			base[modifier] = (base[modifier] + entityStats[modifier]) / 2 if morphed else entityStats[modifier]
 	RefreshEntityStats()
 
 #
@@ -96,7 +96,7 @@ func Init(actorNode : Actor, data : EntityData):
 	if "BaseExp" in stats:				baseExp				= stats["BaseExp"]
 
 	SetAttributes(stats)
-	SetEntityStats(stats, morphed)
+	SetEntityStats(stats)
 
 	health		= stats["Health"]	if "Health" in stats	else current.maxHealth
 	mana		= stats["Mana"]		if "Mana" in stats		else current.maxMana
@@ -118,9 +118,9 @@ func FillRandomAttributes():
 				break
 		SetAttributes(attributes)
 
-func Morph(data : EntityData):
-	morphed = not morphed
-	SetEntityStats(data._stats, morphed)
+func Morph(data : EntityData, morph : bool):
+	morphed = morph
+	SetEntityStats(data._stats)
 
 func AddAttribute(attribute : ActorCommons.Attribute):
 	if Formula.GetMaxAttributePoints(self) - Formula.GetAssignedAttributePoints(self) > 0:

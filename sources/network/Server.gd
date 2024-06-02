@@ -106,6 +106,12 @@ func TriggerCast(targetID : int, skillID : int, rpcID : int = NetworkCommons.Rid
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player:
+		if player.stat.spiritShape.length() == 0:
+			return
+		var map : Object = WorldAgent.GetMapFromAgent(player)
+		if map and map.spiritOnly and player.stat.morphed:
+			return
+
 		player.Morph(true)
 
 func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):

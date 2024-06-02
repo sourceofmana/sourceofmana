@@ -160,6 +160,9 @@ func GetCurrentShapeID() -> String:
 func GetNextShapeID() -> String:
 	return stat.spiritShape if not stat.morphed else stat.entityShape
 
+func ShouldMorph(nextID : String) -> bool:
+	return nextID != stat.entityShape
+
 #
 func AddAttacker(attacker : BaseAgent, damage : int):
 	if attacker:
