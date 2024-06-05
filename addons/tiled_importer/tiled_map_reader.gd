@@ -271,6 +271,7 @@ func build_server(source_path) -> Node:
 		port_array.append(port.destinationMap)
 		port_array.append(port.destinationPos)
 		port_array.append(port_polygon)
+		port_array.append(port.autoWarp)
 		port_array.append(port.sailingPos)
 		root.ports.append(port_array)
 

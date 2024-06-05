@@ -157,6 +157,9 @@ func Interact(_caller : BaseAgent):
 func GetNextShapeID() -> String:
 	return stat.entityShape if stat.IsMorph() else stat.spiritShape
 
+func GetNextPortShapeID() -> String:
+	return stat.spiritShape if stat.IsSailing() else "Ship"
+
 #
 func AddAttacker(attacker : BaseAgent, damage : int):
 	if attacker:

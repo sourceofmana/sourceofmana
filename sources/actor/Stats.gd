@@ -126,6 +126,9 @@ func Morph(data : EntityData):
 func IsMorph() -> bool:
 	return currentShape != entityShape
 
+func IsSailing() -> bool:
+	return currentShape == "Ship"
+
 func AddAttribute(attribute : ActorCommons.Attribute):
 	if Formula.GetMaxAttributePoints(self) - Formula.GetAssignedAttributePoints(self) > 0:
 		match attribute:

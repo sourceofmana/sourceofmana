@@ -73,6 +73,8 @@ func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
 			var nextMap : WorldMap = Launcher.World.GetMap(warp.destinationMap)
 			if nextMap:
 				Launcher.World.Warp(player, nextMap, warp.getDestinationPos(player))
+				if warp is PortObject:
+					Callback.OneShotCallback(player.tree_entered, player.Morph, [false, player.GetNextPortShapeID()])
 
 func TriggerSit(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)

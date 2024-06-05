@@ -60,6 +60,6 @@ func LoadMapData():
 					portObject.destinationMap = port[0]
 					portObject.destinationPos = port[1]
 					portObject.polygon = port[2]
-					portObject.autoWarp = false
-					portObject.sailingPos = port[3]
+					portObject.autoWarp = port[3]
+					portObject.sailingPos = port[4]
 					warps.append(portObject)
