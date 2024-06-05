@@ -35,9 +35,6 @@ const TiledXMLToDictionary = preload("res://addons/tiled_importer/tiled_xml_to_d
 # Polygon vertices sorter
 const PolygonSorter = preload("polygon_sorter.gd")
 
-# Custom objects
-const WarpObject = preload("WarpObject.gd")
-
 # Prefix for error messages, make easier to identify the source
 const error_prefix = "Tiled Importer: "
 
@@ -75,10 +72,10 @@ var _tileset_path_to_first_gid = {}
 var polygon_pool : Array = []
 # Navigation polygons
 var navigation_pool : Array = []
-# Spawn objects
+# Custom objects
 var spawn_pool : Array = []
-# Warp objects
 var warp_pool : Array = []
+var port_pool : Array = []
 # JSON Instance
 var JSONInstance = JSON.new()
 # Tile DB
@@ -255,7 +252,6 @@ func build_server(source_path) -> Node:
 		root.spawns.append(spawn_array)
 
 	# Can't save an array of custom objects, every element will be null when loaded
-#	root.warps = warp_pool
 	for warp in warp_pool:
 		var warp_polygon : PackedVector2Array = []
 		for warp_vertex in warp.polygon:
@@ -266,6 +262,17 @@ func build_server(source_path) -> Node:
 		warp_array.append(warp_polygon)
 		warp_array.append(warp.autoWarp)
 		root.warps.append(warp_array)
+
+	for port in port_pool:
+		var port_polygon : PackedVector2Array = []
+		for port_vertex in port.polygon:
+			port_polygon.append(port_vertex + port.position)
+		var port_array : Array = []
+		port_array.append(port.destinationMap)
+		port_array.append(port.destinationPos)
+		port_array.append(port_polygon)
+		port_array.append(port.sailingPos)
+		root.ports.append(port_array)
 
 	return root
 
@@ -728,6 +735,9 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 						if object.type == "Warp":
 							customObject = WarpObject.new()
 							collisionObject = CollisionPolygon2D.new()
+						elif object.type == "Port":
+							customObject = PortObject.new()
+							collisionObject = CollisionPolygon2D.new()
 						else:
 							customObject = Polygon2D.new()
 
@@ -798,18 +808,23 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 						set_custom_properties(customObject, object)
 
 					# Warp
-					if "type" in object and object.type == "Warp":
-						if "properties" in object:
-							var dest_cellsize = cell_size
-							if "dest_cellsize" in object.properties:
-								dest_cellsize = object.properties.dest_cellsize
-							if "dest_map" in object.properties and not str(object.properties.dest_map).is_empty():
-								customObject.destinationMap = object.properties.dest_map
-							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
-								customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
-							if "auto_warp" in object.properties:
-								customObject.autoWarp = object.properties.auto_warp
-						warp_pool.append(customObject)
+					if "type" in object and "properties" in object:
+						var dest_cellsize = cell_size
+						if "dest_cellsize" in object.properties:
+							dest_cellsize = object.properties.dest_cellsize
+						if "dest_map" in object.properties and not str(object.properties.dest_map).is_empty():
+							customObject.destinationMap = object.properties.dest_map
+						if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
+							customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
+						if "auto_warp" in object.properties:
+							customObject.autoWarp = object.properties.auto_warp
+						if "sail_pos_x" in object.properties and "sail_pos_y" in object.properties:
+							customObject.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize
+
+						if customObject is PortObject:
+							port_pool.append(customObject)
+						elif customObject is WarpObject:
+							warp_pool.append(customObject)
 
 					customObject.visible = bool(object.visible) if "visible" in object else true
 					customObject.position = pos

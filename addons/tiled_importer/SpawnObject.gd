@@ -1,6 +1,5 @@
 @tool
 extends Object
-
 class_name SpawnObject
 
 @export var count : int 				= 0

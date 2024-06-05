@@ -28,11 +28,15 @@ func bodyExited(body : CollisionObject2D):
 		lastPlayerPos = Vector2.ZERO
 		HideLabel()
 
+func getDestinationPos(_actor : Actor) -> Vector2:
+	return destinationPos
+
 func _physics_process(_delta):
 	if hasPlayerWithin:
-		if lastPlayerPos != Launcher.Player.get_position():
-			lastPlayerPos = Launcher.Player.get_position()
-			var canWarp : bool = Geometry2D.is_point_in_polygon(Launcher.Player.get_global_position() - get_global_position(), polygon)
+		var newPos : Vector2 = Launcher.Player.get_global_position()
+		if lastPlayerPos != newPos:
+			lastPlayerPos = newPos
+			var canWarp : bool = Geometry2D.is_point_in_polygon(newPos - get_global_position(), polygon)
 
 			if autoWarp:
 				if canWarp:
