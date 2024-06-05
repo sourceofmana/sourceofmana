@@ -31,9 +31,12 @@ func GetMapBoundaries() -> Rect2:
 
 #
 func EmplaceMapNode(mapName : String):
+	if mapNode && mapNode.get_name() == mapName:
+		return
+
 	PhysicsServer2D.set_active(false)
 
-	if mapNode && mapNode.get_name() != mapName:
+	if mapNode:
 		UnloadMapNode()
 	LoadMapNode(mapName)
 
@@ -77,24 +80,27 @@ func AddChild(entity : Entity):
 
 #
 func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int):
+	if not tilemapNode:
+		return
+
+	var entity : Entity = Entities.Get(agentID)
 	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.FSM.playerName
-	var entity : Entity = null
-	if tilemapNode:
-		if isLocalPlayer and Launcher.Player:
-			entity = Launcher.Player
-		else:
-			entity = Instantiate.CreateEntity(entityType, entityID, nick)
-			entity.agentID = agentID
-			if entity && isLocalPlayer:
-				Launcher.Player = entity
-				Launcher.Player.SetLocalPlayer()
-				if Launcher.FSM:
-					Launcher.FSM.emit_signal("enter_game")
+	var isAlreadySpawned : bool = entity != null and entity.get_parent() == tilemapNode
+
+	if not entity:
+		entity = Instantiate.CreateEntity(entityType, entityID, nick)
+		entity.agentID = agentID
+		if entity && isLocalPlayer:
+			Launcher.Player = entity
+			Launcher.Player.SetLocalPlayer()
+			if Launcher.FSM:
+				Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
-		Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastID])
-		AddChild(entity)
-		Entities.Add(entity, agentID)
+		Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned])
+		if not isAlreadySpawned:
+			AddChild(entity)
+			Entities.Add(entity, agentID)
 
 		if isLocalPlayer:
 			emit_signal('PlayerWarped')

@@ -52,15 +52,19 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		if playerID == NetworkCommons.RidUnknown:
 			return
 
-		if map.spiritOnly != agent.stat.morphed:
-			agent.Morph(false)
+		if map.spiritOnly:
+			if not agent.stat.IsMorph():
+				agent.Morph(false, agent.stat.spiritShape)
+		else:
+			if agent.stat.IsMorph():
+				agent.Morph(false, agent.stat.entityShape)
 
 		Launcher.Network.WarpPlayer(map.name, playerID)
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
-				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.GetCurrentShapeID(), neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, playerID)
+				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, playerID)
 
-	Launcher.Network.Server.NotifyInstance(agent, "AddEntity", [agent.GetEntityType(), agent.GetCurrentShapeID(), agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
+	Launcher.Network.Server.NotifyInstance(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
 
 # Generic
 func _post_launch():

@@ -21,8 +21,8 @@ func UpdateLastStats():
 	lastStat.weight != stat.weight or \
 	lastStat.entityShape != stat.entityShape or \
 	lastStat.spiritShape != stat.spiritShape or \
-	lastStat.morphed != stat.morphed:
-		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.morphed, peerID)
+	lastStat.currentShape != stat.currentShape:
+		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.currentShape, peerID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 		lastStat.health				= stat.health
@@ -31,7 +31,7 @@ func UpdateLastStats():
 		lastStat.weight				= stat.weight
 		lastStat.entityShape		= stat.entityShape
 		lastStat.spiritShape		= stat.spiritShape
-		lastStat.morphed			= stat.morphed
+		lastStat.currentShape		= stat.currentShape
 
 	if lastStat.strength != stat.strength or \
 	lastStat.vitality != stat.vitality or \
@@ -52,7 +52,7 @@ func Morph(notifyMorphing : bool, morphID : String = ""):
 			return
 
 	var morphData : EntityData = Instantiate.FindEntityReference(morphID)
-	stat.Morph(morphData, ShouldMorph(morphID))
+	stat.Morph(morphData)
 	Launcher.Network.Server.NotifyInstance(self, "Morphed", [morphID, notifyMorphing])
 
 #

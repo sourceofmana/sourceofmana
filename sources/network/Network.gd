@@ -122,8 +122,8 @@ func Morphed(agentID : int, morphID : String, notifyMorphing : bool, rpcID : int
 
 # Stats
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdateActiveStats(agentID : int, level : int, experience : int, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, morphed : bool, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("UpdateActiveStats", [agentID, level, experience, health, mana, stamina, weight, entityShape, spiritShape, morphed], rpcID)
+func UpdateActiveStats(agentID : int, level : int, experience : int, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, currentShape : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("UpdateActiveStats", [agentID, level, experience, health, mana, stamina, weight, entityShape, spiritShape, currentShape], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func UpdateAttributes(agentID : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = NetworkCommons.RidSingleMode):

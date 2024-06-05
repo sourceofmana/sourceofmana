@@ -29,9 +29,9 @@ func SetVisual(data : EntityData, morphed : bool = false):
 		visualInitCallback.call()
 
 #
-func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextskillCastID : int):
+func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextskillCastID : int, forceValue : bool = false):
 	var dist = Vector2(gardbandPosition - position).length_squared()
-	if dist > NetworkCommons.MaxGuardbandDistSquared:
+	if dist > NetworkCommons.MaxGuardbandDistSquared or forceValue:
 		position = gardbandPosition
 
 	entityPosOffset = gardbandPosition - position

@@ -52,3 +52,14 @@ func LoadMapData():
 					if warp.size() > 3:
 						warpObject.autoWarp = warp[3]
 					warps.append(warpObject)
+		if "ports" in node:
+			for port in node.ports:
+				Util.Assert(port != null, "Port format is not supported")
+				if port:
+					var portObject = PortObject.new()
+					portObject.destinationMap = port[0]
+					portObject.destinationPos = port[1]
+					portObject.polygon = port[2]
+					portObject.autoWarp = false
+					portObject.sailingPos = port[3]
+					warps.append(portObject)

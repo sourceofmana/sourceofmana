@@ -10,7 +10,7 @@ var stamina : int						= 0
 var weight : float						= 0.0
 var entityShape : String				= ""
 var spiritShape : String				= ""
-var morphed : bool						= false
+var currentShape : String				= ""
 
 # Inactive Stats
 var baseExp : int						= 1
@@ -79,7 +79,7 @@ func SetAttributes(attributes : Dictionary):
 func SetEntityStats(entityStats : Dictionary):
 	for modifier in entityStats:
 		if modifier in base:
-			base[modifier] = (base[modifier] + entityStats[modifier]) / 2 if morphed else entityStats[modifier]
+			base[modifier] = (base[modifier] + entityStats[modifier]) / 2 if IsMorph() else entityStats[modifier]
 	RefreshEntityStats()
 
 #
@@ -89,6 +89,7 @@ func Init(actorNode : Actor, data : EntityData):
 
 	var stats : Dictionary = data._stats
 	entityShape	= data._name
+	currentShape = entityShape
 
 	if "Level" in stats:				level				= stats["Level"]
 	if "Experience" in stats:			experience			= stats["Experience"]
@@ -118,9 +119,12 @@ func FillRandomAttributes():
 				break
 		SetAttributes(attributes)
 
-func Morph(data : EntityData, morph : bool):
-	morphed = morph
+func Morph(data : EntityData):
+	currentShape = data._name
 	SetEntityStats(data._stats)
+
+func IsMorph() -> bool:
+	return currentShape != entityShape
 
 func AddAttribute(attribute : ActorCommons.Attribute):
 	if Formula.GetMaxAttributePoints(self) - Formula.GetAssignedAttributePoints(self) > 0:

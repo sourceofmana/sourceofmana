@@ -154,14 +154,8 @@ func Damage(_caller : BaseAgent):
 func Interact(_caller : BaseAgent):
 	pass
 
-func GetCurrentShapeID() -> String:
-	return stat.spiritShape if stat.morphed else stat.entityShape
-
 func GetNextShapeID() -> String:
-	return stat.spiritShape if not stat.morphed else stat.entityShape
-
-func ShouldMorph(nextID : String) -> bool:
-	return nextID != stat.entityShape
+	return stat.entityShape if stat.IsMorph() else stat.spiritShape
 
 #
 func AddAttacker(attacker : BaseAgent, damage : int):

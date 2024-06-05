@@ -72,7 +72,7 @@ func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
 		if warp:
 			var nextMap : WorldMap = Launcher.World.GetMap(warp.destinationMap)
 			if nextMap:
-				Launcher.World.Warp(player, nextMap, warp.destinationPos)
+				Launcher.World.Warp(player, nextMap, warp.getDestinationPos(player))
 
 func TriggerSit(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
@@ -109,7 +109,7 @@ func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 		if player.stat.spiritShape.length() == 0:
 			return
 		var map : Object = WorldAgent.GetMapFromAgent(player)
-		if map and map.spiritOnly and player.stat.morphed:
+		if map and map.spiritOnly:
 			return
 
 		player.Morph(true)
@@ -117,7 +117,7 @@ func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var target : BaseAgent = WorldAgent.GetAgent(targetID)
 	if target:
-		Launcher.Network.UpdateActiveStats(targetID, target.stat.level, target.stat.experience, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.entityShape, target.stat.spiritShape, target.stat.morphed, rpcID)
+		Launcher.Network.UpdateActiveStats(targetID, target.stat.level, target.stat.experience, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.entityShape, target.stat.spiritShape, target.stat.currentShape, rpcID)
 
 func AddAttribute(attribute : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
