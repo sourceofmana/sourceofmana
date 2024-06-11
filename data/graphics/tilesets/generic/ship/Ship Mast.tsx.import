@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://da8yk6k2a18cf"
+path="res://.godot/imported/Ship Mast.tsx-8d83745c06deac5a06273a7f9f504637.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/generic/ship/Ship Mast.tsx"
+dest_files=["res://.godot/imported/Ship Mast.tsx-8d83745c06deac5a06273a7f9f504637.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

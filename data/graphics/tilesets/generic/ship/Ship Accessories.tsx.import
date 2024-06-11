@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://cc4gx7uexsile"
+path="res://.godot/imported/Ship Accessories.tsx-48a02b3c8b72dd4c70a005ce89d5d413.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/generic/ship/Ship Accessories.tsx"
+dest_files=["res://.godot/imported/Ship Accessories.tsx-48a02b3c8b72dd4c70a005ce89d5d413.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
