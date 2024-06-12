@@ -115,7 +115,7 @@ func RefreshEntityStats(entity : Entity):
 	lCooldownDelay.set_text("%0.2fs" % entity.stat.current.cooldownAttackDelay)
 	lCritRate.set_text("%.d%%" % (entity.stat.current.critRate * 100.0))
 	lDodgeRate.set_text("%.d%%" % (entity.stat.current.dodgeRate * 100.0))
-	lWalkSpeed.set_text(GetPercentString(entity.stat.current.walkSpeed, entity.stat.base.walkSpeed))
+	lWalkSpeed.set_text(GetPercentString(entity.stat.current.walkSpeed, entity.stat.morphStat.walkSpeed))
 
 #
 func GetPercentString(current : float, base : float) -> String:

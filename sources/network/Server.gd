@@ -74,7 +74,7 @@ func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
 			if nextMap:
 				Launcher.World.Warp(player, nextMap, warp.getDestinationPos(player))
 				if warp is PortObject:
-					Callback.OneShotCallback(player.tree_entered, player.Morph, [false, player.GetNextPortShapeID()])
+					player.Morph(false, player.GetNextPortShapeID())
 
 func TriggerSit(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
@@ -158,17 +158,19 @@ func GetAgent(rpcID : int) -> BaseAgent:
 	return agent
 
 func NotifyInstance(agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
-	if not agent or not agent.get_parent():
+	if not agent:
 		Util.Assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
 		return
 
 	var currentPlayerID = agent.get_rid().get_id()
-	if currentPlayerID != null:
+	if inclusive and agent is PlayerAgent:
+		Launcher.Network.callv(callbackName, [currentPlayerID] + args + [GetRid(agent)])
+
+	if agent.get_parent():
 		for player in agent.get_parent().players:
-			if player != null:
-				var playerID = player.get_rid().get_id()
+			if player != null and player != agent:
 				var peerID = GetRid(player)
-				if peerID != NetworkCommons.RidUnknown && (inclusive || playerID != currentPlayerID):
+				if peerID != NetworkCommons.RidUnknown:
 					Launcher.Network.callv(callbackName, [currentPlayerID] + args + [peerID])
 
 #

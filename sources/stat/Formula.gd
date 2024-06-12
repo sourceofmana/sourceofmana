@@ -38,53 +38,53 @@ static func FHalf(val) -> int:
 
 # Concentration related stats
 static func GetMaxMana(stat : ActorStats) -> int:
-	return stat.base.maxMana + F((stat.concentration + stat.level) * coefMaxMana)
+	return stat.morphStat.maxMana + F((stat.concentration + stat.level) * coefMaxMana)
 
 static func GetRegenMana(stat : ActorStats) -> int:
 	return 1 + FFifth(stat.concentration) + FPercent(GetMaxMana(stat) * coefRegenMana)
 
 static func GetCritRate(stat : ActorStats) -> float:
-	return stat.base.critRate + Percent(FFifth(stat.concentration + stat.level))
+	return stat.morphStat.critRate + Percent(FFifth(stat.concentration + stat.level))
 
 # Endurance related stats
 static func GetMaxStamina(stat : ActorStats) -> int:
-	return stat.base.maxStamina + F((stat.endurance + stat.level) * coefMaxStamina)
+	return stat.morphStat.maxStamina + F((stat.endurance + stat.level) * coefMaxStamina)
 
 static func GetRegenStamina(stat : ActorStats) -> int:
 	return 1 + FFifth(stat.endurance) + FPercent(GetMaxStamina(stat) * coefRegenStamina)
 
 static func GetCooldownAttackDelay(stat : ActorStats) -> float:
-	return maxf(0.001, stat.base.cooldownAttackDelay - Percent(stat.endurance + stat.level))
+	return maxf(0.001, stat.morphStat.cooldownAttackDelay - Percent(stat.endurance + stat.level))
 
 # Vitality related stats
 static func GetMaxHealth(stat : ActorStats) -> int:
-	return stat.base.maxHealth + F((stat.vitality + stat.level) * coefMaxHealth)
+	return stat.morphStat.maxHealth + F((stat.vitality + stat.level) * coefMaxHealth)
 
 static func GetRegenHealth(stat : ActorStats) -> int:
 	return 1 + FFifth(stat.vitality) + FPercent(GetMaxHealth(stat) * coefRegenHealth)
 
 static func GetDefense(stat : ActorStats) -> int:
-	return stat.base.defense + F(stat.vitality * coefDefense) + stat.level
+	return stat.morphStat.defense + F(stat.vitality * coefDefense) + stat.level
 
 # Agility related stats
 static func GetCastAttackDelay(stat : ActorStats) -> float:
-	return max(0.001, stat.base.castAttackDelay - Percent(stat.agility + stat.level))
+	return max(0.001, stat.morphStat.castAttackDelay - Percent(stat.agility + stat.level))
 
 static func GetDodgeRate(stat : ActorStats) -> float:
-	return stat.base.dodgeRate + Percent(FFifth(stat.agility + stat.level))
+	return stat.morphStat.dodgeRate + Percent(FFifth(stat.agility + stat.level))
 
 static func GetAttackRange(stat : ActorStats) -> int:
-	return stat.base.attackRange + FFifth(stat.agility)
+	return stat.morphStat.attackRange + FFifth(stat.agility)
 
 # Strength related stats
 static func GetWalkSpeed(stat : ActorStats) -> float:
-	return stat.base.walkSpeed + Fifth(stat.strength + stat.level)
+	return stat.morphStat.walkSpeed + Fifth(stat.strength + stat.level)
 
 static func GetWeightCapacity(stat : ActorStats) -> float:
-	return snappedf(stat.base.weightCapacity + Half(stat.strength + stat.level), weightSnap)
+	return snappedf(stat.morphStat.weightCapacity + Half(stat.strength + stat.level), weightSnap)
 
 static func GetAttack(stat : ActorStats) -> int:
-	return stat.base.attack + F(stat.strength * coefAttack) + stat.level
+	return stat.morphStat.attack + F(stat.strength * coefAttack) + stat.level
 
 #
 static func ClampHealth(stat : ActorStats) -> int:
@@ -101,7 +101,7 @@ static func GetWeight(inventory : EntityInventory) -> float:
 
 # Animation ratios
 static func GetWalkRatio(stat : ActorStats) -> float:
-	return stat.base.walkSpeed / stat.current.walkSpeed if stat.current.walkSpeed > 0 else 1.0
+	return stat.morphStat.walkSpeed / stat.current.walkSpeed if stat.current.walkSpeed > 0 else 1.0
 
 # Experience management
 static func GetXpBonus(stat : ActorStats) -> float:

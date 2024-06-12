@@ -23,7 +23,8 @@ var endurance : int						= 0
 var concentration : int					= 0
 
 # Entity Stats
-var base : BaseStats					= BaseStats.new()
+var entityStat : BaseStats				= BaseStats.new()
+var morphStat : BaseStats				= BaseStats.new()
 var current : BaseStats					= BaseStats.new()
 var actor : Actor						= null
 
@@ -76,10 +77,17 @@ func SetAttributes(attributes : Dictionary):
 		FillRandomAttributes()
 	RefreshAttributes()
 
-func SetEntityStats(entityStats : Dictionary):
-	for modifier in entityStats:
-		if modifier in base:
-			base[modifier] = (base[modifier] + entityStats[modifier]) / 2 if IsMorph() else entityStats[modifier]
+func SetEntityStats(newStats : Dictionary):
+	for modifier in newStats:
+		if modifier in entityStat:
+			entityStat[modifier] = newStats[modifier]
+			morphStat[modifier] = entityStat[modifier]
+	RefreshEntityStats()
+
+func SetMorphStats(newStats : Dictionary):
+	for modifier in newStats:
+		if modifier in morphStat:
+			morphStat[modifier] = (entityStat[modifier] + newStats[modifier]) / 2 if IsMorph() else newStats[modifier]
 	RefreshEntityStats()
 
 #
@@ -121,7 +129,7 @@ func FillRandomAttributes():
 
 func Morph(data : EntityData):
 	currentShape = data._name
-	SetEntityStats(data._stats)
+	SetMorphStats(data._stats)
 
 func IsMorph() -> bool:
 	return currentShape != entityShape
