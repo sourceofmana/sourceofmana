@@ -16,7 +16,7 @@ enum ActionInfo
 }
 
 #
-static var useJoystick : bool = 0
+static var useJoystick : bool = false
 static var joyButton : Array = ["A", "B", "X", "Y", "Back", "Guide", "Start", "LSB", "RSB", "LB", "RB", "UP", "DOWN", "LEFT", "RIGHT", "Misc", "Paddle1", "Paddle2", "Paddle3", "Paddle4", "Touch"]
 static var actionNames : Dictionary = {
 	"ui_select" : "Select",
@@ -58,7 +58,7 @@ static var actionNames : Dictionary = {
 	"smile_15" : "Emote",
 	"smile_16" : "Emote",
 	"smile_17" : "Emote",
-	"gp_morph" : "Emote",
+	"gp_morph" : "Morph",
 	"ui_settings" : "Settings",
 	"ui_stat": "Stat",
 	"gp_shortcut_1" : "Shortcut 1",
@@ -112,7 +112,10 @@ static func Init():
 	ConnectionChanged()
 
 static func ConnectionChanged(deviceId : int = 0, connected : bool = false):
-	useJoystick = Input.get_connected_joypads().size() > 0
+	if OS.get_name() == "Android" or OS.get_name() == "iOS":
+		useJoystick = true
+	else:
+		useJoystick = Input.get_connected_joypads().size() > 0
 	UpdateWorkaroundTouchPad(deviceId, connected)
 
 static func GetActionInfo(action : String) -> Array:
