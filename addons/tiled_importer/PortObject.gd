@@ -6,7 +6,7 @@ class_name PortObject
 
 #
 func getDestinationPos(actor : Actor) -> Vector2:
-	if actor and actor.stat and actor.stat.spiritShape == actor.stat.currentShape:
+	if actor and actor.stat and not actor.stat.IsSailing():
 		return sailingPos
 	else:
 		return destinationPos
