@@ -37,7 +37,7 @@ func _ready():
 		tips.remove_child(child)
 
 	for action in actions:
-		if InputMap.action_get_events(action).size() > 0:
+		if DeviceManager.HasEvent(action):
 			var actionInfo : Array = DeviceManager.GetActionInfo(action)
 			if actionInfo.size() == DeviceManager.ActionInfo.COUNT:
 				var tip : Control = tipNode.instantiate()

@@ -84,7 +84,7 @@ static var actionNames : Dictionary = {
 static func UpdateWorkaroundTouchPad(_deviceID: int = -1, _connected: bool = false):
 	var validControllerID : int = -1
 	for device in Input.get_connected_joypads():
-		if !Input.get_joy_name(device).contains("Touchpad"):
+		if not Input.get_joy_name(device).contains("Touchpad"):
 			validControllerID = device
 			break
 
@@ -109,20 +109,23 @@ static func UpdateWorkaroundTouchPad(_deviceID: int = -1, _connected: bool = fal
 #
 static func Init():
 	Input.joy_connection_changed.connect(DeviceManager.ConnectionChanged)
-	ConnectionChanged()
+	for deviceId in Input.get_connected_joypads():
+		ConnectionChanged(deviceId, true)
 
-static func ConnectionChanged(deviceId : int = 0, connected : bool = false):
+static func ConnectionChanged(deviceId : int, connected : bool):
 	if OS.get_name() == "Android" or OS.get_name() == "iOS":
 		useJoystick = true
 	else:
 		useJoystick = Input.get_connected_joypads().size() > 0
-	UpdateWorkaroundTouchPad(deviceId, connected)
+
+	if OS.get_name() == "Linux":
+		UpdateWorkaroundTouchPad(deviceId, connected)
 
 static func GetActionInfo(action : String) -> Array:
 	var defaultValue : String = ""
 	var defaultDeviceType : DeviceType = DeviceType.KEYBOARD
 
-	for event in InputMap.action_get_events(action):
+	for event in GetEvents(action):
 		if event is InputEventKey:
 			var keycode : Key = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
 			defaultValue = OS.get_keycode_string(keycode)
@@ -143,3 +146,9 @@ static func GetActionInfo(action : String) -> Array:
 
 static func GetActionName(action : String) -> String:
 	return actionNames[action] if actionNames.has(action) else ""
+
+static func GetEvents(action : String) -> Array:
+	return ProjectSettings.get_setting("input/" + action).events if ProjectSettings.has_setting("input/" + action) else []
+
+static func HasEvent(action : String) -> bool:
+	return GetEvents(action).size() > 0

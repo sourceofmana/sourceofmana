@@ -9,7 +9,7 @@ func OnTopButtonPressed():
 
 func _ready():
 	if targetShortcut:
-		var eventList : Array = InputMap.action_get_events(targetShortcut)
+		var eventList : Array = DeviceManager.GetEvents(targetShortcut)
 		if eventList.size() > 0:
 			shortcut = Shortcut.new()
 			shortcut.events = eventList
