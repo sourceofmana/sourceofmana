@@ -6,6 +6,8 @@ var clickTimer : Timer			= null
 var previousMove : Vector2		= Vector2.ZERO
 const stickDeadzone : float		= 0.2
 
+var consumed : Dictionary		= {}
+
 #
 func Enable(enable : bool):
 	isEnabled = enable
@@ -13,18 +15,25 @@ func Enable(enable : bool):
 func IsEnabled() -> bool:
 	return isEnabled
 
+func IsUsable(action : String) -> bool:
+	return IsEnabled() and not consumed.has(action)
+
+#
+func ConsumeAction(action : String):
+	consumed[action] = true
+
 #
 func IsActionJustPressed(action : String, forceMode : bool = false) -> bool:
-	return Input.is_action_just_pressed(action) if IsEnabled() || forceMode else false
+	return Input.is_action_just_pressed(action) if IsUsable(action) || forceMode else false
 
 func IsActionPressed(action : String, forceMode : bool = false) -> bool:
-	return Input.is_action_pressed(action) if IsEnabled() || forceMode else false
+	return Input.is_action_pressed(action) if IsUsable(action) || forceMode else false
 
 func IsActionOnlyPressed(action : String, forceMode : bool = false) -> bool:
-	return Input.is_action_pressed(action) && not Input.is_action_just_pressed(action) if IsEnabled() || forceMode else false
+	return Input.is_action_pressed(action) && not Input.is_action_just_pressed(action) if IsUsable(action) || forceMode else false
 
 func IsActionJustReleased(action : String, forceMode : bool = false) -> bool:
-	return Input.is_action_just_released(action) if IsEnabled() || forceMode else false
+	return Input.is_action_just_released(action) if IsUsable(action) || forceMode else false
 
 func GetMove(forceMode : bool = false) -> Vector2:
 	var moveVector : Vector2 = Vector2.ZERO
@@ -87,6 +96,7 @@ func _physics_process(_deltaTime : float):
 		elif IsActionJustPressed("smile_17"):		Launcher.Network.TriggerEmote(16)
 		elif IsActionJustPressed("gp_sit"):			Launcher.Network.TriggerSit()
 		elif IsActionJustPressed("gp_target"):		Launcher.Player.Target(Launcher.Player.position)
+		elif IsActionJustPressed("gp_interact"):	Launcher.Player.JustInteract()
 		elif IsActionPressed("gp_interact"):		Launcher.Player.Interact()
 		elif IsActionJustPressed("gp_shortcut_1"):	 Launcher.GUI.boxes.Trigger(0)
 		elif IsActionJustPressed("gp_shortcut_2"):	 Launcher.GUI.boxes.Trigger(1)
@@ -110,6 +120,8 @@ func _physics_process(_deltaTime : float):
 		elif IsActionJustPressed("ui_menu"):		Launcher.GUI.menu._on_button_pressed()
 		elif IsActionJustPressed("ui_validate"):	Launcher.GUI.ToggleChatNewLine()
 		elif IsActionJustPressed("ui_screenshot"):	FileSystem.SaveScreenshot()
+
+	consumed.clear()
 
 #
 func _ready():

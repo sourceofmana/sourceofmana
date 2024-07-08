@@ -48,12 +48,13 @@ func _physics_process(_delta):
 					HideLabel()
 
 func _input(event):
-	if not currentTip:
+	if not currentTip or not currentTip.visible:
 		return
 
 	for tip in currentTip.get_children():
 		if tip and tip is ButtonTip and event.is_action_pressed(tip.action):
 			ConfirmWarp()
+			Launcher.Action.ConsumeAction(tip.action)
 			get_viewport().set_input_as_handled()
 			return
 
