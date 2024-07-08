@@ -190,3 +190,6 @@ const DisplayHPDelay : float				= 7.0
 # Stats
 const MaxPointPerAttributes : int			= 20
 const InventorySize : int					= 100
+
+# Explore
+static var SailingDestination : Destination	= Destination.new("Ocean", Vector2(71, 55))

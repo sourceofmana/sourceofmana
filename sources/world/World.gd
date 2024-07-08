@@ -23,7 +23,7 @@ func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i):
 	Util.Assert(newMap != null and agent != null, "Warp could not proceed, agent or current map missing")
 	if agent and newMap:
 		WorldAgent.PopAgent(agent)
-		agent.position = newPos
+		agent.position = agent.exploreOrigin.pos if newMap.spiritOnly and newPos == Vector2i.ZERO else newPos
 		agent.SwitchInputMode(true)
 		Spawn(newMap, agent)
 

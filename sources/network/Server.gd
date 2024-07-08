@@ -99,6 +99,11 @@ func TriggerInteract(triggeredAgentID : int, rpcID : int = NetworkCommons.RidSin
 		if triggeredAgent:
 			triggeredAgent.Interact(player)
 
+func TriggerExplore(rpcID : int = NetworkCommons.RidSingleMode):
+	var player : BaseAgent = GetAgent(rpcID)
+	if player is PlayerAgent:
+		player.Explore()
+
 func TriggerCast(targetID : int, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var player : BaseAgent = GetAgent(rpcID)
 	if player and DB.SkillsDB.has(skillID):

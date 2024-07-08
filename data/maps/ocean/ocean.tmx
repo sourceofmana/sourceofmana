@@ -789,15 +789,15 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="52" name="Artis Port" type="Port" x="2263" y="1731">
+  <object id="52" name="Ocean" type="Port" x="2263" y="1731">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
     <property name="dest_pos_x" type="int" value="0"/>
     <property name="dest_pos_y" type="int" value="0"/>
-    <property name="sail_pos_x" type="int" value="274"/>
-    <property name="sail_pos_y" type="int" value="102"/>
+    <property name="sail_pos_x" type="int" value="0"/>
+    <property name="sail_pos_y" type="int" value="0"/>
    </properties>
    <polygon points="41.2025,60.7943 41.2025,29.1813 72.8964,29.1813 72.8964,60.7943"/>
   </object>

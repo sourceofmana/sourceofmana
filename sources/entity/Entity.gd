@@ -77,16 +77,21 @@ func Target(source : Vector2, interactable : bool = true):
 			target.interactive.nameLabel.material = ActorCommons.EnemyTarget
 			Launcher.Network.TriggerSelect(target.agentID)
 
-func Interact():
+func JustInteract():
 	if not target or target.state == ActorCommons.State.DEATH:
 		Target(position, true)
-	if not target:
-		return
+	if target:
+		Interact()
+	else:
+		if stat.IsSailing():
+			Launcher.Network.TriggerExplore()
 
-	if target.type == ActorCommons.Type.NPC:
-		Launcher.Network.TriggerInteract(target.agentID)
-	elif target.type == ActorCommons.Type.MONSTER:
-		Cast(SkillCommons.SkillDefaultAttack)
+func Interact():
+	if target:
+		if target.type == ActorCommons.Type.NPC:
+			Launcher.Network.TriggerInteract(target.agentID)
+		elif target.type == ActorCommons.Type.MONSTER:
+			Cast(SkillCommons.SkillDefaultAttack)
 
 func Cast(skillID : int):
 	var skill : SkillCell = DB.SkillsDB[skillID]

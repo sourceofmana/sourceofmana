@@ -3,6 +3,8 @@ class_name PlayerAgent
 
 #
 var lastStat : ActorStats				= ActorStats.new()
+var respawnDestination : Destination	= Destination.new()
+var exploreOrigin : Destination	= Destination.new()
 
 #
 static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
@@ -66,18 +68,28 @@ func _ready():
 	Callback.OneShotCallback(regenTimer.tree_entered, Callback.ResetTimer, [regenTimer, ActorCommons.RegenDelay, stat.Regen])
 	add_child.call_deferred(regenTimer)
 
+	respawnDestination.map = Launcher.World.defaultSpawn.map.name
+	respawnDestination.pos = Launcher.World.defaultSpawn.spawn_position
+
 	super._ready()
 
 #
 func Respawn():
+	if not ActorCommons.IsAlive(self):
+		stat.health  = int(stat.current.maxHealth / 2.0)
+		WarpTo(respawnDestination)
+
+func Explore():
 	if ActorCommons.IsAlive(self):
-		return
-	WorldAgent.PopAgent(self)
-	var spawn: SpawnObject = Launcher.World.defaultSpawn
-	position = spawn.spawn_position
-	ResetNav()
+		var map : WorldMap = WorldAgent.GetMapFromAgent(self)
+		if map and map.spiritOnly:
+			if stat.IsSailing():
+				exploreOrigin.map = map.name
+				exploreOrigin.pos = position
+				WarpTo(ActorCommons.SailingDestination)
 
-	# Reset stats that were affected by death
-	stat.health  = int(stat.current.maxHealth / 2.0)
-
-	Launcher.World.Spawn(spawn.map, self)
+func WarpTo(dest : Destination):
+	var nextMap : WorldMap = Launcher.World.GetMap(dest.map)
+	if nextMap:
+		var nextPos : Vector2 = dest.pos * (16 if nextMap.spiritOnly else 32)
+		Launcher.World.Warp(self, nextMap, nextPos)

@@ -102,6 +102,10 @@ func ChatAgent(ridAgent : int, text : String, rpcID : int = NetworkCommons.RidSi
 func TriggerInteract(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("TriggerInteract", [entityID], rpcID, 1000)
 
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TriggerExplore(rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("TriggerExplore", [], rpcID)
+
 # Combat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerCast(entityID : int, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
