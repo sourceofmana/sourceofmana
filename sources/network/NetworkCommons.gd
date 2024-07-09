@@ -4,7 +4,7 @@ class_name NetworkCommons
 # Server
 const ServerPort : int					= 6109
 const LocalServerAddress : String		= "127.0.0.1"
-const ServerAddress : String			= "75.119.128.234"
+const ServerAddress : String			= "som.manasource.org"
 const MaxPlayerCount : int				= 32
 
 # Navigation
