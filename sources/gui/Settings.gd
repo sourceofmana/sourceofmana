@@ -95,7 +95,7 @@ func apply_resolution(resolution : Vector2i):
 	var currentPos : Vector2i = get_viewport().get_position()
 	var newPosition : Vector2i = Vector2i(clampi(currentPos.x, 0, (windowSize - resolution).x), clampi(currentPos.y, 0, (windowSize - resolution).y))
 	DisplayServer.window_set_size(newSize)
-	apply_windowPos(newPosition)
+	set_windowPos(newPosition)
 	init_actionoverlay(true)
 	populate_resolution_labels(resolution)
 
