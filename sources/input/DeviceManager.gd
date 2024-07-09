@@ -111,6 +111,8 @@ static func Init():
 	Input.joy_connection_changed.connect(DeviceManager.ConnectionChanged)
 	for deviceId in Input.get_connected_joypads():
 		ConnectionChanged(deviceId, true)
+	if DeviceManager.HasDeviceSupport():
+		Input.set_custom_mouse_cursor(FileSystem.LoadGfx("gui/misc/mouse.png"))
 
 static func ConnectionChanged(deviceId : int, connected : bool):
 	if OS.get_name() == "Android" or OS.get_name() == "iOS":
@@ -125,22 +127,23 @@ static func GetActionInfo(action : String) -> Array:
 	var defaultValue : String = ""
 	var defaultDeviceType : DeviceType = DeviceType.KEYBOARD
 
-	for event in GetEvents(action):
-		if event is InputEventKey:
-			var keycode : Key = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
-			defaultValue = OS.get_keycode_string(keycode)
-			defaultDeviceType = DeviceType.KEYBOARD
-			if not useJoystick:
-				break
+	if HasDeviceSupport():
+		for event in GetEvents(action):
+			if event is InputEventKey:
+				var keycode : Key = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
+				defaultValue = OS.get_keycode_string(keycode)
+				defaultDeviceType = DeviceType.KEYBOARD
+				if not useJoystick:
+					break
 
-		if event is InputEventJoypadButton:
-			if event.button_index >= 0 and event.button_index < joyButton.size():
-				defaultValue = joyButton[event.button_index]
-			else:
-				defaultValue = str(event.button_index)
-			defaultDeviceType = DeviceType.JOYSTICK
-			if useJoystick:
-				break
+			if event is InputEventJoypadButton:
+				if event.button_index >= 0 and event.button_index < joyButton.size():
+					defaultValue = joyButton[event.button_index]
+				else:
+					defaultValue = str(event.button_index)
+				defaultDeviceType = DeviceType.JOYSTICK
+				if useJoystick:
+					break
 
 	return [defaultValue, defaultDeviceType]
 
@@ -152,3 +155,6 @@ static func GetEvents(action : String) -> Array:
 
 static func HasEvent(action : String) -> bool:
 	return GetEvents(action).size() > 0
+
+static func HasDeviceSupport() -> bool:
+	return DisplayServer.get_name() != "headless"
