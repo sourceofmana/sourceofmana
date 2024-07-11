@@ -36,3 +36,5 @@ offset_top = -27.0
 offset_right = 50.5
 offset_bottom = -8.0
 grow_horizontal = 1
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

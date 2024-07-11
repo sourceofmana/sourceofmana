@@ -10,3 +10,8 @@ func Init(title : String, action : StringName, callback : Callable):
 func Setup(action : StringName, callback : Callable):
 	if tip:
 		tip.Setup(action, callback)
+
+#
+func _on_visibility_changed():
+	if tip:
+		tip.set_process_input(visible)

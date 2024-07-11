@@ -17,6 +17,9 @@ func Setup(action : StringName, callback : Callable):
 
 #
 func _input(event):
+	if not visible:
+		return
+
 	if event.is_action_pressed(_action):
 		_callback.call()
 		Launcher.Action.ConsumeAction(_action)
