@@ -1,15 +1,23 @@
 extends Button
 class_name ButtonTip
 
-@export var action : StringName = ""
+@export var _action : StringName = ""
+@export var _callback : Callable
 
 #
 func UpdateTip():
-	if DeviceManager.HasEvent(action):
-		set_text(DeviceManager.GetActionInfo(action)[DeviceManager.ActionInfo.NAME])
+	if DeviceManager.HasEvent(_action):
+		set_text(DeviceManager.GetActionInfo(_action)[DeviceManager.ActionInfo.NAME])
 	set_visible(get_text().length() > 0)
 
-#
-func _ready():
-	Util.Assert(DeviceManager.HasEvent(action) == true, "Action not found! Could not process this button tip")
+func Setup(action : StringName, callback : Callable):
+	_action = action
+	_callback = callback
 	UpdateTip()
+
+#
+func _input(event):
+	if event.is_action_pressed(_action):
+		_callback.call()
+		Launcher.Action.ConsumeAction(_action)
+		get_viewport().set_input_as_handled()

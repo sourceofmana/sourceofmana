@@ -15,7 +15,7 @@ var lastPlayerPos : Vector2						= Vector2.ZERO
 
 const defaultParticlesCount : int				= 12
 const WarpFx : PackedScene						= preload("res://presets/effects/particles/WarpLocation.tscn")
-const WarpTip : PackedScene						= preload("res://presets/gui/WarpTip.tscn")
+const WarpTip : PackedScene						= preload("res://presets/gui/Tip.tscn")
 
 #
 func bodyEntered(body : CollisionObject2D):
@@ -47,24 +47,13 @@ func _physics_process(_delta):
 				else:
 					HideLabel()
 
-func _input(event):
-	if not currentTip or not currentTip.visible:
-		return
-
-	for tip in currentTip.get_children():
-		if tip and tip is ButtonTip and event.is_action_pressed(tip.action):
-			ConfirmWarp()
-			Launcher.Action.ConsumeAction(tip.action)
-			get_viewport().set_input_as_handled()
-			return
-
 func ConfirmWarp():
 	Launcher.Network.TriggerWarp()
 
 func DisplayLabel():
 	if not currentTip:
 		currentTip = WarpTip.instantiate()
-		currentTip.set_text(destinationMap)
+		currentTip.Init(destinationMap, "gp_interact", ConfirmWarp.bind())
 
 		var xmin : float = INF
 		var xmax : float = -INF
