@@ -11,7 +11,8 @@ extends ServiceBase
 @onready var boxes : Control					= $Overlay/Sections/Shortcuts/Boxes
 
 @onready var notificationLabel : RichTextLabel	= $Overlay/Sections/Notification
-@onready var tipsLabel : PanelContainer			= $Overlay/Sections/Tips
+@onready var tipsContext : ContextMenu			= $Overlay/Sections/Contexts/Tips
+@onready var mainContext : ContextMenu			= $Overlay/Sections/Contexts/Main
 
 # Windows
 @onready var windows : Control					= $Windows/Floating
@@ -77,7 +78,7 @@ func EnterLoginMenu():
 
 func EnterGame():
 	if Launcher.Player:
-		tipsLabel.Display()
+		tipsContext.FadeIn()
 
 		background.set_visible(false)
 		loginWindow.EnableControl(false)
@@ -118,6 +119,11 @@ func _notification(notif):
 func _ready():
 	Util.Assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
 	CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
+
+	tipsContext.Push(ContextData.new("gp_interact"))
+	tipsContext.Push(ContextData.new("gp_sit"))
+	tipsContext.Push(ContextData.new("gp_morph"))
+	tipsContext.Push(ContextData.new("gp_target"))
 
 func _on_ui_margin_resized():
 	if CRTShader and CRTShader.material:

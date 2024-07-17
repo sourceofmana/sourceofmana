@@ -120,4 +120,5 @@ func DisconnectPlayer():
 	if Launcher.Map:
 		Launcher.Map.UnloadMapNode()
 	if Launcher.Player:
+		Launcher.Player.queue_free()
 		Launcher.Player = null

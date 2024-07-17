@@ -138,6 +138,12 @@ func DisplayHP():
 func HideHP():
 	healthBar.modulate.a = 0.99
 
+func DisplaySailContext():
+	Launcher.GUI.mainContext.Clear()
+	Launcher.GUI.mainContext.Push(ContextData.new("ui_validate", "Explore", Launcher.Network.TriggerExplore.bind()))
+	Launcher.GUI.mainContext.Push(ContextData.new("ui_cancel", "Cancel", Callback.Empty.bind()))
+	Launcher.GUI.mainContext.FadeIn(true)
+
 #
 func RefreshVisibleNodeOffset(offset : int):
 	visibleNode.position.y = (-ActorCommons.interactionDisplayOffset) + offset

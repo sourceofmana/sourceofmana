@@ -22,6 +22,34 @@ func IsUsable(action : String) -> bool:
 func ConsumeAction(action : String):
 	consumed[action] = true
 
+func TryJustPressed(event : InputEvent, action : String) -> bool:
+	if event.is_action_pressed(action) and IsActionJustPressed(action, true):
+		ConsumeAction(action)
+		get_viewport().set_input_as_handled()
+		return true
+	return false
+
+func TryPressed(event : InputEvent, action : String) -> bool:
+	if event.is_action_pressed(action) and IsActionPressed(action, true):
+		ConsumeAction(action)
+		get_viewport().set_input_as_handled()
+		return true
+	return false
+
+func TryOnlyPressed(event : InputEvent, action : String) -> bool:
+	if event.is_action_pressed(action) and IsActionOnlyPressed(action, true):
+		ConsumeAction(action)
+		get_viewport().set_input_as_handled()
+		return true
+	return false
+
+func TryJustReleased(event : InputEvent, action : String) -> bool:
+	if event.is_action_released(action) and IsActionJustReleased(action, true):
+		ConsumeAction(action)
+		get_viewport().set_input_as_handled()
+		return true
+	return false
+
 #
 func IsActionJustPressed(action : String, forceMode : bool = false) -> bool:
 	return Input.is_action_just_pressed(action) if IsUsable(action) || forceMode else false
@@ -109,7 +137,7 @@ func _physics_process(_deltaTime : float):
 		elif IsActionJustPressed("gp_shortcut_9"):	 Launcher.GUI.boxes.Trigger(8)
 		elif IsActionJustPressed("gp_shortcut_10"):	 Launcher.GUI.boxes.Trigger(9)
 		elif IsActionJustPressed("gp_morph"):	 	Launcher.Network.TriggerMorph()
-		elif IsActionJustPressed("ui_close", true):	Launcher.GUI.CloseWindow()
+		elif IsActionJustPressed("ui_close"):		Launcher.GUI.CloseWindow()
 		elif IsActionJustPressed("ui_inventory"):	Launcher.GUI.ToggleControl(Launcher.GUI.inventoryWindow)
 		elif IsActionJustPressed("ui_minimap"):		Launcher.GUI.ToggleControl(Launcher.GUI.minimapWindow)
 		elif IsActionJustPressed("ui_chat"):		Launcher.GUI.ToggleControl(Launcher.GUI.chatWindow)

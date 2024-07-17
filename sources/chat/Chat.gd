@@ -45,14 +45,14 @@ func OnNewTextSubmitted(newText : String):
 			SetNewLineEnabled(false)
 
 #
-func _process(_deltaTime : float):
+func _input(event : InputEvent):
 	if isNewLineEnabled():
-		if Input.is_action_just_pressed("ui_cancel"):
+		if Launcher.Action.TryJustPressed(event, "ui_cancel"):
 			SetNewLineEnabled(false)
-		elif Input.is_action_just_pressed("ui_up"):
+		elif Launcher.Action.TryJustPressed(event, "ui_up"):
 			chatHistory.Up()
 			lineEdit.text = chatHistory.Get()
-		elif Input.is_action_just_pressed("ui_down"):
+		elif Launcher.Action.TryJustPressed(event, "ui_down"):
 			chatHistory.Down()
 			lineEdit.text = chatHistory.Get()
 

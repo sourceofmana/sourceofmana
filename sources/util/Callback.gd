@@ -20,7 +20,7 @@ static func PlugCallback(objectSignal : Signal, callback : Callable, args : Arra
 	AddCallback(objectSignal, callback, args)
 
 #
-static func OneShotCallback(objectSignal : Signal, callback : Callable, args : Array):
+static func OneShotCallback(objectSignal : Signal, callback : Callable, args : Array = []):
 	RemoveCallback(objectSignal, Callback.ShootCallback)
 	AddCallback(objectSignal, Callback.ShootCallback, [callback] + args)
 
@@ -74,3 +74,6 @@ static func LoopTimer(timer : Timer, delay : float):
 	Util.Assert(delay > 0, "Delay should never be null, infinite loop can happen on looped timers")
 	if timer and delay > 0:
 		timer.start(delay)
+
+static func Empty():
+	pass

@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://ef10hudas2sx"]
+[gd_scene load_steps=3 format=3 uid="uid://bma76sut56bfu"]
 
 [ext_resource type="Texture2D" uid="uid://dedvehg8nrl3m" path="res://data/graphics/gui/button/button_hover.png" id="1_laqiq"]
-[ext_resource type="Script" path="res://sources/gui/ButtonTip.gd" id="2_q13u4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_baw6c"]
 texture = ExtResource("1_laqiq")
@@ -23,4 +22,3 @@ offset_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_baw6c")
-script = ExtResource("2_q13u4")

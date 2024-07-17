@@ -58,6 +58,7 @@ func SetLocalPlayer():
 	
 	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
 	Launcher.Network.RetrieveInventory()
+	Launcher.FSM.emit_signal("enter_game")
 
 func ClearTarget():
 	if target != null:
@@ -84,7 +85,7 @@ func JustInteract():
 		Interact()
 	else:
 		if stat.IsSailing():
-			Launcher.Network.TriggerExplore()
+			interactive.DisplaySailContext()
 
 func Interact():
 	if target:

@@ -70,7 +70,7 @@ func RemoveChild(entity : Entity):
 	if entity:
 		if tilemapNode:
 			tilemapNode.remove_child(entity)
-		if not entity.type == ActorCommons.Type.PLAYER:
+		if entity != Launcher.Player:
 			entity.queue_free()
 
 func AddChild(entity : Entity):
@@ -87,14 +87,14 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.FSM.playerName
 	var isAlreadySpawned : bool = entity != null and entity.get_parent() == tilemapNode
 
+	if isLocalPlayer and Launcher.Player:
+		entity = Launcher.Player
 	if not entity:
 		entity = Instantiate.CreateEntity(entityType, entityID, nick)
 		entity.agentID = agentID
-		if entity && isLocalPlayer:
+		if isLocalPlayer:
 			Launcher.Player = entity
 			Launcher.Player.SetLocalPlayer()
-			if Launcher.FSM:
-				Launcher.FSM.emit_signal("enter_game")
 
 	if entity:
 		Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned])

@@ -33,9 +33,9 @@
 [ext_resource type="JSON" path="res://data/db/credits.json" id="16_pfh0e"]
 [ext_resource type="PackedScene" uid="uid://lkl6f0td76mu" path="res://presets/gui/Notification.tscn" id="17_64u4l"]
 [ext_resource type="Script" path="res://sources/gui/Sticks.gd" id="18_6nrx4"]
-[ext_resource type="PackedScene" uid="uid://ti8obbg4a52j" path="res://presets/gui/Tips.tscn" id="18_88m73"]
 [ext_resource type="Texture2D" uid="uid://c6vlftjsnocs3" path="res://data/graphics/gui/mobile/background.png" id="18_lb78w"]
 [ext_resource type="Texture2D" uid="uid://cyuj6w585tm0y" path="res://data/graphics/gui/mobile/button.png" id="20_1vdgt"]
+[ext_resource type="PackedScene" uid="uid://tqcjqyaicaol" path="res://presets/gui/contexts/ContextMenuV.tscn" id="20_px3po"]
 [ext_resource type="Texture2D" uid="uid://4lbn2136wjw3" path="res://data/graphics/gui/mobile/buttonY.png" id="22_v5bsw"]
 [ext_resource type="Texture2D" uid="uid://bncxvjj4nmem8" path="res://data/graphics/gui/mobile/buttonX.png" id="23_8ulos"]
 [ext_resource type="Texture2D" uid="uid://m862d3fndtf" path="res://data/graphics/gui/mobile/buttonY_pressed.png" id="23_veq0v"]
@@ -235,14 +235,45 @@ theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
 [node name="Notification" parent="Overlay/Sections" instance=ExtResource("17_64u4l")]
 layout_mode = 2
 
-[node name="Tips" parent="Overlay/Sections" instance=ExtResource("18_88m73")]
+[node name="Contexts" type="Control" parent="Overlay/Sections"]
+z_index = 10
+z_as_relative = false
 layout_mode = 2
-actions = Array[StringName]([&"gp_interact", &"gp_target", &"gp_morph", &"gp_sit"])
+size_flags_vertical = 3
+
+[node name="Tips" parent="Overlay/Sections/Contexts" instance=ExtResource("20_px3po")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -12.0
+offset_bottom = 12.0
+grow_vertical = 2
+size_flags_vertical = 6
+persistant = false
+
+[node name="Main" parent="Overlay/Sections/Contexts" instance=ExtResource("20_px3po")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_right = 36.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+fadeInDelay = 0.5
+displayDelay = 0.0
+fadeOutDelay = 0.3
 
 [node name="Shortcuts" type="MarginContainer" parent="Overlay/Sections"]
 custom_minimum_size = Vector2(0, 155)
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_vertical = 8
 
 [node name="Sticks" type="HBoxContainer" parent="Overlay/Sections/Shortcuts"]
 layout_mode = 2

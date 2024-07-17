@@ -18,6 +18,7 @@ enum ActionInfo
 #
 static var useJoystick : bool = false
 static var joyButton : Array = ["A", "B", "X", "Y", "Back", "Guide", "Start", "LSB", "RSB", "LB", "RB", "UP", "DOWN", "LEFT", "RIGHT", "Misc", "Paddle1", "Paddle2", "Paddle3", "Paddle4", "Touch"]
+
 static var actionNames : Dictionary = {
 	"ui_select" : "Select",
 	"ui_focus_next" : "Focus Next",
@@ -72,7 +73,10 @@ static var actionNames : Dictionary = {
 	"gp_shortcut_9" : "Shortcut 9",
 	"gp_shortcut_10" : "Shortcut 10",
 	"gp_target" : "Target",
-	"ui_skill": "Skill"
+	"ui_skill": "Skill",
+	"ui_cancel": "Cancel",
+	"ui_secondary": "Secondary",
+	"ui_tertiary": "Tertiary"
 }
 
 # Re-assign controller input events to first valid controller
@@ -131,7 +135,7 @@ static func GetActionInfo(action : String) -> Array:
 		for event in GetEvents(action):
 			if event is InputEventKey:
 				var keycode : Key = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
-				defaultValue = OS.get_keycode_string(keycode)
+				defaultValue = OS.get_keycode_string(keycode if keycode != 0 else event.keycode)
 				defaultDeviceType = DeviceType.KEYBOARD
 				if not useJoystick:
 					break

@@ -9,13 +9,11 @@ class_name WarpObject
 @export var areaSize : float					= 1.0
 @export var randomPoints : PackedVector2Array	= []
 
-var currentTip : RichTextLabel					= null
 var hasPlayerWithin : bool						= false
-var lastPlayerPos : Vector2						= Vector2.ZERO
+var contextDisplayed : bool						= false
 
 const defaultParticlesCount : int				= 12
 const WarpFx : PackedScene						= preload("res://presets/effects/particles/WarpLocation.tscn")
-const WarpTip : PackedScene						= preload("res://presets/gui/Tip.tscn")
 
 #
 func bodyEntered(body : CollisionObject2D):
@@ -25,7 +23,6 @@ func bodyEntered(body : CollisionObject2D):
 func bodyExited(body : CollisionObject2D):
 	if body and body == Launcher.Player:
 		hasPlayerWithin = false
-		lastPlayerPos = Vector2.ZERO
 		HideLabel()
 
 func getDestinationPos(_actor : Actor) -> Vector2:
@@ -33,45 +30,29 @@ func getDestinationPos(_actor : Actor) -> Vector2:
 
 func _physics_process(_delta):
 	if hasPlayerWithin:
-		var newPos : Vector2 = Launcher.Player.get_global_position()
-		if lastPlayerPos != newPos:
-			lastPlayerPos = newPos
-			var canWarp : bool = Geometry2D.is_point_in_polygon(newPos - get_global_position(), polygon)
-
-			if autoWarp:
-				if canWarp:
-					ConfirmWarp()
-			else:
-				if canWarp:
-					DisplayLabel()
-				else:
-					HideLabel()
+		var newPos : Vector2 = Launcher.Player.get_global_position() + Launcher.Player.entityPosOffset
+		var canWarp : bool = Geometry2D.is_point_in_polygon(newPos - get_global_position(), polygon)
+		if autoWarp:
+			if canWarp:
+				ConfirmWarp()
+		else:
+			if canWarp and (not contextDisplayed or not Launcher.GUI.mainContext.is_visible()):
+				DisplayLabel()
+			elif not canWarp and contextDisplayed:
+				HideLabel()
 
 func ConfirmWarp():
 	Launcher.Network.TriggerWarp()
 
 func DisplayLabel():
-	if not currentTip:
-		currentTip = WarpTip.instantiate()
-		currentTip.Init(destinationMap, "gp_interact", ConfirmWarp.bind())
-
-		var xmin : float = INF
-		var xmax : float = -INF
-		for point in polygon:
-			if point.x < xmin:
-				xmin = point.x
-			elif point.x > xmax:
-				xmax = point.x
-		currentTip.position.x += (xmax + xmin) / 2
-
-		add_child(currentTip)
-
-	if currentTip:
-		currentTip.set_visible(true)
+	Launcher.GUI.mainContext.Clear()
+	Launcher.GUI.mainContext.Push(ContextData.new("gp_interact", destinationMap, ConfirmWarp.bind()))
+	Launcher.GUI.mainContext.FadeIn()
+	contextDisplayed = true
 
 func HideLabel():
-	if currentTip:
-		currentTip.set_visible(false)
+	Launcher.GUI.mainContext.FadeOut()
+	contextDisplayed = false
 
 #
 func _ready():
