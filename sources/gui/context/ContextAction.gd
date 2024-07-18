@@ -41,9 +41,9 @@ func _on_visibility_changed():
 func _input(event):
 	if not visible or not _data or _data._callback.is_null():
 		return
-
-	if Launcher.Action.TryJustPressed(event, _data._action):
-		_on_trigger()
+	if event.is_action(_data._action):
+		if Launcher.Action.TryJustPressed(event, _data._action):
+			_on_trigger()
 
 func _on_trigger():
 	if not visible or not _data or _data._callback.is_null():

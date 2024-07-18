@@ -313,25 +313,21 @@ texture = ExtResource("18_lb78w")
 position = Vector2(51, 5)
 texture_normal = ExtResource("22_v5bsw")
 texture_pressed = ExtResource("23_veq0v")
-action = "gp_sit"
 
 [node name="ButtonX" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
 position = Vector2(4, 52)
 texture_normal = ExtResource("23_8ulos")
 texture_pressed = ExtResource("25_8t8bb")
-action = "gp_morph"
 
 [node name="ButtonB" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
 position = Vector2(98, 52)
 texture_normal = ExtResource("24_idf5b")
 texture_pressed = ExtResource("27_rgxqc")
-action = "gp_target"
 
 [node name="ButtonA" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
 position = Vector2(51, 99)
 texture_normal = ExtResource("25_6cklw")
 texture_pressed = ExtResource("29_ioa8a")
-action = "gp_interact"
 
 [node name="Boxes" parent="Overlay/Sections/Shortcuts" instance=ExtResource("4")]
 layout_mode = 2
@@ -491,5 +487,13 @@ top_level = true
 [connection signal="pressed" from="Overlay/Sections/Indicators/Menu/MenuButton" to="Overlay/Sections/Indicators/Menu" method="_on_button_pressed"]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Direction/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]
 [connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Direction/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_up"]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonY" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [3]]
+[connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonY" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [3]]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonX" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [2]]
+[connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonX" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [2]]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonB" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [1]]
+[connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonB" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [1]]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonA" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [0]]
+[connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonA" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [0]]
 [connection signal="resized" from="Windows/Floating" to="Windows/Floating" method="_on_window_resized"]
 [connection signal="gui_input" from="Windows/Floating/Stat" to="Windows/Floating/Stat" method="OnGuiInput"]

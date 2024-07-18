@@ -31,3 +31,9 @@ func _physics_process(_delta):
 		newPos.y = clampf(newPos.y, 0.0, 100.0)
 
 		DirectionButton.position = newPos
+
+func _press_button(buttonId : JoyButton):
+	DeviceManager.SendEventJoy(buttonId, true)
+
+func _release_button(buttonId : JoyButton):
+	DeviceManager.SendEventJoy(buttonId, false)

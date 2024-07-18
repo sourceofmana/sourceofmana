@@ -16,7 +16,7 @@ enum ActionInfo
 }
 
 #
-static var useJoystick : bool = false
+static var useJoystick : bool = OS.get_name() == "Android" or OS.get_name() == "iOS"
 static var joyButton : Array = ["A", "B", "X", "Y", "Back", "Guide", "Start", "LSB", "RSB", "LB", "RB", "UP", "DOWN", "LEFT", "RIGHT", "Misc", "Paddle1", "Paddle2", "Paddle3", "Paddle4", "Touch"]
 
 static var actionNames : Dictionary = {
@@ -162,3 +162,17 @@ static func HasEvent(action : String) -> bool:
 
 static func HasDeviceSupport() -> bool:
 	return DisplayServer.get_name() != "headless"
+
+#
+static func SendEvent(action : String, state : bool = true):
+	var event = InputEventJoypadButton.new()
+	event.action = action
+	event.pressed = state
+	Input.parse_input_event(event)
+
+static func SendEventJoy(buttonID : int, state : bool = true):
+	var event = InputEventJoypadButton.new()
+	event.pressed = state
+	event.button_index = buttonID
+	event.pressure = 1.0 if state else 0.0
+	Input.parse_input_event(event)
