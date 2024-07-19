@@ -5,7 +5,7 @@ class_name ChatContainer
 @onready var lineEdit : LineEdit				= $NewText
 
 @onready var tabInstance : Object				= FileSystem.LoadGui("chat/ChatTab", false)
-@onready var chatHistory : ChatHistory			= ChatHistory.new()
+@onready var backlog : ChatBacklog			= ChatBacklog.new()
 
 var enabledLastFrame : bool						= false
 
@@ -38,7 +38,7 @@ func OnNewTextSubmitted(newText : String):
 		if newText.is_empty() == false:
 			lineEdit.clear()
 			if Launcher.Player:
-				chatHistory.Add(newText)
+				backlog.Add(newText)
 				Launcher.Network.TriggerChat(newText)
 				SetNewLineEnabled(false)
 		else:
@@ -50,11 +50,11 @@ func _input(event : InputEvent):
 		if Launcher.Action.TryJustPressed(event, "ui_cancel"):
 			SetNewLineEnabled(false)
 		elif Launcher.Action.TryJustPressed(event, "ui_up"):
-			chatHistory.Up()
-			lineEdit.text = chatHistory.Get()
+			backlog.Up()
+			lineEdit.text = backlog.Get()
 		elif Launcher.Action.TryJustPressed(event, "ui_down"):
-			chatHistory.Down()
-			lineEdit.text = chatHistory.Get()
+			backlog.Down()
+			lineEdit.text = backlog.Get()
 
 func _physics_process(_delta):
 	if enabledLastFrame:

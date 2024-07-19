@@ -1,5 +1,5 @@
 extends Object
-class_name ChatHistory
+class_name ChatBacklog
 
 #
 var sentLog : Array[String]				= []
