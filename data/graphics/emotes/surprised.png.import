@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/surprised.png-7d6ee5f7feb5e32700e76ccd4fa84c0
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

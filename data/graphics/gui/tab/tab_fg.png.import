@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/tab_fg.png-5c6b594c42dbef7ba8f4d7bdaf51edfd.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false
