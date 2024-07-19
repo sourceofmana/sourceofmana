@@ -88,7 +88,7 @@ func JustInteract():
 			interactive.DisplaySailContext()
 
 func Interact():
-	if target:
+	if target != null:
 		if target.type == ActorCommons.Type.NPC:
 			Launcher.Network.TriggerInteract(target.agentID)
 		elif target.type == ActorCommons.Type.MONSTER:

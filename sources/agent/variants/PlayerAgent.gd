@@ -91,5 +91,4 @@ func Explore():
 func WarpTo(dest : Destination):
 	var nextMap : WorldMap = Launcher.World.GetMap(dest.map)
 	if nextMap:
-		var nextPos : Vector2 = dest.pos * (16 if nextMap.spiritOnly else 32)
-		Launcher.World.Warp(self, nextMap, nextPos)
+		Launcher.World.Warp(self, nextMap, dest.pos)

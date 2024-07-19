@@ -192,4 +192,4 @@ const MaxPointPerAttributes : int			= 20
 const InventorySize : int					= 100
 
 # Explore
-static var SailingDestination : Destination	= Destination.new("Ocean", Vector2(71, 55))
+static var SailingDestination : Destination	= Destination.new("Ocean", Vector2(71 * 32, 55 * 32))
