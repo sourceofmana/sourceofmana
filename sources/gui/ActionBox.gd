@@ -32,6 +32,6 @@ func Trigger(idx : int):
 		slots[idx].UseCell()
 
 func _ready():
-	if OS.get_name() == "Android" or OS.get_name() == "iOS":
+	if LauncherCommons.isMobile:
 		for label in labels:
 			label.set_visible(false)
