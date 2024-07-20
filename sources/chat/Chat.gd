@@ -21,7 +21,7 @@ func AddText(speech : String, color : Color):
 		tabContainer.get_current_tab_control().text += "[color=#" + color.to_html(false) + "]" + speech + "[/color]\n"
 
 func isNewLineEnabled() -> bool:
-	return lineEdit.is_visible() if lineEdit else false 
+	return lineEdit.is_visible() and lineEdit.has_focus() if lineEdit else false
 
 func SetNewLineEnabled(enable : bool):
 	if lineEdit and not enabledLastFrame:
@@ -34,7 +34,7 @@ func SetNewLineEnabled(enable : bool):
 
 #
 func OnNewTextSubmitted(newText : String):
-	if not Launcher.Action.IsActionOnlyPressed("ui_validate", true) and lineEdit:
+	if lineEdit:
 		if newText.is_empty() == false:
 			lineEdit.clear()
 			if Launcher.Player:
@@ -47,14 +47,16 @@ func OnNewTextSubmitted(newText : String):
 #
 func _input(event : InputEvent):
 	if isNewLineEnabled():
-		if Launcher.Action.TryJustPressed(event, "ui_cancel"):
+		if Launcher.Action.TryJustPressed(event, "ui_cancel", true):
 			SetNewLineEnabled(false)
-		elif Launcher.Action.TryJustPressed(event, "ui_up"):
+		elif Launcher.Action.TryJustPressed(event, "ui_up", true):
 			backlog.Up()
 			lineEdit.text = backlog.Get()
-		elif Launcher.Action.TryJustPressed(event, "ui_down"):
+		elif Launcher.Action.TryJustPressed(event, "ui_down", true):
 			backlog.Down()
 			lineEdit.text = backlog.Get()
+		elif Launcher.Action.TryJustPressed(event, "ui_validate", true):
+			OnNewTextSubmitted(lineEdit.text)
 
 func _physics_process(_delta):
 	if enabledLastFrame:

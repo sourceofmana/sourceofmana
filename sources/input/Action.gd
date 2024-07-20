@@ -22,29 +22,29 @@ func IsUsable(action : String) -> bool:
 func ConsumeAction(action : String):
 	consumed[action] = true
 
-func TryJustPressed(event : InputEvent, action : String) -> bool:
-	if event.is_action_pressed(action) and IsActionJustPressed(action, true):
+func TryJustPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
+	if event.is_action_pressed(action) and IsActionJustPressed(action, forceMode):
 		ConsumeAction(action)
 		get_viewport().set_input_as_handled()
 		return true
 	return false
 
-func TryPressed(event : InputEvent, action : String) -> bool:
-	if event.is_action_pressed(action) and IsActionPressed(action, true):
+func TryPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
+	if event.is_action_pressed(action) and IsActionPressed(action, forceMode):
 		ConsumeAction(action)
 		get_viewport().set_input_as_handled()
 		return true
 	return false
 
-func TryOnlyPressed(event : InputEvent, action : String) -> bool:
-	if event.is_action_pressed(action) and IsActionOnlyPressed(action, true):
+func TryOnlyPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
+	if event.is_action_pressed(action) and IsActionOnlyPressed(action, forceMode):
 		ConsumeAction(action)
 		get_viewport().set_input_as_handled()
 		return true
 	return false
 
-func TryJustReleased(event : InputEvent, action : String) -> bool:
-	if event.is_action_released(action) and IsActionJustReleased(action, true):
+func TryJustReleased(event : InputEvent, action : String, forceMode : bool = false) -> bool:
+	if event.is_action_released(action) and IsActionJustReleased(action, forceMode):
 		ConsumeAction(action)
 		get_viewport().set_input_as_handled()
 		return true
@@ -80,15 +80,13 @@ func GetMove(forceMode : bool = false) -> Vector2:
 	return moveVector
 
 # Local player movement
-func _unhandled_input(_event):
-	if not supportMouse:
-		return
-
-	if get_viewport() and Launcher.Camera and Launcher.Camera.mainCamera and clickTimer:
-		if clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
-			var mousePos : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
-			Launcher.Network.SetClickPos(mousePos)
-			clickTimer.start()
+func _unhandled_input(event):
+	if event.is_action("gp_click_to") and supportMouse:
+		if get_viewport() and Launcher.Camera and Launcher.Camera.mainCamera and clickTimer:
+			if clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
+				var mousePos : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
+				Launcher.Network.SetClickPos(mousePos)
+				clickTimer.start()
 
 func _physics_process(_deltaTime : float):
 	if Launcher.Player:
@@ -105,50 +103,50 @@ func _physics_process(_deltaTime : float):
 		previousMove = move
 
 #
-		if IsActionJustPressed("smile_1"):			Launcher.Network.TriggerEmote(0)
-		elif IsActionJustPressed("smile_2"):		Launcher.Network.TriggerEmote(1)
-		elif IsActionJustPressed("smile_3"):		Launcher.Network.TriggerEmote(2)
-		elif IsActionJustPressed("smile_4"):		Launcher.Network.TriggerEmote(3)
-		elif IsActionJustPressed("smile_5"):		Launcher.Network.TriggerEmote(4)
-		elif IsActionJustPressed("smile_6"):		Launcher.Network.TriggerEmote(5)
-		elif IsActionJustPressed("smile_7"):		Launcher.Network.TriggerEmote(6)
-		elif IsActionJustPressed("smile_8"):		Launcher.Network.TriggerEmote(7)
-		elif IsActionJustPressed("smile_9"):		Launcher.Network.TriggerEmote(8)
-		elif IsActionJustPressed("smile_10"):		Launcher.Network.TriggerEmote(9)
-		elif IsActionJustPressed("smile_11"):		Launcher.Network.TriggerEmote(10)
-		elif IsActionJustPressed("smile_12"):		Launcher.Network.TriggerEmote(11)
-		elif IsActionJustPressed("smile_13"):		Launcher.Network.TriggerEmote(12)
-		elif IsActionJustPressed("smile_14"):		Launcher.Network.TriggerEmote(13)
-		elif IsActionJustPressed("smile_15"):		Launcher.Network.TriggerEmote(14)
-		elif IsActionJustPressed("smile_16"):		Launcher.Network.TriggerEmote(15)
-		elif IsActionJustPressed("smile_17"):		Launcher.Network.TriggerEmote(16)
-		elif IsActionJustPressed("gp_sit"):			Launcher.Network.TriggerSit()
-		elif IsActionJustPressed("gp_target"):		Launcher.Player.Target(Launcher.Player.position)
-		elif IsActionJustPressed("gp_interact"):	Launcher.Player.JustInteract()
-		elif IsActionPressed("gp_interact"):		Launcher.Player.Interact()
-		elif IsActionJustPressed("gp_shortcut_1"):	 Launcher.GUI.boxes.Trigger(0)
-		elif IsActionJustPressed("gp_shortcut_2"):	 Launcher.GUI.boxes.Trigger(1)
-		elif IsActionJustPressed("gp_shortcut_3"):	 Launcher.GUI.boxes.Trigger(2)
-		elif IsActionJustPressed("gp_shortcut_4"):	 Launcher.GUI.boxes.Trigger(3)
-		elif IsActionJustPressed("gp_shortcut_5"):	 Launcher.GUI.boxes.Trigger(4)
-		elif IsActionJustPressed("gp_shortcut_6"):	 Launcher.GUI.boxes.Trigger(5)
-		elif IsActionJustPressed("gp_shortcut_7"):	 Launcher.GUI.boxes.Trigger(6)
-		elif IsActionJustPressed("gp_shortcut_8"):	 Launcher.GUI.boxes.Trigger(7)
-		elif IsActionJustPressed("gp_shortcut_9"):	 Launcher.GUI.boxes.Trigger(8)
-		elif IsActionJustPressed("gp_shortcut_10"):	 Launcher.GUI.boxes.Trigger(9)
-		elif IsActionJustPressed("gp_morph"):	 	Launcher.Network.TriggerMorph()
-		elif IsActionJustPressed("ui_close"):		Launcher.GUI.CloseWindow()
-		elif IsActionJustPressed("ui_inventory"):	Launcher.GUI.ToggleControl(Launcher.GUI.inventoryWindow)
-		elif IsActionJustPressed("ui_minimap"):		Launcher.GUI.ToggleControl(Launcher.GUI.minimapWindow)
-		elif IsActionJustPressed("ui_chat"):		Launcher.GUI.ToggleControl(Launcher.GUI.chatWindow)
-		elif IsActionJustPressed("ui_emote"):		Launcher.GUI.ToggleControl(Launcher.GUI.emoteWindow)
-		elif IsActionJustPressed("ui_skill"):		Launcher.GUI.ToggleControl(Launcher.GUI.skillWindow)
-		elif IsActionJustPressed("ui_settings"):	Launcher.GUI.ToggleControl(Launcher.GUI.settingsWindow)
-		elif IsActionJustPressed("ui_stat"):		Launcher.GUI.ToggleControl(Launcher.GUI.statWindow)
-		elif IsActionJustPressed("ui_menu"):		Launcher.GUI.menu._on_button_pressed()
-		elif IsActionJustPressed("ui_validate"):	Launcher.GUI.ToggleChatNewLine()
-		elif IsActionJustPressed("ui_screenshot"):	FileSystem.SaveScreenshot()
-
+func _input(event):
+	if TryJustPressed(event, "smile_1"):			Launcher.Network.TriggerEmote(0)
+	elif TryJustPressed(event, "smile_2"):			Launcher.Network.TriggerEmote(1)
+	elif TryJustPressed(event, "smile_3"):			Launcher.Network.TriggerEmote(2)
+	elif TryJustPressed(event, "smile_4"):			Launcher.Network.TriggerEmote(3)
+	elif TryJustPressed(event, "smile_5"):			Launcher.Network.TriggerEmote(4)
+	elif TryJustPressed(event, "smile_6"):			Launcher.Network.TriggerEmote(5)
+	elif TryJustPressed(event, "smile_7"):			Launcher.Network.TriggerEmote(6)
+	elif TryJustPressed(event, "smile_8"):			Launcher.Network.TriggerEmote(7)
+	elif TryJustPressed(event, "smile_9"):			Launcher.Network.TriggerEmote(8)
+	elif TryJustPressed(event, "smile_10"):			Launcher.Network.TriggerEmote(9)
+	elif TryJustPressed(event, "smile_11"):			Launcher.Network.TriggerEmote(10)
+	elif TryJustPressed(event, "smile_12"):			Launcher.Network.TriggerEmote(11)
+	elif TryJustPressed(event, "smile_13"):			Launcher.Network.TriggerEmote(12)
+	elif TryJustPressed(event, "smile_14"):			Launcher.Network.TriggerEmote(13)
+	elif TryJustPressed(event, "smile_15"):			Launcher.Network.TriggerEmote(14)
+	elif TryJustPressed(event, "smile_16"):			Launcher.Network.TriggerEmote(15)
+	elif TryJustPressed(event, "smile_17"):			Launcher.Network.TriggerEmote(16)
+	elif TryJustPressed(event, "gp_sit"):			Launcher.Network.TriggerSit()
+	elif TryJustPressed(event, "gp_target"):		Launcher.Player.Target(Launcher.Player.position)
+	elif TryJustPressed(event, "gp_interact"):		Launcher.Player.JustInteract()
+	elif TryPressed(event, "gp_interact"):			Launcher.Player.Interact()
+	elif TryJustPressed(event, "gp_shortcut_1"):	Launcher.GUI.boxes.Trigger(0)
+	elif TryJustPressed(event, "gp_shortcut_2"):	Launcher.GUI.boxes.Trigger(1)
+	elif TryJustPressed(event, "gp_shortcut_3"):	Launcher.GUI.boxes.Trigger(2)
+	elif TryJustPressed(event, "gp_shortcut_4"):	Launcher.GUI.boxes.Trigger(3)
+	elif TryJustPressed(event, "gp_shortcut_5"):	Launcher.GUI.boxes.Trigger(4)
+	elif TryJustPressed(event, "gp_shortcut_6"):	Launcher.GUI.boxes.Trigger(5)
+	elif TryJustPressed(event, "gp_shortcut_7"):	Launcher.GUI.boxes.Trigger(6)
+	elif TryJustPressed(event, "gp_shortcut_8"):	Launcher.GUI.boxes.Trigger(7)
+	elif TryJustPressed(event, "gp_shortcut_9"):	Launcher.GUI.boxes.Trigger(8)
+	elif TryJustPressed(event, "gp_shortcut_10"):	Launcher.GUI.boxes.Trigger(9)
+	elif TryJustPressed(event, "gp_morph"):	 		Launcher.Network.TriggerMorph()
+	elif TryJustPressed(event, "ui_close"):			Launcher.GUI.CloseWindow()
+	elif TryJustPressed(event, "ui_inventory"):		Launcher.GUI.ToggleControl(Launcher.GUI.inventoryWindow)
+	elif TryJustPressed(event, "ui_minimap"):		Launcher.GUI.ToggleControl(Launcher.GUI.minimapWindow)
+	elif TryJustPressed(event, "ui_chat"):			Launcher.GUI.ToggleControl(Launcher.GUI.chatWindow)
+	elif TryJustPressed(event, "ui_emote"):			Launcher.GUI.ToggleControl(Launcher.GUI.emoteWindow)
+	elif TryJustPressed(event, "ui_skill"):			Launcher.GUI.ToggleControl(Launcher.GUI.skillWindow)
+	elif TryJustPressed(event, "ui_settings"):		Launcher.GUI.ToggleControl(Launcher.GUI.settingsWindow)
+	elif TryJustPressed(event, "ui_stat"):			Launcher.GUI.ToggleControl(Launcher.GUI.statWindow)
+	elif TryJustPressed(event, "ui_menu"):			Launcher.GUI.menu._on_button_pressed()
+	elif TryJustPressed(event, "ui_validate"):		Launcher.GUI.ToggleChatNewLine()
+	elif TryJustPressed(event, "ui_screenshot"):	FileSystem.SaveScreenshot()
 	consumed.clear()
 
 #

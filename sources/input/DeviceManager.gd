@@ -79,53 +79,10 @@ static var actionNames : Dictionary = {
 	"ui_tertiary": "Tertiary"
 }
 
-# Re-assign controller input events to first valid controller
-#
-# never use the touchpad as controller, this might need to be extended in the future
-# as the godot issue also talks about LED controllers being mistaken for game controllers
-#
-# this workaround is needed because of https://github.com/godotengine/godot/issues/59250
-static func UpdateWorkaroundTouchPad(_deviceID: int = -1, _connected: bool = false):
-	var validControllerID : int = -1
-	for device in Input.get_connected_joypads():
-		if not Input.get_joy_name(device).contains("Touchpad"):
-			validControllerID = device
-			break
-
-	# Reset
-	InputMap.load_from_project_settings()
-
-	if validControllerID != -1:
-		# If valid controller is connected set it's device id so the touchpad is not used
-		for action in InputMap.get_actions():
-			for event in InputMap.action_get_events(action):
-				if event is InputEventJoypadMotion or event is InputEventJoypadButton:
-					InputMap.action_erase_event(action, event)
-					event.device = validControllerID
-					InputMap.action_add_event(action, event)
-	else:
-		# If no controller is connected then remove joystick events from actions
-		for action in InputMap.get_actions():
-			for event in InputMap.action_get_events(action):
-				if event is InputEventJoypadMotion or event is InputEventJoypadButton:
-					InputMap.action_erase_event(action, event)
-
 #
 static func Init():
-	Input.joy_connection_changed.connect(DeviceManager.ConnectionChanged)
-	for deviceId in Input.get_connected_joypads():
-		ConnectionChanged(deviceId, true)
 	if DeviceManager.HasDeviceSupport():
 		Input.set_custom_mouse_cursor(FileSystem.LoadGfx("gui/misc/mouse.png"))
-
-static func ConnectionChanged(deviceId : int, connected : bool):
-	if OS.get_name() == "Android" or OS.get_name() == "iOS":
-		useJoystick = true
-	else:
-		useJoystick = Input.get_connected_joypads().size() > 0
-
-	if OS.get_name() == "Linux":
-		UpdateWorkaroundTouchPad(deviceId, connected)
 
 static func GetActionInfo(action : String) -> Array:
 	var defaultValue : String = ""
