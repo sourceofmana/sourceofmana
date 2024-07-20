@@ -11,7 +11,7 @@ offset_bottom = 14.0
 theme = ExtResource("1_80axu")
 script = ExtResource("2_bcg0l")
 
-[node name="Icon" type="Button" parent="." groups=["tips"]]
+[node name="Icon" type="Button" parent="." groups=["inputLabels"]]
 custom_minimum_size = Vector2(28, 24)
 layout_mode = 2
 theme = ExtResource("1_80axu")

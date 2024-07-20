@@ -11,7 +11,7 @@ func Init(data : ContextData, menu : ContextMenu):
 	_data = data
 	_menu = menu
 
-func UpdateTip():
+func SetInputLabel():
 	if DeviceManager.HasEvent(_data._action):
 		var actionInfo : Array = DeviceManager.GetActionInfo(_data._action)
 		if actionInfo.size() == DeviceManager.ActionInfo.COUNT:
@@ -27,7 +27,8 @@ func UpdateTip():
 #
 func _ready():
 	_label.set_text(_data._title)
-	UpdateTip()
+	SetInputLabel()
+	Launcher.Action.deviceChanged.connect(SetInputLabel)
 	if _icon:
 		_icon.set_process_input(true)
 

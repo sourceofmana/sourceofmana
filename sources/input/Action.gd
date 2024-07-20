@@ -8,6 +8,8 @@ const stickDeadzone : float		= 0.2
 
 var consumed : Dictionary		= {}
 
+signal deviceChanged
+
 #
 func Enable(enable : bool):
 	isEnabled = enable
@@ -104,6 +106,12 @@ func _physics_process(_deltaTime : float):
 
 #
 func _input(event):
+	if event.is_pressed():
+		if event is InputEventJoypadButton and DeviceManager.currentDeviceType != DeviceManager.DeviceType.JOYSTICK:
+			DeviceManager.DeviceChanged(DeviceManager.DeviceType.JOYSTICK)
+		elif event is InputEventKey and DeviceManager.currentDeviceType != DeviceManager.DeviceType.KEYBOARD:
+			DeviceManager.DeviceChanged(DeviceManager.DeviceType.KEYBOARD)
+
 	if TryJustPressed(event, "smile_1"):			Launcher.Network.TriggerEmote(0)
 	elif TryJustPressed(event, "smile_2"):			Launcher.Network.TriggerEmote(1)
 	elif TryJustPressed(event, "smile_3"):			Launcher.Network.TriggerEmote(2)

@@ -16,7 +16,9 @@ enum ActionInfo
 }
 
 #
-static var useJoystick : bool = OS.get_name() == "Android" or OS.get_name() == "iOS"
+static var currentDeviceId : int = -1
+static var currentDeviceType : DeviceType = DeviceType.JOYSTICK if LauncherCommons.isMobile else DeviceType.KEYBOARD
+
 static var joyButton : Array = ["A", "B", "X", "Y", "Back", "Guide", "Start", "LSB", "RSB", "LB", "RB", "UP", "DOWN", "LEFT", "RIGHT", "Misc", "Paddle1", "Paddle2", "Paddle3", "Paddle4", "Touch"]
 
 static var actionNames : Dictionary = {
@@ -90,21 +92,14 @@ static func GetActionInfo(action : String) -> Array:
 
 	if HasDeviceSupport():
 		for event in GetEvents(action):
-			if event is InputEventKey:
+			if currentDeviceType == DeviceType.KEYBOARD and event is InputEventKey:
 				var keycode : Key = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
 				defaultValue = OS.get_keycode_string(keycode if keycode != 0 else event.keycode)
-				defaultDeviceType = DeviceType.KEYBOARD
-				if not useJoystick:
-					break
-
-			if event is InputEventJoypadButton:
-				if event.button_index >= 0 and event.button_index < joyButton.size():
-					defaultValue = joyButton[event.button_index]
-				else:
-					defaultValue = str(event.button_index)
-				defaultDeviceType = DeviceType.JOYSTICK
-				if useJoystick:
-					break
+				break
+			elif currentDeviceType == DeviceType.JOYSTICK and event is InputEventJoypadButton:
+				var inScope : bool = event.button_index >= 0 and event.button_index < joyButton.size()
+				defaultValue = joyButton[event.button_index] if inScope else str(event.button_index)
+				break
 
 	return [defaultValue, defaultDeviceType]
 
@@ -133,3 +128,10 @@ static func SendEventJoy(buttonID : int, state : bool = true):
 	event.button_index = buttonID
 	event.pressure = 1.0 if state else 0.0
 	Input.parse_input_event(event)
+
+#
+static func DeviceChanged(deviceType : DeviceType):
+	currentDeviceType = deviceType
+
+	if not LauncherCommons.isMobile:
+		Launcher.Action.deviceChanged.emit()
