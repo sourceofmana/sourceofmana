@@ -33,7 +33,6 @@ func _ready():
 		_icon.set_process_input(true)
 
 func _on_visibility_changed():
-	pass
 	var isEnabled = is_visible_in_tree()
 	set_process_input(isEnabled)
 	if _icon:
