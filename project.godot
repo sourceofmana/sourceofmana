@@ -16,6 +16,7 @@ config/use_custom_user_dir=true
 config/custom_user_dir_name="SourceOfMana"
 config/features=PackedStringArray("4.2")
 run/flush_stdout_on_print=true
+run/max_fps=60
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://data/press/splash/splashscreen.png"
 config/icon="res://data/press/logo/logo_seed.svg"
