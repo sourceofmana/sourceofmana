@@ -10,8 +10,9 @@ func WarpPlayer(map : String, _rpcID : int = NetworkCommons.RidSingleMode):
 		Launcher.Player.entityVelocity = Vector2.ZERO
 
 func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Map:
-		Launcher.Map.EmotePlayer(playerID, emoteID)
+	var entity : Entity = Entities.Get(playerID)
+	if entity && entity.get_parent() && entity.interactive:
+		entity.interactive.DisplayEmote(emoteID)
 
 func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -44,6 +45,11 @@ func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : 
 		var caller : Entity = Entities.Get(ridAgent)
 		if caller && entity && entity.get_parent() and entity.interactive:
 			entity.interactive.DisplayAlteration(entity, caller, value, alteration, skillID)
+
+func Casted(agentID : int, skillID : int, cooldown : float, _rpcID : int = NetworkCommons.RidSingleMode):
+	var entity : Entity = Entities.Get(agentID)
+	if entity and entity.get_parent() and entity.interactive:
+		entity.interactive.DisplaySkill(entity, skillID, cooldown)
 
 func TargetLevelUp(targetID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -94,17 +100,21 @@ func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : 
 func ItemAdded(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and DB.ItemsDB.has(itemID):
 		var cell : BaseCell = DB.ItemsDB[itemID]
-		Launcher.Player.inventory.PushItem(cell, count)
-		if Launcher.GUI and Launcher.GUI.inventoryWindow:
-			Launcher.GUI.inventoryWindow.RefreshInventory()
+		if cell:
+			cell.used.emit()
+			Launcher.Player.inventory.PushItem(cell, count)
+			if Launcher.GUI and Launcher.GUI.inventoryWindow:
+				Launcher.GUI.inventoryWindow.RefreshInventory()
 
 func ItemRemoved(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and DB.ItemsDB.has(itemID):
 		var cell : BaseCell = DB.ItemsDB[itemID]
-		Launcher.Player.inventory.PopItem(cell, count)
-		if Launcher.GUI and Launcher.GUI.inventoryWindow:
-			Launcher.GUI.inventoryWindow.RefreshInventory()
+		if cell:
+			Launcher.Player.inventory.PopItem(cell, count)
 			CellTile.RefreshShortcuts(cell)
+			if Launcher.GUI and Launcher.GUI.inventoryWindow:
+				Launcher.GUI.inventoryWindow.RefreshInventory()
+			cell.used.emit()
 
 func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and Launcher.Player.inventory:

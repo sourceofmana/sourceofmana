@@ -115,8 +115,3 @@ func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector
 	var entity : Entity = Entities.Get(agentID)
 	if entity:
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID)
-
-func EmotePlayer(agentID : int, emoteID : int):
-	var entity : Entity = Entities.Get(agentID)
-	if entity && entity.get_parent() && entity.interactive:
-		entity.interactive.DisplayEmote(emoteID)

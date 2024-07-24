@@ -115,6 +115,10 @@ func TriggerCast(entityID : int, skillID : int, rpcID : int = NetworkCommons.Rid
 func TargetAlteration(agentID : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("TargetAlteration", [agentID, targetID, value, alteration, skillID], rpcID)
 
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func Casted(agentID : int, skillID: int, cooldown : float, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("Casted", [agentID, skillID, cooldown], rpcID)
+
 # Morph
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
