@@ -12,6 +12,8 @@ class_name BaseCell
 @export var usable : bool						= false
 @export var effects : Dictionary				= {}
 
+signal used
+
 #
 func Use():
 	if Launcher.Network.Client and usable:

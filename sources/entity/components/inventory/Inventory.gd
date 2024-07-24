@@ -5,15 +5,21 @@ var actor : Actor			= null
 var items: Array[Item]		= []
 
 #
+func GetItem(cell : BaseCell) -> Item:
+	for item in items:
+		if item.cell.name == cell.name:
+			return item
+	return null
+#
 func PushItem(cell : BaseCell, count : int) -> bool:
 	if count <= 0 or not cell:
 		return false
 
 	if cell.stackable:
-		for item in items:
-			if item.cell.name == cell.name:
-				item.count += count
-				return true
+		var item : Item = GetItem(cell)
+		if item:
+			item.count += count
+			return true
 
 		if items.size() >= ActorCommons.InventorySize:
 			return false

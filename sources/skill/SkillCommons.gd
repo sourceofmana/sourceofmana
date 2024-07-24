@@ -108,6 +108,9 @@ static func IsCasting(agent : BaseAgent, skill : SkillCell = null) -> bool:
 static func IsCoolingDown(agent : BaseAgent, skill : SkillCell) -> bool:
 	return agent.cooldownTimers.has(skill.name) and agent.cooldownTimers[skill.name] != null and not agent.cooldownTimers[skill.name].is_queued_for_deletion()
 
+static func GetCooldown(actor : Actor, skill : SkillCell) -> float:
+	return actor.stat.current.cooldownAttackDelay + skill.cooldownTime
+
 static func IsDelayed(skill : SkillCell) -> bool:
 	return skill.projectilePreset != null
 

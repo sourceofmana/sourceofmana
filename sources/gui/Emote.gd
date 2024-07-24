@@ -12,12 +12,12 @@ func RefreshEmotes():
 		if emote is BaseCell:
 			CellTile.RefreshShortcuts(emote, 1)
 			if tile:
-				tile.SetData(emote)
+				tile.AssignData(emote)
 				tileIdx += 1
 				tile = grid.GetTile(tileIdx)
 
 	for remainingIdx in range(tileIdx, grid.maxCount):
-		grid.tiles[remainingIdx].SetData(null, 0)
+		grid.tiles[remainingIdx].AssignData(null, 0)
 
 #
 func _ready():

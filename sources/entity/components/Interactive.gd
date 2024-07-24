@@ -16,10 +16,13 @@ var displayName : bool						= false
 func DisplayEmote(emoteID : int):
 	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
 	if emoteFx:
-		if DB.EmotesDB && DB.EmotesDB[emoteID]:
-			emoteFx.texture = DB.EmotesDB[emoteID].icon
+		if DB.EmotesDB and emoteID in DB.EmotesDB:
+			var emote : BaseCell = DB.EmotesDB[emoteID]
+			emoteFx.texture = emote.icon
 			emoteFx.lifetime = ActorCommons.emoteDelay
 			emoteFx.restart()
+			if entity == Launcher.Player:
+				emote.used.emit()
 
 #
 func DisplayMorph(callback : Callable):
@@ -51,21 +54,24 @@ func DisplayCast(emitter : Entity, skillID : int):
 					castFx.self_modulate = skill.castColor
 				castFx.emitting = true
 				add_child(castFx)
-				if skill.mode == Skill.TargetMode.ZONE:
-					Callback.SelfDestructTimer(self, skill.castTime, DisplaySkill.bind(emitter, skill), "ActionTimer")
 
-func DisplaySkill(emitter : Entity, skill : SkillCell):
-	if skill and skill.skillPreset:
-		var skillFx : GPUParticles2D = skill.skillPreset.instantiate()
-		if skillFx:
-			skillFx.finished.connect(Util.RemoveNode.bind(skillFx, emitter))
-			skillFx.lifetime = skill.skillTime
-			if skill.skillColor != Color.BLACK:
-				skillFx.process_material.set("color", skill.skillColor)
-			skillFx.emitting = true
-			emitter.add_child(skillFx)
+func DisplaySkill(emitter : Entity, skillID : int, cooldown : float):
+	if DB.SkillsDB.has(skillID):
+		var skill : SkillCell = DB.SkillsDB[skillID]
+		if skill:
+			if cooldown > 0.0:
+				skill.used.emit(cooldown)
+			if skill.skillPreset:
+				var skillFx : GPUParticles2D = skill.skillPreset.instantiate()
+				if skillFx:
+					skillFx.finished.connect(Util.RemoveNode.bind(skillFx, emitter))
+					skillFx.lifetime = skill.skillTime
+					if skill.skillColor != Color.BLACK:
+						skillFx.process_material.set("color", skill.skillColor)
+					skillFx.emitting = true
+					emitter.add_child(skillFx)
 
-func DisplayProjectile(emitter : Entity, skill : SkillCell, callable : Callable):
+func DisplayProjectile(emitter : Entity, skill : SkillCell):
 	if Launcher.Map.tilemapNode and skill and skill.projectilePreset:
 		var projectileNode : Node2D = skill.projectilePreset.instantiate()
 		if projectileNode:
@@ -74,7 +80,6 @@ func DisplayProjectile(emitter : Entity, skill : SkillCell, callable : Callable)
 			projectileNode.destination = get_parent().interactive.visibleNode.global_position
 			projectileNode.destination.y += ActorCommons.interactionDisplayOffset
 			projectileNode.delay = emitter.stat.current.castAttackDelay
-			projectileNode.callable = callable
 			Launcher.Map.tilemapNode.add_child(projectileNode)
 
 func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteration : ActorCommons.Alteration, skillID : int):
@@ -87,14 +92,10 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			target.stat.health += value if alteration == ActorCommons.Alteration.HEAL else -value
 			target.stat.RefreshActiveStats()
 
-		if DB.SkillsDB.has(skillID):
+		if alteration == ActorCommons.Alteration.PROJECTILE and DB.SkillsDB.has(skillID):
 			var skill : SkillCell = DB.SkillsDB[skillID]
 			if skill.mode != Skill.TargetMode.ZONE:
-				var callable : Callable = DisplaySkill.bind(target, skill)
-				if alteration == ActorCommons.Alteration.PROJECTILE:
-					DisplayProjectile(emitter, skill, callable)
-				else:
-					callable.call()
+				DisplayProjectile(emitter, skill)
 
 #
 func DisplaySpeech(speech : String):

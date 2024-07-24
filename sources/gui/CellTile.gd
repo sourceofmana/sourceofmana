@@ -3,8 +3,13 @@ class_name CellTile
 
 @export var draggable : bool			= false
 @onready var icon : TextureRect			= $Icon
-@onready var label : Label				= $Label
+@onready var countLabel : Label			= $Count
+@onready var cooldownLabel : Label		= $Cooldown
 var cell : BaseCell						= null
+var timer : Timer						= null
+var count : int							= 0
+
+const modulateDisable : float			= 0.5
 
 # Private
 func SetToolTip():
@@ -17,47 +22,72 @@ func SetToolTip():
 			tooltip += "\n\nWeight: " + str(cell.weight) + "g"
 	set_tooltip_text(tooltip)
 
-func SetCountLabel(count : int):
-	if label:
+func UpdateCountLabel():
+	if countLabel:
 		if count >= 1000:
-			label.text = "999+"
+			countLabel.text = "999+"
 		elif count <= 1:
-			label.text = ""
+			countLabel.text = ""
 		else:
-			label.text = str(count)
+			countLabel.text = str(count)
+	if icon:
+		var modColor : Color = Color.BLACK if count <= 0 else Color.WHITE
+		modColor.a = modulateDisable if count <= 0 else 1.0
+		icon.material.set_shader_parameter("modulate", modColor)
 
 # Public
-func SetData(sourceCell : BaseCell, count : int = 1):
-	cell = sourceCell
+func AssignData(newCell : BaseCell, newCount : int = 1):
+	if cell != newCell:
+		UnassignData(cell)
+		if newCell:
+			newCell.used.connect(Used)
+	cell = newCell
+	count = newCount
 	if icon:
 		icon.set_texture(cell.icon if cell else null)
-	SetCountLabel(count)
+	UpdateCountLabel()
 	SetToolTip()
 	if not draggable:
 		set_visible(count > 0 and cell != null)
 
-static func RefreshShortcuts(baseCell : BaseCell, baseCount : int = -1):
+func UnassignData(sourceCell : BaseCell):
+	icon.material.set_shader_parameter("start_time", 0)
+	if sourceCell:
+		if sourceCell.used.is_connected(Used):
+			sourceCell.used.disconnect(Used)
+
+static func RefreshShortcuts(baseCell : BaseCell, newCount : int = -1):
 	if baseCell == null or not Launcher.Player or not Launcher.Player.inventory:
 		return
 
 	if baseCell.type != CellCommons.Type.ITEM:
-		baseCount = 1
-	elif baseCount < 0:
+		newCount = 1
+	elif newCount < 0:
+		newCount = 0
 		for item in Launcher.Player.inventory.items:
 			if item and item.cell and item.cell == baseCell:
-				baseCount = item.count
+				newCount = item.count
 				break
 
 	var tiles : Array[Node] = Launcher.GUI.get_tree().get_nodes_in_group("CellTile")
 	for shortcutTile in tiles:
 		if shortcutTile and shortcutTile.is_visible() and shortcutTile.draggable and shortcutTile.cell == baseCell:
-			shortcutTile.SetCountLabel(baseCount)
-			shortcutTile.icon.modulate = Color.BLACK if baseCount <= 0 else Color.WHITE
-			shortcutTile.icon.modulate.a = 0.5 if baseCount <= 0 else 1.0
+			shortcutTile.count = newCount
+			shortcutTile.UpdateCountLabel()
 
 func UseCell():
 	if cell:
 		cell.Use()
+
+func Used(cooldown : float = 0.0):
+	timer = Callback.SelfDestructTimer(self, cooldown, ClearCooldown)
+
+func ClearCooldown():
+	timer = null
+	cooldownLabel.text = ""
+	UpdateCountLabel()
+	if count > 0:
+		icon.material.set_shader_parameter("start_time", Time.get_ticks_msec() / 1000.0)
 
 # Drag
 func _get_drag_data(_position : Vector2):
@@ -71,7 +101,7 @@ func _can_drop_data(_at_position : Vector2, data):
 	return draggable and data is BaseCell and data != cell and data.usable
 
 func _drop_data(_at_position : Vector2, data):
-	SetData(data)
+	AssignData(data)
 	CellTile.RefreshShortcuts(data)
 
 # Default
@@ -79,3 +109,13 @@ func _gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
 			UseCell()
+
+func _physics_process(_delta):
+	if timer:
+		if cell.type == CellCommons.Type.SKILL:
+			var cooldown : float = SkillCommons.GetCooldown(Launcher.Player, cell)
+			var cooldownRatio : float = timer.time_left / cooldown if cooldown > timer.time_left else 1.0
+			var modColor : Color = Color.GRAY.lerp(Color.BLACK, cooldownRatio)
+			modColor.a = modulateDisable + (cooldownRatio * (1.0 - modulateDisable))
+			icon.material.set_shader_parameter("modulate", modColor)
+			cooldownLabel.text = ("%.1f" if timer.time_left < 10 else "%.0f") % [timer.time_left]

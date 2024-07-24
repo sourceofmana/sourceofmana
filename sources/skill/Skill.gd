@@ -40,31 +40,34 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 				if SkillCommons.IsTargetable(agent, target, skill):
 					var handle : Callable = Skill.Handle.bind(agent, target, skill, SkillCommons.GetRNG(hasStamina))
 					if SkillCommons.IsDelayed(skill):
-						Callback.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle, "SKILL_" + skill.name)
+						Callback.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle)
 						Delayed(agent, target, skill)
 					else:
 						handle.call()
+					Casted(agent, target, skill)
 					return
 			TargetMode.ZONE:
 				for zoneTarget in SkillCommons.GetSurroundingTargets(agent, skill):
 					Handle(agent, zoneTarget, skill, SkillCommons.GetRNG(hasStamina))
+				Casted(agent, null, skill)
 				return
 			TargetMode.SELF:
 				Handle(agent, agent, skill, SkillCommons.GetRNG(hasStamina))
+				Casted(agent, target, skill)
 				return
 		Missed(agent, target)
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	if skill.effects.has(CellCommons.effectDamage):		Damaged(agent, target, skill, rng)
 	if skill.effects.has(CellCommons.effectHP):			Healed(agent, target, skill, rng)
-	Casted(agent, target, skill)
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill.repeat and ActorCommons.IsAlive(target) else Callable()
 	agent.SetSkillCastID(SkillCommons.SkillNone)
-	var timer : Timer = Callback.SelfDestructTimer(agent, agent.stat.current.cooldownAttackDelay + skill.cooldownTime, callable, skill.name + " CoolDown")
+	var timer : Timer = Callback.SelfDestructTimer(agent, SkillCommons.GetCooldown(agent, skill), callable, skill.name + " CoolDown")
 	agent.cooldownTimers[skill.name] = timer
+	Launcher.Network.Server.NotifyInstance(agent, "Casted", [skill.id, timer.time_left])
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	var info : AlterationInfo = SkillCommons.GetDamage(agent, target, skill, rng)

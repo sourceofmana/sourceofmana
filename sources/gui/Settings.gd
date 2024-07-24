@@ -273,7 +273,7 @@ func apply_shortcutcells(cells : Array):
 								if DB.SkillsDB.has(cellInfo[1]):
 									cell = DB.SkillsDB[cellInfo[1]]
 						if cell:
-							tile.SetData(cell)
+							tile.AssignData(cell)
 							CellTile.RefreshShortcuts(cell)
 						cells.erase(cellInfo)
 						break

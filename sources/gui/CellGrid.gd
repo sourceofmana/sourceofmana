@@ -23,6 +23,6 @@ func _ready():
 	get_parent().resized.connect(_on_panel_resized)
 	for tileIdx in range(maxCount):
 		var tile : CellTile = tilePreset.instantiate()
-		tile.SetData(null, 0)
+		tile.AssignData(null, 0)
 		tiles[tileIdx] = tile
 		add_child(tile)
