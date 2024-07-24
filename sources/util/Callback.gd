@@ -29,12 +29,15 @@ static func SelfDestructCallback(parent : Node, timer : Timer, callback : Callab
 	if parent:
 		parent.remove_child(timer)
 		timer.queue_free()
-	if not callback.is_null():
+	if not callback.is_null() and callback.is_valid():
 		callback.call()
 
 #
-static func SelfDestructTimer(parent : Node, delay : float, callback : Callable, timerName = "") -> Timer:
-	if parent:
+static func SelfDestructTimer(parent : Node, delay : float, callback : Callable = Callable(), timerName = "") -> Timer:
+	if delay <= 0.0:
+		if not callback.is_null() and callback.is_valid():
+			callback.call()
+	elif parent:
 		var timer : Timer = null if timerName.is_empty() else parent.get_node_or_null(timerName)
 		if not timer:
 			timer = Timer.new()
