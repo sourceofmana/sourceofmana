@@ -21,12 +21,12 @@ cd <checkout of this repo>
 godot --server --headless
 ```
 
-With prebuild binary:
+With prebuilt binary:
 ```
 "./Source of Mana" --server --headless
 ```
 
-Note that SOM writes the list of online players next to the SOM or godot executable.
+Note that SOM writes the list of online players, `online.json`, next to the SOM or godot executable.
 
 ## License
 
