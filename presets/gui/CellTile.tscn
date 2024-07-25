@@ -8,10 +8,9 @@
 resource_local_to_scene = true
 shader = ExtResource("3_8kgog")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_duration = 1.0
 shader_parameter/shine_size = 0.15
 shader_parameter/shine_angle = 18.0
-shader_parameter/start_time = -1.0
+shader_parameter/progress = -1.0
 shader_parameter/modulate = Color(1, 1, 1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_s0bqm"]

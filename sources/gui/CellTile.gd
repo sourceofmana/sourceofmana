@@ -6,7 +6,8 @@ class_name CellTile
 @onready var countLabel : Label			= $Count
 @onready var cooldownLabel : Label		= $Cooldown
 var cell : BaseCell						= null
-var timer : Timer						= null
+var cooldownTimer : float				= -INF
+var shineTimer : float					= -INF
 var count : int							= 0
 
 const modulateDisable : float			= 0.5
@@ -51,7 +52,8 @@ func AssignData(newCell : BaseCell, newCount : int = 1):
 		set_visible(count > 0 and cell != null)
 
 func UnassignData(sourceCell : BaseCell):
-	icon.material.set_shader_parameter("start_time", 0)
+	icon.material.set_shader_parameter("progress", -INF)
+	icon.material.set_shader_parameter("modulate", Color.WHITE)
 	if sourceCell:
 		if sourceCell.used.is_connected(Used):
 			sourceCell.used.disconnect(Used)
@@ -80,14 +82,14 @@ func UseCell():
 		cell.Use()
 
 func Used(cooldown : float = 0.0):
-	timer = Callback.SelfDestructTimer(self, cooldown, ClearCooldown)
+	cooldownTimer = cooldown
 
 func ClearCooldown():
-	timer = null
+	cooldownTimer = -INF
 	cooldownLabel.text = ""
 	UpdateCountLabel()
 	if count > 0:
-		icon.material.set_shader_parameter("start_time", Time.get_ticks_msec() / 1000.0)
+		shineTimer = 1.0
 
 # Drag
 func _get_drag_data(_position : Vector2):
@@ -110,12 +112,21 @@ func _gui_input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
 			UseCell()
 
-func _physics_process(_delta):
-	if timer:
-		if cell.type == CellCommons.Type.SKILL:
-			var cooldown : float = SkillCommons.GetCooldown(Launcher.Player, cell)
-			var cooldownRatio : float = timer.time_left / cooldown if cooldown > timer.time_left else 1.0
-			var modColor : Color = Color.GRAY.lerp(Color.BLACK, cooldownRatio)
-			modColor.a = modulateDisable + (cooldownRatio * (1.0 - modulateDisable))
-			icon.material.set_shader_parameter("modulate", modColor)
-			cooldownLabel.text = ("%.1f" if timer.time_left < 10 else "%.0f") % [timer.time_left]
+func _process(delta):
+	if cooldownTimer != -INF:
+		cooldownTimer -= delta
+		if cooldownTimer <= 0.0:
+			ClearCooldown()
+		else:
+			if cell.type == CellCommons.Type.SKILL:
+				var cooldown : float = SkillCommons.GetCooldown(Launcher.Player, cell)
+				var cooldownRatio : float = cooldownTimer / cooldown if cooldown > cooldownTimer else 1.0
+				var modColor : Color = Color.GRAY.lerp(Color.BLACK, cooldownRatio)
+				modColor.a = modulateDisable + (cooldownRatio * (1.0 - modulateDisable))
+				icon.material.set_shader_parameter("modulate", modColor)
+				cooldownLabel.text = ("%.1f" if cooldownTimer < 10 else "%.0f") % [cooldownTimer]
+	elif shineTimer != -INF:
+		shineTimer -= delta
+		if shineTimer <= 0.0:
+			shineTimer = -INF
+		icon.material.set_shader_parameter("progress", shineTimer)
