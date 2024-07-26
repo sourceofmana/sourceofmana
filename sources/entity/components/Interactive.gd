@@ -141,8 +141,8 @@ func HideHP():
 
 func DisplaySailContext():
 	Launcher.GUI.mainContext.Clear()
-	Launcher.GUI.mainContext.Push(ContextData.new("ui_validate", "Explore", Launcher.Network.TriggerExplore.bind()))
-	Launcher.GUI.mainContext.Push(ContextData.new("ui_cancel", "Cancel", Callback.Empty.bind()))
+	Launcher.GUI.mainContext.Push(ContextData.new("ui_context_validate", "Explore", Launcher.Network.TriggerExplore.bind()))
+	Launcher.GUI.mainContext.Push(ContextData.new("ui_context_cancel", "Cancel", Callback.Empty.bind()))
 	Launcher.GUI.mainContext.FadeIn(true)
 
 #
