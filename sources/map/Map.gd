@@ -97,10 +97,12 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 			Launcher.Player.SetLocalPlayer()
 
 	if entity:
-		Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned])
 		if not isAlreadySpawned:
+			Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned])
 			AddChild(entity)
 			Entities.Add(entity, agentID)
+		else:
+			entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned)
 
 		if isLocalPlayer:
 			emit_signal('PlayerWarped')
