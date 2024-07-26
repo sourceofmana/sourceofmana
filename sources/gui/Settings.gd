@@ -222,7 +222,7 @@ func save_sessionoverlay():
 	var overlay : Array = []
 	if Launcher.GUI and Launcher.GUI.windows:
 		for window in Launcher.GUI.windows.get_children():
-			if window.is_visible() and not window.blockActions:
+			if window.is_visible() and window.saveOverlayState:
 				overlay.append([window.get_name().get_file(), window.get_position(), window.get_size()])
 		set_sessionoverlay(overlay)
 func set_sessionoverlay(overlay : Array):
@@ -285,17 +285,11 @@ func _on_visibility_changed():
 func _ready():
 	RefreshSettings(true)
 	Launcher.FSM.enter_game.connect(RefreshSettings.bind(true))
+	Launcher.FSM.exit_game.connect(SaveSettings.bind())
 
 	if LauncherCommons.isMobile or OS.get_name() == "Web":
 		accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL].get_parent().set_visible(false)
 		accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
-
-func _exit_tree():
-	if not Launcher.FSM.playerName.is_empty():
-		save_sessionoverlay()
-		save_windowPos()
-		save_shortcutcells()
-		SaveSettings()
 
 # Conf accessors
 func RefreshSettings(apply : bool):
@@ -304,6 +298,9 @@ func RefreshSettings(apply : bool):
 			category[option][ACC_TYPE.INIT].call_deferred(apply)
 
 func SaveSettings():
+	save_sessionoverlay()
+	save_windowPos()
+	save_shortcutcells()
 	Conf.SaveType("settings", Conf.Type.USERSETTINGS)
 
 func SetVal(key : String, value):

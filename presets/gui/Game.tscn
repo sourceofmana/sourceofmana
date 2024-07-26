@@ -378,6 +378,7 @@ offset_right = 1255.0
 offset_bottom = 404.0
 grow_horizontal = 1
 grow_vertical = 1
+saveOverlayState = true
 
 [node name="Minimap" parent="Windows/Floating" instance=ExtResource("9_myjuo")]
 visible = false
@@ -387,6 +388,7 @@ offset_left = 1058.0
 offset_top = 6.0
 offset_right = 1258.0
 offset_bottom = 131.0
+saveOverlayState = true
 
 [node name="Emote" parent="Windows/Floating" instance=ExtResource("37_v7lrk")]
 visible = false
@@ -396,6 +398,7 @@ offset_left = 68.0
 offset_top = 25.0
 offset_right = 306.0
 offset_bottom = 68.0
+saveOverlayState = true
 
 [node name="Skill" parent="Windows/Floating" instance=ExtResource("38_ompay")]
 layout_mode = 0
@@ -403,6 +406,7 @@ offset_left = 0.0
 offset_top = 71.0
 offset_right = 213.0
 offset_bottom = 114.0
+saveOverlayState = true
 
 [node name="Chat" parent="Windows/Floating" instance=ExtResource("5")]
 layout_mode = 2
@@ -415,6 +419,7 @@ offset_right = 420.0
 offset_bottom = 622.0
 grow_horizontal = 1
 grow_vertical = 1
+saveOverlayState = true
 
 [node name="Login" parent="Windows/Floating" instance=ExtResource("7_lrq68")]
 visible = false

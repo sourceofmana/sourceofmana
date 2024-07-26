@@ -9,13 +9,14 @@ signal MoveFloatingWindowToTop
 enum EdgeOrientation { NONE, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT, TOP_LEFT, TOP, TOP_RIGHT }
 
 #
-@export var blockActions	= false
-var maxSize					= Vector2(-1, -1)
-const edgeSize				= 5
-const cornerSize			= 15
-var clickPosition			= null
-var isResizing				= false
-var selectedEdge			= EdgeOrientation.NONE
+@export var blockActions : bool		= false
+@export var saveOverlayState : bool	= false
+var maxSize : Vector2				= Vector2(-1, -1)
+const edgeSize : int				= 5
+const cornerSize : int				= 15
+var clickPosition : Vector2			= Vector2.INF
+var isResizing : bool				= false
+var selectedEdge : EdgeOrientation	= EdgeOrientation.NONE
 
 #
 func ClampFloatingWindow(globalPos : Vector2, moveLimit : Vector2):
@@ -111,7 +112,7 @@ func GetEdgeOrientation(pos : Vector2):
 	isResizing = selectedEdge != EdgeOrientation.NONE
 
 func ResetWindowModifier():
-	clickPosition	= null
+	clickPosition	= Vector2.INF
 	isResizing		= false
 	selectedEdge 	= EdgeOrientation.NONE
 
@@ -148,7 +149,7 @@ func OnGuiInput(event : InputEvent):
 			ResetWindowModifier()
 
 	if event is InputEventMouseMotion:
-		if clickPosition:
+		if clickPosition != Vector2.INF:
 			UpdateWindow(event.position)
 
 func UpdateWindow(eventPosition : Vector2 = Vector2.ZERO):
@@ -157,7 +158,7 @@ func UpdateWindow(eventPosition : Vector2 = Vector2.ZERO):
 	if isResizing:
 		ResizeWindow(ClampFloatingWindow(eventPosition, floatingWindowSize), eventPosition + position)
 	else:
-		if clickPosition != null:
+		if clickPosition != Vector2.INF:
 			position += eventPosition - clickPosition
 
 		if get_minimum_size().x > 0 and get_minimum_size().y > 0:
