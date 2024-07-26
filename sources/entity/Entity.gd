@@ -58,7 +58,7 @@ func SetLocalPlayer():
 	
 	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
 	Launcher.Network.RetrieveInventory()
-	Launcher.FSM.emit_signal("enter_game")
+	Launcher.FSM.EnterState(Launcher.FSM.States.IN_GAME)
 
 func ClearTarget():
 	if target != null:

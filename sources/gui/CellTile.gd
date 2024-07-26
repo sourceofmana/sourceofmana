@@ -115,7 +115,7 @@ func _gui_input(event):
 func _process(delta):
 	if cooldownTimer != -INF:
 		cooldownTimer -= delta
-		if cooldownTimer <= 0.0:
+		if cooldownTimer <= 0.0 or Launcher.Player == null:
 			ClearCooldown()
 		else:
 			if cell.type == CellCommons.Type.SKILL:
@@ -127,6 +127,6 @@ func _process(delta):
 				cooldownLabel.text = ("%.1f" if cooldownTimer < 10 else "%.0f") % [cooldownTimer]
 	elif shineTimer != -INF:
 		shineTimer -= delta
-		if shineTimer <= 0.0:
+		if shineTimer <= 0.0 or Launcher.Player == null:
 			shineTimer = -INF
 		icon.material.set_shader_parameter("progress", shineTimer)

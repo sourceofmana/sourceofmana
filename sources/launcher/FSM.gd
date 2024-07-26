@@ -2,8 +2,11 @@ extends ServiceBase
 
 #
 signal enter_login
+signal exit_login
 signal enter_char_selection
+signal exit_char_selection
 signal enter_game
+signal exit_game
 
 #
 enum States { NONE = 0, LOGIN_CONNECTION, CHAR_SELECTION, IN_GAME, QUIT }
@@ -33,22 +36,23 @@ func UpdateStates():
 		States.LOGIN_CONNECTION:
 			match GetPhase():
 				Phases.ENTER:
-					emit_signal("enter_login")
+					enter_login.emit()
 				Phases.EXIT:
-					pass
+					exit_login.emit()
 		States.CHAR_SELECTION:
 			match GetPhase():
 				Phases.ENTER:
-					emit_signal("enter_char_selection")
-					EnterState(States.IN_GAME) # Skip char selection
+					enter_char_selection.emit()
+				Phases.EXIT:
+					exit_char_selection.emit()
 		States.IN_GAME:
 			match GetPhase():
 				Phases.ENTER:
-					Launcher.Network.NetCreate()
+					enter_game.emit()
 				Phases.UPDATE:
 					pass
 				Phases.EXIT:
-					Launcher.Network.NetDestroy()
+					exit_game.emit()
 		States.QUIT:
 			Launcher._quit()
 

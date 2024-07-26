@@ -277,3 +277,8 @@ func NetDestroy():
 		peer.close()
 
 	uniqueID = NetworkCommons.RidDefault
+
+func _post_launch():
+	Launcher.FSM.enter_game.connect(NetCreate.bind())
+	Launcher.FSM.exit_game.connect(NetDestroy.bind())
+	isInitialized = true
