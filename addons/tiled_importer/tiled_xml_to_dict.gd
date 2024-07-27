@@ -22,6 +22,7 @@
 
 @tool
 extends RefCounted
+class_name TiledXMLToDictionary
 
 # Reads a TMX file from a path and return a Dictionary with the same structure
 # as the JSON map format

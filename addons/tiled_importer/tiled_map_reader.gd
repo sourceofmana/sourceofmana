@@ -19,21 +19,16 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
 @tool
+
 extends RefCounted
+class_name TiledMapReader
 
 # Constants for tile flipping
 # http://doc.mapeditor.org/reference/tmx-map-format/#tile-flipping
 const FLIPPED_HORIZONTALLY_FLAG = 0x80000000
 const FLIPPED_VERTICALLY_FLAG   = 0x40000000
 const FLIPPED_DIAGONALLY_FLAG   = 0x20000000
-
-# XML Format reader
-const TiledXMLToDictionary = preload("res://addons/tiled_importer/tiled_xml_to_dict.gd")
-
-# Polygon vertices sorter
-const PolygonSorter = preload("polygon_sorter.gd")
 
 # Prefix for error messages, make easier to identify the source
 const error_prefix = "Tiled Importer: "

@@ -95,7 +95,7 @@ func _get_option_visibility(path, option, options):
 	return true
 
 func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
-	var mapReader = preload("res://addons/tiled_importer/tiled_map_reader.gd").new()
+	var mapReader = TiledMapReader.new()
 	var tileset = mapReader.build_tileset(source_file, options)
 
 	if typeof(tileset) != TYPE_OBJECT:

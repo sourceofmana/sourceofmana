@@ -23,6 +23,7 @@
 # Sorter for polygon vertices
 @tool
 extends RefCounted
+class_name PolygonSorter
 
 var center
 

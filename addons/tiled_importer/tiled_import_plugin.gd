@@ -102,10 +102,10 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	# Offset is only optional for importing TileSets
 	options.apply_offset = true
 	var saveRet = OK
-	var TiledMapReader = load("res://addons/tiled_importer/tiled_map_reader.gd").new()
+	var mapReader = TiledMapReader.new()
 
 	# Client Data import (TileMap and warp locations)
-	var client_scene = TiledMapReader.build_client(source_file, options)
+	var client_scene = mapReader.build_client(source_file, options)
 	if typeof(client_scene) == TYPE_OBJECT:
 		var packed_scene = PackedScene.new()
 		packed_scene.pack(client_scene)
@@ -113,7 +113,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 
 	# Server Data import (Spawn and warp locations)
 	var server_scene = null
-	server_scene = TiledMapReader.build_server(source_file)
+	server_scene = mapReader.build_server(source_file)
 	if typeof(server_scene) == TYPE_OBJECT:
 		var packed_scene = PackedScene.new()
 		packed_scene.pack(server_scene)
@@ -121,7 +121,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 
 	var navigation_tres = null
 	if options.export_navigation_mesh:
-		navigation_tres = TiledMapReader.build_navigation(source_file, options)
+		navigation_tres = mapReader.build_navigation(source_file, options)
 		if typeof(server_scene) == TYPE_OBJECT:
 			saveRet &= ResourceSaver.save(navigation_tres, "%s.navigation.tres" % [source_file])
 
