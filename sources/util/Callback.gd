@@ -19,17 +19,14 @@ static func ShootCallback(args : Array):
 
 static func TriggerCallback(callback : Callable, args : Array = []):
 	if callback and callback is Callable and not callback.is_null() and callback.is_valid():
-		if args.size() == 0 and callback.get_bound_arguments_count() > 0:
-			args = callback.get_bound_arguments()
-		for arg in args:
-			if arg and is_instance_valid(arg) and arg is Object and arg.is_queued_for_deletion():
+		for arg in args + callback.get_bound_arguments():
+			if not is_instance_valid(arg) and (arg == null or arg is Object):
 				return
-		callback.callv(args)
+		callback.callv(args) if args.size() > 0 else callback.call()
 
 #
 static func OneShotCallback(objectSignal : Signal, callback : Callable, args : Array = []):
-	RemoveCallback(objectSignal, Callback.ShootCallback)
-	AddCallback(objectSignal, Callback.ShootCallback, [callback] + args)
+	PlugCallback(objectSignal, Callback.ShootCallback, [callback] + args)
 
 #
 static func SelfDestructCallback(parent : Node, timer : Timer, callback : Callable):
@@ -46,8 +43,8 @@ static func SelfDestructTimer(parent : Node, delay : float, callback : Callable 
 		var timer : Timer = null if timerName.is_empty() else parent.get_node_or_null(timerName)
 		if not timer:
 			timer = Timer.new()
-			timer.one_shot = true
-			timer.autostart = true
+			timer.set_one_shot(true)
+			timer.set_autostart(true)
 			AddCallback(timer.timeout, Callback.SelfDestructCallback, [parent, timer, callback])
 			if not timerName.is_empty():
 				timer.name = timerName
@@ -68,13 +65,16 @@ static func ClearTimer(timer : Timer):
 				Callback.RemoveCallback(timer.get(sig["name"]), connection["callable"])
 		timer.stop()
 
-static func StartTimer(timer : Timer, delay : float, callback : Callable):
+static func StartTimer(timer : Timer, delay : float, callback : Callable, oneShot : bool = false):
 	if delay == 0.0:
 		TriggerCallback(callback)
 	elif timer:
 		timer.start(delay)
 		timer.set_autostart(true)
-		PlugCallback(timer.timeout, callback)
+		if oneShot:
+			OneShotCallback(timer.timeout, callback)
+		else:
+			PlugCallback(timer.timeout, callback)
 
 static func LoopTimer(timer : Timer, delay : float):
 	Util.Assert(delay > 0, "Delay should never be null, infinite loop can happen on looped timers")
