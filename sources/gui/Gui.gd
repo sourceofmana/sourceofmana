@@ -78,6 +78,10 @@ func EnterLoginMenu():
 
 func EnterGame():
 	if Launcher.Player:
+		tipsContext.Push(ContextData.new("gp_interact"))
+		tipsContext.Push(ContextData.new("gp_sit"))
+		tipsContext.Push(ContextData.new("gp_morph"))
+		tipsContext.Push(ContextData.new("gp_target"))
 		tipsContext.FadeIn()
 
 		background.set_visible(false)
@@ -119,11 +123,6 @@ func _notification(notif):
 func _ready():
 	Util.Assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
 	CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
-
-	tipsContext.Push(ContextData.new("gp_interact"))
-	tipsContext.Push(ContextData.new("gp_sit"))
-	tipsContext.Push(ContextData.new("gp_morph"))
-	tipsContext.Push(ContextData.new("gp_target"))
 
 func _on_ui_margin_resized():
 	if CRTShader and CRTShader.material:
