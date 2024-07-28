@@ -279,6 +279,6 @@ func NetDestroy():
 	uniqueID = NetworkCommons.RidDefault
 
 func _post_launch():
-	Launcher.FSM.enter_game.connect(NetCreate.bind())
-	Launcher.FSM.exit_game.connect(NetDestroy.bind())
+	Launcher.FSM.exit_login.connect(NetCreate)
+	Launcher.FSM.exit_game.connect(NetDestroy)
 	isInitialized = true
