@@ -52,11 +52,7 @@ func LaunchMode(isClient : bool = false, isServer : bool = false):
 			FSM.queue_free()
 
 			# TODO: add a GUI to display various server stats
-			var label = Label.new()
-			if !OS.has_feature("editor"):
-				label.text = "Server mode started, to hide this window run this binary from the terminal as follows: " + OS.get_executable_path() + " --headless --server"
-			else:
-				label.text = "Running in the Godot editor, so this window can not be hidden. Only exported projects can use --headless."
+			var label = FileSystem.LoadGui("Server")
 			add_child.call_deferred(label)
 
 		Network.NetCreate()
