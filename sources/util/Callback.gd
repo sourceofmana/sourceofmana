@@ -19,10 +19,11 @@ static func ShootCallback(args : Array):
 
 static func TriggerCallback(callback : Callable, args : Array = []):
 	if callback and callback is Callable and not callback.is_null() and callback.is_valid():
-		for arg in args + callback.get_bound_arguments():
-			if not is_instance_valid(arg) and (arg == null or arg is Object):
-				return
-		callback.callv(args) if args.size() > 0 else callback.call()
+		var newArgs : Array = args if callback.get_bound_arguments_count() == 0 else callback.get_bound_arguments()
+		for argId in newArgs.size():
+			if not is_instance_valid(newArgs[argId]) and typeof(newArgs[argId]) == TYPE_NIL:
+				newArgs[argId] = null
+		callback.callv(args)
 
 #
 static func OneShotCallback(objectSignal : Signal, callback : Callable, args : Array = []):
