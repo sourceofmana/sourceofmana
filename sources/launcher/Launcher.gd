@@ -51,7 +51,6 @@ func LaunchMode(isClient : bool = false, isServer : bool = false):
 			Scene.queue_free()
 			FSM.queue_free()
 
-			# TODO: add a GUI to display various server stats
 			var label = FileSystem.LoadGui("Server")
 			add_child.call_deferred(label)
 
