@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cr2by2nem8o87"]
 
-[ext_resource type="Script" path="res://presets/gui/ServerDisplay.gd" id="1_lgnu7"]
+[ext_resource type="Script" path="res://sources/gui/ServerDisplay.gd" id="1_lgnu7"]
 
 [node name="Control" type="Label"]
 anchors_preset = 15
