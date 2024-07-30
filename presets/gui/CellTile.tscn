@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cq76gfx44nn6q"]
+[gd_scene load_steps=5 format=3 uid="uid://cq76gfx44nn6q"]
 
 [ext_resource type="Script" path="res://sources/gui/CellTile.gd" id="1_ec554"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_nr8t2"]
@@ -12,10 +12,6 @@ shader_parameter/shine_size = 0.15
 shader_parameter/shine_angle = 18.0
 shader_parameter/progress = -1.0
 shader_parameter/modulate = Color(1, 1, 1, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_s0bqm"]
-line_spacing = 0.0
-font_size = 15
 
 [node name="Background" type="ColorRect" groups=["CellTile"]]
 custom_minimum_size = Vector2(34, 34)
@@ -54,7 +50,8 @@ offset_top = -19.0
 offset_bottom = 3.0
 grow_horizontal = 0
 grow_vertical = 0
-label_settings = SubResource("LabelSettings_s0bqm")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
 horizontal_alignment = 2
 vertical_alignment = 2
 clip_text = true
@@ -71,7 +68,8 @@ offset_bottom = 3.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("1_nr8t2")
-label_settings = SubResource("LabelSettings_s0bqm")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
