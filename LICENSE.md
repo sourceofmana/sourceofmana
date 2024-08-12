@@ -251,7 +251,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/tilesets/generic/ship/indoor/fringe.png [Reid]
 ./graphics/tilesets/generic/ship/indoor/indoor-x2x4.png [Reid]
 ./graphics/tilesets/generic/ship/indoor/indoor.png [Reid]
-./graphics/tilesets/generic/ship/indoor/sunlight)x1x5.png [Reid]
+./graphics/tilesets/generic/ship/indoor/sunlight-x1x5.png [Reid]
 ./graphics/tilesets/generic/water-sparkle.png [Len]
 ./graphics/tilesets/isles/candor/cave/cave-x1x2.png [Micksha] [Reid]
 ./graphics/tilesets/isles/candor/cave/cave.png [Micksha] [Reid]
