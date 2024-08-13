@@ -331,12 +331,13 @@
 </data>
  </layer>
  <objectgroup id="7" name="Object">
-  <object id="1" name="To First Deck" type="warp" x="608" y="864" width="32" height="32">
+  <object id="1" name="To First Deck" type="Warp" x="608" y="864">
    <properties>
-    <property name="dest_map" value="000-2-0"/>
-    <property name="dest_x" value="32"/>
-    <property name="dest_y" value="28"/>
+    <property name="dest_map" value="Ship First Deck"/>
+    <property name="dest_pos_x" type="int" value="32"/>
+    <property name="dest_pos_y" type="int" value="28"/>
    </properties>
+   <polygon points="0,0 0,32 32,32 32,0"/>
   </object>
  </objectgroup>
 </map>

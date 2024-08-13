@@ -340,20 +340,13 @@
 </data>
  </layer>
  <objectgroup id="8" name="Object">
-  <object id="11" name="ToLevel1" type="warp" x="1312" y="960" width="32" height="32">
+  <object id="11" name="To Hold" type="Warp" x="1312" y="960">
    <properties>
-    <property name="dest_map" value="000-2-2"/>
-    <property name="dest_x" value="25"/>
-    <property name="dest_y" value="31"/>
+    <property name="dest_map" value="Ship Hold"/>
+    <property name="dest_pos_x" type="int" value="25"/>
+    <property name="dest_pos_y" type="int" value="31"/>
    </properties>
-  </object>
-  <object id="20" name="Cuco" type="spawn" x="928" y="928" width="128" height="128">
-   <properties>
-    <property name="death" value="90000"/>
-    <property name="max_beings" value="1"/>
-    <property name="monster_id" value="1020"/>
-    <property name="spawn" value="80000"/>
-   </properties>
+   <polygon points="0,0 0,32 32,32 32,0"/>
   </object>
  </objectgroup>
 </map>

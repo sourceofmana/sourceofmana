@@ -328,24 +328,25 @@
 </data>
  </layer>
  <objectgroup id="7" name="Object">
-  <object id="1" name="To Ship's Hold" type="warp" x="2304" y="1088" width="32" height="32">
+  <object id="1" name="To Ship's Hold" type="Warp" x="2304" y="1088">
    <properties>
-    <property name="dest_map" value="000-2-2"/>
-    <property name="dest_x" value="48"/>
-    <property name="dest_y" value="28"/>
-    <property name="npc_id" value="SCRIPT"/>
+    <property name="dest_map" value="Ship Hold"/>
+    <property name="dest_pos_x" type="int" value="48"/>
+    <property name="dest_pos_y" type="int" value="28"/>
    </properties>
+   <polygon points="0,0 0,32 32,32 32,0"/>
   </object>
-  <object id="2" name="To First Deck" type="warp" x="2304" y="960" width="32" height="32">
+  <object id="2" name="To First Deck" type="Warp" x="2304" y="960">
    <properties>
-    <property name="dest_map" value="000-2-0"/>
-    <property name="dest_x" value="31"/>
-    <property name="dest_y" value="26"/>
+    <property name="dest_map" value="Ship First Deck"/>
+    <property name="dest_pos_x" type="int" value="31"/>
+    <property name="dest_pos_y" type="int" value="26"/>
    </properties>
+   <polygon points="0,0 0,32 32,32 32,0"/>
   </object>
-  <object id="3" name="Piou" type="Spawn" x="992" y="736" width="1376" height="640">
+  <object id="3" name="Piou" type="Spawn" x="-200" y="120" width="32" height="32">
    <properties>
-    <property name="count" value="3"/>
+    <property name="count" type="int" value="3"/>
     <property name="name" value="Piou"/>
     <property name="type" value="Monster"/>
    </properties>
