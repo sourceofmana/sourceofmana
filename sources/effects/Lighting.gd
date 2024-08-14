@@ -17,6 +17,7 @@ func UpdateTexture():
 	var time : float = Time.get_ticks_msec() / 1000.0
 	var viewportSize : Vector2 = Launcher.Camera.mainCamera.get_viewport_rect().size
 	var cameraTopLeft : Vector2 = Launcher.Camera.mainCamera.global_position - viewportSize * 0.5
+	cameraTopLeft = cameraTopLeft.clamp(Launcher.Camera.minPos, Launcher.Camera.maxPos - viewportSize)
 	var cameraRect : Rect2 = Rect2(cameraTopLeft, viewportSize)
 
 	for light in lights:
@@ -34,7 +35,7 @@ func UpdateTexture():
 			if Rect2( \
 				Vector2(cameraTopLeft + colorRect.global_position), \
 				Vector2(colorRect.size) \
-			).grow(light.currentRadius).has_point(light.global_position):
+			).grow(light.radius).has_point(light.global_position):
 					lightData.append(Vector4(light.global_position.x, light.global_position.y, light.currentDeadband, light.currentRadius))
 					colorData.append(light.color)
 
