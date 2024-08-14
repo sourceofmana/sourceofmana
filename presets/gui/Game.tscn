@@ -240,6 +240,7 @@ z_index = 10
 z_as_relative = false
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 
 [node name="Tips" parent="Overlay/Sections/Contexts" instance=ExtResource("20_px3po")]
 layout_mode = 1
