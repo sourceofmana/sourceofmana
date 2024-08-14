@@ -1159,13 +1159,16 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 							var light_radius : float = 64.0
 							var light_color : Color = Color.WHITE
 							var light_speed : float = 20.0
+							var light_offset : Vector2 = region.size / 2
 							if "light_radius" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_radius:
 								light_radius = ts.tileproperties[rel_id].light_radius
 							if "light_color" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_color:
 								light_color = Color(ts.tileproperties[rel_id].light_color)
 							if "light_speed" in ts.tileproperties[rel_id]:
 								light_speed = ts.tileproperties[rel_id].light_speed
-							specificDic[gid] = ["LightSource", region.size / 2, light_speed, light_radius, light_color]
+							if "light_offset" in ts.tileproperties[rel_id]:
+								light_offset.y -= ts.tileproperties[rel_id].light_offset
+							specificDic[gid] = ["LightSource", light_offset, light_speed, light_radius, light_color]
 						"FX":
 							var fx_path : String = "particles/" + ts.tileproperties[rel_id].FX if "FX" in ts.tileproperties[rel_id] else ""
 							var inner_offset : Vector2 = Vector2.ZERO
