@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.1" name="Torch" tilewidth="96" tileheight="64" tilecount="18" columns="6">
+<tileset version="1.10" tiledversion="1.11.0" name="Torch" tilewidth="96" tileheight="64" tilecount="18" columns="6">
  <image source="torch-x3x2.png" width="576" height="192"/>
  <tile id="0">
   <properties>
-   <property name="is_lightsource" type="bool" value="true"/>
+   <property name="custom" value="LightSource"/>
    <property name="light_color" value="FFD28DFF"/>
    <property name="light_radius" type="int" value="96"/>
   </properties>
@@ -21,7 +21,7 @@
  </tile>
  <tile id="6">
   <properties>
-   <property name="is_lightsource" type="bool" value="true"/>
+   <property name="custom" value="LightSource"/>
    <property name="light_color" value="FFD28DFF"/>
    <property name="light_radius" type="int" value="128"/>
   </properties>
@@ -39,7 +39,7 @@
  </tile>
  <tile id="12">
   <properties>
-   <property name="is_lightsource" type="bool" value="true"/>
+   <property name="custom" value="LightSource"/>
    <property name="light_color" value="FFD28DFF"/>
    <property name="light_radius" type="int" value="128"/>
   </properties>
