@@ -1,0 +1,9 @@
+[gd_resource type="NavigationPolygon" format=3 uid="uid://cexbla58foef5"]
+
+[resource]
+vertices = PackedVector2Array(842, 954, 950, 998, 790, 998, 726, 954, 950, 858, 918, 858, 842, 838, 874, 826, 778, 826, 778, 794, 790, 794, 790, 826, 874, 794, 918, 794, 726, 838, 726, 826, 790, 1030, 650, 1030, 650, 902, 650, 890, 618, 902, 618, 890, 650, 826, 714, 826, 726, 794, 714, 794)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 1, 0, 5), PackedInt32Array(5, 0, 6, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(7, 12, 13, 5), PackedInt32Array(11, 7, 6, 14), PackedInt32Array(8, 11, 14), PackedInt32Array(15, 8, 14), PackedInt32Array(3, 2, 16, 17, 18), PackedInt32Array(14, 3, 18, 19), PackedInt32Array(18, 20, 21, 19), PackedInt32Array(14, 19, 22, 23), PackedInt32Array(15, 14, 23), PackedInt32Array(24, 15, 23, 25)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(787, 485, 787, 485, 1222, 584, 1191, 1153, 430, 1121, 546, 471)])
+source_geometry_mode = 1
+source_geometry_group_name = &"poly"
+cell_size = 32.0
