@@ -12,4 +12,9 @@
     "Artis Sewer": {					"Path" : "sewer/artis-sewer",},
     "Artis": {							"Path" : "artis/artis",},
     "Ocean": {							"Path" : "ocean/ocean",},
+    "Ship First Deck": {				"Path" : "ship/ship-first-deck",},
+    "Ship Second Deck": {				"Path" : "ship/ship-second-deck",},
+    "Ship Nard Room": {					"Path" : "ship/ship-nard-room",},
+    "Ship Hold": {						"Path" : "ship/ship-hold",},
+    "Ship Alige Hide": {				"Path" : "ship/ship-alige-hide",},
 }
