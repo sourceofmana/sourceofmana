@@ -88,7 +88,7 @@ static func LoadMap(path : String, ext : String) -> Object:
 	var scenePath : String		= filePath + ext
 	var pathExists : bool		= ResourceExists(scenePath)
 
-	Util.Assert(pathExists, "Map file not found " + path + Path.MapClientExt + " should be located at " + Path.MapRsc)
+	Util.Assert(pathExists, "Map file not found " + scenePath + " should be located at " + Path.MapRsc)
 	if pathExists:
 		mapInstance = ResourceInstanceOrLoad(scenePath)
 		Util.PrintLog("Map", "Loading resource: " + scenePath)
