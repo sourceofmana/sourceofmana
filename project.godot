@@ -31,6 +31,7 @@ Launcher="*res://sources/launcher/Launcher.gd"
 
 [debug]
 
+gdscript/warnings/unused_signal=0
 gdscript/warnings/treat_warnings_as_errors=true
 gdscript/completion/autocomplete_setters_and_getters=true
 
@@ -415,7 +416,7 @@ pointing/emulate_touch_from_mouse=true
 
 common/max_physics_steps_per_frame=1
 2d/physics_engine="GodotPhysics2D"
-common/enable_pause_aware_picking=true
+common/physics_interpolation=true
 
 [rendering]
 
@@ -432,14 +433,13 @@ textures/light_projectors/filter=0
 global_illumination/sdfgi/frames_to_converge=0
 global_illumination/sdfgi/frames_to_update_lights=4
 2d/snap/snap_2d_transforms_to_pixel=true
-2d/snap/snap_2d_vertices_to_pixel=true
 quality/driver/fallback_to_gles2=true
-2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
 vram_compression/import_pvrtc=true
 environment/default_environment="res://default_env.tres"
 quality/driver/driver_name="GLES2"
 threads/thread_safe_bvh=true
+2d/snapping/use_gpu_pixel_snap=false
 
 [tiled_importer]
 
