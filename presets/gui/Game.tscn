@@ -226,11 +226,11 @@ offset_right = 62.0
 offset_bottom = 61.0
 size_flags_horizontal = 10
 size_flags_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_hg7ie")
+theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/hover = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_w48pk")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
-theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
+theme_override_styles/normal = SubResource("StyleBoxTexture_hg7ie")
 
 [node name="Notification" parent="Overlay/Sections" instance=ExtResource("17_64u4l")]
 layout_mode = 2
