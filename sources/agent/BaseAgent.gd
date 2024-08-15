@@ -71,10 +71,11 @@ func SetVelocity():
 		nextVelocity = currentVelocity
 		move_and_slide()
 
-	var velocityDiff : Vector2 = (nextVelocity - velocity).abs()
-	if (velocityDiff.x + velocityDiff.y) > 5 or (velocity != nextVelocity and (velocity.is_zero_approx() or nextVelocity.is_zero_approx())):
-		velocity = nextVelocity
-		forceUpdate = true
+	if velocity != nextVelocity:
+		var velocityDiff : Vector2 = (nextVelocity - velocity).abs()
+		if (velocityDiff.x + velocityDiff.y) > 5 or velocity.is_zero_approx() or nextVelocity.is_zero_approx():
+			velocity = nextVelocity
+			forceUpdate = true
 
 func SetCurrentState():
 	if stat.health <= 0:
