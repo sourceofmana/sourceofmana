@@ -4,14 +4,35 @@ class_name NpcAgent
 #
 static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.NPC
 
+static var Greetings = [
+	"Hello %s!",
+	"Greetings, %s!",
+	"Ah, %s!",
+	"Welcome, %s!",
+	"Salutations, %s!",
+	"Good to see you, %s!",
+	"Ahoy, %s!",
+	"Well met, %s!",
+	"Hail, %s!",
+	"Hey %s!",
+	"Good day, %s!",
+	"%s, well met!"
+]
+
+static func GetRandomGreets(actor : Actor) -> String:
+	return Greetings[randi() % Greetings.size()] % [actor.nick]
+
 #
-func Interact(caller : BaseAgent):
-	if caller:
-		var peerID : int = Launcher.Network.Server.GetRid(caller)
+func Interact(_actor : Actor): pass # Should be defined per NPC
+
+func Trigger() -> bool:
+	return SetState(ActorCommons.State.TRIGGER) and state == ActorCommons.State.TRIGGER
+
+func Greets(actor : BaseAgent):
+	if actor:
+		var peerID : int = Launcher.Network.Server.GetRid(actor)
 		if peerID != NetworkCommons.RidUnknown:
-			var npcAgentID : int = get_rid().get_id()
-			if SetState(ActorCommons.State.TRIGGER) and state == ActorCommons.State.TRIGGER:
-				Launcher.Network.ChatAgent(npcAgentID, "Hello %s!" % caller.nick, peerID)
+			Launcher.Network.ChatAgent(get_rid().get_id(), NpcAgent.GetRandomGreets(actor), peerID)
 
 #
 func _ready():
