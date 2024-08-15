@@ -16,6 +16,7 @@ const DBRsc : String					= DataRsc + "db/"
 const ConfRsc : String					= DataRsc + "conf/"
 
 const Src : String						= Rsc + "sources/"
+const ScriptSrc : String				= Src + "scripts/"
 const DBInstSrc : String				= Src + "db/instance/"
 
 const Pst : String						= Rsc + "presets/"

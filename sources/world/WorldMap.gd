@@ -37,6 +37,7 @@ func LoadMapData():
 					spawnObject.spawn_position = spawn[3]
 					spawnObject.spawn_offset = spawn[4]
 					spawnObject.respawn_delay = spawn[5]
+					spawnObject.custom_script = spawn[6]
 					spawnObject.is_global = spawnObject.spawn_position < Vector2i.LEFT
 					spawnObject.is_persistant = true
 					spawnObject.map = self

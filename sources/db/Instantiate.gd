@@ -16,7 +16,7 @@ static func CreateEntity(entityType : ActorCommons.Type, entityID : String, nick
 		actor.Init(entityType, entityID, nick)
 	return actor
 
-static func CreateAgent(entityTypeStr : String, entityID : String, nick : String = "") -> BaseAgent:
+static func CreateAgent(entityTypeStr : String, entityID : String, nick : String = "", scriptPath : String = "") -> BaseAgent:
 	var actor : BaseAgent = null
 	var entityType : ActorCommons.Type = ActorCommons.Type.NPC
 	match entityTypeStr:
@@ -35,6 +35,11 @@ static func CreateAgent(entityTypeStr : String, entityID : String, nick : String
 		_: Util.Assert(false, "Trying to create an agent with a wrong type: " + entityTypeStr)
 
 	if actor:
+		if scriptPath:
+			var scriptRef : Object = FileSystem.LoadScript(scriptPath)
+			if scriptRef:
+				actor.set_script(scriptRef)
+
 		actor.Init(entityType, entityID, nick)
 	return actor
 

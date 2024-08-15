@@ -96,18 +96,23 @@ static func LoadMap(path : String, ext : String) -> Object:
 	return mapInstance
 
 # Source
-static func LoadSource(path : String, alloc : bool = true) -> Object:
-	var fullPath : String		= Path.Src + path
+static func LoadGDScript(fullPath : String, alloc : bool = true) -> Object:
 	var srcFile : Object		= null
 
 	var pathExists : bool		= ResourceExists(fullPath)
-	Util.Assert(pathExists, "Source file not found " + path + " should be located at " + fullPath)
+	Util.Assert(pathExists, "GDScript file not found " + fullPath)
 
 	if pathExists:
 		srcFile = FileAlloc(fullPath) if alloc else ResourceLoader.load(fullPath)
 		Util.PrintLog("Source", "Loading script: " + fullPath)
 
 	return srcFile
+
+static func LoadSource(path : String, alloc : bool = true) -> Object:
+	return LoadGDScript(Path.Src + path, alloc)
+
+static func LoadScript(path : String, alloc : bool = false) -> Object:
+	return LoadGDScript(Path.ScriptSrc + path, alloc)
 
 # Config
 static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
