@@ -148,8 +148,8 @@ func _process(_delta):
 
 func RefreshTree():
 	if previousState in blendSpacePaths:
-		var blendSpacePath = blendSpacePaths[previousState]
+		var blendSpacePath : String = blendSpacePaths[previousState]
 		animationTree[blendSpacePath] = previousOrientation
 
-	var stateName = ActorCommons.GetStateName(previousState)
+	var stateName : String = ActorCommons.GetStateName(previousState)
 	animationTree[ActorCommons.playbackParameter].travel(stateName)

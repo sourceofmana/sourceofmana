@@ -82,7 +82,7 @@ const stateFromTrigger : String				= "From Trigger"
 static func GetNextTransition(currentState : State, newState : State) -> State:
 	return stateTransitions[currentState][newState]
 
-static func GetStateName(state : State):
+static func GetStateName(state : State) -> String:
 	match state:
 		State.IDLE:			return stateIdle
 		State.WALK:			return stateWalk
