@@ -6,28 +6,18 @@ signal PlayerWarped
 #
 var pool								= FileSystem.LoadSource("map/MapPool.gd")
 var mapNode : Node2D					= null
-var tilemapNode : TileMap				= null
+var fringeLayer : TileMapLayer			= null
 
 #
 func RefreshTileMap():
 	for child in mapNode.get_children():
-		if child is TileMap:
-			tilemapNode = child
+		if child is TileMapLayer and child.name == "Fringe":
+			fringeLayer = child
 			break
 
 func GetMapBoundaries() -> Rect2:
-	var boundaries : Rect2 = Rect2()
-	Util.Assert(tilemapNode != null, "Could not find a tilemap on the current scene")
-	if tilemapNode:
-		var mapLimits			= tilemapNode.get_used_rect()
-		var mapCellsize			= tilemapNode.get_tileset().get_tile_size() if tilemapNode.get_tileset() else Vector2i(32, 32)
-
-		boundaries.position.x	= mapCellsize.x * mapLimits.position.x
-		boundaries.end.x		= mapCellsize.x * mapLimits.end.x
-		boundaries.position.y	= mapCellsize.y * mapLimits.position.y
-		boundaries.end.y		= mapCellsize.y * mapLimits.end.y
-
-	return boundaries
+	Util.Assert(mapNode != null, "Map node not found on the current scene")
+	return mapNode.get_meta("MapBoundaries") if mapNode else Rect2()
 
 #
 func EmplaceMapNode(mapName : String):
@@ -50,7 +40,7 @@ func UnloadMapNode():
 		RemoveChildren()
 		Launcher.remove_child(mapNode)
 		mapNode = null
-		tilemapNode = null
+		fringeLayer = null
 		Entities.Clear()
 
 func LoadMapNode(mapName : String):
@@ -62,30 +52,30 @@ func LoadMapNode(mapName : String):
 
 #
 func RemoveChildren():
-	Util.Assert(tilemapNode != null, "Current tilemap not found, could not remove children")
-	for entity in tilemapNode.get_children():
+	Util.Assert(fringeLayer != null, "Current fringe layer not found, could not remove children")
+	for entity in fringeLayer.get_children():
 		RemoveChild(entity as Entity)
 
 func RemoveChild(entity : Entity):
 	if entity:
-		if tilemapNode:
-			tilemapNode.remove_child(entity)
+		if fringeLayer:
+			fringeLayer.remove_child(entity)
 		if entity != Launcher.Player:
 			entity.queue_free()
 
 func AddChild(entity : Entity):
-	Util.Assert(tilemapNode != null, "Current tilemap not found, could not add a new child entity")
-	if tilemapNode:
-		tilemapNode.add_child(entity)
+	Util.Assert(fringeLayer != null, "Current fringe layer not found, could not add a new child entity")
+	if fringeLayer:
+		fringeLayer.add_child(entity)
 
 #
 func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int):
-	if not tilemapNode:
+	if not fringeLayer:
 		return
 
 	var entity : Entity = Entities.Get(agentID)
 	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.FSM.playerName
-	var isAlreadySpawned : bool = entity != null and entity.get_parent() == tilemapNode
+	var isAlreadySpawned : bool = entity != null and entity.get_parent() == fringeLayer
 
 	if isLocalPlayer and Launcher.Player:
 		entity = Launcher.Player

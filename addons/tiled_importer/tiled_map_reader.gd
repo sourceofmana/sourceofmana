@@ -63,10 +63,6 @@ const whitelist_properties = [
 var _loaded_templates = {}
 # Maps each tileset file used by the map to it's first gid; Used for template parsing
 var _tileset_path_to_first_gid = {}
-# Collision polygons
-var polygon_pool : Array = []
-# Navigation polygons
-var navigation_pool : Array = []
 # Custom objects
 var spawn_pool : Array = []
 var warp_pool : Array = []
@@ -158,7 +154,7 @@ func build_client(source_path, options) -> Node2D:
 		# Error happened
 		return tileset
 
-	var map_data = {
+	var mapData = {
 		"options": options,
 		"map_mode": map_mode,
 		"map_pos_offset": map_pos_offset,
@@ -170,33 +166,34 @@ func build_client(source_path, options) -> Node2D:
 		"infinite": bool(map.infinite) if "infinite" in map else false
 	}
 
-	var layerID = 0
 	var zOrder = 0
-	var level = TileMap.new()
 	tileset.tile_size = cell_size
-	level.set_tileset(tileset)
-	level.set("editor/display_folded", true)
-	root.add_child(level)
-	level.set_owner(root)
-	level.set_name(source_path.get_file().get_basename())
-	level.set_y_sort_enabled(true)
-	level.remove_layer(0)
 
+	# Set zOrders
 	for tmxLayer in map.layers:
 		if tmxLayer.name == "Fringe":
 			break
 		else:
 			zOrder -= 1
 
+	# Add each layers
+	var mapBoundaries : Rect2 = Rect2()
 	for tmxLayer in map.layers:
-		level.add_layer(layerID)
-		err = make_layer(level, tmxLayer, root, root, map_data, zOrder, layerID)
-		if err == OK:
-			layerID +=1
+		var layer : TileMapLayer = make_layer(tmxLayer, root, mapData, zOrder)
+		if layer:
+			mapBoundaries = mapBoundaries.merge(layer.get_used_rect())
+			root.add_child(layer)
+			layer.set_owner(root)
 			zOrder += 1
-		else:
-			level.remove_layer(layerID)
 
+	# Set metadata
+	mapBoundaries.position.x *= cell_size.x
+	mapBoundaries.end.x *= cell_size.x
+	mapBoundaries.position.y *= cell_size.y
+	mapBoundaries.end.y *= cell_size.y
+	root.set_meta("MapBoundaries", mapBoundaries)
+
+	# Background color
 	if options.add_background and "backgroundcolor" in map:
 		var bg_color = str(map.backgroundcolor)
 		if (!bg_color.is_valid_html_color()):
@@ -273,167 +270,13 @@ func build_server(source_path) -> Node:
 
 	return root
 
-func build_navigation(source_path, options) -> NavigationPolygon:
-	var map_size : Vector2i = Vector2i(map_width * cell_size.x, map_height * cell_size.y)
-	var root = NavigationPolygon.new()
-	root.set_name(source_path.get_file().get_basename())
-
-	# Merge algorithm
-	merge_polygons(false)
-	offset_polygons(options.polygon_grow_default)
-	merge_polygons(true)
-	remove_outer_polygons(map_size)
-	# TODO: reduce nearest points
-
-	# Create navigation mesh
-	for polygon in polygon_pool:
-		root.add_outline(polygon)
-	root.make_polygons_from_outlines()
-
-	return root
-
-func fill_polygon_pool(level : TileMap, cell_pos : Vector2, cell_size : Vector2, gid : int):
-	var layer_id : int			= tileDic[gid][0]
-	var atlas_pos : Vector2i	= tileDic[gid][1]
-
-	var ts_atlas : TileSetAtlasSource	= level.get_tileset().get_source(layer_id)
-	var tile_data : TileData			= ts_atlas.get_tile_data(atlas_pos, 0)
-	var tile_polygon_count : int		= tile_data.get_collision_polygons_count(0)
-	var cell_offset = cell_size / 2 + cell_pos
-
-	for tile_polygon in tile_polygon_count:
-		var polygon : PackedVector2Array = tile_data.get_collision_polygon_points(0, tile_polygon)
-
-		if polygon.size() > 0:
-			var last_vertex = Vector2(-1, -1)
-			var first_vertex = polygon[0]
-			var filtered_polygon : PackedVector2Array = []
-
-			for vertex in polygon.size():
-				if last_vertex != polygon[vertex]:
-					last_vertex = polygon[vertex]
-					if vertex != polygon.size() - 1 || vertex == polygon.size() - 1 && polygon[vertex] != first_vertex:
-						filtered_polygon.append(polygon[vertex] + cell_offset)
-
-			polygon_pool.append(filtered_polygon)
-
-func is_cyclic_polygon(inner_polygon : PackedVector2Array, outer_polygon : PackedVector2Array) -> bool:
-	var is_cyclic : bool = inner_polygon.size() > 0
-
-	for vertice in inner_polygon:
-		if not Geometry2D.is_point_in_polygon(vertice, outer_polygon):
-			is_cyclic = false
-			break
-
-	return is_cyclic
-
-func both_cyclic_polygon(first : PackedVector2Array, second : PackedVector2Array) -> bool:
-	return is_cyclic_polygon(first, second) || is_cyclic_polygon(second, first)
-
-func merge_polygons(create_outer_polygon : bool = false, has_debug : bool = false):
-	while(true):
-		var polygons_to_remove : Array = []
-		var polygons_to_skip : Array = []
-		var polygons_to_clip : Array = []
-		var pool_size = polygon_pool.size()
-
-		if has_debug: print("Size: " + str(pool_size))
-
-		for pol_index in pool_size:
-			if polygons_to_remove.has(pol_index) or polygons_to_skip.has(pol_index):
-				continue
-
-			for pol_subindex in range(pol_index + 1, pool_size):
-				if polygons_to_remove.has(pol_subindex) or polygons_to_skip.has(pol_subindex):
-					continue
-				var current_polygon : PackedVector2Array = polygon_pool[pol_index]
-				var other_polygon : PackedVector2Array = polygon_pool[pol_subindex]
-
-				# Check if one is inside another
-				if is_cyclic_polygon(other_polygon, current_polygon):
-					if create_outer_polygon:
-						polygons_to_clip.append(pol_subindex)
-					else:
-						polygons_to_remove.append(pol_subindex)
-					continue
-
-				# Check if polygon intersect another collision
-				var merged_polygon : Array = []
-				if polygons_to_clip.has(pol_subindex):
-					merged_polygon = Geometry2D.clip_polygons(current_polygon, other_polygon)
-					if merged_polygon[0] != current_polygon:
-						polygon_pool[pol_index] = merged_polygon[0]
-						polygons_to_remove.append(pol_subindex)
-					continue
-
-				merged_polygon = Geometry2D.merge_polygons(current_polygon, other_polygon)
-
-				# Merged one into another
-				if merged_polygon.size() == 1:
-					polygon_pool[pol_index] = merged_polygon[0]
-					polygons_to_remove.append(pol_subindex)
-				elif create_outer_polygon:
-					# Inner/Outer polygon created
-					if merged_polygon.size() == 2:
-						polygon_pool[pol_index] = merged_polygon[0]
-						polygon_pool[pol_subindex] = merged_polygon[1]
-					# Merged with kids
-					elif merged_polygon.size() > 2:
-						polygon_pool[pol_index] = merged_polygon[0]
-						polygons_to_remove.append(pol_subindex)
-						polygon_pool.append_array(merged_polygon.slice(1, merged_polygon.size()))
-
-		polygons_to_remove.sort()
-		if polygons_to_remove.size() == 0:
-			break
-
-		for rem_index in range(polygons_to_remove.size() -1, -1, -1):
-			polygon_pool.remove_at(polygons_to_remove[rem_index])
-
-func offset_polygons(offset : int):
-	var offseted_pool : Array = []
-	var inner_polygons : Array = []
-
-	for pol_index in polygon_pool.size():
-		if not inner_polygons.has(pol_index):
-			var current_polygon : PackedVector2Array = polygon_pool[pol_index]
-			for pol_subindex in range(pol_index + 1, polygon_pool.size()):
-				if not inner_polygons.has(pol_subindex):
-					var other_polygon : PackedVector2Array = polygon_pool[pol_subindex]
-					if is_cyclic_polygon(current_polygon, other_polygon):
-						inner_polygons.append(pol_index)
-					elif is_cyclic_polygon(other_polygon, current_polygon):
-						inner_polygons.append(pol_index)
-
-	for pol_index in polygon_pool.size():
-		var pol_offset = offset
-		var outer_polygon : PackedVector2Array = polygon_pool[pol_index]
-		var offseted_polygons = Geometry2D.offset_polygon(outer_polygon, pol_offset, Geometry2D.JOIN_SQUARE)
-		offseted_pool.append_array(offseted_polygons)
-
-	polygon_pool.clear()
-	polygon_pool = offseted_pool
-
-func remove_outer_polygons(border : Vector2i):
-	var polygons_to_remove : Array = []
-
-	for pol_index in polygon_pool.size():
-		var polygon : PackedVector2Array = polygon_pool[pol_index]
-		for vertice in polygon:
-			if vertice.x <= 0 || vertice.x >= border.x || vertice.y <= 0 || vertice.y >= border.y:
-				polygons_to_remove.append(pol_index)
-				break
-
-	for rem_index in range(polygons_to_remove.size() -1, -1, -1):
-		polygon_pool.remove_at(polygons_to_remove[rem_index])
-
-#
-func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, gid : int):
+# Specific nodes to add per tiles (i.e.: Particle effects, light sources, etc...)
+func add_specific_nodes(parent : Node2D, cell_in_map : Vector2, gid : int):
 	if gid in specificDic and specificDic[gid].size() > 0:
 		var specificGid = specificDic[gid]
 		match specificGid[0]:
 			"LightSource":
-				var lighting : CanvasLayer = root.get_node_or_null("LightingLayer")
+				var lighting : CanvasLayer = parent.get_node_or_null("LightingLayer")
 				if lighting:
 					var lightSource : LightSource = LightSource.new()
 					if lightSource:
@@ -444,7 +287,7 @@ func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, g
 						lightSource.radius = specificGid[3]
 						lightSource.color = specificGid[4]
 						lighting.add_child(lightSource)
-						lightSource.set_owner(root)
+						lightSource.set_owner(parent)
 			"FX":
 				var fx : Node2D = FileSystem.LoadEffect(specificGid[2])
 				if fx:
@@ -453,22 +296,22 @@ func add_specific_nodes(level : TileMap, root : Node2D, cell_in_map : Vector2, g
 					fx.position.x += specificGid[1].x
 					fx.position.y += specificGid[1].y
 
-					var effects : Node2D = root.get_node_or_null("Effects")
+					var effects : Node2D = parent.get_node_or_null("Effects")
 					if not effects:
 						effects = Node2D.new()
 						effects.name = "Effects"
-						root.add_child(effects)
-						effects.set_owner(root)
+						parent.add_child(effects)
+						effects.set_owner(parent)
 
 					effects.add_child(fx)
-					fx.set_owner(root)
+					fx.set_owner(parent)
 
 # Creates a layer node from the data
-# Returns an error code
-func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
+# Returns a TileMapLayer on success or null if an error happen
+func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 	var err = validate_layer(tmxLayer)
 	if err != OK:
-		return err
+		return null
 
 	# Main map data
 	var map_pos_offset = data.map_pos_offset
@@ -482,16 +325,18 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 	var opacity = float(tmxLayer.opacity) if "opacity" in tmxLayer else 1.0
 	var visible = bool(tmxLayer.visible) if "visible" in tmxLayer else true
 
-	level.set_layer_name(layerID, tmxLayer.name)
-	level.set_layer_navigation_enabled(layerID, false)
+	var layer : TileMapLayer = TileMapLayer.new()
+	layer.set_name(tmxLayer.name)
+	layer.set_tile_set(tileset)
+	layer.set_navigation_enabled(false)
+
 	if tmxLayer.type == "tilelayer":
-		var layer_size = Vector2(int(tmxLayer.width), int(tmxLayer.height))
-		level.set_layer_modulate(layerID, Color(1.0, 1.0, 1.0, opacity))
-		level.set_layer_enabled(layerID, visible)
-		level.set_layer_z_index(layerID, zindex)
+		layer.set_modulate(Color(1.0, 1.0, 1.0, opacity))
+		layer.set_enabled(visible)
+		layer.set_z_index(zindex)
 		if "Fringe" in tmxLayer.name:
-			level.set_layer_y_sort_enabled(layerID, true)
-			level.set_layer_y_sort_origin(layerID, 10)
+			layer.set_y_sort_enabled(true)
+			layer.set_y_sort_origin(cell_size.y / 2)
 
 		var offset = Vector2()
 		if "offsetx" in tmxLayer:
@@ -509,16 +354,16 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 		for chunk in chunks:
 			err = validate_chunk(chunk)
 			if err != OK:
-				return err
+				return null
 
 			var chunk_data = chunk.data
 
 			if "encoding" in tmxLayer and tmxLayer.encoding == "base64":
 				if "compression" in tmxLayer:
+					var layer_size : Vector2 = Vector2(int(tmxLayer.width), int(tmxLayer.height))
 					chunk_data = decompress_layer_data(chunk.data, tmxLayer.compression, layer_size)
 					if typeof(chunk_data) == TYPE_INT:
-						# Error happened
-						return chunk_data
+						return null
 				else:
 					chunk_data = read_base64_layer_data(chunk.data)
 
@@ -539,24 +384,22 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 				var cell_pos_y = cell_y * cell_size.y
 				var cell_in_map = Vector2(cell_pos_x, cell_pos_y)
 
-				level.set_cell(layerID, cell, tileDic[gid][0], tileDic[gid][1])
-				add_specific_nodes(level, root, cell_in_map, gid)
-				fill_polygon_pool(level, cell_in_map, cell_size, gid)
+				layer.set_cell(cell, tileDic[gid][0], tileDic[gid][1])
+				add_specific_nodes(parent, cell_in_map, gid)
 
 				count += 1
 
 		if options.save_tiled_properties:
-			set_tiled_properties_as_meta(level, tmxLayer)
+			set_tiled_properties_as_meta(parent, tmxLayer)
 		if options.custom_properties:
-			set_custom_properties(level, tmxLayer)
-
+			set_custom_properties(parent, tmxLayer)
 	elif tmxLayer.type == "imagelayer":
 		var image = null
 		if tmxLayer.image != "":
 			image = load_image(tmxLayer.image, source_path, options)
 			if typeof(image) != TYPE_OBJECT:
 				# Error happened
-				return image
+				return null
 
 		var pos = Vector2()
 		var offset = Vector2()
@@ -584,7 +427,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 		sprite.set("editor/display_folded", true)
 		parent.add_child(sprite)
 		sprite.position = pos + offset
-		sprite.set_owner(root)
+		sprite.set_owner(parent)
 	elif tmxLayer.type == "objectgroup":
 		var object_layer = Node2D.new()
 			
@@ -595,7 +438,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 			object_layer.set("editor/display_folded", true)
 
 		parent.add_child(object_layer)
-		object_layer.set_owner(root)
+		object_layer.set_owner(parent)
 
 		if "name" in tmxLayer and not str(tmxLayer.name).is_empty():
 			object_layer.set_name(str(tmxLayer.name))
@@ -625,7 +468,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 				point.position = Vector2(float(object.x), float(object.y))
 				point.visible = bool(object.visible) if "visible" in object else true
 				object_layer.add_child(point)
-				point.set_owner(root)
+				point.set_owner(parent)
 				if "name" in object and not str(object.name).is_empty():
 					point.set_name(str(object.name))
 				elif "id" in object and not str(object.id).is_empty():
@@ -645,7 +488,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 				if typeof(shape) != TYPE_OBJECT:
 					# Error happened
-					return shape
+					return null
 
 				if "type" in object and object.type == "occluder":
 					var occluder = LightOccluder2D.new()
@@ -674,7 +517,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 						set_custom_properties(occluder, object)
 
 					object_layer.add_child(occluder)
-					occluder.set_owner(root)
+					occluder.set_owner(parent)
 
 				else:
 					var offset = Vector2()
@@ -794,12 +637,12 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 					if customObject && object_layer:
 						customObject.set("editor/display_folded", true)
 						object_layer.add_child(customObject)
-						customObject.set_owner(root)
+						customObject.set_owner(parent)
 
 					if collisionObject:
 						collisionObject.set("editor/display_folded", true)
 						customObject.add_child(collisionObject)
-						collisionObject.set_owner(root)
+						collisionObject.set_owner(parent)
 
 					if options.save_tiled_properties:
 						set_tiled_properties_as_meta(customObject, object)
@@ -839,7 +682,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 				var pos = Vector2()
 				var rot = 0
 				var scale = Vector2(1, 1)
-				var ts_atlas : TileSetAtlasSource = level.get_tileset().get_source(level.get_tileset().get_source_count() - 1)
+				var ts_atlas : TileSetAtlasSource = tileset.get_source(tileset.get_source_count() - 1)
 				sprite.texture = ts_atlas.get_texture()
 				var texture_size : Vector2 = sprite.texture.get_size() if sprite.texture != null else Vector2()
 
@@ -872,10 +715,10 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 						_: obj_root = StaticBody2D.new() 
 
 					object_layer.add_child(obj_root)
-					obj_root.owner = root
+					obj_root.owner = parent
 
 					obj_root.add_child(sprite)
-					sprite.owner = root
+					sprite.owner = parent
 
 					var shapes = tileset.tile_get_shapes(tile_id)
 					for s in shapes:
@@ -892,7 +735,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 							collision_node.position.y *= -1
 							collision_node.position.y -= cell_size.y
 						obj_root.add_child(collision_node)
-						collision_node.owner = root
+						collision_node.owner = parent
 
 				if "name" in object and not str(object.name).is_empty():
 					obj_root.set_name(str(object.name))
@@ -911,7 +754,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 				if not has_collisions:
 					object_layer.add_child(sprite)
-					sprite.set_owner(root)
+					sprite.set_owner(parent)
 
 				if options.save_tiled_properties:
 					set_tiled_properties_as_meta(obj_root, object)
@@ -922,8 +765,7 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 							for prop in tile_meta[tile_id]:
 								obj_root.set_meta(prop, tile_meta[tile_id][prop])
 					set_custom_properties(obj_root, object)
-		return ERR_SKIP
-
+		return null
 	elif tmxLayer.type == "group":
 		var group = Node2D.new()
 		var pos = Vector2()
@@ -945,13 +787,12 @@ func make_layer(level, tmxLayer, parent, root, data, zindex, layerID):
 
 		group.set("editor/display_folded", true)
 		parent.add_child(group)
-		group.set_owner(root)
-
+		group.set_owner(parent)
 	else:
 		print_error("Unknown tmxLayer type ('%s') in '%s'" % [str(tmxLayer.type), str(tmxLayer.name) if "name" in tmxLayer else "[unnamed tmxLayer]"])
-		return ERR_INVALID_DATA
+		return null
 
-	return OK
+	return layer
 
 func set_default_obj_params(object):
 	# Set default values for object
@@ -962,8 +803,6 @@ func set_default_obj_params(object):
 		object.type = ""
 	if not "visible" in object:
 		object.visible = true
-
-var flags
 
 # Makes a tileset from a array of tilesets data
 # Since Godot supports only one TileSet per TileMap, all tilesets from Tiled are combined

@@ -121,7 +121,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 
 	var navigation_tres = null
 	if options.export_navigation_mesh:
-		navigation_tres = mapReader.build_navigation(source_file, options)
+		navigation_tres = mapReader.make_navigation(source_file, options)
 		if typeof(server_scene) == TYPE_OBJECT:
 			saveRet &= ResourceSaver.save(navigation_tres, "%s.navigation.tres" % [source_file])
 
