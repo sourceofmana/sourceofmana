@@ -337,7 +337,7 @@ _data = {
 
 [node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("1_66oof")
-offset = Vector2(0, -32)
+offset = Vector2(0, -24)
 hframes = 16
 vframes = 8
 frame = 64
@@ -350,6 +350,3 @@ libraries = {
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_mvwfv")]
 root_node = NodePath("../../Body")
-libraries = {
-"": SubResource("AnimationLibrary_pnwib")
-}
