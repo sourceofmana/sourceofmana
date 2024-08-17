@@ -87,7 +87,7 @@ func _get_import_options(path, preset):
 		},
 		{
 			"name": "export_navigation_mesh",
-			"default_value": false
+			"default_value": true
 		},
 		{
 			"name": "polygon_grow_default",
@@ -114,16 +114,16 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	# Server Data import (Spawn and warp locations)
 	var server_scene = null
 	server_scene = mapReader.build_server(source_file)
-	if typeof(server_scene) == TYPE_OBJECT:
+	if server_scene:
 		var packed_scene = PackedScene.new()
 		packed_scene.pack(server_scene)
 		saveRet &= ResourceSaver.save(packed_scene, "%s.server.%s" % [source_file, _get_save_extension()])
 
-	var navigation_tres = null
-	if options.export_navigation_mesh:
-		navigation_tres = mapReader.make_navigation(source_file, options)
-		if typeof(server_scene) == TYPE_OBJECT:
-			saveRet &= ResourceSaver.save(navigation_tres, "%s.navigation.tres" % [source_file])
+	# Navigation import into a separate .tres
+	var nav_region : NavigationRegion2D = mapReader.build_navigation()
+	if nav_region and options.export_navigation_mesh:
+		NavigationServer2D.bake_from_source_geometry_data(nav_region.navigation_polygon, mapReader.source_data)
+		saveRet &= ResourceSaver.save(nav_region.navigation_polygon, "%s.navigation.tres" % [source_file])
 
 	# Default import file when opening the .tmx file
 	if client_scene:
@@ -131,10 +131,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 			server_scene.set_name("ServerData")
 			client_scene.add_child(server_scene)
 			server_scene.set_owner(client_scene)
-		if navigation_tres:
-			var nav_region : NavigationRegion2D = NavigationRegion2D.new()
-			nav_region.navigation_polygon = navigation_tres
-			nav_region.set_name("NavRegion")
+		if nav_region:
 			client_scene.add_child(nav_region)
 			nav_region.set_owner(client_scene)
 		var packed_scene = PackedScene.new()

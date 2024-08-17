@@ -78,6 +78,10 @@ var cell_size = Vector2.ZERO
 var map_width = 0
 var map_height = 0
 var spirit_only = false
+var nav_region : NavigationRegion2D = NavigationRegion2D.new()
+var map_boundaries : Rect2 = Rect2()# Collision polygons
+var source_data : NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
+
 
 func reset_global_memebers():
 	_loaded_templates = {}
@@ -177,21 +181,20 @@ func build_client(source_path, options) -> Node2D:
 			zOrder -= 1
 
 	# Add each layers
-	var mapBoundaries : Rect2 = Rect2()
 	for tmxLayer in map.layers:
 		var layer : TileMapLayer = make_layer(tmxLayer, root, mapData, zOrder)
 		if layer:
-			mapBoundaries = mapBoundaries.merge(layer.get_used_rect())
+			map_boundaries = map_boundaries.merge(layer.get_used_rect())
 			root.add_child(layer)
 			layer.set_owner(root)
 			zOrder += 1
 
 	# Set metadata
-	mapBoundaries.position.x *= cell_size.x
-	mapBoundaries.end.x *= cell_size.x
-	mapBoundaries.position.y *= cell_size.y
-	mapBoundaries.end.y *= cell_size.y
-	root.set_meta("MapBoundaries", mapBoundaries)
+	map_boundaries.position.x *= cell_size.x
+	map_boundaries.end.x *= cell_size.x
+	map_boundaries.position.y *= cell_size.y
+	map_boundaries.end.y *= cell_size.y
+	root.set_meta("MapBoundaries", map_boundaries)
 
 	# Background color
 	if options.add_background and "backgroundcolor" in map:
@@ -224,6 +227,38 @@ func build_client(source_path, options) -> Node2D:
 		colorizer.owner = root
 
 	return root
+
+func build_navigation() -> Node2D:
+	nav_region.set_name("NavRegion")
+	nav_region.navigation_polygon = NavigationPolygon.new()
+	nav_region.navigation_polygon.set_source_geometry_mode(NavigationPolygon.SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN)
+	nav_region.navigation_polygon.add_outline(PackedVector2Array([Vector2(map_boundaries.position.x, map_boundaries.position.y), Vector2(map_boundaries.position.x, map_boundaries.end.y), Vector2(map_boundaries.end.x, map_boundaries.end.y), Vector2(map_boundaries.end.x, map_boundaries.position.y)]))
+	nav_region.navigation_polygon.set_agent_radius(10 if cell_size.y == 32 else 4)
+	return nav_region
+
+func fill_polygon_pool(tileset : TileSet, cell_pos : Vector2, gid : int):
+	var layer_id : int			= tileDic[gid][0]
+	var atlas_pos : Vector2i	= tileDic[gid][1]
+
+	var ts_atlas : TileSetAtlasSource	= tileset.get_source(layer_id)
+	var tile_data : TileData			= ts_atlas.get_tile_data(atlas_pos, 0)
+	var tile_polygon_count : int		= tile_data.get_collision_polygons_count(0)
+
+	for tile_polygon in tile_polygon_count:
+		var polygon : PackedVector2Array = tile_data.get_collision_polygon_points(0, tile_polygon)
+
+		if polygon.size() > 0:
+			var last_vertex = Vector2(-1, -1)
+			var first_vertex = polygon[0]
+			var filtered_polygon : PackedVector2Array = []
+
+			for vertex in polygon.size():
+				if last_vertex != polygon[vertex]:
+					last_vertex = polygon[vertex]
+					if vertex != polygon.size() - 1 || vertex == polygon.size() - 1 && polygon[vertex] != first_vertex:
+						filtered_polygon.append(polygon[vertex] + cell_pos + cell_size / 2.0)
+
+			source_data.add_obstruction_outline(filtered_polygon)
 
 # Reads a collision pool and create a navigation mesh
 func build_server(source_path) -> Node:
@@ -329,6 +364,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 	layer.set_name(tmxLayer.name)
 	layer.set_tile_set(tileset)
 	layer.set_navigation_enabled(false)
+	layer.add_to_group("navigation_polygon_source_geometry_group", true)
 
 	if tmxLayer.type == "tilelayer":
 		layer.set_modulate(Color(1.0, 1.0, 1.0, opacity))
@@ -386,6 +422,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 
 				layer.set_cell(cell, tileDic[gid][0], tileDic[gid][1])
 				add_specific_nodes(parent, cell_in_map, gid)
+				fill_polygon_pool(tileset, cell_in_map, gid)
 
 				count += 1
 
@@ -887,9 +924,9 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 
 		while i < tilecount:
 			var tilepos = Vector2(x, y)
-			var region = Rect2(tilepos, tilesize)
+			var tileRegion = Rect2(tilepos, tilesize)
 
-			tileRegions.push_back(region)
+			tileRegions.push_back(tileRegion)
 
 			column += 1
 			i += 1
@@ -903,7 +940,7 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 		i = 0
 
 		while i < tilecount:
-			var region = tileRegions[i]
+			var tileRegion = tileRegions[i]
 
 			var rel_id = str(gid - firstgid)
 
@@ -929,16 +966,16 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 #				if options.apply_offset:
 #					tsAtlas.set_margins(Vector2(0, 32-image.get_height()))
 
-			var atlasPos : Vector2i = region.position / region.size
+			var atlasPos : Vector2i = tileRegion.position / tileRegion.size
 			tileDic[gid] = [layerID, atlasPos]
-			tsAtlas.set_texture_region_size(region.size)
+			tsAtlas.set_texture_region_size(tileRegion.size)
 			tsAtlas.create_tile(atlasPos)
 
 			var tileData : TileData = tsAtlas.get_tile_data(atlasPos, 0)
 			var textureOrigin : Vector2i = Vector2i.ZERO
-			if region.size.x > 32 || region.size.y > 32:
-				textureOrigin.x = -(region.size.x - 32) / 2
-				textureOrigin.y = (region.size.y - 32) / 2
+			if tileRegion.size.x > cell_size.x || tileRegion.size.y > cell_size.y:
+				textureOrigin.x = -(tileRegion.size.x - cell_size.x) / 2
+				textureOrigin.y = (tileRegion.size.y - cell_size.y) / 2
 				tileData.set_texture_origin(textureOrigin)
 
 			if rel_id in ts.tiles && "animation" in ts.tiles[rel_id]:
@@ -966,9 +1003,6 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 						# Error happened
 						return shape
 
-					var offset = Vector2(float(object.x), float(object.y))
-					offset -= Vector2(16,16) if region.size == Vector2(32,32) else Vector2(16, region.size.y - 16)
-
 					var polygonShape : PackedVector2Array = []
 					if shape is ConvexPolygonShape2D:
 						polygonShape = shape.get_points()
@@ -987,6 +1021,10 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 							Vector2(0, 0) \
 							]
 
+					var offset = Vector2(float(object.x), float(object.y)) - cell_size / 2
+					if tileRegion.size.y > cell_size.y:
+						offset.y -= (tileRegion.size.y - cell_size.y)
+
 					for iVertice in range(0, polygonShape.size()):
 						polygonShape[iVertice] += offset
 					if polygonShape.is_empty() == false:
@@ -1001,7 +1039,7 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 							var light_radius : float = 64.0
 							var light_color : Color = Color.WHITE
 							var light_speed : float = 20.0
-							var light_offset : Vector2 = region.size / 2
+							var light_offset : Vector2 = tileRegion.size / 2
 							if "light_radius" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_radius:
 								light_radius = ts.tileproperties[rel_id].light_radius
 							if "light_color" in ts.tileproperties[rel_id] and ts.tileproperties[rel_id].light_color:
