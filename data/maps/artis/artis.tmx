@@ -2,6 +2,7 @@
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="250" height="175" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="125">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
+  <property name="music" value="Adventure Begins"/>
   <property name="name" value="Artis"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/aemil/aurora/ground.tsx"/>
