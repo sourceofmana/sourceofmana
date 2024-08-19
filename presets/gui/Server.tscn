@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://sources/gui/ServerDisplay.gd" id="1_lgnu7"]
 [ext_resource type="Script" path="res://sources/gui/Player Count.gd" id="2_ixmph"]
 
-[node name="Panel" type="PanelContainer"]
+[node name="Server GUI Panel" type="PanelContainer"]
 anchors_preset = -1
 anchor_right = 0.125
 anchor_bottom = 0.128
