@@ -1,5 +1,8 @@
 extends Node
 
+signal player_connected
+signal player_disconnected
+
 var playerMap : Dictionary			= {}
 var onlineList : OnlineList			= OnlineList.new()
 
@@ -36,6 +39,7 @@ func ConnectPlayer(nickname : String, rpcID : int = NetworkCommons.RidSingleMode
 
 			playerMap[rpcID].agentRID = agent.get_rid().get_id()
 			onlineList.UpdateJson()
+			player_connected.emit()
 			Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
 	elif rpcID != NetworkCommons.RidSingleMode:
 		Launcher.Network.peer.disconnect_peer(rpcID)
@@ -43,10 +47,11 @@ func ConnectPlayer(nickname : String, rpcID : int = NetworkCommons.RidSingleMode
 func DisconnectPlayer(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
-		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
 		WorldAgent.RemoveAgent(player)
 		playerMap.erase(rpcID)
 		onlineList.UpdateJson()
+		player_disconnected.emit()
+		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
 
 #
 func SetClickPos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
