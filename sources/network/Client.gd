@@ -66,13 +66,14 @@ func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = Ne
 			entity.stat.Morph(morphData)
 			entity.SetVisual(morphData, morphed)
 
-func UpdateActiveStats(ridAgent : int, level : int, experience : int, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, currentShape : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdateActiveStats(ridAgent : int, level : int, experience : int, gp : int, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, currentShape : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
 		if entity and entity.get_parent() and entity.stat:
 			var levelUp : bool = entity.stat.level != level
 			entity.stat.level			= level
 			entity.stat.experience		= experience
+			entity.stat.gp				= gp
 			entity.stat.health			= health
 			entity.stat.mana			= mana
 			entity.stat.stamina			= stamina

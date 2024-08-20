@@ -4,6 +4,7 @@ class_name ActorStats
 # Active Stats
 var level : int							= 1
 var experience : int					= 0
+var gp : int							= 0
 var health : int						= 1
 var mana : int							= 0
 var stamina : int						= 0
@@ -101,6 +102,7 @@ func Init(actorNode : Actor, data : EntityData):
 
 	if "Level" in stats:				level				= stats["Level"]
 	if "Experience" in stats:			experience			= stats["Experience"]
+	if "GP" in stats:					gp					= stats["GP"]
 	if "Spirit" in stats:				spiritShape			= stats["Spirit"]
 	if "BaseExp" in stats:				baseExp				= stats["BaseExp"]
 
@@ -178,8 +180,10 @@ func SetMana(bonus : int):
 func SetStamina(bonus : int):
 	stamina = clampi(stamina + bonus, 0, current.maxStamina)
 
-func AddExperience(bonus : int):
-	experience += bonus
+func AddExperience(value : int):
+	if value <= 0:
+		return
+	experience += value
 	# Manage level up
 	var levelUpHappened = false
 	var experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
@@ -190,3 +194,8 @@ func AddExperience(bonus : int):
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
 	if levelUpHappened and Launcher.Network.Server:
 		Launcher.Network.Server.NotifyInstance(actor, "TargetLevelUp", [])
+
+func AddGP(value : int):
+	if gp <= 0:
+		return
+	gp += value
