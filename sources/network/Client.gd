@@ -39,6 +39,22 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidS
 			if entity.interactive:
 				entity.interactive.DisplaySpeech(text)
 
+func ContextText(ridAgent : int, text : String, rpcID : int = NetworkCommons.RidSingleMode):
+	ChatAgent(ridAgent, text, rpcID)
+
+func ContextChoice(texts : PackedStringArray, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.GUI and Launcher.GUI.mainContext:
+		Launcher.GUI.mainContext.Clear()
+		if texts.size() > 0:
+			Launcher.GUI.mainContext.Push(ContextData.new("ui_context_validate", texts[0], Launcher.Network.TriggerChoice.bind(0)))
+		if texts.size() > 1:
+			Launcher.GUI.mainContext.Push(ContextData.new("ui_context_cancel", texts[1], Launcher.Network.TriggerChoice.bind(1)))
+		if texts.size() > 2:
+			Launcher.GUI.mainContext.Push(ContextData.new("ui_context_secondary", texts[2], Launcher.Network.TriggerChoice.bind(2)))
+		if texts.size() > 3:
+			Launcher.GUI.mainContext.Push(ContextData.new("ui_context_tertiary", texts[3], Launcher.Network.TriggerChoice.bind(3)))
+		Launcher.GUI.mainContext.FadeIn(true)
+
 func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(targetID)

@@ -29,7 +29,7 @@ func CallMethod(networkRpcID : int, methodName : String, actionDelta : int) -> b
 #
 func ConnectPlayer(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
 	if not GetAgent(rpcID) and not nickname in onlineList.GetPlayerNames():
-		var agent : BaseAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
+		var agent : PlayerAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
 		if agent:
 			playerMap[rpcID].agentRID = agent.get_rid().get_id()
 			agent.inventory.ImportInventory({0: 5, 1: 2})
@@ -41,7 +41,7 @@ func ConnectPlayer(nickname : String, rpcID : int = NetworkCommons.RidSingleMode
 		Launcher.Network.peer.disconnect_peer(rpcID)
 
 func DisconnectPlayer(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
 		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
 		WorldAgent.RemoveAgent(player)
@@ -50,23 +50,23 @@ func DisconnectPlayer(rpcID : int = NetworkCommons.RidSingleMode):
 
 #
 func SetClickPos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
 		player.SetRelativeMode(false, Vector2.ZERO)
 		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
 		player.SetRelativeMode(true, direction.normalized())
 
 func ClearNavigation(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
 		player.SetRelativeMode(false, Vector2.ZERO)
 
 func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
 		var warp : WarpObject = Launcher.World.CanWarp(player)
 		if warp:
@@ -77,12 +77,12 @@ func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
 					player.Morph(false, player.GetNextPortShapeID())
 
 func TriggerSit(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
 		player.SetState(ActorCommons.State.SIT)
 
 func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player is PlayerAgent:
 		player.Respawn()
 
@@ -92,26 +92,31 @@ func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
 func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
 	NotifyInstance(GetAgent(rpcID), "ChatAgent", [text])
 
+func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	var player : PlayerAgent = GetAgent(rpcID)
+	if player and player.currentScript:
+		player.currentScript.InteractChoice(choiceID)
+
 func TriggerInteract(triggeredAgentID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
 		var triggeredAgent : BaseAgent = WorldAgent.GetAgent(triggeredAgentID)
 		if triggeredAgent:
 			triggeredAgent.Interact(player)
 
 func TriggerExplore(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player is PlayerAgent:
 		player.Explore()
 
 func TriggerCast(targetID : int, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player and DB.SkillsDB.has(skillID):
 		var target : BaseAgent = WorldAgent.GetAgent(targetID)
 		Skill.Cast(player, target, DB.SkillsDB[skillID])
 
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
 		if player.stat.spiritShape.length() == 0:
 			return
@@ -124,22 +129,22 @@ func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var target : BaseAgent = WorldAgent.GetAgent(targetID)
 	if target:
-		Launcher.Network.UpdateActiveStats(targetID, target.stat.level, target.stat.experience, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.entityShape, target.stat.spiritShape, target.stat.currentShape, rpcID)
+		Launcher.Network.UpdateActiveStats(targetID, target.stat.level, target.stat.experience, target.stat.gp, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.entityShape, target.stat.spiritShape, target.stat.currentShape, rpcID)
 
 func AddAttribute(attribute : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player and player.stat:
 		player.stat.AddAttribute(attribute)
 
 func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
 	if cell and cell.usable:
-		var player : BaseAgent = GetAgent(rpcID)
+		var player : PlayerAgent = GetAgent(rpcID)
 		if player and player.inventory:
 			player.inventory.UseItem(cell)
 
 func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : BaseAgent = GetAgent(rpcID)
+	var player : PlayerAgent = GetAgent(rpcID)
 	if player and player.inventory:
 		Launcher.Network.RefreshInventory(player.inventory.ExportInventory(), rpcID)
 
@@ -152,15 +157,15 @@ func GetRid(player : PlayerAgent) -> int:
 	Util.Assert(false, "No playerdata associated to this user within the player map")
 	return NetworkCommons.RidUnknown
 
-func GetAgent(rpcID : int) -> BaseAgent:
-	var agent : BaseAgent	= null
+func GetAgent(rpcID : int) -> PlayerAgent:
+	var player : PlayerAgent	= null
 	if rpcID in playerMap:
 		var playerData : PlayerData = playerMap.get(rpcID)
 		Util.Assert(playerData != null, "No playerdata associated to this user within the player map")
 		if playerData:
-			agent = WorldAgent.GetAgent(playerData.agentRID)
+			player = WorldAgent.GetAgent(playerData.agentRID)
 
-	return agent
+	return player
 
 func NotifyInstance(agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
 	if not agent:

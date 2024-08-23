@@ -23,6 +23,7 @@ static func CreateAgent(entityTypeStr : String, entityID : String, nick : String
 		"Npc":
 			actor = NpcAgent.new()
 			entityType = ActorCommons.Type.NPC
+			actor.scriptPath = scriptPath
 		"Trigger":
 			actor = NpcAgent.new()
 			entityType = ActorCommons.Type.NPC
@@ -35,12 +36,8 @@ static func CreateAgent(entityTypeStr : String, entityID : String, nick : String
 		_: Util.Assert(false, "Trying to create an agent with a wrong type: " + entityTypeStr)
 
 	if actor:
-		if scriptPath:
-			var scriptRef : Object = FileSystem.LoadScript(scriptPath)
-			if scriptRef:
-				actor.set_script(scriptRef)
-
 		actor.Init(entityType, entityID, nick)
+
 	return actor
 
 # Map

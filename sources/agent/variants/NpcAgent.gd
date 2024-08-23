@@ -2,37 +2,22 @@ extends BaseAgent
 class_name NpcAgent
 
 #
-static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.NPC
-
-static var Greetings = [
-	"Hello %s!",
-	"Greetings, %s!",
-	"Ah, %s!",
-	"Welcome, %s!",
-	"Salutations, %s!",
-	"Good to see you, %s!",
-	"Ahoy, %s!",
-	"Well met, %s!",
-	"Hail, %s!",
-	"Hey %s!",
-	"Good day, %s!",
-	"%s, well met!"
-]
-
-static func GetRandomGreets(actor : Actor) -> String:
-	return Greetings[randi() % Greetings.size()] % [actor.nick]
+var scriptPath : String				= ""
 
 #
-func Interact(_actor : Actor): pass # Should be defined per NPC
+static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.NPC
 
-func Trigger() -> bool:
-	return SetState(ActorCommons.State.TRIGGER) and state == ActorCommons.State.TRIGGER
+#
+func Interact(player : Actor):
+	if player is not PlayerAgent:
+		return
 
-func Greets(actor : BaseAgent):
-	if actor:
-		var peerID : int = Launcher.Network.Server.GetRid(actor)
-		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ChatAgent(get_rid().get_id(), NpcAgent.GetRandomGreets(actor), peerID)
+	if not player.currentScript:
+		player.AddScript(self)
+	elif player.currentScript and player.currentScript.npc == self:
+		player.currentScript.step += 1
+	if player.currentScript.npc == self:
+		player.currentScript.ApplyStep()
 
 #
 func _ready():

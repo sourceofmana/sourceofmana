@@ -97,10 +97,23 @@ func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
 func ChatAgent(ridAgent : int, text : String, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("ChatAgent", [ridAgent, text], rpcID)
 
+# Context
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ContextText(ridAgent : int, text : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ContextText", [ridAgent, text], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ContextChoice(texts : PackedStringArray, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ContextChoice", [texts], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("TriggerChoice", [choiceID], rpcID)
+
 # Interact
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerInteract(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerInteract", [entityID], rpcID, 1000)
+	NetCallServer("TriggerInteract", [entityID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerExplore(rpcID : int = NetworkCommons.RidSingleMode):

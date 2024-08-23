@@ -4,7 +4,8 @@ class_name PlayerAgent
 #
 var lastStat : ActorStats				= ActorStats.new()
 var respawnDestination : Destination	= Destination.new()
-var exploreOrigin : Destination	= Destination.new()
+var exploreOrigin : Destination			= Destination.new()
+var currentScript : NpcScript			= null
 
 #
 static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
@@ -17,6 +18,7 @@ func UpdateLastStats():
 
 	if lastStat.level != stat.level or \
 	lastStat.experience != stat.experience or \
+	lastStat.gp != stat.gp or \
 	lastStat.health != stat.health or \
 	lastStat.mana != stat.mana or \
 	lastStat.stamina != stat.stamina or \
@@ -24,7 +26,7 @@ func UpdateLastStats():
 	lastStat.entityShape != stat.entityShape or \
 	lastStat.spiritShape != stat.spiritShape or \
 	lastStat.currentShape != stat.currentShape:
-		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.currentShape, peerID)
+		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.gp, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.currentShape, peerID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 		lastStat.health				= stat.health
@@ -92,3 +94,14 @@ func WarpTo(dest : Destination):
 	var nextMap : WorldMap = Launcher.World.GetMap(dest.map)
 	if nextMap:
 		Launcher.World.Warp(self, nextMap, dest.pos)
+
+#
+func AddScript(npc : NpcAgent):
+	if npc and npc.scriptPath:
+		currentScript = FileSystem.LoadScript(npc.scriptPath, true)
+		if not currentScript.Init(npc, self):
+			ClearScript()
+
+func ClearScript():
+	if currentScript:
+		currentScript = null
