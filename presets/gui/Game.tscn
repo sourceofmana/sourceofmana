@@ -268,6 +268,7 @@ grow_vertical = 2
 [node name="Buffer" type="Control" parent="Overlay/Sections/Contexts/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="BottomVbox" type="VBoxContainer" parent="Overlay/Sections/Contexts/VBox"]
 layout_mode = 2
@@ -295,6 +296,7 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="Button" type="Button" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue"]
 layout_mode = 2
@@ -302,13 +304,14 @@ size_flags_horizontal = 8
 size_flags_vertical = 4
 
 [node name="ChoiceVbox" type="VBoxContainer" parent="Overlay/Sections/Contexts/VBox/BottomVbox"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 115)
 layout_mode = 2
 size_flags_vertical = 8
 
 [node name="Buffer" type="Control" parent="Overlay/Sections/Contexts/VBox/BottomVbox/ChoiceVbox"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="Choice" parent="Overlay/Sections/Contexts/VBox/BottomVbox/ChoiceVbox" instance=ExtResource("20_px3po")]
 layout_mode = 2
