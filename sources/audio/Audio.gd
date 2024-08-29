@@ -45,6 +45,8 @@ func _post_launch():
 	audioPlayer = Launcher.Scene.get_node("AudioStreamPlayer")
 	Util.Assert(audioPlayer != null, "Could not find the AudioStreamPlayer instance")
 
+	if Launcher.FSM:
+		Launcher.FSM.exit_game.connect(self.Stop)
 	if Launcher.Map:
 		Launcher.Map.PlayerWarped.connect(self.Warped)
 		Warped()

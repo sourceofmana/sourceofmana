@@ -63,10 +63,13 @@ func ToggleChatNewLine():
 
 #
 func EnterLoginMenu():
+	infoContext.set_visible(false)
+
 	menu.SetItemsVisible(false)
 	stats.set_visible(false)
 	statWindow.set_visible(false)
 
+	dialogueWindow.set_visible(false)
 	notificationLabel.set_visible(false)
 	menu.set_visible(false)
 	shortcuts.set_visible(false)
@@ -79,6 +82,7 @@ func EnterLoginMenu():
 
 func EnterGame():
 	if Launcher.Player:
+		infoContext.Clear()
 		infoContext.Push(ContextData.new("gp_interact"))
 		infoContext.Push(ContextData.new("gp_sit"))
 		infoContext.Push(ContextData.new("gp_morph"))
