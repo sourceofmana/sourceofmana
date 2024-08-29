@@ -6,6 +6,8 @@ const LightTextColor : Color 						= Color("FFFFDD")
 const TextColor : Color 							= Color("EED8A1")
 const DarkTextColor : Color							= Color("C19747")
 
+const ContextAction : PackedScene					= preload("res://presets/gui/contexts/ContextAction.tscn")
+
 #
 static func ColorToHSVA(color : Color) -> Vector4:
 	var maxc : float = max(color.r, max(color.g, color.b))

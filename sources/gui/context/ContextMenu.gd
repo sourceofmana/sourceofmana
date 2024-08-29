@@ -16,13 +16,11 @@ var fadeOutStep : float						= 0.0
 
 var canFadeOut : bool						= false
 
-const ContextAction : PackedScene			= preload("res://presets/gui/contexts/ContextAction.tscn")
-
 #
 func FlushDataBuffer():
 	while buffer.size() > 0:
 		var data : ContextData = buffer.pop_front()
-		var action : Control = ContextAction.instantiate()
+		var action : Control = UICommons.ContextAction.instantiate()
 		action.Init(data, self)
 		contextList.add_child.call_deferred(action)
 
