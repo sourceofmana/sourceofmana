@@ -3,6 +3,7 @@ class_name NpcAgent
 
 #
 var scriptPath : String				= ""
+var scriptPreset : GDScript			= null
 
 #
 static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.NPC
@@ -14,8 +15,11 @@ func Interact(player : Actor):
 
 	if not player.currentScript:
 		player.AddScript(self)
-	elif player.currentScript and player.currentScript.npc == self:
-		player.currentScript.step += 1
+	else:
+		if player.currentScript.IsWaiting():
+			return
+		elif player.currentScript.npc == self:
+			player.currentScript.step += 1
 	if player.currentScript.npc == self:
 		player.currentScript.ApplyStep()
 
@@ -25,5 +29,8 @@ func _ready():
 	aiTimer.set_name("AiTimer")
 	Callback.OneShotCallback(aiTimer.tree_entered, AI.Reset, [self])
 	add_child.call_deferred(aiTimer)
+
+	if not scriptPath.is_empty():
+		scriptPreset = FileSystem.LoadScript(scriptPath, false)
 
 	super._ready()

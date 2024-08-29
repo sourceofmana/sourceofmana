@@ -39,18 +39,17 @@ func _on_visibility_changed():
 		_icon.set_process_input(isEnabled)
 
 func _input(event):
-	if not visible or not _data or _data._callback.is_null():
+	if not visible or not _data or _data._action.is_empty() or _data._callback.is_null():
 		return
 	if event.is_action(_data._action):
 		if Launcher.Action.TryJustPressed(event, _data._action, true):
 			_on_trigger()
 
 func _on_trigger():
-	if not visible or not _data or _data._callback.is_null():
+	if not visible or not _data or _data._action.is_empty() or _data._callback.is_null():
 		return
 
 	_data._callback.call()
 	Launcher.Action.ConsumeAction(_data._action)
-	get_viewport().set_input_as_handled()
 	if _menu:
 		_menu.Hide()

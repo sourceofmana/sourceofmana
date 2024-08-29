@@ -9,7 +9,6 @@ offset_right = 438.0
 offset_bottom = 594.0
 theme = ExtResource("1_3x28q")
 script = ExtResource("2_8yd1q")
-blockActions = null
 
 [node name="Scroll" type="ScrollContainer" parent="."]
 layout_mode = 2
@@ -26,6 +25,7 @@ theme_override_constants/margin_bottom = 3
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin"]
 clip_contents = true
 layout_mode = 2
+size_flags_vertical = 0
 alignment = 1
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=55 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -49,6 +49,7 @@
 [ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/Emote.tscn" id="37_v7lrk"]
 [ext_resource type="PackedScene" uid="uid://b5jgfu2dukotm" path="res://presets/gui/Skill.tscn" id="38_ompay"]
 [ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
+[ext_resource type="Script" path="res://sources/gui/Dialogue.gd" id="45_tnbk2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
 shader = ExtResource("4_60kv4")
@@ -60,6 +61,8 @@ texture = ExtResource("4_ah7dm")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w48pk"]
 texture = ExtResource("5_fdh06")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qyvn"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("3")
@@ -81,6 +84,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("4_wx5hs")
 theme_override_constants/margin_left = 19
 theme_override_constants/margin_top = 19
 theme_override_constants/margin_right = 19
@@ -242,7 +246,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 
-[node name="Tips" parent="Overlay/Sections/Contexts" instance=ExtResource("20_px3po")]
+[node name="Info" parent="Overlay/Sections/Contexts" instance=ExtResource("20_px3po")]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -253,20 +257,64 @@ grow_vertical = 2
 size_flags_vertical = 6
 persistant = false
 
-[node name="Main" parent="Overlay/Sections/Contexts" instance=ExtResource("20_px3po")]
+[node name="VBox" type="VBoxContainer" parent="Overlay/Sections/Contexts"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -36.0
-offset_right = 36.0
-offset_bottom = 0.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+
+[node name="Buffer" type="Control" parent="Overlay/Sections/Contexts/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BottomVbox" type="VBoxContainer" parent="Overlay/Sections/Contexts/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Dialogue" type="PanelContainer" parent="Overlay/Sections/Contexts/VBox/BottomVbox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"DialogueBox"
+script = ExtResource("45_tnbk2")
+
+[node name="FixedHBox" type="HBoxContainer" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue"]
+layout_mode = 2
+
+[node name="Scrollable" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue/FixedHBox" instance=ExtResource("14_xidsc")]
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5qyvn")
+
+[node name="Buffer" type="Control" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue/FixedHBox"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="ChoiceVbox" type="VBoxContainer" parent="Overlay/Sections/Contexts/VBox/BottomVbox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Buffer" type="Control" parent="Overlay/Sections/Contexts/VBox/BottomVbox/ChoiceVbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Choice" parent="Overlay/Sections/Contexts/VBox/BottomVbox/ChoiceVbox" instance=ExtResource("20_px3po")]
+layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_type_variation = &"DialogueBox"
 fadeInDelay = 0.5
 displayDelay = 0.0
 fadeOutDelay = 0.3
@@ -343,6 +391,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("4_wx5hs")
 theme_override_constants/margin_top = 80
 
 [node name="Floating" type="Control" parent="Windows"]
@@ -410,6 +459,7 @@ offset_bottom = 114.0
 saveOverlayState = true
 
 [node name="Chat" parent="Windows/Floating" instance=ExtResource("5")]
+visible = false
 layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
@@ -440,7 +490,6 @@ offset_bottom = 547.0
 grow_horizontal = 2
 grow_vertical = 2
 jsonFile = ExtResource("15_q438c")
-blockActions = false
 
 [node name="Credit" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false
@@ -450,7 +499,6 @@ offset_top = 85.0
 offset_right = 451.0
 offset_bottom = 583.0
 jsonFile = ExtResource("16_pfh0e")
-blockActions = false
 
 [node name="Settings" parent="Windows/Floating" instance=ExtResource("16_gapih")]
 visible = false
@@ -491,6 +539,7 @@ top_level = true
 [connection signal="resized" from="Overlay" to="." method="_on_ui_margin_resized"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Stat/StatButton" to="Overlay/Sections/Indicators/Stat" method="_on_button_pressed"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Menu/MenuButton" to="Overlay/Sections/Indicators/Menu" method="_on_button_pressed"]
+[connection signal="pressed" from="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue/Button" to="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue" method="ButtonPressed"]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Direction/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]
 [connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Direction/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_up"]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonY" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [3]]

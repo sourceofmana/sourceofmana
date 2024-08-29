@@ -99,8 +99,20 @@ func ChatAgent(ridAgent : int, text : String, rpcID : int = NetworkCommons.RidSi
 
 # Context
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ToggleContext(enable : bool, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ToggleContext", [enable], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextText(ridAgent : int, text : String, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("ContextText", [ridAgent, text], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ContextContinue(rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ContextContinue", [], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ContextClose(rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ContextClose", [], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextChoice(texts : PackedStringArray, rpcID : int = NetworkCommons.RidSingleMode):
@@ -109,6 +121,10 @@ func ContextChoice(texts : PackedStringArray, rpcID : int = NetworkCommons.RidSi
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("TriggerChoice", [choiceID], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TriggerCloseContext(rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("TriggerCloseContext", [], rpcID)
 
 # Interact
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)

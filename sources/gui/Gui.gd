@@ -11,8 +11,9 @@ extends ServiceBase
 @onready var boxes : Control					= $Overlay/Sections/Shortcuts/Boxes
 
 @onready var notificationLabel : RichTextLabel	= $Overlay/Sections/Notification
-@onready var tipsContext : ContextMenu			= $Overlay/Sections/Contexts/Tips
-@onready var mainContext : ContextMenu			= $Overlay/Sections/Contexts/Main
+@onready var dialogueWindow : PanelContainer	= $Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue
+@onready var choiceContext : ContextMenu		= $Overlay/Sections/Contexts/VBox/BottomVbox/ChoiceVbox/Choice
+@onready var infoContext : ContextMenu			= $Overlay/Sections/Contexts/Info
 
 # Windows
 @onready var windows : Control					= $Windows/Floating
@@ -78,11 +79,11 @@ func EnterLoginMenu():
 
 func EnterGame():
 	if Launcher.Player:
-		tipsContext.Push(ContextData.new("gp_interact"))
-		tipsContext.Push(ContextData.new("gp_sit"))
-		tipsContext.Push(ContextData.new("gp_morph"))
-		tipsContext.Push(ContextData.new("gp_target"))
-		tipsContext.FadeIn()
+		infoContext.Push(ContextData.new("gp_interact"))
+		infoContext.Push(ContextData.new("gp_sit"))
+		infoContext.Push(ContextData.new("gp_morph"))
+		infoContext.Push(ContextData.new("gp_target"))
+		infoContext.FadeIn()
 
 		background.set_visible(false)
 		loginWindow.EnableControl(false)

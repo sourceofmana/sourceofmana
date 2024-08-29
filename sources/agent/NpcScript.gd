@@ -5,10 +5,11 @@ class_name NpcScript
 var npc : NpcAgent					= null
 var pc : PlayerAgent				= null
 
-var timer : Timer					= null
 var steps : Array[Dictionary]		= []
 var step : int						= 0
+var timerCount : int				= 0
 var isWaitingForChoice : bool		= false
+var windowToggled : bool			= false
 
 # Display
 func Trigger() -> bool:
@@ -39,15 +40,24 @@ func Farewell():
 
 # Timer
 func AddTimer(delay : float):
-	var newTimer : Timer = Callback.SelfDestructTimer(pc, 1.0, ClearTimer)
-	if timer and timer.time_left < delay:
-		timer = newTimer
+	Callback.SelfDestructTimer(pc, delay, ClearTimer)
+	timerCount += 1
 
 func ClearTimer():
-	timer = null
+	timerCount -= 1
+	if IsDone():
+		pc.ClearScript()
 
 # Interaction logic
+func ToggleWindow(toggle : bool):
+	if windowToggled != toggle:
+		windowToggled = toggle
+		NpcCommons.ToggleContext(pc, windowToggled)
+
 func InteractChoice(choiceId : int):
+	if not isWaitingForChoice:
+		return
+
 	var dialogueStep : Dictionary = steps[step]
 	if choiceId < dialogueStep["choices"].size():
 		var choice : Dictionary = dialogueStep["choices"][choiceId]
@@ -58,15 +68,14 @@ func InteractChoice(choiceId : int):
 			choice["action"].call()
 		ApplyStep()
 
-func Interact():
-	step += 1
-	ApplyStep()
-
 func ApplyStep():
 	if step < steps.size():
+		ToggleWindow(true)
+
 		var dialogueStep : Dictionary = steps[step]
 		if dialogueStep.has("text"):
 			NpcCommons.ContextText(npc, pc, dialogueStep["text"])
+
 		if dialogueStep.has("choices"):
 			var choices : PackedStringArray = []
 			for choice in dialogueStep["choices"]:
@@ -75,20 +84,30 @@ func ApplyStep():
 			if choices.size() > 0:
 				isWaitingForChoice = true
 				NpcCommons.ContextChoices(pc, choices)
+		else:
+			if step + 1 < steps.size():
+				NpcCommons.ContextContinue(pc)
+			else:
+				NpcCommons.ContextClose(pc)
+	else:
+		ToggleWindow(false)
+
 	if IsDone():
+		ToggleWindow(false)
 		pc.ClearScript()
 
 func IsDone() -> bool:
-	return step + 1 >= steps.size() and not isWaitingForChoice and timer == null
+	return step >= steps.size() and not IsWaiting()
+
+func IsWaiting() -> bool:
+	return isWaitingForChoice or timerCount > 0
 
 # Default functions
-func Init(_npc : NpcAgent, _pc : PlayerAgent) -> bool:
+func _init(_npc : NpcAgent, _pc : PlayerAgent):
 	if not _pc or not _npc:
 		Util.Assert(false, "Trying to init a NPC Script with a missing player or NPC")
-		return false
 	pc = _pc
 	npc = _npc
 	OnDefault()
-	return true
 
 func OnDefault(): pass

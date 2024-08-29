@@ -36,7 +36,7 @@ func _physics_process(_delta):
 			if canWarp:
 				ConfirmWarp()
 		else:
-			if canWarp and (not contextDisplayed or not Launcher.GUI.mainContext.is_visible()):
+			if canWarp and (not contextDisplayed or not Launcher.GUI.choiceContext.is_visible()):
 				DisplayLabel()
 			elif not canWarp and contextDisplayed:
 				HideLabel()
@@ -45,13 +45,13 @@ func ConfirmWarp():
 	Launcher.Network.TriggerWarp()
 
 func DisplayLabel():
-	Launcher.GUI.mainContext.Clear()
-	Launcher.GUI.mainContext.Push(ContextData.new("gp_interact", destinationMap, ConfirmWarp.bind()))
-	Launcher.GUI.mainContext.FadeIn()
+	Launcher.GUI.choiceContext.Clear()
+	Launcher.GUI.choiceContext.Push(ContextData.new("gp_interact", destinationMap, ConfirmWarp.bind()))
+	Launcher.GUI.choiceContext.FadeIn()
 	contextDisplayed = true
 
 func HideLabel():
-	Launcher.GUI.mainContext.FadeOut()
+	Launcher.GUI.choiceContext.FadeOut()
 	contextDisplayed = false
 
 #

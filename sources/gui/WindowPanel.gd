@@ -11,7 +11,7 @@ enum EdgeOrientation { NONE, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT, TOP
 #
 @export var blockActions : bool		= false
 @export var saveOverlayState : bool	= false
-var maxSize : Vector2				= Vector2(-1, -1)
+@export var maxSize : Vector2		= Vector2(-1, -1)
 const edgeSize : int				= 5
 const cornerSize : int				= 15
 var clickPosition : Vector2			= Vector2.INF
