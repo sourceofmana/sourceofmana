@@ -3,8 +3,8 @@ extends MenuButton
 
 var selection = 0
 var OPTIONS = [
-	["BaseItem", BaseItem],
-	["FoodItem", FoodItem]
+	["BaseItem", Item],
+	["FoodItem", Item]
 ]
 
 var popup = get_popup()
