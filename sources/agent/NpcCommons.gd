@@ -35,11 +35,11 @@ static func Chat(npc : NpcAgent, pc : PlayerAgent, chat : String):
 		if peerID != NetworkCommons.RidUnknown:
 			Launcher.Network.ChatAgent(npc.get_rid().get_id(), chat, peerID)
 
-static func ContextText(npc : NpcAgent, pc : PlayerAgent, text : String):
-	if npc and pc:
+static func ContextText(pc : PlayerAgent, author : String, text : String):
+	if pc:
 		var peerID : int = Launcher.Network.Server.GetRid(pc)
 		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ContextText(npc.get_rid().get_id(), text, peerID)
+			Launcher.Network.ContextText(author, text, peerID)
 
 static func ContextChoices(pc : PlayerAgent, texts : PackedStringArray):
 	if pc:

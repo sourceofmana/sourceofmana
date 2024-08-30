@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bri5teturlsr1"]
+
+[node name="2" type="RichTextLabel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+theme_override_constants/line_separation = 5
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

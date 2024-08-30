@@ -44,10 +44,9 @@ func ToggleContext(enable : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 		Launcher.GUI.dialogueWindow.Clear()
 	Launcher.GUI.dialogueWindow.set_visible(enable)
 
-func ContextText(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidSingleMode):
-	var entity : Entity = Entities.Get(ridAgent)
-	if entity:
-		Launcher.GUI.dialogueWindow.AddName(entity.nick)
+func ContextText(author : String, text : String, _rpcID : int = NetworkCommons.RidSingleMode):
+	if not author.is_empty():
+		Launcher.GUI.dialogueWindow.AddName(author)
 	Launcher.GUI.dialogueWindow.AddDialogue(text)
 	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
 

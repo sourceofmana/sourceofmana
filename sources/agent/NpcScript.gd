@@ -60,12 +60,14 @@ func InteractChoice(choiceId : int):
 
 	var dialogueStep : Dictionary = steps[step]
 	if choiceId < dialogueStep["choices"].size():
+		NpcCommons.ContextText(pc, pc.nick, dialogueStep["text"])
 		var choice : Dictionary = dialogueStep["choices"][choiceId]
 		if choice.has("action"):
 			isWaitingForChoice = false
 			step = 0
 			steps.clear()
 			choice["action"].call()
+
 		ApplyStep()
 
 func ApplyStep():
@@ -74,7 +76,7 @@ func ApplyStep():
 
 		var dialogueStep : Dictionary = steps[step]
 		if dialogueStep.has("text"):
-			NpcCommons.ContextText(npc, pc, dialogueStep["text"])
+			NpcCommons.ContextText(pc, npc.nick, dialogueStep["text"])
 
 		if dialogueStep.has("choices"):
 			var choices : PackedStringArray = []

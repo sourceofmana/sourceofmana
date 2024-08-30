@@ -103,8 +103,8 @@ func ToggleContext(enable : bool, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("ToggleContext", [enable], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ContextText(ridAgent : int, text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ContextText", [ridAgent, text], rpcID)
+func ContextText(author : String, text : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("ContextText", [author, text], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextContinue(rpcID : int = NetworkCommons.RidSingleMode):

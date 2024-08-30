@@ -1,22 +1,27 @@
 extends PanelContainer
 
 #
-@onready var button : Button			= $Button
+@onready var button : TouchScreenButton	= $Button/TouchButton
+@onready var buttonLabel : Label		= $Button/Label
 @onready var scrollable : Scrollable	= $FixedHBox/Scrollable
 @onready var scrollbar: VScrollBar		= $FixedHBox/Scrollable/Scroll/_v_scroll
 var lastName : String					= ""
+
+const PlayerNameLabel : PackedScene		= preload("res://presets/gui/labels/PlayerNameLabel.tscn")
+const NPCNameLabel : PackedScene		= preload("res://presets/gui/labels/NpcNameLabel.tscn")
+const PlayerDialogueLabel : PackedScene	= preload("res://presets/gui/labels/PlayerDialogueLabel.tscn")
 
 #
 func AddName(text : String):
 	if lastName != text:
 		lastName = text
-		var label : RichTextLabel = Scrollable.titleLabel.instantiate()
-		label.text = "[color=#" + UICommons.LightTextColor.to_html(false) + "]" + text + "[/color]"
+		var label : RichTextLabel = PlayerNameLabel.instantiate() if lastName == Launcher.Player.nick else NPCNameLabel.instantiate()
+		label.text = "[color=#" + UICommons.LightTextColor.to_html(false) + "]" + lastName + "[/color]"
 		scrollable.textContainer.add_child(label)
 
 func AddDialogue(text : String):
-	var label : RichTextLabel = Scrollable.contentLabel.instantiate()
-	label.text = "[color=#" + UICommons.TextColor.to_html(false) + "]\t" + text + "[/color]"
+	var label : RichTextLabel = PlayerDialogueLabel.instantiate() if lastName == Launcher.Player.nick else Scrollable.contentLabel.instantiate()
+	label.text = "[color=#" + UICommons.TextColor.to_html(false) + "]" + text + "[/color]"
 	scrollable.textContainer.add_child(label)
 
 func AutoScroll():
@@ -24,14 +29,13 @@ func AutoScroll():
 
 func ToggleButton(enable : bool, text : String):
 	button.set_visible(enable)
-	button.set_text(text)
+	buttonLabel.set_text(text)
 
 func ButtonPressed():
 	if Launcher.Player:
 		Launcher.Player.Interact()
-	if button.text == "Close":
+	if buttonLabel.text == "Close":
 		set_visible(false)
-#	ToggleButton(false, "")
 
 func Clear():
 	scrollable.Clear()
