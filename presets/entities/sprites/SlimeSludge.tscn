@@ -275,6 +275,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [96]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Fire:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="35"]
 resource_name = "SitDown"
@@ -472,6 +484,3 @@ libraries = {
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("3_mg0gu")]
 root_node = NodePath("../../Body")
-libraries = {
-"": SubResource("AnimationLibrary_iko4k")
-}
