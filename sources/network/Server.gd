@@ -94,8 +94,8 @@ func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
 
 func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = GetAgent(rpcID)
-	if player and player.currentScript:
-		player.currentScript.InteractChoice(choiceID)
+	if player and player.ownScript:
+		player.ownScript.InteractChoice(choiceID)
 
 func TriggerCloseContext(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = GetAgent(rpcID)

@@ -15,15 +15,15 @@ func Interact(player : Actor):
 	if player is not PlayerAgent:
 		return
 
-	if not player.currentScript:
+	if not player.ownScript:
 		player.AddScript(self)
 	else:
-		if player.currentScript.IsWaiting():
-			player.currentScript.OnContinue()
-		elif player.currentScript.npc == self:
-			player.currentScript.step += 1
-	if player.currentScript.npc == self:
-		player.currentScript.ApplyStep()
+		if player.ownScript.IsWaiting():
+			player.ownScript.OnContinue()
+		elif player.ownScript.npc == self:
+			player.ownScript.step += 1
+	if player.ownScript.npc == self:
+		player.ownScript.ApplyStep()
 
 #
 func _ready():

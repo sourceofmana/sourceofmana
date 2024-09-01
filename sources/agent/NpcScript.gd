@@ -43,12 +43,7 @@ func Farewell():
 
 # Timer
 func AddTimer(caller : BaseAgent, delay : float, callback : Callable):
-	if caller:
-		var newTimer : Timer = Callback.SelfDestructTimer(caller, delay, TimeOut.bind(callback))
-		if newTimer:
-			timerCount += 1
-		return newTimer
-	return null
+	NpcCommons.AddTimer(caller, delay, callback)
 
 func TimeOut(callback : Callable):
 	timerCount -= 1

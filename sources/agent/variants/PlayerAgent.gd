@@ -5,7 +5,7 @@ class_name PlayerAgent
 var lastStat : ActorStats				= ActorStats.new()
 var respawnDestination : Destination	= Destination.new()
 var exploreOrigin : Destination			= Destination.new()
-var currentScript : NpcScript			= null
+var ownScript : NpcScript			= null
 
 #
 static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
@@ -98,8 +98,8 @@ func WarpTo(dest : Destination):
 #
 func AddScript(npc : NpcAgent):
 	if npc and npc.playerScriptPreset:
-		currentScript = npc.playerScriptPreset.new(npc, self)
+		ownScript = npc.playerScriptPreset.new(npc, self)
 
 func ClearScript():
-	if currentScript:
-		currentScript = null
+	if ownScript:
+		ownScript = null

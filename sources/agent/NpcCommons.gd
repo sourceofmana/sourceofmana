@@ -28,7 +28,7 @@ static var Farewells : PackedStringArray = [
 	"Goodbye for now."
 ]
 
-# To Client
+# Context sent to client
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
 	if npc and pc and pc is PlayerAgent:
 		var peerID : int = Launcher.Network.Server.GetRid(pc)
@@ -73,8 +73,17 @@ static func GetRandomFarewell(nick : String) -> String:
 	var farewell : String = Farewells[randi() % Farewells.size()]
 	return farewell if farewell.find("%s") == -1 else farewell % [nick]
 
-# From Client
+# Context received from client
 static func TryCloseContext(pc : BaseAgent):
-	if pc and pc is PlayerAgent and pc.currentScript and not pc.currentScript.IsWaiting():
-		pc.currentScript.ToggleWindow(false)
+	if pc and pc is PlayerAgent and pc.ownScript and not pc.ownScript.IsWaiting():
+		pc.ownScript.ToggleWindow(false)
 		pc.ClearScript()
+
+# Timer
+static func AddTimer(caller : BaseAgent, delay : float, callback : Callable):
+	if caller and caller.ownScript:
+		var newTimer : Timer = Callback.SelfDestructTimer(caller, delay, caller.ownScript.TimeOut.bind(callback))
+		if newTimer:
+			caller.ownScript.timerCount += 1
+		return newTimer
+	return null
