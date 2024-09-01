@@ -19,19 +19,9 @@ func OnStart():
 			Chat("You need a key to open this chest!")
 	# Chest is opened, you can withdraw your reward
 	else:
-		WithdrawReward()
-
-func OnContinue():
-	WithdrawReward()
-
-func WithdrawReward():
-	# Check quest state
-	if not withdrew:
-		withdrew = true
-		AddItem(rewardItemID)
-	else:
-		Chat("This chest is empty.")
-
-func CloseChest():
-	if ActorCommons.IsTriggering(npc):
-		Trigger()
+		# Check quest state
+		if not withdrew:
+			withdrew = true
+			AddItem(rewardItemID)
+		else:
+			Chat("This chest is empty.")
