@@ -97,8 +97,8 @@ func WarpTo(dest : Destination):
 
 #
 func AddScript(npc : NpcAgent):
-	if npc and npc.scriptPath:
-		currentScript = npc.scriptPreset.new(npc, self)
+	if npc and npc.playerScriptPreset:
+		currentScript = npc.playerScriptPreset.new(npc, self)
 
 func ClearScript():
 	if currentScript:

@@ -1,7 +1,7 @@
 extends NpcScript
 
 #
-func OnDefault():
+func OnStart():
 	Mes("Hello there.")
 	Mes("What do you want?")
 	# Choice Context

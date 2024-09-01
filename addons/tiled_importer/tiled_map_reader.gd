@@ -276,7 +276,8 @@ func build_server(source_path) -> Node:
 		spawn_array.append(spawn.spawn_position)
 		spawn_array.append(spawn.spawn_offset)
 		spawn_array.append(spawn.respawn_delay)
-		spawn_array.append(spawn.custom_script)
+		spawn_array.append(spawn.player_script)
+		spawn_array.append(spawn.own_script)
 		root.spawns.append(spawn_array)
 
 	# Can't save an array of custom objects, every element will be null when loaded
@@ -583,8 +584,10 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 									spawn_object.name = object.properties.name
 								if "type" in object.properties:
 									spawn_object.type = object.properties.type
-								if "script" in object.properties:
-									spawn_object.custom_script = object.properties.script
+								if "player_script" in object.properties:
+									spawn_object.player_script = object.properties.player_script
+								if "own_script" in object.properties:
+									spawn_object.own_script = object.properties.own_script
 								if "respawn_delay" in object.properties:
 									spawn_object.respawn_delay = object.properties.respawn_delay
 								spawn_object.spawn_position = pos + shape.extents

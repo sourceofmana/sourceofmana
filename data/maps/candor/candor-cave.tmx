@@ -578,7 +578,7 @@
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="name" value="Elanore"/>
-    <property name="script" value="Default.gd"/>
+    <property name="player_script" value="Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

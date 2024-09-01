@@ -16,17 +16,15 @@ static func CreateEntity(entityType : ActorCommons.Type, entityID : String, nick
 		actor.Init(entityType, entityID, nick)
 	return actor
 
-static func CreateAgent(entityTypeStr : String, entityID : String, nick : String = "", scriptPath : String = "") -> BaseAgent:
+static func CreateAgent(entityTypeStr : String, entityID : String, nick : String = "", playerScriptPath : String = "", ownScriptPath : String = "") -> BaseAgent:
 	var actor : BaseAgent = null
 	var entityType : ActorCommons.Type = ActorCommons.Type.NPC
 	match entityTypeStr:
 		"Npc":
 			actor = NpcAgent.new()
 			entityType = ActorCommons.Type.NPC
-			actor.scriptPath = scriptPath
-		"Trigger":
-			actor = NpcAgent.new()
-			entityType = ActorCommons.Type.NPC
+			actor.playerScriptPath = playerScriptPath
+			actor.ownScriptPath = ownScriptPath
 		"Monster":
 			actor = MonsterAgent.new()
 			entityType = ActorCommons.Type.MONSTER

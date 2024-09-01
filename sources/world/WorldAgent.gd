@@ -98,7 +98,7 @@ static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : St
 	if Vector2i(position) == Vector2i.ZERO:
 		return null
 
-	var agent : BaseAgent = Instantiate.CreateAgent(spawn.type, spawn.name, nickname, spawn.custom_script)
+	var agent : BaseAgent = Instantiate.CreateAgent(spawn.type, spawn.name, nickname, spawn.player_script, spawn.own_script)
 	agent.spawnInfo = spawn
 	agent.position = position
 

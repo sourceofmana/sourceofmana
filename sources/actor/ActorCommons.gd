@@ -103,6 +103,9 @@ static func IsAttacking(agent : Actor) -> bool:
 static func IsSitting(agent : Actor) -> bool:
 	return agent and agent.state == State.SIT
 
+static func IsTriggering(agent : Actor) -> bool:
+	return agent and agent.state == State.TRIGGER
+
 #
 const slotBody : String						= "Body"
 const slotChest : String					= "Chest"

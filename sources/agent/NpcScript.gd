@@ -3,7 +3,7 @@ class_name NpcScript
 
 # Script variables
 var npc : NpcAgent					= null
-var pc : PlayerAgent				= null
+var own : BaseAgent					= null
 
 var steps : Array[Dictionary]		= []
 var step : int						= 0
@@ -13,7 +13,7 @@ var windowToggled : bool			= false
 
 # Display
 func Trigger() -> bool:
-	return npc.SetState(ActorCommons.State.TRIGGER) and npc.state == ActorCommons.State.TRIGGER if npc else false
+	return npc.SetState(ActorCommons.State.TRIGGER) if npc else false
 
 # Dialogue
 func Mes(mes : String):
@@ -30,29 +30,64 @@ func Choice(mes : String, callable : Callable):
 	dialogueStep["choices"].append({"text": mes, "action": callable})
 
 func Chat(mes : String):
-	NpcCommons.Chat(npc, pc, mes)
+	if npc != own:
+		NpcCommons.Chat(npc, own, mes)
 
 func Greeting():
-	NpcCommons.Chat(npc, pc, NpcCommons.GetRandomGreeting(pc.nick))
+	if npc != own:
+		NpcCommons.Chat(npc, own, NpcCommons.GetRandomGreeting(own.nick))
 
 func Farewell():
-	NpcCommons.Chat(npc, pc, NpcCommons.GetRandomFarewell(pc.nick))
+	if npc != own:
+		NpcCommons.Chat(npc, own, NpcCommons.GetRandomFarewell(own.nick))
 
 # Timer
-func AddTimer(delay : float):
-	Callback.SelfDestructTimer(pc, delay, ClearTimer)
-	timerCount += 1
+func AddTimer(caller : BaseAgent, delay : float, callback : Callable):
+	if caller:
+		var newTimer : Timer = Callback.SelfDestructTimer(caller, delay, TimeOut.bind(callback))
+		if newTimer:
+			timerCount += 1
+		return newTimer
+	return null
 
-func ClearTimer():
+func TimeOut(callback : Callable):
 	timerCount -= 1
-	if IsDone():
-		pc.ClearScript()
+	Callback.TriggerCallback(callback)
+	if own and IsDone():
+		own.ClearScript()
+
+func ClearTimer(timer : Timer):
+	if timer and not timer.is_stopped() and not timer.is_queued_for_deletion():
+		timer.stop()
+		timer.queue_free()
+		timerCount -= 1
+		if own and IsDone():
+			own.ClearScript()
+
+# Inventory
+func HasItem(itemID : int, count : int = 1) -> bool:
+	if own is PlayerAgent:
+		var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
+		return own.inventory.HasItem(cell, count) if cell else false
+	return false
+
+func AddItem(itemID : int, count : int = 1) -> bool:
+	if own is PlayerAgent:
+		var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
+		return own.inventory.AddItem(cell, count) if cell else false
+	return false
+
+func RemoveItem(itemID : int, count : int = 1) -> bool:
+	if own is PlayerAgent:
+		var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
+		return own.inventory.RemoveItem(cell, count) if cell else false
+	return false
 
 # Interaction logic
 func ToggleWindow(toggle : bool):
 	if windowToggled != toggle:
 		windowToggled = toggle
-		NpcCommons.ToggleContext(pc, windowToggled)
+		NpcCommons.ToggleContext(own, windowToggled)
 
 func InteractChoice(choiceId : int):
 	if not isWaitingForChoice:
@@ -60,7 +95,7 @@ func InteractChoice(choiceId : int):
 
 	var dialogueStep : Dictionary = steps[step]
 	if choiceId < dialogueStep["choices"].size():
-		NpcCommons.ContextText(pc, pc.nick, dialogueStep["text"])
+		NpcCommons.ContextText(own, own.nick, dialogueStep["text"])
 		var choice : Dictionary = dialogueStep["choices"][choiceId]
 		if choice.has("action"):
 			isWaitingForChoice = false
@@ -76,7 +111,7 @@ func ApplyStep():
 
 		var dialogueStep : Dictionary = steps[step]
 		if dialogueStep.has("text"):
-			NpcCommons.ContextText(pc, npc.nick, dialogueStep["text"])
+			NpcCommons.ContextText(own, npc.nick, dialogueStep["text"])
 
 		if dialogueStep.has("choices"):
 			var choices : PackedStringArray = []
@@ -85,31 +120,31 @@ func ApplyStep():
 					choices.append(choice["text"])
 			if choices.size() > 0:
 				isWaitingForChoice = true
-				NpcCommons.ContextChoices(pc, choices)
+				NpcCommons.ContextChoices(own, choices)
 		else:
 			if step + 1 < steps.size():
-				NpcCommons.ContextContinue(pc)
+				NpcCommons.ContextContinue(own)
 			else:
-				NpcCommons.ContextClose(pc)
+				NpcCommons.ContextClose(own)
 	else:
 		ToggleWindow(false)
 
 	if IsDone():
 		ToggleWindow(false)
-		pc.ClearScript()
+		own.ClearScript()
 
 func IsDone() -> bool:
-	return step >= steps.size() and not IsWaiting()
+	return own != npc and step >= steps.size() and not IsWaiting()
 
 func IsWaiting() -> bool:
-	return isWaitingForChoice or timerCount > 0
+	return own == npc or isWaitingForChoice or timerCount > 0
 
 # Default functions
-func _init(_npc : NpcAgent, _pc : PlayerAgent):
-	if not _pc or not _npc:
-		Util.Assert(false, "Trying to init a NPC Script with a missing player or NPC")
-	pc = _pc
+func _init(_npc : NpcAgent, _own : BaseAgent):
+	Util.Assert(_npc != null and _own != null, "Trying to init a NPC Script with a missing player or NPC")
+	own = _own
 	npc = _npc
-	OnDefault()
+	OnStart()
 
-func OnDefault(): pass
+func OnStart(): pass
+func OnContinue(): pass

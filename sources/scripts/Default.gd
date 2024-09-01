@@ -1,6 +1,6 @@
 extends NpcScript
 
 #
-func OnDefault():
+func OnStart():
 	Greeting()
-	AddTimer(1.0)
+	AddTimer(own, 1.0, Callable())

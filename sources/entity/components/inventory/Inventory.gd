@@ -35,6 +35,9 @@ func PushItem(cell : BaseCell, count : int) -> bool:
 	return true
 
 func PopItem(cell : BaseCell, count : int) -> bool:
+	if count <= 0 or not cell:
+		return false
+
 	var toRemove : Array[Item] = []
 	for item in items:
 		if item.cell.name == cell.name:
@@ -57,6 +60,21 @@ func PopItem(cell : BaseCell, count : int) -> bool:
 
 	return false
 
+func HasItem(cell : BaseCell, count : int) -> bool:
+	if count <= 0 or not cell:
+		return false
+
+	var totalCount : int = 0
+	for item in items:
+		if item.cell.name == cell.name:
+			if cell.stackable:
+				return item.count >= count
+			else:
+				totalCount += 1
+				if totalCount >= count:
+					return true
+	return false
+
 #
 func GetWeight() -> float:
 	var weight : float = 0.0
@@ -74,12 +92,13 @@ func UseItem(cell : BaseCell):
 			actor.stat.SetStamina(cell.effects[CellCommons.effectStamina])
 
 #
-func AddItem(cell : BaseCell, count : int = 1):
+func AddItem(cell : BaseCell, count : int = 1) -> bool:
 	if PushItem(cell, count):
 		var peerID : int = Launcher.Network.Server.GetRid(actor)
 		if peerID != NetworkCommons.RidUnknown:
 			Launcher.Network.ItemAdded(cell.id, count, peerID)
-
+		return true
+	return false
 
 func RemoveItem(cell : BaseCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
