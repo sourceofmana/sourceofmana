@@ -92,7 +92,7 @@ func Interact():
 		if target.type == ActorCommons.Type.NPC:
 			Launcher.Network.TriggerInteract(target.agentID)
 		elif target.type == ActorCommons.Type.MONSTER:
-			Cast(SkillCommons.SkillDefaultAttack)
+			Cast(DB.GetCellHash(SkillCommons.SkillMeleeName))
 
 func Cast(skillID : int):
 	var skill : SkillCell = DB.SkillsDB[skillID]

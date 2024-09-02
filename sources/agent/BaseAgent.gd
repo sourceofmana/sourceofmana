@@ -96,7 +96,7 @@ func SetState(wantedState : ActorCommons.State) -> bool:
 func SetSkillCastID(skillID : int):
 	forceUpdate = forceUpdate or DB.SkillsDB.has(currentSkillID)
 	currentSkillID = skillID
-	if skillID >= SkillCommons.SkillDefaultAttack:
+	if skillID != DB.UnknownHash:
 		skillSelected = null
 
 func AddSkill(skill : SkillCell, proba : float):

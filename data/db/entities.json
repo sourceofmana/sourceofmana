@@ -13,17 +13,17 @@
 			"Spirit": "Piou",
 		},
 		"SkillSet": {
-			"0": 1.0,
-			"1": 1.0,
-			"2": 1.0,
-			"3": 1.0,
-			"4": 1.0,
+			"Melee": 1.0,
+			"Mana Burst": 1.0,
+			"Flar": 1.0,
+			"Lum": 1.0,
+			"Inma": 1.0,
 		},
 	},
 	"1": {
 		"Name": "Ship",
 		"Ethnicity": "Ship",
-		"NavigationAgent": "NPAgent",
+		"NavigationAgent": "PlayerAgent",
 		"Collision": "Medium",
 		"Radius": "10",
 		"Stat": {
@@ -181,7 +181,7 @@
 			"Level": 10,
 		},
 		"SkillSet": {
-			"2": 1.0,
+			"Flar": 1.0,
 		},
 	},
 	"1011": {
@@ -196,6 +196,9 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 50,
+		},
+		"Drops": {
+			"Apple": 1.0,
 		},
 	},
 	"1012": {

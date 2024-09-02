@@ -1,8 +1,8 @@
 extends NpcScript
 
 const animationSpeed : float		= 30.0
-const rewardItemID : int			= 0
-const keyItemID : int				= 1
+var rewardItemID : int				= DB.GetCellHash("Apple")
+var keyItemID : int					= DB.GetCellHash("Dorian's Key")
 
 # To remove once quest setters and getters are implemented
 var withdrew : bool					= false

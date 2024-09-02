@@ -111,7 +111,12 @@ func RemoveItem(cell : BaseCell, count : int = 1) -> bool:
 #
 func ImportInventory(data : Dictionary):
 	for key in data.keys():
-		PushItem(DB.ItemsDB[key], data[key])
+		var hasKey : bool = DB.ItemsDB.has(key)
+		Util.Assert(hasKey, "Could not find the requested key within the ItemsDB %d" % [key])
+		if hasKey:
+			PushItem(DB.ItemsDB[key], data[key])
+		else:
+			print(DB.ItemsDB)
 
 func ExportInventory() -> Dictionary:
 	var data : Dictionary = {}

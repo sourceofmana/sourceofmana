@@ -14,6 +14,8 @@ class_name EntityData
 @export var _stats : Dictionary					= {}
 @export var _skillSet : Array[int]				= []
 @export var _skillProba : Dictionary			= {}
+@export var _drops : Array[int]					= []
+@export var _dropsProba : Dictionary			= {}
 
 func _init():
 	_customTextures.resize(ActorCommons.Slot.COUNT)
@@ -45,10 +47,16 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 		for statName in result.Stat:
 			entity._stats[statName] = result.Stat[statName]
 	if "SkillSet" in result:
-		for skillSetName in result.SkillSet:
-			var skillSetID : int = int(skillSetName)
-			if DB.SkillsDB.has(skillSetID):
-				entity._skillSet.append(skillSetID)
-				entity._skillProba[skillSetID] = result.SkillSet[skillSetName]
+		for skillName in result.SkillSet:
+			var skillID : int = DB.GetCellHash(skillName)
+			if DB.SkillsDB.has(skillID):
+				entity._skillSet.append(skillID)
+				entity._skillProba[skillID] = result.SkillSet[skillName]
+	if "Drops" in result:
+		for itemName in result.Drops:
+			var itemID : int = DB.GetCellHash(itemName)
+			if DB.SkillsDB.has(itemID):
+				entity._drops.append(itemID)
+				entity._dropsProba[itemID] = result.Drops[itemName]
 
 	return entity

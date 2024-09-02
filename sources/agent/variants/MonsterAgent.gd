@@ -12,5 +12,4 @@ func _ready():
 	add_child.call_deferred(aiTimer)
 
 	super._ready()
-
-	AddSkill(DB.SkillsDB[SkillCommons.SkillDefaultAttack], 1.0)
+	AddSkill(DB.SkillsDB[DB.GetCellHash(SkillCommons.SkillMeleeName)], 1.0)

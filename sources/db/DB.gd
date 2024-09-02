@@ -10,6 +10,9 @@ static var EmotesDB : Dictionary			= {}
 static var ItemsDB : Dictionary				= {}
 static var SkillsDB : Dictionary			= {}
 
+static var hashDB : Dictionary				= {}
+const UnknownHash : int						= -1
+
 #
 static func ParseMapsDB():
 	var result = FileSystem.LoadDB("maps.json")
@@ -68,8 +71,9 @@ static func ParseEmotesDB():
 	if not result.is_empty():
 		for key in result:
 			var cell : BaseCell = FileSystem.LoadCell(Path.EmotePst + result[key].Path + Path.RscExt)
-			cell.id = key
-			EmotesDB[int(cell.id)] = cell
+			cell.id = SetCellHash(cell.name)
+			Util.Assert(EmotesDB.has(cell.id) == false, "Duplicated cell in EmotesDB")
+			EmotesDB[cell.id] = cell
 
 static func ParseItemsDB():
 	var result = FileSystem.LoadDB("items.json")
@@ -77,8 +81,9 @@ static func ParseItemsDB():
 	if not result.is_empty():
 		for key in result:
 			var cell : BaseCell = FileSystem.LoadCell(Path.ItemPst + result[key].Path + Path.RscExt)
-			cell.id = key
-			ItemsDB[int(cell.id)] = cell
+			cell.id = SetCellHash(cell.name)
+			Util.Assert(ItemsDB.has(cell.id) == false, "Duplicated cell in ItemsDB")
+			ItemsDB[cell.id] = cell
 
 static func ParseSkillsDB():
 	var result = FileSystem.LoadDB("skills.json")
@@ -86,8 +91,9 @@ static func ParseSkillsDB():
 	if not result.is_empty():
 		for key in result:
 			var cell : BaseCell = FileSystem.LoadCell(Path.SkillPst + result[key].Path + Path.RscExt)
-			cell.id = key
-			SkillsDB[int(cell.id)] = cell
+			cell.id = SetCellHash(cell.name)
+			Util.Assert(SkillsDB.has(cell.id) == false, "Duplicated cell in SkillsDB")
+			SkillsDB[cell.id] = cell
 
 #
 static func GetMapPath(mapName : String) -> String:
@@ -100,6 +106,24 @@ static func GetMapPath(mapName : String) -> String:
 		if mapInfo:
 			path = mapInfo._path
 	return path
+
+#
+static func HasCellHash(cellname : StringName) -> bool:
+	return hashDB.has(cellname)
+
+static func SetCellHash(cellname : StringName) -> int:
+	var hasCRC : bool = HasCellHash(cellname)
+	var crc : int = UnknownHash
+	Util.Assert(not hasCRC, "Cell hash already exists for " + cellname)
+	if not hasCRC:
+		crc = cellname.hash()
+		hashDB[cellname] = crc
+	return crc
+
+static func GetCellHash(cellname : StringName) -> int:
+	var hasCRC : bool = HasCellHash(cellname)
+	Util.Assert(hasCRC, "Cell hash already exists for " + cellname)
+	return hashDB[cellname] if hasCRC else UnknownHash
 
 #
 static func Init():

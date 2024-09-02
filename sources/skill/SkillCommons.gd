@@ -2,8 +2,7 @@ extends Object
 class_name SkillCommons
 
 # Constants
-const SkillNone : int					= -1
-const SkillDefaultAttack : int			= 0
+const SkillMeleeName : String			= "Melee"
 
 # Actions
 enum ConsomeType
@@ -118,4 +117,4 @@ static func HasSkill(agent : BaseAgent, skill : SkillCell) -> bool:
 	return agent.skillSet.find(skill) != -1
 
 static func HasActionInProgress(agent : BaseAgent) -> bool:
-	return agent.currentSkillID >= SkillDefaultAttack or not agent.actionTimer.is_stopped()
+	return agent.currentSkillID != DB.UnknownHash or not agent.actionTimer.is_stopped()

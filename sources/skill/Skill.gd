@@ -64,7 +64,7 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill.repeat and ActorCommons.IsAlive(target) else Callable()
-	agent.SetSkillCastID(SkillCommons.SkillNone)
+	agent.SetSkillCastID(DB.UnknownHash)
 	var timer : Timer = Callback.SelfDestructTimer(agent, SkillCommons.GetCooldown(agent, skill), callable, skill.name + " CoolDown")
 	agent.cooldownTimers[skill.name] = timer
 	Launcher.Network.Server.NotifyInstance(agent, "Casted", [skill.id, timer.time_left])
@@ -84,7 +84,7 @@ static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng
 
 static func Stopped(agent : BaseAgent):
 	if SkillCommons.HasActionInProgress(agent):
-		agent.SetSkillCastID(SkillCommons.SkillNone)
+		agent.SetSkillCastID(DB.UnknownHash)
 		Callback.ClearTimer(agent.actionTimer)
 		if agent.aiTimer:
 			AI.SetState(agent, AI.State.IDLE)
@@ -92,7 +92,7 @@ static func Stopped(agent : BaseAgent):
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:
 		return
-	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), 0, ActorCommons.Alteration.MISS, SkillCommons.SkillNone])
+	Launcher.Network.Server.NotifyInstance(agent, "TargetAlteration", [target.get_rid().get_id(), 0, ActorCommons.Alteration.MISS, DB.UnknownHash])
 	Stopped(agent)
 
 static func Delayed(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
