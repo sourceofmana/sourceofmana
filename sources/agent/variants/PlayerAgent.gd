@@ -57,7 +57,7 @@ func Morph(notifyMorphing : bool, morphID : String = ""):
 
 	var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 	stat.Morph(morphData)
-	Launcher.Network.Server.NotifyInstance(self, "Morphed", [morphID, notifyMorphing])
+	Launcher.Network.Server.NotifyNeighbours(self, "Morphed", [morphID, notifyMorphing])
 
 #
 func _physics_process(delta):

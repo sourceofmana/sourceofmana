@@ -64,7 +64,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 			for neighbour in neighbours:
 				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, playerID)
 
-	Launcher.Network.Server.NotifyInstance(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
+	Launcher.Network.Server.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
 
 # Generic
 func _post_launch():

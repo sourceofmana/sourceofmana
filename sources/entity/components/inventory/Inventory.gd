@@ -115,8 +115,6 @@ func ImportInventory(data : Dictionary):
 		Util.Assert(hasKey, "Could not find the requested key within the ItemsDB %d" % [key])
 		if hasKey:
 			PushItem(DB.ItemsDB[key], data[key])
-		else:
-			print(DB.ItemsDB)
 
 func ExportInventory() -> Dictionary:
 	var data : Dictionary = {}

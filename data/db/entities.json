@@ -19,6 +19,10 @@
 			"Lum": 1.0,
 			"Inma": 1.0,
 		},
+		"Drops": {
+			"Apple": 5.0,
+			"Dorian's Key": 2.0,
+		},
 	},
 	"1": {
 		"Name": "Ship",

@@ -199,6 +199,15 @@ func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
 func RefreshInventory(cells : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallClient("RefreshInventory", [cells], rpcID)
 
+# Drop
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func DropAdded(drop : Drop, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("DropAdded", [drop], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func DropRemoved(drop : Drop, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("DropRemoved", [drop], rpcID)
+
 #
 func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:
 	if Server:

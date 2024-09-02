@@ -6,6 +6,7 @@ var id : int							= 0
 var npcs : Array[BaseAgent]				= []
 var mobs : Array[BaseAgent]				= []
 var players : Array[BaseAgent]			= []
+var drops : Array[Drop]					= []
 var map : WorldMap						= null
 
 #

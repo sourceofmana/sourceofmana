@@ -4,8 +4,19 @@ class_name MonsterAgent
 #
 static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.MONSTER
 
-#
+func Killed():
+	super.Killed()
+	Formula.ApplyXp(self)
+	if aiTimer:
+		AI.SetState(self, AI.State.HALT)
+
+	for item in inventory.items:
+		WorldDrop.PushDrop(item, self)
+
+	Callback.SelfDestructTimer(self, ActorCommons.DeathDelay, WorldAgent.RemoveAgent.bind(self))
+
 func _ready():
+	inventory = EntityInventory.new()
 	aiTimer = Timer.new()
 	aiTimer.set_name("AiTimer")
 	Callback.OneShotCallback(aiTimer.tree_entered, AI.Reset, [self])

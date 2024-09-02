@@ -189,6 +189,7 @@ const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
 const RegenDelay : float					= 1.0
 const DeathDelay : float					= 10.0
 const DisplayHPDelay : float				= 7.0
+const DropDelay : float						= 15.0
 
 # Stats
 const MaxPointPerAttributes : int			= 20

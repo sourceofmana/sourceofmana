@@ -55,7 +55,7 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 	if "Drops" in result:
 		for itemName in result.Drops:
 			var itemID : int = DB.GetCellHash(itemName)
-			if DB.SkillsDB.has(itemID):
+			if DB.ItemsDB.has(itemID):
 				entity._drops.append(itemID)
 				entity._dropsProba[itemID] = result.Drops[itemName]
 

@@ -193,7 +193,7 @@ func AddExperience(value : int):
 		levelUpHappened = true
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
 	if levelUpHappened and Launcher.Network.Server:
-		Launcher.Network.Server.NotifyInstance(actor, "TargetLevelUp", [])
+		Launcher.Network.Server.NotifyNeighbours(actor, "TargetLevelUp", [])
 
 func AddGP(value : int):
 	if gp <= 0:

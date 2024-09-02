@@ -105,6 +105,16 @@ func AddSkill(skill : SkillCell, proba : float):
 	skillProba[skill] = proba
 	skillProbaSum += proba
 
+func AddItem(item : BaseCell, proba : float):
+	if item and inventory:
+		while proba > 0.0:
+			var rng : float = randf_range(0.0, 1.0)
+			if rng <= proba:
+				inventory.PushItem(item, 1)
+				proba -= 1.0
+			else:
+				break
+
 func SetRelativeMode(enable : bool, givenDirection : Vector2):
 	if isRelativeMode != enable:
 		isRelativeMode = enable
@@ -134,12 +144,15 @@ func UpdateChanged():
 	if currentInput != Vector2.ZERO:
 		currentOrientation = Vector2(currentVelocity).normalized()
 	var functionName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
-	Launcher.Network.Server.NotifyInstance(self, functionName, [velocity, position, currentOrientation, state, currentSkillID])
+	Launcher.Network.Server.NotifyNeighbours(self, functionName, [velocity, position, currentOrientation, state, currentSkillID])
 
 #
 func SetData(data : EntityData):
 	for skillID in data._skillSet:
 		AddSkill(DB.SkillsDB[skillID], data._skillProba[skillID])
+
+	for itemID in data._drops:
+		AddItem(DB.ItemsDB[itemID], data._dropsProba[itemID])
 
 	entityRadius = data._radius
 
@@ -187,10 +200,6 @@ func GetDamageRatio(attacker : BaseAgent) -> float:
 
 func Killed():
 	SetSkillCastID(-1)
-	Formula.ApplyXp(self)
-	if aiTimer:
-		AI.SetState(self, AI.State.HALT)
-		Callback.SelfDestructTimer(self, ActorCommons.DeathDelay, WorldAgent.RemoveAgent.bind(self))
 
 #
 func _physics_process(_delta):
