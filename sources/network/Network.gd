@@ -201,12 +201,16 @@ func RefreshInventory(cells : Dictionary, rpcID : int = NetworkCommons.RidSingle
 
 # Drop
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func DropAdded(drop : Drop, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("DropAdded", [drop], rpcID)
+func DropAdded(dropID : int, itemID : int, pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("DropAdded", [dropID, itemID, pos], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func DropRemoved(drop : Drop, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("DropRemoved", [drop], rpcID)
+func DropRemoved(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("DropRemoved", [dropID], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
+func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("PickupDrop", [dropID], rpcID)
 
 #
 func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:

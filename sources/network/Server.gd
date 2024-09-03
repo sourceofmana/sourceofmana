@@ -150,6 +150,11 @@ func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
 	if player and player.inventory:
 		Launcher.Network.RefreshInventory(player.inventory.ExportInventory(), rpcID)
 
+func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	var player : PlayerAgent = GetAgent(rpcID)
+	if player:
+		WorldDrop.PickupDrop(dropID, player)
+
 #
 func GetRid(player : PlayerAgent) -> int:
 	var playerRid : int = player.get_rid().get_id()

@@ -153,12 +153,14 @@ func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingl
 	if Launcher.GUI and Launcher.GUI.inventoryWindow:
 		Launcher.GUI.inventoryWindow.RefreshInventory()
 
-func DropAdded(drop : Drop, _rpcID : int = NetworkCommons.RidSingleMode):
-	print(drop)
+func DropAdded(dropID : int, itemID : int, pos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Map and itemID in DB.ItemsDB:
+		Launcher.Map.AddDrop(dropID, DB.ItemsDB[itemID], pos)
 
-func DropRemoved(drop : Drop, _rpcID : int = NetworkCommons.RidSingleMode):
-	print(drop)
-
+func DropRemoved(dropID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Map:
+		Launcher.Map.RemoveDrop(dropID)
+#
 func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:
 		Launcher.GUI.notificationLabel.AddNotification(notif)

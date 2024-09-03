@@ -4,27 +4,37 @@ class_name WorldDrop
 # Drop management
 static func PushDrop(item : Item, agent : BaseAgent):
 	if agent:
-		var inst : WorldInstance = agent.get_parent()
+		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 		if inst:
-			var drop : Drop = Drop.new(item, agent.position)
-			inst.drops.append(drop)
-			drop.timer = Callback.SelfDestructTimer(inst, ActorCommons.DropDelay, WorldDrop.PopDrop.bind(drop, inst))
-			Launcher.Network.Server.NotifyInstance(inst, "DropAdded", [drop])
+			var dropPos : Vector2 = agent.position
+			dropPos.x += randf_range(-agent.entityRadius, agent.entityRadius)
+			dropPos.y += randf_range(-agent.entityRadius, agent.entityRadius)
 
-static func PopDrop(drop : Drop, inst : WorldInstance) -> bool:
-	if inst and inst.drops.find(drop) >= 0:
-		inst.drops.erase(drop)
-		Launcher.Network.Server.NotifyInstance(inst, "DropRemoved", [drop])
-		if drop.timer:
+			var drop : Drop = Drop.new(item, dropPos)
+			inst.drops[drop.get_instance_id()] = drop
+			drop.timer = Callback.SelfDestructTimer(inst, ActorCommons.DropDelay, WorldDrop.PopDrop.bind(drop, inst))
+
+			Launcher.Network.Server.NotifyInstance(inst, "DropAdded", [drop.get_instance_id(), item.cell.id, drop.position])
+
+static func PopDrop(dropID : int, inst : WorldInstance) -> bool:
+	if inst and inst.drops.has(dropID):
+		var drop : Drop = inst.drops[dropID]
+		inst.drops.erase(dropID)
+		Launcher.Network.Server.NotifyInstance(inst, "DropRemoved", [dropID])
+		if drop and drop.timer:
 			drop.timer.stop()
 			drop.timer.queue_free()
 		drop.queue_free()
 		return true
 	return false
 
-static func RetrieveDrop(drop : Drop, agent : BaseAgent) -> bool:
-	if agent:
-		var inst : WorldInstance = agent.get_parent()
-		if PopDrop(drop, inst) and agent.inventory.AddItem(drop.item.cell, drop.item.count):
-			return true
+static func PickupDrop(dropID : int, agent : BaseAgent) -> bool:
+	if agent and agent.inventory:
+		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+		if inst and dropID in inst.drops:
+			var drop : Drop = inst.drops[dropID]
+			if agent.position.distance_squared_to(drop.position) < ActorCommons.PickupSquaredDistance \
+			and PopDrop(dropID, inst) \
+			and agent.inventory.AddItem(drop.item.cell, drop.item.count):
+				return true
 	return false

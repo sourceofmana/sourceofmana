@@ -101,7 +101,9 @@ func InteractChoice(choiceId : int):
 		ApplyStep()
 
 func ApplyStep():
-	if step < steps.size():
+	if isWaitingForChoice:
+		pass # Skip the current step if we are waiting for a player choice
+	elif step < steps.size():
 		ToggleWindow(true)
 
 		var dialogueStep : Dictionary = steps[step]

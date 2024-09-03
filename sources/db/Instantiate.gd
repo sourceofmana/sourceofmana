@@ -38,6 +38,13 @@ static func CreateAgent(entityTypeStr : String, entityID : String, nick : String
 
 	return actor
 
+# Drop
+static func CreateDrop(cell : BaseCell, pos : Vector2) -> Sprite2D:
+	var node : Sprite2D = Sprite2D.new()
+	node.texture = cell.icon
+	node.position = pos
+	return node
+
 # Map
 static func LoadMapData(mapName : String, ext : String) -> Object:
 	var mapPath : String			= DB.GetMapPath(mapName)

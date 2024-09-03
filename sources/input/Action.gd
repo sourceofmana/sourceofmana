@@ -143,6 +143,7 @@ func _input(event):
 	elif TryJustPressed(event, "gp_shortcut_8"):	Launcher.GUI.boxes.Trigger(7)
 	elif TryJustPressed(event, "gp_shortcut_9"):	Launcher.GUI.boxes.Trigger(8)
 	elif TryJustPressed(event, "gp_shortcut_10"):	Launcher.GUI.boxes.Trigger(9)
+	elif TryJustPressed(event, "gp_pickup"):		Launcher.Map.PickupNearestDrop()
 	elif TryJustPressed(event, "gp_morph"):	 		Launcher.Network.TriggerMorph()
 	elif TryJustPressed(event, "ui_close"):			Launcher.GUI.CloseWindow()
 	elif TryJustPressed(event, "ui_inventory"):		Launcher.GUI.ToggleControl(Launcher.GUI.inventoryWindow)

@@ -5,7 +5,7 @@ class_name LauncherCommons
 const ProjectName : String				= "Source of Mana"
 
 # Map
-const DefaultStartMap : String			= "Splatyna Cave Entrance"
+const DefaultStartMap : String			= "Overworld"
 const DefaultStartPos : Vector2			= Vector2(1456, 3504)
 
 # MapPool
