@@ -337,7 +337,7 @@ _data = {
 
 [node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("1_66oof")
-offset = Vector2(0, -24)
+offset = Vector2(0, -28)
 hframes = 16
 vframes = 8
 frame = 64

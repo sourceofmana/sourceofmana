@@ -10,10 +10,10 @@ static func FindEntityReference(entityID : String) -> EntityData:
 			break
 	return ref
 
-static func CreateEntity(entityType : ActorCommons.Type, entityID : String, nick : String = "") -> Entity:
+static func CreateEntity(entityType : ActorCommons.Type, entityID : String, nick : String = "", isManaged : bool = false) -> Entity:
 	var actor : Entity = FileSystem.LoadEntityVariant()
 	if actor:
-		actor.Init(entityType, entityID, nick)
+		actor.Init(entityType, entityID, nick, isManaged)
 	return actor
 
 static func CreateAgent(entityTypeStr : String, entityID : String, nick : String = "", playerScriptPath : String = "", ownScriptPath : String = "") -> BaseAgent:
@@ -34,7 +34,7 @@ static func CreateAgent(entityTypeStr : String, entityID : String, nick : String
 		_: Util.Assert(false, "Trying to create an agent with a wrong type: " + entityTypeStr)
 
 	if actor:
-		actor.Init(entityType, entityID, nick)
+		actor.Init(entityType, entityID, nick, true)
 
 	return actor
 

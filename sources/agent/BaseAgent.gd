@@ -3,7 +3,7 @@ class_name BaseAgent
 
 #
 var agent : NavigationAgent2D			= null
-var entityRadius : int				= 0
+var entityRadius : int					= 0
 
 var aiState : AI.State					= AI.State.IDLE
 var aiTimer : Timer						= null
@@ -108,8 +108,7 @@ func AddSkill(skill : SkillCell, proba : float):
 func AddItem(item : BaseCell, proba : float):
 	if item and inventory:
 		while proba > 0.0:
-			var rng : float = randf_range(0.0, 1.0)
-			if rng <= proba:
+			if proba >= 1.0 or randf_range(0.0, 1.0) <= proba:
 				inventory.PushItem(item, 1)
 				proba -= 1.0
 			else:

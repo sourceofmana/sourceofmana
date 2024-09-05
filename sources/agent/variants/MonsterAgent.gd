@@ -16,7 +16,7 @@ func Killed():
 	Callback.SelfDestructTimer(self, ActorCommons.DeathDelay, WorldAgent.RemoveAgent, [self])
 
 func _ready():
-	inventory = EntityInventory.new()
+	inventory = ActorInventory.new()
 	aiTimer = Timer.new()
 	aiTimer.set_name("AiTimer")
 	Callback.OneShotCallback(aiTimer.tree_entered, AI.Reset, [self])

@@ -96,7 +96,7 @@ static func ClampMana(stat : ActorStats) -> int:
 static func ClampStamina(stat : ActorStats) -> int:
 	return clampi(stat.stamina, 0, stat.current.maxStamina)
 
-static func GetWeight(inventory : EntityInventory) -> float:
+static func GetWeight(inventory : ActorInventory) -> float:
 	return snappedf(inventory.GetWeight(), weightSnap)
 
 # Animation ratios

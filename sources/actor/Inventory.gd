@@ -1,5 +1,5 @@
 extends Object
-class_name EntityInventory
+class_name ActorInventory
 
 var actor : Actor			= null
 var items: Array[Item]		= []
@@ -94,17 +94,19 @@ func UseItem(cell : BaseCell):
 #
 func AddItem(cell : BaseCell, count : int = 1) -> bool:
 	if PushItem(cell, count):
-		var peerID : int = Launcher.Network.Server.GetRid(actor)
-		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ItemAdded(cell.id, count, peerID)
+		if actor is PlayerAgent:
+			var peerID : int = Launcher.Network.Server.GetRid(actor)
+			if peerID != NetworkCommons.RidUnknown:
+				Launcher.Network.ItemAdded(cell.id, count, peerID)
 		return true
 	return false
 
 func RemoveItem(cell : BaseCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
-		var peerID : int = Launcher.Network.Server.GetRid(actor)
-		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ItemRemoved(cell.id, count, peerID)
+		if actor is PlayerAgent:
+			var peerID : int = Launcher.Network.Server.GetRid(actor)
+			if peerID != NetworkCommons.RidUnknown:
+				Launcher.Network.ItemRemoved(cell.id, count, peerID)
 		return true
 	return false
 

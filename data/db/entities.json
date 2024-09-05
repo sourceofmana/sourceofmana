@@ -19,10 +19,6 @@
 			"Lum": 1.0,
 			"Inma": 1.0,
 		},
-		"Drops": {
-			"Apple": 5.0,
-			"Dorian's Key": 2.0,
-		},
 	},
 	"1": {
 		"Name": "Ship",
@@ -61,6 +57,9 @@
 		"Stat": {
 			"walkSpeed": 40,
 		},
+		"Drops": {
+			"Dorian's Key": 1.0,
+		},
 	},
 	"1002": {
 		"Name": "Emil",
@@ -88,6 +87,9 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
+		},
+		"Drops": {
+			"Gabriel's Key": 1.0,
 		},
 	},
 	"1004": {
@@ -131,6 +133,9 @@
 		"Stat": {
 			"walkSpeed": 40,
 		},
+		"Drops": {
+			"Marvin's Key": 1.0,
+		},
 	},
 	"1007": {
 		"Name": "Salt Slime",
@@ -144,6 +149,9 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
+		},
+		"Drops": {
+			"Apple": 0.7,
 		},
 	},
 	"1008": {
@@ -200,9 +208,6 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 50,
-		},
-		"Drops": {
-			"Apple": 1.0,
 		},
 	},
 	"1012": {
