@@ -25,10 +25,10 @@ func DisplayEmote(emoteID : int):
 				emote.used.emit()
 
 #
-func DisplayMorph(callback : Callable):
+func DisplayMorph(callback : Callable, args : Array):
 	var particle : GPUParticles2D = ActorCommons.MorphFx.instantiate()
 	if particle:
-		Callback.SelfDestructTimer(self, ActorCommons.morphDelay, callback)
+		Callback.SelfDestructTimer(self, ActorCommons.morphDelay, callback, args)
 		particle.finished.connect(Util.RemoveNode.bind(particle, self))
 		particle.emitting = true
 		add_child(particle)
@@ -105,7 +105,7 @@ func DisplaySpeech(speech : String):
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
-		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, Util.RemoveNode.bind(speechLabel, speechContainer))
+		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, Util.RemoveNode, [speechLabel, speechContainer])
 
 #
 func DisplayHP():
@@ -115,7 +115,7 @@ func DisplayHP():
 
 	if Launcher.Player:
 		if Launcher.Player.target != entity:
-			Callback.SelfDestructTimer(healthBar, ActorCommons.DisplayHPDelay, HideHP, "HideHP")
+			Callback.SelfDestructTimer(healthBar, ActorCommons.DisplayHPDelay, HideHP, [], "HideHP")
 		if entity.stat.level >= Launcher.Player.stat.level and ActorCommons.LevelDifferenceColor:
 			nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / ActorCommons.LevelDifferenceColor)
 

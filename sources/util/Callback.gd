@@ -19,10 +19,9 @@ static func ShootCallback(args : Array):
 
 static func TriggerCallback(callback : Callable, args : Array = []):
 	if callback and callback is Callable and not callback.is_null() and callback.is_valid():
-		var newArgs : Array = args if callback.get_bound_arguments_count() == 0 else callback.get_bound_arguments()
-		for argId in newArgs.size():
-			if not is_instance_valid(newArgs[argId]) and typeof(newArgs[argId]) == TYPE_NIL:
-				newArgs[argId] = null
+		for argId in args.size():
+			if not is_instance_valid(args[argId]) and typeof(args[argId]) == TYPE_NIL:
+				args[argId] = null
 		callback.callv(args)
 
 #
@@ -30,14 +29,16 @@ static func OneShotCallback(objectSignal : Signal, callback : Callable, args : A
 	PlugCallback(objectSignal, Callback.ShootCallback, [callback] + args)
 
 #
-static func SelfDestructCallback(parent : Node, timer : Timer, callback : Callable):
+static func SelfDestructCallback(parent : Node, timer : Timer, callback : Callable, args : Array = []):
+	if parent is WorldInstance:
+		pass
 	if parent:
 		parent.remove_child(timer)
 		timer.queue_free()
-	TriggerCallback(callback)
+	TriggerCallback(callback, args)
 
 #
-static func SelfDestructTimer(parent : Node, delay : float, callback : Callable = Callable(), timerName = "") -> Timer:
+static func SelfDestructTimer(parent : Node, delay : float, callback : Callable = Callable(), args : Array = [], timerName = "") -> Timer:
 	if delay <= 0.0:
 		TriggerCallback(callback)
 	elif parent:
@@ -46,7 +47,7 @@ static func SelfDestructTimer(parent : Node, delay : float, callback : Callable 
 			timer = Timer.new()
 			timer.set_one_shot(true)
 			timer.set_autostart(true)
-			AddCallback(timer.timeout, Callback.SelfDestructCallback, [parent, timer, callback])
+			AddCallback(timer.timeout, Callback.SelfDestructCallback, [parent, timer, callback, args])
 			if not timerName.is_empty():
 				timer.name = timerName
 			parent.add_child(timer)

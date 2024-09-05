@@ -13,7 +13,7 @@ func Killed():
 	for item in inventory.items:
 		WorldDrop.PushDrop(item, self)
 
-	Callback.SelfDestructTimer(self, ActorCommons.DeathDelay, WorldAgent.RemoveAgent.bind(self))
+	Callback.SelfDestructTimer(self, ActorCommons.DeathDelay, WorldAgent.RemoveAgent, [self])
 
 func _ready():
 	inventory = EntityInventory.new()

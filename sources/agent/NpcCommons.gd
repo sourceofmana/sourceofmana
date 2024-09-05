@@ -82,7 +82,7 @@ static func TryCloseContext(pc : BaseAgent):
 # Timer
 static func AddTimer(caller : BaseAgent, delay : float, callback : Callable):
 	if caller and caller.ownScript:
-		var newTimer : Timer = Callback.SelfDestructTimer(caller, delay, caller.ownScript.TimeOut.bind(callback))
+		var newTimer : Timer = Callback.SelfDestructTimer(caller, delay, caller.ownScript.TimeOut, [callback])
 		if newTimer:
 			caller.ownScript.timerCount += 1
 		return newTimer

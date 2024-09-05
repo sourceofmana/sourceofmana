@@ -80,7 +80,7 @@ func SetVelocity():
 func SetCurrentState():
 	if stat.health <= 0:
 		SetState(ActorCommons.State.DEATH)
-	elif DB.SkillsDB.has(currentSkillID):
+	elif currentSkillID != DB.UnknownHash:
 		SetState(DB.SkillsDB[currentSkillID].state)
 	elif currentVelocity == Vector2i.ZERO:
 		SetState(ActorCommons.State.IDLE)

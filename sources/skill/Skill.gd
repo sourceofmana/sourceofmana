@@ -63,10 +63,16 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
-	var callable : Callable = Skill.Cast.bind(agent, target, skill) if skill.repeat and ActorCommons.IsAlive(target) else Callable()
+	var callable : Callable = Callable()
+	var args : Array = []
+	if skill.repeat and ActorCommons.IsAlive(target):
+		callable = Skill.Cast
+		args = [agent, target, skill]
+
 	agent.SetSkillCastID(DB.UnknownHash)
-	var timer : Timer = Callback.SelfDestructTimer(agent, SkillCommons.GetCooldown(agent, skill), callable, skill.name + " CoolDown")
+	var timer : Timer = Callback.SelfDestructTimer(agent, SkillCommons.GetCooldown(agent, skill), callable, args, skill.name + " CoolDown")
 	agent.cooldownTimers[skill.name] = timer
+
 	Launcher.Network.Server.NotifyNeighbours(agent, "Casted", [skill.id, timer.time_left])
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):

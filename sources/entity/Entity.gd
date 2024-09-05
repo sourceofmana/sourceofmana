@@ -22,11 +22,10 @@ func SetData(data : EntityData):
 	interactive.Init(data)
 
 func SetVisual(data : EntityData, morphed : bool = false):
-	var visualInitCallback : Callable = visual.Init.bind(data)
 	if morphed:
-		interactive.DisplayMorph(visualInitCallback)
+		interactive.DisplayMorph(visual.Init, [data])
 	else:
-		visualInitCallback.call()
+		visual.Init(data)
 
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextskillCastID : int, forceValue : bool = false):
@@ -64,7 +63,7 @@ func ClearTarget():
 	if target != null:
 		if target.interactive.nameLabel.material:
 			target.interactive.nameLabel.material = null
-		Callback.SelfDestructTimer(target.interactive.healthBar, ActorCommons.DisplayHPDelay, target.interactive.HideHP, "HideHP")
+		Callback.SelfDestructTimer(target.interactive.healthBar, ActorCommons.DisplayHPDelay, target.interactive.HideHP, [], "HideHP")
 		target = null
 
 func Target(source : Vector2, interactable : bool = true):

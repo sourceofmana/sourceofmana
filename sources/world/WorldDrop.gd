@@ -12,21 +12,30 @@ static func PushDrop(item : Item, agent : BaseAgent):
 
 			var drop : Drop = Drop.new(item, dropPos)
 			inst.drops[drop.get_instance_id()] = drop
-			drop.timer = Callback.SelfDestructTimer(inst, ActorCommons.DropDelay, WorldDrop.PopDrop.bind(drop, inst))
 
-			Launcher.Network.Server.NotifyInstance(inst, "DropAdded", [drop.get_instance_id(), item.cell.id, drop.position])
+			var dropID : int = drop.get_instance_id()
+			drop.timer = Callback.SelfDestructTimer(inst, ActorCommons.DropDelay, WorldDrop.Timeout, [dropID, inst])
+			Launcher.Network.Server.NotifyInstance(inst, "DropAdded", [dropID, item.cell.id, drop.position])
 
 static func PopDrop(dropID : int, inst : WorldInstance) -> bool:
 	if inst and inst.drops.has(dropID):
 		var drop : Drop = inst.drops[dropID]
 		inst.drops.erase(dropID)
 		Launcher.Network.Server.NotifyInstance(inst, "DropRemoved", [dropID])
-		if drop and drop.timer:
-			drop.timer.stop()
-			drop.timer.queue_free()
-		drop.queue_free()
-		return true
+		if drop:
+			if drop.timer != null:
+				drop.timer.stop()
+				drop.timer.queue_free()
+			drop.queue_free()
+			return true
 	return false
+
+static func Timeout(dropID : int, inst : WorldInstance):
+	if inst and inst.drops.has(dropID):
+		var drop : Drop = inst.drops[dropID]
+		if drop:
+			drop.timer = null
+			PopDrop(dropID, inst)
 
 static func PickupDrop(dropID : int, agent : BaseAgent) -> bool:
 	if agent and agent.inventory:

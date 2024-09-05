@@ -40,7 +40,7 @@ static func RemoveAgent(agent : BaseAgent):
 	Util.Assert(agent != null, "Agent is null, can't remove it")
 	if agent:
 		if agent.get_parent() and agent.spawnInfo and agent.spawnInfo.is_persistant:
-			Callback.SelfDestructTimer(agent.get_parent(), agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent.bind(agent.spawnInfo))
+			Callback.SelfDestructTimer(agent.get_parent(), agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent, [agent.spawnInfo])
 
 		PopAgent(agent)
 		agents.erase(agent)
