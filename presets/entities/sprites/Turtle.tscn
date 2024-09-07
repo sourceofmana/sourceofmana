@@ -374,7 +374,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [31]
+"values": [31, 30, 32, 30]
 }
 
 [sub_resource type="Animation" id="9"]
