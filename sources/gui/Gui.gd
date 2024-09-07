@@ -135,4 +135,5 @@ func _on_ui_margin_resized():
 
 	if settingsWindow:
 		settingsWindow.set_fullscreen(DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_FULLSCREEN)
+		settingsWindow.set_windowPos(DisplayServer.window_get_position(0))
 		settingsWindow.set_resolution(DisplayServer.window_get_size(0))
