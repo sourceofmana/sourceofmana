@@ -31,14 +31,14 @@ func DisplayMorph(callback : Callable, args : Array):
 		Callback.SelfDestructTimer(self, ActorCommons.morphDelay, callback, args)
 		particle.finished.connect(Util.RemoveNode.bind(particle, self))
 		particle.emitting = true
-		add_child(particle)
+		add_child.call_deferred(particle)
 
 #
 func DisplayLevelUp():
 	var particle : GPUParticles2D = ActorCommons.LevelUpFx.instantiate()
 	if particle:
 		particle.emitting = true
-		add_child(particle)
+		add_child.call_deferred(particle)
 
 #
 func DisplayCast(emitter : Entity, skillID : int):
@@ -53,7 +53,7 @@ func DisplayCast(emitter : Entity, skillID : int):
 				if skill.castColor != Color.BLACK:
 					castFx.self_modulate = skill.castColor
 				castFx.emitting = true
-				add_child(castFx)
+				add_child.call_deferred(castFx)
 
 func DisplaySkill(emitter : Entity, skillID : int, cooldown : float):
 	if DB.SkillsDB.has(skillID):
@@ -69,7 +69,7 @@ func DisplaySkill(emitter : Entity, skillID : int, cooldown : float):
 					if skill.skillColor != Color.BLACK:
 						skillFx.process_material.set("color", skill.skillColor)
 					skillFx.emitting = true
-					emitter.add_child(skillFx)
+					emitter.add_child.call_deferred(skillFx)
 
 func DisplayProjectile(emitter : Entity, skill : SkillCell):
 	if Launcher.Map.fringeLayer and skill and skill.projectilePreset:
@@ -80,7 +80,7 @@ func DisplayProjectile(emitter : Entity, skill : SkillCell):
 			projectileNode.destination = get_parent().interactive.visibleNode.global_position
 			projectileNode.destination.y += ActorCommons.interactionDisplayOffset
 			projectileNode.delay = emitter.stat.current.castAttackDelay
-			Launcher.Map.fringeLayer.add_child(projectileNode)
+			Launcher.Map.fringeLayer.add_child.call_deferred(projectileNode)
 
 func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteration : ActorCommons.Alteration, skillID : int):
 	if Launcher.Map.fringeLayer:
@@ -88,11 +88,11 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			var newLabel : Label = ActorCommons.AlterationLabel.instantiate()
 			newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
 			newLabel.SetValue(emitter, value, alteration)
-			Launcher.Map.fringeLayer.add_child(newLabel)
+			Launcher.Map.fringeLayer.add_child.call_deferred(newLabel)
 			target.stat.health += value if alteration == ActorCommons.Alteration.HEAL else -value
 			target.stat.RefreshActiveStats()
 
-		if alteration == ActorCommons.Alteration.PROJECTILE and DB.SkillsDB.has(skillID):
+		if alteration == ActorCommons.Alteration.PROJECTILE:
 			var skill : SkillCell = DB.SkillsDB[skillID]
 			if skill.mode != Skill.TargetMode.ZONE:
 				DisplayProjectile(emitter, skill)
@@ -104,7 +104,7 @@ func DisplaySpeech(speech : String):
 		var speechLabel : RichTextLabel = ActorCommons.SpeechLabel.instantiate()
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
-		speechContainer.add_child(speechLabel)
+		speechContainer.add_child.call_deferred(speechLabel)
 		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, Util.RemoveNode, [speechLabel, speechContainer])
 
 #
