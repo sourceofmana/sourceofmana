@@ -84,18 +84,17 @@ func DisplayProjectile(emitter : Entity, skill : SkillCell):
 
 func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteration : ActorCommons.Alteration, skillID : int):
 	if Launcher.Map.fringeLayer:
-		if alteration != ActorCommons.Alteration.PROJECTILE:
+		if alteration == ActorCommons.Alteration.PROJECTILE:
+			var skill : SkillCell = DB.SkillsDB[skillID]
+			if skill.mode != Skill.TargetMode.ZONE:
+				DisplayProjectile(emitter, skill)
+		else:
 			var newLabel : Label = ActorCommons.AlterationLabel.instantiate()
 			newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
 			newLabel.SetValue(emitter, value, alteration)
 			Launcher.Map.fringeLayer.add_child.call_deferred(newLabel)
 			target.stat.health += value if alteration == ActorCommons.Alteration.HEAL else -value
 			target.stat.RefreshActiveStats()
-
-		if alteration == ActorCommons.Alteration.PROJECTILE:
-			var skill : SkillCell = DB.SkillsDB[skillID]
-			if skill.mode != Skill.TargetMode.ZONE:
-				DisplayProjectile(emitter, skill)
 
 #
 func DisplaySpeech(speech : String):
@@ -104,7 +103,7 @@ func DisplaySpeech(speech : String):
 		var speechLabel : RichTextLabel = ActorCommons.SpeechLabel.instantiate()
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
-		speechContainer.add_child.call_deferred(speechLabel)
+		speechContainer.add_child(speechLabel)
 		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, Util.RemoveNode, [speechLabel, speechContainer])
 
 #
