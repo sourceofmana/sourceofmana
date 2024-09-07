@@ -53,7 +53,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 				return
 			TargetMode.SELF:
 				Handle(agent, agent, skill, SkillCommons.GetRNG(hasStamina))
-				Casted(agent, target, skill)
+				Casted(agent, agent, skill)
 				return
 		Missed(agent, target)
 
@@ -73,7 +73,7 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	var timer : Timer = Callback.SelfDestructTimer(agent, SkillCommons.GetCooldown(agent, skill), callable, args, skill.name + " CoolDown")
 	agent.cooldownTimers[skill.name] = timer
 
-	Launcher.Network.Server.NotifyNeighbours(agent, "Casted", [skill.id, timer.time_left])
+	Launcher.Network.Server.NotifyNeighbours(target, "Casted", [skill.id, timer.time_left])
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	var info : AlterationInfo = SkillCommons.GetDamage(agent, target, skill, rng)
