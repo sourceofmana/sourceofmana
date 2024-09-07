@@ -84,9 +84,9 @@ func EnterGame():
 	if Launcher.Player:
 		infoContext.Clear()
 		infoContext.Push(ContextData.new("gp_interact"))
-		infoContext.Push(ContextData.new("gp_sit"))
+		infoContext.Push(ContextData.new("gp_untarget"))
 		infoContext.Push(ContextData.new("gp_morph"))
-		infoContext.Push(ContextData.new("gp_target"))
+		infoContext.Push(ContextData.new("gp_sit"))
 		infoContext.FadeIn()
 
 		background.set_visible(false)
