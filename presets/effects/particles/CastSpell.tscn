@@ -36,7 +36,6 @@ color_ramp = SubResource("GradientTexture1D_lucto")
 
 [node name="CastParticles" type="GPUParticles2D"]
 z_index = -1
-z_as_relative = false
 material = SubResource("CanvasItemMaterial_i21r2")
 position = Vector2(0, -10)
 scale = Vector2(1, 0.7)
