@@ -49,7 +49,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 			TargetMode.ZONE:
 				for zoneTarget in SkillCommons.GetSurroundingTargets(agent, skill):
 					Handle(agent, zoneTarget, skill, SkillCommons.GetRNG(hasStamina))
-				Casted(agent, null, skill)
+				Casted(agent, agent, skill)
 				return
 			TargetMode.SELF:
 				Handle(agent, agent, skill, SkillCommons.GetRNG(hasStamina))
