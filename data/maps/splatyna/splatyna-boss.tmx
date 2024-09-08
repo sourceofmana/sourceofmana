@@ -562,7 +562,7 @@
    <properties>
     <property name="dest_map" value="Splatyna Cave"/>
     <property name="dest_pos_x" type="int" value="111"/>
-    <property name="dest_pos_y" type="int" value="129"/>
+    <property name="dest_pos_y" type="int" value="131"/>
    </properties>
    <polygon points="0,0 32,32 64,0 87,-47 -23,-47"/>
   </object>
@@ -577,6 +577,8 @@
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="name" value="Old Chest"/>
+    <property name="own_script" value="ChestGlobal.gd"/>
+    <property name="player_script" value="Chest.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

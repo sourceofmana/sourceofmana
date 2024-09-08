@@ -39,8 +39,9 @@ static func AddAgent(agent : BaseAgent):
 static func RemoveAgent(agent : BaseAgent):
 	Util.Assert(agent != null, "Agent is null, can't remove it")
 	if agent:
-		if agent.get_parent() and agent.spawnInfo and agent.spawnInfo.is_persistant:
-			Callback.SelfDestructTimer(agent.get_parent(), agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent, [agent.spawnInfo])
+		var inst : WorldInstance = agent.get_parent()
+		if inst and agent.spawnInfo and agent.spawnInfo.is_persistant:
+			Callback.SelfDestructTimer(inst, agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent, [agent.spawnInfo, inst.id])
 
 		PopAgent(agent)
 		agents.erase(agent)
@@ -94,7 +95,12 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 		RemoveAgent(agent)
 
 static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : String = "") -> BaseAgent:
-	var position : Vector2 = WorldNavigation.GetSpawnPosition(spawn.map, spawn)
+	var data : EntityData = Instantiate.FindEntityReference(spawn.name)
+	Util.Assert(data != null, "Could not create the actor: %s" % spawn.name)
+	if not data:
+		return
+
+	var position : Vector2 = WorldNavigation.GetSpawnPosition(spawn.map, spawn, not data._navigationAgent.is_empty())
 	if Vector2i(position) == Vector2i.ZERO:
 		return null
 

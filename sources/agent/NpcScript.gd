@@ -11,6 +11,49 @@ var timerCount : int				= 0
 var isWaitingForChoice : bool		= false
 var windowToggled : bool			= false
 
+# Monster
+func Spawn(monsterName : String, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
+	var agents : Array[MonsterAgent] = []
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(npc)
+	if inst and inst.map:
+		var spawnObject : SpawnObject = SpawnObject.new()
+		spawnObject.map					= inst.map
+		if position == Vector2.ZERO:
+			spawnObject.spawn_position	= WorldNavigation.GetRandomPosition(inst.map)
+		else:
+			spawnObject.spawn_position	= WorldNavigation.GetRandomPositionAABB(inst.map, position, spawnRadius)
+		spawnObject.type				= "Monster"
+		spawnObject.name				= monsterName
+		spawnObject.count				= count
+
+		for i in count:
+			agents.push_back(WorldAgent.CreateAgent(spawnObject, inst.id))
+	return agents
+
+func MonsterCount():
+	var count : int = 0
+	if own:
+		var inst : WorldInstance = own.get_parent()
+		if inst:
+			count = inst.mobs.size()
+	return count
+
+func IsMonsterAlive(monsterName : String) -> bool:
+	if own:
+		var inst : WorldInstance = own.get_parent()
+		if inst:
+			for mob in inst.mobs:
+				if mob and mob.nick == monsterName and ActorCommons.IsAlive(mob):
+					return true
+	return false
+
+# Warp
+func Warp(mapName : String, position : Vector2):
+	if own is PlayerAgent:
+		var map : WorldMap = Launcher.World.GetMap(mapName)
+		if map:
+			Launcher.World.Warp(own, map, position)
+
 # Quest
 func SetQuest(questID : int, state : int):
 	if own and own.progress:

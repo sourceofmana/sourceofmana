@@ -20,7 +20,7 @@ func Init(_type : ActorCommons.Type, _ID : String, _nick : String = "", isManage
 		return
 
 	type = _type
-	nick = _ID if _nick.length() == 0 else _nick
+	nick = _ID if _nick.is_empty() else _nick
 	Callback.PlugCallback(ready, SetData, [data])
 
 	if type == ActorCommons.Type.PLAYER and isManaged:

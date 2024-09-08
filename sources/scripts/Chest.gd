@@ -21,21 +21,18 @@ func Inactive():
 	Chat("This chest seems to be sealed.")
 
 func TryOpen():
-	# Chest is not open, try to open it
-	if not ActorCommons.IsTriggering(npc):
-		# Check and remove items to open the chest
-		if HasItem(dorianKeyID) and HasItem(gabrielKeyID) and HasItem(marvinKeyID):
-			if RemoveItem(dorianKeyID) and RemoveItem(gabrielKeyID) and RemoveItem(marvinKeyID):
-				Trigger()
-				AddTimer(npc, animationSpeed, npc.ownScript.CloseChest)
-		else:
-			Chat("A lock with three holes is blocking this chest.")
-			Chat("You will need three different keys to unlock it.")
-	# Chest is opened, you can withdraw your reward
+	if IsMonsterAlive("Splatyna"):
+		Chat("A dark presence is still around.")
 	else:
+		# Chest is not open, try to open it
+		if not ActorCommons.IsTriggering(npc):
+			Trigger()
+			AddTimer(npc, animationSpeed, npc.ownScript.CloseChest)
+
+		# Chest is opened, you can withdraw your reward
 		if HasSpace(1):
 			SetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING, ProgressCommons.STATE_SPLATYNA.REWARDS_WITHDREW)
-			AddItem(appleID)
+			AddItem(appleID, 5)
 
 func Empty():
 	Chat("This chest is empty.")

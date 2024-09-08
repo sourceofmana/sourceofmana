@@ -61,10 +61,14 @@ static func GetRandomPositionAABB(map : WorldMap, pos : Vector2i, offset : Vecto
 		return GetRandomPosition(map)
 	return Vector2i.ZERO
 
-static func GetSpawnPosition(map : WorldMap, spawn : SpawnObject) -> Vector2i:
+static func GetSpawnPosition(map : WorldMap, spawn : SpawnObject, hasNavigation : bool) -> Vector2i:
 	var position : Vector2i = Vector2i.ZERO
 	if not spawn.is_global:
-		position = WorldNavigation.GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
+		if hasNavigation:
+			position = WorldNavigation.GetRandomPositionAABB(map, spawn.spawn_position, spawn.spawn_offset)
+		else:
+			position = spawn.spawn_position
+
 	if position == Vector2i.ZERO:
 		position = WorldNavigation.GetRandomPosition(map)
 

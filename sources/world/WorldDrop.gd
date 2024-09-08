@@ -38,7 +38,7 @@ static func Timeout(dropID : int, inst : WorldInstance):
 			PopDrop(dropID, inst)
 
 static func PickupDrop(dropID : int, agent : BaseAgent) -> bool:
-	if agent and agent.inventory:
+	if agent and ActorCommons.IsAlive(agent) and agent.inventory:
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 		if inst and dropID in inst.drops:
 			var drop : Drop = inst.drops[dropID]

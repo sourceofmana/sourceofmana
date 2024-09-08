@@ -300,5 +300,12 @@
 		"Stat": {
 			"walkSpeed": 50,
 		},
-	}
+	},
+	"2003": {
+		"Name": "Locks",
+		"Ethnicity": "CaveLocks",
+		"Collision": "Large",
+		"Radius": "32",
+		"DisplayName": true,
+	},
 }

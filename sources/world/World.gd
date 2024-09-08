@@ -1,5 +1,4 @@
 extends ServiceBase
-
 class_name WorldService
 
 # Vars

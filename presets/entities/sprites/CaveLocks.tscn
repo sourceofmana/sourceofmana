@@ -1,7 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dy3gyhmlew12g"]
+[gd_scene load_steps=13 format=3 uid="uid://bkrd2qnl2atsn"]
 
-[ext_resource type="Texture2D" uid="uid://cnmxs1n4xeaix" path="res://data/graphics/sprites/npcs/large-chest.png" id="1_ql3k7"]
-[ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="2_dex3v"]
+[ext_resource type="Texture2D" uid="uid://ddcmhoqjma1th" path="res://data/graphics/sprites/npcs/cave-locks.png" id="1_4t0qc"]
+[ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="2_atsn7"]
 
 [sub_resource type="Animation" id="Animation_38rnv"]
 resource_name = "Attack"
@@ -42,10 +42,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [3, 2, 1, 0]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_x1wls"]
@@ -75,7 +75,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [3]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_5moda"]
@@ -102,10 +102,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_v53m3"]
@@ -155,10 +155,8 @@ _data = {
 
 [node name="Body" type="Sprite2D" parent="."]
 position = Vector2(0, -4)
-texture = ExtResource("1_ql3k7")
-offset = Vector2(0, -16)
-hframes = 4
-frame = 3
+texture = ExtResource("1_4t0qc")
+offset = Vector2(0, -36)
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Body")
@@ -166,5 +164,5 @@ libraries = {
 "": SubResource("AnimationLibrary_gf7hs")
 }
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_dex3v")]
+[node name="AnimationTree" parent="Animation" instance=ExtResource("2_atsn7")]
 root_node = NodePath("../../Body")
