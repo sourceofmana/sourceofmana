@@ -4,6 +4,8 @@
 [ext_resource type="Script" path="res://sources/gui/SpeechBubble.gd" id="3_oywku"]
 
 [node name="Speech" type="RichTextLabel"]
+z_index = 4096
+z_as_relative = false
 clip_contents = false
 anchors_preset = 8
 anchor_left = 0.5
