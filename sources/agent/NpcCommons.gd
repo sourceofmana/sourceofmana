@@ -28,6 +28,18 @@ static var Farewells : PackedStringArray = [
 	"Goodbye for now."
 ]
 
+# Display
+static func PushNotification(pc : BaseAgent, text : String):
+	if pc:
+		if pc is PlayerAgent:
+			var peerID : int = Launcher.Network.Server.GetRid(pc)
+			if peerID != NetworkCommons.RidUnknown:
+				Launcher.Network.PushNotification(text, peerID)
+		elif pc is NpcAgent:
+			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(pc)
+			if inst:
+				Launcher.Network.Server.NotifyInstance(inst, "PushNotification", [text])
+
 # Context sent to client
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
 	if npc and pc and pc is PlayerAgent:

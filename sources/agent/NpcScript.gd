@@ -11,7 +11,21 @@ var timerCount : int				= 0
 var isWaitingForChoice : bool		= false
 var windowToggled : bool			= false
 
+# Quest
+func SetQuest(questID : int, state : int):
+	if own and own.progress:
+		if own.progress.GetQuest(questID) == ProgressCommons.UnknownProgress:
+			Notification("Quest Started: " + ProgressCommons.QuestNames[questID])
+		own.progress.SetQuest(questID, state)
+
+func GetQuest(questID : int) -> int:
+	return own.progress.GetQuest(questID) if own and own.progress else ProgressCommons.UnknownProgress
+
 # Display
+func Notification(text : String):
+	NpcCommons.PushNotification(own, text)
+
+# State
 func Trigger() -> bool:
 	return npc.SetState(ActorCommons.State.TRIGGER) if npc else false
 
@@ -62,19 +76,42 @@ func ClearTimer(timer : Timer):
 # Inventory
 func HasItem(itemID : int, count : int = 1) -> bool:
 	if own is PlayerAgent:
-		var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
+		var cell : BaseCell = DB.GetItem(itemID)
 		return own.inventory.HasItem(cell, count) if cell else false
 	return false
 
+func HasItemsSpace(items : Array) -> bool:
+	var totalCount : int = 0
+	for item in items:
+		var itemCount : int = 1
+		var cell : BaseCell = null
+		if item is Array:
+			assert(item.size() == 2, "Wrong format to check user inventory space")
+			if item.size() == 2:
+				cell = DB.GetItem(item[0])
+				itemCount = item[1]
+		elif item is int:
+			cell = DB.GetItem(item)
+		else:
+			assert(false, "Argument given is not an item, could not verify if the inventory has enough space for this")
+			return false
+
+		if cell:
+			totalCount += 1 if cell.stackable else itemCount
+	return HasSpace(totalCount)
+
+func HasSpace(itemCount : int) -> bool:
+	return own.inventory.HasSpace(itemCount) if own is PlayerAgent else false
+
 func AddItem(itemID : int, count : int = 1) -> bool:
 	if own is PlayerAgent:
-		var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
+		var cell : BaseCell = DB.GetItem(itemID)
 		return own.inventory.AddItem(cell, count) if cell else false
 	return false
 
 func RemoveItem(itemID : int, count : int = 1) -> bool:
 	if own is PlayerAgent:
-		var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
+		var cell : BaseCell = DB.GetItem(itemID)
 		return own.inventory.RemoveItem(cell, count) if cell else false
 	return false
 
@@ -90,8 +127,8 @@ func InteractChoice(choiceId : int):
 
 	var dialogueStep : Dictionary = steps[step]
 	if choiceId < dialogueStep["choices"].size():
-		NpcCommons.ContextText(own, own.nick, dialogueStep["text"])
 		var choice : Dictionary = dialogueStep["choices"][choiceId]
+		NpcCommons.ContextText(own, own.nick, choice["text"])
 		if choice.has("action"):
 			isWaitingForChoice = false
 			step = 0

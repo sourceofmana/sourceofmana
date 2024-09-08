@@ -66,7 +66,7 @@ func HasItem(cell : BaseCell, count : int) -> bool:
 
 	var totalCount : int = 0
 	for item in items:
-		if item.cell.name == cell.name:
+		if item.cell.id == cell.id:
 			if cell.stackable:
 				return item.count >= count
 			else:
@@ -74,6 +74,12 @@ func HasItem(cell : BaseCell, count : int) -> bool:
 				if totalCount >= count:
 					return true
 	return false
+
+func HasSpace(count : int) -> bool:
+	var inventoryCount : int = 0
+	for item in items:
+		inventoryCount += 1 if item.cell.stackable else item.count
+	return inventoryCount + count < ActorCommons.InventorySize
 
 #
 func GetWeight() -> float:

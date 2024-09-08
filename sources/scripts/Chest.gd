@@ -1,27 +1,41 @@
 extends NpcScript
 
 const animationSpeed : float		= 30.0
-var rewardItemID : int				= DB.GetCellHash("Apple")
-var keyItemID : int					= DB.GetCellHash("Dorian's Key")
 
-# To remove once quest setters and getters are implemented
-var withdrew : bool					= false
+# Reward items
+var appleID : int					= DB.GetCellHash("Apple")
+
+# Required items
+var dorianKeyID : int				= DB.GetCellHash("Dorian's Key")
+var gabrielKeyID : int				= DB.GetCellHash("Gabriel's Key")
+var marvinKeyID : int				= DB.GetCellHash("Marvin's Key")
 
 #
 func OnStart():
+	match GetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING):
+		ProgressCommons.STATE_SPLATYNA.INACTIVE: Inactive()
+		ProgressCommons.STATE_SPLATYNA.STARTED: TryOpen()
+		_: Empty()
+
+func Inactive():
+	Chat("This chest seems to be sealed.")
+
+func TryOpen():
 	# Chest is not open, try to open it
 	if not ActorCommons.IsTriggering(npc):
-		# Remove the item and open the chest
-		if RemoveItem(keyItemID):
-			Trigger()
-			AddTimer(npc, animationSpeed, npc.ownScript.CloseChest)
+		# Check and remove items to open the chest
+		if HasItem(dorianKeyID) and HasItem(gabrielKeyID) and HasItem(marvinKeyID):
+			if RemoveItem(dorianKeyID) and RemoveItem(gabrielKeyID) and RemoveItem(marvinKeyID):
+				Trigger()
+				AddTimer(npc, animationSpeed, npc.ownScript.CloseChest)
 		else:
-			Chat("You need a key to open this chest!")
+			Chat("A lock with three holes is blocking this chest.")
+			Chat("You will need three different keys to unlock it.")
 	# Chest is opened, you can withdraw your reward
 	else:
-		# Check quest state
-		if not withdrew:
-			withdrew = true
-			AddItem(rewardItemID)
-		else:
-			Chat("This chest is empty.")
+		if HasSpace(1):
+			SetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING, ProgressCommons.STATE_SPLATYNA.REWARDS_WITHDREW)
+			AddItem(appleID)
+
+func Empty():
+	Chat("This chest is empty.")

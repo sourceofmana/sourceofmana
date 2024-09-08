@@ -126,6 +126,19 @@ static func GetCellHash(cellname : StringName) -> int:
 	return hashDB[cellname] if hasCRC else UnknownHash
 
 #
+static func GetItem(cellHash : int) -> BaseCell:
+	assert(cellHash in ItemsDB, "Could not find the identifier %s in ItemsDB" % [cellHash])
+	return ItemsDB[cellHash] if cellHash in ItemsDB else null
+
+static func GetEmote(cellHash : int) -> BaseCell:
+	assert(cellHash in EmotesDB, "Could not find the identifier %s in EmotesDB" % [cellHash])
+	return EmotesDB[cellHash] if cellHash in EmotesDB else null
+
+static func GetSkill(cellHash : int) -> SkillCell:
+	assert(cellHash in SkillsDB, "Could not find the identifier %s in SkillsDB" % [cellHash])
+	return SkillsDB[cellHash] if cellHash in SkillsDB else null
+
+#
 static func Init():
 	ParseMapsDB()
 	ParseMusicsDB()
