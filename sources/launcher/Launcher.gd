@@ -6,11 +6,11 @@ var Root : Node						= null
 # Specific services
 var Action : ServiceBase			= null
 var Scene : Node2D					= null
+var Audio : AudioStreamPlayer		= null
 var GUI : ServiceBase				= null
 var Debug : ServiceBase				= null
 
 # Low-prio services
-var Audio : ServiceBase				= null
 var Camera : ServiceBase			= null
 var FSM : ServiceBase				= null
 var Map : ServiceBase				= null
@@ -50,7 +50,8 @@ func LaunchMode(isClient : bool = false, isServer : bool = false):
 		if not isClient:
 			Scene.queue_free()
 			FSM.queue_free()
-
+			Action.queue_free()
+			Audio.queue_free()
 			var label = FileSystem.LoadGui("Server")
 			add_child.call_deferred(label)
 
@@ -61,7 +62,6 @@ func LaunchClient():
 		Debug		= FileSystem.LoadSource("debug/Debug.gd")
 
 	# Load then low-prio services on which the order is not important
-	Audio			= FileSystem.LoadSource("audio/Audio.gd")
 	Camera			= FileSystem.LoadSource("camera/Camera.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
 
@@ -73,7 +73,8 @@ func LaunchServer():
 func _enter_tree():
 	Root			= get_tree().get_root()
 	Scene			= Root.get_node("Source")
-	GUI				= Scene.get_node("CanvasLayer")
+	GUI				= Scene.get_node("Canvas")
+	Audio			= Scene.get_node("Audio")
 
 	if not Root or not Scene or not GUI:
 		printerr("Could not initialize source's base services")
@@ -99,10 +100,10 @@ func _post_launch():
 	if Camera and not Camera.isInitialized:		Camera._post_launch()
 	if GUI and not GUI.isInitialized:			GUI._post_launch()
 	if Debug and not Debug.isInitialized:		Debug._post_launch()
-	if Audio and not Audio.isInitialized:		Audio._post_launch()
 	if World and not World.isInitialized:		World._post_launch()
 	if FSM and not FSM.isInitialized:			FSM._post_launch()
 	if Network and not Network.isInitialized:	Network._post_launch()
+	if Audio:									Audio._post_launch()
 
 func _quit():
 	get_tree().quit()

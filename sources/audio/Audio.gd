@@ -1,38 +1,27 @@
-extends ServiceBase
+extends AudioStreamPlayer
 
-var audioPlayer : AudioStreamPlayer				= null
 var currentTrack : String = ""
 
 #
-func Play(pause : bool = false):
-	if pause:
-		audioPlayer.pause()
-	else:
-		audioPlayer.play()
-
 func Stop():
-	if audioPlayer.is_playing():
-		audioPlayer.stop()
+	if is_playing():
+		stop()
 	currentTrack = ""
 
 func Load(soundName : String):
-	Util.Assert(audioPlayer != null, "AudioStreamPlayer could not be found")
-	if audioPlayer && currentTrack != soundName && not soundName.is_empty() && DB.MusicsDB[soundName] != null:
+	if currentTrack != soundName && not soundName.is_empty() && DB.MusicsDB[soundName] != null:
 		var soundStream : Resource = FileSystem.LoadMusic(DB.MusicsDB[soundName]._path as String)
 		Util.Assert(soundStream != null, "Could not load music: " + soundName)
 		if soundStream != null:
 			soundStream.set_loop(true)
-
-			audioPlayer.stream	= soundStream
+			set_stream(soundStream)
 			currentTrack		= soundName
 
-			audioPlayer.set_autoplay(true)
-			audioPlayer.play()
+			set_autoplay(true)
+			play()
 
 func SetVolume(volume : float):
-	Util.Assert(audioPlayer != null, "AudioStreamPlayer could not be found")
-	if audioPlayer:
-		audioPlayer.set_volume_db(volume)
+	set_volume_db(volume)
 
 func Warped():
 	if Launcher.Map.mapNode && Launcher.Map.mapNode.has_meta("music"):
@@ -42,13 +31,8 @@ func Warped():
 
 #
 func _post_launch():
-	audioPlayer = Launcher.Scene.get_node("AudioStreamPlayer")
-	Util.Assert(audioPlayer != null, "Could not find the AudioStreamPlayer instance")
-
-	if Launcher.FSM:
-		Launcher.FSM.exit_game.connect(self.Stop)
-	if Launcher.Map:
-		Launcher.Map.PlayerWarped.connect(self.Warped)
+	if Launcher.FSM and not Launcher.FSM.exit_game.is_connected(Stop):
+		Launcher.FSM.exit_game.connect(Stop)
+	if Launcher.Map and not Launcher.Map.PlayerWarped.is_connected(Warped):
+		Launcher.Map.PlayerWarped.connect(Warped)
 		Warped()
-
-	isInitialized = true

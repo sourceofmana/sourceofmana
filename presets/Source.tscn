@@ -1,10 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://xbkw20luc3wd"]
+[gd_scene load_steps=3 format=3 uid="uid://xbkw20luc3wd"]
 
 [ext_resource type="PackedScene" uid="uid://owiltak1cxk8" path="res://presets/gui/Game.tscn" id="1_t6imb"]
+[ext_resource type="Script" path="res://sources/audio/Audio.gd" id="2_8nciu"]
 
 [node name="Source" type="Node2D"]
 
-[node name="CanvasLayer" parent="." instance=ExtResource("1_t6imb")]
+[node name="Canvas" parent="." instance=ExtResource("1_t6imb")]
 layer = 128
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+script = ExtResource("2_8nciu")
