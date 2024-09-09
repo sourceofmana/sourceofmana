@@ -3,8 +3,6 @@ extends ServiceBase
 var correctPos : ColorRect					= null
 var wrongPos : ColorRect					= null
 
-var navLineDebug : bool						= false
-var navlineWidth : int 						= 2
 var desyncDebug : bool						= false
 
 #
@@ -30,31 +28,6 @@ func OnPlayerEnterGame():
 				col.top_level = true
 				wrongPos = col
 				Launcher.Player.add_child.call_deferred(col)
-
-#
-func UpdateNavLine(entity : Entity):
-	if navLineDebug:
-		if entity and entity.agent:
-			if not entity.has_node("NavigationLine"):
-				var navLine : Line2D = Line2D.new()
-				navLine.set_name("NavigationLine")
-				navLine.set_width(navlineWidth)
-				navLine.set_default_color(Color(Color.WHITE, 0.4))
-				navLine.set_antialiased(true)
-				navLine.set_as_top_level(true)
-				entity.add_child.call_deferred(navLine)
-
-			if entity.has_node("NavigationLine"):
-				var entityNavLine : Line2D = entity.get_node("NavigationLine")
-				entityNavLine.points = entity.agent.get_current_navigation_path()
-			else:
-				Util.Assert(false, "Navigation Line2D can't be null, something went wrong")
-
-func ClearNavLine(entity : Entity):
-	if entity:
-		if entity.has_node("NavigationLine"):
-			var entityNavLine : Line2D = entity.get_node("NavigationLine")
-			entityNavLine.points = []
 
 #
 func _post_launch():

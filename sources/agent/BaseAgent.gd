@@ -5,7 +5,8 @@ class_name BaseAgent
 var agent : NavigationAgent2D			= null
 var entityRadius : int					= 0
 
-var aiState : AI.State					= AI.State.IDLE
+var behaviour : int						= AICommons.Behaviour.NEUTRAL
+var aiState : AICommons.State			= AICommons.State.IDLE
 var aiTimer : Timer						= null
 var actionTimer : Timer					= null
 var regenTimer : Timer					= null

@@ -2,17 +2,8 @@ extends Object
 class_name AI
 
 #
-enum State
-{
-	IDLE = 0,
-	WALK,
-	ATTACK,
-	HALT,
-}
-
-#
-static func SetState(agent : BaseAgent, state : State, force : bool = false):
-	var newState : State = state if force else AICommons.GetTransition(agent.aiState, state)
+static func SetState(agent : BaseAgent, state : AICommons.State, force : bool = false):
+	var newState : AICommons.State = state if force else AICommons.GetTransition(agent.aiState, state)
 	if agent.aiState != newState:
 		agent.aiState = newState
 		if AICommons.IsActionInProgress(agent):
@@ -21,23 +12,23 @@ static func SetState(agent : BaseAgent, state : State, force : bool = false):
 			agent.ResetNav()
 
 static func Reset(agent : BaseAgent):
-	SetState(agent, State.IDLE, true)
+	SetState(agent, AICommons.State.IDLE, true)
 	Callback.StartTimer(agent.aiTimer, AICommons.refreshDelay, AI.Refresh.bind(agent))
 
 static func Refresh(agent : BaseAgent):
 	if not agent:
 		return
 	if not WorldAgent.GetMapFromAgent(agent):
-		SetState(agent, State.HALT)
+		SetState(agent, AICommons.State.HALT)
 
 	match agent.aiState:
-		State.IDLE:
+		AICommons.State.IDLE:
 			StateIdle(agent)
-		State.WALK:
+		AICommons.State.WALK:
 			StateWalk(agent)
-		State.ATTACK:
+		AICommons.State.ATTACK:
 			StateAttack(agent)
-		State.HALT:
+		AICommons.State.HALT:
 			Callback.ClearTimer(agent.aiTimer)
 			return
 		_:
@@ -60,7 +51,7 @@ static func StateWalk(agent : BaseAgent):
 static func StateAttack(agent : BaseAgent):
 	var target : BaseAgent = agent.GetMostValuableAttacker()
 	if not ActorCommons.IsAlive(target):
-		SetState(agent, State.IDLE, true)
+		SetState(agent, AICommons.State.IDLE, true)
 	elif not AICommons.IsActionInProgress(agent):
 		agent.skillSelected = AICommons.GetRandomSkill(agent)
 		if not agent.skillSelected:
@@ -76,8 +67,8 @@ static func ToWalk(agent : BaseAgent):
 	if map:
 		var position : Vector2i = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.GetOffset())
 		agent.WalkToward(position)
-		agent.aiState = State.WALK
-		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, State.IDLE])
+		agent.aiState = AICommons.State.WALK
+		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, AICommons.State.IDLE])
 
 static func ToAttack(agent : BaseAgent, target : BaseAgent):
 	if AICommons.IsAgentMoving(agent):
@@ -96,5 +87,5 @@ static func ToFlee(agent : BaseAgent, target : BaseAgent):
 	if map and SkillCommons.IsSameMap(agent, target):
 		var fleePosition : Vector2 = agent.position - agent.position.direction_to(target.position) * AICommons.fleeDistance
 		agent.WalkToward(fleePosition)
-		agent.aiState = State.WALK
-		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, State.IDLE])
+		agent.aiState = AICommons.State.WALK
+		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, AICommons.State.IDLE])

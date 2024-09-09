@@ -2,12 +2,33 @@ extends Object
 class_name AICommons
 
 #
+enum State
+{
+	IDLE = 0,
+	WALK,
+	ATTACK,
+	HALT,
+}
+
+enum Behaviour
+{
+	NONE		= 0,
+	NEUTRAL		= 1 << 0,
+	AGGRESSIVE	= 1 << 1,
+	IMMOBILE	= 1 << 2,
+	LEADER		= 1 << 3,
+	FOLLOWER	= 1 << 4,
+	SPAWNER		= 1 << 5,
+	STEAL		= 1 << 6,
+}
+
+#
 const _transitions : Array[Array] = [
-#	IDLE				WALK				ATTACK				HALT			< To/From v
-	[AI.State.IDLE,		AI.State.WALK,		AI.State.ATTACK,	AI.State.HALT],	# IDLE
-	[AI.State.IDLE,		AI.State.WALK,		AI.State.ATTACK,	AI.State.HALT],	# WALK
-	[AI.State.ATTACK,	AI.State.ATTACK,	AI.State.ATTACK,	AI.State.HALT],	# ATTACK
-	[AI.State.HALT,		AI.State.HALT,		AI.State.HALT,		AI.State.HALT],	# HALT
+#	IDLE				WALK			ATTACK			HALT			< To/From v
+	[State.IDLE,		State.WALK,		State.ATTACK,	State.HALT],	# IDLE
+	[State.IDLE,		State.WALK,		State.ATTACK,	State.HALT],	# WALK
+	[State.ATTACK,		State.ATTACK,	State.ATTACK,	State.HALT],	# ATTACK
+	[State.HALT,		State.HALT,		State.HALT,		State.HALT],	# HALT
 ]
 
 const refreshDelay : float			= 1.0
@@ -52,5 +73,5 @@ static func GetRandomSkill(agent : BaseAgent) -> SkillCell:
 				return skill
 	return null
 
-static func GetTransition(prev : AI.State, next : AI.State) -> AI.State:
+static func GetTransition(prev : State, next : State) -> State:
 	return _transitions[prev][next]

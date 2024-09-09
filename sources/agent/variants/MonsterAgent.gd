@@ -8,7 +8,7 @@ func Killed():
 	super.Killed()
 	Formula.ApplyXp(self)
 	if aiTimer:
-		AI.SetState(self, AI.State.HALT)
+		AI.SetState(self, AICommons.State.HALT)
 
 	for item in inventory.items:
 		WorldDrop.PushDrop(item, self)
