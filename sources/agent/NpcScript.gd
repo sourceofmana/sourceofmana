@@ -76,7 +76,7 @@ func Trigger() -> bool:
 func Mes(mes : String):
 	steps.append({"text": mes})
 
-func Choice(mes : String, callable : Callable):
+func Choice(mes : String, callable : Callable = Callback.Empty):
 	if steps.is_empty():
 		steps.append({"choices": []})
 
