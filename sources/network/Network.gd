@@ -226,19 +226,19 @@ func NetCallServer(methodName : String, args : Array, rpcID : int, actionDelta :
 		if NetSpamControl(rpcID, methodName, actionDelta):
 			Server.callv(methodName, args + [rpcID])
 	else:
-		callv("rpc_id", [1, methodName] + args + [uniqueID])
+		callv.call_deferred("rpc_id", [1, methodName] + args + [uniqueID])
 
 func NetCallClient(methodName : String, args : Array, rpcID : int):
 	if Client:
 		Client.callv(methodName, args)
 	else:
-		callv("rpc_id", [rpcID, methodName] + args)
+		callv.call_deferred("rpc_id", [rpcID, methodName] + args)
 
 func NetCallClientGlobal(methodName : String, args : Array):
 	if Client:
 		Client.callv(methodName, args)
 	else:
-		callv("rpc", [methodName] + args)
+		callv.call_deferred("rpc", [methodName] + args)
 
 func NetMode(isClient : bool, isServer : bool):
 	if isClient:
