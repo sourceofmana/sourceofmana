@@ -200,3 +200,12 @@ const InventorySize : int					= 100
 
 # Explore
 static var SailingDestination : Destination	= Destination.new("Ocean", Vector2(71 * 32, 55 * 32))
+
+# New player
+const DefaultAttributes : Dictionary = {
+	"strength": 10,
+	"vitality": 3
+}
+static var DefaultInventory : Dictionary = {
+	"Apple".hash(): 5
+}
