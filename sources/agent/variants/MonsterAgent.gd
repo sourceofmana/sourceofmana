@@ -7,8 +7,6 @@ static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.MONST
 func Killed():
 	super.Killed()
 	Formula.ApplyXp(self)
-	if aiTimer:
-		AI.SetState(self, AICommons.State.HALT)
 
 	for item in inventory.items:
 		WorldDrop.PushDrop(item, self)

@@ -201,6 +201,10 @@ const InventorySize : int					= 100
 # Explore
 static var SailingDestination : Destination	= Destination.new("Ocean", Vector2(71 * 32, 55 * 32))
 
+# Navigation
+const DisplacementVector : Vector2			= Vector2(32, 32)
+const MaxDisplacementSquareLength : float	= 64 * 64
+
 # New player
 const DefaultAttributes : Dictionary = {
 	"strength": 10,

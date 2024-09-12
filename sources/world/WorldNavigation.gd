@@ -17,33 +17,27 @@ static func CreateInstance(map : WorldMap, mapRID : RID):
 		map.regionRID = NavigationServer2D.region_create()
 		NavigationServer2D.region_set_map(map.regionRID, map.mapRID)
 		NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.navPoly)
+		NavigationServer2D.region_set_navigation_layers(map.regionRID, 1)
 
 		NavigationServer2D.map_force_update(map.mapRID)
 
 # Getter
-static func GetPathLength(agent : BaseAgent, pos : Vector2) -> float :
+static func GetPathLengthSquared(agent : BaseAgent, pos : Vector2) -> float:
 	var path : PackedVector2Array = NavigationServer2D.map_get_path(agent.agent.get_navigation_map(), agent.position, pos, true)
-	var pathLength : float = 0.0
-	for i in range(0, path.size() - 1):
-		pathLength += Vector2(path[i] - path[i+1]).length()
-	return pathLength
+	if path.size() == 0:
+		return INF
+
+	path.append(pos)
+	var pathLengthSquared : float = 0.0
+	for i in range(0, path.size()-1):
+		pathLengthSquared += (path[i] - path[i+1]).length_squared()
+	return pathLengthSquared
 
 # Utils
 static func GetRandomPosition(map : WorldMap) -> Vector2i:
 	Util.Assert(map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0, "No triangulation available")
 	if map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0:
-		var outlinesList : PackedVector2Array  = map.navPoly.get_vertices()
-
-		var randPolygonID : int = randi_range(0, map.navPoly.get_polygon_count() - 1)
-		var randPolygon : PackedInt32Array = map.navPoly.get_polygon(randPolygonID)
-
-		var randVerticeID : int = randi_range(0, randPolygon.size() - 1)
-		var a : Vector2 = outlinesList[randPolygon[randVerticeID]]
-		var b : Vector2 = outlinesList[randPolygon[(randVerticeID + 1) % randPolygon.size()]]
-		var c : Vector2 = outlinesList[randPolygon[(randVerticeID + 2) % randPolygon.size()]]
-
-		return Vector2i(a + sqrt(randf()) * (-a + b + randf() * (c - b)))
-
+		return NavigationServer2D.map_get_random_point(map.mapRID, 1, false)
 	Util.Assert(false, "Mob could not be spawned, no available point on the navigation mesh were found")
 	return Vector2i.ZERO
 

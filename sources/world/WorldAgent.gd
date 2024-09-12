@@ -100,7 +100,7 @@ static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : St
 	if not data:
 		return
 
-	var position : Vector2 = WorldNavigation.GetSpawnPosition(spawn.map, spawn, not data._navigationAgent.is_empty())
+	var position : Vector2 = WorldNavigation.GetSpawnPosition(spawn.map, spawn, !(data._behaviour & AICommons.Behaviour.IMMOBILE))
 	if Vector2i(position) == Vector2i.ZERO:
 		return null
 

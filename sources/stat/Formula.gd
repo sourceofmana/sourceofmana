@@ -109,10 +109,10 @@ static func GetXpBonus(stat : ActorStats) -> float:
 
 static func ApplyXp(agent : BaseAgent):
 	var bonus : float = Formula.GetXpBonus(agent.stat)
-	for attacker in agent.attackers:
-		if attacker != null and not attacker.is_queued_for_deletion():
-			var bonusScaled : int = int(bonus * agent.GetDamageRatio(attacker))
-			attacker.stat.AddExperience(bonusScaled)
+	for entry in agent.attackers:
+		if entry.attacker != null and not entry.attacker.is_queued_for_deletion():
+			var bonusScaled : int = int(bonus * agent.GetDamageRatio(entry.attacker))
+			entry.attacker.stat.AddExperience(bonusScaled)
 
 # Attribute points
 static func GetMaxAttributePoints(stat : ActorStats) -> int:

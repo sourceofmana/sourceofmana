@@ -1,7 +1,5 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dp6v2o0wokn8"]
 
 [node name="NavAgent" type="NavigationAgent2D"]
 path_desired_distance = 10.0
-target_desired_distance = 10.0
-path_max_distance = 100.0
-radius = 24.0
+neighbor_distance = 20.0

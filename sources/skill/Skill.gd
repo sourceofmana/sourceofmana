@@ -80,7 +80,6 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rn
 	var info : AlterationInfo = SkillCommons.GetDamage(agent, target, skill, rng)
 	if target.aiTimer:
 		target.AddAttacker(agent, info.value)
-		AI.SetState(target, AICommons.State.ATTACK)
 	target.stat.SetHealth(-info.value)
 	Launcher.Network.Server.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill.id])
 

@@ -5,12 +5,12 @@ class_name EntityData
 @export var _name : String 						= ""
 @export var _ethnicity : String					= ""
 @export var _hairstyle : String					= ""
-@export var _navigationAgent : String			= ""
 @export var _collision : String					= ""
 @export var _radius : int						= 0
 @export var _customTextures : Array[String]		= []
 @export var _customShaders : Array[String]		= []
 @export var _displayName : bool					= false
+@export var _behaviour : int					= AICommons.Behaviour.NEUTRAL
 @export var _stats : Dictionary					= {}
 @export var _skillSet : Array[int]				= []
 @export var _skillProba : Dictionary			= {}
@@ -29,8 +29,6 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 		entity._ethnicity = result.Ethnicity
 	if "Hairstyle" in result:
 		entity._hairstyle = result.Hairstyle
-	if "NavigationAgent" in result:
-		entity._navigationAgent = result.NavigationAgent
 	if "Collision" in result:
 		entity._collision = result.Collision
 	if "Radius" in result:
@@ -43,6 +41,8 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 			entity._customShaders[ActorCommons.GetSlotID(shader)] = result.Shaders[shader]
 	if "DisplayName" in result:
 		entity._displayName = result.DisplayName
+	if "Behaviour" in result:
+		entity._behaviour = AICommons.GetBehaviourFlags(result.Behaviour)
 	if "Stat" in result:
 		for statName in result.Stat:
 			entity._stats[statName] = result.Stat[statName]
