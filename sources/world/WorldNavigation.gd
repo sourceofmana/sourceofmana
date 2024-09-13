@@ -23,15 +23,16 @@ static func CreateInstance(map : WorldMap, mapRID : RID):
 
 # Getter
 static func GetPathLengthSquared(agent : BaseAgent, pos : Vector2) -> float:
-	var path : PackedVector2Array = NavigationServer2D.map_get_path(agent.agent.get_navigation_map(), agent.position, pos, true)
-	if path.size() == 0:
-		return INF
-
-	path.append(pos)
-	var pathLengthSquared : float = 0.0
-	for i in range(0, path.size()-1):
-		pathLengthSquared += (path[i] - path[i+1]).length_squared()
-	return pathLengthSquared
+	if agent:
+		var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
+		if map:
+			var path : PackedVector2Array = NavigationServer2D.map_get_path(map.mapRID, agent.position, pos, true)
+			if path.size() >= 2:
+				var unrolledPos : Vector2 = Vector2.ZERO
+				for i in range(0, path.size()-1):
+					unrolledPos += (path[i] - path[i+1]).abs()
+				return unrolledPos.length_squared()
+	return INF
 
 # Utils
 static func GetRandomPosition(map : WorldMap) -> Vector2i:
