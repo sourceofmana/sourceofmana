@@ -73,11 +73,11 @@ static func GetSurroundingTargets(agent : BaseAgent, skill : SkillCell) -> Array
 
 	if skill.effects.has(CellCommons.effectDamage):
 		for neighbour in neighbours[1]:
-			if ActorCommons.IsAlive(neighbour) and IsNear(agent, neighbour, GetRange(agent, skill)):
+			if IsTargetable(agent, neighbour, skill):
 				targets.append(neighbour)
 	if skill.effects.has(CellCommons.effectHP):
 		for neighbour in neighbours[2]:
-			if ActorCommons.IsAlive(neighbour) and IsNotSelf(agent, neighbour) and IsNear(agent, neighbour, GetRange(agent, skill)):
+			if IsTargetable(agent, neighbour, skill):
 				targets.append(neighbour)
 
 	return targets

@@ -129,25 +129,22 @@ static func ApplyNeutralBehaviour(agent : BaseAgent) -> bool:
 	return false
 
 static func ApplyAggressiveBehaviour(agent : BaseAgent) -> bool:
-	if agent == null or agent.agent == null:
+	if agent == null:
 		return false
 
 	var nearest : PlayerAgent = null
 	var nearestSquaredDist : float = AICommons.reachDistanceSquared
 	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	for player in instance.players:
-		if player:
+		if ActorCommons.IsAlive(player):
 			var currentDist : float = WorldNavigation.GetPathLengthSquared(agent, player.position)
 			if currentDist < nearestSquaredDist:
 				nearest = player
 				nearestSquaredDist = currentDist
 	if nearest:
 		agent.AddAttacker(nearest)
-		AI.SetState(agent, AICommons.State.ATTACK, true)
+		agent.aiState = AICommons.State.ATTACK
 		return true
-
-	if agent.aiState == State.ATTACK:
-		AI.SetState(agent, AICommons.State.WALK, true)
 	return false
 
 static func ApplyStealBehaviour(_agent : BaseAgent) -> bool:
