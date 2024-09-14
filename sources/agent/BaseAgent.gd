@@ -95,9 +95,9 @@ func SetState(wantedState : ActorCommons.State) -> bool:
 	return state == wantedState
 
 func SetSkillCastID(skillID : int):
-	forceUpdate = forceUpdate or DB.SkillsDB.has(currentSkillID)
+	forceUpdate = forceUpdate or currentSkillID in DB.SkillsDB
 	currentSkillID = skillID
-	if skillID != DB.UnknownHash:
+	if skillID == DB.UnknownHash:
 		skillSelected = null
 
 func AddSkill(skill : SkillCell, proba : float):
@@ -225,7 +225,7 @@ func GetDamageRatio(attacker : BaseAgent) -> float:
 	return 0.0
 
 func Killed():
-	SetSkillCastID(-1)
+	SetSkillCastID(DB.UnknownHash)
 
 #
 func _physics_process(_delta):
@@ -236,6 +236,9 @@ func _physics_process(_delta):
 			agent.set_velocity(currentVelocity)
 		else:
 			_velocity_computed(currentVelocity)
+	else:
+		if forceUpdate:
+			UpdateChanged()
 
 func _velocity_computed(safeVelocity : Vector2i):
 	currentVelocity = safeVelocity
