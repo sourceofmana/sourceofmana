@@ -166,14 +166,6 @@ icon_alignment = 1
 targetWindow = NodePath("../../../../../../../Windows/Floating/Inventory")
 targetShortcut = &"ui_inventory"
 
-[node name="Chat" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
-layout_mode = 2
-icon = ExtResource("6_2quic")
-flat = true
-targetWindow = NodePath("../../../../../../../Windows/Floating/Chat")
-targetShortcut = &"ui_chat"
-
 [node name="Minimap" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
@@ -181,6 +173,22 @@ icon = ExtResource("7_cv35r")
 flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Minimap")
 targetShortcut = &"ui_minimap"
+
+[node name="Skill" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+use_parent_material = true
+layout_mode = 2
+icon = ExtResource("13_h6wc7")
+flat = true
+targetWindow = NodePath("../../../../../../../Windows/Floating/Skill")
+targetShortcut = &"ui_skill"
+
+[node name="Chat" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+use_parent_material = true
+layout_mode = 2
+icon = ExtResource("6_2quic")
+flat = true
+targetWindow = NodePath("../../../../../../../Windows/Floating/Chat")
+targetShortcut = &"ui_chat"
 
 [node name="Emote" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
@@ -190,13 +198,13 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Emote")
 targetShortcut = &"ui_emote"
 
-[node name="Skill" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Settings" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
-icon = ExtResource("13_h6wc7")
+icon = ExtResource("11_17vy0")
 flat = true
-targetWindow = NodePath("../../../../../../../Windows/Floating/Skill")
-targetShortcut = &"ui_skill"
+targetWindow = NodePath("../../../../../../../Windows/Floating/Settings")
+targetShortcut = &"ui_settings"
 
 [node name="News" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
@@ -213,14 +221,6 @@ icon = ExtResource("10_mq57a")
 flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Credit")
 targetShortcut = &"ui_credits"
-
-[node name="Settings" parent="Overlay/Sections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
-layout_mode = 2
-icon = ExtResource("11_17vy0")
-flat = true
-targetWindow = NodePath("../../../../../../../Windows/Floating/Settings")
-targetShortcut = &"ui_settings"
 
 [node name="MenuButton" type="Button" parent="Overlay/Sections/Indicators/Menu"]
 custom_minimum_size = Vector2(62, 61)
