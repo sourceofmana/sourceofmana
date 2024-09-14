@@ -538,9 +538,18 @@ grow_vertical = 1
 
 [node name="Respawn" parent="Windows/Floating" instance=ExtResource("44_7o5pa")]
 visible = false
-layout_mode = 1
-offset_left = -140.0
-offset_right = 140.0
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 280.0
+offset_bottom = 80.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Stat" parent="Windows/Floating" instance=ExtResource("35_d1kq3")]
 visible = false
@@ -574,4 +583,5 @@ top_level = true
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonA" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [0]]
 [connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonA" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [0]]
 [connection signal="resized" from="Windows/Floating" to="Windows/Floating" method="_on_window_resized"]
+[connection signal="gui_input" from="Windows/Floating/Respawn" to="Windows/Floating/Respawn" method="OnGuiInput"]
 [connection signal="gui_input" from="Windows/Floating/Stat" to="Windows/Floating/Stat" method="OnGuiInput"]
