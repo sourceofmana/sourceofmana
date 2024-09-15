@@ -66,9 +66,11 @@ func ClearTarget():
 		Callback.SelfDestructTimer(target.interactive.healthBar, ActorCommons.DisplayHPDelay, target.interactive.HideHP, [], "HideHP")
 		target = null
 
-func Target(source : Vector2, interactable : bool = true):
-	ClearTarget()
-	target = Entities.GetNearestTarget(source, interactable)
+func Target(source : Vector2, interactable : bool = true, nextTarget : bool = false):
+	var newTarget = Entities.GetNextTarget(source, target if nextTarget and target else null, interactable)
+	if newTarget != target:
+		ClearTarget()
+		target = newTarget
 
 	if target:
 		if interactable and target.type == ActorCommons.Type.NPC:
@@ -101,7 +103,7 @@ func Cast(skillID : int):
 
 	var entityID : int = 0
 	if skill.mode == Skill.TargetMode.SINGLE:
-		if not target or target.state == ActorCommons.State.DEATH:
+		if not target or target.state == ActorCommons.State.DEATH or target.type != ActorCommons.Type.MONSTER:
 			Target(position, false)
 		if target and target.type == ActorCommons.Type.MONSTER:
 			entityID = target.agentID

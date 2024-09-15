@@ -130,7 +130,7 @@ func _input(event):
 	elif TryJustPressed(event, "smile_16"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Surprised"))
 	elif TryJustPressed(event, "smile_17"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Confused"))
 	elif TryJustPressed(event, "gp_sit"):			Launcher.Network.TriggerSit()
-	elif TryJustPressed(event, "gp_target"):		Launcher.Player.Target(Launcher.Player.position)
+	elif TryJustPressed(event, "gp_target"):		Launcher.Player.Target(Launcher.Player.position, true, true)
 	elif TryJustPressed(event, "gp_untarget"):		Launcher.Player.ClearTarget()
 	elif TryJustPressed(event, "gp_interact"):		Launcher.Player.JustInteract()
 	elif TryPressed(event, "gp_interact"):			Launcher.Player.Interact()

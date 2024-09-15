@@ -18,15 +18,27 @@ static func Erase(ridEntity : int):
 	entities.erase(ridEntity)
 
 #
-static func GetNearestTarget(source : Vector2, interactable : bool) -> Entity:
-	var nearestDistance : float	= -1
-	var target : Entity		= null
+static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable : bool) -> Entity:
+	var nearestDistance : float	= INF
+	var minThreshold : float = 0
+	var target : Entity = null
+	if currentEntity:
+		nearestDistance = source.distance_squared_to(currentEntity.position)
+		minThreshold = nearestDistance
+		target = currentEntity
+
 	for entityID in entities:
 		var entity : Entity = Get(entityID)
-		if entity and entity.state != ActorCommons.State.DEATH:
+		if entity != currentEntity and entity.state != ActorCommons.State.DEATH:
 			if entity.type == ActorCommons.Type.MONSTER or (interactable and entity.type == ActorCommons.Type.NPC):
 				var distance : float = source.distance_squared_to(entity.position)
-				if nearestDistance == -1 or distance < nearestDistance:
-					nearestDistance = distance
-					target = entity
+				if nearestDistance <= minThreshold:
+					if distance < nearestDistance or distance > minThreshold:
+						nearestDistance = distance
+						target = entity
+				else:
+					if distance < nearestDistance and distance > minThreshold:
+						nearestDistance = distance
+						target = entity
+
 	return target
