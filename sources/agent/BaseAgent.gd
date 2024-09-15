@@ -203,7 +203,7 @@ func GetMostValuableAttacker() -> BaseAgent:
 	var target : BaseAgent = null
 	var maxDamage : int = -1
 	for entry in attackers:
-		if entry.attacker and entry.damage > maxDamage:
+		if SkillCommons.IsInteractable(self, entry.attacker) and entry.damage > maxDamage:
 			maxDamage = entry.damage
 			target = entry.attacker
 	return target

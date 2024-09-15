@@ -60,7 +60,7 @@ const _transitions : Array[Array] = [
 
 const refreshDelay : float			= 1.0
 const fleeDistance : float			= 200
-const reachDistance : float			= 250
+const reachDistance : float			= 500
 const reachDistanceSquared : float	= reachDistance * reachDistance
 const maxAttackerCount : int		= 8
 
@@ -136,7 +136,7 @@ static func ApplyAggressiveBehaviour(agent : BaseAgent) -> bool:
 	var nearestSquaredDist : float = AICommons.reachDistanceSquared
 	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	for player in instance.players:
-		if ActorCommons.IsAlive(player):
+		if SkillCommons.IsInteractable(agent, player):
 			var currentDist : float = WorldNavigation.GetPathLengthSquared(agent, player.position)
 			if currentDist < nearestSquaredDist:
 				nearest = player
