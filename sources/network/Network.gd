@@ -224,21 +224,21 @@ func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool
 func NetCallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault):
 	if Server:
 		if NetSpamControl(rpcID, methodName, actionDelta):
-			Server.callv(methodName, args + [rpcID])
+			Server.callv.call_deferred(methodName, args + [rpcID])
 	else:
-		callv.call_deferred("rpc_id", [1, methodName] + args + [uniqueID])
+		callv.call("rpc_id", [1, methodName] + args + [uniqueID])
 
 func NetCallClient(methodName : String, args : Array, rpcID : int):
 	if Client:
-		Client.callv(methodName, args)
+		Client.callv.call_deferred(methodName, args)
 	else:
-		callv.call_deferred("rpc_id", [rpcID, methodName] + args)
+		callv.call("rpc_id", [rpcID, methodName] + args)
 
 func NetCallClientGlobal(methodName : String, args : Array):
 	if Client:
-		Client.callv(methodName, args)
+		Client.callv.call_deferred(methodName, args)
 	else:
-		callv.call_deferred("rpc", [methodName] + args)
+		callv.call("rpc", [methodName] + args)
 
 func NetMode(isClient : bool, isServer : bool):
 	if isClient:
