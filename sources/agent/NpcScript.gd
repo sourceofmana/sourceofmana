@@ -60,6 +60,8 @@ func SetQuest(questID : int, state : int):
 		if own.progress.GetQuest(questID) == ProgressCommons.UnknownProgress:
 			Notification("Quest Started: " + ProgressCommons.QuestNames[questID])
 		own.progress.SetQuest(questID, state)
+		if state == ProgressCommons.CompletedProgress:
+			Notification("Quest Completed: " + ProgressCommons.QuestNames[questID])
 
 func GetQuest(questID : int) -> int:
 	return own.progress.GetQuest(questID) if own and own.progress else ProgressCommons.UnknownProgress
