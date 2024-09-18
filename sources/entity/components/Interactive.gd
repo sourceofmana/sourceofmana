@@ -59,7 +59,7 @@ func DisplaySkill(emitter : Entity, skillID : int, cooldown : float):
 	if DB.SkillsDB.has(skillID):
 		var skill : SkillCell = DB.SkillsDB[skillID]
 		if skill:
-			if cooldown > 0.0:
+			if emitter == Launcher.Player and cooldown > 0.0:
 				skill.used.emit(cooldown)
 			if skill.skillPreset:
 				var skillFx : GPUParticles2D = skill.skillPreset.instantiate()
