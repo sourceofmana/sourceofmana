@@ -40,8 +40,8 @@ static func RemoveAgent(agent : BaseAgent):
 	Util.Assert(agent != null, "Agent is null, can't remove it")
 	if agent:
 		var inst : WorldInstance = agent.get_parent()
-		if inst and agent.spawnInfo and agent.spawnInfo.is_persistant:
-			Callback.SelfDestructTimer(inst, agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent, [agent.spawnInfo, inst.id])
+		if inst and inst.timers and agent.spawnInfo and agent.spawnInfo.is_persistant:
+			Callback.SelfDestructTimer(inst.timers, agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent, [agent.spawnInfo, inst.id])
 
 		PopAgent(agent)
 		agents.erase(agent)
@@ -81,10 +81,8 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 	if agent and inst:
 		if not HasAgent(inst, agent):
 			if agent is PlayerAgent:
-				var prevPlayerCount : int = inst.players.size()
 				inst.players.push_back(agent)
-				if prevPlayerCount == 0:
-					inst.RefreshProcessMode()
+				inst.RefreshProcessMode()
 			elif agent is MonsterAgent:
 				inst.mobs.push_back(agent)
 			elif agent is NpcAgent:

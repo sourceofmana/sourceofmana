@@ -8,9 +8,13 @@ var mobs : Array[BaseAgent]				= []
 var players : Array[BaseAgent]			= []
 var drops : Dictionary					= {}
 var map : WorldMap						= null
+var timers : Node						= Node.new()
 
 #
 func _ready():
+	timers.set_name("Timers")
+	add_child.call_deferred(timers)
+
 	for spawn in map.spawns:
 		if spawn and Instantiate.FindEntityReference(spawn.name) != null:
 			for i in spawn.count:
@@ -34,8 +38,11 @@ static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:
 	return inst
 
 #
-func QueryProcessMode():
-	Callback.SelfDestructTimer(Launcher, 10, RefreshProcessMode, [], "ProcessMode_" + name)
+func QueryProcessMode(delaySec : float = ActorCommons.MapProcessingToggleDelay):
+	Callback.SelfDestructTimer(Launcher, delaySec, RefreshProcessMode, [], "ProcessMode_" + name)
 
 func RefreshProcessMode():
-	set_process_mode(ProcessMode.PROCESS_MODE_DISABLED if players.size() == 0 else ProcessMode.PROCESS_MODE_INHERIT)
+	if players.size() == 0 and timers.get_child_count() > 0:
+		QueryProcessMode(ActorCommons.MapProcessingToggleExtraDelay)
+	else:
+		set_process_mode(ProcessMode.PROCESS_MODE_DISABLED if players.size() == 0 else ProcessMode.PROCESS_MODE_INHERIT)

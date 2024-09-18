@@ -186,9 +186,11 @@ const speechExtraWidth : int				= 20
 
 # Lifetime
 const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
-const RegenDelay : float					= 1.0
+const RegenDelay : float					= 3.0
 const DeathDelay : float					= 10.0
 const DisplayHPDelay : float				= 7.0
+const MapProcessingToggleDelay : float		= 10.0
+const MapProcessingToggleExtraDelay : float	= 60.0
 
 # Drop
 const DropDelay : float						= 15.0
