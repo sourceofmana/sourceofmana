@@ -89,7 +89,7 @@ static func IsActionInProgress(agent : BaseAgent) -> bool:
 	return agent.actionTimer and not agent.actionTimer.is_stopped()
 
 static func IsAgentMoving(agent : BaseAgent):
-	return agent.hasCurrentGoal and agent.aiState == State.WALK
+	return agent.hasCurrentGoal
 
 static func IsReachable(agent : BaseAgent, target : BaseAgent) -> bool:
 	return SkillCommons.IsInteractable(agent, target) and WorldNavigation.GetPathLengthSquared(agent, target.position) < reachDistanceSquared
