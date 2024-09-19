@@ -103,6 +103,8 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 func RemoveEntity(agentID : int):
 	var entity : Entity = Entities.Get(agentID)
 	if entity:
+		if Launcher.Player.target == entity:
+			Launcher.Player.target = null
 		RemoveChild(entity)
 		Entities.Erase(agentID)
 
