@@ -18,6 +18,8 @@ static func SetState(agent : BaseAgent, state : AICommons.State, force : bool = 
 
 static func Reset(agent : BaseAgent):
 	SetState(agent, AICommons.State.IDLE, true)
+	agent.actionTimer.stop()
+	agent.ResetNav()
 	Callback.StartTimer(agent.aiTimer, AICommons.refreshDelay, AI.Refresh.bind(agent))
 
 static func Refresh(agent : BaseAgent):
@@ -90,6 +92,9 @@ static func StateAttack(agent : BaseAgent):
 		elif target:
 			if AICommons.CanWalk(agent):
 				ToChase(agent, target)
+	else: # Has target and action is in progress
+		if not ActorCommons.IsAlive(target):
+			Reset(agent)
 
 # Could be delayed, always check if agent is inside a map
 static func ToWalk(agent : BaseAgent):
