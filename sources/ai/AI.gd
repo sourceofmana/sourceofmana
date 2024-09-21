@@ -20,7 +20,7 @@ static func Reset(agent : BaseAgent):
 	SetState(agent, AICommons.State.IDLE, true)
 	agent.actionTimer.stop()
 	agent.ResetNav()
-	Callback.StartTimer(agent.aiTimer, AICommons.RefreshDelay, AI.Refresh.bind(agent))
+	Callback.StartTimer(agent.aiTimer, AICommons.RefreshDelayMin, AI.Refresh.bind(agent))
 
 static func Refresh(agent : BaseAgent):
 	if not ActorCommons.IsAlive(agent) or not WorldAgent.GetInstanceFromAgent(agent):
@@ -41,7 +41,7 @@ static func Refresh(agent : BaseAgent):
 		_:
 			Util.Assert(false, "AI state not handled")
 
-	Callback.LoopTimer(agent.aiTimer, AICommons.RefreshDelay)
+	Callback.LoopTimer(agent.aiTimer, agent.aiRefreshDelay)
 
 static func HandleBehaviour(agent : BaseAgent):
 	var handled : bool = false

@@ -8,6 +8,7 @@ var entityRadius : int					= 0
 var behaviour : int						= AICommons.Behaviour.NONE
 var aiState : AICommons.State			= AICommons.State.IDLE
 var aiTimer : Timer						= null
+var aiRefreshDelay : float				= randf_range(AICommons.RefreshDelayMin, AICommons.RefreshDelayMax)
 var actionTimer : Timer					= null
 var regenTimer : Timer					= null
 var cooldownTimers : Dictionary			= {}

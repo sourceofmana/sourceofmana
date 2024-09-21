@@ -58,7 +58,8 @@ const _transitions : Array[Array] = [
 	[State.HALT,		State.HALT,		State.HALT,		State.HALT],	# HALT
 ]
 
-const RefreshDelay : float			= 1.0
+const RefreshDelayMin : float		= 1.0
+const RefreshDelayMax : float		= 5.0
 const FleeDistance : float			= 200
 const ReachDistance : float			= 500
 const ReachDistanceSquared : float	= ReachDistance * ReachDistance
