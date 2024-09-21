@@ -5,7 +5,8 @@ extends RichTextLabel
 @export var modulateOutScaler : float	 = 2.0
 
 @onready var timer : Timer			= $Timer
-@onready var modulateWay : int		= 0
+
+var way : UICommons.Way					= UICommons.Way.KEEP
 
 #
 func AddNotification(notif : String, delay : float = 5.0):
@@ -13,13 +14,13 @@ func AddNotification(notif : String, delay : float = 5.0):
 		ClearNotification()
 		text = "[center]%s[/center]" % notif
 		timer.start(delay)
-		modulateWay = 1
+		way = UICommons.Way.SHOW
 
 func ClearNotification():
 	if not timer.is_stopped():
 		timer.stop()
 
-	modulateWay = -1
+	way = UICommons.Way.HIDE
 
 #
 func _on_timer_timeout():
@@ -27,12 +28,12 @@ func _on_timer_timeout():
 
 #
 func _physics_process(delta : float):
-	if modulateWay > 0 and modulate.a < 1.0:
+	if way == UICommons.Way.SHOW and modulate.a < 1.0:
 		modulate.a = clampf(modulate.a + delta * modulateInScaler, 0.0, 1.0)
-	elif modulateWay < 0 and modulate.a > 0.0:
+	elif way == UICommons.Way.HIDE and modulate.a > 0.0:
 		modulate.a = clampf(modulate.a - delta * modulateOutScaler, 0.0, 1.0)
 	else:
-		modulateWay = 0
+		way = UICommons.Way.KEEP
 
 func _ready():
 	modulate.a = 0.0

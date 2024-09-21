@@ -206,6 +206,7 @@ static var SailingDestination : Destination	= Destination.new("Ocean", Vector2(7
 # Navigation
 const DisplacementVector : Vector2			= Vector2(32, 32)
 const MaxDisplacementSquareLength : float	= 64 * 64
+const InputApproximationUnit : int			= 12
 
 # New player
 const DefaultAttributes : Dictionary = {

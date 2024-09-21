@@ -131,11 +131,11 @@ func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : 
 func ItemAdded(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and DB.ItemsDB.has(itemID):
 		var cell : BaseCell = DB.ItemsDB[itemID]
-		if cell:
+		if cell and Launcher.Player.inventory.PushItem(cell, count):
+			if Launcher.GUI:
+				Launcher.GUI.pickupPanel.AddLast(cell, count)
+#				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
-			Launcher.Player.inventory.PushItem(cell, count)
-			if Launcher.GUI and Launcher.GUI.inventoryWindow:
-				Launcher.GUI.inventoryWindow.RefreshInventory()
 
 func ItemRemoved(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and DB.ItemsDB.has(itemID):
@@ -160,6 +160,7 @@ func DropAdded(dropID : int, itemID : int, pos : Vector2, _rpcID : int = Network
 func DropRemoved(dropID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.RemoveDrop(dropID)
+
 #
 func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:

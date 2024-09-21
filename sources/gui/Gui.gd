@@ -11,6 +11,7 @@ extends ServiceBase
 @onready var boxes : Control					= $Overlay/Sections/Shortcuts/Boxes
 
 @onready var notificationLabel : RichTextLabel	= $Overlay/Sections/Notification
+@onready var pickupPanel : PanelContainer		= $Overlay/Sections/PickUp
 @onready var dialogueWindow : PanelContainer	= $Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue
 @onready var choiceContext : ContextMenu		= $Overlay/Sections/Contexts/VBox/BottomVbox/ChoiceVbox/Choice
 @onready var infoContext : ContextMenu			= $Overlay/Sections/Contexts/Info
@@ -71,6 +72,7 @@ func EnterLoginMenu():
 
 	dialogueWindow.set_visible(false)
 	notificationLabel.set_visible(false)
+	pickupPanel.set_visible(false)
 	menu.set_visible(false)
 	shortcuts.set_visible(false)
 	quitWindow.set_visible(false)

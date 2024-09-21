@@ -2,7 +2,6 @@ extends GridContainer
 
 #
 @export var maxCount : int				= 100
-const tilePreset : Resource				= preload("res://presets/gui/CellTile.tscn")
 var tiles : Array[CellTile]				= []
 
 #
@@ -22,7 +21,7 @@ func _ready():
 
 	get_parent().resized.connect(_on_panel_resized)
 	for tileIdx in range(maxCount):
-		var tile : CellTile = tilePreset.instantiate()
+		var tile : CellTile = UICommons.CellTilePreset.instantiate()
 		tile.AssignData(null, 0)
 		tiles[tileIdx] = tile
 		add_child(tile)

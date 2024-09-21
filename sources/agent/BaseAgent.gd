@@ -30,8 +30,6 @@ var skillProba : Dictionary				= {}
 var skillProbaSum : float				= 0.0
 var skillSelected : SkillCell			= null
 
-const inputApproximationUnit : int		= 12
-
 #
 func SwitchInputMode(clearCurrentInput : bool):
 	hasCurrentGoal = false
@@ -52,8 +50,8 @@ func UpdateInput():
 
 	if hasCurrentGoal:
 		if agent && not agent.is_navigation_finished():
-			var clampedDirection : Vector2 = Vector2(global_position.direction_to(agent.get_next_path_position()).normalized() * inputApproximationUnit)
-			currentInput = Vector2(clampedDirection) / inputApproximationUnit
+			var clampedDirection : Vector2 = Vector2(global_position.direction_to(agent.get_next_path_position()).normalized() * ActorCommons.InputApproximationUnit)
+			currentInput = Vector2(clampedDirection) / ActorCommons.InputApproximationUnit
 
 			lastPositions.push_back(agent.distance_to_target())
 			if lastPositions.size() > 5:

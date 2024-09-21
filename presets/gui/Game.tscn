@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=56 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -36,6 +36,7 @@
 [ext_resource type="Texture2D" uid="uid://c6vlftjsnocs3" path="res://data/graphics/gui/mobile/background.png" id="18_lb78w"]
 [ext_resource type="Texture2D" uid="uid://cyuj6w585tm0y" path="res://data/graphics/gui/mobile/button.png" id="20_1vdgt"]
 [ext_resource type="PackedScene" uid="uid://tqcjqyaicaol" path="res://presets/gui/contexts/ContextMenuV.tscn" id="20_px3po"]
+[ext_resource type="PackedScene" uid="uid://cppc7wshwpqof" path="res://presets/gui/PickUp.tscn" id="21_5ivxk"]
 [ext_resource type="Texture2D" uid="uid://4lbn2136wjw3" path="res://data/graphics/gui/mobile/buttonY.png" id="22_v5bsw"]
 [ext_resource type="Texture2D" uid="uid://bncxvjj4nmem8" path="res://data/graphics/gui/mobile/buttonX.png" id="23_8ulos"]
 [ext_resource type="Texture2D" uid="uid://m862d3fndtf" path="res://data/graphics/gui/mobile/buttonY_pressed.png" id="23_veq0v"]
@@ -237,6 +238,9 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_w48pk")
 theme_override_styles/normal = SubResource("StyleBoxTexture_hg7ie")
 
 [node name="Notification" parent="Overlay/Sections" instance=ExtResource("17_64u4l")]
+layout_mode = 2
+
+[node name="PickUp" parent="Overlay/Sections" instance=ExtResource("21_5ivxk")]
 layout_mode = 2
 
 [node name="Contexts" type="Control" parent="Overlay/Sections"]
@@ -564,6 +568,7 @@ layer = 128
 
 [node name="HQ4x" parent="Shaders" instance=ExtResource("10_id8es")]
 visible = false
+offset_right = 39.0
 
 [node name="CRT" parent="Shaders" instance=ExtResource("11_x7rk2")]
 top_level = true

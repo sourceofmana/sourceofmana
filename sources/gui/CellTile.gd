@@ -39,7 +39,8 @@ func UpdateCountLabel():
 # Public
 func AssignData(newCell : BaseCell, newCount : int = 1):
 	if cell != newCell:
-		UnassignData(cell)
+		if cell:
+			UnassignData(cell)
 		if newCell:
 			newCell.used.connect(Used)
 	cell = newCell
