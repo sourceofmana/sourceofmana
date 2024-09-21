@@ -32,6 +32,9 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 		if entity != currentEntity and entity.state != ActorCommons.State.DEATH:
 			if entity.type == ActorCommons.Type.MONSTER or (interactable and entity.type == ActorCommons.Type.NPC):
 				var distance : float = source.distance_squared_to(entity.position)
+				if distance > ActorCommons.TargetMaxSquaredDistance:
+					continue
+
 				if nearestDistance <= minThreshold:
 					if distance < nearestDistance or distance > minThreshold:
 						nearestDistance = distance
