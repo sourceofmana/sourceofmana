@@ -145,7 +145,7 @@ func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
 	if cell and cell.usable:
 		var player : PlayerAgent = GetAgent(rpcID)
-		if player and player.inventory:
+		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.UseItem(cell)
 
 func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):

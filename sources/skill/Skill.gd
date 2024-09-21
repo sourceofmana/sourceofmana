@@ -76,7 +76,7 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	var info : AlterationInfo = SkillCommons.GetDamage(agent, target, skill, rng)
-	if target.aiTimer:
+	if target is AIAgent:
 		target.AddAttacker(agent, info.value)
 	target.stat.SetHealth(-info.value)
 	Launcher.Network.Server.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill.id])
@@ -90,7 +90,7 @@ static func Stopped(agent : BaseAgent):
 	if SkillCommons.HasActionInProgress(agent):
 		agent.SetSkillCastID(DB.UnknownHash)
 		Callback.ClearTimer(agent.actionTimer)
-		if agent.aiTimer:
+		if agent is AIAgent:
 			AI.SetState(agent, AICommons.State.IDLE)
 
 static func Missed(agent : BaseAgent, target : BaseAgent):

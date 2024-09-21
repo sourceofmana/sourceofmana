@@ -1,4 +1,4 @@
-extends BaseAgent
+extends AIAgent
 class_name MonsterAgent
 
 #
@@ -17,10 +17,5 @@ func Killed():
 
 func _ready():
 	inventory = ActorInventory.new()
-	aiTimer = Timer.new()
-	aiTimer.set_name("AiTimer")
-	Callback.OneShotCallback(aiTimer.tree_entered, AI.Reset, [self])
-	add_child.call_deferred(aiTimer)
-
 	super._ready()
 	AddSkill(DB.SkillsDB[DB.GetCellHash(SkillCommons.SkillMeleeName)], 1.0)

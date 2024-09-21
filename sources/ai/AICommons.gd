@@ -83,22 +83,22 @@ static func GetUnstuckTimer() -> float:
 	const maxUnstuckTimer : int			= 10
 	return randf_range(minUnstuckTimer, maxUnstuckTimer)
 
-static func IsStuck(agent : BaseAgent) -> bool:
+static func IsStuck(agent : AIAgent) -> bool:
 	return agent.lastPositions.size() >= 5 and abs(agent.lastPositions[0] - agent.lastPositions[4]) < 1
 
-static func IsActionInProgress(agent : BaseAgent) -> bool:
+static func IsActionInProgress(agent : AIAgent) -> bool:
 	return agent.actionTimer and not agent.actionTimer.is_stopped()
 
-static func IsAgentMoving(agent : BaseAgent):
+static func IsAgentMoving(agent : AIAgent):
 	return agent.hasCurrentGoal
 
-static func IsReachable(agent : BaseAgent, target : BaseAgent) -> bool:
+static func IsReachable(agent : AIAgent, target : BaseAgent) -> bool:
 	return SkillCommons.IsInteractable(agent, target) and WorldNavigation.GetPathLengthSquared(agent, target.position) < ReachDistanceSquared
 
-static func CanWalk(agent: BaseAgent):
+static func CanWalk(agent: AIAgent):
 	return agent.agent != null
 
-static func GetRandomSkill(agent : BaseAgent) -> SkillCell:
+static func GetRandomSkill(agent : AIAgent) -> SkillCell:
 	if agent.skillSet.size() > 0 and agent.skillProbaSum > 0.0:
 		var randProba : float = randf_range(0.0, agent.skillProbaSum)
 		for skill in agent.skillSet:
@@ -111,13 +111,13 @@ static func GetTransition(prev : State, next : State) -> State:
 	return _transitions[prev][next]
 
 # Behaviour
-static func ApplyPacifistBehaviour(agent : BaseAgent) -> bool:
+static func ApplyPacifistBehaviour(agent : AIAgent) -> bool:
 	if agent.aiState == State.ATTACK:
 		AI.SetState(agent, State.IDLE, true)
 		return true
 	return false
 
-static func ApplyNeutralBehaviour(agent : BaseAgent) -> bool:
+static func ApplyNeutralBehaviour(agent : AIAgent) -> bool:
 	if agent == null or agent.agent == null:
 		return false
 
@@ -129,7 +129,7 @@ static func ApplyNeutralBehaviour(agent : BaseAgent) -> bool:
 		AI.SetState(agent, State.WALK, true)
 	return false
 
-static func ApplyAggressiveBehaviour(agent : BaseAgent) -> bool:
+static func ApplyAggressiveBehaviour(agent : AIAgent) -> bool:
 	if agent == null:
 		return false
 
@@ -148,7 +148,7 @@ static func ApplyAggressiveBehaviour(agent : BaseAgent) -> bool:
 		return true
 	return false
 
-static func ApplyStealBehaviour(agent : BaseAgent) -> bool:
+static func ApplyStealBehaviour(agent : AIAgent) -> bool:
 	if not IsActionInProgress(agent):
 		if IsAgentMoving(agent):
 			if not agent.currentGoal:
@@ -175,11 +175,11 @@ static func ApplyStealBehaviour(agent : BaseAgent) -> bool:
 
 	return false
 
-static func ApplyFollowerBehaviour(_agent : BaseAgent) -> bool:
+static func ApplyFollowerBehaviour(_agent : AIAgent) -> bool:
 	return false
 
-static func ApplyImmobileBehaviour(_agent : BaseAgent) -> bool:
-	return false
+static func ApplyImmobileBehaviour(_agent : AIAgent) -> bool:
+	return false # Nothing to handle here
 
-static func ApplySpawnerBehaviour(_agent : BaseAgent) -> bool:
+static func ApplySpawnerBehaviour(_agent : AIAgent) -> bool:
 	return false

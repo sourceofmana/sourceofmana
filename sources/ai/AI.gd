@@ -2,7 +2,7 @@ extends Object
 class_name AI
 
 #
-static func SetState(agent : BaseAgent, state : AICommons.State, force : bool = false):
+static func SetState(agent : AIAgent, state : AICommons.State, force : bool = false):
 	var newState : AICommons.State = state if force else AICommons.GetTransition(agent.aiState, state)
 	if agent.aiState != newState:
 		agent.aiState = newState
@@ -16,13 +16,13 @@ static func SetState(agent : BaseAgent, state : AICommons.State, force : bool = 
 		if agent.agent:
 			agent.agent.avoidance_enabled = agent.aiState == AICommons.State.ATTACK
 
-static func Reset(agent : BaseAgent):
+static func Reset(agent : AIAgent):
 	SetState(agent, AICommons.State.IDLE, true)
 	agent.actionTimer.stop()
 	agent.ResetNav()
 	Callback.StartTimer(agent.aiTimer, AICommons.RefreshDelayMin, AI.Refresh.bind(agent))
 
-static func Refresh(agent : BaseAgent):
+static func Refresh(agent : AIAgent):
 	if not ActorCommons.IsAlive(agent) or not WorldAgent.GetInstanceFromAgent(agent):
 		SetState(agent, AICommons.State.HALT)
 	else:
@@ -43,42 +43,42 @@ static func Refresh(agent : BaseAgent):
 
 	Callback.LoopTimer(agent.aiTimer, agent.aiRefreshDelay)
 
-static func HandleBehaviour(agent : BaseAgent):
+static func HandleBehaviour(agent : AIAgent):
 	var handled : bool = false
 
 	# Check if should attack
-	if not handled and agent.behaviour & AICommons.Behaviour.PACIFIST:
+	if not handled and agent.aiBehaviour & AICommons.Behaviour.PACIFIST:
 		handled = AICommons.ApplyPacifistBehaviour(agent)
-	elif not handled and agent.behaviour & AICommons.Behaviour.NEUTRAL:
+	elif not handled and agent.aiBehaviour & AICommons.Behaviour.NEUTRAL:
 		handled = AICommons.ApplyNeutralBehaviour(agent)
-	elif not handled and agent.behaviour & AICommons.Behaviour.AGGRESSIVE:
+	elif not handled and agent.aiBehaviour & AICommons.Behaviour.AGGRESSIVE:
 		handled = AICommons.ApplyAggressiveBehaviour(agent)
 
 	# Check if should walk
-	if not handled and agent.behaviour & AICommons.Behaviour.STEAL:
+	if not handled and agent.aiBehaviour & AICommons.Behaviour.STEAL:
 		handled = AICommons.ApplyStealBehaviour(agent)
-	elif not handled and agent.behaviour & AICommons.Behaviour.FOLLOWER:
+	elif not handled and agent.aiBehaviour & AICommons.Behaviour.FOLLOWER:
 		handled = AICommons.ApplyFollowerBehaviour(agent)
 
 	# Check if should idle
-	if not handled and agent.behaviour & AICommons.Behaviour.SPAWNER:
+	if not handled and agent.aiBehaviour & AICommons.Behaviour.SPAWNER:
 		handled = AICommons.ApplySpawnerBehaviour(agent)
-	elif not handled and agent.behaviour & AICommons.Behaviour.IMMOBILE:
+	elif not handled and agent.aiBehaviour & AICommons.Behaviour.IMMOBILE:
 		handled = AICommons.ApplyImmobileBehaviour(agent)
 
 #
-static func StateIdle(agent : BaseAgent):
+static func StateIdle(agent : AIAgent):
 	if not AICommons.IsActionInProgress(agent):
 		if AICommons.CanWalk(agent):
 			Callback.StartTimer(agent.actionTimer, AICommons.GetWalkTimer(), AI.ToWalk.bind(agent))
 
-static func StateWalk(agent : BaseAgent):
+static func StateWalk(agent : AIAgent):
 	if AICommons.IsAgentMoving(agent) and AICommons.IsActionInProgress(agent):
 		if AICommons.IsStuck(agent):
 			agent.ResetNav()
 			Callback.StartTimer(agent.actionTimer, AICommons.GetUnstuckTimer(), AI.ToWalk.bind(agent))
 
-static func StateAttack(agent : BaseAgent):
+static func StateAttack(agent : AIAgent):
 	var target : BaseAgent = agent.GetMostValuableAttacker()
 	if not target:
 		Reset(agent)
@@ -99,7 +99,7 @@ static func StateAttack(agent : BaseAgent):
 			Reset(agent)
 
 # Could be delayed, always check if agent is inside a map
-static func ToWalk(agent : BaseAgent):
+static func ToWalk(agent : AIAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map:
 		var position : Vector2i = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.GetOffset())
@@ -107,19 +107,19 @@ static func ToWalk(agent : BaseAgent):
 		agent.WalkToward(position)
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, AICommons.State.IDLE])
 
-static func ToAttack(agent : BaseAgent, target : BaseAgent):
+static func ToAttack(agent : AIAgent, target : BaseAgent):
 	if AICommons.IsAgentMoving(agent):
 		agent.ResetNav()
 	if WorldAgent.GetMapFromAgent(agent):
 		Skill.Cast(agent, target, agent.skillSelected)
 
-static func ToChase(agent : BaseAgent, target : BaseAgent):
+static func ToChase(agent : AIAgent, target : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map and SkillCommons.IsSameMap(agent, target):
 		agent.SetCurrentGoal(target)
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.Refresh, [agent])
 
-static func ToFlee(agent : BaseAgent, target : BaseAgent):
+static func ToFlee(agent : AIAgent, target : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map and SkillCommons.IsSameMap(agent, target):
 		var fleePosition : Vector2 = agent.position - agent.position.direction_to(target.position) * AICommons.FleeDistance

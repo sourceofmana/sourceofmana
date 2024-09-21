@@ -5,14 +5,9 @@ class_name BaseAgent
 var agent : NavigationAgent2D			= null
 var entityRadius : int					= 0
 
-var behaviour : int						= AICommons.Behaviour.NONE
-var aiState : AICommons.State			= AICommons.State.IDLE
-var aiTimer : Timer						= null
-var aiRefreshDelay : float				= randf_range(AICommons.RefreshDelayMin, AICommons.RefreshDelayMax)
 var actionTimer : Timer					= null
 var regenTimer : Timer					= null
 var cooldownTimers : Dictionary			= {}
-var attackers : Array					= []
 
 var hasCurrentGoal : bool				= false
 var currentGoal : Node2D				= null
@@ -160,10 +155,9 @@ func SetData(data : EntityData):
 		AddItem(DB.ItemsDB[itemID], data._dropsProba[itemID])
 
 	entityRadius = data._radius
-	behaviour = data._behaviour
 
 	# Navigation
-	if !(behaviour & AICommons.Behaviour.IMMOBILE):
+	if !(data._behaviour & AICommons.Behaviour.IMMOBILE):
 		if self is PlayerAgent:
 			agent = FileSystem.LoadEntityComponent("navigations/PlayerAgent")
 		else:
@@ -185,49 +179,6 @@ func GetNextShapeID() -> String:
 
 func GetNextPortShapeID() -> String:
 	return stat.spiritShape if stat.IsSailing() else "Ship"
-
-#
-func AddAttacker(attacker : BaseAgent, damage : int = 0):
-	if attacker:
-		var currentTick : int = Time.get_ticks_msec()
-		for entry in attackers:
-			if entry.attacker == attacker:
-				entry.damage += damage
-				entry.time = currentTick
-				return
-
-		attackers.append({"attacker": attacker, "damage": damage, "time": currentTick})
-		if attackers.size() > AICommons.MaxAttackerCount:
-			RemoveOldestAttacker()
-
-func RemoveOldestAttacker():
-	attackers.sort_custom(func(a, b): return a.time < b.time)
-	attackers.erase(0)
-
-func GetMostValuableAttacker() -> BaseAgent:
-	var target : BaseAgent = null
-	var maxDamage : int = -1
-	for entry in attackers:
-		if SkillCommons.IsInteractable(self, entry.attacker) and entry.damage > maxDamage:
-			maxDamage = entry.damage
-			target = entry.attacker
-	return target
-
-func GetNearbyMostValuableAttacker() -> BaseAgent:
-	var target : BaseAgent = null
-	var maxDamage : int = -1
-	for entry in attackers:
-		if entry.attacker and entry.damage > maxDamage and AICommons.IsReachable(self, entry.attacker):
-			maxDamage = entry.damage
-			target = entry.attacker
-	return target
-
-func GetDamageRatio(attacker : BaseAgent) -> float:
-	for entry in attackers:
-		if entry.attacker == attacker:
-			if entry.time > Time.get_ticks_msec() - ActorCommons.AttackTimestampLimit and stat.current.maxHealth > 0:
-				return float(entry.damage) / float(stat.current.maxHealth) if entry.damage < stat.current.maxHealth else 1.0
-	return 0.0
 
 func Killed():
 	SetSkillCastID(DB.UnknownHash)
