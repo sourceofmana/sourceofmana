@@ -14,6 +14,7 @@ var cooldownTimers : Dictionary			= {}
 var attackers : Array					= []
 
 var hasCurrentGoal : bool				= false
+var currentGoal : Node2D				= null
 var isRelativeMode : bool				= false
 var lastPositions : Array[float]		= []
 
@@ -136,6 +137,11 @@ func WalkToward(pos : Vector2):
 func ResetNav():
 	WalkToward(position)
 	SwitchInputMode(true)
+	currentGoal = null
+
+func SetCurrentGoal(goal : Node2D):
+	WalkToward(goal.position)
+	currentGoal = goal
 
 func UpdateChanged():
 	forceUpdate = false
@@ -190,7 +196,7 @@ func AddAttacker(attacker : BaseAgent, damage : int = 0):
 				return
 
 		attackers.append({"attacker": attacker, "damage": damage, "time": currentTick})
-		if attackers.size() > AICommons.maxAttackerCount:
+		if attackers.size() > AICommons.MaxAttackerCount:
 			RemoveOldestAttacker()
 
 func RemoveOldestAttacker():
@@ -210,7 +216,7 @@ func GetNearbyMostValuableAttacker() -> BaseAgent:
 	var target : BaseAgent = null
 	var maxDamage : int = -1
 	for entry in attackers:
-		if entry.attacker and AICommons.IsReachable(self, entry.attacker) and entry.damage > maxDamage:
+		if entry.attacker and entry.damage > maxDamage and AICommons.IsReachable(self, entry.attacker):
 			maxDamage = entry.damage
 			target = entry.attacker
 	return target

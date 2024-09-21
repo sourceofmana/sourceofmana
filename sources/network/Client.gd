@@ -134,7 +134,7 @@ func ItemAdded(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingl
 		if cell and Launcher.Player.inventory.PushItem(cell, count):
 			if Launcher.GUI:
 				Launcher.GUI.pickupPanel.AddLast(cell, count)
-#				Launcher.GUI.inventoryWindow.RefreshInventory()
+				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
 
 func ItemRemoved(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):

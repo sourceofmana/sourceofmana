@@ -58,11 +58,11 @@ const _transitions : Array[Array] = [
 	[State.HALT,		State.HALT,		State.HALT,		State.HALT],	# HALT
 ]
 
-const refreshDelay : float			= 1.0
-const fleeDistance : float			= 200
-const reachDistance : float			= 500
-const reachDistanceSquared : float	= reachDistance * reachDistance
-const maxAttackerCount : int		= 8
+const RefreshDelay : float			= 1.0
+const FleeDistance : float			= 200
+const ReachDistance : float			= 500
+const ReachDistanceSquared : float	= ReachDistance * ReachDistance
+const MaxAttackerCount : int		= 8
 
 #
 static func GetOffset() -> Vector2i:
@@ -92,7 +92,7 @@ static func IsAgentMoving(agent : BaseAgent):
 	return agent.hasCurrentGoal
 
 static func IsReachable(agent : BaseAgent, target : BaseAgent) -> bool:
-	return SkillCommons.IsInteractable(agent, target) and WorldNavigation.GetPathLengthSquared(agent, target.position) < reachDistanceSquared
+	return SkillCommons.IsInteractable(agent, target) and WorldNavigation.GetPathLengthSquared(agent, target.position) < ReachDistanceSquared
 
 static func CanWalk(agent: BaseAgent):
 	return agent.agent != null
@@ -122,10 +122,10 @@ static func ApplyNeutralBehaviour(agent : BaseAgent) -> bool:
 
 	var target : BaseAgent = agent.GetNearbyMostValuableAttacker()
 	if target:
-		AI.SetState(agent, AICommons.State.ATTACK, true)
+		AI.SetState(agent, State.ATTACK, true)
 		return true
-	elif agent.aiState == AICommons.State.ATTACK:
-		AI.SetState(agent, AICommons.State.WALK, true)
+	elif agent.aiState == State.ATTACK:
+		AI.SetState(agent, State.WALK, true)
 	return false
 
 static func ApplyAggressiveBehaviour(agent : BaseAgent) -> bool:
@@ -133,7 +133,7 @@ static func ApplyAggressiveBehaviour(agent : BaseAgent) -> bool:
 		return false
 
 	var nearest : PlayerAgent = null
-	var nearestSquaredDist : float = AICommons.reachDistanceSquared
+	var nearestSquaredDist : float = ReachDistanceSquared
 	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	for player in instance.players:
 		if SkillCommons.IsInteractable(agent, player):
@@ -143,11 +143,35 @@ static func ApplyAggressiveBehaviour(agent : BaseAgent) -> bool:
 				nearestSquaredDist = currentDist
 	if nearest:
 		agent.AddAttacker(nearest)
-		agent.aiState = AICommons.State.ATTACK
+		agent.aiState = State.ATTACK
 		return true
 	return false
 
-static func ApplyStealBehaviour(_agent : BaseAgent) -> bool:
+static func ApplyStealBehaviour(agent : BaseAgent) -> bool:
+	if not IsActionInProgress(agent):
+		if IsAgentMoving(agent):
+			if not agent.currentGoal:
+				agent.ResetNav()
+		else:
+			var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+			if instance:
+				var nearest : Drop = null
+				var nearestDist : float = INF
+				for dropIdx in instance.drops:
+					var drop : Drop = instance.drops[dropIdx]
+					if drop:
+						var dist : float = WorldNavigation.GetPathLengthSquared(agent, drop.position)
+						if dist < nearestDist and dist < ReachDistanceSquared:
+							nearest = drop
+							nearestDist = dist
+				if nearest:
+					if nearestDist < ActorCommons.PickupSquaredDistance:
+						WorldDrop.PickupDrop(nearest.get_instance_id(), agent)
+					else:
+						AI.SetState(agent, State.WALK, true)
+						agent.SetCurrentGoal(nearest)
+					return true
+
 	return false
 
 static func ApplyFollowerBehaviour(_agent : BaseAgent) -> bool:

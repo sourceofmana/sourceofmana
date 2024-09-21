@@ -14,7 +14,7 @@ static func PlugCallback(objectSignal : Signal, callback : Callable, args : Arra
 	AddCallback(objectSignal, callback, args)
 
 static func ShootCallback(args : Array):
-	if args.size() > 0:
+	if args.size() > 0 and args[0] is Callable:
 		TriggerCallback(args.pop_front(), args)
 
 static func TriggerCallback(callback : Callable, args : Array = []):
