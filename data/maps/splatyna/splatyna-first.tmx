@@ -454,12 +454,5 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="32" name="Lilah" type="Spawn" x="1421" y="1290" width="270" height="252">
-   <properties>
-    <property name="count" type="int" value="2"/>
-    <property name="name" value="Lilah"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>

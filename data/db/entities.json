@@ -131,7 +131,7 @@
 		{
 			"Body": "sprites/monsters/marvin.png",
 		},
-		"Behaviour": ["Aggressive", "Leader", "Steal"],
+		"Behaviour": ["Aggressive", "Leader", "Spawner", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
 		"Stat": {
@@ -139,6 +139,9 @@
 		},
 		"Drops": {
 			"Marvin's Key": 1.0,
+		},
+		"Spawns": {
+			"Lilah": 2,
 		},
 	},
 	"1007": {

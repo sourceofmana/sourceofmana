@@ -211,6 +211,17 @@ static func ApplySpawnerBehaviour(agent : AIAgent) -> bool:
 		else:
 			agent.followers[spawn] = []
 		if toSpawn > 0:
+			var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+			if instance:
+				for mob in instance.mobs:
+					if mob.leader == null and mob.aiBehaviour & Behaviour.FOLLOWER and mob.nick == spawn and mob.spawnInfo.is_persistant == false:
+						mob.leader = agent
+						agent.AddFollower(mob)
+						toSpawn -= 1
+					if toSpawn == 0:
+						break
+
+		if toSpawn > 0:
 			var spawnedAgents : Array[MonsterAgent] = NpcCommons.Spawn(agent, spawn, toSpawn, agent.position, GetOffset())
 			for spawnedAgent in spawnedAgents:
 				spawnedAgent.leader = agent

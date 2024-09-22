@@ -45,4 +45,15 @@ func RefreshProcessMode():
 	if players.size() == 0 and timers.get_child_count() > 0:
 		QueryProcessMode(ActorCommons.MapProcessingToggleExtraDelay)
 	else:
-		set_process_mode(ProcessMode.PROCESS_MODE_DISABLED if players.size() == 0 else ProcessMode.PROCESS_MODE_INHERIT)
+		var toggle : bool= players.size() == 0
+		set_process_mode(ProcessMode.PROCESS_MODE_DISABLED if toggle else ProcessMode.PROCESS_MODE_INHERIT)
+		for npc in npcs:
+			if npc.aiTimer:
+				npc.aiTimer.set_paused(toggle)
+			if npc.actionTimer:
+				npc.actionTimer.set_paused(toggle)
+		for mob in mobs:
+			if mob.aiTimer:
+				mob.aiTimer.set_paused(toggle)
+			if mob.actionTimer:
+				mob.actionTimer.set_paused(toggle)

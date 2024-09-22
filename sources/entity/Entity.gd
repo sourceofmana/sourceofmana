@@ -67,7 +67,7 @@ func ClearTarget():
 		target = null
 
 func Target(source : Vector2, interactable : bool = true, nextTarget : bool = false):
-	var newTarget = Entities.GetNextTarget(source, target if nextTarget and target else null, interactable)
+	var newTarget = Entities.GetNextTarget(source, target if nextTarget and target != null else null, interactable)
 	if newTarget != target:
 		ClearTarget()
 		target = newTarget
