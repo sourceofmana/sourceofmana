@@ -43,6 +43,8 @@ static func RemoveAgent(agent : BaseAgent):
 		if inst and inst.timers and agent.spawnInfo and agent.spawnInfo.is_persistant:
 			Callback.SelfDestructTimer(inst.timers, agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent, [agent.spawnInfo, inst.id])
 
+		if agent is AIAgent and agent.leader:
+			agent.leader.RemoveFollower(agent)
 		PopAgent(agent)
 		agents.erase(agent)
 		agent.queue_free()

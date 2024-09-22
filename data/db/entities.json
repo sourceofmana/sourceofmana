@@ -41,7 +41,11 @@
 		"Radius": "32",
 		"DisplayName": true,
 		"Stat": {
-			"walkSpeed": 40,
+			"walkSpeed": 50,
+		},
+		"Spawns": {
+			"Lilah": 3,
+			"Lulea": 3,
 		},
 	},
 	"1001": {

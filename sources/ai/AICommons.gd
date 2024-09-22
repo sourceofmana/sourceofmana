@@ -195,10 +195,26 @@ static func ApplyFollowerBehaviour(agent : AIAgent) -> bool:
 							nearestDist = dist
 				if nearest:
 					agent.leader = nearest
+					nearest.AddFollower(agent)
 	return false
 
 static func ApplyImmobileBehaviour(_agent : AIAgent) -> bool:
 	return false # Nothing to handle here
 
-static func ApplySpawnerBehaviour(_agent : AIAgent) -> bool:
-	return false
+static func ApplySpawnerBehaviour(agent : AIAgent) -> bool:
+	var nbSpawned : int = 0
+	for spawn in agent.data._spawns:
+		var toSpawn : int = agent.data._spawns[spawn]
+		if spawn in agent.followers:
+			agent.followers.erase(null)
+			toSpawn -= agent.followers[spawn].size()
+		else:
+			agent.followers[spawn] = []
+		if toSpawn > 0:
+			var spawnedAgents : Array[MonsterAgent] = NpcCommons.Spawn(agent, spawn, toSpawn, agent.position, GetOffset())
+			for spawnedAgent in spawnedAgents:
+				spawnedAgent.leader = agent
+			agent.followers[spawn].append_array(spawnedAgents)
+			nbSpawned += spawnedAgents.size()
+
+	return nbSpawned > 0

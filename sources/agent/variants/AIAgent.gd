@@ -7,6 +7,7 @@ var aiState : AICommons.State			= AICommons.State.IDLE
 var aiTimer : Timer						= null
 var aiRefreshDelay : float				= randf_range(AICommons.RefreshDelayMin, AICommons.RefreshDelayMax)
 var attackers : Array					= []
+var followers : Dictionary				= {}
 var leader : BaseAgent					= null
 var hasNodeGoal : bool					= false
 var nodeGoal : Node2D					= null
@@ -66,9 +67,20 @@ func GetDamageRatio(attacker : BaseAgent) -> float:
 				return float(entry.damage) / float(stat.current.maxHealth) if entry.damage < stat.current.maxHealth else 1.0
 	return 0.0
 
+func AddFollower(follower : BaseAgent):
+	if follower and ActorCommons.IsAlive(follower):
+		if not follower.data._name in followers:
+			followers[follower.data._name] = []
+		followers[follower.data._name].push_back(follower)
+
+func RemoveFollower(follower : BaseAgent):
+	if follower:
+		if follower.data._name in followers:
+			followers[follower.data._name].erase(follower)
+
 #
-func SetData(data : EntityData):
-	super.SetData(data)
+func SetData():
+	super.SetData()
 	aiBehaviour = data._behaviour
 
 func _ready():

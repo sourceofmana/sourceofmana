@@ -99,3 +99,27 @@ static func AddTimer(caller : BaseAgent, delay : float, callback : Callable):
 			caller.ownScript.timerCount += 1
 		return newTimer
 	return null
+
+# Commands
+static func Spawn(caller : BaseAgent, monsterName : String, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
+	var agents : Array[MonsterAgent] = []
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(caller)
+	if inst and inst.map:
+		for i in count:
+			var spawnObject : SpawnObject = SpawnObject.new()
+			spawnObject.map					= inst.map
+			spawnObject.type				= "Monster"
+			spawnObject.name				= monsterName
+			spawnObject.count				= count
+			if position == Vector2.ZERO:
+				spawnObject.spawn_position	= WorldNavigation.GetRandomPosition(inst.map)
+			else:
+				spawnObject.spawn_position	= WorldNavigation.GetRandomPositionAABB(inst.map, position, spawnRadius)
+			agents.push_back(WorldAgent.CreateAgent(spawnObject, inst.id))
+	return agents
+
+static func Warp(caller : BaseAgent, mapName : String, position : Vector2):
+	if caller is PlayerAgent:
+		var map : WorldMap = Launcher.World.GetMap(mapName)
+		if map:
+			Launcher.World.Warp(caller, map, position)

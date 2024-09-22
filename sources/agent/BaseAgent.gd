@@ -141,7 +141,7 @@ func UpdateChanged():
 	Launcher.Network.Server.NotifyNeighbours(self, functionName, [velocity, position, currentOrientation, state, currentSkillID])
 
 #
-func SetData(data : EntityData):
+func SetData():
 	for skillID in data._skillSet:
 		AddSkill(DB.SkillsDB[skillID], data._skillProba[skillID])
 

@@ -47,6 +47,12 @@ static func Refresh(agent : AIAgent):
 static func HandleBehaviour(agent : AIAgent):
 	var handled : bool = false
 
+	# Check if should idle
+	if not handled and agent.aiBehaviour & AICommons.Behaviour.SPAWNER:
+		handled = AICommons.ApplySpawnerBehaviour(agent)
+	if not handled and agent.aiBehaviour & AICommons.Behaviour.IMMOBILE:
+		handled = AICommons.ApplyImmobileBehaviour(agent)
+
 	# Check if should attack, either one of those
 	if not handled and agent.aiBehaviour & AICommons.Behaviour.PACIFIST:
 		handled = AICommons.ApplyPacifistBehaviour(agent)
@@ -61,12 +67,6 @@ static func HandleBehaviour(agent : AIAgent):
 	if not handled and agent.aiBehaviour & AICommons.Behaviour.FOLLOWER:
 		handled = AICommons.ApplyFollowerBehaviour(agent)
 
-	# Check if should idle
-	if not handled and agent.aiBehaviour & AICommons.Behaviour.SPAWNER:
-		handled = AICommons.ApplySpawnerBehaviour(agent)
-	if not handled and agent.aiBehaviour & AICommons.Behaviour.IMMOBILE:
-		handled = AICommons.ApplyImmobileBehaviour(agent)
-
 #
 static func StateIdle(agent : AIAgent):
 	if not AICommons.IsActionInProgress(agent):
@@ -78,6 +78,10 @@ static func StateWalk(agent : AIAgent):
 		Reset(agent)
 
 static func StateAttack(agent : AIAgent):
+	for cat in agent.followers:
+		for follower in agent.followers[cat]:
+			AI.Refresh(follower)
+
 	var target : BaseAgent = agent.GetMostValuableAttacker()
 	if not target:
 		Reset(agent)

@@ -17,15 +17,15 @@ var agentID : int						= -1
 signal entity_died
 
 # Init
-func SetData(data : EntityData):
+func SetData():
 	SetVisual(data)
 	interactive.Init(data)
 
-func SetVisual(data : EntityData, morphed : bool = false):
+func SetVisual(altData : EntityData, morphed : bool = false):
 	if morphed:
-		interactive.DisplayMorph(visual.Init, [data])
+		interactive.DisplayMorph(visual.Init, [altData])
 	else:
-		visual.Init(data)
+		visual.Init(altData)
 
 #
 func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextskillCastID : int, forceValue : bool = false):
