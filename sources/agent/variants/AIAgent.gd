@@ -7,8 +7,23 @@ var aiState : AICommons.State			= AICommons.State.IDLE
 var aiTimer : Timer						= null
 var aiRefreshDelay : float				= randf_range(AICommons.RefreshDelayMin, AICommons.RefreshDelayMax)
 var attackers : Array					= []
+var leader : BaseAgent					= null
+var hasNodeGoal : bool					= false
+var nodeGoal : Node2D					= null
 
 #
+func ResetNav():
+	super.ResetNav()
+	if hasNodeGoal:
+		hasNodeGoal = false
+		nodeGoal = null
+		actionTimer.stop()
+
+func SetNodeGoal(goal : Node2D, pos : Vector2):
+	WalkToward(pos)
+	hasNodeGoal = goal != null
+	nodeGoal = goal
+
 func AddAttacker(attacker : BaseAgent, damage : int = 0):
 	if attacker:
 		var currentTick : int = Time.get_ticks_msec()

@@ -10,7 +10,6 @@ var regenTimer : Timer					= null
 var cooldownTimers : Dictionary			= {}
 
 var hasCurrentGoal : bool				= false
-var currentGoal : Node2D				= null
 var isRelativeMode : bool				= false
 var lastPositions : Array[float]		= []
 
@@ -133,11 +132,6 @@ func WalkToward(pos : Vector2):
 func ResetNav():
 	WalkToward(position)
 	SwitchInputMode(true)
-	currentGoal = null
-
-func SetCurrentGoal(goal : Node2D):
-	WalkToward(goal.position)
-	currentGoal = goal
 
 func UpdateChanged():
 	forceUpdate = false

@@ -3,3 +3,4 @@
 [node name="NavAgent" type="NavigationAgent2D"]
 path_desired_distance = 10.0
 neighbor_distance = 20.0
+max_speed = 50.0

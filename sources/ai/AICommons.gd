@@ -110,6 +110,9 @@ static func GetRandomSkill(agent : AIAgent) -> SkillCell:
 static func GetTransition(prev : State, next : State) -> State:
 	return _transitions[prev][next]
 
+static func HasExpiredNodeGoal(agent : AIAgent):
+	return agent.hasNodeGoal and (agent.nodeGoal == null or (agent.nodeGoal is BaseAgent and ActorCommons.IsAlive(agent.nodeGoal)))
+
 # Behaviour
 static func ApplyPacifistBehaviour(agent : AIAgent) -> bool:
 	if agent.aiState == State.ATTACK:
@@ -126,7 +129,7 @@ static func ApplyNeutralBehaviour(agent : AIAgent) -> bool:
 		AI.SetState(agent, State.ATTACK, true)
 		return true
 	elif agent.aiState == State.ATTACK:
-		AI.SetState(agent, State.WALK, true)
+		AI.Reset(agent)
 	return false
 
 static func ApplyAggressiveBehaviour(agent : AIAgent) -> bool:
@@ -150,32 +153,48 @@ static func ApplyAggressiveBehaviour(agent : AIAgent) -> bool:
 
 static func ApplyStealBehaviour(agent : AIAgent) -> bool:
 	if not IsActionInProgress(agent):
-		if IsAgentMoving(agent):
-			if not agent.currentGoal:
-				agent.ResetNav()
-		else:
-			var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
-			if instance:
-				var nearest : Drop = null
-				var nearestDist : float = INF
-				for dropIdx in instance.drops:
-					var drop : Drop = instance.drops[dropIdx]
-					if drop:
-						var dist : float = WorldNavigation.GetPathLengthSquared(agent, drop.position)
-						if dist < nearestDist and dist < ReachDistanceSquared:
-							nearest = drop
-							nearestDist = dist
-				if nearest:
-					if nearestDist < ActorCommons.PickupSquaredDistance:
-						WorldDrop.PickupDrop(nearest.get_instance_id(), agent)
-					else:
-						AI.SetState(agent, State.WALK, true)
-						agent.SetCurrentGoal(nearest)
-					return true
+		var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+		if instance:
+			var nearest : Drop = null
+			var nearestDist : float = INF
+			for dropIdx in instance.drops:
+				var drop : Drop = instance.drops[dropIdx]
+				if drop:
+					var dist : float = WorldNavigation.GetPathLengthSquared(agent, drop.position)
+					if dist < nearestDist and dist < ReachDistanceSquared:
+						nearest = drop
+						nearestDist = dist
+			if nearest:
+				if nearestDist < ActorCommons.PickupSquaredDistance:
+					WorldDrop.PickupDrop(nearest.get_instance_id(), agent)
+				else:
+					AI.SetState(agent, State.WALK, true)
+					agent.SetNodeGoal(nearest, nearest.position)
+				return true
 
 	return false
 
-static func ApplyFollowerBehaviour(_agent : AIAgent) -> bool:
+static func ApplyFollowerBehaviour(agent : AIAgent) -> bool:
+	if not IsActionInProgress(agent):
+		if agent.leader != null:
+			if agent.leader.aiState == State.ATTACK:
+				var mvp : BaseAgent = agent.leader.GetMostValuableAttacker()
+				if mvp:
+					agent.AddAttacker(mvp)
+					return true
+		else: # Try to find a leader
+			var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+			if instance:
+				var nearest : BaseAgent = null
+				var nearestDist : float = INF
+				for mob in instance.mobs:
+					if mob and mob.aiBehaviour & Behaviour.LEADER:
+						var dist : float = WorldNavigation.GetPathLengthSquared(agent, mob.position)
+						if dist < nearestDist and dist < ReachDistanceSquared:
+							nearest = mob
+							nearestDist = dist
+				if nearest:
+					agent.leader = nearest
 	return false
 
 static func ApplyImmobileBehaviour(_agent : AIAgent) -> bool:

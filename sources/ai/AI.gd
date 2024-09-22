@@ -18,7 +18,6 @@ static func SetState(agent : AIAgent, state : AICommons.State, force : bool = fa
 
 static func Reset(agent : AIAgent):
 	SetState(agent, AICommons.State.IDLE, true)
-	agent.actionTimer.stop()
 	agent.ResetNav()
 	Callback.StartTimer(agent.aiTimer, AICommons.RefreshDelayMin, AI.Refresh.bind(agent))
 
@@ -26,6 +25,8 @@ static func Refresh(agent : AIAgent):
 	if not ActorCommons.IsAlive(agent) or not WorldAgent.GetInstanceFromAgent(agent):
 		SetState(agent, AICommons.State.HALT)
 	else:
+		if AICommons.HasExpiredNodeGoal(agent):
+			Reset(agent)
 		HandleBehaviour(agent)
 
 	match agent.aiState:
@@ -46,7 +47,7 @@ static func Refresh(agent : AIAgent):
 static func HandleBehaviour(agent : AIAgent):
 	var handled : bool = false
 
-	# Check if should attack
+	# Check if should attack, either one of those
 	if not handled and agent.aiBehaviour & AICommons.Behaviour.PACIFIST:
 		handled = AICommons.ApplyPacifistBehaviour(agent)
 	elif not handled and agent.aiBehaviour & AICommons.Behaviour.NEUTRAL:
@@ -57,13 +58,13 @@ static func HandleBehaviour(agent : AIAgent):
 	# Check if should walk
 	if not handled and agent.aiBehaviour & AICommons.Behaviour.STEAL:
 		handled = AICommons.ApplyStealBehaviour(agent)
-	elif not handled and agent.aiBehaviour & AICommons.Behaviour.FOLLOWER:
+	if not handled and agent.aiBehaviour & AICommons.Behaviour.FOLLOWER:
 		handled = AICommons.ApplyFollowerBehaviour(agent)
 
 	# Check if should idle
 	if not handled and agent.aiBehaviour & AICommons.Behaviour.SPAWNER:
 		handled = AICommons.ApplySpawnerBehaviour(agent)
-	elif not handled and agent.aiBehaviour & AICommons.Behaviour.IMMOBILE:
+	if not handled and agent.aiBehaviour & AICommons.Behaviour.IMMOBILE:
 		handled = AICommons.ApplyImmobileBehaviour(agent)
 
 #
@@ -73,10 +74,8 @@ static func StateIdle(agent : AIAgent):
 			Callback.StartTimer(agent.actionTimer, AICommons.GetWalkTimer(), AI.ToWalk.bind(agent))
 
 static func StateWalk(agent : AIAgent):
-	if AICommons.IsAgentMoving(agent) and AICommons.IsActionInProgress(agent):
-		if AICommons.IsStuck(agent):
-			agent.ResetNav()
-			Callback.StartTimer(agent.actionTimer, AICommons.GetUnstuckTimer(), AI.ToWalk.bind(agent))
+	if not AICommons.IsAgentMoving(agent) or AICommons.IsStuck(agent):
+		Reset(agent)
 
 static func StateAttack(agent : AIAgent):
 	var target : BaseAgent = agent.GetMostValuableAttacker()
@@ -102,9 +101,14 @@ static func StateAttack(agent : AIAgent):
 static func ToWalk(agent : AIAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map:
-		var position : Vector2i = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.GetOffset())
 		SetState(agent, AICommons.State.WALK, true)
-		agent.WalkToward(position)
+		var position : Vector2i
+		if agent.leader != null:
+			position = WorldNavigation.GetRandomPositionAABB(map, agent.leader.position, AICommons.GetOffset())
+			agent.SetNodeGoal(agent.leader, position)
+		else:
+			position = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.GetOffset())
+			agent.SetNodeGoal(agent, position)
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, AICommons.State.IDLE])
 
 static func ToAttack(agent : AIAgent, target : BaseAgent):
@@ -116,7 +120,7 @@ static func ToAttack(agent : AIAgent, target : BaseAgent):
 static func ToChase(agent : AIAgent, target : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map and SkillCommons.IsSameMap(agent, target):
-		agent.SetCurrentGoal(target)
+		agent.SetNodeGoal(target, target.position)
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.Refresh, [agent])
 
 static func ToFlee(agent : AIAgent, target : BaseAgent):
@@ -124,5 +128,5 @@ static func ToFlee(agent : AIAgent, target : BaseAgent):
 	if map and SkillCommons.IsSameMap(agent, target):
 		var fleePosition : Vector2 = agent.position - agent.position.direction_to(target.position) * AICommons.FleeDistance
 		SetState(agent, AICommons.State.WALK, true)
-		agent.WalkToward(fleePosition)
+		agent.SetNodeGoal(target, fleePosition)
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, AICommons.State.IDLE])
