@@ -1117,7 +1117,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="123" name="Fire Skull" type="Spawn" x="1935" y="1696" width="185" height="147">
+  <object id="123" name="Fire Skull" type="Spawn" x="1293" y="1696" width="185" height="147">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="name" value="Fire Skull"/>
