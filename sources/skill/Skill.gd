@@ -92,7 +92,7 @@ static func Stopped(agent : BaseAgent):
 		agent.SetSkillCastID(DB.UnknownHash)
 		Callback.ClearTimer(agent.actionTimer)
 		if agent is AIAgent:
-			AI.SetState(agent, AICommons.State.IDLE)
+			AI.Refresh(agent)
 
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:

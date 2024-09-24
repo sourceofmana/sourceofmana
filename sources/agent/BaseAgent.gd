@@ -158,6 +158,7 @@ func SetData():
 			agent = FileSystem.LoadEntityComponent("navigations/NPAgent")
 		agent.set_radius(data._radius)
 		agent.set_neighbor_distance(data._radius * 2)
+		agent.set_avoidance_priority(clampf(data._radius / float(ActorCommons.MaxEntityRadiusSize), 0.0, 1.0))
 		agent.velocity_computed.connect(self._velocity_computed)
 		add_child.call_deferred(agent)
 

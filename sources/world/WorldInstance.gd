@@ -3,8 +3,8 @@ extends SubViewport
 
 #
 var id : int							= 0
-var npcs : Array[BaseAgent]				= []
-var mobs : Array[BaseAgent]				= []
+var npcs : Array[AIAgent]				= []
+var mobs : Array[AIAgent]				= []
 var players : Array[BaseAgent]			= []
 var drops : Dictionary					= {}
 var map : WorldMap						= null

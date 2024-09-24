@@ -19,7 +19,7 @@ static func SetState(agent : AIAgent, state : AICommons.State, force : bool = fa
 static func Reset(agent : AIAgent):
 	SetState(agent, AICommons.State.IDLE, true)
 	agent.ResetNav()
-	Callback.StartTimer(agent.aiTimer, AICommons.RefreshDelayMin, AI.Refresh.bind(agent))
+	Callback.StartTimer(agent.aiTimer, AICommons.MinRefreshDelay, AI.Refresh.bind(agent))
 
 static func Refresh(agent : AIAgent):
 	if not ActorCommons.IsAlive(agent) or not WorldAgent.GetInstanceFromAgent(agent):
@@ -37,12 +37,14 @@ static func Refresh(agent : AIAgent):
 		AICommons.State.ATTACK:
 			StateAttack(agent)
 		AICommons.State.HALT:
+			if agent.agent:
+				agent.agent.avoidance_layers = 0
 			Callback.ClearTimer(agent.aiTimer)
 			return
 		_:
 			Util.Assert(false, "AI state not handled")
 
-	Callback.LoopTimer(agent.aiTimer, agent.aiRefreshDelay)
+	Callback.LoopTimer(agent.aiTimer, AICommons.MinRefreshDelay if agent.aiState == AICommons.State.ATTACK else agent.aiRefreshDelay)
 
 static func HandleBehaviour(agent : AIAgent):
 	var handled : bool = false
@@ -78,10 +80,6 @@ static func StateWalk(agent : AIAgent):
 		Reset(agent)
 
 static func StateAttack(agent : AIAgent):
-	for cat in agent.followers:
-		for follower in agent.followers[cat]:
-			AI.Refresh(follower)
-
 	var target : BaseAgent = agent.GetMostValuableAttacker()
 	if not target:
 		Reset(agent)
@@ -97,8 +95,8 @@ static func StateAttack(agent : AIAgent):
 				ToChase(agent, target)
 		else:
 			Reset(agent)
-	else: # Has target and action is in progress
-		if not ActorCommons.IsAlive(target) or (AICommons.IsAgentMoving(agent) and not agent.currentGoal):
+	else: # Has target and is moving toward a Node2D goal
+		if not ActorCommons.IsAlive(target) or (AICommons.IsAgentMoving(agent) and agent.nodeGoal == null):
 			Reset(agent)
 
 # Could be delayed, always check if agent is inside a map
@@ -108,10 +106,10 @@ static func ToWalk(agent : AIAgent):
 		SetState(agent, AICommons.State.WALK, true)
 		var position : Vector2i
 		if agent.leader != null:
-			position = WorldNavigation.GetRandomPositionAABB(map, agent.leader.position, AICommons.GetOffset())
+			position = WorldNavigation.GetRandomPositionAABB(map, agent.leader.position, AICommons.MaxOffsetVector)
 			agent.SetNodeGoal(agent.leader, position)
 		else:
-			position = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.GetOffset())
+			position = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.MaxOffsetVector)
 			agent.SetNodeGoal(agent, position)
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, AICommons.State.IDLE])
 

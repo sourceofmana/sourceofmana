@@ -58,30 +58,32 @@ const _transitions : Array[Array] = [
 	[State.HALT,		State.HALT,		State.HALT,		State.HALT],	# HALT
 ]
 
-const RefreshDelayMin : float		= 1.0
-const RefreshDelayMax : float		= 5.0
+const MinRefreshDelay : float		= 1.0
+const MaxRefreshDelay : float		= 5.0
+const MinWalkTimer : int			= 5
+const MaxWalkTimer : int			= 20
+const MinUnstuckTimer : int			= 2
+const MaxUnstuckTimer : int			= 10
+
+const MinOffsetDistance : int		= 30
+const MaxOffsetDistance : int		= 200
+const MaxOffsetVector : Vector2i	= Vector2i(MaxOffsetDistance, MaxOffsetDistance)
 const FleeDistance : float			= 200
 const ReachDistance : float			= 500
 const ReachDistanceSquared : float	= ReachDistance * ReachDistance
 const MaxAttackerCount : int		= 8
 
 #
-static func GetOffset() -> Vector2i:
-	const minDistance : int				= 30
-	const maxDistance : int				= 200
+static func GeRandomtOffset() -> Vector2i:
 	return Vector2i(
-		randi_range(minDistance, maxDistance),
-		randi_range(minDistance, maxDistance))
+		randi_range(MinOffsetDistance, MaxOffsetDistance),
+		randi_range(MinOffsetDistance, MaxOffsetDistance))
 
 static func GetWalkTimer() -> float:
-	const minWalkTimer : int			= 5
-	const maxWalkTimer : int			= 20
-	return randf_range(minWalkTimer, maxWalkTimer)
+	return randf_range(MinWalkTimer, MaxWalkTimer)
 
 static func GetUnstuckTimer() -> float:
-	const minUnstuckTimer : int			= 2
-	const maxUnstuckTimer : int			= 10
-	return randf_range(minUnstuckTimer, maxUnstuckTimer)
+	return randf_range(MinUnstuckTimer, MaxUnstuckTimer)
 
 static func IsStuck(agent : AIAgent) -> bool:
 	return agent.lastPositions.size() >= 5 and abs(agent.lastPositions[0] - agent.lastPositions[4]) < 1
@@ -111,7 +113,7 @@ static func GetTransition(prev : State, next : State) -> State:
 	return _transitions[prev][next]
 
 static func HasExpiredNodeGoal(agent : AIAgent):
-	return agent.hasNodeGoal and (agent.nodeGoal == null or (agent.nodeGoal is BaseAgent and ActorCommons.IsAlive(agent.nodeGoal)))
+	return agent.hasNodeGoal and (agent.nodeGoal == null or (agent.nodeGoal is BaseAgent and not ActorCommons.IsAlive(agent.nodeGoal)))
 
 # Behaviour
 static func ApplyPacifistBehaviour(agent : AIAgent) -> bool:
@@ -126,7 +128,8 @@ static func ApplyNeutralBehaviour(agent : AIAgent) -> bool:
 
 	var target : BaseAgent = agent.GetNearbyMostValuableAttacker()
 	if target:
-		AI.SetState(agent, State.ATTACK, true)
+		if agent.aiState != State.ATTACK or agent.nodeGoal != target:
+			AI.SetState(agent, State.ATTACK, true)
 		return true
 	elif agent.aiState == State.ATTACK:
 		AI.Reset(agent)
@@ -147,7 +150,8 @@ static func ApplyAggressiveBehaviour(agent : AIAgent) -> bool:
 				nearestSquaredDist = currentDist
 	if nearest:
 		agent.AddAttacker(nearest)
-		agent.aiState = State.ATTACK
+		if agent.aiState != State.ATTACK or agent.nodeGoal != nearest:
+			AI.SetState(agent, State.ATTACK, true)
 		return true
 	return false
 
@@ -177,25 +181,10 @@ static func ApplyStealBehaviour(agent : AIAgent) -> bool:
 static func ApplyFollowerBehaviour(agent : AIAgent) -> bool:
 	if not IsActionInProgress(agent):
 		if agent.leader != null:
-			if agent.leader.aiState == State.ATTACK:
-				var mvp : BaseAgent = agent.leader.GetMostValuableAttacker()
-				if mvp:
-					agent.AddAttacker(mvp)
-					return true
-		else: # Try to find a leader
-			var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
-			if instance:
-				var nearest : BaseAgent = null
-				var nearestDist : float = INF
-				for mob in instance.mobs:
-					if mob and mob.aiBehaviour & Behaviour.LEADER:
-						var dist : float = WorldNavigation.GetPathLengthSquared(agent, mob.position)
-						if dist < nearestDist and dist < ReachDistanceSquared:
-							nearest = mob
-							nearestDist = dist
-				if nearest:
-					agent.leader = nearest
-					nearest.AddFollower(agent)
+			if agent.leader.aiState == State.ATTACK and agent.aiState == State.IDLE:
+				AI.SetState(agent, State.WALK, true)
+				agent.SetNodeGoal(agent.leader, agent.leader.position)
+				return true
 	return false
 
 static func ApplyImmobileBehaviour(_agent : AIAgent) -> bool:
@@ -215,17 +204,15 @@ static func ApplySpawnerBehaviour(agent : AIAgent) -> bool:
 			if instance:
 				for mob in instance.mobs:
 					if mob.leader == null and mob.aiBehaviour & Behaviour.FOLLOWER and mob.nick == spawn and mob.spawnInfo.is_persistant == false:
-						mob.leader = agent
 						agent.AddFollower(mob)
 						toSpawn -= 1
 					if toSpawn == 0:
 						break
 
 		if toSpawn > 0:
-			var spawnedAgents : Array[MonsterAgent] = NpcCommons.Spawn(agent, spawn, toSpawn, agent.position, GetOffset())
+			var spawnedAgents : Array[MonsterAgent] = NpcCommons.Spawn(agent, spawn, toSpawn, agent.position, GeRandomtOffset())
 			for spawnedAgent in spawnedAgents:
-				spawnedAgent.leader = agent
-			agent.followers[spawn].append_array(spawnedAgents)
+				agent.AddFollower(spawnedAgent)
 			nbSpawned += spawnedAgents.size()
 
 	return nbSpawned > 0

@@ -33,7 +33,7 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 	if "Collision" in result:
 		entity._collision = result.Collision
 	if "Radius" in result:
-		entity._radius = result.Radius
+		entity._radius = clampi(result.Radius.to_int(), 0, ActorCommons.MaxEntityRadiusSize)
 	if "Textures" in result:
 		for texture in result.Textures:
 			entity._customTextures[ActorCommons.GetSlotID(texture)] = result.Textures[texture]

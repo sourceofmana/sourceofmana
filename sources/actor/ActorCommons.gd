@@ -185,7 +185,6 @@ const speechMaxWidth : int					= 256
 const speechExtraWidth : int				= 20
 const TargetMaxSquaredDistance : float		= 512 * 512 # ~15 Tile squared length
 
-
 # Lifetime
 const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
 const RegenDelay : float					= 3.0
@@ -209,6 +208,7 @@ static var SailingDestination : Destination	= Destination.new("Ocean", Vector2(7
 const DisplacementVector : Vector2			= Vector2(32, 32)
 const MaxDisplacementSquareLength : float	= 64 * 64
 const InputApproximationUnit : int			= 12
+const MaxEntityRadiusSize : int				= 256
 
 # New player
 const DefaultAttributes : Dictionary = {
