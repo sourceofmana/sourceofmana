@@ -22,7 +22,7 @@ func _ready():
 
 #
 static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:
-	Util.Assert(_map != null, "Could not create an instance on a non-valid map")
+	assert(_map != null, "Could not create an instance on a non-valid map")
 	if _map == null:
 		return
 

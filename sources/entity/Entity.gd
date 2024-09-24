@@ -97,7 +97,7 @@ func Interact():
 
 func Cast(skillID : int):
 	var skill : SkillCell = DB.SkillsDB[skillID]
-	Util.Assert(skill != null, "Skill ID is not found, can't cast it")
+	assert(skill != null, "Skill ID is not found, can't cast it")
 	if skill == null:
 		return
 

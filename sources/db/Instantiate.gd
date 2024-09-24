@@ -31,7 +31,7 @@ static func CreateAgent(entityTypeStr : String, entityID : String, nick : String
 		"Player":
 			actor = PlayerAgent.new()
 			entityType = ActorCommons.Type.PLAYER
-		_: Util.Assert(false, "Trying to create an agent with a wrong type: " + entityTypeStr)
+		_: assert(false, "Trying to create an agent with a wrong type: " + entityTypeStr)
 
 	if actor:
 		actor.Init(entityType, entityID, nick, true)

@@ -17,7 +17,7 @@ func RefreshTileMap():
 			break
 
 func GetMapBoundaries() -> Rect2:
-	Util.Assert(mapNode != null, "Map node not found on the current scene")
+	assert(mapNode != null, "Map node not found on the current scene")
 	return mapNode.get_meta("MapBoundaries") if mapNode else Rect2()
 
 #
@@ -47,14 +47,14 @@ func UnloadMapNode():
 
 func LoadMapNode(mapName : String):
 	mapNode = pool.LoadMapClientData(mapName)
-	Util.Assert(mapNode != null, "Map instance could not be created")
+	assert(mapNode != null, "Map instance could not be created")
 	if mapNode:
 		RefreshTileMap()
 		Launcher.add_child(mapNode)
 
 # Generic fringe Node2D
 func RemoveChildren():
-	Util.Assert(fringeLayer != null, "Current fringe layer not found, could not remove children")
+	assert(fringeLayer != null, "Current fringe layer not found, could not remove children")
 	for child in fringeLayer.get_children():
 		if child is Node2D:
 			RemoveChild(child)
@@ -67,7 +67,7 @@ func RemoveChild(child : Node2D):
 			child.queue_free()
 
 func AddChild(child : Node2D):
-	Util.Assert(fringeLayer != null, "Current fringe layer not found, could not add a new child")
+	assert(fringeLayer != null, "Current fringe layer not found, could not add a new child")
 	if fringeLayer:
 		fringeLayer.add_child(child)
 

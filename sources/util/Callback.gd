@@ -79,7 +79,7 @@ static func StartTimer(timer : Timer, delay : float, callback : Callable, oneSho
 			PlugCallback(timer.timeout, callback)
 
 static func LoopTimer(timer : Timer, delay : float):
-	Util.Assert(delay > 0, "Delay should never be null, infinite loop can happen on looped timers")
+	assert(delay > 0, "Delay should never be null, infinite loop can happen on looped timers")
 	if timer and delay > 0:
 		timer.start(delay)
 

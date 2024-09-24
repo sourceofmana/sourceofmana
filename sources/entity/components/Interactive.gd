@@ -14,7 +14,7 @@ var displayName : bool						= false
 
 #
 func DisplayEmote(emoteID : int):
-	Util.Assert(emoteFx != null, "No emote particle found, could not display emote")
+	assert(emoteFx != null, "No emote particle found, could not display emote")
 	if emoteFx:
 		if DB.EmotesDB and emoteID in DB.EmotesDB:
 			var emote : BaseCell = DB.EmotesDB[emoteID]
@@ -98,7 +98,7 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 
 #
 func DisplaySpeech(speech : String):
-	Util.Assert(speechContainer != null, "No speech container found, could not display speech bubble")
+	assert(speechContainer != null, "No speech container found, could not display speech bubble")
 	if speechContainer:
 		var speechLabel : RichTextLabel = ActorCommons.SpeechLabel.instantiate()
 		speechLabel.set_text("[center]%s[/center]" % [speech])
@@ -165,7 +165,7 @@ func Init(data : EntityData):
 		nameLabel.set_visible(displayName)
 
 func _ready():
-	Util.Assert(entity != null, "No Entity is found as parent for this Interactive node")
+	assert(entity != null, "No Entity is found as parent for this Interactive node")
 	if not entity:
 		return
 

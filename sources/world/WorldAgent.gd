@@ -11,7 +11,7 @@ static func GetMapFromAgent(agent : BaseAgent) -> WorldMap:
 	var map : WorldMap = null
 	var inst : WorldInstance = GetInstanceFromAgent(agent)
 	if inst:
-		Util.Assert(inst.map != null, "Agent's base map is incorrect, instance is not referenced inside a map")
+		assert(inst.map != null, "Agent's base map is incorrect, instance is not referenced inside a map")
 		map = inst.map
 	return map
 
@@ -32,12 +32,12 @@ static func GetAgent(agentID : int) -> BaseAgent:
 	return agent
 
 static func AddAgent(agent : BaseAgent):
-	Util.Assert(agent != null, "Agent is null, can't add it")
+	assert(agent != null, "Agent is null, can't add it")
 	if agent and not agents.has(agent.get_rid().get_id()):
 		agents[agent.get_rid().get_id()] = agent
 
 static func RemoveAgent(agent : BaseAgent):
-	Util.Assert(agent != null, "Agent is null, can't remove it")
+	assert(agent != null, "Agent is null, can't remove it")
 	if agent:
 		var inst : WorldInstance = agent.get_parent()
 		if inst and inst.timers and agent.spawnInfo and agent.spawnInfo.is_persistant:
@@ -51,7 +51,7 @@ static func RemoveAgent(agent : BaseAgent):
 
 static func HasAgent(inst : WorldInstance, agent : BaseAgent):
 	var hasAgent : bool = false
-	Util.Assert(agent != null and inst != null, "Agent or instance are invalid, could not check if the agent is inside the instance")
+	assert(agent != null and inst != null, "Agent or instance are invalid, could not check if the agent is inside the instance")
 	if agent and inst:
 		if agent is PlayerAgent:
 			hasAgent = inst.players.has(agent)
@@ -62,7 +62,7 @@ static func HasAgent(inst : WorldInstance, agent : BaseAgent):
 	return hasAgent
 
 static func PopAgent(agent : BaseAgent):
-	Util.Assert(agent != null, "Agent is null, can't pop it")
+	assert(agent != null, "Agent is null, can't pop it")
 	if agent:
 		var inst : WorldInstance = GetInstanceFromAgent(agent)
 		Launcher.Network.Server.NotifyNeighbours(agent, "RemoveEntity", [], false)
@@ -78,8 +78,8 @@ static func PopAgent(agent : BaseAgent):
 			inst.remove_child(agent)
 
 static func PushAgent(agent : BaseAgent, inst : WorldInstance):
-	Util.Assert(agent != null, "Agent is null, can't push it")
-	Util.Assert(inst != null, "Instance is null, can't push the agent in it")		
+	assert(agent != null, "Agent is null, can't push it")
+	assert(inst != null, "Instance is null, can't push the agent in it")		
 	if agent and inst:
 		if not HasAgent(inst, agent):
 			if agent is PlayerAgent:
@@ -96,7 +96,7 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 
 static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : String = "") -> BaseAgent:
 	var data : EntityData = Instantiate.FindEntityReference(spawn.name)
-	Util.Assert(data != null, "Could not create the actor: %s" % spawn.name)
+	assert(data != null, "Could not create the actor: %s" % spawn.name)
 	if not data:
 		return
 

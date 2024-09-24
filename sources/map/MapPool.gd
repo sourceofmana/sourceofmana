@@ -28,7 +28,7 @@ func FreeMap(map : String):
 			pool[map].queue_free()
 			pool[map] = null
 			var ret : bool = pool.erase(map)
-			Util.Assert(ret, "Could not remove map (" + map + ") from the pool")
+			assert(ret, "Could not remove map (" + map + ") from the pool")
 
 #
 func RefreshPool(currentMap : Node2D):

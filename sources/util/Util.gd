@@ -2,17 +2,12 @@ extends Node
 class_name Util
 
 #
-static func Assert(condition : bool, message : String) -> void:
-	if OS.is_debug_build() && not condition:
-		printerr(message)
-		push_warning(message)
-
 static func PrintLog(logGroup : String, logString : String):
 	print("[%d.%03d][%s] %s" % [Time.get_ticks_msec() / 1000.0, Time.get_ticks_msec() % 1000, logGroup, logString])
 
 static func PrintInfo(_logGroup : String, _logString : String):
-	pass
 #	print("[%d.%03d][%s] %s" % [Time.get_ticks_msec() / 1000.0, Time.get_ticks_msec() % 1000, logGroup, logString])
+	pass
 
 #
 static func RemoveNode(node : Node, parent : Node):

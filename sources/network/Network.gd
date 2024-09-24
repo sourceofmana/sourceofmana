@@ -272,7 +272,7 @@ func NetCreate():
 		else:
 			ret = peer.create_client(serverAddress, NetworkCommons.ServerPort)
 
-		Util.Assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
+		assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
 			var connectedCallback : Callable = ConnectPlayer.bind(Launcher.FSM.playerName) 
@@ -297,7 +297,7 @@ func NetCreate():
 			ret = peer.create_server(NetworkCommons.ServerPort, "*", tlsOptions)
 		else:
 			ret = peer.create_server(NetworkCommons.ServerPort)
-		Util.Assert(ret == OK, "Server could not be created, please check if your port %d is valid" % NetworkCommons.ServerPort)
+		assert(ret == OK, "Server could not be created, please check if your port %d is valid" % NetworkCommons.ServerPort)
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
 			if not Launcher.Root.multiplayer.peer_connected.is_connected(Server.ConnectPeer):

@@ -11,7 +11,7 @@ func Stop():
 func Load(soundName : String):
 	if currentTrack != soundName && not soundName.is_empty() && DB.MusicsDB[soundName] != null:
 		var soundStream : Resource = FileSystem.LoadMusic(DB.MusicsDB[soundName]._path as String)
-		Util.Assert(soundStream != null, "Could not load music: " + soundName)
+		assert(soundStream != null, "Could not load music: " + soundName)
 		if soundStream != null:
 			soundStream.set_loop(true)
 			set_stream(soundStream)

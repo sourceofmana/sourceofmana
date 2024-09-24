@@ -202,7 +202,7 @@ func IsWaiting() -> bool:
 
 # Default functions
 func _init(_npc : NpcAgent, _own : BaseAgent):
-	Util.Assert(_npc != null and _own != null, "Trying to init a NPC Script with a missing player or NPC")
+	assert(_npc != null and _own != null, "Trying to init a NPC Script with a missing player or NPC")
 	own = _own
 	npc = _npc
 	OnStart()

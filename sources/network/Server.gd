@@ -13,7 +13,7 @@ func AddPlayerData(networkRpcID : int):
 		playerMap[networkRpcID] = PlayerData.new()
 
 func CallMethod(networkRpcID : int, methodName : String, actionDelta : int) -> bool:
-	Util.Assert(networkRpcID in playerMap, "Could not find data related to this player: " + str(networkRpcID))
+	assert(networkRpcID in playerMap, "Could not find data related to this player: " + str(networkRpcID))
 	if networkRpcID in playerMap:
 		var oldTick : int = 0
 		if methodName in playerMap[networkRpcID].rpcDeltas:
@@ -164,14 +164,14 @@ func GetRid(player : PlayerAgent) -> int:
 	for dataID in playerMap:
 		if playerMap[dataID].agentRID == playerRid:
 			return dataID
-	Util.Assert(false, "No playerdata associated to this user within the player map")
+	assert(false, "No playerdata associated to this user within the player map")
 	return NetworkCommons.RidUnknown
 
 func GetAgent(rpcID : int) -> PlayerAgent:
 	var player : PlayerAgent	= null
 	if rpcID in playerMap:
 		var playerData : PlayerData = playerMap.get(rpcID)
-		Util.Assert(playerData != null, "No playerdata associated to this user within the player map")
+		assert(playerData != null, "No playerdata associated to this user within the player map")
 		if playerData:
 			player = WorldAgent.GetAgent(playerData.agentRID)
 
@@ -179,7 +179,7 @@ func GetAgent(rpcID : int) -> PlayerAgent:
 
 func NotifyNeighbours(agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
 	if not agent:
-		Util.Assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
+		assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
 		return
 
 	var currentPlayerID = agent.get_rid().get_id()

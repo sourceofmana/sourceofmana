@@ -25,7 +25,7 @@ func _on_button_pressed():
 
 #
 func _ready():
-	Util.Assert(content != null and content.material != null and items != null, "Menu Indicator nodes are not set correctly")
+	assert(content != null and content.material != null and items != null, "Menu Indicator nodes are not set correctly")
 	content.material.set_shader_parameter("progress", progress_speed)
 	items.set_visible(false)
 

@@ -120,7 +120,7 @@ func RemoveItem(cell : BaseCell, count : int = 1) -> bool:
 func ImportInventory(data : Dictionary):
 	for key in data.keys():
 		var hasKey : bool = DB.ItemsDB.has(key)
-		Util.Assert(hasKey, "Could not find the requested key within the ItemsDB %d" % [key])
+		assert(hasKey, "Could not find the requested key within the ItemsDB %d" % [key])
 		if hasKey:
 			PushItem(DB.ItemsDB[key], data[key])
 
@@ -135,5 +135,5 @@ func ExportInventory() -> Dictionary:
 
 #
 func Init(actorNode : Actor):
-	Util.Assert(actorNode != null, "Caller actor node should never be null")
+	assert(actorNode != null, "Caller actor node should never be null")
 	actor = actorNode

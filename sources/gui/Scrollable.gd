@@ -60,7 +60,7 @@ func AddContacts(entry : Dictionary):
 			elif "nick" in contact:
 				contactName = contact["nick"]
 			else:
-				Util.Assert(false, "No name for this contact information")
+				assert(false, "No name for this contact information")
 				continue
 
 			if "mailid" in contact and "mailprovider" in contact:

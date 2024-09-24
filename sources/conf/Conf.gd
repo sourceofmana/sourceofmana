@@ -19,7 +19,7 @@ static func GetCacheID(section : String, key : String, type : Type) -> String:
 
 static func GetVariant(section : String, key : String, type : Type, default = null):
 	if not confFiles[type] or type >= Type.COUNT:
-		Util.Assert(false, "Config type is not valid, returning default value")
+		assert(false, "Config type is not valid, returning default value")
 		return default
 
 	var value = default
@@ -52,7 +52,7 @@ static func GetString(section : String, key : String, type : Type = Type.NONE) -
 	return GetVariant(section, key, type, "")
 
 static func SetValue(section : String, key : String, type : Type, value):
-	Util.Assert(type < Type.COUNT and confFiles[type] != null, "Can't find %s within our loaded conf files")
+	assert(type < Type.COUNT and confFiles[type] != null, "Can't find %s within our loaded conf files")
 	if type >= Type.COUNT or not confFiles[type]:
 		return
 
@@ -62,15 +62,15 @@ static func SetValue(section : String, key : String, type : Type, value):
 		cache[cacheID] = value
 
 static func HasSection(section : String, type : Type) -> bool:
-	Util.Assert(type < Type.COUNT, "Can't find %s within our loaded conf files")
+	assert(type < Type.COUNT, "Can't find %s within our loaded conf files")
 	return type < Type.COUNT and confFiles[type].has_section(section)
 
 static func HasSectionKey(section : String, key : String, type : Type) -> bool:
-	Util.Assert(type < Type.COUNT, "Can't find %s within our loaded conf files")
+	assert(type < Type.COUNT, "Can't find %s within our loaded conf files")
 	return type < Type.COUNT and confFiles[type].has_section_key(section, key)
 
 static func SaveType(fileName : String, type : Type):
-	Util.Assert(type < Type.COUNT, "Can't find %s within our loaded conf files")
+	assert(type < Type.COUNT, "Can't find %s within our loaded conf files")
 	if type < Type.COUNT:
 		FileSystem.SaveConfig(fileName, confFiles[type])
 
@@ -79,4 +79,4 @@ static func Init():
 	confFiles.append(FileSystem.LoadConfig("settings"))
 	confFiles.append(FileSystem.LoadConfig("settings", true))
 
-	Util.Assert(confFiles.size() == Type.COUNT, "Config files count mismatch")
+	assert(confFiles.size() == Type.COUNT, "Config files count mismatch")

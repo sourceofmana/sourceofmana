@@ -43,7 +43,7 @@ func SetValue(dealer : Entity, value : int, alteration : ActorCommons.Alteration
 			hue = ActorCommons.HealColor
 			set_text(str(value))
 		_:
-			Util.Assert(false, "Alteration type not handled: " + str(alteration))
+			assert(false, "Alteration type not handled: " + str(alteration))
 
 	HSVA = Vector4(hue, 0.8, 1.0, 1.0)
 

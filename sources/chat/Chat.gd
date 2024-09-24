@@ -63,7 +63,7 @@ func _physics_process(_delta):
 		enabledLastFrame = false
 
 func _ready():
-	Util.Assert(tabContainer && tabInstance, "TabContainer or TabInstance not correctly set")
+	assert(tabContainer && tabInstance, "TabContainer or TabInstance not correctly set")
 	if tabContainer && tabInstance:
 		var newTab : RichTextLabel = tabInstance.instantiate()
 		newTab.set_name("General")

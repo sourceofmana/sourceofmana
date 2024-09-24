@@ -93,7 +93,7 @@ func SetMorphStats(newStats : Dictionary):
 
 #
 func Init(actorNode : Actor, data : EntityData):
-	Util.Assert(actorNode != null, "Caller actor node should never be null")
+	assert(actorNode != null, "Caller actor node should never be null")
 	actor = actorNode
 
 	var stats : Dictionary = data._stats

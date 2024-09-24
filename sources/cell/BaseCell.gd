@@ -25,4 +25,4 @@ func Use():
 			CellCommons.Type.SKILL:
 				Launcher.Player.Cast(id)
 			_:
-				Util.Assert(false, "Cell type not recognized")
+				assert(false, "Cell type not recognized")

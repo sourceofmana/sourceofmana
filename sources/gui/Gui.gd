@@ -128,7 +128,7 @@ func _notification(notif):
 			Launcher.Action.Enable(true)
 
 func _ready():
-	Util.Assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
+	assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
 	CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
 
 func _on_ui_margin_resized():

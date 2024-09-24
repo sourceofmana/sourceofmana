@@ -28,7 +28,7 @@ func LoadMapData():
 			spiritOnly = node.spirit_only
 		if "spawns" in node:
 			for spawn in node.spawns:
-				Util.Assert(spawn != null, "Warp format is not supported")
+				assert(spawn != null, "Warp format is not supported")
 				if spawn:
 					var spawnObject = SpawnObject.new()
 					spawnObject.count = spawn[0]
@@ -45,7 +45,7 @@ func LoadMapData():
 					spawns.append(spawnObject)
 		if "warps" in node:
 			for warp in node.warps:
-				Util.Assert(warp != null, "Warp format is not supported")
+				assert(warp != null, "Warp format is not supported")
 				if warp:
 					var warpObject = WarpObject.new()
 					warpObject.destinationMap = warp[0]
@@ -56,7 +56,7 @@ func LoadMapData():
 					warps.append(warpObject)
 		if "ports" in node:
 			for port in node.ports:
-				Util.Assert(port != null, "Port format is not supported")
+				assert(port != null, "Port format is not supported")
 				if port:
 					var portObject = PortObject.new()
 					portObject.destinationMap = port[0]

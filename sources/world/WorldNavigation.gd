@@ -36,14 +36,14 @@ static func GetPathLengthSquared(agent : BaseAgent, pos : Vector2) -> float:
 
 # Utils
 static func GetRandomPosition(map : WorldMap) -> Vector2i:
-	Util.Assert(map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0, "No triangulation available")
+	assert(map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0, "No triangulation available")
 	if map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0:
 		return NavigationServer2D.map_get_random_point(map.mapRID, 1, false)
-	Util.Assert(false, "Mob could not be spawned, no available point on the navigation mesh were found")
+	assert(false, "Mob could not be spawned, no available point on the navigation mesh were found")
 	return Vector2i.ZERO
 
 static func GetRandomPositionAABB(map : WorldMap, pos : Vector2i, offset : Vector2i) -> Vector2i:
-	Util.Assert(map != null, "Could not create a random position for a non-initialized map")
+	assert(map != null, "Could not create a random position for a non-initialized map")
 	if map != null:
 		for i in NetworkCommons.NavigationSpawnTry:
 			var randPoint : Vector2i = Vector2i(randi_range(-offset.x, offset.x), randi_range(-offset.y, offset.y))
@@ -67,5 +67,5 @@ static func GetSpawnPosition(map : WorldMap, spawn : SpawnObject, hasNavigation 
 	if position == Vector2i.ZERO:
 		position = WorldNavigation.GetRandomPosition(map)
 
-	Util.Assert(position != Vector2i.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
+	assert(position != Vector2i.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
 	return position

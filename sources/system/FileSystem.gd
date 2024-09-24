@@ -37,11 +37,11 @@ static func LoadFile(path : String) -> String:
 	var content : String		= ""
 
 	var pathExists : bool		= FileExists(fullPath)
-	Util.Assert(pathExists, "Content file not found " + path + " should be located at " + fullPath)
+	assert(pathExists, "Content file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
 		var file : FileAccess = FileAccess.open(fullPath, FileAccess.READ)
-		Util.Assert(file != null, "File parsing issue on file " + fullPath)
+		assert(file != null, "File parsing issue on file " + fullPath)
 		if file:
 			content = file.get_as_text()
 			Util.PrintLog("File", "Loading file: " + fullPath)
@@ -50,7 +50,7 @@ static func LoadFile(path : String) -> String:
 
 static func SaveFile(fullPath : String, content : String):
 	var file : FileAccess		= FileAccess.open(fullPath, FileAccess.WRITE)
-	Util.Assert(file != null, "File parsing issue on file " + fullPath)
+	assert(file != null, "File parsing issue on file " + fullPath)
 	if file:
 		file.store_string(content)
 		file.close()
@@ -62,7 +62,7 @@ static func LoadDB(path : String) -> Dictionary:
 	var result : Dictionary		= {}
 
 	var pathExists : bool		= FileExists(fullPath)
-	Util.Assert(pathExists, "DB file not found " + path + " should be located at " + fullPath)
+	assert(pathExists, "DB file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
 		var DBFile : FileAccess = FileAccess.open(fullPath, FileAccess.READ)
@@ -70,7 +70,7 @@ static func LoadDB(path : String) -> Dictionary:
 		var jsonInstance : JSON = JSON.new()
 		var err : int = jsonInstance.parse(DBFile.get_as_text())
 
-		Util.Assert(err == OK, "DB parsing issue on file " + fullPath \
+		assert(err == OK, "DB parsing issue on file " + fullPath \
 			+ " Line: " + str(jsonInstance.get_error_line()) \
 			+ " Error: " + jsonInstance.get_error_message() \
 		)
@@ -88,7 +88,7 @@ static func LoadMap(path : String, ext : String) -> Object:
 	var scenePath : String		= filePath + ext
 	var pathExists : bool		= ResourceExists(scenePath)
 
-	Util.Assert(pathExists, "Map file not found " + scenePath + " should be located at " + Path.MapRsc)
+	assert(pathExists, "Map file not found " + scenePath + " should be located at " + Path.MapRsc)
 	if pathExists:
 		mapInstance = ResourceInstanceOrLoad(scenePath)
 		Util.PrintLog("Map", "Loading resource: " + scenePath)
@@ -100,7 +100,7 @@ static func LoadGDScript(fullPath : String, alloc : bool = true) -> Object:
 	var srcFile : Object		= null
 
 	var pathExists : bool		= ResourceExists(fullPath)
-	Util.Assert(pathExists, "GDScript file not found " + fullPath)
+	assert(pathExists, "GDScript file not found " + fullPath)
 
 	if pathExists:
 		srcFile = FileAlloc(fullPath) if alloc else ResourceLoader.load(fullPath)
@@ -124,7 +124,7 @@ static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
 		cfgFile = ConfigFile.new()
 		if pathExists:
 			var err : Error = cfgFile.load(fullPath)
-			Util.Assert(err == OK, "Error loading the config file " + path + " located at " + fullPath)
+			assert(err == OK, "Error loading the config file " + path + " located at " + fullPath)
 
 			if err != OK:
 				cfgFile.free()
@@ -132,17 +132,17 @@ static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
 			else:
 				Util.PrintLog("Config", "Loading file: " + fullPath)
 	else:
-		Util.Assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
+		assert(pathExists, "Config file not found " + path + " should be located at " + fullPath)
 
 	return cfgFile
 
 static func SaveConfig(path : String, cfgFile : ConfigFile):
-	Util.Assert(cfgFile != null, "Config file " + path + " not initialized")
+	assert(cfgFile != null, "Config file " + path + " not initialized")
 
 	if cfgFile:
 		var fullPath : String = Path.Local + path + Path.ConfExt
 		var err : Error = cfgFile.save(fullPath)
-		Util.Assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
+		assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
 		Util.PrintLog("Config", "Saving file: " + fullPath)
 
 # Resource
@@ -150,7 +150,7 @@ static func LoadResource(fullPath : String, instantiate : bool = true) -> Object
 	var rscInstance : Object	= null
 	var pathExists : bool		= ResourceExists(fullPath)
 
-	Util.Assert(pathExists, "Resource file not found at: " + fullPath)
+	assert(pathExists, "Resource file not found at: " + fullPath)
 	if pathExists:
 		rscInstance = ResourceInstance(fullPath) if instantiate else ResourceLoader.load(fullPath)
 
@@ -185,7 +185,7 @@ static func LoadMusic(path : String) -> Resource:
 	var musicFile : Resource			= null
 
 	var pathExists : bool		= ResourceExists(fullPath)
-	Util.Assert(pathExists, "Music file not found " + path + " should be located at " + fullPath)
+	assert(pathExists, "Music file not found " + path + " should be located at " + fullPath)
 
 	if pathExists:
 		musicFile = ResourceLoader.load(fullPath)
@@ -213,7 +213,7 @@ static func GetFiles(path : String) -> PackedStringArray:
 
 static func SaveScreenshot():
 	var image : Image = Util.GetScreenCapture()
-	Util.Assert(image != null, "Could not get a viewport screenshot")
+	assert(image != null, "Could not get a viewport screenshot")
 	if image:
 		var dir = DirAccess.open(OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS))
 		if not dir.dir_exists("Screenshots"):
@@ -227,6 +227,6 @@ static func SaveScreenshot():
 
 		if not dir.dir_exists(savePath):
 			var ret : Error = image.save_png(savePath)
-			Util.Assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
+			assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
 			if ret == OK:
 				Util.PrintInfo("FileSystem", "Saving capture: " + savePath)

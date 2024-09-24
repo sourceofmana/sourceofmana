@@ -8,7 +8,7 @@ var desyncDebug : bool						= false
 #
 func OnPlayerEnterGame():
 	if desyncDebug:
-		Util.Assert(Launcher.Player != null, "Debug: Player is not accessible")
+		assert(Launcher.Player != null, "Debug: Player is not accessible")
 		if Launcher.Player:
 			if Launcher.Player.sprite:
 				Launcher.Player.sprite.set_visible(false)

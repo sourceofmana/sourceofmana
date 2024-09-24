@@ -73,7 +73,7 @@ func GetBarFormat(currentValue : float, maxValue : float) -> String:
 
 #
 func SetStat(newValue : float, maxValue : float):
-	Util.Assert(bar != null && label != null, "ProgressBar childs are missing")
+	assert(bar != null && label != null, "ProgressBar childs are missing")
 	if valueTo != newValue || valueMax != maxValue:
 		var previousValue : float = valueTo
 
@@ -94,7 +94,7 @@ func SetStat(newValue : float, maxValue : float):
 
 #
 func _ready():
-	Util.Assert(bar != null, "ProgressBar bar child is missing")
+	assert(bar != null, "ProgressBar bar child is missing")
 	if bar:
 		bar.fill_mode = fillMode
 		if textureProgress:
@@ -104,7 +104,7 @@ func _ready():
 		if textureBackground:
 			bar.texture_under = textureBackground
 
-	Util.Assert(label != null, "ProgressBar label child is missing")
+	assert(label != null, "ProgressBar label child is missing")
 	if label:
 		if labelScale != 1:
 			label.set_scale(Vector2(labelScale,labelScale))

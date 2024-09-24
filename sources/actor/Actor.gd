@@ -16,7 +16,7 @@ func SetData():
 
 func Init(_type : ActorCommons.Type, _ID : String, _nick : String = "", isManaged : bool = false):
 	data = Instantiate.FindEntityReference(_ID)
-	Util.Assert(data != null, "Could not create the actor: %s" % _ID)
+	assert(data != null, "Could not create the actor: %s" % _ID)
 	if not data:
 		return
 
