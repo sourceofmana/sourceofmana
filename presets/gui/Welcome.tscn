@@ -4,8 +4,6 @@
 [ext_resource type="Script" path="res://sources/gui/Scrollable.gd" id="2_3lvfq"]
 [ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus-16.ttf" id="3_p3gae"]
 
-
-
 [node name="Welcome" type="PanelContainer"]
 custom_minimum_size = Vector2(160, 96)
 offset_right = 438.0

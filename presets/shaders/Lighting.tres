@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bw63xppmmv0rq"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=4 uid="uid://bw63xppmmv0rq"]
 
 [sub_resource type="Shader" id="Shader_ypmb7"]
 resource_local_to_scene = true
@@ -71,5 +71,5 @@ shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
 shader_parameter/deadband = 4.0
-shader_parameter/light_data = PackedFloat32Array()
-shader_parameter/color_data = PackedFloat32Array()
+shader_parameter/light_data = PackedVector4Array()
+shader_parameter/color_data = PackedVector4Array()

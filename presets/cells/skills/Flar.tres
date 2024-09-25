@@ -20,6 +20,7 @@ castTime = 1.0
 skillColor = Color(0, 0, 0, 1)
 skillTime = 0.0
 projectilePreset = ExtResource("4_s21rb")
+id = -1
 name = "Flar"
 description = "Cast a fire projectile, igniting enemies with intense heat and power."
 icon = ExtResource("3_gnmn3")

@@ -535,6 +535,3 @@ libraries = {
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_gsp5q")]
 root_node = NodePath("../../Body")
-libraries = {
-"": SubResource("AnimationLibrary_iko4k")
-}

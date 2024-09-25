@@ -1,15 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://bmsbt0owg4j86"]
 
-[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_3g7vc"]
-[ext_resource type="Script" path="res://sources/gui/Emote.gd" id="2_7jhvq"]
-[ext_resource type="Script" path="res://sources/gui/CellGrid.gd" id="3_usf6c"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_dnsxy"]
+[ext_resource type="Script" path="res://sources/gui/Emote.gd" id="2_fbark"]
+[ext_resource type="Script" path="res://sources/gui/CellGrid.gd" id="3_2xdy7"]
 
 [node name="Panel" type="PanelContainer"]
 custom_minimum_size = Vector2(160, 96)
 offset_right = 160.0
 offset_bottom = 96.0
-theme = ExtResource("1_3g7vc")
-script = ExtResource("2_7jhvq")
+theme = ExtResource("1_dnsxy")
+script = ExtResource("2_fbark")
 
 [node name="ItemContainer" type="ScrollContainer" parent="."]
 custom_minimum_size = Vector2(34, 34)
@@ -24,7 +24,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
-script = ExtResource("3_usf6c")
+script = ExtResource("3_2xdy7")
 maxCount = 17
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]

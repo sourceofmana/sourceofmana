@@ -20,6 +20,7 @@ castTime = 2.0
 skillPreset = ExtResource("5_703aq")
 skillColor = Color(0, 0, 0, 1)
 skillTime = 2.0
+id = -1
 name = "Mana Burst"
 description = "Unleash a mana-fueled attack, creating a focused circle of concentrated mana around you."
 icon = ExtResource("1_lskrc")

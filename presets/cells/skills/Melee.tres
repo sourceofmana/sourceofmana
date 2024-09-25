@@ -14,6 +14,7 @@ castColor = Color(0, 0, 0, 1)
 castTime = 0.0
 skillColor = Color(0, 0, 0, 1)
 skillTime = 0.0
+id = -1
 name = "Melee"
 description = "Close combat attack."
 icon = ExtResource("3_trswl")

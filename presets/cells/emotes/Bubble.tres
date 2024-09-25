@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_d7s2w")
+id = -1
 name = "Bubble"
 description = ""
 icon = ExtResource("1_18nl5")

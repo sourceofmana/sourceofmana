@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_mo7fq")
+id = -1
 name = "Grin"
 description = ""
 icon = ExtResource("1_tebwm")

@@ -47,7 +47,7 @@
 [ext_resource type="Texture2D" uid="uid://dgiywkj6go44v" path="res://data/graphics/gui/mobile/buttonA_pressed.png" id="29_ioa8a"]
 [ext_resource type="PackedScene" uid="uid://dhdq88so6g3yh" path="res://presets/gui/Stats.tscn" id="35_d1kq3"]
 [ext_resource type="PackedScene" uid="uid://u31xl3ap3wd8" path="res://presets/gui/Inventory.tscn" id="35_j05ha"]
-[ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/Emote.tscn" id="37_v7lrk"]
+[ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/gui/Emote.tscn" id="37_v7lrk"]
 [ext_resource type="PackedScene" uid="uid://b5jgfu2dukotm" path="res://presets/gui/Skill.tscn" id="38_ompay"]
 [ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
 [ext_resource type="Script" path="res://sources/gui/Dialogue.gd" id="45_tnbk2"]

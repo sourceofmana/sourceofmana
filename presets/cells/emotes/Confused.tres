@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_x3wii")
+id = -1
 name = "Confused"
 description = ""
 icon = ExtResource("1_efo1i")

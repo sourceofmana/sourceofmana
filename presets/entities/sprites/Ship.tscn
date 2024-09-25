@@ -935,7 +935,4 @@ speed_scale = 0.519
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_m3lbd")]
 root_node = NodePath("../../Body")
-libraries = {
-"": SubResource("AnimationLibrary_iko4k")
-}
 parameters/Death/BlendSpace2D/blend_position = Vector2(0, -0.904762)

@@ -34,7 +34,7 @@ nodes/BlendSpace2D/position = Vector2(540, 240)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_eo7t4")
 nodes/TimeScale/position = Vector2(760, 200)
 nodes/output/position = Vector2(940, 200)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
+node_connections = [&"TimeScale", 0, &"BlendSpace2D", &"output", 0, &"TimeScale"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_arcve"]
 animation = &"Death"
@@ -69,7 +69,7 @@ nodes/BlendSpace2D/position = Vector2(380, 240)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_weftj")
 nodes/TimeScale/position = Vector2(620, 200)
 nodes/output/position = Vector2(820, 200)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
+node_connections = [&"TimeScale", 0, &"BlendSpace2D", &"output", 0, &"TimeScale"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_71xax"]
 animation = &"Trigger"
@@ -83,7 +83,7 @@ nodes/Animation/position = Vector2(375, 222)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_4qedw")
 nodes/TimeScale/position = Vector2(580, 180)
 nodes/output/position = Vector2(780, 180)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dysp1"]
 animation = &"IdleLeft"
@@ -118,7 +118,7 @@ nodes/BlendSpace2D/position = Vector2(340, 200)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_fowgp")
 nodes/TimeScale/position = Vector2(580, 180)
 nodes/output/position = Vector2(800, 180)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
+node_connections = [&"TimeScale", 0, &"BlendSpace2D", &"output", 0, &"TimeScale"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hmfxx"]
 animation = &"SitLeft"
@@ -153,7 +153,7 @@ nodes/BlendSpace2D/position = Vector2(260, 220)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_ox2ev")
 nodes/TimeScale/position = Vector2(480, 180)
 nodes/output/position = Vector2(680, 180)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
+node_connections = [&"TimeScale", 0, &"BlendSpace2D", &"output", 0, &"TimeScale"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1spn8"]
 animation = &"Trigger"
@@ -167,7 +167,7 @@ nodes/Animation/position = Vector2(382, 199)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_bavah")
 nodes/TimeScale/position = Vector2(580, 160)
 nodes/output/position = Vector2(780, 160)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sa6ck"]
 animation = &"Trigger"
@@ -181,7 +181,7 @@ nodes/Animation/position = Vector2(325, 195)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_rjptr")
 nodes/TimeScale/position = Vector2(520, 160)
 nodes/output/position = Vector2(720, 160)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cx8vo"]
 animation = &"WalkUp"
@@ -236,7 +236,7 @@ nodes/BlendSpace2D/position = Vector2(420, 200)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_gfwha")
 nodes/TimeScale/position = Vector2(660, 160)
 nodes/output/position = Vector2(860, 160)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
+node_connections = [&"TimeScale", 0, &"BlendSpace2D", &"output", 0, &"TimeScale"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_so0lp"]
 

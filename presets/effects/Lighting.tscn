@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhxp5shmhixr3"]
+[gd_scene load_steps=11 format=4 uid="uid://dhxp5shmhixr3"]
 
 [ext_resource type="Script" path="res://sources/effects/Lighting.gd" id="1_75w83"]
 
@@ -72,8 +72,8 @@ shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
-shader_parameter/light_data = PackedFloat32Array()
-shader_parameter/color_data = PackedFloat32Array()
+shader_parameter/light_data = PackedVector4Array()
+shader_parameter/color_data = PackedVector4Array()
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w6cvu"]
 resource_local_to_scene = true
@@ -83,8 +83,8 @@ shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
-shader_parameter/light_data = PackedFloat32Array()
-shader_parameter/color_data = PackedFloat32Array()
+shader_parameter/light_data = PackedVector4Array()
+shader_parameter/color_data = PackedVector4Array()
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r5sve"]
 resource_local_to_scene = true
@@ -94,8 +94,8 @@ shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
-shader_parameter/light_data = PackedFloat32Array()
-shader_parameter/color_data = PackedFloat32Array()
+shader_parameter/light_data = PackedVector4Array()
+shader_parameter/color_data = PackedVector4Array()
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2ll4b"]
 resource_local_to_scene = true
@@ -105,8 +105,8 @@ shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
-shader_parameter/light_data = PackedFloat32Array()
-shader_parameter/color_data = PackedFloat32Array()
+shader_parameter/light_data = PackedVector4Array()
+shader_parameter/color_data = PackedVector4Array()
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_30lle"]
 resource_local_to_scene = true
@@ -116,8 +116,8 @@ shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
-shader_parameter/light_data = PackedFloat32Array()
-shader_parameter/color_data = PackedFloat32Array()
+shader_parameter/light_data = PackedVector4Array()
+shader_parameter/color_data = PackedVector4Array()
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_68mh6"]
 resource_local_to_scene = true
@@ -127,8 +127,8 @@ shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
-shader_parameter/light_data = PackedFloat32Array()
-shader_parameter/color_data = PackedFloat32Array()
+shader_parameter/light_data = PackedVector4Array()
+shader_parameter/color_data = PackedVector4Array()
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ighdq"]
 resource_local_to_scene = true
@@ -138,8 +138,8 @@ shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
-shader_parameter/light_data = PackedFloat32Array()
-shader_parameter/color_data = PackedFloat32Array()
+shader_parameter/light_data = PackedVector4Array()
+shader_parameter/color_data = PackedVector4Array()
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ebkb4"]
 resource_local_to_scene = true
@@ -149,8 +149,8 @@ shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
-shader_parameter/light_data = PackedFloat32Array()
-shader_parameter/color_data = PackedFloat32Array()
+shader_parameter/light_data = PackedVector4Array()
+shader_parameter/color_data = PackedVector4Array()
 
 [node name="LightingLayer" type="CanvasLayer"]
 script = ExtResource("1_75w83")

@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_piw51")
+id = -1
 name = "Apple"
 description = "A crisp red apple known for its refreshing taste and vitality-boosting properties."
 icon = ExtResource("1_nhe6a")
