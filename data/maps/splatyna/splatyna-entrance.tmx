@@ -484,7 +484,7 @@
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="name" value="Becees"/>
-    <property name="player_script" value="Becees.gd"/>
+    <property name="player_script" value="splatyna/Becees.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

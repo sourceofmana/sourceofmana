@@ -14,14 +14,13 @@ var data : EntityData					= null
 func SetData():
 	pass
 
-func Init(_type : ActorCommons.Type, _ID : String, _nick : String = "", isManaged : bool = false):
-	data = Instantiate.FindEntityReference(_ID)
-	assert(data != null, "Could not create the actor: %s" % _ID)
-	if not data:
+func Init(_type : ActorCommons.Type, _data : EntityData, _nick : String = "", isManaged : bool = false):
+	if not _data:
 		return
 
+	data = _data
 	type = _type
-	nick = _ID if _nick.is_empty() else _nick
+	nick = _nick
 	Callback.PlugCallback(ready, SetData)
 
 	if type == ActorCommons.Type.PLAYER and isManaged:

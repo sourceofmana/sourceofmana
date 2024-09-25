@@ -4,6 +4,7 @@ class_name SpawnObject
 
 @export var count : int 				= 0
 @export var name : String				= ""
+@export var nick : String				= ""
 @export var type : String				= ""
 @export var player_script : String		= ""
 @export var own_script : String			= ""

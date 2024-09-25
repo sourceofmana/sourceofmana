@@ -11,30 +11,45 @@ static func FindEntityReference(entityID : String) -> EntityData:
 	return ref
 
 static func CreateEntity(entityType : ActorCommons.Type, entityID : String, nick : String = "", isManaged : bool = false) -> Entity:
+	var data : EntityData = Instantiate.FindEntityReference(entityID)
+	assert(data != null, "Could not create the actor: %s" % entityID)
+	if not data:
+		return null
+
 	var actor : Entity = FileSystem.LoadEntityVariant()
 	if actor:
-		actor.Init(entityType, entityID, nick, isManaged)
+		actor.Init(entityType, data,  entityID if nick.length() == 0 else nick, isManaged)
 	return actor
 
-static func CreateAgent(entityTypeStr : String, entityID : String, nick : String = "", playerScriptPath : String = "", ownScriptPath : String = "") -> BaseAgent:
+static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = "") -> BaseAgent:
+	if spawn == null or data == null:
+		return null
+
+	var position : Vector2 = WorldNavigation.GetSpawnPosition(spawn.map, spawn, !(data._behaviour & AICommons.Behaviour.IMMOBILE))
+	if Vector2i(position) == Vector2i.ZERO:
+		return null
+
 	var actor : BaseAgent = null
-	var entityType : ActorCommons.Type = ActorCommons.Type.NPC
-	match entityTypeStr:
+	var type : ActorCommons.Type = ActorCommons.Type.NPC
+
+	match spawn.type:
 		"Npc":
 			actor = NpcAgent.new()
-			entityType = ActorCommons.Type.NPC
-			actor.playerScriptPath = playerScriptPath
-			actor.ownScriptPath = ownScriptPath
+			actor.playerScriptPath = spawn.player_script
+			actor.ownScriptPath = spawn.own_script
+			type = ActorCommons.Type.NPC
 		"Monster":
 			actor = MonsterAgent.new()
-			entityType = ActorCommons.Type.MONSTER
+			type = ActorCommons.Type.MONSTER
 		"Player":
 			actor = PlayerAgent.new()
-			entityType = ActorCommons.Type.PLAYER
-		_: assert(false, "Trying to create an agent with a wrong type: " + entityTypeStr)
+			type = ActorCommons.Type.PLAYER
+		_: assert(false, "Trying to create an agent with a wrong type: " + spawn.type)
 
 	if actor:
-		actor.Init(entityType, entityID, nick, true)
+		actor.Init(type, data, spawn.name if nick.is_empty() else nick, true)
+		actor.spawnInfo = spawn
+		actor.position = position
 
 	return actor
 

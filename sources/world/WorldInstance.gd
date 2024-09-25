@@ -16,9 +16,9 @@ func _ready():
 	add_child.call_deferred(timers)
 
 	for spawn in map.spawns:
-		if spawn and Instantiate.FindEntityReference(spawn.name) != null:
+		if spawn:
 			for i in spawn.count:
-				WorldAgent.CreateAgent(spawn, id)
+				WorldAgent.CreateAgent(spawn, id, spawn.nick)
 
 #
 static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:

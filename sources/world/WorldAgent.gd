@@ -96,19 +96,12 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 
 static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : String = "") -> BaseAgent:
 	var data : EntityData = Instantiate.FindEntityReference(spawn.name)
-	assert(data != null, "Could not create the actor: %s" % spawn.name)
 	if not data:
 		return
 
-	var position : Vector2 = WorldNavigation.GetSpawnPosition(spawn.map, spawn, !(data._behaviour & AICommons.Behaviour.IMMOBILE))
-	if Vector2i(position) == Vector2i.ZERO:
-		return null
-
-	var agent : BaseAgent = Instantiate.CreateAgent(spawn.type, spawn.name, nickname, spawn.player_script, spawn.own_script)
-	agent.spawnInfo = spawn
-	agent.position = position
-
-	AddAgent(agent)
-	Launcher.World.Spawn(spawn.map, agent, instanceID)
+	var agent : BaseAgent = Instantiate.CreateAgent(spawn, data, spawn.nick if nickname.length() == 0 else nickname)
+	if agent:
+		AddAgent(agent)
+		Launcher.World.Spawn(spawn.map, agent, instanceID)
 
 	return agent
