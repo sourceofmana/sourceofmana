@@ -24,6 +24,12 @@ func RemoveOldest():
 	if child:
 		container.remove_child(child)
 
+func RemoveAll():
+	for child in container.get_children():
+		if child:
+			container.remove_child(child)
+	timestampsMs.clear()
+
 func TryClearOldest():
 	if timestampsMs.size() > 0 and Time.get_ticks_msec() > timestampsMs[0] + UICommons.DelayPickUpNotification:
 		# Do not clear the last item yet, it will be cleared once this window will be hidden.
@@ -39,7 +45,7 @@ func _physics_process(delta : float):
 			if modulate.a > 0.0:
 				modulate.a = clampf(modulate.a - delta * modulateOutScaler, 0.0, 1.0)
 			else:
-				RemoveOldest()
+				RemoveAll()
 				way = UICommons.Way.KEEP
 				visible = false
 		UICommons.Way.KEEP:
