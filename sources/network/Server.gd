@@ -134,6 +134,7 @@ func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var target : BaseAgent = WorldAgent.GetAgent(targetID)
 	if target:
+		Launcher.Network.UpdateAttributes(targetID, target.stat.strength, target.stat.vitality, target.stat.agility, target.stat.endurance, target.stat.concentration, rpcID)
 		Launcher.Network.UpdateActiveStats(targetID, target.stat.level, target.stat.experience, target.stat.gp, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.entityShape, target.stat.spiritShape, target.stat.currentShape, rpcID)
 
 func AddAttribute(attribute : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
