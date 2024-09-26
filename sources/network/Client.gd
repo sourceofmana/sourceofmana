@@ -112,7 +112,8 @@ func UpdateActiveStats(ridAgent : int, level : int, experience : int, gp : int, 
 			entity.stat.spiritShape		= spiritShape
 			entity.stat.currentShape	= currentShape
 			if levelUp:
-				PushNotification("Level %d reached.\nFeel the mana power growing inside you!" % (level))
+				if entity == Launcher.Player:
+					PushNotification("Level %d reached.\nFeel the mana power growing inside you!" % (level))
 				entity.stat.RefreshAttributes()
 			else:
 				entity.stat.RefreshActiveStats()
