@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=60 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://ctgk7c648iyds" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -44,7 +44,11 @@
 [ext_resource type="Texture2D" uid="uid://dp34vjt8lj8n5" path="res://data/graphics/gui/mobile/buttonA.png" id="25_6cklw"]
 [ext_resource type="Texture2D" uid="uid://dfmkxvhnjsnkw" path="res://data/graphics/gui/mobile/buttonX_pressed.png" id="25_8t8bb"]
 [ext_resource type="Texture2D" uid="uid://reqjw3bt0dtj" path="res://data/graphics/gui/mobile/buttonB_pressed.png" id="27_rgxqc"]
+[ext_resource type="Texture2D" uid="uid://coey8dl7aa50i" path="res://data/graphics/gui/mobile/buttonL.png" id="28_k5lnh"]
+[ext_resource type="Texture2D" uid="uid://dyiyds131k860" path="res://data/graphics/gui/mobile/buttonL_pressed.png" id="29_5sssi"]
 [ext_resource type="Texture2D" uid="uid://dgiywkj6go44v" path="res://data/graphics/gui/mobile/buttonA_pressed.png" id="29_ioa8a"]
+[ext_resource type="Texture2D" uid="uid://q7eoj3doqqoc" path="res://data/graphics/gui/mobile/buttonR.png" id="30_gfxfv"]
+[ext_resource type="Texture2D" uid="uid://bqnar6nnlfqxu" path="res://data/graphics/gui/mobile/buttonR_pressed.png" id="31_udatq"]
 [ext_resource type="PackedScene" uid="uid://dhdq88so6g3yh" path="res://presets/gui/Stats.tscn" id="35_d1kq3"]
 [ext_resource type="PackedScene" uid="uid://u31xl3ap3wd8" path="res://presets/gui/Inventory.tscn" id="35_j05ha"]
 [ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/gui/Emote.tscn" id="37_v7lrk"]
@@ -357,7 +361,12 @@ script = ExtResource("18_6nrx4")
 
 [node name="Direction" type="Control" parent="Overlay/Sections/Shortcuts/Sticks"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
+
+[node name="ButtonLeft" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Direction"]
+position = Vector2(4, -50)
+texture_normal = ExtResource("28_k5lnh")
+texture_pressed = ExtResource("29_5sssi")
 
 [node name="Direction" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Direction"]
 texture_normal = ExtResource("18_lb78w")
@@ -384,6 +393,11 @@ texture = ExtResource("20_1vdgt")
 layout_mode = 2
 size_flags_horizontal = 10
 texture = ExtResource("18_lb78w")
+
+[node name="ButtonRight" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
+position = Vector2(98, -50)
+texture_normal = ExtResource("30_gfxfv")
+texture_pressed = ExtResource("31_udatq")
 
 [node name="ButtonY" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/Actions"]
 position = Vector2(51, 5)
@@ -577,8 +591,12 @@ top_level = true
 [connection signal="pressed" from="Overlay/Sections/Indicators/Stat/StatButton" to="Overlay/Sections/Indicators/Stat" method="_on_button_pressed"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Menu/MenuButton" to="Overlay/Sections/Indicators/Menu" method="_on_button_pressed"]
 [connection signal="released" from="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue/Button/TouchButton" to="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue" method="ButtonPressed"]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Direction/ButtonLeft" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [9]]
+[connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Direction/ButtonLeft" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [9]]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Direction/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]
 [connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Direction/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_up"]
+[connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonRight" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [10]]
+[connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonRight" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [10]]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonY" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [3]]
 [connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonY" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [3]]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Actions/ButtonX" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [2]]
