@@ -76,7 +76,7 @@ func _ready():
 	super._ready()
 
 func _exit_tree():
-	agent.ClearScript()
+	ClearScript()
 
 #
 func Respawn():

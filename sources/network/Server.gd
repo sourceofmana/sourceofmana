@@ -67,7 +67,7 @@ func ClearNavigation(rpcID : int = NetworkCommons.RidSingleMode):
 
 func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = GetAgent(rpcID)
-	if player:
+	if player and player.ownScript == null:
 		var warp : WarpObject = Launcher.World.CanWarp(player)
 		if warp:
 			var nextMap : WorldMap = Launcher.World.GetMap(warp.destinationMap)
