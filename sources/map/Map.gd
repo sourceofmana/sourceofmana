@@ -1,6 +1,8 @@
 extends ServiceBase
 
 #
+signal MapUnloaded
+signal MapLoaded
 signal PlayerWarped
 
 #
@@ -44,6 +46,7 @@ func UnloadMapNode():
 		fringeLayer = null
 		drops.clear()
 		Entities.Clear()
+		MapUnloaded.emit()
 
 func LoadMapNode(mapName : String):
 	mapNode = pool.LoadMapClientData(mapName)
@@ -51,6 +54,7 @@ func LoadMapNode(mapName : String):
 	if mapNode:
 		RefreshTileMap()
 		Launcher.add_child(mapNode)
+		MapLoaded.emit()
 
 # Generic fringe Node2D
 func RemoveChildren():

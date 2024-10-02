@@ -63,7 +63,10 @@ func ClearTarget():
 	if target != null:
 		if target.interactive.nameLabel.material:
 			target.interactive.nameLabel.material = null
-		Callback.SelfDestructTimer(target.interactive.healthBar, ActorCommons.DisplayHPDelay, target.interactive.HideHP, [], "HideHP")
+		if target.is_inside_tree():
+			Callback.SelfDestructTimer(target.interactive.healthBar, ActorCommons.DisplayHPDelay, target.interactive.HideHP, [], "HideHP")
+		else:
+			target.interactive.HideHP()
 		target = null
 
 func Target(source : Vector2, interactable : bool = true, nextTarget : bool = false):
@@ -125,6 +128,8 @@ func _physics_process(delta : float):
 		move_and_slide()
 
 func _ready():
-	if Launcher.Player != self:
+	if Launcher.Player == self:
+		Launcher.Map.MapUnloaded.connect(ClearTarget)
+	else:
 		stat.active_stats_updated.connect(interactive.DisplayHP)
 	entity_died.connect(interactive.DisplayHP)
