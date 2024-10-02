@@ -21,9 +21,12 @@ static func Reset(agent : AIAgent):
 	agent.ResetNav()
 	Callback.StartTimer(agent.aiTimer, AICommons.MinRefreshDelay, AI.Refresh.bind(agent))
 
+static func Stop(agent : AIAgent):
+	SetState(agent, AICommons.State.HALT)
+
 static func Refresh(agent : AIAgent):
 	if not ActorCommons.IsAlive(agent) or not WorldAgent.GetInstanceFromAgent(agent):
-		SetState(agent, AICommons.State.HALT)
+		Stop(agent)
 	else:
 		if AICommons.HasExpiredNodeGoal(agent):
 			Reset(agent)

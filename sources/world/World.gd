@@ -19,7 +19,7 @@ func GetMap(mapName : String) -> WorldMap:
 
 # Core functions
 func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i):
-	assert(newMap != null and agent != null, "Warp could not proceed, agent or current map missing")
+	assert(newMap != null and agent != null, "Warp could not proceed, agent or new map missing")
 	if agent and newMap:
 		WorldAgent.PopAgent(agent)
 		agent.position = agent.exploreOrigin.pos if newMap.spiritOnly and newPos == Vector2i.ZERO else newPos

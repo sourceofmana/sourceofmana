@@ -75,6 +75,9 @@ func _ready():
 
 	super._ready()
 
+func _exit_tree():
+	agent.ClearScript()
+
 #
 func Respawn():
 	if not ActorCommons.IsAlive(self):
