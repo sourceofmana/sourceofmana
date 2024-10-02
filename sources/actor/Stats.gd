@@ -196,6 +196,6 @@ func AddExperience(value : int):
 		Launcher.Network.Server.NotifyNeighbours(actor, "TargetLevelUp", [])
 
 func AddGP(value : int):
-	if gp <= 0:
+	if value <= 0:
 		return
 	gp += value

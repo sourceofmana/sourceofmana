@@ -142,6 +142,15 @@ func RemoveItem(itemID : int, count : int = 1) -> bool:
 		return own.inventory.RemoveItem(cell, count) if cell else false
 	return false
 
+# Money & Experience
+func AddExp(value : int):
+	if value > 0 and own is PlayerAgent and own.stat:
+		own.stat.AddExperience(value)
+
+func AddGP(value : int):
+	if value > 0 and own is PlayerAgent and own.stat:
+		own.stat.AddGP(value)
+
 # Interaction logic
 func ToggleWindow(toggle : bool):
 	if windowToggled != toggle:

@@ -14,7 +14,7 @@
 show_behind_parent = true
 custom_minimum_size = Vector2(180, 100)
 offset_right = 400.0
-offset_bottom = 364.0
+offset_bottom = 419.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource("1_dhni5")
@@ -281,6 +281,21 @@ textureProgress = ExtResource("6_2hq2a")
 textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
+
+[node name="GPBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/GPBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Money"
+
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/GPBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "0"
+horizontal_alignment = 2
 
 [node name="VSeparator" type="VSeparator" parent="Scroll/Margin/Layout/Stats/PreciseStats"]
 layout_mode = 2

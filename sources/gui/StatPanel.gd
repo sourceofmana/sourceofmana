@@ -10,6 +10,7 @@ extends WindowPanel
 @onready var pMana : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox/ProgressBar
 @onready var pStamina : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox/ProgressBar
 @onready var pWeight : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox/ProgressBar
+@onready var lGP : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/GPBox/Value
 
 @onready var lStrength : Label					= $Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Current
 @onready var lVitality : Label					= $Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Current
@@ -84,6 +85,7 @@ func RefreshActiveStats(entity : Entity):
 	pMana.SetStat(entity.stat.mana, entity.stat.current.maxMana)
 	pStamina.SetStat(entity.stat.stamina, entity.stat.current.maxStamina)
 	pWeight.SetStat(entity.stat.weight, entity.stat.current.weightCapacity)
+	lGP.set_text("%s GP" % Util.GetFormatedText(str(entity.stat.gp)))
 
 func RefreshAttributes(entity : Entity):
 	if not entity:

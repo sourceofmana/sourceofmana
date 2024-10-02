@@ -32,38 +32,11 @@ func GetRatio(currentValue : float, maxValue : float) -> float:
 		ratio = currentValue / maxValue * 100.0
 	return ratio
 
-func GetFormatedText(value : String) -> String:
-	var commaLocation : int = value.find(".")
-	var charCounter : int = 0
-
-	if commaLocation > 0:
-		charCounter = commaLocation - 3
-	else:
-		charCounter = value.length() - 3
-
-	while charCounter > 0:
-		value = value.insert(charCounter, ",")
-		charCounter = charCounter - 3
-
-	commaLocation = value.find(".")
-	if commaLocation == -1:
-		commaLocation = value.length()
-		if numberAfterComma > 0:
-			value += "."
-
-	if numberAfterComma > 0:
-		for i in range(value.length() - 1, commaLocation + numberAfterComma):
-			value += "0"
-	else:
-		value = value.substr(0, commaLocation)
-
-	return value
-
 func GetBarFormat(currentValue : float, maxValue : float) -> String:
-	var formatedText : String = GetFormatedText("%.2f" % ((currentValue / maxValue * 100.0) if displayRatio else currentValue))
+	var formatedText : String = Util.GetFormatedText("%.2f" % ((currentValue / maxValue * 100.0) if displayRatio else currentValue), numberAfterComma)
 
 	if displayMax:
-		var maxValueText : String = GetFormatedText(String.num(maxValue))
+		var maxValueText : String = Util.GetFormatedText(String.num(maxValue), numberAfterComma)
 		formatedText += " / " + maxValueText
 
 	if labelUnit.length() > 0.0:

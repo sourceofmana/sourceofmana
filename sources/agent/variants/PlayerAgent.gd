@@ -29,6 +29,7 @@ func UpdateLastStats():
 		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.gp, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.currentShape, peerID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
+		lastStat.gp					= stat.gp
 		lastStat.health				= stat.health
 		lastStat.mana				= stat.mana
 		lastStat.stamina			= stat.stamina
