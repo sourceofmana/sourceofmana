@@ -42,6 +42,7 @@
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 50,
+			"Level": 10,
 		},
 		"Spawns": {
 			"Lilah": 3,
@@ -60,6 +61,7 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
+			"Level": 5,
 		},
 		"Drops": {
 			"Dorian's Key": 1.0,
@@ -91,6 +93,7 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
+			"Level": 5,
 		},
 		"Drops": {
 			"Gabriel's Key": 1.0,
@@ -136,6 +139,7 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
+			"Level": 5,
 		},
 		"Drops": {
 			"Marvin's Key": 1.0,
