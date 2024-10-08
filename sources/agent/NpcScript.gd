@@ -11,6 +11,33 @@ var timerCount : int				= 0
 var isWaitingForChoice : bool		= false
 var windowToggled : bool			= false
 
+# NPC & own script liaison
+func CallGlobal(scriptFunc : String):
+	if HasGlobal(scriptFunc):
+		npc.ownScript.call_deferred(scriptFunc)
+	else:
+		assert(false, "Could not retrieve this NPC global function: %s." % scriptFunc)
+
+func HasGlobal(scriptFunc : String) -> bool:
+	return npc and npc.ownScript and npc.ownScript.has_method(scriptFunc)
+
+func GetGlobal(scriptFunc : String) -> Callable:
+	if HasGlobal(scriptFunc):
+		var callable = npc.ownScript.get(scriptFunc)
+		if callable is Callable:
+			return callable
+	assert(false, "Could not retrieve this NPC global function: %s." % scriptFunc)
+	return Callable()
+
+func Trigger() -> bool:
+	if npc and npc.SetState(ActorCommons.State.TRIGGER):
+		CallGlobal("OnTrigger")
+		return true
+	return false
+
+func IsTriggering() -> bool:
+	return ActorCommons.IsTriggering(npc)
+
 # Monster
 func Spawn(monsterName : String, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
 	return NpcCommons.Spawn(npc, monsterName, count, position, spawnRadius)
@@ -32,6 +59,23 @@ func IsMonsterAlive(monsterName : String) -> bool:
 					return true
 	return false
 
+func KillMonsters():
+	var inst : WorldInstance = own.get_parent()
+	if inst:
+		for mob in inst.mobs:
+			mob.stat.SetHealth(-mob.stat.current.maxHealth)
+
+# Players
+func AlivePlayerCount() -> int:
+	var count : int = 0
+	if own:
+		var inst : WorldInstance = own.get_parent()
+		if inst:
+			for player in inst.players:
+				if ActorCommons.IsAlive(player):
+					count += 1
+	return count
+
 # Warp
 func Warp(mapName : String, position : Vector2):
 	NpcCommons.Warp(own, mapName, position)
@@ -51,10 +95,6 @@ func GetQuest(questID : int) -> int:
 # Display
 func Notification(text : String):
 	NpcCommons.PushNotification(own, text)
-
-# State
-func Trigger() -> bool:
-	return npc.SetState(ActorCommons.State.TRIGGER) if npc else false
 
 # Dialogue
 func Mes(mes : String):
@@ -218,3 +258,4 @@ func _init(_npc : NpcAgent, _own : BaseAgent):
 
 func OnStart(): pass
 func OnContinue(): pass
+func OnTrigger(): pass

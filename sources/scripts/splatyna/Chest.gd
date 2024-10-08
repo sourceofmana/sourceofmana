@@ -1,7 +1,5 @@
 extends NpcScript
 
-const animationSpeed : float		= 30.0
-
 # Reward items
 var appleID : int					= DB.GetCellHash("Apple")
 
@@ -25,9 +23,8 @@ func TryOpen():
 		Chat("A dark presence is still around.")
 	else:
 		# Chest is not open, try to open it
-		if not ActorCommons.IsTriggering(npc):
+		if not IsTriggering():
 			Trigger()
-			AddTimer(npc, animationSpeed, npc.ownScript.CloseChest)
 
 		# Chest is opened, you can withdraw your reward
 		if HasSpace(1):
