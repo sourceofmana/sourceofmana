@@ -19,7 +19,7 @@ static func SetState(agent : AIAgent, state : AICommons.State, force : bool = fa
 static func Reset(agent : AIAgent):
 	SetState(agent, AICommons.State.IDLE, true)
 	agent.ResetNav()
-	Callback.StartTimer(agent.aiTimer, AICommons.MinRefreshDelay, AI.Refresh.bind(agent))
+	Callback.StartTimer(agent.aiTimer, agent.aiRefreshDelay, Refresh.bind(agent))
 
 static func Stop(agent : AIAgent):
 	SetState(agent, AICommons.State.HALT)

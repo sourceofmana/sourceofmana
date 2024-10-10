@@ -99,15 +99,13 @@ func SetData():
 	super.SetData()
 	aiBehaviour = data._behaviour
 
-func _enter_tree():
-	AI.Reset(self)
-
 func _exit_tree():
 	AI.Stop(self)
 
 func _ready():
+	super._ready()
 	aiTimer = Timer.new()
 	aiTimer.set_name("AiTimer")
+	aiTimer.set_one_shot(true)
+	Callback.OneShotCallback(aiTimer.ready, AI.Reset, [self])
 	add_child.call_deferred(aiTimer)
-
-	super._ready()

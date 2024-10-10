@@ -80,6 +80,7 @@ static func StartTimer(timer : Timer, delay : float, callback : Callable, oneSho
 
 static func LoopTimer(timer : Timer, delay : float):
 	assert(delay > 0, "Delay should never be null, infinite loop can happen on looped timers")
+	assert(timer and not timer.timeout.get_connections().is_empty(), "Impossible to loop over an invalid timer or a missing timeout callback")
 	if timer and delay > 0:
 		timer.start(delay)
 
