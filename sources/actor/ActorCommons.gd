@@ -194,7 +194,7 @@ const MapProcessingToggleDelay : float		= 10.0
 const MapProcessingToggleExtraDelay : float	= 60.0
 
 # Drop
-const DropDelay : float						= 15.0
+const DropDelay : float						= 60.0
 const PickupSquaredDistance : float			= 48 * 48 # 1.5 Tile squared length
 
 # Stats
