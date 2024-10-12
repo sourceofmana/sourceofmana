@@ -42,6 +42,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3")
+theme_type_variation = &"SmallLabel"
 text = "0/0"
 horizontal_alignment = 1
 vertical_alignment = 1
