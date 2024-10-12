@@ -126,6 +126,10 @@ func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
 func TriggerCloseContext(rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("TriggerCloseContext", [], rpcID)
 
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TriggerNextContext(rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("TriggerNextContext", [], rpcID)
+
 # Interact
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerInteract(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):

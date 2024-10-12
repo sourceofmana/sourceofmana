@@ -33,7 +33,7 @@ func ToggleButton(enable : bool, text : String):
 
 func ButtonPressed():
 	if Launcher.Player:
-		Launcher.Player.Interact()
+		Launcher.Network.TriggerNextContext()
 	if buttonLabel.text == "Close":
 		set_visible(false)
 

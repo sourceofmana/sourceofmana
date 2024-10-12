@@ -97,6 +97,11 @@ func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	if player and player.ownScript:
 		player.ownScript.InteractChoice(choiceID)
 
+func TriggerNextContext(rpcID : int = NetworkCommons.RidSingleMode):
+	var player : PlayerAgent = GetAgent(rpcID)
+	if player and player.ownScript and player.ownScript.npc:
+		player.ownScript.npc.Interact(player)
+
 func TriggerCloseContext(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = GetAgent(rpcID)
 	if player:
