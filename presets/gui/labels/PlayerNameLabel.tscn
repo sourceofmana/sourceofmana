@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://ba25euehnjgs3"]
-
-[ext_resource type="FontFile" uid="uid://xjlm0vx7cd6y" path="res://data/graphics/fonts/alagard-16.ttf" id="1_oa6kc"]
+[gd_scene format=3 uid="uid://ba25euehnjgs3"]
 
 [node name="Control" type="RichTextLabel"]
 anchors_preset = 15
@@ -10,11 +8,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 10
 mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("1_oa6kc")
-theme_override_fonts/mono_font = ExtResource("1_oa6kc")
-theme_override_fonts/italics_font = ExtResource("1_oa6kc")
-theme_override_fonts/bold_italics_font = ExtResource("1_oa6kc")
-theme_override_fonts/bold_font = ExtResource("1_oa6kc")
 bbcode_enabled = true
 fit_content = true
 autowrap_mode = 0

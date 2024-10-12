@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://f2jxqr5e7i5e"]
+[gd_scene load_steps=6 format=3 uid="uid://f2jxqr5e7i5e"]
 
 [ext_resource type="Script" path="res://sources/entity/components/Interactive.gd" id="1_b3bk6"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_wehdi"]
 [ext_resource type="PackedScene" uid="uid://c0wuhrlsdwo8s" path="res://presets/gui/HealthBar.tscn" id="2_5opbf"]
-[ext_resource type="FontFile" uid="uid://2r8d45jgc1r5" path="res://data/graphics/fonts/romulus-16.ttf" id="2_elci4"]
 [ext_resource type="PackedScene" uid="uid://08v0t5i6hvef" path="res://presets/effects/particles/Emote.tscn" id="2_gghi1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0daf3"]
@@ -60,7 +59,6 @@ size_flags_vertical = 8
 theme = ExtResource("1_wehdi")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_fonts/font = ExtResource("2_elci4")
 horizontal_alignment = 1
 
 [node name="HealthBar" parent="UnderBox" instance=ExtResource("2_5opbf")]
