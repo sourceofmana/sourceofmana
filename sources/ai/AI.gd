@@ -107,12 +107,19 @@ static func ToWalk(agent : AIAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map:
 		SetState(agent, AICommons.State.WALK, true)
-		var position : Vector2i
+		var position : Vector2i = agent.position
 		if agent.leader != null:
 			position = WorldNavigation.GetRandomPositionAABB(map, agent.leader.position, AICommons.MaxOffsetVector)
 			agent.SetNodeGoal(agent.leader, position)
 		else:
-			position = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.MaxOffsetVector)
+			# Check if agent is within its spawn wandering zone
+			var deltaPosition: Vector2 = agent.position - Vector2(agent.spawnInfo.spawn_position)
+			if agent.spawnInfo.is_global or \
+			abs(deltaPosition.x) <= agent.spawnInfo.spawn_offset.x and abs(deltaPosition.y) <= agent.spawnInfo.spawn_offset.y or \
+			(deltaPosition - Vector2(agent.spawnInfo.spawn_offset)).length_squared() <= AICommons.WanderDistanceSquared:
+				position = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.MaxOffsetVector)
+			else:
+				position = WorldNavigation.GetRandomPositionAABB(map, agent.spawnInfo.spawn_position, agent.spawnInfo.spawn_offset)
 			agent.SetNodeGoal(agent, position)
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, AICommons.State.IDLE])
 
