@@ -11,6 +11,8 @@ const CellTilePreset : PackedScene					= preload("res://presets/gui/CellTile.tsc
 
 const DelayPickUpNotification : float				= 5.0 * 1000.0
 
+const DialogueTextSpeed : float						= 0.02
+
 #
 enum Way
 {

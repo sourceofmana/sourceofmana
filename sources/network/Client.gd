@@ -57,17 +57,7 @@ func ContextClose(_rpcID : int = NetworkCommons.RidSingleMode):
 	Launcher.GUI.dialogueWindow.ToggleButton(true, "Close")
 
 func ContextChoice(texts : PackedStringArray, _rpcID : int = NetworkCommons.RidSingleMode):
-	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
-	Launcher.GUI.choiceContext.Clear()
-	if texts.size() > 0:
-		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_validate", texts[0], Launcher.Network.TriggerChoice.bind(0)))
-	if texts.size() > 1:
-		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_cancel", texts[1], Launcher.Network.TriggerChoice.bind(1)))
-	if texts.size() > 2:
-		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_secondary", texts[2], Launcher.Network.TriggerChoice.bind(2)))
-	if texts.size() > 3:
-		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_tertiary", texts[3], Launcher.Network.TriggerChoice.bind(3)))
-	Launcher.GUI.choiceContext.FadeIn(true)
+	Launcher.GUI.dialogueWindow.AddChoices(texts)
 
 func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:

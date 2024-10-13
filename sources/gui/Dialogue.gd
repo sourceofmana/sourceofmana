@@ -6,6 +6,7 @@ extends PanelContainer
 @onready var scrollable : Scrollable	= $FixedHBox/Scrollable
 @onready var scrollbar: VScrollBar		= $FixedHBox/Scrollable/Scroll/_v_scroll
 var lastName : String					= ""
+var lastTween : Tween					= null
 
 const PlayerNameLabel : PackedScene		= preload("res://presets/gui/labels/PlayerNameLabel.tscn")
 const NPCNameLabel : PackedScene		= preload("res://presets/gui/labels/NpcNameLabel.tscn")
@@ -20,18 +21,37 @@ func AddName(text : String):
 		scrollable.textContainer.add_child(label)
 
 func AddDialogue(text : String):
-	var label : RichTextLabel = PlayerDialogueLabel.instantiate() if lastName == Launcher.Player.nick else Scrollable.contentLabel.instantiate()
+	var isPlayer : bool = lastName == Launcher.Player.nick
+	var label : RichTextLabel = PlayerDialogueLabel.instantiate() if isPlayer else Scrollable.contentLabel.instantiate()
 	label.text = "[color=#" + UICommons.TextColor.to_html(false) + "]" + text + "[/color]"
 	scrollable.textContainer.add_child(label)
+
+	if not isPlayer:
+		var textSize : int = label.text.length()
+		label.visible_characters = 0
+		if lastTween:
+			lastTween.custom_step(INF)
+		lastTween = create_tween()
+		lastTween.tween_property(label, "visible_characters", textSize, textSize * UICommons.DialogueTextSpeed)
+		lastTween.tween_callback(DialogueDisplayed)
+
+func DialogueDisplayed():
+	lastTween = null
 
 func AutoScroll():
 	scrollbar.value = scrollbar.max_value
 
 func ToggleButton(enable : bool, text : String):
+	if enable and lastTween:
+		await lastTween.finished
 	button.set_visible(enable)
 	buttonLabel.set_text(text)
 
 func ButtonPressed():
+	if lastTween:
+		lastTween.custom_step(INF)
+		return
+
 	if Launcher.Player:
 		Launcher.Network.TriggerNextContext()
 	if buttonLabel.text == "Close":
@@ -41,6 +61,22 @@ func Clear():
 	scrollable.Clear()
 	lastName = ""
 	button.set_visible(false)
+
+func AddChoices(choices : PackedStringArray):
+	if lastTween:
+		await lastTween.finished
+
+	ToggleButton(false, "")
+	Launcher.GUI.choiceContext.Clear()
+	if choices.size() > 0:
+		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_validate", choices[0], Launcher.Network.TriggerChoice.bind(0)))
+	if choices.size() > 1:
+		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_cancel", choices[1], Launcher.Network.TriggerChoice.bind(1)))
+	if choices.size() > 2:
+		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_secondary", choices[2], Launcher.Network.TriggerChoice.bind(2)))
+	if choices.size() > 3:
+		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_tertiary", choices[3], Launcher.Network.TriggerChoice.bind(3)))
+	Launcher.GUI.choiceContext.FadeIn(true)
 
 # Overloaded functions
 func _ready():
