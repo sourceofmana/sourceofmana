@@ -22,7 +22,7 @@ func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i):
 	assert(newMap != null and agent != null, "Warp could not proceed, agent or new map missing")
 	if agent and newMap:
 		WorldAgent.PopAgent(agent)
-		agent.position = agent.exploreOrigin.pos if newMap.spiritOnly and newPos == Vector2i.ZERO else newPos
+		agent.position = agent.exploreOrigin.pos if newMap.HasFlags(WorldMap.Flags.ONLY_SPIRIT) and newPos == Vector2i.ZERO else newPos
 		agent.SwitchInputMode(true)
 		Spawn(newMap, agent)
 
@@ -51,7 +51,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		if playerID == NetworkCommons.RidUnknown:
 			return
 
-		if map.spiritOnly:
+		if map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
 			if not agent.stat.IsMorph():
 				agent.Morph(false, agent.stat.spiritShape)
 		else:

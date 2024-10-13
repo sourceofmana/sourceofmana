@@ -19,6 +19,9 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 		return
 	if skill.mode == TargetMode.SINGLE and (not target or not ActorCommons.IsAlive(target)):
 		return
+	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
+	if map and map.HasFlags(WorldMap.Flags.NO_SPELL):
+		return
 
 	if SkillCommons.TryConsume(agent, SkillCommons.ConsomeType.MANA, skill):
 		Stopped(agent)

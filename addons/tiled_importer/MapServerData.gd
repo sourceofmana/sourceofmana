@@ -7,4 +7,4 @@ class_name MapServerData
 @export var spawns : Array					= []
 @export var warps : Array					= []
 @export var ports : Array					= []
-@export var spirit_only : bool				= false
+@export var flags : WorldMap.Flags			= WorldMap.Flags.NONE

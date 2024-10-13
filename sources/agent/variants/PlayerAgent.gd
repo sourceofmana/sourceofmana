@@ -88,7 +88,7 @@ func Respawn():
 func Explore():
 	if ActorCommons.IsAlive(self):
 		var map : WorldMap = WorldAgent.GetMapFromAgent(self)
-		if map and map.spiritOnly:
+		if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
 			if stat.IsSailing():
 				exploreOrigin.map = map.name
 				exploreOrigin.pos = position

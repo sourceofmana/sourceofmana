@@ -5,7 +5,7 @@ class_name WorldDrop
 static func PushDrop(item : Item, agent : BaseAgent):
 	if agent:
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
-		if inst:
+		if inst and inst.map and not inst.map.HasFlags(WorldMap.Flags.NO_DROP):
 			var dropPos : Vector2 = agent.position
 			dropPos.x += randf_range(-agent.entityRadius, agent.entityRadius)
 			dropPos.y += randf_range(-agent.entityRadius, agent.entityRadius)

@@ -131,7 +131,7 @@ func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 		if player.stat.spiritShape.length() == 0:
 			return
 		var map : Object = WorldAgent.GetMapFromAgent(player)
-		if map and map.spiritOnly:
+		if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
 			return
 
 		player.Morph(true)

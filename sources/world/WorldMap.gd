@@ -2,14 +2,24 @@ class_name WorldMap
 extends Object
 
 #
+enum Flags
+{
+	NONE = 0,
+	NO_DROP = 1 << 0,
+	NO_SPELL = 1 << 1,
+	NO_REJOIN = 1 << 2,
+	ONLY_SPIRIT = 1 << 3,
+}
+
+#
 var name : String						= ""
 var instances : Array[WorldInstance]	= []
 var spawns : Array[SpawnObject]			= []
 var warps : Array[WarpObject]			= []
+var flags : int							= Flags.NONE
 var navPoly : NavigationPolygon			= null
 var mapRID : RID						= RID()
 var regionRID : RID						= RID()
-var spiritOnly : bool					= false
 
 #
 static func Create(mapName : String) -> WorldMap:
@@ -24,8 +34,8 @@ static func Create(mapName : String) -> WorldMap:
 func LoadMapData():
 	var node : Node = Instantiate.LoadMapData(name, Path.MapServerExt)
 	if node:
-		if "spirit_only" in node:
-			spiritOnly = node.spirit_only
+		if "flags" in node:
+			flags = node.flags
 		if "spawns" in node:
 			for spawn in node.spawns:
 				assert(spawn != null, "Warp format is not supported")
@@ -66,3 +76,5 @@ func LoadMapData():
 					portObject.autoWarp = port[3]
 					portObject.sailingPos = port[4]
 					warps.append(portObject)
+
+func HasFlags(checkedFlags : Flags) -> bool: return !!(flags & checkedFlags)

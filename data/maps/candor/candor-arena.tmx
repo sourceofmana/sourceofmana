@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="112" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="19" nextobjectid="34">
  <properties>
+  <property name="flagnodrop" type="bool" value="true"/>
+  <property name="flagnorejoin" type="bool" value="true"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="lighting" type="float" value="0.5"/>
   <property name="music" value="Lenia"/>

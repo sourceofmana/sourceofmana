@@ -77,7 +77,7 @@ var specificDic : Dictionary = {}
 var cell_size = Vector2.ZERO
 var map_width = 0
 var map_height = 0
-var spirit_only = false
+var map_flags = WorldMap.Flags.NONE
 var nav_region : NavigationRegion2D = NavigationRegion2D.new()
 var map_boundaries : Rect2 = Rect2()# Collision polygons
 var source_data : NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
@@ -264,7 +264,7 @@ func fill_polygon_pool(tileset : TileSet, cell_pos : Vector2, gid : int):
 func build_server(source_path) -> Node:
 	var root = MapServerData.new()
 	root.set_name(source_path.get_file().get_basename())
-	root.spirit_only = spirit_only
+	root.flags = map_flags
 
 	# Can't save an array of custom objects, every element will be null when loaded
 #	root.spawns = spawn_pool
@@ -1344,8 +1344,14 @@ func set_custom_properties(object, tiled_object):
 				lighting.lightLevel = properties[property]
 				object.add_child(lighting)
 				lighting.set_owner(object)
-		elif property == "spiritOnly":
-			spirit_only = bool(properties[property])
+		elif property == "flagnodrop" and bool(properties[property]):
+			map_flags |= WorldMap.Flags.NO_DROP
+		elif property == "flagnospell" and bool(properties[property]):
+			map_flags |= WorldMap.Flags.NO_SPELL
+		elif property == "flagnorejoin" and bool(properties[property]):
+			map_flags |= WorldMap.Flags.NO_REJOIN
+		elif property == "flagonlyspirit" and bool(properties[property]):
+			map_flags |= WorldMap.Flags.ONLY_SPIRIT
 
 # Get the custom properties as a dictionary
 # Useful for tile meta, which is not stored directly
