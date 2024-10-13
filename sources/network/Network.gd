@@ -313,18 +313,19 @@ func NetCreate():
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 
 func NetDestroy():
-	if uniqueID == NetworkCommons.RidDefault:
-		pass
-
-	if Client and Server:
-		Client.DisconnectPlayer()
-		Server.DisconnectPlayer()
-	else:
+	if peer:
 		peer.close()
-
+	if Client:
+		Client.DisconnectPlayer()
+		Client.queue_free()
+		Client = null
+	if Server:
+		Server.DisconnectPlayer()
+		Server.queue_free()
+		Server = null
 	uniqueID = NetworkCommons.RidDefault
 
 func _post_launch():
 	Launcher.FSM.exit_login.connect(NetCreate)
-	Launcher.FSM.exit_game.connect(NetDestroy)
+	Launcher.FSM.enter_login.connect(NetDestroy)
 	isInitialized = true
