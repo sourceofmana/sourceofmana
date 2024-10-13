@@ -75,6 +75,7 @@ static var actionNames : Dictionary = {
 	"gp_shortcut_10" : "Shortcut 10",
 	"gp_target" : "Target",
 	"gp_untarget" : "Clear Target",
+	"gp_pickup" : "Pickup",
 	"ui_skill": "Skill",
 	"ui_cancel": "Cancel",
 	"ui_context_validate": "Context Validate",

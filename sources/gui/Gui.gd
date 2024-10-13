@@ -89,6 +89,8 @@ func EnterGame():
 		infoContext.Push(ContextData.new("gp_untarget"))
 		infoContext.Push(ContextData.new("gp_morph"))
 		infoContext.Push(ContextData.new("gp_sit"))
+		infoContext.Push(ContextData.new("gp_target"))
+		infoContext.Push(ContextData.new("gp_pickup"))
 		infoContext.FadeIn()
 
 		background.set_visible(false)
