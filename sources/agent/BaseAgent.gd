@@ -2,6 +2,9 @@ extends Actor
 class_name BaseAgent
 
 #
+signal agent_killed
+
+#
 var agent : NavigationAgent2D			= null
 var entityRadius : int					= 0
 
@@ -176,6 +179,7 @@ func GetNextPortShapeID() -> String:
 	return stat.spiritShape if stat.IsSailing() else "Ship"
 
 func Killed():
+	agent_killed.emit(self)
 	SetSkillCastID(DB.UnknownHash)
 
 #

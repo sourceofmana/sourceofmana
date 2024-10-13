@@ -91,15 +91,6 @@ static func TryCloseContext(pc : BaseAgent):
 		pc.ownScript.ToggleWindow(false)
 		pc.ClearScript()
 
-# Timer
-static func AddTimer(caller : BaseAgent, delay : float, callback : Callable):
-	if caller and caller.ownScript:
-		var newTimer : Timer = Callback.SelfDestructTimer(caller, delay, caller.ownScript.TimeOut, [callback])
-		if newTimer:
-			caller.ownScript.timerCount += 1
-		return newTimer
-	return null
-
 # Commands
 static func Spawn(caller : BaseAgent, monsterName : String, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
 	var agents : Array[MonsterAgent] = []

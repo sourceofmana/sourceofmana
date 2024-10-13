@@ -45,14 +45,24 @@ func Spawn(monsterName : String, count : int = 1, position : Vector2 = Vector2.Z
 func MonsterCount():
 	var count : int = 0
 	if own:
-		var inst : WorldInstance = own.get_parent()
+		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
 		if inst:
 			count = inst.mobs.size()
 	return count
 
+func AliveMonsterCount() -> int:
+	var count : int = 0
+	if own:
+		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
+		if inst:
+			for mob in inst.mobs:
+				if ActorCommons.IsAlive(mob):
+					count += 1
+	return count
+
 func IsMonsterAlive(monsterName : String) -> bool:
 	if own:
-		var inst : WorldInstance = own.get_parent()
+		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
 		if inst:
 			for mob in inst.mobs:
 				if mob and mob.nick == monsterName and ActorCommons.IsAlive(mob):
@@ -60,7 +70,7 @@ func IsMonsterAlive(monsterName : String) -> bool:
 	return false
 
 func KillMonsters():
-	var inst : WorldInstance = own.get_parent()
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
 	if inst:
 		for mob in inst.mobs:
 			mob.stat.SetHealth(-mob.stat.current.maxHealth)
@@ -69,7 +79,7 @@ func KillMonsters():
 func AlivePlayerCount() -> int:
 	var count : int = 0
 	if own:
-		var inst : WorldInstance = own.get_parent()
+		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
 		if inst:
 			for player in inst.players:
 				if ActorCommons.IsAlive(player):
@@ -123,8 +133,17 @@ func Farewell():
 		NpcCommons.Chat(npc, own, NpcCommons.GetRandomFarewell(own.nick))
 
 # Timer
-func AddTimer(caller : BaseAgent, delay : float, callback : Callable):
-	NpcCommons.AddTimer(caller, delay, callback)
+func AddTimer(caller : BaseAgent, delay : float, callback : Callable, timerName = "") -> Timer:
+	if caller and caller.ownScript:
+		var newTimer : Timer = null if timerName.is_empty() else caller.get_node_or_null(timerName)
+		if newTimer:
+			newTimer.start(delay)
+		else:
+			newTimer = Callback.SelfDestructTimer(caller, delay, caller.ownScript.TimeOut, [callback], timerName)
+			if newTimer:
+				caller.ownScript.timerCount += 1
+		return newTimer
+	return null
 
 func TimeOut(callback : Callable):
 	timerCount -= 1

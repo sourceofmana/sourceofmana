@@ -7,8 +7,11 @@ const playerLevelRequirement : int		= 1
 
 #
 func OnStart():
-	Mes("Ah, another challenger! This cave is a proving ground, where the waves of corrupted creatures test your endurance. Think you're ready for what's inside?")
-	QuestionStart()
+	if IsTriggering():
+		Chat("Focus on your mission!")
+	else:
+		Mes("Ah, another challenger! This cave is a proving ground, where the waves of corrupted creatures test your endurance. Think you're ready for what's inside?")
+		QuestionStart()
 
 func QuestionStart():
 	Choice("I'm ready. Bring on the waves.", StartFight)
@@ -86,6 +89,6 @@ func StartFight():
 			Mes("You'll need to bring me 5 apples as a tribute before we begin.")
 		elif own.stat.level < playerLevelRequirement:
 			Mes("You're not strong enough for this fight. Come back when you've reached level %d." % playerLevelRequirement)
-		else:
+		elif RemoveItem(tributeItemID, tributeItemCount):
 			Chat("Ah, you're ready for this! The fight begins in 10 seconds, brace yourself!")
 			Trigger()

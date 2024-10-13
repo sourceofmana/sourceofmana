@@ -28,10 +28,11 @@ static func TriggerCallback(callback : Callable, args : Array = []):
 static func OneShotCallback(objectSignal : Signal, callback : Callable, args : Array = []):
 	PlugCallback(objectSignal, Callback.ShootCallback, [callback] + args)
 
+static func ClearOneShot(objectSignal : Signal):
+	RemoveCallback(objectSignal, Callback.ShootCallback)
+
 #
 static func SelfDestructCallback(parent : Node, timer : Timer, callback : Callable, args : Array = []):
-	if parent is WorldInstance:
-		pass
 	if parent:
 		parent.remove_child(timer)
 		timer.queue_free()
