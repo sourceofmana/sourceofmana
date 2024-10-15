@@ -56,7 +56,7 @@ func _on_play_pressed():
 			Launcher.GUI.settingsWindow.set_sessionaccountname(nameTextControl.get_text())
 		Launcher.GUI.ToggleControl(self)
 		Launcher.FSM.playerName = nameTextControl.get_text()
-		Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_SELECTION)
+		Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_PROGRESS)
 		Launcher.LaunchMode(true, not onlineCheck.button_pressed)
 
 func _on_host_pressed():

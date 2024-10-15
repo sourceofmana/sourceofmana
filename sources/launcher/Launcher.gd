@@ -69,6 +69,25 @@ func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
 	add_child.call_deferred(World)
 
+func LauncherReset():
+	if Debug:
+		Debug.queue_free()
+		Debug = null
+	if Map:
+		Map.UnloadMapNode()
+		Map.queue_free()
+		Map = null
+	if Camera:
+		Camera.queue_free()
+		Camera = null
+	if Player:
+		Player.queue_free()
+		Player = null
+	if World:
+		World.DestroyAreas()
+		World.queue_free()
+		World = null
+
 #
 func _enter_tree():
 	Root			= get_tree().get_root()

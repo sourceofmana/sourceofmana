@@ -158,16 +158,10 @@ func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMod
 		Launcher.GUI.notificationLabel.AddNotification(notif)
 
 func DisconnectPlayer():
-	if Launcher.Debug:
-		Launcher.Debug.queue_free()
-		Launcher.Debug = null
-	if Launcher.Map:
-		Launcher.Map.UnloadMapNode()
-		Launcher.Map.queue_free()
-		Launcher.Map = null
-	if Launcher.Camera:
-		Launcher.Camera.queue_free()
-		Launcher.Camera = null
-	if Launcher.Player:
-		Launcher.Player.queue_free()
-		Launcher.Player = null
+	Launcher.LauncherReset()
+
+func _init():
+	if not Launcher.FSM.exit_login.is_connected(Launcher.Network.NetCreate):
+		Launcher.FSM.exit_login.connect(Launcher.Network.NetCreate)
+	if not Launcher.FSM.enter_login.is_connected(Launcher.Network.NetDestroy):
+		Launcher.FSM.enter_login.connect(Launcher.Network.NetDestroy)

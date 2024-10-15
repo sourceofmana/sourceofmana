@@ -38,6 +38,9 @@ extends ServiceBase
 @onready var CRTShader : TextureRect			= $Shaders/CRT
 @onready var HQ4xShader : TextureRect			= $Shaders/HQ4x
 
+# State transition
+var progressTimer : Timer						= null
+
 #
 func CloseWindow():
 	ToggleControl(quitWindow)
@@ -82,29 +85,45 @@ func EnterLoginMenu():
 	newsWindow.EnableControl(true)
 	loginWindow.EnableControl(true)
 
+func EnterLoginProgress():
+	newsWindow.EnableControl(false)
+	loginWindow.EnableControl(false)
+	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.LoginAttemptTimeout, Launcher.FSM.EnterState, [Launcher.FSM.States.LOGIN_SCREEN], "ProgressTimer")
+
+func EnterCharMenu():
+	progressTimer.stop()
+	progressTimer = null
+	Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_PROGRESS)
+
+func EnterCharProgress():
+	Launcher.Network.ConnectPlayer(Launcher.FSM.playerName)
+	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.CharSelectionTimeout, Launcher.FSM.EnterState, [Launcher.FSM.States.LOGIN_SCREEN], "ProgressTimer")
+
 func EnterGame():
-	if Launcher.Player:
-		infoContext.Clear()
-		infoContext.Push(ContextData.new("gp_interact"))
-		infoContext.Push(ContextData.new("gp_untarget"))
-		infoContext.Push(ContextData.new("gp_morph"))
-		infoContext.Push(ContextData.new("gp_sit"))
-		infoContext.Push(ContextData.new("gp_target"))
-		infoContext.Push(ContextData.new("gp_pickup"))
-		infoContext.FadeIn()
+	progressTimer.stop()
+	progressTimer = null
 
-		background.set_visible(false)
-		loginWindow.EnableControl(false)
-		newsWindow.EnableControl(false)
+	infoContext.Clear()
+	infoContext.Push(ContextData.new("gp_interact"))
+	infoContext.Push(ContextData.new("gp_untarget"))
+	infoContext.Push(ContextData.new("gp_morph"))
+	infoContext.Push(ContextData.new("gp_sit"))
+	infoContext.Push(ContextData.new("gp_target"))
+	infoContext.Push(ContextData.new("gp_pickup"))
+	infoContext.FadeIn()
 
-		stats.set_visible(true)
-		menu.set_visible(true)
-		shortcuts.set_visible(true)
-		notificationLabel.set_visible(true)
+	background.set_visible(false)
+	loginWindow.EnableControl(false)
+	newsWindow.EnableControl(false)
 
-		menu.SetItemsVisible(true)
-		stats.Init()
-		statWindow.Init(Launcher.Player)
+	stats.set_visible(true)
+	menu.set_visible(true)
+	shortcuts.set_visible(true)
+	notificationLabel.set_visible(true)
+
+	menu.SetItemsVisible(true)
+	stats.Init()
+	statWindow.Init(Launcher.Player)
 
 #
 func _post_launch():
@@ -113,8 +132,12 @@ func _post_launch():
 
 	if Launcher.FSM:
 		Launcher.FSM.enter_login.connect(EnterLoginMenu)
+		Launcher.FSM.enter_login_progress.connect(EnterLoginProgress)
+		Launcher.FSM.enter_char.connect(EnterCharMenu)
+		Launcher.FSM.enter_char_progress.connect(EnterCharProgress)
 		Launcher.FSM.enter_game.connect(EnterGame)
 
+	Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
 	isInitialized = true
 
 func _notification(notif):

@@ -26,6 +26,9 @@ const Timeout : int						= 1000
 const TimeoutMin : int					= 30000
 const TimeoutMax : int					= 60000
 
+const LoginAttemptTimeout : float		= 15
+const CharSelectionTimeout : float		= 15
+
 # Auth
 const PlayerNameMinSize : int			= 3
 const PlayerNameMaxSize : int			= 30

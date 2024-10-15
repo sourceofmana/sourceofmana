@@ -279,7 +279,7 @@ func NetCreate():
 		assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
-			var connectedCallback : Callable = ConnectPlayer.bind(Launcher.FSM.playerName) 
+			var connectedCallback : Callable = Launcher.FSM.EnterState.bind(Launcher.FSM.States.CHAR_SCREEN)
 			if not Launcher.Root.multiplayer.connected_to_server.is_connected(connectedCallback):
 				Launcher.Root.multiplayer.connected_to_server.connect(connectedCallback)
 			if not Launcher.Root.multiplayer.connection_failed.is_connected(Client.DisconnectPlayer):
@@ -326,6 +326,4 @@ func NetDestroy():
 	uniqueID = NetworkCommons.RidDefault
 
 func _post_launch():
-	Launcher.FSM.exit_login.connect(NetCreate)
-	Launcher.FSM.enter_login.connect(NetDestroy)
 	isInitialized = true
