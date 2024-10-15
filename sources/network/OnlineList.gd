@@ -10,7 +10,7 @@ func GetPlayerNames() -> Array[String]:
 		for playerData in Launcher.Network.Server.playerMap.values():
 			var agent : PlayerAgent = WorldAgent.GetAgent(playerData.agentRID)
 			if agent:
-				players.append(agent.get_name())
+				players.append(agent.nick)
 	return players
 
 func UpdateJson():
