@@ -140,7 +140,7 @@ func UpdateChanged():
 	forceUpdate = false
 	if currentInput != Vector2.ZERO:
 		currentOrientation = Vector2(currentVelocity).normalized()
-	var functionName : String = "ForceUpdateEntity" if velocity == Vector2.ZERO else "UpdateEntity"
+	var functionName : String = "ForceUpdateEntity" if velocity.is_zero_approx() else "UpdateEntity"
 	Launcher.Network.Server.NotifyNeighbours(self, functionName, [velocity, position, currentOrientation, state, currentSkillID])
 
 #
@@ -187,18 +187,16 @@ func _physics_process(_delta):
 	if agent:
 		UpdateInput()
 
-		if agent.get_avoidance_enabled():
-			agent.set_velocity(currentVelocity)
-		else:
-			_velocity_computed(currentVelocity)
+	if agent and agent.get_avoidance_enabled():
+		agent.set_velocity(currentVelocity)
 	else:
-		if forceUpdate:
-			UpdateChanged()
+		_velocity_computed(currentVelocity)
 
 func _velocity_computed(safeVelocity : Vector2i):
 	currentVelocity = safeVelocity
 	SetCurrentState()
-	SetVelocity()
+	if currentVelocity != Vector2i.ZERO or not velocity.is_zero_approx():
+		SetVelocity()
 
 	if forceUpdate:
 		UpdateChanged()
