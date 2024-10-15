@@ -42,10 +42,6 @@ func OnTrigger():
 func StartFight():
 	Reset()
 	originalPlayerCount = AlivePlayerCount()
-	var ownInstance : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
-	for player in ownInstance.players:
-		Callback.OneShotCallback(player.tree_exiting, CheckWave, [player])
-		Callback.OneShotCallback(player.agent_killed, CheckWave, [player])
 	waveTimer = AddTimer(npc, waveDelay, TimeoutWave)
 	NextWave()
 
@@ -83,18 +79,14 @@ func SpawnMonsters():
 			if mobPoint > 0 and mobPoint <= remainingPoints:
 				var spawnAmount : int = randi_range(1, int(remainingPoints / floor(mobPoint)))
 				remainingPoints -= mobPoint * spawnAmount
-				for spawned in Spawn(mob._name, spawnAmount, spawnCenter, spawnRadius):
-					if spawned:
-						spawned.agent_killed.connect(CheckWave)
+				Spawn(mob._name, spawnAmount, spawnCenter, spawnRadius)
 
-func CheckWave(checkedAgent : BaseAgent = null):
+func CheckWave():
 	if not IsTriggering():
 		return
 
-	if checkedAgent is PlayerAgent:
-		if AlivePlayerCount() == 0:
-			OnCancel()
-	# All monsters' agent_killed and this npc's check timer will be managed here
+	if AlivePlayerCount() == 0:
+		OnCancel()
 	else:
 		var mobCount : int = AliveMonsterCount()
 		if mobCount > 0:
