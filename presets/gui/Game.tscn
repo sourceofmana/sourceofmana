@@ -37,9 +37,11 @@
 [ext_resource type="Texture2D" uid="uid://cyuj6w585tm0y" path="res://data/graphics/gui/mobile/button.png" id="20_1vdgt"]
 [ext_resource type="PackedScene" uid="uid://tqcjqyaicaol" path="res://presets/gui/contexts/ContextMenuV.tscn" id="20_px3po"]
 [ext_resource type="PackedScene" uid="uid://cppc7wshwpqof" path="res://presets/gui/PickUp.tscn" id="21_5ivxk"]
+[ext_resource type="PackedScene" uid="uid://ds4k8qrgo3ko3" path="res://presets/gui/Loading.tscn" id="22_cg00p"]
 [ext_resource type="Texture2D" uid="uid://4lbn2136wjw3" path="res://data/graphics/gui/mobile/buttonY.png" id="22_v5bsw"]
 [ext_resource type="Texture2D" uid="uid://bncxvjj4nmem8" path="res://data/graphics/gui/mobile/buttonX.png" id="23_8ulos"]
 [ext_resource type="Texture2D" uid="uid://m862d3fndtf" path="res://data/graphics/gui/mobile/buttonY_pressed.png" id="23_veq0v"]
+[ext_resource type="PackedScene" uid="uid://bgvr3t4hmbkny" path="res://presets/gui/Dialogue.tscn" id="24_fqnq4"]
 [ext_resource type="Texture2D" uid="uid://3vvdehbmo43i" path="res://data/graphics/gui/mobile/buttonB.png" id="24_idf5b"]
 [ext_resource type="Texture2D" uid="uid://dp34vjt8lj8n5" path="res://data/graphics/gui/mobile/buttonA.png" id="25_6cklw"]
 [ext_resource type="Texture2D" uid="uid://dfmkxvhnjsnkw" path="res://data/graphics/gui/mobile/buttonX_pressed.png" id="25_8t8bb"]
@@ -54,7 +56,6 @@
 [ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/gui/Emote.tscn" id="37_v7lrk"]
 [ext_resource type="PackedScene" uid="uid://b5jgfu2dukotm" path="res://presets/gui/Skill.tscn" id="38_ompay"]
 [ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
-[ext_resource type="Script" path="res://sources/gui/Dialogue.gd" id="45_tnbk2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
 shader = ExtResource("4_60kv4")
@@ -66,8 +67,6 @@ texture = ExtResource("4_ah7dm")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w48pk"]
 texture = ExtResource("5_fdh06")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qyvn"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("3")
@@ -124,6 +123,27 @@ offset_right = 62.0
 offset_bottom = 61.0
 size_flags_horizontal = 10
 size_flags_vertical = 0
+
+[node name="Info" type="Control" parent="Overlay/Sections/Indicators"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Notification" parent="Overlay/Sections/Indicators/Info" instance=ExtResource("17_64u4l")]
+visible = false
+layout_mode = 2
+offset_left = -250.0
+offset_top = 20.0
+offset_right = 250.0
+offset_bottom = 56.0
+
+[node name="PickUp" parent="Overlay/Sections/Indicators/Info" instance=ExtResource("21_5ivxk")]
+visible = false
+layout_mode = 2
+offset_left = -66.0
+offset_top = 75.0
+offset_right = 56.0
+offset_bottom = 103.0
 
 [node name="Menu" type="Control" parent="Overlay/Sections/Indicators"]
 layout_mode = 2
@@ -241,12 +261,6 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_w48pk")
 theme_override_styles/normal = SubResource("StyleBoxTexture_hg7ie")
 
-[node name="Notification" parent="Overlay/Sections" instance=ExtResource("17_64u4l")]
-layout_mode = 2
-
-[node name="PickUp" parent="Overlay/Sections" instance=ExtResource("21_5ivxk")]
-layout_mode = 2
-
 [node name="Contexts" type="Control" parent="Overlay/Sections"]
 z_index = 10
 z_as_relative = false
@@ -254,7 +268,12 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 
+[node name="Loading" parent="Overlay/Sections/Contexts" instance=ExtResource("22_cg00p")]
+visible = false
+layout_mode = 1
+
 [node name="Info" parent="Overlay/Sections/Contexts" instance=ExtResource("20_px3po")]
+visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -265,90 +284,17 @@ grow_vertical = 2
 size_flags_vertical = 6
 persistant = false
 
-[node name="VBox" type="VBoxContainer" parent="Overlay/Sections/Contexts"]
+[node name="Dialogue" parent="Overlay/Sections/Contexts" instance=ExtResource("24_fqnq4")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Buffer" type="Control" parent="Overlay/Sections/Contexts/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="BottomVbox" type="VBoxContainer" parent="Overlay/Sections/Contexts/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Dialogue" type="PanelContainer" parent="Overlay/Sections/Contexts/VBox/BottomVbox"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_type_variation = &"DialogueBox"
-script = ExtResource("45_tnbk2")
-
-[node name="FixedHBox" type="HBoxContainer" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue"]
-layout_mode = 2
-
-[node name="Scrollable" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue/FixedHBox" instance=ExtResource("14_xidsc")]
-custom_minimum_size = Vector2(500, 100)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_5qyvn")
-
-[node name="Buffer" type="Control" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue/FixedHBox"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Button" type="Control" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-
-[node name="TouchButton" type="TouchScreenButton" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue/Button"]
-position = Vector2(-31, -31)
-texture_normal = ExtResource("4_ah7dm")
-texture_pressed = ExtResource("5_fdh06")
-
-[node name="Label" type="Label" parent="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue/Button"]
-layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -7.0
-offset_right = 20.0
-offset_bottom = 7.0
-grow_horizontal = 2
-grow_vertical = 2
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ChoiceVbox" type="VBoxContainer" parent="Overlay/Sections/Contexts/VBox/BottomVbox"]
-custom_minimum_size = Vector2(0, 115)
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="Buffer" type="Control" parent="Overlay/Sections/Contexts/VBox/BottomVbox/ChoiceVbox"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Choice" parent="Overlay/Sections/Contexts/VBox/BottomVbox/ChoiceVbox" instance=ExtResource("20_px3po")]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_type_variation = &"DialogueBox"
-fadeInDelay = 0.5
-displayDelay = 0.0
-fadeOutDelay = 0.3
+offset_left = -338.0
+offset_top = -251.0
+offset_right = 338.0
+offset_bottom = 19.0
+grow_vertical = 0
 
 [node name="Shortcuts" type="MarginContainer" parent="Overlay/Sections"]
 custom_minimum_size = Vector2(0, 155)
@@ -356,6 +302,7 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="Sticks" type="HBoxContainer" parent="Overlay/Sections/Shortcuts"]
+visible = false
 layout_mode = 2
 script = ExtResource("18_6nrx4")
 
@@ -426,6 +373,7 @@ size_flags_vertical = 4
 mouse_filter = 0
 
 [node name="Windows" type="MarginContainer" parent="."]
+z_index = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -590,7 +538,6 @@ top_level = true
 [connection signal="resized" from="Overlay" to="." method="_on_ui_margin_resized"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Stat/StatButton" to="Overlay/Sections/Indicators/Stat" method="_on_button_pressed"]
 [connection signal="pressed" from="Overlay/Sections/Indicators/Menu/MenuButton" to="Overlay/Sections/Indicators/Menu" method="_on_button_pressed"]
-[connection signal="released" from="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue/Button/TouchButton" to="Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue" method="ButtonPressed"]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Direction/ButtonLeft" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [9]]
 [connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/Direction/ButtonLeft" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [9]]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/Direction/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]

@@ -160,6 +160,11 @@ func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMod
 func DisconnectPlayer():
 	Launcher.LauncherReset()
 
+func NetworkIssue():
+	if Launcher.GUI:
+		Launcher.GUI.loginWindow.FillWarningLabel("Could not connect to the server.\nPlease contact us via our [url=%s][color=#%s]Discord server[/color][/url].\nMeanwhile be sure to test the offline mode!" % [LauncherCommons.SocialLink, UICommons.DarkTextColor])
+	Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
+
 func _init():
 	if not Launcher.FSM.exit_login.is_connected(Launcher.Network.NetCreate):
 		Launcher.FSM.exit_login.connect(Launcher.Network.NetCreate)

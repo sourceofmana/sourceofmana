@@ -5,6 +5,7 @@ class_name UICommons
 const LightTextColor : Color 						= Color("FFFFDD")
 const TextColor : Color 							= Color("EED8A1")
 const DarkTextColor : Color							= Color("C19747")
+const WarnTextColor : Color							= Color("F0846A")
 
 const ContextAction : PackedScene					= preload("res://presets/gui/contexts/ContextAction.tscn")
 const CellTilePreset : PackedScene					= preload("res://presets/gui/CellTile.tscn")

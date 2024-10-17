@@ -10,10 +10,11 @@ extends ServiceBase
 @onready var sticks : Container					= $Overlay/Sections/Shortcuts/Sticks
 @onready var boxes : Control					= $Overlay/Sections/Shortcuts/Boxes
 
-@onready var notificationLabel : RichTextLabel	= $Overlay/Sections/Notification
-@onready var pickupPanel : PanelContainer		= $Overlay/Sections/PickUp
-@onready var dialogueWindow : PanelContainer	= $Overlay/Sections/Contexts/VBox/BottomVbox/Dialogue
-@onready var choiceContext : ContextMenu		= $Overlay/Sections/Contexts/VBox/BottomVbox/ChoiceVbox/Choice
+@onready var notificationLabel : RichTextLabel	= $Overlay/Sections/Indicators/Info/Notification
+@onready var pickupPanel : PanelContainer		= $Overlay/Sections/Indicators/Info/PickUp
+@onready var loadingControl : Control			= $Overlay/Sections/Contexts/Loading
+@onready var dialogueWindow : PanelContainer	= $Overlay/Sections/Contexts/Dialogue/BottomVbox/Dialogue
+@onready var choiceContext : ContextMenu		= $Overlay/Sections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
 @onready var infoContext : ContextMenu			= $Overlay/Sections/Contexts/Info
 
 # Windows
@@ -76,6 +77,7 @@ func EnterLoginMenu():
 	dialogueWindow.set_visible(false)
 	notificationLabel.set_visible(false)
 	pickupPanel.set_visible(false)
+	loadingControl.set_visible(false)
 	menu.set_visible(false)
 	shortcuts.set_visible(false)
 	quitWindow.set_visible(false)
@@ -88,20 +90,25 @@ func EnterLoginMenu():
 func EnterLoginProgress():
 	newsWindow.EnableControl(false)
 	loginWindow.EnableControl(false)
-	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.LoginAttemptTimeout, Launcher.FSM.EnterState, [Launcher.FSM.States.LOGIN_SCREEN], "ProgressTimer")
+
+	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.LoginAttemptTimeout, Launcher.Network.Client.NetworkIssue, [], "ProgressTimer")
+	loadingControl.set_visible(true)
 
 func EnterCharMenu():
 	progressTimer.stop()
 	progressTimer = null
+	loadingControl.set_visible(false)
 	Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_PROGRESS)
 
 func EnterCharProgress():
 	Launcher.Network.ConnectPlayer(Launcher.FSM.playerName)
-	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.CharSelectionTimeout, Launcher.FSM.EnterState, [Launcher.FSM.States.LOGIN_SCREEN], "ProgressTimer")
+	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.CharSelectionTimeout, Launcher.Network.Client.NetworkIssue, [], "ProgressTimer")
+	loadingControl.set_visible(true)
 
 func EnterGame():
 	progressTimer.stop()
 	progressTimer = null
+	loadingControl.set_visible(false)
 
 	infoContext.Clear()
 	infoContext.Push(ContextData.new("gp_interact"))

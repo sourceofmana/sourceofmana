@@ -9,18 +9,13 @@ func EnableControl(state : bool):
 	super(state)
 
 	if state == true:
-		logOutButton.visible = Launcher.Player != null
-
+		logOutButton.visible = Launcher.Network.Client != null
 		stayButton.grab_focus()
 
 #
 func _on_logout_pressed():
-	if Launcher.Player:
-		Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
-		EnableControl(false)
-	else:
-		Launcher.FSM.EnterState(Launcher.FSM.States.QUIT)
-		ToggleControl()
+	Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
+	EnableControl(false)
 
 func _on_quit_pressed():
 	Launcher.FSM.EnterState(Launcher.FSM.States.QUIT)

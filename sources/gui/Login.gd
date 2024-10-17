@@ -2,7 +2,7 @@ extends WindowPanel
 
 @onready var nameTextControl : LineEdit		= $Margin/VBoxContainer/GridContainer/NameContainer/NameText
 @onready var passwordTextControl : LineEdit	= $Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText
-@onready var warningLabel : Label			= $Margin/VBoxContainer/Warning
+@onready var warningLabel : RichTextLabel	= $Margin/VBoxContainer/Warning
 
 @onready var onlineCheck : CheckBox			= $Margin/VBoxContainer/SignBar/OnlineButton
 @onready var hostButton : Button			= $Margin/VBoxContainer/SignBar/Host
@@ -11,7 +11,7 @@ extends WindowPanel
 
 #
 func FillWarningLabel(warn : String):
-	warningLabel.set_text(warn)
+	warningLabel.set_text("[color=#%s]%s[/color]" % [UICommons.WarnTextColor.to_html(false), warn])
 
 #
 func CheckNameSize(s : String) -> bool:
@@ -33,7 +33,13 @@ func CheckSignInInformation() -> bool:
 	elif not CheckNameValid(nameText):
 		FillWarningLabel("Name should not include non alpha-numeric character")
 		ret = false
+	else:
+		FillWarningLabel("")
+
 	return ret
+
+func _warning_on_meta_clicked(meta):
+	OS.shell_open(str(meta))
 
 #
 func EnableControl(state : bool):

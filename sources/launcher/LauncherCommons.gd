@@ -3,6 +3,7 @@ class_name LauncherCommons
 
 # Project
 const ProjectName : String				= "Source of Mana"
+const SocialLink : String				= "https://discord.com/channels/581622549566193664/1013487216493854780"
 
 # Map
 const DefaultStartMap : String			= "Splatyna Cave Entrance"
