@@ -181,7 +181,7 @@ func SetStamina(bonus : int):
 	stamina = clampi(stamina + bonus, 0, current.maxStamina)
 
 func AddExperience(value : int):
-	if value <= 0:
+	if not ActorCommons.IsAlive(actor) or value <= 0:
 		return
 	experience += value
 	# Manage level up
@@ -196,6 +196,6 @@ func AddExperience(value : int):
 		Launcher.Network.Server.NotifyNeighbours(actor, "TargetLevelUp", [])
 
 func AddGP(value : int):
-	if value <= 0:
+	if not ActorCommons.IsAlive(actor) or value <= 0:
 		return
 	gp += value

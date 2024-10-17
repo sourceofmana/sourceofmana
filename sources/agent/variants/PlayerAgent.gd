@@ -99,6 +99,11 @@ func WarpTo(dest : Destination):
 	if nextMap:
 		Launcher.World.Warp(self, nextMap, dest.pos)
 
+func Killed():
+	super.Killed()
+	if ownScript:
+		ClearScript()
+
 #
 func AddScript(npc : NpcAgent):
 	if npc and npc.playerScriptPreset:

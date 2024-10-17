@@ -12,7 +12,7 @@ static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.NPC
 
 #
 func Interact(player : Actor):
-	if player is not PlayerAgent:
+	if player is not PlayerAgent or not ActorCommons.IsAlive(player):
 		return
 
 	if not player.ownScript:

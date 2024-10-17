@@ -91,9 +91,9 @@ func CheckWave():
 		var mobCount : int = AliveMonsterCount()
 		if mobCount > 0:
 			if mobCount > 1:
-				Notification("One kaore corrupted being left to kill.")
-			else:
 				Notification("%d kaore corrupted beings are still around." % mobCount)
+			else:
+				Notification("One kaore corrupted being left to kill.")
 			AddTimer(npc, checkDelay, CheckWave, "CheckTimer")
 		else:
 			NextWave()

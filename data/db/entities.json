@@ -317,4 +317,12 @@
 		"Radius": "32",
 		"DisplayName": true,
 	},
+	"2004": {
+		"Name": "Gabz",
+		"Ethnicity": "Player",
+		"Behaviour": ["Immobile", "Pacifist"],
+		"Collision": "Small",
+		"Radius": "16",
+		"DisplayName": true,
+	},
 }
