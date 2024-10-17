@@ -39,7 +39,7 @@ func ConnectPlayer(nickname : String, rpcID : int = NetworkCommons.RidSingleMode
 
 			playerMap[rpcID].agentRID = agent.get_rid().get_id()
 			onlineList.UpdateJson()
-			player_connected.emit()
+			player_connected.emit(rpcID)
 			Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
 	elif rpcID != NetworkCommons.RidSingleMode:
 		Launcher.Network.peer.disconnect_peer(rpcID)
@@ -50,7 +50,7 @@ func DisconnectPlayer(rpcID : int = NetworkCommons.RidSingleMode):
 		WorldAgent.RemoveAgent(player)
 		playerMap.erase(rpcID)
 		onlineList.UpdateJson()
-		player_disconnected.emit()
+		player_disconnected.emit(rpcID)
 		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
 
 #
