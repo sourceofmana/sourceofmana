@@ -1,6 +1,6 @@
 extends Label
 
-func OnPlayerCountChange(rpcID):
+func OnPlayerCountChange(_rpcID):
 	var playercount : int = Launcher.Network.Server.playerMap.values().size()
 	set_text("Current player count: %d" % playercount)
 
