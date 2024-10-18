@@ -285,15 +285,18 @@ size_flags_vertical = 6
 persistant = false
 
 [node name="Dialogue" parent="Overlay/Sections/Contexts" instance=ExtResource("24_fqnq4")]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
+anchor_bottom = 1.0
 offset_left = -338.0
-offset_top = -251.0
+offset_top = -364.0
 offset_right = 338.0
-offset_bottom = 19.0
+offset_bottom = 0.0
+grow_horizontal = 2
 grow_vertical = 0
 
 [node name="Shortcuts" type="MarginContainer" parent="Overlay/Sections"]
@@ -390,6 +393,7 @@ script = ExtResource("7")
 
 [node name="Quit" parent="Windows/Floating" instance=ExtResource("8")]
 visible = false
+z_index = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

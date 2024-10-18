@@ -13,7 +13,7 @@ extends ServiceBase
 @onready var notificationLabel : RichTextLabel	= $Overlay/Sections/Indicators/Info/Notification
 @onready var pickupPanel : PanelContainer		= $Overlay/Sections/Indicators/Info/PickUp
 @onready var loadingControl : Control			= $Overlay/Sections/Contexts/Loading
-@onready var dialogueWindow : PanelContainer	= $Overlay/Sections/Contexts/Dialogue/BottomVbox/Dialogue
+@onready var dialogueWindow : VBoxContainer		= $Overlay/Sections/Contexts/Dialogue
 @onready var choiceContext : ContextMenu		= $Overlay/Sections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
 @onready var infoContext : ContextMenu			= $Overlay/Sections/Contexts/Info
 

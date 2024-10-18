@@ -1,10 +1,10 @@
-extends PanelContainer
+extends VBoxContainer
 
 #
-@onready var button : TouchScreenButton	= $Button/TouchButton
-@onready var buttonLabel : Label		= $Button/Label
-@onready var scrollable : Scrollable	= $FixedHBox/Scrollable
-@onready var scrollbar: VScrollBar		= $FixedHBox/Scrollable/Scroll/_v_scroll
+@onready var button : TouchScreenButton	= $BottomVbox/Dialogue/Button/TouchButton
+@onready var buttonLabel : Label		= $BottomVbox/Dialogue/Button/Label
+@onready var scrollable : Scrollable	= $BottomVbox/Dialogue/FixedHBox/Scrollable
+@onready var scrollbar: VScrollBar		= $BottomVbox/Dialogue/FixedHBox/Scrollable/Scroll/_v_scroll
 var lastName : String					= ""
 var lastTween : Tween					= null
 

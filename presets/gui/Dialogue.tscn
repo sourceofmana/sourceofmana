@@ -10,12 +10,10 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qyvn"]
 
 [node name="Dialogue" type="VBoxContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 676.0
+offset_bottom = 364.0
 theme = ExtResource("1_w0q73")
+script = ExtResource("1_xbnx6")
 
 [node name="Buffer" type="Control" parent="."]
 layout_mode = 2
@@ -23,15 +21,14 @@ size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="BottomVbox" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Dialogue" type="PanelContainer" parent="BottomVbox"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"DialogueBox"
-script = ExtResource("1_xbnx6")
 
 [node name="FixedHBox" type="HBoxContainer" parent="BottomVbox/Dialogue"]
 layout_mode = 2
@@ -77,17 +74,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ChoiceVbox" type="VBoxContainer" parent="BottomVbox"]
-custom_minimum_size = Vector2(0, 115)
+custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
-size_flags_vertical = 8
+size_flags_vertical = 3
 
-[node name="Buffer" type="Control" parent="BottomVbox/ChoiceVbox"]
+[node name="BufferUp" type="Control" parent="BottomVbox/ChoiceVbox"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="Choice" parent="BottomVbox/ChoiceVbox" instance=ExtResource("5_6rp1f")]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -95,5 +91,10 @@ theme_type_variation = &"DialogueBox"
 fadeInDelay = 0.5
 displayDelay = 0.0
 fadeOutDelay = 0.3
+
+[node name="BufferDown" type="Control" parent="BottomVbox/ChoiceVbox"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
 
 [connection signal="released" from="BottomVbox/Dialogue/Button/TouchButton" to="BottomVbox/Dialogue" method="ButtonPressed"]

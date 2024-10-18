@@ -45,6 +45,7 @@ func FadeIn(disableAction : bool = false):
 	FlushDataBuffer()
 
 	canFadeOut = not persistant
+	_process(0)
 
 func FadeOut():
 	if currentStep < fadeInStep:
@@ -56,6 +57,7 @@ func FadeOut():
 		currentStep = displayStep
 
 	canFadeOut = true
+	_process(0)
 
 func Show(disableAction):
 	visible = true
