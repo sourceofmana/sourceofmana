@@ -130,20 +130,18 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Notification" parent="Overlay/Sections/Indicators/Info" instance=ExtResource("17_64u4l")]
-visible = false
 layout_mode = 2
 offset_left = -250.0
-offset_top = 20.0
+offset_top = -19.0
 offset_right = 250.0
-offset_bottom = 56.0
+offset_bottom = 17.0
 
 [node name="PickUp" parent="Overlay/Sections/Indicators/Info" instance=ExtResource("21_5ivxk")]
-visible = false
 layout_mode = 2
 offset_left = -66.0
-offset_top = 75.0
+offset_top = 35.0
 offset_right = 56.0
-offset_bottom = 103.0
+offset_bottom = 63.0
 
 [node name="Menu" type="Control" parent="Overlay/Sections/Indicators"]
 layout_mode = 2

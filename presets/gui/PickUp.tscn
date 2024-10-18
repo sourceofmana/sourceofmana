@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://sources/gui/PickUp.gd" id="2_o631f"]
 
 [node name="PickUp" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 62)
 offset_right = 156.0
 offset_bottom = 55.0
 size_flags_horizontal = 4
