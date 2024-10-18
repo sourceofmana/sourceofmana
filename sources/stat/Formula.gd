@@ -7,7 +7,7 @@ const attributePointPerLevel : int				= 3
 const coefMaxMana : float						= 1.5
 const coefRegenMana : float						= 0.05
 const coefMaxStamina : float					= 1.8
-const coefRegenStamina : float					= 5.0
+const coefRegenStamina : float					= 10.0
 const coefMaxHealth : float						= 2.0
 const coefRegenHealth : float					= 0.01
 const coefDefense : float						= 2.0
@@ -51,7 +51,7 @@ static func GetMaxStamina(stat : ActorStats) -> int:
 	return stat.morphStat.maxStamina + F((stat.endurance + stat.level) * coefMaxStamina)
 
 static func GetRegenStamina(stat : ActorStats) -> int:
-	return 1 + FFifth(stat.endurance) + FPercent(GetMaxStamina(stat) * coefRegenStamina)
+	return stat.level + stat.endurance + FPercent(GetMaxStamina(stat) * coefRegenStamina)
 
 static func GetCooldownAttackDelay(stat : ActorStats) -> float:
 	return maxf(0.001, stat.morphStat.cooldownAttackDelay - Percent(stat.endurance + stat.level))
