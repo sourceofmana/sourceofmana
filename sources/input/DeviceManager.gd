@@ -77,6 +77,7 @@ static var actionNames : Dictionary = {
 	"gp_untarget" : "Clear Target",
 	"gp_pickup" : "Pickup",
 	"ui_skill": "Skill",
+	"ui_accept": "Accept",
 	"ui_cancel": "Cancel",
 	"ui_context_validate": "Context Validate",
 	"ui_context_cancel": "Context Cancel",
@@ -106,8 +107,11 @@ static func GetActionInfo(action : String) -> Array:
 
 	return [defaultValue, defaultDeviceType]
 
+static func HasActionName(action : String) -> bool:
+	return action in actionNames
+
 static func GetActionName(action : String) -> String:
-	return actionNames[action] if actionNames.has(action) else ""
+	return actionNames[action] if HasActionName(action) else ""
 
 static func GetEvents(action : String) -> Array:
 	return ProjectSettings.get_setting("input/" + action).events if ProjectSettings.has_setting("input/" + action) else []

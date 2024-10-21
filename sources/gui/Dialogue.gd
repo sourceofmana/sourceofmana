@@ -13,6 +13,15 @@ const NPCNameLabel : PackedScene		= preload("res://presets/gui/labels/NpcNameLab
 const PlayerDialogueLabel : PackedScene	= preload("res://presets/gui/labels/PlayerDialogueLabel.tscn")
 
 #
+func Toggle(toggle : bool):
+	if toggle:
+		Launcher.GUI.DisplayInfoContext(["ui_accept", "ui_cancel"])
+		Launcher.GUI.dialogueWindow.Clear()
+	else:
+		Launcher.GUI.infoContext.FadeOut()
+
+	Launcher.GUI.dialogueContainer.set_visible(toggle)
+
 func AddName(text : String):
 	if lastName != text:
 		lastName = text
@@ -83,7 +92,7 @@ func _ready():
 	scrollbar.changed.connect(AutoScroll)
 
 func _input(event : InputEvent):
-	if is_visible() and not Launcher.GUI.choiceContext.is_visible():
+	if Launcher.GUI.dialogueContainer.is_visible() and not Launcher.GUI.choiceContext.is_visible():
 		if Launcher.Action.TryJustPressed(event, "ui_accept", true):
 			ButtonPressed()
 		if Launcher.Action.TryJustPressed(event, "ui_cancel", true):

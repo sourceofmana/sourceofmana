@@ -40,9 +40,7 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidS
 				entity.interactive.DisplaySpeech.call_deferred(text)
 
 func ToggleContext(enable : bool, _rpcID : int = NetworkCommons.RidSingleMode):
-	if enable:
-		Launcher.GUI.dialogueWindow.Clear()
-	Launcher.GUI.dialogueContainer.set_visible(enable)
+	Launcher.GUI.dialogueWindow.Toggle(enable)
 
 func ContextText(author : String, text : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if not author.is_empty():

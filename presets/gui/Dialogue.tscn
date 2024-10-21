@@ -100,4 +100,4 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[connection signal="released" from="BottomVbox/Dialogue/Button/TouchButton" to="BottomVbox/Dialogue" method="ButtonPressed"]
+[connection signal="released" from="BottomVbox/Dialogue/Button/TouchButton" to="." method="ButtonPressed"]
