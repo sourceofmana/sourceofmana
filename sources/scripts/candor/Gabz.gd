@@ -20,8 +20,8 @@ func QuestionStart():
 	Choice("Waves of monsters? Why are they coming?", ExplainWaves)
 
 func ExplainCave():
-	Mes("Ah, this cave? It's... alive, in a way. You feel it too, don't you?")
-	Mes("It breathes Kaore, the corrupted Mana. Everything here was once... more alive. But now it's just hungry, like me.")
+	Mes("Ah, this cave? It's... Alive, in a way. You feel it too, don't you?")
+	Mes("It breathes Kaore, the corrupted Mana. Everything here was once... More alive. But now it's just hungry, like me.")
 	QuestionsCave()
 
 func QuestionsCave():
@@ -31,8 +31,8 @@ func QuestionsCave():
 	Choice("Why is the cave like this?", ExplainCaveOrigin)
 
 func ExplainWaves():
-	Mes("Waves... yes, waves of those lost to Kaore. They are drawn here, hungry for more of the decaying Mana.")
-	Mes("You will fight them, over and over. But beware... with each wave, the cave itself grows more restless. You might not make it to the end.")
+	Mes("Waves... Yes, waves of those lost to Kaore. They are drawn here, hungry for more of the decaying Mana.")
+	Mes("You will fight them, over and over. But beware... With each wave, the cave itself grows more restless. You might not make it to the end.")
 	QuestionsWaves()
 
 func QuestionsWaves():
@@ -42,13 +42,13 @@ func QuestionsWaves():
 	Choice("Why does Kaore make things this way?", ExplainKaore)
 
 func ExplainNpc():
-	Mes("Me? Oh, just a fellow survivor... or maybe a guide? I can't tell anymore.")
-	Mes("I've spent too long near the Kaore. It's in my blood, in my thoughts... but it's okay. I think?")
+	Mes("Me? Oh, just a fellow survivor... Or maybe a guide? I can't tell anymore.")
+	Mes("I've spent too long near the Kaore. It's in my blood, in my thoughts... But it's okay. I think?")
 	Mes("But never mind me. You're here to fight, aren't you?")
 	QuestionsCave()
 
 func ExplainNpcCorruption():
-	Mes("Oh, it started small... whispers in the back of my mind, a strange craving for... something.")
+	Mes("Oh, it started small... Whispers in the back of my mind, a strange craving for... Something.")
 	Mes("But now? I don't remember what I was before. Maybe it's better this way.")
 	Mes("You don't want this. But here we are.")
 	QuestionsCave()
@@ -56,7 +56,7 @@ func ExplainNpcCorruption():
 func ExplainCaveOrigin():
 	Mes("This cave was once a Mana wellspring, a place of life and power.")
 	Mes("But after the Aethyra War, the Mana decayed into Kaore. Now it’s nothing more than a trap for those who wander too close.")
-	Mes("But don't worry. You'll either win... or join the rest of us.")
+	Mes("But don't worry. You'll either win... Or join the rest of us.")
 	QuestionsCave()
 
 func ExplainFailure():
@@ -66,14 +66,14 @@ func ExplainFailure():
 
 func ExplainCorruption():
 	Mes("Ah, the corruption... Kaore, it's what Mana becomes when it’s left to decay.")
-	Mes("Mana flows through all living things. When it's pure, it nurtures life. But here... it's been stagnant for far too long.")
+	Mes("Mana flows through all living things. When it's pure, it nurtures life. But here... It's been stagnant for far too long.")
 	Mes("Once the Mana Trees was lost, the balance was broken. Now Kaore festers in places like this.")
 	Mes("It seeps into everything: creatures, the land, even people. And once you're touched by it, there's no going back.")
 	QuestionsWaves()
 	
 func ExplainKaore():
-	Mes("Kaore... it's the decayed Mana. It festers where life was once vibrant. Here, in this cave, it thrives.")
-	Mes("It changes things... makes them hostile, makes them... desperate.")
+	Mes("Kaore... It's the decayed Mana. It festers where life was once vibrant. Here, in this cave, it thrives.")
+	Mes("It changes things... Makes them hostile, makes them... Desperate.")
 	Mes("You'll feel it too if you stay long enough.")
 	QuestionsWaves()
 

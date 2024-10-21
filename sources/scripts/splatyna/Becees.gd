@@ -36,20 +36,20 @@ func OnFinish():
 	Mes("Did something happen to Splatyna?! What have you done?")
 
 	Choice("Nothing! Everything’s fine...", OnDeny)
-	Choice("She’s... gone.", OnAdmit)
+	Choice("She’s... Gone.", OnAdmit)
 
 func OnDeny():
 	Mes("Good, good! As long as Splatyna still watches over us.")
 
 func OnAdmit():
 	Mes("Gone?! No, no! You’re lying! Splatyna can’t die!")
-	Mes("Just... go, before I lose my mind!")
+	Mes("Just... Go, before I lose my mind!")
 
 func OnAskAboutSplatyna():
-	Mes("Oh, Splatyna... she's not like the other slimes, no no. She's powerful! She's been blessed by Kaore!")
+	Mes("Oh, Splatyna... She's not like the other slimes, no no. She's powerful! She's been blessed by Kaore!")
 	Mes("She doesn't need food or water like the rest of us. Kaore keeps her alive! She’s stronger and wiser than us poor souls!")
 	Mes("And the gold! Yes, she loves it. She says it keeps her safe, makes her strong! We give her gold, and she protects us, keeps the decay away!")
-	Mes("But don't anger her, no! She can make you crazy with just a look! Her magic... it's powerful, twisted by Kaore. She's... perfect.")
+	Mes("But don't anger her, no! She can make you crazy with just a look! Her magic... It's powerful, twisted by Kaore. She's... perfect.")
 	InfoChoice(2)
 
 func OnAskAboutPlace():
