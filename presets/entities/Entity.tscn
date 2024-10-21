@@ -7,6 +7,7 @@
 [node name="Entity" type="CharacterBody2D"]
 collision_layer = 5
 collision_mask = 0
+motion_mode = 1
 script = ExtResource("1_h5sc8")
 
 [node name="Interactive" parent="." instance=ExtResource("2_5gxse")]
