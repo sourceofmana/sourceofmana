@@ -147,6 +147,7 @@ func _input(event):
 	elif TryJustPressed(event, "gp_pickup"):		Launcher.Map.PickupNearestDrop()
 	elif TryJustPressed(event, "gp_morph"):	 		Launcher.Network.TriggerMorph()
 	elif TryJustPressed(event, "ui_close"):			Launcher.GUI.CloseWindow()
+	elif TryJustPressed(event, "ui_close", true):	Launcher.GUI.CloseCurrentWindow()
 	elif TryJustPressed(event, "ui_inventory"):		Launcher.GUI.ToggleControl(Launcher.GUI.inventoryWindow)
 	elif TryJustPressed(event, "ui_minimap"):		Launcher.GUI.ToggleControl(Launcher.GUI.minimapWindow)
 	elif TryJustPressed(event, "ui_chat"):			Launcher.GUI.ToggleControl(Launcher.GUI.chatWindow)

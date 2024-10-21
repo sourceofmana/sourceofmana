@@ -471,6 +471,7 @@ offset_left = 296.0
 offset_top = 240.0
 offset_right = 576.0
 offset_bottom = 346.0
+blockActions = false
 
 [node name="News" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false
