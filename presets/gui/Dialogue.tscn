@@ -10,6 +10,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qyvn"]
 
 [node name="Dialogue" type="VBoxContainer"]
+custom_minimum_size = Vector2(676, 280)
 offset_right = 676.0
 offset_bottom = 364.0
 theme = ExtResource("1_w0q73")
@@ -26,6 +27,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Dialogue" type="PanelContainer" parent="BottomVbox"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"DialogueBox"
@@ -84,6 +86,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="Choice" parent="BottomVbox/ChoiceVbox" instance=ExtResource("5_6rp1f")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

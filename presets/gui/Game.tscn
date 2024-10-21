@@ -130,6 +130,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Notification" parent="Overlay/Sections/Indicators/Info" instance=ExtResource("17_64u4l")]
+visible = false
 layout_mode = 2
 offset_left = -250.0
 offset_top = -19.0
@@ -137,6 +138,7 @@ offset_right = 250.0
 offset_bottom = 17.0
 
 [node name="PickUp" parent="Overlay/Sections/Indicators/Info" instance=ExtResource("21_5ivxk")]
+visible = false
 layout_mode = 2
 offset_left = -66.0
 offset_top = 35.0
@@ -283,7 +285,6 @@ size_flags_vertical = 6
 persistant = false
 
 [node name="Dialogue" parent="Overlay/Sections/Contexts" instance=ExtResource("24_fqnq4")]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

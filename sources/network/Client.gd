@@ -42,7 +42,7 @@ func ChatAgent(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidS
 func ToggleContext(enable : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	if enable:
 		Launcher.GUI.dialogueWindow.Clear()
-	Launcher.GUI.dialogueWindow.set_visible(enable)
+	Launcher.GUI.dialogueContainer.set_visible(enable)
 
 func ContextText(author : String, text : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if not author.is_empty():

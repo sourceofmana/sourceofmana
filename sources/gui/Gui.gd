@@ -14,6 +14,7 @@ extends ServiceBase
 @onready var pickupPanel : PanelContainer		= $Overlay/Sections/Indicators/Info/PickUp
 @onready var loadingControl : Control			= $Overlay/Sections/Contexts/Loading
 @onready var dialogueWindow : VBoxContainer		= $Overlay/Sections/Contexts/Dialogue
+@onready var dialogueContainer : PanelContainer	= $Overlay/Sections/Contexts/Dialogue/BottomVbox/Dialogue
 @onready var choiceContext : ContextMenu		= $Overlay/Sections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
 @onready var infoContext : ContextMenu			= $Overlay/Sections/Contexts/Info
 
@@ -74,7 +75,7 @@ func EnterLoginMenu():
 	stats.set_visible(false)
 	statWindow.set_visible(false)
 
-	dialogueWindow.set_visible(false)
+	dialogueContainer.set_visible(false)
 	notificationLabel.set_visible(false)
 	pickupPanel.set_visible(false)
 	loadingControl.set_visible(false)
