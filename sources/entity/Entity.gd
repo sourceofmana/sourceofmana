@@ -124,7 +124,7 @@ func _physics_process(delta : float):
 		entityPosOffset.y = max(0, entityPosOffset.y - posOffsetFix.y) if signOffset.y > 0 else min(0, entityPosOffset.y - posOffsetFix.y)
 		velocity += posOffsetFix / delta
 
-	if velocity != Vector2.ZERO:
+	if get_parent() != null and velocity != Vector2.ZERO:
 		move_and_slide()
 
 func _ready():

@@ -65,7 +65,7 @@ func UpdateInput():
 
 func SetVelocity():
 	var nextVelocity : Vector2 = Vector2.ZERO
-	if state == ActorCommons.State.WALK:
+	if get_parent() != null and state == ActorCommons.State.WALK:
 		nextVelocity = currentVelocity
 		move_and_slide()
 
