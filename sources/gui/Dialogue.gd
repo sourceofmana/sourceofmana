@@ -64,7 +64,7 @@ func ButtonPressed():
 	if Launcher.Player:
 		Launcher.Network.TriggerNextContext()
 	if buttonLabel.text == "Close":
-		set_visible(false)
+		Launcher.GUI.dialogueContainer.set_visible(false)
 
 func Clear():
 	scrollable.Clear()

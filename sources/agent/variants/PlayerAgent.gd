@@ -111,4 +111,5 @@ func AddScript(npc : NpcAgent):
 
 func ClearScript():
 	if ownScript:
+		ownScript.OnQuit()
 		ownScript = null

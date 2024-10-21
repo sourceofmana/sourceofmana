@@ -132,6 +132,13 @@ func WalkToward(pos : Vector2):
 	if agent:
 		agent.target_position = pos
 
+func LookAt(target : BaseAgent):
+	if target:
+		var newOrientation : Vector2 = Vector2(target.position - position).normalized()
+		if not newOrientation.is_equal_approx(currentDirection):
+			currentOrientation = newOrientation
+			forceUpdate = true
+
 func ResetNav():
 	WalkToward(position)
 	SwitchInputMode(true)

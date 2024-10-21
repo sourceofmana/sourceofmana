@@ -33,7 +33,9 @@ func Trigger() -> bool:
 	if npc and npc.SetState(ActorCommons.State.TRIGGER):
 		CallGlobal("OnTrigger")
 		return true
-	return false
+	else:
+		CallGlobal("OnQuit")
+		return false
 
 func IsTriggering() -> bool:
 	return ActorCommons.IsTriggering(npc)
@@ -271,10 +273,18 @@ func IsWaiting() -> bool:
 # Default functions
 func _init(_npc : NpcAgent, _own : BaseAgent):
 	assert(_npc != null and _own != null, "Trying to init a NPC Script with a missing player or NPC")
-	own = _own
-	npc = _npc
-	OnStart()
+	if _npc and _own:
+		own = _own
+		npc = _npc
+		OnStart()
+		if npc != own:
+			npc.AddInteraction()
+			own.LookAt(npc)
+			npc.LookAt(own)
 
 func OnStart(): pass
 func OnContinue(): pass
 func OnTrigger(): pass
+func OnQuit():
+	if npc and npc != own:
+		npc.SubInteraction()

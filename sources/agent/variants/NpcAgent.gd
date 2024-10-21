@@ -6,6 +6,7 @@ var playerScriptPath : String				= ""
 var playerScriptPreset : GDScript			= null
 var ownScriptPath : String					= ""
 var ownScript : NpcScript					= null
+var interactionCount : int					= 0
 
 #
 static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.NPC
@@ -24,6 +25,17 @@ func Interact(player : Actor):
 			player.ownScript.step += 1
 	if player.ownScript.npc == self:
 		player.ownScript.ApplyStep()
+
+func AddInteraction():
+	if interactionCount == 0:
+		AI.Stop(self)
+	interactionCount = interactionCount + 1
+
+func SubInteraction():
+	if interactionCount > 0:
+		interactionCount = interactionCount - 1
+	if interactionCount == 0:
+		AI.Reset(self)
 
 #
 func _ready():
