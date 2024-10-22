@@ -44,13 +44,13 @@ func LoadData(data : EntityData):
 	if data._collision and get_parent().type == ActorCommons.Type.PLAYER:
 		collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
 		if collision:
-			get_parent().add_child(collision)
+			get_parent().add_child.call_deferred(collision)
 
 	# Sprite Preset
 	if data._ethnicity:
 		var preset : Node2D = FileSystem.LoadEntitySprite(data._ethnicity)
 		if preset:
-			add_child(preset)
+			add_child.call_deferred(preset)
 
 		# Animation
 		if preset and preset.has_node("Animation"):
@@ -72,7 +72,7 @@ func LoadData(data : EntityData):
 				elif data._customTextures[slot]:
 					sprite = Sprite2D.new()
 					sprite.set_name(slotName)
-					preset.add_child(sprite)
+					preset.add_child.call_deferred(sprite)
 
 				if sprite:
 					if data._customTextures[slot]:

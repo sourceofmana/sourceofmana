@@ -53,7 +53,7 @@ func LoadMapNode(mapName : String):
 	assert(mapNode != null, "Map instance could not be created")
 	if mapNode:
 		RefreshTileMap()
-		Launcher.add_child(mapNode)
+		Launcher.add_child.call_deferred(mapNode)
 		MapLoaded.emit()
 
 # Generic fringe Node2D
@@ -73,7 +73,7 @@ func RemoveChild(child : Node2D):
 func AddChild(child : Node2D):
 	assert(fringeLayer != null, "Current fringe layer not found, could not add a new child")
 	if fringeLayer:
-		fringeLayer.add_child(child)
+		fringeLayer.add_child.call_deferred(child)
 
 # Entities
 func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int):

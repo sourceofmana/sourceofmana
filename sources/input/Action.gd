@@ -166,6 +166,6 @@ func _ready():
 	clickTimer.set_name("ClickTimer")
 	clickTimer.set_wait_time(0.2)
 	clickTimer.set_one_shot(true)
-	add_child(clickTimer)
+	add_child.call_deferred(clickTimer)
 
 	DeviceManager.Init()

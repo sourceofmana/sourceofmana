@@ -113,7 +113,7 @@ static func GetTransition(prev : State, next : State) -> State:
 	return _transitions[prev][next]
 
 static func HasExpiredNodeGoal(agent : AIAgent):
-	return agent.hasNodeGoal and (agent.nodeGoal == null or (agent.nodeGoal is BaseAgent and not ActorCommons.IsAlive(agent.nodeGoal)))
+	return agent.hasNodeGoal and (agent.nodeGoal == null or (agent.nodeGoal is BaseAgent and not (ActorCommons.IsAlive(agent.nodeGoal) and SkillCommons.IsSameMap(agent, agent.nodeGoal))))
 
 # Behaviour
 static func ApplyPacifistBehaviour(agent : AIAgent) -> bool:

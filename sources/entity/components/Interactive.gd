@@ -103,7 +103,7 @@ func DisplaySpeech(speech : String):
 		var speechLabel : RichTextLabel = ActorCommons.SpeechLabel.instantiate()
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
-		speechContainer.add_child(speechLabel)
+		speechContainer.add_child.call_deferred(speechLabel)
 		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, Util.RemoveNode, [speechLabel, speechContainer])
 
 #

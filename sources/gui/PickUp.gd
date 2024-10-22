@@ -17,7 +17,7 @@ func AddLast(cell : BaseCell, count : int):
 		timestampsMs.push_back(Time.get_ticks_msec())
 		var tile : CellTile = UICommons.CellTilePreset.instantiate()
 		tile.ready.connect(tile.AssignData.bind(cell, count))
-		container.add_child(tile)
+		container.add_child.call_deferred(tile)
 
 func RemoveOldest():
 	var child : Control = container.get_child(0)

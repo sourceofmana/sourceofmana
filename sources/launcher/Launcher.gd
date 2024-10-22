@@ -104,9 +104,9 @@ func _ready():
 	Network			= FileSystem.LoadSource("network/Network.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
 
-	add_child(Action)
-	add_child(Network)
-	add_child(FSM)
+	add_child.call_deferred(Action)
+	add_child.call_deferred(Network)
+	add_child.call_deferred(FSM)
 
 	_post_launch()
 	DB.Init()
