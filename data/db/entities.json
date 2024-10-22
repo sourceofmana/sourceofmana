@@ -19,6 +19,10 @@
 			"Lum": 1.0,
 			"Inma": 1.0,
 		},
+		"Shaders":
+		{
+			"Chest": "presets/palettes/cloth-crimson.tres",
+		},
 	},
 	"1": {
 		"Name": "Ship",
@@ -271,6 +275,7 @@
 		"Shaders":
 		{
 			"Body": "presets/palettes/human-skin-dark.tres",
+			"Chest": "presets/palettes/cloth-olive.tres",
 		},
 		"Hairstyle": "Bald",
 		"Behaviour": ["Pacifist"],
@@ -295,10 +300,13 @@
 		"Textures":
 		{
 			"Body": "sprites/players/human-female.png",
+			"Chest": "sprites/equipments/chests/vneckjumper-female.png",
+			"Legs": "sprites/equipments/legs/trousers-female.png",
 		},
 		"Shaders":
 		{
 			"Body": "presets/palettes/human-skin-tanned.tres",
+			"Chest": "presets/palettes/cloth-olive.tres",
 		},
 		"Hairstyle": "Bald",
 		"Behaviour": ["Pacifist"],
@@ -324,5 +332,9 @@
 		"Collision": "Small",
 		"Radius": "16",
 		"DisplayName": true,
+		"Shaders":
+		{
+			"Chest": "presets/palettes/cloth-olive.tres",
+		},
 	},
 }
