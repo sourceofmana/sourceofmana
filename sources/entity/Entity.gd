@@ -99,6 +99,13 @@ func Interact():
 			Cast(DB.GetCellHash(SkillCommons.SkillMeleeName))
 
 func Cast(skillID : int):
+	if Launcher.GUI.dialogueContainer.is_visible():
+		return
+
+	assert(skillID in DB.SkillsDB, "Skill ID %x not found within our skill db" % skillID)
+	if not skillID in DB.SkillsDB:
+		return
+
 	var skill : SkillCell = DB.SkillsDB[skillID]
 	assert(skill != null, "Skill ID is not found, can't cast it")
 	if skill == null:
