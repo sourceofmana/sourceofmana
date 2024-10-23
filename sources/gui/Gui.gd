@@ -3,20 +3,21 @@ extends ServiceBase
 @onready var background : TextureRect			= $Background
 
 # Overlay
-@onready var menu : Control						= $Overlay/Sections/Indicators/Menu
-@onready var stats : Control					= $Overlay/Sections/Indicators/Stat
+@onready var menu : Control						= $Overlay/VSections/Indicators/Menu
+@onready var stats : Control					= $Overlay/VSections/Indicators/Stat
+
+@onready var notificationLabel : RichTextLabel	= $Overlay/VSections/Indicators/Info/Notification
+@onready var pickupPanel : PanelContainer		= $Overlay/VSections/Indicators/Info/PickUp
+@onready var loadingControl : Control			= $Overlay/VSections/Contexts/Loading
+@onready var dialogueWindow : VBoxContainer		= $Overlay/VSections/Contexts/Dialogue
+@onready var dialogueContainer : PanelContainer	= $Overlay/VSections/Contexts/Dialogue/BottomVbox/Dialogue
+@onready var choiceContext : ContextMenu		= $Overlay/VSections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
+@onready var infoContext : ContextMenu			= $Overlay/VSections/Contexts/Info
+
+@onready var boxes : Control					= $Overlay/VSections/Boxes
 
 @onready var shortcuts : Container				= $Overlay/Sections/Shortcuts
 @onready var sticks : Container					= $Overlay/Sections/Shortcuts/Sticks
-@onready var boxes : Control					= $Overlay/Sections/Shortcuts/Boxes
-
-@onready var notificationLabel : RichTextLabel	= $Overlay/Sections/Indicators/Info/Notification
-@onready var pickupPanel : PanelContainer		= $Overlay/Sections/Indicators/Info/PickUp
-@onready var loadingControl : Control			= $Overlay/Sections/Contexts/Loading
-@onready var dialogueWindow : VBoxContainer		= $Overlay/Sections/Contexts/Dialogue
-@onready var dialogueContainer : PanelContainer	= $Overlay/Sections/Contexts/Dialogue/BottomVbox/Dialogue
-@onready var choiceContext : ContextMenu		= $Overlay/Sections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
-@onready var infoContext : ContextMenu			= $Overlay/Sections/Contexts/Info
 
 # Windows
 @onready var windows : Control					= $Windows/Floating
@@ -87,7 +88,7 @@ func EnterLoginMenu():
 	pickupPanel.set_visible(false)
 	loadingControl.set_visible(false)
 	menu.set_visible(false)
-	shortcuts.set_visible(false)
+	boxes.set_visible(false)
 	quitWindow.set_visible(false)
 	respawnWindow.EnableControl(false)
 
@@ -125,7 +126,7 @@ func EnterGame():
 
 	stats.set_visible(true)
 	menu.set_visible(true)
-	shortcuts.set_visible(true)
+	boxes.set_visible(true)
 	notificationLabel.set_visible(true)
 
 	menu.SetItemsVisible(true)

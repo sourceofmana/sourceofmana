@@ -13,6 +13,7 @@
 custom_minimum_size = Vector2(676, 280)
 offset_right = 676.0
 offset_bottom = 364.0
+mouse_filter = 2
 theme = ExtResource("1_w0q73")
 script = ExtResource("1_xbnx6")
 
@@ -25,21 +26,25 @@ mouse_filter = 2
 custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="Dialogue" type="PanelContainer" parent="BottomVbox"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
+mouse_filter = 2
 theme_type_variation = &"DialogueBox"
 
 [node name="FixedHBox" type="HBoxContainer" parent="BottomVbox/Dialogue"]
 layout_mode = 2
+mouse_filter = 0
 
 [node name="Scrollable" parent="BottomVbox/Dialogue/FixedHBox" instance=ExtResource("2_415ce")]
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_5qyvn")
 
 [node name="Buffer" type="Control" parent="BottomVbox/Dialogue/FixedHBox"]
@@ -50,12 +55,13 @@ size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="Button" type="Control" parent="BottomVbox/Dialogue"]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 
 [node name="TouchButton" type="TouchScreenButton" parent="BottomVbox/Dialogue/Button"]
-position = Vector2(-31, -31)
+position = Vector2(32, 0)
 texture_normal = ExtResource("3_5rxxj")
 texture_pressed = ExtResource("4_fspi0")
 
@@ -66,10 +72,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -7.0
-offset_right = 20.0
-offset_bottom = 7.0
+offset_left = 12.0
+offset_top = -7.5
+offset_right = 52.0
+offset_bottom = 7.5
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_alignment = 1
@@ -79,6 +85,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="BufferUp" type="Control" parent="BottomVbox/ChoiceVbox"]
 layout_mode = 2
