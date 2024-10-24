@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="385" height="290" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="67">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="385" height="290" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="67">
  <properties>
   <property name="flagnodrop" type="bool" value="true"/>
   <property name="flagnospell" type="bool" value="true"/>
   <property name="flagonlyspirit" type="bool" value="true"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
+  <property name="music" value="Foreboding"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/overworld/grass.tsx"/>
  <tileset firstgid="257" source="../../graphics/tilesets/overworld/house.tsx"/>

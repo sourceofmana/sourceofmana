@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dxtcy73vp7n7g"
+path="res://.godot/imported/Bart Kelsey - In the forest of the birches.ogg-2f6dc24f9de373c594f49193d3112481.oggvorbisstr"
+
+[deps]
+
+source_file="res://data/musics/Bart Kelsey - In the forest of the birches.ogg"
+dest_files=["res://.godot/imported/Bart Kelsey - In the forest of the birches.ogg-2f6dc24f9de373c594f49193d3112481.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
