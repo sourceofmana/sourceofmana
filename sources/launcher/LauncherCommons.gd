@@ -7,7 +7,7 @@ const SocialLink : String				= "https://discord.com/channels/581622549566193664/
 
 # Map
 const DefaultStartMap : String			= "Splatyna Cave Entrance"
-const DefaultStartPos : Vector2			= Vector2(1456, 1504)
+const DefaultStartPos : Vector2			= Vector2(1753, 1487)
 
 # MapPool
 const EnableMapPool : bool				= false
