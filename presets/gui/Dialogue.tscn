@@ -97,6 +97,7 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 1
 theme_type_variation = &"DialogueBox"
 fadeInDelay = 0.5
 displayDelay = 0.0
