@@ -21,7 +21,7 @@
 		},
 		"Shaders":
 		{
-			"Chest": "presets/palettes/cloth-crimson.tres",
+			"Chest": "presets/palettes/cloth-natural.tres",
 		},
 	},
 	"1": {
@@ -334,7 +334,7 @@
 		"DisplayName": true,
 		"Shaders":
 		{
-			"Chest": "presets/palettes/cloth-olive.tres",
+			"Chest": "presets/palettes/cloth-crimson.tres",
 		},
 	},
 }
