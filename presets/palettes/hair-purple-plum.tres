@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c24jbmmixsluq"]
+
+[ext_resource type="Shader" path="res://sources/shaders/ColorPalette.gdshader" id="1_gdu4b"]
+
+[resource]
+shader = ExtResource("1_gdu4b")
+shader_parameter/palette_size = 7
+shader_parameter/palette_in = PackedColorArray(0.168627, 0.168627, 0.168627, 1, 0.247059, 0.247059, 0.247059, 1, 0.345098, 0.345098, 0.345098, 1, 0.521569, 0.521569, 0.521569, 1, 0.654902, 0.654902, 0.654902, 1, 0.839216, 0.839216, 0.839216, 1, 1, 1, 1, 1)
+shader_parameter/palette_out = PackedColorArray(0.215686, 0.129412, 0.215686, 1, 0.254902, 0.129412, 0.262745, 1, 0.309804, 0.133333, 0.321569, 1, 0.392157, 0.152941, 0.4, 1, 0.490196, 0.164706, 0.486275, 1, 0.658824, 0.372549, 0.52549, 1, 0.87451, 0.694118, 0.682353, 1)

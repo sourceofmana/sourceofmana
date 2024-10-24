@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ns8bipjan7j5"]
+
+[ext_resource type="Shader" path="res://sources/shaders/ColorPalette.gdshader" id="1_iv8tv"]
+
+[resource]
+shader = ExtResource("1_iv8tv")
+shader_parameter/palette_size = 7
+shader_parameter/palette_in = PackedColorArray(0.168627, 0.168627, 0.168627, 1, 0.247059, 0.247059, 0.247059, 1, 0.345098, 0.345098, 0.345098, 1, 0.521569, 0.521569, 0.521569, 1, 0.654902, 0.654902, 0.654902, 1, 0.839216, 0.839216, 0.839216, 1, 1, 1, 1, 1)
+shader_parameter/palette_out = PackedColorArray(0.152941, 0.227451, 0.180392, 1, 0.184314, 0.290196, 0.215686, 1, 0.172549, 0.321569, 0.207843, 1, 0.227451, 0.411765, 0.207843, 1, 0.294118, 0.501961, 0.172549, 1, 0.545098, 0.705882, 0.286275, 1, 0.823529, 0.894118, 0.537255, 1)

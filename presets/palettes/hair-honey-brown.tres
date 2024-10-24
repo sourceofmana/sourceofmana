@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cil2xfvhb6kko"]
+
+[ext_resource type="Shader" path="res://sources/shaders/ColorPalette.gdshader" id="1_b32ox"]
+
+[resource]
+shader = ExtResource("1_b32ox")
+shader_parameter/palette_size = 7
+shader_parameter/palette_in = PackedColorArray(0.168627, 0.168627, 0.168627, 1, 0.247059, 0.247059, 0.247059, 1, 0.345098, 0.345098, 0.345098, 1, 0.521569, 0.521569, 0.521569, 1, 0.654902, 0.654902, 0.654902, 1, 0.839216, 0.839216, 0.839216, 1, 1, 1, 1, 1)
+shader_parameter/palette_out = PackedColorArray(0.239216, 0.14902, 0.0745098, 1, 0.305882, 0.192157, 0.0901961, 1, 0.466667, 0.298039, 0.12549, 1, 0.560784, 0.364706, 0.133333, 1, 0.682353, 0.466667, 0.176471, 1, 0.858824, 0.682353, 0.360784, 1, 0.968627, 0.882353, 0.678431, 1)
