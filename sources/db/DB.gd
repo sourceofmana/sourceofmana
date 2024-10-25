@@ -4,7 +4,6 @@ class_name DB
 static var MapsDB : Dictionary				= {}
 static var MusicsDB : Dictionary			= {}
 static var EthnicitiesDB : Dictionary		= {}
-static var HairstylesDB : Dictionary		= {}
 static var EntitiesDB : Dictionary			= {}
 static var EmotesDB : Dictionary			= {}
 static var ItemsDB : Dictionary				= {}
@@ -45,18 +44,6 @@ static func ParseEthnicitiesDB():
 			ethnicity._path.append(result[key].Female)
 			ethnicity._path.append(result[key].Nonbinary)
 			EthnicitiesDB[key] = ethnicity
-
-static func ParseHairstylesDB():
-	var result = FileSystem.LoadDB("hairstyles.json")
-
-	if not result.is_empty():
-		for key in result:
-			var hairstyle : TraitData = TraitData.new()
-			hairstyle._name = key
-			hairstyle._path.append(result[key].Male)
-			hairstyle._path.append(result[key].Female)
-			hairstyle._path.append(result[key].Nonbinary)
-			HairstylesDB[key] = hairstyle
 
 static func ParseEntitiesDB():
 	var result = FileSystem.LoadDB("entities.json")
@@ -143,7 +130,6 @@ static func Init():
 	ParseMapsDB()
 	ParseMusicsDB()
 	ParseEthnicitiesDB()
-	ParseHairstylesDB()
 	ParseEmotesDB()
 	ParseItemsDB()
 	ParseSkillsDB()

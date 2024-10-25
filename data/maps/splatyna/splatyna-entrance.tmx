@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="60">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="60">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="lighting" type="float" value="0.8"/>
@@ -480,11 +480,11 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="14" name="Object">
-  <object id="48" name="Becees" type="Spawn" x="1352" y="1287" width="146" height="128">
+  <object id="48" name="Bicies" type="Spawn" x="1352" y="1287" width="146" height="128">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Becees"/>
-    <property name="player_script" value="splatyna/Becees.gd"/>
+    <property name="name" value="Bicies"/>
+    <property name="player_script" value="splatyna/Bicies.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

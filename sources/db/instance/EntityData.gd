@@ -4,7 +4,6 @@ class_name EntityData
 @export var _id : int							= -1
 @export var _name : String 						= ""
 @export var _ethnicity : String					= ""
-@export var _hairstyle : String					= ""
 @export var _collision : String					= ""
 @export var _radius : int						= 0
 @export var _customTextures : Array[String]		= []
@@ -28,8 +27,6 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 	entity._name = result.Name
 	if "Ethnicity" in result:
 		entity._ethnicity = result.Ethnicity
-	if "Hairstyle" in result:
-		entity._hairstyle = result.Hairstyle
 	if "Collision" in result:
 		entity._collision = result.Collision
 	if "Radius" in result:

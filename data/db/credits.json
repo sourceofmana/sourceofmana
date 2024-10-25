@@ -65,6 +65,9 @@
 							"mailserver": "tmw2.org"
 						},
 						{
+							"nick": "NetSysFire"
+						},
+						{
 							"nick": "Wushin",
 							"mailid": "pasekei",
 							"mailprovider": "gmail.com"
@@ -202,6 +205,9 @@
 							"nick": "Lien",
 							"mailid": "felixjely",
 							"mailprovider": "hotmail.fr"
+						},
+						{
+							"nick": "Kineticstorm"
 						},
 						{
 							"nick": "LokiF"
@@ -389,9 +395,6 @@
 						},
 						{
 							"nick": "Ezili"
-						},
-						{
-							"nick": "Kineticstorm"
 						},
 						{
 							"name": "Jack Menhorn",

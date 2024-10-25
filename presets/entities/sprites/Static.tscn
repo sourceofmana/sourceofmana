@@ -1,0 +1,168 @@
+[gd_scene load_steps=13 format=3 uid="uid://cnpafioewxbag"]
+
+[ext_resource type="Texture2D" uid="uid://bu8s0rpavynlw" path="res://data/graphics/default.png" id="1_8rucx"]
+[ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="2_6w5rt"]
+
+[sub_resource type="Animation" id="Animation_38rnv"]
+resource_name = "Attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_kbkln"]
+resource_name = "Death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_8svaw"]
+resource_name = "From Trigger"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_x1wls"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_tli2y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_5moda"]
+resource_name = "Sit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_2ge8q"]
+resource_name = "To Trigger"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_v53m3"]
+resource_name = "Trigger"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_yp2cr"]
+resource_name = "Walk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gf7hs"]
+_data = {
+"Attack": SubResource("Animation_38rnv"),
+"Death": SubResource("Animation_kbkln"),
+"From Trigger": SubResource("Animation_8svaw"),
+"Idle": SubResource("Animation_x1wls"),
+"RESET": SubResource("Animation_tli2y"),
+"Sit": SubResource("Animation_5moda"),
+"To Trigger": SubResource("Animation_2ge8q"),
+"Trigger": SubResource("Animation_v53m3"),
+"Walk": SubResource("Animation_yp2cr")
+}
+
+[node name="Chest" type="Node2D"]
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("1_8rucx")
+offset = Vector2(0, -16)
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Body")
+libraries = {
+"": SubResource("AnimationLibrary_gf7hs")
+}
+
+[node name="AnimationTree" parent="Animation" instance=ExtResource("2_6w5rt")]
+root_node = NodePath("../../Body")

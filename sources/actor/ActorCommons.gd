@@ -34,6 +34,7 @@ enum State
 enum Slot
 {
 	BODY = 0,
+	HAIR,
 	CHEST,
 	LEGS,
 	FEET,
@@ -108,6 +109,7 @@ static func IsTriggering(agent : Actor) -> bool:
 
 #
 const slotBody : String						= "Body"
+const slotHair : String						= "Hair"
 const slotChest : String					= "Chest"
 const slotLegs : String						= "Legs"
 const slotFeet : String						= "Feet"
@@ -120,6 +122,7 @@ const slotShield : String					= "Shield"
 static func GetSlotName(slot : Slot) -> String:
 	match slot:
 		Slot.BODY:				return slotBody
+		Slot.HAIR:				return slotHair
 		Slot.CHEST:				return slotChest
 		Slot.LEGS:				return slotLegs
 		Slot.FEET:				return slotFeet
@@ -133,6 +136,7 @@ static func GetSlotName(slot : Slot) -> String:
 static func GetSlotID(slot : String) -> Slot:
 	match slot:
 		slotBody:					return Slot.BODY
+		slotHair:					return Slot.HAIR
 		slotChest:					return Slot.CHEST
 		slotLegs:					return Slot.LEGS
 		slotFeet:					return Slot.FEET

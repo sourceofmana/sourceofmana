@@ -3,13 +3,12 @@
 		"Name": "Default Entity",
 		"Ethnicity": "Player",
 		"Gender": "Male",
-		"Hairstyle": "Bald",
 		"Behaviour": ["None"],
 		"Collision": "Medium",
 		"Radius": "10",
 		"DisplayName": true,
 		"Stat": {
-			"walkSpeed": 150,
+			"walkSpeed": 160,
 			"Spirit": "Piou",
 		},
 		"SkillSet": {
@@ -19,8 +18,13 @@
 			"Lum": 1.0,
 			"Inma": 1.0,
 		},
+		"Textures":
+		{
+			"Hair": "sprites/hairstyles/emo.png",
+		},
 		"Shaders":
 		{
+			"Hair": "presets/palettes/hair-pure-platinum.tres",
 			"Chest": "presets/palettes/cloth-natural.tres",
 		},
 	},
@@ -270,14 +274,18 @@
 
 
 	"2000": {
-		"Name": "Becees",
+		"Name": "Bicies",
 		"Ethnicity": "Player",
+		"Textures":
+		{
+			"Hair": "sprites/hairstyles/center-parting.png",
+		},
 		"Shaders":
 		{
 			"Body": "presets/palettes/human-skin-dark.tres",
+			"Hair": "presets/palettes/hair-dark-brown.tres",
 			"Chest": "presets/palettes/cloth-olive.tres",
 		},
-		"Hairstyle": "Bald",
 		"Behaviour": ["Pacifist"],
 		"Collision": "Small",
 		"Radius": "16",
@@ -300,15 +308,16 @@
 		"Textures":
 		{
 			"Body": "sprites/players/human-female.png",
+			"Hair": "sprites/hairstyles/bun.png",
 			"Chest": "sprites/equipments/chests/vneckjumper-female.png",
 			"Legs": "sprites/equipments/legs/trousers-female.png",
 		},
 		"Shaders":
 		{
 			"Body": "presets/palettes/human-skin-tanned.tres",
-			"Chest": "presets/palettes/cloth-olive.tres",
+			"Hair": "presets/palettes/hair-forest-green.tres",
+			"Chest": "presets/palettes/cloth-crimson.tres",
 		},
-		"Hairstyle": "Bald",
 		"Behaviour": ["Pacifist"],
 		"Collision": "Small",
 		"Radius": "16",
@@ -327,14 +336,14 @@
 	},
 	"2004": {
 		"Name": "Gabz",
-		"Ethnicity": "Player",
+		"Ethnicity": "Static",
 		"Behaviour": ["Immobile", "Pacifist"],
 		"Collision": "Small",
 		"Radius": "16",
 		"DisplayName": true,
-		"Shaders":
+		"Textures":
 		{
-			"Chest": "presets/palettes/cloth-crimson.tres",
+			"Body": "sprites/npcs/gabz.png",
 		},
 	},
 }
