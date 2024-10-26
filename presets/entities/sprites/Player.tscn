@@ -1283,3 +1283,4 @@ libraries = {
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_mvwfv")]
+root_node = NodePath("../../Body")
