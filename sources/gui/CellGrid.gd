@@ -24,4 +24,4 @@ func _ready():
 		var tile : CellTile = UICommons.CellTilePreset.instantiate()
 		tile.AssignData(null, 0)
 		tiles[tileIdx] = tile
-		add_child.call_deferred(tile)
+		add_child(tile)

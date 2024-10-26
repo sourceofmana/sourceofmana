@@ -307,7 +307,6 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="Boxes" parent="Overlay/VSections" instance=ExtResource("4")]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -318,15 +317,20 @@ mouse_filter = 2
 
 [node name="Shortcuts" type="MarginContainer" parent="Overlay/Sections"]
 custom_minimum_size = Vector2(0, 155)
-layout_mode = 2
-offset_top = 527.0
-offset_right = 1242.0
-offset_bottom = 682.0
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 size_flags_vertical = 8
+mouse_filter = 2
 
 [node name="Sticks" type="HBoxContainer" parent="Overlay/Sections/Shortcuts"]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 script = ExtResource("18_6nrx4")
 
 [node name="Direction" type="Control" parent="Overlay/Sections/Shortcuts/Sticks"]
@@ -504,8 +508,8 @@ visible = false
 layout_mode = 2
 offset_left = 23.0
 offset_top = 85.0
-offset_right = 451.0
-offset_bottom = 583.0
+offset_right = 483.0
+offset_bottom = 545.0
 jsonFile = ExtResource("16_pfh0e")
 
 [node name="Settings" parent="Windows/Floating" instance=ExtResource("16_gapih")]

@@ -55,7 +55,7 @@ func GetCurrentWindow() -> Control:
 
 func CloseCurrentWindow():
 	var control : WindowPanel = GetCurrentWindow()
-	if control:
+	if control and control.is_visible():
 		ToggleControl(control)
 
 func ToggleControl(control : WindowPanel):
@@ -91,6 +91,7 @@ func EnterLoginMenu():
 	boxes.set_visible(false)
 	quitWindow.set_visible(false)
 	respawnWindow.EnableControl(false)
+	shortcuts.set_visible(false)
 
 	background.set_visible(true)
 	newsWindow.EnableControl(true)
@@ -128,6 +129,7 @@ func EnterGame():
 	menu.set_visible(true)
 	boxes.set_visible(true)
 	notificationLabel.set_visible(true)
+	shortcuts.set_visible(true)
 
 	menu.SetItemsVisible(true)
 	stats.Init()
