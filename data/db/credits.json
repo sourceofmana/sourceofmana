@@ -235,7 +235,10 @@
 							"nick": "Pajarico"
 						},
 						{
-							"nick": "Saphy"
+							"name": "Wai Ling",
+							"nick": "Saphy",
+							"mailid": "simotsa",
+							"mailprovider": "gmail.com"
 						},
 						{
 							"nick": "Sir_lance"
@@ -738,8 +741,10 @@
 							"nick": "Skipy"
 						},
 						{
+							"name": "Ryan Voss",
 							"nick": "Talaroc",
-							"name": "Jason Ross"
+							"mailid": "arashi86",
+							"mailprovider": "gmail.com"
 						},
 						{
 							"nick": "Tametomo",
