@@ -1602,6 +1602,23 @@
 					]
 				}
 			]
+		},
+		{
+			"category": "Licensing",
+			"entries": [
+				{
+					"title": "Manasource",
+					"content": "Copyright (c) 2022-present Source of Mana contributors.\nCopyright (c) 2010-2016 Evol Online contributors.\nCopyright (c) 2004-2022 The Mana World contributors.\n\n-- Manasource <https://manasource.org>\n"
+				},
+				{
+					"title": "Software in the Public Interest",
+					"content": "-- SPI In.c <https://spi-inc.org>\n"
+				},
+				{
+					"title": "Godot",
+					"content": "Copyright (c) 2014-present Godot Engine contributors.\nCopyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n-- Godot Engine <https://godotengine.org>\n"
+				}
+			]
 		}
 	]
 }
