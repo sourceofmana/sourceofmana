@@ -2,6 +2,7 @@ extends BaseAgent
 class_name PlayerAgent
 
 #
+var charID : int						= 0
 var lastStat : ActorStats				= ActorStats.new()
 var respawnDestination : Destination	= Destination.new()
 var exploreOrigin : Destination			= Destination.new()

@@ -16,6 +16,7 @@ var FSM : ServiceBase				= null
 var Map : ServiceBase				= null
 var Save : ServiceBase				= null
 var World : ServiceBase				= null
+var SQL : ServiceBase				= null
 var Network : ServiceBase			= null
 
 # Accessors
@@ -67,7 +68,9 @@ func LaunchClient():
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
+	SQL				= FileSystem.LoadSource("sql/SQL.gd")
 	add_child.call_deferred(World)
+	add_child.call_deferred(SQL)
 
 func LauncherReset():
 	if Debug:
@@ -87,6 +90,10 @@ func LauncherReset():
 		World.DestroyAreas()
 		World.queue_free()
 		World = null
+	if SQL:
+		SQL.Destroy()
+		SQL.queue_free()
+		SQL = null
 
 #
 func _enter_tree():
@@ -120,6 +127,7 @@ func _post_launch():
 	if GUI and not GUI.isInitialized:			GUI._post_launch()
 	if Debug and not Debug.isInitialized:		Debug._post_launch()
 	if World and not World.isInitialized:		World._post_launch()
+	if SQL and not SQL.isInitialized:			SQL._post_launch()
 	if FSM and not FSM.isInitialized:			FSM._post_launch()
 	if Network and not Network.isInitialized:	Network._post_launch()
 	if Audio:									Audio._post_launch()
