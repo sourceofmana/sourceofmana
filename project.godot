@@ -47,13 +47,12 @@ window/size/height=720
 
 [editor]
 
-import/use_multiple_threads=false
 search_in_file_extensions=PackedStringArray("gd", "gdshader", "shader", "conf", "db")
 convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/tiled_importer/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg", "res://addons/tiled_importer/plugin.cfg")
 
 [filesystem]
 
@@ -447,12 +446,12 @@ textures/light_projectors/filter=0
 global_illumination/sdfgi/frames_to_converge=0
 global_illumination/sdfgi/frames_to_update_lights=4
 2d/snap/snap_2d_transforms_to_pixel=true
-vram_compression/import_etc=true
-vram_compression/import_pvrtc=true
 environment/default_environment="res://default_env.tres"
 threads/thread_safe_bvh=true
 2d/snapping/use_gpu_pixel_snap=false
 quality/driver/fallback_to_gles2=true
+vram_compression/import_etc=true
+vram_compression/import_pvrtc=true
 
 [tiled_importer]
 
