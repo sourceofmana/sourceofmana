@@ -1,7 +1,0 @@
-[gd_resource type="NavigationPolygon" format=3 uid="uid://c0qe86om12384"]
-
-[resource]
-vertices = PackedVector2Array(2294, 1878, 2198, 1878, 1770, 1866, 1910, 1866, 2282, 1802, 2282, 1750, 2294, 1782, 2230, 1802, 2186, 1866, 2186, 1814, 2294, 1770, 2326, 1770, 2326, 1782, 2294, 1706, 2250, 1706, 2250, 1738, 2230, 1750, 2218, 1738, 2218, 1770, 1610, 1770, 2102, 1814, 1610, 1802, 2102, 1866, 1994, 1866, 1994, 1814, 1910, 1814, 1686, 1866, 2198, 1910, 1674, 1910, 1674, 1878, 1610, 1878, 1610, 1846, 1686, 1814, 1546, 1846, 1546, 1802, 1770, 1814)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 0), PackedInt32Array(7, 4, 0, 8, 9), PackedInt32Array(10, 11, 12, 6), PackedInt32Array(10, 6, 5), PackedInt32Array(13, 10, 5), PackedInt32Array(14, 13, 5, 15), PackedInt32Array(15, 5, 16, 17), PackedInt32Array(18, 17, 16, 7), PackedInt32Array(19, 18, 7, 9, 20, 21), PackedInt32Array(20, 22, 23, 24), PackedInt32Array(21, 20, 24), PackedInt32Array(21, 24, 25), PackedInt32Array(26, 2, 1, 27, 28, 29), PackedInt32Array(26, 29, 30, 31, 32), PackedInt32Array(31, 33, 34, 21, 32), PackedInt32Array(35, 32, 21), PackedInt32Array(35, 21, 25), PackedInt32Array(35, 25, 3, 2), PackedInt32Array(0, 3, 23), PackedInt32Array(0, 23, 22), PackedInt32Array(0, 22, 8)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 0, 3360, 3840, 3360, 3840, 0)])
-source_geometry_mode = 1
