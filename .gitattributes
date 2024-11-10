@@ -1,0 +1,5 @@
+*.gd    text eol=lf
+*.tres  text eol=lf
+*.tscn  text eol=lf
+*.cfg   text eol=lf
+*.sh    text eol=lf
