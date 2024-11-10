@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2q5vtkxo04dp"]
+[gd_scene load_steps=6 format=3 uid="uid://c2q5vtkxo04dp"]
 
 [ext_resource type="Script" path="res://sources/gui/ActionBox.gd" id="1_ao5ox"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_btsj0"]
-[ext_resource type="Texture2D" uid="uid://desxm6lbhpunn" path="res://data/graphics/gui/menu/menubar_button.png" id="1_pcpv2"]
-[ext_resource type="Texture2D" uid="uid://qfpxygkhxldq" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="2_7lddn"]
+[ext_resource type="Texture2D" uid="uid://bxbrk4eng2uhi" path="res://data/graphics/gui/menu/menubar_button.png" id="1_pcpv2"]
+[ext_resource type="Texture2D" uid="uid://b2t8xg8go0vsr" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="2_7lddn"]
 [ext_resource type="PackedScene" uid="uid://cq76gfx44nn6q" path="res://presets/gui/CellTile.tscn" id="3_gpxeb"]
-[ext_resource type="BitMap" uid="uid://cl65b4aves6sl" path="res://data/graphics/gui/mobile/button_mask.png" id="5_ibhap"]
 
 [node name="ActionBox" type="Control"]
 custom_minimum_size = Vector2(422, 96)
@@ -25,7 +24,6 @@ script = ExtResource("1_ao5ox")
 position = Vector2(0, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot" parent="TouchScreenButton" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
@@ -59,7 +57,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(36, 0)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot2" parent="TouchScreenButton2" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
@@ -93,7 +90,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(72, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot3" parent="TouchScreenButton3" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
@@ -127,7 +123,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(108, 0)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot4" parent="TouchScreenButton4" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
@@ -161,7 +156,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(144, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot5" parent="TouchScreenButton5" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
@@ -197,7 +191,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(216, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot6" parent="TouchScreenButton6" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
@@ -233,7 +226,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(252, 0)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot7" parent="TouchScreenButton7" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
@@ -269,7 +261,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(288, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot8" parent="TouchScreenButton8" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
@@ -305,7 +296,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(324, 0)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot9" parent="TouchScreenButton9" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
@@ -341,7 +331,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(360, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
-bitmask = ExtResource("5_ibhap")
 
 [node name="CellSlot10" parent="TouchScreenButton10" instance=ExtResource("3_gpxeb")]
 anchors_preset = 8

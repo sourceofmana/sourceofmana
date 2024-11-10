@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://bukwvqd4r1qaj"
+path="res://.godot/imported/Ship Water Transition.tsx-3a1e0e22f2e79fa51db22f2ac5af2ee5.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/generic/ship/Ship Water Transition.tsx"
+dest_files=["res://.godot/imported/Ship Water Transition.tsx-3a1e0e22f2e79fa51db22f2ac5af2ee5.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

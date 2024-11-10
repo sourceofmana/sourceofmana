@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://coppbcrkvraoh"]
 
 [ext_resource type="Script" path="res://sources/gui/ProgressBar.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://dg7bdxr15avbp" path="res://data/graphics/gui/barprogressdefault.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bgk8cu6tthri4" path="res://data/graphics/gui/barprogressdefault.png" id="2"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="3"]
 
 [node name="ProgressBar" type="Control"]

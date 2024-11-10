@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bagfvnt2bhttv"]
 
 [ext_resource type="Shader" path="res://sources/shaders/CRT.gdshader" id="1_kwf7s"]
-[ext_resource type="Texture2D" uid="uid://da0magqi2o4ro" path="res://data/graphics/gui/item.png" id="2_ujy33"]
+[ext_resource type="Texture2D" uid="uid://c32m2ojog2a7v" path="res://data/graphics/gui/item.png" id="2_ujy33"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vehbk"]
 shader = ExtResource("1_kwf7s")

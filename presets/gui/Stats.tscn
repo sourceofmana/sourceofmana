@@ -2,14 +2,14 @@
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_dhni5"]
 [ext_resource type="Script" path="res://sources/gui/StatPanel.gd" id="2_v116i"]
-[ext_resource type="Texture2D" uid="uid://bqj80f2mc4hg1" path="res://data/graphics/gui/stat/gender-female.png" id="3_4bqlt"]
+[ext_resource type="Texture2D" uid="uid://lbbhr5w3jhrf" path="res://data/graphics/gui/stat/gender-female.png" id="3_4bqlt"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="3_kjg3f"]
-[ext_resource type="Texture2D" uid="uid://wcw0ycx4hntu" path="res://data/graphics/gui/stat/spirit-hook.png" id="4_de8qp"]
-[ext_resource type="Texture2D" uid="uid://6a6qcdorvi4r" path="res://data/graphics/gui/pixeldark.png" id="4_fxktc"]
-[ext_resource type="Texture2D" uid="uid://dal37y5vr31pu" path="res://data/graphics/gui/pixelbrown.png" id="6_2hq2a"]
-[ext_resource type="Texture2D" uid="uid://c2tpw7e1yvm6g" path="res://data/graphics/gui/pixelred.png" id="8_egmig"]
-[ext_resource type="Texture2D" uid="uid://cf1r33imp2x15" path="res://data/graphics/gui/pixelblue.png" id="9_q6igb"]
-[ext_resource type="Texture2D" uid="uid://c5tm0t6gbrc32" path="res://data/graphics/gui/pixelgreen.png" id="10_h4ygu"]
+[ext_resource type="Texture2D" uid="uid://3jqhykq3lnpt" path="res://data/graphics/gui/stat/spirit-hook.png" id="4_de8qp"]
+[ext_resource type="Texture2D" uid="uid://dc0oen67nnoqp" path="res://data/graphics/gui/pixeldark.png" id="4_fxktc"]
+[ext_resource type="Texture2D" uid="uid://bgmnxng3agmdr" path="res://data/graphics/gui/pixelbrown.png" id="6_2hq2a"]
+[ext_resource type="Texture2D" uid="uid://nbo82cnov3wx" path="res://data/graphics/gui/pixelred.png" id="8_egmig"]
+[ext_resource type="Texture2D" uid="uid://b1bm6d86bv1eq" path="res://data/graphics/gui/pixelblue.png" id="9_q6igb"]
+[ext_resource type="Texture2D" uid="uid://b7vc8pr8rl30g" path="res://data/graphics/gui/pixelgreen.png" id="10_h4ygu"]
 
 [node name="Stat" type="PanelContainer"]
 show_behind_parent = true

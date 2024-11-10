@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dwgxr70dkhrro"]
 
-[ext_resource type="Texture2D" uid="uid://cp18pe8ihj8mt" path="res://data/graphics/effects/particles/fog.png" id="1_3o0mc"]
+[ext_resource type="Texture2D" uid="uid://beom6m0ab5pfv" path="res://data/graphics/effects/particles/fog.png" id="1_3o0mc"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1pdty"]
 

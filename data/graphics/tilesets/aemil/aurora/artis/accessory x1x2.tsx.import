@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://de33gbl2i2idg"
+path="res://.godot/imported/accessory x1x2.tsx-cbe89ab3237d502f56e7edb90d4bdabd.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/aemil/aurora/artis/accessory x1x2.tsx"
+dest_files=["res://.godot/imported/accessory x1x2.tsx-cbe89ab3237d502f56e7edb90d4bdabd.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

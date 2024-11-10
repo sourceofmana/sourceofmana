@@ -3,8 +3,8 @@
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_w0q73"]
 [ext_resource type="Script" path="res://sources/gui/Dialogue.gd" id="1_xbnx6"]
 [ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="2_415ce"]
-[ext_resource type="Texture2D" uid="uid://desxm6lbhpunn" path="res://data/graphics/gui/menu/menubar_button.png" id="3_5rxxj"]
-[ext_resource type="Texture2D" uid="uid://qfpxygkhxldq" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="4_fspi0"]
+[ext_resource type="Texture2D" uid="uid://bxbrk4eng2uhi" path="res://data/graphics/gui/menu/menubar_button.png" id="3_5rxxj"]
+[ext_resource type="Texture2D" uid="uid://b2t8xg8go0vsr" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="4_fspi0"]
 [ext_resource type="PackedScene" uid="uid://tqcjqyaicaol" path="res://presets/gui/contexts/ContextMenuV.tscn" id="5_6rp1f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qyvn"]

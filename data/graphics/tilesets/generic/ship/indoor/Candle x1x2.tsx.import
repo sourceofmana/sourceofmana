@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://c8l1vb63ffpcw"
+path="res://.godot/imported/Candle x1x2.tsx-31838888ac7289044fcfb79d25b97bac.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/generic/ship/indoor/Candle x1x2.tsx"
+dest_files=["res://.godot/imported/Candle x1x2.tsx-31838888ac7289044fcfb79d25b97bac.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

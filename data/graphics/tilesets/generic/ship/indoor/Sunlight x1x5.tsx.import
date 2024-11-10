@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://cjt133g0yjkys"
+path="res://.godot/imported/Sunlight x1x5.tsx-8d585656ee1005a7e7c6bea629683ecb.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/generic/ship/indoor/Sunlight x1x5.tsx"
+dest_files=["res://.godot/imported/Sunlight x1x5.tsx-8d585656ee1005a7e7c6bea629683ecb.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

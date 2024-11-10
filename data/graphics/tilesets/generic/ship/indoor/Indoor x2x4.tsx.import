@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://burqnggm5obvd"
+path="res://.godot/imported/Indoor x2x4.tsx-e1c2be3d4b4ec34f0c9dfd0a79fa03c3.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/generic/ship/indoor/Indoor x2x4.tsx"
+dest_files=["res://.godot/imported/Indoor x2x4.tsx-e1c2be3d4b4ec34f0c9dfd0a79fa03c3.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

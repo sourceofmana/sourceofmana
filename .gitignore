@@ -6,10 +6,9 @@ publishing/*
 
 # imported files
 .godot/*
-*.import
-*.tmx.client.scn
-*.tmx.navigation.tres
-*.tmx.server.scn
+*.tmx.client.scn*
+*.tmx.navigation.tres*
+*.tmx.server.scn*
 
 # linux env
 .mono

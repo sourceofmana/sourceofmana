@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://dtoeo3xx4wyyp"]
 
-[ext_resource type="Texture2D" uid="uid://cvps8apmh5ldl" path="res://data/graphics/gui/stat/statindicator.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://x8ftk53rmqmm" path="res://data/graphics/gui/stat/statindicator.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="2"]
-[ext_resource type="Texture2D" uid="uid://sxsrg2ksliy4" path="res://data/graphics/gui/stat/manabar.png" id="3"]
-[ext_resource type="Texture2D" uid="uid://djt2bg4a6r3wj" path="res://data/graphics/gui/stat/staminabar.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://bvw4xx1l0oy7k" path="res://data/graphics/gui/stat/manabar.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://ck18xgdaj8gn8" path="res://data/graphics/gui/stat/staminabar.png" id="4"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="5"]
-[ext_resource type="Texture2D" uid="uid://rxnq0fxuvc88" path="res://data/graphics/gui/stat/healthbar.png" id="6"]
-[ext_resource type="Texture2D" uid="uid://ddqw46t4kryhb" path="res://data/graphics/gui/stat/expbar.png" id="6_6rl1b"]
+[ext_resource type="Texture2D" uid="uid://c56xsbwllfd64" path="res://data/graphics/gui/stat/healthbar.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://gscvi316alnm" path="res://data/graphics/gui/stat/expbar.png" id="6_6rl1b"]
 [ext_resource type="Script" path="res://sources/gui/StatIndicator.gd" id="7"]
 
 [node name="StatIndicator" type="TextureRect"]

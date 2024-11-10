@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ds4k8qrgo3ko3"]
 
 [ext_resource type="Script" path="res://sources/gui/Loading.gd" id="1_b1dqa"]
-[ext_resource type="Texture2D" uid="uid://cacpsmvvd4rtx" path="res://data/graphics/gui/misc/loading.png" id="2_t0ltk"]
+[ext_resource type="Texture2D" uid="uid://crvywfmr7gc3e" path="res://data/graphics/gui/misc/loading.png" id="2_t0ltk"]
 
 [node name="Loading" type="Control"]
 layout_mode = 3

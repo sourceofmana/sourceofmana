@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bwcss86fsbspu"]
 
-[ext_resource type="Texture2D" uid="uid://clt3g13cp3ag8" path="res://data/graphics/effects/particles/sparkle.png" id="1_8gcyb"]
+[ext_resource type="Texture2D" uid="uid://o0usxnftyn4p" path="res://data/graphics/effects/particles/sparkle.png" id="1_8gcyb"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1pdty"]
 blend_mode = 1

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://6pundiwfj5s1"]
 
 [ext_resource type="Shader" path="res://sources/shaders/HQ4x.gdshader" id="1_ojh3w"]
-[ext_resource type="Texture2D" uid="uid://b8iqfegulwe6t" path="res://data/graphics/gui/button.png" id="2_h2r72"]
+[ext_resource type="Texture2D" uid="uid://fycxxcgj72w4" path="res://data/graphics/gui/button.png" id="2_h2r72"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pp1k4"]
 shader = ExtResource("1_ojh3w")

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cwwa2ifp8dig4"
+path="res://.godot/imported/Bart Kelsey - The Adventure Begins.ogg-c64bf34f783db04756a8ebd368936908.oggvorbisstr"
+
+[deps]
+
+source_file="res://data/musics/Bart Kelsey - The Adventure Begins.ogg"
+dest_files=["res://.godot/imported/Bart Kelsey - The Adventure Begins.ogg-c64bf34f783db04756a8ebd368936908.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
