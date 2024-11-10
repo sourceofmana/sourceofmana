@@ -47,6 +47,7 @@ window/size/height=720
 
 [editor]
 
+import/use_multiple_threads=false
 search_in_file_extensions=PackedStringArray("gd", "gdshader", "shader", "conf", "db")
 convert_text_resources_to_binary_on_export=true
 
