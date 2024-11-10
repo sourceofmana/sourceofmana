@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://q0vjlx00rv0n"]
 
-[ext_resource type="Texture2D" uid="uid://weumrlks8kb1" path="res://data/graphics/sprites/monsters/bat.png" id="1_fdkha"]
+[ext_resource type="Texture2D" uid="uid://cpabodldr1ssx" path="res://data/graphics/sprites/monsters/bat.png" id="1_fdkha"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_gsp5q"]
 
 [sub_resource type="Animation" id="Animation_qks5j"]

@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="BaseCell" load_steps=3 format=3 uid="uid://dkqjldxwvwjm8"]
 
-[ext_resource type="Texture2D" uid="uid://djbyhc4xstaop" path="res://data/graphics/items/common/splatina-key2.png" id="1_feanv"]
+[ext_resource type="Texture2D" uid="uid://demorpiugdi6s" path="res://data/graphics/items/common/splatina-key2.png" id="1_feanv"]
 [ext_resource type="Script" path="res://sources/cell/BaseCell.gd" id="2_6rvov"]
 
 [resource]
 script = ExtResource("2_6rvov")
+id = -1
 name = "Dorian's Key"
 description = "A key that has been hidden a long time ago, seems to open a fancy door."
 icon = ExtResource("1_feanv")

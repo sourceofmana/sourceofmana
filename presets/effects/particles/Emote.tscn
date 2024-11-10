@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://08v0t5i6hvef"]
 
-[ext_resource type="Texture2D" uid="uid://wid4pebjio5y" path="res://data/graphics/emotes/smile.png" id="1_hqcqi"]
+[ext_resource type="Texture2D" uid="uid://dqet6tg4kd201" path="res://data/graphics/emotes/smile.png" id="1_hqcqi"]
 
 [sub_resource type="Curve" id="Curve_e4xou"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0508475, 1), 0.0, 0.0, 0, 0, Vector2(0.949153, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

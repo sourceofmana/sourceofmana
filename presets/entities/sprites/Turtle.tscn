@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://byvgi6883q6ux"]
 
-[ext_resource type="Texture2D" uid="uid://tftp77wpqc3o" path="res://data/graphics/sprites/monsters/turtle.png" id="1_erabt"]
+[ext_resource type="Texture2D" uid="uid://dystl3r4mnu6a" path="res://data/graphics/sprites/monsters/turtle.png" id="1_erabt"]
 [ext_resource type="PackedScene" uid="uid://oxrams6nup8i" path="res://presets/entities/sprites/animations/8Directions.tscn" id="3_vif8h"]
 
 [sub_resource type="Animation" id="Animation_qks5j"]

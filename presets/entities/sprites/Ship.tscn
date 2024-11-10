@@ -1,9 +1,9 @@
 [gd_scene load_steps=47 format=3 uid="uid://bd7dn71v6molq"]
 
-[ext_resource type="Texture2D" uid="uid://rb8r7bxvvx5l" path="res://data/graphics/sprites/players/ship.png" id="1_7q1qd"]
-[ext_resource type="Texture2D" uid="uid://bvnqp8ehtmfxu" path="res://data/graphics/effects/particles/ship-circles.png" id="1_uuuri"]
+[ext_resource type="Texture2D" uid="uid://183h7gytrkx6" path="res://data/graphics/sprites/players/ship.png" id="1_7q1qd"]
+[ext_resource type="Texture2D" uid="uid://dyn6efv22dhja" path="res://data/graphics/effects/particles/ship-circles.png" id="1_uuuri"]
 [ext_resource type="PackedScene" uid="uid://oxrams6nup8i" path="res://presets/entities/sprites/animations/8Directions.tscn" id="2_m3lbd"]
-[ext_resource type="Texture2D" uid="uid://cygwdq3r24vbn" path="res://data/graphics/effects/particles/ship-trails.png" id="4_a6i1u"]
+[ext_resource type="Texture2D" uid="uid://bmii6orfaxvcr" path="res://data/graphics/effects/particles/ship-trails.png" id="4_a6i1u"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pa6s6"]
 particles_animation = true

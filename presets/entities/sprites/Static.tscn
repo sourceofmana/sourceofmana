@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://cnpafioewxbag"]
 
-[ext_resource type="Texture2D" uid="uid://bu8s0rpavynlw" path="res://data/graphics/default.png" id="1_8rucx"]
+[ext_resource type="Texture2D" uid="uid://dw5ppjee83tck" path="res://data/graphics/default.png" id="1_8rucx"]
 [ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="2_6w5rt"]
 
 [sub_resource type="Animation" id="Animation_38rnv"]

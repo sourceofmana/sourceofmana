@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dko0qppid07hg"]
 
-[ext_resource type="Texture2D" uid="uid://h6h0vrtwrnfl" path="res://data/graphics/effects/particles/smoke.png" id="1_0cgnc"]
+[ext_resource type="Texture2D" uid="uid://b0qa2td7svga7" path="res://data/graphics/effects/particles/smoke.png" id="1_0cgnc"]
 [ext_resource type="PackedScene" uid="uid://bpqxr3214t821" path="res://presets/effects/LightSource.tscn" id="2_dg8t3"]
 [ext_resource type="Script" path="res://sources/effects/Projectile.gd" id="2_ggro7"]
 

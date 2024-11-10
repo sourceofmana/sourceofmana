@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://cwpq2bf8h07xi"]
 
-[ext_resource type="Texture2D" uid="uid://cpsernelus5lm" path="res://data/graphics/sprites/monsters/skull-fire.png" id="1_55yx2"]
+[ext_resource type="Texture2D" uid="uid://dwh7x3gvrmogx" path="res://data/graphics/sprites/monsters/skull-fire.png" id="1_55yx2"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_323v4"]
 
 [sub_resource type="Animation" id="Animation_qks5j"]

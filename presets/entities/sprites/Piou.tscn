@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://dxixywo1th1gv"]
 
-[ext_resource type="Texture2D" uid="uid://bja0dvxyqvcu1" path="res://data/graphics/sprites/monsters/piou.png" id="1_wtqld"]
+[ext_resource type="Texture2D" uid="uid://crporj2g72m8b" path="res://data/graphics/sprites/monsters/piou.png" id="1_wtqld"]
 [ext_resource type="PackedScene" uid="uid://oxrams6nup8i" path="res://presets/entities/sprites/animations/8Directions.tscn" id="2_4wmrr"]
 
 [sub_resource type="Animation" id="Animation_qks5j"]

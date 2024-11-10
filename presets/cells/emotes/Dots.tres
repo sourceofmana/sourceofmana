@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BaseCell" load_steps=3 format=3 uid="uid://cskxvabgy34g2"]
 
-[ext_resource type="Texture2D" uid="uid://vq84xk8uh0b0" path="res://data/graphics/emotes/dots.png" id="1_vupho"]
+[ext_resource type="Texture2D" uid="uid://chxs5bve6yb2u" path="res://data/graphics/emotes/dots.png" id="1_vupho"]
 [ext_resource type="Script" path="res://sources/cell/BaseCell.gd" id="2_ppih2"]
 
 [resource]

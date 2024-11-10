@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bbvkrrlmw4ujh"]
 
-[ext_resource type="Texture2D" uid="uid://dv58pcqh47bbl" path="res://data/graphics/effects/particles/orb-oval.png" id="1_43m3b"]
+[ext_resource type="Texture2D" uid="uid://cee0t70xr512" path="res://data/graphics/effects/particles/orb-oval.png" id="1_43m3b"]
 
 [sub_resource type="Gradient" id="Gradient_xd07l"]
 offsets = PackedFloat32Array(0, 0.372483, 0.843558, 1)

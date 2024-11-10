@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="SkillCell" load_steps=6 format=3 uid="uid://cot2eu3ix5rdm"]
 
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_3owvb"]
-[ext_resource type="Texture2D" uid="uid://d0j1d8g3yt5tb" path="res://data/graphics/effects/particles/cast2.png" id="2_fcp7g"]
-[ext_resource type="Texture2D" uid="uid://778ukqslteuy" path="res://data/graphics/items/skill/flar.png" id="3_gnmn3"]
+[ext_resource type="Texture2D" uid="uid://bfrhdyon5owms" path="res://data/graphics/effects/particles/cast2.png" id="2_fcp7g"]
+[ext_resource type="Texture2D" uid="uid://bgjb1apobmlge" path="res://data/graphics/items/skill/flar.png" id="3_gnmn3"]
 [ext_resource type="Script" path="res://sources/cell/SkillCell.gd" id="4_3derk"]
 [ext_resource type="PackedScene" uid="uid://dko0qppid07hg" path="res://presets/effects/particles/Flar.tscn" id="4_s21rb"]
 

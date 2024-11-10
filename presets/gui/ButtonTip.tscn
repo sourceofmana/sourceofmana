@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bma76sut56bfu"]
 
-[ext_resource type="Texture2D" uid="uid://dedvehg8nrl3m" path="res://data/graphics/gui/button/button_hover.png" id="1_laqiq"]
+[ext_resource type="Texture2D" uid="uid://bg204tdu2oe5x" path="res://data/graphics/gui/button/button_hover.png" id="1_laqiq"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_baw6c"]
 texture = ExtResource("1_laqiq")

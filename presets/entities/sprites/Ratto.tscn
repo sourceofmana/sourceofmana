@@ -1,7 +1,7 @@
 [gd_scene load_steps=35 format=3 uid="uid://broh5bavnch5v"]
 
-[ext_resource type="Texture2D" uid="uid://c2xjex2mwvioo" path="res://data/graphics/sprites/monsters/ratto.png" id="1_aito5"]
-[ext_resource type="Texture2D" uid="uid://cpigpqhr14qn2" path="res://data/graphics/sprites/accessories/ratto-tail.png" id="2_53tbt"]
+[ext_resource type="Texture2D" uid="uid://cnl7j0w3al54l" path="res://data/graphics/sprites/monsters/ratto.png" id="1_aito5"]
+[ext_resource type="Texture2D" uid="uid://66cm6ppa5dhi" path="res://data/graphics/sprites/accessories/ratto-tail.png" id="2_53tbt"]
 [ext_resource type="PackedScene" uid="uid://oxrams6nup8i" path="res://presets/entities/sprites/animations/8Directions.tscn" id="2_xws22"]
 
 [sub_resource type="Animation" id="Animation_qks5j"]

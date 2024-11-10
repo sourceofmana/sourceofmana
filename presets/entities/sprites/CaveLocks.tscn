@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bkrd2qnl2atsn"]
 
-[ext_resource type="Texture2D" uid="uid://ddcmhoqjma1th" path="res://data/graphics/sprites/npcs/cave-locks.png" id="1_4t0qc"]
+[ext_resource type="Texture2D" uid="uid://c31lio3h36rlq" path="res://data/graphics/sprites/npcs/cave-locks.png" id="1_4t0qc"]
 [ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="2_atsn7"]
 
 [sub_resource type="Animation" id="Animation_38rnv"]

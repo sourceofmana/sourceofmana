@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b48f227dxr4nh"]
 
-[ext_resource type="Texture2D" uid="uid://yyamt0tpbrdt" path="res://data/graphics/effects/particles/arc.png" id="1_5sgck"]
+[ext_resource type="Texture2D" uid="uid://d3qwmfreth2em" path="res://data/graphics/effects/particles/arc.png" id="1_5sgck"]
 
 [sub_resource type="Gradient" id="Gradient_wrcva"]
 offsets = PackedFloat32Array(0.464164, 1)

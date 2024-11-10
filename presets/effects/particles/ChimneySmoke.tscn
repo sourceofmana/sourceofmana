@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c0mvk3kt4enrl"]
 
-[ext_resource type="Texture2D" uid="uid://h6h0vrtwrnfl" path="res://data/graphics/effects/particles/smoke.png" id="1_nsogh"]
+[ext_resource type="Texture2D" uid="uid://b0qa2td7svga7" path="res://data/graphics/effects/particles/smoke.png" id="1_nsogh"]
 
 [sub_resource type="Curve" id="Curve_clfq1"]
 _data = [Vector2(0.0141243, 0.34141), 0.0, 0.21846, 0, 0, Vector2(1, 0.506057), -4.7515, 0.0, 0, 0]

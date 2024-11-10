@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c0wuhrlsdwo8s"]
 
-[ext_resource type="Texture2D" uid="uid://d4mxgddrny5nh" path="res://data/graphics/gui/smallbar.png" id="1_qbml5"]
-[ext_resource type="Texture2D" uid="uid://bjd7x0b027d7o" path="res://data/graphics/gui/smallbarprogress.png" id="2_8b3ae"]
+[ext_resource type="Texture2D" uid="uid://cjnbc8hwuhqhv" path="res://data/graphics/gui/smallbar.png" id="1_qbml5"]
+[ext_resource type="Texture2D" uid="uid://socu3l7ce2pt" path="res://data/graphics/gui/smallbarprogress.png" id="2_8b3ae"]
 
 [node name="HealthBar" type="TextureProgressBar"]
 anchors_preset = 8

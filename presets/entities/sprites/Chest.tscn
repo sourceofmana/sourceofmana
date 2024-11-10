@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://dy3gyhmlew12g"]
 
-[ext_resource type="Texture2D" uid="uid://cnmxs1n4xeaix" path="res://data/graphics/sprites/npcs/large-chest.png" id="1_ql3k7"]
+[ext_resource type="Texture2D" uid="uid://csmocgom16lgd" path="res://data/graphics/sprites/npcs/large-chest.png" id="1_ql3k7"]
 [ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="2_dex3v"]
 
 [sub_resource type="Animation" id="Animation_38rnv"]

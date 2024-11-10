@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://dqdpqrng1ptvv"]
 
-[ext_resource type="Texture2D" uid="uid://b07huvqt1fuxo" path="res://data/graphics/sprites/monsters/croc.png" id="1_r57t1"]
+[ext_resource type="Texture2D" uid="uid://o8s2iqm8dwfx" path="res://data/graphics/sprites/monsters/croc.png" id="1_r57t1"]
 [ext_resource type="PackedScene" uid="uid://oxrams6nup8i" path="res://presets/entities/sprites/animations/8Directions.tscn" id="2_f1jyi"]
 
 [sub_resource type="Animation" id="Animation_qks5j"]
