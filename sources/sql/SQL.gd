@@ -2,7 +2,6 @@ extends ServiceBase
 
 #
 var db : SQLite						= null
-var dbPath: String					= "res://data/world.db"
 var queryMutex : Mutex				= Mutex.new()
 
 # Queries
@@ -12,7 +11,7 @@ func AddAccount(username : String, password : String, email : String) -> bool:
 		"username" : username,
 		"password" : password,
 		"email" : email,
-		"created_timestamp" : Timestamp()
+		"created_timestamp" : SQLCommons.Timestamp()
 	}
 	return db.insert_row("account", accountData)
 
@@ -29,7 +28,7 @@ func AddCharacter(accountID : int, nickname : String) -> bool:
 	var charData : Dictionary = {
 		"account_id": accountID,
 		"nickname": nickname,
-		"created_timestamp": Timestamp()
+		"created_timestamp": SQLCommons.Timestamp()
 	}
 	return db.insert_row("character", charData)
 
@@ -72,10 +71,10 @@ func UpdateCharacter(player : PlayerAgent) -> bool:
 		return false
 
 	var map : WorldMap = WorldAgent.GetMapFromAgent(player)
-	var newTimestamp : int = Timestamp()
+	var newTimestamp : int = SQLCommons.Timestamp()
 	var data : Dictionary = GetCharacter(player.charID)
 
-	data["total_time"] = GetOrAddValue(data, "total_time", 0) + newTimestamp - GetOrAddValue(data, "last_timestamp", newTimestamp)
+	data["total_time"] = SQLCommons.GetOrAddValue(data, "total_time", 0) + newTimestamp - SQLCommons.GetOrAddValue(data, "last_timestamp", newTimestamp)
 	data["last_timestamp"] = newTimestamp
 
 	if map != null and not map.HasFlags(WorldMap.Flags.NO_REJOIN):
@@ -279,19 +278,14 @@ func QueryBindings(query : String, params : Array) -> Array[Dictionary]:
 	queryMutex.unlock()
 	return data
 
-func HasValue(data : Dictionary, key : String) -> bool:
-	return data[key] != null if data.has(key) else false
-
-func GetOrAddValue(data : Dictionary, key : String, defaultVal : Variant) -> Variant:
-	return data[key] if HasValue(data, key) else defaultVal
-
-func Timestamp() -> int:
-	return Time.get_ticks_msec()
-
 #
 func _post_launch():
+	if not FileSystem.FileExists(Path.Local + SQLCommons.CurrentDBName):
+		if not FileSystem.CopySQLDatabase(SQLCommons.TemplatePath, SQLCommons.CurrentDBName):
+			return
+
 	db = SQLite.new()
-	db.path = dbPath
+	db.path = Path.Local + SQLCommons.CurrentDBName
 	db.verbosity_level = SQLite.VERBOSE if Launcher.Debug else SQLite.NORMAL
 
 	if not db.open_db():

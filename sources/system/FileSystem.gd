@@ -215,7 +215,7 @@ static func SaveScreenshot():
 	var image : Image = Util.GetScreenCapture()
 	assert(image != null, "Could not get a viewport screenshot")
 	if image:
-		var dir = DirAccess.open(OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS))
+		var dir : DirAccess = DirAccess.open(OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS))
 		if not dir.dir_exists("Screenshots"):
 			dir.make_dir("Screenshots")
 		dir.change_dir("Screenshots")
@@ -230,3 +230,18 @@ static func SaveScreenshot():
 			assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
 			if ret == OK:
 				Util.PrintInfo("FileSystem", "Saving capture: " + savePath)
+
+static func CopySQLDatabase(templateName : String, currentName : String) -> bool:
+	var dir : DirAccess = DirAccess.open(Path.TemplateRsc)
+	if dir:
+		dir.list_dir_begin();
+		var fileName : String = dir.get_next()
+		while (fileName != ""):
+			if fileName == templateName:
+				dir.copy(Path.TemplateRsc + templateName, Path.Local + currentName)
+				return true
+			fileName = dir.get_next()
+		assert(false, "Can't find the template resource file: %s" % templateName)
+	else:
+		assert(false, "Can't acces template resource path: %s" % Path.TemplateRsc)
+	return false

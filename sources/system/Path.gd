@@ -14,6 +14,7 @@ const MapRsc : String					= DataRsc + "maps/"
 const MusicRsc : String					= DataRsc + "musics/"
 const DBRsc : String					= DataRsc + "db/"
 const ConfRsc : String					= DataRsc + "conf/"
+const TemplateRsc : String				= ConfRsc + "templates/"
 
 const Src : String						= Rsc + "sources/"
 const ScriptSrc : String				= Src + "scripts/"
