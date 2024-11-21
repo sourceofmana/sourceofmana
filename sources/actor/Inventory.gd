@@ -101,18 +101,16 @@ func UseItem(cell : BaseCell):
 func AddItem(cell : BaseCell, count : int = 1) -> bool:
 	if PushItem(cell, count):
 		if actor is PlayerAgent:
-			var peerID : int = Launcher.Network.Server.GetRid(actor)
-			if peerID != NetworkCommons.RidUnknown:
-				Launcher.Network.ItemAdded(cell.id, count, peerID)
+			if actor.rpcRID != NetworkCommons.RidUnknown:
+				Launcher.Network.ItemAdded(cell.id, count, actor.rpcRID)
 		return true
 	return false
 
 func RemoveItem(cell : BaseCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
 		if actor is PlayerAgent:
-			var peerID : int = Launcher.Network.Server.GetRid(actor)
-			if peerID != NetworkCommons.RidUnknown:
-				Launcher.Network.ItemRemoved(cell.id, count, peerID)
+			if actor.rpcRID != NetworkCommons.RidUnknown:
+				Launcher.Network.ItemRemoved(cell.id, count, actor.rpcRID)
 		return true
 	return false
 

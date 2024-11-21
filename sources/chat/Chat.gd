@@ -24,7 +24,7 @@ func isNewLineEnabled() -> bool:
 	return lineEdit.is_visible() and lineEdit.has_focus() if lineEdit else false
 
 func SetNewLineEnabled(enable : bool):
-	if lineEdit and not enabledLastFrame:
+	if Launcher.Action and lineEdit and not enabledLastFrame:
 		enabledLastFrame = true
 		if not LauncherCommons.isMobile:
 			lineEdit.set_visible(enable)

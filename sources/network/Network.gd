@@ -16,14 +16,47 @@ enum EChannel
 	ENTITY,
 }
 
-# Connection
+# Auth
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func ConnectPlayer(playerName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("ConnectPlayer", [playerName], rpcID)
+func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("CreateAccount", [accountName, password, email], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func DisconnectPlayer(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("DisconnectPlayer", [], rpcID)
+func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("ConnectAccount", [accountName, password], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func AuthError(err : NetworkCommons.AuthError, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("AuthError", [err], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("DisconnectAccount", [], rpcID)
+
+# Character
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func CharacterList(chars : Array[Dictionary], rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("CharacterList", [chars], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func CharacterInfo(info : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("CharacterInfo", [info], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func CreateCharacter(charName : String, traits : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("CreateCharacter", [charName, traits], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("ConnectCharacter", [nickname], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func CharacterError(err : NetworkCommons.CharacterError, rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallClient("CharacterError", [err], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
+	NetCallServer("DisconnectCharacter", [], rpcID)
 
 # Respawn
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
@@ -219,8 +252,6 @@ func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
 #
 func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:
 	if Server:
-		if not Server.playerMap.has(rpcID):
-			Server.AddPlayerData(rpcID)
 		if Server.CallMethod(rpcID, methodName, actionDelta):
 			return true
 	return false
@@ -249,6 +280,8 @@ func NetMode(isClient : bool, isServer : bool):
 		Client = FileSystem.LoadSource("network/Client.gd")
 	if isServer:
 		Server = FileSystem.LoadSource("network/Server.gd")
+	if isServer and not isClient:
+		NetCreate()
 
 func NetCreate():
 	if uniqueID != NetworkCommons.RidDefault:
@@ -260,8 +293,9 @@ func NetCreate():
 		peer = ENetMultiplayerPeer.new()
 
 	if Client and Server:
-		ConnectPlayer(Launcher.FSM.playerName)
 		uniqueID = NetworkCommons.RidSingleMode
+		Server.ConnectPeer(uniqueID)
+		Client.ConnectServer()
 	elif Client:
 		var ret : Error = FAILED
 		var serverAddress : String = NetworkCommons.LocalServerAddress if Launcher.Debug else NetworkCommons.ServerAddress
@@ -279,13 +313,12 @@ func NetCreate():
 		assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
-			var connectedCallback : Callable = Launcher.FSM.EnterState.bind(Launcher.FSM.States.CHAR_SCREEN)
-			if not Launcher.Root.multiplayer.connected_to_server.is_connected(connectedCallback):
-				Launcher.Root.multiplayer.connected_to_server.connect(connectedCallback)
-			if not Launcher.Root.multiplayer.connection_failed.is_connected(Client.DisconnectPlayer):
-				Launcher.Root.multiplayer.connection_failed.connect(Client.DisconnectPlayer)
-			if not Launcher.Root.multiplayer.server_disconnected.is_connected(Client.DisconnectPlayer):
-				Launcher.Root.multiplayer.server_disconnected.connect(Client.DisconnectPlayer)
+			if not Launcher.Root.multiplayer.connected_to_server.is_connected(Client.ConnectServer):
+				Launcher.Root.multiplayer.connected_to_server.connect(Client.ConnectServer)
+			if not Launcher.Root.multiplayer.connection_failed.is_connected(Client.DisconnectServer):
+				Launcher.Root.multiplayer.connection_failed.connect(Client.DisconnectServer)
+			if not Launcher.Root.multiplayer.server_disconnected.is_connected(Client.DisconnectServer):
+				Launcher.Root.multiplayer.server_disconnected.connect(Client.DisconnectServer)
 
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 	elif Server:
@@ -316,11 +349,11 @@ func NetDestroy():
 	if peer:
 		peer.close()
 	if Client:
-		Client.DisconnectPlayer()
+		Client.DisconnectServer()
 		Client.queue_free()
 		Client = null
 	if Server:
-		Server.DisconnectPlayer()
+		Server.Destroy()
 		Server.queue_free()
 		Server = null
 	uniqueID = NetworkCommons.RidDefault

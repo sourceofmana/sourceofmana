@@ -106,6 +106,9 @@ func _physics_process(_deltaTime : float):
 
 #
 func _input(event):
+	if Launcher.Player == null or Launcher.Map == null or Launcher.GUI == null or Launcher.Network == null:
+		return
+
 	if event.is_pressed():
 		if event is InputEventJoypadButton and DeviceManager.currentDeviceType != DeviceManager.DeviceType.JOYSTICK:
 			DeviceManager.DeviceChanged(DeviceManager.DeviceType.JOYSTICK)

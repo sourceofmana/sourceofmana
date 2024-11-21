@@ -51,26 +51,22 @@ caret_blink = true
 caret_blink_interval = 0.5
 
 [node name="PasswordLabel" type="Label" parent="Margin/VBoxContainer/GridContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 text = "Password"
 vertical_alignment = 1
 
 [node name="PasswordContainer" type="PanelContainer" parent="Margin/VBoxContainer/GridContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PasswordText" type="LineEdit" parent="Margin/VBoxContainer/GridContainer/PasswordContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 focus_next = NodePath("../../../SignBar/Play")
 focus_previous = NodePath("../../NameContainer/NameText")
 focus_mode = 1
-placeholder_text = "Type here"
 max_length = 255
 clear_button_enabled = true
 select_all_on_focus = true
@@ -133,3 +129,4 @@ text = "Register"
 [connection signal="toggled" from="Margin/VBoxContainer/SignBar/OnlineButton" to="." method="_on_online_button_toggled"]
 [connection signal="pressed" from="Margin/VBoxContainer/SignBar/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Margin/VBoxContainer/SignBar/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/SignBar/Register" to="." method="_on_register_pressed"]

@@ -24,6 +24,7 @@ extends ServiceBase
 
 @onready var newsWindow : WindowPanel			= $Windows/Floating/News
 @onready var loginWindow : WindowPanel			= $Windows/Floating/Login
+@onready var characterWindow : WindowPanel		= $Windows/Floating/Character
 @onready var inventoryWindow : WindowPanel		= $Windows/Floating/Inventory
 @onready var minimapWindow : WindowPanel		= $Windows/Floating/Minimap
 @onready var chatWindow : WindowPanel			= $Windows/Floating/Chat
@@ -92,6 +93,7 @@ func EnterLoginMenu():
 	quitWindow.set_visible(false)
 	respawnWindow.EnableControl(false)
 	shortcuts.set_visible(false)
+	characterWindow.EnableControl(false)
 
 	background.set_visible(true)
 	newsWindow.EnableControl(true)
@@ -101,18 +103,22 @@ func EnterLoginProgress():
 	newsWindow.EnableControl(false)
 	loginWindow.EnableControl(false)
 
-	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.LoginAttemptTimeout, Launcher.Network.Client.NetworkIssue, [], "ProgressTimer")
+	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.LoginAttemptTimeout, Launcher.Network.Client.AuthError, [NetworkCommons.AuthError.ERR_TIMEOUT], "ProgressTimer")
 	loadingControl.set_visible(true)
 
 func EnterCharMenu():
 	progressTimer.stop()
 	progressTimer = null
 	loadingControl.set_visible(false)
+
 	Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_PROGRESS)
+	characterWindow.EnableControl(true)
 
 func EnterCharProgress():
-	Launcher.Network.ConnectPlayer(Launcher.FSM.playerName)
-	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.CharSelectionTimeout, Launcher.Network.Client.NetworkIssue, [], "ProgressTimer")
+	characterWindow.EnableControl(false)
+
+	Launcher.Network.ConnectCharacter(loginWindow.nameText)
+	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.CharSelectionTimeout, Launcher.Network.Client.CharacterError, [NetworkCommons.CharacterError.ERR_TIMEOUT], "ProgressTimer")
 	loadingControl.set_visible(true)
 
 func EnterGame():

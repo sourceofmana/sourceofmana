@@ -95,13 +95,11 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 		RemoveAgent(agent)
 
 static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : String = "") -> BaseAgent:
+	var agent : BaseAgent = null
 	var data : EntityData = Instantiate.FindEntityReference(spawn.name)
-	if not data:
-		return
-
-	var agent : BaseAgent = Instantiate.CreateAgent(spawn, data, spawn.nick if nickname.length() == 0 else nickname)
+	if data:
+		agent = Instantiate.CreateAgent(spawn, data, spawn.nick if nickname.length() == 0 else nickname)
 	if agent:
 		AddAgent(agent)
 		Launcher.World.Spawn(spawn.map, agent, instanceID)
-
 	return agent

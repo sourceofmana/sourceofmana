@@ -31,10 +31,8 @@ static var Farewells : PackedStringArray = [
 # Display
 static func PushNotification(pc : BaseAgent, text : String):
 	if pc:
-		if pc is PlayerAgent:
-			var peerID : int = Launcher.Network.Server.GetRid(pc)
-			if peerID != NetworkCommons.RidUnknown:
-				Launcher.Network.PushNotification(text, peerID)
+		if pc is PlayerAgent and pc.rpcRID != NetworkCommons.RidUnknown:
+			Launcher.Network.PushNotification(text, pc.rpcRID)
 		elif pc is NpcAgent:
 			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(pc)
 			if inst:
@@ -42,40 +40,28 @@ static func PushNotification(pc : BaseAgent, text : String):
 
 # Context sent to client
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
-	if npc and pc and pc is PlayerAgent:
-		var peerID : int = Launcher.Network.Server.GetRid(pc)
-		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ChatAgent(npc.get_rid().get_id(), chat, peerID)
+	if npc and pc and pc is PlayerAgent and pc.rpcRID != NetworkCommons.RidUnknown:
+		Launcher.Network.ChatAgent(npc.get_rid().get_id(), chat, pc.rpcRID)
 
 static func ContextText(pc : BaseAgent, author : String, text : String):
-	if pc and pc is PlayerAgent:
-		var peerID : int = Launcher.Network.Server.GetRid(pc)
-		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ContextText(author, text, peerID)
+	if pc and pc is PlayerAgent and pc.rpcRID != NetworkCommons.RidUnknown:
+		Launcher.Network.ContextText(author, text, pc.rpcRID)
 
 static func ContextChoices(pc : BaseAgent, texts : PackedStringArray):
-	if pc and pc is PlayerAgent:
-		var peerID : int = Launcher.Network.Server.GetRid(pc)
-		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ContextChoice(texts, peerID)
+	if pc and pc is PlayerAgent and pc.rpcRID != NetworkCommons.RidUnknown:
+		Launcher.Network.ContextChoice(texts, pc.rpcRID)
 
 static func ContextContinue(pc : BaseAgent):
-	if pc and pc is PlayerAgent:
-		var peerID : int = Launcher.Network.Server.GetRid(pc)
-		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ContextContinue(peerID)
+	if pc and pc is PlayerAgent and pc.rpcRID != NetworkCommons.RidUnknown:
+		Launcher.Network.ContextContinue(pc.rpcRID)
 
 static func ContextClose(pc : BaseAgent):
-	if pc and pc is PlayerAgent:
-		var peerID : int = Launcher.Network.Server.GetRid(pc)
-		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ContextClose(peerID)
+	if pc and pc is PlayerAgent and pc.rpcRID != NetworkCommons.RidUnknown:
+		Launcher.Network.ContextClose(pc.rpcRID)
 
 static func ToggleContext(pc : BaseAgent, enable : bool):
-	if pc and pc is PlayerAgent:
-		var peerID : int = Launcher.Network.Server.GetRid(pc)
-		if peerID != NetworkCommons.RidUnknown:
-			Launcher.Network.ToggleContext(enable, peerID)
+	if pc and pc is PlayerAgent and pc.rpcRID != NetworkCommons.RidUnknown:
+		Launcher.Network.ToggleContext(enable, pc.rpcRID)
 
 static func GetRandomGreeting(nick : String) -> String:
 	var greet : String = Greetings[randi() % Greetings.size()]

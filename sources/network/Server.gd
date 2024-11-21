@@ -1,52 +1,146 @@
 extends Node
 
-var playerMap : Dictionary			= {}
-var onlineList : OnlineList			= OnlineList.new()
+# To be moved to Account.gd -- start
+class PeerData:
+	var accountRID : int				= NetworkCommons.RidUnknown
+	var characterRID : int				= NetworkCommons.RidUnknown
+	var agentRID : int					= NetworkCommons.RidUnknown
+	var rpcDeltas : Dictionary			= {}
 
-class PlayerData:
-	var agentRID : int				= NetworkCommons.RidSingleMode
-	var rpcDeltas : Dictionary		= {}
+var peers : Dictionary					= {}
+var onlineList : OnlineList				= OnlineList.new()
 
-#
-func AddPlayerData(networkRpcID : int):
-	if not networkRpcID in playerMap:
-		playerMap[networkRpcID] = PlayerData.new()
+func AddPeerData(rpcID : int):
+	if rpcID not in peers:
+		peers[rpcID] = PeerData.new()
 
-func CallMethod(networkRpcID : int, methodName : String, actionDelta : int) -> bool:
-	assert(networkRpcID in playerMap, "Could not find data related to this player: " + str(networkRpcID))
-	if networkRpcID in playerMap:
+func RemovePeerData(rpcID : int):
+	peers.erase(rpcID)
+
+func CallMethod(rpcID : int, methodName : String, actionDelta : int) -> bool:
+	assert(rpcID in peers, "Could not find data related to this peer: " + str(rpcID))
+	if rpcID in peers:
 		var oldTick : int = 0
-		if methodName in playerMap[networkRpcID].rpcDeltas:
-			oldTick = playerMap[networkRpcID].rpcDeltas[methodName]
+		if methodName in peers[rpcID].rpcDeltas:
+			oldTick = peers[rpcID].rpcDeltas[methodName]
 
 		var currentTick : int = Time.get_ticks_msec()
 		if oldTick + actionDelta <= currentTick:
-			playerMap[networkRpcID].rpcDeltas[methodName] = currentTick
+			peers[rpcID].rpcDeltas[methodName] = currentTick
 			return true
 
 	return false
+# To be moved to Account.gd -- end
 
-#
-func ConnectPlayer(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
-	if not GetAgent(rpcID) and not nickname in onlineList.GetPlayerNames():
-		var agent : PlayerAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
-		if agent:
-			agent.stat.SetAttributes(ActorCommons.DefaultAttributes)
-			agent.inventory.ImportInventory(ActorCommons.DefaultInventory)
 
-			playerMap[rpcID].agentRID = agent.get_rid().get_id()
+# Auth
+func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode):
+	var err : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(accountName, password)
+	if err == NetworkCommons.AuthError.ERR_OK:
+		if not Launcher.SQL.AddAccount(accountName, password, email):
+			err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
+	Launcher.Network.AuthError(err, rpcID)
+
+func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode):
+	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
+	var peer : PeerData = GetPeer(rpcID)
+	if not peer:
+		err = NetworkCommons.AuthError.ERR_NO_PEER_DATA
+	else:
+		err = NetworkCommons.CheckAuthInformation(accountName, password)
+		if err == NetworkCommons.AuthError.ERR_OK:
+			peer.accountRID = Launcher.SQL.Login(accountName, password)
+
+			# Remove once account creation logic is implemented
+			if peer.accountRID == NetworkCommons.RidUnknown:
+				if not Launcher.SQL.AddAccount(accountName, password, "g@g.g"):
+					err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
+				else:
+					peer.accountRID = Launcher.SQL.Login(accountName, password)
+					if peer.accountRID != NetworkCommons.RidUnknown:
+						CreateCharacter(accountName, {
+							"hairstyle" = 0,
+							"haircolor" = 0,
+							"race" = 0,
+							"skin" = 0,
+							"gender" = 0,
+							"shape" = "Default Entity",
+							"spirit" = "Piou"
+						}, rpcID)
+			# -- end
+
+			if peer.accountRID == NetworkCommons.RidUnknown:
+				err = NetworkCommons.AuthError.ERR_AUTH
+			else:
+				for characterID in Launcher.SQL.GetCharacters(peer.accountRID):
+					var characterInfo : Dictionary = Launcher.SQL.GetCharacterInfo(characterID)
+					Launcher.Network.CharacterInfo(characterInfo, rpcID) # To send every character info 1 by 1
+	Launcher.Network.AuthError(err, rpcID)
+
+func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
+	var peer : PeerData = GetPeer(rpcID)
+	if peer:
+		peer.accountRID = NetworkCommons.RidUnknown
+		if peer.characterRID != NetworkCommons.RidUnknown:
+			DisconnectCharacter(rpcID)
+
+# Character
+func CreateCharacter(charName : String, traits : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
+	var accountID : int = GetAccount(rpcID)
+	if accountID == NetworkCommons.RidUnknown:
+		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
+	else:
+		if not Launcher.SQL.AddCharacter(accountID, charName, traits):
+			err = NetworkCommons.CharacterError.ERR_NAME_AVAILABLE
+		else:
+			var characterID : int = Launcher.SQL.GetCharacterID(accountID, charName)
+			if characterID == NetworkCommons.RidUnknown:
+				err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
+			else:
+				Launcher.Network.CharacterInfo(Launcher.SQL.GetCharacterInfo(characterID), rpcID)
+
+	Launcher.Network.CharacterError(err)
+	return err
+
+func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
+	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
+	var peer : PeerData = GetPeer(rpcID)
+
+	if not peer:
+		err = NetworkCommons.CharacterError.ERR_NO_PEER_DATA
+	elif peer.accountRID == NetworkCommons.RidUnknown:
+		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
+	else:
+		peer.characterRID = Launcher.SQL.GetCharacterID(peer.accountRID, nickname)
+		if peer.characterRID == NetworkCommons.RidUnknown:
+			err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
+		else:
+			if GetAgent(rpcID):
+				err = NetworkCommons.CharacterError.ERR_ALREADY_LOGGED_IN
+			else:
+				var agent : PlayerAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
+				if agent:
+					peer.agentRID = agent.get_rid().get_id()
+					agent.stat.SetAttributes(ActorCommons.DefaultAttributes)
+					agent.inventory.ImportInventory(ActorCommons.DefaultInventory)
+					agent.rpcRID = rpcID
+					onlineList.UpdateJson()
+					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
+
+	Launcher.Network.CharacterError(err, rpcID)
+
+func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
+	var peer : PeerData = GetPeer(rpcID)
+	if peer:
+		peer.characterRID = NetworkCommons.RidUnknown
+		var player : PlayerAgent = GetAgent(rpcID)
+		if player:
+			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
+			WorldAgent.RemoveAgent(player)
+			peer.characterRID = NetworkCommons.RidUnknown
+			peer.agentRID = NetworkCommons.RidUnknown
 			onlineList.UpdateJson()
-			Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
-	elif rpcID != NetworkCommons.RidSingleMode:
-		Launcher.Network.peer.disconnect_peer(rpcID)
-
-func DisconnectPlayer(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
-	if player:
-		Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
-		WorldAgent.RemoveAgent(player)
-		playerMap.erase(rpcID)
-		onlineList.UpdateJson()
 
 #
 func SetClickPos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
@@ -165,57 +259,61 @@ func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
 		WorldDrop.PickupDrop(dropID, player)
 
 #
-func GetRid(player : PlayerAgent) -> int:
-	var playerRid : int = player.get_rid().get_id()
-	for dataID in playerMap:
-		if playerMap[dataID].agentRID == playerRid:
-			return dataID
-	assert(false, "No playerdata associated to this user within the player map")
-	return NetworkCommons.RidUnknown
+func GetPeer(rpcID : int) -> PeerData:
+	return peers[rpcID] if rpcID in peers else null
+
+func GetAccount(rpcID : int) -> int:
+	var peer : PeerData = GetPeer(rpcID)
+	return peer.accountRID if peer else NetworkCommons.RidUnknown
+
+func GetCharacter(rpcID : int) -> int:
+	var peer : PeerData = GetPeer(rpcID)
+	return peer.characterRID if peer else NetworkCommons.RidUnknown
 
 func GetAgent(rpcID : int) -> PlayerAgent:
-	var player : PlayerAgent	= null
-	if rpcID in playerMap:
-		var playerData : PlayerData = playerMap.get(rpcID)
-		assert(playerData != null, "No playerdata associated to this user within the player map")
-		if playerData:
-			player = WorldAgent.GetAgent(playerData.agentRID)
+	var peer : PeerData = GetPeer(rpcID)
+	return WorldAgent.GetAgent(peer.agentRID) if peer else null
 
-	return player
-
+#
 func NotifyNeighbours(agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
 	if not agent:
 		assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
 		return
 
-	var currentPlayerID = agent.get_rid().get_id()
+	var currentAgentID = agent.get_rid().get_id()
 	if inclusive and agent is PlayerAgent:
-		Launcher.Network.callv(callbackName, [currentPlayerID] + args + [GetRid(agent)])
+		Launcher.Network.callv(callbackName, [currentAgentID] + args + [agent.rpcRID])
 
-	if agent.get_parent():
-		for player in agent.get_parent().players:
-			if player != null and player != agent:
-				var peerID = GetRid(player)
-				if peerID != NetworkCommons.RidUnknown:
-					Launcher.Network.callv(callbackName, [currentPlayerID] + args + [peerID])
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+	if inst:
+		for player in inst.players:
+			if player != null and player != agent and player.rpcRID != NetworkCommons.RidUnknown:
+				Launcher.Network.callv(callbackName, [currentAgentID] + args + [player.rpcRID])
 
 func NotifyInstance(inst : WorldInstance, callbackName : String, args : Array):
 	if inst:
 		for player in inst.players:
 			if player != null:
-				var peerID = GetRid(player)
-				if peerID != NetworkCommons.RidUnknown:
-					Launcher.Network.callv(callbackName, args + [peerID])
+				if player.rpcRID != NetworkCommons.RidUnknown:
+					Launcher.Network.callv(callbackName, args + [player.rpcRID])
 
-#
+# Peer handling
 func ConnectPeer(rpcID : int):
 	Util.PrintInfo("Server", "Peer connected: %d" % rpcID)
-	var clientPeer : PacketPeer = Launcher.Network.peer.get_peer(rpcID)
-	if clientPeer and clientPeer is ENetPacketPeer:
-		clientPeer.set_timeout(NetworkCommons.Timeout, NetworkCommons.TimeoutMin, NetworkCommons.TimeoutMax)
+	AddPeerData(rpcID)
+	if Launcher.Network.peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
+		var clientPeer : PacketPeer = Launcher.Network.peer.get_peer(rpcID)
+		if clientPeer and clientPeer is ENetPacketPeer:
+			clientPeer.set_timeout(NetworkCommons.Timeout, NetworkCommons.TimeoutMin, NetworkCommons.TimeoutMax)
 
 func DisconnectPeer(rpcID : int):
 	Util.PrintInfo("Server", "Peer disconnected: %d" % rpcID)
-	if rpcID in playerMap:
-		if WorldAgent.GetAgent(playerMap[rpcID].agentRID):
-			DisconnectPlayer(rpcID)
+	var peer : PeerData = GetPeer(rpcID)
+	if peer:
+		if peer.accountRID != NetworkCommons.RidUnknown:
+			DisconnectAccount(rpcID)
+		RemovePeerData(rpcID)
+
+func Destroy():
+	for peerRID in peers:
+		DisconnectPeer(peerRID)

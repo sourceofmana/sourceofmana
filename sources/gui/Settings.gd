@@ -283,6 +283,9 @@ func _on_visibility_changed():
 	RefreshSettings(false)
 
 func _ready():
+	if not Launcher.FSM:
+		return
+
 	RefreshSettings(true)
 	Launcher.FSM.enter_game.connect(RefreshSettings.bind(true))
 	Launcher.FSM.exit_game.connect(SaveSettings.bind())

@@ -2,7 +2,7 @@ extends BaseAgent
 class_name PlayerAgent
 
 #
-var charID : int						= 0
+var rpcRID : int						= NetworkCommons.RidUnknown
 var lastStat : ActorStats				= ActorStats.new()
 var respawnDestination : Destination	= Destination.new()
 var exploreOrigin : Destination			= Destination.new()
@@ -13,8 +13,7 @@ static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.PLAYE
 
 #
 func UpdateLastStats():
-	var peerID : int = Launcher.Network.Server.GetRid(self)
-	if peerID == NetworkCommons.RidUnknown:
+	if rpcRID == NetworkCommons.RidUnknown:
 		return
 
 	if lastStat.level != stat.level or \
@@ -27,7 +26,7 @@ func UpdateLastStats():
 	lastStat.entityShape != stat.entityShape or \
 	lastStat.spiritShape != stat.spiritShape or \
 	lastStat.currentShape != stat.currentShape:
-		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.gp, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.currentShape, peerID)
+		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.gp, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.currentShape, rpcRID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 		lastStat.gp					= stat.gp
@@ -44,7 +43,7 @@ func UpdateLastStats():
 	lastStat.agility != stat.agility or \
 	lastStat.endurance != stat.endurance or \
 	lastStat.concentration != stat.concentration:
-		Launcher.Network.UpdateAttributes(get_rid().get_id(), stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, peerID)
+		Launcher.Network.UpdateAttributes(get_rid().get_id(), stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, rpcRID)
 		lastStat.strength			= stat.strength
 		lastStat.vitality			= stat.vitality
 		lastStat.agility			= stat.agility

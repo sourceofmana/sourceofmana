@@ -81,7 +81,7 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 		return
 
 	var entity : Entity = Entities.Get(agentID)
-	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.FSM.playerName
+	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.GUI.loginWindow.nameTextControl.get_text()
 	var isAlreadySpawned : bool = entity != null and entity.get_parent() == fringeLayer
 
 	if isLocalPlayer and Launcher.Player:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=61 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://4y5ck1nvjs0k" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -56,6 +56,7 @@
 [ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/gui/Emote.tscn" id="37_v7lrk"]
 [ext_resource type="PackedScene" uid="uid://b5jgfu2dukotm" path="res://presets/gui/Skill.tscn" id="38_ompay"]
 [ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
+[ext_resource type="PackedScene" uid="uid://duqpp1dik8h8h" path="res://presets/gui/Character.tscn" id="49_78q3w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
 shader = ExtResource("4_60kv4")
@@ -491,6 +492,14 @@ offset_top = 240.0
 offset_right = 576.0
 offset_bottom = 346.0
 blockActions = false
+
+[node name="Character" parent="Windows/Floating" instance=ExtResource("49_78q3w")]
+visible = false
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 360.0
+offset_bottom = 106.0
 
 [node name="News" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false

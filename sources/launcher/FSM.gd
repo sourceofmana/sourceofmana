@@ -17,8 +17,6 @@ enum States { NONE = 0, LOGIN_SCREEN, LOGIN_PROGRESS, CHAR_SCREEN, CHAR_PROGRESS
 enum Phases { ENTER = 0, UPDATE, EXIT }
 
 #
-var playerName : String				= ""
-
 var lastState : States				= States.NONE
 var currentState : States			= States.NONE
 var nextState : States				= States.NONE

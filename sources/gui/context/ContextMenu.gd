@@ -63,13 +63,15 @@ func Show(disableAction):
 	visible = true
 	for child in contextList.get_children():
 		child._on_visibility_changed()
-	Launcher.Action.Enable(not disableAction)
+	if Launcher.Action:
+		Launcher.Action.Enable(not disableAction)
 
 func Hide():
 	visible = false
 	canFadeOut = false
 	currentStep = 0.0
-	Launcher.Action.Enable(true)
+	if Launcher.Action:
+		Launcher.Action.Enable(true)
 	Clear()
 
 func Clear():

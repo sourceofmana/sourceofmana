@@ -2,9 +2,9 @@ extends ServiceBase
 
 #
 var db : SQLite						= null
+var backups : SQLBackups			= null
 var queryMutex : Mutex				= Mutex.new()
 
-# Queries
 # Accounts
 func AddAccount(username : String, password : String, email : String) -> bool:
 	var accountData : Dictionary = {
@@ -21,16 +21,20 @@ func RemoveAccount(accountID : int) -> bool:
 func Login(username : String, password : String) -> int:
 	var results : Array[Dictionary] = QueryBindings("SELECT account_id FROM account WHERE username = ? AND password = ?;", [username, password])
 	assert(results.size() <= 1, "Duplicated account row")
-	return results[0]["account_id"] if results.size() > 0 else {}
+	return results[0]["account_id"] if results.size() > 0 else NetworkCommons.RidUnknown
 
 # Characters
-func AddCharacter(accountID : int, nickname : String) -> bool:
+func AddCharacter(accountID : int, nickname : String, traits : Dictionary) -> bool:
 	var charData : Dictionary = {
 		"account_id": accountID,
 		"nickname": nickname,
 		"created_timestamp": SQLCommons.Timestamp()
 	}
-	return db.insert_row("character", charData)
+	var ret : bool = db.insert_row("character", charData)
+	if ret:
+		var charID : int = GetCharacterID(accountID, nickname)
+		ret = db.update_rows("trait", "char_id = %d" % charID, traits)
+	return ret
 
 func RemoveCharacter(player : BaseAgent) -> bool:
 	if player:
@@ -43,12 +47,13 @@ func GetCharacters(accountID : int) -> Array[int]:
 		charIDs.append(result["char_id"])
 	return charIDs
 
-func GetCharacterStats(charID : int) -> Dictionary:
+func GetCharacterInfo(charID : int) -> Dictionary:
 	var results : Array[Dictionary] = Query("SELECT * \
-FROM stat \
-INNER JOIN trait ON stat.char_id = trait.char_id \
-INNER JOIN attribute ON stat.char_id = attribute.char_id \
-WHERE stat.char_id = %d;" % charID)
+FROM character \
+INNER JOIN stat ON character.char_id = stat.char_id \
+INNER JOIN trait ON character.char_id = trait.char_id \
+INNER JOIN attribute ON character.char_id = attribute.char_id \
+WHERE character.char_id = %d;" % charID)
 	assert(results.size() == 1, "Character information tables are missing")
 	return results[0] if results.size() > 0 else {}
 
@@ -61,6 +66,11 @@ func CharacterLogout(player : PlayerAgent) -> bool:
 	return success
 
 # Character
+func GetCharacterID(accountID : int, nickname : String) -> int:
+	var results : Array[Dictionary] = QueryBindings("SELECT char_id FROM character WHERE account_id = ? AND nickname = ?;", [accountID, nickname])
+	assert(results.size() <= 1, "Duplicated character row for account %d and nickname %s" % [accountID, nickname])
+	return results[0]["char_id"] if results.size() > 0 else NetworkCommons.RidUnknown
+
 func GetCharacter(charID : int) -> Dictionary:
 	var results : Array[Dictionary] = db.select_rows("character", "char_id = %d" % charID, ["*"])
 	assert(results.size() <= 1, "Duplicated character row %d" % charID)
@@ -290,12 +300,20 @@ func _post_launch():
 
 	if not db.open_db():
 		assert(false, "Failed to open database: "+ db.error_message)
+	else:
+		if not Launcher.Debug:
+			backups = SQLBackups.new()
+			backups.Start()
+
 	isInitialized = true
 
-func _exit_tree():
-	db.close_db()
+func Destroy():
+	if backups:
+		backups.Stop()
+	if db:
+		db.close_db()
 
-func _unit_test():
+func UnitTest():
 	# Clear previous data
 	db.delete_rows("account", "")
 	db.delete_rows("attribute", "")
@@ -319,8 +337,8 @@ func _unit_test():
 	# Fill in some characters into this account and retrieve the full char list from this account
 	var charIDs : Array[int] = GetCharacters(accountID)
 	assert(charIDs.size() == 0, "Character list for the test account is not empty upon creation")
-	assert(AddCharacter(accountID, "Admin") == true, "Could not create a test character")
-	assert(AddCharacter(accountID, "Admin2") == true, "Could not create a second test character")
+	assert(AddCharacter(accountID, "Admin", {}) == true, "Could not create a test character")
+	assert(AddCharacter(accountID, "Admin2", {}) == true, "Could not create a second test character")
 	charIDs = GetCharacters(accountID)
 	assert(charIDs.size() == 2, "Missing characters on the test account")
 	if charIDs.size() != 2:
@@ -330,8 +348,8 @@ func _unit_test():
 	var charID : int = charIDs[0]
 	var character : Dictionary = GetCharacter(charID)
 	assert(character.size() > 0, "Missing character information")
-	var characterStats : Dictionary = GetCharacterStats(charID)
-	assert(characterStats.size() > 0, "Missing character information")
+	var characterInfo : Dictionary = GetCharacterInfo(charID)
+	assert(characterInfo.size() > 0, "Missing character information")
 
 	# Instantiate a player out of the character information
 	var playerData : EntityData = Instantiate.FindEntityReference(Launcher.World.defaultSpawn.name)

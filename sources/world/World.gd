@@ -47,8 +47,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		return
 
 	if agent is PlayerAgent:
-		var playerID = Launcher.Network.Server.GetRid(agent)
-		if playerID == NetworkCommons.RidUnknown:
+		if agent.rpcRID == NetworkCommons.RidUnknown:
 			return
 
 		if map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
@@ -58,10 +57,10 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 			if agent.stat.IsMorph():
 				agent.Morph(false, agent.stat.entityShape)
 
-		Launcher.Network.WarpPlayer(map.name, playerID)
+		Launcher.Network.WarpPlayer(map.name, agent.rpcRID)
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
-				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, playerID)
+				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, agent.rpcRID)
 
 	Launcher.Network.Server.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
 

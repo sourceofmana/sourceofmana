@@ -50,13 +50,15 @@ func LaunchMode(isClient : bool = false, isServer : bool = false):
 	if isServer:
 		if not isClient:
 			Scene.queue_free()
+			Scene = null
 			FSM.queue_free()
+			FSM = null
 			Action.queue_free()
+			Action = null
 			Audio.queue_free()
+			Audio = null
 			var label = FileSystem.LoadGui("Server")
 			add_child.call_deferred(label)
-
-		Network.NetCreate()
 
 func LaunchClient():
 	if OS.is_debug_build():
