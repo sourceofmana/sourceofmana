@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dnrysjgetstj4" path="res://data/graphics/sprites/monsters/slime-sludge.png" id="1_vcu2t"]
 [ext_resource type="Texture2D" uid="uid://d1y3s58v1kslt" path="res://data/graphics/sprites/accessories/fire.png" id="2_j05ha"]
-[ext_resource type="Script" path="res://sources/entity/sprites/AnimatedSprite2DRandomnizer.gd" id="3_4et6q"]
+[ext_resource type="Script" path="res://sources/actor/entity/sprites/AnimatedSprite2DRandomnizer.gd" id="3_4et6q"]
 [ext_resource type="PackedScene" uid="uid://bpqxr3214t821" path="res://presets/effects/LightSource.tscn" id="3_7jtt6"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="3_mg0gu"]
 

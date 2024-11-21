@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BaseCell" load_steps=3 format=3 uid="uid://1guycf8ymnqp"]
 
 [ext_resource type="Texture2D" uid="uid://cl51nc04uu6f" path="res://data/graphics/items/usable/apple.png" id="1_nhe6a"]
-[ext_resource type="Script" path="res://sources/cell/BaseCell.gd" id="2_piw51"]
+[ext_resource type="Script" path="res://sources/gui/cell/BaseCell.gd" id="2_piw51"]
 
 [resource]
 script = ExtResource("2_piw51")

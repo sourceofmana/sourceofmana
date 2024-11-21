@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_jjkni"]
 [ext_resource type="Texture2D" uid="uid://b0sjefu0rrrlq" path="res://data/graphics/items/skill/mana-burst.png" id="1_lskrc"]
-[ext_resource type="Script" path="res://sources/cell/SkillCell.gd" id="1_tou8y"]
+[ext_resource type="Script" path="res://sources/gui/cell/SkillCell.gd" id="1_tou8y"]
 [ext_resource type="Texture2D" uid="uid://b04l4jblvixlt" path="res://data/graphics/effects/particles/cast1.png" id="2_ilyoo"]
 [ext_resource type="PackedScene" uid="uid://b48f227dxr4nh" path="res://presets/effects/particles/ManaBurst.tscn" id="5_703aq"]
 

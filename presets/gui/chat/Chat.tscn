@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_qmu1c"]
 [ext_resource type="Script" path="res://sources/gui/WindowPanel.gd" id="2_rx7is"]
-[ext_resource type="Script" path="res://sources/chat/Chat.gd" id="3_ipdx4"]
+[ext_resource type="Script" path="res://sources/gui/Chat.gd" id="3_ipdx4"]
 
 [node name="Chat" type="PanelContainer"]
 custom_minimum_size = Vector2(100, 100)

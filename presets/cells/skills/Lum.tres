@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_cyfet"]
 [ext_resource type="Texture2D" uid="uid://dk0r81xaf4y47" path="res://data/graphics/effects/particles/cast3.png" id="2_h2x4c"]
 [ext_resource type="Texture2D" uid="uid://ct28rebg0lm14" path="res://data/graphics/items/skill/lum.png" id="3_uxkv0"]
-[ext_resource type="Script" path="res://sources/cell/SkillCell.gd" id="4_7n1yh"]
+[ext_resource type="Script" path="res://sources/gui/cell/SkillCell.gd" id="4_7n1yh"]
 [ext_resource type="PackedScene" uid="uid://676e7kfvces4" path="res://presets/effects/particles/Heal.tscn" id="5_me0na"]
 
 [resource]

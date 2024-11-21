@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BaseCell" load_steps=3 format=3 uid="uid://dkqjldxwvwjm8"]
 
 [ext_resource type="Texture2D" uid="uid://demorpiugdi6s" path="res://data/graphics/items/common/splatina-key2.png" id="1_feanv"]
-[ext_resource type="Script" path="res://sources/cell/BaseCell.gd" id="2_6rvov"]
+[ext_resource type="Script" path="res://sources/gui/cell/BaseCell.gd" id="2_6rvov"]
 
 [resource]
 script = ExtResource("2_6rvov")

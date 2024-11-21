@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dmupihcekthcs"]
 
-[ext_resource type="Script" path="res://sources/entity/Entity.gd" id="1_h5sc8"]
+[ext_resource type="Script" path="res://sources/actor/entity/Entity.gd" id="1_h5sc8"]
 [ext_resource type="PackedScene" uid="uid://f2jxqr5e7i5e" path="res://presets/entities/components/Interactions.tscn" id="2_5gxse"]
-[ext_resource type="Script" path="res://sources/entity/components/Visual.gd" id="4_d0h8p"]
+[ext_resource type="Script" path="res://sources/actor/entity/components/Visual.gd" id="4_d0h8p"]
 
 [node name="Entity" type="CharacterBody2D"]
 collision_layer = 5
