@@ -250,15 +250,9 @@ func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	NetCallServer("PickupDrop", [dropID], rpcID)
 
 #
-func NetSpamControl(rpcID : int, methodName : String, actionDelta : int) -> bool:
-	if Server:
-		if Server.CallMethod(rpcID, methodName, actionDelta):
-			return true
-	return false
-
 func NetCallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault):
 	if Server:
-		if NetSpamControl(rpcID, methodName, actionDelta):
+		if Peers.Footprint(rpcID, methodName, actionDelta):
 			Server.callv.call_deferred(methodName, args + [rpcID])
 	else:
 		callv.call("rpc_id", [1, methodName] + args + [uniqueID])
@@ -277,9 +271,9 @@ func NetCallClientGlobal(methodName : String, args : Array):
 
 func NetMode(isClient : bool, isServer : bool):
 	if isClient:
-		Client = FileSystem.LoadSource("network/Client.gd")
+		Client = FileSystem.LoadSource("network/client/Client.gd")
 	if isServer:
-		Server = FileSystem.LoadSource("network/Server.gd")
+		Server = FileSystem.LoadSource("network/server/Server.gd")
 	if isServer and not isClient:
 		NetCreate()
 
@@ -350,11 +344,9 @@ func NetDestroy():
 		peer.close()
 	if Client:
 		Client.DisconnectServer()
-		Client.queue_free()
 		Client = null
 	if Server:
 		Server.Destroy()
-		Server.queue_free()
 		Server = null
 	uniqueID = NetworkCommons.RidDefault
 

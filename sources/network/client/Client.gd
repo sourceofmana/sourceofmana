@@ -1,7 +1,4 @@
-extends Node
-
-#
-var charID : int					= NetworkCommons.RidUnknown
+extends Object
 
 #
 func WarpPlayer(map : String, _rpcID : int = NetworkCommons.RidSingleMode):

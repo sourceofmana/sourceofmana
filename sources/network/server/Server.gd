@@ -1,37 +1,4 @@
-extends Node
-
-# To be moved to Account.gd -- start
-class PeerData:
-	var accountRID : int				= NetworkCommons.RidUnknown
-	var characterRID : int				= NetworkCommons.RidUnknown
-	var agentRID : int					= NetworkCommons.RidUnknown
-	var rpcDeltas : Dictionary			= {}
-
-var peers : Dictionary					= {}
-var onlineList : OnlineList				= OnlineList.new()
-
-func AddPeerData(rpcID : int):
-	if rpcID not in peers:
-		peers[rpcID] = PeerData.new()
-
-func RemovePeerData(rpcID : int):
-	peers.erase(rpcID)
-
-func CallMethod(rpcID : int, methodName : String, actionDelta : int) -> bool:
-	assert(rpcID in peers, "Could not find data related to this peer: " + str(rpcID))
-	if rpcID in peers:
-		var oldTick : int = 0
-		if methodName in peers[rpcID].rpcDeltas:
-			oldTick = peers[rpcID].rpcDeltas[methodName]
-
-		var currentTick : int = Time.get_ticks_msec()
-		if oldTick + actionDelta <= currentTick:
-			peers[rpcID].rpcDeltas[methodName] = currentTick
-			return true
-
-	return false
-# To be moved to Account.gd -- end
-
+extends Object
 
 # Auth
 func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode):
@@ -43,7 +10,7 @@ func CreateAccount(accountName : String, password : String, email : String, rpcI
 
 func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode):
 	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
-	var peer : PeerData = GetPeer(rpcID)
+	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	if not peer:
 		err = NetworkCommons.AuthError.ERR_NO_PEER_DATA
 	else:
@@ -78,7 +45,7 @@ func ConnectAccount(accountName : String, password : String, rpcID : int = Netwo
 	Launcher.Network.AuthError(err, rpcID)
 
 func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
-	var peer : PeerData = GetPeer(rpcID)
+	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	if peer:
 		peer.accountRID = NetworkCommons.RidUnknown
 		if peer.characterRID != NetworkCommons.RidUnknown:
@@ -87,7 +54,7 @@ func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
 # Character
 func CreateCharacter(charName : String, traits : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
-	var accountID : int = GetAccount(rpcID)
+	var accountID : int = Peers.GetAccount(rpcID)
 	if accountID == NetworkCommons.RidUnknown:
 		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
 	else:
@@ -105,7 +72,7 @@ func CreateCharacter(charName : String, traits : Dictionary, rpcID : int = Netwo
 
 func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
-	var peer : PeerData = GetPeer(rpcID)
+	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 
 	if not peer:
 		err = NetworkCommons.CharacterError.ERR_NO_PEER_DATA
@@ -116,7 +83,7 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 		if peer.characterRID == NetworkCommons.RidUnknown:
 			err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
 		else:
-			if GetAgent(rpcID):
+			if Peers.GetAgent(rpcID):
 				err = NetworkCommons.CharacterError.ERR_ALREADY_LOGGED_IN
 			else:
 				var agent : PlayerAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
@@ -125,42 +92,43 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 					agent.stat.SetAttributes(ActorCommons.DefaultAttributes)
 					agent.inventory.ImportInventory(ActorCommons.DefaultInventory)
 					agent.rpcRID = rpcID
-					onlineList.UpdateJson()
+					OnlineList.UpdateJson()
 					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
 
 	Launcher.Network.CharacterError(err, rpcID)
 
 func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
-	var peer : PeerData = GetPeer(rpcID)
+	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	if peer:
 		peer.characterRID = NetworkCommons.RidUnknown
-		var player : PlayerAgent = GetAgent(rpcID)
+		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player:
 			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
 			WorldAgent.RemoveAgent(player)
 			peer.characterRID = NetworkCommons.RidUnknown
 			peer.agentRID = NetworkCommons.RidUnknown
-			onlineList.UpdateJson()
+			OnlineList.UpdateJson()
 
-#
+# Navigation
 func SetClickPos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		player.SetRelativeMode(false, Vector2.ZERO)
 		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		player.SetRelativeMode(true, direction.normalized())
 
 func ClearNavigation(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		player.SetRelativeMode(false, Vector2.ZERO)
 
+# Triggers
 func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player and player.ownScript == null:
 		var warp : WarpObject = Launcher.World.CanWarp(player)
 		if warp:
@@ -171,56 +139,56 @@ func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
 					player.Morph(false, player.GetNextPortShapeID())
 
 func TriggerSit(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		player.SetState(ActorCommons.State.SIT)
 
 func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player is PlayerAgent:
 		player.Respawn()
 
 func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NotifyNeighbours(GetAgent(rpcID), "EmotePlayer", [emoteID])
+	NotifyNeighbours(Peers.GetAgent(rpcID), "EmotePlayer", [emoteID])
 
 func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NotifyNeighbours(GetAgent(rpcID), "ChatAgent", [text])
+	NotifyNeighbours(Peers.GetAgent(rpcID), "ChatAgent", [text])
 
 func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player and player.ownScript:
 		player.ownScript.InteractChoice(choiceID)
 
 func TriggerNextContext(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player and player.ownScript and player.ownScript.npc:
 		player.ownScript.npc.Interact(player)
 
 func TriggerCloseContext(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		NpcCommons.TryCloseContext(player)
 
 func TriggerInteract(triggeredAgentID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		var triggeredAgent : BaseAgent = WorldAgent.GetAgent(triggeredAgentID)
 		if triggeredAgent:
 			triggeredAgent.Interact(player)
 
 func TriggerExplore(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player is PlayerAgent:
 		player.Explore()
 
 func TriggerCast(targetID : int, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player and DB.SkillsDB.has(skillID):
 		var target : BaseAgent = WorldAgent.GetAgent(targetID)
 		Skill.Cast(player, target, DB.SkillsDB[skillID])
 
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		if player.stat.spiritShape.length() == 0:
 			return
@@ -236,45 +204,31 @@ func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
 		Launcher.Network.UpdateAttributes(targetID, target.stat.strength, target.stat.vitality, target.stat.agility, target.stat.endurance, target.stat.concentration, rpcID)
 		Launcher.Network.UpdateActiveStats(targetID, target.stat.level, target.stat.experience, target.stat.gp, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.entityShape, target.stat.spiritShape, target.stat.currentShape, rpcID)
 
+# Stats
 func AddAttribute(attribute : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player and player.stat:
 		player.stat.AddAttribute(attribute)
 
+# Inventory
 func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var cell : BaseCell = DB.ItemsDB[itemID] if DB.ItemsDB.has(itemID) else null
 	if cell and cell.usable:
-		var player : PlayerAgent = GetAgent(rpcID)
+		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.UseItem(cell)
 
 func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player and player.inventory:
 		Launcher.Network.RefreshInventory(player.inventory.ExportInventory(), rpcID)
 
 func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = GetAgent(rpcID)
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		WorldDrop.PickupDrop(dropID, player)
 
-#
-func GetPeer(rpcID : int) -> PeerData:
-	return peers[rpcID] if rpcID in peers else null
-
-func GetAccount(rpcID : int) -> int:
-	var peer : PeerData = GetPeer(rpcID)
-	return peer.accountRID if peer else NetworkCommons.RidUnknown
-
-func GetCharacter(rpcID : int) -> int:
-	var peer : PeerData = GetPeer(rpcID)
-	return peer.characterRID if peer else NetworkCommons.RidUnknown
-
-func GetAgent(rpcID : int) -> PlayerAgent:
-	var peer : PeerData = GetPeer(rpcID)
-	return WorldAgent.GetAgent(peer.agentRID) if peer else null
-
-#
+# Notify
 func NotifyNeighbours(agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
 	if not agent:
 		assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
@@ -300,7 +254,7 @@ func NotifyInstance(inst : WorldInstance, callbackName : String, args : Array):
 # Peer handling
 func ConnectPeer(rpcID : int):
 	Util.PrintInfo("Server", "Peer connected: %d" % rpcID)
-	AddPeerData(rpcID)
+	Peers.AddPeer(rpcID)
 	if Launcher.Network.peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
 		var clientPeer : PacketPeer = Launcher.Network.peer.get_peer(rpcID)
 		if clientPeer and clientPeer is ENetPacketPeer:
@@ -308,12 +262,12 @@ func ConnectPeer(rpcID : int):
 
 func DisconnectPeer(rpcID : int):
 	Util.PrintInfo("Server", "Peer disconnected: %d" % rpcID)
-	var peer : PeerData = GetPeer(rpcID)
+	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	if peer:
 		if peer.accountRID != NetworkCommons.RidUnknown:
 			DisconnectAccount(rpcID)
-		RemovePeerData(rpcID)
+		Peers.RemovePeer(rpcID)
 
 func Destroy():
-	for peerRID in peers:
+	for peerRID in Peers.peers:
 		DisconnectPeer(peerRID)
