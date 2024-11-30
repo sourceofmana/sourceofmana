@@ -3,7 +3,6 @@ extends WindowPanel
 #
 @onready var nameTextControl : LineEdit		= $Margin/VBoxContainer/GridContainer/NameContainer/NameText
 @onready var passwordTextControl : LineEdit	= $Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText
-@onready var warningLabel : RichTextLabel	= $Margin/VBoxContainer/Warning
 
 @onready var onlineCheck : CheckBox			= $Margin/VBoxContainer/SignBar/OnlineButton
 @onready var hostButton : Button			= $Margin/VBoxContainer/SignBar/Host
@@ -36,7 +35,7 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 
 	if not warn.is_empty():
 		warn = "[color=#%s]%s[/color]" % [UICommons.WarnTextColor.to_html(false), warn]
-	warningLabel.set_text(warn)
+	Launcher.GUI.notificationLabel.AddNotification(warn)
 
 #
 func _warning_on_meta_clicked(meta):
@@ -97,9 +96,6 @@ func _on_text_submitted(_new_text):
 	_on_play_pressed()
 
 #
-func _ready():
-	FillWarningLabel(NetworkCommons.AuthError.ERR_OK)
-
 func _on_visibility_changed():
 	if visible:
 		if nameTextControl and nameTextControl.is_visible() and nameTextControl.get_text().length() == 0:

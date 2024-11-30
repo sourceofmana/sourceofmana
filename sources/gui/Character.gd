@@ -11,6 +11,13 @@ var isCharacterCreatorEnabled : bool					= false
 
 #
 func FillWarningLabel(err : NetworkCommons.CharacterError):
+	if isCharacterCreatorEnabled:
+		Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_SCREEN)
+		if err == NetworkCommons.CharacterError.ERR_OK:
+			EnableCharacterCreator(false)
+		else:
+			EnableCharacterCreator(true)
+
 	var warn : String = ""
 	match err:
 		NetworkCommons.CharacterError.ERR_OK:
@@ -78,12 +85,16 @@ func EnableCharacterCreator(enable : bool):
 	traitsPanel.set_visible(enable)
 	attributesPanel.set_visible(enable)
 
-	Launcher.GUI.buttonBoxes.ClearAll()
-	if enable:
-		Launcher.GUI.buttonBoxes.SetLeft("Cancel", EnableCharacterCreator.bind(false))
-		Launcher.GUI.buttonBoxes.SetMiddle("Randomize", RandomizeCharacter)
-		Launcher.GUI.buttonBoxes.SetRight("Create", CreateCharacter)
-	else:
-		Launcher.GUI.buttonBoxes.SetLeft("Cancel", Launcher.FSM.EnterState.bind(Launcher.FSM.States.LOGIN_SCREEN))
-		Launcher.GUI.buttonBoxes.SetMiddle("New Player", EnableCharacterCreator.bind(true))
-		Launcher.GUI.buttonBoxes.SetRight("Select", SelectCharacter)
+	if Launcher.GUI.buttonBoxes:
+		Launcher.GUI.buttonBoxes.ClearAll()
+		if enable:
+			Launcher.GUI.buttonBoxes.SetLeft("Cancel", EnableCharacterCreator.bind(false))
+			Launcher.GUI.buttonBoxes.SetMiddle("Randomize", RandomizeCharacter)
+			Launcher.GUI.buttonBoxes.SetRight("Create", CreateCharacter)
+		else:
+			Launcher.GUI.buttonBoxes.SetLeft("Cancel", Launcher.FSM.EnterState.bind(Launcher.FSM.States.LOGIN_SCREEN))
+			Launcher.GUI.buttonBoxes.SetMiddle("New Player", EnableCharacterCreator.bind(true))
+			Launcher.GUI.buttonBoxes.SetRight("Select", SelectCharacter)
+
+func RefreshOnce():
+	EnableCharacterCreator(isCharacterCreatorEnabled)

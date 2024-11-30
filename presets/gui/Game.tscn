@@ -135,7 +135,7 @@ size_flags_vertical = 4
 mouse_filter = 1
 
 [node name="Notification" parent="Overlay/VSections/Indicators/Info" instance=ExtResource("17_64u4l")]
-visible = false
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 offset_left = -250.0
 offset_top = -19.0
@@ -294,6 +294,7 @@ offset_bottom = 12.0
 grow_vertical = 2
 size_flags_vertical = 6
 mouse_filter = 1
+theme_type_variation = &"PanelSideLeft"
 persistant = false
 
 [node name="Dialogue" parent="Overlay/VSections/Contexts" instance=ExtResource("24_fqnq4")]
@@ -311,6 +312,7 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="Character" parent="Overlay/VSections/Contexts" instance=ExtResource("49_78q3w")]
+visible = false
 layout_mode = 1
 
 [node name="ButtonBar" type="Control" parent="Overlay/VSections"]

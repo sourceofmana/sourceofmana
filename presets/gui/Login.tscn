@@ -78,11 +78,6 @@ secret = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Warning" type="RichTextLabel" parent="Margin/VBoxContainer"]
-layout_mode = 2
-bbcode_enabled = true
-fit_content = true
-
 [node name="SignBar" type="HBoxContainer" parent="Margin/VBoxContainer"]
 layout_mode = 2
 alignment = 2
@@ -125,7 +120,6 @@ text = "Register"
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="text_submitted" from="Margin/VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_submitted"]
 [connection signal="text_submitted" from="Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_submitted"]
-[connection signal="meta_clicked" from="Margin/VBoxContainer/Warning" to="." method="_warning_on_meta_clicked"]
 [connection signal="toggled" from="Margin/VBoxContainer/SignBar/OnlineButton" to="." method="_on_online_button_toggled"]
 [connection signal="pressed" from="Margin/VBoxContainer/SignBar/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Margin/VBoxContainer/SignBar/Play" to="." method="_on_play_pressed"]

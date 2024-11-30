@@ -88,7 +88,6 @@ func EnterLoginMenu():
 	stats.set_visible(false)
 	statWindow.set_visible(false)
 	dialogueContainer.set_visible(false)
-	notificationLabel.set_visible(false)
 	pickupPanel.set_visible(false)
 	loadingControl.set_visible(false)
 	menu.set_visible(false)
@@ -119,7 +118,7 @@ func EnterCharMenu():
 	Launcher.Map.EmplaceMapNode("Drazil")
 	Launcher.Camera.SetBoundaries()
 	Launcher.Camera.EnableSceneCamera(Vector2(1984, 992))
-	characterPanel.EnableCharacterCreator(false)
+	characterPanel.RefreshOnce()
 
 	characterPanel.set_visible(true)
 	buttonBoxes.set_visible(true)
@@ -143,7 +142,6 @@ func EnterGame():
 	stats.set_visible(true)
 	menu.set_visible(true)
 	actionBoxes.set_visible(true)
-	notificationLabel.set_visible(true)
 	shortcuts.set_visible(true)
 
 	menu.SetItemsVisible(true)

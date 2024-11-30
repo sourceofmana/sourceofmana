@@ -4,14 +4,14 @@ extends RichTextLabel
 @export var modulateInScaler : float	 = 10.0
 @export var modulateOutScaler : float	 = 2.0
 
-@onready var timer : Timer			= $Timer
+@onready var timer : Timer				= $Timer
 
 var way : UICommons.Way					= UICommons.Way.KEEP
 
 #
 func AddNotification(notif : String, delay : float = 5.0):
+	ClearNotification()
 	if notif.length() > 0 and delay > 0.0:
-		ClearNotification()
 		text = "[center]%s[/center]" % notif
 		timer.start(delay)
 		way = UICommons.Way.SHOW
