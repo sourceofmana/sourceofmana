@@ -76,7 +76,7 @@ func _post_launch():
 
 	isInitialized = true
 
-func DestroyAreas():
+func Destroy():
 	for area in areas.values():
 		for inst in area.instances:
 			for player in inst.players:

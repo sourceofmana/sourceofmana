@@ -83,13 +83,14 @@ func LauncherReset():
 		Map.queue_free()
 		Map = null
 	if Camera:
+		Camera.Destroy()
 		Camera.queue_free()
 		Camera = null
 	if Player:
 		Player.queue_free()
 		Player = null
 	if World:
-		World.DestroyAreas()
+		World.Destroy()
 		World.queue_free()
 		World = null
 	if SQL:

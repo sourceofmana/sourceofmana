@@ -39,8 +39,13 @@ func _post_launch():
 
 	if Launcher.Scene:
 		sceneCamera = FileSystem.LoadEntityComponent("Camera")
+		sceneCamera.set_name("SceneCamera")
 		if sceneCamera:
 			Launcher.Scene.add_child.call_deferred(sceneCamera)
 
-
 	isInitialized = true
+
+func Destroy():
+	if sceneCamera and Launcher.Scene:
+		sceneCamera.queue_free()
+		sceneCamera = null
