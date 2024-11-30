@@ -24,16 +24,6 @@ func ConnectAccount(accountName : String, password : String, rpcID : int = Netwo
 					err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
 				else:
 					peer.accountRID = Launcher.SQL.Login(accountName, password)
-					if peer.accountRID != NetworkCommons.RidUnknown:
-						CreateCharacter(accountName, {
-							"hairstyle" = 0,
-							"haircolor" = 0,
-							"race" = 0,
-							"skin" = 0,
-							"gender" = 0,
-							"shape" = "Default Entity",
-							"spirit" = "Piou"
-						}, rpcID)
 			# -- end
 
 			if peer.accountRID == NetworkCommons.RidUnknown:

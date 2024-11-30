@@ -54,7 +54,7 @@ func SetLocalPlayer():
 		Launcher.Camera.mainCamera = FileSystem.LoadEntityComponent("Camera")
 		if Launcher.Camera.mainCamera:
 			add_child.call_deferred(Launcher.Camera.mainCamera)
-	
+
 	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
 	Launcher.Network.RetrieveInventory()
 	Launcher.FSM.EnterState(Launcher.FSM.States.IN_GAME)

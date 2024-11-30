@@ -91,3 +91,10 @@ enum CharacterError {
 	ERR_NAME_VALID,
 	ERR_NAME_SIZE,
 }
+
+static func CheckCharacterInformation(nickText : String) -> CharacterError:
+	if not CheckSize(nickText, PlayerNameMinSize, PlayerNameMaxSize):
+		return CharacterError.ERR_NAME_SIZE
+	elif not CheckValid(nickText, EntryValidRegex):
+		return CharacterError.ERR_NAME_VALID
+	return CharacterError.ERR_OK

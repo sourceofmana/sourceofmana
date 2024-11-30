@@ -5,26 +5,27 @@ extends ServiceBase
 # Overlay
 @onready var menu : Control						= $Overlay/VSections/Indicators/Menu
 @onready var stats : Control					= $Overlay/VSections/Indicators/Stat
-
 @onready var notificationLabel : RichTextLabel	= $Overlay/VSections/Indicators/Info/Notification
 @onready var pickupPanel : PanelContainer		= $Overlay/VSections/Indicators/Info/PickUp
+
+# Contexts
 @onready var loadingControl : Control			= $Overlay/VSections/Contexts/Loading
 @onready var dialogueWindow : VBoxContainer		= $Overlay/VSections/Contexts/Dialogue
 @onready var dialogueContainer : PanelContainer	= $Overlay/VSections/Contexts/Dialogue/BottomVbox/Dialogue
 @onready var choiceContext : ContextMenu		= $Overlay/VSections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
 @onready var infoContext : ContextMenu			= $Overlay/VSections/Contexts/Info
+@onready var characterPanel : Control			= $Overlay/VSections/Contexts/Character
 
-@onready var boxes : Control					= $Overlay/VSections/Boxes
-
+# Shortcuts
+@onready var actionBoxes : Control				= $Overlay/VSections/ButtonBar/ActionBoxes
+@onready var buttonBoxes : Control				= $Overlay/VSections/ButtonBar/ButtonBoxes
 @onready var shortcuts : Container				= $Overlay/Sections/Shortcuts
 @onready var sticks : Container					= $Overlay/Sections/Shortcuts/Sticks
 
 # Windows
 @onready var windows : Control					= $Windows/Floating
-
 @onready var newsWindow : WindowPanel			= $Windows/Floating/News
 @onready var loginWindow : WindowPanel			= $Windows/Floating/Login
-@onready var characterWindow : WindowPanel		= $Windows/Floating/Character
 @onready var inventoryWindow : WindowPanel		= $Windows/Floating/Inventory
 @onready var minimapWindow : WindowPanel		= $Windows/Floating/Minimap
 @onready var chatWindow : WindowPanel			= $Windows/Floating/Chat
@@ -89,11 +90,12 @@ func EnterLoginMenu():
 	pickupPanel.set_visible(false)
 	loadingControl.set_visible(false)
 	menu.set_visible(false)
-	boxes.set_visible(false)
+	actionBoxes.set_visible(false)
 	quitWindow.set_visible(false)
 	respawnWindow.EnableControl(false)
 	shortcuts.set_visible(false)
-	characterWindow.EnableControl(false)
+	characterPanel.set_visible(false)
+	buttonBoxes.set_visible(false)
 
 	background.set_visible(true)
 	newsWindow.EnableControl(true)
@@ -110,30 +112,33 @@ func EnterCharMenu():
 	progressTimer.stop()
 	progressTimer = null
 	loadingControl.set_visible(false)
+	background.set_visible(false)
+	Launcher.Map.EmplaceMapNode("Drazil")
+	Launcher.Camera.SetBoundaries()
+	Launcher.Camera.EnableSceneCamera(Vector2(1984, 992))
+	characterPanel.EnableCharacterCreator(false)
 
-	Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_PROGRESS)
-	characterWindow.EnableControl(true)
+	characterPanel.set_visible(true)
+	buttonBoxes.set_visible(true)
 
 func EnterCharProgress():
-	characterWindow.EnableControl(false)
+	characterPanel.set_visible(false)
+	buttonBoxes.set_visible(false)
 
 	Launcher.Network.ConnectCharacter(loginWindow.nameText)
 	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.CharSelectionTimeout, Launcher.Network.Client.CharacterError, [NetworkCommons.CharacterError.ERR_TIMEOUT], "ProgressTimer")
 	loadingControl.set_visible(true)
 
 func EnterGame():
+	Launcher.Camera.DisableSceneCamera()
 	progressTimer.stop()
 	progressTimer = null
 	loadingControl.set_visible(false)
 	DisplayInfoContext(["gp_interact", "gp_untarget", "gp_morph", "gp_sit", "gp_target", "gp_pickup"])
 
-	background.set_visible(false)
-	loginWindow.EnableControl(false)
-	newsWindow.EnableControl(false)
-
 	stats.set_visible(true)
 	menu.set_visible(true)
-	boxes.set_visible(true)
+	actionBoxes.set_visible(true)
 	notificationLabel.set_visible(true)
 	shortcuts.set_visible(true)
 

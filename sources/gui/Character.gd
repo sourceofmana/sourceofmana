@@ -1,7 +1,13 @@
-extends WindowPanel
+extends Control
 
 #
-@onready var warningLabel : RichTextLabel	= $Margin/VBoxContainer/Warning
+@onready var characterNameLineEdit : LineEdit			= $PlayerName/MarginContainer/VBoxContainer/Entry
+@onready var characterNameDisplay : Label				= $PlayerName/MarginContainer/VBoxContainer/Name
+@onready var traitsPanel : PanelContainer				= $Customization/Traits
+@onready var attributesPanel : PanelContainer			= $Customization/Attributes
+@onready var statsPanel : PanelContainer				= $Customization/Stats
+
+var isCharacterCreatorEnabled : bool					= false
 
 #
 func FillWarningLabel(err : NetworkCommons.CharacterError):
@@ -9,6 +15,7 @@ func FillWarningLabel(err : NetworkCommons.CharacterError):
 	match err:
 		NetworkCommons.CharacterError.ERR_OK:
 			warn = ""
+			EnableCharacterCreator(false)
 		NetworkCommons.CharacterError.ERR_ALREADY_LOGGED_IN:
 			warn = "Character is already logged in."
 		NetworkCommons.CharacterError.ERR_TIMEOUT:
@@ -26,15 +33,49 @@ func FillWarningLabel(err : NetworkCommons.CharacterError):
 
 	if not warn.is_empty():
 		warn = "[color=#%s]%s[/color]" % [UICommons.WarnTextColor.to_html(false), warn]
-	warningLabel.set_text(warn)
+	Launcher.GUI.notificationLabel.AddNotification(warn)
 
-#
 func AddCharacter(info : Dictionary):
 	if "nickname" not in info or "level" not in info:
 		assert(false, "Missing character information")
 	else:
 		Util.PrintLog("Character", "Character: %s (Level %d)" % [info["nickname"], info["level"]])
 
-#
-func _ready():
-	FillWarningLabel(NetworkCommons.CharacterError.ERR_OK)
+func RandomizeCharacter():
+	pass
+
+func CreateCharacter():
+	if isCharacterCreatorEnabled:
+		var nickname : String = characterNameLineEdit.get_text()
+		var err : NetworkCommons.CharacterError = NetworkCommons.CheckCharacterInformation(nickname)
+		if err != NetworkCommons.CharacterError.ERR_OK:
+			FillWarningLabel(err)
+		else:
+			Launcher.Network.CreateCharacter(nickname, {
+				"hairstyle" = 0,
+				"haircolor" = 0,
+				"race" = 0,
+				"skin" = 0,
+				"gender" = 0,
+				"shape" = "Default Entity",
+				"spirit" = "Piou"
+			})
+			Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_PROGRESS)
+
+func EnableCharacterCreator(enable : bool):
+	isCharacterCreatorEnabled = enable
+	statsPanel.set_visible(!enable)
+	characterNameDisplay.set_visible(!enable)
+	characterNameLineEdit.set_visible(enable)
+	traitsPanel.set_visible(enable)
+	attributesPanel.set_visible(enable)
+
+	Launcher.GUI.buttonBoxes.ClearAll()
+	if enable:
+		Launcher.GUI.buttonBoxes.SetLeft("Cancel", EnableCharacterCreator.bind(false))
+		Launcher.GUI.buttonBoxes.SetMiddle("Randomize", RandomizeCharacter)
+		Launcher.GUI.buttonBoxes.SetRight("Create", CreateCharacter)
+	else:
+		Launcher.GUI.buttonBoxes.SetLeft("Cancel", Launcher.FSM.EnterState.bind(Launcher.FSM.States.LOGIN_SCREEN))
+		Launcher.GUI.buttonBoxes.SetMiddle("New Player", EnableCharacterCreator.bind(true))
+		Launcher.GUI.buttonBoxes.SetRight("Select", Launcher.FSM.EnterState.bind(Launcher.FSM.States.CHAR_PROGRESS))

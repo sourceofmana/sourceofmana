@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=62 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://4y5ck1nvjs0k" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -45,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://5fam1c22ucqh" path="res://data/graphics/gui/mobile/buttonB.png" id="24_idf5b"]
 [ext_resource type="Texture2D" uid="uid://c06gr2x25n6vt" path="res://data/graphics/gui/mobile/buttonA.png" id="25_6cklw"]
 [ext_resource type="Texture2D" uid="uid://rty5s2v4s24x" path="res://data/graphics/gui/mobile/buttonX_pressed.png" id="25_8t8bb"]
+[ext_resource type="PackedScene" uid="uid://h70yw73rukc0" path="res://presets/gui/ButtonBox.tscn" id="26_plhfr"]
 [ext_resource type="Texture2D" uid="uid://ddx5khysp6252" path="res://data/graphics/gui/mobile/buttonB_pressed.png" id="27_rgxqc"]
 [ext_resource type="Texture2D" uid="uid://dsj3d0a61n701" path="res://data/graphics/gui/mobile/buttonL.png" id="28_k5lnh"]
 [ext_resource type="Texture2D" uid="uid://bffqij77vx5xq" path="res://data/graphics/gui/mobile/buttonL_pressed.png" id="29_5sssi"]
@@ -104,6 +105,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="Stat" type="Control" parent="Overlay/VSections/Indicators"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 2
 mouse_filter = 1
@@ -153,6 +155,7 @@ grow_horizontal = 2
 mouse_filter = 1
 
 [node name="Menu" type="Control" parent="Overlay/VSections/Indicators"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 10
 mouse_filter = 1
@@ -307,8 +310,30 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Boxes" parent="Overlay/VSections" instance=ExtResource("4")]
+[node name="Character" parent="Overlay/VSections/Contexts" instance=ExtResource("49_78q3w")]
+layout_mode = 1
+
+[node name="ButtonBar" type="Control" parent="Overlay/VSections"]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
+
+[node name="ButtonBoxes" parent="Overlay/VSections/ButtonBar" instance=ExtResource("26_plhfr")]
+visible = false
+layout_mode = 1
+offset_bottom = 24.0
+
+[node name="ActionBoxes" parent="Overlay/VSections/ButtonBar" instance=ExtResource("4")]
+visible = false
+custom_minimum_size = Vector2(422, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -211.0
+offset_right = 211.0
+offset_bottom = 0.0
+grow_vertical = 1
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
@@ -492,14 +517,6 @@ offset_top = 240.0
 offset_right = 576.0
 offset_bottom = 346.0
 blockActions = false
-
-[node name="Character" parent="Windows/Floating" instance=ExtResource("49_78q3w")]
-visible = false
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 360.0
-offset_bottom = 106.0
 
 [node name="News" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false

@@ -163,7 +163,7 @@ func AuthError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.Rid
 
 func CharacterError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:
-		Launcher.GUI.characterWindow.FillWarningLabel(err)
+		Launcher.GUI.characterPanel.FillWarningLabel(err)
 	Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_SCREEN)
 
 func CharacterList(chars : Array[Dictionary], _rpcID : int = NetworkCommons.RidSingleMode):
@@ -171,7 +171,7 @@ func CharacterList(chars : Array[Dictionary], _rpcID : int = NetworkCommons.RidS
 		CharacterInfo(characterInfo)
 
 func CharacterInfo(info : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
-	Launcher.GUI.characterWindow.AddCharacter(info)
+	Launcher.GUI.characterPanel.AddCharacter(info)
 
 #
 func ConnectServer():

@@ -135,4 +135,5 @@ func _post_launch():
 	if Audio:									Audio._post_launch()
 
 func _quit():
+	LauncherReset()
 	get_tree().quit()
