@@ -39,7 +39,7 @@ func AddCharacter(info : Dictionary):
 	if "nickname" not in info or "level" not in info:
 		assert(false, "Missing character information")
 	else:
-		Util.PrintLog("Character", "Character: %s (Level %d)" % [info["nickname"], info["level"]])
+		UpdateSelectedCharacter(info)
 
 func RandomizeCharacter():
 	pass
@@ -62,6 +62,14 @@ func CreateCharacter():
 			})
 			Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_PROGRESS)
 
+func SelectCharacter():
+	Launcher.Network.ConnectCharacter(characterNameDisplay.get_text())
+	Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_PROGRESS)
+
+func UpdateSelectedCharacter(info : Dictionary):
+	if "nickname" in info:
+		characterNameDisplay.set_text(info["nickname"])
+
 func EnableCharacterCreator(enable : bool):
 	isCharacterCreatorEnabled = enable
 	statsPanel.set_visible(!enable)
@@ -78,4 +86,4 @@ func EnableCharacterCreator(enable : bool):
 	else:
 		Launcher.GUI.buttonBoxes.SetLeft("Cancel", Launcher.FSM.EnterState.bind(Launcher.FSM.States.LOGIN_SCREEN))
 		Launcher.GUI.buttonBoxes.SetMiddle("New Player", EnableCharacterCreator.bind(true))
-		Launcher.GUI.buttonBoxes.SetRight("Select", Launcher.FSM.EnterState.bind(Launcher.FSM.States.CHAR_PROGRESS))
+		Launcher.GUI.buttonBoxes.SetRight("Select", SelectCharacter)

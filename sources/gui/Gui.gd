@@ -79,12 +79,14 @@ func DisplayInfoContext(actions : PackedStringArray):
 
 #
 func EnterLoginMenu():
-	infoContext.set_visible(false)
+	if progressTimer:
+		progressTimer.stop()
+		progressTimer = null
 
+	infoContext.set_visible(false)
 	menu.SetItemsVisible(false)
 	stats.set_visible(false)
 	statWindow.set_visible(false)
-
 	dialogueContainer.set_visible(false)
 	notificationLabel.set_visible(false)
 	pickupPanel.set_visible(false)
@@ -109,8 +111,9 @@ func EnterLoginProgress():
 	loadingControl.set_visible(true)
 
 func EnterCharMenu():
-	progressTimer.stop()
-	progressTimer = null
+	if progressTimer:
+		progressTimer.stop()
+		progressTimer = null
 	loadingControl.set_visible(false)
 	background.set_visible(false)
 	Launcher.Map.EmplaceMapNode("Drazil")
@@ -125,15 +128,16 @@ func EnterCharProgress():
 	characterPanel.set_visible(false)
 	buttonBoxes.set_visible(false)
 
-	Launcher.Network.ConnectCharacter(loginWindow.nameText)
 	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.CharSelectionTimeout, Launcher.Network.Client.CharacterError, [NetworkCommons.CharacterError.ERR_TIMEOUT], "ProgressTimer")
 	loadingControl.set_visible(true)
 
 func EnterGame():
-	Launcher.Camera.DisableSceneCamera()
-	progressTimer.stop()
-	progressTimer = null
+	if progressTimer:
+		progressTimer.stop()
+		progressTimer = null
 	loadingControl.set_visible(false)
+
+	Launcher.Camera.DisableSceneCamera()
 	DisplayInfoContext(["gp_interact", "gp_untarget", "gp_morph", "gp_sit", "gp_target", "gp_pickup"])
 
 	stats.set_visible(true)
