@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://h70yw73rukc0"]
+
+[ext_resource type="Script" path="res://sources/gui/ButtonBox.gd" id="1_ciocy"]
+
+[node name="ButtonBoxes" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+script = ExtResource("1_ciocy")
+
+[node name="EmptyLeft" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ButtonLeft" type="Button" parent="."]
+layout_mode = 2
+theme_type_variation = &"LargeButton"
+text = "Left"
+
+[node name="EmptyLeftMiddle" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ButtonMiddle" type="Button" parent="."]
+layout_mode = 2
+theme_type_variation = &"LargeButton"
+text = "Middle"
+
+[node name="EmptyRightMiddle" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ButtonRight" type="Button" parent="."]
+layout_mode = 2
+theme_type_variation = &"LargeButton"
+text = "Right"
+
+[node name="EmptyRight" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
