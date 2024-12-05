@@ -92,14 +92,6 @@ theme_type_variation = &"PearlBox"
 button_pressed = true
 text = "Online"
 
-[node name="Host" type="Button" parent="Margin/VBoxContainer/SignBar"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-focus_next = NodePath("../Play")
-focus_previous = NodePath("../../GridContainer/PasswordContainer/PasswordText")
-text = "Host"
-
 [node name="Play" type="Button" parent="Margin/VBoxContainer/SignBar"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -109,7 +101,6 @@ focus_previous = NodePath("../../GridContainer/PasswordContainer/PasswordText")
 text = "Play"
 
 [node name="Register" type="Button" parent="Margin/VBoxContainer/SignBar"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -118,9 +109,12 @@ focus_previous = NodePath("../Play")
 text = "Register"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="focus_entered" from="Margin/VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="Margin/VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_focus_exited"]
 [connection signal="text_submitted" from="Margin/VBoxContainer/GridContainer/NameContainer/NameText" to="." method="_on_text_submitted"]
+[connection signal="focus_entered" from="Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_focus_exited"]
 [connection signal="text_submitted" from="Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText" to="." method="_on_text_submitted"]
 [connection signal="toggled" from="Margin/VBoxContainer/SignBar/OnlineButton" to="." method="_on_online_button_toggled"]
-[connection signal="pressed" from="Margin/VBoxContainer/SignBar/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Margin/VBoxContainer/SignBar/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Margin/VBoxContainer/SignBar/Register" to="." method="_on_register_pressed"]
