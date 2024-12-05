@@ -17,4 +17,4 @@ static func GetOrAddValue(data : Dictionary, key : String, defaultVal : Variant)
 	return data[key] if HasValue(data, key) else defaultVal
 
 static func Timestamp() -> int:
-	return Time.get_ticks_msec()
+	return int(Time.get_unix_time_from_system()) # Remove sub-seconds precision

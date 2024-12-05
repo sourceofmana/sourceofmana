@@ -22,51 +22,54 @@ var Network : ServiceBase			= null
 # Accessors
 var Player : Entity					= null
 
+# Signals
+signal launchModeUpdated
 
 #
 func ParseLaunchMode():
-	var launchClient : bool = false
-	var launchServer : bool = false
-
-	if "--hybrid" in OS.get_cmdline_args():
-		launchClient = true
-		launchServer = true
-	elif "--client" in OS.get_cmdline_args():
-		launchClient = true
-		launchServer = false
-	elif "--server" in OS.get_cmdline_args():
-		launchClient = false
-		launchServer = true
-
-	LaunchMode(launchClient, launchServer)
-
-func LaunchMode(isClient : bool = false, isServer : bool = false):
-	Network.NetMode(isClient, isServer)
-	if isClient:	LaunchClient()
-	if isServer:	LaunchServer()
-
-	_post_launch()
-
-	if isServer:
-		if not isClient:
+	if "--server" in OS.get_cmdline_args():
+		if Scene:
 			Scene.queue_free()
 			Scene = null
-			FSM.queue_free()
-			FSM = null
-			Action.queue_free()
-			Action = null
+		if GUI:
+			GUI.queue_free()
+			GUI = null
+		if Audio:
 			Audio.queue_free()
 			Audio = null
-			var label = FileSystem.LoadGui("Server")
-			add_child.call_deferred(label)
+		LaunchMode(false, true)
+	else:
+		if OS.get_name() == "Web" or OS.is_debug_build():
+			LaunchMode(true, true)
+		else:
+			LaunchMode(true, false)
+
+func LaunchMode(launchClient : bool = false, launchServer : bool = false) -> bool:
+	var isClientConnected : bool = Launcher.Network.Client != null
+	var isServerConnected : bool = Launcher.Network.Server != null
+	if isClientConnected == launchClient and isServerConnected == launchServer:
+		return false
+
+	Launcher.LauncherReset(false, false)
+	Network.NetDestroy()
+	if launchClient:	LaunchClient()
+	if launchServer:	LaunchServer()
+	Network.NetMode(launchClient, launchServer)
+
+	_post_launch()
+	launchModeUpdated.emit(launchClient, launchServer)
+	return true
 
 func LaunchClient():
 	if OS.is_debug_build():
 		Debug		= FileSystem.LoadSource("debug/Debug.gd")
 
 	# Load then low-prio services on which the order is not important
+	Action			= FileSystem.LoadSource("input/Action.gd")
 	Camera			= FileSystem.LoadSource("camera/Camera.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
+
+	add_child.call_deferred(Action)
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
@@ -74,29 +77,46 @@ func LaunchServer():
 	add_child.call_deferred(World)
 	add_child.call_deferred(SQL)
 
-func LauncherReset():
-	if Debug:
-		Debug.queue_free()
-		Debug = null
-	if Map:
-		Map.UnloadMapNode()
-		Map.queue_free()
-		Map = null
-	if Camera:
-		Camera.Destroy()
-		Camera.queue_free()
-		Camera = null
-	if Player:
-		Player.queue_free()
-		Player = null
-	if World:
-		World.Destroy()
-		World.queue_free()
-		World = null
-	if SQL:
-		SQL.Destroy()
-		SQL.queue_free()
-		SQL = null
+func LauncherReset(clientStarted : bool, serverStarted : bool):
+	if not clientStarted:
+		if Debug:
+			Debug.Destroy()
+			Debug.queue_free()
+			Debug = null
+		if Action:
+			Action.queue_free()
+			Action = null
+		if Camera:
+			Camera.Destroy()
+			Camera.queue_free()
+			Camera = null
+		if Map:
+			Map.Destroy()
+			Map.queue_free()
+			Map = null
+		if Player:
+			Player.queue_free()
+			Player = null
+
+	if not serverStarted:
+		if World:
+			World.Destroy()
+			World.queue_free()
+			World = null
+		if SQL:
+			SQL.Destroy()
+			SQL.queue_free()
+			SQL = null
+
+func LauncherQuit():
+	if Network:
+		Network.NetDestroy()
+		Network.queue_free()
+		Network = null
+	if FSM:
+		FSM.queue_free()
+		FSM = null
+	get_tree().quit()
 
 #
 func _enter_tree():
@@ -110,19 +130,16 @@ func _enter_tree():
 		_quit()
 
 func _ready():
-	Action			= FileSystem.LoadSource("input/Action.gd")
 	Network			= FileSystem.LoadSource("network/Network.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
-
-	add_child.call_deferred(Action)
 	add_child.call_deferred(Network)
 	add_child.call_deferred(FSM)
 
-	_post_launch()
 	DB.Init()
 	Conf.Init()
 
 	ParseLaunchMode()
+	_post_launch()
 
 # Call _post_launch functions for service depending on other services
 func _post_launch():
@@ -136,5 +153,5 @@ func _post_launch():
 	if Audio:									Audio._post_launch()
 
 func _quit():
-	LauncherReset()
-	get_tree().quit()
+	LauncherReset(false, false)
+	LauncherQuit()

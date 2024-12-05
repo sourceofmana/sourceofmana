@@ -5,7 +5,6 @@ extends WindowPanel
 @onready var passwordTextControl : LineEdit	= $Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText
 
 @onready var onlineCheck : CheckBox			= $Margin/VBoxContainer/SignBar/OnlineButton
-@onready var hostButton : Button			= $Margin/VBoxContainer/SignBar/Host
 @onready var playButton : Button			= $Margin/VBoxContainer/SignBar/Play
 @onready var registerButton : Button		= $Margin/VBoxContainer/SignBar/Register
 
@@ -46,29 +45,39 @@ func EnableControl(state : bool):
 	super(state)
 
 	if state == true:
-		if not OS.is_debug_build():
-			hostButton.visible = false
-		else:
-			_on_online_button_toggled(false)
-
 		if OS.get_name() == "Web":
-			_on_online_button_toggled(false)
 			onlineCheck.visible = false
+
+func RefreshOnlineMode():
+	OnlineMode(Launcher.Network.Client != null, Launcher.Network.Server != null)
+
+func OnlineMode(_clientStarted : bool, serverStarted : bool):
+	if onlineCheck:
+		onlineCheck.text = "Offline" if serverStarted else "Online"
+		if onlineCheck.button_pressed != not serverStarted:
+			onlineCheck.button_pressed = not serverStarted
+
+func EnableButtons(state : bool):
+	var isDisabled : bool = not state
+	onlineCheck.disabled = isDisabled
+	playButton.disabled = isDisabled
+	registerButton.disabled = isDisabled
+	if isDisabled:
+		onlineCheck.text = "Connecting..."
+	else:
+		RefreshOnlineMode()
 
 #
 func _on_play_pressed():
 	nameText = nameTextControl.get_text()
 	passwordText = passwordTextControl.get_text()
-
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
 	FillWarningLabel(authError)
-
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		Launcher.GUI.ToggleControl(self)
+		Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_PROGRESS)
+		Launcher.Network.ConnectAccount(nameText, passwordText)
 		if Launcher.GUI.settingsWindow:
 			Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
-		Launcher.LaunchMode(true, not onlineCheck.button_pressed)
-		Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_PROGRESS)
 
 func _on_register_pressed():
 	nameText = nameTextControl.get_text()
@@ -80,17 +89,15 @@ func _on_register_pressed():
 	if authError == NetworkCommons.AuthError.ERR_OK:
 		Launcher.Network.CreateAccount(nameText, passwordText, "g@g.g")
 
-func _on_host_pressed():
-		Launcher.GUI.ToggleControl(self)
-		Launcher.LaunchMode(false, true)
-
 #
 func _on_text_focus_entered():
 	SetFloatingWindowToTop()
-	Launcher.Action.Enable(false)
+	if Launcher.Action:
+		Launcher.Action.Enable(false)
 
 func _on_text_focus_exited():
-	Launcher.Action.Enable(true)
+	if Launcher.Action:
+		Launcher.Action.Enable(true)
 
 func _on_text_submitted(_new_text):
 	_on_play_pressed()
@@ -104,7 +111,12 @@ func _on_visibility_changed():
 			passwordTextControl.grab_focus()
 		elif playButton and playButton.is_visible():
 			playButton.grab_focus()
+		RefreshOnlineMode()
 
-func _on_online_button_toggled(toggled):
-	onlineCheck.button_pressed = toggled
-	onlineCheck.text = "Online" if toggled else "Offline"
+func _on_online_button_toggled(toggled : bool):
+	var emulateServer : bool = not toggled
+	if Launcher.LaunchMode(true, emulateServer):
+		EnableButtons(false)
+
+func _init():
+	Launcher.launchModeUpdated.connect(OnlineMode)

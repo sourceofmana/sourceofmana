@@ -175,19 +175,17 @@ func CharacterInfo(info : Dictionary, _rpcID : int = NetworkCommons.RidSingleMod
 #
 func ConnectServer():
 	if Launcher.GUI and Launcher.GUI.loginWindow:
-		Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_PROGRESS)
-
-		var accountName : String = Launcher.GUI.loginWindow.nameText
-		var accountPassword : String = Launcher.GUI.loginWindow.passwordText
-		Launcher.Network.ConnectAccount(accountName, accountPassword)
+		Launcher.GUI.loginWindow.EnableButtons(true)
 
 func DisconnectServer():
-	Launcher.LauncherReset()
+	Launcher.LaunchMode(true, true)
 	Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
+	AuthError(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
 
-#
-func _init():
-	if not Launcher.FSM.exit_login.is_connected(Launcher.Network.NetCreate):
-		Launcher.FSM.exit_login.connect(Launcher.Network.NetCreate)
-	if not Launcher.FSM.enter_login.is_connected(Launcher.Network.NetDestroy):
-		Launcher.FSM.enter_login.connect(Launcher.Network.NetDestroy)
+func Destroy():
+	if Launcher.Root.multiplayer.connected_to_server.is_connected(ConnectServer):
+		Launcher.Root.multiplayer.connected_to_server.disconnect(ConnectServer)
+	if Launcher.Root.multiplayer.connection_failed.is_connected(DisconnectServer):
+		Launcher.Root.multiplayer.connection_failed.disconnect(DisconnectServer)
+	if Launcher.Root.multiplayer.server_disconnected.is_connected(DisconnectServer):
+		Launcher.Root.multiplayer.server_disconnected.disconnect(DisconnectServer)

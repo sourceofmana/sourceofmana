@@ -7,13 +7,16 @@ var queryMutex : Mutex				= Mutex.new()
 
 # Accounts
 func AddAccount(username : String, password : String, email : String) -> bool:
-	var accountData : Dictionary = {
-		"username" : username,
-		"password" : password,
-		"email" : email,
-		"created_timestamp" : SQLCommons.Timestamp()
-	}
-	return db.insert_row("account", accountData)
+	var results : Array = db.select_rows("account", "username = %s" % username, ["account_id"])
+	if results.size() == 0:
+		var accountData : Dictionary = {
+			"username" : username,
+			"password" : password,
+			"email" : email,
+			"created_timestamp" : SQLCommons.Timestamp()
+		}
+		return db.insert_row("account", accountData)
+	return false
 
 func RemoveAccount(accountID : int) -> bool:
 	return db.delete_rows("account", "account_id = %d" % accountID)

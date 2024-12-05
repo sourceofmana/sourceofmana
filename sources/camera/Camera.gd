@@ -27,6 +27,7 @@ func SetBoundaries():
 
 func EnableSceneCamera(pos : Vector2):
 	sceneCamera.global_position = pos
+	sceneCamera.set_enabled(true)
 	sceneCamera.make_current()
 
 func DisableSceneCamera():

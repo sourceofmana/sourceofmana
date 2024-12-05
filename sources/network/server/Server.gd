@@ -2,10 +2,17 @@ extends Object
 
 # Auth
 func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode):
-	var err : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(accountName, password)
-	if err == NetworkCommons.AuthError.ERR_OK:
-		if not Launcher.SQL.AddAccount(accountName, password, email):
-			err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
+	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
+	var peer : Peers.Peer = Peers.GetPeer(rpcID)
+	if not peer:
+		err = NetworkCommons.AuthError.ERR_NO_PEER_DATA
+	else:
+		err = NetworkCommons.CheckAuthInformation(accountName, password)
+		if err == NetworkCommons.AuthError.ERR_OK:
+			if not Launcher.SQL.AddAccount(accountName, password, email):
+				err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
+			else:
+				peer.accountRID = Launcher.SQL.Login(accountName, password)
 	Launcher.Network.AuthError(err, rpcID)
 
 func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode):
@@ -17,15 +24,6 @@ func ConnectAccount(accountName : String, password : String, rpcID : int = Netwo
 		err = NetworkCommons.CheckAuthInformation(accountName, password)
 		if err == NetworkCommons.AuthError.ERR_OK:
 			peer.accountRID = Launcher.SQL.Login(accountName, password)
-
-			# Remove once account creation logic is implemented
-			if peer.accountRID == NetworkCommons.RidUnknown:
-				if not Launcher.SQL.AddAccount(accountName, password, "g@g.g"):
-					err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
-				else:
-					peer.accountRID = Launcher.SQL.Login(accountName, password)
-			# -- end
-
 			if peer.accountRID == NetworkCommons.RidUnknown:
 				err = NetworkCommons.AuthError.ERR_AUTH
 			else:
@@ -57,7 +55,7 @@ func CreateCharacter(charName : String, traits : Dictionary, rpcID : int = Netwo
 			else:
 				Launcher.Network.CharacterInfo(Launcher.SQL.GetCharacterInfo(characterID), rpcID)
 
-	Launcher.Network.CharacterError(err)
+	Launcher.Network.CharacterError(err, rpcID)
 	return err
 
 func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
@@ -69,12 +67,12 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 	elif peer.accountRID == NetworkCommons.RidUnknown:
 		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
 	else:
-		peer.characterRID = Launcher.SQL.GetCharacterID(peer.accountRID, nickname)
-		if peer.characterRID == NetworkCommons.RidUnknown:
-			err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
+		if Peers.GetCharacter(rpcID) != NetworkCommons.RidUnknown:
+			err = NetworkCommons.CharacterError.ERR_ALREADY_LOGGED_IN
 		else:
-			if Peers.GetAgent(rpcID):
-				err = NetworkCommons.CharacterError.ERR_ALREADY_LOGGED_IN
+			peer.characterRID = Launcher.SQL.GetCharacterID(peer.accountRID, nickname)
+			if peer.characterRID == NetworkCommons.RidUnknown:
+				err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
 			else:
 				var agent : PlayerAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
 				if agent:
@@ -95,7 +93,6 @@ func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
 		if player:
 			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
 			WorldAgent.RemoveAgent(player)
-			peer.characterRID = NetworkCommons.RidUnknown
 			peer.agentRID = NetworkCommons.RidUnknown
 			OnlineList.UpdateJson()
 
@@ -259,5 +256,10 @@ func DisconnectPeer(rpcID : int):
 		Peers.RemovePeer(rpcID)
 
 func Destroy():
+	if Launcher.Root.multiplayer.peer_connected.is_connected(ConnectPeer):
+		Launcher.Root.multiplayer.peer_connected.disconnect(ConnectPeer)
+	if Launcher.Root.multiplayer.peer_disconnected.is_connected(DisconnectPeer):
+		Launcher.Root.multiplayer.peer_disconnected.disconnect(DisconnectPeer)
+
 	for peerRID in Peers.peers:
 		DisconnectPeer(peerRID)

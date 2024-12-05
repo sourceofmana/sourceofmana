@@ -136,7 +136,7 @@ func set_actionoverlay(enable : bool):
 	SetVal("Render-ActionOverlay", enable)
 	apply_actionoverlay(enable)
 func apply_actionoverlay(enable : bool):
-	if Launcher.GUI:
+	if Launcher.GUI and Launcher.Action:
 		if enable:
 			var rescaledWindowSize : float = float(DisplayServer.window_get_size().x / Launcher.Root.get_content_scale_factor())
 			var horizontalMargin : int = lerp(0, 160, max(0, rescaledWindowSize - GetVal("Render-MinWindowSize").x * 1.5) / rescaledWindowSize)
@@ -172,7 +172,8 @@ func set_hq4x(enable : bool):
 	SetVal("Render-HQ4x", enable)
 	apply_hq4x(enable)
 func apply_hq4x(enable : bool):
-	Launcher.GUI.HQ4xShader.set_visible(enable)
+	if Launcher.GUI and Launcher.GUI.HQ4xShader:
+		Launcher.GUI.HQ4xShader.set_visible(enable)
 
 # CRT
 func init_crt(apply : bool):
@@ -184,7 +185,8 @@ func set_crt(enable : bool):
 	SetVal("Render-CRT", enable)
 	apply_crt(enable)
 func apply_crt(enable : bool):
-	Launcher.GUI.CRTShader.set_visible(enable)
+	if Launcher.GUI and Launcher.GUI.CRTShader:
+		Launcher.GUI.CRTShader.set_visible(enable)
 
 # Audio General
 func init_audiogeneral(apply : bool):

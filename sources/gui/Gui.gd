@@ -79,7 +79,7 @@ func DisplayInfoContext(actions : PackedStringArray):
 
 #
 func EnterLoginMenu():
-	if progressTimer:
+	if progressTimer != null:
 		progressTimer.stop()
 		progressTimer = null
 
@@ -106,15 +106,23 @@ func EnterLoginProgress():
 	newsWindow.EnableControl(false)
 	loginWindow.EnableControl(false)
 
-	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.LoginAttemptTimeout, Launcher.Network.Client.AuthError, [NetworkCommons.AuthError.ERR_TIMEOUT], "ProgressTimer")
+	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.LoginAttemptTimeout, TimeoutLoginProgress, [], "ProgressTimer")
 	loadingControl.set_visible(true)
+
+func TimeoutLoginProgress():
+	Launcher.Network.Client.AuthError(NetworkCommons.AuthError.ERR_TIMEOUT)
+	progressTimer = null
 
 func EnterCharMenu():
 	if progressTimer:
 		progressTimer.stop()
 		progressTimer = null
+
 	loadingControl.set_visible(false)
 	background.set_visible(false)
+	newsWindow.EnableControl(false)
+	loginWindow.EnableControl(false)
+
 	Launcher.Map.EmplaceMapNode("Drazil")
 	Launcher.Camera.SetBoundaries()
 	Launcher.Camera.EnableSceneCamera(Vector2(1984, 992))
@@ -127,8 +135,12 @@ func EnterCharProgress():
 	characterPanel.set_visible(false)
 	buttonBoxes.set_visible(false)
 
-	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.CharSelectionTimeout, Launcher.Network.Client.CharacterError, [NetworkCommons.CharacterError.ERR_TIMEOUT], "ProgressTimer")
+	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.CharSelectionTimeout, TimeoutCharProgress, [], "ProgressTimer")
 	loadingControl.set_visible(true)
+
+func TimeoutCharProgress():
+	Launcher.Network.Client.CharacterError(NetworkCommons.CharacterError.ERR_TIMEOUT)
+	progressTimer = null
 
 func EnterGame():
 	if progressTimer:
@@ -159,8 +171,8 @@ func _post_launch():
 		Launcher.FSM.enter_char.connect(EnterCharMenu)
 		Launcher.FSM.enter_char_progress.connect(EnterCharProgress)
 		Launcher.FSM.enter_game.connect(EnterGame)
+		Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
 
-	Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
 	isInitialized = true
 
 func _notification(notif):

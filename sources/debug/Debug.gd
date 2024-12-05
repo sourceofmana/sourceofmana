@@ -31,10 +31,14 @@ func OnPlayerEnterGame():
 
 #
 func _post_launch():
-	if Launcher.Map and not Launcher.FSM.enter_game.is_connected(OnPlayerEnterGame):
+	if not Launcher.FSM.enter_game.is_connected(OnPlayerEnterGame):
 		Launcher.FSM.enter_game.connect(OnPlayerEnterGame)
-
 	isInitialized = true
+
+func Destroy():
+	if Launcher.FSM.enter_game.is_connected(OnPlayerEnterGame):
+		Launcher.FSM.enter_game.disconnect(OnPlayerEnterGame)
+	isInitialized = false
 
 func Refresh(_delta : float):
 	if Launcher.Player:

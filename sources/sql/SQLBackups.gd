@@ -59,7 +59,7 @@ func Start():
 
 func Stop():
 	if isRunning and not stopRequested:
-		stopRequested = false
+		stopRequested = true
 		thread.wait_to_finish()
 
 #

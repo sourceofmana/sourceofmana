@@ -274,8 +274,7 @@ func NetMode(isClient : bool, isServer : bool):
 		Client = FileSystem.LoadSource("network/client/Client.gd")
 	if isServer:
 		Server = FileSystem.LoadSource("network/server/Server.gd")
-	if isServer and not isClient:
-		NetCreate()
+	NetCreate()
 
 func NetCreate():
 	if uniqueID != NetworkCommons.RidDefault:
@@ -343,7 +342,7 @@ func NetDestroy():
 	if peer:
 		peer.close()
 	if Client:
-		Client.DisconnectServer()
+		Client.Destroy()
 		Client = null
 	if Server:
 		Server.Destroy()

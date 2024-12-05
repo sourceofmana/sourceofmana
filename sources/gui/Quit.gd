@@ -15,6 +15,7 @@ func EnableControl(state : bool):
 #
 func _on_logout_pressed():
 	Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
+	Launcher.Network.DisconnectAccount()
 	EnableControl(false)
 
 func _on_quit_pressed():
