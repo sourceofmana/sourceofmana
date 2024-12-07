@@ -4,8 +4,8 @@ class_name ChatContainer
 @onready var tabContainer : TabContainer		= $ChatTabContainer
 @onready var lineEdit : LineEdit				= $NewText
 
-@onready var tabInstance : Object				= FileSystem.LoadGui("chat/ChatTab", false)
-@onready var backlog : ChatBacklog			= ChatBacklog.new()
+@onready var tabInstance : Object				= FileSystem.LoadGui("labels/ChatLabel", false)
+@onready var backlog : ChatBacklog				= ChatBacklog.new()
 
 var enabledLastFrame : bool						= false
 

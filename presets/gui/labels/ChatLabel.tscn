@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://uiwxfl4dyoyw"]
 
-[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_oi0bu"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_1ynyk"]
 
 [node name="Tab" type="RichTextLabel"]
 anchors_preset = 15
@@ -15,7 +15,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
-theme = ExtResource("1_oi0bu")
+theme = ExtResource("1_1ynyk")
 bbcode_enabled = true
 scroll_following = true
 autowrap_mode = 2
