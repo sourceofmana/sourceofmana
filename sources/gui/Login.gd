@@ -115,8 +115,9 @@ func _on_visibility_changed():
 
 func _on_online_button_toggled(toggled : bool):
 	var emulateServer : bool = not toggled
-	if Launcher.LaunchMode(true, emulateServer):
-		EnableButtons(false)
+	EnableButtons(false)
+	if not Launcher.LaunchMode(true, emulateServer):
+		EnableButtons(true)
 
-func _init():
+func _ready():
 	Launcher.launchModeUpdated.connect(OnlineMode)

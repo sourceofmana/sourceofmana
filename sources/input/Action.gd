@@ -172,3 +172,8 @@ func _ready():
 	add_child.call_deferred(clickTimer)
 
 	DeviceManager.Init()
+
+func Destroy():
+	if clickTimer:
+		remove_child.call_deferred(clickTimer)
+		clickTimer = null

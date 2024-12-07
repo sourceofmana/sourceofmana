@@ -3,10 +3,20 @@ class_name Peers
 
 #
 class Peer:
+	var rpcDeltas : Dictionary			= {}
 	var accountRID : int				= NetworkCommons.RidUnknown
 	var characterRID : int				= NetworkCommons.RidUnknown
 	var agentRID : int					= NetworkCommons.RidUnknown
-	var rpcDeltas : Dictionary			= {}
+
+	func SetAccount(id : int):
+		accountRID = id
+		Launcher.Network.Server.online_accounts_update.emit()
+	func SetCharacter(id : int):
+		characterRID = id
+		Launcher.Network.Server.online_characters_update.emit()
+	func SetAgent(id : int):
+		agentRID = id
+		Launcher.Network.Server.online_agents_update.emit()
 
 static var peers : Dictionary			= {}
 
@@ -14,9 +24,11 @@ static var peers : Dictionary			= {}
 static func AddPeer(rpcID : int):
 	if rpcID not in peers:
 		peers[rpcID] = Peer.new()
+		Launcher.Network.Server.peer_update.emit()
 
 static func RemovePeer(rpcID : int):
-	peers.erase(rpcID)
+	if peers.erase(rpcID):
+		Launcher.Network.Server.peer_update.emit()
 
 static func Footprint(rpcID : int, methodName : String, actionDelta : int) -> bool:
 	assert(rpcID in peers, "Could not find data related to this peer: " + str(rpcID))

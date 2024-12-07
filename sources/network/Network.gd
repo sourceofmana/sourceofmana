@@ -306,13 +306,7 @@ func NetCreate():
 		assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
-			if not Launcher.Root.multiplayer.connected_to_server.is_connected(Client.ConnectServer):
-				Launcher.Root.multiplayer.connected_to_server.connect(Client.ConnectServer)
-			if not Launcher.Root.multiplayer.connection_failed.is_connected(Client.DisconnectServer):
-				Launcher.Root.multiplayer.connection_failed.connect(Client.DisconnectServer)
-			if not Launcher.Root.multiplayer.server_disconnected.is_connected(Client.DisconnectServer):
-				Launcher.Root.multiplayer.server_disconnected.connect(Client.DisconnectServer)
-
+			Client.Init()
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 	elif Server:
 		var ret : Error = FAILED
@@ -330,12 +324,7 @@ func NetCreate():
 		assert(ret == OK, "Server could not be created, please check if your port %d is valid" % NetworkCommons.ServerPort)
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
-			if not Launcher.Root.multiplayer.peer_connected.is_connected(Server.ConnectPeer):
-				Launcher.Root.multiplayer.peer_connected.connect(Server.ConnectPeer)
-			if not Launcher.Root.multiplayer.peer_disconnected.is_connected(Server.DisconnectPeer):
-				Launcher.Root.multiplayer.peer_disconnected.connect(Server.DisconnectPeer)
-			Util.PrintLog("Server", "Initialized on port %d" % NetworkCommons.ServerPort)
-
+			Server.Init()
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 
 func NetDestroy():

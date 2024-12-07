@@ -1,5 +1,13 @@
 extends Object
 
+#
+signal peer_update
+signal accounts_list_update
+signal characters_list_update
+signal online_accounts_update
+signal online_characters_update
+signal online_agents_update
+
 # Auth
 func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode):
 	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
@@ -12,7 +20,8 @@ func CreateAccount(accountName : String, password : String, email : String, rpcI
 			if not Launcher.SQL.AddAccount(accountName, password, email):
 				err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
 			else:
-				peer.accountRID = Launcher.SQL.Login(accountName, password)
+				accounts_list_update.emit()
+				peer.SetAccount(Launcher.SQL.Login(accountName, password))
 	Launcher.Network.AuthError(err, rpcID)
 
 func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode):
@@ -23,7 +32,7 @@ func ConnectAccount(accountName : String, password : String, rpcID : int = Netwo
 	else:
 		err = NetworkCommons.CheckAuthInformation(accountName, password)
 		if err == NetworkCommons.AuthError.ERR_OK:
-			peer.accountRID = Launcher.SQL.Login(accountName, password)
+			peer.SetAccount(Launcher.SQL.Login(accountName, password))
 			if peer.accountRID == NetworkCommons.RidUnknown:
 				err = NetworkCommons.AuthError.ERR_AUTH
 			else:
@@ -35,7 +44,7 @@ func ConnectAccount(accountName : String, password : String, rpcID : int = Netwo
 func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
 	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	if peer:
-		peer.accountRID = NetworkCommons.RidUnknown
+		peer.SetAccount(NetworkCommons.RidUnknown)
 		if peer.characterRID != NetworkCommons.RidUnknown:
 			DisconnectCharacter(rpcID)
 
@@ -53,6 +62,7 @@ func CreateCharacter(charName : String, traits : Dictionary, rpcID : int = Netwo
 			if characterID == NetworkCommons.RidUnknown:
 				err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
 			else:
+				characters_list_update.emit()
 				Launcher.Network.CharacterInfo(Launcher.SQL.GetCharacterInfo(characterID), rpcID)
 
 	Launcher.Network.CharacterError(err, rpcID)
@@ -70,17 +80,16 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 		if Peers.GetCharacter(rpcID) != NetworkCommons.RidUnknown:
 			err = NetworkCommons.CharacterError.ERR_ALREADY_LOGGED_IN
 		else:
-			peer.characterRID = Launcher.SQL.GetCharacterID(peer.accountRID, nickname)
+			peer.SetCharacter(Launcher.SQL.GetCharacterID(peer.accountRID, nickname))
 			if peer.characterRID == NetworkCommons.RidUnknown:
 				err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
 			else:
 				var agent : PlayerAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
 				if agent:
-					peer.agentRID = agent.get_rid().get_id()
+					peer.SetAgent(agent.get_rid().get_id())
 					agent.stat.SetAttributes(ActorCommons.DefaultAttributes)
 					agent.inventory.ImportInventory(ActorCommons.DefaultInventory)
 					agent.rpcRID = rpcID
-					OnlineList.UpdateJson()
 					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
 
 	Launcher.Network.CharacterError(err, rpcID)
@@ -88,13 +97,12 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
 	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	if peer:
-		peer.characterRID = NetworkCommons.RidUnknown
+		peer.SetCharacter(NetworkCommons.RidUnknown)
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player:
 			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
 			WorldAgent.RemoveAgent(player)
-			peer.agentRID = NetworkCommons.RidUnknown
-			OnlineList.UpdateJson()
+			peer.SetAgent(NetworkCommons.RidUnknown)
 
 # Navigation
 func SetClickPos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
@@ -255,7 +263,20 @@ func DisconnectPeer(rpcID : int):
 			DisconnectAccount(rpcID)
 		Peers.RemovePeer(rpcID)
 
+#
+func Init():
+	if not online_agents_update.is_connected(OnlineList.UpdateJson):
+		online_agents_update.connect(OnlineList.UpdateJson)
+	if not Launcher.Root.multiplayer.peer_connected.is_connected(ConnectPeer):
+		Launcher.Root.multiplayer.peer_connected.connect(ConnectPeer)
+	if not Launcher.Root.multiplayer.peer_disconnected.is_connected(DisconnectPeer):
+		Launcher.Root.multiplayer.peer_disconnected.connect(DisconnectPeer)
+
+	Util.PrintLog("Server", "Initialized on port %d" % NetworkCommons.ServerPort)
+
 func Destroy():
+	if online_agents_update.is_connected(OnlineList.UpdateJson):
+		online_agents_update.disconnect(OnlineList.UpdateJson)
 	if Launcher.Root.multiplayer.peer_connected.is_connected(ConnectPeer):
 		Launcher.Root.multiplayer.peer_connected.disconnect(ConnectPeer)
 	if Launcher.Root.multiplayer.peer_disconnected.is_connected(DisconnectPeer):

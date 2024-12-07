@@ -14,7 +14,6 @@ var Debug : ServiceBase				= null
 var Camera : ServiceBase			= null
 var FSM : ServiceBase				= null
 var Map : ServiceBase				= null
-var Save : ServiceBase				= null
 var World : ServiceBase				= null
 var SQL : ServiceBase				= null
 var Network : ServiceBase			= null
@@ -28,21 +27,17 @@ signal launchModeUpdated
 #
 func ParseLaunchMode():
 	if "--server" in OS.get_cmdline_args():
-		if Scene:
-			Scene.queue_free()
-			Scene = null
-		if GUI:
-			GUI.queue_free()
-			GUI = null
-		if Audio:
-			Audio.queue_free()
-			Audio = null
+		Scene.queue_free()
+		GUI = null
+		Audio = null
+
+		Scene = FileSystem.LoadResource(Path.Pst + "Server" + Path.SceneExt)
+		Root.add_child.call_deferred(Scene)
+
 		LaunchMode(false, true)
 	else:
-		if OS.get_name() == "Web" or OS.is_debug_build():
-			LaunchMode(true, true)
-		else:
-			LaunchMode(true, false)
+		var emulateServer : bool = OS.get_name() == "Web" or OS.is_debug_build()
+		LaunchMode(true, emulateServer)
 
 func LaunchMode(launchClient : bool = false, launchServer : bool = false) -> bool:
 	var isClientConnected : bool = Launcher.Network.Client != null
@@ -68,12 +63,16 @@ func LaunchClient():
 	Action			= FileSystem.LoadSource("input/Action.gd")
 	Camera			= FileSystem.LoadSource("camera/Camera.gd")
 	Map				= FileSystem.LoadSource("map/Map.gd")
+	Action.set_name("Action")
 
 	add_child.call_deferred(Action)
 
 func LaunchServer():
 	World			= FileSystem.LoadSource("world/World.gd")
 	SQL				= FileSystem.LoadSource("sql/SQL.gd")
+	World.set_name("World")
+	SQL.set_name("SQL")
+
 	add_child.call_deferred(World)
 	add_child.call_deferred(SQL)
 
@@ -84,6 +83,8 @@ func LauncherReset(clientStarted : bool, serverStarted : bool):
 			Debug.queue_free()
 			Debug = null
 		if Action:
+			Action.set_name("ActionDestroyed")
+			Action.Destroy()
 			Action.queue_free()
 			Action = null
 		if Camera:
@@ -100,20 +101,24 @@ func LauncherReset(clientStarted : bool, serverStarted : bool):
 
 	if not serverStarted:
 		if World:
+			World.set_name("WorldDestroyed")
 			World.Destroy()
 			World.queue_free()
 			World = null
 		if SQL:
+			SQL.set_name("SQLDestroyed")
 			SQL.Destroy()
 			SQL.queue_free()
 			SQL = null
 
 func LauncherQuit():
 	if Network:
+		Network.set_name("NetworkDestroyed")
 		Network.NetDestroy()
 		Network.queue_free()
 		Network = null
 	if FSM:
+		FSM.set_name("FSMDestroyed")
 		FSM.queue_free()
 		FSM = null
 	get_tree().quit()
@@ -132,6 +137,9 @@ func _enter_tree():
 func _ready():
 	Network			= FileSystem.LoadSource("network/Network.gd")
 	FSM				= FileSystem.LoadSource("launcher/FSM.gd")
+	Network.set_name("Network")
+	FSM.set_name("FSM")
+
 	add_child.call_deferred(Network)
 	add_child.call_deferred(FSM)
 
