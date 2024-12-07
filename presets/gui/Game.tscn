@@ -519,8 +519,6 @@ offset_top = 240.0
 offset_right = 576.0
 offset_bottom = 346.0
 blockActions = false
-saveOverlayState = false
-maxSize = Vector2(-1, -1)
 
 [node name="News" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false

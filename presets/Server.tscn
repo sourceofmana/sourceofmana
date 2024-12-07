@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://slqw3xepi1c1"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_7785j"]
+[ext_resource type="PackedScene" uid="uid://cr2by2nem8o87" path="res://presets/gui/Server.tscn" id="2_atfre"]
+
+[node name="Source" type="Node2D"]
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="Container" type="VBoxContainer" parent="Canvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_7785j")
+
+[node name="EmptyTop" type="Control" parent="Canvas/Container"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="NetworkState" type="Label" parent="Canvas/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"NotificationBox"
+text = "Network State"
+
+[node name="EmptyBottom" type="Control" parent="Canvas/Container"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="PanelContainer" parent="Canvas/Container" instance=ExtResource("2_atfre")]
+layout_mode = 2

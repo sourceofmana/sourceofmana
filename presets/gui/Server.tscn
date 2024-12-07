@@ -1,11 +1,48 @@
-[gd_scene load_steps=2 format=3 uid="uid://cr2by2nem8o87"]
+[gd_scene load_steps=3 format=3 uid="uid://cr2by2nem8o87"]
 
+[ext_resource type="PackedScene" uid="uid://bq66pltgf5nhp" path="res://presets/gui/labels/ContentLabel.tscn" id="1_bk404"]
 [ext_resource type="Script" path="res://sources/gui/ServerDisplay.gd" id="1_lgnu7"]
 
-[node name="Control" type="Label"]
+[node name="PanelContainer" type="PanelContainer"]
+clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
 script = ExtResource("1_lgnu7")
+
+[node name="HSections" type="TabContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Info" type="TabBar" parent="HSections"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBox" type="VBoxContainer" parent="HSections/Info"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" parent="HSections/Info/VBox" instance=ExtResource("1_bk404")]
+layout_mode = 2
+
+[node name="RefreshButon" type="Button" parent="HSections/Info/VBox"]
+layout_mode = 2
+text = "Refresh"
+
+[node name="Peers" type="TabBar" parent="HSections"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="RichTextLabel" parent="HSections/Peers" instance=ExtResource("1_bk404")]
+layout_mode = 1
+
+[connection signal="pressed" from="HSections/Info/VBox/RefreshButon" to="." method="_on_info_update"]
