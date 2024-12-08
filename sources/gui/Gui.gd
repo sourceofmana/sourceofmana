@@ -122,10 +122,6 @@ func EnterCharMenu():
 	background.set_visible(false)
 	newsWindow.EnableControl(false)
 	loginWindow.EnableControl(false)
-
-	Launcher.Map.EmplaceMapNode("Drazil")
-	Launcher.Camera.SetBoundaries()
-	Launcher.Camera.EnableSceneCamera(Vector2(1984, 992))
 	characterPanel.RefreshOnce()
 
 	characterPanel.set_visible(true)

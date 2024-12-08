@@ -35,10 +35,6 @@ func ConnectAccount(accountName : String, password : String, rpcID : int = Netwo
 			peer.SetAccount(Launcher.SQL.Login(accountName, password))
 			if peer.accountRID == NetworkCommons.RidUnknown:
 				err = NetworkCommons.AuthError.ERR_AUTH
-			else:
-				for characterID in Launcher.SQL.GetCharacters(peer.accountRID):
-					var characterInfo : Dictionary = Launcher.SQL.GetCharacterInfo(characterID)
-					Network.CharacterInfo(characterInfo, rpcID) # To send every character info 1 by 1
 	Network.AuthError(err, rpcID)
 
 func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
@@ -103,6 +99,17 @@ func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
 			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
 			WorldAgent.RemoveAgent(player)
 			peer.SetAgent(NetworkCommons.RidUnknown)
+
+func CharacterListing(rpcID : int = NetworkCommons.RidSingleMode):
+	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
+	var accountID : int = Peers.GetAccount(rpcID)
+	if accountID == NetworkCommons.RidUnknown:
+		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
+	else:
+		for characterID in Launcher.SQL.GetCharacters(accountID):
+			var characterInfo : Dictionary = Launcher.SQL.GetCharacterInfo(characterID)
+			Network.CharacterInfo(characterInfo, rpcID)
+	Network.CharacterError(err, rpcID)
 
 # Navigation
 func SetClickPos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):

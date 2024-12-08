@@ -214,6 +214,21 @@ const MaxDisplacementSquareLength : float	= 64 * 64
 const InputApproximationUnit : int			= 12
 const MaxEntityRadiusSize : int				= 256
 
+# Character
+const MaxCharacterCount : int				= 9
+const CharacterScreenMap : String			= "Drazil"
+const CharacterScreenLocations : PackedVector2Array = [
+	Vector2(1984, 992),
+	Vector2(1856, 960),
+	Vector2(2144, 960),
+	Vector2(1760, 896),
+	Vector2(2240, 896),
+	Vector2(1728, 768),
+	Vector2(2240, 768),
+	Vector2(1856, 672),
+	Vector2(2144, 704),
+]
+
 # New player
 const DefaultAttributes : Dictionary = {
 	"strength": 10,

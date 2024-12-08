@@ -35,10 +35,6 @@ func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
 
 # Character
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
-func CharacterList(chars : Array[Dictionary], rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("CharacterList", [chars], rpcID)
-
-@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
 func CharacterInfo(info : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("CharacterInfo", [info], rpcID)
 
@@ -57,6 +53,10 @@ func CharacterError(err : NetworkCommons.CharacterError, rpcID : int = NetworkCo
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("DisconnectCharacter", [], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func CharacterListing(rpcID : int = NetworkCommons.RidSingleMode):
+	CallServer("CharacterListing", [], rpcID)
 
 # Respawn
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)

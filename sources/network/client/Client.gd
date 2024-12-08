@@ -165,10 +165,6 @@ func CharacterError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommon
 	if Launcher.GUI:
 		Launcher.GUI.characterPanel.FillWarningLabel(err)
 
-func CharacterList(chars : Array[Dictionary], _rpcID : int = NetworkCommons.RidSingleMode):
-	for characterInfo in chars:
-		CharacterInfo(characterInfo)
-
 func CharacterInfo(info : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	Launcher.GUI.characterPanel.AddCharacter(info)
 
