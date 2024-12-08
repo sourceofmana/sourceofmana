@@ -159,7 +159,7 @@ func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMod
 func AuthError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:
 		Launcher.GUI.loginWindow.FillWarningLabel(err)
-	Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_SCREEN if err == NetworkCommons.AuthError.ERR_OK else Launcher.FSM.States.LOGIN_SCREEN)
+	FSM.EnterState(FSM.States.CHAR_SCREEN if err == NetworkCommons.AuthError.ERR_OK else FSM.States.LOGIN_SCREEN)
 
 func CharacterError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:
@@ -178,8 +178,8 @@ func ConnectServer():
 		Launcher.GUI.loginWindow.EnableButtons(true)
 
 func DisconnectServer():
-	Launcher.LaunchMode(true, true)
-	Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
+	Launcher.Mode(true, true)
+	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	AuthError(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
 
 #

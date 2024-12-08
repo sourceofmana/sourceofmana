@@ -1,4 +1,4 @@
-extends ServiceBase
+extends Node
 
 #
 var Client							= null
@@ -19,264 +19,262 @@ enum EChannel
 # Auth
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("CreateAccount", [accountName, password, email], rpcID)
+	CallServer("CreateAccount", [accountName, password, email], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("ConnectAccount", [accountName, password], rpcID)
+	CallServer("ConnectAccount", [accountName, password], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
 func AuthError(err : NetworkCommons.AuthError, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("AuthError", [err], rpcID)
+	CallClient("AuthError", [err], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("DisconnectAccount", [], rpcID)
+	CallServer("DisconnectAccount", [], rpcID)
 
 # Character
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
 func CharacterList(chars : Array[Dictionary], rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("CharacterList", [chars], rpcID)
+	CallClient("CharacterList", [chars], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
 func CharacterInfo(info : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("CharacterInfo", [info], rpcID)
+	CallClient("CharacterInfo", [info], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func CreateCharacter(charName : String, traits : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("CreateCharacter", [charName, traits], rpcID)
+	CallServer("CreateCharacter", [charName, traits], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("ConnectCharacter", [nickname], rpcID)
+	CallServer("ConnectCharacter", [nickname], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
 func CharacterError(err : NetworkCommons.CharacterError, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("CharacterError", [err], rpcID)
+	CallClient("CharacterError", [err], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("DisconnectCharacter", [], rpcID)
+	CallServer("DisconnectCharacter", [], rpcID)
 
 # Respawn
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerRespawn", [], rpcID)
+	CallServer("TriggerRespawn", [], rpcID)
 
 # Warp
 @rpc("any_peer", "call_remote", "unreliable", EChannel.MAP)
 func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerWarp", [], rpcID)
+	CallServer("TriggerWarp", [], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
 func WarpPlayer(mapName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("WarpPlayer", [mapName], rpcID)
+	CallClient("WarpPlayer", [mapName], rpcID)
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
 func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("AddEntity", [agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastID], rpcID)
+	CallClient("AddEntity", [agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
 func RemoveEntity(agentID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("RemoveEntity", [agentID], rpcID)
+	CallClient("RemoveEntity", [agentID], rpcID)
 
 # Notification
 @rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.MAP)
 func PushNotification(notif : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("PushNotification", [notif], rpcID)
+	CallClient("PushNotification", [notif], rpcID)
 
 # Navigation
 @rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.NAVIGATION)
 func SetClickPos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("SetClickPos", [pos], rpcID)
+	CallServer("SetClickPos", [pos], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
 func SetMovePos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("SetMovePos", [pos], rpcID, NetworkCommons.DelayInstant)
+	CallServer("SetMovePos", [pos], rpcID, NetworkCommons.DelayInstant)
 
 @rpc("authority", "call_remote", "unreliable_ordered", EChannel.NAVIGATION)
 func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("UpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastID], rpcID)
+	CallClient("UpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.NAVIGATION)
 func ForceUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int,  rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ForceUpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastID], rpcID)
+	CallClient("ForceUpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
 func ClearNavigation(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("ClearNavigation", [], rpcID)
+	CallServer("ClearNavigation", [], rpcID)
 
 # Emote
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerEmote", [emoteID], rpcID)
+	CallServer("TriggerEmote", [emoteID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION) 
 func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
+	CallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
 
 # Sit
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerSit(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerSit", [], rpcID)
+	CallServer("TriggerSit", [], rpcID)
 
 # Chat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerChat", [text], rpcID)
+	CallServer("TriggerChat", [text], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ChatAgent(ridAgent : int, text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ChatAgent", [ridAgent, text], rpcID)
+	CallClient("ChatAgent", [ridAgent, text], rpcID)
 
 # Context
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ToggleContext(enable : bool, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ToggleContext", [enable], rpcID)
+	CallClient("ToggleContext", [enable], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextText(author : String, text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ContextText", [author, text], rpcID)
+	CallClient("ContextText", [author, text], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextContinue(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ContextContinue", [], rpcID)
+	CallClient("ContextContinue", [], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextClose(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ContextClose", [], rpcID)
+	CallClient("ContextClose", [], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextChoice(texts : PackedStringArray, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ContextChoice", [texts], rpcID)
+	CallClient("ContextChoice", [texts], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerChoice", [choiceID], rpcID)
+	CallServer("TriggerChoice", [choiceID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerCloseContext(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerCloseContext", [], rpcID)
+	CallServer("TriggerCloseContext", [], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerNextContext(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerNextContext", [], rpcID)
+	CallServer("TriggerNextContext", [], rpcID)
 
 # Interact
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerInteract(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerInteract", [entityID], rpcID)
+	CallServer("TriggerInteract", [entityID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerExplore(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerExplore", [], rpcID)
+	CallServer("TriggerExplore", [], rpcID)
 
 # Combat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerCast(entityID : int, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerCast", [entityID, skillID], rpcID)
+	CallServer("TriggerCast", [entityID, skillID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func TargetAlteration(agentID : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("TargetAlteration", [agentID, targetID, value, alteration, skillID], rpcID)
+	CallClient("TargetAlteration", [agentID, targetID, value, alteration, skillID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func Casted(agentID : int, skillID: int, cooldown : float, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("Casted", [agentID, skillID, cooldown], rpcID)
+	CallClient("Casted", [agentID, skillID, cooldown], rpcID)
 
 # Morph
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerMorph", [], rpcID)
+	CallServer("TriggerMorph", [], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func Morphed(agentID : int, morphID : String, notifyMorphing : bool, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("Morphed", [agentID, morphID, notifyMorphing], rpcID)
+	CallClient("Morphed", [agentID, morphID, notifyMorphing], rpcID)
 
 # Stats
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func UpdateActiveStats(agentID : int, level : int, experience : int, gp : int, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, currentShape : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("UpdateActiveStats", [agentID, level, experience, gp, health, mana, stamina, weight, entityShape, spiritShape, currentShape], rpcID)
+	CallClient("UpdateActiveStats", [agentID, level, experience, gp, health, mana, stamina, weight, entityShape, spiritShape, currentShape], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func UpdateAttributes(agentID : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("UpdateAttributes", [agentID, strength, vitality, agility, endurance, concentration], rpcID)
+	CallClient("UpdateAttributes", [agentID, strength, vitality, agility, endurance, concentration], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func TargetLevelUp(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("TargetLevelUp", [targetID], rpcID)
+	CallClient("TargetLevelUp", [targetID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func TriggerSelect(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("TriggerSelect", [entityID], rpcID)
+	CallServer("TriggerSelect", [entityID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func AddAttribute(stat : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("AddAttribute", [stat], rpcID)
+	CallServer("AddAttribute", [stat], rpcID)
 
 # Items
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func ItemAdded(itemID : int, count : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ItemAdded", [itemID, count], rpcID)
+	CallClient("ItemAdded", [itemID, count], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func ItemRemoved(itemID : int, count : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("ItemRemoved", [itemID, count], rpcID)
+	CallClient("ItemRemoved", [itemID, count], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("UseItem", [itemID], rpcID)
+	CallServer("UseItem", [itemID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("RetrieveInventory", [], rpcID)
+	CallServer("RetrieveInventory", [], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func RefreshInventory(cells : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("RefreshInventory", [cells], rpcID)
+	CallClient("RefreshInventory", [cells], rpcID)
 
 # Drop
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func DropAdded(dropID : int, itemID : int, pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("DropAdded", [dropID, itemID, pos], rpcID)
+	CallClient("DropAdded", [dropID, itemID, pos], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func DropRemoved(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallClient("DropRemoved", [dropID], rpcID)
+	CallClient("DropRemoved", [dropID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NetCallServer("PickupDrop", [dropID], rpcID)
+	CallServer("PickupDrop", [dropID], rpcID)
 
 #
-func NetCallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault):
+func CallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault):
 	if Server:
 		if Peers.Footprint(rpcID, methodName, actionDelta):
 			Server.callv.call_deferred(methodName, args + [rpcID])
 	else:
 		callv.call("rpc_id", [1, methodName] + args + [uniqueID])
 
-func NetCallClient(methodName : String, args : Array, rpcID : int):
+func CallClient(methodName : String, args : Array, rpcID : int):
 	if Client:
 		Client.callv.call_deferred(methodName, args)
 	else:
 		callv.call("rpc_id", [rpcID, methodName] + args)
 
-func NetCallClientGlobal(methodName : String, args : Array):
+func CallClientGlobal(methodName : String, args : Array):
 	if Client:
 		Client.callv.call_deferred(methodName, args)
 	else:
 		callv.call("rpc", [methodName] + args)
 
-func NetMode(isClient : bool, isServer : bool):
+func Mode(isClient : bool, isServer : bool):
 	if isClient:
 		Client = FileSystem.LoadSource("network/client/Client.gd")
 	if isServer:
 		Server = FileSystem.LoadSource("network/server/Server.gd")
-	NetCreate()
 
-func NetCreate():
 	if uniqueID != NetworkCommons.RidDefault:
 		pass
 
@@ -327,7 +325,7 @@ func NetCreate():
 			Server.Init()
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 
-func NetDestroy():
+func Destroy():
 	if peer:
 		peer.close()
 	if Client:
@@ -337,6 +335,3 @@ func NetDestroy():
 		Server.Destroy()
 		Server = null
 	uniqueID = NetworkCommons.RidDefault
-
-func _post_launch():
-	isInitialized = true

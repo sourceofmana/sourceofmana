@@ -39,7 +39,7 @@ func OnNewTextSubmitted(newText : String):
 			lineEdit.clear()
 			if Launcher.Player:
 				backlog.Add(newText)
-				Launcher.Network.TriggerChat(newText)
+				Network.TriggerChat(newText)
 				SetNewLineEnabled(false)
 		else:
 			SetNewLineEnabled(false)

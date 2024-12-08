@@ -1,4 +1,4 @@
-extends ServiceBase
+extends Node
 
 #
 signal enter_login
@@ -75,7 +75,3 @@ func UpdateStates():
 	currentState	= nextState
 	if lastState != currentState or currentState != nextState:
 		UpdateStates.call_deferred()
-
-#
-func _post_launch():
-	isInitialized = true

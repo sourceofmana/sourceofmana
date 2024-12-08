@@ -87,7 +87,7 @@ func _unhandled_input(event):
 		if get_viewport() and Launcher.Camera and Launcher.Camera.mainCamera and clickTimer:
 			if clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
 				var mousePos : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
-				Launcher.Network.SetClickPos(mousePos)
+				Network.SetClickPos(mousePos)
 				clickTimer.start()
 
 func _physics_process(_deltaTime : float):
@@ -97,16 +97,16 @@ func _physics_process(_deltaTime : float):
 			if clickTimer.get_time_left() > 0:
 				clickTimer.stop()
 			if previousMove != move:
-				Launcher.Network.SetMovePos(move)
+				Network.SetMovePos(move)
 		else:
 			if previousMove != move:
 				Launcher.Player.entityVelocity = move
-				Launcher.Network.ClearNavigation()
+				Network.ClearNavigation()
 		previousMove = move
 
 #
 func _input(event):
-	if Launcher.Player == null or Launcher.Map == null or Launcher.GUI == null or Launcher.Network == null:
+	if Launcher.Player == null or Launcher.Map == null or Launcher.GUI == null or Network == null:
 		return
 
 	if event.is_pressed():
@@ -115,24 +115,24 @@ func _input(event):
 		elif event is InputEventKey and DeviceManager.currentDeviceType != DeviceManager.DeviceType.KEYBOARD:
 			DeviceManager.DeviceChanged(DeviceManager.DeviceType.KEYBOARD)
 
-	if TryJustPressed(event, "smile_1"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Dying"))
-	elif TryJustPressed(event, "smile_2"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Creeped"))
-	elif TryJustPressed(event, "smile_3"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Smile"))
-	elif TryJustPressed(event, "smile_4"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Sad"))
-	elif TryJustPressed(event, "smile_5"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Evil"))
-	elif TryJustPressed(event, "smile_6"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Wink"))
-	elif TryJustPressed(event, "smile_7"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Angel"))
-	elif TryJustPressed(event, "smile_8"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Embarrassed"))
-	elif TryJustPressed(event, "smile_9"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Amused"))
-	elif TryJustPressed(event, "smile_10"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Grin"))
-	elif TryJustPressed(event, "smile_11"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Angry"))
-	elif TryJustPressed(event, "smile_12"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Bored"))
-	elif TryJustPressed(event, "smile_13"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Bubble"))
-	elif TryJustPressed(event, "smile_14"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Dots"))
-	elif TryJustPressed(event, "smile_15"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Whatever"))
-	elif TryJustPressed(event, "smile_16"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Surprised"))
-	elif TryJustPressed(event, "smile_17"):			Launcher.Network.TriggerEmote(DB.GetCellHash("Confused"))
-	elif TryJustPressed(event, "gp_sit"):			Launcher.Network.TriggerSit()
+	if TryJustPressed(event, "smile_1"):			Network.TriggerEmote(DB.GetCellHash("Dying"))
+	elif TryJustPressed(event, "smile_2"):			Network.TriggerEmote(DB.GetCellHash("Creeped"))
+	elif TryJustPressed(event, "smile_3"):			Network.TriggerEmote(DB.GetCellHash("Smile"))
+	elif TryJustPressed(event, "smile_4"):			Network.TriggerEmote(DB.GetCellHash("Sad"))
+	elif TryJustPressed(event, "smile_5"):			Network.TriggerEmote(DB.GetCellHash("Evil"))
+	elif TryJustPressed(event, "smile_6"):			Network.TriggerEmote(DB.GetCellHash("Wink"))
+	elif TryJustPressed(event, "smile_7"):			Network.TriggerEmote(DB.GetCellHash("Angel"))
+	elif TryJustPressed(event, "smile_8"):			Network.TriggerEmote(DB.GetCellHash("Embarrassed"))
+	elif TryJustPressed(event, "smile_9"):			Network.TriggerEmote(DB.GetCellHash("Amused"))
+	elif TryJustPressed(event, "smile_10"):			Network.TriggerEmote(DB.GetCellHash("Grin"))
+	elif TryJustPressed(event, "smile_11"):			Network.TriggerEmote(DB.GetCellHash("Angry"))
+	elif TryJustPressed(event, "smile_12"):			Network.TriggerEmote(DB.GetCellHash("Bored"))
+	elif TryJustPressed(event, "smile_13"):			Network.TriggerEmote(DB.GetCellHash("Bubble"))
+	elif TryJustPressed(event, "smile_14"):			Network.TriggerEmote(DB.GetCellHash("Dots"))
+	elif TryJustPressed(event, "smile_15"):			Network.TriggerEmote(DB.GetCellHash("Whatever"))
+	elif TryJustPressed(event, "smile_16"):			Network.TriggerEmote(DB.GetCellHash("Surprised"))
+	elif TryJustPressed(event, "smile_17"):			Network.TriggerEmote(DB.GetCellHash("Confused"))
+	elif TryJustPressed(event, "gp_sit"):			Network.TriggerSit()
 	elif TryJustPressed(event, "gp_target"):		Launcher.Player.Target(Launcher.Player.position, true, true)
 	elif TryJustPressed(event, "gp_untarget"):		Launcher.Player.ClearTarget()
 	elif TryJustPressed(event, "gp_interact"):		Launcher.Player.JustInteract()
@@ -148,7 +148,7 @@ func _input(event):
 	elif TryJustPressed(event, "gp_shortcut_9"):	Launcher.GUI.actionBoxes.Trigger(8)
 	elif TryJustPressed(event, "gp_shortcut_10"):	Launcher.GUI.actionBoxes.Trigger(9)
 	elif TryJustPressed(event, "gp_pickup"):		Launcher.Map.PickupNearestDrop()
-	elif TryJustPressed(event, "gp_morph"):	 		Launcher.Network.TriggerMorph()
+	elif TryJustPressed(event, "gp_morph"):	 		Network.TriggerMorph()
 	elif TryJustPressed(event, "ui_close"):			Launcher.GUI.CloseWindow()
 	elif TryJustPressed(event, "ui_close", true):	Launcher.GUI.CloseCurrentWindow()
 	elif TryJustPressed(event, "ui_inventory"):		Launcher.GUI.ToggleControl(Launcher.GUI.inventoryWindow)

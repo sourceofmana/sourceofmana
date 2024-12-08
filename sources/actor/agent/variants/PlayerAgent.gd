@@ -26,7 +26,7 @@ func UpdateLastStats():
 	lastStat.entityShape != stat.entityShape or \
 	lastStat.spiritShape != stat.spiritShape or \
 	lastStat.currentShape != stat.currentShape:
-		Launcher.Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.gp, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.currentShape, rpcRID)
+		Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.gp, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.currentShape, rpcRID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 		lastStat.gp					= stat.gp
@@ -43,7 +43,7 @@ func UpdateLastStats():
 	lastStat.agility != stat.agility or \
 	lastStat.endurance != stat.endurance or \
 	lastStat.concentration != stat.concentration:
-		Launcher.Network.UpdateAttributes(get_rid().get_id(), stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, rpcRID)
+		Network.UpdateAttributes(get_rid().get_id(), stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, rpcRID)
 		lastStat.strength			= stat.strength
 		lastStat.vitality			= stat.vitality
 		lastStat.agility			= stat.agility
@@ -58,7 +58,7 @@ func Morph(notifyMorphing : bool, morphID : String = ""):
 
 	var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 	stat.Morph(morphData)
-	Launcher.Network.Server.NotifyNeighbours(self, "Morphed", [morphID, notifyMorphing])
+	Network.Server.NotifyNeighbours(self, "Morphed", [morphID, notifyMorphing])
 
 #
 func _physics_process(delta):

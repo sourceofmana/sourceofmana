@@ -57,8 +57,8 @@ func SetLocalPlayer():
 			Launcher.Camera.mainCamera.ready.connect(Launcher.Camera.mainCamera.make_current)
 
 	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
-	Launcher.Network.RetrieveInventory()
-	Launcher.FSM.EnterState(Launcher.FSM.States.IN_GAME)
+	Network.RetrieveInventory()
+	FSM.EnterState(FSM.States.IN_GAME)
 
 func ClearTarget():
 	if target != null:
@@ -81,7 +81,7 @@ func Target(source : Vector2, interactable : bool = true, nextTarget : bool = fa
 			target.interactive.nameLabel.material = ActorCommons.AllyTarget
 		elif target.type == ActorCommons.Type.MONSTER:
 			target.interactive.nameLabel.material = ActorCommons.EnemyTarget
-			Launcher.Network.TriggerSelect(target.agentID)
+			Network.TriggerSelect(target.agentID)
 
 func JustInteract():
 	if not target or target.state == ActorCommons.State.DEATH:
@@ -95,7 +95,7 @@ func JustInteract():
 func Interact():
 	if target != null:
 		if target.type == ActorCommons.Type.NPC:
-			Launcher.Network.TriggerInteract(target.agentID)
+			Network.TriggerInteract(target.agentID)
 		elif target.type == ActorCommons.Type.MONSTER:
 			Cast(DB.GetCellHash(SkillCommons.SkillMeleeName))
 
@@ -119,7 +119,7 @@ func Cast(skillID : int):
 		if target and target.type == ActorCommons.Type.MONSTER:
 			entityID = target.agentID
 
-	Launcher.Network.TriggerCast(entityID, skillID)
+	Network.TriggerCast(entityID, skillID)
 
 #
 func _physics_process(delta : float):

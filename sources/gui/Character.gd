@@ -12,7 +12,7 @@ var isCharacterCreatorEnabled : bool					= false
 #
 func FillWarningLabel(err : NetworkCommons.CharacterError):
 	if isCharacterCreatorEnabled:
-		Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_SCREEN)
+		FSM.EnterState(FSM.States.CHAR_SCREEN)
 		if err == NetworkCommons.CharacterError.ERR_OK:
 			EnableCharacterCreator(false)
 		else:
@@ -58,7 +58,7 @@ func CreateCharacter():
 		if err != NetworkCommons.CharacterError.ERR_OK:
 			FillWarningLabel(err)
 		else:
-			Launcher.Network.CreateCharacter(nickname, {
+			Network.CreateCharacter(nickname, {
 				"hairstyle" = 0,
 				"haircolor" = 0,
 				"race" = 0,
@@ -67,11 +67,11 @@ func CreateCharacter():
 				"shape" = "Default Entity",
 				"spirit" = "Piou"
 			})
-			Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_PROGRESS)
+			FSM.EnterState(FSM.States.CHAR_PROGRESS)
 
 func SelectCharacter():
-	Launcher.Network.ConnectCharacter(characterNameDisplay.get_text())
-	Launcher.FSM.EnterState(Launcher.FSM.States.CHAR_PROGRESS)
+	Network.ConnectCharacter(characterNameDisplay.get_text())
+	FSM.EnterState(FSM.States.CHAR_PROGRESS)
 
 func UpdateSelectedCharacter(info : Dictionary):
 	if "nickname" in info:
@@ -92,7 +92,7 @@ func EnableCharacterCreator(enable : bool):
 			Launcher.GUI.buttonBoxes.SetMiddle("Randomize", RandomizeCharacter)
 			Launcher.GUI.buttonBoxes.SetRight("Create", CreateCharacter)
 		else:
-			Launcher.GUI.buttonBoxes.SetLeft("Cancel", Launcher.FSM.EnterState.bind(Launcher.FSM.States.LOGIN_SCREEN))
+			Launcher.GUI.buttonBoxes.SetLeft("Cancel", FSM.EnterState.bind(FSM.States.LOGIN_SCREEN))
 			Launcher.GUI.buttonBoxes.SetMiddle("New Player", EnableCharacterCreator.bind(true))
 			Launcher.GUI.buttonBoxes.SetRight("Select", SelectCharacter)
 

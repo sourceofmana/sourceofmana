@@ -94,5 +94,5 @@ func _on_visibility_changed():
 		respawnButton.call_deferred("grab_focus")
 
 func _on_respawn_pressed():
-	Launcher.Network.TriggerRespawn()
+	Network.TriggerRespawn()
 	visible = false

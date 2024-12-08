@@ -49,7 +49,7 @@ func EnableControl(state : bool):
 			onlineCheck.visible = false
 
 func RefreshOnlineMode():
-	OnlineMode(Launcher.Network.Client != null, Launcher.Network.Server != null)
+	OnlineMode(Network.Client != null, Network.Server != null)
 
 func OnlineMode(_clientStarted : bool, serverStarted : bool):
 	if onlineCheck:
@@ -74,8 +74,8 @@ func _on_play_pressed():
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
 	FillWarningLabel(authError)
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_PROGRESS)
-		Launcher.Network.ConnectAccount(nameText, passwordText)
+		FSM.EnterState(FSM.States.LOGIN_PROGRESS)
+		Network.ConnectAccount(nameText, passwordText)
 		if Launcher.GUI.settingsWindow:
 			Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
 
@@ -87,7 +87,7 @@ func _on_register_pressed():
 	FillWarningLabel(authError)
 
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		Launcher.Network.CreateAccount(nameText, passwordText, "g@g.g")
+		Network.CreateAccount(nameText, passwordText, "g@g.g")
 
 #
 func _on_text_focus_entered():
@@ -116,7 +116,7 @@ func _on_visibility_changed():
 func _on_online_button_toggled(toggled : bool):
 	var emulateServer : bool = not toggled
 	EnableButtons(false)
-	if not Launcher.LaunchMode(true, emulateServer):
+	if not Launcher.Mode(true, emulateServer):
 		EnableButtons(true)
 
 func _ready():

@@ -16,12 +16,12 @@ signal used
 
 #
 func Use():
-	if Launcher.Network.Client and usable:
+	if Network.Client and usable:
 		match type:
 			CellCommons.Type.ITEM:
-				Launcher.Network.UseItem(id)
+				Network.UseItem(id)
 			CellCommons.Type.EMOTE:
-				Launcher.Network.TriggerEmote(id)
+				Network.TriggerEmote(id)
 			CellCommons.Type.SKILL:
 				Launcher.Player.Cast(id)
 			_:

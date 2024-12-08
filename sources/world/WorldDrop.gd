@@ -15,13 +15,13 @@ static func PushDrop(item : Item, agent : BaseAgent):
 
 			var dropID : int = drop.get_instance_id()
 			drop.timer = Callback.SelfDestructTimer(inst, ActorCommons.DropDelay, WorldDrop.Timeout, [dropID, inst])
-			Launcher.Network.Server.NotifyInstance(inst, "DropAdded", [dropID, item.cell.id, drop.position])
+			Network.Server.NotifyInstance(inst, "DropAdded", [dropID, item.cell.id, drop.position])
 
 static func PopDrop(dropID : int, inst : WorldInstance) -> bool:
 	if inst and inst.drops.has(dropID):
 		var drop : Drop = inst.drops[dropID]
 		inst.drops.erase(dropID)
-		Launcher.Network.Server.NotifyInstance(inst, "DropRemoved", [dropID])
+		Network.Server.NotifyInstance(inst, "DropRemoved", [dropID])
 		if drop:
 			if drop.timer != null:
 				drop.timer.stop()

@@ -45,7 +45,8 @@ func _on_peer_connection_update():
 
 #
 func _ready():
-	Launcher.Network.Server.peer_update.connect(_on_peer_connection_update)
-	Launcher.Network.Server.online_accounts_update.connect(_on_peer_connection_update)
-	Launcher.Network.Server.online_characters_update.connect(_on_peer_connection_update)
-	Launcher.Network.Server.online_agents_update.connect(_on_peer_connection_update)
+	if Network.Server:
+		Network.Server.peer_update.connect(_on_peer_connection_update)
+		Network.Server.online_accounts_update.connect(_on_peer_connection_update)
+		Network.Server.online_characters_update.connect(_on_peer_connection_update)
+		Network.Server.online_agents_update.connect(_on_peer_connection_update)

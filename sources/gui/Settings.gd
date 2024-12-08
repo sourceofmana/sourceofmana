@@ -285,12 +285,12 @@ func _on_visibility_changed():
 	RefreshSettings(false)
 
 func _ready():
-	if not Launcher.FSM:
+	if not FSM:
 		return
 
 	RefreshSettings(true)
-	Launcher.FSM.enter_game.connect(RefreshSettings.bind(true))
-	Launcher.FSM.exit_game.connect(SaveSettings.bind())
+	FSM.enter_game.connect(RefreshSettings.bind(true))
+	FSM.exit_game.connect(SaveSettings.bind())
 
 	if LauncherCommons.isMobile or OS.get_name() == "Web":
 		accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL].get_parent().set_visible(false)

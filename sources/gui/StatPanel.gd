@@ -36,19 +36,19 @@ extends WindowPanel
 
 #
 func IncreaseStrength():
-	Launcher.Network.AddAttribute(ActorCommons.Attribute.STRENGTH)
+	Network.AddAttribute(ActorCommons.Attribute.STRENGTH)
 
 func IncreaseVitality():
-	Launcher.Network.AddAttribute(ActorCommons.Attribute.VITALITY)
+	Network.AddAttribute(ActorCommons.Attribute.VITALITY)
 
 func IncreaseAgility():
-	Launcher.Network.AddAttribute(ActorCommons.Attribute.AGILITY)
+	Network.AddAttribute(ActorCommons.Attribute.AGILITY)
 
 func IncreaseEndurance():
-	Launcher.Network.AddAttribute(ActorCommons.Attribute.ENDURANCE)
+	Network.AddAttribute(ActorCommons.Attribute.ENDURANCE)
 
 func IncreaseConcentration():
-	Launcher.Network.AddAttribute(ActorCommons.Attribute.CONCENTRATION)
+	Network.AddAttribute(ActorCommons.Attribute.CONCENTRATION)
 
 #
 func Init(entity : Entity):

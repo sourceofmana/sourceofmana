@@ -62,7 +62,7 @@ func ButtonPressed():
 		return
 
 	if Launcher.Player:
-		Launcher.Network.TriggerNextContext()
+		Network.TriggerNextContext()
 	if buttonLabel.text == "Close":
 		Launcher.GUI.dialogueContainer.set_visible(false)
 
@@ -78,13 +78,13 @@ func AddChoices(choices : PackedStringArray):
 	ToggleButton(false, "")
 	Launcher.GUI.choiceContext.Clear()
 	if choices.size() > 0:
-		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_validate", choices[0], Launcher.Network.TriggerChoice.bind(0)))
+		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_validate", choices[0], Network.TriggerChoice.bind(0)))
 	if choices.size() > 1:
-		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_cancel", choices[1], Launcher.Network.TriggerChoice.bind(1)))
+		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_cancel", choices[1], Network.TriggerChoice.bind(1)))
 	if choices.size() > 2:
-		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_secondary", choices[2], Launcher.Network.TriggerChoice.bind(2)))
+		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_secondary", choices[2], Network.TriggerChoice.bind(2)))
 	if choices.size() > 3:
-		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_tertiary", choices[3], Launcher.Network.TriggerChoice.bind(3)))
+		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_tertiary", choices[3], Network.TriggerChoice.bind(3)))
 	Launcher.GUI.choiceContext.FadeIn(true)
 
 # Overloaded functions
@@ -92,8 +92,8 @@ func _ready():
 	scrollbar.changed.connect(AutoScroll)
 
 func _input(event : InputEvent):
-	if Launcher.GUI.dialogueContainer.is_visible() and not Launcher.GUI.choiceContext.is_visible():
+	if Launcher.GUI and Launcher.GUI.dialogueContainer.is_visible() and not Launcher.GUI.choiceContext.is_visible():
 		if Launcher.Action.TryJustPressed(event, "ui_accept", true):
 			ButtonPressed()
 		if Launcher.Action.TryJustPressed(event, "ui_cancel", true):
-			Launcher.Network.TriggerCloseContext()
+			Network.TriggerCloseContext()

@@ -110,7 +110,7 @@ func EnterLoginProgress():
 	loadingControl.set_visible(true)
 
 func TimeoutLoginProgress():
-	Launcher.Network.Client.AuthError(NetworkCommons.AuthError.ERR_TIMEOUT)
+	Network.Client.AuthError(NetworkCommons.AuthError.ERR_TIMEOUT)
 	progressTimer = null
 
 func EnterCharMenu():
@@ -139,7 +139,7 @@ func EnterCharProgress():
 	loadingControl.set_visible(true)
 
 func TimeoutCharProgress():
-	Launcher.Network.Client.CharacterError(NetworkCommons.CharacterError.ERR_TIMEOUT)
+	Network.Client.CharacterError(NetworkCommons.CharacterError.ERR_TIMEOUT)
 	progressTimer = null
 
 func EnterGame():
@@ -162,16 +162,12 @@ func EnterGame():
 
 #
 func _post_launch():
-	get_tree().set_auto_accept_quit(false)
-	get_tree().set_quit_on_go_back(false)
-
-	if Launcher.FSM:
-		Launcher.FSM.enter_login.connect(EnterLoginMenu)
-		Launcher.FSM.enter_login_progress.connect(EnterLoginProgress)
-		Launcher.FSM.enter_char.connect(EnterCharMenu)
-		Launcher.FSM.enter_char_progress.connect(EnterCharProgress)
-		Launcher.FSM.enter_game.connect(EnterGame)
-		Launcher.FSM.EnterState(Launcher.FSM.States.LOGIN_SCREEN)
+	FSM.enter_login.connect(EnterLoginMenu)
+	FSM.enter_login_progress.connect(EnterLoginProgress)
+	FSM.enter_char.connect(EnterCharMenu)
+	FSM.enter_char_progress.connect(EnterCharProgress)
+	FSM.enter_game.connect(EnterGame)
+	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 
 	isInitialized = true
 
@@ -188,6 +184,9 @@ func _notification(notif):
 			Launcher.Action.Enable(true)
 
 func _ready():
+	get_tree().set_auto_accept_quit(false)
+	get_tree().set_quit_on_go_back(false)
+
 	assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
 	CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
 

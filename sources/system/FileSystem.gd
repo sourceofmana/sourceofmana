@@ -108,8 +108,11 @@ static func LoadGDScript(fullPath : String, alloc : bool = true) -> Object:
 
 	return srcFile
 
-static func LoadSource(path : String, alloc : bool = true) -> Object:
-	return LoadGDScript(Path.Src + path, alloc)
+static func LoadSource(path : String, nodeName : String = "", alloc : bool = true) -> Object:
+	var sourceObject : Object = LoadGDScript(Path.Src + path, alloc)
+	if not nodeName.is_empty():
+		sourceObject.set_name(nodeName)
+	return sourceObject
 
 static func LoadScript(path : String, alloc : bool = false) -> Object:
 	return LoadGDScript(Path.ScriptSrc + path, alloc)

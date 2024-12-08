@@ -198,8 +198,8 @@ func AddExperience(value : int):
 		level += 1
 		levelUpHappened = true
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
-	if levelUpHappened and Launcher.Network.Server:
-		Launcher.Network.Server.NotifyNeighbours(actor, "TargetLevelUp", [])
+	if levelUpHappened and Network.Server:
+		Network.Server.NotifyNeighbours(actor, "TargetLevelUp", [])
 
 func AddGP(value : int):
 	if not ActorCommons.IsAlive(actor) or value <= 0:

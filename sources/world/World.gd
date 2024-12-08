@@ -1,5 +1,4 @@
 extends ServiceBase
-class_name WorldService
 
 # Vars
 var areas : Dictionary						= {}
@@ -57,12 +56,12 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 			if agent.stat.IsMorph():
 				agent.Morph(false, agent.stat.entityShape)
 
-		Launcher.Network.WarpPlayer(map.name, agent.rpcRID)
+		Network.WarpPlayer(map.name, agent.rpcRID)
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
-				Launcher.Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, agent.rpcRID)
+				Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, agent.rpcRID)
 
-	Launcher.Network.Server.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
+	Network.Server.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
 
 # Generic
 func _post_launch():

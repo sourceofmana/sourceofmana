@@ -42,7 +42,7 @@ func _physics_process(_delta):
 				HideLabel()
 
 func ConfirmWarp():
-	Launcher.Network.TriggerWarp()
+	Network.TriggerWarp()
 
 func DisplayLabel():
 	Launcher.GUI.choiceContext.Clear()

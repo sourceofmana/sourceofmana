@@ -102,7 +102,7 @@ func AddItem(cell : BaseCell, count : int = 1) -> bool:
 	if PushItem(cell, count):
 		if actor is PlayerAgent:
 			if actor.rpcRID != NetworkCommons.RidUnknown:
-				Launcher.Network.ItemAdded(cell.id, count, actor.rpcRID)
+				Network.ItemAdded(cell.id, count, actor.rpcRID)
 		return true
 	return false
 
@@ -110,7 +110,7 @@ func RemoveItem(cell : BaseCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
 		if actor is PlayerAgent:
 			if actor.rpcRID != NetworkCommons.RidUnknown:
-				Launcher.Network.ItemRemoved(cell.id, count, actor.rpcRID)
+				Network.ItemRemoved(cell.id, count, actor.rpcRID)
 		return true
 	return false
 

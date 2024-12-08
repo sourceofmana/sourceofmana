@@ -142,7 +142,7 @@ func PickupNearestDrop():
 				nearestLengthSquared = lengthSquared
 				nearestID = dropID
 	if nearestID > 0:
-		Launcher.Network.PickupDrop(nearestID)
+		Network.PickupDrop(nearestID)
 
 #
 func _post_launch():
