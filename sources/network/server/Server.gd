@@ -45,13 +45,15 @@ func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
 			DisconnectCharacter(rpcID)
 
 # Character
-func CreateCharacter(charName : String, traits : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
 	var accountID : int = Peers.GetAccount(rpcID)
 	if accountID == NetworkCommons.RidUnknown:
 		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
 	else:
-		if not Launcher.SQL.AddCharacter(accountID, charName, traits):
+		if Launcher.SQL.GetCharacters(accountID).size() >= ActorCommons.MaxCharacterCount:
+			err = NetworkCommons.CharacterError.ERR_SLOT_AVAILABLE
+		if not Launcher.SQL.AddCharacter(accountID, charName, traits, attributes):
 			err = NetworkCommons.CharacterError.ERR_NAME_AVAILABLE
 		else:
 			var characterID : int = Launcher.SQL.GetCharacterID(accountID, charName)
@@ -82,8 +84,9 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 			else:
 				var agent : PlayerAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
 				if agent:
+					var info : Dictionary = Launcher.SQL.GetCharacterInfo(peer.characterRID)
 					peer.SetAgent(agent.get_rid().get_id())
-					agent.stat.SetAttributes(ActorCommons.DefaultAttributes)
+					agent.stat.SetAttributes(info)
 					agent.inventory.ImportInventory(ActorCommons.DefaultInventory)
 					agent.rpcRID = rpcID
 					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
@@ -192,7 +195,7 @@ func TriggerCast(targetID : int, skillID : int, rpcID : int = NetworkCommons.Rid
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
-		if player.stat.spiritShape.length() == 0:
+		if player.stat.spirit.length() == 0:
 			return
 		var map : Object = WorldAgent.GetMapFromAgent(player)
 		if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
@@ -204,13 +207,15 @@ func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var target : BaseAgent = WorldAgent.GetAgent(targetID)
 	if target:
 		Network.UpdateAttributes(targetID, target.stat.strength, target.stat.vitality, target.stat.agility, target.stat.endurance, target.stat.concentration, rpcID)
-		Network.UpdateActiveStats(targetID, target.stat.level, target.stat.experience, target.stat.gp, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.entityShape, target.stat.spiritShape, target.stat.currentShape, rpcID)
+		Network.UpdateActiveStats(targetID, target.stat.level, target.stat.experience, target.stat.gp, target.stat.health, target.stat.mana, target.stat.stamina, target.stat.weight, target.stat.shape, target.stat.spirit, target.stat.currentShape, rpcID)
 
 # Stats
 func AddAttribute(attribute : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
+	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	var player : PlayerAgent = Peers.GetAgent(rpcID)
-	if player and player.stat:
+	if peer and peer.characterRID != NetworkCommons.RidUnknown and player and player.stat:
 		player.stat.AddAttribute(attribute)
+		Launcher.SQL.UpdateAttribute(peer.characterRID, player.stat)
 
 # Inventory
 func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):

@@ -90,6 +90,7 @@ enum CharacterError {
 	ERR_NAME_AVAILABLE,
 	ERR_NAME_VALID,
 	ERR_NAME_SIZE,
+	ERR_SLOT_AVAILABLE,
 }
 
 static func CheckCharacterInformation(nickText : String) -> CharacterError:

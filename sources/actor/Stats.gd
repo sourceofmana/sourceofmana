@@ -15,8 +15,8 @@ var haircolor : int						= 0
 var gender : int						= ActorCommons.Gender.MALE
 var race : int							= 0
 var skin : int							= 0
-var entityShape : String				= ""
-var spiritShape : String				= ""
+var shape : String				= ""
+var spirit : String				= ""
 var currentShape : String				= ""
 
 # Inactive Stats
@@ -103,13 +103,13 @@ func Init(actorNode : Actor, data : EntityData):
 	actor = actorNode
 
 	var stats : Dictionary = data._stats
-	entityShape	= data._name
-	currentShape = entityShape
+	shape	= data._name
+	currentShape = shape
 
 	if "Level" in stats:				level				= stats["Level"]
 	if "Experience" in stats:			experience			= stats["Experience"]
 	if "GP" in stats:					gp					= stats["GP"]
-	if "Spirit" in stats:				spiritShape			= stats["Spirit"]
+	if "Spirit" in stats:				spirit			= stats["Spirit"]
 	if "BaseExp" in stats:				baseExp				= stats["BaseExp"]
 
 	SetAttributes(stats)
@@ -121,7 +121,7 @@ func Init(actorNode : Actor, data : EntityData):
 	RefreshActiveStats()
 
 func FillRandomAttributes():
-	var maxPoints : int			= Formula.GetMaxAttributePoints(self)
+	var maxPoints : int			= Formula.GetMaxAttributePoints(level)
 	var assignedPoints : int	= Formula.GetAssignedAttributePoints(self)
 	if maxPoints > assignedPoints:
 		const attributeNames = ["strength", "vitality", "agility", "endurance", "concentration"]
@@ -140,13 +140,13 @@ func Morph(data : EntityData):
 	SetMorphStats(data._stats)
 
 func IsMorph() -> bool:
-	return currentShape != entityShape
+	return currentShape != shape
 
 func IsSailing() -> bool:
 	return currentShape == "Ship"
 
 func AddAttribute(attribute : ActorCommons.Attribute):
-	if Formula.GetMaxAttributePoints(self) - Formula.GetAssignedAttributePoints(self) > 0:
+	if Formula.GetMaxAttributePoints(level) - Formula.GetAssignedAttributePoints(self) > 0:
 		match attribute:
 			ActorCommons.Attribute.STRENGTH:
 				strength = min(ActorCommons.MaxPointPerAttributes, strength + 1)

@@ -39,8 +39,8 @@ func CharacterInfo(info : Dictionary, rpcID : int = NetworkCommons.RidSingleMode
 	CallClient("CharacterInfo", [info], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func CreateCharacter(charName : String, traits : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("CreateCharacter", [charName, traits], rpcID)
+func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+	CallServer("CreateCharacter", [charName, traits, attributes], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
@@ -196,8 +196,8 @@ func Morphed(agentID : int, morphID : String, notifyMorphing : bool, rpcID : int
 
 # Stats
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdateActiveStats(agentID : int, level : int, experience : int, gp : int, health : int, mana : int, stamina : int, weight : float, entityShape : String, spiritShape : String, currentShape : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("UpdateActiveStats", [agentID, level, experience, gp, health, mana, stamina, weight, entityShape, spiritShape, currentShape], rpcID)
+func UpdateActiveStats(agentID : int, level : int, experience : int, gp : int, health : int, mana : int, stamina : int, weight : float, shape : String, spirit : String, currentShape : String, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("UpdateActiveStats", [agentID, level, experience, gp, health, mana, stamina, weight, shape, spirit, currentShape], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func UpdateAttributes(agentID : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = NetworkCommons.RidSingleMode):

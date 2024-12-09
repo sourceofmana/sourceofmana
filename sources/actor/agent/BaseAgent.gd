@@ -183,10 +183,10 @@ func Interact(_caller : BaseAgent):
 	pass
 
 func GetNextShapeID() -> String:
-	return stat.entityShape if stat.IsMorph() else stat.spiritShape
+	return stat.shape if stat.IsMorph() else stat.spirit
 
 func GetNextPortShapeID() -> String:
-	return stat.spiritShape if stat.IsSailing() else "Ship"
+	return stat.spirit if stat.IsSailing() else "Ship"
 
 func Killed():
 	agent_killed.emit(self)

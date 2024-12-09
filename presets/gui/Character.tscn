@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://duqpp1dik8h8h"]
+[gd_scene load_steps=5 format=3 uid="uid://duqpp1dik8h8h"]
 
-[ext_resource type="Script" path="res://sources/gui/Character.gd" id="2_aacye"]
+[ext_resource type="Script" path="res://sources/gui/character/Character.gd" id="2_aacye"]
+[ext_resource type="Script" path="res://sources/gui/character/Attributes.gd" id="2_nrudd"]
+[ext_resource type="Script" path="res://sources/gui/character/Stats.gd" id="3_v4km6"]
+[ext_resource type="Script" path="res://sources/gui/character/Traits.gd" id="4_1wiqu"]
 
 [node name="Character" type="VBoxContainer"]
 anchors_preset = 15
@@ -59,10 +62,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Attributes" type="PanelContainer" parent="Customization"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PanelSideLeft"
+script = ExtResource("2_nrudd")
 
 [node name="Margin" type="MarginContainer" parent="Customization/Attributes"]
 layout_mode = 2
@@ -219,6 +222,7 @@ text = "+"
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PanelSideLeft"
+script = ExtResource("3_v4km6")
 
 [node name="Margin" type="MarginContainer" parent="Customization/Stats"]
 layout_mode = 2
@@ -283,6 +287,7 @@ visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PanelSideRight"
+script = ExtResource("4_1wiqu")
 
 [node name="Margin" type="MarginContainer" parent="Customization/Traits"]
 layout_mode = 2
@@ -432,3 +437,14 @@ size_flags_horizontal = 3
 [node name="EmptyBottom" type="Control" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
+
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Strength/Minus" to="Customization/Attributes" method="_on_strength_minus_button"]
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Strength/Plus" to="Customization/Attributes" method="_on_strength_plus_button"]
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Vitality/Minus" to="Customization/Attributes" method="_on_vitality_minus_button"]
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Vitality/Plus" to="Customization/Attributes" method="_on_vitality_plus_button"]
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Agility/Minus" to="Customization/Attributes" method="_on_agility_minus_button"]
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Agility/Plus" to="Customization/Attributes" method="_on_agility_plus_button"]
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Endurance/Minus" to="Customization/Attributes" method="_on_endurance_minus_button"]
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Endurance/Plus" to="Customization/Attributes" method="_on_endurance_plus_button"]
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Concentration/Minus" to="Customization/Attributes" method="_on_concentration_minus_button"]
+[connection signal="pressed" from="Customization/Attributes/Margin/VBox/Concentration/Plus" to="Customization/Attributes" method="_on_concentration_plus_button"]

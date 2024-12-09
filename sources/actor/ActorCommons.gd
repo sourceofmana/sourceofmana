@@ -232,7 +232,10 @@ const CharacterScreenLocations : PackedVector2Array = [
 # New player
 const DefaultAttributes : Dictionary = {
 	"strength": 10,
-	"vitality": 3
+	"vitality": 3,
+	"agility": 0,
+	"endurance": 0,
+	"concentration": 0,
 }
 static var DefaultInventory : Dictionary = {
 	"Apple".hash(): 5

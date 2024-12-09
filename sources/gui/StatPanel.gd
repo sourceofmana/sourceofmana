@@ -78,7 +78,7 @@ func RefreshActiveStats(entity : Entity):
 	RefreshGender(entity)
 	lName.set_text(entity.nick)
 	lLevel.set_text("Lv. %d" % entity.stat.level)
-	lSpirit.set_text(entity.stat.spiritShape)
+	lSpirit.set_text(entity.stat.spirit)
 
 	pExperience.SetStat(entity.stat.experience, Experience.GetNeededExperienceForNextLevel(entity.stat.level))
 	pHealth.SetStat(entity.stat.health, entity.stat.current.maxHealth)
@@ -97,7 +97,7 @@ func RefreshAttributes(entity : Entity):
 	lEndurance.set_text(str(entity.stat.endurance))
 	lConcentration.set_text(str(entity.stat.concentration))
 
-	var availablePoints : int = Formula.GetMaxAttributePoints(entity.stat) - Formula.GetAssignedAttributePoints(entity.stat)
+	var availablePoints : int = Formula.GetMaxAttributePoints(entity.stat.level) - Formula.GetAssignedAttributePoints(entity.stat)
 	lAvailablePoints.set_text(str(availablePoints))
 
 	bStrength.set_disabled(availablePoints <= 0 or entity.stat.strength >= ActorCommons.MaxPointPerAttributes)

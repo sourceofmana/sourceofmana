@@ -80,7 +80,7 @@ func AddCharacter(info : Dictionary):
 		UpdateSelectedCharacter(info, availableSlot)
 
 func RandomizeCharacter():
-	pass
+	attributesPanel.Randomize()
 
 func CreateCharacter():
 	if isCharacterCreatorEnabled:
@@ -89,15 +89,7 @@ func CreateCharacter():
 		if err != NetworkCommons.CharacterError.ERR_OK:
 			FillWarningLabel(err)
 		else:
-			Network.CreateCharacter(nickname, {
-				"hairstyle" = 0,
-				"haircolor" = 0,
-				"race" = 0,
-				"skin" = 0,
-				"gender" = 0,
-				"shape" = "Default Entity",
-				"spirit" = "Piou"
-			})
+			Network.CreateCharacter(nickname, traitsPanel.GetValues(), attributesPanel.GetValues())
 			FSM.EnterState(FSM.States.CHAR_PROGRESS)
 
 func SelectCharacter():

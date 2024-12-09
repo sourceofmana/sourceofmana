@@ -2,6 +2,10 @@ extends Node
 class_name Callback
 
 #
+static func ClearCallbacks(objectSignal : Signal):
+	for connection in objectSignal.get_connections():
+		RemoveCallback(objectSignal, connection["callable"])
+
 static func RemoveCallback(objectSignal : Signal, callback : Callable):
 	if objectSignal.is_connected(callback):
 		objectSignal.disconnect(callback)

@@ -115,8 +115,8 @@ static func ApplyXp(agent : BaseAgent):
 			entry.attacker.stat.AddExperience(bonusScaled)
 
 # Attribute points
-static func GetMaxAttributePoints(stat : ActorStats) -> int:
-	return attributePointsBase + stat.level * attributePointPerLevel
+static func GetMaxAttributePoints(level : int) -> int:
+	return attributePointsBase + level * attributePointPerLevel
 
 static func GetAssignedAttributePoints(stat : ActorStats) -> int:
 	return stat.agility + stat.vitality + stat.strength + stat.endurance + stat.concentration

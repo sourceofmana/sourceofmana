@@ -7,14 +7,14 @@ extends Control
 
 # Private functions
 func _bind(button : Button, buttonName : String, callable : Callable):
-	Callback.OneShotCallback(button.pressed, callable)
+	Callback.PlugCallback(button.pressed, callable)
 	button.set_text(buttonName)
 	button.set_visible(true)
 
 func _clear(button : Button):
 	button.set_visible(false)
 	button.set_text("")
-	Callback.ClearOneShot(button.pressed)
+	Callback.ClearCallbacks(button.pressed)
 
 # Public functions
 func SetLeft(buttonName : String, callable : Callable):

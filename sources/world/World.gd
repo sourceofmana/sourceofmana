@@ -51,10 +51,10 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 
 		if map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
 			if not agent.stat.IsMorph():
-				agent.Morph(false, agent.stat.spiritShape)
+				agent.Morph(false, agent.stat.spirit)
 		else:
 			if agent.stat.IsMorph():
-				agent.Morph(false, agent.stat.entityShape)
+				agent.Morph(false, agent.stat.shape)
 
 		Network.WarpPlayer(map.name, agent.rpcRID)
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):

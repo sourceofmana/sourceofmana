@@ -23,10 +23,10 @@ func UpdateLastStats():
 	lastStat.mana != stat.mana or \
 	lastStat.stamina != stat.stamina or \
 	lastStat.weight != stat.weight or \
-	lastStat.entityShape != stat.entityShape or \
-	lastStat.spiritShape != stat.spiritShape or \
+	lastStat.shape != stat.shape or \
+	lastStat.spirit != stat.spirit or \
 	lastStat.currentShape != stat.currentShape:
-		Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.gp, stat.health, stat.mana, stat.stamina, stat.weight, stat.entityShape, stat.spiritShape, stat.currentShape, rpcRID)
+		Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.gp, stat.health, stat.mana, stat.stamina, stat.weight, stat.shape, stat.spirit, stat.currentShape, rpcRID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 		lastStat.gp					= stat.gp
@@ -34,8 +34,8 @@ func UpdateLastStats():
 		lastStat.mana				= stat.mana
 		lastStat.stamina			= stat.stamina
 		lastStat.weight				= stat.weight
-		lastStat.entityShape		= stat.entityShape
-		lastStat.spiritShape		= stat.spiritShape
+		lastStat.shape		= stat.shape
+		lastStat.spirit		= stat.spirit
 		lastStat.currentShape		= stat.currentShape
 
 	if lastStat.strength != stat.strength or \
