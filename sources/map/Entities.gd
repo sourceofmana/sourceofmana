@@ -9,7 +9,13 @@ static func Get(ridEntity : int) -> Entity:
 	return entities.get(ridEntity)
 
 static func Clear():
+	var playerID : int = -1
+	for entityID in entities:
+		if entities[entityID] == Launcher.Player:
+			playerID = entityID
+			break
 	entities.clear()
+	entities[playerID] = Launcher.Player
 
 static func Add(entity : Entity, ridEntity : int):
 	entities[ridEntity] = entity 
