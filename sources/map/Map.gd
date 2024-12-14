@@ -85,6 +85,8 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 	var isAlreadySpawned : bool = entity != null and entity.get_parent() == fringeLayer
 
 	if not entity:
+		if nick.is_empty():
+			nick = entityID
 		entity = Instantiate.CreateEntity(entityType, entityID, nick, isLocalPlayer)
 		entity.agentID = agentID
 		if isLocalPlayer:

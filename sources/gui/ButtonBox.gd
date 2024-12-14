@@ -26,6 +26,15 @@ func SetMiddle(buttonName : String, callable : Callable):
 func SetRight(buttonName : String, callable : Callable):
 	_bind(rightButton, buttonName, callable)
 
+func ClearLeft():
+	_clear(leftButton)
+
+func ClearMiddle():
+	_clear(middleButton)
+
+func ClearRight():
+	_clear(rightButton)
+
 func ClearAll():
 	_clear(leftButton)
 	_clear(middleButton)

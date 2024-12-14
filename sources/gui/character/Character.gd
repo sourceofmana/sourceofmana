@@ -1,14 +1,18 @@
 extends Control
 
 #
+@onready var characterName : PanelContainer				= $PlayerName
 @onready var characterNameLineEdit : LineEdit			= $PlayerName/MarginContainer/VBoxContainer/Entry
 @onready var characterNameDisplay : Label				= $PlayerName/MarginContainer/VBoxContainer/Name
-@onready var traitsPanel : PanelContainer				= $Customization/Traits
-@onready var attributesPanel : PanelContainer			= $Customization/Attributes
-@onready var statsPanel : PanelContainer				= $Customization/Stats
+
+@onready var display : HBoxContainer					= $Display
+@onready var traitsPanel : PanelContainer				= $Display/Traits
+@onready var attributesPanel : PanelContainer			= $Display/Attributes
+@onready var statsPanel : PanelContainer				= $Display/Stats
 
 var isCharacterCreatorEnabled : bool					= false
-var characters : Array[Dictionary]						= []
+var charactersInfo : Array[Dictionary]					= []
+var charactersNode : Array[Entity]						= []
 var currentCharacterID : int							= -1
 
 #
@@ -44,40 +48,70 @@ func FillWarningLabel(err : NetworkCommons.CharacterError):
 		warn = "[color=#%s]%s[/color]" % [UICommons.WarnTextColor.to_html(false), warn]
 	Launcher.GUI.notificationLabel.AddNotification(warn)
 
-func VerifyCharacterInfo(info : Dictionary):
-	return "nickname" in info and "last_timestamp" in info
+func FillMissingCharacterInfo(info : Dictionary):
+	info.get_or_add("nickname", "")
+	info.get_or_add("last_timestamp", 1 << 32)
+
+func HasSlot(slotID : int) -> bool:
+	return slotID >= 0 and slotID < charactersInfo.size()
+
+func GetDefaultSlot(slotID : int) -> int:
+	return slotID if HasSlot(slotID) else 0
+
+func NextAvailableSlot() -> int:
+	var availableSlot : int = -1
+	for charID in charactersInfo.size():
+		if charactersInfo[charID].is_empty():
+			availableSlot = charID
+			break
+	return availableSlot
 
 func AddCharacter(info : Dictionary):
-	if not VerifyCharacterInfo(info):
-		assert(false, "Could not verify character info")
-		return
+	FillMissingCharacterInfo(info)
 
 	var entity : Entity = Instantiate.CreateEntity(ActorCommons.Type.PLAYER, "Default Entity", info["nickname"], false)
 	if not entity:
 		assert(false, "Could not create character preview")
 		return
 
-	var availableSlot : int = -1
-	for charID in characters.size():
-		if characters[charID].is_empty():
-			availableSlot = charID
-			break
+	var availableSlot : int = NextAvailableSlot()
 
 	if availableSlot == -1:
 		assert(false, "No free available placement")
 		return
 
-	characters[availableSlot] = info
+	charactersInfo[availableSlot] = info
+	charactersNode[availableSlot] = entity
 
 	Launcher.Map.AddChild(entity)
-	var randDir : Vector2 = Vector2(randf_range(-1.0, 1.0), 0.5)
-	var randState : ActorCommons.State = ActorCommons.State.IDLE if randi() % 2 == 1 else ActorCommons.State.SIT
+	var randDir : Vector2 = Vector2(randf_range(-0.8, 0.8), 1.0)
+	var randState : ActorCommons.State = ActorCommons.State.IDLE if isCharacterCreatorEnabled or randi() % 2 == 1 else ActorCommons.State.SIT
 	entity.Update(Vector2.ZERO, ActorCommons.CharacterScreenLocations[availableSlot], randDir, randState, -1, true)
 
-	if currentCharacterID == -1 or \
-	characters[currentCharacterID]["last_timestamp"] == null or \
-	(info["last_timestamp"] != null and characters[currentCharacterID]["last_timestamp"] < info["last_timestamp"]):
+	if not HasSlot(currentCharacterID) or \
+	"last_timestamp" not in charactersInfo[currentCharacterID] or charactersInfo[currentCharacterID]["last_timestamp"] == null or \
+	(info["last_timestamp"] != null and charactersInfo[currentCharacterID]["last_timestamp"] < info["last_timestamp"]):
 		UpdateSelectedCharacter(info, availableSlot)
+
+func RemoveCharacter(slotID):
+	if HasSlot(slotID):
+		if charactersNode[slotID] != null:
+			Launcher.Map.RemoveChild(charactersNode[slotID])
+			charactersNode[slotID] = null
+		if not charactersInfo[slotID].is_empty():
+			charactersInfo[slotID] = {}
+
+		if currentCharacterID == slotID:
+			var mostRecentTimestamp : int = -1
+			var mostRecentCharacterID : int = -1
+			for characterID in charactersInfo.size():
+				if not charactersInfo[characterID].is_empty():
+					if mostRecentCharacterID == -1:
+						mostRecentCharacterID = characterID
+					elif "last_timestamp" in charactersInfo[characterID] and charactersInfo[characterID]["last_timestamp"] != null and mostRecentTimestamp < charactersInfo[characterID]["last_timestamp"]:
+						mostRecentTimestamp = charactersInfo[characterID]["last_timestamp"]
+						mostRecentCharacterID = characterID
+			UpdateSelectedCharacter(charactersInfo[mostRecentCharacterID] if HasSlot(mostRecentCharacterID) else {}, mostRecentCharacterID)
 
 func RandomizeCharacter():
 	attributesPanel.Randomize()
@@ -96,13 +130,28 @@ func SelectCharacter():
 	Network.ConnectCharacter(characterNameDisplay.get_text())
 	FSM.EnterState(FSM.States.CHAR_PROGRESS)
 
-func UpdateSelectedCharacter(info : Dictionary, slotID : int):
-	characterNameDisplay.set_text(info["nickname"])
-	Launcher.Camera.EnableSceneCamera(ActorCommons.CharacterScreenLocations[slotID])
+func UpdateSelectedCharacter(info : Dictionary = {}, slotID : int = -1):
+	if "nickname" in info:
+		characterNameDisplay.set_text(info["nickname"])
+
+	var displayInformation : bool = not info.is_empty() or isCharacterCreatorEnabled
+	characterName.set_visible(displayInformation)
+	display.set_visible(displayInformation)
+
+	Launcher.Camera.EnableSceneCamera(ActorCommons.CharacterScreenLocations[GetDefaultSlot(slotID)])
 	currentCharacterID = slotID
 
 func EnableCharacterCreator(enable : bool):
+	var wasCharacterCreatorEnabled : bool = isCharacterCreatorEnabled
 	isCharacterCreatorEnabled = enable
+
+	if wasCharacterCreatorEnabled:
+		if not enable and HasSlot(currentCharacterID) and charactersNode[currentCharacterID] != null:
+			RemoveCharacter(currentCharacterID)
+	else:
+		if enable:
+			AddCharacter({})
+
 	statsPanel.set_visible(!enable)
 	characterNameDisplay.set_visible(!enable)
 	characterNameLineEdit.set_visible(enable)
@@ -116,21 +165,31 @@ func EnableCharacterCreator(enable : bool):
 			Launcher.GUI.buttonBoxes.SetMiddle("Randomize", RandomizeCharacter)
 			Launcher.GUI.buttonBoxes.SetRight("Create", CreateCharacter)
 		else:
-			Launcher.GUI.buttonBoxes.SetLeft("Cancel", FSM.EnterState.bind(FSM.States.LOGIN_SCREEN))
-			Launcher.GUI.buttonBoxes.SetMiddle("New Player", EnableCharacterCreator.bind(true))
+			Launcher.GUI.buttonBoxes.SetLeft("Cancel", Leave)
+			if NextAvailableSlot() != -1:
+				Launcher.GUI.buttonBoxes.SetMiddle("New Player", EnableCharacterCreator.bind(true))
 			Launcher.GUI.buttonBoxes.SetRight("Select", SelectCharacter)
 
 func RefreshOnce():
 	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMap)
 	Launcher.Camera.SetBoundaries()
-	Launcher.Camera.EnableSceneCamera(ActorCommons.CharacterScreenLocations[0])
-	EnableCharacterCreator(isCharacterCreatorEnabled)
+
 	Launcher.Map.RemoveChildren()
-	for characterID in characters.size():
-		characters[characterID] = {}
+	for slotID in charactersInfo.size():
+		RemoveCharacter(slotID)
 	currentCharacterID = -1
+
+	EnableCharacterCreator(isCharacterCreatorEnabled)
+	UpdateSelectedCharacter({}, currentCharacterID)
 	Network.CharacterListing()
+
+func Leave():
+	FSM.EnterState(FSM.States.LOGIN_SCREEN)
+	for slotID in charactersInfo.size():
+		RemoveCharacter(slotID)
+	currentCharacterID = -1
 
 #
 func _ready():
-	characters.resize(ActorCommons.MaxCharacterCount)
+	charactersInfo.resize(ActorCommons.MaxCharacterCount)
+	charactersNode.resize(ActorCommons.MaxCharacterCount)

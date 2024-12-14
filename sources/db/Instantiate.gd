@@ -18,7 +18,7 @@ static func CreateEntity(entityType : ActorCommons.Type, entityID : String, nick
 
 	var actor : Entity = FileSystem.LoadEntityVariant()
 	if actor:
-		actor.Init(entityType, data,  entityID if nick.length() == 0 else nick, isManaged)
+		actor.Init(entityType, data, nick, isManaged)
 	return actor
 
 static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = "") -> BaseAgent:

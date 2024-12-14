@@ -227,6 +227,7 @@ const CharacterScreenLocations : PackedVector2Array = [
 	Vector2(2240, 768),
 	Vector2(1856, 672),
 	Vector2(2144, 704),
+	Vector2(2048, 736)
 ]
 
 # New player
