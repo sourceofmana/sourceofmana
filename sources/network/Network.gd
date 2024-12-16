@@ -299,7 +299,9 @@ func Mode(isClient : bool, isServer : bool):
 				prefix = "wss://"
 			ret = peer.create_client(prefix + serverAddress + ":" + str(NetworkCommons.ServerPort), tlsOptions)
 		else:
+			peer.set_timeout(NetworkCommons.Timeout, NetworkCommons.TimeoutMin, NetworkCommons.TimeoutMax)
 			ret = peer.create_client(serverAddress, NetworkCommons.ServerPort)
+
 
 		assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
 		if ret == OK:

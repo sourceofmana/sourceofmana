@@ -22,6 +22,13 @@ enum Way
 	SHOW = 1,
 }
 
+enum ButtonBox
+{
+	LEFT = 0,
+	MIDDLE,
+	RIGHT,
+}
+
 static func ColorToHSVA(color : Color) -> Vector4:
 	var maxc : float = max(color.r, max(color.g, color.b))
 	var minc : float = min(color.r, min(color.g, color.b))

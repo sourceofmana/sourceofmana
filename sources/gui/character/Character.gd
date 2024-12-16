@@ -161,14 +161,14 @@ func EnableCharacterCreator(enable : bool):
 	if Launcher.GUI.buttonBoxes:
 		Launcher.GUI.buttonBoxes.ClearAll()
 		if enable:
-			Launcher.GUI.buttonBoxes.SetLeft("Cancel", EnableCharacterCreator.bind(false))
-			Launcher.GUI.buttonBoxes.SetMiddle("Randomize", RandomizeCharacter)
-			Launcher.GUI.buttonBoxes.SetRight("Create", CreateCharacter)
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Cancel", EnableCharacterCreator.bind(false))
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.MIDDLE, "Randomize", RandomizeCharacter)
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Create", CreateCharacter)
 		else:
-			Launcher.GUI.buttonBoxes.SetLeft("Cancel", Leave)
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Cancel", Leave)
 			if NextAvailableSlot() != -1:
-				Launcher.GUI.buttonBoxes.SetMiddle("New Player", EnableCharacterCreator.bind(true))
-			Launcher.GUI.buttonBoxes.SetRight("Select", SelectCharacter)
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.MIDDLE, "New Player", EnableCharacterCreator.bind(true))
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Select", SelectCharacter)
 
 func RefreshOnce():
 	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMap)
@@ -188,6 +188,12 @@ func Leave():
 	for slotID in charactersInfo.size():
 		RemoveCharacter(slotID)
 	currentCharacterID = -1
+
+func Close():
+	if isCharacterCreatorEnabled:
+		EnableCharacterCreator(false)
+	else:
+		Leave()
 
 #
 func _ready():

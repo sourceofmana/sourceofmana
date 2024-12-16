@@ -14,6 +14,7 @@ extends ServiceBase
 @onready var dialogueContainer : PanelContainer	= $Overlay/VSections/Contexts/Dialogue/BottomVbox/Dialogue
 @onready var choiceContext : ContextMenu		= $Overlay/VSections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
 @onready var infoContext : ContextMenu			= $Overlay/VSections/Contexts/Info
+@onready var loginPanel : Control				= $Overlay/VSections/Contexts/Login
 @onready var characterPanel : Control			= $Overlay/VSections/Contexts/Character
 
 # Shortcuts
@@ -24,8 +25,6 @@ extends ServiceBase
 
 # Windows
 @onready var windows : Control					= $Windows/Floating
-@onready var newsWindow : WindowPanel			= $Windows/Floating/News
-@onready var loginWindow : WindowPanel			= $Windows/Floating/Login
 @onready var inventoryWindow : WindowPanel		= $Windows/Floating/Inventory
 @onready var minimapWindow : WindowPanel		= $Windows/Floating/Minimap
 @onready var chatWindow : WindowPanel			= $Windows/Floating/Chat
@@ -48,17 +47,26 @@ var progressTimer : Timer						= null
 
 #
 func CloseWindow():
-	ToggleControl(quitWindow)
+	if FSM.IsLoginState():
+		ToggleControl(quitWindow)
+	elif FSM.IsCharacterState():
+		characterPanel.Close()
+	elif FSM.IsGameState():
+		ToggleControl(quitWindow)
 
 func GetCurrentWindow() -> Control:
 	if windows && windows.get_child_count() > 0:
 		return windows.get_child(windows.get_child_count() - 1)
 	return null
 
-func CloseCurrentWindow():
-	var control : WindowPanel = GetCurrentWindow()
-	if control and control.is_visible():
-		ToggleControl(control)
+func CloseCurrent():
+	var focusedNode : Control = get_viewport().gui_get_focus_owner()
+	if focusedNode and focusedNode is LineEdit:
+		focusedNode.release_focus()
+	else:
+		var control : WindowPanel = GetCurrentWindow()
+		if control and control.is_visible():
+			ToggleControl(control)
 
 func ToggleControl(control : WindowPanel):
 	if control:
@@ -99,12 +107,13 @@ func EnterLoginMenu():
 	buttonBoxes.set_visible(false)
 
 	background.set_visible(true)
-	newsWindow.EnableControl(true)
-	loginWindow.EnableControl(true)
+	loginPanel.set_visible(true)
+	loginPanel._on_visibility_changed()
+	buttonBoxes.set_visible(true)
 
 func EnterLoginProgress():
-	newsWindow.EnableControl(false)
-	loginWindow.EnableControl(false)
+	loginPanel.set_visible(false)
+	buttonBoxes.set_visible(false)
 
 	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.LoginAttemptTimeout, TimeoutLoginProgress, [], "ProgressTimer")
 	loadingControl.set_visible(true)
@@ -120,8 +129,7 @@ func EnterCharMenu():
 
 	loadingControl.set_visible(false)
 	background.set_visible(false)
-	newsWindow.EnableControl(false)
-	loginWindow.EnableControl(false)
+	loginPanel.set_visible(false)
 	characterPanel.RefreshOnce()
 
 	characterPanel.set_visible(true)

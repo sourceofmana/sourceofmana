@@ -8,32 +8,49 @@ extends Control
 # Private functions
 func _bind(button : Button, buttonName : String, callable : Callable):
 	Callback.PlugCallback(button.pressed, callable)
-	button.set_text(buttonName)
 	button.set_visible(true)
+	_name(button, buttonName)
+
+func _name(button : Button, buttonName : String):
+	button.set_text(buttonName)
 
 func _clear(button : Button):
 	button.set_visible(false)
 	button.set_text("")
 	Callback.ClearCallbacks(button.pressed)
 
+func _focus(button : Button):
+	if button.visible:
+		button.grab_focus()
+
 # Public functions
-func SetLeft(buttonName : String, callable : Callable):
-	_bind(leftButton, buttonName, callable)
+func Bind(side : UICommons.ButtonBox, buttonName : String, callable : Callable):
+	match side:
+		UICommons.ButtonBox.LEFT:		_bind(leftButton, buttonName, callable)
+		UICommons.ButtonBox.MIDDLE:		_bind(middleButton, buttonName, callable)
+		UICommons.ButtonBox.RIGHT:		_bind(rightButton, buttonName, callable)
+		_:								assert(false, "Unknown button box side")
 
-func SetMiddle(buttonName : String, callable : Callable):
-	_bind(middleButton, buttonName, callable)
+func Rename(side : UICommons.ButtonBox, buttonName : String):
+	match side:
+		UICommons.ButtonBox.LEFT:		_name(leftButton, buttonName)
+		UICommons.ButtonBox.MIDDLE:		_name(middleButton, buttonName)
+		UICommons.ButtonBox.RIGHT:		_name(rightButton, buttonName)
+		_:								assert(false, "Unknown button box side")
 
-func SetRight(buttonName : String, callable : Callable):
-	_bind(rightButton, buttonName, callable)
+func Clear(side : UICommons.ButtonBox):
+	match side:
+		UICommons.ButtonBox.LEFT:		_clear(leftButton)
+		UICommons.ButtonBox.MIDDLE:		_clear(middleButton)
+		UICommons.ButtonBox.RIGHT:		_clear(rightButton)
+		_:								assert(false, "Unknown button box side")
 
-func ClearLeft():
-	_clear(leftButton)
-
-func ClearMiddle():
-	_clear(middleButton)
-
-func ClearRight():
-	_clear(rightButton)
+func Focus(side : UICommons.ButtonBox):
+	match side:
+		UICommons.ButtonBox.LEFT:		_focus(leftButton)
+		UICommons.ButtonBox.MIDDLE:		_focus(middleButton)
+		UICommons.ButtonBox.RIGHT:		_focus(rightButton)
+		_:								assert(false, "Unknown button box side")
 
 func ClearAll():
 	_clear(leftButton)

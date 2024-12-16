@@ -26,5 +26,6 @@ func _on_stay_pressed():
 	ToggleControl()
 
 func _on_window_draw():
+	logOutButton.set_visible(FSM.IsGameState())
 	if quitButton:
 		quitButton.grab_focus()

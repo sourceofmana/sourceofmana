@@ -211,8 +211,8 @@ func set_sessionaccountname(accountName : String):
 	SetVal("Session-AccountName", accountName)
 	apply_sessionaccountname(accountName)
 func apply_sessionaccountname(accountName : String):
-	if Launcher.GUI and Launcher.GUI.loginWindow:
-		Launcher.GUI.loginWindow.nameTextControl.set_text(accountName)
+	if Launcher.GUI and Launcher.GUI.loginPanel:
+		Launcher.GUI.loginPanel.nameTextControl.set_text(accountName)
 
 # Session Windows Overlay placement
 enum ESessionOverlay { NAME = 0, POSITION, SIZE, COUNT}

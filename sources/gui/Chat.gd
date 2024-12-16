@@ -46,7 +46,7 @@ func OnNewTextSubmitted(newText : String):
 
 #
 func _input(event : InputEvent):
-	if isNewLineEnabled():
+	if FSM.IsGameState() and isNewLineEnabled():
 		if Launcher.Action.TryJustPressed(event, "ui_cancel", true):
 			SetNewLineEnabled(false)
 		elif Launcher.Action.TryJustPressed(event, "ui_up", true):

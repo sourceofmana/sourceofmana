@@ -1,12 +1,9 @@
-extends WindowPanel
+extends Control
 
 #
-@onready var nameTextControl : LineEdit		= $Margin/VBoxContainer/GridContainer/NameContainer/NameText
-@onready var passwordTextControl : LineEdit	= $Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText
-
-@onready var onlineCheck : CheckBox			= $Margin/VBoxContainer/SignBar/OnlineButton
-@onready var playButton : Button			= $Margin/VBoxContainer/SignBar/Play
-@onready var registerButton : Button		= $Margin/VBoxContainer/SignBar/Register
+@onready var nameTextControl : LineEdit		= $Panel/Margin/VBoxContainer/GridContainer/NameContainer/NameText
+@onready var passwordTextControl : LineEdit	= $Panel/Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText
+@onready var onlineIndicator : CheckBox		= $Panel/Margin/VBoxContainer/OnlineIndicator
 
 var nameText : String = ""
 var passwordText : String = ""
@@ -41,34 +38,30 @@ func _warning_on_meta_clicked(meta):
 	OS.shell_open(str(meta))
 
 #
-func EnableControl(state : bool):
-	super(state)
-
-	if state == true:
-		if OS.get_name() == "Web":
-			onlineCheck.visible = false
-
 func RefreshOnlineMode():
 	OnlineMode(Network.Client != null, Network.Server != null)
 
 func OnlineMode(_clientStarted : bool, serverStarted : bool):
-	if onlineCheck:
-		onlineCheck.text = "Offline" if serverStarted else "Online"
-		if onlineCheck.button_pressed != not serverStarted:
-			onlineCheck.button_pressed = not serverStarted
+	if onlineIndicator:
+		Launcher.GUI.buttonBoxes.Rename(UICommons.ButtonBox.LEFT, "Switch Online" if serverStarted else "Switch Offline")
+		onlineIndicator.text = "Playing Offline" if serverStarted else "Playing Online"
+		if onlineIndicator.button_pressed != not serverStarted:
+			onlineIndicator.button_pressed = not serverStarted
 
 func EnableButtons(state : bool):
-	var isDisabled : bool = not state
-	onlineCheck.disabled = isDisabled
-	playButton.disabled = isDisabled
-	registerButton.disabled = isDisabled
-	if isDisabled:
-		onlineCheck.text = "Connecting..."
-	else:
-		RefreshOnlineMode()
+	if Launcher.GUI and Launcher.GUI.buttonBoxes:
+		if state:
+			if OS.get_name() != "Web":
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.MIDDLE, "Create Account", CreateAccount)
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Connect", Connect)
+			RefreshOnlineMode()
+		else:
+			Launcher.GUI.buttonBoxes.ClearAll()
+			onlineIndicator.text = "Connecting..."
 
 #
-func _on_play_pressed():
+func Connect():
 	nameText = nameTextControl.get_text()
 	passwordText = passwordTextControl.get_text()
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
@@ -79,7 +72,7 @@ func _on_play_pressed():
 		if Launcher.GUI.settingsWindow:
 			Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
 
-func _on_register_pressed():
+func CreateAccount():
 	nameText = nameTextControl.get_text()
 	passwordText = passwordTextControl.get_text()
 
@@ -91,7 +84,6 @@ func _on_register_pressed():
 
 #
 func _on_text_focus_entered():
-	SetFloatingWindowToTop()
 	if Launcher.Action:
 		Launcher.Action.Enable(false)
 
@@ -100,7 +92,7 @@ func _on_text_focus_exited():
 		Launcher.Action.Enable(true)
 
 func _on_text_submitted(_new_text):
-	_on_play_pressed()
+	Connect()
 
 #
 func _on_visibility_changed():
@@ -109,15 +101,15 @@ func _on_visibility_changed():
 			nameTextControl.grab_focus()
 		elif passwordTextControl and passwordTextControl.is_visible() and passwordTextControl.get_text().length() == 0:
 			passwordTextControl.grab_focus()
-		elif playButton and playButton.is_visible():
-			playButton.grab_focus()
-		RefreshOnlineMode()
-
-func _on_online_button_toggled(toggled : bool):
-	var emulateServer : bool = not toggled
-	EnableButtons(false)
-	if not Launcher.Mode(true, emulateServer):
+		elif Launcher.GUI.buttonBoxes:
+			Launcher.GUI.buttonBoxes.Focus(UICommons.ButtonBox.RIGHT)
 		EnableButtons(true)
+
+func SwitchOnlineMode(toggled : bool):
+	var emulateServer : bool = not toggled
+	EnableButtons(true)
+	if not Launcher.Mode(true, emulateServer):
+		EnableButtons(false)
 
 func _ready():
 	Launcher.launchModeUpdated.connect(OnlineMode)

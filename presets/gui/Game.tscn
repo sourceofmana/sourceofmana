@@ -311,6 +311,18 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 0
 
+[node name="Login" parent="Overlay/VSections/Contexts" instance=ExtResource("7_lrq68")]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -146.0
+offset_right = 146.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Character" parent="Overlay/VSections/Contexts" instance=ExtResource("49_78q3w")]
 visible = false
 layout_mode = 1
@@ -510,15 +522,6 @@ offset_bottom = 622.0
 grow_horizontal = 1
 grow_vertical = 1
 saveOverlayState = true
-
-[node name="Login" parent="Windows/Floating" instance=ExtResource("7_lrq68")]
-visible = false
-layout_mode = 1
-offset_left = 296.0
-offset_top = 240.0
-offset_right = 576.0
-offset_bottom = 346.0
-blockActions = false
 
 [node name="News" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false
