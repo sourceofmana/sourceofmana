@@ -1,82 +1,98 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjgijbfxixe67"]
+[gd_scene load_steps=6 format=3 uid="uid://cjgijbfxixe67"]
 
 [ext_resource type="Script" path="res://sources/gui/Login.gd" id="2_2pjk7"]
 [ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="3_6esv8"]
-[ext_resource type="JSON" path="res://data/db/news.json" id="4_dyd78"]
+[ext_resource type="JSON" path="res://data/db/agreement.json" id="3_kh3en"]
+[ext_resource type="JSON" path="res://data/db/news.json" id="3_mlkr6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tk56e"]
 
 [node name="Login" type="MarginContainer"]
 custom_minimum_size = Vector2(540, 0)
-offset_right = 540.0
-offset_bottom = 239.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("2_2pjk7")
 
-[node name="Panel" type="PanelContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+
+[node name="EmptyLeft" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
 theme_type_variation = &"DialogueBox"
 
-[node name="Margin" type="MarginContainer" parent="Panel"]
+[node name="Margin" type="MarginContainer" parent="HBoxContainer/Panel"]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Margin"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Panel/Margin"]
 layout_mode = 2
 metadata/_edit_use_custom_anchors = true
 
-[node name="Label" type="Label" parent="Panel/Margin/VBoxContainer"]
+[node name="LoginContainer" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
-text = "Source of Mana"
-horizontal_alignment = 1
+size_flags_horizontal = 4
+size_flags_vertical = 0
 
-[node name="HSeparator" type="HSeparator" parent="Panel/Margin/VBoxContainer"]
+[node name="Name" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 32
 
-[node name="GridContainer" type="GridContainer" parent="Panel/Margin/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name"]
 layout_mode = 2
-columns = 2
-
-[node name="NameLabel" type="Label" parent="Panel/Margin/VBoxContainer/GridContainer"]
-layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 0
 text = "Name"
 vertical_alignment = 1
 
-[node name="NameContainer" type="PanelContainer" parent="Panel/Margin/VBoxContainer/GridContainer"]
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 0
 
-[node name="NameText" type="LineEdit" parent="Panel/Margin/VBoxContainer/GridContainer/NameContainer"]
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_next = NodePath("../../PasswordContainer/PasswordText")
+focus_next = NodePath("../../../Password/Container/Text")
 focus_mode = 1
 max_length = 255
 clear_button_enabled = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="PasswordLabel" type="Label" parent="Panel/Margin/VBoxContainer/GridContainer"]
+[node name="Password" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password"]
+layout_mode = 2
+size_flags_vertical = 0
 text = "Password"
 vertical_alignment = 1
 
-[node name="PasswordContainer" type="PanelContainer" parent="Panel/Margin/VBoxContainer/GridContainer"]
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 0
 
-[node name="PasswordText" type="LineEdit" parent="Panel/Margin/VBoxContainer/GridContainer/PasswordContainer"]
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-focus_previous = NodePath("../../NameContainer/NameText")
+focus_previous = NodePath("../../../Name/Container/Text")
 focus_mode = 1
 max_length = 255
 clear_button_enabled = true
@@ -85,19 +101,71 @@ caret_blink = true
 caret_blink_interval = 0.5
 secret = true
 
-[node name="OnlineIndicator" type="CheckBox" parent="Panel/Margin/VBoxContainer"]
+[node name="Email" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
 layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Email"
+vertical_alignment = 1
+
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_previous = NodePath("../../../Name/Container/Text")
+focus_mode = 1
+max_length = 255
+clear_button_enabled = true
+select_all_on_focus = true
+caret_blink = true
+caret_blink_interval = 0.5
+
+[node name="OnlineIndicator" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
 theme_type_variation = &"PearlBox"
 disabled = true
 
-[node name="HSeparator2" type="HSeparator" parent="Panel/Margin/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer/Panel/Margin/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 theme_override_constants/separation = 32
 
-[node name="Scrollable" parent="Panel/Margin/VBoxContainer" instance=ExtResource("3_6esv8")]
+[node name="News" parent="HBoxContainer/Panel/Margin/VBoxContainer" instance=ExtResource("3_6esv8")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxEmpty_tk56e")
-jsonFile = ExtResource("4_dyd78")
+jsonFile = ExtResource("3_mlkr6")
+
+[node name="Agreement" parent="HBoxContainer/Panel/Margin/VBoxContainer" instance=ExtResource("3_6esv8")]
+visible = false
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tk56e")
+jsonFile = ExtResource("3_kh3en")
+
+[node name="EmptyRight" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text" to="." method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text" to="." method="_on_text_submitted"]
+[connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_submitted"]
+[connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_submitted"]

@@ -159,7 +159,6 @@ func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMod
 func AuthError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:
 		Launcher.GUI.loginPanel.FillWarningLabel(err)
-	FSM.EnterState(FSM.States.CHAR_SCREEN if err == NetworkCommons.AuthError.ERR_OK else FSM.States.LOGIN_SCREEN)
 
 func CharacterError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:
@@ -171,7 +170,7 @@ func CharacterInfo(info : Dictionary, _rpcID : int = NetworkCommons.RidSingleMod
 #
 func ConnectServer():
 	if Launcher.GUI and Launcher.GUI.loginPanel:
-		Launcher.GUI.loginPanel.EnableButtons(true)
+		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
 
 func DisconnectServer():
 	Launcher.Mode(true, true)

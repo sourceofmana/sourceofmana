@@ -11,6 +11,9 @@ func _bind(button : Button, buttonName : String, callable : Callable):
 	button.set_visible(true)
 	_name(button, buttonName)
 
+func _call(button : Button):
+	button.pressed.emit()
+
 func _name(button : Button, buttonName : String):
 	button.set_text(buttonName)
 
@@ -29,6 +32,13 @@ func Bind(side : UICommons.ButtonBox, buttonName : String, callable : Callable):
 		UICommons.ButtonBox.LEFT:		_bind(leftButton, buttonName, callable)
 		UICommons.ButtonBox.MIDDLE:		_bind(middleButton, buttonName, callable)
 		UICommons.ButtonBox.RIGHT:		_bind(rightButton, buttonName, callable)
+		_:								assert(false, "Unknown button box side")
+
+func Call(side : UICommons.ButtonBox):
+	match side:
+		UICommons.ButtonBox.LEFT:		_call(leftButton)
+		UICommons.ButtonBox.MIDDLE:		_call(middleButton)
+		UICommons.ButtonBox.RIGHT:		_call(rightButton)
 		_:								assert(false, "Unknown button box side")
 
 func Rename(side : UICommons.ButtonBox, buttonName : String):

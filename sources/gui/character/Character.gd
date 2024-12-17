@@ -142,18 +142,19 @@ func UpdateSelectedCharacter(info : Dictionary = {}, slotID : int = -1):
 	currentCharacterID = slotID
 
 func EnableCharacterCreator(enable : bool):
-	var wasCharacterCreatorEnabled : bool = isCharacterCreatorEnabled
-	isCharacterCreatorEnabled = enable
+	if isCharacterCreatorEnabled != enable:
+		var wasCharacterCreatorEnabled : bool = isCharacterCreatorEnabled
+		isCharacterCreatorEnabled = enable
 
-	if wasCharacterCreatorEnabled:
-		if not enable and HasSlot(currentCharacterID) and charactersNode[currentCharacterID] != null:
-			RemoveCharacter(currentCharacterID)
-	else:
-		if enable:
-			AddCharacter({})
+		if wasCharacterCreatorEnabled:
+			if not enable and HasSlot(currentCharacterID) and charactersNode[currentCharacterID] != null:
+				RemoveCharacter(currentCharacterID)
+		else:
+			if enable:
+				AddCharacter({})
 
-	statsPanel.set_visible(!enable)
-	characterNameDisplay.set_visible(!enable)
+	statsPanel.set_visible(not enable)
+	characterNameDisplay.set_visible(not enable)
 	characterNameLineEdit.set_visible(enable)
 	traitsPanel.set_visible(enable)
 	attributesPanel.set_visible(enable)
@@ -171,13 +172,14 @@ func EnableCharacterCreator(enable : bool):
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Select", SelectCharacter)
 
 func RefreshOnce():
+	if isCharacterCreatorEnabled:
+		return
+
 	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMap)
 	Launcher.Camera.SetBoundaries()
-
-	Launcher.Map.RemoveChildren()
+	currentCharacterID = -1
 	for slotID in charactersInfo.size():
 		RemoveCharacter(slotID)
-	currentCharacterID = -1
 
 	EnableCharacterCreator(isCharacterCreatorEnabled)
 	UpdateSelectedCharacter({}, currentCharacterID)
@@ -187,6 +189,7 @@ func Leave():
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	for slotID in charactersInfo.size():
 		RemoveCharacter(slotID)
+	Launcher.GUI.buttonBoxes.ClearAll()
 	currentCharacterID = -1
 
 func Close():

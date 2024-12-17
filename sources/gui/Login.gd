@@ -1,15 +1,33 @@
 extends Control
 
 #
-@onready var nameTextControl : LineEdit		= $Panel/Margin/VBoxContainer/GridContainer/NameContainer/NameText
-@onready var passwordTextControl : LineEdit	= $Panel/Margin/VBoxContainer/GridContainer/PasswordContainer/PasswordText
-@onready var onlineIndicator : CheckBox		= $Panel/Margin/VBoxContainer/OnlineIndicator
+@onready var nameControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name
+@onready var nameTextControl : LineEdit		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text
+@onready var passwordControl : Control		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password
+@onready var passwordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text
+@onready var emailControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email
+@onready var emailTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text
+@onready var onlineIndicator : CheckBox		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/OnlineIndicator
+@onready var news : Scrollable				= $HBoxContainer/Panel/Margin/VBoxContainer/News
+@onready var agreement : Scrollable			= $HBoxContainer/Panel/Margin/VBoxContainer/Agreement
 
+var isAccountCreatorEnabled : bool			= false
 var nameText : String = ""
-var passwordText : String = ""
 
 #
 func FillWarningLabel(err : NetworkCommons.AuthError):
+	if isAccountCreatorEnabled:
+		FSM.EnterState(FSM.States.LOGIN_SCREEN)
+		if err == NetworkCommons.AuthError.ERR_OK:
+			EnableAccountCreator(false)
+		else:
+			EnableAccountCreator(true)
+	else:
+		if err == NetworkCommons.AuthError.ERR_OK:
+			FSM.EnterState(FSM.States.CHAR_SCREEN)
+		else:
+			FSM.EnterState(FSM.States.LOGIN_SCREEN)
+
 	var warn : String = ""
 	match err:
 		NetworkCommons.AuthError.ERR_OK:
@@ -33,9 +51,15 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 		warn = "[color=#%s]%s[/color]" % [UICommons.WarnTextColor.to_html(false), warn]
 	Launcher.GUI.notificationLabel.AddNotification(warn)
 
-#
-func _warning_on_meta_clicked(meta):
-	OS.shell_open(str(meta))
+func EnableAccountCreator(enable : bool):
+	isAccountCreatorEnabled = enable
+
+	emailControl.set_visible(isAccountCreatorEnabled)
+	agreement.set_visible(isAccountCreatorEnabled)
+
+	onlineIndicator.set_visible(not isAccountCreatorEnabled)
+	news.set_visible(not isAccountCreatorEnabled)
+	EnableButtons(true)
 
 #
 func RefreshOnlineMode():
@@ -50,20 +74,28 @@ func OnlineMode(_clientStarted : bool, serverStarted : bool):
 
 func EnableButtons(state : bool):
 	if Launcher.GUI and Launcher.GUI.buttonBoxes:
+		Launcher.GUI.buttonBoxes.ClearAll()
 		if state:
-			if OS.get_name() != "Web":
-				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
-			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.MIDDLE, "Create Account", CreateAccount)
-			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Connect", Connect)
-			RefreshOnlineMode()
+			if isAccountCreatorEnabled:
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Cancel", EnableAccountCreator.bind(false))
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Create", CreateAccount)
+			else:
+				if OS.get_name() != "Web":
+					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.MIDDLE, "Create Account", EnableAccountCreator.bind(true))
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Connect", Connect)
+				RefreshOnlineMode()
 		else:
-			Launcher.GUI.buttonBoxes.ClearAll()
 			onlineIndicator.text = "Connecting..."
+
+func RefreshOnce():
+	EnableAccountCreator(isAccountCreatorEnabled)
+	_on_visibility_changed()
 
 #
 func Connect():
 	nameText = nameTextControl.get_text()
-	passwordText = passwordTextControl.get_text()
+	var passwordText : String = passwordTextControl.get_text()
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
 	FillWarningLabel(authError)
 	if authError == NetworkCommons.AuthError.ERR_OK:
@@ -74,13 +106,16 @@ func Connect():
 
 func CreateAccount():
 	nameText = nameTextControl.get_text()
-	passwordText = passwordTextControl.get_text()
+	var passwordText : String = passwordTextControl.get_text()
+	var emailText : String = emailTextControl.get_text()
 
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
+	if authError == NetworkCommons.AuthError.ERR_OK:
+		authError = NetworkCommons.CheckEmailInformation(emailText)
 	FillWarningLabel(authError)
 
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		Network.CreateAccount(nameText, passwordText, "g@g.g")
+		Network.CreateAccount(nameText, passwordText, emailText)
 
 #
 func _on_text_focus_entered():
@@ -92,7 +127,7 @@ func _on_text_focus_exited():
 		Launcher.Action.Enable(true)
 
 func _on_text_submitted(_new_text):
-	Connect()
+	Launcher.GUI.buttonBoxes.Call(UICommons.ButtonBox.RIGHT)
 
 #
 func _on_visibility_changed():
@@ -106,9 +141,8 @@ func _on_visibility_changed():
 		EnableButtons(true)
 
 func SwitchOnlineMode(toggled : bool):
-	var emulateServer : bool = not toggled
 	EnableButtons(true)
-	if not Launcher.Mode(true, emulateServer):
+	if Launcher.Mode(true, toggled):
 		EnableButtons(false)
 
 func _ready():

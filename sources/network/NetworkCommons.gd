@@ -78,6 +78,9 @@ static func CheckAuthInformation(nameText : String, passwordText : String) -> Au
 		return AuthError.ERR_PASSWORD_VALID
 	return AuthError.ERR_OK
 
+static func CheckEmailInformation(emailText : String) -> AuthError:
+	return AuthError.ERR_OK if CheckValid(emailText, EmailValidRegex) else AuthError.ERR_NAME_VALID
+
 # Character
 enum CharacterError {
 	ERR_OK = 0,

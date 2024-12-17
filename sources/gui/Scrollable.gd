@@ -46,6 +46,7 @@ func AddContent(entry : Dictionary):
 		var label : RichTextLabel = contentLabel.instantiate()
 		label.text = "[color=#" + UICommons.TextColor.to_html(false) + "]" + entry["content"] + "[/color]\n"
 		textContainer.add_child.call_deferred(label)
+		label.meta_clicked.connect(_richtextlabel_on_meta_clicked)
 
 func AddContacts(entry : Dictionary):
 	if "contacts" in entry:

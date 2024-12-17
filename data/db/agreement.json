@@ -1,0 +1,60 @@
+{
+	"categories": [
+		{
+			"category": "Account Policies",
+			"entries": [
+				{
+					"content": "By registering for and using any of Source of Mana’s services, including game servers and related platforms, you agree to the following terms. These policies are designed to ensure a safe, respectful, and enjoyable community for everyone.\n"
+				}
+			]
+		},
+		{
+			"category": "Code of Conduct",
+			"entries": [
+				{
+					"content": "- [b]Respect and Cooperation[/b]: Treat all contributors, players, and staff members with respect. Disagreements should be handled constructively, with an attitude of mutual understanding.\n- [b]Inclusivity[/b]: Everyone is welcome, regardless of their background. Discrimination or harassment of any kind will not be tolerated.\n- [b]Responsibility[/b]: Staff members are volunteers and represent the organization. Mistakes can happen; learning and improvement are part of the process.- [b]Positive Engagement[/b]: Foster a positive environment through open communication, tolerance, and cooperation.\n"
+				}
+			]
+		},
+		{
+			"category": "Game Rules",
+			"entries": [
+				{
+					"content": "- [b]No AFK Botting[/b]: Automation of gameplay while away from the keyboard is prohibited.\n- [b]Language and Names[/b]: Offensive or inappropriate language and character names are not allowed.\n- [b]Spam-Free Environment[/b]: Avoid chat flooding, trade spamming, or any disruptive behavior.\n- [b]Speak English in Public Areas[/b]: Use English in public chats to promote inclusivity, except in private messages or among groups with a shared language.\n- [b]No Begging[/b]: Politely ask for help or items only once. Avoid annoying or pestering others.\n- [b]No Multiboxing[/b]: Controlling multiple characters in combat simultaneously is forbidden.\n- [b]Social Convention[/b]: Follow the broader community guidelines available at [url]https://policies.themanaworld.org/tsc[/url].\n"
+				}
+			]
+		},
+		{
+			"category": "Privacy and Security",
+			"entries": [
+				{
+					"content": "- [b]Account Protection[/b]: Use a strong, unique password and do not share it. No moderator, admin, or any person representing Source of Mana will ever ask for your password.\n- [b]Personal Information[/b]: Avoid sharing private or sensitive information in public spaces. Exercise caution to prevent exploitation.\n- [b]Emails for Account Identification[/b]: Your email address may be used to identify your account for password resets.\n- [b]Data Collection[/b]: We collect standard information (e.g. IP address, email) to prevent fraud, analyze trends, and maintain services.\n- [b]Account Termination[/b]: You may request the deletion of personal data. However, some information, such as logs or contributions, may be anonymized or retained to protect the integrity of the community.\n"
+				}
+			]
+		},
+		{
+			"category": "Enforcement and Disclaimers",
+			"entries": [
+				{
+					"content": "- [b]Ban Policy[/b]: Bans apply to individuals, not just accounts. Attempts to evade bans may result in the immediate suspension of any associated accounts.\n- [b]Rule Changes[/b]: Rules may be updated periodically. Notices will be provided via updated platform pages and welcome announcements within the client.\n- [b]Compliance with Laws[/b]: Source of Mana operates under U.S. law. Illegal activities in the game are prohibited.\n- [b]Staff Authority[/b]: Failure to comply with Game Master (GM) instructions may be considered a rule violation.\n"
+				}
+			]
+		},
+		{
+			"category": "Communication Guidelines",
+			"entries": [
+				{
+					"content": "- Be polite and patient, especially when dealing with language barriers.\n- Avoid using all capital letters (perceived as shouting).\n- Use proper grammar to facilitate clear communication.\n- Report game bugs and abuse to support the community.\n"
+				}
+			]
+		},
+		{
+			"category": "Additional Notes",
+			"entries": [
+				{
+					"content": "- Source of Mana is an entity under *Software in the Public Interest, Inc.*.\n- For further questions about policies, please contact us through [url=https://discord.com/invite/UnY77dR]Discord[/url] or [url=https://web.libera.chat/?channels=#sourceofmana]IRC[/url]."
+				}
+			]
+		}
+	]
+}

@@ -108,7 +108,7 @@ func EnterLoginMenu():
 
 	background.set_visible(true)
 	loginPanel.set_visible(true)
-	loginPanel._on_visibility_changed()
+	loginPanel.RefreshOnce()
 	buttonBoxes.set_visible(true)
 
 func EnterLoginProgress():
@@ -151,6 +151,7 @@ func EnterGame():
 		progressTimer.stop()
 		progressTimer = null
 	loadingControl.set_visible(false)
+	background.set_visible(false)
 
 	Launcher.Camera.DisableSceneCamera()
 	DisplayInfoContext(["gp_interact", "gp_untarget", "gp_morph", "gp_sit", "gp_target", "gp_pickup"])
