@@ -257,22 +257,40 @@ layout_mode = 2
 text = "1"
 horizontal_alignment = 2
 
-[node name="Level2" type="HBoxContainer" parent="Display/Stats/Margin/VBox"]
+[node name="Location" type="HBoxContainer" parent="Display/Stats/Margin/VBox"]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Display/Stats/Margin/VBox/Level2"]
+[node name="Name" type="Label" parent="Display/Stats/Margin/VBox/Location"]
 layout_mode = 2
 text = "Location"
 
-[node name="Empty" type="Control" parent="Display/Stats/Margin/VBox/Level2"]
+[node name="Empty" type="Control" parent="Display/Stats/Margin/VBox/Location"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Value" type="Label" parent="Display/Stats/Margin/VBox/Level2"]
+[node name="Value" type="Label" parent="Display/Stats/Margin/VBox/Location"]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "Artis"
 horizontal_alignment = 1
+
+[node name="Selection" type="HBoxContainer" parent="Display/Stats/Margin/VBox"]
+layout_mode = 2
+
+[node name="Previous" type="Button" parent="Display/Stats/Margin/VBox/Selection"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Previous"
+
+[node name="Empty" type="Control" parent="Display/Stats/Margin/VBox/Selection"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Next" type="Button" parent="Display/Stats/Margin/VBox/Selection"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Next"
 
 [node name="EmptyMiddleLeft" type="Control" parent="Display"]
 layout_mode = 2
@@ -447,3 +465,5 @@ size_flags_vertical = 3
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Endurance/Plus" to="Display/Attributes" method="_on_endurance_plus_button"]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Concentration/Minus" to="Display/Attributes" method="_on_concentration_minus_button"]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Concentration/Plus" to="Display/Attributes" method="_on_concentration_plus_button"]
+[connection signal="pressed" from="Display/Stats/Margin/VBox/Selection/Previous" to="Display/Stats" method="_on_previous_pressed"]
+[connection signal="pressed" from="Display/Stats/Margin/VBox/Selection/Next" to="Display/Stats" method="_on_next_pressed"]

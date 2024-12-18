@@ -93,6 +93,8 @@ func AddCharacter(info : Dictionary):
 	(info["last_timestamp"] != null and charactersInfo[currentCharacterID]["last_timestamp"] < info["last_timestamp"]):
 		UpdateSelectedCharacter(info, availableSlot)
 
+	RefreshCharacterList()
+
 func RemoveCharacter(slotID):
 	if HasSlot(slotID):
 		if charactersNode[slotID] != null:
@@ -113,8 +115,17 @@ func RemoveCharacter(slotID):
 						mostRecentCharacterID = characterID
 			UpdateSelectedCharacter(charactersInfo[mostRecentCharacterID] if HasSlot(mostRecentCharacterID) else {}, mostRecentCharacterID)
 
+		RefreshCharacterList()
+
 func RandomizeCharacter():
 	attributesPanel.Randomize()
+
+func RefreshCharacterList():
+	var characterCount : int = 0
+	for character in charactersNode:
+		if character != null:
+			characterCount += 1
+	statsPanel.selection.set_visible(characterCount >= 2)
 
 func CreateCharacter():
 	if isCharacterCreatorEnabled:
@@ -140,6 +151,18 @@ func UpdateSelectedCharacter(info : Dictionary = {}, slotID : int = -1):
 
 	Launcher.Camera.EnableSceneCamera(ActorCommons.CharacterScreenLocations[GetDefaultSlot(slotID)])
 	currentCharacterID = slotID
+
+func ChangeSelectedCharacter(changeClockwise : bool = true):
+	if not HasSlot(currentCharacterID):
+		currentCharacterID = 0
+	var operationValue : int = 1 if changeClockwise else -1
+
+	for slotID in range(1, charactersInfo.size()):
+		var lookupID : int = (currentCharacterID + (slotID * operationValue)) % ActorCommons.MaxCharacterCount
+		var info : Dictionary = charactersInfo[lookupID]
+		if not info.is_empty():
+			UpdateSelectedCharacter(info, lookupID)
+			break
 
 func EnableCharacterCreator(enable : bool):
 	if isCharacterCreatorEnabled != enable:
@@ -202,3 +225,5 @@ func Close():
 func _ready():
 	charactersInfo.resize(ActorCommons.MaxCharacterCount)
 	charactersNode.resize(ActorCommons.MaxCharacterCount)
+	statsPanel.previousButton.pressed.connect(ChangeSelectedCharacter.bind(false))
+	statsPanel.nextButton.pressed.connect(ChangeSelectedCharacter.bind(true))

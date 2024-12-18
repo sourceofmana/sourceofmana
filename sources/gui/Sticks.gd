@@ -1,16 +1,16 @@
 extends HBoxContainer
 
 #
-@onready var DirectionButton : Control			= $Direction/Direction/Button
-@onready var DefaultStickPosition : Vector2		= DirectionButton.get_position()
+@onready var directionButton : Control			= $LeftAnchor/Direction/Button
+@onready var defaultStickPosition : Vector2		= directionButton.get_position()
 
 var leftStickPressed : bool				= false
 var lastMove : Vector2 = Vector2.ZERO
 
 #
 func GetMove() -> Vector2:
-	if leftStickPressed and DefaultStickPosition.x != 0.0 and DefaultStickPosition.y != 0.0:
-		var move : Vector2 = DirectionButton.get_position() / DefaultStickPosition - Vector2.ONE
+	if leftStickPressed and defaultStickPosition.x != 0.0 and defaultStickPosition.y != 0.0:
+		var move : Vector2 = directionButton.get_position() / defaultStickPosition - Vector2.ONE
 		lastMove = move
 		return move
 	else:
@@ -22,15 +22,15 @@ func _on_direction_button_down():
 
 func _on_direction_button_up():
 	leftStickPressed = false
-	DirectionButton.position = DefaultStickPosition
+	directionButton.position = defaultStickPosition
 
 func _physics_process(_delta):
 	if leftStickPressed:
-		var newPos : Vector2 = get_local_mouse_position() - DirectionButton.get_size() / 2
+		var newPos : Vector2 = get_local_mouse_position() - directionButton.get_size() / 2
 		newPos.x = clampf(newPos.x, 0.0, 100.0)
 		newPos.y = clampf(newPos.y, 0.0, 100.0)
 
-		DirectionButton.position = newPos
+		directionButton.position = newPos
 
 func _press_button(buttonId : JoyButton):
 	DeviceManager.SendEventJoy(buttonId, true)
