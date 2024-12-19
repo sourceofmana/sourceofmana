@@ -36,14 +36,22 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 			warn = "Invalid account name or password."
 		NetworkCommons.AuthError.ERR_PASSWORD_VALID:
 			warn = "Password should only include alpha-numeric characters and symbols."
+			passwordTextControl.grab_focus()
 		NetworkCommons.AuthError.ERR_PASSWORD_SIZE:
 			warn = "Password length should be inbetween %d and %d character long." % [NetworkCommons.PasswordMinSize, NetworkCommons.PasswordMaxSize]
+			passwordTextControl.grab_focus()
 		NetworkCommons.AuthError.ERR_NAME_AVAILABLE:
 			warn = "Account name not available."
+			nameTextControl.grab_focus()
 		NetworkCommons.AuthError.ERR_NAME_VALID:
 			warn = "Name should should only include alpha-numeric characters and symbols."
+			nameTextControl.grab_focus()
 		NetworkCommons.AuthError.ERR_NAME_SIZE:
 			warn = "Name length should be inbetween %d and %d character long." % [NetworkCommons.PlayerNameMinSize, NetworkCommons.PlayerNameMaxSize]
+			nameTextControl.grab_focus()
+		NetworkCommons.AuthError.ERR_EMAIL_VALID:
+			warn = "Email is incorrect, please us a normal email format."
+			emailTextControl.grab_focus()
 		_:
 			warn = "Could not connect to the server (Error %d).\nPlease contact us via our [url=%s][color=#%s]Discord server[/color][/url].\nMeanwhile be sure to test the offline mode!" % [err, LauncherCommons.SocialLink, UICommons.DarkTextColor]
 

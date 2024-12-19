@@ -55,6 +55,7 @@ enum AuthError {
 	ERR_NAME_AVAILABLE,
 	ERR_NAME_VALID,
 	ERR_NAME_SIZE,
+	ERR_EMAIL_VALID,
 }
 
 static func CheckSize(entry : String, minSize : int, maxSize : int) -> bool:
@@ -79,7 +80,7 @@ static func CheckAuthInformation(nameText : String, passwordText : String) -> Au
 	return AuthError.ERR_OK
 
 static func CheckEmailInformation(emailText : String) -> AuthError:
-	return AuthError.ERR_OK if CheckValid(emailText, EmailValidRegex) else AuthError.ERR_NAME_VALID
+	return AuthError.ERR_OK if CheckValid(emailText, EmailValidRegex) else AuthError.ERR_EMAIL_VALID
 
 # Character
 enum CharacterError {

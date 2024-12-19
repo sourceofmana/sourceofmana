@@ -53,37 +53,37 @@ func FillMissingCharacterInfo(info : Dictionary):
 	info.get_or_add("last_timestamp", 1 << 32)
 
 func HasSlot(slotID : int) -> bool:
-	return slotID >= 0 and slotID < charactersInfo.size()
+	return slotID >= 0 and slotID <= ActorCommons.MaxCharacterCount
 
 func GetDefaultSlot(slotID : int) -> int:
 	return slotID if HasSlot(slotID) else 0
 
 func NextAvailableSlot() -> int:
 	var availableSlot : int = -1
-	for charID in charactersInfo.size():
+	for charID in ActorCommons.MaxCharacterCount:
 		if charactersInfo[charID].is_empty():
 			availableSlot = charID
 			break
 	return availableSlot
 
-func AddCharacter(info : Dictionary):
+func AddCharacter(info : Dictionary, slotID : int = -1):
 	FillMissingCharacterInfo(info)
+
+	var availableSlot : int = NextAvailableSlot() if slotID == -1 else slotID
+	if availableSlot == -1:
+		assert(false, "No free available placement")
+		return
 
 	var entity : Entity = Instantiate.CreateEntity(ActorCommons.Type.PLAYER, "Default Entity", info["nickname"], false)
 	if not entity:
 		assert(false, "Could not create character preview")
 		return
 
-	var availableSlot : int = NextAvailableSlot()
-
-	if availableSlot == -1:
-		assert(false, "No free available placement")
-		return
-
+	RemoveCharacter(availableSlot)
 	charactersInfo[availableSlot] = info
 	charactersNode[availableSlot] = entity
-
 	Launcher.Map.AddChild(entity)
+
 	var randDir : Vector2 = Vector2(randf_range(-0.8, 0.8), 1.0)
 	var randState : ActorCommons.State = ActorCommons.State.IDLE if isCharacterCreatorEnabled or randi() % 2 == 1 else ActorCommons.State.SIT
 	entity.Update(Vector2.ZERO, ActorCommons.CharacterScreenLocations[availableSlot], randDir, randState, -1, true)
@@ -95,7 +95,7 @@ func AddCharacter(info : Dictionary):
 
 	RefreshCharacterList()
 
-func RemoveCharacter(slotID):
+func RemoveCharacter(slotID : int):
 	if HasSlot(slotID):
 		if charactersNode[slotID] != null:
 			Launcher.Map.RemoveChild(charactersNode[slotID])
@@ -106,7 +106,7 @@ func RemoveCharacter(slotID):
 		if currentCharacterID == slotID:
 			var mostRecentTimestamp : int = -1
 			var mostRecentCharacterID : int = -1
-			for characterID in charactersInfo.size():
+			for characterID in ActorCommons.MaxCharacterCount:
 				if not charactersInfo[characterID].is_empty():
 					if mostRecentCharacterID == -1:
 						mostRecentCharacterID = characterID
@@ -157,8 +157,8 @@ func ChangeSelectedCharacter(changeClockwise : bool = true):
 		currentCharacterID = 0
 	var operationValue : int = 1 if changeClockwise else -1
 
-	for slotID in range(1, charactersInfo.size()):
-		var lookupID : int = (currentCharacterID + (slotID * operationValue)) % ActorCommons.MaxCharacterCount
+	for slotID in range(1, ActorCommons.MaxCharacterCount):
+		var lookupID : int = (currentCharacterID + (slotID * operationValue) + ActorCommons.MaxCharacterCount) % ActorCommons.MaxCharacterCount
 		var info : Dictionary = charactersInfo[lookupID]
 		if not info.is_empty():
 			UpdateSelectedCharacter(info, lookupID)
@@ -171,10 +171,10 @@ func EnableCharacterCreator(enable : bool):
 
 		if wasCharacterCreatorEnabled:
 			if not enable and HasSlot(currentCharacterID) and charactersNode[currentCharacterID] != null:
-				RemoveCharacter(currentCharacterID)
+				RemoveCharacter(ActorCommons.MaxCharacterCount)
 		else:
 			if enable:
-				AddCharacter({})
+				AddCharacter({}, ActorCommons.MaxCharacterCount)
 
 	statsPanel.set_visible(not enable)
 	characterNameDisplay.set_visible(not enable)
@@ -223,7 +223,10 @@ func Close():
 
 #
 func _ready():
-	charactersInfo.resize(ActorCommons.MaxCharacterCount)
-	charactersNode.resize(ActorCommons.MaxCharacterCount)
+	charactersInfo.resize(ActorCommons.MaxCharacterCount + 1)
+	charactersNode.resize(ActorCommons.MaxCharacterCount + 1)
+	print(ActorCommons.CharacterScreenLocations.size())
+	assert(charactersInfo.size() == ActorCommons.CharacterScreenLocations.size(), "Character screen locations count mismatch with the max character count")
+	assert(charactersNode.size() == ActorCommons.CharacterScreenLocations.size(), "Character screen locations count mismatch with the max character count")
 	statsPanel.previousButton.pressed.connect(ChangeSelectedCharacter.bind(false))
 	statsPanel.nextButton.pressed.connect(ChangeSelectedCharacter.bind(true))
