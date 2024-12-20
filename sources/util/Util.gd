@@ -56,3 +56,10 @@ static func GetFormatedText(value : String, numberAfterComma : int = 0) -> Strin
 		value = value.substr(0, commaLocation)
 
 	return value
+
+# Dictionary
+static func DicCheckOrAdd(dic : Dictionary, key : Variant, value : Variant):
+	if not key in dic:
+		dic[key] = value
+	elif dic[key] == null:
+		dic[key] = value

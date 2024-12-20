@@ -56,6 +56,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/effects/particles/cast10.png [Reid]
 ./graphics/effects/particles/fog.png [Reid]
 ./graphics/effects/particles/leaf.png [Reid]
+./graphics/effects/particles/orb.png [Reid]
 ./graphics/effects/particles/orb-oval.png [Reid]
 ./graphics/effects/particles/ship-circles.png [Reid]
 ./graphics/effects/particles/ship-trails.png [Reid]

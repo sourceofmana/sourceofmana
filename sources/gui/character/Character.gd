@@ -49,8 +49,10 @@ func FillWarningLabel(err : NetworkCommons.CharacterError):
 	Launcher.GUI.notificationLabel.AddNotification(warn)
 
 func FillMissingCharacterInfo(info : Dictionary):
-	info.get_or_add("nickname", "")
-	info.get_or_add("last_timestamp", 1 << 32)
+	Util.DicCheckOrAdd(info, "nickname", "")
+	Util.DicCheckOrAdd(info, "last_timestamp", 1 << 32)
+	Util.DicCheckOrAdd(info, "level", 1)
+	Util.DicCheckOrAdd(info, "pos_map", LauncherCommons.DefaultStartMap)
 
 func HasSlot(slotID : int) -> bool:
 	return slotID >= 0 and slotID <= ActorCommons.MaxCharacterCount
@@ -141,16 +143,28 @@ func SelectCharacter():
 	Network.ConnectCharacter(characterNameDisplay.get_text())
 	FSM.EnterState(FSM.States.CHAR_PROGRESS)
 
-func UpdateSelectedCharacter(info : Dictionary = {}, slotID : int = -1):
-	if "nickname" in info:
-		characterNameDisplay.set_text(info["nickname"])
-
+func UpdateSelectedCharacter(info : Dictionary, slotID : int):
 	var displayInformation : bool = not info.is_empty() or isCharacterCreatorEnabled
 	characterName.set_visible(displayInformation)
 	display.set_visible(displayInformation)
 
+	if not isCharacterCreatorEnabled and not info.is_empty():
+		statsPanel.SetInfo(info)
+		characterNameDisplay.set_text(info["nickname"])
+
+	if HasSlot(slotID) and charactersNode[slotID] != null:
+		if HasSlot(currentCharacterID) and charactersNode[currentCharacterID]:
+			EnableCharacterSelectionFx(false, currentCharacterID)
+		EnableCharacterSelectionFx(true, slotID)
+
 	Launcher.Camera.EnableSceneCamera(ActorCommons.CharacterScreenLocations[GetDefaultSlot(slotID)])
 	currentCharacterID = slotID
+
+func EnableCharacterSelectionFx(isEnabled : bool, slotID : int):
+	if charactersNode[slotID].interactive:
+		charactersNode[slotID].interactive.DisplayTarget(ActorCommons.Target.ALLY if isEnabled else ActorCommons.Target.NONE)
+	else:
+		charactersNode[slotID].ready.connect(EnableCharacterSelectionFx.bind(isEnabled, slotID))
 
 func ChangeSelectedCharacter(changeClockwise : bool = true):
 	if not HasSlot(currentCharacterID):
@@ -225,7 +239,6 @@ func Close():
 func _ready():
 	charactersInfo.resize(ActorCommons.MaxCharacterCount + 1)
 	charactersNode.resize(ActorCommons.MaxCharacterCount + 1)
-	print(ActorCommons.CharacterScreenLocations.size())
 	assert(charactersInfo.size() == ActorCommons.CharacterScreenLocations.size(), "Character screen locations count mismatch with the max character count")
 	assert(charactersNode.size() == ActorCommons.CharacterScreenLocations.size(), "Character screen locations count mismatch with the max character count")
 	statsPanel.previousButton.pressed.connect(ChangeSelectedCharacter.bind(false))

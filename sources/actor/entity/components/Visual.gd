@@ -117,20 +117,17 @@ func ResetAnimationValue():
 	UpdateScale()
 	RefreshTree()
 
-func SyncPlayerOffset():
-	var spriteOffset : int = 0
+func GetPlayerOffset() -> int:
+	var spriteOffset : int = ActorCommons.interactionDisplayOffset
 	if sprites[ActorCommons.Slot.BODY]:
 		spriteOffset = int(sprites[ActorCommons.Slot.BODY].offset.y)
-
-	spriteOffsetUpdate.emit(spriteOffset)
-
+	return spriteOffset
 #
 func Init(data : EntityData):
 	Callback.PlugCallback(get_parent().stat.entity_stats_updated, self.UpdateScale)
 	sprites.resize(ActorCommons.Slot.COUNT)
 
 	LoadData(data)
-	SyncPlayerOffset()
 
 func _process(_delta):
 	if not animationTree:

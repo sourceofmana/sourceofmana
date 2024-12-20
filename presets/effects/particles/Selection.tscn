@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwsmt1b02q3pb"]
+
+[ext_resource type="Texture2D" uid="uid://cwlcajt78phca" path="res://data/graphics/effects/particles/orb.png" id="1_e5vgw"]
+
+[sub_resource type="Gradient" id="Gradient_biq2t"]
+offsets = PackedFloat32Array(0.464164, 1)
+colors = PackedColorArray(0.9, 0.846, 0.63, 1, 0.1, 0.79, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vvsv7"]
+gradient = SubResource("Gradient_biq2t")
+width = 10
+
+[sub_resource type="Curve" id="Curve_kddwk"]
+_data = [Vector2(0, 0.402404), 0.0, 0.0, 0, 0, Vector2(0.616725, 0.797737), 2.05226, 2.05226, 0, 0, Vector2(1, 0.632249), -3.78584, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tbltw"]
+curve = SubResource("Curve_kddwk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_41gbv"]
+resource_local_to_scene = true
+lifetime_randomness = 0.2
+particle_flag_rotate_y = true
+emission_shape_offset = Vector3(0, -5, 0)
+emission_shape_scale = Vector3(1.33, 0.66, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(1, 0, 1)
+emission_ring_height = 10.0
+emission_ring_radius = 48.0
+emission_ring_inner_radius = 48.0
+angle_min = -720.0
+angle_max = 720.0
+angular_velocity_min = 180.0
+angular_velocity_max = 360.0
+orbit_velocity_min = -0.2
+orbit_velocity_max = 0.2
+gravity = Vector3(0, -20, 0)
+attractor_interaction_enabled = false
+scale_curve = SubResource("CurveTexture_tbltw")
+color_ramp = SubResource("GradientTexture1D_vvsv7")
+hue_variation_min = -0.05
+hue_variation_max = 0.05
+turbulence_noise_strength = 6.03
+
+[node name="GPUParticles2D2" type="GPUParticles2D"]
+z_as_relative = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_41gbv")
+texture = ExtResource("1_e5vgw")
+local_coords = true

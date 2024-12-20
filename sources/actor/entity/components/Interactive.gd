@@ -11,8 +11,44 @@ class_name EntityInteractive
 @onready var entity : Entity				= get_parent()
 
 var displayName : bool						= false
+var selectionFx : GPUParticles2D			= null
+var visualOffset : int						= -1
 
 #
+func DisplaySelection(hue : float):
+	if selectionFx == null or not selectionFx.emitting:
+		selectionFx = ActorCommons.SelectionFx.instantiate()
+		add_child(selectionFx)
+	if selectionFx:
+		var colorRamp : GradientTexture1D = selectionFx.process_material.get("color_ramp")
+		if colorRamp and colorRamp.gradient.colors.size() > 1:
+			colorRamp.gradient.colors[1].h = hue
+			selectionFx.process_material.set("color_ramp", colorRamp)
+
+		var sizeRatio : float = float(visualOffset) / float(ActorCommons.interactionDisplayOffset) if ActorCommons.interactionDisplayOffset > 0 else 1.0
+		var emissionShapeScale : Vector3 = selectionFx.process_material.get("emission_shape_scale")
+		if emissionShapeScale != Vector3.ZERO:
+			emissionShapeScale *= sizeRatio
+			selectionFx.process_material.set("emission_shape_scale", emissionShapeScale)
+
+		selectionFx.amount_ratio = sizeRatio
+
+func DisplayTarget(type : ActorCommons.Target):
+	match type:
+		ActorCommons.Target.NONE:
+			if selectionFx and selectionFx.emitting:
+				selectionFx.emitting = false
+				selectionFx.finished.connect(remove_child.bind(selectionFx))
+				selectionFx = null
+			if nameLabel and nameLabel.material:
+				nameLabel.material = null
+		ActorCommons.Target.ALLY:
+			nameLabel.material = ActorCommons.AllyTarget
+			DisplaySelection(0.5)
+		ActorCommons.Target.ENEMY:
+			nameLabel.material = ActorCommons.EnemyTarget
+			DisplaySelection(0)
+
 func DisplayEmote(emoteID : int):
 	assert(emoteFx != null, "No emote particle found, could not display emote")
 	if emoteFx:
@@ -146,7 +182,8 @@ func DisplaySailContext():
 
 #
 func RefreshVisibleNodeOffset(offset : int):
-	visibleNode.position.y = (-ActorCommons.interactionDisplayOffset) + offset
+	visibleNode.position.y = offset - ActorCommons.interactionDisplayOffset
+	visualOffset = clamp(-offset, 20, 256)
 
 #
 func _physics_process(delta):
@@ -163,12 +200,5 @@ func Init(data : EntityData):
 	if nameLabel:
 		nameLabel.set_text(entity.nick)
 		nameLabel.set_visible(displayName)
-
-func _ready():
-	assert(entity != null, "No Entity is found as parent for this Interactive node")
-	if not entity:
-		return
-
-	if visibleNode and entity.visual:
-		entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
-		entity.visual.SyncPlayerOffset()
+	if entity.visual:
+		RefreshVisibleNodeOffset(entity.visual.GetPlayerOffset())
