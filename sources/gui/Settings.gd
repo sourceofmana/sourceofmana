@@ -136,19 +136,8 @@ func set_actionoverlay(enable : bool):
 	SetVal("Render-ActionOverlay", enable)
 	apply_actionoverlay(enable)
 func apply_actionoverlay(enable : bool):
-	if Launcher.GUI and Launcher.Action:
-		if enable:
-			var rescaledWindowSize : float = float(DisplayServer.window_get_size().x / Launcher.Root.get_content_scale_factor())
-			var horizontalMargin : int = lerp(0, 160, max(0, rescaledWindowSize - GetVal("Render-MinWindowSize").x * 1.5) / rescaledWindowSize)
-			Launcher.GUI.shortcuts.add_theme_constant_override("margin_left", horizontalMargin)
-			Launcher.GUI.shortcuts.add_theme_constant_override("margin_right", horizontalMargin)
-			Launcher.GUI.sticks.set_visible(true)
-			Launcher.Action.supportMouse = false
-		else:
-			Launcher.GUI.shortcuts.add_theme_constant_override("margin_left", 0)
-			Launcher.GUI.shortcuts.add_theme_constant_override("margin_right", 0)
-			Launcher.GUI.sticks.set_visible(false)
-			Launcher.Action.supportMouse = true
+	if Launcher.GUI and Launcher.GUI.sticks:
+		Launcher.GUI.sticks.Enable(enable)
 
 # Lighting
 func init_lighting(apply : bool):
