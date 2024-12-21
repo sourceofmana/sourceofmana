@@ -96,9 +96,13 @@ static func GetActionInfo(action : String) -> Array:
 
 	if HasDeviceSupport():
 		for event in GetEvents(action):
-			if currentDeviceType == DeviceType.KEYBOARD and event is InputEventKey:
-				var keycode : Key = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
-				defaultValue = OS.get_keycode_string(keycode if keycode != 0 else event.keycode)
+			if not LauncherCommons.isMobile and currentDeviceType == DeviceType.KEYBOARD and event is InputEventKey:
+				var keycode : Key = KEY_NONE
+				if not LauncherCommons.isMobile:
+					keycode = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
+				if keycode == KEY_NONE:
+					keycode = event.keycode
+				defaultValue = OS.get_keycode_string(keycode)
 				break
 			elif currentDeviceType == DeviceType.JOYSTICK and event is InputEventJoypadButton:
 				var inScope : bool = event.button_index >= 0 and event.button_index < joyButton.size()
