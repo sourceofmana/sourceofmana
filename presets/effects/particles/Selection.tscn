@@ -2,13 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://cwlcajt78phca" path="res://data/graphics/effects/particles/orb.png" id="1_e5vgw"]
 
-[sub_resource type="Gradient" id="Gradient_biq2t"]
-offsets = PackedFloat32Array(0.464164, 1)
-colors = PackedColorArray(0.9, 0.846, 0.63, 1, 0.1, 0.79, 1, 1)
+[sub_resource type="Gradient" id="Gradient_re0c8"]
+resource_local_to_scene = true
+offsets = PackedFloat32Array(0.464164, 0.552239)
+colors = PackedColorArray(0.9, 0.846, 0.63, 1, 0.2, 0.866667, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_vvsv7"]
-gradient = SubResource("Gradient_biq2t")
-width = 10
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_neix0"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_re0c8")
+width = 2
 
 [sub_resource type="Curve" id="Curve_kddwk"]
 _data = [Vector2(0, 0.402404), 0.0, 0.0, 0, 0, Vector2(0.616725, 0.797737), 2.05226, 2.05226, 0, 0, Vector2(1, 0.632249), -3.78584, 0.0, 0, 0]
@@ -37,9 +39,9 @@ orbit_velocity_max = 0.2
 gravity = Vector3(0, -20, 0)
 attractor_interaction_enabled = false
 scale_curve = SubResource("CurveTexture_tbltw")
-color_ramp = SubResource("GradientTexture1D_vvsv7")
-hue_variation_min = -0.05
-hue_variation_max = 0.05
+color_ramp = SubResource("GradientTexture1D_neix0")
+hue_variation_min = -0.1
+hue_variation_max = 0.1
 turbulence_noise_strength = 6.03
 
 [node name="GPUParticles2D2" type="GPUParticles2D"]
@@ -47,4 +49,5 @@ z_as_relative = false
 amount = 200
 process_material = SubResource("ParticleProcessMaterial_41gbv")
 texture = ExtResource("1_e5vgw")
+preprocess = 0.4
 local_coords = true

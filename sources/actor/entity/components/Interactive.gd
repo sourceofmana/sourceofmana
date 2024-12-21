@@ -15,39 +15,42 @@ var selectionFx : GPUParticles2D			= null
 var visualOffset : int						= -1
 
 #
-func DisplaySelection(hue : float):
-	if selectionFx == null or not selectionFx.emitting:
+func DisplaySelection(hue : float, alpha : float = 1.0):
+	if selectionFx == null:
 		selectionFx = ActorCommons.SelectionFx.instantiate()
+		selectionFx.finished.connect(remove_child.bind(selectionFx))
 		add_child(selectionFx)
+
+		if selectionFx:
+			var sizeRatio : float = float(visualOffset) / float(ActorCommons.interactionDisplayOffset) if ActorCommons.interactionDisplayOffset > 0 else 1.0
+			var emissionShapeScale : Vector3 = selectionFx.process_material.get("emission_shape_scale")
+			if emissionShapeScale != Vector3.ZERO:
+				emissionShapeScale *= sizeRatio
+				selectionFx.process_material.set("emission_shape_scale", emissionShapeScale)
+			selectionFx.amount_ratio = sizeRatio
+
 	if selectionFx:
 		var colorRamp : GradientTexture1D = selectionFx.process_material.get("color_ramp")
 		if colorRamp and colorRamp.gradient.colors.size() > 1:
 			colorRamp.gradient.colors[1].h = hue
+			colorRamp.gradient.colors[1].a = alpha
 			selectionFx.process_material.set("color_ramp", colorRamp)
-
-		var sizeRatio : float = float(visualOffset) / float(ActorCommons.interactionDisplayOffset) if ActorCommons.interactionDisplayOffset > 0 else 1.0
-		var emissionShapeScale : Vector3 = selectionFx.process_material.get("emission_shape_scale")
-		if emissionShapeScale != Vector3.ZERO:
-			emissionShapeScale *= sizeRatio
-			selectionFx.process_material.set("emission_shape_scale", emissionShapeScale)
-
-		selectionFx.amount_ratio = sizeRatio
 
 func DisplayTarget(type : ActorCommons.Target):
 	match type:
 		ActorCommons.Target.NONE:
 			if selectionFx and selectionFx.emitting:
+				DisplaySelection(0.0, 0.0)
 				selectionFx.emitting = false
-				selectionFx.finished.connect(remove_child.bind(selectionFx))
 				selectionFx = null
 			if nameLabel and nameLabel.material:
 				nameLabel.material = null
 		ActorCommons.Target.ALLY:
 			nameLabel.material = ActorCommons.AllyTarget
-			DisplaySelection(0.5)
+			DisplaySelection(0.53)
 		ActorCommons.Target.ENEMY:
 			nameLabel.material = ActorCommons.EnemyTarget
-			DisplaySelection(0)
+			DisplaySelection(0.03)
 
 func DisplayEmote(emoteID : int):
 	assert(emoteFx != null, "No emote particle found, could not display emote")
