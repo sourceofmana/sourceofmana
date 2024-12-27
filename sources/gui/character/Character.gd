@@ -13,7 +13,7 @@ extends Control
 var isCharacterCreatorEnabled : bool					= false
 var charactersInfo : Array[Dictionary]					= []
 var charactersNode : Array[Entity]						= []
-var currentCharacterID : int							= -1
+var currentCharacterID : int							= ActorCommons.InvalidCharacterSlot
 
 #
 func FillWarningLabel(err : NetworkCommons.CharacterError):
@@ -61,18 +61,18 @@ func GetDefaultSlot(slotID : int) -> int:
 	return slotID if HasSlot(slotID) else 0
 
 func NextAvailableSlot() -> int:
-	var availableSlot : int = -1
+	var availableSlot : int = ActorCommons.InvalidCharacterSlot
 	for charID in ActorCommons.MaxCharacterCount:
 		if charactersInfo[charID].is_empty():
 			availableSlot = charID
 			break
 	return availableSlot
 
-func AddCharacter(info : Dictionary, slotID : int = -1):
+func AddCharacter(info : Dictionary, slotID : int = ActorCommons.InvalidCharacterSlot):
 	FillMissingCharacterInfo(info)
 
-	var availableSlot : int = NextAvailableSlot() if slotID == -1 else slotID
-	if availableSlot == -1:
+	var availableSlot : int = NextAvailableSlot() if slotID == ActorCommons.InvalidCharacterSlot else slotID
+	if availableSlot == ActorCommons.InvalidCharacterSlot:
 		assert(false, "No free available placement")
 		return
 
@@ -107,10 +107,10 @@ func RemoveCharacter(slotID : int):
 
 		if currentCharacterID == slotID:
 			var mostRecentTimestamp : int = -1
-			var mostRecentCharacterID : int = -1
+			var mostRecentCharacterID : int = ActorCommons.InvalidCharacterSlot
 			for characterID in ActorCommons.MaxCharacterCount:
 				if not charactersInfo[characterID].is_empty():
-					if mostRecentCharacterID == -1:
+					if mostRecentCharacterID == ActorCommons.InvalidCharacterSlot:
 						mostRecentCharacterID = characterID
 					elif "last_timestamp" in charactersInfo[characterID] and charactersInfo[characterID]["last_timestamp"] != null and mostRecentTimestamp < charactersInfo[characterID]["last_timestamp"]:
 						mostRecentTimestamp = charactersInfo[characterID]["last_timestamp"]
@@ -204,7 +204,7 @@ func EnableCharacterCreator(enable : bool):
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Create", CreateCharacter)
 		else:
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Cancel", Leave)
-			if NextAvailableSlot() != -1:
+			if NextAvailableSlot() != ActorCommons.InvalidCharacterSlot:
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.MIDDLE, "New Player", EnableCharacterCreator.bind(true))
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Select", SelectCharacter)
 
@@ -214,7 +214,7 @@ func RefreshOnce():
 
 	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMap)
 	Launcher.Camera.SetBoundaries()
-	currentCharacterID = -1
+	currentCharacterID = ActorCommons.InvalidCharacterSlot
 	for slotID in charactersInfo.size():
 		RemoveCharacter(slotID)
 
@@ -227,7 +227,7 @@ func Leave():
 	for slotID in charactersInfo.size():
 		RemoveCharacter(slotID)
 	Launcher.GUI.buttonBoxes.ClearAll()
-	currentCharacterID = -1
+	currentCharacterID = ActorCommons.InvalidCharacterSlot
 
 func Close():
 	if isCharacterCreatorEnabled:

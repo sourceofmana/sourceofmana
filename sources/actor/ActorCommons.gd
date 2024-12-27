@@ -224,6 +224,7 @@ const InputApproximationUnit : int			= 12
 const MaxEntityRadiusSize : int				= 256
 
 # Character
+const InvalidCharacterSlot : int			= -1
 const MaxCharacterCount : int				= 10
 const CharacterScreenMap : String			= "Drazil"
 const CharacterScreenLocations : PackedVector2Array = [
