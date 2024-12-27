@@ -8,9 +8,11 @@ func OnTopButtonPressed():
 		Launcher.GUI.ToggleControl(targetWindow)
 
 func _ready():
-	if targetShortcut:
+	assert(targetWindow != null, "Invalid shortcut given for this window button")
+	if targetWindow:
 		var eventList : Array = DeviceManager.GetEvents(targetShortcut)
-		if eventList.size() > 0:
+		assert(not eventList.is_empty(), "Invalid shortcut %s given for this window button" % targetShortcut)
+		if not eventList.is_empty():
 			shortcut = Shortcut.new()
 			shortcut.events = eventList
 			tooltip_text = tooltip_text + " " + name

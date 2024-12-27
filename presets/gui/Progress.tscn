@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://dolxuw03u60eo"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_q7m0j"]
+[ext_resource type="Script" path="res://sources/gui/Settings.gd" id="2_j3ryh"]
+
+[node name="Progress" type="PanelContainer"]
+show_behind_parent = true
+custom_minimum_size = Vector2(180, 100)
+offset_left = 446.0
+offset_top = 176.0
+offset_right = 764.0
+offset_bottom = 486.0
+theme = ExtResource("1_q7m0j")
+script = ExtResource("2_j3ryh")
+saveOverlayState = true
+
+[node name="Margin" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="TabBar" type="TabContainer" parent="Margin"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Quest Log" type="ScrollContainer" parent="Margin/TabBar"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_tab_index = 0
+
+[node name="Manapedia" type="ScrollContainer" parent="Margin/TabBar"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[connection signal="gui_input" from="." to="." method="OnGuiInput"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

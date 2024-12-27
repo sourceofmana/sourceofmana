@@ -47,7 +47,6 @@ context_menu_enabled = false
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 1
-text = "Reid"
 horizontal_alignment = 1
 
 [node name="EmptyTop" type="Control" parent="."]
