@@ -594,6 +594,7 @@ top_level = true
 [connection signal="resized" from="Overlay" to="." method="_on_ui_margin_resized"]
 [connection signal="pressed" from="Overlay/VSections/Indicators/Stat/StatButton" to="Overlay/VSections/Indicators/Stat" method="_on_button_pressed"]
 [connection signal="pressed" from="Overlay/VSections/Indicators/Menu/MenuButton" to="Overlay/VSections/Indicators/Menu" method="_on_button_pressed"]
+[connection signal="visibility_changed" from="Overlay/VSections/Contexts/Character" to="Overlay/VSections/Contexts/Character" method="_on_visibility_changed"]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/LeftAnchor/ButtonLeft" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [9]]
 [connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/LeftAnchor/ButtonLeft" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [9]]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/LeftAnchor/Direction" to="Overlay/Sections/Shortcuts/Sticks" method="_on_direction_button_down"]

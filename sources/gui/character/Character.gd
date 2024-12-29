@@ -199,14 +199,14 @@ func EnableCharacterCreator(enable : bool):
 	if Launcher.GUI.buttonBoxes:
 		Launcher.GUI.buttonBoxes.ClearAll()
 		if enable:
-			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Cancel", EnableCharacterCreator.bind(false))
-			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.MIDDLE, "Randomize", RandomizeCharacter)
-			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Create", CreateCharacter)
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Create", CreateCharacter)
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Randomize", RandomizeCharacter)
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", EnableCharacterCreator.bind(false))
 		else:
-			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Cancel", Leave)
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Select", SelectCharacter)
 			if NextAvailableSlot() != ActorCommons.InvalidCharacterSlot:
-				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.MIDDLE, "New Player", EnableCharacterCreator.bind(true))
-			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Select", SelectCharacter)
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "New Player", EnableCharacterCreator.bind(true))
+			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", Leave)
 
 func RefreshOnce():
 	if isCharacterCreatorEnabled:
@@ -243,3 +243,9 @@ func _ready():
 	assert(charactersNode.size() == ActorCommons.CharacterScreenLocations.size(), "Character screen locations count mismatch with the max character count")
 	statsPanel.previousButton.pressed.connect(ChangeSelectedCharacter.bind(false))
 	statsPanel.nextButton.pressed.connect(ChangeSelectedCharacter.bind(true))
+
+func _on_visibility_changed():
+	if not visible:
+		statsPanel.set_visible(false)
+		traitsPanel.set_visible(false)
+		attributesPanel.set_visible(false)

@@ -24,9 +24,10 @@ enum Way
 
 enum ButtonBox
 {
-	LEFT = 0,
-	MIDDLE,
-	RIGHT,
+	PRIMARY = 0,
+	SECONDARY,
+	TERTIARY,
+	CANCEL
 }
 
 static func ColorToHSVA(color : Color) -> Vector4:

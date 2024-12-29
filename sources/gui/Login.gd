@@ -75,7 +75,7 @@ func RefreshOnlineMode():
 
 func OnlineMode(_clientStarted : bool, serverStarted : bool):
 	if onlineIndicator:
-		Launcher.GUI.buttonBoxes.Rename(UICommons.ButtonBox.LEFT, "Switch Online" if serverStarted else "Switch Offline")
+		Launcher.GUI.buttonBoxes.Rename(UICommons.ButtonBox.SECONDARY, "Switch Online" if serverStarted else "Switch Offline")
 		onlineIndicator.text = "Playing Offline" if serverStarted else "Playing Online"
 		if onlineIndicator.button_pressed != not serverStarted:
 			onlineIndicator.button_pressed = not serverStarted
@@ -85,13 +85,13 @@ func EnableButtons(state : bool):
 		Launcher.GUI.buttonBoxes.ClearAll()
 		if state:
 			if isAccountCreatorEnabled:
-				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Cancel", EnableAccountCreator.bind(false))
-				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Create", CreateAccount)
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Create", CreateAccount)
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", EnableAccountCreator.bind(false))
 			else:
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Connect", Connect)
 				if OS.get_name() != "Web":
-					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.LEFT, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
-				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.MIDDLE, "Create Account", EnableAccountCreator.bind(true))
-				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.RIGHT, "Connect", Connect)
+					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Create Account", EnableAccountCreator.bind(true))
 				RefreshOnlineMode()
 		else:
 			onlineIndicator.text = "Connecting..."
@@ -135,7 +135,7 @@ func _on_text_focus_exited():
 		Launcher.Action.Enable(true)
 
 func _on_text_submitted(_new_text):
-	Launcher.GUI.buttonBoxes.Call(UICommons.ButtonBox.RIGHT)
+	Launcher.GUI.buttonBoxes.Call(UICommons.ButtonBox.PRIMARY)
 
 #
 func _on_visibility_changed():
@@ -144,8 +144,6 @@ func _on_visibility_changed():
 			nameTextControl.grab_focus()
 		elif passwordTextControl and passwordTextControl.is_visible() and passwordTextControl.get_text().length() == 0:
 			passwordTextControl.grab_focus()
-		elif Launcher.GUI.buttonBoxes:
-			Launcher.GUI.buttonBoxes.Focus(UICommons.ButtonBox.RIGHT)
 		EnableButtons(true)
 
 func SwitchOnlineMode(toggled : bool):

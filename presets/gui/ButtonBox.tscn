@@ -9,37 +9,52 @@ offset_bottom = 27.0
 grow_horizontal = 2
 script = ExtResource("1_ciocy")
 
-[node name="EmptyLeft" type="Control" parent="."]
+[node name="Empty" type="Control" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ButtonLeft" type="Button" parent="."]
+[node name="ButtonCancel" type="Button" parent="."]
 layout_mode = 2
 theme_type_variation = &"LargeButton"
-text = "Left"
+text = "Cancel"
 
-[node name="EmptyLeftMiddle" type="Control" parent="."]
+[node name="Empty2" type="Control" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ButtonMiddle" type="Button" parent="."]
+[node name="ButtonTertiary" type="Button" parent="."]
 layout_mode = 2
 theme_type_variation = &"LargeButton"
-text = "Middle"
+text = "Tertiary"
 
-[node name="EmptyRightMiddle" type="Control" parent="."]
+[node name="Empty3" type="Control" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ButtonRight" type="Button" parent="."]
+[node name="Empty4" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ButtonSecondary" type="Button" parent="."]
 layout_mode = 2
 theme_type_variation = &"LargeButton"
-text = "Right"
+text = "Secondary"
 
-[node name="EmptyRight" type="Control" parent="."]
+[node name="Empty5" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ButtonPrimary" type="Button" parent="."]
+layout_mode = 2
+theme_type_variation = &"LargeButton"
+text = "Primary"
+
+[node name="Empty6" type="Control" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
