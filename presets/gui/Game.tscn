@@ -552,6 +552,10 @@ grow_vertical = 1
 [node name="Progress" parent="Windows/Floating" instance=ExtResource("54_112vu")]
 visible = false
 layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 318.0
+offset_bottom = 310.0
 script = ExtResource("19_v8wo4")
 
 [node name="Respawn" parent="Windows/Floating" instance=ExtResource("44_7o5pa")]
