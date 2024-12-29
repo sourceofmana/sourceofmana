@@ -38,7 +38,7 @@ func _on_visibility_changed():
 	if _icon:
 		_icon.set_process_input(isEnabled)
 
-func _input(event):
+func _unhandled_input(event):
 	if not visible or not _data or _data._action.is_empty() or _data._callback.is_null():
 		return
 	if event.is_action(_data._action):

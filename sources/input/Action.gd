@@ -57,16 +57,16 @@ func TryJustReleased(event : InputEvent, action : String, forceMode : bool = fal
 
 #
 func IsActionJustPressed(action : String, forceMode : bool = false) -> bool:
-	return Input.is_action_just_pressed(action) if IsUsable(action) || forceMode else false
+	return Input.is_action_just_pressed(action) if forceMode or IsUsable(action) else false
 
 func IsActionPressed(action : String, forceMode : bool = false) -> bool:
-	return Input.is_action_pressed(action) if IsUsable(action) || forceMode else false
+	return Input.is_action_pressed(action) if forceMode or IsUsable(action) else false
 
 func IsActionOnlyPressed(action : String, forceMode : bool = false) -> bool:
-	return Input.is_action_pressed(action) && not Input.is_action_just_pressed(action) if IsUsable(action) || forceMode else false
+	return Input.is_action_pressed(action) && not Input.is_action_just_pressed(action) if forceMode or IsUsable(action) else false
 
 func IsActionJustReleased(action : String, forceMode : bool = false) -> bool:
-	return Input.is_action_just_released(action) if IsUsable(action) || forceMode else false
+	return Input.is_action_just_released(action) if forceMode or IsUsable(action) else false
 
 func GetMove(forceMode : bool = false) -> Vector2:
 	var moveVector : Vector2 = Vector2.ZERO

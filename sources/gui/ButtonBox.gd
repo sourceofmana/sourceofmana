@@ -70,3 +70,17 @@ func ClearAll():
 # Overriden
 func _ready():
 	ClearAll()
+
+func _unhandled_input(event : InputEvent):
+	if not visible:
+		return
+
+	if leftButton and leftButton.is_visible() and event.is_action("ui_context_secondary"):
+		if Launcher.Action.TryPressed(event, "ui_context_secondary", true):
+			_call(leftButton)
+	elif middleButton and middleButton.is_visible() and event.is_action("ui_context_tertiary"):
+		if Launcher.Action.TryPressed(event, "ui_context_tertiary", true):
+			_call(middleButton)
+	elif rightButton and rightButton.is_visible() and event.is_action("ui_context_cancel"):
+		if Launcher.Action.TryPressed(event, "ui_context_cancel", true):
+			_call(rightButton)
