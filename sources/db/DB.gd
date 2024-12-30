@@ -47,14 +47,18 @@ static func ParseHairstylesDB():
 
 	if not result.is_empty():
 		for key in result:
-			HairstylesDB[key] = TraitData.Create(key, result[key])
+			var id = SetCellHash(key)
+			assert(id not in HairstylesDB, "Duplicated cell in HairstylesDB")
+			HairstylesDB[id] = TraitData.Create(key, result[key])
 
 static func ParseHaircolorsDB():
 	var result : Dictionary = FileSystem.LoadDB("haircolors.json")
 
 	if not result.is_empty():
 		for key in result:
-			HaircolorsDB[key] = TraitData.Create(key, result[key])
+			var id = SetCellHash(key)
+			assert(id not in HairstylesDB, "Duplicated cell in HaircolorsDB")
+			HaircolorsDB[id] = TraitData.Create(key, result[key])
 
 static func ParseEntitiesDB():
 	var result = FileSystem.LoadDB("entities.json")
@@ -139,20 +143,24 @@ static func GetSkill(cellHash : int) -> SkillCell:
 	assert(hasInDB, "Could not find the identifier %s in SkillsDB" % [cellHash])
 	return SkillsDB[cellHash] if hasInDB else null
 
-static func GetEthnicityPresetPath(ethnicity : String) -> String:
+static func GetEthnicity(ethnicity : String) -> EthnicityData:
 	var hasInDB : bool = ethnicity in EthnicitiesDB
 	assert(hasInDB, "Could not find the identifier %s in EthnicityDB" % [ethnicity])
-	return EthnicitiesDB[ethnicity]._preset if hasInDB else ethnicity
+	return EthnicitiesDB[ethnicity] if hasInDB else null
 
-static func GetHairstyle(hairstyle : String) -> TraitData:
-	var hasInDB : bool = hairstyle in HairstylesDB
-	assert(hasInDB, "Could not find the identifier %s in HairstylesDB" % [hairstyle])
-	return HairstylesDB[hairstyle] if hasInDB else null
+static func GetEthnicityPresetPath(ethnicity : String) -> String:
+	var data : EthnicityData = EthnicitiesDB[ethnicity] if ethnicity in EthnicitiesDB else null
+	return data._preset if data else ethnicity
 
-static func GetHaircolor(haircolor : String) -> TraitData:
-	var hasInDB : bool = haircolor in HaircolorsDB
-	assert(hasInDB, "Could not find the identifier %s in HaircolorsDB" % [haircolor])
-	return HaircolorsDB[haircolor] if hasInDB else null
+static func GetHairstyle(cellHash : int) -> TraitData:
+	var hasInDB : bool = cellHash in HairstylesDB
+	assert(hasInDB, "Could not find the identifier %d in HairstylesDB" % [cellHash])
+	return HairstylesDB[cellHash] if hasInDB else null
+
+static func GetHaircolor(cellHash : int) -> TraitData:
+	var hasInDB : bool = cellHash in HaircolorsDB
+	assert(hasInDB, "Could not find the identifier %d in HaircolorsDB" % [cellHash])
+	return HaircolorsDB[cellHash] if hasInDB else null
 
 #
 static func Init():

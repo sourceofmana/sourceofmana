@@ -17,6 +17,17 @@ enum Gender
 	COUNT
 }
 
+const genderMale : String				= "Male"
+const genderFemale : String				= "Female"
+const genderNonBinary : String			= "Non Binary"
+
+static func GetGenderName(gender : Gender) -> String:
+	match gender:
+		Gender.MALE:			return genderMale
+		Gender.FEMALE:			return genderFemale
+		Gender.NONBINARY:		return genderNonBinary
+		_:						return genderNonBinary
+
 enum State
 {
 	UNKNOWN = -1,

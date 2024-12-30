@@ -75,7 +75,7 @@ func RefreshOnlineMode():
 
 func OnlineMode(_clientStarted : bool, serverStarted : bool):
 	if onlineIndicator:
-		Launcher.GUI.buttonBoxes.Rename(UICommons.ButtonBox.SECONDARY, "Switch Online" if serverStarted else "Switch Offline")
+		Launcher.GUI.buttonBoxes.Rename(UICommons.ButtonBox.TERTIARY, "Switch Online" if serverStarted else "Switch Offline")
 		onlineIndicator.text = "Playing Offline" if serverStarted else "Playing Online"
 		if onlineIndicator.button_pressed != not serverStarted:
 			onlineIndicator.button_pressed = not serverStarted
