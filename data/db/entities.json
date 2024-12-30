@@ -1,7 +1,7 @@
 {
 	"0": {
 		"Name": "Default Entity",
-		"Ethnicity": "Player",
+		"Ethnicity": "Human",
 		"Gender": "Male",
 		"Behaviour": ["None"],
 		"Collision": "Medium",
@@ -275,7 +275,7 @@
 
 	"2000": {
 		"Name": "Bicies",
-		"Ethnicity": "Player",
+		"Ethnicity": "Human",
 		"Textures":
 		{
 			"Hair": "sprites/hairstyles/center-parting.png",
@@ -304,7 +304,7 @@
 	},
 	"2002": {
 		"Name": "Elanore",
-		"Ethnicity": "Player",
+		"Ethnicity": "Human",
 		"Textures":
 		{
 			"Body": "sprites/players/human-female.png",

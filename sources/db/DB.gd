@@ -4,6 +4,8 @@ class_name DB
 static var MapsDB : Dictionary				= {}
 static var MusicsDB : Dictionary			= {}
 static var EthnicitiesDB : Dictionary		= {}
+static var HairstylesDB : Dictionary		= {}
+static var HaircolorsDB : Dictionary		= {}
 static var EntitiesDB : Dictionary			= {}
 static var EmotesDB : Dictionary			= {}
 static var ItemsDB : Dictionary				= {}
@@ -38,12 +40,21 @@ static func ParseEthnicitiesDB():
 
 	if not result.is_empty():
 		for key in result:
-			var ethnicity : TraitData = TraitData.new()
-			ethnicity._name = key
-			ethnicity._path.append(result[key].Male)
-			ethnicity._path.append(result[key].Female)
-			ethnicity._path.append(result[key].Nonbinary)
-			EthnicitiesDB[key] = ethnicity
+			EthnicitiesDB[key] = EthnicityData.Create(key, result[key])
+
+static func ParseHairstylesDB():
+	var result : Dictionary = FileSystem.LoadDB("hairstyles.json")
+
+	if not result.is_empty():
+		for key in result:
+			HairstylesDB[key] = TraitData.Create(key, result[key])
+
+static func ParseHaircolorsDB():
+	var result : Dictionary = FileSystem.LoadDB("haircolors.json")
+
+	if not result.is_empty():
+		for key in result:
+			HaircolorsDB[key] = TraitData.Create(key, result[key])
 
 static func ParseEntitiesDB():
 	var result = FileSystem.LoadDB("entities.json")
@@ -114,22 +125,42 @@ static func GetCellHash(cellname : StringName) -> int:
 
 #
 static func GetItem(cellHash : int) -> BaseCell:
-	assert(cellHash in ItemsDB, "Could not find the identifier %s in ItemsDB" % [cellHash])
-	return ItemsDB[cellHash] if cellHash in ItemsDB else null
+	var hasInDB : bool = cellHash in ItemsDB
+	assert(hasInDB, "Could not find the identifier %s in ItemsDB" % [cellHash])
+	return ItemsDB[cellHash] if hasInDB else null
 
 static func GetEmote(cellHash : int) -> BaseCell:
-	assert(cellHash in EmotesDB, "Could not find the identifier %s in EmotesDB" % [cellHash])
-	return EmotesDB[cellHash] if cellHash in EmotesDB else null
+	var hasInDB : bool = cellHash in EmotesDB
+	assert(hasInDB, "Could not find the identifier %s in EmotesDB" % [cellHash])
+	return EmotesDB[cellHash] if hasInDB else null
 
 static func GetSkill(cellHash : int) -> SkillCell:
-	assert(cellHash in SkillsDB, "Could not find the identifier %s in SkillsDB" % [cellHash])
-	return SkillsDB[cellHash] if cellHash in SkillsDB else null
+	var hasInDB : bool = cellHash in SkillsDB
+	assert(hasInDB, "Could not find the identifier %s in SkillsDB" % [cellHash])
+	return SkillsDB[cellHash] if hasInDB else null
+
+static func GetEthnicityPresetPath(ethnicity : String) -> String:
+	var hasInDB : bool = ethnicity in EthnicitiesDB
+	assert(hasInDB, "Could not find the identifier %s in EthnicityDB" % [ethnicity])
+	return EthnicitiesDB[ethnicity]._preset if hasInDB else ethnicity
+
+static func GetHairstyle(hairstyle : String) -> TraitData:
+	var hasInDB : bool = hairstyle in HairstylesDB
+	assert(hasInDB, "Could not find the identifier %s in HairstylesDB" % [hairstyle])
+	return HairstylesDB[hairstyle] if hasInDB else null
+
+static func GetHaircolor(haircolor : String) -> TraitData:
+	var hasInDB : bool = haircolor in HaircolorsDB
+	assert(hasInDB, "Could not find the identifier %s in HaircolorsDB" % [haircolor])
+	return HaircolorsDB[haircolor] if hasInDB else null
 
 #
 static func Init():
 	ParseMapsDB()
 	ParseMusicsDB()
 	ParseEthnicitiesDB()
+	ParseHairstylesDB()
+	ParseHaircolorsDB()
 	ParseEmotesDB()
 	ParseItemsDB()
 	ParseSkillsDB()

@@ -134,7 +134,7 @@ func UpdateTrait(charID : int, stats : ActorStats) -> bool:
 	var data : Dictionary = {
 		"hairstyle" = stats.hairstyle,
 		"haircolor" = stats.haircolor,
-		"race" = stats.race,
+		"ethnicity" = stats.ethnicity,
 		"skin" = stats.skin,
 		"gender" = stats.gender,
 		"shape" = stats.currentShape,

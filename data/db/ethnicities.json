@@ -1,7 +1,13 @@
 {
-    "Kaizei Viro": {
+	"Human": {
+		"Preset"	: "Player",
 		"Male"		: "players/human-male.png",
 		"Female"	: "players/human-female.png",
-		"Nonbinary"	: "players/human-nonbinary.png",
+		"Nonbinary"	: "players/human-male.png",
+		"Skins": {
+				"Medium" : "",
+				"Tanned" : "human-skin-tanned.tres",
+				"Dark" : "human-skin-dark.tres",
+		},
 	},
 }

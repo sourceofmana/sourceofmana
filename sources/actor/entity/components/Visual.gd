@@ -48,7 +48,7 @@ func LoadData(data : EntityData):
 
 	# Sprite Preset
 	if data._ethnicity:
-		var preset : Node2D = FileSystem.LoadEntitySprite(data._ethnicity)
+		var preset : Node2D = FileSystem.LoadEntitySprite(DB.GetEthnicityPresetPath(data._ethnicity))
 		if preset:
 			add_child.call_deferred(preset)
 

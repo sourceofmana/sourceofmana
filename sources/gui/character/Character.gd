@@ -121,6 +121,7 @@ func RemoveCharacter(slotID : int):
 
 func RandomizeCharacter():
 	attributesPanel.Randomize()
+	traitsPanel.Randomize()
 
 func RefreshCharacterList():
 	var characterCount : int = 0

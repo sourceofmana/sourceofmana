@@ -7,3 +7,19 @@ class_name TraitData
 func _init():
 	_name = "Unknown"
 	_path = []
+
+static func Create(key : String, result : Variant) -> TraitData:
+	var data : TraitData = TraitData.new()
+	data._name = key
+	if result is String:
+		data._path.append(result)
+	elif result is Dictionary:
+		if "Male" in result:
+			data._path.append(result.Male)
+		if "Female" in result:
+			data._path.append(result.Female)
+		if "Nonbinary" in result:
+			data._path.append(result.Nonbinary)
+		assert(not data._path.is_empty(), "No path found for the ethnicity " + key)
+
+	return data

@@ -333,6 +333,10 @@ text = "<"
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Hairstyle"]
+layout_mode = 2
+text = "Hairstyle: "
+
 [node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Hairstyle"]
 layout_mode = 2
 text = "Hairstyle"
@@ -357,6 +361,10 @@ text = "<"
 [node name="EmptyLeft" type="Control" parent="Display/Traits/Margin/VBox/HairColor"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/HairColor"]
+layout_mode = 2
+text = "Hair Color: "
 
 [node name="Name" type="Label" parent="Display/Traits/Margin/VBox/HairColor"]
 layout_mode = 2
@@ -383,6 +391,10 @@ text = "<"
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Gender"]
+layout_mode = 2
+text = "Gender: "
+
 [node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Gender"]
 layout_mode = 2
 text = "Gender"
@@ -396,27 +408,31 @@ custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = ">"
 
-[node name="Race" type="HBoxContainer" parent="Display/Traits/Margin/VBox"]
+[node name="Ethnicity" type="HBoxContainer" parent="Display/Traits/Margin/VBox"]
 layout_mode = 2
 
-[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Race"]
+[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Ethnicity"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "<"
 
-[node name="EmptyLeft" type="Control" parent="Display/Traits/Margin/VBox/Race"]
+[node name="EmptyLeft" type="Control" parent="Display/Traits/Margin/VBox/Ethnicity"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Race"]
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Ethnicity"]
 layout_mode = 2
-text = "Race"
+text = "Ethnicity: "
 
-[node name="EmptyRight" type="Control" parent="Display/Traits/Margin/VBox/Race"]
+[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Ethnicity"]
+layout_mode = 2
+text = "Ethnicity"
+
+[node name="EmptyRight" type="Control" parent="Display/Traits/Margin/VBox/Ethnicity"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Race"]
+[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Ethnicity"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = ">"
@@ -432,6 +448,10 @@ text = "<"
 [node name="EmptyLeft" type="Control" parent="Display/Traits/Margin/VBox/SkinTone"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/SkinTone"]
+layout_mode = 2
+text = "Skin Tone: "
 
 [node name="Name" type="Label" parent="Display/Traits/Margin/VBox/SkinTone"]
 layout_mode = 2

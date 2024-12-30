@@ -13,10 +13,10 @@ var weight : float						= 0.0
 var hairstyle : int						= 0
 var haircolor : int						= 0
 var gender : int						= ActorCommons.Gender.MALE
-var race : int							= 0
+var ethnicity : int						= 0
 var skin : int							= 0
-var shape : String				= ""
-var spirit : String				= ""
+var shape : String						= ""
+var spirit : String						= ""
 var currentShape : String				= ""
 
 # Inactive Stats

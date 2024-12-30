@@ -28,7 +28,7 @@ CREATE TABLE trait (
     char_id              INTEGER PRIMARY KEY,
     hairstyle            INTEGER,
     haircolor            INTEGER,
-    race                 INTEGER,
+    ethnicity            INTEGER,
     skin                 INTEGER,
     gender               INTEGER,
     shape                TEXT,
