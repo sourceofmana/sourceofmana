@@ -3,7 +3,7 @@ class_name DB
 
 static var MapsDB : Dictionary				= {}
 static var MusicsDB : Dictionary			= {}
-static var EthnicitiesDB : Dictionary		= {}
+static var RacesDB : Dictionary		= {}
 static var HairstylesDB : Dictionary		= {}
 static var HaircolorsDB : Dictionary		= {}
 static var EntitiesDB : Dictionary			= {}
@@ -35,12 +35,12 @@ static func ParseMusicsDB():
 			music._path = result[key].Path
 			MusicsDB[key] = music
 
-static func ParseEthnicitiesDB():
-	var result = FileSystem.LoadDB("ethnicities.json")
+static func ParseRacesDB():
+	var result = FileSystem.LoadDB("races.json")
 
 	if not result.is_empty():
 		for key in result:
-			EthnicitiesDB[key] = EthnicityData.Create(key, result[key])
+			RacesDB[key] = RaceData.Create(key, result[key])
 
 static func ParseHairstylesDB():
 	var result : Dictionary = FileSystem.LoadDB("hairstyles.json")
@@ -143,14 +143,14 @@ static func GetSkill(cellHash : int) -> SkillCell:
 	assert(hasInDB, "Could not find the identifier %s in SkillsDB" % [cellHash])
 	return SkillsDB[cellHash] if hasInDB else null
 
-static func GetEthnicity(ethnicity : String) -> EthnicityData:
-	var hasInDB : bool = ethnicity in EthnicitiesDB
-	assert(hasInDB, "Could not find the identifier %s in EthnicityDB" % [ethnicity])
-	return EthnicitiesDB[ethnicity] if hasInDB else null
+static func GetRace(race : String) -> RaceData:
+	var hasInDB : bool = race in RacesDB
+	assert(hasInDB, "Could not find the identifier %s in RaceDB" % [race])
+	return RacesDB[race] if hasInDB else null
 
-static func GetEthnicityPresetPath(ethnicity : String) -> String:
-	var data : EthnicityData = EthnicitiesDB[ethnicity] if ethnicity in EthnicitiesDB else null
-	return data._preset if data else ethnicity
+static func GetRacePresetPath(race : String) -> String:
+	var data : RaceData = RacesDB[race] if race in RacesDB else null
+	return data._preset if data else race
 
 static func GetHairstyle(cellHash : int) -> TraitData:
 	var hasInDB : bool = cellHash in HairstylesDB
@@ -166,7 +166,7 @@ static func GetHaircolor(cellHash : int) -> TraitData:
 static func Init():
 	ParseMapsDB()
 	ParseMusicsDB()
-	ParseEthnicitiesDB()
+	ParseRacesDB()
 	ParseHairstylesDB()
 	ParseHaircolorsDB()
 	ParseEmotesDB()

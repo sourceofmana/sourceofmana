@@ -405,29 +405,29 @@ custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = ">"
 
-[node name="Ethnicity" type="HBoxContainer" parent="Display/Traits/Margin/VBox"]
+[node name="Race" type="HBoxContainer" parent="Display/Traits/Margin/VBox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Ethnicity"]
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Race"]
 layout_mode = 2
-text = "Ethnicity"
+text = "Race"
 
-[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/Ethnicity"]
+[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/Race"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Ethnicity"]
+[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Race"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "<"
 
-[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Ethnicity"]
+[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Race"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Ethnicity"
 horizontal_alignment = 1
 
-[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Ethnicity"]
+[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Race"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = ">"
@@ -485,7 +485,7 @@ size_flags_vertical = 3
 [connection signal="pressed" from="Display/Traits/Margin/VBox/HairColor/Next" to="Display/Traits" method="_on_haircolor_next_button"]
 [connection signal="pressed" from="Display/Traits/Margin/VBox/Gender/Previous" to="Display/Traits" method="_on_gender_prev_button"]
 [connection signal="pressed" from="Display/Traits/Margin/VBox/Gender/Next" to="Display/Traits" method="_on_gender_next_button"]
-[connection signal="pressed" from="Display/Traits/Margin/VBox/Ethnicity/Previous" to="Display/Traits" method="_on_ethnicity_prev_button"]
-[connection signal="pressed" from="Display/Traits/Margin/VBox/Ethnicity/Next" to="Display/Traits" method="_on_ethnicity_next_button"]
+[connection signal="pressed" from="Display/Traits/Margin/VBox/Race/Previous" to="Display/Traits" method="_on_ethnicity_prev_button"]
+[connection signal="pressed" from="Display/Traits/Margin/VBox/Race/Next" to="Display/Traits" method="_on_ethnicity_next_button"]
 [connection signal="pressed" from="Display/Traits/Margin/VBox/SkinTone/Previous" to="Display/Traits" method="_on_skintone_prev_button"]
 [connection signal="pressed" from="Display/Traits/Margin/VBox/SkinTone/Next" to="Display/Traits" method="_on_skintone_next_button"]

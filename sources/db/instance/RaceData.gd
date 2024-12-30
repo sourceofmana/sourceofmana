@@ -1,5 +1,5 @@
 extends Node
-class_name EthnicityData
+class_name RaceData
 
 @export var _name : String				= "Unknown"
 @export var _preset : String			= ""
@@ -8,8 +8,8 @@ class_name EthnicityData
 @export var _nonbinaryPath : String		= ""
 @export var _skins : Dictionary			= {}
 
-static func Create(key : String, result : Dictionary) -> EthnicityData:
-	var data : EthnicityData = EthnicityData.new()
+static func Create(key : String, result : Dictionary) -> RaceData:
+	var data : RaceData = RaceData.new()
 	data._name = key
 	data._preset = result.Preset
 	if "Male" in result:

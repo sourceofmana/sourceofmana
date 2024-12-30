@@ -92,7 +92,7 @@ func AddCharacter(info : Dictionary, slotID : int = ActorCommons.InvalidCharacte
 
 	if not HasSlot(currentCharacterID) or \
 	"last_timestamp" not in charactersInfo[currentCharacterID] or charactersInfo[currentCharacterID]["last_timestamp"] == null or \
-	(info["last_timestamp"] != null and charactersInfo[currentCharacterID]["last_timestamp"] < info["last_timestamp"]):
+	(info["last_timestamp"] != null and charactersInfo[currentCharacterID]["last_timestamp"] <= info["last_timestamp"]):
 		UpdateSelectedCharacter(info, availableSlot)
 
 	RefreshCharacterList()

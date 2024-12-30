@@ -13,9 +13,9 @@ extends PanelContainer
 @onready var genderPrev : Button			= $Margin/VBox/Gender/Previous
 @onready var genderNext : Button			= $Margin/VBox/Gender/Next
 
-@onready var ethnicityLabel : Label			= $Margin/VBox/Ethnicity/Name
-@onready var ethnicityPrev : Button			= $Margin/VBox/Ethnicity/Previous
-@onready var ethnicityNext : Button			= $Margin/VBox/Ethnicity/Next
+@onready var raceLabel : Label			= $Margin/VBox/Race/Name
+@onready var racePrev : Button			= $Margin/VBox/Race/Previous
+@onready var raceNext : Button			= $Margin/VBox/Race/Next
 
 @onready var skintoneLabel : Label			= $Margin/VBox/SkinTone/Name
 @onready var skintonePrev : Button			= $Margin/VBox/SkinTone/Previous
@@ -23,13 +23,13 @@ extends PanelContainer
 
 @onready var hairstylesCount : int			= DB.HairstylesDB.size()
 @onready var haircolorsCount : int			= DB.HaircolorsDB.size()
-@onready var ethnicityCount : int			= DB.EthnicitiesDB.size()
+@onready var raceCount : int			= DB.RacesDB.size()
 var skintoneCount : int						= 0
 
 var hairstyleValue : int					= 0
 var haircolorValue : int					= 0
 var genderValue : int						= 0
-var ethnicityValue : int					= 0
+var raceValue : int					= 0
 var skintoneValue : int						= 0
 
 #
@@ -37,7 +37,7 @@ func GetValues():
 	return {
 		"hairstyle" = DB.HairstylesDB.keys()[hairstyleValue],
 		"haircolor" = DB.HaircolorsDB.keys()[haircolorValue],
-		"ethnicity" = ethnicityValue,
+		"race" = raceValue,
 		"skin" = skintoneValue,
 		"gender" = genderValue,
 		"shape" = "Default Entity",
@@ -84,27 +84,27 @@ func _on_gender_next_button():
 	genderValue = genderValue + 1 if genderValue < ActorCommons.Gender.COUNT - 1 else 0
 	RefreshGender()
 
-# Ethnicity
-func RefreshEthnicity():
-	var ethnicities : Array = DB.EthnicitiesDB.keys()
-	if ethnicityValue >= 0 and ethnicityValue < ethnicityCount:
-		var data : EthnicityData = DB.GetEthnicity(ethnicities[ethnicityValue])
-		ethnicityLabel.set_text(data._name)
+# Race
+func RefreshRace():
+	var races : Array = DB.RacesDB.keys()
+	if raceValue >= 0 and raceValue < raceCount:
+		var data : RaceData = DB.GetRace(races[raceValue])
+		raceLabel.set_text(data._name)
 		skintoneCount = data._skins.size()
 
-func _on_ethnicity_prev_button():
-	ethnicityValue = ethnicityValue - 1 if ethnicityValue > 0 else ethnicityCount - 1
-	RefreshEthnicity()
+func _on_race_prev_button():
+	raceValue = raceValue - 1 if raceValue > 0 else raceCount - 1
+	RefreshRace()
 
-func _on_ethnicity_next_button():
-	ethnicityValue = ethnicityValue + 1 if ethnicityValue < ethnicityCount - 1 else 0
-	RefreshEthnicity()
+func _on_race_next_button():
+	raceValue = raceValue + 1 if raceValue < raceCount - 1 else 0
+	RefreshRace()
 
 # Skin tone
 func RefreshSkintone():
-	var ethnicities : Array = DB.EthnicitiesDB.keys()
-	if ethnicityValue >= 0 and ethnicityValue < ethnicityCount:
-		var data : EthnicityData = DB.GetEthnicity(ethnicities[ethnicityValue])
+	var races : Array = DB.RacesDB.keys()
+	if raceValue >= 0 and raceValue < raceCount:
+		var data : RaceData = DB.GetRace(races[raceValue])
 		var skins : Dictionary = data._skins
 		var skinsKeys : Array = skins.keys()
 		if skintoneValue >= 0 and skintoneValue < skinsKeys.size():
@@ -126,8 +126,8 @@ func Randomize():
 	RefreshHaircolor()
 	genderValue = randi() % ActorCommons.Gender.COUNT
 	RefreshGender()
-	ethnicityValue = randi() % ethnicityCount
-	RefreshEthnicity()
+	raceValue = randi() % raceCount
+	RefreshRace()
 	skintoneValue = randi() % skintoneCount
 	RefreshSkintone()
 

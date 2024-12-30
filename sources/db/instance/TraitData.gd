@@ -20,6 +20,6 @@ static func Create(key : String, result : Variant) -> TraitData:
 			data._path.append(result.Female)
 		if "Nonbinary" in result:
 			data._path.append(result.Nonbinary)
-		assert(not data._path.is_empty(), "No path found for the ethnicity " + key)
+		assert(not data._path.is_empty(), "No path found for the race " + key)
 
 	return data
