@@ -123,7 +123,7 @@ AFTER INSERT ON character
 FOR EACH ROW
 BEGIN
     INSERT INTO trait (char_id, hairstyle, haircolor, race, skin, gender, shape, spirit)
-    VALUES (NEW.char_id, 0, 0, 0, 0, 0, 'Default Entity', 'Default Entity');
+    VALUES (NEW.char_id, 0, 0, 0, 0, 0, '', '');
 
     INSERT INTO attribute (char_id, strength, vitality, agility, endurance, concentration)
     VALUES (NEW.char_id, 0, 0, 0, 0, 0);

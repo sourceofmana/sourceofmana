@@ -40,7 +40,9 @@ static func ParseRacesDB():
 
 	if not result.is_empty():
 		for key in result:
-			RacesDB[key] = RaceData.Create(key, result[key])
+			var id = SetCellHash(key)
+			assert(id not in RacesDB, "Duplicated cell in RacesDB")
+			RacesDB[id] = RaceData.Create(key, result[key])
 
 static func ParseHairstylesDB():
 	var result : Dictionary = FileSystem.LoadDB("hairstyles.json")
@@ -143,13 +145,14 @@ static func GetSkill(cellHash : int) -> SkillCell:
 	assert(hasInDB, "Could not find the identifier %s in SkillsDB" % [cellHash])
 	return SkillsDB[cellHash] if hasInDB else null
 
-static func GetRace(race : String) -> RaceData:
-	var hasInDB : bool = race in RacesDB
-	assert(hasInDB, "Could not find the identifier %s in RaceDB" % [race])
-	return RacesDB[race] if hasInDB else null
+static func GetRace(cellHash : int) -> RaceData:
+	var hasInDB : bool = cellHash in RacesDB
+	assert(hasInDB, "Could not find the identifier %s in RaceDB" % [cellHash])
+	return RacesDB[cellHash] if hasInDB else null
 
 static func GetRacePresetPath(race : String) -> String:
-	var data : RaceData = RacesDB[race] if race in RacesDB else null
+	var cellHash : int = GetCellHash(race) if HasCellHash(race) else UnknownHash
+	var data : RaceData = RacesDB[cellHash] if cellHash in RacesDB else null
 	return data._preset if data else race
 
 static func GetHairstyle(cellHash : int) -> TraitData:

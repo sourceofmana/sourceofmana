@@ -20,6 +20,8 @@ static func Create(key : String, result : Dictionary) -> RaceData:
 		data._nonbinaryPath = result.Nonbinary
 	if "Skins" in result and result.Skins is Dictionary:
 		for skin in result.Skins.keys():
-			data._skins[skin] = result.Skins[skin]
+			var id = DB.SetCellHash(skin)
+			assert(id not in data._skins, "Duplicated skin ID in %s" % key)
+			data._skins[id] = TraitData.Create(skin, result.Skins[skin])
 
 	return data

@@ -51,9 +51,12 @@ func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictio
 	if accountID == NetworkCommons.RidUnknown:
 		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
 	else:
+		traits.merge(ActorCommons.DefaultTraits)
 		if Launcher.SQL.GetCharacters(accountID).size() >= ActorCommons.MaxCharacterCount:
 			err = NetworkCommons.CharacterError.ERR_SLOT_AVAILABLE
-		if not Launcher.SQL.AddCharacter(accountID, charName, traits, attributes):
+		elif not ActorCommons.CheckTraits(traits) or not ActorCommons.CheckAttributes(attributes):
+			err = NetworkCommons.CharacterError.ERR_MISSING_PARAMS
+		elif not Launcher.SQL.AddCharacter(accountID, charName, traits, attributes):
 			err = NetworkCommons.CharacterError.ERR_NAME_AVAILABLE
 		else:
 			var characterID : int = Launcher.SQL.GetCharacterID(accountID, charName)

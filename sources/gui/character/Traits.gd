@@ -34,14 +34,19 @@ var skintoneValue : int						= 0
 
 #
 func GetValues():
+	var hairstyles : Array = DB.HairstylesDB.keys()
+	var haircolors : Array = DB.HaircolorsDB.keys()
+	var races : Array = DB.RacesDB.keys()
+	var race : RaceData = DB.GetRace(races[raceValue])
+	var skins : Dictionary = race._skins if race else {}
+	var skinsKeys : Array = skins.keys()
+
 	return {
-		"hairstyle" = DB.HairstylesDB.keys()[hairstyleValue],
-		"haircolor" = DB.HaircolorsDB.keys()[haircolorValue],
-		"race" = raceValue,
-		"skin" = skintoneValue,
-		"gender" = genderValue,
-		"shape" = "Default Entity",
-		"spirit" = "Piou",
+		"hairstyle" = hairstyles[hairstyleValue],
+		"haircolor" = haircolors[haircolorValue],
+		"race" = races[raceValue],
+		"skin" = skinsKeys[skintoneValue],
+		"gender" = genderValue
 	}
 
 # Hairstyle
@@ -108,7 +113,7 @@ func RefreshSkintone():
 		var skins : Dictionary = data._skins
 		var skinsKeys : Array = skins.keys()
 		if skintoneValue >= 0 and skintoneValue < skinsKeys.size():
-			skintoneLabel.set_text(skinsKeys[skintoneValue])
+			skintoneLabel.set_text(skins[skinsKeys[skintoneValue]]._name)
 
 func _on_skintone_prev_button():
 	skintoneValue = skintoneValue - 1 if skintoneValue > 0 else skintoneCount - 1

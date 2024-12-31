@@ -28,6 +28,13 @@ static func GetGenderName(gender : Gender) -> String:
 		Gender.NONBINARY:		return genderNonBinary
 		_:						return genderNonBinary
 
+static func GetGenderID(gender : String) -> Gender:
+	match gender:
+		genderMale:					return Gender.MALE
+		genderFemale:				return Gender.FEMALE
+		genderNonBinary:			return Gender.NONBINARY
+		_:							return Gender.MALE
+
 enum State
 {
 	UNKNOWN = -1,
@@ -65,6 +72,23 @@ enum Attribute
 	ENDURANCE,
 	CONCENTRATION,
 }
+
+static func CheckTraits(traits : Dictionary) -> bool:
+	if "hairstyle" not in traits or not DB.GetHairstyle(traits["hairstyle"]):
+		return false
+	if "haircolor" not in traits or not DB.GetHaircolor(traits["haircolor"]):
+		return false
+	if "race" not in traits:
+		return false
+	var race : RaceData = DB.GetRace(traits["race"])
+	if not race or "skin" not in traits or traits["skin"] not in race._skins:
+		return false
+	if "gender" not in traits:
+		return false
+	return true
+
+static func CheckAttributes(attributes : Dictionary) -> bool:
+	return (attributes.get("strength", 0) + attributes.get("vitality", 0) + attributes.get("agility", 0) + attributes.get("endurance") + attributes.get("concentration")) <= Formula.GetMaxAttributePoints(1)
 
 enum Target
 {
@@ -253,6 +277,10 @@ const CharacterScreenLocations : PackedVector2Array = [
 ]
 
 # New player
+const DefaultTraits : Dictionary = {
+	"shape": "Default",
+	"spirit": "Piou"
+}
 const DefaultAttributes : Dictionary = {
 	"strength": 10,
 	"vitality": 3,

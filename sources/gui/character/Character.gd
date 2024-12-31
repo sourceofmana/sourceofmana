@@ -76,7 +76,7 @@ func AddCharacter(info : Dictionary, slotID : int = ActorCommons.InvalidCharacte
 		assert(false, "No free available placement")
 		return
 
-	var entity : Entity = Instantiate.CreateEntity(ActorCommons.Type.PLAYER, "Default Entity", info["nickname"], false)
+	var entity : Entity = Instantiate.CreateEntity(ActorCommons.Type.PLAYER, "Default", info["nickname"], false)
 	if not entity:
 		assert(false, "Could not create character preview")
 		return
@@ -92,7 +92,7 @@ func AddCharacter(info : Dictionary, slotID : int = ActorCommons.InvalidCharacte
 
 	if not HasSlot(currentCharacterID) or \
 	"last_timestamp" not in charactersInfo[currentCharacterID] or charactersInfo[currentCharacterID]["last_timestamp"] == null or \
-	(info["last_timestamp"] != null and charactersInfo[currentCharacterID]["last_timestamp"] <= info["last_timestamp"]):
+	(info["last_timestamp"] != null and charactersInfo[currentCharacterID]["last_timestamp"] < info["last_timestamp"]) or info["nickname"].is_empty():
 		UpdateSelectedCharacter(info, availableSlot)
 
 	RefreshCharacterList()

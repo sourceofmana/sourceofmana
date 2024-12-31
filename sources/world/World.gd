@@ -71,7 +71,7 @@ func _post_launch():
 	defaultSpawn.map				= GetMap(LauncherCommons.DefaultStartMap)
 	defaultSpawn.spawn_position		= LauncherCommons.DefaultStartPos
 	defaultSpawn.type				= "Player"
-	defaultSpawn.name				= "Default Entity"
+	defaultSpawn.name				= "Default"
 
 	isInitialized = true
 
