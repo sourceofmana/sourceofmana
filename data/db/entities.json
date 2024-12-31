@@ -2,18 +2,17 @@
 	"0": {
 		"Name": "Default",
 		"SpritePreset": "Player",
-		"Hairstyle": "Bald",
-		"Haircolor": "Off Black",
-		"Gender": "Male",
-		"Race": "Human",
-		"SkinTone": "Medium",
 		"Behaviour": ["None"],
 		"Collision": "Medium",
 		"Radius": "10",
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 160,
-			"Spirit": "Piou",
+			"hairstyle": "Bald",
+			"haircolor": "Off Black",
+			"gender": "Male",
+			"race": "Human",
+			"skintone": "Medium",
 		},
 		"SkillSet": {
 			"Melee": 1.0,
@@ -54,7 +53,7 @@
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 50,
-			"Level": 10,
+			"level": 10,
 		},
 		"Spawns": {
 			"Lilah": 3,
@@ -73,7 +72,7 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
-			"Level": 5,
+			"level": 5,
 		},
 		"Drops": {
 			"Dorian's Key": 1.0,
@@ -105,7 +104,7 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
-			"Level": 5,
+			"level": 5,
 		},
 		"Drops": {
 			"Gabriel's Key": 1.0,
@@ -151,7 +150,7 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 40,
-			"Level": 5,
+			"level": 5,
 		},
 		"Drops": {
 			"Marvin's Key": 1.0,
@@ -212,7 +211,7 @@
 		"Radius": "10",
 		"Stat": {
 			"walkSpeed": 50,
-			"Level": 10,
+			"level": 10,
 		},
 		"SkillSet": {
 			"Flar": 1.0,

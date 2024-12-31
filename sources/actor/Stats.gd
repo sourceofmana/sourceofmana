@@ -1,27 +1,24 @@
 extends Object
 class_name ActorStats
 
-# Active Stats
+# Active Stats, can be initialized through a dictionary from a SQL query or entities.json
 var level : int							= 1
 var experience : int					= 0
 var gp : int							= 0
-var health : int						= 1
-var mana : int							= 0
-var stamina : int						= 0
+var health : int						= ActorCommons.MaxStatValue
+var mana : int							= ActorCommons.MaxStatValue
+var stamina : int						= ActorCommons.MaxStatValue
 var karma : int							= 0
 var weight : float						= 0.0
 var hairstyle : int						= 0
 var haircolor : int						= 0
 var gender : int						= ActorCommons.Gender.MALE
-var race : int						= 0
-var skin : int							= 0
+var race : int							= 0
+var skintone : int						= 0
 var shape : String						= ""
 var spirit : String						= ""
 var currentShape : String				= ""
-
-# Inactive Stats
 var baseExp : int						= 1
-
 # Attributes
 var strength : int						= 0
 var vitality : int						= 0
@@ -76,10 +73,11 @@ func RefreshAttributes():
 	attributes_updated.emit()
 
 #
-func SetAttributes(attributes : Dictionary):
-	for attribute in attributes:
-		if attribute in self:
-			self[attribute] = attributes[attribute]
+func SetStats(stats : Dictionary):
+	for statName in stats:
+		if stats[statName] != null and statName in self:
+			self[statName] = stats[statName]
+
 	if actor.type == ActorCommons.Type.MONSTER:
 		FillRandomAttributes()
 	RefreshAttributes()
@@ -106,18 +104,8 @@ func Init(actorNode : Actor, data : EntityData):
 	shape	= data._name
 	currentShape = shape
 
-	if "Level" in stats:				level				= stats["Level"]
-	if "Experience" in stats:			experience			= stats["Experience"]
-	if "GP" in stats:					gp					= stats["GP"]
-	if "Spirit" in stats:				spirit			= stats["Spirit"]
-	if "BaseExp" in stats:				baseExp				= stats["BaseExp"]
-
-	SetAttributes(stats)
+	SetStats(stats)
 	SetEntityStats(stats)
-
-	health		= stats["Health"]	if "Health" in stats	else current.maxHealth
-	mana		= stats["Mana"]		if "Mana" in stats		else current.maxMana
-	stamina		= stats["Stamina"]	if "Stamina" in stats	else current.maxStamina
 	RefreshActiveStats()
 
 func FillRandomAttributes():
@@ -133,7 +121,7 @@ func FillRandomAttributes():
 			attributes[att] = self[att] + points
 			if pointToDispatch == 0:
 				break
-		SetAttributes(attributes)
+		SetStats(attributes)
 
 func Morph(data : EntityData):
 	currentShape = data._name

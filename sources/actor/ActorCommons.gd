@@ -246,6 +246,7 @@ const DropDelay : float						= 60.0
 const PickupSquaredDistance : float			= 48 * 48 # 1.5 Tile squared length
 
 # Stats
+const MaxStatValue : int					= 1 << 32
 const MaxPointPerAttributes : int			= 20
 const InventorySize : int					= 100
 

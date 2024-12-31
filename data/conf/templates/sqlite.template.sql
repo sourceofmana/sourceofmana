@@ -122,17 +122,17 @@ CREATE TRIGGER trg_character_new
 AFTER INSERT ON character
 FOR EACH ROW
 BEGIN
-    INSERT INTO trait (char_id, hairstyle, haircolor, race, skin, gender, shape, spirit)
-    VALUES (NEW.char_id, 0, 0, 0, 0, 0, '', '');
+    INSERT INTO trait (char_id)
+    VALUES (NEW.char_id);
 
-    INSERT INTO attribute (char_id, strength, vitality, agility, endurance, concentration)
-    VALUES (NEW.char_id, 0, 0, 0, 0, 0);
+    INSERT INTO attribute (char_id)
+    VALUES (NEW.char_id);
 
-    INSERT INTO stat (char_id, level, experience, gp, health, mana, stamina, karma)
-    VALUES (NEW.char_id, 1, 0, 0, 1, 1, 1, 0);
+    INSERT INTO stat (char_id, level)
+    VALUES (NEW.char_id, 1);
 
-    INSERT INTO equipment (char_id, weapon, shield, ammunition, arms, chest, face, feet, head, legs, accessory1, accessory2)
-    VALUES (NEW.char_id, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    INSERT INTO equipment (char_id)
+    VALUES (NEW.char_id);
 END
 
 CREATE TRIGGER trg_character_delete

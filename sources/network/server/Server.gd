@@ -89,7 +89,7 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 				if agent:
 					var info : Dictionary = Launcher.SQL.GetCharacterInfo(peer.characterRID)
 					peer.SetAgent(agent.get_rid().get_id())
-					agent.stat.SetAttributes(info)
+					agent.stat.SetStats(info)
 					agent.inventory.ImportInventory(ActorCommons.DefaultInventory)
 					agent.rpcRID = rpcID
 					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
