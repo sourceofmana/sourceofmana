@@ -48,7 +48,7 @@ func LoadData(data : EntityData):
 
 	# Sprite Preset
 	if data._spritePreset:
-		var preset : Node2D = FileSystem.LoadEntitySprite(DB.GetRacePresetPath(data._spritePreset))
+		var preset : Node2D = FileSystem.LoadEntitySprite(data._spritePreset)
 		if preset:
 			add_child.call_deferred(preset)
 
@@ -66,10 +66,9 @@ func LoadData(data : EntityData):
 		if preset:
 			for slot in ActorCommons.Slot.COUNT:
 				var slotName : String = ActorCommons.GetSlotName(slot)
-				var sprite : Sprite2D = null
-				if preset.has_node(slotName):
-					sprite = preset.get_node(slotName)
-				elif data._customTextures[slot]:
+				var sprite : Sprite2D = preset.get_node_or_null(slotName)
+
+				if data._customTextures[slot]:
 					sprite = Sprite2D.new()
 					sprite.set_name(slotName)
 					preset.add_child.call_deferred(sprite)

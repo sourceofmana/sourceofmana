@@ -9,7 +9,8 @@ func Killed():
 	Formula.ApplyXp(self)
 
 	for item in inventory.items:
-		WorldDrop.PushDrop(item, self)
+		if item and item.cell and item.cell.id in data._drops:
+			WorldDrop.PushDrop(item, self)
 
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(self)
 	if inst and inst.timers:

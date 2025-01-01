@@ -84,7 +84,7 @@ static func ParseItemsDB():
 
 	if not result.is_empty():
 		for key in result:
-			var cell : BaseCell = FileSystem.LoadCell(Path.ItemPst + result[key].Path + Path.RscExt)
+			var cell : ItemCell = FileSystem.LoadCell(Path.ItemPst + result[key].Path + Path.RscExt)
 			cell.id = SetCellHash(cell.name)
 			assert(ItemsDB.has(cell.id) == false, "Duplicated cell in ItemsDB")
 			ItemsDB[cell.id] = cell
@@ -130,7 +130,7 @@ static func GetCellHash(cellname : StringName) -> int:
 	return hashDB[cellname] if hasHash else UnknownHash
 
 #
-static func GetItem(cellHash : int) -> BaseCell:
+static func GetItem(cellHash : int) -> ItemCell:
 	var hasInDB : bool = cellHash in ItemsDB
 	assert(hasInDB, "Could not find the identifier %s in ItemsDB" % [cellHash])
 	return ItemsDB[cellHash] if hasInDB else null
@@ -149,11 +149,6 @@ static func GetRace(cellHash : int) -> RaceData:
 	var hasInDB : bool = cellHash in RacesDB
 	assert(hasInDB, "Could not find the identifier %s in RaceDB" % [cellHash])
 	return RacesDB[cellHash] if hasInDB else null
-
-static func GetRacePresetPath(race : String) -> String:
-	var cellHash : int = GetCellHash(race) if HasCellHash(race) else UnknownHash
-	var data : RaceData = RacesDB[cellHash] if cellHash in RacesDB else null
-	return data._preset if data else race
 
 static func GetHairstyle(cellHash : int) -> TraitData:
 	var hasInDB : bool = cellHash in HairstylesDB

@@ -51,6 +51,7 @@ enum State
 
 enum Slot
 {
+	NONE = -1,
 	BODY = 0,
 	HAIR,
 	CHEST,

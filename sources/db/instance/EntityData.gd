@@ -6,6 +6,7 @@ class_name EntityData
 @export var _spritePreset : String				= ""
 @export var _collision : String					= ""
 @export var _radius : int						= 0
+@export var _equipments : Array[ItemCell]		= []
 @export var _customTextures : Array[String]		= []
 @export var _customShaders : Array[String]		= []
 @export var _displayName : bool					= false
@@ -31,6 +32,10 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 		entity._collision = result.Collision
 	if "Radius" in result:
 		entity._radius = clampi(result.Radius.to_int(), 0, ActorCommons.MaxEntityRadiusSize)
+	if "Equipments" in result:
+		for itemName in result.Equipments:
+			var itemID : int = DB.GetCellHash(itemName)
+			entity._equipments.append(DB.GetItem(itemID))
 	if "Textures" in result:
 		for texture in result.Textures:
 			entity._customTextures[ActorCommons.GetSlotID(texture)] = result.Textures[texture]

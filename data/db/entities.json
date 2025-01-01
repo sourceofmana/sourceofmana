@@ -21,15 +21,6 @@
 			"Lum": 1.0,
 			"Inma": 1.0,
 		},
-		"Textures":
-		{
-			"Hair": "sprites/hairstyles/emo.png",
-		},
-		"Shaders":
-		{
-			"Hair": "presets/palettes/hair-pure-platinum.tres",
-			"Chest": "presets/palettes/cloth-natural.tres",
-		},
 	},
 	"1": {
 		"Name": "Ship",
@@ -278,21 +269,21 @@
 	"2000": {
 		"Name": "Bicies",
 		"SpritePreset": "Player",
-		"Hairstyle": "Center Parting",
-		"Haircolor": "Dark Brown",
-		"Gender": "Male",
-		"Race": "Human",
-		"SkinTone": "Dark",
-		"Shaders":
-		{
-			"Chest": "presets/palettes/cloth-olive.tres",
-		},
+		"Equipments": [
+			"V-Neck Tee",
+			"Trousers",
+		],
 		"Behaviour": ["Pacifist"],
 		"Collision": "Small",
 		"Radius": "16",
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 70,
+			"hairstyle": "Center Parting",
+			"haircolor": "Dark Brown",
+			"gender": "Male",
+			"race": "Human",
+			"skintone": "Dark",
 		},
 	},
 	"2001": {
@@ -306,26 +297,21 @@
 	"2002": {
 		"Name": "Elanore",
 		"SpritePreset": "Player",
-		"Hairstyle": "Bun",
-		"Haircolor": "Forest Green",
-		"Gender": "Female",
-		"Race": "Human",
-		"SkinTone": "Tanned",
-		"Textures":
-		{
-			"Chest": "sprites/equipments/chests/vneckjumper-female.png",
-			"Legs": "sprites/equipments/legs/trousers-female.png",
-		},
-		"Shaders":
-		{
-			"Chest": "presets/palettes/cloth-crimson.tres",
-		},
+		"Equipments": [
+			"V-Neck Tee",
+			"Trousers"
+		],
 		"Behaviour": ["Pacifist"],
 		"Collision": "Small",
 		"Radius": "16",
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 50,
+			"hairstyle": "Bun",
+			"haircolor": "Forest Green",
+			"gender": "Female",
+			"race": "Human",
+			"skintone": "Tanned",
 		},
 	},
 	"2003": {

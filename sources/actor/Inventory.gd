@@ -1,17 +1,18 @@
 extends Object
 class_name ActorInventory
 
-var actor : Actor			= null
-var items: Array[Item]		= []
+var actor : Actor					= null
+var items: Array[Item]				= []
+var equipments : Array[ItemCell]	= []
 
 #
-func GetItem(cell : BaseCell) -> Item:
+func GetItem(cell : ItemCell) -> Item:
 	for item in items:
 		if item.cell.name == cell.name:
 			return item
 	return null
 #
-func PushItem(cell : BaseCell, count : int) -> bool:
+func PushItem(cell : ItemCell, count : int) -> bool:
 	if count <= 0 or not cell:
 		return false
 
@@ -34,7 +35,7 @@ func PushItem(cell : BaseCell, count : int) -> bool:
 
 	return true
 
-func PopItem(cell : BaseCell, count : int) -> bool:
+func PopItem(cell : ItemCell, count : int) -> bool:
 	if count <= 0 or not cell:
 		return false
 
@@ -55,12 +56,13 @@ func PopItem(cell : BaseCell, count : int) -> bool:
 
 	if not cell.stackable and toRemove.size() == count:
 		for item in toRemove:
+			UnequipItem(cell)
 			items.erase(item)
 		return true
 
 	return false
 
-func HasItem(cell : BaseCell, count : int) -> bool:
+func HasItem(cell : ItemCell, count : int) -> bool:
 	if count <= 0 or not cell:
 		return false
 
@@ -88,7 +90,7 @@ func GetWeight() -> float:
 		weight += item.cell.weight * item.count
 	return weight / 1000.0
 
-func UseItem(cell : BaseCell):
+func UseItem(cell : ItemCell):
 	if cell and cell.type == CellCommons.Type.ITEM and cell.usable and actor and RemoveItem(cell):
 		if cell.effects.has(CellCommons.effectHP):
 			actor.stat.SetHealth(cell.effects[CellCommons.effectHP])
@@ -97,8 +99,18 @@ func UseItem(cell : BaseCell):
 		if cell.effects.has(CellCommons.effectStamina):
 			actor.stat.SetStamina(cell.effects[CellCommons.effectStamina])
 
+func EquipItem(cell : ItemCell):
+	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and actor:
+		equipments[cell.slot] = cell
+		actor.stat.RefreshEntityStats()
+
+func UnequipItem(cell : ItemCell):
+	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and actor:
+		equipments[cell.slot] = null
+		actor.stat.RefreshEntityStats()
+
 #
-func AddItem(cell : BaseCell, count : int = 1) -> bool:
+func AddItem(cell : ItemCell, count : int = 1) -> bool:
 	if PushItem(cell, count):
 		if actor is PlayerAgent:
 			if actor.rpcRID != NetworkCommons.RidUnknown:
@@ -106,7 +118,7 @@ func AddItem(cell : BaseCell, count : int = 1) -> bool:
 		return true
 	return false
 
-func RemoveItem(cell : BaseCell, count : int = 1) -> bool:
+func RemoveItem(cell : ItemCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
 		if actor is PlayerAgent:
 			if actor.rpcRID != NetworkCommons.RidUnknown:
@@ -135,3 +147,7 @@ func ExportInventory() -> Dictionary:
 func Init(actorNode : Actor):
 	assert(actorNode != null, "Caller actor node should never be null")
 	actor = actorNode
+	for itemID in actor.data._equipments:
+		var cell : ItemCell = DB.ItemsDB[itemID]
+		AddItem(cell)
+		EquipItem(cell)
