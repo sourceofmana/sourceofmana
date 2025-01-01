@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=2 format=3 uid="uid://1guycf8ymnqp"]
+
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="1_66yfp"]
+
+[resource]
+script = ExtResource("1_66yfp")
+slot = 10
+id = -1
+name = "Apple"
+description = "A crisp red apple known for its refreshing taste and vitality-boosting properties."
+type = 0
+weight = 5.0
+stackable = true
+usable = true
+effects = {
+"HP": 30
+}

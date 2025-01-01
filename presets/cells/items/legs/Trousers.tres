@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://c848176yw5pfc"]
+
+[ext_resource type="Texture2D" uid="uid://cus02gdamc75t" path="res://data/graphics/items/legs/trousers.png" id="1_pmsey"]
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_ieq8h"]
+
+[resource]
+script = ExtResource("2_ieq8h")
+slot = 3
+id = -1
+name = "Trousers"
+description = "Classic trousers ornated with some fluffy fur."
+icon = ExtResource("1_pmsey")
+type = 0
+weight = 300.0
+stackable = false
+usable = false
+effects = {
+"HP": 30
+}

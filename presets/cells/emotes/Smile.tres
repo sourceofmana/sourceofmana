@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BaseCell" load_steps=3 format=3 uid="uid://crkbqpybsuf5k"]
 
 [ext_resource type="Texture2D" uid="uid://dqet6tg4kd201" path="res://data/graphics/emotes/smile.png" id="1_iaobf"]
-[ext_resource type="Script" path="res://sources/gui/cell/BaseCell.gd" id="2_m5drp"]
+[ext_resource type="Script" path="res://sources/cell/BaseCell.gd" id="2_m5drp"]
 
 [resource]
 script = ExtResource("2_m5drp")

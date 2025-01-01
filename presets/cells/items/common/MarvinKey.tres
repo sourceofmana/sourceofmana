@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=2 format=3 uid="uid://jvifo7cagr5n"]
+
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="1_x3n2t"]
+
+[resource]
+script = ExtResource("1_x3n2t")
+slot = -1
+id = -1
+name = "Marvin's Key"
+description = "A key that has been hidden a long time ago, seems to open a fancy door."
+type = 0
+weight = 15.0
+stackable = true
+usable = false
+effects = {}

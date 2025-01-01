@@ -1,6 +1,8 @@
 {
-	"0": {			"Path": "Apple" },
-	"1": {			"Path": "DorianKey" },
-	"2": {			"Path": "GabrielKey" },
-	"3": {			"Path": "MarvinKey" },
+	"0": {			"Path": "usable/Apple" },
+	"1": {			"Path": "common/DorianKey" },
+	"2": {			"Path": "common/GabrielKey" },
+	"3": {			"Path": "common/MarvinKey" },
+	"4": {			"Path": "chest/VNeckTee" },
+	"5": {			"Path": "legs/Trousers" },
 }

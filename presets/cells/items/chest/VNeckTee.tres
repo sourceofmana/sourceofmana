@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://bscog732as8ki"]
+
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="1_204gq"]
+[ext_resource type="Texture2D" uid="uid://7j2dhnhoqb5r" path="res://data/graphics/items/chest/vnecktee.png" id="1_wp2r3"]
+
+[resource]
+script = ExtResource("1_204gq")
+slot = 2
+id = -1
+name = "V-Neck Tee"
+description = "A thin, soft and warm shirt."
+icon = ExtResource("1_wp2r3")
+type = 0
+weight = 300.0
+stackable = false
+usable = false
+effects = {
+"HP": 30
+}
