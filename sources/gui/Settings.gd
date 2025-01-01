@@ -93,6 +93,8 @@ func apply_resolution(resolution : Vector2i):
 
 	var newSize : Vector2i = clamp(resolution, minScreenSize, windowSize)
 	var currentPos : Vector2i = GetVal("Render-WindowPos")
+	if currentPos == Vector2i(-1, -1):
+		currentPos = (windowSize - resolution) / 2
 	var newPosition : Vector2i = Vector2i(clampi(currentPos.x, 0, (windowSize - resolution).x), clampi(currentPos.y, 0, (windowSize - resolution).y))
 	DisplayServer.window_set_size(newSize)
 	set_windowPos(newPosition)
