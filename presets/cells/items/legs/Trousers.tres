@@ -1,11 +1,14 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://c848176yw5pfc"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=5 format=3 uid="uid://c848176yw5pfc"]
 
 [ext_resource type="Texture2D" uid="uid://cus02gdamc75t" path="res://data/graphics/items/legs/trousers.png" id="1_pmsey"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_ieq8h"]
+[ext_resource type="Texture2D" uid="uid://csdhial7vffyb" path="res://data/graphics/sprites/equipments/legs/trousers-male.png" id="3_4qmhy"]
+[ext_resource type="Texture2D" uid="uid://cxsg8ykd5ppg7" path="res://data/graphics/sprites/equipments/legs/trousers-female.png" id="4_jc85r"]
 
 [resource]
 script = ExtResource("2_ieq8h")
 slot = 3
+textures = Array[Texture2D]([ExtResource("3_4qmhy"), ExtResource("4_jc85r"), ExtResource("3_4qmhy")])
 id = -1
 name = "Trousers"
 description = "Classic trousers ornated with some fluffy fur."

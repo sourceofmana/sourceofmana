@@ -54,7 +54,8 @@ enum Slot
 	NONE = -1,
 	BODY = 0,
 	HAIR,
-	CHEST,
+	FIRST_EQUIPMENT,
+	CHEST = FIRST_EQUIPMENT,
 	LEGS,
 	FEET,
 	HANDS,
@@ -62,7 +63,8 @@ enum Slot
 	FACE,
 	WEAPON,
 	SHIELD,
-	COUNT
+	LAST_EQUIPMENT,
+	COUNT = LAST_EQUIPMENT
 }
 
 enum Attribute

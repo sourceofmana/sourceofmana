@@ -147,7 +147,8 @@ func ExportInventory() -> Dictionary:
 func Init(actorNode : Actor):
 	assert(actorNode != null, "Caller actor node should never be null")
 	actor = actorNode
-	for itemID in actor.data._equipments:
-		var cell : ItemCell = DB.ItemsDB[itemID]
-		AddItem(cell)
-		EquipItem(cell)
+	equipments.resize(ActorCommons.Slot.COUNT)
+	for item in actor.data._equipments:
+		if item and item is ItemCell:
+			AddItem(item)
+			EquipItem(item)

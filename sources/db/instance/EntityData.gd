@@ -21,6 +21,7 @@ class_name EntityData
 func _init():
 	_customTextures.resize(ActorCommons.Slot.COUNT)
 	_customShaders.resize(ActorCommons.Slot.COUNT)
+	_equipments.resize(ActorCommons.Slot.COUNT)
 
 static func Create(key : String, result : Dictionary) -> EntityData:
 	var entity : EntityData = EntityData.new()
@@ -35,7 +36,10 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 	if "Equipments" in result:
 		for itemName in result.Equipments:
 			var itemID : int = DB.GetCellHash(itemName)
-			entity._equipments.append(DB.GetItem(itemID))
+			if itemID != DB.UnknownHash:
+				var itemCell : ItemCell = DB.GetItem(itemID)
+				if itemCell and itemCell.slot != ActorCommons.Slot.NONE:
+					entity._equipments[itemCell.slot] = itemCell
 	if "Textures" in result:
 		for texture in result.Textures:
 			entity._customTextures[ActorCommons.GetSlotID(texture)] = result.Textures[texture]

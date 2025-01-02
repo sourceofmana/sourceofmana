@@ -5,7 +5,6 @@ class_name BaseCell
 @export var name : String						= "Unknown"
 @export var description : String				= ""
 @export var icon : Texture2D					= null
-@export var shader : Resource					= null
 @export var type : CellCommons.Type				= CellCommons.Type.ITEM
 @export var weight : float						= 1.0
 @export var stackable : bool					= false
@@ -15,6 +14,9 @@ class_name BaseCell
 signal used
 
 #
+func _init():
+	pass
+
 func Use():
 	if Network.Client and usable:
 		match type:

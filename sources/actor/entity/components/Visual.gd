@@ -5,6 +5,8 @@ class_name EntityVisual
 signal spriteOffsetUpdate
 
 #
+@onready var entity : Entity				= get_parent()
+
 var collision : CollisionShape2D			= null
 var animation : AnimationPlayer				= null
 var animationTree : AnimationTree			= null
@@ -67,18 +69,29 @@ func LoadData(data : EntityData):
 			for slot in ActorCommons.Slot.COUNT:
 				var slotName : String = ActorCommons.GetSlotName(slot)
 				var sprite : Sprite2D = preset.get_node_or_null(slotName)
+				if not sprite:
+					continue
 
-				if data._customTextures[slot]:
-					sprite = Sprite2D.new()
-					sprite.set_name(slotName)
-					preset.add_child.call_deferred(sprite)
+				if slot == ActorCommons.Slot.BODY:
+					pass
+				elif slot == ActorCommons.Slot.HAIR:
+					pass
+				elif slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_EQUIPMENT:
+					var slotTexture : Texture2D = null
+					var slotMaterial : Material = null
 
-				if sprite:
+					var cell : ItemCell = entity.inventory.equipments[slot] if entity.inventory else data._equipments[slot]
+					if cell != null:
+						slotTexture = cell.textures[entity.stat.gender]
+						slotMaterial = cell.shader
+
 					if data._customTextures[slot]:
-						sprite.texture = FileSystem.LoadGfx(data._customTextures[slot])
+						slotTexture = FileSystem.LoadGfx(data._customTextures[slot])
 					if data._customShaders[slot]:
-						sprite.material = FileSystem.LoadResource(data._customShaders[slot], false)
-					LoadSpriteSlot(slot, sprite)
+						slotMaterial = FileSystem.LoadResource(data._customShaders[slot], false)
+
+					sprite.set_texture(slotTexture)
+					sprite.set_material(slotMaterial)
 
 	ResetAnimationValue()
 
@@ -121,6 +134,7 @@ func GetPlayerOffset() -> int:
 	if sprites[ActorCommons.Slot.BODY]:
 		spriteOffset = int(sprites[ActorCommons.Slot.BODY].offset.y)
 	return spriteOffset
+
 #
 func Init(data : EntityData):
 	Callback.PlugCallback(get_parent().stat.entity_stats_updated, self.UpdateScale)
