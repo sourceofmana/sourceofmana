@@ -18,6 +18,8 @@ class_name EntityData
 @export var _dropsProba : Dictionary			= {}
 @export var _spawns : Dictionary				= {}
 
+const hashedStats : PackedStringArray			= ["race", "skintone", "hairstyle", "haircolor"]
+
 func _init():
 	_customTextures.resize(ActorCommons.Slot.COUNT)
 	_customShaders.resize(ActorCommons.Slot.COUNT)
@@ -52,7 +54,12 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 		entity._behaviour = AICommons.GetBehaviourFlags(result.Behaviour)
 	if "Stat" in result:
 		for statName in result.Stat:
-			entity._stats[statName] = result.Stat[statName]
+			if statName in hashedStats:
+				entity._stats[statName] = DB.GetCellHash(result.Stat[statName])
+			elif statName == "gender":
+				entity._stats[statName] = ActorCommons.GetGenderID(result.Stat[statName])
+			else:
+				entity._stats[statName] = result.Stat[statName]
 	if "SkillSet" in result:
 		for skillName in result.SkillSet:
 			var skillID : int = DB.GetCellHash(skillName)

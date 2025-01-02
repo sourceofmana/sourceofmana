@@ -184,9 +184,12 @@ func DisplaySailContext():
 	Launcher.GUI.choiceContext.FadeIn(true)
 
 #
-func RefreshVisibleNodeOffset(offset : int):
-	visibleNode.position.y = offset - ActorCommons.interactionDisplayOffset
-	visualOffset = clamp(-offset, 20, 256)
+func RefreshVisibleNodeOffset():
+	if entity.visual:
+		var offset : int = entity.visual.GetPlayerOffset()
+
+		visibleNode.position.y = offset - ActorCommons.interactionDisplayOffset
+		visualOffset = clamp(-offset, 20, 256)
 
 #
 func _physics_process(delta):
@@ -204,4 +207,5 @@ func Init(data : EntityData):
 		nameLabel.set_text(entity.nick)
 		nameLabel.set_visible(displayName)
 	if entity.visual:
-		RefreshVisibleNodeOffset(entity.visual.GetPlayerOffset())
+		entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
+		RefreshVisibleNodeOffset()

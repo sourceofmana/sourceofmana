@@ -2,7 +2,6 @@ extends Node
 class_name RaceData
 
 @export var _name : String				= "Unknown"
-@export var _preset : String			= ""
 @export var _malePath : String			= ""
 @export var _femalePath : String		= ""
 @export var _nonbinaryPath : String		= ""
@@ -11,7 +10,6 @@ class_name RaceData
 static func Create(key : String, result : Dictionary) -> RaceData:
 	var data : RaceData = RaceData.new()
 	data._name = key
-	data._preset = result.Preset
 	if "Male" in result:
 		data._malePath = result.Male
 	if "Female" in result:

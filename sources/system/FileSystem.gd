@@ -201,6 +201,11 @@ static func LoadCell(path : String) -> BaseCell:
 	var fullPath : String = path
 	return LoadResource(fullPath, false)
 
+# Palette
+static func LoadPalette(path : String) -> Material:
+	var fullPath : String = Path.PalettesPst + path
+	return LoadResource(fullPath, false)
+
 # Generic texture loading
 static func LoadGfx(path : String) -> Resource:
 	var fullPath : String = Path.GfxRsc + path
