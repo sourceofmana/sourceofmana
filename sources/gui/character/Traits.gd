@@ -23,14 +23,17 @@ extends PanelContainer
 
 @onready var hairstylesCount : int			= DB.HairstylesDB.size()
 @onready var haircolorsCount : int			= DB.HaircolorsDB.size()
-@onready var raceCount : int			= DB.RacesDB.size()
+@onready var raceCount : int				= DB.RacesDB.size()
 var skintoneCount : int						= 0
 
 var hairstyleValue : int					= 0
 var haircolorValue : int					= 0
 var genderValue : int						= 0
-var raceValue : int					= 0
+var raceValue : int							= 0
 var skintoneValue : int						= 0
+
+signal bodyUpdate
+signal hairUpdate
 
 #
 func GetValues():
@@ -54,6 +57,7 @@ func RefreshHairstyle():
 	var hairstyles : Array = DB.HairstylesDB.keys()
 	if hairstyleValue >= 0 and hairstyleValue < hairstylesCount:
 		hairstyleLabel.set_text(DB.GetHairstyle(hairstyles[hairstyleValue])._name)
+		hairUpdate.emit()
 
 func _on_hairstyle_prev_button():
 	hairstyleValue = hairstyleValue - 1 if hairstyleValue > 0 else hairstylesCount - 1
@@ -68,6 +72,7 @@ func RefreshHaircolor():
 	var haircolors : Array = DB.HaircolorsDB.keys()
 	if haircolorValue >= 0 and haircolorValue < haircolorsCount:
 		haircolorLabel.set_text(DB.GetHaircolor(haircolors[haircolorValue])._name)
+		hairUpdate.emit()
 
 func _on_haircolor_prev_button():
 	haircolorValue = haircolorValue - 1 if haircolorValue > 0 else haircolorsCount - 1
@@ -80,6 +85,7 @@ func _on_haircolor_next_button():
 # Gender
 func RefreshGender():
 	genderLabel.set_text(ActorCommons.GetGenderName(genderValue))
+	bodyUpdate.emit()
 
 func _on_gender_prev_button():
 	genderValue = genderValue - 1 if genderValue > 0 else ActorCommons.Gender.COUNT - 1
@@ -96,6 +102,7 @@ func RefreshRace():
 		var data : RaceData = DB.GetRace(races[raceValue])
 		raceLabel.set_text(data._name)
 		skintoneCount = data._skins.size()
+		bodyUpdate.emit()
 
 func _on_race_prev_button():
 	raceValue = raceValue - 1 if raceValue > 0 else raceCount - 1
@@ -114,6 +121,7 @@ func RefreshSkintone():
 		var skinsKeys : Array = skins.keys()
 		if skintoneValue >= 0 and skintoneValue < skinsKeys.size():
 			skintoneLabel.set_text(skins[skinsKeys[skintoneValue]]._name)
+			bodyUpdate.emit()
 
 func _on_skintone_prev_button():
 	skintoneValue = skintoneValue - 1 if skintoneValue > 0 else skintoneCount - 1
@@ -137,5 +145,6 @@ func Randomize():
 	RefreshSkintone()
 
 #
-func _ready():
-	Randomize()
+func _on_visibility_changed():
+	if visible:
+		Randomize()

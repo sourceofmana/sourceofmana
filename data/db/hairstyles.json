@@ -1,6 +1,6 @@
 {
-	"Bald": "bald.png",
-	"Bun": "bun.png",
-	"Center Parting": "center-parting.png",
-	"Emo": "emo.png",
+	"Bald": "sprites/hairstyles/bald.png",
+	"Bun": "sprites/hairstyles/bun.png",
+	"Center Parting": "sprites/hairstyles/center-parting.png",
+	"Emo": "sprites/hairstyles/emo.png",
 }

@@ -209,6 +209,27 @@ func EnableCharacterCreator(enable : bool):
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "New Player", EnableCharacterCreator.bind(true))
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", Leave)
 
+func UpdateCharacterCreatorBody():
+	if isCharacterCreatorEnabled and charactersNode[ActorCommons.MaxCharacterCount]:
+		var races : Array = DB.RacesDB.keys()
+		var race : RaceData = DB.GetRace(races[traitsPanel.raceValue])
+		var skins : Dictionary = race._skins if race else {}
+		var skinsKeys : Array = skins.keys()
+		charactersNode[ActorCommons.MaxCharacterCount].stat.race = races[traitsPanel.raceValue]
+		charactersNode[ActorCommons.MaxCharacterCount].stat.skintone = skinsKeys[traitsPanel.skintoneValue]
+		charactersNode[ActorCommons.MaxCharacterCount].stat.gender = traitsPanel.genderValue
+		if charactersNode[ActorCommons.MaxCharacterCount].visual:
+			charactersNode[ActorCommons.MaxCharacterCount].visual.SetBody()
+
+func UpdateCharacterCreatorHair():
+	if isCharacterCreatorEnabled and charactersNode[ActorCommons.MaxCharacterCount]:
+		var hairstyles : Array = DB.HairstylesDB.keys()
+		var haircolors : Array = DB.HaircolorsDB.keys()
+		charactersNode[ActorCommons.MaxCharacterCount].stat.hairstyle = hairstyles[traitsPanel.hairstyleValue]
+		charactersNode[ActorCommons.MaxCharacterCount].stat.haircolor = haircolors[traitsPanel.haircolorValue]
+		if charactersNode[ActorCommons.MaxCharacterCount].visual:
+			charactersNode[ActorCommons.MaxCharacterCount].visual.SetHair()
+
 func RefreshOnce():
 	if isCharacterCreatorEnabled:
 		return
@@ -244,6 +265,8 @@ func _ready():
 	assert(charactersNode.size() == ActorCommons.CharacterScreenLocations.size(), "Character screen locations count mismatch with the max character count")
 	statsPanel.previousButton.pressed.connect(ChangeSelectedCharacter.bind(false))
 	statsPanel.nextButton.pressed.connect(ChangeSelectedCharacter.bind(true))
+	traitsPanel.bodyUpdate.connect(UpdateCharacterCreatorBody)
+	traitsPanel.hairUpdate.connect(UpdateCharacterCreatorHair)
 
 func _on_visibility_changed():
 	if not visible:

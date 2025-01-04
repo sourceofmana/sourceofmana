@@ -29,8 +29,7 @@ func LoadSpriteSlot(slot : ActorCommons.Slot, sprite : Sprite2D):
 			sprites[slot].queue_free()
 			sprites[slot] = null
 
-		if sprite:
-			sprites[slot] = sprite
+		sprites[slot] = sprite
 
 func ResetData():
 	for child in get_children():
@@ -126,7 +125,15 @@ func SetHair():
 	var slotMaterial : Material = null
 
 	if not entity.stat.IsMorph():
-		pass
+		var hairstyleData : TraitData = DB.GetHairstyle(entity.stat.hairstyle)
+		if hairstyleData == null:
+			return
+		var haircolorData : TraitData = DB.GetHaircolor(entity.stat.haircolor)
+		if haircolorData == null:
+			return
+
+		slotTexture = FileSystem.LoadGfx(hairstyleData._path)
+		slotMaterial = FileSystem.LoadPalette(haircolorData._path)
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
