@@ -24,11 +24,8 @@ func Init(_type : ActorCommons.Type, _data : EntityData, _nick : String = "", is
 	Callback.PlugCallback(ready, SetData)
 
 	if type == ActorCommons.Type.PLAYER and isManaged:
-		inventory = ActorInventory.new()
+		inventory = ActorInventory.new(self)
 		progress = ActorProgress.new()
-
-	if inventory:
-		inventory.Init(self)
 
 	if stat:
 		stat.Init(self, data)

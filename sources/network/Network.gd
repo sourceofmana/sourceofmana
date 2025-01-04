@@ -224,9 +224,25 @@ func ItemAdded(itemID : int, count : int, rpcID : int = NetworkCommons.RidSingle
 func ItemRemoved(itemID : int, count : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("ItemRemoved", [itemID, count], rpcID)
 
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func ItemEquiped(itemID : int, state : bool, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("ItemEquiped", [itemID, state], rpcID)
+
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("UseItem", [itemID], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
+func DropItem(itemID : int, itemCount : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallServer("DropItem", [itemID, itemCount], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
+func EquipItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallServer("EquipItem", [itemID], rpcID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
+func UnequipItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallServer("UnequipItem", [itemID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):

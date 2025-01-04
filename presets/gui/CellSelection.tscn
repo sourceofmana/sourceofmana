@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://j3vwvepvul45"]
+
+[ext_resource type="Texture2D" uid="uid://bxdx3ngd5hqe3" path="res://data/graphics/gui/inventory/selection.png" id="1_yl5of"]
+
+[node name="TextureRect" type="TextureRect"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -19.0
+offset_right = 19.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_yl5of")
+stretch_mode = 2

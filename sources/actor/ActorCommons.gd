@@ -293,5 +293,7 @@ const DefaultAttributes : Dictionary = {
 	"concentration": 0,
 }
 static var DefaultInventory : Dictionary = {
-	"Apple".hash(): 5
+	"Apple".hash(): 5,
+	"Trousers".hash(): 1,
+	"V-Neck Tee".hash(): 1,
 }

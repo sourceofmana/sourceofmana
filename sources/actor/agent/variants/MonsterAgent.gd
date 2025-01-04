@@ -10,13 +10,13 @@ func Killed():
 
 	for item in inventory.items:
 		if item and item.cell and item.cell.id in data._drops:
-			WorldDrop.PushDrop(item, self)
+			inventory.DropItem(item.cell, item.count)
 
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(self)
 	if inst and inst.timers:
 		Callback.SelfDestructTimer(inst.timers, ActorCommons.DeathDelay, WorldAgent.RemoveAgent, [self])
 
 func _ready():
-	inventory = ActorInventory.new()
+	inventory = ActorInventory.new(self)
 	super._ready()
 	AddSkill(DB.SkillsDB[DB.GetCellHash(SkillCommons.SkillMeleeName)], 1.0)

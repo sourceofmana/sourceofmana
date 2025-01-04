@@ -136,6 +136,20 @@ func ItemRemoved(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSin
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
 
+func ItemEquiped(itemID : int, state : bool, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player and DB.ItemsDB.has(itemID):
+		var cell : ItemCell = DB.ItemsDB[itemID]
+		if cell:
+			if state:
+				Launcher.Player.inventory.EquipItem(cell)
+			else:
+				Launcher.Player.inventory.UnequipItem(cell)
+
+			Launcher.Player.visual.SetEquipment(cell.slot)
+			if Launcher.GUI and Launcher.GUI.inventoryWindow:
+				Launcher.GUI.inventoryWindow.RefreshInventory()
+			cell.used.emit()
+
 func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and Launcher.Player.inventory:
 		Launcher.Player.inventory.ImportInventory(cells)

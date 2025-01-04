@@ -9,6 +9,7 @@ const WarnTextColor : Color							= Color("F0846A")
 
 const ContextAction : PackedScene					= preload("res://presets/gui/contexts/ContextAction.tscn")
 const CellTilePreset : PackedScene					= preload("res://presets/gui/CellTile.tscn")
+const CellSelectionPreset : PackedScene				= preload("res://presets/gui/CellSelection.tscn")
 
 const DelayPickUpNotification : float				= 5.0 * 1000.0
 

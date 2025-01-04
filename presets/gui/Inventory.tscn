@@ -32,16 +32,16 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_custom_anchors = true
 
-[node name="Weight" type="HBoxContainer" parent="Margin/VBoxContainer"]
+[node name="Bars" type="HBoxContainer" parent="Margin/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Text" type="Label" parent="Margin/VBoxContainer/Weight"]
+[node name="WeightLabel" type="Label" parent="Margin/VBoxContainer/Bars"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Weight"
 
-[node name="BgTex" type="NinePatchRect" parent="Margin/VBoxContainer/Weight"]
+[node name="WeightTex" type="NinePatchRect" parent="Margin/VBoxContainer/Bars"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -51,7 +51,7 @@ patch_margin_top = 2
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="Weight" parent="Margin/VBoxContainer/Weight/BgTex" instance=ExtResource("4_pr2vo")]
+[node name="ProgressBar" parent="Margin/VBoxContainer/Bars/WeightTex" instance=ExtResource("4_pr2vo")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,13 +69,53 @@ precisionDivider = 100
 numberAfterComma = 2
 metadata/_edit_layout_mode = 1
 
+[node name="SlotLabel" type="Label" parent="Margin/VBoxContainer/Bars"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Slot"
+
+[node name="SlotTex" type="NinePatchRect" parent="Margin/VBoxContainer/Bars"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_3s8jh")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="ProgressBar" parent="Margin/VBoxContainer/Bars/SlotTex" instance=ExtResource("4_pr2vo")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+textureProgress = null
+labelColor = Color(0.32549, 0.305882, 0.290196, 1)
+labelOffset = Vector2(0, -4)
+delayToFillSec = 2.0
+metadata/_edit_layout_mode = 1
+
+[node name="WeightSeparator" type="HSeparator" parent="Margin/VBoxContainer"]
+layout_mode = 2
+
 [node name="Container" type="ScrollContainer" parent="Margin/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
 
-[node name="Grid" type="GridContainer" parent="Margin/VBoxContainer/Container"]
-clip_contents = true
+[node name="Margin" type="MarginContainer" parent="Margin/VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+
+[node name="Grid" type="GridContainer" parent="Margin/VBoxContainer/Container/Margin"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -84,5 +124,50 @@ theme_override_constants/v_separation = 4
 columns = 4
 script = ExtResource("5_p6o47")
 
+[node name="ButtonsSeparator" type="HSeparator" parent="Margin/VBoxContainer"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Margin/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Drop" type="Button" parent="Margin/VBoxContainer/Buttons"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"LargeButton"
+text = "Drop"
+
+[node name="Control" type="Control" parent="Margin/VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="Unequip" type="Button" parent="Margin/VBoxContainer/Buttons"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"LargeButton"
+text = "Unequip"
+
+[node name="Equip" type="Button" parent="Margin/VBoxContainer/Buttons"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"LargeButton"
+text = "Equip"
+
+[node name="Use" type="Button" parent="Margin/VBoxContainer/Buttons"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"LargeButton"
+text = "Use"
+
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
-[connection signal="resized" from="Margin/VBoxContainer/Container/Grid" to="Margin/VBoxContainer/Container/Grid" method="_on_panel_resized"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="resized" from="Margin/VBoxContainer/Container/Margin/Grid" to="Margin/VBoxContainer/Container/Margin/Grid" method="_on_panel_resized"]
+[connection signal="pressed" from="Margin/VBoxContainer/Buttons/Drop" to="." method="_on_drop_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/Buttons/Unequip" to="." method="_on_unequip_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/Buttons/Equip" to="." method="_on_equip_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/Buttons/Use" to="." method="_on_use_pressed"]

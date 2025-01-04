@@ -99,30 +99,37 @@ func UseItem(cell : ItemCell):
 		if cell.effects.has(CellCommons.effectStamina):
 			actor.stat.SetStamina(cell.effects[CellCommons.effectStamina])
 
+func DropItem(cell : ItemCell, count : int):
+	if RemoveItem(cell, count):
+		var item : Item = Item.new(cell, count)
+		WorldDrop.PushDrop(item, actor)
+
 func EquipItem(cell : ItemCell):
 	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and actor:
 		equipments[cell.slot] = cell
 		actor.stat.RefreshEntityStats()
+		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+			Network.ItemEquiped(cell.id, true, actor.rpcRID)
 
 func UnequipItem(cell : ItemCell):
 	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and actor:
 		equipments[cell.slot] = null
 		actor.stat.RefreshEntityStats()
+		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+			Network.ItemEquiped(cell.id, false, actor.rpcRID)
 
 #
 func AddItem(cell : ItemCell, count : int = 1) -> bool:
 	if PushItem(cell, count):
-		if actor is PlayerAgent:
-			if actor.rpcRID != NetworkCommons.RidUnknown:
-				Network.ItemAdded(cell.id, count, actor.rpcRID)
+		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+			Network.ItemAdded(cell.id, count, actor.rpcRID)
 		return true
 	return false
 
 func RemoveItem(cell : ItemCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
-		if actor is PlayerAgent:
-			if actor.rpcRID != NetworkCommons.RidUnknown:
-				Network.ItemRemoved(cell.id, count, actor.rpcRID)
+		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+			Network.ItemRemoved(cell.id, count, actor.rpcRID)
 		return true
 	return false
 
@@ -144,7 +151,7 @@ func ExportInventory() -> Dictionary:
 	return data
 
 #
-func Init(actorNode : Actor):
+func _init(actorNode : Actor):
 	assert(actorNode != null, "Caller actor node should never be null")
 	actor = actorNode
 	equipments.resize(ActorCommons.Slot.COUNT)

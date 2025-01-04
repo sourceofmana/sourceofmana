@@ -6,11 +6,14 @@ class_name CellTile
 @onready var countLabel : Label			= $Count
 @onready var cooldownLabel : Label		= $Cooldown
 var cell : BaseCell						= null
+var selection : TextureRect				= null
 var cooldownTimer : float				= -INF
 var shineTimer : float					= -INF
 var count : int							= 0
 
 const modulateDisable : float			= 0.5
+
+signal selected
 
 # Private
 func SetToolTip():
@@ -25,7 +28,9 @@ func SetToolTip():
 
 func UpdateCountLabel():
 	if countLabel:
-		if count >= 1000:
+		if cell and cell is ItemCell and cell.slot != ActorCommons.Slot.NONE and Launcher.Player.inventory.equipments[cell.slot] == cell:
+			countLabel.text = "~"
+		elif count >= 1000:
 			countLabel.text = "999+"
 		elif count <= 1:
 			countLabel.text = ""
@@ -58,6 +63,17 @@ func UnassignData(sourceCell : BaseCell):
 	if sourceCell:
 		if sourceCell.used.is_connected(Used):
 			sourceCell.used.disconnect(Used)
+
+func AddSelection():
+	if not selection:
+		selection = UICommons.CellSelectionPreset.instantiate()
+		add_child.call_deferred(selection)
+
+func RemoveSelection():
+	if selection:
+		remove_child.call_deferred(selection)
+		selection.queue_free()
+		selection = null
 
 static func RefreshShortcuts(baseCell : BaseCell, newCount : int = -1):
 	if baseCell == null or not Launcher.Player or not Launcher.Player.inventory:
@@ -110,8 +126,11 @@ func _drop_data(_at_position : Vector2, data):
 # Default
 func _gui_input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
-			UseCell()
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.double_click:
+				UseCell()
+			elif event.pressed:
+				selected.emit(self)
 
 func _process(delta):
 	if cooldownTimer != -INF:

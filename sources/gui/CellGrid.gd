@@ -10,11 +10,12 @@ func GetTile(idx : int) -> CellTile:
 
 #
 func _on_panel_resized():
-	if get_child_count() > 0:
-		var tileSize : int = get_child(0).size.x + get("theme_override_constants/h_separation")
+	var firstTile : CellTile = GetTile(0)
+	var tileSize : int = firstTile.size.x + get("theme_override_constants/h_separation") if firstTile else 0
+	if tileSize > 0:
 		columns = max(1, int(get_parent().get_size().x / tileSize))
 	else:
-		columns = 100
+		columns = maxCount
 
 func _ready():
 	tiles.resize(maxCount)
@@ -24,4 +25,4 @@ func _ready():
 		var tile : CellTile = UICommons.CellTilePreset.instantiate()
 		tile.AssignData(null, 0)
 		tiles[tileIdx] = tile
-		add_child(tile)
+		add_child.call_deferred(tile)
