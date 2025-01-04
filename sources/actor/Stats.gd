@@ -1,7 +1,7 @@
 extends Object
 class_name ActorStats
 
-# Active Stats, can be initialized through a dictionary from a SQL query or entities.json
+# Public and private stats, can be initialized through a dictionary from a SQL query or entities.json
 var level : int							= 1
 var experience : int					= 0
 var gp : int							= 0
@@ -33,16 +33,16 @@ var current : BaseStats					= BaseStats.new()
 var actor : Actor						= null
 
 # Signals
-signal active_stats_updated
+signal vital_stats_updated
 signal attributes_updated
 signal entity_stats_updated
 
 #
-func RefreshActiveStats():
+func RefreshVitalStats():
 	health					= Formula.ClampHealth(self)
 	stamina					= Formula.ClampStamina(self)
 	mana					= Formula.ClampMana(self)
-	active_stats_updated.emit()
+	vital_stats_updated.emit()
 
 func RefreshRegenStats():
 	current.regenHealth		= Formula.GetRegenHealth(self)
@@ -65,7 +65,7 @@ func RefreshEntityStats():
 	current.weightCapacity	= Formula.GetWeightCapacity(self)
 	entity_stats_updated.emit()
 
-	RefreshActiveStats()
+	RefreshVitalStats()
 	RefreshRegenStats()
 
 func RefreshAttributes():
@@ -106,7 +106,7 @@ func Init(actorNode : Actor, data : EntityData):
 
 	SetStats(stats)
 	SetEntityStats(stats)
-	RefreshActiveStats()
+	RefreshVitalStats()
 
 func FillRandomAttributes():
 	var maxPoints : int			= Formula.GetMaxAttributePoints(level)

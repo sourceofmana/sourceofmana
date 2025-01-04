@@ -84,27 +84,47 @@ func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = Ne
 			entity.stat.Morph(morphData)
 			entity.SetVisual(morphData, morphed)
 
-func UpdateActiveStats(ridAgent : int, level : int, experience : int, gp : int, health : int, mana : int, stamina : int, weight : float, shape : String, spirit : String, currentShape : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdatePrivateStats(ridAgent : int, experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : String, spirit : String, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Map:
+		var entity : Entity = Entities.Get(ridAgent)
+		if entity and entity.get_parent() and entity.stat:
+			entity.stat.experience		= experience
+			entity.stat.gp				= gp
+			entity.stat.mana			= mana
+			entity.stat.stamina			= stamina
+			entity.stat.karma			= karma
+			entity.stat.weight			= weight
+			entity.stat.shape			= shape
+			entity.stat.spirit			= spirit
+
+func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
 		if entity and entity.get_parent() and entity.stat:
 			var levelUp : bool = entity.stat.level != level
 			entity.stat.level			= level
-			entity.stat.experience		= experience
-			entity.stat.gp				= gp
 			entity.stat.health			= health
-			entity.stat.mana			= mana
-			entity.stat.stamina			= stamina
-			entity.stat.weight			= weight
-			entity.stat.shape		= shape
-			entity.stat.spirit		= spirit
 			entity.stat.currentShape	= currentShape
+
+			var newHair : bool = entity.stat.hairstyle != hairstyle or entity.stat.haircolor != haircolor
+			entity.stat.hairstyle		= hairstyle
+			entity.stat.haircolor		= haircolor
+			if newHair:
+				entity.visual.SetHair()
+
+			var newBody : bool = entity.stat.gender != gender or entity.stat.race != race or entity.stat.skintone != skintone
+			entity.stat.gender			= gender
+			entity.stat.race			= race
+			entity.stat.skintone		= skintone
+			if newBody:
+				entity.visual.SetBody()
+
 			if levelUp:
 				if entity == Launcher.Player:
 					PushNotification("Level %d reached.\nFeel the mana power growing inside you!" % (level))
 				entity.stat.RefreshAttributes()
 			else:
-				entity.stat.RefreshActiveStats()
+				entity.stat.RefreshVitalStats()
 
 func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:

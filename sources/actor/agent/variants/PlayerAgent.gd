@@ -17,26 +17,42 @@ func UpdateLastStats():
 		return
 
 	if lastStat.level != stat.level or \
-	lastStat.experience != stat.experience or \
-	lastStat.gp != stat.gp or \
 	lastStat.health != stat.health or \
+	lastStat.hairstyle != stat.hairstyle or \
+	lastStat.haircolor != stat.haircolor or \
+	lastStat.gender != stat.gender or \
+	lastStat.race != stat.race or \
+	lastStat.skintone != stat.skintone or \
+	lastStat.currentShape != stat.currentShape:
+		Network.Server.NotifyNeighbours(self, "UpdatePublicStats", [stat.level, stat.health, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
+		lastStat.level				= stat.level
+		lastStat.health				= stat.health
+		lastStat.hairstyle			= stat.hairstyle
+		lastStat.haircolor			= stat.haircolor
+		lastStat.gender				= stat.gender
+		lastStat.race				= stat.race
+		lastStat.skintone			= stat.skintone
+		lastStat.currentShape		= stat.currentShape
+
+	if lastStat.experience != stat.experience or \
+	lastStat.gp != stat.gp or \
 	lastStat.mana != stat.mana or \
 	lastStat.stamina != stat.stamina or \
+	lastStat.karma != stat.karma or \
 	lastStat.weight != stat.weight or \
 	lastStat.shape != stat.shape or \
-	lastStat.spirit != stat.spirit or \
-	lastStat.currentShape != stat.currentShape:
-		Network.UpdateActiveStats(get_rid().get_id(), stat.level, stat.experience, stat.gp, stat.health, stat.mana, stat.stamina, stat.weight, stat.shape, stat.spirit, stat.currentShape, rpcRID)
+	lastStat.spirit != stat.spirit:
+		Network.UpdatePrivateStats(get_rid().get_id(), stat.experience, stat.gp, stat.mana, stat.stamina, stat.karma, stat.weight, stat.shape, stat.spirit, rpcRID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 		lastStat.gp					= stat.gp
 		lastStat.health				= stat.health
 		lastStat.mana				= stat.mana
 		lastStat.stamina			= stat.stamina
+		lastStat.karma				= stat.karma
 		lastStat.weight				= stat.weight
-		lastStat.shape		= stat.shape
-		lastStat.spirit		= stat.spirit
-		lastStat.currentShape		= stat.currentShape
+		lastStat.shape				= stat.shape
+		lastStat.spirit				= stat.spirit
 
 	if lastStat.strength != stat.strength or \
 	lastStat.vitality != stat.vitality or \

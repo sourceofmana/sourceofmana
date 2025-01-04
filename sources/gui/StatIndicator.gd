@@ -14,7 +14,7 @@ func Refresh():
 		expStat.SetStat(Launcher.Player.stat.experience, Experience.GetNeededExperienceForNextLevel(Launcher.Player.stat.level))
 
 func Init():
-	Callback.PlugCallback(Launcher.Player.stat.active_stats_updated, Refresh)
+	Callback.PlugCallback(Launcher.Player.stat.vital_stats_updated, Refresh)
 	Refresh()
 
 #

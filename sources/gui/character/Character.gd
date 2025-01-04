@@ -81,6 +81,12 @@ func AddCharacter(info : Dictionary, slotID : int = ActorCommons.InvalidCharacte
 		assert(false, "Could not create character preview")
 		return
 
+	entity.stat.hairstyle	= info["hairstyle"]
+	entity.stat.haircolor	= info["haircolor"]
+	entity.stat.gender		= info["gender"]
+	entity.stat.race		= info["race"]
+	entity.stat.skintone	= info["skintone"]
+
 	RemoveCharacter(availableSlot)
 	charactersInfo[availableSlot] = info
 	charactersNode[availableSlot] = entity
@@ -259,10 +265,9 @@ func Close():
 
 #
 func _ready():
+	assert(ActorCommons.MaxCharacterCount + 1 == ActorCommons.CharacterScreenLocations.size(), "Character screen locations count mismatch with the max character count")
 	charactersInfo.resize(ActorCommons.MaxCharacterCount + 1)
 	charactersNode.resize(ActorCommons.MaxCharacterCount + 1)
-	assert(charactersInfo.size() == ActorCommons.CharacterScreenLocations.size(), "Character screen locations count mismatch with the max character count")
-	assert(charactersNode.size() == ActorCommons.CharacterScreenLocations.size(), "Character screen locations count mismatch with the max character count")
 	statsPanel.previousButton.pressed.connect(ChangeSelectedCharacter.bind(false))
 	statsPanel.nextButton.pressed.connect(ChangeSelectedCharacter.bind(true))
 	traitsPanel.bodyUpdate.connect(UpdateCharacterCreatorBody)

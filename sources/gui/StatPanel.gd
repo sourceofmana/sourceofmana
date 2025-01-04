@@ -52,11 +52,11 @@ func IncreaseConcentration():
 
 #
 func Init(entity : Entity):
-	Callback.PlugCallback(entity.stat.active_stats_updated, RefreshActiveStats.bind(entity))
+	Callback.PlugCallback(entity.stat.vital_stats_updated, RefreshVitalStats.bind(entity))
 	Callback.PlugCallback(entity.stat.attributes_updated, RefreshAttributes.bind(entity))
 	Callback.PlugCallback(entity.stat.entity_stats_updated, RefreshEntityStats.bind(entity))
 
-	RefreshActiveStats(entity)
+	RefreshVitalStats(entity)
 	RefreshAttributes(entity)
 	RefreshEntityStats(entity)
 
@@ -71,7 +71,7 @@ func RefreshGender(entity : Entity):
 			texture = ActorCommons.GenderNonBinaryTexture
 	tGender.set_texture(texture)
 
-func RefreshActiveStats(entity : Entity):
+func RefreshVitalStats(entity : Entity):
 	if not entity:
 		pass
 

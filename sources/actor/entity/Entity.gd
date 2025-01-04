@@ -139,6 +139,6 @@ func _ready():
 	if Launcher.Player == self:
 		Launcher.Map.MapUnloaded.connect(ClearTarget)
 	else:
-		stat.active_stats_updated.connect(interactive.DisplayHP)
+		stat.vital_stats_updated.connect(interactive.DisplayHP)
 	entity_died.connect(interactive.HideHP)
 	entity_died.connect(interactive.DisplayTarget.bind(ActorCommons.Target.NONE))
