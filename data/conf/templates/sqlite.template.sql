@@ -29,7 +29,7 @@ CREATE TABLE trait (
     hairstyle            INTEGER,
     haircolor            INTEGER,
     race                 INTEGER,
-    skin                 INTEGER,
+    skintone             INTEGER,
     gender               INTEGER,
     shape                TEXT,
     spirit               TEXT,
