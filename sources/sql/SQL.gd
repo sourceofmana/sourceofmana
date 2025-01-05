@@ -135,7 +135,7 @@ func UpdateTrait(charID : int, stats : ActorStats) -> bool:
 		"hairstyle" = stats.hairstyle,
 		"haircolor" = stats.haircolor,
 		"race" = stats.race,
-		"skin" = stats.skin,
+		"skintone" = stats.skintone,
 		"gender" = stats.gender,
 		"shape" = stats.currentShape,
 		"spirit" = stats.spirit

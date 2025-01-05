@@ -60,6 +60,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
 				Network.AddEntity(neighbour.get_rid().get_id(), neighbour.GetEntityType(), neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, agent.rpcRID)
+				Network.UpdatePublicStats(neighbour.get_rid().get_id(), neighbour.stat.level, neighbour.stat.health, neighbour.stat.hairstyle, neighbour.stat.haircolor, neighbour.stat.gender, neighbour.stat.race, neighbour.stat.skintone, neighbour.stat.currentShape, agent.rpcRID)
 
 	Network.Server.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
 

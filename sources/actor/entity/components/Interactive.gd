@@ -133,7 +133,7 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			newLabel.SetValue(emitter, value, alteration)
 			Launcher.Map.fringeLayer.add_child(newLabel)
 			target.stat.health += value if alteration == ActorCommons.Alteration.HEAL else -value
-			target.stat.RefreshVitalStats()
+			target.stat.RefreshVitalhStats()
 
 #
 func DisplaySpeech(speech : String):

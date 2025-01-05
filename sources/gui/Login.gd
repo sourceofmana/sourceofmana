@@ -32,6 +32,8 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 	match err:
 		NetworkCommons.AuthError.ERR_OK:
 			warn = ""
+		NetworkCommons.AuthError.ERR_DUPLICATE_CONNECTION:
+			warn = "Another connection happened with the same login."
 		NetworkCommons.AuthError.ERR_AUTH:
 			warn = "Invalid account name or password."
 		NetworkCommons.AuthError.ERR_PASSWORD_VALID:

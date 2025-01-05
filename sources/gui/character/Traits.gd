@@ -48,7 +48,7 @@ func GetValues():
 		"hairstyle" = hairstyles[hairstyleValue],
 		"haircolor" = haircolors[haircolorValue],
 		"race" = races[raceValue],
-		"skin" = skinsKeys[skintoneValue],
+		"skintone" = skinsKeys[skintoneValue],
 		"gender" = genderValue
 	}
 
@@ -145,6 +145,5 @@ func Randomize():
 	RefreshSkintone()
 
 #
-func _on_visibility_changed():
-	if visible:
-		Randomize()
+func _ready():
+	Randomize()

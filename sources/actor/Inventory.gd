@@ -105,18 +105,18 @@ func DropItem(cell : ItemCell, count : int):
 		WorldDrop.PushDrop(item, actor)
 
 func EquipItem(cell : ItemCell):
-	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and actor:
+	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipments[cell.slot] != cell and actor:
 		equipments[cell.slot] = cell
 		actor.stat.RefreshEntityStats()
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			Network.ItemEquiped(cell.id, true, actor.rpcRID)
+			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, true])
 
 func UnequipItem(cell : ItemCell):
-	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and actor:
+	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipments[cell.slot] != null and actor:
 		equipments[cell.slot] = null
 		actor.stat.RefreshEntityStats()
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			Network.ItemEquiped(cell.id, false, actor.rpcRID)
+			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, false])
 
 #
 func AddItem(cell : ItemCell, count : int = 1) -> bool:

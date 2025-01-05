@@ -61,6 +61,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Attributes" type="PanelContainer" parent="Display"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PanelSideLeft"
@@ -219,6 +220,7 @@ layout_mode = 2
 text = "+"
 
 [node name="Stats" type="PanelContainer" parent="Display"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PanelSideLeft"
@@ -302,6 +304,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Traits" type="PanelContainer" parent="Display"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PanelSideRight"
@@ -467,6 +470,8 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_vertical = 3
 
+[connection signal="focus_entered" from="PlayerName/MarginContainer/VBoxContainer/Entry" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="PlayerName/MarginContainer/VBoxContainer/Entry" to="." method="_on_text_focus_exited"]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Strength/Minus" to="Display/Attributes" method="_on_strength_minus_button"]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Strength/Plus" to="Display/Attributes" method="_on_strength_plus_button"]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Vitality/Minus" to="Display/Attributes" method="_on_vitality_minus_button"]
@@ -479,7 +484,6 @@ size_flags_vertical = 3
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Concentration/Plus" to="Display/Attributes" method="_on_concentration_plus_button"]
 [connection signal="pressed" from="Display/Stats/Margin/VBox/Selection/Previous" to="Display/Stats" method="_on_previous_pressed"]
 [connection signal="pressed" from="Display/Stats/Margin/VBox/Selection/Next" to="Display/Stats" method="_on_next_pressed"]
-[connection signal="visibility_changed" from="Display/Traits" to="Display/Traits" method="_on_visibility_changed"]
 [connection signal="pressed" from="Display/Traits/Margin/VBox/Hairstyle/Previous" to="Display/Traits" method="_on_hairstyle_prev_button"]
 [connection signal="pressed" from="Display/Traits/Margin/VBox/Hairstyle/Next" to="Display/Traits" method="_on_hairstyle_next_button"]
 [connection signal="pressed" from="Display/Traits/Margin/VBox/HairColor/Previous" to="Display/Traits" method="_on_haircolor_prev_button"]

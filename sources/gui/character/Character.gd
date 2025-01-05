@@ -53,6 +53,11 @@ func FillMissingCharacterInfo(info : Dictionary):
 	Util.DicCheckOrAdd(info, "last_timestamp", 1 << 32)
 	Util.DicCheckOrAdd(info, "level", 1)
 	Util.DicCheckOrAdd(info, "pos_map", LauncherCommons.DefaultStartMap)
+	Util.DicCheckOrAdd(info, "hairstyle", DB.UnknownHash)
+	Util.DicCheckOrAdd(info, "haircolor", DB.UnknownHash)
+	Util.DicCheckOrAdd(info, "gender", ActorCommons.Gender.MALE)
+	Util.DicCheckOrAdd(info, "race", DB.UnknownHash)
+	Util.DicCheckOrAdd(info, "skintone", DB.UnknownHash)
 
 func HasSlot(slotID : int) -> bool:
 	return slotID >= 0 and slotID <= ActorCommons.MaxCharacterCount
@@ -195,10 +200,10 @@ func EnableCharacterCreator(enable : bool):
 				RemoveCharacter(ActorCommons.MaxCharacterCount)
 		else:
 			if enable:
-				AddCharacter({}, ActorCommons.MaxCharacterCount)
+				AddCharacter(traitsPanel.GetValues(), ActorCommons.MaxCharacterCount)
 
-	statsPanel.set_visible(not enable)
-	characterNameDisplay.set_visible(not enable)
+	statsPanel.set_visible(not enable and visible)
+	characterNameDisplay.set_visible(not enable and visible)
 	characterNameLineEdit.set_visible(enable)
 	traitsPanel.set_visible(enable)
 	attributesPanel.set_visible(enable)
@@ -275,6 +280,17 @@ func _ready():
 
 func _on_visibility_changed():
 	if not visible:
-		statsPanel.set_visible(false)
-		traitsPanel.set_visible(false)
-		attributesPanel.set_visible(false)
+		if statsPanel:
+			statsPanel.set_visible(false)
+		if traitsPanel:
+			traitsPanel.set_visible(false)
+		if attributesPanel:
+			attributesPanel.set_visible(false)
+
+func _on_text_focus_entered():
+	if Launcher.Action:
+		Launcher.Action.Enable(false)
+
+func _on_text_focus_exited():
+	if Launcher.Action:
+		Launcher.Action.Enable(true)

@@ -87,7 +87,7 @@ func GetMove(forceMode : bool = false) -> Vector2:
 # Local player movement
 func _unhandled_input(event):
 	if event.is_action("gp_click_to") and supportMouse:
-		if get_viewport() and Launcher.Camera and Launcher.Camera.mainCamera and clickTimer:
+		if FSM.IsGameState() and clickTimer:
 			if clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
 				var mousePos : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
 				Network.SetClickPos(mousePos)

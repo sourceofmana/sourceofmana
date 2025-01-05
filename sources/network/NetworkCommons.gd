@@ -56,6 +56,7 @@ enum AuthError {
 	ERR_NAME_VALID,
 	ERR_NAME_SIZE,
 	ERR_EMAIL_VALID,
+	ERR_DUPLICATE_CONNECTION,
 }
 
 static func CheckSize(entry : String, minSize : int, maxSize : int) -> bool:

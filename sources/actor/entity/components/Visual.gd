@@ -125,15 +125,11 @@ func SetHair():
 	var slotMaterial : Material = null
 
 	if not entity.stat.IsMorph():
-		var hairstyleData : TraitData = DB.GetHairstyle(entity.stat.hairstyle)
-		if hairstyleData == null:
-			return
-		var haircolorData : TraitData = DB.GetHaircolor(entity.stat.haircolor)
-		if haircolorData == null:
-			return
-
-		slotTexture = FileSystem.LoadGfx(hairstyleData._path)
-		slotMaterial = FileSystem.LoadPalette(haircolorData._path)
+		var hairstyleData : TraitData = DB.GetHairstyle(entity.stat.hairstyle) if entity.stat.hairstyle != DB.UnknownHash else null
+		var haircolorData : TraitData = DB.GetHaircolor(entity.stat.haircolor) if entity.stat.haircolor != DB.UnknownHash else null
+		if hairstyleData != null and haircolorData != null:
+			slotTexture = FileSystem.LoadGfx(hairstyleData._path)
+			slotMaterial = FileSystem.LoadPalette(haircolorData._path)
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)

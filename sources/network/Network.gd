@@ -207,10 +207,6 @@ func UpdatePrivateStats(agentID : int, experience : int, gp : int, mana : int, s
 func UpdateAttributes(agentID : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("UpdateAttributes", [agentID, strength, vitality, agility, endurance, concentration], rpcID)
 
-@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func TargetLevelUp(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("TargetLevelUp", [targetID], rpcID)
-
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func TriggerSelect(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("TriggerSelect", [entityID], rpcID)
@@ -229,8 +225,8 @@ func ItemRemoved(itemID : int, count : int, rpcID : int = NetworkCommons.RidSing
 	CallClient("ItemRemoved", [itemID, count], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemEquiped(itemID : int, state : bool, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ItemEquiped", [itemID, state], rpcID)
+func ItemEquiped(agentID : int, itemID : int, state : bool, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("ItemEquiped", [agentID, itemID, state], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):

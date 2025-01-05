@@ -121,6 +121,14 @@ func Cast(skillID : int):
 
 	Network.TriggerCast(entityID, skillID)
 
+func LevelUp():
+	if Launcher.Player == self:
+		Network.Client.PushNotification("Level %d reached.\nFeel the mana power growing inside you!" % (stat.level))
+
+	stat.RefreshAttributes()
+	if interactive:
+		interactive.DisplayLevelUp.call_deferred()
+
 #
 func _physics_process(delta : float):
 	velocity = entityVelocity
@@ -138,7 +146,7 @@ func _physics_process(delta : float):
 func _ready():
 	if Launcher.Player == self:
 		Launcher.Map.MapUnloaded.connect(ClearTarget)
-	else:
+	elif type == ActorCommons.Type.MONSTER:
 		stat.vital_stats_updated.connect(interactive.DisplayHP)
 	entity_died.connect(interactive.HideHP)
 	entity_died.connect(interactive.DisplayTarget.bind(ActorCommons.Target.NONE))

@@ -69,13 +69,6 @@ func Casted(agentID : int, skillID : int, cooldown : float, _rpcID : int = Netwo
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplaySkill.call_deferred(entity, skillID, cooldown)
 
-func TargetLevelUp(targetID : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Map:
-		var entity : Entity = Entities.Get(targetID)
-		if entity and entity.get_parent() and entity.interactive:
-			entity.interactive.DisplayLevelUp.call_deferred()
-			entity.stat.attributes_updated.emit()
-
 func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
@@ -87,7 +80,7 @@ func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = Ne
 func UpdatePrivateStats(ridAgent : int, experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : String, spirit : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
-		if entity and entity.get_parent() and entity.stat:
+		if entity and entity.stat:
 			entity.stat.experience		= experience
 			entity.stat.gp				= gp
 			entity.stat.mana			= mana
@@ -100,31 +93,28 @@ func UpdatePrivateStats(ridAgent : int, experience : int, gp : int, mana : int, 
 func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
-		if entity and entity.get_parent() and entity.stat:
+		if entity and entity.stat:
 			var levelUp : bool = entity.stat.level != level
 			entity.stat.level			= level
 			entity.stat.health			= health
 			entity.stat.currentShape	= currentShape
+			if levelUp:
+				entity.LevelUp()
 
 			var newHair : bool = entity.stat.hairstyle != hairstyle or entity.stat.haircolor != haircolor
 			entity.stat.hairstyle		= hairstyle
 			entity.stat.haircolor		= haircolor
-			if newHair:
+			if newHair and entity.visual:
 				entity.visual.SetHair()
 
 			var newBody : bool = entity.stat.gender != gender or entity.stat.race != race or entity.stat.skintone != skintone
 			entity.stat.gender			= gender
 			entity.stat.race			= race
 			entity.stat.skintone		= skintone
-			if newBody:
+			if newBody and entity.visual:
 				entity.visual.SetBody()
 
-			if levelUp:
-				if entity == Launcher.Player:
-					PushNotification("Level %d reached.\nFeel the mana power growing inside you!" % (level))
-				entity.stat.RefreshAttributes()
-			else:
-				entity.stat.RefreshVitalStats()
+			entity.stat.RefreshVitalStats()
 
 func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -156,16 +146,17 @@ func ItemRemoved(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSin
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
 
-func ItemEquiped(itemID : int, state : bool, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Player and DB.ItemsDB.has(itemID):
+func ItemEquiped(ridAgent : int, itemID : int, state : bool, _rpcID : int = NetworkCommons.RidSingleMode):
+	var entity : Entity = Entities.Get(ridAgent)
+	if entity and DB.ItemsDB.has(itemID):
 		var cell : ItemCell = DB.ItemsDB[itemID]
 		if cell:
 			if state:
-				Launcher.Player.inventory.EquipItem(cell)
+				entity.inventory.EquipItem(cell)
 			else:
-				Launcher.Player.inventory.UnequipItem(cell)
+				entity.inventory.UnequipItem(cell)
 
-			Launcher.Player.visual.SetEquipment(cell.slot)
+			entity.visual.SetEquipment(cell.slot)
 			if Launcher.GUI and Launcher.GUI.inventoryWindow:
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()

@@ -179,15 +179,11 @@ func AddExperience(value : int):
 		return
 	experience += value
 	# Manage level up
-	var levelUpHappened = false
 	var experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
 	while experiencelNeeded != Experience.MAX_LEVEL_REACHED and experience >= experiencelNeeded:
 		experience -= experiencelNeeded
 		level += 1
-		levelUpHappened = true
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
-	if levelUpHappened and Network.Server:
-		Network.Server.NotifyNeighbours(actor, "TargetLevelUp", [])
 
 func AddGP(value : int):
 	if not ActorCommons.IsAlive(actor) or value <= 0:
