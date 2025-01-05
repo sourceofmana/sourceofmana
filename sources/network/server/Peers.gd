@@ -3,13 +3,24 @@ class_name Peers
 
 #
 class Peer:
-	var rpcDeltas : Dictionary			= {}
+	var peerRID : int					= NetworkCommons.RidUnknown
 	var accountRID : int				= NetworkCommons.RidUnknown
 	var characterRID : int				= NetworkCommons.RidUnknown
 	var agentRID : int					= NetworkCommons.RidUnknown
+	var rpcDeltas : Dictionary			= {}
+
+	func _init(rpcID : int):
+		peerRID = rpcID
 
 	func SetAccount(id : int):
+		if id != NetworkCommons.RidUnknown:
+			var lastPeerRID = Peers.accounts.get(id, NetworkCommons.RidUnknown)
+			if lastPeerRID != NetworkCommons.RidUnknown and Peers.GetAccount(lastPeerRID) != NetworkCommons.RidUnknown:
+				Network.Server.DisconnectAccount(lastPeerRID)
+				Network.AuthError(NetworkCommons.AuthError.ERR_DUPLICATE_CONNECTION, lastPeerRID)
+
 		accountRID = id
+		Peers.accounts[id] = peerRID
 		Network.Server.online_accounts_update.emit()
 	func SetCharacter(id : int):
 		characterRID = id
@@ -19,11 +30,12 @@ class Peer:
 		Network.Server.online_agents_update.emit()
 
 static var peers : Dictionary			= {}
+static var accounts : Dictionary		= {}
 
 # Handling
 static func AddPeer(rpcID : int):
 	if rpcID not in peers:
-		peers[rpcID] = Peer.new()
+		peers[rpcID] = Peer.new(rpcID)
 		Network.Server.peer_update.emit()
 
 static func RemovePeer(rpcID : int):
@@ -45,8 +57,11 @@ static func Footprint(rpcID : int, methodName : String, actionDelta : int) -> bo
 	return false
 
 # Info getters
+static func HasPeer(rpcID : int) -> bool:
+	return rpcID in Peers.peers
+
 static func GetPeer(rpcID : int) -> Peers.Peer:
-	return Peers.peers[rpcID] if Peers and rpcID in Peers.peers else null
+	return Peers.peers.get(rpcID)
 
 static func GetAccount(rpcID : int) -> int:
 	var peer : Peers.Peer = GetPeer(rpcID)
