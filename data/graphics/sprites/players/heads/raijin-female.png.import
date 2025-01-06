@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wcnn00fdkd5s"
-valid=false
+uid="uid://bgkt72xa4xy5m"
+path="res://.godot/imported/raijin-female.png-24ac376a24a0a3423336fefa5089d07f.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://data/graphics/sprites/players/human-female.png"
+source_file="res://data/graphics/sprites/players/heads/raijin-female.png"
+dest_files=["res://.godot/imported/raijin-female.png-24ac376a24a0a3423336fefa5089d07f.ctex"]
 
 [params]
 

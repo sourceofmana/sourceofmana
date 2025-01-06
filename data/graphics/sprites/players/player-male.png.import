@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wcnn00fdkd5s"
-valid=false
+uid="uid://cnigutvcmmvis"
+path="res://.godot/imported/player-male.png-b431a17529e37d78cc5760e7017e8155.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://data/graphics/sprites/players/human-female.png"
+source_file="res://data/graphics/sprites/players/player-male.png"
+dest_files=["res://.godot/imported/player-male.png-b431a17529e37d78cc5760e7017e8155.ctex"]
 
 [params]
 

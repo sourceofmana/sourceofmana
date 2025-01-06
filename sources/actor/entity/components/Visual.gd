@@ -96,15 +96,7 @@ func SetBody():
 	var slotMaterial : Material = sprite.get_material()
 
 	if not entity.stat.IsMorph():
-		match entity.stat.gender:
-			ActorCommons.Gender.MALE:
-				slotTexture = FileSystem.LoadGfx(raceData._malePath)
-			ActorCommons.Gender.FEMALE:
-				slotTexture = FileSystem.LoadGfx(raceData._femalePath)
-			ActorCommons.Gender.NONBINARY:
-				slotTexture = FileSystem.LoadGfx(raceData._nonbinaryPath)
-			_: assert(false, "Unknow gender used")
-
+		slotTexture = FileSystem.LoadGfx(raceData._bodies[entity.stat.gender])
 		if entity.stat.skintone in raceData._skins:
 			var skinData : TraitData = raceData._skins[entity.stat.skintone]
 			if skinData and not skinData._path.is_empty():

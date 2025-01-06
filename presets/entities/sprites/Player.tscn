@@ -1,6 +1,6 @@
 [gd_scene load_steps=26 format=3 uid="uid://clvy3m3dxh517"]
 
-[ext_resource type="Texture2D" uid="uid://cnigutvcmmvis" path="res://data/graphics/sprites/players/human-male.png" id="1_66oof"]
+[ext_resource type="Texture2D" uid="uid://cnigutvcmmvis" path="res://data/graphics/sprites/players/player-male.png" id="1_66oof"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_mvwfv"]
 [ext_resource type="Texture2D" uid="uid://b87un21g7njib" path="res://data/graphics/sprites/hairstyles/bald.png" id="2_ot8ot"]
 [ext_resource type="Texture2D" uid="uid://csdhial7vffyb" path="res://data/graphics/sprites/equipments/legs/trousers-male.png" id="2_tu6yv"]

@@ -1,12 +1,82 @@
 {
 	"Human": {
-		"Male"		: "sprites/players/human-male.png",
-		"Female"	: "sprites/players/human-female.png",
-		"Nonbinary"	: "sprites/players/human-male.png",
+		"Bodies": {
+			"Male"		: "sprites/players/player-male.png",
+			"Female"	: "sprites/players/player-female.png",
+			"Non Binary"	: "sprites/players/player-male.png",
+		},
+		"Faces": {
+			"Male"		: "sprites/players/heads/human-male.png",
+			"Female"	: "sprites/players/heads/human-female.png",
+			"Non Binary"	: "sprites/players/heads/human-male.png",
+		},
 		"Skins": {
-				"Medium" : "",
-				"Tanned" : "human-skin-tanned.tres",
-				"Dark" : "human-skin-dark.tres",
+			"Medium" : "",
+			"Tanned" : "human-skin-tanned.tres",
+			"Dark" : "human-skin-dark.tres",
+		},
+	},
+	"Kralog": {
+		"Bodies": {
+			"Male"		: "sprites/players/player-male.png",
+			"Female"	: "sprites/players/player-female.png",
+			"Non Binary"	: "sprites/players/player-male.png",
+		},
+		"Faces": {
+			"Male"		: "sprites/players/heads/kralog-male.png",
+			"Female"	: "sprites/players/heads/kralog-female.png",
+			"Non Binary"	: "sprites/players/heads/kralog-male.png",
+		},
+		"Skins": {
+			"Frost"		: "kralog-skin-frost.tres",
+			"Fire"		: "kralog-skin-fire.tres",
+		},
+	},
+	"Raijin": {
+		"Bodies": {
+			"Male"		: "sprites/players/player-male.png",
+			"Female"	: "sprites/players/player-female.png",
+			"Non Binary"	: "sprites/players/player-male.png",
+		},
+		"Faces": {
+			"Male"		: "sprites/players/heads/raijin-male.png",
+			"Female"	: "sprites/players/heads/raijin-female.png",
+			"Non Binary"	: "sprites/players/heads/raijin-male.png",
+		},
+		"Skins": {
+			"Light"		: "raijin-skin-light.tres",
+			"Dark"		: "raijin-skin-dark.tres",
+		},
+	},
+	"Tritan": {
+		"Bodies": {
+			"Male"		: "sprites/players/player-male.png",
+			"Female"	: "sprites/players/player-female.png",
+			"Non Binary"	: "sprites/players/player-male.png",
+		},
+		"Faces": {
+			"Male"		: "sprites/players/heads/tritan-male.png",
+			"Female"	: "sprites/players/heads/tritan-female.png",
+			"Non Binary"	: "sprites/players/heads/tritan-male.png",
+		},
+		"Skins": {
+			"Ocean"		: "tritan-skin-ocean.tres",
+			"Oranye"	: "tritan-skin-oranye.tres",
+		},
+	},
+	"Ukar": {
+		"Bodies": {
+			"Male"		: "sprites/players/player-male.png",
+			"Female"	: "sprites/players/player-female.png",
+			"Non Binary"	: "sprites/players/player-male.png",
+		},
+		"Faces": {
+			"Male"		: "sprites/players/heads/ukar-male.png",
+			"Female"	: "sprites/players/heads/ukar-female.png",
+			"Non Binary"	: "sprites/players/heads/ukar-male.png",
+		},
+		"Skins": {
+			"Nordic"	: "ukar-skin-nordic.tres",
 		},
 	},
 }

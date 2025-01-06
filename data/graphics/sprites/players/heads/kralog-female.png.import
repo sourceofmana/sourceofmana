@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wcnn00fdkd5s"
-valid=false
+uid="uid://cndwyhkyxk3lo"
+path="res://.godot/imported/kralog-female.png-2a0b60a4927f74ea5edd859c323fcffe.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://data/graphics/sprites/players/human-female.png"
+source_file="res://data/graphics/sprites/players/heads/kralog-female.png"
+dest_files=["res://.godot/imported/kralog-female.png-2a0b60a4927f74ea5edd859c323fcffe.ctex"]
 
 [params]
 
