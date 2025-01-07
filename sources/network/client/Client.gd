@@ -113,6 +113,7 @@ func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : in
 			entity.stat.skintone		= skintone
 			if newBody and entity.visual:
 				entity.visual.SetBody()
+				entity.visual.SetFace()
 
 			entity.stat.RefreshVitalStats()
 

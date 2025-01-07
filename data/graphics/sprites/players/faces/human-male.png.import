@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnymj2muxrtx6"
-path="res://.godot/imported/ukar-male.png-cfbf6ebcd0f942892a4e75553fd667d0.ctex"
+uid="uid://cikvv0x2ayvx5"
+path="res://.godot/imported/human-male.png-a60da7cea6129129add80089d17aba72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/sprites/players/heads/ukar-male.png"
-dest_files=["res://.godot/imported/ukar-male.png-cfbf6ebcd0f942892a4e75553fd667d0.ctex"]
+source_file="res://data/graphics/sprites/players/faces/human-male.png"
+dest_files=["res://.godot/imported/human-male.png-a60da7cea6129129add80089d17aba72.ctex"]
 
 [params]
 

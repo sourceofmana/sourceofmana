@@ -231,6 +231,7 @@ func UpdateCharacterCreatorBody():
 		charactersNode[ActorCommons.MaxCharacterCount].stat.gender = traitsPanel.genderValue
 		if charactersNode[ActorCommons.MaxCharacterCount].visual:
 			charactersNode[ActorCommons.MaxCharacterCount].visual.SetBody()
+			charactersNode[ActorCommons.MaxCharacterCount].visual.SetFace()
 
 func UpdateCharacterCreatorHair():
 	if isCharacterCreatorEnabled and charactersNode[ActorCommons.MaxCharacterCount]:

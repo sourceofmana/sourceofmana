@@ -53,6 +53,7 @@ enum Slot
 {
 	NONE = -1,
 	BODY = 0,
+	FACE,
 	HAIR,
 	FIRST_EQUIPMENT,
 	CHEST = FIRST_EQUIPMENT,
@@ -60,7 +61,7 @@ enum Slot
 	FEET,
 	HANDS,
 	HEAD,
-	FACE,
+	NECK,
 	WEAPON,
 	SHIELD,
 	LAST_EQUIPMENT,
@@ -154,26 +155,28 @@ static func IsTriggering(agent : Actor) -> bool:
 
 #
 const slotBody : String						= "Body"
+const slotFace : String						= "Face"
 const slotHair : String						= "Hair"
 const slotChest : String					= "Chest"
 const slotLegs : String						= "Legs"
 const slotFeet : String						= "Feet"
 const slotHands : String					= "Hands"
 const slotHead : String						= "Head"
-const slotFace : String						= "Face"
+const slotNeck : String						= "Neck"
 const slotWeapon : String					= "Weapon"
 const slotShield : String					= "Shield"
 
 static func GetSlotName(slot : Slot) -> String:
 	match slot:
 		Slot.BODY:				return slotBody
+		Slot.FACE:				return slotFace
 		Slot.HAIR:				return slotHair
 		Slot.CHEST:				return slotChest
 		Slot.LEGS:				return slotLegs
 		Slot.FEET:				return slotFeet
 		Slot.HANDS:				return slotHands
 		Slot.HEAD:				return slotHead
-		Slot.FACE:				return slotFace
+		Slot.NECK:				return slotNeck
 		Slot.WEAPON:			return slotWeapon
 		Slot.SHIELD:			return slotShield
 		_:						return slotBody
@@ -181,13 +184,14 @@ static func GetSlotName(slot : Slot) -> String:
 static func GetSlotID(slot : String) -> Slot:
 	match slot:
 		slotBody:					return Slot.BODY
+		slotFace:					return Slot.FACE
 		slotHair:					return Slot.HAIR
 		slotChest:					return Slot.CHEST
 		slotLegs:					return Slot.LEGS
 		slotFeet:					return Slot.FEET
 		slotHands:					return Slot.HANDS
 		slotHead:					return Slot.HEAD
-		slotFace:					return Slot.FACE
+		slotNeck:					return Slot.NECK
 		slotWeapon:					return Slot.WEAPON
 		slotShield:					return Slot.SHIELD
 		_:							return Slot.BODY

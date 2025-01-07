@@ -71,6 +71,8 @@ func LoadData(data : EntityData):
 			for slot in ActorCommons.Slot.COUNT:
 				if slot == ActorCommons.Slot.BODY:
 					SetBody()
+				elif slot == ActorCommons.Slot.FACE:
+					SetFace()
 				elif slot == ActorCommons.Slot.HAIR:
 					SetHair()
 				elif slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_EQUIPMENT:
@@ -106,6 +108,33 @@ func SetBody():
 	sprite.set_material(slotMaterial)
 	LoadSpriteSlot(ActorCommons.Slot.BODY, sprite)
 	spriteOffsetUpdate.emit()
+
+func SetFace():
+	var slotName : String = ActorCommons.GetSlotName(ActorCommons.Slot.FACE)
+	var sprite : Sprite2D = preset.get_node_or_null(slotName)
+	if not sprite:
+		return
+
+	if entity.stat.race == DB.UnknownHash:
+		return
+
+	var raceData : RaceData = DB.GetRace(entity.stat.race)
+	if raceData == null:
+		return
+
+	var slotTexture : Texture2D = sprite.get_texture()
+	var slotMaterial : Material = sprite.get_material()
+
+	if not entity.stat.IsMorph():
+		slotTexture = FileSystem.LoadGfx(raceData._faces[entity.stat.gender])
+		if entity.stat.skintone in raceData._skins:
+			var skinData : TraitData = raceData._skins[entity.stat.skintone]
+			if skinData and not skinData._path.is_empty():
+				slotMaterial = FileSystem.LoadPalette(raceData._skins[entity.stat.skintone]._path)
+
+	sprite.set_texture(slotTexture)
+	sprite.set_material(slotMaterial)
+	LoadSpriteSlot(ActorCommons.Slot.FACE, sprite)
 
 func SetHair():
 	var slotName : String = ActorCommons.GetSlotName(ActorCommons.Slot.HAIR)

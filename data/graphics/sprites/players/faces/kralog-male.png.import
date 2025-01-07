@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cspdtwb57a3y5"
-path="res://.godot/imported/ukar-female.png-ae4a89da81187f4943dad7500736ca31.ctex"
+uid="uid://dnfa4p72gw16d"
+path="res://.godot/imported/kralog-male.png-c471884d8066f957fba286500ca45f36.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/sprites/players/heads/ukar-female.png"
-dest_files=["res://.godot/imported/ukar-female.png-ae4a89da81187f4943dad7500736ca31.ctex"]
+source_file="res://data/graphics/sprites/players/faces/kralog-male.png"
+dest_files=["res://.godot/imported/kralog-male.png-c471884d8066f957fba286500ca45f36.ctex"]
 
 [params]
 

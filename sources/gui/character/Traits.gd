@@ -101,7 +101,7 @@ func RefreshRace():
 	if raceValue >= 0 and raceValue < raceCount:
 		var data : RaceData = DB.GetRace(races[raceValue])
 		raceLabel.set_text(data._name)
-		skintoneCount = data._skins.size()
+		RefreshSkintone()
 		bodyUpdate.emit()
 
 func _on_race_prev_button():
@@ -119,7 +119,10 @@ func RefreshSkintone():
 		var data : RaceData = DB.GetRace(races[raceValue])
 		var skins : Dictionary = data._skins
 		var skinsKeys : Array = skins.keys()
-		if skintoneValue >= 0 and skintoneValue < skinsKeys.size():
+		skintoneCount = data._skins.size()
+		if skintoneValue < 0 or skintoneValue >= skintoneCount:
+			skintoneValue = 0
+		if skintoneValue >= 0 and skintoneValue < skintoneCount:
 			skintoneLabel.set_text(skins[skinsKeys[skintoneValue]]._name)
 			bodyUpdate.emit()
 

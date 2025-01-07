@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bppucckex1ll4"
-path="res://.godot/imported/tritan-male.png-a5ec4d7c3d8f4b6562adc5e9ab76cf0d.ctex"
+uid="uid://dnymj2muxrtx6"
+path="res://.godot/imported/ukar-male.png-011d8639eaf629d0486d3a466156cbd7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/sprites/players/heads/tritan-male.png"
-dest_files=["res://.godot/imported/tritan-male.png-a5ec4d7c3d8f4b6562adc5e9ab76cf0d.ctex"]
+source_file="res://data/graphics/sprites/players/faces/ukar-male.png"
+dest_files=["res://.godot/imported/ukar-male.png-011d8639eaf629d0486d3a466156cbd7.ctex"]
 
 [params]
 

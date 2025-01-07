@@ -133,7 +133,7 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			newLabel.SetValue(emitter, value, alteration)
 			Launcher.Map.fringeLayer.add_child(newLabel)
 			target.stat.health += value if alteration == ActorCommons.Alteration.HEAL else -value
-			target.stat.RefreshVitalhStats()
+			target.stat.RefreshVitalStats()
 
 #
 func DisplaySpeech(speech : String):
@@ -192,7 +192,7 @@ func RefreshVisibleNodeOffset():
 		visualOffset = clamp(-offset, 20, 256)
 
 #
-func _physics_process(delta):
+func _physics_process(delta : float):
 	if healthBar.visible and healthBar.modulate.a < 1:
 		healthBar.modulate.a = max(0, healthBar.modulate.a - delta * 2)
 		if not displayName:
