@@ -95,7 +95,7 @@ func SetBody():
 		return
 
 	var slotTexture : Texture2D = sprite.get_texture()
-	var slotMaterial : Material = sprite.get_material()
+	var slotMaterial : Material = null
 
 	if not entity.stat.IsMorph():
 		slotTexture = FileSystem.LoadGfx(raceData._bodies[entity.stat.gender])
@@ -123,7 +123,7 @@ func SetFace():
 		return
 
 	var slotTexture : Texture2D = sprite.get_texture()
-	var slotMaterial : Material = sprite.get_material()
+	var slotMaterial : Material = null
 
 	if not entity.stat.IsMorph():
 		slotTexture = FileSystem.LoadGfx(raceData._faces[entity.stat.gender])

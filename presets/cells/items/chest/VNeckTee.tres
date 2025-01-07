@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("2_oqyvd")
-slot = 2
+slot = 3
 textures = Array[Texture2D]([ExtResource("3_ea1q2"), ExtResource("4_r5xxn"), ExtResource("3_ea1q2")])
 id = -1
 name = "V-Neck Tee"
