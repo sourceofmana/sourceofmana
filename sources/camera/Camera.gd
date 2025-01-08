@@ -5,6 +5,7 @@ var mainCamera : Camera2D		= null
 var sceneCamera : Camera2D		= null
 var minPos : Vector2			= Vector2.ZERO
 var maxPos : Vector2			= Vector2.ONE
+var zoomLevel : float			= 1.0
 
 #
 func SetBoundaries():
@@ -33,16 +34,39 @@ func EnableSceneCamera(pos : Vector2):
 func DisableSceneCamera():
 	sceneCamera.set_enabled(false)
 
+func ZoomIn():
+	zoomLevel = clampf(zoomLevel + ActorCommons.CameraZoomIncrement, ActorCommons.CameraZoomMin, ActorCommons.CameraZoomMax)
+	UpdateZoom()
+
+func ZoomOut():
+	zoomLevel = clampf(zoomLevel - ActorCommons.CameraZoomIncrement, ActorCommons.CameraZoomMin, ActorCommons.CameraZoomMax)
+	UpdateZoom()
+
+func ZoomReset():
+	zoomLevel = 1.0
+	UpdateZoom()
+
+func UpdateZoom():
+	var zoomVector : Vector2 = Vector2(zoomLevel, zoomLevel)
+	mainCamera.set_zoom(zoomVector)
+	sceneCamera.set_zoom(zoomVector)
+
 #
 func _post_launch():
 	if Launcher.Map and not Launcher.Map.PlayerWarped.is_connected(SetBoundaries):
 		Launcher.Map.PlayerWarped.connect(SetBoundaries)
 
 	if Launcher.Scene:
-		sceneCamera = FileSystem.LoadEntityComponent("Camera")
+		var cameraPreset : PackedScene = FileSystem.LoadEntityComponent("Camera", false)
+		sceneCamera = cameraPreset.instantiate()
 		sceneCamera.set_name("SceneCamera")
 		if sceneCamera:
 			Launcher.Scene.add_child.call_deferred(sceneCamera)
+
+		mainCamera = cameraPreset.instantiate()
+		mainCamera.set_name("MainCamera")
+		if mainCamera:
+			Launcher.Scene.add_child.call_deferred(mainCamera)
 
 	isInitialized = true
 

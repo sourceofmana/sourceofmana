@@ -149,7 +149,11 @@ func _input(event):
 		elif TryJustPressed(event, "gp_shortcut_9"):	Launcher.GUI.actionBoxes.Trigger(8)
 		elif TryJustPressed(event, "gp_shortcut_10"):	Launcher.GUI.actionBoxes.Trigger(9)
 		elif TryJustPressed(event, "gp_pickup"):		Launcher.Map.PickupNearestDrop()
-		elif TryJustPressed(event, "gp_morph"):	 		Network.TriggerMorph()
+		elif TryJustPressed(event, "gp_morph"):			Network.TriggerMorph()
+	if not HasConsumed() and Launcher.Camera:
+		if TryJustPressed(event, "gp_zoom_in"):		Launcher.Camera.ZoomIn()
+		elif TryJustPressed(event, "gp_zoom_out"):		Launcher.Camera.ZoomOut()
+		elif TryJustPressed(event, "gp_zoom_reset"):	Launcher.Camera.ZoomReset()
 	if not HasConsumed() and Launcher.GUI:
 		if TryJustPressed(event, "ui_close"):			Launcher.GUI.CloseWindow()
 		elif TryJustPressed(event, "ui_close", true):	Launcher.GUI.CloseCurrent()

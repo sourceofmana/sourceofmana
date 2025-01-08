@@ -169,7 +169,7 @@ static func LoadEntitySprite(type : String, instantiate : bool = true) -> Node2D
 	var fullPath : String = Path.EntitySprite + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
-static func LoadEntityComponent(type : String, instantiate : bool = true) -> Node:
+static func LoadEntityComponent(type : String, instantiate : bool = true) -> Object:
 	var fullPath : String = Path.EntityComponent + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 

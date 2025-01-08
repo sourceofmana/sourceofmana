@@ -266,6 +266,11 @@ const MaxDisplacementSquareLength : float	= 64 * 64
 const InputApproximationUnit : int			= 12
 const MaxEntityRadiusSize : int				= 256
 
+# Camera
+const CameraZoomIncrement : float			= 0.02
+const CameraZoomMin : float					= 0.6
+const CameraZoomMax : float					= 2.0
+
 # Character
 const InvalidCharacterSlot : int			= -1
 const MaxCharacterCount : int				= 10
