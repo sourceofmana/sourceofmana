@@ -5,7 +5,11 @@ var mainCamera : Camera2D		= null
 var sceneCamera : Camera2D		= null
 var minPos : Vector2			= Vector2.ZERO
 var maxPos : Vector2			= Vector2.ONE
-var zoomLevel : float			= 1.0
+var lastZoomLevel : int			= ActorCommons.CameraZoomDefault
+var zoomLevel : int				= ActorCommons.CameraZoomDefault
+var zoomSceneTween : Tween		= null 
+var zoomMainTween : Tween		= null
+var zoomTimer : Timer			= null
 
 #
 func SetBoundaries():
@@ -35,21 +39,55 @@ func DisableSceneCamera():
 	sceneCamera.set_enabled(false)
 
 func ZoomIn():
-	zoomLevel = clampf(zoomLevel + ActorCommons.CameraZoomIncrement, ActorCommons.CameraZoomMin, ActorCommons.CameraZoomMax)
-	UpdateZoom()
+	if not zoomTimer:
+		zoomLevel = clampi(zoomLevel + 1, 0, ActorCommons.CameraZoomLevels.size() - 1)
+		UpdateZoom()
 
 func ZoomOut():
-	zoomLevel = clampf(zoomLevel - ActorCommons.CameraZoomIncrement, ActorCommons.CameraZoomMin, ActorCommons.CameraZoomMax)
-	UpdateZoom()
+	if not zoomTimer:
+		zoomLevel = clampi(zoomLevel - 1, 0, ActorCommons.CameraZoomLevels.size() - 1)
+		UpdateZoom()
 
 func ZoomReset():
-	zoomLevel = 1.0
-	UpdateZoom()
+	if not zoomTimer:
+		zoomLevel = ActorCommons.CameraZoomDefault
+		UpdateZoom()
+
+func ZoomTweenCompleted(isMainCamera : bool):
+	if isMainCamera:
+		zoomMainTween = null
+	else:
+		zoomSceneTween = null
+
+func ZoomTimerCompleted():
+	zoomTimer = null
 
 func UpdateZoom():
-	var zoomVector : Vector2 = Vector2(zoomLevel, zoomLevel)
-	mainCamera.set_zoom(zoomVector)
-	sceneCamera.set_zoom(zoomVector)
+	if zoomLevel == lastZoomLevel:
+		return
+
+	lastZoomLevel = zoomLevel
+	zoomTimer = Callback.SelfDestructTimer(mainCamera, ActorCommons.CameraZoomDelay / 2.0, ZoomTimerCompleted, [], "ZoomTimer")
+
+	if zoomLevel < 0 or zoomLevel >= ActorCommons.CameraZoomLevels.size():
+		assert(false, "Trying to set a wrong zoom level to our camera(s)")
+		return
+
+	var zoomVector : Vector2 = ActorCommons.CameraZoomLevels[zoomLevel]
+
+	if zoomSceneTween:
+		zoomSceneTween.kill()
+	zoomSceneTween = sceneCamera.create_tween()
+	zoomSceneTween.tween_property(sceneCamera, "zoom", zoomVector, ActorCommons.CameraZoomDelay).from(sceneCamera.zoom)
+	zoomSceneTween.play()
+	zoomSceneTween.tween_callback(ZoomTweenCompleted.bind(false))
+
+	if zoomMainTween:
+		zoomMainTween.kill()
+	zoomMainTween = mainCamera.create_tween()
+	zoomMainTween.tween_property(mainCamera, "zoom", zoomVector, ActorCommons.CameraZoomDelay).from(mainCamera.zoom)
+	zoomMainTween.play()
+	zoomMainTween.tween_callback(ZoomTweenCompleted.bind(true))
 
 #
 func _post_launch():

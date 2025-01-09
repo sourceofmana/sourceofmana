@@ -28,21 +28,21 @@ func ConsumeAction(action : String):
 	consumed.push_back(action)
 
 func TryJustPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
-	if event.is_action_pressed(action) and IsActionJustPressed(action, forceMode):
+	if event.is_action_pressed(action, false, true) and IsActionJustPressed(action, forceMode):
 		ConsumeAction(action)
 		get_viewport().set_input_as_handled()
 		return true
 	return false
 
 func TryPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
-	if event.is_action_pressed(action) and IsActionPressed(action, forceMode):
+	if event.is_action_pressed(action, false, true) and IsActionPressed(action, forceMode):
 		ConsumeAction(action)
 		get_viewport().set_input_as_handled()
 		return true
 	return false
 
 func TryOnlyPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
-	if event.is_action_pressed(action) and IsActionOnlyPressed(action, forceMode):
+	if event.is_action_pressed(action, false, true) and IsActionOnlyPressed(action, forceMode):
 		ConsumeAction(action)
 		get_viewport().set_input_as_handled()
 		return true

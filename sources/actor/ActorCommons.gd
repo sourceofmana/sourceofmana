@@ -267,9 +267,18 @@ const InputApproximationUnit : int			= 12
 const MaxEntityRadiusSize : int				= 256
 
 # Camera
-const CameraZoomIncrement : float			= 0.02
-const CameraZoomMin : float					= 0.6
-const CameraZoomMax : float					= 2.0
+const CameraZoomLevels : PackedVector2Array	= [
+	Vector2(0.6, 0.6),
+	Vector2(0.7, 0.7),
+	Vector2(0.85, 0.85),
+	Vector2(1.0, 1.0),
+	Vector2(1.2, 1.2),
+	Vector2(1.5, 1.5),
+	Vector2(2.0, 2.0),
+	Vector2(3.0, 3.0),
+]
+const CameraZoomDefault : int				= 3
+const CameraZoomDelay : float				= 0.4
 
 # Character
 const InvalidCharacterSlot : int			= -1
