@@ -23,15 +23,22 @@ func SetBoundaries():
 			mainCamera.limit_right		= int(mapBoundaries.end.x)
 			mainCamera.limit_top		= int(mapBoundaries.position.y)
 			mainCamera.limit_bottom		= int(mapBoundaries.end.y)
+			mainCamera.set_global_position(Vector2.ZERO)
 
 		if sceneCamera:
 			sceneCamera.limit_left		= int(mapBoundaries.position.x)
 			sceneCamera.limit_right		= int(mapBoundaries.end.x)
 			sceneCamera.limit_top		= int(mapBoundaries.position.y)
 			sceneCamera.limit_bottom	= int(mapBoundaries.end.y)
+			sceneCamera.set_global_position(Vector2.ZERO)
 
 func EnableSceneCamera(pos : Vector2):
-	sceneCamera.global_position = pos
+	if not sceneCamera:
+		return
+
+	var enableSmoothing : bool = sceneCamera.get_global_position() != Vector2.ZERO
+	sceneCamera.set_position_smoothing_enabled(enableSmoothing)
+	sceneCamera.set_global_position(pos)
 	sceneCamera.set_enabled(true)
 	sceneCamera.make_current()
 
@@ -89,10 +96,19 @@ func UpdateZoom():
 	zoomMainTween.play()
 	zoomMainTween.tween_callback(ZoomTweenCompleted.bind(true))
 
+func SyncPlayerPosition():
+	if Launcher.Player and mainCamera:
+		var enableSmoothing : bool = mainCamera.get_global_position() != Vector2.ZERO
+		mainCamera.set_position_smoothing_enabled(enableSmoothing)
+		mainCamera.set_position(Launcher.Player.get_position())
+
 #
 func _post_launch():
-	if Launcher.Map and not Launcher.Map.PlayerWarped.is_connected(SetBoundaries):
-		Launcher.Map.PlayerWarped.connect(SetBoundaries)
+	if Launcher.Map:
+		if not Launcher.Map.MapLoaded.is_connected(SetBoundaries):
+			Launcher.Map.MapLoaded.connect(SetBoundaries)
+		if not Launcher.Map.PlayerWarped.is_connected(SyncPlayerPosition):
+			Launcher.Map.PlayerWarped.connect(SyncPlayerPosition)
 
 	if Launcher.Scene:
 		var cameraPreset : PackedScene = FileSystem.LoadEntityComponent("Camera", false)
@@ -109,6 +125,11 @@ func _post_launch():
 	isInitialized = true
 
 func Destroy():
-	if sceneCamera and Launcher.Scene:
-		sceneCamera.queue_free()
-		sceneCamera = null
+	if Launcher.Scene:
+		if sceneCamera:
+			sceneCamera.queue_free()
+			sceneCamera = null
+
+		if mainCamera:
+			mainCamera.queue_free()
+			mainCamera = null
