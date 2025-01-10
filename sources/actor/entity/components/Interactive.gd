@@ -21,8 +21,9 @@ func DisplaySelection(hue : float, alpha : float = 1.0):
 		selectionFx.finished.connect(remove_child.bind(selectionFx))
 		add_child(selectionFx)
 
-		if selectionFx:
-			var sizeRatio : float = float(visualOffset) / float(ActorCommons.interactionDisplayOffset) if ActorCommons.interactionDisplayOffset > 0 else 1.0
+		if selectionFx and ActorCommons.interactionDisplayOffset > 0:
+			var sizeRatio : float = float(visualOffset) / float(ActorCommons.interactionDisplayOffset)
+			print(sizeRatio)
 			var emissionShapeScale : Vector3 = selectionFx.process_material.get("emission_shape_scale")
 			if emissionShapeScale != Vector3.ZERO:
 				emissionShapeScale *= sizeRatio
@@ -188,8 +189,9 @@ func RefreshVisibleNodeOffset():
 	if entity.visual:
 		var offset : int = entity.visual.GetPlayerOffset()
 
-		visibleNode.position.y = offset - ActorCommons.interactionDisplayOffset
-		visualOffset = clamp(-offset, 20, 256)
+		visibleNode.position.y = ActorCommons.interactionDisplayOffset + offset
+		visualOffset = clampi(offset, 20, 256)
+		print(offset)
 
 #
 func _physics_process(delta : float):

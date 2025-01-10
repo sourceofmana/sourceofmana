@@ -29,7 +29,11 @@ func LoadSpriteSlot(slot : ActorCommons.Slot, sprite : Sprite2D):
 			sprites[slot].queue_free()
 			sprites[slot] = null
 
-		sprites[slot] = sprite
+		if sprite:
+			sprites[slot] = sprite
+			if slot == ActorCommons.Slot.BODY:
+				spriteOffsetUpdate.emit()
+
 
 func ResetData():
 	for child in get_children():
@@ -88,6 +92,7 @@ func SetBody():
 		return
 
 	if entity.stat.race == DB.UnknownHash:
+		SetData(ActorCommons.Slot.BODY, entity.data)
 		return
 
 	var raceData : RaceData = DB.GetRace(entity.stat.race)
@@ -107,7 +112,6 @@ func SetBody():
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
 	LoadSpriteSlot(ActorCommons.Slot.BODY, sprite)
-	spriteOffsetUpdate.emit()
 
 func SetFace():
 	var slotName : String = ActorCommons.GetSlotName(ActorCommons.Slot.FACE)
@@ -225,9 +229,9 @@ func ResetAnimationValue():
 	RefreshTree()
 
 func GetPlayerOffset() -> int:
-	var spriteOffset : int = -ActorCommons.interactionDisplayOffset
+	var spriteOffset : int = ActorCommons.interactionDisplayOffset
 	if sprites[ActorCommons.Slot.BODY]:
-		spriteOffset = int(sprites[ActorCommons.Slot.BODY].offset.y)
+		spriteOffset = -1 * int(sprites[ActorCommons.Slot.BODY].offset.y)
 	return spriteOffset
 
 #
