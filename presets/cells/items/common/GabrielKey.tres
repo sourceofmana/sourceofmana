@@ -1,13 +1,16 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=2 format=3 uid="uid://fn26nshedn1c"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://fn26nshedn1c"]
 
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="1_buwtk"]
+[ext_resource type="Texture2D" uid="uid://crcp30v07dd8i" path="res://data/graphics/items/common/splatina-key3.png" id="1_kr3ik"]
 
 [resource]
 script = ExtResource("1_buwtk")
 slot = -1
+textures = Array[Texture2D]([])
 id = -1
 name = "Gabriel's Key"
 description = "A key that has been hidden a long time ago, seems to open a fancy door."
+icon = ExtResource("1_kr3ik")
 type = 0
 weight = 15.0
 stackable = true
