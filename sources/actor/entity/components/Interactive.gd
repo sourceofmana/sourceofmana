@@ -189,9 +189,8 @@ func RefreshVisibleNodeOffset():
 	if entity.visual:
 		var offset : int = entity.visual.GetPlayerOffset()
 
-		visibleNode.position.y = ActorCommons.interactionDisplayOffset + offset
+		visibleNode.position.y = -1 * (offset + ActorCommons.interactionDisplayOffset)
 		visualOffset = clampi(offset, 20, 256)
-		print(offset)
 
 #
 func _physics_process(delta : float):
