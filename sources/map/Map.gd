@@ -102,7 +102,7 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 			entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned)
 
 		if isLocalPlayer:
-			emit_signal('PlayerWarped')
+			PlayerWarped.emit()
 
 func RemoveEntity(agentID : int):
 	var entity : Entity = Entities.Get(agentID)
@@ -119,7 +119,7 @@ func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector
 
 # Drops
 func AddDrop(dropID : int, cell : BaseCell, pos : Vector2):
-	if not fringeLayer:
+	if not cell or not fringeLayer:
 		return
 
 	if dropID not in drops:
@@ -129,15 +129,16 @@ func AddDrop(dropID : int, cell : BaseCell, pos : Vector2):
 			drops[dropID] = dropNode
 
 func RemoveDrop(dropID : int):
-	if dropID in drops:
-		RemoveChild(drops[dropID])
+	var drop : Sprite2D = drops.get(dropID)
+	if drop:
+		RemoveChild(drop)
 		drops.erase(dropID)
 
 func PickupNearestDrop():
 	var nearestID : int = -1
 	var nearestLengthSquared : float = ActorCommons.PickupSquaredDistance
 	for dropID in drops:
-		var drop : Node2D = drops[dropID]
+		var drop : Node2D = drops.get(dropID)
 		if drop != null:
 			var lengthSquared : float = Launcher.Player.position.distance_squared_to(drop.position)
 			if lengthSquared < nearestLengthSquared:

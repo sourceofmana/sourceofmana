@@ -4,12 +4,28 @@ extends WindowPanel
 @onready var slotStat : Control			= $Margin/VBoxContainer/Bars/SlotTex/ProgressBar
 @onready var grid : GridContainer		= $Margin/VBoxContainer/Container/Margin/Grid
 
-@onready var dropButton : Button		= $Margin/VBoxContainer/Buttons/Drop
-@onready var useButton : Button			= $Margin/VBoxContainer/Buttons/Use
-@onready var equipButton : Button		= $Margin/VBoxContainer/Buttons/Equip
-@onready var unequipButton : Button		= $Margin/VBoxContainer/Buttons/Unequip
+@onready var itemButtons : Control		= $Margin/VBoxContainer/ItemButtons
+@onready var dropButtons : Control		= $Margin/VBoxContainer/DropButtons
+
+@onready var dropButton : Button		= $Margin/VBoxContainer/ItemButtons/Drop
+@onready var useButton : Button			= $Margin/VBoxContainer/ItemButtons/Use
+@onready var equipButton : Button		= $Margin/VBoxContainer/ItemButtons/Equip
+@onready var unequipButton : Button		= $Margin/VBoxContainer/ItemButtons/Unequip
+
+@onready var lessDropButton : Button	= $Margin/VBoxContainer/DropButtons/Less
+@onready var moreDropButton : Button	= $Margin/VBoxContainer/DropButtons/More
+@onready var dropLabel : Label			= $Margin/VBoxContainer/DropButtons/Label
+
+enum ButtonMode
+{
+	UNKNOWN = -1,
+	ITEM = 0,
+	DROP,
+}
 
 var selectedTile : CellTile				= null
+var dropValue : int						= 1
+var buttonMode : ButtonMode				= ButtonMode.UNKNOWN
 
 #
 func RefreshInventory():
@@ -51,6 +67,11 @@ func SelectTile(tile : CellTile):
 	selectedTile = tile if tile else grid.GetTile(0)
 	if selectedTile:
 		selectedTile.AddSelection()
+	RefreshItemMode()
+
+func RefreshItemMode():
+	itemButtons.set_visible(true)
+	dropButtons.set_visible(false)
 
 	if selectedTile and selectedTile.cell and selectedTile.count > 0:
 		var isEquipment : bool = selectedTile.cell.slot != ActorCommons.Slot.NONE
@@ -65,12 +86,35 @@ func SelectTile(tile : CellTile):
 		equipButton.set_visible(false)
 		unequipButton.set_visible(false)
 
+func SetButtonMode(mode : ButtonMode):
+	buttonMode = mode
+	match mode:
+		ButtonMode.ITEM:
+			RefreshItemMode()
+		ButtonMode.DROP:
+			ResetDropButtons()
+			RefreshDropMode()
+		_: assert(false, "Unknown button mode within the inventory window")
+
+func ResetDropButtons():
+	dropValue = 1
+
+func RefreshDropMode():
+	itemButtons.set_visible(false)
+	dropButtons.set_visible(true)
+
+	dropValue = clamp(dropValue, 0, selectedTile.count)
+	lessDropButton.set_disabled(dropValue <= 1)
+	moreDropButton.set_disabled(dropValue >= selectedTile.count)
+	dropLabel.set_text(str(dropValue))
+
 #
 func _ready():
 	for tileIdx in range(grid.maxCount):
 		var tile : CellTile = grid.GetTile(tileIdx)
 		if tile:
 			tile.selected.connect(SelectTile)
+	SetButtonMode(ButtonMode.ITEM)
 
 func _on_visibility_changed():
 	if visible and grid:
@@ -89,5 +133,25 @@ func _on_unequip_pressed():
 		Network.UnequipItem(selectedTile.cell.id)
 
 func _on_drop_pressed():
+	if selectedTile:
+		if selectedTile.count == 1:
+			ResetDropButtons()
+			_on_confirm_drop_pressed()
+		else:
+			SetButtonMode(ButtonMode.DROP)
+
+func _on_drop_cancel_pressed():
+	SetButtonMode(ButtonMode.ITEM)
+
+func _on_drop_less_pressed():
+	dropValue -= 1
+	RefreshDropMode()
+
+func _on_drop_more_pressed():
+	dropValue += 1
+	RefreshDropMode()
+
+func _on_confirm_drop_pressed():
 	if selectedTile and selectedTile.cell:
-		Network.DropItem(selectedTile.cell.id, 1)
+		Network.DropItem(selectedTile.cell.id, dropValue)
+	SetButtonMode(ButtonMode.ITEM)

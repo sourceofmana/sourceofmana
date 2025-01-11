@@ -2,6 +2,7 @@ extends WindowPanel
 
 @onready var textureRect : TextureRect = $ScrollContainer/TextureRect
 @onready var scrollContainer : ScrollContainer = $ScrollContainer
+
 #
 func Warped():
 	if textureRect and Launcher.Map and Launcher.Map.mapNode:

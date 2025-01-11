@@ -127,47 +127,96 @@ script = ExtResource("5_p6o47")
 [node name="ButtonsSeparator" type="HSeparator" parent="Margin/VBoxContainer"]
 layout_mode = 2
 
-[node name="Buttons" type="HBoxContainer" parent="Margin/VBoxContainer"]
+[node name="ItemButtons" type="HBoxContainer" parent="Margin/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Drop" type="Button" parent="Margin/VBoxContainer/Buttons"]
+[node name="Drop" type="Button" parent="Margin/VBoxContainer/ItemButtons"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Drop"
 
-[node name="Control" type="Control" parent="Margin/VBoxContainer/Buttons"]
+[node name="Control" type="Control" parent="Margin/VBoxContainer/ItemButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="Unequip" type="Button" parent="Margin/VBoxContainer/Buttons"]
+[node name="Unequip" type="Button" parent="Margin/VBoxContainer/ItemButtons"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Unequip"
 
-[node name="Equip" type="Button" parent="Margin/VBoxContainer/Buttons"]
+[node name="Equip" type="Button" parent="Margin/VBoxContainer/ItemButtons"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Equip"
 
-[node name="Use" type="Button" parent="Margin/VBoxContainer/Buttons"]
+[node name="Use" type="Button" parent="Margin/VBoxContainer/ItemButtons"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Use"
 
+[node name="DropButtons" type="HBoxContainer" parent="Margin/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Cancel" type="Button" parent="Margin/VBoxContainer/DropButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"LargeButton"
+text = "Cancel"
+
+[node name="EmptyLeft" type="Control" parent="Margin/VBoxContainer/DropButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="Less" type="Button" parent="Margin/VBoxContainer/DropButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"LargeButton"
+text = "<"
+
+[node name="Label" type="Label" parent="Margin/VBoxContainer/DropButtons"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "1"
+horizontal_alignment = 1
+
+[node name="More" type="Button" parent="Margin/VBoxContainer/DropButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"LargeButton"
+text = ">"
+
+[node name="EmptyRight" type="Control" parent="Margin/VBoxContainer/DropButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="Confirm" type="Button" parent="Margin/VBoxContainer/DropButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"LargeButton"
+text = "Confirm"
+
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="resized" from="Margin/VBoxContainer/Container/Margin/Grid" to="Margin/VBoxContainer/Container/Margin/Grid" method="_on_panel_resized"]
-[connection signal="pressed" from="Margin/VBoxContainer/Buttons/Drop" to="." method="_on_drop_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/Buttons/Unequip" to="." method="_on_unequip_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/Buttons/Equip" to="." method="_on_equip_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/Buttons/Use" to="." method="_on_use_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/ItemButtons/Drop" to="." method="_on_drop_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/ItemButtons/Unequip" to="." method="_on_unequip_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/ItemButtons/Equip" to="." method="_on_equip_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/ItemButtons/Use" to="." method="_on_use_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/DropButtons/Cancel" to="." method="_on_drop_cancel_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/DropButtons/Less" to="." method="_on_drop_less_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/DropButtons/More" to="." method="_on_drop_more_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/DropButtons/Confirm" to="." method="_on_confirm_drop_pressed"]

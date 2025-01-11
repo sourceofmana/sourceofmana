@@ -169,8 +169,8 @@ func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingl
 		Launcher.GUI.inventoryWindow.RefreshInventory()
 
 func DropAdded(dropID : int, itemID : int, pos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Map and itemID in DB.ItemsDB:
-		Launcher.Map.AddDrop(dropID, DB.ItemsDB[itemID], pos)
+	if Launcher.Map:
+		Launcher.Map.AddDrop(dropID, DB.GetItem(itemID), pos)
 
 func DropRemoved(dropID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:

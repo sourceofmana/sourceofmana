@@ -7,10 +7,9 @@ var equipments : Array[ItemCell]	= []
 
 #
 func GetItem(cell : ItemCell) -> Item:
-	for item in items:
-		if item.cell.name == cell.name:
-			return item
-	return null
+	var itemIdx : int = items.find(cell)
+	return items[itemIdx] if itemIdx != -1 else null
+
 #
 func PushItem(cell : ItemCell, count : int) -> bool:
 	if count <= 0 or not cell:
