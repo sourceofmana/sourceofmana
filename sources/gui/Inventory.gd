@@ -1,20 +1,34 @@
 extends WindowPanel
 
-@onready var weightStat : Control		= $Margin/VBoxContainer/Bars/WeightTex/ProgressBar
-@onready var slotStat : Control			= $Margin/VBoxContainer/Bars/SlotTex/ProgressBar
-@onready var grid : GridContainer		= $Margin/VBoxContainer/Container/Margin/Grid
+@onready var weightStat : Control		= $Margin/HBoxContainer/VBoxContainer/Bars/WeightTex/ProgressBar
+@onready var slotStat : Control			= $Margin/HBoxContainer/VBoxContainer/Bars/SlotTex/ProgressBar
+@onready var grid : GridContainer		= $Margin/HBoxContainer/VBoxContainer/Container/Margin/Grid
 
-@onready var itemButtons : Control		= $Margin/VBoxContainer/ItemButtons
-@onready var dropButtons : Control		= $Margin/VBoxContainer/DropButtons
+@onready var itemButtons : Control		= $Margin/HBoxContainer/VBoxContainer/ItemButtons
+@onready var dropButtons : Control		= $Margin/HBoxContainer/VBoxContainer/DropButtons
 
-@onready var dropButton : Button		= $Margin/VBoxContainer/ItemButtons/Drop
-@onready var useButton : Button			= $Margin/VBoxContainer/ItemButtons/Use
-@onready var equipButton : Button		= $Margin/VBoxContainer/ItemButtons/Equip
-@onready var unequipButton : Button		= $Margin/VBoxContainer/ItemButtons/Unequip
+@onready var dropButton : Button		= $Margin/HBoxContainer/VBoxContainer/ItemButtons/Drop
+@onready var useButton : Button			= $Margin/HBoxContainer/VBoxContainer/ItemButtons/Use
+@onready var equipButton : Button		= $Margin/HBoxContainer/VBoxContainer/ItemButtons/Equip
+@onready var unequipButton : Button		= $Margin/HBoxContainer/VBoxContainer/ItemButtons/Unequip
 
-@onready var lessDropButton : Button	= $Margin/VBoxContainer/DropButtons/Less
-@onready var moreDropButton : Button	= $Margin/VBoxContainer/DropButtons/More
-@onready var dropLabel : Label			= $Margin/VBoxContainer/DropButtons/Label
+@onready var lessDropButton : Button	= $Margin/HBoxContainer/VBoxContainer/DropButtons/Less
+@onready var moreDropButton : Button	= $Margin/HBoxContainer/VBoxContainer/DropButtons/More
+@onready var dropLabel : Label			= $Margin/HBoxContainer/VBoxContainer/DropButtons/Label
+
+@onready var equipmentSlots : Array[CellTile] = [
+	null, # Body
+	null, # Face
+	null, # Hair
+	$Margin/HBoxContainer/GridContainer/Chest,
+	$Margin/HBoxContainer/GridContainer/Legs,
+	$Margin/HBoxContainer/GridContainer/Feet,
+	$Margin/HBoxContainer/GridContainer/Hands,
+	$Margin/HBoxContainer/GridContainer/Head,
+	$Margin/HBoxContainer/GridContainer/Neck,
+	$Margin/HBoxContainer/GridContainer/Weapon,
+	$Margin/HBoxContainer/GridContainer/Shield,
+]
 
 enum ButtonMode
 {
@@ -23,18 +37,39 @@ enum ButtonMode
 	DROP,
 }
 
+enum FilterTab
+{
+	ALL = 0,
+	EQUIPMENT,
+	USABLE,
+	COMMON,
+	QUEST
+}
+
 var selectedTile : CellTile				= null
 var dropValue : int						= 1
 var buttonMode : ButtonMode				= ButtonMode.UNKNOWN
 
 #
-func RefreshInventory():
+func IsFiltered(cell : ItemCell, filter : FilterTab) -> bool:
+	if not cell:
+		return false
+
+	match filter:
+		FilterTab.ALL: return true
+		FilterTab.EQUIPMENT: return cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and cell.slot <= ActorCommons.Slot.LAST_EQUIPMENT
+		FilterTab.USABLE: return cell.usable
+		FilterTab.COMMON: return cell.slot == ActorCommons.Slot.NONE and not cell.usable
+		FilterTab.QUEST: return cell.slot == ActorCommons.Slot.NONE and not cell.usable and not cell.stackable
+	return false
+
+func RefreshInventory(filter : FilterTab = FilterTab.ALL):
 	var count : int			= 0
 	var tileIdx : int		= 0
 	var tile : CellTile		= grid.tiles[tileIdx]
 
 	for item in Launcher.Player.inventory.items:
-		if item and item.cell:
+		if item and item.cell and IsFiltered(item.cell, filter):
 			count += 1
 			CellTile.RefreshShortcuts(item.cell, item.count)
 			if item.cell.stackable:
@@ -59,14 +94,18 @@ func RefreshInventory():
 	weightStat.SetStat(Formula.GetWeight(Launcher.Player.inventory), Launcher.Player.stat.current.weightCapacity)
 	slotStat.SetStat(count, ActorCommons.InventorySize)
 
+	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
+		equipmentSlots[slot].AssignData(Launcher.Player.inventory.equipments[slot])
+
 	SelectTile(selectedTile)
 
 func SelectTile(tile : CellTile):
-	if selectedTile and selectedTile != tile:
-		selectedTile.RemoveSelection()
-	selectedTile = tile if tile else grid.GetTile(0)
-	if selectedTile:
-		selectedTile.AddSelection()
+	if selectedTile != tile:
+		if selectedTile:
+			selectedTile.RemoveSelection()
+		selectedTile = tile if tile else grid.GetTile(0)
+		if selectedTile:
+			selectedTile.AddSelection()
 	RefreshItemMode()
 
 func RefreshItemMode():
@@ -155,3 +194,6 @@ func _on_confirm_drop_pressed():
 	if selectedTile and selectedTile.cell:
 		Network.DropItem(selectedTile.cell.id, dropValue)
 	SetButtonMode(ButtonMode.ITEM)
+
+func _on_tab_container_tab_changed(tab : int):
+	RefreshInventory(tab)

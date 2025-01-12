@@ -2,6 +2,7 @@ extends ColorRect
 class_name CellTile
 
 @export var draggable : bool			= false
+@export var defaultIcon : CompressedTexture2D = null
 @onready var icon : TextureRect			= $Icon
 @onready var countLabel : Label			= $Count
 @onready var cooldownLabel : Label		= $Cooldown
@@ -51,15 +52,18 @@ func AssignData(newCell : BaseCell, newCount : int = 1):
 	cell = newCell
 	count = newCount
 	if icon:
-		icon.set_texture(cell.icon if cell else null)
+		icon.set_texture(cell.icon if cell else defaultIcon)
+
 	UpdateCountLabel()
 	SetToolTip()
-	if not draggable:
+	if not draggable and not defaultIcon:
 		set_visible(count > 0 and cell != null)
 
 func UnassignData(sourceCell : BaseCell):
-	icon.material.set_shader_parameter("progress", -INF)
-	icon.material.set_shader_parameter("modulate", Color.WHITE)
+	if icon:
+		icon.material.set_shader_parameter("progress", -INF)
+		icon.material.set_shader_parameter("modulate", Color.WHITE)
+		icon.set_texture(defaultIcon)
 	if sourceCell:
 		if sourceCell.used.is_connected(Used):
 			sourceCell.used.disconnect(Used)
@@ -100,6 +104,8 @@ func UseCell():
 
 func Used(cooldown : float = 0.0):
 	cooldownTimer = cooldown
+	set_process(true)
+
 
 func ClearCooldown():
 	cooldownTimer = -INF
@@ -124,6 +130,11 @@ func _drop_data(_at_position : Vector2, data):
 	CellTile.RefreshShortcuts(data)
 
 # Default
+func _ready():
+	if defaultIcon and icon:
+		icon.set_texture(defaultIcon)
+	set_process(false)
+
 func _gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -132,7 +143,7 @@ func _gui_input(event):
 			elif event.pressed:
 				selected.emit(self)
 
-func _process(delta):
+func _process(delta : float):
 	if cooldownTimer != -INF:
 		cooldownTimer -= delta
 		if cooldownTimer <= 0.0 or Launcher.Player == null:
@@ -150,3 +161,5 @@ func _process(delta):
 		if shineTimer <= 0.0 or Launcher.Player == null:
 			shineTimer = -INF
 		icon.material.set_shader_parameter("progress", shineTimer)
+	else:
+		set_process(false)

@@ -1,10 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://u31xl3ap3wd8"]
+[gd_scene load_steps=15 format=3 uid="uid://u31xl3ap3wd8"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_al454"]
 [ext_resource type="Script" path="res://sources/gui/Inventory.gd" id="2_vkka2"]
 [ext_resource type="Texture2D" uid="uid://b1vkianlvn8yc" path="res://data/graphics/gui/bar.png" id="3_3s8jh"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="4_pr2vo"]
 [ext_resource type="Script" path="res://sources/gui/CellGrid.gd" id="5_p6o47"]
+[ext_resource type="PackedScene" uid="uid://cq76gfx44nn6q" path="res://presets/gui/CellTile.tscn" id="6_e0ndm"]
+[ext_resource type="Texture2D" uid="uid://dp2mkhn8q5h4s" path="res://data/graphics/gui/inventory/slots/head.png" id="7_75p06"]
+[ext_resource type="Texture2D" uid="uid://dygpktmxg3nbd" path="res://data/graphics/gui/inventory/slots/hands.png" id="8_gkthq"]
+[ext_resource type="Texture2D" uid="uid://b66vky0av3ser" path="res://data/graphics/gui/inventory/slots/chest.png" id="9_iakqk"]
+[ext_resource type="Texture2D" uid="uid://byespnax5ttts" path="res://data/graphics/gui/inventory/slots/neck.png" id="10_eydmr"]
+[ext_resource type="Texture2D" uid="uid://cnnttwa2ivxa3" path="res://data/graphics/gui/inventory/slots/weapon.png" id="11_dploo"]
+[ext_resource type="Texture2D" uid="uid://b5klttnrvu1ry" path="res://data/graphics/gui/inventory/slots/legs.png" id="12_o8mem"]
+[ext_resource type="Texture2D" uid="uid://mij2lq0lkfjf" path="res://data/graphics/gui/inventory/slots/shield.png" id="13_cqujk"]
+[ext_resource type="Texture2D" uid="uid://bv7mmkjyv5bud" path="res://data/graphics/gui/inventory/slots/feet.png" id="14_c43pa"]
 
 [node name="Panel" type="PanelContainer"]
 show_behind_parent = true
@@ -17,6 +26,7 @@ offset_bottom = -555.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_al454")
+theme_type_variation = &"DialogueWindow"
 script = ExtResource("2_vkka2")
 
 [node name="Margin" type="MarginContainer" parent="."]
@@ -26,22 +36,25 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_custom_anchors = true
 
-[node name="Bars" type="HBoxContainer" parent="Margin/VBoxContainer"]
+[node name="Bars" type="HBoxContainer" parent="Margin/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="WeightLabel" type="Label" parent="Margin/VBoxContainer/Bars"]
+[node name="WeightLabel" type="Label" parent="Margin/HBoxContainer/VBoxContainer/Bars"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Weight"
 
-[node name="WeightTex" type="NinePatchRect" parent="Margin/VBoxContainer/Bars"]
+[node name="WeightTex" type="NinePatchRect" parent="Margin/HBoxContainer/VBoxContainer/Bars"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -51,7 +64,7 @@ patch_margin_top = 2
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="ProgressBar" parent="Margin/VBoxContainer/Bars/WeightTex" instance=ExtResource("4_pr2vo")]
+[node name="ProgressBar" parent="Margin/HBoxContainer/VBoxContainer/Bars/WeightTex" instance=ExtResource("4_pr2vo")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,12 +82,12 @@ precisionDivider = 100
 numberAfterComma = 2
 metadata/_edit_layout_mode = 1
 
-[node name="SlotLabel" type="Label" parent="Margin/VBoxContainer/Bars"]
+[node name="SlotLabel" type="Label" parent="Margin/HBoxContainer/VBoxContainer/Bars"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Slot"
 
-[node name="SlotTex" type="NinePatchRect" parent="Margin/VBoxContainer/Bars"]
+[node name="SlotTex" type="NinePatchRect" parent="Margin/HBoxContainer/VBoxContainer/Bars"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -84,7 +97,7 @@ patch_margin_top = 2
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="ProgressBar" parent="Margin/VBoxContainer/Bars/SlotTex" instance=ExtResource("4_pr2vo")]
+[node name="ProgressBar" parent="Margin/HBoxContainer/VBoxContainer/Bars/SlotTex" instance=ExtResource("4_pr2vo")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -99,15 +112,43 @@ labelOffset = Vector2(0, -4)
 delayToFillSec = 2.0
 metadata/_edit_layout_mode = 1
 
-[node name="WeightSeparator" type="HSeparator" parent="Margin/VBoxContainer"]
+[node name="WeightSeparator" type="HSeparator" parent="Margin/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Container" type="ScrollContainer" parent="Margin/VBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="Margin/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="All" type="TabBar" parent="Margin/HBoxContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Equipment" type="TabBar" parent="Margin/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Consumable" type="TabBar" parent="Margin/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Resource" type="TabBar" parent="Margin/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="Quest" type="TabBar" parent="Margin/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4
+
+[node name="Container" type="ScrollContainer" parent="Margin/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
 
-[node name="Margin" type="MarginContainer" parent="Margin/VBoxContainer/Container"]
+[node name="Margin" type="MarginContainer" parent="Margin/HBoxContainer/VBoxContainer/Container"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -115,7 +156,7 @@ theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 
-[node name="Grid" type="GridContainer" parent="Margin/VBoxContainer/Container/Margin"]
+[node name="Grid" type="GridContainer" parent="Margin/HBoxContainer/VBoxContainer/Container/Margin"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -124,99 +165,145 @@ theme_override_constants/v_separation = 4
 columns = 4
 script = ExtResource("5_p6o47")
 
-[node name="ButtonsSeparator" type="HSeparator" parent="Margin/VBoxContainer"]
+[node name="ButtonsSeparator" type="HSeparator" parent="Margin/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ItemButtons" type="HBoxContainer" parent="Margin/VBoxContainer"]
+[node name="ItemButtons" type="HBoxContainer" parent="Margin/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Drop" type="Button" parent="Margin/VBoxContainer/ItemButtons"]
+[node name="Drop" type="Button" parent="Margin/HBoxContainer/VBoxContainer/ItemButtons"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Drop"
 
-[node name="Control" type="Control" parent="Margin/VBoxContainer/ItemButtons"]
+[node name="Control" type="Control" parent="Margin/HBoxContainer/VBoxContainer/ItemButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="Unequip" type="Button" parent="Margin/VBoxContainer/ItemButtons"]
+[node name="Unequip" type="Button" parent="Margin/HBoxContainer/VBoxContainer/ItemButtons"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Unequip"
 
-[node name="Equip" type="Button" parent="Margin/VBoxContainer/ItemButtons"]
+[node name="Equip" type="Button" parent="Margin/HBoxContainer/VBoxContainer/ItemButtons"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Equip"
 
-[node name="Use" type="Button" parent="Margin/VBoxContainer/ItemButtons"]
+[node name="Use" type="Button" parent="Margin/HBoxContainer/VBoxContainer/ItemButtons"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Use"
 
-[node name="DropButtons" type="HBoxContainer" parent="Margin/VBoxContainer"]
+[node name="DropButtons" type="HBoxContainer" parent="Margin/HBoxContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Cancel" type="Button" parent="Margin/VBoxContainer/DropButtons"]
+[node name="Cancel" type="Button" parent="Margin/HBoxContainer/VBoxContainer/DropButtons"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Cancel"
 
-[node name="EmptyLeft" type="Control" parent="Margin/VBoxContainer/DropButtons"]
+[node name="EmptyLeft" type="Control" parent="Margin/HBoxContainer/VBoxContainer/DropButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="Less" type="Button" parent="Margin/VBoxContainer/DropButtons"]
+[node name="Less" type="Button" parent="Margin/HBoxContainer/VBoxContainer/DropButtons"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "<"
 
-[node name="Label" type="Label" parent="Margin/VBoxContainer/DropButtons"]
+[node name="Label" type="Label" parent="Margin/HBoxContainer/VBoxContainer/DropButtons"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 text = "1"
 horizontal_alignment = 1
 
-[node name="More" type="Button" parent="Margin/VBoxContainer/DropButtons"]
+[node name="More" type="Button" parent="Margin/HBoxContainer/VBoxContainer/DropButtons"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = ">"
 
-[node name="EmptyRight" type="Control" parent="Margin/VBoxContainer/DropButtons"]
+[node name="EmptyRight" type="Control" parent="Margin/HBoxContainer/VBoxContainer/DropButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="Confirm" type="Button" parent="Margin/VBoxContainer/DropButtons"]
+[node name="Confirm" type="Button" parent="Margin/HBoxContainer/VBoxContainer/DropButtons"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Confirm"
 
+[node name="GridContainer" type="GridContainer" parent="Margin/HBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="Empty" type="Control" parent="Margin/HBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Head" parent="Margin/HBoxContainer/GridContainer" instance=ExtResource("6_e0ndm")]
+layout_mode = 2
+defaultIcon = ExtResource("7_75p06")
+
+[node name="Empty2" type="Control" parent="Margin/HBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Hands" parent="Margin/HBoxContainer/GridContainer" instance=ExtResource("6_e0ndm")]
+layout_mode = 2
+defaultIcon = ExtResource("8_gkthq")
+
+[node name="Chest" parent="Margin/HBoxContainer/GridContainer" instance=ExtResource("6_e0ndm")]
+layout_mode = 2
+defaultIcon = ExtResource("9_iakqk")
+
+[node name="Neck" parent="Margin/HBoxContainer/GridContainer" instance=ExtResource("6_e0ndm")]
+layout_mode = 2
+defaultIcon = ExtResource("10_eydmr")
+
+[node name="Weapon" parent="Margin/HBoxContainer/GridContainer" instance=ExtResource("6_e0ndm")]
+layout_mode = 2
+defaultIcon = ExtResource("11_dploo")
+
+[node name="Legs" parent="Margin/HBoxContainer/GridContainer" instance=ExtResource("6_e0ndm")]
+layout_mode = 2
+defaultIcon = ExtResource("12_o8mem")
+
+[node name="Shield" parent="Margin/HBoxContainer/GridContainer" instance=ExtResource("6_e0ndm")]
+layout_mode = 2
+defaultIcon = ExtResource("13_cqujk")
+
+[node name="Empty3" type="Control" parent="Margin/HBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Feet" parent="Margin/HBoxContainer/GridContainer" instance=ExtResource("6_e0ndm")]
+layout_mode = 2
+defaultIcon = ExtResource("14_c43pa")
+
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="resized" from="Margin/VBoxContainer/Container/Margin/Grid" to="Margin/VBoxContainer/Container/Margin/Grid" method="_on_panel_resized"]
-[connection signal="pressed" from="Margin/VBoxContainer/ItemButtons/Drop" to="." method="_on_drop_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/ItemButtons/Unequip" to="." method="_on_unequip_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/ItemButtons/Equip" to="." method="_on_equip_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/ItemButtons/Use" to="." method="_on_use_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/DropButtons/Cancel" to="." method="_on_drop_cancel_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/DropButtons/Less" to="." method="_on_drop_less_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/DropButtons/More" to="." method="_on_drop_more_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/DropButtons/Confirm" to="." method="_on_confirm_drop_pressed"]
+[connection signal="tab_changed" from="Margin/HBoxContainer/VBoxContainer/TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="resized" from="Margin/HBoxContainer/VBoxContainer/Container/Margin/Grid" to="Margin/HBoxContainer/VBoxContainer/Container/Margin/Grid" method="_on_panel_resized"]
+[connection signal="pressed" from="Margin/HBoxContainer/VBoxContainer/ItemButtons/Drop" to="." method="_on_drop_pressed"]
+[connection signal="pressed" from="Margin/HBoxContainer/VBoxContainer/ItemButtons/Unequip" to="." method="_on_unequip_pressed"]
+[connection signal="pressed" from="Margin/HBoxContainer/VBoxContainer/ItemButtons/Equip" to="." method="_on_equip_pressed"]
+[connection signal="pressed" from="Margin/HBoxContainer/VBoxContainer/ItemButtons/Use" to="." method="_on_use_pressed"]
+[connection signal="pressed" from="Margin/HBoxContainer/VBoxContainer/DropButtons/Cancel" to="." method="_on_drop_cancel_pressed"]
+[connection signal="pressed" from="Margin/HBoxContainer/VBoxContainer/DropButtons/Less" to="." method="_on_drop_less_pressed"]
+[connection signal="pressed" from="Margin/HBoxContainer/VBoxContainer/DropButtons/More" to="." method="_on_drop_more_pressed"]
+[connection signal="pressed" from="Margin/HBoxContainer/VBoxContainer/DropButtons/Confirm" to="." method="_on_confirm_drop_pressed"]

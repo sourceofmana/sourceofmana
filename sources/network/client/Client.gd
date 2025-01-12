@@ -149,8 +149,8 @@ func ItemRemoved(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSin
 
 func ItemEquiped(ridAgent : int, itemID : int, state : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	var entity : Entity = Entities.Get(ridAgent)
-	if entity and DB.ItemsDB.has(itemID):
-		var cell : ItemCell = DB.ItemsDB[itemID]
+	if entity:
+		var cell : ItemCell = DB.GetItem(itemID)
 		if cell:
 			if state:
 				entity.inventory.EquipItem(cell)
@@ -158,9 +158,9 @@ func ItemEquiped(ridAgent : int, itemID : int, state : bool, _rpcID : int = Netw
 				entity.inventory.UnequipItem(cell)
 
 			entity.visual.SetEquipment(cell.slot)
-			if Launcher.GUI and Launcher.GUI.inventoryWindow:
+			if entity == Launcher.Player:
 				Launcher.GUI.inventoryWindow.RefreshInventory()
-			cell.used.emit()
+				cell.used.emit()
 
 func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and Launcher.Player.inventory:
