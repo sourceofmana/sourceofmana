@@ -208,5 +208,5 @@ func _on_confirm_drop_pressed():
 	SetButtonMode(ButtonMode.ITEM)
 
 func _on_tab_container_tab_changed(tab : int):
-	currentFilter = tab
+	currentFilter = tab as FilterTab
 	RefreshInventory()
