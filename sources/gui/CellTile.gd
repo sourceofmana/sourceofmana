@@ -6,6 +6,7 @@ class_name CellTile
 @onready var icon : TextureRect			= $Icon
 @onready var countLabel : Label			= $Count
 @onready var cooldownLabel : Label		= $Cooldown
+
 var cell : BaseCell						= null
 var selection : TextureRect				= null
 var cooldownTimer : float				= -INF
@@ -29,7 +30,7 @@ func SetToolTip():
 
 func UpdateCountLabel():
 	if countLabel:
-		if cell and cell is ItemCell and cell.slot != ActorCommons.Slot.NONE and Launcher.Player.inventory.equipments[cell.slot] == cell:
+		if not defaultIcon and cell and cell is ItemCell and cell.slot != ActorCommons.Slot.NONE and Launcher.Player.inventory.equipments[cell.slot] == cell:
 			countLabel.text = "~"
 		elif count >= 1000:
 			countLabel.text = "999+"
@@ -131,8 +132,8 @@ func _drop_data(_at_position : Vector2, data):
 
 # Default
 func _ready():
-	if defaultIcon and icon:
-		icon.set_texture(defaultIcon)
+	if icon:
+		icon.set_texture(cell.icon if cell else defaultIcon)
 	set_process(false)
 
 func _gui_input(event):

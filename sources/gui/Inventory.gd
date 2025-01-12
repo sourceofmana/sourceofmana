@@ -1,33 +1,34 @@
 extends WindowPanel
 
-@onready var weightStat : Control		= $Margin/HBoxContainer/VBoxContainer/Bars/WeightTex/ProgressBar
-@onready var slotStat : Control			= $Margin/HBoxContainer/VBoxContainer/Bars/SlotTex/ProgressBar
-@onready var grid : GridContainer		= $Margin/HBoxContainer/VBoxContainer/Container/Margin/Grid
+@onready var grid : GridContainer		= $Margin/HBoxContainer/ItemsBox/Container/Margin/Grid
 
-@onready var itemButtons : Control		= $Margin/HBoxContainer/VBoxContainer/ItemButtons
-@onready var dropButtons : Control		= $Margin/HBoxContainer/VBoxContainer/DropButtons
+@onready var itemButtons : Control		= $Margin/HBoxContainer/ItemsBox/ItemButtons
+@onready var dropButtons : Control		= $Margin/HBoxContainer/ItemsBox/DropButtons
 
-@onready var dropButton : Button		= $Margin/HBoxContainer/VBoxContainer/ItemButtons/Drop
-@onready var useButton : Button			= $Margin/HBoxContainer/VBoxContainer/ItemButtons/Use
-@onready var equipButton : Button		= $Margin/HBoxContainer/VBoxContainer/ItemButtons/Equip
-@onready var unequipButton : Button		= $Margin/HBoxContainer/VBoxContainer/ItemButtons/Unequip
+@onready var dropButton : Button		= $Margin/HBoxContainer/ItemsBox/ItemButtons/Drop
+@onready var useButton : Button			= $Margin/HBoxContainer/ItemsBox/ItemButtons/Use
+@onready var equipButton : Button		= $Margin/HBoxContainer/ItemsBox/ItemButtons/Equip
+@onready var unequipButton : Button		= $Margin/HBoxContainer/ItemsBox/ItemButtons/Unequip
 
-@onready var lessDropButton : Button	= $Margin/HBoxContainer/VBoxContainer/DropButtons/Less
-@onready var moreDropButton : Button	= $Margin/HBoxContainer/VBoxContainer/DropButtons/More
-@onready var dropLabel : Label			= $Margin/HBoxContainer/VBoxContainer/DropButtons/Label
+@onready var lessDropButton : Button	= $Margin/HBoxContainer/ItemsBox/DropButtons/Less
+@onready var moreDropButton : Button	= $Margin/HBoxContainer/ItemsBox/DropButtons/More
+@onready var dropLabel : Label			= $Margin/HBoxContainer/ItemsBox/DropButtons/Label
+
+@onready var weightStat : Control		= $Margin/HBoxContainer/InfoBox/Bars/WeightTex/ProgressBar
+@onready var slotStat : Control			= $Margin/HBoxContainer/InfoBox/Bars/SlotTex/ProgressBar
 
 @onready var equipmentSlots : Array[CellTile] = [
 	null, # Body
 	null, # Face
 	null, # Hair
-	$Margin/HBoxContainer/GridContainer/Chest,
-	$Margin/HBoxContainer/GridContainer/Legs,
-	$Margin/HBoxContainer/GridContainer/Feet,
-	$Margin/HBoxContainer/GridContainer/Hands,
-	$Margin/HBoxContainer/GridContainer/Head,
-	$Margin/HBoxContainer/GridContainer/Neck,
-	$Margin/HBoxContainer/GridContainer/Weapon,
-	$Margin/HBoxContainer/GridContainer/Shield,
+	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Chest,
+	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Legs,
+	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Feet,
+	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Hands,
+	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Head,
+	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Neck,
+	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Weapon,
+	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Shield,
 ]
 
 enum ButtonMode
@@ -49,6 +50,7 @@ enum FilterTab
 var selectedTile : CellTile				= null
 var dropValue : int						= 1
 var buttonMode : ButtonMode				= ButtonMode.UNKNOWN
+var currentFilter : FilterTab			= FilterTab.ALL
 
 #
 func IsFiltered(cell : ItemCell, filter : FilterTab) -> bool:
@@ -63,13 +65,13 @@ func IsFiltered(cell : ItemCell, filter : FilterTab) -> bool:
 		FilterTab.QUEST: return cell.slot == ActorCommons.Slot.NONE and not cell.usable and not cell.stackable
 	return false
 
-func RefreshInventory(filter : FilterTab = FilterTab.ALL):
+func RefreshInventory():
 	var count : int			= 0
 	var tileIdx : int		= 0
-	var tile : CellTile		= grid.tiles[tileIdx]
+	var tile : CellTile		= grid.GetTile(tileIdx)
 
 	for item in Launcher.Player.inventory.items:
-		if item and item.cell and IsFiltered(item.cell, filter):
+		if item and item.cell and IsFiltered(item.cell, currentFilter):
 			count += 1
 			CellTile.RefreshShortcuts(item.cell, item.count)
 			if item.cell.stackable:
@@ -87,6 +89,9 @@ func RefreshInventory(filter : FilterTab = FilterTab.ALL):
 						tile = grid.GetTile(tileIdx)
 					else:
 						break
+		elif selectedTile and item and item.cell == selectedTile.cell:
+			SelectTile(null)
+			selectedTile = null
 
 	for remainingIdx in range(tileIdx, grid.maxCount):
 		grid.tiles[remainingIdx].AssignData(null, 0)
@@ -97,7 +102,7 @@ func RefreshInventory(filter : FilterTab = FilterTab.ALL):
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
 		equipmentSlots[slot].AssignData(Launcher.Player.inventory.equipments[slot])
 
-	SelectTile(selectedTile)
+	SelectTile(selectedTile if selectedTile else grid.GetTile(0))
 
 func SelectTile(tile : CellTile):
 	if selectedTile != tile:
@@ -115,8 +120,10 @@ func RefreshItemMode():
 	if selectedTile and selectedTile.cell and selectedTile.count > 0:
 		var isEquipment : bool = selectedTile.cell.slot != ActorCommons.Slot.NONE
 		var isEquiped : bool = isEquipment and Launcher.Player.inventory.equipments[selectedTile.cell.slot] == selectedTile.cell
+		var isQuestItem : bool = selectedTile.cell.slot == ActorCommons.Slot.NONE and not selectedTile.cell.usable and not selectedTile.cell.stackable
 		useButton.set_visible(selectedTile.cell.usable)
-		dropButton.set_visible(true)
+		dropButton.set_visible(not isQuestItem)
+		dropButton.set_disabled(false)
 		equipButton.set_visible(isEquipment and not isEquiped)
 		unequipButton.set_visible(isEquipment and isEquiped)
 	else:
@@ -124,6 +131,11 @@ func RefreshItemMode():
 		useButton.set_visible(false)
 		equipButton.set_visible(false)
 		unequipButton.set_visible(false)
+
+	if not dropButton.is_visible() and not useButton.is_visible() and not equipButton.is_visible() and not unequipButton.is_visible():
+		dropButton.set_visible(true)
+		dropButton.set_disabled(true)
+
 
 func SetButtonMode(mode : ButtonMode):
 	buttonMode = mode
@@ -196,4 +208,5 @@ func _on_confirm_drop_pressed():
 	SetButtonMode(ButtonMode.ITEM)
 
 func _on_tab_container_tab_changed(tab : int):
-	RefreshInventory(tab)
+	currentFilter = tab
+	RefreshInventory()
