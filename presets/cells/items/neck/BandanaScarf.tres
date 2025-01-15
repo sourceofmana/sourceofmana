@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://f40w6s2w07wu"]
+
+[ext_resource type="Texture2D" uid="uid://dsr5s7hbgv4ga" path="res://data/graphics/items/neck/bandana-scarf.png" id="1_op2dy"]
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_lc3u8"]
+
+[resource]
+script = ExtResource("2_lc3u8")
+slot = 8
+textures = Array[Texture2D]([null, null, null])
+id = -1
+name = "Bandana Scarf"
+description = ""
+icon = ExtResource("1_op2dy")
+type = 0
+weight = 400.0
+stackable = false
+usable = false
+effects = {}

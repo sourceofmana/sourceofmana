@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://cfkwntfdq7qa6"]
+
+[ext_resource type="Texture2D" uid="uid://1x2n5gxlxlrl" path="res://data/graphics/items/head/desert-hood.png" id="1_iqaxl"]
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_68b7j"]
+
+[resource]
+script = ExtResource("2_68b7j")
+slot = 7
+textures = Array[Texture2D]([null, null, null])
+id = -1
+name = "Desert Hood"
+description = ""
+icon = ExtResource("1_iqaxl")
+type = 0
+weight = 300.0
+stackable = false
+usable = false
+effects = {}

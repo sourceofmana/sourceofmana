@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://bi4288d5a7kbn"]
+
+[ext_resource type="Texture2D" uid="uid://3wesghn8cgpr" path="res://data/graphics/items/legs/leather-pants.png" id="1_wys1t"]
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_rrcf8"]
+
+[resource]
+script = ExtResource("2_rrcf8")
+slot = 4
+textures = Array[Texture2D]([null, null, null])
+id = -1
+name = "Leather Pants"
+description = ""
+icon = ExtResource("1_wys1t")
+type = 0
+weight = 300.0
+stackable = false
+usable = false
+effects = {}

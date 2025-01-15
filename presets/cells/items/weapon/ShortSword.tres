@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://cyipbwryaa5ij"]
+
+[ext_resource type="Texture2D" uid="uid://d14dldvd6f4kt" path="res://data/graphics/items/weapon/shortsword.png" id="1_bnbkv"]
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_tfbm5"]
+
+[resource]
+script = ExtResource("2_tfbm5")
+slot = 9
+textures = Array[Texture2D]([null, null, null])
+id = -1
+name = "Short Sword"
+description = ""
+icon = ExtResource("1_bnbkv")
+type = 0
+weight = 400.0
+stackable = false
+usable = false
+effects = {}

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://d00eqktrfrrkj"]
+
+[ext_resource type="Texture2D" uid="uid://c8w6g0mumeaxd" path="res://data/graphics/items/chest/tanktop.png" id="1_ipbbs"]
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_y1gpw"]
+
+[resource]
+script = ExtResource("2_y1gpw")
+slot = 3
+textures = Array[Texture2D]([null, null, null])
+id = -1
+name = "Tank Top"
+description = ""
+icon = ExtResource("1_ipbbs")
+type = 0
+weight = 300.0
+stackable = false
+usable = false
+effects = {}

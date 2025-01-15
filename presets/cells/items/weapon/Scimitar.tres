@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://dw678a4b7ps2w"]
+
+[ext_resource type="Texture2D" uid="uid://c6ypehqc5uhcx" path="res://data/graphics/items/weapon/scimitar.png" id="1_soho8"]
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_8apsm"]
+
+[resource]
+script = ExtResource("2_8apsm")
+slot = 9
+textures = Array[Texture2D]([null, null, null])
+id = -1
+name = "Scimitar"
+description = "A curved blade as swift and unyielding as the desert sun."
+icon = ExtResource("1_soho8")
+type = 0
+weight = 400.0
+stackable = false
+usable = false
+effects = {}

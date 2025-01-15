@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://bcc00vd45ls38"]
+
+[ext_resource type="Texture2D" uid="uid://eaohskbfniyf" path="res://data/graphics/items/feet/desert-boots.png" id="1_777fh"]
+[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_qntph"]
+
+[resource]
+script = ExtResource("2_qntph")
+slot = 5
+textures = Array[Texture2D]([null, null, null])
+id = -1
+name = "Desert Boots"
+description = ""
+icon = ExtResource("1_777fh")
+type = 0
+weight = 300.0
+stackable = false
+usable = false
+effects = {}
