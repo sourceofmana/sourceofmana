@@ -210,8 +210,6 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/items/weapon/rockknife.png [Micksha]
 ./graphics/items/weapon/scimitar.png [ScratchIO] [Reid]
 ./graphics/items/weapon/shortsword.png [Reid]
-
-
 ./graphics/minimaps/artis/artis.png [Reid]
 ./graphics/minimaps/candor/candor-arena.png [Reid]
 ./graphics/minimaps/candor/candor-cave.png [Reid]
@@ -229,6 +227,8 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/accessories/ratto-tail.png [Coolkid782]
 ./graphics/sprites/equipments/chests/vneckjumper-female.png [Saphy]
 ./graphics/sprites/equipments/chests/vneckjumper-male.png [Saphy]
+./graphics/sprites/equipments/head/desert-hood.png [Enchilado] [Reid]
+./graphics/sprites/equipments/head/funky-hat.png [QOAL]
 ./graphics/sprites/equipments/legs/trousers-male.png [Reid]
 ./graphics/sprites/equipments/legs/trousers-female.png [Reid]
 ./graphics/sprites/monsters/bald.png [Reid]

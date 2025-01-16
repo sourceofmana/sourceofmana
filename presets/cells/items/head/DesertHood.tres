@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://cfkwntfdq7qa6"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=4 format=3 uid="uid://cfkwntfdq7qa6"]
 
 [ext_resource type="Texture2D" uid="uid://1x2n5gxlxlrl" path="res://data/graphics/items/head/desert-hood.png" id="1_iqaxl"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_68b7j"]
+[ext_resource type="Texture2D" uid="uid://d1kr6ha4fsfmj" path="res://data/graphics/sprites/equipments/head/desert-hood.png" id="3_vlg4g"]
 
 [resource]
 script = ExtResource("2_68b7j")
 slot = 7
-textures = Array[Texture2D]([null, null, null])
+textures = Array[Texture2D]([ExtResource("3_vlg4g"), ExtResource("3_vlg4g"), ExtResource("3_vlg4g")])
 id = -1
 name = "Desert Hood"
 description = ""
