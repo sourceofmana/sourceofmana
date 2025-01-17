@@ -237,6 +237,8 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/equipments/head/funky-hat.png [QOAL]
 ./graphics/sprites/equipments/legs/trousers-male.png [Reid]
 ./graphics/sprites/equipments/legs/trousers-female.png [Reid]
+./graphics/sprites/equipments/shield/leather-shield-male.png [Micksha] [Enchilado, Reid]
+./graphics/sprites/equipments/shield/leather-shield-female.png [Micksha] [Enchilado, Reid]
 ./graphics/sprites/monsters/bald.png [Reid]
 ./graphics/sprites/monsters/bun.png [Slave]
 ./graphics/sprites/monsters/center-parting.png [Kineticstorm]

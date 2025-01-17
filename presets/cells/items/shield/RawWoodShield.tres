@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://cwqxojvsapgus"]
 
-[ext_resource type="Texture2D" uid="uid://ois3tbneej8v" path="res://data/graphics/items/shield/leather-shield.png" id="1_6ccvo"]
+[ext_resource type="Texture2D" uid="uid://isxvnbvinfyl" path="res://data/graphics/items/shield/raw-wood-shield.png" id="1_p2nnm"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_wtls8"]
 
 [resource]
@@ -8,9 +8,9 @@ script = ExtResource("2_wtls8")
 slot = 10
 textures = Array[Texture2D]([null, null, null])
 id = -1
-name = "Leather Shield"
+name = "Raw Wood Shield"
 description = ""
-icon = ExtResource("1_6ccvo")
+icon = ExtResource("1_p2nnm")
 type = 0
 weight = 400.0
 stackable = false

@@ -1,16 +1,18 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://cnrkn75mvq8nu"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=5 format=3 uid="uid://cnrkn75mvq8nu"]
 
-[ext_resource type="Texture2D" uid="uid://isxvnbvinfyl" path="res://data/graphics/items/shield/raw-wood-shield.png" id="1_rboaf"]
+[ext_resource type="Texture2D" uid="uid://ois3tbneej8v" path="res://data/graphics/items/shield/leather-shield.png" id="1_xtpys"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_j4quq"]
+[ext_resource type="Texture2D" uid="uid://bma32mfuffgc6" path="res://data/graphics/sprites/equipments/shield/leather-shield-male.png" id="3_sdeoh"]
+[ext_resource type="Texture2D" uid="uid://ddmknrvyfv8x4" path="res://data/graphics/sprites/equipments/shield/leather-shield-female.png" id="4_e33d4"]
 
 [resource]
 script = ExtResource("2_j4quq")
 slot = 10
-textures = Array[Texture2D]([null, null, null])
+textures = Array[Texture2D]([ExtResource("3_sdeoh"), ExtResource("4_e33d4"), ExtResource("3_sdeoh")])
 id = -1
-name = "Raw Wood Shield"
+name = "Leather Shield"
 description = ""
-icon = ExtResource("1_rboaf")
+icon = ExtResource("1_xtpys")
 type = 0
 weight = 400.0
 stackable = false
