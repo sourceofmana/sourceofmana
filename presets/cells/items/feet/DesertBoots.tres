@@ -1,12 +1,16 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://bcc00vd45ls38"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://bcc00vd45ls38"]
 
 [ext_resource type="Texture2D" uid="uid://eaohskbfniyf" path="res://data/graphics/items/feet/desert-boots.png" id="1_777fh"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_qntph"]
+[ext_resource type="Material" uid="uid://bgogdjky3fh42" path="res://presets/palettes/equipments/material-daim-light.tres" id="3_lxxc2"]
+[ext_resource type="Texture2D" uid="uid://cfjjosglguhk5" path="res://data/graphics/sprites/equipments/feet/boots-male.png" id="4_w535q"]
+[ext_resource type="Texture2D" uid="uid://dlo5n0v1scwaf" path="res://data/graphics/sprites/equipments/feet/boots-female.png" id="5_4e7jx"]
 
 [resource]
 script = ExtResource("2_qntph")
 slot = 5
-textures = Array[Texture2D]([null, null, null])
+textures = Array[Texture2D]([ExtResource("4_w535q"), ExtResource("5_4e7jx"), ExtResource("4_w535q")])
+shader = ExtResource("3_lxxc2")
 id = -1
 name = "Desert Boots"
 description = ""

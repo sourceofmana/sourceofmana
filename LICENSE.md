@@ -227,6 +227,8 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/accessories/ratto-tail.png [Coolkid782]
 ./graphics/sprites/equipments/chests/vneckjumper-female.png [Saphy]
 ./graphics/sprites/equipments/chests/vneckjumper-male.png [Saphy]
+./graphics/sprites/equipments/feet/boots-male.png [BlackDon] [Reid]
+./graphics/sprites/equipments/feet/boots-female.png [BlackDon] [Reid]
 ./graphics/sprites/equipments/head/desert-hood.png [Enchilado] [Reid]
 ./graphics/sprites/equipments/head/funky-hat.png [QOAL]
 ./graphics/sprites/equipments/legs/trousers-male.png [Reid]
