@@ -12,8 +12,8 @@
 		},
 		"Skins": {
 			"Medium"		: "",
-			"Tanned"		: "human-skin-tanned.tres",
-			"Dark"			: "human-skin-dark.tres",
+			"Tanned"		: "races/human-skin-tanned.tres",
+			"Dark"			: "races/human-skin-dark.tres",
 		},
 	},
 	"Kralog": {
@@ -28,8 +28,8 @@
 			"Non Binary"	: "sprites/players/faces/kralog-male.png",
 		},
 		"Skins": {
-			"Frost"			: "kralog-skin-frost.tres",
-			"Fire"			: "kralog-skin-fire.tres",
+			"Frost"			: "races/kralog-skin-frost.tres",
+			"Fire"			: "races/kralog-skin-fire.tres",
 		},
 	},
 	"Raijin": {
@@ -44,8 +44,8 @@
 			"Non Binary"	: "sprites/players/faces/raijin-male.png",
 		},
 		"Skins": {
-			"Light"			: "raijin-skin-light.tres",
-			"Dark"			: "raijin-skin-dark.tres",
+			"Light"			: "races/raijin-skin-light.tres",
+			"Dark"			: "races/raijin-skin-dark.tres",
 		},
 	},
 	"Tritan": {
@@ -60,8 +60,8 @@
 			"Non Binary"	: "sprites/players/faces/tritan-male.png",
 		},
 		"Skins": {
-			"Ocean"			: "tritan-skin-ocean.tres",
-			"Oranye"		: "tritan-skin-oranye.tres",
+			"Ocean"			: "races/tritan-skin-ocean.tres",
+			"Oranye"		: "races/tritan-skin-oranye.tres",
 		},
 	},
 	"Ukar": {
@@ -76,7 +76,7 @@
 			"Non Binary"	: "sprites/players/faces/ukar-male.png",
 		},
 		"Skins": {
-			"Nordic"		: "ukar-skin-nordic.tres",
+			"Nordic"		: "races/ukar-skin-nordic.tres",
 		},
 	},
 }
