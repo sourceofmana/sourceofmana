@@ -27,6 +27,13 @@ func HasConsumed() -> bool:
 func ConsumeAction(action : String):
 	consumed.push_back(action)
 
+func TryConsume(event : InputEvent, action : String, forceMode : bool = false) -> bool:
+	if event.is_action_pressed(action, false, true) and Launcher.Action.IsActionPressed(action, forceMode):
+		Launcher.Action.ConsumeAction(action)
+		return true
+	return false
+
+
 func TryJustPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
 	if event.is_action_pressed(action, false, true) and IsActionJustPressed(action, forceMode):
 		ConsumeAction(action)
@@ -93,6 +100,11 @@ func _unhandled_input(event):
 				Network.SetClickPos(mousePos)
 				clickTimer.start()
 
+	if not HasConsumed() and Launcher.Camera:
+		if TryJustPressed(event, "gp_zoom_in"):		Launcher.Camera.ZoomIn()
+		elif TryJustPressed(event, "gp_zoom_out"):		Launcher.Camera.ZoomOut()
+		elif TryJustPressed(event, "gp_zoom_reset"):	Launcher.Camera.ZoomReset()
+
 func _physics_process(_deltaTime : float):
 	if Launcher.Player:
 		var move : Vector2 = GetMove()
@@ -150,10 +162,6 @@ func _input(event):
 		elif TryJustPressed(event, "gp_shortcut_10"):	Launcher.GUI.actionBoxes.Trigger(9)
 		elif TryJustPressed(event, "gp_pickup"):		Launcher.Map.PickupNearestDrop()
 		elif TryJustPressed(event, "gp_morph"):			Network.TriggerMorph()
-	if not HasConsumed() and Launcher.Camera:
-		if TryJustPressed(event, "gp_zoom_in"):		Launcher.Camera.ZoomIn()
-		elif TryJustPressed(event, "gp_zoom_out"):		Launcher.Camera.ZoomOut()
-		elif TryJustPressed(event, "gp_zoom_reset"):	Launcher.Camera.ZoomReset()
 	if not HasConsumed() and Launcher.GUI:
 		if TryJustPressed(event, "ui_close"):			Launcher.GUI.CloseWindow()
 		elif TryJustPressed(event, "ui_close", true):	Launcher.GUI.CloseCurrent()

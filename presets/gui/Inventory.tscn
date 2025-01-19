@@ -73,12 +73,8 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 4
 
-[node name="Container" type="ScrollContainer" parent="Margin/HBoxContainer/ItemsBox"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 3
-
-[node name="Margin" type="MarginContainer" parent="Margin/HBoxContainer/ItemsBox/Container"]
+[node name="Margin" type="MarginContainer" parent="Margin/HBoxContainer/ItemsBox"]
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -86,7 +82,13 @@ theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 
-[node name="Grid" type="GridContainer" parent="Margin/HBoxContainer/ItemsBox/Container/Margin"]
+[node name="Container" type="ScrollContainer" parent="Margin/HBoxContainer/ItemsBox/Margin"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+
+[node name="Grid" type="GridContainer" parent="Margin/HBoxContainer/ItemsBox/Margin/Container"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -259,11 +261,11 @@ layout_mode = 2
 
 [node name="Equipments" type="Label" parent="Margin/HBoxContainer/InfoBox"]
 layout_mode = 2
-size_flags_vertical = 3
 text = "Equipments"
 
 [node name="EquipmentGrid" type="GridContainer" parent="Margin/HBoxContainer/InfoBox"]
 layout_mode = 2
+size_flags_vertical = 3
 columns = 3
 
 [node name="Empty" type="Control" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid"]
@@ -310,7 +312,8 @@ defaultIcon = ExtResource("14_c43pa")
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="tab_changed" from="Margin/HBoxContainer/ItemsBox/TabContainer" to="." method="_on_tab_container_tab_changed"]
-[connection signal="resized" from="Margin/HBoxContainer/ItemsBox/Container/Margin/Grid" to="Margin/HBoxContainer/ItemsBox/Container/Margin/Grid" method="_on_panel_resized"]
+[connection signal="gui_input" from="Margin/HBoxContainer/ItemsBox/Margin/Container/Grid" to="Margin/HBoxContainer/ItemsBox/Margin/Container/Grid" method="_on_gui_input"]
+[connection signal="resized" from="Margin/HBoxContainer/ItemsBox/Margin/Container/Grid" to="Margin/HBoxContainer/ItemsBox/Margin/Container/Grid" method="_on_panel_resized"]
 [connection signal="pressed" from="Margin/HBoxContainer/ItemsBox/ItemButtons/Drop" to="." method="_on_drop_pressed"]
 [connection signal="pressed" from="Margin/HBoxContainer/ItemsBox/ItemButtons/Unequip" to="." method="_on_unequip_pressed"]
 [connection signal="pressed" from="Margin/HBoxContainer/ItemsBox/ItemButtons/Equip" to="." method="_on_equip_pressed"]

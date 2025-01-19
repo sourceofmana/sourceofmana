@@ -1,6 +1,6 @@
 extends WindowPanel
 
-@onready var grid : GridContainer		= $Margin/HBoxContainer/ItemsBox/Container/Margin/Grid
+@onready var grid : GridContainer		= $Margin/HBoxContainer/ItemsBox/Margin/Container/Grid
 
 @onready var itemButtons : Control		= $Margin/HBoxContainer/ItemsBox/ItemButtons
 @onready var dropButtons : Control		= $Margin/HBoxContainer/ItemsBox/DropButtons

@@ -31,3 +31,5 @@ script = ExtResource("3_vf0uc")
 maxCount = 17
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
+[connection signal="gui_input" from="ItemContainer/Grid" to="ItemContainer/Grid" method="_on_gui_input"]
+[connection signal="resized" from="ItemContainer/Grid" to="ItemContainer/Grid" method="_on_panel_resized"]
