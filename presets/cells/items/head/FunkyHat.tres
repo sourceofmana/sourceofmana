@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("2_j6wg3")
-slot = 7
+slot = 4
 textures = Array[Texture2D]([ExtResource("3_ce65w"), ExtResource("3_ce65w"), ExtResource("3_ce65w")])
 id = -1
 name = "Funky Hat"

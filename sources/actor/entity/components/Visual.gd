@@ -81,7 +81,6 @@ func LoadData(data : EntityData):
 					SetHair()
 				elif slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_EQUIPMENT:
 					SetEquipment(slot, data)
-					SetData(slot, data)
 
 	ResetAnimationValue()
 
@@ -187,10 +186,13 @@ func SetData(slot : int, data : EntityData):
 		return
 
 	if data:
-		if data._customTextures[slot]:
-			sprite.set_texture(FileSystem.LoadGfx(data._customTextures[slot]))
-		if data._customShaders[slot]:
-			sprite.set_material(FileSystem.LoadResource(data._customShaders[slot], false))
+		var rescaledSlot : int = slot
+		if slot >= ActorCommons.Slot.FIRST_MODIFIER and slot < ActorCommons.Slot.LAST_MODIFIER:
+			rescaledSlot = slot - ActorCommons.Slot.FIRST_MODIFIER
+			if data._customTextures[rescaledSlot]:
+				sprite.set_texture(FileSystem.LoadGfx(data._customTextures[rescaledSlot]))
+			if data._customShaders[rescaledSlot]:
+				sprite.set_material(FileSystem.LoadResource(data._customShaders[rescaledSlot], false))
 
 	LoadSpriteSlot(slot, sprite)
 
@@ -237,7 +239,7 @@ func GetPlayerOffset() -> int:
 #
 func Init(data : EntityData):
 	Callback.PlugCallback(get_parent().stat.entity_stats_updated, self.UpdateScale)
-	sprites.resize(ActorCommons.Slot.COUNT)
+	sprites.resize(ActorCommons.SlotEquipmentCount + ActorCommons.SlotModifierCount)
 
 	LoadData(data)
 

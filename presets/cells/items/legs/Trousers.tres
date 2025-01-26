@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("2_ieq8h")
-slot = 4
+slot = 1
 textures = Array[Texture2D]([ExtResource("3_4qmhy"), ExtResource("4_jc85r"), ExtResource("3_4qmhy")])
 id = -1
 name = "Trousers"

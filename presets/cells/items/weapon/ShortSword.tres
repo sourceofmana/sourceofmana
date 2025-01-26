@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_tfbm5")
-slot = 9
+slot = 6
 textures = Array[Texture2D]([null, null, null])
 id = -1
 name = "Short Sword"

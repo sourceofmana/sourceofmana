@@ -18,9 +18,6 @@ extends WindowPanel
 @onready var slotStat : Control			= $Margin/HBoxContainer/InfoBox/Bars/SlotTex/ProgressBar
 
 @onready var equipmentSlots : Array[CellTile] = [
-	null, # Body
-	null, # Face
-	null, # Hair
 	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Chest,
 	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Legs,
 	$Margin/HBoxContainer/InfoBox/EquipmentGrid/Feet,
@@ -100,7 +97,7 @@ func RefreshInventory():
 	slotStat.SetStat(count, ActorCommons.InventorySize)
 
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
-		equipmentSlots[slot].AssignData(Launcher.Player.inventory.equipments[slot])
+		equipmentSlots[slot - ActorCommons.Slot.FIRST_EQUIPMENT].AssignData(Launcher.Player.inventory.equipments[slot - ActorCommons.Slot.FIRST_EQUIPMENT])
 
 	SelectTile(selectedTile if selectedTile else grid.GetTile(0))
 

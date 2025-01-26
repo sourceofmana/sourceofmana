@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("2_lc3u8")
-slot = 8
+slot = 5
 textures = Array[Texture2D]([ExtResource("3_i0na6"), ExtResource("3_i0na6"), ExtResource("3_i0na6")])
 id = -1
 name = "Bandana Scarf"

@@ -52,10 +52,7 @@ enum State
 enum Slot
 {
 	NONE = -1,
-	BODY = 0,
-	FACE,
-	HAIR,
-	FIRST_EQUIPMENT,
+	FIRST_EQUIPMENT = 0,
 	CHEST = FIRST_EQUIPMENT,
 	LEGS,
 	FEET,
@@ -65,7 +62,13 @@ enum Slot
 	WEAPON,
 	SHIELD,
 	LAST_EQUIPMENT,
-	COUNT = LAST_EQUIPMENT
+	FIRST_MODIFIER = LAST_EQUIPMENT,
+	BODY = FIRST_MODIFIER,
+	FACE,
+	HAIR,
+	LAST_MODIFIER,
+	QUEST = LAST_MODIFIER,
+	COUNT,
 }
 
 enum Attribute
@@ -154,9 +157,6 @@ static func IsTriggering(agent : Actor) -> bool:
 	return agent and agent.state == State.TRIGGER
 
 #
-const slotBody : String						= "Body"
-const slotFace : String						= "Face"
-const slotHair : String						= "Hair"
 const slotChest : String					= "Chest"
 const slotLegs : String						= "Legs"
 const slotFeet : String						= "Feet"
@@ -165,12 +165,13 @@ const slotHead : String						= "Head"
 const slotNeck : String						= "Neck"
 const slotWeapon : String					= "Weapon"
 const slotShield : String					= "Shield"
+const slotBody : String						= "Body"
+const slotFace : String						= "Face"
+const slotHair : String						= "Hair"
+const slotQuest : String					= "Quest"
 
 static func GetSlotName(slot : Slot) -> String:
 	match slot:
-		Slot.BODY:				return slotBody
-		Slot.FACE:				return slotFace
-		Slot.HAIR:				return slotHair
 		Slot.CHEST:				return slotChest
 		Slot.LEGS:				return slotLegs
 		Slot.FEET:				return slotFeet
@@ -179,13 +180,17 @@ static func GetSlotName(slot : Slot) -> String:
 		Slot.NECK:				return slotNeck
 		Slot.WEAPON:			return slotWeapon
 		Slot.SHIELD:			return slotShield
+		Slot.BODY:				return slotBody
+		Slot.FACE:				return slotFace
+		Slot.HAIR:				return slotHair
+		Slot.QUEST:				return slotQuest
 		_:						return slotBody
+
+const SlotEquipmentCount : int				= ActorCommons.Slot.LAST_EQUIPMENT - ActorCommons.Slot.FIRST_EQUIPMENT
+const SlotModifierCount : int				= ActorCommons.Slot.LAST_MODIFIER - ActorCommons.Slot.FIRST_MODIFIER
 
 static func GetSlotID(slot : String) -> Slot:
 	match slot:
-		slotBody:					return Slot.BODY
-		slotFace:					return Slot.FACE
-		slotHair:					return Slot.HAIR
 		slotChest:					return Slot.CHEST
 		slotLegs:					return Slot.LEGS
 		slotFeet:					return Slot.FEET
@@ -194,6 +199,10 @@ static func GetSlotID(slot : String) -> Slot:
 		slotNeck:					return Slot.NECK
 		slotWeapon:					return Slot.WEAPON
 		slotShield:					return Slot.SHIELD
+		slotBody:					return Slot.BODY
+		slotFace:					return Slot.FACE
+		slotHair:					return Slot.HAIR
+		slotQuest:					return Slot.QUEST
 		_:							return Slot.BODY
 
 # Visual

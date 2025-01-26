@@ -8,7 +8,7 @@
 
 [resource]
 script = ExtResource("2_6hnmy")
-slot = 5
+slot = 2
 textures = Array[Texture2D]([ExtResource("3_bjf14"), ExtResource("4_30krm"), ExtResource("3_bjf14")])
 shader = ExtResource("3_hsd0w")
 id = -1

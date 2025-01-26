@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_nnkqv")
-slot = 3
+slot = 0
 textures = Array[Texture2D]([null, null, null])
 id = -1
 name = "Cotton Shirt"

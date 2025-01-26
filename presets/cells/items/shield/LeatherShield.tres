@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("2_j4quq")
-slot = 10
+slot = 7
 textures = Array[Texture2D]([ExtResource("3_sdeoh"), ExtResource("4_e33d4"), ExtResource("3_sdeoh")])
 id = -1
 name = "Leather Shield"

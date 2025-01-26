@@ -21,9 +21,9 @@ class_name EntityData
 const hashedStats : PackedStringArray			= ["race", "skintone", "hairstyle", "haircolor"]
 
 func _init():
-	_customTextures.resize(ActorCommons.Slot.COUNT)
-	_customShaders.resize(ActorCommons.Slot.COUNT)
-	_equipments.resize(ActorCommons.Slot.COUNT)
+	_customTextures.resize(ActorCommons.SlotModifierCount)
+	_customShaders.resize(ActorCommons.SlotModifierCount)
+	_equipments.resize(ActorCommons.SlotEquipmentCount)
 
 static func Create(key : String, result : Dictionary) -> EntityData:
 	var entity : EntityData = EntityData.new()
@@ -44,10 +44,10 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 					entity._equipments[itemCell.slot] = itemCell
 	if "Textures" in result:
 		for texture in result.Textures:
-			entity._customTextures[ActorCommons.GetSlotID(texture)] = result.Textures[texture]
+			entity._customTextures[ActorCommons.GetSlotID(texture) - ActorCommons.Slot.FIRST_MODIFIER] = result.Textures[texture]
 	if "Shaders" in result:
 		for shader in result.Shaders:
-			entity._customShaders[ActorCommons.GetSlotID(shader)] = result.Shaders[shader]
+			entity._customShaders[ActorCommons.GetSlotID(shader) - ActorCommons.Slot.FIRST_MODIFIER] = result.Shaders[shader]
 	if "DisplayName" in result:
 		entity._displayName = result.DisplayName
 	if "Behaviour" in result:
