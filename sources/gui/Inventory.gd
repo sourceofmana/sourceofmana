@@ -59,7 +59,7 @@ func IsFiltered(cell : ItemCell, filter : FilterTab) -> bool:
 		FilterTab.EQUIPMENT: return cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and cell.slot <= ActorCommons.Slot.LAST_EQUIPMENT
 		FilterTab.USABLE: return cell.usable
 		FilterTab.COMMON: return cell.slot == ActorCommons.Slot.NONE and not cell.usable
-		FilterTab.QUEST: return cell.slot == ActorCommons.Slot.NONE and not cell.usable and not cell.stackable
+		FilterTab.QUEST: return cell.slot == ActorCommons.Slot.QUEST
 	return false
 
 func RefreshInventory():
@@ -115,9 +115,9 @@ func RefreshItemMode():
 	dropButtons.set_visible(false)
 
 	if selectedTile and selectedTile.cell and selectedTile.count > 0:
-		var isEquipment : bool = selectedTile.cell.slot != ActorCommons.Slot.NONE
+		var isEquipment : bool = selectedTile.cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and selectedTile.cell.slot < ActorCommons.Slot.LAST_EQUIPMENT
 		var isEquiped : bool = isEquipment and Launcher.Player.inventory.equipments[selectedTile.cell.slot] == selectedTile.cell
-		var isQuestItem : bool = selectedTile.cell.slot == ActorCommons.Slot.NONE and not selectedTile.cell.usable and not selectedTile.cell.stackable
+		var isQuestItem : bool = selectedTile.cell.slot == ActorCommons.Slot.QUEST
 		useButton.set_visible(selectedTile.cell.usable)
 		dropButton.set_visible(not isQuestItem)
 		dropButton.set_disabled(false)

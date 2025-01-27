@@ -194,6 +194,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/items/legs/leather-pants.png [Reid]
 ./graphics/items/legs/trousers.png [Reid]
 ./graphics/items/neck/bandana-scarf.png [Reid]
+./graphics/items/quest/letter.png [Reid]
 ./graphics/items/shield/leather-shield.png [Len]
 ./graphics/items/shield/raw-wood-shield.png [Enchilado]
 ./graphics/items/skill/inma.png [7Soul] [Reid]
