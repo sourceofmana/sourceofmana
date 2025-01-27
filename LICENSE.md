@@ -236,6 +236,8 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/equipments/hands/gloves-female.png [Fate] [Reid]
 ./graphics/sprites/equipments/head/desert-hood.png [Enchilado] [Reid]
 ./graphics/sprites/equipments/head/funky-hat.png [QOAL]
+./graphics/sprites/equipments/legs/cloudpants-male.png [LuH] [Reid]
+./graphics/sprites/equipments/legs/cloudpants-female.png [Luh] [Reid]
 ./graphics/sprites/equipments/legs/trousers-male.png [Reid]
 ./graphics/sprites/equipments/legs/trousers-female.png [Reid]
 ./graphics/sprites/equipments/neck/bandana-scarf.png [Reid]
