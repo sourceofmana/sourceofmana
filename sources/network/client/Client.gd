@@ -128,18 +128,18 @@ func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : 
 			entity.stat.concentration	= concentration
 			entity.stat.RefreshAttributes()
 
-func ItemAdded(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Player and DB.ItemsDB.has(itemID):
-		var cell : BaseCell = DB.ItemsDB[itemID]
+func ItemAdded(itemID : int, customfield : String, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player:
+		var cell : BaseCell = DB.GetItem(itemID, customfield)
 		if cell and Launcher.Player.inventory.PushItem(cell, count):
 			if Launcher.GUI:
 				Launcher.GUI.pickupPanel.AddLast(cell, count)
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
 
-func ItemRemoved(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Player and DB.ItemsDB.has(itemID):
-		var cell : BaseCell = DB.ItemsDB[itemID]
+func ItemRemoved(itemID : int, customfield : String, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player:
+		var cell : BaseCell = DB.GetItem(itemID, customfield)
 		if cell:
 			Launcher.Player.inventory.PopItem(cell, count)
 			CellTile.RefreshShortcuts(cell)
@@ -147,10 +147,10 @@ func ItemRemoved(itemID : int, count : int, _rpcID : int = NetworkCommons.RidSin
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
 
-func ItemEquiped(ridAgent : int, itemID : int, state : bool, _rpcID : int = NetworkCommons.RidSingleMode):
+func ItemEquiped(ridAgent : int, itemID : int, customfield : String, state : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	var entity : Entity = Entities.Get(ridAgent)
 	if entity:
-		var cell : ItemCell = DB.GetItem(itemID)
+		var cell : ItemCell = DB.GetItem(itemID, customfield)
 		if cell:
 			if state:
 				entity.inventory.EquipItem(cell)
@@ -168,9 +168,9 @@ func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingl
 	if Launcher.GUI and Launcher.GUI.inventoryWindow:
 		Launcher.GUI.inventoryWindow.RefreshInventory()
 
-func DropAdded(dropID : int, itemID : int, pos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
+func DropAdded(dropID : int, itemID : int, customfield : String, pos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.AddDrop(dropID, DB.GetItem(itemID), pos)
+		Launcher.Map.AddDrop(dropID, DB.GetItem(itemID, customfield), pos)
 
 func DropRemoved(dropID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:

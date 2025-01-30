@@ -217,32 +217,32 @@ func AddAttribute(stat : ActorCommons.Attribute, rpcID : int = NetworkCommons.Ri
 
 # Items
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemAdded(itemID : int, count : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ItemAdded", [itemID, count], rpcID)
+func ItemAdded(itemID : int, customfield : String, count : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("ItemAdded", [itemID, customfield, count], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemRemoved(itemID : int, count : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ItemRemoved", [itemID, count], rpcID)
+func ItemRemoved(itemID : int, customfield : String, count : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("ItemRemoved", [itemID, customfield, count], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemEquiped(agentID : int, itemID : int, state : bool, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ItemEquiped", [agentID, itemID, state], rpcID)
+func ItemEquiped(agentID : int, itemID : int, customfield : String, state : bool, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("ItemEquiped", [agentID, itemID, customfield, state], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("UseItem", [itemID], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func DropItem(itemID : int, itemCount : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("DropItem", [itemID, itemCount], rpcID)
+func DropItem(itemID : int, customfield : String, itemCount : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallServer("DropItem", [itemID, customfield, itemCount], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func EquipItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("EquipItem", [itemID], rpcID)
+func EquipItem(itemID : int, customfield : String, rpcID : int = NetworkCommons.RidSingleMode):
+	CallServer("EquipItem", [itemID, customfield], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func UnequipItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("UnequipItem", [itemID], rpcID)
+func UnequipItem(itemID : int, customfield : String, rpcID : int = NetworkCommons.RidSingleMode):
+	CallServer("UnequipItem", [itemID, customfield], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
@@ -254,8 +254,8 @@ func RefreshInventory(cells : Dictionary, rpcID : int = NetworkCommons.RidSingle
 
 # Drop
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func DropAdded(dropID : int, itemID : int, pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("DropAdded", [dropID, itemID, pos], rpcID)
+func DropAdded(dropID : int, itemID : int, customfield : String, pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("DropAdded", [dropID, itemID, customfield, pos], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func DropRemoved(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):

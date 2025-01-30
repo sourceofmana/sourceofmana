@@ -174,11 +174,11 @@ func _on_use_pressed():
 
 func _on_equip_pressed():
 	if selectedTile and selectedTile.cell:
-		Network.EquipItem(selectedTile.cell.id)
+		Network.EquipItem(selectedTile.cell.id, selectedTile.cell.customfield)
 
 func _on_unequip_pressed():
 	if selectedTile and selectedTile.cell:
-		Network.UnequipItem(selectedTile.cell.id)
+		Network.UnequipItem(selectedTile.cell.id, selectedTile.cell.customfield)
 
 func _on_drop_pressed():
 	if selectedTile:
@@ -201,7 +201,7 @@ func _on_drop_more_pressed():
 
 func _on_confirm_drop_pressed():
 	if selectedTile and selectedTile.cell:
-		Network.DropItem(selectedTile.cell.id, dropValue)
+		Network.DropItem(selectedTile.cell.id, selectedTile.cell.customfield, dropValue)
 	SetButtonMode(ButtonMode.ITEM)
 
 func _on_tab_container_tab_changed(tab : int):

@@ -222,28 +222,28 @@ func AddAttribute(attribute : ActorCommons.Attribute, rpcID : int = NetworkCommo
 
 # Inventory
 func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var cell : ItemCell = DB.ItemsDB.get(itemID)
+	var cell : ItemCell = DB.GetItem(itemID)
 	if cell and cell.usable:
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.UseItem(cell)
 
-func DropItem(itemID : int, itemCount : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var cell : ItemCell = DB.ItemsDB.get(itemID)
-	if cell and cell:
+func DropItem(itemID : int, customfield : String, itemCount : int, rpcID : int = NetworkCommons.RidSingleMode):
+	var cell : ItemCell = DB.GetItem(itemID, customfield)
+	if cell:
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.DropItem(cell, itemCount)
 
-func EquipItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var cell : ItemCell = DB.ItemsDB.get(itemID)
+func EquipItem(itemID : int, customfield : String, rpcID : int = NetworkCommons.RidSingleMode):
+	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell and cell.slot != ActorCommons.Slot.NONE:
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.EquipItem(cell)
 
-func UnequipItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	var cell : ItemCell = DB.ItemsDB.get(itemID)
+func UnequipItem(itemID : int, customfield : String, rpcID : int = NetworkCommons.RidSingleMode):
+	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell and cell.slot != ActorCommons.Slot.NONE:
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:

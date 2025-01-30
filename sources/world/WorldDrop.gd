@@ -15,7 +15,7 @@ static func PushDrop(item : Item, agent : BaseAgent):
 
 			var dropID : int = drop.get_instance_id()
 			drop.timer = Callback.SelfDestructTimer(inst, ActorCommons.DropDelay, WorldDrop.Timeout, [dropID, inst])
-			Network.Server.NotifyInstance(inst, "DropAdded", [dropID, item.cell.id, drop.position])
+			Network.Server.NotifyInstance(inst, "DropAdded", [dropID, item.cell.id, item.cell.customfield, drop.position])
 
 static func PopDrop(dropID : int, inst : WorldInstance) -> bool:
 	if inst and inst.drops.has(dropID):

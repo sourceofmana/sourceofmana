@@ -164,7 +164,7 @@ func ClearTimer(timer : Timer):
 # Inventory
 func HasItem(itemID : int, count : int = 1) -> bool:
 	if own is PlayerAgent:
-		var cell : BaseCell = DB.GetItem(itemID)
+		var cell : ItemCell = DB.GetItem(itemID)
 		return own.inventory.HasItem(cell, count) if cell else false
 	return false
 
@@ -172,7 +172,7 @@ func HasItemsSpace(items : Array) -> bool:
 	var totalCount : int = 0
 	for item in items:
 		var itemCount : int = 1
-		var cell : BaseCell = null
+		var cell : ItemCell = null
 		if item is Array:
 			assert(item.size() == 2, "Wrong format to check user inventory space")
 			if item.size() == 2:
@@ -193,13 +193,13 @@ func HasSpace(itemCount : int) -> bool:
 
 func AddItem(itemID : int, count : int = 1) -> bool:
 	if own is PlayerAgent:
-		var cell : BaseCell = DB.GetItem(itemID)
+		var cell : ItemCell = DB.GetItem(itemID)
 		return own.inventory.AddItem(cell, count) if cell else false
 	return false
 
 func RemoveItem(itemID : int, count : int = 1) -> bool:
 	if own is PlayerAgent:
-		var cell : BaseCell = DB.GetItem(itemID)
+		var cell : ItemCell = DB.GetItem(itemID)
 		return own.inventory.RemoveItem(cell, count) if cell else false
 	return false
 

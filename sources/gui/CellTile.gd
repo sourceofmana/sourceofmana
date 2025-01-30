@@ -22,6 +22,8 @@ func SetToolTip():
 	var tooltip : String = ""
 	if cell:
 		tooltip = cell.name
+		if cell is ItemCell and not cell.customfield.is_empty():
+			tooltip += " (%s)" % cell.customfield
 		if cell.description:
 			tooltip += "\n" + cell.description
 		if cell.weight == 0:
@@ -54,6 +56,8 @@ func AssignData(newCell : BaseCell, newCount : int = 1):
 	count = newCount
 	if icon:
 		icon.set_texture(cell.icon if cell else defaultIcon)
+		if cell and cell is ItemCell and cell.shader != null:
+			icon.set_material(cell.shader)
 
 	UpdateCountLabel()
 	SetToolTip()

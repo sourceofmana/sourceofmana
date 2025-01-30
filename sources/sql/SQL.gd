@@ -163,30 +163,31 @@ func UpdateStat(charID : int, stats : ActorStats) -> bool:
 	return db.update_rows("stat", "char_id = %d" % charID, data)
 
 # Inventory
-func GetItem(charID : int, itemID : int, storageType : int = 0) -> Dictionary:
-	var results : Array[Dictionary] = db.select_rows("item", "item_id = %d AND char_id = %d AND storage = %d" % [itemID, charID, storageType], ["*"])
+func GetItem(charID : int, itemID : int, customfield : String, storageType : int = 0) -> Dictionary:
+	var results : Array[Dictionary] = db.select_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = %s" % [itemID, charID, storageType, customfield], ["*"])
 	assert(results.size() <= 1, "Duplicated item %d on character %d with storage %d" % [itemID, charID, storageType])
 	return {} if results.is_empty() else results[0]
 
-func AddItem(charID : int, itemID : int, itemCount : int = 1, storageType : int = 0) -> bool:
-	var data : Dictionary = GetItem(charID, itemID, storageType)
+func AddItem(charID : int, itemID : int, customfield : String, itemCount : int = 1, storageType : int = 0) -> bool:
+	var data : Dictionary = GetItem(charID, itemID, customfield, storageType)
 	# Increment item count
 	if not data.is_empty():
 		data["count"] += 1
-		return db.update_rows("item", "item_id = %d AND char_id = %d AND storage = %d" % [itemID, charID, storageType], data)
+		return db.update_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = %s" % [itemID, charID, storageType, customfield], data)
 
 	# Insert new item
 	data = {
 		"item_id": itemID,
 		"char_id": charID,
 		"count": itemCount,
-		"storage": storageType
+		"storage": storageType,
+		"customfield": customfield
 	}
 	return db.insert_row("item", data)
 
-func RemoveItem(charID : int, itemID : int, storageType : int = 0) -> bool:
-	var data : Dictionary = GetItem(charID, itemID, storageType)
-	var condition : String = "item_id = %d AND char_id = %d AND storage = %d" % [itemID, charID, storageType]
+func RemoveItem(charID : int, itemID : int, customfield : String, storageType : int = 0) -> bool:
+	var data : Dictionary = GetItem(charID, itemID, customfield, storageType)
+	var condition : String = "item_id = %d AND char_id = %d AND storage = %d AND customfield = %s" % [itemID, charID, storageType, customfield]
 	if not data.is_empty():
 		# Decrement item count
 		if data["count"] >= 2:

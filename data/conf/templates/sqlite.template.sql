@@ -79,6 +79,7 @@ CREATE TABLE item (
     char_id              INTEGER NOT NULL,
     count                INTEGER NOT NULL,
 	storage              INTEGER NOT NULL CHECK (storage IN (0, 1)),
+	customfield          TEXT NOT NULL,
     PRIMARY KEY (char_id, item_id, storage),
     FOREIGN KEY (char_id) REFERENCES character(char_id)
 );

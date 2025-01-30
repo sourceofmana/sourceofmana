@@ -130,10 +130,16 @@ static func GetCellHash(cellname : StringName) -> int:
 	return hashDB[cellname] if hasHash else UnknownHash
 
 #
-static func GetItem(cellHash : int) -> ItemCell:
+static func GetItem(cellHash : int, customfield : String = "") -> ItemCell:
 	var hasInDB : bool = cellHash in ItemsDB
 	assert(hasInDB, "Could not find the identifier %s in ItemsDB" % [cellHash])
-	return ItemsDB[cellHash] if hasInDB else null
+	var cell : ItemCell = ItemsDB[cellHash] if hasInDB else null
+	if cell and not customfield.is_empty():
+		var customCell = cell.duplicate()
+		customCell.customfield = customfield
+		return customCell
+	else:
+		return cell
 
 static func GetEmote(cellHash : int) -> BaseCell:
 	var hasInDB : bool = cellHash in EmotesDB

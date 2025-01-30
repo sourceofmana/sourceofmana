@@ -7,8 +7,10 @@ var equipments : Array[ItemCell]	= []
 
 #
 func GetItem(cell : ItemCell) -> Item:
+	if not cell:
+		return null
 	for item in items:
-		if item and item.cell == cell:
+		if item and item.cell.id == cell.id and item.cell.customfield and cell.customfield:
 			return item
 	return null
 
@@ -42,7 +44,7 @@ func PopItem(cell : ItemCell, count : int) -> bool:
 
 	var toRemove : Array[Item] = []
 	for item in items:
-		if item.cell.name == cell.name:
+		if item.cell.id == cell.id and item.cell.customfield == cell.customfield:
 			if cell.stackable:
 				if item.count >= count:
 					item.count -= count
@@ -69,7 +71,7 @@ func HasItem(cell : ItemCell, count : int) -> bool:
 
 	var totalCount : int = 0
 	for item in items:
-		if item.cell.id == cell.id:
+		if item.cell.id == cell.id and item.cell.customfield == cell.customfield:
 			if cell.stackable:
 				return item.count >= count
 			else:
@@ -110,45 +112,51 @@ func EquipItem(cell : ItemCell):
 		equipments[cell.slot] = cell
 		actor.stat.RefreshEntityStats()
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, true])
+			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, true])
 
 func UnequipItem(cell : ItemCell):
 	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipments[cell.slot] != null and actor:
 		equipments[cell.slot] = null
 		actor.stat.RefreshEntityStats()
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, false])
+			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, false])
 
 #
 func AddItem(cell : ItemCell, count : int = 1) -> bool:
 	if PushItem(cell, count):
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			Network.ItemAdded(cell.id, count, actor.rpcRID)
+			Network.ItemAdded(cell.id, cell.customfield, count, actor.rpcRID)
 		return true
 	return false
 
 func RemoveItem(cell : ItemCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			Network.ItemRemoved(cell.id, count, actor.rpcRID)
+			Network.ItemRemoved(cell.id, cell.customfield, count, actor.rpcRID)
 		return true
 	return false
 
 #
 func ImportInventory(data : Dictionary):
 	for key in data.keys():
-		var hasKey : bool = DB.ItemsDB.has(key)
-		assert(hasKey, "Could not find the requested key within the ItemsDB %d" % [key])
-		if hasKey:
-			PushItem(DB.ItemsDB[key], data[key])
+		var keyData : Dictionary = data[key]
+		var id : int = keyData.get("id", -1)
+		var customfield : String = keyData.get("customfield", "")
+		var cell : ItemCell = DB.GetItem(id, customfield)
+		if cell:
+			var count : int = keyData.get("count", 1)
+			PushItem(cell, count)
 
 func ExportInventory() -> Dictionary:
+	var idx : int = 0
 	var data : Dictionary = {}
 	for item in items:
-		if data.has(item.cell.id):
-			data[item.cell.id] += item.count
-		else:
-			data[item.cell.id] = item.count
+		data[idx] = {
+			"id": item.cell.id,
+			"customfield": item.cell.customfield,
+			"count": item.count,
+		}
+		idx += 1
 	return data
 
 #
