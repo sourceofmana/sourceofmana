@@ -11,7 +11,8 @@ func Use():
 	if usable:
 		super.Use()
 	elif slot != ActorCommons.Slot.NONE and Launcher.Player and Launcher.Player.inventory:
-		if Launcher.Player.inventory.equipments[slot] == self:
+		var equipmentCell : ItemCell = Launcher.Player.inventory.equipments[slot]
+		if equipmentCell and equipmentCell.id == id and equipmentCell.customfield == customfield:
 			Network.UnequipItem(id, customfield)
 		else:
 			Network.EquipItem(id, customfield)

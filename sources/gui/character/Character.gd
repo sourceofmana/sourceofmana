@@ -236,7 +236,7 @@ func UpdateCharacterCreatorBody():
 func UpdateCharacterCreatorHair():
 	if isCharacterCreatorEnabled and charactersNode[ActorCommons.MaxCharacterCount]:
 		var hairstyles : Array = DB.HairstylesDB.keys()
-		var haircolors : Array = DB.HaircolorsDB.keys()
+		var haircolors : Array = DB.PalettesDB[DB.Palette.HAIR].keys()
 		charactersNode[ActorCommons.MaxCharacterCount].stat.hairstyle = hairstyles[traitsPanel.hairstyleValue]
 		charactersNode[ActorCommons.MaxCharacterCount].stat.haircolor = haircolors[traitsPanel.haircolorValue]
 		if charactersNode[ActorCommons.MaxCharacterCount].visual:

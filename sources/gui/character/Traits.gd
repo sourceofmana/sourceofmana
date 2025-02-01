@@ -22,7 +22,7 @@ extends PanelContainer
 @onready var skintoneNext : Button			= $Margin/VBox/SkinTone/Next
 
 @onready var hairstylesCount : int			= DB.HairstylesDB.size()
-@onready var haircolorsCount : int			= DB.HaircolorsDB.size()
+@onready var haircolorsCount : int			= DB.PalettesDB[DB.Palette.HAIR].size()
 @onready var raceCount : int				= DB.RacesDB.size()
 var skintoneCount : int						= 0
 
@@ -38,7 +38,7 @@ signal hairUpdate
 #
 func GetValues():
 	var hairstyles : Array = DB.HairstylesDB.keys()
-	var haircolors : Array = DB.HaircolorsDB.keys()
+	var haircolors : Array = DB.PalettesDB[DB.Palette.HAIR].keys()
 	var races : Array = DB.RacesDB.keys()
 	var race : RaceData = DB.GetRace(races[raceValue])
 	var skins : Dictionary = race._skins if race else {}
@@ -69,9 +69,9 @@ func _on_hairstyle_next_button():
 
 # Haircolor
 func RefreshHaircolor():
-	var haircolors : Array = DB.HaircolorsDB.keys()
+	var palettes : Array = DB.PalettesDB[DB.Palette.HAIR].keys()
 	if haircolorValue >= 0 and haircolorValue < haircolorsCount:
-		haircolorLabel.set_text(DB.GetHaircolor(haircolors[haircolorValue])._name)
+		haircolorLabel.set_text(DB.GetPalette(DB.Palette.HAIR, palettes[haircolorValue])._name)
 		hairUpdate.emit()
 
 func _on_haircolor_prev_button():

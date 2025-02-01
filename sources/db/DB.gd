@@ -3,9 +3,9 @@ class_name DB
 
 static var MapsDB : Dictionary				= {}
 static var MusicsDB : Dictionary			= {}
-static var RacesDB : Dictionary		= {}
+static var RacesDB : Dictionary				= {}
 static var HairstylesDB : Dictionary		= {}
-static var HaircolorsDB : Dictionary		= {}
+static var PalettesDB : Array[Dictionary]	= []
 static var EntitiesDB : Dictionary			= {}
 static var EmotesDB : Dictionary			= {}
 static var ItemsDB : Dictionary				= {}
@@ -13,6 +13,14 @@ static var SkillsDB : Dictionary			= {}
 
 static var hashDB : Dictionary				= {}
 const UnknownHash : int						= -1
+
+enum Palette
+{
+	HAIR = 0,
+	SKIN,
+	EQUIPMENT,
+	COUNT
+}
 
 #
 static func ParseMapsDB():
@@ -53,14 +61,18 @@ static func ParseHairstylesDB():
 			assert(id not in HairstylesDB, "Duplicated cell in HairstylesDB")
 			HairstylesDB[id] = TraitData.Create(key, result[key])
 
-static func ParseHaircolorsDB():
-	var result : Dictionary = FileSystem.LoadDB("haircolors.json")
+static func ParsePalettesDB():
+	PalettesDB.resize(Palette.COUNT)
+	var result : Dictionary = FileSystem.LoadDB("palettes.json")
 
 	if not result.is_empty():
-		for key in result:
-			var id = SetCellHash(key)
-			assert(id not in HairstylesDB, "Duplicated cell in HaircolorsDB")
-			HaircolorsDB[id] = TraitData.Create(key, result[key])
+		for categoryKey in result:
+			var category : Dictionary = result[categoryKey]
+			var categoryIdx : int = int(categoryKey)
+			for key in category:
+				var id = SetCellHash(key)
+				assert(id not in HairstylesDB, "Duplicated cell in PalettesDB")
+				PalettesDB[categoryIdx][id] = TraitData.Create(key, category[key])
 
 static func ParseEntitiesDB():
 	var result = FileSystem.LoadDB("entities.json")
@@ -161,10 +173,10 @@ static func GetHairstyle(cellHash : int) -> TraitData:
 	assert(hasInDB, "Could not find the identifier %d in HairstylesDB" % [cellHash])
 	return HairstylesDB[cellHash] if hasInDB else null
 
-static func GetHaircolor(cellHash : int) -> TraitData:
-	var hasInDB : bool = cellHash in HaircolorsDB
-	assert(hasInDB, "Could not find the identifier %d in HaircolorsDB" % [cellHash])
-	return HaircolorsDB[cellHash] if hasInDB else null
+static func GetPalette(type : Palette, cellHash : int) -> TraitData:
+	var hasInDB : bool = cellHash in PalettesDB[type]
+	assert(hasInDB, "Could not find the identifier %d in PalettesDB" % [cellHash])
+	return PalettesDB[type][cellHash] if hasInDB else null
 
 #
 static func Init():
@@ -172,7 +184,7 @@ static func Init():
 	ParseMusicsDB()
 	ParseRacesDB()
 	ParseHairstylesDB()
-	ParseHaircolorsDB()
+	ParsePalettesDB()
 	ParseEmotesDB()
 	ParseItemsDB()
 	ParseSkillsDB()
