@@ -1,12 +1,16 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://bi4288d5a7kbn"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://bi4288d5a7kbn"]
 
 [ext_resource type="Texture2D" uid="uid://3wesghn8cgpr" path="res://data/graphics/items/legs/leather-pants.png" id="1_wys1t"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_rrcf8"]
+[ext_resource type="Material" uid="uid://lvqidalgcn6h" path="res://presets/palettes/equipments/material-leather.tres" id="3_5sqqi"]
+[ext_resource type="Texture2D" uid="uid://das8r2duvhn7q" path="res://data/graphics/sprites/equipments/legs/pants-male.png" id="4_3sf44"]
+[ext_resource type="Texture2D" uid="uid://dd8fdtif3qds6" path="res://data/graphics/sprites/equipments/legs/pants-female.png" id="5_iqcpo"]
 
 [resource]
 script = ExtResource("2_rrcf8")
 slot = 1
-textures = Array[Texture2D]([null, null, null])
+textures = Array[Texture2D]([ExtResource("4_3sf44"), ExtResource("5_iqcpo"), ExtResource("4_3sf44")])
+shader = ExtResource("3_5sqqi")
 id = -1
 name = "Leather Pants"
 description = ""
