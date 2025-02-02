@@ -11,6 +11,7 @@ script = ExtResource("2_11t5n")
 slot = 3
 textures = Array[Texture2D]([ExtResource("4_70lwe"), ExtResource("5_c1dr8"), ExtResource("4_70lwe")])
 shader = ExtResource("3_kswes")
+customfield = ""
 id = -1
 name = "Leather Gloves"
 description = ""

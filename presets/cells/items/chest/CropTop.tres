@@ -1,12 +1,15 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://jxi6a1thqwio"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=4 format=3 uid="uid://jxi6a1thqwio"]
 
 [ext_resource type="Texture2D" uid="uid://mghu7wqp5dwt" path="res://data/graphics/items/chest/croptop.png" id="1_of3co"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_gulyb"]
+[ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipments/cloth-natural.tres" id="3_tcx5b"]
 
 [resource]
 script = ExtResource("2_gulyb")
 slot = 0
 textures = Array[Texture2D]([null, null, null])
+shader = ExtResource("3_tcx5b")
+customfield = ""
 id = -1
 name = "Crop Top"
 description = ""

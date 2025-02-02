@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://06bgh7ndvw40" path="res://data/graphics/items/legs/shorts.png" id="1_r35o7"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_glyxe"]
-[ext_resource type="Material" uid="uid://cseqywfy5hlg" path="res://presets/palettes/equipments/cloth-cerulean.tres" id="3_2viqa"]
+[ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipments/cloth-natural.tres" id="3_egntb"]
 [ext_resource type="Texture2D" uid="uid://7dnljcj3wldb" path="res://data/graphics/sprites/equipments/legs/shorts-male.png" id="4_pjs4f"]
 [ext_resource type="Texture2D" uid="uid://bq8ruol5u0o7l" path="res://data/graphics/sprites/equipments/legs/shorts-female.png" id="5_6mndq"]
 
@@ -10,7 +10,8 @@
 script = ExtResource("2_glyxe")
 slot = 1
 textures = Array[Texture2D]([ExtResource("4_pjs4f"), ExtResource("5_6mndq"), ExtResource("4_pjs4f")])
-shader = ExtResource("3_2viqa")
+shader = ExtResource("3_egntb")
+customfield = ""
 id = -1
 name = "Shorts"
 description = ""

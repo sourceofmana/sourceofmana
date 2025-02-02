@@ -1,12 +1,15 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://cbw8ta1x6umf4"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=4 format=3 uid="uid://cbw8ta1x6umf4"]
 
 [ext_resource type="Texture2D" uid="uid://d2x6dlmqd3xfw" path="res://data/graphics/items/chest/leather-shirt.png" id="1_fwd6i"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_br76x"]
+[ext_resource type="Material" uid="uid://lvqidalgcn6h" path="res://presets/palettes/equipments/material-leather.tres" id="3_8qyx4"]
 
 [resource]
 script = ExtResource("2_br76x")
 slot = 0
 textures = Array[Texture2D]([null, null, null])
+shader = ExtResource("3_8qyx4")
+customfield = ""
 id = -1
 name = "Leather Shirt"
 description = ""

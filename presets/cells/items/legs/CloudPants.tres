@@ -9,6 +9,7 @@
 script = ExtResource("2_m4rcn")
 slot = 1
 textures = Array[Texture2D]([ExtResource("3_2spbt"), ExtResource("4_8yj4d"), ExtResource("3_2spbt")])
+customfield = ""
 id = -1
 name = "Cloud Pants"
 description = ""
