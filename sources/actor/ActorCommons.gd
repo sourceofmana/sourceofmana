@@ -83,7 +83,7 @@ enum Attribute
 static func CheckTraits(traits : Dictionary) -> bool:
 	if "hairstyle" not in traits or not DB.GetHairstyle(traits["hairstyle"]):
 		return false
-	if "haircolor" not in traits or not DB.GetHaircolor(traits["haircolor"]):
+	if "haircolor" not in traits or not DB.GetPalette(DB.Palette.HAIR, traits["haircolor"]):
 		return false
 	if "race" not in traits:
 		return false
@@ -320,7 +320,7 @@ const DefaultAttributes : Dictionary = {
 	"concentration": 0,
 }
 static var DefaultInventory : Dictionary = {
-	"Apple".hash(): 5,
-	"Trousers".hash(): 1,
-	"V-Neck Tee".hash(): 1,
+	"0" : { "id": "Apple".hash(), "count": 5, "customfield": "" },
+	"1" : { "id": "Trousers".hash(), "count": 1, "customfield": "" },
+	"2" : { "id": "V-Neck Tee".hash(), "count": 1, "customfield": "" },
 }

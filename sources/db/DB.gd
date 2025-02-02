@@ -146,7 +146,7 @@ static func GetItem(cellHash : int, customfield : String = "") -> ItemCell:
 	var hasInDB : bool = cellHash in ItemsDB
 	assert(hasInDB, "Could not find the identifier %s in ItemsDB" % [cellHash])
 	var cell : ItemCell = ItemsDB[cellHash] if hasInDB else null
-	if cell and not customfield.is_empty():
+	if cell and not customfield != cell.customfield:
 		var customCell = cell.duplicate()
 		customCell.customfield = customfield
 		return customCell
