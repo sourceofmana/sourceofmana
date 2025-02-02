@@ -21,8 +21,8 @@ static func Create(key : String, result : Dictionary) -> RaceData:
 			data._faces[gender] = result.Faces.get(ActorCommons.GetGenderName(gender), "")
 	if "Skins" in result and result.Skins is Dictionary:
 		for skin in result.Skins.keys():
-			var id = DB.GetCellHash(skin) if DB.HasCellHash(skin) else DB.SetCellHash(skin)
-			assert(id not in data._skins, "Duplicated skin ID in %s" % key)
-			data._skins[id] = TraitData.Create(skin, result.Skins[skin])
+			var skinId : int = DB.GetCellHash(skin) if DB.HasCellHash(skin) else DB.SetCellHash(skin)
+			var paletteId : int = DB.GetCellHash(result.Skins[skin])
+			data._skins[skinId] = DB.GetPalette(DB.Palette.SKIN, paletteId)
 
 	return data

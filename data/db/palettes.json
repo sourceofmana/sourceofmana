@@ -23,4 +23,24 @@
 		"Forest Green": "haircolors/hair-forest-green.tres",
 		"Silver Grey": "haircolors/hair-silver-grey.tres",
 	},
+	"1":
+	{
+		"Human Medium": "races/human-skin-medium.tres",
+		"Human Dark": "races/human-skin-dark.tres",
+		"Human Tanned": "races/human-skin-tanned.tres",
+		"Kralog Fire": "races/kralog-skin-fire.tres",
+		"Kralog Frost": "races/kralog-skin-frost.tres",
+		"Raijin Dark": "races/raijin-skin-dark.tres",
+		"Raijin Light": "races/raijin-skin-light.tres",
+		"Tritan Ocean": "races/tritan-skin-ocean.tres",
+		"Tritan Oranye": "races/tritan-skin-oranye.tres",
+		"Ukar Nordic": "races/ukar-skin-nordic.tres",
+	},
+	"2":
+	{
+		"Natural": "equipments/cloth-nqtural.tres",
+		"Cerulean": "equipments/cloth-cerulean.tres",
+		"Crimson": "equipments/cloth-crimson.tres",
+		"Olive": "equipments/cloth-olive.tres",
+	},
 }

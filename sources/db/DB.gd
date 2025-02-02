@@ -138,7 +138,7 @@ static func SetCellHash(cellname : StringName) -> int:
 
 static func GetCellHash(cellname : StringName) -> int:
 	var hasHash : bool = HasCellHash(cellname)
-	assert(hasHash, "Cell hash already exists for " + cellname)
+	assert(hasHash, "Cell hash doesn't exist for " + cellname)
 	return hashDB[cellname] if hasHash else UnknownHash
 
 #
@@ -182,9 +182,9 @@ static func GetPalette(type : Palette, cellHash : int) -> TraitData:
 static func Init():
 	ParseMapsDB()
 	ParseMusicsDB()
+	ParsePalettesDB()
 	ParseRacesDB()
 	ParseHairstylesDB()
-	ParsePalettesDB()
 	ParseEmotesDB()
 	ParseItemsDB()
 	ParseSkillsDB()
