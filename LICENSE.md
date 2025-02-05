@@ -228,6 +228,8 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/minimaps/splatyna/splatyna-third.png [Reid]
 ./graphics/sprites/accessories/fire.png [Sharm] [Reid]
 ./graphics/sprites/accessories/ratto-tail.png [Coolkid782]
+./graphics/sprites/equipments/chests/shirt-female.png [Modanung]
+./graphics/sprites/equipments/chests/shirt-male.png [Modanung]
 ./graphics/sprites/equipments/chests/vneckjumper-female.png [Saphy]
 ./graphics/sprites/equipments/chests/vneckjumper-male.png [Saphy]
 ./graphics/sprites/equipments/feet/boots-male.png [Black Don] [Reid]
