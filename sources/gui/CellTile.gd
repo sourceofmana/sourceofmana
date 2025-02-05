@@ -32,7 +32,7 @@ func SetToolTip():
 
 func UpdateCountLabel():
 	if countLabel:
-		if not defaultIcon and cell and cell is ItemCell and cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and cell.slot < ActorCommons.Slot.LAST_EQUIPMENT and Launcher.Player.inventory.equipments[cell.slot] == cell:
+		if not defaultIcon and ActorCommons.IsEquipped(cell):
 			countLabel.text = "~"
 		elif count >= 1000:
 			countLabel.text = "999+"

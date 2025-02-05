@@ -146,9 +146,15 @@ static func GetItem(cellHash : int, customfield : String = "") -> ItemCell:
 	var hasInDB : bool = cellHash in ItemsDB
 	assert(hasInDB, "Could not find the identifier %s in ItemsDB" % [cellHash])
 	var cell : ItemCell = ItemsDB[cellHash] if hasInDB else null
-	if cell and not customfield != cell.customfield:
+	if cell and customfield != cell.customfield:
 		var customCell = cell.duplicate()
 		customCell.customfield = customfield
+		if HasCellHash(customfield):
+			var paletteHash : int = GetCellHash(customfield)
+			if paletteHash in PalettesDB[Palette.EQUIPMENT]:
+				var paletteData : TraitData = DB.GetPalette(DB.Palette.EQUIPMENT, paletteHash)
+				if paletteData:
+					customCell.shader = FileSystem.LoadPalette(paletteData._path)
 		return customCell
 	else:
 		return cell

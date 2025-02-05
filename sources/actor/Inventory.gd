@@ -44,7 +44,7 @@ func PopItem(cell : ItemCell, count : int) -> bool:
 
 	var toRemove : Array[Item] = []
 	for item in items:
-		if item.cell.id == cell.id and item.cell.customfield == cell.customfield:
+		if ActorCommons.IsSameCell(item.cell, cell):
 			if cell.stackable:
 				if item.count >= count:
 					item.count -= count
@@ -71,7 +71,7 @@ func HasItem(cell : ItemCell, count : int) -> bool:
 
 	var totalCount : int = 0
 	for item in items:
-		if item.cell.id == cell.id and item.cell.customfield == cell.customfield:
+		if ActorCommons.IsSameCell(item.cell, cell):
 			if cell.stackable:
 				return item.count >= count
 			else:

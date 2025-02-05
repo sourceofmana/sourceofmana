@@ -266,6 +266,19 @@ const MaxStatValue : int					= 1 << 32
 const MaxPointPerAttributes : int			= 20
 const InventorySize : int					= 100
 
+static func IsSameCell(itemA : BaseCell, itemB : BaseCell) -> bool:
+	return itemA and itemB and \
+	itemA.id == itemB.id and \
+	(
+		itemA is not ItemCell and itemB is not ItemCell or \
+		itemA.customfield == itemB.customfield \
+	)
+
+static func IsEquipped(cell : BaseCell) -> bool:
+	return cell and cell is ItemCell and \
+	cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and cell.slot < ActorCommons.Slot.LAST_EQUIPMENT and \
+	IsSameCell(cell, Launcher.Player.inventory.equipments[cell.slot])
+
 # Explore
 static var SailingDestination : Destination	= Destination.new("Ocean", Vector2(71 * 32, 55 * 32))
 
