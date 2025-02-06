@@ -230,6 +230,8 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/accessories/ratto-tail.png [Coolkid782]
 ./graphics/sprites/equipments/chests/croptop-female.png [Crush] [Fate]
 ./graphics/sprites/equipments/chests/croptop-male.png [Crush] [Fate]
+./graphics/sprites/equipments/chests/leathershirt-female.png [Modanung]
+./graphics/sprites/equipments/chests/leathershirt-male.png [Modanung]
 ./graphics/sprites/equipments/chests/shirt-female.png [Modanung]
 ./graphics/sprites/equipments/chests/shirt-male.png [Modanung]
 ./graphics/sprites/equipments/chests/tanktop-female.png [Crush] [Fate]
