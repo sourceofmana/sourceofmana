@@ -261,6 +261,11 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/equipments/shield/leather-shield-female.png [Micksha] [Enchilado, Reid]
 ./graphics/sprites/equipments/shield/rawwood-shield-male.png [Micksha]
 ./graphics/sprites/equipments/shield/rawwood-shield-female.png [Micksha]
+./graphics/sprites/equipments/weapon/knife.png [EJlol] [Reid]
+./graphics/sprites/equipments/weapon/largeblade.png [Micksha] [Reid]
+./graphics/sprites/equipments/weapon/shortsword.png [Reid]
+./graphics/sprites/equipments/weapon/sword.png [Reid]
+
 ./graphics/sprites/monsters/bald.png [Reid]
 ./graphics/sprites/monsters/bun.png [Slave]
 ./graphics/sprites/monsters/center-parting.png [Kineticstorm]

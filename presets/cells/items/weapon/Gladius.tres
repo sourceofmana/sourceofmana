@@ -1,12 +1,16 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://b2g1xlar44gin"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=5 format=3 uid="uid://b2g1xlar44gin"]
 
 [ext_resource type="Texture2D" uid="uid://bnpfs53kem27q" path="res://data/graphics/items/weapon/gladius.png" id="1_hu2iu"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_brecq"]
+[ext_resource type="Texture2D" uid="uid://t0n7cp141hoo" path="res://data/graphics/sprites/equipments/weapon/sword.png" id="3_1lytf"]
+[ext_resource type="Material" uid="uid://dgisl4evthd16" path="res://presets/palettes/equipments/weapon-green-iron.tres" id="3_vtm0f"]
 
 [resource]
 script = ExtResource("2_brecq")
 slot = 6
-textures = Array[Texture2D]([null, null, null])
+textures = Array[Texture2D]([ExtResource("3_1lytf"), ExtResource("3_1lytf"), ExtResource("3_1lytf")])
+shader = ExtResource("3_vtm0f")
+customfield = ""
 id = -1
 name = "Gladius"
 description = ""
