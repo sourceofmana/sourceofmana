@@ -110,13 +110,20 @@ func DropItem(cell : ItemCell, count : int):
 
 func EquipItem(cell : ItemCell):
 	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipments[cell.slot] != cell and actor:
+		var previousItem : ItemCell = equipments[cell.slot]
+		if previousItem and previousItem.modifiers and previousItem.modifiers.IsPersistant():
+			actor.stat.modifiers.erase(previousItem.modifiers)
 		equipments[cell.slot] = cell
+		if cell.modifiers and cell.modifiers.IsPersistant():
+			actor.stat.modifiers.append(cell.modifiers)
 		actor.stat.RefreshEntityStats()
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
 			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, true])
 
 func UnequipItem(cell : ItemCell):
-	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipments[cell.slot] != null and actor:
+	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipments[cell.slot] == cell and actor:
+		if cell and cell.modifiers and cell.modifiers.IsPersistant():
+			actor.stat.modifiers.erase(cell.modifiers)
 		equipments[cell.slot] = null
 		actor.stat.RefreshEntityStats()
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:

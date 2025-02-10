@@ -10,7 +10,7 @@
 [sub_resource type="Resource" id="Resource_qpc65"]
 script = ExtResource("4_amp31")
 _effects = {
-"Damage": 30,
+"Attack": 30,
 "Mana": -10,
 "Stamina": -5
 }

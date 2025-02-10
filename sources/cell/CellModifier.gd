@@ -6,10 +6,12 @@ class_name CellModifier
 @export var _keep : bool						= false
 
 #
-func GetHP() -> int: return _effects.get(CellCommons.effectHP, 0)
-func GetMana() -> int: return _effects.get(CellCommons.effectMana, 0)
-func GetStamina() -> int: return _effects.get(CellCommons.effectStamina, 0)
-func GetDamage() -> int: return _effects.get(CellCommons.effectDamage, 0)
+func GetHP() -> int: return _effects.get(CellCommons.modifierHP, 0)
+func GetMana() -> int: return _effects.get(CellCommons.modifierMana, 0)
+func GetStamina() -> int: return _effects.get(CellCommons.modifierStamina, 0)
+func GetAttack() -> int: return _effects.get(CellCommons.modifierAttack, 0)
+func GetMaxHP() -> int: return _effects.get(CellCommons.modifierMaxHP, 0)
+func IsPersistant() -> bool: return _keep
 
 func Apply(actor : Actor):
 	if not actor:

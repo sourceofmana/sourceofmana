@@ -58,7 +58,10 @@ static func GetCooldownAttackDelay(stat : ActorStats) -> float:
 
 # Vitality related stats
 static func GetMaxHealth(stat : ActorStats) -> int:
-	return stat.morphStat.maxHealth + F((stat.vitality + stat.level) * coefMaxHealth)
+	var baseStat : int = stat.morphStat.maxHealth + F((stat.vitality + stat.level) * coefMaxHealth)
+	for modifier in stat.modifiers:
+		baseStat += modifier.GetMaxHP()
+	return baseStat
 
 static func GetRegenHealth(stat : ActorStats) -> int:
 	return 1 + FFifth(stat.vitality) + FPercent(GetMaxHealth(stat) * coefRegenHealth)
@@ -84,7 +87,10 @@ static func GetWeightCapacity(stat : ActorStats) -> float:
 	return snappedf(stat.morphStat.weightCapacity + Half(stat.strength + stat.level), weightSnap)
 
 static func GetAttack(stat : ActorStats) -> int:
-	return stat.morphStat.attack + F(stat.strength * coefAttack) + stat.level
+	var baseStat : int = stat.morphStat.attack + F(stat.strength * coefAttack) + stat.level
+	for modifier in stat.modifiers:
+		baseStat += modifier.GetAttack()
+	return baseStat
 
 #
 static func ClampHealth(stat : ActorStats) -> int:

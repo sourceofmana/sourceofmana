@@ -61,7 +61,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 		Missed(agent, target)
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
-	if skill.modifiers.GetDamage() != 0:		Damaged(agent, target, skill, rng)
+	if skill.modifiers.GetAttack() != 0:		Damaged(agent, target, skill, rng)
 	if skill.modifiers.GetHP() != 0:			Healed(agent, target, skill, rng)
 
 # Handling

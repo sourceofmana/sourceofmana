@@ -15,25 +15,25 @@ enum ConsomeType
 static func TryConsume(agent : BaseAgent, stat : SkillCommons.ConsomeType, skill : SkillCell) -> bool:
 	match stat:
 		SkillCommons.ConsomeType.HEALTH:
-			var exhaust : int = -skill.modifiers.GetHP()
-			if agent.stat.health >= exhaust:
+			var exhaust : int = skill.modifiers.GetHP()
+			if agent.stat.health >= -exhaust:
 				agent.stat.SetHealth(exhaust)
 				return true
 		SkillCommons.ConsomeType.MANA:
-			var exhaust : int = -skill.modifiers.GetMana()
-			if agent.stat.mana >= exhaust:
+			var exhaust : int = skill.modifiers.GetMana()
+			if agent.stat.mana >= -exhaust:
 				agent.stat.SetMana(exhaust)
 				return true
 		SkillCommons.ConsomeType.STAMINA:
-			var exhaust : int = -skill.modifiers.GetStamina()
-			if agent.stat.stamina >= exhaust:
+			var exhaust : int = skill.modifiers.GetStamina()
+			if agent.stat.stamina >= -exhaust:
 				agent.stat.SetStamina(exhaust)
 				return true
 	return false
 
 static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float) -> Skill.AlterationInfo:
 	var info : Skill.AlterationInfo = Skill.AlterationInfo.new()
-	var skillValue : int = skill.modifiers.GetDamage()
+	var skillValue : int = skill.modifiers.GetAttack()
 	info.value = max(1, agent.stat.current.attack + skillValue - target.stat.current.defense)
 
 	var critMaster : bool = agent.stat.current.critRate > target.stat.current.dodgeRate
@@ -63,7 +63,7 @@ static func GetSurroundingTargets(agent : BaseAgent, skill : SkillCell) -> Array
 	var targets : Array[BaseAgent] = []
 	var neighbours : Array[Array] = WorldAgent.GetNeighboursFromAgent(agent)
 
-	if skill.modifiers.GetDamage() != 0:
+	if skill.modifiers.GetAttack() != 0:
 		for neighbour in neighbours[1]:
 			if IsTargetable(agent, neighbour, skill):
 				targets.append(neighbour)

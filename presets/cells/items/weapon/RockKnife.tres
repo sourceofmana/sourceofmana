@@ -1,9 +1,18 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=5 format=3 uid="uid://duhylo7w1pitx"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=7 format=3 uid="uid://duhylo7w1pitx"]
 
 [ext_resource type="Texture2D" uid="uid://dq5sfseqnqch2" path="res://data/graphics/items/weapon/rockknife.png" id="1_b8u7e"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_b65r6"]
+[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="2_wggpy"]
 [ext_resource type="Material" uid="uid://cmcsynxphmave" path="res://presets/palettes/equipments/weapon-leather-rock.tres" id="3_14n6d"]
 [ext_resource type="Texture2D" uid="uid://t0n7cp141hoo" path="res://data/graphics/sprites/equipments/weapon/sword.png" id="3_lgchf"]
+
+[sub_resource type="Resource" id="Resource_s3xh4"]
+script = ExtResource("2_wggpy")
+_effects = {
+"Attack": 100,
+"MaxHealth": 30
+}
+_keep = true
 
 [resource]
 script = ExtResource("2_b65r6")
@@ -19,4 +28,4 @@ type = 0
 weight = 400.0
 stackable = false
 usable = false
-effects = {}
+modifiers = SubResource("Resource_s3xh4")

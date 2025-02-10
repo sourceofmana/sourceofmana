@@ -10,7 +10,7 @@
 [sub_resource type="Resource" id="Resource_arwp5"]
 script = ExtResource("4_voj4c")
 _effects = {
-"Damage": 50,
+"Attack": 50,
 "Mana": -10,
 "Stamina": -5
 }

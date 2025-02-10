@@ -31,6 +31,7 @@ var entityStat : BaseStats				= BaseStats.new()
 var morphStat : BaseStats				= BaseStats.new()
 var current : BaseStats					= BaseStats.new()
 var actor : Actor						= null
+var modifiers : Array[CellModifier]		= []
 
 # Signals
 signal vital_stats_updated
