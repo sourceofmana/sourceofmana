@@ -1,12 +1,21 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://1guycf8ymnqp"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=5 format=3 uid="uid://1guycf8ymnqp"]
 
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="1_66yfp"]
 [ext_resource type="Texture2D" uid="uid://cl51nc04uu6f" path="res://data/graphics/items/usable/apple.png" id="1_cplo6"]
+[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="2_tfrr5"]
+
+[sub_resource type="Resource" id="Resource_inxm0"]
+script = ExtResource("2_tfrr5")
+_effects = {
+"HP": 30
+}
+_keep = false
 
 [resource]
 script = ExtResource("1_66yfp")
 slot = -1
 textures = Array[Texture2D]([])
+customfield = ""
 id = -1
 name = "Apple"
 description = "A crisp red apple known for its refreshing taste and vitality-boosting properties."
@@ -15,6 +24,4 @@ type = 0
 weight = 5.0
 stackable = true
 usable = true
-effects = {
-"HP": 30
-}
+modifiers = SubResource("Resource_inxm0")

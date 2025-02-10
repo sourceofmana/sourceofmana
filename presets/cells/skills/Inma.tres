@@ -1,10 +1,20 @@
-[gd_resource type="Resource" script_class="SkillCell" load_steps=6 format=3 uid="uid://dvgbbk4l2m11q"]
+[gd_resource type="Resource" script_class="SkillCell" load_steps=8 format=3 uid="uid://dvgbbk4l2m11q"]
 
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_f6vbr"]
 [ext_resource type="Texture2D" uid="uid://cyg3qk423x8vq" path="res://data/graphics/effects/particles/cast4.png" id="2_llpnr"]
 [ext_resource type="Texture2D" uid="uid://bffgldeyns80v" path="res://data/graphics/items/skill/inma.png" id="3_jylje"]
 [ext_resource type="Script" path="res://sources/cell/SkillCell.gd" id="4_p55re"]
+[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="4_tb83y"]
 [ext_resource type="PackedScene" uid="uid://676e7kfvces4" path="res://presets/effects/particles/Heal.tscn" id="5_0vmmd"]
+
+[sub_resource type="Resource" id="Resource_p6s5p"]
+script = ExtResource("4_tb83y")
+_effects = {
+"HP": 50,
+"Mana": -10,
+"Stamina": -15
+}
+_keep = false
 
 [resource]
 script = ExtResource("4_p55re")
@@ -28,8 +38,4 @@ type = 2
 weight = 0.0
 stackable = false
 usable = true
-effects = {
-"HP": 50,
-"Mana": -10,
-"Stamina": -15
-}
+modifiers = SubResource("Resource_p6s5p")

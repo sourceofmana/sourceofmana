@@ -13,35 +13,27 @@ enum ConsomeType
 }
 
 static func TryConsume(agent : BaseAgent, stat : SkillCommons.ConsomeType, skill : SkillCell) -> bool:
-	var callable : Callable
-	var canConsome : bool		= false
-	var exhaust : int			= 0
-
 	match stat:
 		SkillCommons.ConsomeType.HEALTH:
-			if skill.effects.has(CellCommons.effectHP):
-				exhaust = -skill.effects[CellCommons.effectHP]
-			callable = agent.stat.SetHealth
-			canConsome = agent.stat.health >= exhaust
+			var exhaust : int = -skill.modifiers.GetHP()
+			if agent.stat.health >= exhaust:
+				agent.stat.SetHealth(exhaust)
+				return true
 		SkillCommons.ConsomeType.MANA:
-			if skill.effects.has(CellCommons.effectMana):
-				exhaust = -skill.effects[CellCommons.effectMana]
-			callable = agent.stat.SetMana
-			canConsome = agent.stat.mana >= exhaust
+			var exhaust : int = -skill.modifiers.GetMana()
+			if agent.stat.mana >= exhaust:
+				agent.stat.SetMana(exhaust)
+				return true
 		SkillCommons.ConsomeType.STAMINA:
-			if skill.effects.has(CellCommons.effectStamina):
-				exhaust = -skill.effects[CellCommons.effectStamina]
-			callable = agent.stat.SetStamina
-			canConsome = agent.stat.stamina >= exhaust
-
-	if canConsome:
-		callable.call(-exhaust)
-
-	return canConsome
+			var exhaust : int = -skill.modifiers.GetStamina()
+			if agent.stat.stamina >= exhaust:
+				agent.stat.SetStamina(exhaust)
+				return true
+	return false
 
 static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float) -> Skill.AlterationInfo:
 	var info : Skill.AlterationInfo = Skill.AlterationInfo.new()
-	var skillValue : int = skill.effects[CellCommons.effectDamage] if skill.effects.has(CellCommons.effectDamage) else 0
+	var skillValue : int = skill.modifiers.GetDamage()
 	info.value = max(1, agent.stat.current.attack + skillValue - target.stat.current.defense)
 
 	var critMaster : bool = agent.stat.current.critRate > target.stat.current.dodgeRate
@@ -62,7 +54,7 @@ static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillCell, 
 	return info
 
 static func GetHeal(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float) -> int:
-	var skillValue : int = skill.effects[CellCommons.effectHP] if skill.effects.has(CellCommons.effectHP) else 0
+	var skillValue : int = skill.modifiers.GetHP()
 	var healValue : int = int(agent.stat.concentration + skillValue * rng)
 	healValue = min(healValue, target.stat.current.maxHealth - target.stat.health)
 	return healValue
@@ -71,11 +63,11 @@ static func GetSurroundingTargets(agent : BaseAgent, skill : SkillCell) -> Array
 	var targets : Array[BaseAgent] = []
 	var neighbours : Array[Array] = WorldAgent.GetNeighboursFromAgent(agent)
 
-	if skill.effects.has(CellCommons.effectDamage):
+	if skill.modifiers.GetDamage() != 0:
 		for neighbour in neighbours[1]:
 			if IsTargetable(agent, neighbour, skill):
 				targets.append(neighbour)
-	if skill.effects.has(CellCommons.effectHP):
+	if skill.modifiers.GetHP() != 0:
 		for neighbour in neighbours[2]:
 			if IsTargetable(agent, neighbour, skill):
 				targets.append(neighbour)

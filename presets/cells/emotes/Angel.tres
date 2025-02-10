@@ -13,4 +13,3 @@ type = 1
 weight = 0.0
 stackable = false
 usable = true
-effects = {}

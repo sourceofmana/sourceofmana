@@ -9,7 +9,7 @@ class_name BaseCell
 @export var weight : float						= 1.0
 @export var stackable : bool					= false
 @export var usable : bool						= false
-@export var effects : Dictionary				= {}
+@export var modifiers : CellModifier			= null
 
 signal used
 

@@ -61,8 +61,8 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 		Missed(agent, target)
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
-	if skill.effects.has(CellCommons.effectDamage):		Damaged(agent, target, skill, rng)
-	if skill.effects.has(CellCommons.effectHP):			Healed(agent, target, skill, rng)
+	if skill.modifiers.GetDamage() != 0:		Damaged(agent, target, skill, rng)
+	if skill.modifiers.GetHP() != 0:			Healed(agent, target, skill, rng)
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):

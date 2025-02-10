@@ -94,13 +94,8 @@ func GetWeight() -> float:
 	return weight / 1000.0
 
 func UseItem(cell : ItemCell):
-	if cell and cell.type == CellCommons.Type.ITEM and cell.usable and actor and RemoveItem(cell):
-		if cell.effects.has(CellCommons.effectHP):
-			actor.stat.SetHealth(cell.effects[CellCommons.effectHP])
-		if cell.effects.has(CellCommons.effectMana):
-			actor.stat.SetMana(cell.effects[CellCommons.effectMana])
-		if cell.effects.has(CellCommons.effectStamina):
-			actor.stat.SetStamina(cell.effects[CellCommons.effectStamina])
+	if cell and cell.modifiers and cell.type == CellCommons.Type.ITEM and cell.usable and actor and RemoveItem(cell):
+		cell.modifiers.Apply(actor)
 
 func DropItem(cell : ItemCell, count : int):
 	if RemoveItem(cell, count):
