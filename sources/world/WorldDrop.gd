@@ -15,7 +15,7 @@ static func PushDrop(item : Item, agent : BaseAgent):
 
 			var dropID : int = drop.get_instance_id()
 			drop.timer = Callback.SelfDestructTimer(inst, ActorCommons.DropDelay, WorldDrop.Timeout, [dropID, inst])
-			Network.Server.NotifyInstance(inst, "DropAdded", [dropID, item.cell.id, item.cell.customfield, drop.position])
+			Network.Server.NotifyInstance(inst, "DropAdded", [dropID, item.cellID, item.cellCustomfield, drop.position])
 
 static func PopDrop(dropID : int, inst : WorldInstance) -> bool:
 	if inst and inst.drops.has(dropID):
@@ -42,8 +42,11 @@ static func PickupDrop(dropID : int, agent : BaseAgent) -> bool:
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 		if inst and dropID in inst.drops:
 			var drop : Drop = inst.drops[dropID]
-			if agent.position.distance_squared_to(drop.position) < ActorCommons.PickupSquaredDistance \
-			and PopDrop(dropID, inst) \
-			and agent.inventory.AddItem(drop.item.cell, drop.item.count):
-				return true
+			if drop and drop.item:
+				var cell : ItemCell = DB.GetItem(drop.item.cellID, drop.item.cellCustomfield)
+				if cell and \
+				agent.position.distance_squared_to(drop.position) < ActorCommons.PickupSquaredDistance \
+				and PopDrop(dropID, inst) \
+				and agent.inventory.AddItem(cell, drop.item.count):
+					return true
 	return false

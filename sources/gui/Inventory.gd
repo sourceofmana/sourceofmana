@@ -68,12 +68,19 @@ func RefreshInventory():
 	var tile : CellTile		= grid.GetTile(tileIdx)
 
 	for item in Launcher.Player.inventory.items:
-		if item and item.cell and IsFiltered(item.cell, currentFilter):
+		if not item or item.cellID == CellCommons.UnknownID:
+			continue
+
+		var cell : ItemCell = DB.GetItem(item.cellID, item.cellCustomfield)
+		if not cell:
+			continue
+
+		if IsFiltered(cell, currentFilter):
 			count += 1
-			CellTile.RefreshShortcuts(item.cell, item.count)
-			if item.cell.stackable:
+			CellTile.RefreshShortcuts(cell, item.count)
+			if cell.stackable:
 				if tile:
-					tile.AssignData(item.cell, item.count)
+					tile.AssignData(cell, item.count)
 					tileIdx += 1
 					tile = grid.GetTile(tileIdx)
 				else:
@@ -81,12 +88,12 @@ func RefreshInventory():
 			else:
 				for cellIdx in range(item.count):
 					if tile:
-						tile.AssignData(item.cell)
+						tile.AssignData(cell)
 						tileIdx += 1
 						tile = grid.GetTile(tileIdx)
 					else:
 						break
-		elif selectedTile and item and item.cell == selectedTile.cell:
+		elif selectedTile and item and cell == selectedTile.cell:
 			SelectTile(null)
 			selectedTile = null
 
@@ -133,7 +140,6 @@ func RefreshItemMode():
 	if not dropButton.is_visible() and not useButton.is_visible() and not equipButton.is_visible() and not unequipButton.is_visible():
 		dropButton.set_visible(true)
 		dropButton.set_disabled(true)
-
 
 func SetButtonMode(mode : ButtonMode):
 	buttonMode = mode

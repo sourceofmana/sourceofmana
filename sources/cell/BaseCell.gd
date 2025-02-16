@@ -1,7 +1,7 @@
 extends Resource
 class_name BaseCell
 
-@export var id : int							= -1
+@export var id : int							= CellCommons.UnknownID
 @export var name : String						= "Unknown"
 @export var description : String				= ""
 @export var icon : Texture2D					= null

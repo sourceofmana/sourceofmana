@@ -2,7 +2,7 @@ extends Object
 class_name ActorInventory
 
 var actor : Actor					= null
-var items: Array[Item]				= []
+var items : Array[Item]				= []
 var equipments : Array[ItemCell]	= []
 
 #
@@ -10,7 +10,7 @@ func GetItem(cell : ItemCell) -> Item:
 	if not cell:
 		return null
 	for item in items:
-		if item and item.cell.id == cell.id and item.cell.customfield and cell.customfield:
+		if CellCommons.IsSameItem(cell, item):
 			return item
 	return null
 
@@ -44,7 +44,7 @@ func PopItem(cell : ItemCell, count : int) -> bool:
 
 	var toRemove : Array[Item] = []
 	for item in items:
-		if ActorCommons.IsSameCell(item.cell, cell):
+		if CellCommons.IsSameItem(cell, item):
 			if cell.stackable:
 				if item.count >= count:
 					item.count -= count
@@ -71,7 +71,7 @@ func HasItem(cell : ItemCell, count : int) -> bool:
 
 	var totalCount : int = 0
 	for item in items:
-		if ActorCommons.IsSameCell(item.cell, cell):
+		if CellCommons.IsSameItem(cell, item):
 			if cell.stackable:
 				return item.count >= count
 			else:
@@ -83,14 +83,20 @@ func HasItem(cell : ItemCell, count : int) -> bool:
 func HasSpace(count : int) -> bool:
 	var inventoryCount : int = 0
 	for item in items:
-		inventoryCount += 1 if item.cell.stackable else item.count
+		if item:
+			var cell : ItemCell = DB.GetItem(item.cellID)
+			if cell:
+				inventoryCount += 1 if cell.stackable else item.count
 	return inventoryCount + count < ActorCommons.InventorySize
 
 #
 func GetWeight() -> float:
 	var weight : float = 0.0
 	for item in items:
-		weight += item.cell.weight * item.count
+		if item:
+			var cell : ItemCell = DB.GetItem(item.cellID)
+			if cell:
+				weight += cell.weight * item.count
 	return weight / 1000.0
 
 func UseItem(cell : ItemCell):
@@ -135,7 +141,7 @@ func RemoveItem(cell : ItemCell, count : int = 1) -> bool:
 func ImportInventory(data : Dictionary):
 	for key in data.keys():
 		var keyData : Dictionary = data[key]
-		var id : int = keyData.get("id", -1)
+		var id : int = keyData.get("id", CellCommons.UnknownID)
 		var customfield : String = keyData.get("customfield", "")
 		var cell : ItemCell = DB.GetItem(id, customfield)
 		if cell:
@@ -146,11 +152,7 @@ func ExportInventory() -> Dictionary:
 	var idx : int = 0
 	var data : Dictionary = {}
 	for item in items:
-		data[idx] = {
-			"id": item.cell.id,
-			"customfield": item.cell.customfield,
-			"count": item.count,
-		}
+		data[idx] = item.Export()
 		idx += 1
 	return data
 

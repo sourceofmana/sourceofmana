@@ -93,7 +93,7 @@ static func RefreshShortcuts(baseCell : BaseCell, newCount : int = -1):
 	elif newCount < 0:
 		newCount = 0
 		for item in Launcher.Player.inventory.items:
-			if item and item.cell and item.cell == baseCell:
+			if item and CellCommons.IsSameItem(baseCell, item):
 				newCount = item.count
 				break
 

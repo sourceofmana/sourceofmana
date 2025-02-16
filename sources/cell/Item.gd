@@ -1,9 +1,18 @@
 extends Object
 class_name Item
 
-var cell : BaseCell			= null
-var count : int				= 0
+var cellID : int					= CellCommons.UnknownID
+var cellCustomfield : String		= ""
+var count : int						= 0
 
-func _init(_cell : BaseCell, _count : int = 1):
-	cell = _cell
+func _init(_cell : ItemCell, _count : int = 1):
+	cellID = _cell.id
+	cellCustomfield = _cell.customfield
 	count = _count
+
+func Export() -> Dictionary:
+	return {
+		"id": cellID,
+		"customfield": cellCustomfield,
+		"count": count,
+	}

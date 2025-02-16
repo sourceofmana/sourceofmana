@@ -149,6 +149,7 @@ static func GetItem(cellHash : int, customfield : String = "") -> ItemCell:
 	if cell and customfield != cell.customfield:
 		var customCell = cell.duplicate()
 		customCell.customfield = customfield
+
 		if HasCellHash(customfield):
 			var paletteHash : int = GetCellHash(customfield)
 			if paletteHash in PalettesDB[Palette.EQUIPMENT]:
