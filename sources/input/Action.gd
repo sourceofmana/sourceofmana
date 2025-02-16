@@ -24,41 +24,39 @@ func IsUsable(action : String) -> bool:
 func HasConsumed() -> bool:
 	return not consumed.is_empty()
 
-func ConsumeAction(action : String):
+func ConsumeAction(action : String, setHandled : bool = false):
 	consumed.push_back(action)
+	if setHandled:
+		get_viewport().set_input_as_handled()
 
 func TryConsume(event : InputEvent, action : String, forceMode : bool = false) -> bool:
 	if event.is_action_pressed(action, false, true) and Launcher.Action.IsActionPressed(action, forceMode):
-		Launcher.Action.ConsumeAction(action)
+		ConsumeAction(action)
 		return true
 	return false
 
 
 func TryJustPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
 	if event.is_action_pressed(action, false, true) and IsActionJustPressed(action, forceMode):
-		ConsumeAction(action)
-		get_viewport().set_input_as_handled()
+		ConsumeAction(action, true)
 		return true
 	return false
 
 func TryPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
 	if event.is_action_pressed(action, false, true) and IsActionPressed(action, forceMode):
-		ConsumeAction(action)
-		get_viewport().set_input_as_handled()
+		ConsumeAction(action, true)
 		return true
 	return false
 
 func TryOnlyPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
 	if event.is_action_pressed(action, false, true) and IsActionOnlyPressed(action, forceMode):
-		ConsumeAction(action)
-		get_viewport().set_input_as_handled()
+		ConsumeAction(action, true)
 		return true
 	return false
 
 func TryJustReleased(event : InputEvent, action : String, forceMode : bool = false) -> bool:
 	if event.is_action_released(action) and IsActionJustReleased(action, forceMode):
-		ConsumeAction(action)
-		get_viewport().set_input_as_handled()
+		ConsumeAction(action, true)
 		return true
 	return false
 
@@ -101,7 +99,14 @@ func _unhandled_input(event):
 				clickTimer.start()
 
 	if not HasConsumed() and Launcher.Camera:
-		if TryJustPressed(event, "gp_zoom_in"):		Launcher.Camera.ZoomIn()
+		if event is InputEventMagnifyGesture:
+			if event.factor > 1.0:
+				ConsumeAction("gp_zoom_in", true)
+				Launcher.Camera.ZoomIn()
+			elif event.factor < 1.0:
+				ConsumeAction("gp_zoom_out", true)
+				Launcher.Camera.ZoomOut()
+		elif TryJustPressed(event, "gp_zoom_in"):		Launcher.Camera.ZoomIn()
 		elif TryJustPressed(event, "gp_zoom_out"):		Launcher.Camera.ZoomOut()
 		elif TryJustPressed(event, "gp_zoom_reset"):	Launcher.Camera.ZoomReset()
 
