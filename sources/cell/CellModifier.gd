@@ -2,32 +2,46 @@ extends Resource
 class_name CellModifier
 
 #
-@export var _effects : Dictionary				= {}
-@export var _keep : bool						= false
+@export var _modifiers : Array[StatModifier]			= []
 
 #
-func GetHP() -> int: return _effects.get(CellCommons.modifierHP, 0)
-func GetMana() -> int: return _effects.get(CellCommons.modifierMana, 0)
-func GetStamina() -> int: return _effects.get(CellCommons.modifierStamina, 0)
-func GetAttack() -> int: return _effects.get(CellCommons.modifierAttack, 0)
-func GetMaxHP() -> int: return _effects.get(CellCommons.modifierMaxHP, 0)
-func IsPersistant() -> bool: return _keep
+func Get(effect : CellCommons.Modifier, persistent : bool = false, default : Variant = 0) -> Variant:
+	for modifier in _modifiers:
+		if modifier._effect == effect:
+			return modifier._value if modifier and modifier._persistent == persistent else default
+	return default
 
+#
+func Add(modifier : StatModifier):
+	_modifiers.append(modifier)
+
+func Remove(modifier : StatModifier):
+	_modifiers.erase(modifier)
+
+#
 func Apply(actor : Actor):
 	if not actor:
 		assert(false, "Actor not found, could not apply the cell modifier")
 
-	if _keep:
-		pass
-	else:
-		var hp : int = GetHP();
-		if hp != 0: actor.stat.SetHealth(hp)
-		var mana : int = GetMana();
-		if mana != 0: actor.stat.SetMana(mana)
-		var stamina : int = GetStamina();
-		if stamina != 0: actor.stat.SetStamina(stamina)
+	for modifier in _modifiers:
+		if modifier:
+			match modifier._effect:
+				CellCommons.Modifier.Health:
+					var hp : int = Get(modifier._effect);
+					if hp != 0: actor.stat.SetHealth(hp)
+				CellCommons.Modifier.Mana:
+					var mana : int = Get(modifier._effect);
+					if mana != 0: actor.stat.SetMana(mana)
+				CellCommons.Modifier.Stamina:
+					var stamina : int = Get(modifier._effect);
+					if stamina != 0: actor.stat.SetStamina(stamina)
 
-#
-func _init(effects : Dictionary = {}, keep = false):
-	_effects = effects
-	_keep = keep
+func Equip(actor : Actor):
+	for modifier in _modifiers:
+		if modifier and modifier._persistent:
+			actor.stat.modifiers.Add(modifier)
+
+func Unequip(actor : Actor):
+	for modifier in _modifiers:
+		if modifier and modifier._persistent:
+			actor.stat.modifiers.Remove(modifier)

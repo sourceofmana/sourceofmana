@@ -1,16 +1,25 @@
-[gd_resource type="Resource" script_class="SkillCell" load_steps=5 format=3 uid="uid://lcvqesy5llmf"]
+[gd_resource type="Resource" script_class="SkillCell" load_steps=8 format=3 uid="uid://lcvqesy5llmf"]
 
 [ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="2_6glr6"]
+[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_yjg4f"]
 [ext_resource type="Texture2D" uid="uid://cs2d4q80ggkmh" path="res://data/graphics/items/skill/melee.png" id="3_trswl"]
 [ext_resource type="Script" path="res://sources/cell/SkillCell.gd" id="5_obt75"]
 
-[sub_resource type="Resource" id="Resource_o81pg"]
+[sub_resource type="Resource" id="Resource_ecwg5"]
+script = ExtResource("2_yjg4f")
+_effect = 20
+_value = 1
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_nnkbv"]
+script = ExtResource("2_yjg4f")
+_effect = 3
+_value = -10
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_kmmav"]
 script = ExtResource("2_6glr6")
-_effects = {
-"Attack": 1,
-"Stamina": -10
-}
-_keep = false
+_modifiers = Array[ExtResource("2_yjg4f")]([SubResource("Resource_ecwg5"), SubResource("Resource_nnkbv")])
 
 [resource]
 script = ExtResource("5_obt75")
@@ -31,4 +40,4 @@ type = 2
 weight = 0.0
 stackable = false
 usable = true
-modifiers = SubResource("Resource_o81pg")
+modifiers = SubResource("Resource_kmmav")

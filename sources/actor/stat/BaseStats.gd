@@ -7,6 +7,8 @@ var walkSpeed : float					= 100.0
 
 var attack : int						= 10
 var defense : int						= 5
+var mattack : int						= 10
+var mdefense : int						= 5
 var attackRange : int					= 32
 var critRate : float					= 0.01
 var dodgeRate : float					= 0.01

@@ -31,7 +31,7 @@ var entityStat : BaseStats				= BaseStats.new()
 var morphStat : BaseStats				= BaseStats.new()
 var current : BaseStats					= BaseStats.new()
 var actor : Actor						= null
-var modifiers : Array[CellModifier]		= []
+var modifiers : CellModifier			= CellModifier.new()
 
 # Signals
 signal vital_stats_updated
@@ -57,7 +57,9 @@ func RefreshEntityStats():
 	current.maxStamina		= Formula.GetMaxStamina(self)
 	current.attack			= Formula.GetAttack(self)
 	current.attackRange		= Formula.GetAttackRange(self)
+	current.mattack			= Formula.GetMAttack(self)
 	current.defense			= Formula.GetDefense(self)
+	current.mdefense		= Formula.GetMDefense(self)
 	current.critRate		= Formula.GetCritRate(self)
 	current.dodgeRate		= Formula.GetDodgeRate(self)
 	current.castAttackDelay	= Formula.GetCastAttackDelay(self)

@@ -23,7 +23,7 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	if map and map.HasFlags(WorldMap.Flags.NO_SPELL):
 		return
 
-	if SkillCommons.TryConsume(agent, SkillCommons.ConsomeType.MANA, skill):
+	if SkillCommons.TryConsume(agent, CellCommons.Modifier.Mana, skill):
 		Stopped(agent)
 		agent.SetSkillCastID(skill.id)
 		Callback.StartTimer(agent.actionTimer, skill.castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill), true)
@@ -33,7 +33,7 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 
 static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	if ActorCommons.IsAlive(agent) and SkillCommons.IsCasting(agent) and SkillCommons.HasSkill(agent, skill):
-		var hasStamina : bool = SkillCommons.TryConsume(agent, SkillCommons.ConsomeType.STAMINA, skill)
+		var hasStamina : bool = SkillCommons.TryConsume(agent, CellCommons.Modifier.Stamina, skill)
 
 		match skill.mode:
 			TargetMode.SINGLE:
@@ -61,8 +61,10 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 		Missed(agent, target)
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
-	if skill.modifiers.GetAttack() != 0:		Damaged(agent, target, skill, rng)
-	if skill.modifiers.GetHP() != 0:			Healed(agent, target, skill, rng)
+	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
+		Damaged(agent, target, skill, rng)
+	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
+		Healed(agent, target, skill, rng)
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):

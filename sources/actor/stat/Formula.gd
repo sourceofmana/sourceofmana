@@ -38,59 +38,59 @@ static func FHalf(val) -> int:
 
 # Concentration related stats
 static func GetMaxMana(stat : ActorStats) -> int:
-	return stat.morphStat.maxMana + F((stat.concentration + stat.level) * coefMaxMana)
+	return stat.morphStat.maxMana + F((stat.concentration + stat.level) * coefMaxMana) + stat.modifiers.Get(CellCommons.Modifier.MaxMana, true)
 
 static func GetRegenMana(stat : ActorStats) -> int:
-	return 1 + FFifth(stat.concentration) + FPercent(GetMaxMana(stat) * coefRegenMana)
+	return 1 + FFifth(stat.concentration) + FPercent(GetMaxMana(stat) * coefRegenMana) + stat.modifiers.Get(CellCommons.Modifier.RegenMana, true)
 
 static func GetCritRate(stat : ActorStats) -> float:
-	return stat.morphStat.critRate + Percent(FFifth(stat.concentration + stat.level))
+	return stat.morphStat.critRate + Percent(FFifth(stat.concentration + stat.level)) + stat.modifiers.Get(CellCommons.Modifier.CritRate, true)
+
+static func GetMAttack(stat : ActorStats) -> int:
+	return stat.morphStat.mattack + F(stat.concentration * coefAttack) + stat.level + stat.modifiers.Get(CellCommons.Modifier.MAttack, true)
+
+static func GetMDefense(stat : ActorStats) -> int:
+	return stat.morphStat.mdefense + F(stat.concentration * coefDefense) + stat.level + stat.modifiers.Get(CellCommons.Modifier.MDefense, true)
 
 # Endurance related stats
 static func GetMaxStamina(stat : ActorStats) -> int:
-	return stat.morphStat.maxStamina + F((stat.endurance + stat.level) * coefMaxStamina)
+	return stat.morphStat.maxStamina + F((stat.endurance + stat.level) * coefMaxStamina) + stat.modifiers.Get(CellCommons.Modifier.MaxStamina, true)
 
 static func GetRegenStamina(stat : ActorStats) -> int:
-	return stat.level + stat.endurance + FPercent(GetMaxStamina(stat) * coefRegenStamina)
+	return stat.level + stat.endurance + FPercent(GetMaxStamina(stat) * coefRegenStamina) + stat.modifiers.Get(CellCommons.Modifier.RegenStamina, true)
 
 static func GetCooldownAttackDelay(stat : ActorStats) -> float:
-	return maxf(0.001, stat.morphStat.cooldownAttackDelay - Percent(stat.endurance + stat.level))
+	return maxf(0.001, stat.morphStat.cooldownAttackDelay - Percent(stat.endurance + stat.level)) + stat.modifiers.Get(CellCommons.Modifier.CooldownDelay, true)
 
 # Vitality related stats
 static func GetMaxHealth(stat : ActorStats) -> int:
-	var baseStat : int = stat.morphStat.maxHealth + F((stat.vitality + stat.level) * coefMaxHealth)
-	for modifier in stat.modifiers:
-		baseStat += modifier.GetMaxHP()
-	return baseStat
+	return stat.morphStat.maxHealth + F((stat.vitality + stat.level) * coefMaxHealth) + stat.modifiers.Get(CellCommons.Modifier.MaxHealth, true)
 
 static func GetRegenHealth(stat : ActorStats) -> int:
-	return 1 + FFifth(stat.vitality) + FPercent(GetMaxHealth(stat) * coefRegenHealth)
+	return 1 + FFifth(stat.vitality) + FPercent(GetMaxHealth(stat) * coefRegenHealth) + stat.modifiers.Get(CellCommons.Modifier.RegenHealth, true)
 
 static func GetDefense(stat : ActorStats) -> int:
-	return stat.morphStat.defense + F(stat.vitality * coefDefense) + stat.level
+	return stat.morphStat.defense + F(stat.vitality * coefDefense) + stat.level + stat.modifiers.Get(CellCommons.Modifier.Defense, true)
 
 # Agility related stats
 static func GetCastAttackDelay(stat : ActorStats) -> float:
-	return max(0.001, stat.morphStat.castAttackDelay - Percent(stat.agility + stat.level))
+	return max(0.001, stat.morphStat.castAttackDelay - Percent(stat.agility + stat.level)) + stat.modifiers.Get(CellCommons.Modifier.CastDelay, true)
 
 static func GetDodgeRate(stat : ActorStats) -> float:
-	return stat.morphStat.dodgeRate + Percent(FFifth(stat.agility + stat.level))
+	return stat.morphStat.dodgeRate + Percent(FFifth(stat.agility + stat.level)) + stat.modifiers.Get(CellCommons.Modifier.DodgeRate, true)
 
 static func GetAttackRange(stat : ActorStats) -> int:
-	return stat.morphStat.attackRange + FFifth(stat.agility)
+	return stat.morphStat.attackRange + FFifth(stat.agility) + stat.modifiers.Get(CellCommons.Modifier.AttackRange, true)
 
 # Strength related stats
 static func GetWalkSpeed(stat : ActorStats) -> float:
-	return stat.morphStat.walkSpeed + Fifth(stat.strength + stat.level)
+	return stat.morphStat.walkSpeed + Fifth(stat.strength + stat.level) + stat.modifiers.Get(CellCommons.Modifier.WalkSpeed, true)
 
 static func GetWeightCapacity(stat : ActorStats) -> float:
-	return snappedf(stat.morphStat.weightCapacity + Half(stat.strength + stat.level), weightSnap)
+	return snappedf(stat.morphStat.weightCapacity + Half(stat.strength + stat.level), weightSnap) + stat.modifiers.Get(CellCommons.Modifier.WeightCapacity, true)
 
 static func GetAttack(stat : ActorStats) -> int:
-	var baseStat : int = stat.morphStat.attack + F(stat.strength * coefAttack) + stat.level
-	for modifier in stat.modifiers:
-		baseStat += modifier.GetAttack()
-	return baseStat
+	return stat.morphStat.attack + F(stat.strength * coefAttack) + stat.level + stat.modifiers.Get(CellCommons.Modifier.Attack, true)
 
 #
 static func ClampHealth(stat : ActorStats) -> int:

@@ -5,27 +5,20 @@ class_name SkillCommons
 const SkillMeleeName : String			= "Melee"
 
 # Actions
-enum ConsomeType
-{
-	HEALTH = 0,
-	MANA,
-	STAMINA,
-}
-
-static func TryConsume(agent : BaseAgent, stat : SkillCommons.ConsomeType, skill : SkillCell) -> bool:
-	match stat:
-		SkillCommons.ConsomeType.HEALTH:
-			var exhaust : int = skill.modifiers.GetHP()
+static func TryConsume(agent : BaseAgent, modifier : CellCommons.Modifier, skill : SkillCell) -> bool:
+	match modifier:
+		CellCommons.Modifier.Health:
+			var exhaust : int = skill.modifiers.Get(modifier)
 			if agent.stat.health >= -exhaust:
 				agent.stat.SetHealth(exhaust)
 				return true
-		SkillCommons.ConsomeType.MANA:
-			var exhaust : int = skill.modifiers.GetMana()
+		CellCommons.Modifier.Mana:
+			var exhaust : int = skill.modifiers.Get(modifier)
 			if agent.stat.mana >= -exhaust:
 				agent.stat.SetMana(exhaust)
 				return true
-		SkillCommons.ConsomeType.STAMINA:
-			var exhaust : int = skill.modifiers.GetStamina()
+		CellCommons.Modifier.Stamina:
+			var exhaust : int = skill.modifiers.Get(modifier)
 			if agent.stat.stamina >= -exhaust:
 				agent.stat.SetStamina(exhaust)
 				return true
@@ -33,8 +26,12 @@ static func TryConsume(agent : BaseAgent, stat : SkillCommons.ConsomeType, skill
 
 static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float) -> Skill.AlterationInfo:
 	var info : Skill.AlterationInfo = Skill.AlterationInfo.new()
-	var skillValue : int = skill.modifiers.GetAttack()
-	info.value = max(1, agent.stat.current.attack + skillValue - target.stat.current.defense)
+	var skillValue : int = skill.modifiers.Get(CellCommons.Modifier.MAttack)
+	if skillValue > 0:
+		info.value = max(1, agent.stat.current.mattack + skillValue - target.stat.current.mdefense)
+	else:
+		skillValue = skill.modifiers.Get(CellCommons.Modifier.Attack)
+		info.value = max(1, agent.stat.current.attack + skillValue - target.stat.current.defense)
 
 	var critMaster : bool = agent.stat.current.critRate > target.stat.current.dodgeRate
 	if critMaster and rng > 1.0 - agent.stat.current.critRate:
@@ -54,7 +51,7 @@ static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillCell, 
 	return info
 
 static func GetHeal(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float) -> int:
-	var skillValue : int = skill.modifiers.GetHP()
+	var skillValue : int = skill.modifiers.Get(CellCommons.Modifier.Health)
 	var healValue : int = int(agent.stat.concentration + skillValue * rng)
 	healValue = min(healValue, target.stat.current.maxHealth - target.stat.health)
 	return healValue
@@ -63,11 +60,11 @@ static func GetSurroundingTargets(agent : BaseAgent, skill : SkillCell) -> Array
 	var targets : Array[BaseAgent] = []
 	var neighbours : Array[Array] = WorldAgent.GetNeighboursFromAgent(agent)
 
-	if skill.modifiers.GetAttack() != 0:
+	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
 		for neighbour in neighbours[1]:
 			if IsTargetable(agent, neighbour, skill):
 				targets.append(neighbour)
-	if skill.modifiers.GetHP() != 0:
+	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
 		for neighbour in neighbours[2]:
 			if IsTargetable(agent, neighbour, skill):
 				targets.append(neighbour)
