@@ -148,7 +148,7 @@ func RemoveItem(cell : ItemCell, count : int = 1) -> bool:
 func ImportInventory(data : Dictionary):
 	for key in data.keys():
 		var keyData : Dictionary = data[key]
-		var id : int = keyData.get("id", CellCommons.UnknownID)
+		var id : int = keyData.get("id", DB.UnknownHash)
 		var customfield : String = keyData.get("customfield", "")
 		var cell : ItemCell = DB.GetItem(id, customfield)
 		if cell:

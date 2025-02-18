@@ -1,7 +1,7 @@
 extends Object
 class_name Item
 
-var cellID : int					= CellCommons.UnknownID
+var cellID : int					= DB.UnknownHash
 var cellCustomfield : String		= ""
 var count : int						= 0
 

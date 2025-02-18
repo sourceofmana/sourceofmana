@@ -9,6 +9,8 @@ enum Type
 	COUNT
 }
 
+
+
 static func CompareCell(cell : BaseCell, id : int, customfield : String) -> bool:
 	return cell and \
 	cell.id == id and \

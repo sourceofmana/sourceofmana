@@ -68,7 +68,7 @@ func RefreshInventory():
 	var tile : CellTile		= grid.GetTile(tileIdx)
 
 	for item in Launcher.Player.inventory.items:
-		if not item or item.cellID == CellCommons.UnknownID:
+		if not item or item.cellID == DB.UnknownHash:
 			continue
 
 		var cell : ItemCell = DB.GetItem(item.cellID, item.cellCustomfield)
