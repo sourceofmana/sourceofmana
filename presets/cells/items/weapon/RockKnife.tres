@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://duhylo7w1pitx"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=11 format=3 uid="uid://duhylo7w1pitx"]
 
 [ext_resource type="Texture2D" uid="uid://dq5sfseqnqch2" path="res://data/graphics/items/weapon/rockknife.png" id="1_b8u7e"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_b65r6"]
@@ -10,18 +10,24 @@
 [sub_resource type="Resource" id="Resource_8xs74"]
 script = ExtResource("2_rwadm")
 _effect = 20
-_value = 100
+_value = 0.0
 _persistent = true
 
 [sub_resource type="Resource" id="Resource_o04xs"]
 script = ExtResource("2_rwadm")
 _effect = 12
-_value = 30
+_value = 0.0
 _persistent = true
+
+[sub_resource type="Resource" id="Resource_x1bl1"]
+script = ExtResource("2_rwadm")
+_effect = 17
+_value = 16.0
+_persistent = false
 
 [sub_resource type="Resource" id="Resource_8s3hv"]
 script = ExtResource("2_wggpy")
-_modifiers = Array[ExtResource("2_rwadm")]([SubResource("Resource_8xs74"), SubResource("Resource_o04xs")])
+_modifiers = Array[ExtResource("2_rwadm")]([SubResource("Resource_8xs74"), SubResource("Resource_o04xs"), SubResource("Resource_x1bl1")])
 
 [resource]
 script = ExtResource("2_b65r6")

@@ -1,13 +1,26 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=4 format=3 uid="uid://cfkwntfdq7qa6"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=8 format=3 uid="uid://cfkwntfdq7qa6"]
 
 [ext_resource type="Texture2D" uid="uid://1x2n5gxlxlrl" path="res://data/graphics/items/head/desert-hood.png" id="1_iqaxl"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_68b7j"]
+[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_hwjqb"]
+[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_7htmu"]
 [ext_resource type="Texture2D" uid="uid://d1kr6ha4fsfmj" path="res://data/graphics/sprites/equipments/head/desert-hood.png" id="3_vlg4g"]
+
+[sub_resource type="Resource" id="Resource_u2a5x"]
+script = ExtResource("2_hwjqb")
+_effect = 14
+_value = 5.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_mscun"]
+script = ExtResource("3_7htmu")
+_modifiers = Array[ExtResource("2_hwjqb")]([SubResource("Resource_u2a5x")])
 
 [resource]
 script = ExtResource("2_68b7j")
 slot = 4
 textures = Array[Texture2D]([ExtResource("3_vlg4g"), ExtResource("3_vlg4g"), ExtResource("3_vlg4g")])
+customfield = ""
 id = -1
 name = "Desert Hood"
 description = ""
@@ -16,4 +29,4 @@ type = 0
 weight = 300.0
 stackable = false
 usable = false
-effects = {}
+modifiers = SubResource("Resource_mscun")

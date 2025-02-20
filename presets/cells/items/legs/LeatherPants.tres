@@ -1,10 +1,22 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://bi4288d5a7kbn"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://bi4288d5a7kbn"]
 
 [ext_resource type="Texture2D" uid="uid://3wesghn8cgpr" path="res://data/graphics/items/legs/leather-pants.png" id="1_wys1t"]
+[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_n1lb5"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_rrcf8"]
 [ext_resource type="Material" uid="uid://lvqidalgcn6h" path="res://presets/palettes/equipments/material-leather.tres" id="3_5sqqi"]
+[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_6t6gi"]
 [ext_resource type="Texture2D" uid="uid://das8r2duvhn7q" path="res://data/graphics/sprites/equipments/legs/pants-male.png" id="4_3sf44"]
 [ext_resource type="Texture2D" uid="uid://dd8fdtif3qds6" path="res://data/graphics/sprites/equipments/legs/pants-female.png" id="5_iqcpo"]
+
+[sub_resource type="Resource" id="Resource_x35g1"]
+script = ExtResource("2_n1lb5")
+_effect = 14
+_value = 10.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_pk32q"]
+script = ExtResource("3_6t6gi")
+_modifiers = Array[ExtResource("2_n1lb5")]([SubResource("Resource_x35g1")])
 
 [resource]
 script = ExtResource("2_rrcf8")
@@ -20,4 +32,4 @@ type = 0
 weight = 300.0
 stackable = false
 usable = false
-effects = {}
+modifiers = SubResource("Resource_pk32q")

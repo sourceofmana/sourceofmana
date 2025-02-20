@@ -1,8 +1,26 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=4 format=3 uid="uid://oddxnoy4pk24"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=9 format=3 uid="uid://oddxnoy4pk24"]
 
 [ext_resource type="Texture2D" uid="uid://pjuix81fkhsf" path="res://data/graphics/items/weapon/cleaver.png" id="1_6ay8c"]
+[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_66kaj"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_fwq6l"]
 [ext_resource type="Texture2D" uid="uid://d1u6pvhxej3t7" path="res://data/graphics/sprites/equipments/weapon/largeblade.png" id="3_26lpm"]
+[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_ilohe"]
+
+[sub_resource type="Resource" id="Resource_2xgca"]
+script = ExtResource("2_66kaj")
+_effect = 20
+_value = 100.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_qn4w3"]
+script = ExtResource("2_66kaj")
+_effect = 15
+_value = 0.5
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_cav7e"]
+script = ExtResource("3_ilohe")
+_modifiers = Array[ExtResource("2_66kaj")]([SubResource("Resource_2xgca"), SubResource("Resource_qn4w3")])
 
 [resource]
 script = ExtResource("2_fwq6l")
@@ -17,4 +35,4 @@ type = 0
 weight = 400.0
 stackable = false
 usable = false
-effects = {}
+modifiers = SubResource("Resource_cav7e")

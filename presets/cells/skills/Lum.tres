@@ -1,20 +1,34 @@
-[gd_resource type="Resource" script_class="SkillCell" load_steps=8 format=3 uid="uid://bg131bvkygwrx"]
+[gd_resource type="Resource" script_class="SkillCell" load_steps=12 format=3 uid="uid://bg131bvkygwrx"]
 
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_cyfet"]
 [ext_resource type="Texture2D" uid="uid://dk0r81xaf4y47" path="res://data/graphics/effects/particles/cast3.png" id="2_h2x4c"]
 [ext_resource type="Texture2D" uid="uid://ct28rebg0lm14" path="res://data/graphics/items/skill/lum.png" id="3_uxkv0"]
 [ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="4_7ktfv"]
 [ext_resource type="Script" path="res://sources/cell/SkillCell.gd" id="4_7n1yh"]
+[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="4_wcuhp"]
 [ext_resource type="PackedScene" uid="uid://676e7kfvces4" path="res://presets/effects/particles/Heal.tscn" id="5_me0na"]
 
-[sub_resource type="Resource" id="Resource_4pm3y"]
+[sub_resource type="Resource" id="Resource_pfw64"]
+script = ExtResource("4_wcuhp")
+_effect = 1
+_value = 50
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_wgr1t"]
+script = ExtResource("4_wcuhp")
+_effect = 2
+_value = -5
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_6rjgn"]
+script = ExtResource("4_wcuhp")
+_effect = 3
+_value = -15
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_1da6t"]
 script = ExtResource("4_7ktfv")
-_effects = {
-"HP": 50,
-"Mana": -5,
-"Stamina": -15
-}
-_keep = false
+_modifiers = Array[ExtResource("4_wcuhp")]([SubResource("Resource_pfw64"), SubResource("Resource_wgr1t"), SubResource("Resource_6rjgn")])
 
 [resource]
 script = ExtResource("4_7n1yh")
@@ -38,4 +52,4 @@ type = 2
 weight = 0.0
 stackable = false
 usable = true
-modifiers = SubResource("Resource_4pm3y")
+modifiers = SubResource("Resource_1da6t")

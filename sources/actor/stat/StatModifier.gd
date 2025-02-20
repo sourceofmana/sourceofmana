@@ -3,7 +3,7 @@ class_name StatModifier
 
 #
 @export var _effect : CellCommons.Modifier	= CellCommons.Modifier.None
-@export var _value : Variant				= 0
+@export var _value : Variant				= 0.0
 @export var _persistent : bool				= false
 
 #

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillCell" load_steps=10 format=3 uid="uid://cot2eu3ix5rdm"]
+[gd_resource type="Resource" script_class="SkillCell" load_steps=12 format=3 uid="uid://cot2eu3ix5rdm"]
 
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_3owvb"]
 [ext_resource type="Texture2D" uid="uid://bfrhdyon5owms" path="res://data/graphics/effects/particles/cast2.png" id="2_fcp7g"]
@@ -11,12 +11,24 @@
 [sub_resource type="Resource" id="Resource_s34tt"]
 script = ExtResource("4_0se4b")
 _effect = 7
-_value = 30
+_value = 50
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_7m8ix"]
+script = ExtResource("4_0se4b")
+_effect = 2
+_value = -10
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_klyse"]
+script = ExtResource("4_0se4b")
+_effect = 3
+_value = -10
 _persistent = false
 
 [sub_resource type="Resource" id="Resource_uhivh"]
 script = ExtResource("4_voj4c")
-_modifiers = Array[ExtResource("4_0se4b")]([SubResource("Resource_s34tt")])
+_modifiers = Array[ExtResource("4_0se4b")]([SubResource("Resource_s34tt"), SubResource("Resource_7m8ix"), SubResource("Resource_klyse")])
 
 [resource]
 script = ExtResource("4_3derk")

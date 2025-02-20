@@ -1,9 +1,27 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=5 format=3 uid="uid://bj5p08ffbj617"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://bj5p08ffbj617"]
 
 [ext_resource type="Texture2D" uid="uid://cpwbknubtfeou" path="res://data/graphics/items/weapon/boneknife.png" id="1_uvles"]
+[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_6d7ht"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_i26ks"]
+[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_p7h7e"]
 [ext_resource type="Texture2D" uid="uid://bxs16ohgjjohe" path="res://data/graphics/sprites/equipments/weapon/shortsword.png" id="3_tr6hd"]
 [ext_resource type="Material" uid="uid://c03i4eore23tk" path="res://presets/palettes/equipments/weapon-bone.tres" id="3_uxtf6"]
+
+[sub_resource type="Resource" id="Resource_abqns"]
+script = ExtResource("2_6d7ht")
+_effect = 20
+_value = 80.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_7vlbd"]
+script = ExtResource("2_6d7ht")
+_effect = 15
+_value = -0.1
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_snree"]
+script = ExtResource("3_p7h7e")
+_modifiers = Array[ExtResource("2_6d7ht")]([SubResource("Resource_abqns"), SubResource("Resource_7vlbd")])
 
 [resource]
 script = ExtResource("2_i26ks")
@@ -19,4 +37,4 @@ type = 0
 weight = 400.0
 stackable = false
 usable = false
-effects = {}
+modifiers = SubResource("Resource_snree")

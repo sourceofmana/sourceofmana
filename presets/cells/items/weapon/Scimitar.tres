@@ -1,8 +1,32 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=4 format=3 uid="uid://dw678a4b7ps2w"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://dw678a4b7ps2w"]
 
 [ext_resource type="Texture2D" uid="uid://c6ypehqc5uhcx" path="res://data/graphics/items/weapon/scimitar.png" id="1_soho8"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_8apsm"]
+[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_8vn10"]
+[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_h5xm3"]
 [ext_resource type="Texture2D" uid="uid://t0n7cp141hoo" path="res://data/graphics/sprites/equipments/weapon/sword.png" id="3_u0la2"]
+
+[sub_resource type="Resource" id="Resource_085be"]
+script = ExtResource("2_8vn10")
+_effect = 20
+_value = 75.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_al82h"]
+script = ExtResource("2_8vn10")
+_effect = 11
+_value = -0.2
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_5yc08"]
+script = ExtResource("2_8vn10")
+_effect = 17
+_value = 20.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_4pa0l"]
+script = ExtResource("3_h5xm3")
+_modifiers = Array[ExtResource("2_8vn10")]([SubResource("Resource_085be"), SubResource("Resource_al82h"), SubResource("Resource_5yc08")])
 
 [resource]
 script = ExtResource("2_8apsm")
@@ -17,3 +41,4 @@ type = 0
 weight = 400.0
 stackable = false
 usable = false
+modifiers = SubResource("Resource_4pa0l")

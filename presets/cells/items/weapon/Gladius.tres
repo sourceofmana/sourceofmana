@@ -1,9 +1,27 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=5 format=3 uid="uid://b2g1xlar44gin"]
+[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://b2g1xlar44gin"]
 
 [ext_resource type="Texture2D" uid="uid://bnpfs53kem27q" path="res://data/graphics/items/weapon/gladius.png" id="1_hu2iu"]
 [ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_brecq"]
+[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_nlprc"]
 [ext_resource type="Texture2D" uid="uid://t0n7cp141hoo" path="res://data/graphics/sprites/equipments/weapon/sword.png" id="3_1lytf"]
 [ext_resource type="Material" uid="uid://dgisl4evthd16" path="res://presets/palettes/equipments/weapon-green-iron.tres" id="3_vtm0f"]
+[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_wdxxq"]
+
+[sub_resource type="Resource" id="Resource_ideqs"]
+script = ExtResource("2_nlprc")
+_effect = 20
+_value = 50.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_j8f12"]
+script = ExtResource("2_nlprc")
+_effect = 17
+_value = 16.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_pu81m"]
+script = ExtResource("3_wdxxq")
+_modifiers = Array[ExtResource("2_nlprc")]([SubResource("Resource_ideqs"), SubResource("Resource_j8f12")])
 
 [resource]
 script = ExtResource("2_brecq")
@@ -19,4 +37,4 @@ type = 0
 weight = 400.0
 stackable = false
 usable = false
-effects = {}
+modifiers = SubResource("Resource_pu81m")

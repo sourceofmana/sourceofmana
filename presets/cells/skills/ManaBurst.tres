@@ -1,20 +1,34 @@
-[gd_resource type="Resource" script_class="SkillCell" load_steps=8 format=3 uid="uid://cj0tgusolkqoe"]
+[gd_resource type="Resource" script_class="SkillCell" load_steps=12 format=3 uid="uid://cj0tgusolkqoe"]
 
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_jjkni"]
 [ext_resource type="Texture2D" uid="uid://b0sjefu0rrrlq" path="res://data/graphics/items/skill/mana-burst.png" id="1_lskrc"]
 [ext_resource type="Script" path="res://sources/cell/SkillCell.gd" id="1_tou8y"]
 [ext_resource type="Texture2D" uid="uid://b04l4jblvixlt" path="res://data/graphics/effects/particles/cast1.png" id="2_ilyoo"]
 [ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="4_amp31"]
+[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="4_sacis"]
 [ext_resource type="PackedScene" uid="uid://b48f227dxr4nh" path="res://presets/effects/particles/ManaBurst.tscn" id="5_703aq"]
+
+[sub_resource type="Resource" id="Resource_p4hfi"]
+script = ExtResource("4_sacis")
+_effect = 7
+_value = 30
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_yvouw"]
+script = ExtResource("4_sacis")
+_effect = 2
+_value = -10
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_dr472"]
+script = ExtResource("4_sacis")
+_effect = 3
+_value = -5
+_persistent = false
 
 [sub_resource type="Resource" id="Resource_qpc65"]
 script = ExtResource("4_amp31")
-_effects = {
-"Attack": 30,
-"Mana": -10,
-"Stamina": -5
-}
-_keep = false
+_modifiers = Array[ExtResource("4_sacis")]([SubResource("Resource_p4hfi"), SubResource("Resource_yvouw"), SubResource("Resource_dr472")])
 
 [resource]
 script = ExtResource("1_tou8y")

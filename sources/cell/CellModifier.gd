@@ -6,10 +6,11 @@ class_name CellModifier
 
 #
 func Get(effect : CellCommons.Modifier, persistent : bool = false, default : Variant = 0) -> Variant:
+	var value : Variant = default
 	for modifier in _modifiers:
 		if modifier._effect == effect:
-			return modifier._value if modifier and modifier._persistent == persistent else default
-	return default
+			value += modifier._value if modifier and modifier._persistent == persistent else default
+	return value
 
 #
 func Add(modifier : StatModifier):
