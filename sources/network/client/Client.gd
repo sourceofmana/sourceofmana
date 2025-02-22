@@ -198,8 +198,8 @@ func CharacterError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommon
 	if Launcher.GUI:
 		Launcher.GUI.characterPanel.FillWarningLabel(err)
 
-func CharacterInfo(info : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
-	Launcher.GUI.characterPanel.AddCharacter(info)
+func CharacterInfo(info : Dictionary, equipment : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
+	Launcher.GUI.characterPanel.AddCharacter(info, equipment)
 
 #
 func ConnectServer():

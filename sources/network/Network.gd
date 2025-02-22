@@ -35,8 +35,8 @@ func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
 
 # Character
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
-func CharacterInfo(info : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("CharacterInfo", [info], rpcID)
+func CharacterInfo(info : Dictionary, equipment : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("CharacterInfo", [info, equipment], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):

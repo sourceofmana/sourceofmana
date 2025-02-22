@@ -73,7 +73,7 @@ func NextAvailableSlot() -> int:
 			break
 	return availableSlot
 
-func AddCharacter(info : Dictionary, slotID : int = ActorCommons.InvalidCharacterSlot):
+func AddCharacter(info : Dictionary, equipment : Dictionary, slotID : int = ActorCommons.InvalidCharacterSlot):
 	FillMissingCharacterInfo(info)
 
 	var availableSlot : int = NextAvailableSlot() if slotID == ActorCommons.InvalidCharacterSlot else slotID
@@ -85,6 +85,8 @@ func AddCharacter(info : Dictionary, slotID : int = ActorCommons.InvalidCharacte
 	if not entity:
 		assert(false, "Could not create character preview")
 		return
+
+	entity.inventory.ImportEquipment(equipment)
 
 	entity.stat.hairstyle	= info["hairstyle"]
 	entity.stat.haircolor	= info["haircolor"]
@@ -200,7 +202,7 @@ func EnableCharacterCreator(enable : bool):
 				RemoveCharacter(ActorCommons.MaxCharacterCount)
 		else:
 			if enable:
-				AddCharacter(traitsPanel.GetValues(), ActorCommons.MaxCharacterCount)
+				AddCharacter(traitsPanel.GetValues(), {}, ActorCommons.MaxCharacterCount)
 
 	statsPanel.set_visible(not enable and visible)
 	characterNameDisplay.set_visible(not enable and visible)

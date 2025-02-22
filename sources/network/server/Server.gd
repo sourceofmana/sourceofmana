@@ -67,7 +67,7 @@ func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictio
 				for itemData in ActorCommons.DefaultInventory:
 					Launcher.SQL.AddItem(characterID, itemData.get("item_id", DB.UnknownHash), itemData.get("customfield", ""), itemData.get("count", 1))
 
-				Network.CharacterInfo(Launcher.SQL.GetCharacterInfo(characterID), rpcID)
+				Network.CharacterInfo(Launcher.SQL.GetCharacterInfo(characterID), Launcher.SQL.GetEquipment(characterID), rpcID)
 
 	Network.CharacterError(err, rpcID)
 	return err
@@ -121,8 +121,9 @@ func CharacterListing(rpcID : int = NetworkCommons.RidSingleMode):
 		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
 	else:
 		for characterID in Launcher.SQL.GetCharacters(accountID):
-			var characterInfo : Dictionary = Launcher.SQL.GetCharacterInfo(characterID)
-			Network.CharacterInfo(characterInfo, rpcID)
+			var charInfo : Dictionary = Launcher.SQL.GetCharacterInfo(characterID)
+			var charEquipment : Dictionary = Launcher.SQL.GetEquipment(characterID)
+			Network.CharacterInfo(charInfo, charEquipment, rpcID)
 	Network.CharacterError(err, rpcID)
 
 # Navigation
