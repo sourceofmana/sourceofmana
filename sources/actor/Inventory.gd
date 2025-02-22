@@ -118,6 +118,9 @@ func EquipItem(cell : ItemCell):
 			cell.modifiers.Equip(actor)
 		actor.stat.RefreshEntityStats()
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+			var charID : int = Peers.GetCharacter(actor.rpcRID)
+			if charID != NetworkCommons.RidUnknown:
+				Launcher.SQL.UpdateEquipment(charID, ExportEquipment())
 			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, true])
 
 func UnequipItem(cell : ItemCell):
@@ -127,12 +130,18 @@ func UnequipItem(cell : ItemCell):
 		equipments[cell.slot] = null
 		actor.stat.RefreshEntityStats()
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+			var charID : int = Peers.GetCharacter(actor.rpcRID)
+			if charID != NetworkCommons.RidUnknown:
+				Launcher.SQL.UpdateEquipment(charID, ExportEquipment())
 			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, false])
 
 #
 func AddItem(cell : ItemCell, count : int = 1) -> bool:
 	if PushItem(cell, count):
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+			var charID : int = Peers.GetCharacter(actor.rpcRID)
+			if charID != NetworkCommons.RidUnknown:
+				Launcher.SQL.AddItem(charID, cell.id, cell.customfield, count)
 			Network.ItemAdded(cell.id, cell.customfield, count, actor.rpcRID)
 		return true
 	return false
@@ -140,28 +149,49 @@ func AddItem(cell : ItemCell, count : int = 1) -> bool:
 func RemoveItem(cell : ItemCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
 		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+			var charID : int = Peers.GetCharacter(actor.rpcRID)
+			if charID != NetworkCommons.RidUnknown:
+				Launcher.SQL.RemoveItem(charID, cell.id, cell.customfield, count)
 			Network.ItemRemoved(cell.id, cell.customfield, count, actor.rpcRID)
 		return true
 	return false
 
 #
-func ImportInventory(data : Dictionary):
-	for key in data.keys():
-		var keyData : Dictionary = data[key]
-		var id : int = keyData.get("id", DB.UnknownHash)
-		var customfield : String = keyData.get("customfield", "")
+func ImportInventory(data : Array[Dictionary]):
+	for item in data:
+		var id : int = item.get("item_id", DB.UnknownHash)
+		var customfield : String = item.get("customfield", "")
 		var cell : ItemCell = DB.GetItem(id, customfield)
 		if cell:
-			var count : int = keyData.get("count", 1)
+			var count : int = item.get("count", 1)
 			PushItem(cell, count)
 
-func ExportInventory() -> Dictionary:
-	var idx : int = 0
-	var data : Dictionary = {}
+func ExportInventory() -> Array[Dictionary]:
+	var data : Array[Dictionary] = []
 	for item in items:
-		data[idx] = item.Export()
-		idx += 1
+		data.push_back(item.Export())
 	return data
+
+#
+func ImportEquipment(data : Dictionary):
+	for slotName in data.keys():
+		var cellHash = data.get(slotName, DB.UnknownHash)
+		if cellHash != null and cellHash != DB.UnknownHash:
+			var cell : ItemCell = DB.GetItem(cellHash)
+			if cell:
+				EquipItem(cell)
+
+func ExportEquipment() -> Dictionary:
+	return {
+		"weapon": equipments[ActorCommons.Slot.WEAPON].id if equipments[ActorCommons.Slot.WEAPON] else DB.UnknownHash,
+		"shield": equipments[ActorCommons.Slot.SHIELD].id if equipments[ActorCommons.Slot.SHIELD] else DB.UnknownHash,
+		"arms": equipments[ActorCommons.Slot.HANDS].id if equipments[ActorCommons.Slot.HANDS] else DB.UnknownHash,
+		"chest": equipments[ActorCommons.Slot.CHEST].id if equipments[ActorCommons.Slot.CHEST] else DB.UnknownHash,
+		"face": equipments[ActorCommons.Slot.NECK].id if equipments[ActorCommons.Slot.NECK] else DB.UnknownHash,
+		"feet": equipments[ActorCommons.Slot.FEET].id if equipments[ActorCommons.Slot.FEET] else DB.UnknownHash,
+		"head": equipments[ActorCommons.Slot.HEAD].id if equipments[ActorCommons.Slot.HEAD] else DB.UnknownHash,
+		"legs": equipments[ActorCommons.Slot.LEGS].id if equipments[ActorCommons.Slot.LEGS] else DB.UnknownHash,
+	}
 
 #
 func _init(actorNode : Actor):

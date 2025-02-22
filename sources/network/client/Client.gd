@@ -162,11 +162,19 @@ func ItemEquiped(ridAgent : int, itemID : int, customfield : String, state : boo
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 				cell.used.emit()
 
-func RefreshInventory(cells : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
+func RefreshInventory(cells : Array[Dictionary], _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player and Launcher.Player.inventory:
 		Launcher.Player.inventory.ImportInventory(cells)
 	if Launcher.GUI and Launcher.GUI.inventoryWindow:
 		Launcher.GUI.inventoryWindow.RefreshInventory()
+
+func RefreshEquipments(ridAgent : int, equipments : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
+	var entity : Entity = Entities.Get(ridAgent)
+	if entity:
+		if entity.inventory:
+			entity.inventory.ImportEquipment(equipments)
+		if entity == Launcher.Player and Launcher.GUI and Launcher.GUI.inventoryWindow:
+			Launcher.GUI.inventoryWindow.RefreshInventory()
 
 func DropAdded(dropID : int, itemID : int, customfield : String, pos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:

@@ -12,7 +12,7 @@ func _init(_cell : ItemCell, _count : int = 1):
 
 func Export() -> Dictionary:
 	return {
-		"id": cellID,
+		"item_id": cellID,
 		"customfield": cellCustomfield,
 		"count": count,
 	}

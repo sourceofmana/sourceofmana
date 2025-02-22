@@ -249,8 +249,12 @@ func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("RetrieveInventory", [], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func RefreshInventory(cells : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+func RefreshInventory(cells : Array[Dictionary], rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("RefreshInventory", [cells], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func RefreshEquipments(agentID : int, equipments : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("RefreshEquipments", [agentID, equipments], rpcID)
 
 # Drop
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)

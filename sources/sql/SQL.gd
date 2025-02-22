@@ -7,7 +7,7 @@ var queryMutex : Mutex				= Mutex.new()
 
 # Accounts
 func AddAccount(username : String, password : String, email : String) -> bool:
-	var results : Array = db.select_rows("account", "username = %s" % username, ["account_id"])
+	var results : Array = db.select_rows("account", "username = '%s'" % username, ["account_id"])
 	if results.size() == 0:
 		var accountData : Dictionary = {
 			"username" : username,
@@ -40,9 +40,10 @@ func AddCharacter(accountID : int, nickname : String, traits : Dictionary, attri
 		ret = ret and db.update_rows("attribute", "char_id = %d" % charID, attributes)
 	return ret
 
-func RemoveCharacter(player : BaseAgent) -> bool:
-	if player:
-		return db.delete_rows("character", "char_id = %d" % player.charID)
+func RemoveCharacter(player : PlayerAgent) -> bool:
+	var charID : int = Peers.GetCharacter(player.rpcRID)
+	if charID != NetworkCommons.RidUnknown:
+		return db.delete_rows("character", "char_id = %d" % charID)
 	return false
 
 func GetCharacters(accountID : int) -> Array[int]:
@@ -62,17 +63,19 @@ WHERE character.char_id = %d;" % charID)
 	return results[0] if results.size() > 0 else {}
 
 func CharacterLogout(player : PlayerAgent) -> bool:
-	var success : bool = true
-	success = success && UpdateAttribute(player.charID, player.stat)
-	success = success && UpdateTrait(player.charID, player.stat)
-	success = success && UpdateStat(player.charID, player.stat)
-	success = success && UpdateCharacter(player)
+	var charID : int = Peers.GetCharacter(player.rpcRID)
+	var success : bool = charID != NetworkCommons.RidUnknown
+	if success:
+		success = success && UpdateAttribute(charID, player.stat)
+		success = success && UpdateTrait(charID, player.stat)
+		success = success && UpdateStat(charID, player.stat)
+		success = success && UpdateCharacter(player)
 	return success
 
 # Character
 func GetCharacterID(accountID : int, nickname : String) -> int:
 	var results : Array[Dictionary] = QueryBindings("SELECT char_id FROM character WHERE account_id = ? AND nickname = ?;", [accountID, nickname])
-	assert(results.size() <= 1, "Duplicated character row for account %d and nickname %s" % [accountID, nickname])
+	assert(results.size() <= 1, "Duplicated character row for account %d and nickname '%s'" % [accountID, nickname])
 	return results[0]["char_id"] if results.size() > 0 else NetworkCommons.RidUnknown
 
 func GetCharacter(charID : int) -> Dictionary:
@@ -84,9 +87,13 @@ func UpdateCharacter(player : PlayerAgent) -> bool:
 	if player == null:
 		return false
 
+	var charID : int = Peers.GetCharacter(player.rpcRID)
+	if charID == NetworkCommons.RidUnknown:
+		return false
+
 	var map : WorldMap = WorldAgent.GetMapFromAgent(player)
 	var newTimestamp : int = SQLCommons.Timestamp()
-	var data : Dictionary = GetCharacter(player.charID)
+	var data : Dictionary = GetCharacter(charID)
 
 	data["total_time"] = SQLCommons.GetOrAddValue(data, "total_time", 0) + newTimestamp - SQLCommons.GetOrAddValue(data, "last_timestamp", newTimestamp)
 	data["last_timestamp"] = newTimestamp
@@ -101,7 +108,7 @@ func UpdateCharacter(player : PlayerAgent) -> bool:
 		data["respawn_y"] = player.respawnDestination.pos.y
 		data["respawn_map"] = player.respawnDestination.map
 
-	return db.update_rows("character", "char_id = %d;" % player.charID, data)
+	return db.update_rows("character", "char_id = %d;" % charID, data)
 
 # Stats
 func GetAttribute(charID : int) -> Dictionary:
@@ -164,7 +171,7 @@ func UpdateStat(charID : int, stats : ActorStats) -> bool:
 
 # Inventory
 func GetItem(charID : int, itemID : int, customfield : String, storageType : int = 0) -> Dictionary:
-	var results : Array[Dictionary] = db.select_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = %s" % [itemID, charID, storageType, customfield], ["*"])
+	var results : Array[Dictionary] = db.select_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = '%s'" % [itemID, charID, storageType, customfield], ["*"])
 	assert(results.size() <= 1, "Duplicated item %d on character %d with storage %d" % [itemID, charID, storageType])
 	return {} if results.is_empty() else results[0]
 
@@ -173,7 +180,7 @@ func AddItem(charID : int, itemID : int, customfield : String, itemCount : int =
 	# Increment item count
 	if not data.is_empty():
 		data["count"] += 1
-		return db.update_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = %s" % [itemID, charID, storageType, customfield], data)
+		return db.update_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = '%s'" % [itemID, charID, storageType, customfield], data)
 
 	# Insert new item
 	data = {
@@ -185,42 +192,30 @@ func AddItem(charID : int, itemID : int, customfield : String, itemCount : int =
 	}
 	return db.insert_row("item", data)
 
-func RemoveItem(charID : int, itemID : int, customfield : String, storageType : int = 0) -> bool:
+func RemoveItem(charID : int, itemID : int, customfield : String, itemCount : int = 1, storageType : int = 0) -> bool:
 	var data : Dictionary = GetItem(charID, itemID, customfield, storageType)
-	var condition : String = "item_id = %d AND char_id = %d AND storage = %d AND customfield = %s" % [itemID, charID, storageType, customfield]
+	var condition : String = "item_id = %d AND char_id = %d AND storage = %d AND customfield = '%s'" % [itemID, charID, storageType, customfield]
 	if not data.is_empty():
 		# Decrement item count
-		if data["count"] >= 2:
-			data["count"] -= 1
-			return db.update_row("item", condition, data)
+		if data["count"] > itemCount:
+			data["count"] -= itemCount
+			return db.update_rows("item", condition, data)
 		# Remove item
-		return db.delete_row("item", condition)
+		elif data["count"] == itemCount:
+			return db.delete_rows("item", condition)
 	return false
 
-func GetStorage(charID : int, storageType) -> Array[Dictionary]:
+func GetStorage(charID : int, storageType : int = 0) -> Array[Dictionary]:
 	return db.select_rows("item", "char_id = %d AND storage = %d" % [charID, storageType], ["*"])
 
 # Equipment
 func GetEquipment(charID : int) -> Dictionary:
-	var results : Array[Dictionary] = db.select_rows("equipment", "char_id = %d" % charID, ["*"])
+	var results : Array[Dictionary] = db.select_rows("equipment", "char_id = %d" % charID, ["weapon, shield, arms, chest, face, feet, head, legs"])
 	assert(results.size() <= 1, "Duplicated equipment on character %d" % charID)
 	return results[0] if results.size() > 0 else {}
 
-func UpdateEquipment(player : PlayerAgent) -> bool:
-	var data : Dictionary = {
-		"weapon": 0,
-		"shield": 0,
-		"ammunition": 0,
-		"arms": 0,
-		"chest": 0,
-		"face": 0,
-		"feet": 0,
-		"head": 0,
-		"legs": 0,
-		"accessory1": 0,
-		"accessory2": 0
-	}
-	return db.update_rows("equipment", "char_id = %d" % player.charID, data)
+func UpdateEquipment(charID : int, data : Dictionary) -> bool:
+	return db.update_rows("equipment", "char_id = %d" % charID, data)
 
 # Skill
 func GetSkill(charID : int, skillID : int) -> Dictionary:
@@ -233,7 +228,7 @@ func SetSkill(charID : int, skillID : int, value : int) -> bool:
 	# Update value
 	if not data.is_empty():
 		data["level"] = value
-		return db.update_row("skill", "skill_id = %d AND char_id = %d" % [skillID, charID], data)
+		return db.update_rows("skill", "skill_id = %d AND char_id = %d" % [skillID, charID], data)
 	# Add value
 	return db.insert_row("skill", data)
 
@@ -251,7 +246,7 @@ func SetBestiary(charID : int, mobID : int, value : int) -> bool:
 	# Update value
 	if not data.is_empty():
 		data["killed_count"] = value
-		return db.update_row("bestiary", "mob_id = %d AND char_id = %d" % [mobID, charID], data)
+		return db.update_rows("bestiary", "mob_id = %d AND char_id = %d" % [mobID, charID], data)
 	# Add value
 	return db.insert_row("bestiary", data)
 
@@ -269,7 +264,7 @@ func SetQuest(charID : int, questID : int, value : int) -> bool:
 	# Update value
 	if not data.is_empty():
 		data["state"] = value
-		return db.update_row("quest", "quest_id = %d AND char_id = %d" % [questID, charID], data)
+		return db.update_rows("quest", "quest_id = %d AND char_id = %d" % [questID, charID], data)
 	# Add value
 	return db.insert_row("item", data)
 
@@ -363,7 +358,6 @@ func UnitTest():
 	var player : BaseAgent = Instantiate.CreateAgent(Launcher.World.defaultSpawn, playerData, character["nickname"])
 	if player == null:
 		return
-	player.charID = charID
 
 	# Log out the player, remove it from the database and remove the account as well
 	assert(CharacterLogout(player) == true, "Could not logout from the character")

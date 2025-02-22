@@ -64,6 +64,9 @@ func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictio
 				err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
 			else:
 				characters_list_update.emit()
+				for itemData in ActorCommons.DefaultInventory:
+					Launcher.SQL.AddItem(characterID, itemData.get("item_id", DB.UnknownHash), itemData.get("customfield", ""), itemData.get("count", 1))
+
 				Network.CharacterInfo(Launcher.SQL.GetCharacterInfo(characterID), rpcID)
 
 	Network.CharacterError(err, rpcID)
@@ -87,11 +90,16 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 			else:
 				var agent : PlayerAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
 				if agent:
-					var info : Dictionary = Launcher.SQL.GetCharacterInfo(peer.characterRID)
-					peer.SetAgent(agent.get_rid().get_id())
-					agent.stat.SetStats(info)
-					agent.inventory.ImportInventory(ActorCommons.DefaultInventory)
 					agent.rpcRID = rpcID
+					peer.SetAgent(agent.get_rid().get_id())
+
+					var charInfo : Dictionary = Launcher.SQL.GetCharacterInfo(peer.characterRID)
+					agent.stat.SetStats(charInfo)
+					var charInventory : Array[Dictionary] = Launcher.SQL.GetStorage(peer.characterRID, 0)
+					agent.inventory.ImportInventory(charInventory)
+					var charEquipment : Dictionary = Launcher.SQL.GetEquipment(peer.characterRID)
+					agent.inventory.ImportEquipment(charEquipment)
+
 					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
 
 	Network.CharacterError(err, rpcID)
