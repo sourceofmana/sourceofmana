@@ -88,18 +88,13 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 			if peer.characterRID == NetworkCommons.RidUnknown:
 				err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
 			else:
-				var agent : PlayerAgent = WorldAgent.CreateAgent(Launcher.World.defaultSpawn, 0, nickname)
+				var charInfo : Dictionary = Launcher.SQL.GetCharacterInfo(peer.characterRID)
+				var spawnLocation : SpawnObject = PlayerAgent.GetSpawnFromData(charInfo)
+				var agent : PlayerAgent = WorldAgent.CreateAgent(spawnLocation, 0, nickname)
 				if agent:
 					agent.rpcRID = rpcID
 					peer.SetAgent(agent.get_rid().get_id())
-
-					var charInfo : Dictionary = Launcher.SQL.GetCharacterInfo(peer.characterRID)
-					agent.stat.SetStats(charInfo)
-					var charInventory : Array[Dictionary] = Launcher.SQL.GetStorage(peer.characterRID, 0)
-					agent.inventory.ImportInventory(charInventory)
-					var charEquipment : Dictionary = Launcher.SQL.GetEquipment(peer.characterRID)
-					agent.inventory.ImportEquipment(charEquipment)
-
+					agent.SetCharacterInfo(charInfo, peer.characterRID)
 					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
 
 	Network.CharacterError(err, rpcID)
@@ -107,12 +102,13 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
 	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	if peer:
-		peer.SetCharacter(NetworkCommons.RidUnknown)
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player:
 			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
+			Launcher.SQL.CharacterLogout(player)
 			WorldAgent.RemoveAgent(player)
 			peer.SetAgent(NetworkCommons.RidUnknown)
+		peer.SetCharacter(NetworkCommons.RidUnknown)
 
 func CharacterListing(rpcID : int = NetworkCommons.RidSingleMode):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK

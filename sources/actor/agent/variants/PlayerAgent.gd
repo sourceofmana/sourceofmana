@@ -4,12 +4,50 @@ class_name PlayerAgent
 #
 var rpcRID : int						= NetworkCommons.RidUnknown
 var lastStat : ActorStats				= ActorStats.new()
-var respawnDestination : Destination	= Destination.new()
+var respawnDestination : Destination	= null
 var exploreOrigin : Destination			= Destination.new()
-var ownScript : NpcScript			= null
+var ownScript : NpcScript				= null
 
 #
 static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
+
+#
+static func GetDestinationFromData(charData : Dictionary, mapID : String, posXID : String, posYID : String) -> Destination:
+	var mapName = charData.get(mapID, null)
+	var mapPosX = charData.get(posXID, null)
+	var mapPosY = charData.get(posYID, null)
+	if mapName != null and mapPosX != null and mapPosY != null:
+		var map : WorldMap = Launcher.World.GetMap(mapName)
+		if map:
+			return Destination.new(map.name, Vector2(mapPosX, mapPosY))
+	return null
+
+static func GetSpawnFromData(charData : Dictionary) -> SpawnObject:
+	var destination : Destination = GetDestinationFromData(charData, "pos_map", "pos_x", "pos_y")
+	if destination:
+		var spawnLocation : SpawnObject = SpawnObject.new()
+		spawnLocation.map				= Launcher.World.GetMap(destination.map)
+		spawnLocation.spawn_position	= destination.pos
+		spawnLocation.type				= "Player"
+		spawnLocation.name				= "Default"
+		return spawnLocation
+	return WorldAgent.defaultSpawnLocation
+
+static func GetRespawnFromData(charData : Dictionary) -> Destination:
+	var destination : Destination = GetDestinationFromData(charData, "respawn_map", "respawn_x", "respawn_y")
+	return destination if destination else Destination.new(WorldAgent.defaultSpawnLocation.map.name, WorldAgent.defaultSpawnLocation.spawn_position)
+
+func SetCharacterInfo(charData : Dictionary, charID : int):
+	# Stats
+	stat.SetStats(charData)
+	# Inventory
+	var inventoryData : Array[Dictionary] = Launcher.SQL.GetStorage(charID, 0)
+	inventory.ImportInventory(inventoryData)
+	# Equiped items
+	var equipmentData : Dictionary = Launcher.SQL.GetEquipment(charID)
+	inventory.ImportEquipment(equipmentData)
+	# Respawn
+	respawnDestination = GetRespawnFromData(charData)
 
 #
 func UpdateLastStats():
@@ -86,10 +124,6 @@ func _ready():
 	regenTimer.set_name("RegenTimer")
 	Callback.OneShotCallback(regenTimer.tree_entered, Callback.ResetTimer, [regenTimer, ActorCommons.RegenDelay, stat.Regen])
 	add_child.call_deferred(regenTimer)
-
-	respawnDestination.map = Launcher.World.defaultSpawn.map.name
-	respawnDestination.pos = Launcher.World.defaultSpawn.spawn_position
-
 	super._ready()
 
 func _exit_tree():
@@ -113,7 +147,7 @@ func Explore():
 func WarpTo(dest : Destination):
 	var nextMap : WorldMap = Launcher.World.GetMap(dest.map)
 	if nextMap:
-		Launcher.World.Warp(self, nextMap, dest.pos)
+		Launcher.World.Warp(self, nextMap, dest.pos, dest.instanceID)
 
 func Killed():
 	super.Killed()

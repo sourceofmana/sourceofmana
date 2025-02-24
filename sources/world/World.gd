@@ -2,7 +2,6 @@ extends ServiceBase
 
 # Vars
 var areas : Dictionary						= {}
-var defaultSpawn : SpawnObject				= SpawnObject.new()
 
 # Getters
 func CanWarp(agent : BaseAgent) -> WarpObject:
@@ -14,16 +13,16 @@ func CanWarp(agent : BaseAgent) -> WarpObject:
 	return null
 
 func GetMap(mapName : String) -> WorldMap:
-	return areas[mapName] if mapName in areas else null
+	return areas.get(mapName, null)
 
 # Core functions
-func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i):
+func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, instanceID : int = 0):
 	assert(newMap != null and agent != null, "Warp could not proceed, agent or new map missing")
 	if agent and newMap:
 		WorldAgent.PopAgent(agent)
 		agent.position = agent.exploreOrigin.pos if newMap.HasFlags(WorldMap.Flags.ONLY_SPIRIT) and newPos == Vector2i.ZERO else newPos
 		agent.SwitchInputMode(true)
-		Spawn(newMap, agent)
+		Spawn(newMap, agent, instanceID)
 
 func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
 	assert(map != null and instanceID < map.instances.size() and agent != null, "Spawn could not proceed, agent or map missing")
@@ -73,11 +72,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 func _post_launch():
 	for mapName in DB.MapsDB:
 		areas[mapName] = WorldMap.Create(mapName)
-
-	defaultSpawn.map				= GetMap(LauncherCommons.DefaultStartMap)
-	defaultSpawn.spawn_position		= LauncherCommons.DefaultStartPos
-	defaultSpawn.type				= "Player"
-	defaultSpawn.name				= "Default"
+	WorldAgent._post_launch()
 
 	isInitialized = true
 

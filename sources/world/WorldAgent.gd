@@ -1,7 +1,8 @@
 extends Node
 class_name WorldAgent
 
-static var agents : Dictionary = {}
+static var agents : Dictionary						= {}
+static var defaultSpawnLocation : SpawnObject		= SpawnObject.new()
 
 # From Agent getters
 static func GetInstanceFromAgent(agent : BaseAgent) -> SubViewport:
@@ -39,12 +40,14 @@ static func AddAgent(agent : BaseAgent):
 static func RemoveAgent(agent : BaseAgent):
 	assert(agent != null, "Agent is null, can't remove it")
 	if agent:
-		var inst : WorldInstance = agent.get_parent()
-		if inst and inst.timers and agent.spawnInfo and agent.spawnInfo.is_persistant:
-			Callback.SelfDestructTimer(inst.timers, agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent, [agent.spawnInfo, inst.id])
 
-		if agent is AIAgent and agent.leader != null:
-			agent.leader.RemoveFollower(agent)
+		if agent is AIAgent:
+			var inst : WorldInstance = agent.get_parent()
+			if inst and inst.timers and agent.spawnInfo and agent.spawnInfo.is_persistant:
+				Callback.SelfDestructTimer(inst.timers, agent.spawnInfo.respawn_delay, WorldAgent.CreateAgent, [agent.spawnInfo, inst.id])
+			if agent.leader != null:
+				agent.leader.RemoveFollower(agent)
+
 		PopAgent(agent)
 		agents.erase(agent)
 		agent.queue_free()
@@ -65,8 +68,8 @@ static func PopAgent(agent : BaseAgent):
 	assert(agent != null, "Agent is null, can't pop it")
 	if agent:
 		var inst : WorldInstance = GetInstanceFromAgent(agent)
-		Network.Server.NotifyNeighbours(agent, "RemoveEntity", [], false)
 		if inst:
+			Network.Server.NotifyNeighbours(agent, "RemoveEntity", [], false)
 			if agent is PlayerAgent:
 				inst.players.erase(agent)
 				if inst.players.size() == 0:
@@ -97,9 +100,23 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : String = "") -> BaseAgent:
 	var agent : BaseAgent = null
 	var data : EntityData = Instantiate.FindEntityReference(spawn.name)
-	if data:
-		agent = Instantiate.CreateAgent(spawn, data, spawn.nick if nickname.length() == 0 else nickname)
-	if agent:
-		AddAgent(agent)
-		Launcher.World.Spawn(spawn.map, agent, instanceID)
+	if not data:
+		return null
+
+	var position : Vector2 = WorldNavigation.GetSpawnPosition(spawn.map, spawn, !(data._behaviour & AICommons.Behaviour.IMMOBILE))
+	if Vector2i(position) == Vector2i.ZERO:
+		return null
+
+	agent = Instantiate.CreateAgent(spawn, data, spawn.nick if nickname.length() == 0 else nickname)
+	if not agent:
+		return null
+
+	AddAgent(agent)
+	Launcher.World.Warp(agent, spawn.map, position, instanceID)
 	return agent
+
+static func _post_launch():
+	defaultSpawnLocation.map				= Launcher.World.GetMap(LauncherCommons.DefaultStartMap)
+	defaultSpawnLocation.spawn_position		= LauncherCommons.DefaultStartPos
+	defaultSpawnLocation.type				= "Player"
+	defaultSpawnLocation.name				= "Default"

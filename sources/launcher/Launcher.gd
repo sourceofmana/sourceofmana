@@ -76,6 +76,9 @@ func Reset(clientStarted : bool, serverStarted : bool):
 			Map.Destroy()
 			Map.queue_free()
 			Map = null
+		if Network.Client:
+			Network.Client.Destroy()
+			Network.Client = null
 		if Player:
 			Player.queue_free()
 			Player = null
@@ -86,6 +89,9 @@ func Reset(clientStarted : bool, serverStarted : bool):
 			World.Destroy()
 			World.queue_free()
 			World = null
+		if Network.Server:
+			Network.Server.Destroy()
+			Network.Server = null
 		if SQL:
 			SQL.set_name("SQLDestroyed")
 			SQL.Destroy()
@@ -93,6 +99,7 @@ func Reset(clientStarted : bool, serverStarted : bool):
 			SQL = null
 
 func Quit():
+	Reset(false, false)
 	Network.Destroy()
 	get_tree().quit()
 
@@ -136,5 +143,4 @@ func _post_launch():
 	if Audio:									Audio._post_launch()
 
 func _quit():
-	Reset(false, false)
 	Quit()

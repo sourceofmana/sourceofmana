@@ -14,7 +14,7 @@ var data : EntityData					= null
 func SetData():
 	pass
 
-func Init(_type : ActorCommons.Type, _data : EntityData, _nick : String = "", isManaged : bool = false):
+func _init(_type : ActorCommons.Type = ActorCommons.Type.NPC, _data : EntityData = null, _nick : String = "", isManaged : bool = false):
 	if not _data:
 		return
 

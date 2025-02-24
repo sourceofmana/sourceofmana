@@ -40,8 +40,7 @@ func AddCharacter(accountID : int, nickname : String, traits : Dictionary, attri
 		ret = ret and db.update_rows("attribute", "char_id = %d" % charID, attributes)
 	return ret
 
-func RemoveCharacter(player : PlayerAgent) -> bool:
-	var charID : int = Peers.GetCharacter(player.rpcRID)
+func RemoveCharacter(charID : int) -> bool:
 	if charID != NetworkCommons.RidUnknown:
 		return db.delete_rows("character", "char_id = %d" % charID)
 	return false
@@ -64,12 +63,14 @@ WHERE character.char_id = %d;" % charID)
 
 func CharacterLogout(player : PlayerAgent) -> bool:
 	var charID : int = Peers.GetCharacter(player.rpcRID)
+	if charID == NetworkCommons.RidUnknown:
+		return false
+
 	var success : bool = charID != NetworkCommons.RidUnknown
-	if success:
-		success = success && UpdateAttribute(charID, player.stat)
-		success = success && UpdateTrait(charID, player.stat)
-		success = success && UpdateStat(charID, player.stat)
-		success = success && UpdateCharacter(player)
+	success = success and UpdateAttribute(charID, player.stat)
+	success = success and UpdateTrait(charID, player.stat)
+	success = success and UpdateStat(charID, player.stat)
+	success = success and UpdateCharacter(player)
 	return success
 
 # Character
@@ -361,6 +362,6 @@ func UnitTest():
 
 	# Log out the player, remove it from the database and remove the account as well
 	assert(CharacterLogout(player) == true, "Could not logout from the character")
-	assert(RemoveCharacter(player) == true, "Could not delete the test character")
+	assert(RemoveCharacter(charID) == true, "Could not delete the test character")
 	assert(RemoveAccount(accountID) == true, "Could not delete the test account")
 	player.queue_free()

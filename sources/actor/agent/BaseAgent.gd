@@ -23,7 +23,6 @@ var currentVelocity : Vector2i			= Vector2i.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var forceUpdate : bool					= false
 
-var spawnInfo : SpawnObject				= null
 var skillSet : Array[SkillCell]			= []
 var skillProba : Dictionary				= {}
 var skillProbaSum : float				= 0.0

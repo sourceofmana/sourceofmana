@@ -10,20 +10,20 @@
 [sub_resource type="Resource" id="Resource_8xs74"]
 script = ExtResource("2_rwadm")
 _effect = 20
-_value = 0.0
+_value = 100.0
 _persistent = true
 
 [sub_resource type="Resource" id="Resource_o04xs"]
 script = ExtResource("2_rwadm")
 _effect = 12
-_value = 0.0
+_value = 30.0
 _persistent = true
 
 [sub_resource type="Resource" id="Resource_x1bl1"]
 script = ExtResource("2_rwadm")
 _effect = 17
 _value = 16.0
-_persistent = false
+_persistent = true
 
 [sub_resource type="Resource" id="Resource_8s3hv"]
 script = ExtResource("2_wggpy")

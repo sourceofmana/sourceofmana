@@ -11,6 +11,7 @@ var followers : Dictionary				= {}
 var leader : BaseAgent					= null
 var hasNodeGoal : bool					= false
 var nodeGoal : Node2D					= null
+var spawnInfo : SpawnObject				= null
 
 #
 func ResetNav():

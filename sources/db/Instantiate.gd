@@ -18,39 +18,26 @@ static func CreateEntity(entityType : ActorCommons.Type, entityID : String, nick
 
 	var actor : Entity = FileSystem.LoadEntityVariant()
 	if actor:
-		actor.Init(entityType, data, nick, isManaged)
+		actor._init(entityType, data, nick, isManaged)
 	return actor
 
 static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = "") -> BaseAgent:
 	if spawn == null or data == null:
 		return null
 
-	var position : Vector2 = WorldNavigation.GetSpawnPosition(spawn.map, spawn, !(data._behaviour & AICommons.Behaviour.IMMOBILE))
-	if Vector2i(position) == Vector2i.ZERO:
-		return null
-
 	var actor : BaseAgent = null
-	var type : ActorCommons.Type = ActorCommons.Type.NPC
-
 	match spawn.type:
 		"Npc":
-			actor = NpcAgent.new()
+			actor = NpcAgent.new(ActorCommons.Type.NPC, data, spawn.name if nick.is_empty() else nick, true)
+			actor.spawnInfo = spawn
 			actor.playerScriptPath = spawn.player_script
 			actor.ownScriptPath = spawn.own_script
-			type = ActorCommons.Type.NPC
 		"Monster":
-			actor = MonsterAgent.new()
-			type = ActorCommons.Type.MONSTER
+			actor = MonsterAgent.new(ActorCommons.Type.MONSTER, data, spawn.name if nick.is_empty() else nick, true)
+			actor.spawnInfo = spawn
 		"Player":
-			actor = PlayerAgent.new()
-			type = ActorCommons.Type.PLAYER
+			actor = PlayerAgent.new(ActorCommons.Type.PLAYER, data, spawn.name if nick.is_empty() else nick, true)
 		_: assert(false, "Trying to create an agent with a wrong type: " + spawn.type)
-
-	if actor:
-		actor.Init(type, data, spawn.name if nick.is_empty() else nick, true)
-		actor.spawnInfo = spawn
-		actor.position = position
-
 	return actor
 
 # Drop
