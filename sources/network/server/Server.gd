@@ -35,12 +35,16 @@ func ConnectAccount(accountName : String, password : String, rpcID : int = Netwo
 			peer.SetAccount(Launcher.SQL.Login(accountName, password))
 			if peer.accountRID == NetworkCommons.RidUnknown:
 				err = NetworkCommons.AuthError.ERR_AUTH
+			else:
+				Launcher.SQL.UpdateAccount(peer.accountRID)
 	Network.AuthError(err, rpcID)
 
 func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
 	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	if peer:
-		peer.SetAccount(NetworkCommons.RidUnknown)
+		if peer.accountRID != NetworkCommons.RidUnknown:
+			Launcher.SQL.UpdateAccount(peer.accountRID)
+			peer.SetAccount(NetworkCommons.RidUnknown)
 		if peer.characterRID != NetworkCommons.RidUnknown:
 			DisconnectCharacter(rpcID)
 
@@ -95,6 +99,7 @@ func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleM
 					agent.rpcRID = rpcID
 					peer.SetAgent(agent.get_rid().get_id())
 					agent.SetCharacterInfo(charInfo, peer.characterRID)
+					Launcher.SQL.CharacterLogin(peer.characterRID)
 					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, rpcID])
 
 	Network.CharacterError(err, rpcID)

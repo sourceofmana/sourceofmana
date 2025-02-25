@@ -26,6 +26,13 @@ func Login(username : String, password : String) -> int:
 	assert(results.size() <= 1, "Duplicated account row")
 	return results[0]["account_id"] if results.size() > 0 else NetworkCommons.RidUnknown
 
+func UpdateAccount(accountID : int) -> bool:
+	var newTimestamp : int = SQLCommons.Timestamp()
+	var data : Dictionary = {
+		"last_timestamp": newTimestamp
+	}
+	return db.update_rows("account", "account_id = %d;" % accountID, data)
+
 # Characters
 func AddCharacter(accountID : int, nickname : String, traits : Dictionary, attributes : Dictionary) -> bool:
 	var charData : Dictionary = {
@@ -72,6 +79,13 @@ func CharacterLogout(player : PlayerAgent) -> bool:
 	success = success and UpdateStat(charID, player.stat)
 	success = success and UpdateCharacter(player)
 	return success
+
+func CharacterLogin(charID : int) -> bool:
+	var newTimestamp : int = SQLCommons.Timestamp()
+	var data : Dictionary = {
+		"last_timestamp": newTimestamp
+	}
+	return db.update_rows("character", "char_id = %d;" % charID, data)
 
 # Character
 func GetCharacterID(accountID : int, nickname : String) -> int:
