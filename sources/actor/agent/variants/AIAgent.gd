@@ -12,6 +12,7 @@ var leader : BaseAgent					= null
 var hasNodeGoal : bool					= false
 var nodeGoal : Node2D					= null
 var spawnInfo : SpawnObject				= null
+var skillSelected : SkillCell			= null
 
 #
 func ResetNav():
@@ -96,9 +97,18 @@ func RemoveFollower(follower : BaseAgent):
 		follower.leader = null
 
 #
+func SetSkillCastID(skillID : int):
+	super.SetSkillCastID(skillID)
+	if skillID == DB.UnknownHash:
+		skillSelected = null
+
 func SetData():
-	super.SetData()
 	aiBehaviour = data._behaviour
+	for skillID in data._skillSet:
+		AddSkill(DB.SkillsDB[skillID], data._skillProba[skillID])
+	for itemID in data._drops:
+		AddItem(DB.ItemsDB[itemID], data._dropsProba[itemID])
+	super.SetData()
 
 func _exit_tree():
 	AI.Stop(self)

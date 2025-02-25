@@ -23,11 +23,6 @@ var currentVelocity : Vector2i			= Vector2i.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var forceUpdate : bool					= false
 
-var skillSet : Array[SkillCell]			= []
-var skillProba : Dictionary				= {}
-var skillProbaSum : float				= 0.0
-var skillSelected : SkillCell			= null
-
 #
 func SwitchInputMode(clearCurrentInput : bool):
 	hasCurrentGoal = false
@@ -96,14 +91,10 @@ func SetState(wantedState : ActorCommons.State) -> bool:
 func SetSkillCastID(skillID : int):
 	forceUpdate = forceUpdate or currentSkillID in DB.SkillsDB
 	currentSkillID = skillID
-	if skillID == DB.UnknownHash:
-		skillSelected = null
 
-func AddSkill(skill : SkillCell, proba : float):
-	if skill and not skillSet.has(skill):
-		skillSet.append(skill)
-	skillProba[skill] = proba
-	skillProbaSum += proba
+func AddSkill(cell : SkillCell, proba : float):
+	if cell:
+		progress.AddSkill(cell, proba)
 
 func AddItem(item : BaseCell, proba : float):
 	if item and inventory:
@@ -154,13 +145,9 @@ func UpdateChanged():
 
 #
 func SetData():
+	entityRadius = data._radius
 	for skillID in data._skillSet:
 		AddSkill(DB.SkillsDB[skillID], data._skillProba[skillID])
-
-	for itemID in data._drops:
-		AddItem(DB.ItemsDB[itemID], data._dropsProba[itemID])
-
-	entityRadius = data._radius
 
 	# Navigation
 	if !(data._behaviour & AICommons.Behaviour.IMMOBILE):

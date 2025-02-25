@@ -8,18 +8,6 @@
 		"DisplayName": true,
 		"Stat": {
 			"walkSpeed": 160,
-			"hairstyle": "Bald",
-			"haircolor": "Off Black",
-			"gender": "Male",
-			"race": "Human",
-			"skintone": "Medium",
-		},
-		"SkillSet": {
-			"Melee": 1.0,
-			"Mana Burst": 1.0,
-			"Flar": 1.0,
-			"Lum": 1.0,
-			"Inma": 1.0,
 		},
 	},
 	"1": {

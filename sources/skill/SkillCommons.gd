@@ -107,7 +107,7 @@ static func IsDelayed(skill : SkillCell) -> bool:
 	return skill.projectilePreset != null
 
 static func HasSkill(agent : BaseAgent, skill : SkillCell) -> bool:
-	return agent.skillSet.find(skill) != -1
+	return agent.progress and agent.progress.HasSkill(skill)
 
 static func HasActionInProgress(agent : BaseAgent) -> bool:
 	return agent.currentSkillID != DB.UnknownHash or not agent.actionTimer.is_stopped()

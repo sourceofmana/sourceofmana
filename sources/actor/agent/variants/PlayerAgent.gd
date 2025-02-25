@@ -147,7 +147,7 @@ func Explore():
 func WarpTo(dest : Destination):
 	var nextMap : WorldMap = Launcher.World.GetMap(dest.map)
 	if nextMap:
-		Launcher.World.Warp(self, nextMap, dest.pos, dest.instanceID)
+		Launcher.World.Warp(self, nextMap, dest.pos, dest.instance)
 
 func Killed():
 	super.Killed()

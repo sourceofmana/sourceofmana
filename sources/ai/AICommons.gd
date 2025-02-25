@@ -101,10 +101,10 @@ static func CanWalk(agent: AIAgent):
 	return agent.agent != null
 
 static func GetRandomSkill(agent : AIAgent) -> SkillCell:
-	if agent.skillSet.size() > 0 and agent.skillProbaSum > 0.0:
-		var randProba : float = randf_range(0.0, agent.skillProbaSum)
-		for skill in agent.skillSet:
-			randProba -= agent.skillProba[skill]
+	if agent.progress.probaSum > 0.0:
+		var randProba : float = randf_range(0.0, agent.progress.probaSum)
+		for skill in agent.progress.skills:
+			randProba -= agent.progress.skills[skill].proba
 			if randProba <= 0.0:
 				return skill
 	return null

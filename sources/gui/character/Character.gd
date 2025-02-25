@@ -178,7 +178,7 @@ func EnableCharacterSelectionFx(isEnabled : bool, slotID : int):
 	if charactersNode[slotID].interactive:
 		charactersNode[slotID].interactive.DisplayTarget(ActorCommons.Target.ALLY if isEnabled else ActorCommons.Target.NONE)
 	else:
-		charactersNode[slotID].ready.connect(EnableCharacterSelectionFx.bind(isEnabled, slotID))
+		Callback.PlugCallback(charactersNode[slotID].ready, EnableCharacterSelectionFx, [isEnabled, slotID])
 
 func ChangeSelectedCharacter(changeClockwise : bool = true):
 	if not HasSlot(currentCharacterID):
