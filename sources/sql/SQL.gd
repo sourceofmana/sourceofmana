@@ -233,55 +233,58 @@ func UpdateEquipment(charID : int, data : Dictionary) -> bool:
 	return db.update_rows("equipment", "char_id = %d" % charID, data)
 
 # Skill
-func GetSkill(charID : int, skillID : int) -> Dictionary:
-	var results : Array[Dictionary] = db.select_rows("skill", "char_id = %d AND skill_id = %d" % [charID, skillID], ["*"])
-	assert(results.size() <= 1, "Duplicated skill %d on character %d" % [skillID, charID])
-	return results[0] if results.size() > 0 else {}
-
 func SetSkill(charID : int, skillID : int, value : int) -> bool:
-	var data : Dictionary = GetSkill(charID, skillID)
-	# Update value
-	if not data.is_empty():
-		data["level"] = value
-		return db.update_rows("skill", "skill_id = %d AND char_id = %d" % [skillID, charID], data)
-	# Add value
+	var results : Array[Dictionary] = db.select_rows("skill", "char_id = %d AND skill_id = %d" % [charID, skillID], ["*"])
+	assert(results.size() <= 1, "Duplicated skill for %d on character %d" % [skillID, charID])
+
+	if results.size() > 0:
+		results[0]["level"] = value
+		return db.update_rows("skill", "char_id = %d AND skill_id = %d" % [charID, skillID], results[0])
+
+	var data : Dictionary = {
+		"char_id": charID,
+		"skill_id": skillID,
+		"level": value,
+	}
 	return db.insert_row("skill", data)
 
 func GetSkills(charID : int) -> Array[Dictionary]:
 	return db.select_rows("skill", "char_id = %d" % [charID], ["*"])
 
 # Bestiary
-func GetBestiary(charID : int, mobID : int) -> Dictionary:
+func SetBestiary(charID : int, mobID : int, value : int) -> bool:
 	var results : Array[Dictionary] = db.select_rows("bestiary", "char_id = %d AND mob_id = %d" % [charID, mobID], ["*"])
 	assert(results.size() <= 1, "Duplicated bestiary row for %d on character %d" % [mobID, charID])
-	return results[0] if results.size() > 0 else {}
 
-func SetBestiary(charID : int, mobID : int, value : int) -> bool:
-	var data : Dictionary = GetBestiary(charID, mobID)
-	# Update value
-	if not data.is_empty():
-		data["killed_count"] = value
-		return db.update_rows("bestiary", "mob_id = %d AND char_id = %d" % [mobID, charID], data)
-	# Add value
+	if results.size() > 0:
+		results[0]["killed_count"] = value
+		return db.update_rows("bestiary", "char_id = %d AND mob_id = %d" % [charID, mobID], results[0])
+
+	var data : Dictionary = {
+		"char_id": charID,
+		"mob_id": mobID,
+		"killed_count": value,
+	}
 	return db.insert_row("bestiary", data)
 
 func GetBestiaries(charID : int) -> Array[Dictionary]:
 	return db.select_rows("bestiary", "char_id = %d" % [charID], ["*"])
 
 # Quest
-func GetQuest(charID : int, questID : int) -> Dictionary:
+func SetQuest(charID : int, questID : int, value : int) -> bool:
 	var results : Array[Dictionary] = db.select_rows("quest", "char_id = %d AND quest_id = %d" % [charID, questID], ["*"])
 	assert(results.size() <= 1, "Duplicated quest row for %d on character %d" % [questID, charID])
-	return results[0] if results.size() > 0 else {}
 
-func SetQuest(charID : int, questID : int, value : int) -> bool:
-	var data : Dictionary = GetQuest(charID, questID)
-	# Update value
-	if not data.is_empty():
-		data["state"] = value
-		return db.update_rows("quest", "quest_id = %d AND char_id = %d" % [questID, charID], data)
-	# Add value
-	return db.insert_row("item", data)
+	if results.size() > 0:
+		results[0]["state"] = value
+		return db.update_rows("quest", "char_id = %d AND quest_id = %d" % [charID, questID], results[0])
+
+	var data : Dictionary = {
+		"char_id": charID,
+		"quest_id": questID,
+		"state": value,
+	}
+	return db.insert_row("quest", data)
 
 func GetQuests(charID : int) -> Array[Dictionary]:
 	return db.select_rows("quest", "char_id = %d" % [charID], ["*"])

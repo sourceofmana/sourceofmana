@@ -48,6 +48,8 @@ func SetCharacterInfo(charData : Dictionary, charID : int):
 	inventory.ImportEquipment(equipmentData)
 	# Respawn
 	respawnDestination = GetRespawnFromData(charData)
+	# Progress
+	progress.ImportProgress(charID)
 
 #
 func UpdateLastStats():

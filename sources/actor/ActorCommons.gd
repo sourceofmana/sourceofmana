@@ -354,3 +354,7 @@ static var DefaultInventory : Array[Dictionary] = [
 	{ "item_id": "Jean Chaps".hash(), "count": 1, "customfield": "" },
 	{ "item_id": "Shorts".hash(), "count": 1, "customfield": "Cerulean" },
 ]
+static var DefaultSkills : Array[Dictionary] = [
+	{ "skill_id": "Melee".hash(), "level": 1 },
+	{ "skill_id": "Flar".hash(), "level": 1 },
+]

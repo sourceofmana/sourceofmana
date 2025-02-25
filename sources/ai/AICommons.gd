@@ -106,7 +106,7 @@ static func GetRandomSkill(agent : AIAgent) -> SkillCell:
 		for skill in agent.progress.skills:
 			randProba -= agent.progress.skills[skill].proba
 			if randProba <= 0.0:
-				return skill
+				return DB.GetSkill(skill)
 	return null
 
 static func GetTransition(prev : State, next : State) -> State:

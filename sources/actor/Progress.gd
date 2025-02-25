@@ -3,8 +3,8 @@ class_name ActorProgress
 
 #
 class _SkillData:
-	var proba : float						= 1.0
-	var level : int							= 1
+	var proba : float						= 0.0
+	var level : int							= 0
 
 #
 var bestiary : Dictionary			= {}
@@ -29,20 +29,13 @@ func GetQuest(questID : int) -> int:
 		questMutex.unlock()
 	return state
 
-func FillQuests(data : Dictionary) -> void:
-	quests.clear()
-	questMutex.lock()
-	for questID in data:
-		quests[questID] = data[questID]
-	questMutex.unlock()
-
 # Bestiary progress
-func AddBestiary(entityID : int):
+func AddBestiary(entityID : int, killedCount : int = 1):
 	bestiaryMutex.lock()
 	if entityID in bestiary:
-		bestiary[entityID] += 1
+		bestiary[entityID] += killedCount
 	else:
-		bestiary[entityID] = 1
+		bestiary[entityID] = killedCount
 	bestiaryMutex.unlock()
 
 func GetBestiary(monsterID : String) -> int:
@@ -53,36 +46,36 @@ func GetBestiary(monsterID : String) -> int:
 		bestiaryMutex.unlock()
 	return count
 
-func FillBestiary(data : Dictionary):
-	bestiary.clear()
-	bestiaryMutex.lock()
-	for entityID in data:
-		bestiary[entityID] = data[entityID]
-	bestiaryMutex.unlock()
-
 #
 func HasSkill(cell : SkillCell, level : int = 1) -> bool:
 	assert(cell != null, "Provided skill cell is null")
-	var data : _SkillData = skills.get(cell, null)
+	var data : _SkillData = skills.get(cell.id, null) if cell else null
 	return data and data.level >= level
 
 func AddSkill(cell : SkillCell, proba : float, level : int = 1):
 	assert(cell != null, "Provided skill cell is null")
-	if cell and not skills.has(cell):
-		var data : _SkillData = _SkillData.new()
-		data.level = level
-		data.proba = proba
-		skills[cell] = data
+	if not cell:
+		return
+
+	if cell.id not in skills:
+		skills[cell.id] = _SkillData.new()
+
+	var data : _SkillData = skills[cell.id]
+	probaSum -= data.proba
+	data.level = level
+	data.proba = proba
 	probaSum += proba
 
 func RemoveSkill(cell : SkillCell):
 	assert(cell != null, "Provided skill cell is null")
-	if cell:
-		var data : _SkillData = skills.get(cell, null)
-		if data:
-			probaSum -= data.proba
-			skills.erase(cell)
-			data.queue_free()
+	if not cell:
+		return
+
+	var data : _SkillData = skills.get(cell.id, null)
+	if data:
+		probaSum -= data.proba
+		skills.erase(cell.id)
+		data.queue_free()
 
 func IncreaseSkillLevel(cell : SkillCell):
 	assert(cell != null, "Provided skill cell is null")
@@ -96,7 +89,34 @@ func DecreaseSkillLevel(cell : SkillCell):
 	if cell:
 		var data : _SkillData = skills.get(cell, null)
 		if data:
-			data.level -= 1
+			data.level = max(0, data.level - 1)
+
+#
+func ExportProgress(charID : int):
+	questMutex.lock()
+	for entryID in quests:
+		Launcher.SQL.SetQuest(charID, entryID, quests[entryID])
+	questMutex.unlock()
+
+	bestiaryMutex.lock()
+	for entryID in bestiary:
+		Launcher.SQL.SetBestiary(charID, entryID, bestiary[entryID])
+	bestiaryMutex.unlock()
+
+	for entryID in skills:
+		var skill : _SkillData = skills[entryID]
+		if skill:
+			Launcher.SQL.SetSkill(charID, entryID, skill.level)
+
+func ImportProgress(charID : int):
+	for entry in Launcher.SQL.GetSkills(charID):
+		var skill : SkillCell = DB.GetSkill(entry.get("skill_id", DB.UnknownHash))
+		if skill:
+			AddSkill(skill, 1.0, entry.get("level", 1))
+	for entry in Launcher.SQL.GetQuests(charID):
+		SetQuest(entry.get("quest_id", DB.UnknownHash), entry.get("state", 0))
+	for entry in Launcher.SQL.GetBestiaries(charID):
+		AddBestiary(entry.get("mob_id", DB.UnknownHash), entry.get("killed_count", 0))
 
 #
 func _init(isManaged : bool):
