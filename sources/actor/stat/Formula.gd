@@ -117,8 +117,11 @@ static func ApplyXp(agent : BaseAgent):
 	var bonus : float = Formula.GetXpBonus(agent.stat)
 	for entry in agent.attackers:
 		if entry.attacker != null and not entry.attacker.is_queued_for_deletion():
-			var bonusScaled : int = int(bonus * agent.GetDamageRatio(entry.attacker))
+			var damageRatio : float = agent.GetDamageRatio(entry.attacker)
+			var bonusScaled : int = int(bonus * damageRatio)
 			entry.attacker.stat.AddExperience(bonusScaled)
+			if damageRatio > 0.5:
+				entry.attacker.progress.AddBestiary(agent.data._id, 1)
 
 # Attribute points
 static func GetMaxAttributePoints(level : int) -> int:

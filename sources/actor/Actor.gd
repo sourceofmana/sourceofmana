@@ -25,7 +25,7 @@ func _init(_type : ActorCommons.Type = ActorCommons.Type.NPC, _data : EntityData
 
 	if type == ActorCommons.Type.PLAYER:
 		inventory = ActorInventory.new(self)
-	progress = ActorProgress.new(isManaged and type == ActorCommons.Type.PLAYER)
+	progress = ActorProgress.new(self, isManaged and type == ActorCommons.Type.PLAYER)
 
 	if stat:
 		stat.Init(self, data)

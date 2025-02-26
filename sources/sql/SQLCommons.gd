@@ -7,7 +7,8 @@ const CurrentDBName : String			= "current.db"
 const BackupDBPath : String				= "sql-backups/"
 const BackupLimit : int					= 5
 const BackupCheckIntervalSec : int		= 2
-const BackupIntervalSec : int			= 3600
+const BackupIntervalSec : int			= 60 * 60
+const BackupPlayersSec : int			= 10 * 60
 
 #
 static func HasValue(data : Dictionary, key : String) -> bool:

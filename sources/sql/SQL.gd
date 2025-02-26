@@ -68,7 +68,7 @@ WHERE character.char_id = %d;" % charID)
 	assert(results.size() == 1, "Character information tables are missing")
 	return results[0] if results.size() > 0 else {}
 
-func CharacterLogout(player : PlayerAgent) -> bool:
+func RefreshCharacter(player : PlayerAgent) -> bool:
 	var charID : int = Peers.GetCharacter(player.rpcRID)
 	if charID == NetworkCommons.RidUnknown:
 		return false
@@ -78,6 +78,8 @@ func CharacterLogout(player : PlayerAgent) -> bool:
 	success = success and UpdateTrait(charID, player.stat)
 	success = success and UpdateStat(charID, player.stat)
 	success = success and UpdateCharacter(player)
+	success = success and UpdateProgress(charID, player.progress)
+
 	return success
 
 func CharacterLogin(charID : int) -> bool:
@@ -232,6 +234,25 @@ func GetEquipment(charID : int) -> Dictionary:
 func UpdateEquipment(charID : int, data : Dictionary) -> bool:
 	return db.update_rows("equipment", "char_id = %d" % charID, data)
 
+# Progress
+func UpdateProgress(charID : int, progress : ActorProgress):
+	progress.questMutex.lock()
+	for entryID in progress.quests:
+		Launcher.SQL.SetQuest(charID, entryID, progress.quests[entryID])
+	progress.questMutex.unlock()
+
+	progress.bestiaryMutex.lock()
+	for entryID in progress.bestiary:
+		Launcher.SQL.SetBestiary(charID, entryID, progress.bestiary[entryID])
+	progress.bestiaryMutex.unlock()
+
+	for entryID in progress.skills:
+		var skill : ActorProgress._SkillData = progress.skills[entryID]
+		if skill:
+			Launcher.SQL.SetSkill(charID, entryID, skill.level)
+
+	return true
+
 # Skill
 func SetSkill(charID : int, skillID : int, value : int) -> bool:
 	var results : Array[Dictionary] = db.select_rows("skill", "char_id = %d AND skill_id = %d" % [charID, skillID], ["*"])
@@ -319,9 +340,8 @@ func _post_launch():
 	if not db.open_db():
 		assert(false, "Failed to open database: "+ db.error_message)
 	else:
-		if not Launcher.Debug:
-			backups = SQLBackups.new()
-			backups.Start()
+		#if not Launcher.Debug:
+		backups = SQLBackups.new()
 
 	isInitialized = true
 
@@ -378,7 +398,7 @@ func UnitTest():
 		return
 
 	# Log out the player, remove it from the database and remove the account as well
-	assert(CharacterLogout(player) == true, "Could not logout from the character")
+	assert(RefreshCharacter(player) == true, "Could not logout from the character")
 	assert(RemoveCharacter(charID) == true, "Could not delete the test character")
 	assert(RemoveAccount(accountID) == true, "Could not delete the test account")
 	player.queue_free()

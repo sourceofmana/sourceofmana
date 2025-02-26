@@ -25,9 +25,12 @@ func SetToolTip():
 		if cell is ItemCell and not cell.customfield.is_empty():
 			tooltip += " (%s)" % cell.customfield
 		if cell.description:
-			tooltip += "\n" + cell.description
-		if cell.weight == 0:
-			tooltip += "\n\nWeight: " + str(cell.weight) + "g"
+			tooltip += "\n%s" % cell.description
+		if cell is SkillCell and Launcher.Player and Launcher.Player.progress:
+			var skillLevel : int = Launcher.Player.progress.GetSkillLevel(cell)
+			tooltip += "\nLevel: %d" % skillLevel
+		if cell.weight != 0:
+			tooltip += "\n\nWeight: %dg" % cell.weight
 	set_tooltip_text(tooltip)
 
 func UpdateCountLabel():

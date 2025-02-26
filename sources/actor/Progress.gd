@@ -11,6 +11,8 @@ var bestiary : Dictionary			= {}
 var quests : Dictionary				= {}
 var skills : Dictionary				= {}
 
+var actor : Actor				= null
+
 var questMutex : Mutex				= null
 var bestiaryMutex : Mutex			= null
 var probaSum : float				= 0.0
@@ -20,6 +22,9 @@ func SetQuest(questID : int, state : int):
 	questMutex.lock()
 	quests[questID] = state
 	questMutex.unlock()
+
+	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+		Network.UpdateQuest(questID, state, actor.rpcRID)
 
 func GetQuest(questID : int) -> int:
 	var state : int = ProgressCommons.UnknownProgress
@@ -31,12 +36,15 @@ func GetQuest(questID : int) -> int:
 
 # Bestiary progress
 func AddBestiary(entityID : int, killedCount : int = 1):
+	var totalCount : int = killedCount
 	bestiaryMutex.lock()
 	if entityID in bestiary:
-		bestiary[entityID] += killedCount
-	else:
-		bestiary[entityID] = killedCount
+		totalCount += bestiary[entityID]
+	bestiary[entityID] = totalCount
 	bestiaryMutex.unlock()
+
+	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+		Network.UpdateBestiary(entityID, totalCount, actor.rpcRID)
 
 func GetBestiary(monsterID : String) -> int:
 	var count : int = 0
@@ -66,48 +74,37 @@ func AddSkill(cell : SkillCell, proba : float, level : int = 1):
 	data.proba = proba
 	probaSum += proba
 
+	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+		Network.UpdateSkill(cell.id, level, actor.rpcRID)
+
+func GetSkill(cell : SkillCell) -> _SkillData:
+	return skills.get(cell.id, null) if cell else null
+
+func GetSkillProba(cell : SkillCell) -> float:
+	var data : _SkillData = GetSkill(cell)
+	return data.proba if data else 0.0
+
+func GetSkillLevel(cell : SkillCell) -> int:
+	var data : _SkillData = GetSkill(cell)
+	return data.level if data else 0
+
 func RemoveSkill(cell : SkillCell):
 	assert(cell != null, "Provided skill cell is null")
 	if not cell:
 		return
 
 	var data : _SkillData = skills.get(cell.id, null)
-	if data:
-		probaSum -= data.proba
-		skills.erase(cell.id)
-		data.queue_free()
+	if not data:
+		return
 
-func IncreaseSkillLevel(cell : SkillCell):
-	assert(cell != null, "Provided skill cell is null")
-	if cell:
-		var data : _SkillData = skills.get(cell, null)
-		if data:
-			data.level += 1
+	probaSum -= data.proba
+	skills.erase(cell.id)
+	data.queue_free()
 
-func DecreaseSkillLevel(cell : SkillCell):
-	assert(cell != null, "Provided skill cell is null")
-	if cell:
-		var data : _SkillData = skills.get(cell, null)
-		if data:
-			data.level = max(0, data.level - 1)
+	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
+		Network.UpdateSkill(cell.id, 0, actor.rpcRID)
 
 #
-func ExportProgress(charID : int):
-	questMutex.lock()
-	for entryID in quests:
-		Launcher.SQL.SetQuest(charID, entryID, quests[entryID])
-	questMutex.unlock()
-
-	bestiaryMutex.lock()
-	for entryID in bestiary:
-		Launcher.SQL.SetBestiary(charID, entryID, bestiary[entryID])
-	bestiaryMutex.unlock()
-
-	for entryID in skills:
-		var skill : _SkillData = skills[entryID]
-		if skill:
-			Launcher.SQL.SetSkill(charID, entryID, skill.level)
-
 func ImportProgress(charID : int):
 	for entry in Launcher.SQL.GetSkills(charID):
 		var skill : SkillCell = DB.GetSkill(entry.get("skill_id", DB.UnknownHash))
@@ -119,7 +116,8 @@ func ImportProgress(charID : int):
 		AddBestiary(entry.get("mob_id", DB.UnknownHash), entry.get("killed_count", 0))
 
 #
-func _init(isManaged : bool):
+func _init(actorNode : Actor, isManaged : bool):
 	if isManaged:
+		actor = actorNode
 		questMutex = Mutex.new()
 		bestiaryMutex = Mutex.new()

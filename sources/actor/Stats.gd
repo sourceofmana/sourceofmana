@@ -85,6 +85,7 @@ func SetStats(stats : Dictionary):
 		FillRandomAttributes()
 	RefreshAttributes()
 
+#
 func SetEntityStats(newStats : Dictionary):
 	for modifier in newStats:
 		if modifier in entityStat:

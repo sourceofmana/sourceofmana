@@ -4,12 +4,14 @@ extends WindowPanel
 
 #
 func RefreshSkills():
+	if not Launcher.Player or not Launcher.Player.progress:
+		return
+
 	var tileIdx : int		= 0
 	var tile : CellTile		= grid.tiles[tileIdx]
-
-	for skillID in DB.SkillsDB:
-		var skill : BaseCell = DB.SkillsDB[skillID]
-		if skill is BaseCell:
+	for skillID in Launcher.Player.progress.skills:
+		var skill : SkillCell = DB.GetSkill(skillID)
+		if skill is SkillCell:
 			CellTile.RefreshShortcuts(skill, 1)
 			if tile:
 				tile.AssignData(skill)

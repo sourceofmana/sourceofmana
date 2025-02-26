@@ -195,7 +195,6 @@ func ExportEquipment() -> Dictionary:
 
 #
 func _init(actorNode : Actor):
-	assert(actorNode != null, "Caller actor node should never be null")
 	actor = actorNode
 	equipments.resize(ActorCommons.SlotEquipmentCount)
 	for item in actor.data._equipments:

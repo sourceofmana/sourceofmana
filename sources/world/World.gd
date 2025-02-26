@@ -64,11 +64,18 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 				if neighbour.inventory:
 					Network.RefreshEquipments(neighbourRID, neighbour.inventory.ExportEquipment(), agent.rpcRID)
 
+		Network.RefreshProgress(agent.progress.skills, agent.progress.quests, agent.progress.bestiary, agent.rpcRID)
 	Network.Server.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
 	if agent.inventory:
 		Network.Server.NotifyNeighbours(agent, "RefreshEquipments", [agent.inventory.ExportEquipment()], false)
 
 # Generic
+func BackupPlayers():
+	for area in areas.values():
+		for inst in area.instances:
+			for player in inst.players:
+				Launcher.SQL.RefreshCharacter(player)
+
 func _post_launch():
 	for mapName in DB.MapsDB:
 		areas[mapName] = WorldMap.Create(mapName)

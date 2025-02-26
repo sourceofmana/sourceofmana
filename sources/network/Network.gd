@@ -215,7 +215,7 @@ func TriggerSelect(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
 func AddAttribute(stat : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("AddAttribute", [stat], rpcID)
 
-# Items
+# Inventory
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func ItemAdded(itemID : int, customfield : String, count : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("ItemAdded", [itemID, customfield, count], rpcID)
@@ -268,6 +268,23 @@ func DropRemoved(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("PickupDrop", [dropID], rpcID)
+
+# Progress
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func UpdateSkill(skillID : int, level : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("UpdateSkill", [skillID, level], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func UpdateBestiary(mobID : int, count : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("UpdateBestiary", [mobID, count], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func UpdateQuest(questID : int, state : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("UpdateQuest", [questID, state], rpcID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("RefreshProgress", [skills, quests, bestiary], rpcID)
 
 #
 func CallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault):

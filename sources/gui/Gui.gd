@@ -31,6 +31,7 @@ extends ServiceBase
 @onready var settingsWindow : WindowPanel		= $Windows/Floating/Settings
 @onready var emoteWindow : WindowPanel			= $Windows/Floating/Emote
 @onready var skillWindow : WindowPanel			= $Windows/Floating/Skill
+@onready var progressWindow : WindowPanel		= $Windows/Floating/Progress
 @onready var quitWindow : WindowPanel			= $Windows/Floating/Quit
 @onready var respawnWindow : WindowPanel		= $Windows/Floating/Respawn
 @onready var statWindow : WindowPanel			= $Windows/Floating/Stat

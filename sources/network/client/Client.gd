@@ -201,6 +201,36 @@ func CharacterError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommon
 func CharacterInfo(info : Dictionary, equipment : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	Launcher.GUI.characterPanel.AddCharacter(info, equipment)
 
+# Progress
+func UpdateSkill(skillID : int, level : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player:
+		var skill : SkillCell = DB.GetSkill(skillID)
+		if skill:
+			Launcher.Player.progress.AddSkill(skill, 1.0, level)
+			if Launcher.GUI and Launcher.GUI.skillWindow:
+				Launcher.GUI.skillWindow.RefreshSkills()
+
+func UpdateBestiary(mobID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player:
+		Launcher.Player.progress.AddBestiary(mobID, count)
+		if Launcher.GUI and Launcher.GUI.progressWindow:
+			Launcher.GUI.progressWindow.RefreshBestiary(mobID)
+
+func UpdateQuest(questID : int, state : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player:
+		Launcher.Player.progress.SetQuest(questID, state)
+		if Launcher.GUI and Launcher.GUI.progressWindow:
+			Launcher.GUI.progressWindow.RefreshQuest(questID)
+
+func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player:
+		for skill in skills:
+			UpdateSkill(skill, skills[skill].level)
+		for quest in quests:
+			UpdateQuest(quest, quests[quest])
+		for mob in bestiary:
+			UpdateBestiary(mob, bestiary[mob])
+
 #
 func ConnectServer():
 	if Launcher.GUI and Launcher.GUI.loginPanel:

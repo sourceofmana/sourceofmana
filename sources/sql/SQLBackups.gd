@@ -5,7 +5,6 @@ class_name SQLBackups
 var thread : Thread						= Thread.new()
 var isRunning : bool					= false
 var stopRequested : bool				= false
-var skipBackup : bool					= true
 
 #
 func CreateBackup() -> void:
@@ -38,19 +37,31 @@ func PruneBackups() -> void:
 
 #
 func Run():
+	Thread.set_thread_safety_checks_enabled(false)
+
+	var lastBackupTimestamp : int = SQLCommons.Timestamp()
+	var lastPlayerUpdateTimestamp : int = SQLCommons.Timestamp()
+	var lastStopCheckTimestamp : int = SQLCommons.Timestamp()
+
 	while isRunning:
-		if not skipBackup:
+		var timestamp : int = SQLCommons.Timestamp()
+
+		if timestamp - lastBackupTimestamp >= SQLCommons.BackupIntervalSec:
 			CreateBackup()
 			PruneBackups()
+			lastBackupTimestamp = timestamp
 
-		var sleepTime : int = SQLCommons.BackupIntervalSec
-		while sleepTime > 0 and not stopRequested:
-			OS.delay_msec(SQLCommons.BackupCheckIntervalSec * 1000)
-			sleepTime -= SQLCommons.BackupCheckIntervalSec
-		skipBackup = false
+		if timestamp - lastPlayerUpdateTimestamp >= SQLCommons.BackupPlayersSec:
+			Launcher.World.BackupPlayers()
+			lastPlayerUpdateTimestamp = timestamp
 
-		if stopRequested:
-			isRunning = false
+		if timestamp - lastStopCheckTimestamp >= SQLCommons.BackupCheckIntervalSec:
+			if stopRequested:
+				isRunning = false
+				break
+			lastStopCheckTimestamp = timestamp
+
+		OS.delay_msec(100)
 
 func Start():
 	if not isRunning:
