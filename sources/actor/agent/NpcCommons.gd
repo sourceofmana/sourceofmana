@@ -36,7 +36,7 @@ static func PushNotification(pc : BaseAgent, text : String):
 		elif pc is NpcAgent:
 			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(pc)
 			if inst:
-				Network.Server.NotifyInstance(inst, "PushNotification", [text])
+				Network.NotifyInstance(inst, "PushNotification", [text])
 
 # Context sent to client
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):

@@ -64,7 +64,7 @@ func UpdateLastStats():
 	lastStat.race != stat.race or \
 	lastStat.skintone != stat.skintone or \
 	lastStat.currentShape != stat.currentShape:
-		Network.Server.NotifyNeighbours(self, "UpdatePublicStats", [stat.level, stat.health, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
+		Network.NotifyNeighbours(self, "UpdatePublicStats", [stat.level, stat.health, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
 		lastStat.level				= stat.level
 		lastStat.health				= stat.health
 		lastStat.hairstyle			= stat.hairstyle
@@ -114,7 +114,7 @@ func Morph(notifyMorphing : bool, morphID : String = ""):
 
 	var morphData : EntityData = Instantiate.FindEntityReference(morphID)
 	stat.Morph(morphData)
-	Network.Server.NotifyNeighbours(self, "Morphed", [morphID, notifyMorphing])
+	Network.NotifyNeighbours(self, "Morphed", [morphID, notifyMorphing])
 
 #
 func _physics_process(delta):

@@ -69,7 +69,7 @@ static func PopAgent(agent : BaseAgent):
 	if agent:
 		var inst : WorldInstance = GetInstanceFromAgent(agent)
 		if inst:
-			Network.Server.NotifyNeighbours(agent, "RemoveEntity", [], false)
+			Network.NotifyNeighbours(agent, "RemoveEntity", [], false)
 			if agent is PlayerAgent:
 				inst.players.erase(agent)
 				if inst.players.size() == 0:

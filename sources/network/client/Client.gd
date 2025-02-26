@@ -89,17 +89,15 @@ func UpdatePrivateStats(ridAgent : int, experience : int, gp : int, mana : int, 
 			entity.stat.weight			= weight
 			entity.stat.shape			= shape
 			entity.stat.spirit			= spirit
+			entity.stat.RefreshVitalStats()
 
 func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
 		if entity and entity.stat:
-			var levelUp : bool = entity.stat.level != level
 			entity.stat.level			= level
 			entity.stat.health			= health
 			entity.stat.currentShape	= currentShape
-			if levelUp:
-				entity.LevelUp()
 
 			var newHair : bool = entity.stat.hairstyle != hairstyle or entity.stat.haircolor != haircolor
 			entity.stat.hairstyle		= hairstyle
@@ -127,6 +125,12 @@ func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : 
 			entity.stat.endurance		= endurance
 			entity.stat.concentration	= concentration
 			entity.stat.RefreshAttributes()
+
+func LevelUp(ridAgent : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Map:
+		var entity : Entity = Entities.Get(ridAgent)
+		if entity and entity.get_parent() and entity.stat:
+			entity.LevelUp()
 
 func ItemAdded(itemID : int, customfield : String, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player:

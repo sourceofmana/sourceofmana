@@ -121,7 +121,7 @@ func EquipItem(cell : ItemCell):
 			var charID : int = Peers.GetCharacter(actor.rpcRID)
 			if charID != NetworkCommons.RidUnknown:
 				Launcher.SQL.UpdateEquipment(charID, ExportEquipment())
-			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, true])
+			Network.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, true])
 
 func UnequipItem(cell : ItemCell):
 	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipments[cell.slot] == cell and actor:
@@ -133,7 +133,7 @@ func UnequipItem(cell : ItemCell):
 			var charID : int = Peers.GetCharacter(actor.rpcRID)
 			if charID != NetworkCommons.RidUnknown:
 				Launcher.SQL.UpdateEquipment(charID, ExportEquipment())
-			Network.Server.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, false])
+			Network.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, false])
 
 #
 func AddItem(cell : ItemCell, count : int = 1) -> bool:

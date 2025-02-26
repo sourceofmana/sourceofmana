@@ -215,6 +215,10 @@ func TriggerSelect(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
 func AddAttribute(stat : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("AddAttribute", [stat], rpcID)
 
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func LevelUp(agentID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("LevelUp", [agentID], rpcID)
+
 # Inventory
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func ItemAdded(itemID : int, customfield : String, count : int, rpcID : int = NetworkCommons.RidSingleMode):
@@ -286,7 +290,30 @@ func UpdateQuest(questID : int, state : int, rpcID : int = NetworkCommons.RidSin
 func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("RefreshProgress", [skills, quests, bestiary], rpcID)
 
-#
+# Notify peers
+func NotifyNeighbours(agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
+	if not agent:
+		assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
+		return
+
+	var currentAgentID = agent.get_rid().get_id()
+	if inclusive and agent is PlayerAgent:
+		Network.callv(callbackName, [currentAgentID] + args + [agent.rpcRID])
+
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+	if inst:
+		for player in inst.players:
+			if player != null and player != agent and player.rpcRID != NetworkCommons.RidUnknown:
+				Network.callv(callbackName, [currentAgentID] + args + [player.rpcRID])
+
+func NotifyInstance(inst : WorldInstance, callbackName : String, args : Array):
+	if inst:
+		for player in inst.players:
+			if player != null:
+				if player.rpcRID != NetworkCommons.RidUnknown:
+					Network.callv(callbackName, args + [player.rpcRID])
+
+# Peer calls
 func CallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault):
 	if Server:
 		if Peers.Footprint(rpcID, methodName, actionDelta):
@@ -306,6 +333,7 @@ func CallClientGlobal(methodName : String, args : Array):
 	else:
 		callv.call("rpc", [methodName] + args)
 
+# Service handling
 func Mode(isClient : bool, isServer : bool):
 	if isClient:
 		Client = FileSystem.LoadSource("network/client/Client.gd")
@@ -337,8 +365,6 @@ func Mode(isClient : bool, isServer : bool):
 			ret = peer.create_client(prefix + serverAddress + ":" + str(NetworkCommons.ServerPort), tlsOptions)
 		else:
 			ret = peer.create_client(serverAddress, NetworkCommons.ServerPort)
-
-
 		assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer

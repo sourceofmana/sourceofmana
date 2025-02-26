@@ -84,14 +84,14 @@ func Reset(clientStarted : bool, serverStarted : bool):
 			Player = null
 
 	if not serverStarted:
+		if Network.Server:
+			Network.Server.Destroy()
+			Network.Server = null
 		if World:
 			World.set_name("WorldDestroyed")
 			World.Destroy()
 			World.queue_free()
 			World = null
-		if Network.Server:
-			Network.Server.Destroy()
-			Network.Server = null
 		if SQL:
 			SQL.set_name("SQLDestroyed")
 			SQL.Destroy()

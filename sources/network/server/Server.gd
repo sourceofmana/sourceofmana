@@ -169,10 +169,10 @@ func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
 		player.Respawn()
 
 func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	NotifyNeighbours(Peers.GetAgent(rpcID), "EmotePlayer", [emoteID])
+	Network.NotifyNeighbours(Peers.GetAgent(rpcID), "EmotePlayer", [emoteID])
 
 func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	NotifyNeighbours(Peers.GetAgent(rpcID), "ChatAgent", [text])
+	Network.NotifyNeighbours(Peers.GetAgent(rpcID), "ChatAgent", [text])
 
 func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = Peers.GetAgent(rpcID)
@@ -270,29 +270,6 @@ func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		WorldDrop.PickupDrop(dropID, player)
-
-# Notify
-func NotifyNeighbours(agent : BaseAgent, callbackName : String, args : Array, inclusive : bool = true):
-	if not agent:
-		assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
-		return
-
-	var currentAgentID = agent.get_rid().get_id()
-	if inclusive and agent is PlayerAgent:
-		Network.callv(callbackName, [currentAgentID] + args + [agent.rpcRID])
-
-	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
-	if inst:
-		for player in inst.players:
-			if player != null and player != agent and player.rpcRID != NetworkCommons.RidUnknown:
-				Network.callv(callbackName, [currentAgentID] + args + [player.rpcRID])
-
-func NotifyInstance(inst : WorldInstance, callbackName : String, args : Array):
-	if inst:
-		for player in inst.players:
-			if player != null:
-				if player.rpcRID != NetworkCommons.RidUnknown:
-					Network.callv(callbackName, args + [player.rpcRID])
 
 # Peer handling
 func ConnectPeer(rpcID : int):

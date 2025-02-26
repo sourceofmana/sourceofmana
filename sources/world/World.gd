@@ -65,9 +65,9 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 					Network.RefreshEquipments(neighbourRID, neighbour.inventory.ExportEquipment(), agent.rpcRID)
 
 		Network.RefreshProgress(agent.progress.skills, agent.progress.quests, agent.progress.bestiary, agent.rpcRID)
-	Network.Server.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
+	Network.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
 	if agent.inventory:
-		Network.Server.NotifyNeighbours(agent, "RefreshEquipments", [agent.inventory.ExportEquipment()], false)
+		Network.NotifyNeighbours(agent, "RefreshEquipments", [agent.inventory.ExportEquipment()], false)
 
 # Generic
 func BackupPlayers():
