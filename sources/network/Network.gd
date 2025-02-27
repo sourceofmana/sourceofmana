@@ -336,9 +336,9 @@ func CallClientGlobal(methodName : String, args : Array):
 # Service handling
 func Mode(isClient : bool, isServer : bool):
 	if isClient:
-		Client = FileSystem.LoadSource("network/client/Client.gd")
+		Client = NetClient.new()
 	if isServer:
-		Server = FileSystem.LoadSource("network/server/Server.gd")
+		Server = NetServer.new()
 
 	if uniqueID != NetworkCommons.RidDefault:
 		pass
@@ -366,10 +366,7 @@ func Mode(isClient : bool, isServer : bool):
 		else:
 			ret = peer.create_client(serverAddress, NetworkCommons.ServerPort)
 		assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
-		if ret == OK:
-			Launcher.Root.multiplayer.multiplayer_peer = peer
-			Client.Init()
-			uniqueID = Launcher.Root.multiplayer.get_unique_id()
+		Launcher.Root.multiplayer.multiplayer_peer = peer
 	elif Server:
 		var ret : Error = FAILED
 		if NetworkCommons.EnableWebSocket:
@@ -386,7 +383,6 @@ func Mode(isClient : bool, isServer : bool):
 		assert(ret == OK, "Server could not be created, please check if your port %d is valid" % NetworkCommons.ServerPort)
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
-			Server.Init()
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()
 
 func Destroy():

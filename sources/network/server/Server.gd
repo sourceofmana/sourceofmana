@@ -1,4 +1,5 @@
 extends Object
+class_name NetServer
 
 #
 signal peer_update
@@ -289,7 +290,7 @@ func DisconnectPeer(rpcID : int):
 		Peers.RemovePeer(rpcID)
 
 #
-func Init():
+func _init():
 	if not online_agents_update.is_connected(OnlineList.UpdateJson):
 		online_agents_update.connect(OnlineList.UpdateJson)
 	if not Launcher.Root.multiplayer.peer_connected.is_connected(ConnectPeer):

@@ -247,9 +247,7 @@ func UpdateProgress(charID : int, progress : ActorProgress):
 	progress.bestiaryMutex.unlock()
 
 	for entryID in progress.skills:
-		var skill : ActorProgress._SkillData = progress.skills[entryID]
-		if skill:
-			Launcher.SQL.SetSkill(charID, entryID, skill.level)
+		Launcher.SQL.SetSkill(charID, entryID, progress.skills[entryID])
 
 	return true
 

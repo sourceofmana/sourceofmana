@@ -1,4 +1,5 @@
 extends Object
+class_name NetClient
 
 #
 func WarpPlayer(map : String, _rpcID : int = NetworkCommons.RidSingleMode):
@@ -229,7 +230,7 @@ func UpdateQuest(questID : int, state : int, _rpcID : int = NetworkCommons.RidSi
 func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player:
 		for skill in skills:
-			UpdateSkill(skill, skills[skill].level)
+			UpdateSkill(skill, skills[skill])
 		for quest in quests:
 			UpdateQuest(quest, quests[quest])
 		for mob in bestiary:
@@ -237,6 +238,7 @@ func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictio
 
 #
 func ConnectServer():
+	Network.uniqueID = Launcher.Root.multiplayer.get_unique_id()
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
 
@@ -244,9 +246,10 @@ func DisconnectServer():
 	Launcher.Mode(true, true)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	AuthError(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
+	Network.uniqueID = NetworkCommons.RidDefault
 
 #
-func Init():
+func _init():
 	if not Launcher.Root.multiplayer.connected_to_server.is_connected(ConnectServer):
 		Launcher.Root.multiplayer.connected_to_server.connect(ConnectServer)
 	if not Launcher.Root.multiplayer.connection_failed.is_connected(DisconnectServer):

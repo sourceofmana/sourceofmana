@@ -30,7 +30,7 @@ const LoginAttemptTimeout : float		= 15
 const CharSelectionTimeout : float		= 15
 
 # Peer
-const EnableWebSocket : bool			= false
+const EnableWebSocket : bool			= true
 const ClientTrustedCAPath : String		= "res://publishing/my_trusted_cas.crt"
 const ServerKeyPath : String			= "res://publishing/private_key.key"
 const ServerCertsPath : String			= "res://publishing/my_server_cas.crt"

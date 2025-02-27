@@ -2,13 +2,9 @@ extends Object
 class_name ActorProgress
 
 #
-class _SkillData:
-	var proba : float						= 0.0
-	var level : int							= 0
-
-#
 var bestiary : Dictionary			= {}
 var quests : Dictionary				= {}
+var skillProbas : Dictionary		= {}
 var skills : Dictionary				= {}
 
 var actor : Actor				= null
@@ -57,49 +53,35 @@ func GetBestiary(monsterID : String) -> int:
 #
 func HasSkill(cell : SkillCell, level : int = 1) -> bool:
 	assert(cell != null, "Provided skill cell is null")
-	var data : _SkillData = skills.get(cell.id, null) if cell else null
-	return data and data.level >= level
+	return skills.get(cell.id, 0) >= level
 
 func AddSkill(cell : SkillCell, proba : float, level : int = 1):
 	assert(cell != null, "Provided skill cell is null")
 	if not cell:
 		return
 
-	if cell.id not in skills:
-		skills[cell.id] = _SkillData.new()
-
-	var data : _SkillData = skills[cell.id]
-	probaSum -= data.proba
-	data.level = level
-	data.proba = proba
+	probaSum -= skillProbas.get(cell.id, 0)
+	skills[cell.id] = level
+	skillProbas[cell.id] = proba
 	probaSum += proba
 
 	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
 		Network.UpdateSkill(cell.id, level, actor.rpcRID)
 
-func GetSkill(cell : SkillCell) -> _SkillData:
-	return skills.get(cell.id, null) if cell else null
-
 func GetSkillProba(cell : SkillCell) -> float:
-	var data : _SkillData = GetSkill(cell)
-	return data.proba if data else 0.0
+	return skillProbas.get(cell.id, null) if cell else 0.0
 
 func GetSkillLevel(cell : SkillCell) -> int:
-	var data : _SkillData = GetSkill(cell)
-	return data.level if data else 0
+	return skills.get(cell.id, null) if cell else 0.0
 
 func RemoveSkill(cell : SkillCell):
 	assert(cell != null, "Provided skill cell is null")
 	if not cell:
 		return
 
-	var data : _SkillData = skills.get(cell.id, null)
-	if not data:
-		return
-
-	probaSum -= data.proba
+	probaSum -= skillProbas.get(cell.id, 0)
 	skills.erase(cell.id)
-	data.queue_free()
+	skillProbas.erase(cell.id)
 
 	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
 		Network.UpdateSkill(cell.id, 0, actor.rpcRID)
