@@ -286,6 +286,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/monsters/slime-drain.png [Neorice] [Reid]
 ./graphics/sprites/monsters/slime-salt.png [Neorice] [Reid]
 ./graphics/sprites/monsters/slime-sludge.png [Neorice] [Reid]
+./graphics/sprites/monsters/snake.png [Neorice] [Reid]
 ./graphics/sprites/monsters/turtle.png [Coolkid782] [Reid]
 ./graphics/sprites/npcs/cave-locks.png [Reid]
 ./graphics/sprites/npcs/gabz.png [Reid]

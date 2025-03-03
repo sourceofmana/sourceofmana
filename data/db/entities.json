@@ -253,6 +253,16 @@
 			"defense": 1,
 		},
 	},
+	"1016": {
+		"Name": "Snake",
+		"SpritePreset": "Snake",
+		"Behaviour": ["Aggressive"],
+		"Collision": "Medium",
+		"Radius": "10",
+		"Stat": {
+			"walkSpeed": 170,
+		},
+	},
 
 	"2000": {
 		"Name": "Bicies",
