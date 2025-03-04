@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=8 format=3 uid="uid://cfkwntfdq7qa6"]
 
 [ext_resource type="Texture2D" uid="uid://1x2n5gxlxlrl" path="res://data/graphics/items/head/desert-hood.png" id="1_iqaxl"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_68b7j"]
-[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_hwjqb"]
-[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_7htmu"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_68b7j"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_hwjqb"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_7htmu"]
 [ext_resource type="Texture2D" uid="uid://d1kr6ha4fsfmj" path="res://data/graphics/sprites/equipments/head/desert-hood.png" id="3_vlg4g"]
 
 [sub_resource type="Resource" id="Resource_u2a5x"]

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://cvpjvvrg63wc5"]
 
 [ext_resource type="Texture2D" uid="uid://c5yuy5eggxbft" path="res://data/graphics/items/chest/cotton-shirt.png" id="1_qatwx"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_nnkqv"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_nnkqv"]
 [ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipments/cloth-natural.tres" id="3_4f3v5"]
 [ext_resource type="Texture2D" uid="uid://buq7e57i7oy8d" path="res://data/graphics/sprites/equipments/chests/shirt-male.png" id="4_j0vli"]
 [ext_resource type="Texture2D" uid="uid://cgpi8e4xeb7kq" path="res://data/graphics/sprites/equipments/chests/shirt-female.png" id="5_l1k2v"]

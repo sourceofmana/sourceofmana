@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://b48f227dxr4nh"]
+[gd_scene load_steps=9 format=3 uid="uid://oxryxm5bfcy1"]
 
-[ext_resource type="Texture2D" uid="uid://d3qwmfreth2em" path="res://data/graphics/effects/particles/arc.png" id="1_5sgck"]
+[ext_resource type="Texture2D" uid="uid://cwlcajt78phca" path="res://data/graphics/effects/particles/orb.png" id="1_us37d"]
 
 [sub_resource type="Gradient" id="Gradient_wrcva"]
 offsets = PackedFloat32Array(0.464164, 1)
-colors = PackedColorArray(0.763638, 0.744907, 0.510455, 1, 0.305791, 0.831373, 0.4811, 1)
+colors = PackedColorArray(0.76, 0.755947, 0.6992, 1, 1, 0.866667, 0.2, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_124iq"]
 gradient = SubResource("Gradient_wrcva")
+width = 10
 
 [sub_resource type="Curve" id="Curve_gddar"]
 _limits = [-2.0, 2.0, 0.0, 1.0]
@@ -18,42 +19,38 @@ point_count = 2
 curve = SubResource("Curve_gddar")
 
 [sub_resource type="Curve" id="Curve_n0f8g"]
-_data = [Vector2(0, 0.220643), 0.0, 0.789524, 0, 0, Vector2(0.498442, 0.38937), 1.45075, 1.45075, 0, 0, Vector2(1, 0), -7.83652, 0.0, 0, 0]
+_data = [Vector2(0, 0.181754), 0.0, 0.789524, 0, 0, Vector2(0.473868, 0.567892), 1.45075, 1.45075, 0, 0, Vector2(1, 0.181754), -7.83652, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_3qrii"]
 curve = SubResource("Curve_n0f8g")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mag5b"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wevpf"]
 lifetime_randomness = 0.2
 particle_flag_disable_z = true
 emission_shape = 6
 emission_ring_axis = Vector3(1, 0, 1)
 emission_ring_height = 1.0
-emission_ring_radius = 72.0
-emission_ring_inner_radius = 70.0
+emission_ring_radius = 50.0
+emission_ring_inner_radius = 50.0
 emission_ring_cone_angle = 90.0
 angle_min = -720.0
 angle_max = 720.0
-angular_velocity_min = -720.0
-angular_velocity_max = -720.0
+angular_velocity_min = 180.0
+angular_velocity_max = 360.0
 orbit_velocity_min = -0.7
 orbit_velocity_max = 0.7
 orbit_velocity_curve = SubResource("CurveTexture_d6fkq")
-gravity = Vector3(0, -10, 0)
-tangential_accel_min = -2.0
-tangential_accel_max = 2.0
+gravity = Vector3(0, -50, 0)
+attractor_interaction_enabled = false
 scale_curve = SubResource("CurveTexture_3qrii")
 color_ramp = SubResource("GradientTexture1D_124iq")
+turbulence_noise_strength = 6.03
 
-[node name="GPUParticles2D" type="GPUParticles2D"]
+[node name="GPUParticles2D2" type="GPUParticles2D"]
 scale = Vector2(1, 0.7)
-emitting = false
-amount = 100
-process_material = SubResource("ParticleProcessMaterial_mag5b")
-texture = ExtResource("1_5sgck")
-lifetime = 2.0
-one_shot = true
-explosiveness = 0.6
-randomness = 0.15
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_wevpf")
+texture = ExtResource("1_us37d")
+preprocess = 3.0
 local_coords = true

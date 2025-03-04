@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqkyebisda4de"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_80axu"]
-[ext_resource type="Script" path="res://sources/gui/context/ContextAction.gd" id="2_pwujc"]
+[ext_resource type="Script" uid="uid://k0khfcqx2quk" path="res://sources/gui/context/ContextAction.gd" id="2_pwujc"]
 
 [node name="Action" type="HBoxContainer"]
 offset_right = 97.0

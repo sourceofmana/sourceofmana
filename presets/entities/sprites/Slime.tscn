@@ -311,25 +311,25 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iko4k"]
 _data = {
-"AttackDown": SubResource("Animation_qks5j"),
-"AttackLeft": SubResource("Animation_apvk4"),
-"AttackRight": SubResource("Animation_hrf5s"),
-"AttackUp": SubResource("Animation_t4ydb"),
-"Death": SubResource("Animation_ha1pu"),
-"IdleDown": SubResource("6"),
-"IdleLeft": SubResource("7"),
-"IdleRight": SubResource("8"),
-"IdleUp": SubResource("9"),
-"RESET": SubResource("40"),
-"SitDown": SubResource("35"),
-"SitLeft": SubResource("36"),
-"SitRight": SubResource("37"),
-"SitUp": SubResource("38"),
-"Trigger": SubResource("Animation_pwq8w"),
-"WalkDown": SubResource("3"),
-"WalkLeft": SubResource("4"),
-"WalkRight": SubResource("2"),
-"WalkUp": SubResource("5")
+&"AttackDown": SubResource("Animation_qks5j"),
+&"AttackLeft": SubResource("Animation_apvk4"),
+&"AttackRight": SubResource("Animation_hrf5s"),
+&"AttackUp": SubResource("Animation_t4ydb"),
+&"Death": SubResource("Animation_ha1pu"),
+&"IdleDown": SubResource("6"),
+&"IdleLeft": SubResource("7"),
+&"IdleRight": SubResource("8"),
+&"IdleUp": SubResource("9"),
+&"RESET": SubResource("40"),
+&"SitDown": SubResource("35"),
+&"SitLeft": SubResource("36"),
+&"SitRight": SubResource("37"),
+&"SitUp": SubResource("38"),
+&"Trigger": SubResource("Animation_pwq8w"),
+&"WalkDown": SubResource("3"),
+&"WalkLeft": SubResource("4"),
+&"WalkRight": SubResource("2"),
+&"WalkUp": SubResource("5")
 }
 
 [node name="Slime" type="Node2D"]

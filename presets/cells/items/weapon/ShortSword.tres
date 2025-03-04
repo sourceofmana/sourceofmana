@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=8 format=3 uid="uid://cyipbwryaa5ij"]
 
 [ext_resource type="Texture2D" uid="uid://d14dldvd6f4kt" path="res://data/graphics/items/weapon/shortsword.png" id="1_bnbkv"]
-[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_f7w3l"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_tfbm5"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_f7w3l"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_tfbm5"]
 [ext_resource type="Texture2D" uid="uid://bxs16ohgjjohe" path="res://data/graphics/sprites/equipments/weapon/shortsword.png" id="3_axrmm"]
-[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_pb8kx"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_pb8kx"]
 
 [sub_resource type="Resource" id="Resource_7wll8"]
 script = ExtResource("2_f7w3l")

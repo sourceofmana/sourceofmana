@@ -3489,25 +3489,25 @@ tracks/14/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pnwib"]
 _data = {
-"AttackDown": SubResource("Animation_qisc1"),
-"AttackLeft": SubResource("Animation_qxnb1"),
-"AttackRight": SubResource("Animation_jrmcd"),
-"AttackUp": SubResource("Animation_kodxx"),
-"Death": SubResource("Animation_m1d7p"),
-"IdleDown": SubResource("6"),
-"IdleLeft": SubResource("7"),
-"IdleRight": SubResource("8"),
-"IdleUp": SubResource("9"),
-"RESET": SubResource("40"),
-"SitDown": SubResource("35"),
-"SitLeft": SubResource("36"),
-"SitRight": SubResource("37"),
-"SitUp": SubResource("38"),
-"Trigger": SubResource("Animation_3p26o"),
-"WalkDown": SubResource("3"),
-"WalkLeft": SubResource("4"),
-"WalkRight": SubResource("2"),
-"WalkUp": SubResource("5")
+&"AttackDown": SubResource("Animation_qisc1"),
+&"AttackLeft": SubResource("Animation_qxnb1"),
+&"AttackRight": SubResource("Animation_jrmcd"),
+&"AttackUp": SubResource("Animation_kodxx"),
+&"Death": SubResource("Animation_m1d7p"),
+&"IdleDown": SubResource("6"),
+&"IdleLeft": SubResource("7"),
+&"IdleRight": SubResource("8"),
+&"IdleUp": SubResource("9"),
+&"RESET": SubResource("40"),
+&"SitDown": SubResource("35"),
+&"SitLeft": SubResource("36"),
+&"SitRight": SubResource("37"),
+&"SitUp": SubResource("38"),
+&"Trigger": SubResource("Animation_3p26o"),
+&"WalkDown": SubResource("3"),
+&"WalkLeft": SubResource("4"),
+&"WalkRight": SubResource("2"),
+&"WalkUp": SubResource("5")
 }
 
 [node name="Node" type="Node2D"]

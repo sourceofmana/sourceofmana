@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cq76gfx44nn6q"]
 
-[ext_resource type="Script" path="res://sources/gui/CellTile.gd" id="1_ec554"]
+[ext_resource type="Script" uid="uid://t24avk2vmd2j" path="res://sources/gui/CellTile.gd" id="1_ec554"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_nr8t2"]
-[ext_resource type="Shader" path="res://sources/shaders/ShineHighlight.gdshader" id="3_8kgog"]
+[ext_resource type="Shader" uid="uid://cgqu7co137s38" path="res://sources/shaders/ShineHighlight.gdshader" id="3_8kgog"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neqro"]
 resource_local_to_scene = true

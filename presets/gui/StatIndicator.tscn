@@ -7,7 +7,7 @@
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="5"]
 [ext_resource type="Texture2D" uid="uid://c56xsbwllfd64" path="res://data/graphics/gui/stat/healthbar.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://gscvi316alnm" path="res://data/graphics/gui/stat/expbar.png" id="6_6rl1b"]
-[ext_resource type="Script" path="res://sources/gui/StatIndicator.gd" id="7"]
+[ext_resource type="Script" uid="uid://v8uc3k2d1ge4" path="res://sources/gui/StatIndicator.gd" id="7"]
 
 [node name="StatIndicator" type="TextureRect"]
 size_flags_horizontal = 3

@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://cavkg1wyg23fh"]
 
 [ext_resource type="Texture2D" uid="uid://b5uiokn4yc02s" path="res://data/graphics/items/quest/letter.png" id="1_jk2eh"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_6b5vw"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_6b5vw"]
 
 [resource]
 script = ExtResource("2_6b5vw")
 slot = 11
 textures = Array[Texture2D]([])
+customfield = ""
 id = -1
 name = "Letter"
 description = "A stamped letter given for a specific quest."
@@ -15,4 +16,3 @@ type = 0
 weight = 15.0
 stackable = false
 usable = false
-effects = {}

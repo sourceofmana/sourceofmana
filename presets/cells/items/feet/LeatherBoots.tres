@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=11 format=3 uid="uid://b1kgjqcht72fg"]
 
 [ext_resource type="Texture2D" uid="uid://cqpx2eql7kcet" path="res://data/graphics/items/feet/leather-boots.png" id="1_44ei4"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_6hnmy"]
-[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_cdluw"]
-[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_6b6ab"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_6hnmy"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_cdluw"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_6b6ab"]
 [ext_resource type="Texture2D" uid="uid://cfjjosglguhk5" path="res://data/graphics/sprites/equipments/feet/boots-male.png" id="3_bjf14"]
 [ext_resource type="Material" uid="uid://lvqidalgcn6h" path="res://presets/palettes/equipments/material-leather.tres" id="3_hsd0w"]
 [ext_resource type="Texture2D" uid="uid://dlo5n0v1scwaf" path="res://data/graphics/sprites/equipments/feet/boots-female.png" id="4_30krm"]

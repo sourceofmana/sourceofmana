@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b0qa2td7svga7" path="res://data/graphics/effects/particles/smoke.png" id="1_0cgnc"]
 [ext_resource type="PackedScene" uid="uid://bpqxr3214t821" path="res://presets/effects/LightSource.tscn" id="2_dg8t3"]
-[ext_resource type="Script" path="res://sources/effects/Projectile.gd" id="2_ggro7"]
+[ext_resource type="Script" uid="uid://bu2axrh4eey4m" path="res://sources/effects/Projectile.gd" id="2_ggro7"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y2my7"]
 blend_mode = 1

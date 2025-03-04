@@ -140,15 +140,15 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gf7hs"]
 _data = {
-"Attack": SubResource("Animation_38rnv"),
-"Death": SubResource("Animation_kbkln"),
-"From Trigger": SubResource("Animation_8svaw"),
-"Idle": SubResource("Animation_x1wls"),
-"RESET": SubResource("Animation_tli2y"),
-"Sit": SubResource("Animation_5moda"),
-"To Trigger": SubResource("Animation_2ge8q"),
-"Trigger": SubResource("Animation_v53m3"),
-"Walk": SubResource("Animation_yp2cr")
+&"Attack": SubResource("Animation_38rnv"),
+&"Death": SubResource("Animation_kbkln"),
+&"From Trigger": SubResource("Animation_8svaw"),
+&"Idle": SubResource("Animation_x1wls"),
+&"RESET": SubResource("Animation_tli2y"),
+&"Sit": SubResource("Animation_5moda"),
+&"To Trigger": SubResource("Animation_2ge8q"),
+&"Trigger": SubResource("Animation_v53m3"),
+&"Walk": SubResource("Animation_yp2cr")
 }
 
 [node name="Chest" type="Node2D"]

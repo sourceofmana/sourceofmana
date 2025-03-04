@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://duqpp1dik8h8h"]
 
-[ext_resource type="Script" path="res://sources/gui/character/Character.gd" id="2_aacye"]
-[ext_resource type="Script" path="res://sources/gui/character/Attributes.gd" id="2_nrudd"]
-[ext_resource type="Script" path="res://sources/gui/character/Stats.gd" id="3_v4km6"]
-[ext_resource type="Script" path="res://sources/gui/character/Traits.gd" id="4_1wiqu"]
+[ext_resource type="Script" uid="uid://btujsudusgp8p" path="res://sources/gui/character/Character.gd" id="2_aacye"]
+[ext_resource type="Script" uid="uid://b73huh7ahb6av" path="res://sources/gui/character/Attributes.gd" id="2_nrudd"]
+[ext_resource type="Script" uid="uid://cjsfs480co2wp" path="res://sources/gui/character/Stats.gd" id="3_v4km6"]
+[ext_resource type="Script" uid="uid://2qjjdmjumwox" path="res://sources/gui/character/Traits.gd" id="4_1wiqu"]
 
 [node name="Character" type="VBoxContainer"]
 anchors_preset = 15

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://3ldimch2l6rv"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_3x28q"]
-[ext_resource type="Script" path="res://sources/gui/Scrollable.gd" id="2_8yd1q"]
+[ext_resource type="Script" uid="uid://btbemuboy4dc5" path="res://sources/gui/Scrollable.gd" id="2_8yd1q"]
 
 [node name="Scrollable" type="PanelContainer"]
 custom_minimum_size = Vector2(160, 96)

@@ -1,10 +1,10 @@
 [gd_scene load_steps=15 format=3 uid="uid://u31xl3ap3wd8"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_al454"]
-[ext_resource type="Script" path="res://sources/gui/Inventory.gd" id="2_vkka2"]
+[ext_resource type="Script" uid="uid://dhmr1oy7yo7x1" path="res://sources/gui/Inventory.gd" id="2_vkka2"]
 [ext_resource type="Texture2D" uid="uid://b1vkianlvn8yc" path="res://data/graphics/gui/bar.png" id="3_3s8jh"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="4_pr2vo"]
-[ext_resource type="Script" path="res://sources/gui/CellGrid.gd" id="5_p6o47"]
+[ext_resource type="Script" uid="uid://cuhwrw40yxve1" path="res://sources/gui/CellGrid.gd" id="5_p6o47"]
 [ext_resource type="PackedScene" uid="uid://cq76gfx44nn6q" path="res://presets/gui/CellTile.tscn" id="6_e0ndm"]
 [ext_resource type="Texture2D" uid="uid://dp2mkhn8q5h4s" path="res://data/graphics/gui/inventory/slots/head.png" id="7_75p06"]
 [ext_resource type="Texture2D" uid="uid://dygpktmxg3nbd" path="res://data/graphics/gui/inventory/slots/hands.png" id="8_gkthq"]

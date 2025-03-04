@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://64xnrn2clhgn"]
 
 [ext_resource type="Texture2D" uid="uid://06bgh7ndvw40" path="res://data/graphics/items/legs/shorts.png" id="1_r35o7"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_glyxe"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_glyxe"]
 [ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipments/cloth-natural.tres" id="3_egntb"]
 [ext_resource type="Texture2D" uid="uid://7dnljcj3wldb" path="res://data/graphics/sprites/equipments/legs/shorts-male.png" id="4_pjs4f"]
 [ext_resource type="Texture2D" uid="uid://bq8ruol5u0o7l" path="res://data/graphics/sprites/equipments/legs/shorts-female.png" id="5_6mndq"]

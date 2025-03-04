@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cjgijbfxixe67"]
 
-[ext_resource type="Script" path="res://sources/gui/Login.gd" id="2_2pjk7"]
+[ext_resource type="Script" uid="uid://bfuwxwu1j6l6d" path="res://sources/gui/Login.gd" id="2_2pjk7"]
 [ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="3_6esv8"]
 [ext_resource type="JSON" path="res://data/db/agreement.json" id="3_kh3en"]
 [ext_resource type="JSON" path="res://data/db/news.json" id="3_mlkr6"]

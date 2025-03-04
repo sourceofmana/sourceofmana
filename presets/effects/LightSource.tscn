@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bpqxr3214t821"]
 
-[ext_resource type="Script" path="res://sources/effects/LightSource.gd" id="1_0jqv3"]
+[ext_resource type="Script" uid="uid://cotu7uabq3nay" path="res://sources/effects/LightSource.gd" id="1_0jqv3"]
 
 [node name="LightSource" type="Marker2D" groups=["lights"]]
 position = Vector2(1971, 1660)

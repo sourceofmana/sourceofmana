@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://cnrkn75mvq8nu"]
 
 [ext_resource type="Texture2D" uid="uid://ois3tbneej8v" path="res://data/graphics/items/shield/leather-shield.png" id="1_xtpys"]
-[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_4h4tb"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_j4quq"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_4h4tb"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_j4quq"]
 [ext_resource type="Texture2D" uid="uid://bma32mfuffgc6" path="res://data/graphics/sprites/equipments/shield/leather-shield-male.png" id="3_sdeoh"]
-[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_st3q8"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_st3q8"]
 [ext_resource type="Texture2D" uid="uid://ddmknrvyfv8x4" path="res://data/graphics/sprites/equipments/shield/leather-shield-female.png" id="4_e33d4"]
 
 [sub_resource type="Resource" id="Resource_2upui"]

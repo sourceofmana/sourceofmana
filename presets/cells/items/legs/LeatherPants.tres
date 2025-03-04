@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://bi4288d5a7kbn"]
 
 [ext_resource type="Texture2D" uid="uid://3wesghn8cgpr" path="res://data/graphics/items/legs/leather-pants.png" id="1_wys1t"]
-[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_n1lb5"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_rrcf8"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_n1lb5"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_rrcf8"]
 [ext_resource type="Material" uid="uid://lvqidalgcn6h" path="res://presets/palettes/equipments/material-leather.tres" id="3_5sqqi"]
-[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_6t6gi"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_6t6gi"]
 [ext_resource type="Texture2D" uid="uid://das8r2duvhn7q" path="res://data/graphics/sprites/equipments/legs/pants-male.png" id="4_3sf44"]
 [ext_resource type="Texture2D" uid="uid://dd8fdtif3qds6" path="res://data/graphics/sprites/equipments/legs/pants-female.png" id="5_iqcpo"]
 

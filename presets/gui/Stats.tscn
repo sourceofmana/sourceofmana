@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://dhdq88so6g3yh"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_dhni5"]
-[ext_resource type="Script" path="res://sources/gui/StatPanel.gd" id="2_v116i"]
+[ext_resource type="Script" uid="uid://cguhlue4ygu63" path="res://sources/gui/StatPanel.gd" id="2_v116i"]
 [ext_resource type="Texture2D" uid="uid://lbbhr5w3jhrf" path="res://data/graphics/gui/stat/gender-female.png" id="3_4bqlt"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="3_kjg3f"]
 [ext_resource type="Texture2D" uid="uid://3jqhykq3lnpt" path="res://data/graphics/gui/stat/spirit-hook.png" id="4_de8qp"]

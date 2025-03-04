@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cppc7wshwpqof"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_mgiqr"]
-[ext_resource type="Script" path="res://sources/gui/PickUp.gd" id="2_o631f"]
+[ext_resource type="Script" uid="uid://bjbq5k66ht6m7" path="res://sources/gui/PickUp.gd" id="2_o631f"]
 
 [node name="PickUp" type="PanelContainer"]
 custom_minimum_size = Vector2(0, 62)

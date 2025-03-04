@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cwym72gdros00"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_biluh"]
-[ext_resource type="Script" path="res://sources/gui/context/ContextMenu.gd" id="2_t0kth"]
+[ext_resource type="Script" uid="uid://btiruufqr3qn7" path="res://sources/gui/context/ContextMenu.gd" id="2_t0kth"]
 
 [node name="Context" type="PanelContainer"]
 z_index = 1000

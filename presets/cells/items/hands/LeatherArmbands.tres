@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://xh8p4v6vvq72"]
 
 [ext_resource type="Texture2D" uid="uid://8fuq3ocdgbgc" path="res://data/graphics/items/hands/leather-armbands.png" id="1_lklgh"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_2kiu5"]
-[ext_resource type="Script" path="res://sources/actor/stat/StatModifier.gd" id="2_diy2g"]
-[ext_resource type="Script" path="res://sources/cell/CellModifier.gd" id="3_0yt5s"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_2kiu5"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_diy2g"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_0yt5s"]
 [ext_resource type="Material" uid="uid://lvqidalgcn6h" path="res://presets/palettes/equipments/material-leather.tres" id="3_cuabt"]
 [ext_resource type="Texture2D" uid="uid://bhxoexihf3en3" path="res://data/graphics/sprites/equipments/hands/armbands-male.png" id="4_wv0eh"]
 [ext_resource type="Texture2D" uid="uid://ilwwnugqpvaa" path="res://data/graphics/sprites/equipments/hands/armbands-female.png" id="5_f2by0"]

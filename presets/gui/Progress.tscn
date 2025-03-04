@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dolxuw03u60eo"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_q7m0j"]
-[ext_resource type="Script" path="res://sources/gui/Settings.gd" id="2_j3ryh"]
+[ext_resource type="Script" uid="uid://ci85y60tfmp4o" path="res://sources/gui/Settings.gd" id="2_j3ryh"]
 
 [node name="Progress" type="PanelContainer"]
 show_behind_parent = true

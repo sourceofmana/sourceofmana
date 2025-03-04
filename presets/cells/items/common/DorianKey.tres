@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=3 format=3 uid="uid://dkqjldxwvwjm8"]
 
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="1_8iaus"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_8iaus"]
 [ext_resource type="Texture2D" uid="uid://demorpiugdi6s" path="res://data/graphics/items/common/splatina-key2.png" id="1_bfqgm"]
 
 [resource]
 script = ExtResource("1_8iaus")
 slot = -1
 textures = Array[Texture2D]([])
+customfield = ""
 id = -1
 name = "Dorian's Key"
 description = "A key that has been hidden a long time ago, seems to open a fancy door."
@@ -15,4 +16,3 @@ type = 0
 weight = 15.0
 stackable = true
 usable = false
-effects = {}

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://xbkw20luc3wd"]
 
 [ext_resource type="PackedScene" uid="uid://owiltak1cxk8" path="res://presets/gui/Game.tscn" id="1_ptsf3"]
-[ext_resource type="Script" path="res://sources/audio/Audio.gd" id="2_1wl3n"]
+[ext_resource type="Script" uid="uid://fcxpglv4jnph" path="res://sources/audio/Audio.gd" id="2_1wl3n"]
 
 [node name="Source" type="Node2D"]
 

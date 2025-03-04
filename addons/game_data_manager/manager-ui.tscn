@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cjg64w82poqg3"]
 
-[ext_resource type="Script" path="res://addons/game_data_manager/RefreshButton.gd" id="1_02c80"]
-[ext_resource type="Script" path="res://addons/game_data_manager/ItemList.gd" id="2_2kinw"]
-[ext_resource type="Script" path="res://addons/game_data_manager/ItemTypeSelector.gd" id="7_nn4vo"]
+[ext_resource type="Script" uid="uid://chiiowuffij0c" path="res://addons/game_data_manager/RefreshButton.gd" id="1_02c80"]
+[ext_resource type="Script" uid="uid://bfufr7xg3rkwb" path="res://addons/game_data_manager/ItemList.gd" id="2_2kinw"]
+[ext_resource type="Script" uid="uid://c5t1lf8t4lnap" path="res://addons/game_data_manager/ItemTypeSelector.gd" id="7_nn4vo"]
 
 [node name="Manager-ui" type="Control"]
 layout_mode = 3

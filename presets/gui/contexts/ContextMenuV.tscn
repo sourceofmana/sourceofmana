@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://tqcjqyaicaol"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_sma80"]
-[ext_resource type="Script" path="res://sources/gui/context/ContextMenu.gd" id="2_se8cc"]
+[ext_resource type="Script" uid="uid://btiruufqr3qn7" path="res://sources/gui/context/ContextMenu.gd" id="2_se8cc"]
 
 [node name="Context" type="PanelContainer"]
 offset_right = 72.0

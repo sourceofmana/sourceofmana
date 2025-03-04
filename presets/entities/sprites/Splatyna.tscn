@@ -323,25 +323,25 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iko4k"]
 _data = {
-"AttackDown": SubResource("Animation_k46p5"),
-"AttackLeft": SubResource("Animation_v5vca"),
-"AttackRight": SubResource("Animation_4saa4"),
-"AttackUp": SubResource("Animation_6ruor"),
-"Death": SubResource("Animation_o7dai"),
-"IdleDown": SubResource("6"),
-"IdleLeft": SubResource("7"),
-"IdleRight": SubResource("8"),
-"IdleUp": SubResource("9"),
-"RESET": SubResource("40"),
-"SitDown": SubResource("35"),
-"SitLeft": SubResource("36"),
-"SitRight": SubResource("37"),
-"SitUp": SubResource("38"),
-"Trigger": SubResource("Animation_x315o"),
-"WalkDown": SubResource("3"),
-"WalkLeft": SubResource("4"),
-"WalkRight": SubResource("2"),
-"WalkUp": SubResource("5")
+&"AttackDown": SubResource("Animation_k46p5"),
+&"AttackLeft": SubResource("Animation_v5vca"),
+&"AttackRight": SubResource("Animation_4saa4"),
+&"AttackUp": SubResource("Animation_6ruor"),
+&"Death": SubResource("Animation_o7dai"),
+&"IdleDown": SubResource("6"),
+&"IdleLeft": SubResource("7"),
+&"IdleRight": SubResource("8"),
+&"IdleUp": SubResource("9"),
+&"RESET": SubResource("40"),
+&"SitDown": SubResource("35"),
+&"SitLeft": SubResource("36"),
+&"SitRight": SubResource("37"),
+&"SitUp": SubResource("38"),
+&"Trigger": SubResource("Animation_x315o"),
+&"WalkDown": SubResource("3"),
+&"WalkLeft": SubResource("4"),
+&"WalkRight": SubResource("2"),
+&"WalkUp": SubResource("5")
 }
 
 [node name="Splatyna" type="Node2D"]

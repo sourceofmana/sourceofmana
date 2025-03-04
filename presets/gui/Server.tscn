@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cr2by2nem8o87"]
 
 [ext_resource type="PackedScene" uid="uid://bq66pltgf5nhp" path="res://presets/gui/labels/ContentLabel.tscn" id="1_bk404"]
-[ext_resource type="Script" path="res://sources/gui/ServerDisplay.gd" id="1_lgnu7"]
+[ext_resource type="Script" uid="uid://pdqsy1s1d8jr" path="res://sources/gui/ServerDisplay.gd" id="1_lgnu7"]
 
 [node name="PanelContainer" type="PanelContainer"]
 clip_contents = true

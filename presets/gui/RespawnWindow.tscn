@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b8frfkv2y8x6"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_xw25t"]
-[ext_resource type="Script" path="res://sources/gui/RespawnDialog.gd" id="2_l0vfw"]
+[ext_resource type="Script" uid="uid://cdj1gdknowoco" path="res://sources/gui/RespawnDialog.gd" id="2_l0vfw"]
 
 [node name="Respawn" type="PanelContainer"]
 custom_minimum_size = Vector2(280, 64)

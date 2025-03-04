@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BaseCell" load_steps=3 format=3 uid="uid://cggwiouberwva"]
 
 [ext_resource type="Texture2D" uid="uid://deequ6glt51jr" path="res://data/graphics/emotes/angry.png" id="1_gvhfr"]
-[ext_resource type="Script" path="res://sources/cell/BaseCell.gd" id="2_lfv2e"]
+[ext_resource type="Script" uid="uid://cxsn36lpngjtj" path="res://sources/cell/BaseCell.gd" id="2_lfv2e"]
 
 [resource]
 script = ExtResource("2_lfv2e")

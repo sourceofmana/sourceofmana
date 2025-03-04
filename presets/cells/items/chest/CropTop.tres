@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://jxi6a1thqwio"]
 
 [ext_resource type="Texture2D" uid="uid://mghu7wqp5dwt" path="res://data/graphics/items/chest/croptop.png" id="1_of3co"]
-[ext_resource type="Script" path="res://sources/cell/ItemCell.gd" id="2_gulyb"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_gulyb"]
 [ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipments/cloth-natural.tres" id="3_tcx5b"]
 [ext_resource type="Texture2D" uid="uid://c1qgpdp588q6b" path="res://data/graphics/sprites/equipments/chests/croptop-male.png" id="4_pgujx"]
 [ext_resource type="Texture2D" uid="uid://cljwwu6qbjstp" path="res://data/graphics/sprites/equipments/chests/croptop-female.png" id="5_7jh67"]

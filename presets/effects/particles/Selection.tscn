@@ -30,6 +30,7 @@ emission_ring_axis = Vector3(1, 0, 1)
 emission_ring_height = 10.0
 emission_ring_radius = 48.0
 emission_ring_inner_radius = 48.0
+emission_ring_cone_angle = 90.0
 angle_min = -720.0
 angle_max = 720.0
 angular_velocity_min = 180.0
