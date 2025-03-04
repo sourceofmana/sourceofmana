@@ -15,7 +15,7 @@ config/version="0.7"
 run/main_scene="res://presets/Default.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="SourceOfMana"
-config/features=PackedStringArray("4.3")
+config/features=PackedStringArray("4.4")
 run/flush_stdout_on_print=true
 run/max_fps=60
 boot_splash/bg_color=Color(0, 0, 0, 1)
@@ -457,8 +457,8 @@ gp_zoom_reset={
 
 [input_devices]
 
-pointing/emulate_touch_from_mouse=true
 pointing/android/enable_pan_and_scale_gestures=true
+pointing/emulate_touch_from_mouse=true
 
 [physics]
 
