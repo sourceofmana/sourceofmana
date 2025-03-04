@@ -104,7 +104,7 @@ static func GetRandomSkill(agent : AIAgent) -> SkillCell:
 	if agent.progress.probaSum > 0.0:
 		var randProba : float = randf_range(0.0, agent.progress.probaSum)
 		for skill in agent.progress.skills:
-			randProba -= agent.progress.skills[skill].proba
+			randProba -= agent.progress.skillProbas[skill]
 			if randProba <= 0.0:
 				return DB.GetSkill(skill)
 	return null

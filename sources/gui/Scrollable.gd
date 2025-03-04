@@ -1,3 +1,4 @@
+@tool
 extends WindowPanel
 class_name Scrollable
 

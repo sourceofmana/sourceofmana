@@ -19,8 +19,6 @@ static func CreateInstance(map : WorldMap, mapRID : RID):
 		NavigationServer2D.region_set_navigation_polygon(map.regionRID, map.navPoly)
 		NavigationServer2D.region_set_navigation_layers(map.regionRID, 1)
 
-		NavigationServer2D.map_force_update(map.mapRID)
-
 # Getter
 static func GetPathLengthSquared(agent : BaseAgent, pos : Vector2) -> float:
 	if agent:

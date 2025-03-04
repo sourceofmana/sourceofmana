@@ -1,3 +1,4 @@
+@tool
 extends WindowPanel
 
 @onready var lName : Label						= $Scroll/Margin/Layout/Stats/Information/Name

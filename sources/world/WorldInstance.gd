@@ -15,10 +15,19 @@ func _ready():
 	timers.set_name("Timers")
 	add_child.call_deferred(timers)
 
-	for spawn in map.spawns:
-		if spawn:
-			for i in spawn.count:
-				WorldAgent.CreateAgent(spawn, id, spawn.nick)
+	var mapRID : RID = get_world_2d().get_navigation_map()
+	if not NavigationServer2D.map_get_iteration_id(mapRID):
+		NavigationServer2D.map_changed.connect(_map_loaded)
+	else:
+		_map_loaded(mapRID)
+
+func _map_loaded(mapRID : RID):
+	if get_world_2d().get_navigation_map() == mapRID:
+		NavigationServer2D.map_changed.disconnect(_map_loaded)
+		for spawn in map.spawns:
+			if spawn:
+				for i in spawn.count:
+					WorldAgent.CreateAgent(spawn, id, spawn.nick)
 
 #
 static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:
