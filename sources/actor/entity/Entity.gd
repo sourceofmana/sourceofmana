@@ -146,7 +146,6 @@ func _physics_process(delta : float):
 func _ready():
 	if Launcher.Player == self:
 		Launcher.Map.MapUnloaded.connect(ClearTarget)
-	elif type == ActorCommons.Type.MONSTER:
-		stat.vital_stats_updated.connect(interactive.DisplayHP)
+
 	entity_died.connect(interactive.HideHP)
 	entity_died.connect(interactive.DisplayTarget.bind(ActorCommons.Target.NONE))

@@ -121,6 +121,9 @@ static func ToWalk(agent : AIAgent):
 			else:
 				position = WorldNavigation.GetRandomPositionAABB(map, agent.spawnInfo.spawn_position, agent.spawnInfo.spawn_offset)
 			agent.SetNodeGoal(agent, position)
+			var walkSpeed : int = randi_range(agent.minWanderingSpeed, agent.maxWanderingSpeed)
+			agent.currentWalkSpeed = Vector2(walkSpeed, walkSpeed)
+
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.SetState, [agent, AICommons.State.IDLE])
 
 static func ToAttack(agent : AIAgent, target : BaseAgent):
@@ -134,6 +137,7 @@ static func ToChase(agent : AIAgent, target : BaseAgent):
 	if map and SkillCommons.IsSameMap(agent, target):
 		agent.SetNodeGoal(target, target.position)
 		Callback.OneShotCallback(agent.agent.navigation_finished, AI.Refresh, [agent])
+		agent.currentWalkSpeed = Vector2(agent.stat.current.walkSpeed, agent.stat.current.walkSpeed)
 
 static func ToFlee(agent : AIAgent, target : BaseAgent):
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)

@@ -218,6 +218,8 @@ const GenderMaleTexture : Texture2D			= preload("res://data/graphics/gui/stat/ge
 const GenderFemaleTexture : Texture2D		= preload("res://data/graphics/gui/stat/gender-female.png")
 const GenderNonBinaryTexture : Texture2D	= preload("res://data/graphics/gui/stat/gender-nonbinary.png")
 
+const LastMeanValueMax : int				= 5
+
 # Skill
 enum Alteration
 {

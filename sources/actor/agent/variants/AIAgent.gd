@@ -14,6 +14,9 @@ var nodeGoal : Node2D					= null
 var spawnInfo : SpawnObject				= null
 var skillSelected : SkillCell			= null
 
+var minWanderingSpeed : int				= 100
+var maxWanderingSpeed : int				= 100
+
 #
 func ResetNav():
 	super.ResetNav()
@@ -57,7 +60,7 @@ func GetMostValuableAttacker() -> BaseAgent:
 	var target : BaseAgent = null
 	var maxDamage : int = -1
 	for entry in attackers:
-		if SkillCommons.IsInteractable(self, entry.attacker) and entry.damage > maxDamage:
+		if entry.attacker and SkillCommons.IsInteractable(self, entry.attacker) and entry.damage > maxDamage:
 			maxDamage = entry.damage
 			target = entry.attacker
 	return target
@@ -108,6 +111,8 @@ func SetData():
 		AddSkill(DB.SkillsDB[skillID], data._skillProba[skillID])
 	for itemID in data._drops:
 		AddItem(DB.ItemsDB[itemID], data._dropsProba[itemID])
+	minWanderingSpeed = int(stat.current.walkSpeed / 4)
+	maxWanderingSpeed = int(stat.current.walkSpeed / 2)
 	super.SetData()
 
 func _exit_tree():

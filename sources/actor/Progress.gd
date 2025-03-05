@@ -69,10 +69,10 @@ func AddSkill(cell : SkillCell, proba : float, level : int = 1):
 		Network.UpdateSkill(cell.id, level, actor.rpcRID)
 
 func GetSkillProba(cell : SkillCell) -> float:
-	return skillProbas.get(cell.id, null) if cell else 0.0
+	return skillProbas.get(cell.id, 0.0) if cell else 0.0
 
 func GetSkillLevel(cell : SkillCell) -> int:
-	return skills.get(cell.id, null) if cell else 0.0
+	return skills.get(cell.id, 0) if cell else 0.0
 
 func RemoveSkill(cell : SkillCell):
 	assert(cell != null, "Provided skill cell is null")

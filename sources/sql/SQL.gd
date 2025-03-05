@@ -161,7 +161,7 @@ func UpdateTrait(charID : int, stats : ActorStats) -> bool:
 		"race" = stats.race,
 		"skintone" = stats.skintone,
 		"gender" = stats.gender,
-		"shape" = stats.currentShape,
+		"shape" = stats.shape,
 		"spirit" = stats.spirit
 	}
 	return db.update_rows("trait", "char_id = %d" % charID, data)

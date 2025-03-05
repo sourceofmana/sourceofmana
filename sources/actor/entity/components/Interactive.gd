@@ -134,6 +134,8 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			Launcher.Map.fringeLayer.add_child(newLabel)
 			target.stat.health += value if alteration == ActorCommons.Alteration.HEAL else -value
 			target.stat.RefreshVitalStats()
+			if Launcher.Player == emitter:
+				DisplayHP()
 
 #
 func DisplaySpeech(speech : String):

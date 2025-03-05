@@ -22,6 +22,7 @@ var currentSkillID : int				= -1
 var currentVelocity : Vector2i			= Vector2i.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var forceUpdate : bool					= false
+var currentWalkSpeed : Vector2			= Vector2.ZERO
 
 #
 func SwitchInputMode(clearCurrentInput : bool):
@@ -47,15 +48,12 @@ func UpdateInput():
 			currentInput = Vector2(clampedDirection) / ActorCommons.InputApproximationUnit
 
 			lastPositions.push_back(agent.distance_to_target())
-			if lastPositions.size() > 5:
+			if lastPositions.size() > ActorCommons.LastMeanValueMax:
 				lastPositions.pop_front()
 		else:
 			SwitchInputMode(true)
 
-	if currentInput != Vector2.ZERO:
-		currentVelocity = currentInput * stat.current.walkSpeed
-	else:
-		currentVelocity = Vector2i.ZERO
+	currentVelocity = currentInput * currentWalkSpeed
 
 func SetVelocity():
 	if currentVelocity == Vector2i.ZERO and velocity.is_zero_approx():
@@ -156,10 +154,12 @@ func SetData():
 		else:
 			agent = FileSystem.LoadEntityComponent("navigations/NPAgent")
 		agent.set_radius(data._radius)
-		agent.set_neighbor_distance(data._radius * 2)
+		agent.set_neighbor_distance(data._radius * 2.0)
 		agent.set_avoidance_priority(clampf(data._radius / float(ActorCommons.MaxEntityRadiusSize), 0.0, 1.0))
+		agent.set_max_speed(stat.current.walkSpeed)
 		agent.velocity_computed.connect(self._velocity_computed)
 		add_child.call_deferred(agent)
+		currentWalkSpeed = Vector2(stat.current.walkSpeed, stat.current.walkSpeed)
 
 #
 func Damage(_caller : BaseAgent):
