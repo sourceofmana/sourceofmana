@@ -255,12 +255,75 @@
 	},
 	"1016": {
 		"Name": "Snake",
-		"SpritePreset": "Snake",
+		"SpritePreset": "Generic4Directions",
 		"Behaviour": ["Aggressive"],
 		"Collision": "Medium",
 		"Radius": "10",
+		"Textures": {
+			"Body": "sprites/monsters/snake.png",
+		},
 		"Stat": {
 			"walkSpeed": 170,
+		},
+	},
+	"1017": {
+		"Name": "Fluffy",
+		"SpritePreset": "Generic4Directions",
+		"Collision": "Medium",
+		"Radius": "10",
+		"Textures": {
+			"Body": "sprites/monsters/fluffy.png",
+		},
+		"Stat": {
+			"walkSpeed": 50,
+		},
+	},
+	"1018": {
+		"Name": "Maggot",
+		"SpritePreset": "Generic4Directions",
+		"Collision": "Medium",
+		"Radius": "10",
+		"Textures": {
+			"Body": "sprites/monsters/maggot.png",
+		},
+		"Stat": {
+			"walkSpeed": 50,
+		},
+	},
+	"1019": {
+		"Name": "Fire Goblin",
+		"SpritePreset": "Generic4Directions",
+		"Collision": "Medium",
+		"Radius": "10",
+		"Textures": {
+			"Body": "sprites/monsters/firegoblin.png",
+		},
+		"Stat": {
+			"walkSpeed": 80,
+		},
+	},
+	"1020": {
+		"Name": "Spiky Mushroom",
+		"SpritePreset": "Generic4Directions",
+		"Collision": "Medium",
+		"Radius": "10",
+		"Textures": {
+			"Body": "sprites/monsters/mushroom-spiky.png",
+		},
+		"Stat": {
+			"walkSpeed": 80,
+		},
+	},
+	"1021": {
+		"Name": "Evil Mushroom",
+		"SpritePreset": "Generic4Directions",
+		"Collision": "Medium",
+		"Radius": "10",
+		"Textures": {
+			"Body": "sprites/monsters/mushroom-evil.png",
+		},
+		"Stat": {
+			"walkSpeed": 80,
 		},
 	},
 
