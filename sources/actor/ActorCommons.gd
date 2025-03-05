@@ -357,4 +357,7 @@ static var DefaultInventory : Array[Dictionary] = [
 static var DefaultSkills : Array[Dictionary] = [
 	{ "skill_id": "Melee".hash(), "level": 1 },
 	{ "skill_id": "Flar".hash(), "level": 1 },
+	{ "skill_id": "Lum".hash(), "level": 1 },
+	{ "skill_id": "Inma".hash(), "level": 1 },
+	{ "skill_id": "Mana Burst".hash(), "level": 1 },
 ]
