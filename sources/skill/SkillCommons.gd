@@ -6,6 +6,9 @@ const SkillMeleeName : String			= "Melee"
 
 # Actions
 static func TryConsume(agent : BaseAgent, modifier : CellCommons.Modifier, skill : SkillCell) -> bool:
+	if agent is not PlayerAgent:
+		return true
+
 	match modifier:
 		CellCommons.Modifier.Health:
 			var exhaust : int = skill.modifiers.Get(modifier)
