@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://cyr6go0b60dmi"]
+
+[ext_resource type="Texture2D" uid="uid://xnxj6c36uknp" path="res://data/graphics/effects/particles/fire.png" id="1_1x4i0"]
+[ext_resource type="Script" uid="uid://bu2axrh4eey4m" path="res://sources/effects/Projectile.gd" id="2_62w43"]
+[ext_resource type="PackedScene" uid="uid://bpqxr3214t821" path="res://presets/effects/LightSource.tscn" id="3_ivd6x"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y2my7"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l54cu"]
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 1.0
+anim_speed_max = 3.0
+
+[node name="Fire" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_y2my7")
+amount = 1
+texture = ExtResource("1_1x4i0")
+lifetime = 0.6
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_l54cu")
+script = ExtResource("2_62w43")
+
+[node name="LightSource" parent="." instance=ExtResource("3_ivd6x")]
+position = Vector2(0, 0)
+radius = 96

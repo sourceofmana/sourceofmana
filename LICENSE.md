@@ -54,6 +54,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/effects/particles/cast8.png [Reid]
 ./graphics/effects/particles/cast9.png [Reid]
 ./graphics/effects/particles/cast10.png [Reid]
+./graphics/effects/particles/fire.png [Neorice]
 ./graphics/effects/particles/fog.png [Reid]
 ./graphics/effects/particles/leaf.png [Reid]
 ./graphics/effects/particles/orb.png [Reid]

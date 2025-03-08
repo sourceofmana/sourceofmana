@@ -298,6 +298,9 @@
 		"Textures": {
 			"Body": "sprites/monsters/firegoblin.png",
 		},
+		"SkillSet": {
+			"Spitfire": 2.0,
+		},
 		"Stat": {
 			"walkSpeed": 80,
 		},
