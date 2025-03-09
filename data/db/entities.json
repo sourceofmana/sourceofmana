@@ -377,6 +377,16 @@
 			"walkSpeed": 80,
 		},
 	},
+	"1025": {
+		"Name": "Bird",
+		"SpritePreset": "Bird",
+		"Collision": "Medium",
+		"Radius": "16",
+		"Stat": {
+			"walkSpeed": 200,
+			"castAttackDelay": 0.1,
+		},
+	},
 
 	"2000": {
 		"Name": "Bicies",

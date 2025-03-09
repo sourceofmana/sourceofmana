@@ -272,6 +272,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/monsters/center-parting.png [Kineticstorm]
 ./graphics/sprites/monsters/emo.png [Kineticstorm]
 ./graphics/sprites/monsters/bat.png [Bagzie]
+./graphics/sprites/monsters/bird.png [Pateame] [Reid]
 ./graphics/sprites/monsters/bigpiou.png [Hocus]
 ./graphics/sprites/monsters/croc.png [Reid] [Coolkid782, Enchilado]
 ./graphics/sprites/monsters/dorian.png [Neorice] [Reid]
