@@ -387,6 +387,27 @@
 			"castAttackDelay": 0.1,
 		},
 	},
+	"1026": {
+		"Name": "Lizzy",
+		"SpritePreset": "Lizzy",
+		"Collision": "Medium",
+		"Radius": "16",
+		"Stat": {
+			"walkSpeed": 80,
+		},
+	},
+	"1027": {
+		"Name": "Lizandra",
+		"SpritePreset": "Lizzy",
+		"Collision": "Medium",
+		"Radius": "16",
+		"Textures": {
+			"Body": "sprites/monsters/lizandra.png",
+		},
+		"Stat": {
+			"walkSpeed": 80,
+		},
+	},
 
 	"2000": {
 		"Name": "Bicies",
