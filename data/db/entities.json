@@ -329,6 +329,54 @@
 			"walkSpeed": 80,
 		},
 	},
+	"1022": {
+		"Name": "Pinkie",
+		"SpritePreset": "Generic4Directions",
+		"Collision": "Medium",
+		"Radius": "20",
+		"Textures": {
+			"Body": "sprites/monsters/pinkie.png",
+		},
+		"Stat": {
+			"walkSpeed": 80,
+		},
+	},
+	"1023": {
+		"Name": "Giant Maggot",
+		"SpritePreset": "Generic4Directions",
+		"Collision": "Large",
+		"Radius": "70",
+		"Textures": {
+			"Body": "sprites/monsters/maggot-giant.png",
+		},
+		"Stat": {
+			"walkSpeed": 80,
+		},
+	},
+	"1024": {
+		"Name": "Scorpion",
+		"SpritePreset": "Generic4Directions",
+		"Collision": "Medium",
+		"Radius": "30",
+		"Textures": {
+			"Body": "sprites/monsters/scorpion.png",
+		},
+		"Stat": {
+			"walkSpeed": 60,
+		},
+	},
+	"1025": {
+		"Name": "Skeleton",
+		"SpritePreset": "Player",
+		"Collision": "Medium",
+		"Radius": "16",
+		"Textures": {
+			"Body": "sprites/monsters/skeleton.png",
+		},
+		"Stat": {
+			"walkSpeed": 80,
+		},
+	},
 
 	"2000": {
 		"Name": "Bicies",
