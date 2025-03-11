@@ -47,8 +47,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -20.0
+offset_top = 16.0
 offset_right = 20.0
-offset_bottom = 40.0
+offset_bottom = 56.0
 grow_horizontal = 2
 
 [node name="Name" type="Label" parent="UnderBox"]
