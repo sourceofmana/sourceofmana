@@ -34,7 +34,7 @@ func UpdateAccount(accountID : int) -> bool:
 	return db.update_rows("account", "account_id = %d;" % accountID, data)
 
 # Characters
-func AddCharacter(accountID : int, nickname : String, traits : Dictionary, attributes : Dictionary) -> bool:
+func AddCharacter(accountID : int, nickname : String, stats : Dictionary, traits : Dictionary, attributes : Dictionary) -> bool:
 	var charData : Dictionary = {
 		"account_id": accountID,
 		"nickname": nickname,
@@ -43,6 +43,7 @@ func AddCharacter(accountID : int, nickname : String, traits : Dictionary, attri
 	var ret : bool = db.insert_row("character", charData)
 	if ret:
 		var charID : int = GetCharacterID(accountID, nickname)
+		ret = ret and db.update_rows("stat", "char_id = %d" % charID, stats)
 		ret = ret and db.update_rows("trait", "char_id = %d" % charID, traits)
 		ret = ret and db.update_rows("attribute", "char_id = %d" % charID, attributes)
 	return ret
@@ -373,8 +374,8 @@ func UnitTest():
 	# Fill in some characters into this account and retrieve the full char list from this account
 	var charIDs : Array[int] = GetCharacters(accountID)
 	assert(charIDs.size() == 0, "Character list for the test account is not empty upon creation")
-	assert(AddCharacter(accountID, "Admin", {}, {}) == true, "Could not create a test character")
-	assert(AddCharacter(accountID, "Admin2", {}, {}) == true, "Could not create a second test character")
+	assert(AddCharacter(accountID, "Admin", {}, {}, {}) == true, "Could not create a test character")
+	assert(AddCharacter(accountID, "Admin2", {}, {}, {}) == true, "Could not create a second test character")
 	charIDs = GetCharacters(accountID)
 	assert(charIDs.size() == 2, "Missing characters on the test account")
 	if charIDs.size() != 2:

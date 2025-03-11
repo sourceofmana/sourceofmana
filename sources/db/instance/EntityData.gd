@@ -11,7 +11,7 @@ class_name EntityData
 @export var _customShaders : Array[String]		= []
 @export var _displayName : bool					= false
 @export var _behaviour : int					= AICommons.Behaviour.NEUTRAL
-@export var _stats : Dictionary					= {}
+@export var _stats : Dictionary					= ActorCommons.DefaultStats.duplicate()
 @export var _skillSet : Array[int]				= []
 @export var _skillProba : Dictionary			= {}
 @export var _drops : Array[int]					= []

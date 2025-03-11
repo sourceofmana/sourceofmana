@@ -326,6 +326,9 @@ const DefaultAttributes : Dictionary = {
 	"endurance": 0,
 	"concentration": 0,
 }
+static var DefaultStats : Dictionary = {
+	"level": 1,
+}
 static var DefaultInventory : Array[Dictionary] = [
 	{ "item_id": "Apple".hash(), "count": 5, "customfield": "" },
 	{ "item_id": "Trousers".hash(), "count": 1, "customfield": "" },

@@ -65,6 +65,8 @@ func UpdateLastStats():
 	lastStat.skintone != stat.skintone or \
 	lastStat.currentShape != stat.currentShape:
 		Network.NotifyNeighbours(self, "UpdatePublicStats", [stat.level, stat.health, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
+		if lastStat.level != 0 and lastStat.level < stat.level:
+			Network.NotifyNeighbours(self, "LevelUp", [])
 		lastStat.level				= stat.level
 		lastStat.health				= stat.health
 		lastStat.hairstyle			= stat.hairstyle
@@ -73,6 +75,7 @@ func UpdateLastStats():
 		lastStat.race				= stat.race
 		lastStat.skintone			= stat.skintone
 		lastStat.currentShape		= stat.currentShape
+
 
 	if lastStat.experience != stat.experience or \
 	lastStat.gp != stat.gp or \

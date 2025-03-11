@@ -2,7 +2,7 @@ extends Object
 class_name ActorStats
 
 # Public and private stats, can be initialized through a dictionary from a SQL query or entities.json
-var level : int							= 1
+var level : int							= 0
 var experience : int					= 0
 var gp : int							= 0
 var health : int						= ActorCommons.MaxStatValue
@@ -183,14 +183,11 @@ func AddExperience(value : int):
 		return
 	experience += value
 	# Manage level up
-	var previousLevel : int = level
 	var experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
 	while experiencelNeeded != Experience.MAX_LEVEL_REACHED and experience >= experiencelNeeded:
 		experience -= experiencelNeeded
 		level += 1
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
-	if previousLevel < level:
-		Network.LevelUp(actor.get_rid().get_id())
 
 func AddGP(value : int):
 	if not ActorCommons.IsAlive(actor) or value <= 0:

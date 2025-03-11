@@ -45,12 +45,14 @@ func DisplayTarget(type : ActorCommons.Target):
 				selectionFx = null
 			if nameLabel and nameLabel.material:
 				nameLabel.material = null
+			return
 		ActorCommons.Target.ALLY:
 			nameLabel.material = ActorCommons.AllyTarget
 			DisplaySelection(0.53)
 		ActorCommons.Target.ENEMY:
 			nameLabel.material = ActorCommons.EnemyTarget
 			DisplaySelection(0.03)
+	DisplayHP()
 
 func DisplayEmote(emoteID : int):
 	assert(emoteFx != null, "No emote particle found, could not display emote")
@@ -175,6 +177,10 @@ func DisplayHP():
 			healthBar.tint_progress = Color.YELLOW.lerp(Color.GREEN, (ratio-0.33) * 3.0)
 		else:
 			healthBar.tint_progress = Color.GREEN
+
+func RefreshHP():
+	if healthBar.visible:
+		DisplayHP()
 
 func HideHP():
 	healthBar.modulate.a = 0.99
