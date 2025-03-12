@@ -557,6 +557,8 @@ offset_top = 0.0
 offset_right = 318.0
 offset_bottom = 310.0
 script = ExtResource("19_v8wo4")
+blockActions = false
+maxSize = Vector2(-1, -1)
 
 [node name="Respawn" parent="Windows/Floating" instance=ExtResource("44_7o5pa")]
 visible = false
