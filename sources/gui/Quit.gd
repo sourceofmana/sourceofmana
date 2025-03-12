@@ -9,8 +9,12 @@ extends WindowPanel
 func EnableControl(state : bool):
 	super(state)
 	if state:
-		logOutButton.set_visible(FSM.IsGameState())
-		stayButton.grab_focus()
+		if FSM.IsGameState():
+			logOutButton.set_visible(true)
+			logOutButton.grab_focus()
+		else:
+			logOutButton.set_visible(false)
+			quitButton.grab_focus()
 
 #
 func _on_logout_pressed():

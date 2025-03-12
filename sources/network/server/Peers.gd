@@ -3,11 +3,11 @@ class_name Peers
 
 #
 class Peer:
-	var peerRID : int					= NetworkCommons.RidUnknown
-	var accountRID : int				= NetworkCommons.RidUnknown
-	var characterRID : int				= NetworkCommons.RidUnknown
-	var agentRID : int					= NetworkCommons.RidUnknown
-	var rpcDeltas : Dictionary			= {}
+	var peerRID : int								= NetworkCommons.RidUnknown
+	var accountRID : int							= NetworkCommons.RidUnknown
+	var characterRID : int							= NetworkCommons.RidUnknown
+	var agentRID : int								= NetworkCommons.RidUnknown
+	var rpcDeltas : Dictionary[String, int]			= {}
 
 	func _init(rpcID : int):
 		peerRID = rpcID
@@ -29,8 +29,8 @@ class Peer:
 		agentRID = id
 		Network.Server.online_agents_update.emit()
 
-static var peers : Dictionary			= {}
-static var accounts : Dictionary		= {}
+static var peers : Dictionary[int, Peer]			= {}
+static var accounts : Dictionary[int, int]			= {}
 
 # Handling
 static func AddPeer(rpcID : int):

@@ -6,7 +6,7 @@ var id : int							= 0
 var npcs : Array[AIAgent]				= []
 var mobs : Array[AIAgent]				= []
 var players : Array[BaseAgent]			= []
-var drops : Dictionary					= {}
+var drops : Dictionary[int, Drop]		= {}
 var map : WorldMap						= null
 var timers : Node						= Node.new()
 

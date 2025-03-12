@@ -1,7 +1,7 @@
 extends Node
 class_name WorldAgent
 
-static var agents : Dictionary						= {}
+static var agents : Dictionary[int, BaseAgent]		= {}
 static var defaultSpawnLocation : SpawnObject		= SpawnObject.new()
 
 # From Agent getters
@@ -40,7 +40,6 @@ static func AddAgent(agent : BaseAgent):
 static func RemoveAgent(agent : BaseAgent):
 	assert(agent != null, "Agent is null, can't remove it")
 	if agent:
-
 		if agent is AIAgent:
 			var inst : WorldInstance = agent.get_parent()
 			if inst and inst.timers and agent.spawnInfo and agent.spawnInfo.is_persistant:
@@ -49,7 +48,7 @@ static func RemoveAgent(agent : BaseAgent):
 				agent.leader.RemoveFollower(agent)
 
 		PopAgent(agent)
-		agents.erase(agent)
+		agents.erase(agent.get_rid().get_id())
 		agent.queue_free()
 
 static func HasAgent(inst : WorldInstance, agent : BaseAgent):

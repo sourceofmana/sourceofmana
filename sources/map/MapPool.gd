@@ -1,7 +1,7 @@
 extends Node
 
 #
-var pool : Dictionary		= {}
+var pool : Dictionary[String, Node2D]		= {}
 
 #
 func LoadMapClientData(mapName : String) -> Node2D:
@@ -17,18 +17,13 @@ func LoadMapClientData(mapName : String) -> Node2D:
 
 #
 func GetMap(mapName : String) -> Node2D:
-	var mapInstance : Node2D = null 
-	if pool.has(mapName):
-		mapInstance = pool.get(mapName)
-	return mapInstance
+	return pool.get(mapName, null)
 
-func FreeMap(map : String):
-	if map:
-		if pool.get(map) != null:
-			pool[map].queue_free()
-			pool[map] = null
-			var ret : bool = pool.erase(map)
-			assert(ret, "Could not remove map (" + map + ") from the pool")
+func FreeMap(mapName : String):
+	var mapNode : Node2D = GetMap(mapName)
+	if mapNode:
+		mapNode.queue_free()
+		pool.erase(mapName)
 
 #
 func RefreshPool(currentMap : Node2D):

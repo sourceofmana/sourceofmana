@@ -2,11 +2,11 @@ extends Object
 class_name Entities
 
 #
-static var entities : Dictionary				= {}
+static var entities : Dictionary[int, Entity]		= {}
 
 #
 static func Get(ridEntity : int) -> Entity:
-	return entities.get(ridEntity)
+	return entities.get(ridEntity, null)
 
 static func Clear():
 	var playerID : int = -1

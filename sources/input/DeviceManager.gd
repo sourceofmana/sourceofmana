@@ -20,7 +20,7 @@ static var currentDeviceId : int = -1
 static var currentDeviceType : DeviceType = DeviceType.JOYSTICK if LauncherCommons.isMobile else DeviceType.KEYBOARD
 
 static var joyButton : Array = ["A", "B", "X", "Y", "Back", "Guide", "Start", "LSB", "RSB", "L", "R", "UP", "DOWN", "LEFT", "RIGHT", "Misc", "Paddle1", "Paddle2", "Paddle3", "Paddle4", "Touch"]
-static var actionNames : Dictionary = {
+static var actionNames : Dictionary[String, String] = {
 	"ui_select" : "Select",
 	"ui_focus_next" : "Focus Next",
 	"ui_focus_prev" : "Focus Previous",

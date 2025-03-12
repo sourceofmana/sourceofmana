@@ -58,7 +58,7 @@ static func GetFormatedText(value : String, numberAfterComma : int = 0) -> Strin
 	return value
 
 # Dictionary
-static func DicCheckOrAdd(dic : Dictionary, key : Variant, value : Variant):
+static func DicCheckOrAdd(dic : Dictionary[Variant, Variant], key : Variant, value : Variant):
 	if not key in dic:
 		dic[key] = value
 	elif dic[key] == null:

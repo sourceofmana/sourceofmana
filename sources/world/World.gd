@@ -1,7 +1,7 @@
 extends ServiceBase
 
 # Vars
-var areas : Dictionary						= {}
+var areas : Dictionary[String, WorldMap]				= {}
 
 # Getters
 func CanWarp(agent : BaseAgent) -> WarpObject:

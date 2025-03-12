@@ -1,15 +1,15 @@
 extends Object
 class_name DB
 
-static var MapsDB : Dictionary				= {}
-static var MusicsDB : Dictionary			= {}
-static var RacesDB : Dictionary				= {}
-static var HairstylesDB : Dictionary		= {}
-static var PalettesDB : Array[Dictionary]	= []
-static var EntitiesDB : Dictionary			= {}
-static var EmotesDB : Dictionary			= {}
-static var ItemsDB : Dictionary				= {}
-static var SkillsDB : Dictionary			= {}
+static var MapsDB : Dictionary[String, MapData]				= {}
+static var MusicsDB : Dictionary[String, MusicData]			= {}
+static var RacesDB : Dictionary[int, RaceData]				= {}
+static var HairstylesDB : Dictionary[int, TraitData]		= {}
+static var PalettesDB : Array[Dictionary]					= []
+static var EntitiesDB : Dictionary[String, EntityData]		= {}
+static var EmotesDB : Dictionary[int, BaseCell]				= {}
+static var ItemsDB : Dictionary[int, ItemCell]				= {}
+static var SkillsDB : Dictionary[int, SkillCell]			= {}
 
 static var hashDB : Dictionary				= {}
 const UnknownHash : int						= -1
@@ -106,7 +106,7 @@ static func ParseSkillsDB():
 
 	if not result.is_empty():
 		for key in result:
-			var cell : BaseCell = FileSystem.LoadCell(Path.SkillPst + result[key].Path + Path.RscExt)
+			var cell : SkillCell = FileSystem.LoadCell(Path.SkillPst + result[key].Path + Path.RscExt)
 			cell.id = SetCellHash(cell.name)
 			assert(SkillsDB.has(cell.id) == false, "Duplicated cell in SkillsDB")
 			SkillsDB[cell.id] = cell

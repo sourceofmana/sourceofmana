@@ -9,7 +9,7 @@ signal PlayerWarped
 var pool								= FileSystem.LoadSource("map/MapPool.gd")
 var mapNode : Node2D					= null
 var fringeLayer : TileMapLayer			= null
-var drops : Dictionary					= {}
+var drops : Dictionary[int, Sprite2D]	= {}
 
 #
 func RefreshTileMap():
