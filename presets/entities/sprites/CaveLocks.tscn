@@ -161,7 +161,7 @@ offset = Vector2(0, -36)
 [node name="Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Body")
 libraries = {
-"": SubResource("AnimationLibrary_gf7hs")
+&"": SubResource("AnimationLibrary_gf7hs")
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_atsn7")]

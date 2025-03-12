@@ -479,7 +479,7 @@ radius = 96
 [node name="Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Body")
 libraries = {
-"": SubResource("AnimationLibrary_iko4k")
+&"": SubResource("AnimationLibrary_iko4k")
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("3_mg0gu")]

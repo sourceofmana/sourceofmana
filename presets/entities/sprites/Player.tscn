@@ -3576,7 +3576,7 @@ hframes = 5
 [node name="Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Body")
 libraries = {
-"": SubResource("AnimationLibrary_pnwib")
+&"": SubResource("AnimationLibrary_pnwib")
 }
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_mvwfv")]
