@@ -302,7 +302,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="6"]
 resource_name = "IdleDown"
 length = 0.5
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -662,7 +661,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [7]
 }
 tracks/1/type = "value"
@@ -689,7 +688,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [3]
 }
 tracks/1/type = "value"
@@ -716,7 +715,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [6]
 }
 tracks/1/type = "value"
@@ -743,7 +742,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [0]
 }
 tracks/1/type = "value"
@@ -770,7 +769,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [5]
 }
 tracks/1/type = "value"
@@ -797,7 +796,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [8]
 }
 tracks/1/type = "value"
@@ -824,7 +823,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [2]
 }
 tracks/1/type = "value"
@@ -851,7 +850,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [1]
 }
 tracks/1/type = "value"
@@ -907,17 +906,17 @@ _data = {
 material = SubResource("CanvasItemMaterial_pa6s6")
 position = Vector2(0, -8)
 amount = 6
-process_material = SubResource("ParticleProcessMaterial_fyt0m")
 texture = ExtResource("1_uuuri")
+process_material = SubResource("ParticleProcessMaterial_fyt0m")
 
 [node name="Trails" type="GPUParticles2D" parent="."]
 position = Vector2(0, -7)
 emitting = false
 amount = 100
-process_material = SubResource("ParticleProcessMaterial_cyqte")
 texture = ExtResource("4_a6i1u")
 lifetime = 2.0
 explosiveness = 0.03
+process_material = SubResource("ParticleProcessMaterial_cyqte")
 
 [node name="Body" type="Sprite2D" parent="."]
 texture = ExtResource("1_7q1qd")
@@ -929,10 +928,11 @@ frame = 7
 [node name="Animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Body")
 libraries = {
-"": SubResource("AnimationLibrary_iko4k")
+&"": SubResource("AnimationLibrary_iko4k")
 }
 speed_scale = 0.519
 
 [node name="AnimationTree" parent="Animation" instance=ExtResource("2_m3lbd")]
 root_node = NodePath("../../Body")
+callback_mode_discrete = 1
 parameters/Death/BlendSpace2D/blend_position = Vector2(0, -0.904762)
