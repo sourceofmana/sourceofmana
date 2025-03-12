@@ -156,10 +156,14 @@ func SetData():
 		agent.set_radius(data._radius)
 		agent.set_neighbor_distance(data._radius * 2.0)
 		agent.set_avoidance_priority(clampf(data._radius / float(ActorCommons.MaxEntityRadiusSize), 0.0, 1.0))
-		agent.set_max_speed(stat.current.walkSpeed)
 		agent.velocity_computed.connect(self._velocity_computed)
 		add_child.call_deferred(agent)
-		currentWalkSpeed = Vector2(stat.current.walkSpeed, stat.current.walkSpeed)
+		RefreshWalkSpeed()
+
+func RefreshWalkSpeed():
+	if agent:
+		agent.set_max_speed(stat.current.walkSpeed)
+	currentWalkSpeed = Vector2(stat.current.walkSpeed, stat.current.walkSpeed)
 
 #
 func Damage(_caller : BaseAgent):
@@ -208,3 +212,7 @@ func _ready():
 	actionTimer.set_name("ActionTimer")
 	actionTimer.set_one_shot(true)
 	add_child.call_deferred(actionTimer)
+
+func _init(_type : ActorCommons.Type = ActorCommons.Type.NPC, _data : EntityData = null, _nick : String = "", isManaged : bool = false):
+	stat.entity_stats_updated.connect(RefreshWalkSpeed)
+	super._init(_type, _data, _nick, isManaged)

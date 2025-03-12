@@ -1,16 +1,15 @@
 @tool
 extends WindowPanel
 
-@onready var stayButton : Button	= $Margin/VBoxContainer/ButtonChoice/Stay
-@onready var logOutButton : Button	= $Margin/VBoxContainer/ButtonChoice/LogOut
-@onready var quitButton : Button	= $Margin/VBoxContainer/ButtonChoice/Quit
+@onready var stayButton : Button	= $Margin/VBoxContainer/Container/ButtonChoice/Stay
+@onready var logOutButton : Button	= $Margin/VBoxContainer/Container/ButtonChoice/LogOut
+@onready var quitButton : Button	= $Margin/VBoxContainer/Container/ButtonChoice/Quit
 
 #
 func EnableControl(state : bool):
 	super(state)
-
-	if state == true:
-		logOutButton.visible = Network.Client != null
+	if state:
+		logOutButton.set_visible(FSM.IsGameState())
 		stayButton.grab_focus()
 
 #
@@ -25,8 +24,3 @@ func _on_quit_pressed():
 
 func _on_stay_pressed():
 	ToggleControl()
-
-func _on_window_draw():
-	logOutButton.set_visible(FSM.IsGameState())
-	if quitButton:
-		quitButton.grab_focus()

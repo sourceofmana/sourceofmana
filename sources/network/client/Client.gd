@@ -15,9 +15,9 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = NetworkCommons.Ri
 	if entity && entity.get_parent() && entity.interactive:
 		entity.interactive.DisplayEmote.call_deferred(emoteID)
 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : String, spirit : String, currentShape : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastID)
+		Launcher.Map.AddEntity(agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
 
 func RemoveEntity(agentID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:

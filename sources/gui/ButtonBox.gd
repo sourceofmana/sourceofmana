@@ -79,7 +79,7 @@ func _ready():
 	ClearAll()
 
 func _unhandled_input(event : InputEvent):
-	if not visible:
+	if not visible or not Launcher.Action.IsEnabled():
 		return
 
 	if primaryButton and primaryButton.is_visible() and event.is_action("ui_context_validate"):

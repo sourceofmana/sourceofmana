@@ -1,11 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://f2jxqr5e7i5e"]
+[gd_scene load_steps=5 format=3 uid="uid://f2jxqr5e7i5e"]
 
 [ext_resource type="Script" uid="uid://cvstlrlxs5iui" path="res://sources/actor/entity/components/Interactive.gd" id="1_b3bk6"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_wehdi"]
 [ext_resource type="PackedScene" uid="uid://c0wuhrlsdwo8s" path="res://presets/gui/HealthBar.tscn" id="2_5opbf"]
 [ext_resource type="PackedScene" uid="uid://08v0t5i6hvef" path="res://presets/effects/particles/Emote.tscn" id="2_gghi1"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0daf3"]
 
 [node name="Interactions" type="Node2D"]
 z_index = 1
@@ -31,12 +29,14 @@ anchor_bottom = 1.0
 offset_top = -4.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("1_wehdi")
 alignment = 1
 
 [node name="Panel" type="PanelContainer" parent="TopOffset/TopBox"]
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_0daf3")
+theme_type_variation = &"ChatContainer"
 
 [node name="SpeechContainer" type="VBoxContainer" parent="TopOffset/TopBox/Panel"]
 layout_mode = 2

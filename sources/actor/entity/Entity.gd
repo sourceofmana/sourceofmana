@@ -81,7 +81,8 @@ func Target(source : Vector2, interactable : bool = true, nextTarget : bool = fa
 			target.interactive.DisplayTarget(ActorCommons.Target.ALLY)
 		elif target.type == ActorCommons.Type.MONSTER:
 			target.interactive.DisplayTarget(ActorCommons.Target.ENEMY)
-			Network.TriggerSelect(target.agentID)
+		Network.TriggerSelect(target.agentID)
+		target.interactive.DisplayHP()
 
 func JustInteract():
 	if not target or target.state == ActorCommons.State.DEATH:

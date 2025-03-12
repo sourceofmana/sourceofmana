@@ -32,29 +32,37 @@ vertical_alignment = 1
 autowrap_mode = 2
 language = "en_GB"
 
-[node name="ButtonChoice" type="HBoxContainer" parent="Margin/VBoxContainer"]
+[node name="Container" type="MarginContainer" parent="Margin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 3
+
+[node name="ButtonChoice" type="HBoxContainer" parent="Margin/VBoxContainer/Container"]
 layout_mode = 2
 alignment = 2
 
-[node name="Quit" type="Button" parent="Margin/VBoxContainer/ButtonChoice"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Quit"
-
-[node name="LogOut" type="Button" parent="Margin/VBoxContainer/ButtonChoice"]
+[node name="Quit" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice"]
 layout_mode = 2
 size_flags_horizontal = 2
+theme_type_variation = &"LargeButton"
+text = "Quit"
+
+[node name="LogOut" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"LargeButton"
 text = "Log Out"
 
-[node name="Stay" type="Button" parent="Margin/VBoxContainer/ButtonChoice"]
+[node name="Stay" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice"]
 layout_mode = 2
+size_flags_horizontal = 10
+theme_type_variation = &"LargeButton"
 text = "Stay"
 
-[node name="Container" type="MarginContainer" parent="Margin/VBoxContainer"]
-layout_mode = 2
-
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
-[connection signal="draw" from="Margin/VBoxContainer/ButtonChoice" to="." method="_on_window_draw"]
-[connection signal="pressed" from="Margin/VBoxContainer/ButtonChoice/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/ButtonChoice/LogOut" to="." method="_on_logout_pressed"]
-[connection signal="pressed" from="Margin/VBoxContainer/ButtonChoice/Stay" to="." method="_on_stay_pressed"]
+[connection signal="draw" from="Margin/VBoxContainer/Container/ButtonChoice" to="." method="_on_window_draw"]
+[connection signal="pressed" from="Margin/VBoxContainer/Container/ButtonChoice/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/Container/ButtonChoice/LogOut" to="." method="_on_logout_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/Container/ButtonChoice/Stay" to="." method="_on_stay_pressed"]

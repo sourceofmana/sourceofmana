@@ -61,7 +61,7 @@ func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictio
 			err = NetworkCommons.CharacterError.ERR_SLOT_AVAILABLE
 		elif not ActorCommons.CheckTraits(traits) or not ActorCommons.CheckAttributes(attributes):
 			err = NetworkCommons.CharacterError.ERR_MISSING_PARAMS
-		elif not Launcher.SQL.AddCharacter(accountID, charName, traits, attributes):
+		elif not Launcher.SQL.AddCharacter(accountID, charName, ActorCommons.DefaultStats, traits, attributes):
 			err = NetworkCommons.CharacterError.ERR_NAME_AVAILABLE
 		else:
 			var characterID : int = Launcher.SQL.GetCharacterID(accountID, charName)
@@ -124,10 +124,14 @@ func CharacterListing(rpcID : int = NetworkCommons.RidSingleMode):
 	if accountID == NetworkCommons.RidUnknown:
 		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
 	else:
-		for characterID in Launcher.SQL.GetCharacters(accountID):
-			var charInfo : Dictionary = Launcher.SQL.GetCharacterInfo(characterID)
-			var charEquipment : Dictionary = Launcher.SQL.GetEquipment(characterID)
-			Network.CharacterInfo(charInfo, charEquipment, rpcID)
+		var characterIDs : Array[int] = Launcher.SQL.GetCharacters(accountID)
+		if characterIDs.is_empty():
+			err = NetworkCommons.CharacterError.ERR_EMPTY_ACCOUNT
+		else:
+			for characterID in characterIDs:
+				var charInfo : Dictionary = Launcher.SQL.GetCharacterInfo(characterID)
+				var charEquipment : Dictionary = Launcher.SQL.GetEquipment(characterID)
+				Network.CharacterInfo(charInfo, charEquipment, rpcID)
 	Network.CharacterError(err, rpcID)
 
 # Navigation

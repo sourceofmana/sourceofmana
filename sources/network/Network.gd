@@ -74,8 +74,8 @@ func WarpPlayer(mapName : String, rpcID : int = NetworkCommons.RidSingleMode):
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("AddEntity", [agentID, entityType, entityID, nick, velocity, position, orientation, state, skillCastID], rpcID)
+func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : String, spirit : String, currentShape : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("AddEntity", [agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
 func RemoveEntity(agentID : int, rpcID : int = NetworkCommons.RidSingleMode):

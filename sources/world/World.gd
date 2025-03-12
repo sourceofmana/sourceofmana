@@ -59,13 +59,13 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
 				var neighbourRID : int = neighbour.get_rid().get_id()
-				Network.AddEntity(neighbourRID, neighbour.GetEntityType(), neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, agent.rpcRID)
+				Network.AddEntity(neighbourRID, neighbour.GetEntityType(), neighbour.stat.shape, neighbour.stat.spirit, neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, agent.rpcRID)
 				Network.UpdatePublicStats(neighbourRID, neighbour.stat.level, neighbour.stat.health, neighbour.stat.hairstyle, neighbour.stat.haircolor, neighbour.stat.gender, neighbour.stat.race, neighbour.stat.skintone, neighbour.stat.currentShape, agent.rpcRID)
 				if neighbour.inventory:
 					Network.RefreshEquipments(neighbourRID, neighbour.inventory.ExportEquipment(), agent.rpcRID)
 
 		Network.RefreshProgress(agent.progress.skills, agent.progress.quests, agent.progress.bestiary, agent.rpcRID)
-	Network.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
+	Network.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.shape, agent.stat.spirit, agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
 	if agent.inventory:
 		Network.NotifyNeighbours(agent, "RefreshEquipments", [agent.inventory.ExportEquipment()], false)
 

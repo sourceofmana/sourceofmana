@@ -36,6 +36,7 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 			warn = "Another connection happened with the same login."
 		NetworkCommons.AuthError.ERR_AUTH:
 			warn = "Invalid account name or password."
+			passwordTextControl.grab_focus()
 		NetworkCommons.AuthError.ERR_PASSWORD_VALID:
 			warn = "Password should only include alpha-numeric characters and symbols."
 			passwordTextControl.grab_focus()

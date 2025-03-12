@@ -52,7 +52,6 @@ func DisplayTarget(type : ActorCommons.Target):
 		ActorCommons.Target.ENEMY:
 			nameLabel.material = ActorCommons.EnemyTarget
 			DisplaySelection(0.03)
-	DisplayHP()
 
 func DisplayEmote(emoteID : int):
 	assert(emoteFx != null, "No emote particle found, could not display emote")

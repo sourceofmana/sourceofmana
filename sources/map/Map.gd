@@ -76,7 +76,7 @@ func AddChild(child : Node2D):
 		fringeLayer.add_child.call_deferred(child)
 
 # Entities
-func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int):
+func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : String, spirit : String, currentShape : String, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int):
 	if not fringeLayer:
 		return
 
@@ -86,14 +86,18 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, entityID : String,
 
 	if not entity:
 		if nick.is_empty():
-			nick = entityID
-		entity = Instantiate.CreateEntity(entityType, entityID, nick, isLocalPlayer)
+			nick = shape
+		entity = Instantiate.CreateEntity(entityType, currentShape, nick, isLocalPlayer)
 		entity.agentID = agentID
 		if isLocalPlayer:
 			Launcher.Player = entity
 			Launcher.Player.SetLocalPlayer()
 
 	if entity:
+		entity.stat.shape = shape
+		entity.stat.spirit = spirit
+		entity.stat.currentShape = currentShape
+
 		if not isAlreadySpawned:
 			Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned])
 			AddChild(entity)

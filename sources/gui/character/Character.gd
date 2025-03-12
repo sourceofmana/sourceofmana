@@ -41,6 +41,8 @@ func FillWarningLabel(err : NetworkCommons.CharacterError):
 			warn = "Name should should only include alpha-numeric characters and symbols."
 		NetworkCommons.CharacterError.ERR_NAME_SIZE:
 			warn = "Name length should be inbetween %d and %d character long." % [NetworkCommons.PlayerNameMinSize, NetworkCommons.PlayerNameMaxSize]
+		NetworkCommons.CharacterError.ERR_EMPTY_ACCOUNT:
+			EnableCharacterCreator(true)
 		_:
 			warn = "Unknown character issue (Error %d).\nPlease contact us via our [url=%s][color=#%s]Discord server[/color][/url].\n" % [err, LauncherCommons.SocialLink, UICommons.DarkTextColor]
 
