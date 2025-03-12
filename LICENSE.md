@@ -90,6 +90,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/gui/button/button_hover.png [Reid]
 ./graphics/gui/button/button_pressed.png [Reid]
 ./graphics/gui/button.png [hal9000]
+./graphics/gui/chat.png [Reid]
 ./graphics/gui/checkbox/cb_disabled.png [Reid]
 ./graphics/gui/checkbox/cb_enabled.png [Reid]
 ./graphics/gui/checkbox/cb_lock_disabled.png [Reid]

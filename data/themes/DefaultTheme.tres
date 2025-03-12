@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=71 format=3 uid="uid://dhb6h35g1bk0x"]
+[gd_resource type="Theme" load_steps=76 format=3 uid="uid://dhb6h35g1bk0x"]
 
 [ext_resource type="Texture2D" uid="uid://c8dd1hfs2ws34" path="res://data/graphics/gui/tab/tab_fg.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://cw3cy5h2gk8qa" path="res://data/graphics/gui/window/window_bg_soft.png" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b5o4sy2gb7thr" path="res://data/graphics/gui/tab/tab_bg.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://djwvdhceu4dlg" path="res://data/graphics/gui/tab/tab_disabled.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://chsp33wllcy8d" path="res://data/graphics/gui/button/button.png" id="5_fw406"]
+[ext_resource type="Texture2D" uid="uid://dbdgyis3h8wnx" path="res://data/graphics/gui/chat.png" id="5_u08yo"]
 [ext_resource type="Texture2D" uid="uid://bwrw6ehlrqkjm" path="res://data/graphics/gui/checkbox/cb_compact_enabled.png" id="6_ffxkw"]
 [ext_resource type="Texture2D" uid="uid://da6j85rw7nqdq" path="res://data/graphics/gui/checkbox/cb_small_enabled.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://cmtn5fwyfajkm" path="res://data/graphics/gui/checkbox/cb_small_lock_enabled.png" id="8"]
@@ -16,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://kqorkv70t0yi" path="res://data/graphics/gui/window/close.png" id="11_ilveh"]
 [ext_resource type="Texture2D" uid="uid://ds7o2y47g3f1l" path="res://data/graphics/gui/window/window_bg_title_full.png" id="11_ue8tk"]
 [ext_resource type="Texture2D" uid="uid://ds361htqsjrmu" path="res://data/graphics/gui/checkbox/cb_small_lock_disabled.png" id="13"]
+[ext_resource type="Texture2D" uid="uid://cesdqicc7sxgk" path="res://data/graphics/gui/button/button_pressed.png" id="13_mn5yk"]
 [ext_resource type="Texture2D" uid="uid://daq6gf2m7eldb" path="res://data/graphics/gui/checkbox/cb_small_disabled.png" id="14"]
 [ext_resource type="Texture2D" uid="uid://db5wlgbj5a5mk" path="res://data/graphics/gui/panelsideleft.png" id="14_ydunl"]
 [ext_resource type="Texture2D" uid="uid://cwb3pymvkf25d" path="res://data/graphics/gui/panelsideright.png" id="15_a7lxq"]
@@ -90,6 +92,17 @@ texture_margin_top = 2.0
 texture_margin_right = 11.0
 texture_margin_bottom = 3.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mn5yk"]
+content_margin_left = 0.0
+content_margin_top = 3.0
+content_margin_right = 0.0
+content_margin_bottom = 3.0
+texture = ExtResource("5_u08yo")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lpei3"]
 content_margin_left = 6.0
 content_margin_top = 4.0
@@ -135,7 +148,29 @@ texture_margin_right = 5.0
 texture_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ad0ai"]
-texture = ExtResource("2")
+texture = ExtResource("3")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 6.0
+texture_margin_bottom = 5.0
+expand_margin_left = 10.0
+expand_margin_top = 5.0
+expand_margin_right = 10.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u08yo"]
+texture = ExtResource("16")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 6.0
+texture_margin_bottom = 5.0
+expand_margin_left = 10.0
+expand_margin_top = 5.0
+expand_margin_right = 10.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ceaab"]
+texture = ExtResource("13_mn5yk")
 texture_margin_left = 5.0
 texture_margin_top = 4.0
 texture_margin_right = 6.0
@@ -450,6 +485,8 @@ Button/styles/pressed = SubResource("StyleBoxTexture_w7io8")
 ButtonTip/base_type = &"Button"
 ButtonTip/colors/font_color = Color(1, 1, 0.866667, 1)
 ButtonTip/styles/normal = SubResource("StyleBoxTexture_l2tym")
+ChatContainer/base_type = &"PanelContainer"
+ChatContainer/styles/panel = SubResource("StyleBoxTexture_mn5yk")
 CheckButton/icons/checked = ExtResource("7")
 CheckButton/icons/checked_disabled = ExtResource("8")
 CheckButton/icons/checked_disabled_mirrored = ExtResource("13")
@@ -471,10 +508,10 @@ KeyTip/styles/normal = SubResource("StyleBoxTexture_itdwx")
 Label/colors/font_color = Color(0.933333, 0.847059, 0.631373, 1)
 LargeButton/base_type = &"Button"
 LargeButton/styles/disabled = SubResource("StyleBoxTexture_ad0ai")
-LargeButton/styles/focus = SubResource("StyleBoxTexture_ad0ai")
-LargeButton/styles/hover = SubResource("StyleBoxTexture_ad0ai")
+LargeButton/styles/focus = SubResource("StyleBoxTexture_u08yo")
+LargeButton/styles/hover = SubResource("StyleBoxTexture_u08yo")
 LargeButton/styles/normal = SubResource("StyleBoxTexture_ad0ai")
-LargeButton/styles/pressed = SubResource("StyleBoxTexture_ad0ai")
+LargeButton/styles/pressed = SubResource("StyleBoxTexture_ceaab")
 LineEdit/colors/clear_button_color_pressed = Color(0.933, 0.847, 0.631, 1)
 LineEdit/colors/cursor_color = Color(0.933, 0.847, 0.631, 1)
 LineEdit/colors/font_color = Color(0.933, 0.847, 0.631, 1)
