@@ -245,22 +245,25 @@ func ConnectServer():
 func DisconnectServer():
 	Launcher.Mode(true, true)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
-	AuthError(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
 	Network.uniqueID = NetworkCommons.RidDefault
+
+func ConnectionFailed():
+	DisconnectServer()
+	AuthError(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
 
 #
 func _init():
 	if not Launcher.Root.multiplayer.connected_to_server.is_connected(ConnectServer):
 		Launcher.Root.multiplayer.connected_to_server.connect(ConnectServer)
-	if not Launcher.Root.multiplayer.connection_failed.is_connected(DisconnectServer):
-		Launcher.Root.multiplayer.connection_failed.connect(DisconnectServer)
+	if not Launcher.Root.multiplayer.connection_failed.is_connected(ConnectionFailed):
+		Launcher.Root.multiplayer.connection_failed.connect(ConnectionFailed)
 	if not Launcher.Root.multiplayer.server_disconnected.is_connected(DisconnectServer):
 		Launcher.Root.multiplayer.server_disconnected.connect(DisconnectServer)
 
 func Destroy():
 	if Launcher.Root.multiplayer.connected_to_server.is_connected(ConnectServer):
 		Launcher.Root.multiplayer.connected_to_server.disconnect(ConnectServer)
-	if Launcher.Root.multiplayer.connection_failed.is_connected(DisconnectServer):
-		Launcher.Root.multiplayer.connection_failed.disconnect(DisconnectServer)
+	if Launcher.Root.multiplayer.connection_failed.is_connected(ConnectionFailed):
+		Launcher.Root.multiplayer.connection_failed.disconnect(ConnectionFailed)
 	if Launcher.Root.multiplayer.server_disconnected.is_connected(DisconnectServer):
 		Launcher.Root.multiplayer.server_disconnected.disconnect(DisconnectServer)
