@@ -2,16 +2,16 @@ extends Object
 class_name ActorProgress
 
 #
-var bestiary : Dictionary			= {}
-var quests : Dictionary				= {}
-var skillProbas : Dictionary		= {}
-var skills : Dictionary				= {}
+var bestiary : Dictionary[int, int]			= {}
+var quests : Dictionary[int, int]			= {}
+var skillProbas : Dictionary[int, float]	= {}
+var skills : Dictionary[int, int]			= {}
 
-var actor : Actor				= null
+var actor : Actor							= null
 
-var questMutex : Mutex				= null
-var bestiaryMutex : Mutex			= null
-var probaSum : float				= 0.0
+var questMutex : Mutex						= null
+var bestiaryMutex : Mutex					= null
+var probaSum : float						= 0.0
 
 # Quest progress
 func SetQuest(questID : int, state : int):
@@ -42,7 +42,7 @@ func AddBestiary(entityID : int, killedCount : int = 1):
 	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
 		Network.UpdateBestiary(entityID, totalCount, actor.rpcRID)
 
-func GetBestiary(monsterID : String) -> int:
+func GetBestiary(monsterID : int) -> int:
 	var count : int = 0
 	if monsterID in bestiary:
 		bestiaryMutex.lock()

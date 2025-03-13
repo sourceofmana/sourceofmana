@@ -41,8 +41,8 @@ func IsTriggering() -> bool:
 	return ActorCommons.IsTriggering(npc)
 
 # Monster
-func Spawn(monsterName : String, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
-	return NpcCommons.Spawn(npc, monsterName, count, position, spawnRadius)
+func Spawn(mobID : int, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
+	return NpcCommons.Spawn(npc, mobID, count, position, spawnRadius)
 
 func MonsterCount():
 	var count : int = 0

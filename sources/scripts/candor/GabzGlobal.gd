@@ -79,7 +79,7 @@ func SpawnMonsters():
 			if mobPoint > 0 and mobPoint <= remainingPoints:
 				var spawnAmount : int = randi_range(1, int(remainingPoints / floor(mobPoint)))
 				remainingPoints -= mobPoint * spawnAmount
-				Spawn(mob._name, spawnAmount, spawnCenter, spawnRadius)
+				Spawn(mob._id, spawnAmount, spawnCenter, spawnRadius)
 
 func CheckWave():
 	if not IsTriggering():

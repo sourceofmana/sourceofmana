@@ -191,7 +191,7 @@ func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("TriggerMorph", [], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func Morphed(agentID : int, morphID : String, notifyMorphing : bool, rpcID : int = NetworkCommons.RidSingleMode):
+func Morphed(agentID : int, morphID : int, notifyMorphing : bool, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("Morphed", [agentID, morphID, notifyMorphing], rpcID)
 
 # Stats

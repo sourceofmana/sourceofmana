@@ -78,7 +78,7 @@ static func TryCloseContext(pc : BaseAgent):
 		pc.ClearScript()
 
 # Commands
-static func Spawn(caller : BaseAgent, monsterName : String, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
+static func Spawn(caller : BaseAgent, mobID : int, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
 	var agents : Array[MonsterAgent] = []
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(caller)
 	if inst and inst.map:
@@ -86,7 +86,7 @@ static func Spawn(caller : BaseAgent, monsterName : String, count : int = 1, pos
 			var spawnObject : SpawnObject = SpawnObject.new()
 			spawnObject.map					= inst.map
 			spawnObject.type				= "Monster"
-			spawnObject.name				= monsterName
+			spawnObject.id					= mobID
 			spawnObject.count				= count
 			if position == Vector2.ZERO:
 				spawnObject.spawn_position	= WorldNavigation.GetRandomPosition(inst.map)

@@ -13,10 +13,10 @@ class_name EntityData
 @export var _behaviour : int					= AICommons.Behaviour.NEUTRAL
 @export var _stats : Dictionary					= ActorCommons.DefaultStats.duplicate()
 @export var _skillSet : Array[int]				= []
-@export var _skillProba : Dictionary			= {}
+@export var _skillProba : Dictionary[int, float]= {}
 @export var _drops : Array[int]					= []
-@export var _dropsProba : Dictionary			= {}
-@export var _spawns : Dictionary				= {}
+@export var _dropsProba : Dictionary[int, float]= {}
+@export var _spawns : Dictionary[int, int]		= {}
 
 const hashedStats : PackedStringArray			= ["race", "skintone", "hairstyle", "haircolor"]
 
@@ -75,6 +75,6 @@ static func Create(result : Dictionary) -> EntityData:
 	if "Spawns" in result:
 		for entityName in result.Spawns:
 			var entityID : int = entityName.hash()
-			entity._spawns[entityID] = result.Spawns[entityName]
+			entity._spawns[entityID] = int(result.Spawns[entityName])
 
 	return entity

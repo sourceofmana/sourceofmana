@@ -203,7 +203,7 @@ static func ApplySpawnerBehaviour(agent : AIAgent) -> bool:
 			var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 			if instance:
 				for mob in instance.mobs:
-					if mob.leader == null and mob.aiBehaviour & Behaviour.FOLLOWER and mob.nick == spawn and mob.spawnInfo.is_persistant == false:
+					if mob.leader == null and mob.aiBehaviour & Behaviour.FOLLOWER and mob.data._id == spawn and mob.spawnInfo.is_persistant == false:
 						agent.AddFollower(mob)
 						toSpawn -= 1
 					if toSpawn == 0:

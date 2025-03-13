@@ -70,7 +70,7 @@ func Casted(agentID : int, skillID : int, cooldown : float, _rpcID : int = Netwo
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplaySkill.call_deferred(entity, skillID, cooldown)
 
-func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
+func Morphed(ridAgent : int, morphID : int, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	var entity : Entity = Entities.Get(ridAgent)
 	if entity:
 		var morphData : EntityData = DB.EntitiesDB.get(morphID, null)

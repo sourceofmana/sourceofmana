@@ -16,8 +16,8 @@ var sprites : Array[Sprite2D]				= []
 var previousOrientation : Vector2			= Vector2.ZERO
 var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
 
-var blendSpacePaths : Dictionary			= {}
-var timeScalePaths : Dictionary				= {}
+var blendSpacePaths : Dictionary[int, String]	= {}
+var timeScalePaths : Dictionary[int, String]	= {}
 
 var skillCastID : int						= DB.UnknownHash
 var attackAnimLength : float				= 1.0

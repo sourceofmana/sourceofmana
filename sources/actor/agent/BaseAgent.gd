@@ -10,7 +10,7 @@ var entityRadius : int					= 0
 
 var actionTimer : Timer					= null
 var regenTimer : Timer					= null
-var cooldownTimers : Dictionary			= {}
+var cooldownTimers : Dictionary[int, Timer]	= {}
 
 var hasCurrentGoal : bool				= false
 var isRelativeMode : bool				= false
