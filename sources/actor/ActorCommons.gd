@@ -315,11 +315,11 @@ const CharacterScreenLocations : PackedVector2Array = [
 ]
 
 # New player
-const DefaultTraits : Dictionary = {
-	"shape": "Default",
-	"spirit": "Piou"
+static var DefaultTraits : Dictionary = {
+	"shape": DB.PlayerHash,
+	"spirit": "Piou".hash()
 }
-const DefaultAttributes : Dictionary = {
+static var DefaultAttributes : Dictionary = {
 	"strength": 10,
 	"vitality": 3,
 	"agility": 0,

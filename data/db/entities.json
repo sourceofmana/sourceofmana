@@ -1,6 +1,6 @@
 {
 	"0": {
-		"Name": "Default",
+		"Name": "Player",
 		"SpritePreset": "Player",
 		"Behaviour": ["None"],
 		"Collision": "Medium",

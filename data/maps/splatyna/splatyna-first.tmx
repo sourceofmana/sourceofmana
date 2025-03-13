@@ -450,7 +450,6 @@
   <object id="30" name="Marvin" type="Spawn" x="1982" y="1353" width="32" height="32">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Marvin"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>

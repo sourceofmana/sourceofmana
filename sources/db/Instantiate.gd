@@ -2,17 +2,7 @@ extends Node
 class_name Instantiate
 
 # Entity
-static func FindEntityReference(entityID : String) -> EntityData:
-	var ref : EntityData = null
-	for entityDB in DB.EntitiesDB:
-		if entityDB == entityID || DB.EntitiesDB[entityDB]._name == entityID:
-			ref = DB.EntitiesDB[entityDB]
-			break
-	return ref
-
-static func CreateEntity(entityType : ActorCommons.Type, entityID : String, nick : String = "", isManaged : bool = false) -> Entity:
-	var data : EntityData = Instantiate.FindEntityReference(entityID)
-	assert(data != null, "Could not create the actor: %s" % entityID)
+static func CreateEntity(entityType : ActorCommons.Type, data : EntityData, nick : String = "", isManaged : bool = false) -> Entity:
 	if not data:
 		return null
 
@@ -25,18 +15,21 @@ static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = 
 	if spawn == null or data == null:
 		return null
 
+	if nick.is_empty():
+		nick = data._name
+
 	var actor : BaseAgent = null
 	match spawn.type:
 		"Npc":
-			actor = NpcAgent.new(ActorCommons.Type.NPC, data, spawn.name if nick.is_empty() else nick, true)
+			actor = NpcAgent.new(ActorCommons.Type.NPC, data, nick, true)
 			actor.spawnInfo = spawn
 			actor.playerScriptPath = spawn.player_script
 			actor.ownScriptPath = spawn.own_script
 		"Monster":
-			actor = MonsterAgent.new(ActorCommons.Type.MONSTER, data, spawn.name if nick.is_empty() else nick, true)
+			actor = MonsterAgent.new(ActorCommons.Type.MONSTER, data, nick, true)
 			actor.spawnInfo = spawn
 		"Player":
-			actor = PlayerAgent.new(ActorCommons.Type.PLAYER, data, spawn.name if nick.is_empty() else nick, true)
+			actor = PlayerAgent.new(ActorCommons.Type.PLAYER, data, nick, true)
 		_: assert(false, "Trying to create an agent with a wrong type: " + spawn.type)
 	return actor
 

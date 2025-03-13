@@ -15,7 +15,7 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = NetworkCommons.Ri
 	if entity && entity.get_parent() && entity.interactive:
 		entity.interactive.DisplayEmote.call_deferred(emoteID)
 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : String, spirit : String, currentShape : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.AddEntity(agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
 
@@ -71,14 +71,14 @@ func Casted(agentID : int, skillID : int, cooldown : float, _rpcID : int = Netwo
 		entity.interactive.DisplaySkill.call_deferred(entity, skillID, cooldown)
 
 func Morphed(ridAgent : int, morphID : String, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Map:
-		var entity : Entity = Entities.Get(ridAgent)
-		if entity:
-			var morphData : EntityData = Instantiate.FindEntityReference(morphID)
+	var entity : Entity = Entities.Get(ridAgent)
+	if entity:
+		var morphData : EntityData = DB.EntitiesDB.get(morphID, null)
+		if morphData:
 			entity.stat.Morph(morphData)
 			entity.SetVisual(morphData, morphed)
 
-func UpdatePrivateStats(ridAgent : int, experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : String, spirit : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdatePrivateStats(ridAgent : int, experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
 		if entity and entity.stat:
@@ -92,7 +92,7 @@ func UpdatePrivateStats(ridAgent : int, experience : int, gp : int, mana : int, 
 			entity.stat.spirit			= spirit
 			entity.stat.RefreshVitalStats()
 
-func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
 		if entity and entity.stat:

@@ -214,14 +214,14 @@ func TriggerCast(targetID : int, skillID : int, rpcID : int = NetworkCommons.Rid
 
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = Peers.GetAgent(rpcID)
-	if player:
-		if player.stat.spirit.length() == 0:
-			return
-		var map : Object = WorldAgent.GetMapFromAgent(player)
-		if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
-			return
-
-		player.Morph(true)
+	if not player:
+		return
+	if player.stat.spirit == DB.UnknownHash:
+		return
+	var map : Object = WorldAgent.GetMapFromAgent(player)
+	if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
+		return
+	player.Morph(true)
 
 func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var target : BaseAgent = WorldAgent.GetAgent(targetID)

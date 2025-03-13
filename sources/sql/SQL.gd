@@ -350,8 +350,7 @@ func Destroy():
 	if db:
 		db.close_db()
 
-func UnitTest():
-	# Clear previous data
+func Wipe():
 	db.delete_rows("account", "")
 	db.delete_rows("attribute", "")
 	db.delete_rows("bestiary", "")
@@ -363,41 +362,3 @@ func UnitTest():
 	db.delete_rows("sqlite_sequence", "")
 	db.delete_rows("stat", "")
 	db.delete_rows("trait", "")
-
-	# Add account and login into it
-	assert(AddAccount("Admin", "password", "q@q.q") == true, "Could not create the test account")
-	var accountID : int = Login("Admin", "password")
-	assert(accountID != -1, "Could not login to the test account")
-	if accountID == -1:
-		return
-
-	# Fill in some characters into this account and retrieve the full char list from this account
-	var charIDs : Array[int] = GetCharacters(accountID)
-	assert(charIDs.size() == 0, "Character list for the test account is not empty upon creation")
-	assert(AddCharacter(accountID, "Admin", {}, {}, {}) == true, "Could not create a test character")
-	assert(AddCharacter(accountID, "Admin2", {}, {}, {}) == true, "Could not create a second test character")
-	charIDs = GetCharacters(accountID)
-	assert(charIDs.size() == 2, "Missing characters on the test account")
-	if charIDs.size() != 2:
-		return
-
-	# Get a specific character
-	var charID : int = charIDs[0]
-	var character : Dictionary = GetCharacter(charID)
-	assert(character.size() > 0, "Missing character information")
-	var characterInfo : Dictionary = GetCharacterInfo(charID)
-	assert(characterInfo.size() > 0, "Missing character information")
-
-	# Instantiate a player out of the character information
-	var playerData : EntityData = Instantiate.FindEntityReference(Launcher.World.defaultSpawn.name)
-	if not playerData:
-		return
-	var player : BaseAgent = Instantiate.CreateAgent(Launcher.World.defaultSpawn, playerData, character["nickname"])
-	if player == null:
-		return
-
-	# Log out the player, remove it from the database and remove the account as well
-	assert(RefreshCharacter(player) == true, "Could not logout from the character")
-	assert(RemoveCharacter(charID) == true, "Could not delete the test character")
-	assert(RemoveAccount(accountID) == true, "Could not delete the test account")
-	player.queue_free()

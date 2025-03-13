@@ -172,11 +172,11 @@ func Damage(_caller : BaseAgent):
 func Interact(_caller : BaseAgent):
 	pass
 
-func GetNextShapeID() -> String:
+func GetNextShapeID() -> int:
 	return stat.shape if stat.IsMorph() else stat.spirit
 
-func GetNextPortShapeID() -> String:
-	return stat.spirit if stat.IsSailing() else "Ship"
+func GetNextPortShapeID() -> int:
+	return stat.spirit if stat.IsSailing() else DB.ShipHash
 
 func Killed():
 	agent_killed.emit(self)

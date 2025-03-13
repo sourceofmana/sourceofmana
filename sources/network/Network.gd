@@ -74,7 +74,7 @@ func WarpPlayer(mapName : String, rpcID : int = NetworkCommons.RidSingleMode):
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : String, spirit : String, currentShape : String, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, rpcID : int = NetworkCommons.RidSingleMode):
+func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("AddEntity", [agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
@@ -196,11 +196,11 @@ func Morphed(agentID : int, morphID : String, notifyMorphing : bool, rpcID : int
 
 # Stats
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdatePublicStats(agentID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : String, rpcID : int = NetworkCommons.RidSingleMode):
+func UpdatePublicStats(agentID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("UpdatePublicStats", [agentID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdatePrivateStats(agentID : int, experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : String, spirit : String, rpcID : int = NetworkCommons.RidSingleMode):
+func UpdatePrivateStats(agentID : int, experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("UpdatePrivateStats", [agentID, experience, gp, mana, stamina, karma, weight, shape, spirit], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)

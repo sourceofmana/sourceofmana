@@ -31,8 +31,8 @@ CREATE TABLE trait (
     race                 INTEGER,
     skintone             INTEGER,
     gender               INTEGER,
-    shape                TEXT,
-    spirit               TEXT,
+    shape                INTEGER,
+    spirit               INTEGER,
     FOREIGN KEY (char_id) REFERENCES character(char_id)
 );
 

@@ -570,14 +570,12 @@
   <object id="36" name="Splatyna" type="Spawn" x="1685" y="1475" width="96" height="128">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Splatyna"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="41" name="Old Chest" type="Spawn" x="1968" y="1340" width="23" height="21">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Old Chest"/>
     <property name="own_script" value="splatyna/ChestGlobal.gd"/>
     <property name="player_script" value="splatyna/Chest.gd"/>
     <property name="type" value="Npc"/>

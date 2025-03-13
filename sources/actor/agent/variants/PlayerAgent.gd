@@ -29,7 +29,7 @@ static func GetSpawnFromData(charData : Dictionary) -> SpawnObject:
 		spawnLocation.map				= Launcher.World.GetMap(destination.map)
 		spawnLocation.spawn_position	= destination.pos
 		spawnLocation.type				= "Player"
-		spawnLocation.name				= "Default"
+		spawnLocation.id				= DB.PlayerHash
 		return spawnLocation
 	return WorldAgent.defaultSpawnLocation
 
@@ -109,15 +109,14 @@ func UpdateLastStats():
 		lastStat.endurance			= stat.endurance
 		lastStat.concentration		= stat.concentration
 
-func Morph(notifyMorphing : bool, morphID : String = ""):
-	if morphID.length() == 0:
+func Morph(notifyMorphing : bool, morphID : int = DB.UnknownHash):
+	if morphID == DB.UnknownHash:
 		morphID = GetNextShapeID()
-		if morphID.length() == 0:
-			return
 
-	var morphData : EntityData = Instantiate.FindEntityReference(morphID)
-	stat.Morph(morphData)
-	Network.NotifyNeighbours(self, "Morphed", [morphID, notifyMorphing])
+	var morphData : EntityData = DB.EntitiesDB.get(morphID, null)
+	if morphData:
+		stat.Morph(morphData)
+		Network.NotifyNeighbours(self, "Morphed", [morphID, notifyMorphing])
 
 #
 func _physics_process(delta):

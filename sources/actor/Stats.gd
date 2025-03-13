@@ -15,9 +15,9 @@ var haircolor : int						= DB.UnknownHash
 var gender : int						= ActorCommons.Gender.MALE
 var race : int							= DB.UnknownHash
 var skintone : int						= DB.UnknownHash
-var shape : String						= ""
-var spirit : String						= ""
-var currentShape : String				= ""
+var shape : int							= DB.UnknownHash
+var spirit : int						= DB.UnknownHash
+var currentShape : int					= DB.UnknownHash
 var baseExp : int						= 1
 # Attributes
 var strength : int						= 0
@@ -105,7 +105,7 @@ func Init(actorNode : Actor, data : EntityData):
 	actor = actorNode
 
 	var stats : Dictionary = data._stats
-	shape	= data._name
+	shape	= data._id
 	currentShape = shape
 
 	SetStats(stats)
@@ -128,14 +128,14 @@ func FillRandomAttributes():
 		SetStats(attributes)
 
 func Morph(data : EntityData):
-	currentShape = data._name
+	currentShape = data._id
 	SetMorphStats(data._stats)
 
 func IsMorph() -> bool:
 	return currentShape != shape
 
 func IsSailing() -> bool:
-	return currentShape == "Ship"
+	return currentShape == DB.ShipHash
 
 func AddAttribute(attribute : ActorCommons.Attribute):
 	if Formula.GetMaxAttributePoints(level) - Formula.GetAssignedAttributePoints(self) > 0:

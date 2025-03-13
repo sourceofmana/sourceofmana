@@ -3,7 +3,7 @@ extends Object
 class_name SpawnObject
 
 @export var count : int 				= 0
-@export var name : String				= ""
+@export var id : int					= DB.UnknownHash
 @export var nick : String				= ""
 @export var type : String				= ""
 @export var player_script : String		= ""

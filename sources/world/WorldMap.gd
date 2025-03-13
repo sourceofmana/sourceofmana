@@ -42,7 +42,7 @@ func LoadMapData():
 				if spawn:
 					var spawnObject = SpawnObject.new()
 					spawnObject.count = spawn[0]
-					spawnObject.name = spawn[1]
+					spawnObject.id = spawn[1]
 					spawnObject.type = spawn[2]
 					spawnObject.spawn_position = spawn[3]
 					spawnObject.spawn_offset = spawn[4]

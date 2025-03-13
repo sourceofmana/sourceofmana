@@ -6,13 +6,15 @@ static var MusicsDB : Dictionary[String, MusicData]			= {}
 static var RacesDB : Dictionary[int, RaceData]				= {}
 static var HairstylesDB : Dictionary[int, TraitData]		= {}
 static var PalettesDB : Array[Dictionary]					= []
-static var EntitiesDB : Dictionary[String, EntityData]		= {}
+static var EntitiesDB : Dictionary[int, EntityData]		= {}
 static var EmotesDB : Dictionary[int, BaseCell]				= {}
 static var ItemsDB : Dictionary[int, ItemCell]				= {}
 static var SkillsDB : Dictionary[int, SkillCell]			= {}
 
 static var hashDB : Dictionary				= {}
 const UnknownHash : int						= -1
+static var PlayerHash : int					= "Player".hash()
+static var ShipHash : int					= "Ship".hash()
 
 enum Palette
 {
@@ -79,7 +81,8 @@ static func ParseEntitiesDB():
 
 	if not result.is_empty():
 		for key in result:
-			EntitiesDB[key] = EntityData.Create(key, result[key])
+			var entity : EntityData = EntityData.Create(result[key])
+			EntitiesDB[entity._id] = entity
 
 static func ParseEmotesDB():
 	var result = FileSystem.LoadDB("emotes.json")

@@ -83,7 +83,12 @@ func AddCharacter(info : Dictionary, equipment : Dictionary, slotID : int = Acto
 		assert(false, "No free available placement")
 		return
 
-	var entity : Entity = Instantiate.CreateEntity(ActorCommons.Type.PLAYER, "Default", info["nickname"], false)
+	var entityData : EntityData = DB.EntitiesDB.get(DB.PlayerHash, null)
+	if not entityData:
+		assert(false, "Could not retrieve the default entity database entry")
+		return
+
+	var entity : Entity = Instantiate.CreateEntity(ActorCommons.Type.PLAYER, entityData, info["nickname"], false)
 	if not entity:
 		assert(false, "Could not create character preview")
 		return

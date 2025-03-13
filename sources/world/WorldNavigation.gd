@@ -65,5 +65,5 @@ static func GetSpawnPosition(map : WorldMap, spawn : SpawnObject, hasNavigation 
 	if position == Vector2i.ZERO:
 		position = WorldNavigation.GetRandomPosition(map)
 
-	assert(position != Vector2i.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.name)
+	assert(position != Vector2i.ZERO, "Could not spawn the agent %s, no walkable position found" % spawn.id)
 	return position

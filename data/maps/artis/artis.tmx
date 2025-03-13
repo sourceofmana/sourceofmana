@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="250" height="175" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="125">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="250" height="175" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="125">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Adventure Begins"/>
@@ -1701,7 +1701,6 @@
   <object id="85" name="Piou" type="spawn" x="-36" y="-3">
    <properties>
     <property name="count" type="int" value="2"/>
-    <property name="name" value="Piou"/>
     <property name="respawn_delay" type="float" value="60"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1709,7 +1708,6 @@
   <object id="87" name="Piousse" type="spawn" x="-30" y="31">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Piousse"/>
     <property name="respawn_delay" type="float" value="150"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1717,7 +1715,6 @@
   <object id="88" name="Fluffy" type="spawn" x="5216" y="608" width="768" height="992">
    <properties>
     <property name="count" type="int" value="6"/>
-    <property name="name" value="Fluffy"/>
     <property name="respawn_delay" type="float" value="100"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1725,7 +1722,6 @@
   <object id="89" name="Fluffy" type="spawn" x="6304" y="1376" width="192" height="352">
    <properties>
     <property name="count" type="int" value="4"/>
-    <property name="name" value="Fluffy"/>
     <property name="respawn_delay" type="float" value="100"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1733,7 +1729,6 @@
   <object id="90" name="Piou" type="spawn" x="5216" y="608" width="768" height="992">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Piou"/>
     <property name="respawn_delay" type="float" value="60"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1741,7 +1736,6 @@
   <object id="91" name="Pikpik" type="spawn" x="1088" y="1856" width="128" height="320">
    <properties>
     <property name="count" type="int" value="3"/>
-    <property name="name" value="Pikpik"/>
     <property name="respawn_delay" type="float" value="20"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1749,7 +1743,6 @@
   <object id="92" name="Pikpik" type="spawn" x="736" y="3008" width="224" height="160">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Pikpik"/>
     <property name="respawn_delay" type="float" value="20"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1757,7 +1750,6 @@
   <object id="93" name="Pikpik" type="spawn" x="1216" y="4352" width="288" height="128">
    <properties>
     <property name="count" type="int" value="2"/>
-    <property name="name" value="Pikpik"/>
     <property name="respawn_delay" type="float" value="20"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1765,7 +1757,6 @@
   <object id="94" name="Coconut Tree" type="spawn" x="1440" y="4352">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Coconut Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1773,7 +1764,6 @@
   <object id="95" name="Coconut Tree" type="spawn" x="2240" y="4352">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Coconut Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1781,7 +1771,6 @@
   <object id="96" name="Manana Tree" type="spawn" x="1184" y="4032">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1789,7 +1778,6 @@
   <object id="97" name="Manana Tree" type="spawn" x="1088" y="4160">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1797,7 +1785,6 @@
   <object id="98" name="Manana Tree" type="spawn" x="1312" y="4128">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1805,7 +1792,6 @@
   <object id="99" name="Manana Tree" type="spawn" x="1152" y="2464">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1813,7 +1799,6 @@
   <object id="100" name="Manana Tree" type="spawn" x="1184" y="2528">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1821,7 +1806,6 @@
   <object id="101" name="Manana Tree" type="spawn" x="1248" y="2336">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1829,7 +1813,6 @@
   <object id="102" name="Manana Tree" type="spawn" x="1376" y="2240">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1837,7 +1820,6 @@
   <object id="103" name="Manana Tree" type="spawn" x="1536" y="2272">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1845,7 +1827,6 @@
   <object id="104" name="Manana Tree" type="spawn" x="1280" y="2144">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1853,7 +1834,6 @@
   <object id="105" name="Manana Tree" type="spawn" x="1472" y="2080">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1861,7 +1841,6 @@
   <object id="106" name="Manana Tree" type="spawn" x="4864" y="832">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1869,7 +1848,6 @@
   <object id="107" name="Manana Tree" type="spawn" x="4864" y="1024">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1877,7 +1855,6 @@
   <object id="108" name="Manana Tree" type="spawn" x="4960" y="1184">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1885,7 +1862,6 @@
   <object id="109" name="Manana Tree" type="spawn" x="5056" y="928">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1893,7 +1869,6 @@
   <object id="110" name="Manana Tree" type="spawn" x="6496" y="1632">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1901,7 +1876,6 @@
   <object id="111" name="Manana Tree" type="spawn" x="6336" y="1600">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1909,7 +1883,6 @@
   <object id="112" name="Manana Tree" type="spawn" x="6368" y="1760">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1917,7 +1890,6 @@
   <object id="113" name="Manana Tree" type="spawn" x="5920" y="2080">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1925,7 +1897,6 @@
   <object id="114" name="Manana Tree" type="spawn" x="6112" y="2016">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1933,7 +1904,6 @@
   <object id="115" name="Manana Tree" type="spawn" x="6400" y="2112">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="name" value="Manana Tree"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>

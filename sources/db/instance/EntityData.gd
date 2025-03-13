@@ -1,7 +1,7 @@
 extends Node
 class_name EntityData
 
-@export var _id : int							= -1
+@export var _id : int							= DB.UnknownHash
 @export var _name : String 						= ""
 @export var _spritePreset : String				= ""
 @export var _collision : String					= ""
@@ -25,9 +25,9 @@ func _init():
 	_customShaders.resize(ActorCommons.SlotModifierCount)
 	_equipments.resize(ActorCommons.SlotEquipmentCount)
 
-static func Create(key : String, result : Dictionary) -> EntityData:
+static func Create(result : Dictionary) -> EntityData:
 	var entity : EntityData = EntityData.new()
-	entity._id = key.to_int()
+	entity._id = result.Name.hash()
 	entity._name = result.Name
 	if "SpritePreset" in result:
 		entity._spritePreset = result.SpritePreset
@@ -74,6 +74,7 @@ static func Create(key : String, result : Dictionary) -> EntityData:
 				entity._dropsProba[itemID] = result.Drops[itemName]
 	if "Spawns" in result:
 		for entityName in result.Spawns:
-			entity._spawns[entityName] = result.Spawns[entityName]
+			var entityID : int = entityName.hash()
+			entity._spawns[entityID] = result.Spawns[entityName]
 
 	return entity

@@ -7,7 +7,7 @@ var aiState : AICommons.State			= AICommons.State.IDLE
 var aiTimer : Timer						= null
 var aiRefreshDelay : float				= randf_range(AICommons.MinRefreshDelay, AICommons.MaxRefreshDelay)
 var attackers : Array					= []
-var followers : Dictionary				= {}
+var followers : Dictionary[int, Array]	= {}
 var leader : BaseAgent					= null
 var hasNodeGoal : bool					= false
 var nodeGoal : Node2D					= null
@@ -47,8 +47,8 @@ func AddAttacker(attacker : BaseAgent, damage : int = 0):
 		attackers.append(attackerInfo)
 		if attackers.size() > AICommons.MaxAttackerCount:
 			RemoveOldestAttacker()
-		for category in followers:
-			for follower in followers[category]:
+		for groupID in followers:
+			for follower in followers[groupID]:
 				follower.AddAttacker(attacker, damage)
 				AI.Refresh(follower)
 
@@ -84,9 +84,9 @@ func GetDamageRatio(attacker : BaseAgent) -> float:
 func AddFollower(follower : BaseAgent):
 	if follower and ActorCommons.IsAlive(follower):
 		# Set Leader data
-		if not follower.data._name in followers:
-			followers[follower.data._name] = []
-		followers[follower.data._name].push_back(follower)
+		if not follower.data._id in followers:
+			followers[follower.data._id] = []
+		followers[follower.data._id].push_back(follower)
 
 		# Set Follower data
 		follower.leader = self
@@ -95,8 +95,8 @@ func AddFollower(follower : BaseAgent):
 
 func RemoveFollower(follower : BaseAgent):
 	if follower:
-		if follower.data._name in followers:
-			followers[follower.data._name].erase(follower)
+		if follower.data._id in followers:
+			followers[follower.data._id].erase(follower)
 		follower.leader = null
 
 #

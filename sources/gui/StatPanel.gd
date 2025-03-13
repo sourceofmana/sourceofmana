@@ -79,7 +79,9 @@ func RefreshVitalStats(entity : Entity):
 	RefreshGender(entity)
 	lName.set_text(entity.nick)
 	lLevel.set_text("Lv. %d" % entity.stat.level)
-	lSpirit.set_text(entity.stat.spirit)
+	var spiritData : EntityData = DB.EntitiesDB.get(entity.stat.spirit, null)
+	if spiritData:
+		lSpirit.set_text(spiritData._name)
 
 	pExperience.SetStat(entity.stat.experience, Experience.GetNeededExperienceForNextLevel(entity.stat.level))
 	pHealth.SetStat(entity.stat.health, entity.stat.current.maxHealth)
