@@ -7,77 +7,78 @@ signal PlayerWarped
 
 #
 var pool								= FileSystem.LoadSource("map/MapPool.gd")
-var mapNode : Node2D					= null
-var fringeLayer : TileMapLayer			= null
+var currentMapID : int					= DB.UnknownHash
+var currentMapNode : Node2D				= null
+var currentFringe : TileMapLayer		= null
 var drops : Dictionary[int, Sprite2D]	= {}
 
 #
 func RefreshTileMap():
-	for child in mapNode.get_children():
+	for child in currentMapNode.get_children():
 		if child is TileMapLayer and child.name == "Fringe":
-			fringeLayer = child
+			currentFringe = child
 			break
 
 func GetMapBoundaries() -> Rect2:
-	assert(mapNode != null, "Map node not found on the current scene")
-	return mapNode.get_meta("MapBoundaries") if mapNode else Rect2()
+	assert(currentMapNode != null, "Map node not found on the current scene")
+	return currentMapNode.get_meta("MapBoundaries") if currentMapNode else Rect2()
 
 #
-func EmplaceMapNode(mapName : String):
-	if mapNode && mapNode.get_name() == mapName:
+func EmplaceMapNode(mapID : int):
+	if currentMapID == mapID:
 		return
 
 	PhysicsServer2D.set_active(false)
-
-	if mapNode:
+	if currentMapNode:
 		UnloadMapNode()
-	LoadMapNode(mapName)
-
+	LoadMapNode(mapID)
 	PhysicsServer2D.set_active(true)
 
 	if LauncherCommons.EnableMapPool:
-		pool.RefreshPool(mapNode)
+		pool.RefreshPool(currentMapNode)
 
 func UnloadMapNode():
-	if mapNode:
+	if currentMapNode:
 		RemoveChildren()
-		Launcher.remove_child(mapNode)
-		mapNode = null
-		fringeLayer = null
+		Launcher.remove_child(currentMapNode)
+		currentMapID = DB.UnknownHash
+		currentMapNode = null
+		currentFringe = null
 		drops.clear()
 		Entities.Clear()
 		MapUnloaded.emit()
 
-func LoadMapNode(mapName : String):
-	mapNode = pool.LoadMapClientData(mapName)
-	assert(mapNode != null, "Map instance could not be created")
-	if mapNode:
+func LoadMapNode(mapID : int):
+	currentMapNode = pool.LoadMapClientData(mapID)
+	currentMapID = mapID
+	assert(currentMapNode != null, "Map instance could not be created")
+	if currentMapNode:
 		RefreshTileMap()
-		Launcher.add_child.call_deferred(mapNode)
+		Launcher.add_child.call_deferred(currentMapNode)
 		MapLoaded.emit()
 
 # Generic fringe Node2D
 func RemoveChildren():
-	assert(fringeLayer != null, "Current fringe layer not found, could not remove children")
-	for child in fringeLayer.get_children():
+	assert(currentFringe != null, "Current fringe layer not found, could not remove children")
+	for child in currentFringe.get_children():
 		if child is Node2D:
 			RemoveChild(child)
 
 func RemoveChild(child : Node2D):
 	if child:
-		if fringeLayer:
-			fringeLayer.remove_child(child)
+		if currentFringe:
+			currentFringe.remove_child(child)
 		if child != Launcher.Player:
 			child.queue_free()
 
 func AddChild(child : Node2D):
-	assert(fringeLayer != null, "Current fringe layer not found, could not add a new child")
-	if fringeLayer:
-		fringeLayer.add_child.call_deferred(child)
+	assert(currentFringe != null, "Current fringe layer not found, could not add a new child")
+	if currentFringe:
+		currentFringe.add_child.call_deferred(child)
 
 # Entities
 func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int):
-	if not fringeLayer:
+	if not currentFringe:
 		return
 
 	var entityData : EntityData = DB.EntitiesDB.get(shape, null)
@@ -86,7 +87,7 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spiri
 
 	var entity : Entity = Entities.Get(agentID)
 	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
-	var isAlreadySpawned : bool = entity != null and entity.get_parent() == fringeLayer
+	var isAlreadySpawned : bool = entity != null and entity.get_parent() == currentFringe
 
 	if not entity:
 		if nick.is_empty():
@@ -127,7 +128,7 @@ func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector
 
 # Drops
 func AddDrop(dropID : int, cell : BaseCell, pos : Vector2):
-	if not cell or not fringeLayer:
+	if not cell or not currentFringe:
 		return
 
 	if dropID not in drops:

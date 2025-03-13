@@ -89,8 +89,8 @@ func AlivePlayerCount() -> int:
 	return count
 
 # Warp
-func Warp(mapName : String, position : Vector2):
-	NpcCommons.Warp(own, mapName, position)
+func Warp(mapID : int, position : Vector2):
+	NpcCommons.Warp(own, mapID, position)
 
 # Quest
 func SetQuest(questID : int, state : int):

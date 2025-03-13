@@ -12,6 +12,7 @@ enum Flags
 }
 
 #
+var id : int							= DB.UnknownHash
 var name : String						= ""
 var instances : Array[WorldInstance]	= []
 var spawns : Array[SpawnObject]			= []
@@ -22,17 +23,21 @@ var mapRID : RID						= RID()
 var regionRID : RID						= RID()
 
 #
-static func Create(mapName : String) -> WorldMap:
-	var map : WorldMap = WorldMap.new()
-	map.name = mapName
-	map.LoadMapData()
-	WorldNavigation.LoadData(map)
-	map.instances.append(WorldInstance.Create(map))
+static func Create(mapID : int) -> WorldMap:
+	var map : WorldMap = null
+	var mapData : FileData = DB.MapsDB.get(mapID, null)
+	if mapData:
+		map = WorldMap.new()
+		map.id = mapID
+		map.name = mapData._name
+		map.LoadMapData()
+		WorldNavigation.LoadData(map)
+		map.instances.append(WorldInstance.Create(map))
 
 	return map
 
 func LoadMapData():
-	var node : Node = Instantiate.LoadMapData(name, Path.MapServerExt)
+	var node : Node = Instantiate.LoadMapData(id, Path.MapServerExt)
 	if node:
 		if "flags" in node:
 			flags = node.flags
@@ -59,7 +64,7 @@ func LoadMapData():
 				assert(warp != null, "Warp format is not supported")
 				if warp:
 					var warpObject = WarpObject.new()
-					warpObject.destinationMap = warp[0]
+					warpObject.destinationID = warp[0]
 					warpObject.destinationPos = warp[1]
 					warpObject.polygon = warp[2]
 					if warp.size() > 3:
@@ -70,7 +75,7 @@ func LoadMapData():
 				assert(port != null, "Port format is not supported")
 				if port:
 					var portObject = PortObject.new()
-					portObject.destinationMap = port[0]
+					portObject.destinationID = port[0]
 					portObject.destinationPos = port[1]
 					portObject.polygon = port[2]
 					portObject.autoWarp = port[3]

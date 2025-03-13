@@ -104,7 +104,7 @@ func SetBody():
 	if not entity.stat.IsMorph():
 		slotTexture = FileSystem.LoadGfx(raceData._bodies[entity.stat.gender])
 		if entity.stat.skintone in raceData._skins:
-			var skinData : TraitData = raceData._skins[entity.stat.skintone]
+			var skinData : FileData = raceData._skins[entity.stat.skintone]
 			if skinData and not skinData._path.is_empty():
 				slotMaterial = FileSystem.LoadPalette(raceData._skins[entity.stat.skintone]._path)
 
@@ -131,7 +131,7 @@ func SetFace():
 	if not entity.stat.IsMorph():
 		slotTexture = FileSystem.LoadGfx(raceData._faces[entity.stat.gender])
 		if entity.stat.skintone in raceData._skins:
-			var skinData : TraitData = raceData._skins[entity.stat.skintone]
+			var skinData : FileData = raceData._skins[entity.stat.skintone]
 			if skinData and not skinData._path.is_empty():
 				slotMaterial = FileSystem.LoadPalette(raceData._skins[entity.stat.skintone]._path)
 
@@ -149,8 +149,8 @@ func SetHair():
 	var slotMaterial : Material = null
 
 	if not entity.stat.IsMorph():
-		var hairstyleData : TraitData = DB.GetHairstyle(entity.stat.hairstyle) if entity.stat.hairstyle != DB.UnknownHash else null
-		var haircolorData : TraitData = DB.GetPalette(DB.Palette.HAIR, entity.stat.haircolor) if entity.stat.haircolor != DB.UnknownHash else null
+		var hairstyleData : FileData = DB.GetHairstyle(entity.stat.hairstyle) if entity.stat.hairstyle != DB.UnknownHash else null
+		var haircolorData : FileData = DB.GetPalette(DB.Palette.HAIR, entity.stat.haircolor) if entity.stat.haircolor != DB.UnknownHash else null
 		if hairstyleData != null and haircolorData != null:
 			slotTexture = FileSystem.LoadGfx(hairstyleData._path)
 			slotMaterial = FileSystem.LoadPalette(haircolorData._path)

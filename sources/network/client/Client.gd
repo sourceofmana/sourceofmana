@@ -2,10 +2,12 @@ extends Object
 class_name NetClient
 
 #
-func WarpPlayer(map : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func WarpPlayer(mapID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.EmplaceMapNode(map)
-		PushNotification(map, _rpcID)
+		var mapData : FileData = DB.MapsDB.get(mapID, null)
+		if mapData:
+			Launcher.Map.EmplaceMapNode(mapID)
+			PushNotification(mapData._name, _rpcID)
 
 	if Launcher.Player:
 		Launcher.Player.entityVelocity = Vector2.ZERO

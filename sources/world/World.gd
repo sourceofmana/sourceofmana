@@ -1,7 +1,7 @@
 extends ServiceBase
 
 # Vars
-var areas : Dictionary[String, WorldMap]				= {}
+var areas : Dictionary[int, WorldMap]				= {}
 
 # Getters
 func CanWarp(agent : BaseAgent) -> WarpObject:
@@ -12,8 +12,8 @@ func CanWarp(agent : BaseAgent) -> WarpObject:
 				return warp
 	return null
 
-func GetMap(mapName : String) -> WorldMap:
-	return areas.get(mapName, null)
+func GetMap(mapID : int) -> WorldMap:
+	return areas.get(mapID, null)
 
 # Core functions
 func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, instanceID : int = 0):
@@ -55,7 +55,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 			if agent.stat.IsMorph():
 				agent.Morph(false, agent.stat.shape)
 
-		Network.WarpPlayer(map.name, agent.rpcRID)
+		Network.WarpPlayer(map.id, agent.rpcRID)
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
 				var neighbourRID : int = neighbour.get_rid().get_id()
@@ -77,8 +77,8 @@ func BackupPlayers():
 				Launcher.SQL.RefreshCharacter(player)
 
 func _post_launch():
-	for mapName in DB.MapsDB:
-		areas[mapName] = WorldMap.Create(mapName)
+	for mapID in DB.MapsDB:
+		areas[mapID] = WorldMap.Create(mapID)
 	WorldAgent._post_launch()
 
 	isInitialized = true

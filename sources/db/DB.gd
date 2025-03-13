@@ -1,12 +1,12 @@
 extends Object
 class_name DB
 
-static var MapsDB : Dictionary[String, MapData]				= {}
-static var MusicsDB : Dictionary[String, MusicData]			= {}
+static var MapsDB : Dictionary[int, FileData]				= {}
+static var MusicsDB : Dictionary[int, FileData]				= {}
 static var RacesDB : Dictionary[int, RaceData]				= {}
-static var HairstylesDB : Dictionary[int, TraitData]		= {}
+static var HairstylesDB : Dictionary[int, FileData]			= {}
 static var PalettesDB : Array[Dictionary]					= []
-static var EntitiesDB : Dictionary[int, EntityData]		= {}
+static var EntitiesDB : Dictionary[int, EntityData]			= {}
 static var EmotesDB : Dictionary[int, BaseCell]				= {}
 static var ItemsDB : Dictionary[int, ItemCell]				= {}
 static var SkillsDB : Dictionary[int, SkillCell]			= {}
@@ -15,6 +15,7 @@ static var hashDB : Dictionary				= {}
 const UnknownHash : int						= -1
 static var PlayerHash : int					= "Player".hash()
 static var ShipHash : int					= "Ship".hash()
+static var OceanHash : int					= "Ocean".hash()
 
 enum Palette
 {
@@ -30,20 +31,16 @@ static func ParseMapsDB():
 
 	if not result.is_empty():
 		for key in result:
-			var map : MapData = MapData.new()
-			map._name = key
-			map._path = result[key].Path
-			MapsDB[key] = map
+			var data : FileData = FileData.Create(key, result[key].Path)
+			MapsDB[data._id] = data
 
 static func ParseMusicsDB():
 	var result = FileSystem.LoadDB("musics.json")
 
 	if not result.is_empty():
 		for key in result:
-			var music : MusicData = MusicData.new()
-			music._name = key
-			music._path = result[key].Path
-			MusicsDB[key] = music
+			var data : FileData = FileData.Create(key, result[key].Path)
+			MusicsDB[data._id] = data
 
 static func ParseRacesDB():
 	var result = FileSystem.LoadDB("races.json")
@@ -59,9 +56,8 @@ static func ParseHairstylesDB():
 
 	if not result.is_empty():
 		for key in result:
-			var id = SetCellHash(key)
-			assert(id not in HairstylesDB, "Duplicated cell in HairstylesDB")
-			HairstylesDB[id] = TraitData.Create(key, result[key])
+			var data : FileData = FileData.Create(key, result[key])
+			HairstylesDB[data._id] = data
 
 static func ParsePalettesDB():
 	PalettesDB.resize(Palette.COUNT)
@@ -74,7 +70,7 @@ static func ParsePalettesDB():
 			for key in category:
 				var id = SetCellHash(key)
 				assert(id not in HairstylesDB, "Duplicated cell in PalettesDB")
-				PalettesDB[categoryIdx][id] = TraitData.Create(key, category[key])
+				PalettesDB[categoryIdx][id] = FileData.Create(key, category[key])
 
 static func ParseEntitiesDB():
 	var result = FileSystem.LoadDB("entities.json")
@@ -115,18 +111,6 @@ static func ParseSkillsDB():
 			SkillsDB[cell.id] = cell
 
 #
-static func GetMapPath(mapName : String) -> String:
-	var path : String = ""
-	var mapInfo = null
-
-	if MapsDB.has(mapName):
-		mapInfo = MapsDB[mapName]
-		assert(mapInfo != null, "Could not find the map " + mapName + " within the db")
-		if mapInfo:
-			path = mapInfo._path
-	return path
-
-#
 static func HasCellHash(cellname : StringName) -> bool:
 	return hashDB.has(cellname)
 
@@ -156,7 +140,7 @@ static func GetItem(cellHash : int, customfield : String = "") -> ItemCell:
 		if HasCellHash(customfield):
 			var paletteHash : int = GetCellHash(customfield)
 			if paletteHash in PalettesDB[Palette.EQUIPMENT]:
-				var paletteData : TraitData = DB.GetPalette(DB.Palette.EQUIPMENT, paletteHash)
+				var paletteData : FileData = DB.GetPalette(DB.Palette.EQUIPMENT, paletteHash)
 				if paletteData:
 					customCell.shader = FileSystem.LoadPalette(paletteData._path)
 		return customCell
@@ -178,12 +162,12 @@ static func GetRace(cellHash : int) -> RaceData:
 	assert(hasInDB, "Could not find the identifier %s in RaceDB" % [cellHash])
 	return RacesDB[cellHash] if hasInDB else null
 
-static func GetHairstyle(cellHash : int) -> TraitData:
+static func GetHairstyle(cellHash : int) -> FileData:
 	var hasInDB : bool = cellHash in HairstylesDB
 	assert(hasInDB, "Could not find the identifier %d in HairstylesDB" % [cellHash])
 	return HairstylesDB[cellHash] if hasInDB else null
 
-static func GetPalette(type : Palette, cellHash : int) -> TraitData:
+static func GetPalette(type : Palette, cellHash : int) -> FileData:
 	var hasInDB : bool = cellHash in PalettesDB[type]
 	assert(hasInDB, "Could not find the identifier %d in PalettesDB" % [cellHash])
 	return PalettesDB[type][cellHash] if hasInDB else null

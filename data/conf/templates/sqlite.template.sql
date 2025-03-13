@@ -17,10 +17,10 @@ CREATE TABLE character (
     total_time           INTEGER,
     pos_x                INTEGER,
     pos_y                INTEGER,
-    pos_map              TEXT,
+    pos_map              INTEGER,
     respawn_x            INTEGER,
     respawn_y            INTEGER,
-    respawn_map          TEXT,
+    respawn_map          INTEGER,
     FOREIGN KEY (account_id) REFERENCES account(account_id)
 );
 

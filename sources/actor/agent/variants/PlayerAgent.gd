@@ -12,21 +12,21 @@ var ownScript : NpcScript				= null
 static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
 
 #
-static func GetDestinationFromData(charData : Dictionary, mapID : String, posXID : String, posYID : String) -> Destination:
-	var mapName = charData.get(mapID, null)
+static func GetDestinationFromData(charData : Dictionary, destID : String, posXID : String, posYID : String) -> Destination:
+	var mapID = charData.get(destID, null)
 	var mapPosX = charData.get(posXID, null)
 	var mapPosY = charData.get(posYID, null)
-	if mapName != null and mapPosX != null and mapPosY != null:
-		var map : WorldMap = Launcher.World.GetMap(mapName)
+	if mapID != null and mapPosX != null and mapPosY != null:
+		var map : WorldMap = Launcher.World.GetMap(mapID)
 		if map:
-			return Destination.new(map.name, Vector2(mapPosX, mapPosY))
+			return Destination.new(map.id, Vector2(mapPosX, mapPosY))
 	return null
 
 static func GetSpawnFromData(charData : Dictionary) -> SpawnObject:
 	var destination : Destination = GetDestinationFromData(charData, "pos_map", "pos_x", "pos_y")
 	if destination:
 		var spawnLocation : SpawnObject = SpawnObject.new()
-		spawnLocation.map				= Launcher.World.GetMap(destination.map)
+		spawnLocation.map				= Launcher.World.GetMap(destination.mapID)
 		spawnLocation.spawn_position	= destination.pos
 		spawnLocation.type				= "Player"
 		spawnLocation.id				= DB.PlayerHash
@@ -35,7 +35,7 @@ static func GetSpawnFromData(charData : Dictionary) -> SpawnObject:
 
 static func GetRespawnFromData(charData : Dictionary) -> Destination:
 	var destination : Destination = GetDestinationFromData(charData, "respawn_map", "respawn_x", "respawn_y")
-	return destination if destination else Destination.new(WorldAgent.defaultSpawnLocation.map.name, WorldAgent.defaultSpawnLocation.spawn_position)
+	return destination if destination else Destination.new(WorldAgent.defaultSpawnLocation.map.id, WorldAgent.defaultSpawnLocation.spawn_position)
 
 func SetCharacterInfo(charData : Dictionary, charID : int):
 	# Stats
@@ -144,12 +144,12 @@ func Explore():
 		var map : WorldMap = WorldAgent.GetMapFromAgent(self)
 		if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
 			if stat.IsSailing():
-				exploreOrigin.map = map.name
+				exploreOrigin.mapID = map.id
 				exploreOrigin.pos = position
 				WarpTo(ActorCommons.SailingDestination)
 
 func WarpTo(dest : Destination):
-	var nextMap : WorldMap = Launcher.World.GetMap(dest.map)
+	var nextMap : WorldMap = Launcher.World.GetMap(dest.mapID)
 	if nextMap:
 		Launcher.World.Warp(self, nextMap, dest.pos, dest.instance)
 

@@ -274,7 +274,7 @@ static func IsEquipped(cell : BaseCell) -> bool:
 	CellCommons.IsSameCell(cell, Launcher.Player.inventory.equipments[cell.slot])
 
 # Explore
-static var SailingDestination : Destination	= Destination.new("Ocean", Vector2(71 * 32, 55 * 32))
+static var SailingDestination : Destination	= Destination.new(DB.OceanHash, Vector2(71 * 32, 55 * 32))
 
 # Navigation
 const DisplacementVector : Vector2			= Vector2(32, 32)
@@ -299,7 +299,7 @@ const CameraZoomDelay : float				= 0.4
 # Character
 const InvalidCharacterSlot : int			= -1
 const MaxCharacterCount : int				= 10
-const CharacterScreenMap : String			= "Drazil"
+static var CharacterScreenMapID : int		= "Drazil".hash()
 const CharacterScreenLocations : PackedVector2Array = [
 	Vector2(1984, 992),
 	Vector2(2144, 960),

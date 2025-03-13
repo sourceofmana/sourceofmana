@@ -119,12 +119,12 @@ func UpdateCharacter(player : PlayerAgent) -> bool:
 	if map != null and not map.HasFlags(WorldMap.Flags.NO_REJOIN):
 		data["pos_x"] = player.position.x
 		data["pos_y"] = player.position.y
-		data["pos_map"] = map.name
+		data["pos_map"] = map.id
 
 	if player.respawnDestination != null:
 		data["respawn_x"] = player.respawnDestination.pos.x
 		data["respawn_y"] = player.respawnDestination.pos.y
-		data["respawn_map"] = player.respawnDestination.map
+		data["respawn_map"] = player.respawnDestination.mapID
 
 	return db.update_rows("character", "char_id = %d;" % charID, data)
 

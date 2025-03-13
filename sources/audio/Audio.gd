@@ -1,31 +1,40 @@
 extends AudioStreamPlayer
 
-var currentTrack : String = ""
+var currentTrack : int = DB.UnknownHash
 
 #
 func Stop():
 	if is_playing():
 		stop()
-	currentTrack = ""
+	currentTrack = DB.UnknownHash
 
-func Load(soundName : String):
-	if currentTrack != soundName && not soundName.is_empty() && DB.MusicsDB[soundName] != null:
-		var soundStream : Resource = FileSystem.LoadMusic(DB.MusicsDB[soundName]._path as String)
-		assert(soundStream != null, "Could not load music: " + soundName)
-		if soundStream != null:
-			soundStream.set_loop(true)
-			set_stream(soundStream)
-			currentTrack		= soundName
+func Load(soundID : int):
+	if currentTrack != soundID:
+		var soundData : FileData = DB.MusicsDB.get(soundID, null)
+		if not soundData:
+			assert(false, "Could not load music database id: %s" % soundID)
+			return
 
-			set_autoplay(true)
-			play()
+		var soundStream : Resource = FileSystem.LoadMusic(soundData._path)
+		if not soundStream:
+			assert(false, "Could not load music: %s" % soundData._name)
+			return
+
+		soundStream.set_loop(true)
+		set_stream(soundStream)
+		currentTrack = soundID
+
+		set_autoplay(true)
+		play()
 
 func SetVolume(volume : float):
 	set_volume_db(volume)
 
 func Warped():
-	if Launcher.Map.mapNode && Launcher.Map.mapNode.has_meta("music"):
-		Load(Launcher.Map.mapNode.get_meta("music") as String)
+	if Launcher.Map.currentMapNode:
+		var mapName : String = Launcher.Map.currentMapNode.get_meta("music", "")
+		if not mapName.is_empty():
+			Load(mapName.hash())
 	else:
 		Stop()
 

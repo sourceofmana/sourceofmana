@@ -173,6 +173,7 @@ static func ApplyStealBehaviour(agent : AIAgent) -> bool:
 					WorldDrop.PickupDrop(nearest.get_instance_id(), agent)
 				else:
 					AI.SetState(agent, State.WALK, true)
+					agent.currentWalkSpeed = Vector2(agent.stat.current.walkSpeed, agent.stat.current.walkSpeed)
 					agent.SetNodeGoal(nearest, nearest.position)
 				return true
 

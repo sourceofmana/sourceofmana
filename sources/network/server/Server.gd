@@ -157,7 +157,7 @@ func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
 	if player and player.ownScript == null:
 		var warp : WarpObject = Launcher.World.CanWarp(player)
 		if warp:
-			var nextMap : WorldMap = Launcher.World.GetMap(warp.destinationMap)
+			var nextMap : WorldMap = Launcher.World.GetMap(warp.destinationID)
 			if nextMap:
 				Launcher.World.Warp(player, nextMap, warp.getDestinationPos(player))
 				if warp is PortObject:

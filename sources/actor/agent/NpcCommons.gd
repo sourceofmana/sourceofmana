@@ -95,8 +95,8 @@ static func Spawn(caller : BaseAgent, mobID : int, count : int = 1, position : V
 			agents.push_back(WorldAgent.CreateAgent(spawnObject, inst.id))
 	return agents
 
-static func Warp(caller : BaseAgent, mapName : String, position : Vector2):
+static func Warp(caller : BaseAgent, mapID : int, position : Vector2):
 	if caller is PlayerAgent:
-		var map : WorldMap = Launcher.World.GetMap(mapName)
+		var map : WorldMap = Launcher.World.GetMap(mapID)
 		if map:
 			Launcher.World.Warp(caller, map, position)

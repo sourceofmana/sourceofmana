@@ -1,4 +1,4 @@
-extends Node
+extends Resource
 class_name EntityData
 
 @export var _id : int							= DB.UnknownHash
@@ -55,7 +55,7 @@ static func Create(result : Dictionary) -> EntityData:
 	if "Stat" in result:
 		for statName in result.Stat:
 			if statName in hashedStats:
-				entity._stats[statName] = DB.GetCellHash(result.Stat[statName])
+				entity._stats[statName] = result.Stat[statName].hash()
 			elif statName == "gender":
 				entity._stats[statName] = ActorCommons.GetGenderID(result.Stat[statName])
 			else:

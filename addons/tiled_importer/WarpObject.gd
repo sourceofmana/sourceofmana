@@ -2,7 +2,7 @@
 extends Area2D
 class_name WarpObject
 
-@export var destinationMap : String 			= ""
+@export var destinationID : int		 			= DB.UnknownHash
 @export var destinationPos : Vector2			= Vector2.ZERO
 @export var polygon : PackedVector2Array 		= []
 @export var autoWarp : bool						= true
@@ -46,9 +46,11 @@ func ConfirmWarp():
 
 func DisplayLabel():
 	Launcher.GUI.choiceContext.Clear()
-	Launcher.GUI.choiceContext.Push(ContextData.new("gp_interact", destinationMap, ConfirmWarp.bind()))
-	Launcher.GUI.choiceContext.FadeIn()
-	contextDisplayed = true
+	var mapData : FileData = DB.MapsDB.get(destinationID, null)
+	if mapData:
+		Launcher.GUI.choiceContext.Push(ContextData.new("gp_interact", mapData._name, ConfirmWarp.bind()))
+		Launcher.GUI.choiceContext.FadeIn()
+		contextDisplayed = true
 
 func HideLabel():
 	Launcher.GUI.choiceContext.FadeOut()

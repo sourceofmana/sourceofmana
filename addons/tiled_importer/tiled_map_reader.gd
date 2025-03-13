@@ -287,7 +287,7 @@ func build_server(source_path) -> Node:
 		for warp_vertex in warp.polygon:
 			warp_polygon.append(warp_vertex + warp.position)
 		var warp_array : Array = []
-		warp_array.append(warp.destinationMap)
+		warp_array.append(warp.destinationID)
 		warp_array.append(warp.destinationPos)
 		warp_array.append(warp_polygon)
 		warp_array.append(warp.autoWarp)
@@ -298,7 +298,7 @@ func build_server(source_path) -> Node:
 		for port_vertex in port.polygon:
 			port_polygon.append(port_vertex + port.position)
 		var port_array : Array = []
-		port_array.append(port.destinationMap)
+		port_array.append(port.destinationID)
 		port_array.append(port.destinationPos)
 		port_array.append(port_polygon)
 		port_array.append(port.autoWarp)
@@ -697,7 +697,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 						if "dest_cellsize" in object.properties:
 							dest_cellsize = object.properties.dest_cellsize
 						if "dest_map" in object.properties and not str(object.properties.dest_map).is_empty():
-							customObject.destinationMap = object.properties.dest_map
+							customObject.destinationID = object.properties.dest_map.hash()
 						if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
 							customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
 						if "auto_warp" in object.properties:

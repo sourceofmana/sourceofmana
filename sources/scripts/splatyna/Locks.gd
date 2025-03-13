@@ -5,7 +5,7 @@ var dorianKeyID : int				= DB.GetCellHash("Dorian's Key")
 var gabrielKeyID : int				= DB.GetCellHash("Gabriel's Key")
 var marvinKeyID : int				= DB.GetCellHash("Marvin's Key")
 
-const mapName : StringName			= "Splatyna's Chamber"
+var mapID : int						= "Splatyna's Chamber".hash()
 const mapPosition : Vector2			= Vector2(1500, 2190)
 
 #
@@ -27,7 +27,7 @@ func TryOpen():
 	if GetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING) != ProgressCommons.STATE_SPLATYNA.INACTIVE:
 		if HasItem(dorianKeyID) and HasItem(gabrielKeyID) and HasItem(marvinKeyID):
 			if RemoveItem(dorianKeyID) and RemoveItem(gabrielKeyID) and RemoveItem(marvinKeyID):
-				Warp(mapName, mapPosition)
+				Warp(mapID, mapPosition)
 		else:
 			Chat("You need three different keys to unlock this passage.")
 

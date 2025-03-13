@@ -4,7 +4,7 @@ class_name RaceData
 @export var _name : String				= "Unknown"
 @export var _faces : Array[String]		= []
 @export var _bodies : Array[String]		= []
-@export var _skins : Dictionary[int, TraitData]	= {}
+@export var _skins : Dictionary[int, FileData]	= {}
 
 func _init():
 	_faces.resize(ActorCommons.Gender.COUNT)

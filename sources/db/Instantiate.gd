@@ -41,8 +41,6 @@ static func CreateDrop(cell : BaseCell, pos : Vector2) -> Sprite2D:
 	return node
 
 # Map
-static func LoadMapData(mapName : String, ext : String) -> Object:
-	var mapPath : String			= DB.GetMapPath(mapName)
-	var mapInstance : Object		= FileSystem.LoadMap(mapPath, ext)
-
-	return mapInstance
+static func LoadMapData(mapID : int, ext : String) -> Object:
+	var mapData : FileData = DB.MapsDB.get(mapID, null)
+	return FileSystem.LoadMap(mapData._path, ext) if mapData else null

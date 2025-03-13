@@ -6,17 +6,20 @@ extends WindowPanel
 
 #
 func Warped():
-	if textureRect and Launcher.Map and Launcher.Map.mapNode:
-		var mapName : String = Launcher.Map.mapNode.get_name()
-		assert(mapName.is_empty() == false, "Could not fetch the active map name")
-		if mapName.is_empty() == false:
-			var mapPath : String = DB.GetMapPath(mapName)
-			assert(mapPath.is_empty() == false, "Could not fetch the active map path")
-			if mapPath.is_empty() == false:
-				var resource : Texture2D = FileSystem.LoadMinimap(mapPath)
-				assert(resource != null, "Could not load the minimap resource")
-				if resource:
-					textureRect.set_texture(resource)
+	if not textureRect or not Launcher.Map:
+		return
+	if Launcher.Map.currentMapID == DB.UnknownHash:
+		assert(false, "Could not fetch the active map name")
+		return
+	var mapData : FileData = DB.MapsDB.get(Launcher.Map.currentMapID, null)
+	if not mapData:
+		assert(false, "Could not retrieve the map ID from our map daabase")
+		return
+	var resource : Texture2D = FileSystem.LoadMinimap(mapData._path)
+	if not resource:
+		assert(false, "Could not load the minimap resource")
+		return
+	textureRect.set_texture(resource)
 
 #
 func _ready():

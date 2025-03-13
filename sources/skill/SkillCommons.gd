@@ -101,8 +101,7 @@ static func IsCasting(agent : BaseAgent, skill : SkillCell = null) -> bool:
 	return (agent.currentSkillID == skill.id) if skill else DB.SkillsDB.has(agent.currentSkillID)
 
 static func IsCoolingDown(agent : BaseAgent, skill : SkillCell) -> bool:
-	var timer : Timer = agent.cooldownTimers.get(skill.id, null)
-	return timer and not timer.is_queued_for_deletion()
+	return agent.cooldownTimers.get(skill.id, false)
 
 static func GetCooldown(actor : Actor, skill : SkillCell) -> float:
 	return actor.stat.current.cooldownAttackDelay + skill.cooldownTime

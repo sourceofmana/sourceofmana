@@ -10,7 +10,9 @@ extends PanelContainer
 #
 func SetInfo(info : Dictionary):
 	levelLabel.set_text(str(info["level"]))
-	locationLabel.set_text(info["pos_map"])
+	var mapData : FileData = DB.MapsDB.get(info["pos_map"], null)
+	if mapData:
+		locationLabel.set_text(mapData._name)
 
 #
 func _unhandled_input(event : InputEvent):

@@ -54,7 +54,7 @@ func FillMissingCharacterInfo(info : Dictionary):
 	Util.DicCheckOrAdd(info, "nickname", "")
 	Util.DicCheckOrAdd(info, "last_timestamp", 1 << 32)
 	Util.DicCheckOrAdd(info, "level", 1)
-	Util.DicCheckOrAdd(info, "pos_map", LauncherCommons.DefaultStartMap)
+	Util.DicCheckOrAdd(info, "pos_map", LauncherCommons.DefaultStartMapID)
 	Util.DicCheckOrAdd(info, "hairstyle", DB.UnknownHash)
 	Util.DicCheckOrAdd(info, "haircolor", DB.UnknownHash)
 	Util.DicCheckOrAdd(info, "gender", ActorCommons.Gender.MALE)
@@ -255,7 +255,7 @@ func RefreshOnce():
 	if isCharacterCreatorEnabled:
 		return
 
-	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMap)
+	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMapID)
 	Launcher.Camera.SetBoundaries()
 	currentCharacterID = ActorCommons.InvalidCharacterSlot
 	for slotID in charactersInfo.size():

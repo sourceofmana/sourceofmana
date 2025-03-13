@@ -1,54 +1,54 @@
 extends Node
 
 #
-var pool : Dictionary[String, Node2D]		= {}
+var pool : Dictionary[int, Node2D]		= {}
 
 #
-func LoadMapClientData(mapName : String) -> Node2D:
-	var mapInstance : Node2D		= GetMap(mapName)
-	var mapPath : String			= DB.GetMapPath(mapName)
-
+func LoadMapClientData(mapID : int) -> Node2D:
+	var mapInstance : Node2D = GetMap(mapID)
 	if mapInstance == null:
-		mapInstance = FileSystem.LoadMap(mapPath, Path.MapClientExt)
-		mapInstance.set_name(mapName)
-		pool[mapName] = mapInstance
-
+		var mapData : FileData = DB.MapsDB.get(mapID, null)
+		assert(mapData != null, "Could not load the map reference within our map db")
+		if mapData:
+			mapInstance = FileSystem.LoadMap(mapData._path, Path.MapClientExt)
+			mapInstance.set_name(mapData._name)
+			pool[mapID] = mapInstance
 	return mapInstance
 
 #
-func GetMap(mapName : String) -> Node2D:
-	return pool.get(mapName, null)
+func GetMap(mapID : int) -> Node2D:
+	return pool.get(mapID, null)
 
-func FreeMap(mapName : String):
-	var mapNode : Node2D = GetMap(mapName)
+func FreeMap(mapID : int):
+	var mapNode : Node2D = GetMap(mapID)
 	if mapNode:
 		mapNode.queue_free()
-		pool.erase(mapName)
+		pool.erase(mapID)
 
 #
-func RefreshPool(currentMap : Node2D):
+func RefreshPool():
 	var adjacentMaps : Array = []
-	if currentMap.has_node("Object"):
-		for object in currentMap.get_node("Object").get_children():
+	if Launcher.Map.currentMapNode.has_node("Object"):
+		for object in Launcher.Map.currentMapNode.get_node("Object").get_children():
 			if object is WarpObject:
-				adjacentMaps.append(object.destinationMap)
+				adjacentMaps.append(object.destinationMapHash)
 
-	for mapName in adjacentMaps:
-		if not pool.has(mapName):
-			pool[mapName] = LoadMapClientData(mapName as String)
+	for mapID in adjacentMaps:
+		if mapID not in pool:
+			pool[mapID] = LoadMapClientData(mapID)
 
-	var poolCurrentSize : int	= pool.size()
+	var poolCurrentSize : int = pool.size()
 	if poolCurrentSize > LauncherCommons.MapPoolMaxSize:
-		ClearUnused(currentMap, adjacentMaps, poolCurrentSize - LauncherCommons.MapPoolMaxSize)
+		ClearUnused(adjacentMaps, poolCurrentSize - LauncherCommons.MapPoolMaxSize)
 
-func ClearUnused(currentMap : Node2D, adjacentMaps : Array, nbToRemove : int):
+func ClearUnused(adjacentMaps : Array, nbToRemove : int):
 	var mapToFree : Array = []
-	for map in pool:
-		if not adjacentMaps.has(map) && map != currentMap.name:
-			mapToFree.append(map)
+	for mapID in pool:
+		if mapID != Launcher.Map.currentMapID and mapID not in adjacentMaps:
+			mapToFree.append(mapID)
 
-	for map in mapToFree:
-		FreeMap(map)
+	for mapID in mapToFree:
+		FreeMap(mapID)
 		nbToRemove -= 1
 		if nbToRemove <= 0:
 			break

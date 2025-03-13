@@ -69,8 +69,8 @@ func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
 	CallServer("TriggerWarp", [], rpcID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
-func WarpPlayer(mapName : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("WarpPlayer", [mapName], rpcID)
+func WarpPlayer(mapID : int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("WarpPlayer", [mapID], rpcID)
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
