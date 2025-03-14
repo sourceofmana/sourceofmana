@@ -203,15 +203,16 @@ func ChangeSelectedCharacter(changeClockwise : bool = true):
 
 func EnableCharacterCreator(enable : bool):
 	if isCharacterCreatorEnabled != enable:
-		var wasCharacterCreatorEnabled : bool = isCharacterCreatorEnabled
 		isCharacterCreatorEnabled = enable
-
-		if wasCharacterCreatorEnabled:
+		if enable:
+			if Launcher.Camera.IsZooming(ActorCommons.CameraZoomDefault):
+				Launcher.Camera.ZoomAt(ActorCommons.CameraZoomDouble)
+			AddCharacter(traitsPanel.GetValues(), {}, ActorCommons.MaxCharacterCount)
+		else:
+			if Launcher.Camera.IsZooming(ActorCommons.CameraZoomDouble):
+				Launcher.Camera.ZoomAt(ActorCommons.CameraZoomDefault)
 			if not enable and HasSlot(currentCharacterID) and charactersNode[currentCharacterID] != null:
 				RemoveCharacter(ActorCommons.MaxCharacterCount)
-		else:
-			if enable:
-				AddCharacter(traitsPanel.GetValues(), {}, ActorCommons.MaxCharacterCount)
 
 	statsPanel.set_visible(not enable and visible)
 	characterNameDisplay.set_visible(not enable and visible)

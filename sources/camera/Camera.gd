@@ -45,6 +45,13 @@ func EnableSceneCamera(pos : Vector2):
 func DisableSceneCamera():
 	sceneCamera.set_enabled(false)
 
+func IsZooming(level : int) -> bool:
+	return zoomLevel == level
+
+func ZoomAt(level : int):
+	zoomLevel = clampi(level, 0, ActorCommons.CameraZoomLevels.size() - 1)
+	UpdateZoom()
+
 func ZoomIn():
 	if not zoomTimer:
 		zoomLevel = clampi(zoomLevel + 1, 0, ActorCommons.CameraZoomLevels.size() - 1)
