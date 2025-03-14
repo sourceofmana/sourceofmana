@@ -130,11 +130,12 @@ func CreateAccount():
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
 	if authError == NetworkCommons.AuthError.ERR_OK:
 		authError = NetworkCommons.CheckEmailInformation(emailText)
-	FillWarningLabel(authError)
 
 	if authError == NetworkCommons.AuthError.ERR_OK:
 		if Network.CreateAccount(nameText, passwordText, emailText):
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
+	else:
+		FillWarningLabel(authError)
 
 func Close():
 	if isAccountCreatorEnabled:

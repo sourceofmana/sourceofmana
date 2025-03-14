@@ -18,7 +18,9 @@ func CreateAccount(accountName : String, password : String, email : String, rpcI
 	else:
 		err = NetworkCommons.CheckAuthInformation(accountName, password)
 		if err == NetworkCommons.AuthError.ERR_OK:
-			if not Launcher.SQL.AddAccount(accountName, password, email):
+			if Launcher.SQL.HasAccount(accountName):
+				err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
+			elif not Launcher.SQL.AddAccount(accountName, password, email):
 				err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
 			else:
 				accounts_list_update.emit()
@@ -57,7 +59,9 @@ func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictio
 		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
 	else:
 		traits.merge(ActorCommons.DefaultTraits)
-		if Launcher.SQL.GetCharacters(accountID).size() >= ActorCommons.MaxCharacterCount:
+		if Launcher.SQL.HasCharacter(charName):
+			err = NetworkCommons.CharacterError.ERR_NAME_AVAILABLE
+		elif Launcher.SQL.GetCharacters(accountID).size() >= ActorCommons.MaxCharacterCount:
 			err = NetworkCommons.CharacterError.ERR_SLOT_AVAILABLE
 		elif not ActorCommons.CheckTraits(traits) or not ActorCommons.CheckAttributes(attributes):
 			err = NetworkCommons.CharacterError.ERR_MISSING_PARAMS

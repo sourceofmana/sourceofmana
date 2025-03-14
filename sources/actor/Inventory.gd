@@ -174,25 +174,28 @@ func ExportInventory() -> Array[Dictionary]:
 
 #
 func ImportEquipment(data : Dictionary):
-	for slotName in data.keys():
-		var cellHash = data.get(slotName, DB.UnknownHash)
+	for equipmentID in ActorCommons.SlotEquipmentCount:
+		var equipmentKey : String = ActorCommons.GetSlotName(equipmentID).to_lower()
+		var cellHash = data.get(equipmentKey, DB.UnknownHash)
 		if cellHash != null and cellHash != DB.UnknownHash:
-			var cell : ItemCell = DB.GetItem(cellHash)
+			var cellCustomfield = data.get(equipmentKey + "Custom", "")
+			if cellCustomfield == null:
+				cellCustomfield = ""
+			var cell : ItemCell = DB.GetItem(cellHash, cellCustomfield)
 			if cell:
 				EquipItem(cell)
 
 func ExportEquipment() -> Dictionary:
-	return {
-		"weapon": equipments[ActorCommons.Slot.WEAPON].id if equipments[ActorCommons.Slot.WEAPON] else DB.UnknownHash,
-		"shield": equipments[ActorCommons.Slot.SHIELD].id if equipments[ActorCommons.Slot.SHIELD] else DB.UnknownHash,
-		"arms": equipments[ActorCommons.Slot.HANDS].id if equipments[ActorCommons.Slot.HANDS] else DB.UnknownHash,
-		"chest": equipments[ActorCommons.Slot.CHEST].id if equipments[ActorCommons.Slot.CHEST] else DB.UnknownHash,
-		"face": equipments[ActorCommons.Slot.NECK].id if equipments[ActorCommons.Slot.NECK] else DB.UnknownHash,
-		"feet": equipments[ActorCommons.Slot.FEET].id if equipments[ActorCommons.Slot.FEET] else DB.UnknownHash,
-		"head": equipments[ActorCommons.Slot.HEAD].id if equipments[ActorCommons.Slot.HEAD] else DB.UnknownHash,
-		"legs": equipments[ActorCommons.Slot.LEGS].id if equipments[ActorCommons.Slot.LEGS] else DB.UnknownHash,
-	}
-
+	var dic : Dictionary = {}
+	for equipmentID in ActorCommons.SlotEquipmentCount:
+		var equipmentKey : String = ActorCommons.GetSlotName(equipmentID).to_lower()
+		if equipments[equipmentID]:
+			dic[equipmentKey] = equipments[equipmentID].id
+			dic[equipmentKey + "Custom"] = equipments[equipmentID].customfield
+		else:
+			dic[equipmentKey] = DB.UnknownHash
+			dic[equipmentKey + "Custom"] = ""
+	return dic
 #
 func _init(actorNode : Actor):
 	actor = actorNode

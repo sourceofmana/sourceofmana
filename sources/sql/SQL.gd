@@ -7,23 +7,23 @@ var queryMutex : Mutex				= Mutex.new()
 
 # Accounts
 func AddAccount(username : String, password : String, email : String) -> bool:
-	var results : Array = db.select_rows("account", "username = '%s'" % username, ["account_id"])
-	if results.size() == 0:
-		var salt : String = Hasher.GenerateSalt()
-		var hashedPassword : String = Hasher.HashPassword(password, salt)
+	var salt : String = Hasher.GenerateSalt()
+	var hashedPassword : String = Hasher.HashPassword(password, salt)
 
-		var accountData : Dictionary = {
-			"username" : username,
-			"password_salt" : salt,
-			"password" : hashedPassword,
-			"email" : email,
-			"created_timestamp" : SQLCommons.Timestamp()
-		}
-		return db.insert_row("account", accountData)
-	return false
+	var accountData : Dictionary = {
+		"username" : username,
+		"password_salt" : salt,
+		"password" : hashedPassword,
+		"email" : email,
+		"created_timestamp" : SQLCommons.Timestamp()
+	}
+	return db.insert_row("account", accountData)
 
 func RemoveAccount(accountID : int) -> bool:
 	return db.delete_rows("account", "account_id = %d" % accountID)
+
+func HasAccount(username : String) -> bool:
+	return not QueryBindings("SELECT account_id FROM account WHERE username = ?;", [username]).is_empty()
 
 func Login(username : String, triedPassword : String) -> int:
 	var results : Array[Dictionary] = QueryBindings("SELECT account_id, password, password_salt FROM account WHERE username = ?;", [username])
@@ -94,6 +94,9 @@ func RefreshCharacter(player : PlayerAgent) -> bool:
 	success = success and UpdateProgress(charID, player.progress)
 
 	return success
+
+func HasCharacter(nickname : String) -> bool:
+	return not QueryBindings("SELECT char_id FROM character WHERE nickname = ?;", [nickname]).is_empty()
 
 func CharacterLogin(charID : int) -> bool:
 	var newTimestamp : int = SQLCommons.Timestamp()
@@ -240,7 +243,7 @@ func GetStorage(charID : int, storageType : int = 0) -> Array[Dictionary]:
 
 # Equipment
 func GetEquipment(charID : int) -> Dictionary:
-	var results : Array[Dictionary] = db.select_rows("equipment", "char_id = %d" % charID, ["weapon, shield, arms, chest, face, feet, head, legs"])
+	var results : Array[Dictionary] = db.select_rows("equipment", "char_id = %d" % charID, ["*"])
 	assert(results.size() <= 1, "Duplicated equipment on character %d" % charID)
 	return results[0] if results.size() > 0 else {}
 
