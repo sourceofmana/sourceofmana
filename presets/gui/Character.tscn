@@ -472,6 +472,7 @@ size_flags_vertical = 3
 
 [connection signal="focus_entered" from="PlayerName/MarginContainer/VBoxContainer/Entry" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="PlayerName/MarginContainer/VBoxContainer/Entry" to="." method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="PlayerName/MarginContainer/VBoxContainer/Entry" to="." method="CreateCharacter" unbinds=1]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Strength/Minus" to="Display/Attributes" method="_on_strength_minus_button"]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Strength/Plus" to="Display/Attributes" method="_on_strength_plus_button"]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Vitality/Minus" to="Display/Attributes" method="_on_vitality_minus_button"]

@@ -18,12 +18,12 @@ enum EChannel
 
 # Auth
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("CreateAccount", [accountName, password, email], rpcID, NetworkCommons.DelayLogin)
+func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
+	return CallServer("CreateAccount", [accountName, password, email], rpcID, NetworkCommons.DelayLogin)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("ConnectAccount", [accountName, password], rpcID, NetworkCommons.DelayLogin)
+func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
+	return CallServer("ConnectAccount", [accountName, password], rpcID, NetworkCommons.DelayLogin)
 
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
 func AuthError(err : NetworkCommons.AuthError, rpcID : int = NetworkCommons.RidSingleMode):
@@ -39,12 +39,12 @@ func CharacterInfo(info : Dictionary, equipment : Dictionary, rpcID : int = Netw
 	CallClient("CharacterInfo", [info, equipment], rpcID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("CreateCharacter", [charName, traits, attributes], rpcID)
+func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictionary, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
+	return CallServer("CreateCharacter", [charName, traits, attributes], rpcID, NetworkCommons.DelayLogin)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("ConnectCharacter", [nickname], rpcID)
+func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
+	return CallServer("ConnectCharacter", [nickname], rpcID, NetworkCommons.DelayLogin)
 
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
 func CharacterError(err : NetworkCommons.CharacterError, rpcID : int = NetworkCommons.RidSingleMode):
@@ -314,12 +314,18 @@ func NotifyInstance(inst : WorldInstance, callbackName : String, args : Array):
 					Network.callv(callbackName, args + [player.rpcRID])
 
 # Peer calls
-func CallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault):
+func CallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault) -> bool:
 	if Server:
 		if Peers.Footprint(rpcID, methodName, actionDelta):
 			Server.callv.call_deferred(methodName, args + [rpcID])
+			return true
 	else:
-		callv.call("rpc_id", [1, methodName] + args + [uniqueID])
+		if Peers.Footprint(rpcID, methodName, actionDelta):
+			callv.call("rpc_id", [1, methodName] + args + [uniqueID])
+			return true
+		else:
+			return false
+	return false
 
 func CallClient(methodName : String, args : Array, rpcID : int):
 	if Client:

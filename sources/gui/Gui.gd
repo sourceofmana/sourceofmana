@@ -49,7 +49,7 @@ var progressTimer : Timer						= null
 #
 func CloseWindow():
 	if FSM.IsLoginState():
-		ToggleControl(quitWindow)
+		loginPanel.Close()
 	elif FSM.IsCharacterState():
 		characterPanel.Close()
 	elif FSM.IsGameState():

@@ -200,6 +200,8 @@ func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMod
 func AuthError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:
 		Launcher.GUI.loginPanel.FillWarningLabel(err)
+		if err == NetworkCommons.AuthError.ERR_OK:
+			FSM.EnterState(FSM.States.CHAR_SCREEN)
 
 func CharacterError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.GUI:
@@ -243,11 +245,13 @@ func ConnectServer():
 	Network.uniqueID = Launcher.Root.multiplayer.get_unique_id()
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
+	Peers.AddPeer(NetworkCommons.RidSingleMode)
 
 func DisconnectServer():
 	Launcher.Mode(true, true)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	Network.uniqueID = NetworkCommons.RidDefault
+	Peers.RemovePeer(NetworkCommons.RidSingleMode)
 
 func ConnectionFailed():
 	DisconnectServer()

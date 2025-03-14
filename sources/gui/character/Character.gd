@@ -53,6 +53,7 @@ func FillWarningLabel(err : NetworkCommons.CharacterError):
 func FillMissingCharacterInfo(info : Dictionary):
 	Util.DicCheckOrAdd(info, "nickname", "")
 	Util.DicCheckOrAdd(info, "last_timestamp", 1 << 32)
+	Util.DicCheckOrAdd(info, "created_timestamp", 1 << 32)
 	Util.DicCheckOrAdd(info, "level", 1)
 	Util.DicCheckOrAdd(info, "pos_map", LauncherCommons.DefaultStartMapID)
 	Util.DicCheckOrAdd(info, "hairstyle", DB.UnknownHash)
@@ -111,8 +112,9 @@ func AddCharacter(info : Dictionary, equipment : Dictionary, slotID : int = Acto
 	entity.Update(Vector2.ZERO, ActorCommons.CharacterScreenLocations[availableSlot], randDir, randState, -1, true)
 
 	if not HasSlot(currentCharacterID) or \
-	"last_timestamp" not in charactersInfo[currentCharacterID] or charactersInfo[currentCharacterID]["last_timestamp"] == null or \
-	(info["last_timestamp"] != null and charactersInfo[currentCharacterID]["last_timestamp"] < info["last_timestamp"]) or info["nickname"].is_empty():
+		(charactersInfo[currentCharacterID]["last_timestamp"] <= info["last_timestamp"] or \
+		charactersInfo[currentCharacterID]["created_timestamp"] <= info["created_timestamp"] or \
+		info["nickname"].is_empty()):
 		UpdateSelectedCharacter(info, availableSlot)
 
 	RefreshCharacterList()
@@ -157,12 +159,12 @@ func CreateCharacter():
 		if err != NetworkCommons.CharacterError.ERR_OK:
 			FillWarningLabel(err)
 		else:
-			Network.CreateCharacter(nickname, traitsPanel.GetValues(), attributesPanel.GetValues())
-			FSM.EnterState(FSM.States.CHAR_PROGRESS)
+			if Network.CreateCharacter(nickname, traitsPanel.GetValues(), attributesPanel.GetValues()):
+				FSM.EnterState(FSM.States.CHAR_PROGRESS)
 
 func SelectCharacter():
-	Network.ConnectCharacter(characterNameDisplay.get_text())
-	FSM.EnterState(FSM.States.CHAR_PROGRESS)
+	if Network.ConnectCharacter(characterNameDisplay.get_text()):
+		FSM.EnterState(FSM.States.CHAR_PROGRESS)
 
 func UpdateSelectedCharacter(info : Dictionary, slotID : int):
 	var displayInformation : bool = not info.is_empty() or isCharacterCreatorEnabled
@@ -217,6 +219,9 @@ func EnableCharacterCreator(enable : bool):
 	traitsPanel.set_visible(enable)
 	attributesPanel.set_visible(enable)
 
+	if enable:
+		characterNameLineEdit.grab_focus()
+
 	if Launcher.GUI.buttonBoxes:
 		Launcher.GUI.buttonBoxes.ClearAll()
 		if enable:
@@ -253,6 +258,7 @@ func UpdateCharacterCreatorHair():
 
 func RefreshOnce():
 	if isCharacterCreatorEnabled:
+		EnableCharacterCreator(isCharacterCreatorEnabled)
 		return
 
 	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMapID)

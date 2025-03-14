@@ -36,11 +36,13 @@ static var accounts : Dictionary[int, int]			= {}
 static func AddPeer(rpcID : int):
 	if rpcID not in peers:
 		peers[rpcID] = Peer.new(rpcID)
-		Network.Server.peer_update.emit()
+		if Network.Server:
+			Network.Server.peer_update.emit()
 
 static func RemovePeer(rpcID : int):
 	if peers.erase(rpcID):
-		Network.Server.peer_update.emit()
+		if Network.Server:
+			Network.Server.peer_update.emit()
 
 static func Footprint(rpcID : int, methodName : String, actionDelta : int) -> bool:
 	assert(rpcID in peers, "Could not find data related to this peer: " + str(rpcID))

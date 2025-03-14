@@ -23,9 +23,7 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 		else:
 			EnableAccountCreator(true)
 	else:
-		if err == NetworkCommons.AuthError.ERR_OK:
-			FSM.EnterState(FSM.States.CHAR_SCREEN)
-		else:
+		if err != NetworkCommons.AuthError.ERR_OK:
 			FSM.EnterState(FSM.States.LOGIN_SCREEN)
 
 	var warn : String = ""
@@ -71,8 +69,17 @@ func EnableAccountCreator(enable : bool):
 	onlineIndicator.set_visible(not isAccountCreatorEnabled)
 	news.set_visible(not isAccountCreatorEnabled)
 	EnableButtons(true)
+	RefreshFocusNodes(enable)
 
 #
+func RefreshFocusNodes(accountCreatorEnabled : bool):
+	if accountCreatorEnabled:
+		nameTextControl.set_focus_previous(emailTextControl.get_path())
+		passwordTextControl.set_focus_next(emailTextControl.get_path())
+	else:
+		nameTextControl.set_focus_previous(passwordTextControl.get_path())
+		passwordTextControl.set_focus_next(nameTextControl.get_path())
+
 func RefreshOnlineMode():
 	OnlineMode(Network.Client != null, Network.Server != null)
 
@@ -110,10 +117,10 @@ func Connect():
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
 	FillWarningLabel(authError)
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		FSM.EnterState(FSM.States.LOGIN_PROGRESS)
-		Network.ConnectAccount(nameText, passwordText)
-		if Launcher.GUI.settingsWindow:
-			Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
+		if Network.ConnectAccount(nameText, passwordText):
+			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
+			if Launcher.GUI.settingsWindow:
+				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
 
 func CreateAccount():
 	nameText = nameTextControl.get_text()
@@ -126,7 +133,14 @@ func CreateAccount():
 	FillWarningLabel(authError)
 
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		Network.CreateAccount(nameText, passwordText, emailText)
+		if Network.CreateAccount(nameText, passwordText, emailText):
+			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
+
+func Close():
+	if isAccountCreatorEnabled:
+		EnableAccountCreator(false)
+	else:
+		Launcher.GUI.ToggleControl(Launcher.GUI.quitWindow)
 
 #
 func _on_text_focus_entered():
