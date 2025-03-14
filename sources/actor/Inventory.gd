@@ -196,6 +196,7 @@ func ExportEquipment() -> Dictionary:
 			dic[equipmentKey] = DB.UnknownHash
 			dic[equipmentKey + "Custom"] = ""
 	return dic
+
 #
 func _init(actorNode : Actor):
 	actor = actorNode
