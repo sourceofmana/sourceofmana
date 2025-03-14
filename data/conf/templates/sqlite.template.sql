@@ -2,10 +2,12 @@ CREATE TABLE account (
     account_id           INTEGER PRIMARY KEY AUTOINCREMENT,
     username             TEXT UNIQUE NOT NULL,
     password             TEXT NOT NULL,
+    password_salt        TEXT NOT NULL,
     email                TEXT NOT NULL,
     created_timestamp    INTEGER NOT NULL,
     last_timestamp       INTEGER,
     banned_timestamp     INTEGER
+    flags                INTEGER,
 );
 
 CREATE TABLE character (

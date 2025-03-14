@@ -19,11 +19,11 @@ enum EChannel
 # Auth
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("CreateAccount", [accountName, password, email], rpcID)
+	CallServer("CreateAccount", [accountName, password, email], rpcID, NetworkCommons.DelayLogin)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("ConnectAccount", [accountName, password], rpcID)
+	CallServer("ConnectAccount", [accountName, password], rpcID, NetworkCommons.DelayLogin)
 
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
 func AuthError(err : NetworkCommons.AuthError, rpcID : int = NetworkCommons.RidSingleMode):

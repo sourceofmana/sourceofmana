@@ -21,6 +21,7 @@ const RidDefault : int					= 0
 
 const DelayInstant : int				= 0
 const DelayDefault : int				= 50
+const DelayLogin : int					= 1000
 
 const Timeout : int						= 1000
 const TimeoutMin : int					= 30000

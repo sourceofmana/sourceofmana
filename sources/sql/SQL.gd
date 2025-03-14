@@ -9,9 +9,13 @@ var queryMutex : Mutex				= Mutex.new()
 func AddAccount(username : String, password : String, email : String) -> bool:
 	var results : Array = db.select_rows("account", "username = '%s'" % username, ["account_id"])
 	if results.size() == 0:
+		var salt : String = Hasher.GenerateSalt()
+		var hashedPassword : String = Hasher.HashPassword(password, salt)
+
 		var accountData : Dictionary = {
 			"username" : username,
-			"password" : password,
+			"password_salt" : salt,
+			"password" : hashedPassword,
 			"email" : email,
 			"created_timestamp" : SQLCommons.Timestamp()
 		}
@@ -21,10 +25,18 @@ func AddAccount(username : String, password : String, email : String) -> bool:
 func RemoveAccount(accountID : int) -> bool:
 	return db.delete_rows("account", "account_id = %d" % accountID)
 
-func Login(username : String, password : String) -> int:
-	var results : Array[Dictionary] = QueryBindings("SELECT account_id FROM account WHERE username = ? AND password = ?;", [username, password])
+func Login(username : String, triedPassword : String) -> int:
+	var results : Array[Dictionary] = QueryBindings("SELECT account_id, password, password_salt FROM account WHERE username = ?;", [username])
 	assert(results.size() <= 1, "Duplicated account row")
-	return results[0]["account_id"] if results.size() > 0 else NetworkCommons.RidUnknown
+	if not results.is_empty():
+		var salt = results[0].get("password_salt", null)
+		var correctPassword = results[0].get("password", null)
+		var accountID = results[0].get("account_id", null)
+		if salt and correctPassword and accountID and salt is String and correctPassword is String and accountID is int:
+			var hashedTriedPassword : String = Hasher.HashPassword(triedPassword, salt)
+			if hashedTriedPassword == correctPassword:
+				return accountID
+	return NetworkCommons.RidUnknown
 
 func UpdateAccount(accountID : int) -> bool:
 	var newTimestamp : int = SQLCommons.Timestamp()
