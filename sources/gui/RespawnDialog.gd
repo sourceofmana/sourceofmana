@@ -1,4 +1,3 @@
-@tool
 extends WindowPanel
 
 @onready var respawnLabel : Label = $Margin/VBoxContainer/Label

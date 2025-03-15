@@ -1,4 +1,3 @@
-@tool
 extends WindowPanel
 
 @onready var stayButton : Button	= $Margin/VBoxContainer/Container/ButtonChoice/Stay

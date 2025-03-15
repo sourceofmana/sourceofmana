@@ -1,4 +1,3 @@
-@tool
 extends WindowPanel
 
 var platformSection : String					= OS.get_name()

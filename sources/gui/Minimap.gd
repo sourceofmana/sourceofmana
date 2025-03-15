@@ -1,4 +1,3 @@
-@tool
 extends WindowPanel
 
 @onready var textureRect : TextureRect = $ScrollContainer/TextureRect

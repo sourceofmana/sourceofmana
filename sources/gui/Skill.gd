@@ -1,4 +1,3 @@
-@tool
 extends WindowPanel
 
 @onready var grid : GridContainer		= $ItemContainer/Grid
