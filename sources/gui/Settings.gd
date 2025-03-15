@@ -284,7 +284,7 @@ func _ready():
 	FSM.enter_game.connect(RefreshSettings.bind(true))
 	FSM.exit_game.connect(SaveSettings.bind())
 
-	if LauncherCommons.isMobile or OS.get_name() == "Web":
+	if LauncherCommons.isMobile or LauncherCommons.isWeb:
 		accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL].get_parent().set_visible(false)
 		accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
 

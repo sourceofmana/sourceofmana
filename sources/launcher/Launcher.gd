@@ -120,7 +120,7 @@ func _ready():
 		GUI = Scene.get_node("Canvas")
 		Audio = Scene.get_node("Audio")
 		startClient = true
-		startServer = OS.get_name() == "Web" or OS.is_debug_build()
+		startServer = not LauncherCommons.isWeb and OS.is_debug_build()
 
 	if not Root or not Scene:
 		printerr("Could not initialize source's base services")

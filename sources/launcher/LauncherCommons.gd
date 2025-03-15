@@ -15,3 +15,4 @@ const MapPoolMaxSize : int				= 10
 
 #
 static var isMobile : bool				= OS.get_name() == "Android" or OS.get_name() == "iOS"
+static var isWeb : bool					= OS.get_name() == "Web"

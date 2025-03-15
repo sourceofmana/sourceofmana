@@ -306,7 +306,7 @@ func _init():
 	if not Launcher.Root.multiplayer.peer_disconnected.is_connected(DisconnectPeer):
 		Launcher.Root.multiplayer.peer_disconnected.connect(DisconnectPeer)
 
-	Util.PrintLog("Server", "Initialized on port %d" % NetworkCommons.ServerPort)
+	Util.PrintLog("Server", "Initialized with default port")
 
 func Destroy():
 	if online_agents_update.is_connected(OnlineList.UpdateJson):

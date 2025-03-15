@@ -98,7 +98,7 @@ static func GetActionInfo(action : String) -> Array:
 		for event in GetEvents(action):
 			if not LauncherCommons.isMobile and currentDeviceType == DeviceType.KEYBOARD and event is InputEventKey:
 				var keycode : Key = KEY_NONE
-				if not LauncherCommons.isMobile:
+				if not LauncherCommons.isMobile and not LauncherCommons.isWeb:
 					keycode = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
 				if keycode == KEY_NONE:
 					keycode = event.keycode

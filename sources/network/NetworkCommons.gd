@@ -2,10 +2,16 @@ extends Object
 class_name NetworkCommons
 
 # Server
-const ServerPort : int					= 6109
-const LocalServerAddress : String		= "127.0.0.1"
+const WebSocketPortTesting : int		= 6118
+const ENetPortTesting : int				= 6119
+const ServerAddressTesting : String		= "som.manasource.org"
+
+const WebSocketPort : int				= 6108
+const ENetPort : int					= 6109
 const ServerAddress : String			= "som.manasource.org"
-const MaxPlayerCount : int				= 32
+
+const LocalServerAddress : String		= "127.0.0.1"
+const MaxPlayerCount : int				= 128
 
 # Navigation
 const NavigationSpawnTry : int			= 10
@@ -31,10 +37,9 @@ const LoginAttemptTimeout : float		= 15
 const CharSelectionTimeout : float		= 15
 
 # Peer
-const EnableWebSocket : bool			= true
-const ClientTrustedCAPath : String		= "res://publishing/my_trusted_cas.crt"
-const ServerKeyPath : String			= "res://publishing/private_key.key"
-const ServerCertsPath : String			= "res://publishing/my_server_cas.crt"
+const ForceWebSocket : bool				= false
+const ServerKeyPath : String			= "user://server.key"
+const ServerCertPath : String			= "user://server.crt"
 
 # Auth
 const PlayerNameMinSize : int			= 3

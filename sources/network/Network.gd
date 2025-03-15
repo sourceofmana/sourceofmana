@@ -341,6 +341,12 @@ func CallClientGlobal(methodName : String, args : Array):
 
 # Service handling
 func Mode(isClient : bool, isServer : bool):
+	var useWebSocket : bool = NetworkCommons.ForceWebSocket
+	var isOffline : bool = isClient and isServer
+	var WebSocketPort : int = NetworkCommons.WebSocketPortTesting
+	var ENetPort : int = NetworkCommons.ENetPortTesting
+	var serverAddress : String = NetworkCommons.LocalServerAddress
+
 	if isClient:
 		Client = NetClient.new()
 	if isServer:
@@ -349,44 +355,42 @@ func Mode(isClient : bool, isServer : bool):
 	if uniqueID != NetworkCommons.RidDefault:
 		pass
 
-	if NetworkCommons.EnableWebSocket:
+	if useWebSocket:
 		peer = WebSocketMultiplayerPeer.new()
 	else:
 		peer = ENetMultiplayerPeer.new()
 
-	if Client and Server:
+	if isOffline:
 		uniqueID = NetworkCommons.RidSingleMode
 		Server.ConnectPeer(uniqueID)
 		Client.ConnectServer()
 	elif Client:
 		var ret : Error = FAILED
-		var serverAddress : String = NetworkCommons.LocalServerAddress if Launcher.Debug else NetworkCommons.ServerAddress
-		if NetworkCommons.EnableWebSocket:
-			var tlsOptions : TLSOptions = null
-			var prefix : String = "ws://"
-			if ResourceLoader.exists(NetworkCommons.ClientTrustedCAPath):
-				var clientTrustedCA : X509Certificate = ResourceLoader.load(NetworkCommons.ClientTrustedCAPath)
-				tlsOptions = TLSOptions.client(clientTrustedCA)
-				prefix = "wss://"
-			ret = peer.create_client(prefix + serverAddress + ":" + str(NetworkCommons.ServerPort), tlsOptions)
+		if useWebSocket:
+			var prefix : String = "ws://" if serverAddress == NetworkCommons.LocalServerAddress else "wss://"
+			var tlsOptions : TLSOptions = TLSOptions.client_unsafe()
+			ret = peer.create_client(prefix + serverAddress + ":" + str(WebSocketPort), tlsOptions)
+			assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, WebSocketPort])
 		else:
-			ret = peer.create_client(serverAddress, NetworkCommons.ServerPort)
-		assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, NetworkCommons.ServerPort])
+			ret = peer.create_client(serverAddress, ENetPort)
+			assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, ENetPort])
 		Launcher.Root.multiplayer.multiplayer_peer = peer
 	elif Server:
 		var ret : Error = FAILED
-		if NetworkCommons.EnableWebSocket:
-			var serverKey : CryptoKey = null
-			var serverCerts : X509Certificate = null
-			var tlsOptions : TLSOptions = null
-			if ResourceLoader.exists(NetworkCommons.ServerKeyPath) and ResourceLoader.exists(NetworkCommons.ServerCertsPath):
-				serverKey = ResourceLoader.load(NetworkCommons.ServerKeyPath)
-				serverCerts = ResourceLoader.load(NetworkCommons.ServerCertsPath)
-				tlsOptions = TLSOptions.server(serverKey, serverCerts)
-			ret = peer.create_server(NetworkCommons.ServerPort, "*", tlsOptions)
+		var tlsOptions : TLSOptions = null
+		if ResourceLoader.exists(NetworkCommons.ServerCertPath) and ResourceLoader.exists(NetworkCommons.ServerKeyPath):
+			var serverKey : CryptoKey = CryptoKey.new()
+			var serverCert : X509Certificate = X509Certificate.new()
+			serverKey.load(NetworkCommons.ServerKeyPath)
+			serverCert.load(NetworkCommons.ServerCertPath)
+			tlsOptions = TLSOptions.server(serverKey, serverCert)
+		if useWebSocket:
+			ret = peer.create_server(WebSocketPort, "*", tlsOptions)
+			assert(ret == OK, "Server could not be created, please check if your port %d is valid" % WebSocketPort)
 		else:
-			ret = peer.create_server(NetworkCommons.ServerPort)
-		assert(ret == OK, "Server could not be created, please check if your port %d is valid" % NetworkCommons.ServerPort)
+			ret = peer.create_server(ENetPort)
+#			peer.host.dtls_server_setup(tlsOptions)
+			assert(ret == OK, "Server could not be created, please check if your port %d is valid" % ENetPort)
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
 			uniqueID = Launcher.Root.multiplayer.get_unique_id()

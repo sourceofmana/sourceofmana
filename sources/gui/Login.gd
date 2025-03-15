@@ -99,7 +99,9 @@ func EnableButtons(state : bool):
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", EnableAccountCreator.bind(false))
 			else:
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Connect", Connect)
-				if OS.get_name() != "Web":
+				if LauncherCommons.isWeb:
+					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Refresh Connection", SwitchOnlineMode.bind(true))
+				else:
 					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Create Account", EnableAccountCreator.bind(true))
 				RefreshOnlineMode()

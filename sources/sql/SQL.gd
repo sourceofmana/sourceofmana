@@ -354,8 +354,8 @@ func _post_launch():
 	if not db.open_db():
 		assert(false, "Failed to open database: "+ db.error_message)
 	else:
-		#if not Launcher.Debug:
-		backups = SQLBackups.new()
+		if not Launcher.Debug:
+			backups = SQLBackups.new()
 
 	isInitialized = true
 
