@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://dh1ysgwnyqu3u"
+uid="uid://curg5pa6ejtu7"
 path="res://.godot/imported/ship-alige-hide.tmx-f408a8d112de1d4d5686ec9efd02e63d.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

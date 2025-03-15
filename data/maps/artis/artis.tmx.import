@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://dy8li2q5xjneo"
+uid="uid://cu8es1hf6r83y"
 path="res://.godot/imported/artis.tmx-75618eadd740c64a2482d404b80b6e9c.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

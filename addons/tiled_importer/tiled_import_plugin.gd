@@ -90,8 +90,8 @@ func _get_import_options(path, preset):
 			"default_value": true
 		},
 		{
-			"name": "polygon_grow_default",
-			"default_value": 12
+			"name": "export_global_scene",
+			"default_value": false
 		}
 	]
 
@@ -104,38 +104,54 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	var saveRet = OK
 	var mapReader = TiledMapReader.new()
 
-	# Client Data import (TileMap and warp locations)
-	var client_scene = mapReader.build_client(source_file, options)
-	if typeof(client_scene) == TYPE_OBJECT:
-		var packed_scene = PackedScene.new()
-		packed_scene.pack(client_scene)
-		saveRet &= ResourceSaver.save(packed_scene, "%s.client.%s" % [source_file, _get_save_extension()])
-
-	# Server Data import (Spawn and warp locations)
-	var server_scene = null
-	server_scene = mapReader.build_server(source_file)
-	if server_scene:
-		var packed_scene = PackedScene.new()
-		packed_scene.pack(server_scene)
-		saveRet &= ResourceSaver.save(packed_scene, "%s.server.%s" % [source_file, _get_save_extension()])
+	var client_scene : Node2D = mapReader.build_client(source_file, options)
+	var server_scene : Node = mapReader.build_server(source_file)
+	var nav_region : NavigationRegion2D = mapReader.build_navigation()
 
 	# Navigation import into a separate .tres
-	var nav_region : NavigationRegion2D = mapReader.build_navigation()
 	if nav_region and options.export_navigation_mesh:
 		NavigationServer2D.bake_from_source_geometry_data(nav_region.navigation_polygon, mapReader.source_data)
 		saveRet &= ResourceSaver.save(nav_region.navigation_polygon, "%s.navigation.tres" % [source_file])
 
-	# Default import file when opening the .tmx file
-	if client_scene:
+	# Import file when opening the .tmx file
+	if options.export_global_scene:
 		if server_scene:
 			server_scene.set_name("ServerData")
 			client_scene.add_child(server_scene)
 			server_scene.set_owner(client_scene)
 		if nav_region:
+			server_scene.set_name("NavRegion")
 			client_scene.add_child(nav_region)
 			nav_region.set_owner(client_scene)
 		var packed_scene = PackedScene.new()
 		packed_scene.pack(client_scene)
+		saveRet &= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()]) # Mandatory 
+	else:
+		# Client Data import (TileMap and warp locations)
+		if client_scene:
+			# Hide unused data from the client
+			for child in client_scene.get_children():
+				if child is TileMapLayer:
+					child.set_occlusion_enabled(false)
+					child.set_collision_enabled(false)
+					child.set_navigation_enabled(false)
+					if child.get_name() == "Collision":
+						client_scene.remove_child(child)
+			var packed_scene = PackedScene.new()
+			packed_scene.pack(client_scene)
+			saveRet &= ResourceSaver.save(packed_scene, "%s.client.%s" % [source_file, _get_save_extension()])
+
+		# Server Data import (Spawn and warp locations)
+		if server_scene:
+			var packed_scene = PackedScene.new()
+			packed_scene.pack(server_scene)
+			saveRet &= ResourceSaver.save(packed_scene, "%s.server.%s" % [source_file, _get_save_extension()])
+
+		# Empty scene when the user want to open the .tmx, have to check the export_global_scene to generate a global unified scene
+		var empty_scene : Node2D = Node2D.new()
+		empty_scene.set_name("Empty")
+		var packed_scene = PackedScene.new()
+		packed_scene.pack(empty_scene)
 		saveRet &= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()]) # Mandatory 
 
 	return saveRet

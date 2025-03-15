@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://dlccywg5b1akk"
+uid="uid://dgjifjo3lpbwi"
 path="res://.godot/imported/splatyna-boss.tmx-f9c2f7d0bd5764bafa00f111e2c05155.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

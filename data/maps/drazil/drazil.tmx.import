@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://dl0nfp2cf34vh"
+uid="uid://dsd3aho7kg3wk"
 path="res://.godot/imported/drazil.tmx-e06653719e04d9b2622dfebbebf13f1a.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

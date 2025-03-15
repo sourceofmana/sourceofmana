@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://cntgqvltb4ku3"
+uid="uid://bsoevrfx466df"
 path="res://.godot/imported/splatyna-corridor.tmx-c739be919ed06e238b640ddc48628f4a.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

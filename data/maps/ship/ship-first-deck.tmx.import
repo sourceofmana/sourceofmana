@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://c2hndqfi5bf15"
+uid="uid://b1y0rhuic2ld3"
 path="res://.godot/imported/ship-first-deck.tmx-e0c2d04bc1e9a62753f5147c73718cd2.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

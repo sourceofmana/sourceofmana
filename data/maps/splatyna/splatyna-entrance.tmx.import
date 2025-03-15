@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://c313xs4m58uxd"
+uid="uid://d3ym7jqtxiit4"
 path="res://.godot/imported/splatyna-entrance.tmx-fd88c68e8fb8d926e7c855e2ccbead90.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

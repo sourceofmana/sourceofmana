@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://bk8xbu1cxlb5s"
+uid="uid://dxns5agv7jawi"
 path="res://.godot/imported/candor-cave.tmx-6530b6fbc9a7e8936e62c035edc62d33.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

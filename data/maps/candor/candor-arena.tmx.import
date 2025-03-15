@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://dcaaj7anoek6i"
+uid="uid://1sj077wqyxon"
 path="res://.godot/imported/candor-arena.tmx-e05d3f8f0108d01b1fa585e4e8f4a0bf.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

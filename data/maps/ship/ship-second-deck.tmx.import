@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://cm4ph1us71rso"
+uid="uid://cnxqigulelifc"
 path="res://.godot/imported/ship-second-deck.tmx-bd8be5ca5ed03bf5a98e3170f28d0546.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

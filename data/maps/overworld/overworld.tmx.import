@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://cqq7y3hp0hmas"
+uid="uid://dqgxfdp5x7hla"
 path="res://.godot/imported/overworld.tmx-785a91c3b9f927e8ee04388f4463465e.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

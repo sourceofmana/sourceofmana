@@ -2,7 +2,7 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://cyjs7b10hrcg1"
+uid="uid://cms4wajv2axvn"
 path="res://.godot/imported/ocean.tmx-56e90334eee6b8bd069b62aeb342173a.scn"
 
 [deps]
@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-polygon_grow_default=12
+export_global_scene=false

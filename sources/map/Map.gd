@@ -40,7 +40,7 @@ func EmplaceMapNode(mapID : int):
 func UnloadMapNode():
 	if currentMapNode:
 		RemoveChildren()
-		Launcher.remove_child(currentMapNode)
+		Launcher.remove_child.call_deferred(currentMapNode)
 		currentMapID = DB.UnknownHash
 		currentMapNode = null
 		currentFringe = null
@@ -67,7 +67,7 @@ func RemoveChildren():
 func RemoveChild(child : Node2D):
 	if child:
 		if currentFringe:
-			currentFringe.remove_child(child)
+			currentFringe.remove_child.call_deferred(child)
 		if child != Launcher.Player:
 			child.queue_free()
 
