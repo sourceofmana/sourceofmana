@@ -121,13 +121,13 @@ func _ready():
 		Audio = Scene.get_node("Audio")
 		startClient = true
 		startServer = not LauncherCommons.isWeb and OS.is_debug_build()
+		Conf.Init()
 
 	if not Root or not Scene:
 		printerr("Could not initialize source's base services")
 		Quit()
 
 	DB.Init()
-	Conf.Init()
 	Mode(startClient, startServer)
 	await Scene.ready
 

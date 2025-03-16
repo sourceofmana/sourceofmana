@@ -242,7 +242,7 @@ func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictio
 
 #
 func ConnectServer():
-	Network.uniqueID = Launcher.Root.multiplayer.get_unique_id()
+	Network.uniqueID = Launcher.Root.multiplayer.get_unique_id() if Launcher.Root.multiplayer.has_multiplayer_peer() else NetworkCommons.RidDefault
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
 	Peers.AddPeer(NetworkCommons.RidSingleMode)

@@ -28,11 +28,9 @@ func EmplaceMapNode(mapID : int):
 	if currentMapID == mapID:
 		return
 
-	PhysicsServer2D.set_active(false)
 	if currentMapNode:
 		UnloadMapNode()
 	LoadMapNode(mapID)
-	PhysicsServer2D.set_active(true)
 
 	if LauncherCommons.EnableMapPool:
 		pool.RefreshPool(currentMapNode)

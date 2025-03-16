@@ -196,7 +196,6 @@ static func ApplySpawnerBehaviour(agent : AIAgent) -> bool:
 	for spawn in agent.data._spawns:
 		var toSpawn : int = agent.data._spawns[spawn]
 		if spawn in agent.followers:
-			agent.followers.erase(null)
 			toSpawn -= agent.followers[spawn].size()
 		else:
 			agent.followers[spawn] = []
