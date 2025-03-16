@@ -81,6 +81,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/emotes/wink.png [Modanung]
 ./graphics/emotes/whatever.png [Reid]
 ./graphics/fonts/alagard-16.ttf [pix3m]
+./graphics/fonts/DejaVuSans.ttf [Bitstream]
 ./graphics/fonts/romulus-16.ttf [pix3m]
 ./graphics/gui/bar.png [Reid]
 ./graphics/gui/barprogressdefault.png [Reid]
