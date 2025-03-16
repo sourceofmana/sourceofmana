@@ -1,7 +1,7 @@
 extends ServiceBase
 
 #
-var db : SQLite						= null
+var db : Object						= null
 var backups : SQLBackups			= null
 var queryMutex : Mutex				= Mutex.new()
 
@@ -347,7 +347,10 @@ func _post_launch():
 		if not FileSystem.CopySQLDatabase(SQLCommons.TemplatePath, SQLCommons.CurrentDBName):
 			return
 
-	db = SQLite.new()
+	if LauncherCommons.isWeb:
+		db = DummySQL.new()
+	else:
+		db = SQLite.new()
 	db.path = Path.Local + SQLCommons.CurrentDBName
 	db.verbosity_level = SQLite.VERBOSE if Launcher.Debug else SQLite.NORMAL
 
