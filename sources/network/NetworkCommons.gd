@@ -37,7 +37,7 @@ const LoginAttemptTimeout : float		= 15
 const CharSelectionTimeout : float		= 15
 
 # Peer
-const ForceWebSocket : bool				= false
+const ForceWebSocket : bool				= true
 const ServerKeyPath : String			= "user://server.key"
 const ServerCertPath : String			= "user://server.crt"
 

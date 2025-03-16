@@ -121,7 +121,7 @@ func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : in
 func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
-		if entity and entity.get_parent() and entity.stat:
+		if entity and entity.stat:
 			entity.stat.strength		= strength
 			entity.stat.vitality		= vitality
 			entity.stat.agility			= agility
@@ -242,15 +242,16 @@ func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictio
 
 #
 func ConnectServer():
-	Network.uniqueID = Launcher.Root.multiplayer.get_unique_id() if Launcher.Root.multiplayer.has_multiplayer_peer() else NetworkCommons.RidDefault
+	if not Network.Server:
+		Network.uniqueID = Launcher.Root.multiplayer.get_unique_id()
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
 	Peers.AddPeer(NetworkCommons.RidSingleMode)
 
 func DisconnectServer():
+	Network.uniqueID = NetworkCommons.RidDefault
 	Launcher.Mode(true, true)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
-	Network.uniqueID = NetworkCommons.RidDefault
 	Peers.RemovePeer(NetworkCommons.RidSingleMode)
 
 func ConnectionFailed():

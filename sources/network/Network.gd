@@ -342,10 +342,11 @@ func CallClientGlobal(methodName : String, args : Array):
 # Service handling
 func Mode(isClient : bool, isServer : bool):
 	var useWebSocket : bool = NetworkCommons.ForceWebSocket
+	var isLocal : bool = OS.is_debug_build()
 	var isOffline : bool = isClient and isServer
 	var WebSocketPort : int = NetworkCommons.WebSocketPortTesting
 	var ENetPort : int = NetworkCommons.ENetPortTesting
-	var serverAddress : String = NetworkCommons.LocalServerAddress
+	var serverAddress : String = NetworkCommons.LocalServerAddress if isLocal else NetworkCommons.ServerAddressTesting
 
 	if isClient:
 		Client = NetClient.new()
@@ -366,13 +367,15 @@ func Mode(isClient : bool, isServer : bool):
 		Client.ConnectServer()
 	elif Client:
 		var ret : Error = FAILED
+		var tlsOptions : TLSOptions = TLSOptions.client_unsafe()
 		if useWebSocket:
 			var prefix : String = "ws://" if serverAddress == NetworkCommons.LocalServerAddress else "wss://"
-			var tlsOptions : TLSOptions = TLSOptions.client_unsafe()
 			ret = peer.create_client(prefix + serverAddress + ":" + str(WebSocketPort), tlsOptions)
 			assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, WebSocketPort])
 		else:
 			ret = peer.create_client(serverAddress, ENetPort)
+			if not isLocal:
+				ret = peer.host.dtls_client_setup(serverAddress, tlsOptions)
 			assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, ENetPort])
 		Launcher.Root.multiplayer.multiplayer_peer = peer
 	elif Server:
@@ -389,7 +392,8 @@ func Mode(isClient : bool, isServer : bool):
 			assert(ret == OK, "Server could not be created, please check if your port %d is valid" % WebSocketPort)
 		else:
 			ret = peer.create_server(ENetPort)
-#			peer.host.dtls_server_setup(tlsOptions)
+			if tlsOptions:
+				ret = peer.host.dtls_server_setup(tlsOptions)
 			assert(ret == OK, "Server could not be created, please check if your port %d is valid" % ENetPort)
 		if ret == OK:
 			Launcher.Root.multiplayer.multiplayer_peer = peer
