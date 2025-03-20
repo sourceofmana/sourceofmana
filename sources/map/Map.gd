@@ -79,7 +79,7 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spiri
 	if not currentFringe:
 		return
 
-	var entityData : EntityData = DB.EntitiesDB.get(shape, null)
+	var entityData : EntityData = DB.EntitiesDB.get(currentShape, null)
 	if not entityData:
 		return
 
