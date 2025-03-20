@@ -1,6 +1,7 @@
 extends AudioStreamPlayer
 
-var currentTrack : int = DB.UnknownHash
+var currentTrack : int					= DB.UnknownHash
+var soundStream : AudioStreamOggVorbis	= null
 
 #
 func Stop():
@@ -10,12 +11,16 @@ func Stop():
 
 func Load(soundID : int):
 	if currentTrack != soundID:
+		if soundStream:
+			soundStream = null
+			currentTrack = DB.UnknownHash
+
 		var soundData : FileData = DB.MusicsDB.get(soundID, null)
 		if not soundData:
 			assert(false, "Could not load music database id: %s" % soundID)
 			return
 
-		var soundStream : Resource = FileSystem.LoadMusic(soundData._path)
+		soundStream = FileSystem.LoadMusic(soundData._path)
 		if not soundStream:
 			assert(false, "Could not load music: %s" % soundData._name)
 			return
