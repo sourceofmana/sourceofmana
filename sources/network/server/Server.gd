@@ -1,13 +1,5 @@
-extends Object
+extends NetInterface
 class_name NetServer
-
-#
-signal peer_update
-signal accounts_list_update
-signal characters_list_update
-signal online_accounts_update
-signal online_characters_update
-signal online_agents_update
 
 # Auth
 func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode):
@@ -23,7 +15,7 @@ func CreateAccount(accountName : String, password : String, email : String, rpcI
 			elif not Launcher.SQL.AddAccount(accountName, password, email):
 				err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
 			else:
-				accounts_list_update.emit()
+				Network.accounts_list_update.emit()
 				peer.SetAccount(Launcher.SQL.Login(accountName, password))
 	Network.AuthError(err, rpcID)
 
@@ -72,7 +64,7 @@ func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictio
 			if characterID == NetworkCommons.RidUnknown:
 				err = NetworkCommons.CharacterError.ERR_NO_CHARACTER_ID
 			else:
-				characters_list_update.emit()
+				Network.characters_list_update.emit()
 				for itemData in ActorCommons.DefaultInventory:
 					Launcher.SQL.AddItem(characterID, itemData.get("item_id", DB.UnknownHash), itemData.get("customfield", ""), itemData.get("count", 1))
 				for skillData in ActorCommons.DefaultSkills:
@@ -282,10 +274,10 @@ func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
 
 # Peer handling
 func ConnectPeer(rpcID : int):
-	Util.PrintInfo("Server", "Peer connected: %d" % rpcID)
-	Peers.AddPeer(rpcID)
-	if Network.peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
-		var clientPeer : PacketPeer = Network.peer.get_peer(rpcID)
+	Util.PrintInfo("Server", "Peer connected: %d with %s" % [rpcID, "Websocket" if useWebSocket else "ENet"])
+	Peers.AddPeer(rpcID, useWebSocket)
+	if currentPeer and currentPeer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
+		var clientPeer : PacketPeer = currentPeer.get_peer(rpcID)
 		if clientPeer and clientPeer is ENetPacketPeer:
 			clientPeer.set_timeout(NetworkCommons.Timeout, NetworkCommons.TimeoutMin, NetworkCommons.TimeoutMax)
 
@@ -298,23 +290,55 @@ func DisconnectPeer(rpcID : int):
 		Peers.RemovePeer(rpcID)
 
 #
-func _init():
-	if not online_agents_update.is_connected(OnlineList.UpdateJson):
-		online_agents_update.connect(OnlineList.UpdateJson)
-	if not Launcher.Root.multiplayer.peer_connected.is_connected(ConnectPeer):
-		Launcher.Root.multiplayer.peer_connected.connect(ConnectPeer)
-	if not Launcher.Root.multiplayer.peer_disconnected.is_connected(DisconnectPeer):
-		Launcher.Root.multiplayer.peer_disconnected.connect(DisconnectPeer)
+func _enter_tree():
+	if isOffline:
+		uniqueID = NetworkCommons.RidSingleMode
+		ConnectPeer(uniqueID)
+		return
 
-	Util.PrintLog("Server", "Initialized with default port")
+	if not multiplayerAPI.peer_connected.is_connected(ConnectPeer):
+		multiplayerAPI.peer_connected.connect(ConnectPeer)
+	if not multiplayerAPI.peer_disconnected.is_connected(DisconnectPeer):
+		multiplayerAPI.peer_disconnected.connect(DisconnectPeer)
+
+	var serverPort : int = NetworkCommons.WebSocketPort if useWebSocket else NetworkCommons.ENetPort
+	if isTesting:
+		serverPort = NetworkCommons.WebSocketPortTesting if useWebSocket else NetworkCommons.ENetPortTesting
+
+	var tlsOptions : TLSOptions = null
+	if ResourceLoader.exists(NetworkCommons.ServerCertPath) and ResourceLoader.exists(NetworkCommons.ServerKeyPath):
+		var serverKey : CryptoKey = CryptoKey.new()
+		var serverCert : X509Certificate = X509Certificate.new()
+		serverKey.load(NetworkCommons.ServerKeyPath)
+		serverCert.load(NetworkCommons.ServerCertPath)
+		tlsOptions = TLSOptions.server(serverKey, serverCert)
+
+	var ret : Error = FAILED
+	if useWebSocket:
+		ret = currentPeer.create_server(serverPort, "*", tlsOptions)
+	else:
+		ret = currentPeer.create_server(serverPort)
+		if ret == OK and tlsOptions:
+			ret = currentPeer.host.dtls_server_setup(tlsOptions)
+
+	assert(ret == OK, "Server could not be created, please check if your port %d is valid" % serverPort)
+	if ret == OK:
+		multiplayerAPI.multiplayer_peer = currentPeer
+		uniqueID = multiplayerAPI.get_unique_id()
+
+		Util.PrintLog("Server", "Initialized with: %s, %s, %s, %s" % [
+			"WebSocket" if useWebSocket else "ENet",
+			"Offline" if isOffline else "Online",
+			"Local" if isLocal else "Public",
+			"Testing" if isTesting else "Release"
+		])
 
 func Destroy():
-	if online_agents_update.is_connected(OnlineList.UpdateJson):
-		online_agents_update.disconnect(OnlineList.UpdateJson)
-	if Launcher.Root.multiplayer.peer_connected.is_connected(ConnectPeer):
-		Launcher.Root.multiplayer.peer_connected.disconnect(ConnectPeer)
-	if Launcher.Root.multiplayer.peer_disconnected.is_connected(DisconnectPeer):
-		Launcher.Root.multiplayer.peer_disconnected.disconnect(DisconnectPeer)
+	if multiplayerAPI.peer_connected.is_connected(ConnectPeer):
+		multiplayerAPI.peer_connected.disconnect(ConnectPeer)
+	if multiplayerAPI.peer_disconnected.is_connected(DisconnectPeer):
+		multiplayerAPI.peer_disconnected.disconnect(DisconnectPeer)
 
 	for peerRID in Peers.peers:
 		DisconnectPeer(peerRID)
+	super.Destroy()

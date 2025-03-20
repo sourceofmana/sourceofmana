@@ -1,11 +1,17 @@
 extends Node
 
 #
-var Client							= null
-var Server							= null
+signal peer_update
+signal accounts_list_update
+signal characters_list_update
+signal online_accounts_update
+signal online_characters_update
+signal online_agents_update
 
-var peer : MultiplayerPeer			= null
-var uniqueID : int					= NetworkCommons.RidDefault
+#
+var Client							= null
+var ENetServer						= null
+var WebSocketServer					= null
 
 enum EChannel
 {
@@ -315,97 +321,49 @@ func NotifyInstance(inst : WorldInstance, callbackName : String, args : Array):
 
 # Peer calls
 func CallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault) -> bool:
-	if Server:
+	if rpcID != NetworkCommons.RidSingleMode:
 		if Peers.Footprint(rpcID, methodName, actionDelta):
-			Server.callv.call_deferred(methodName, args + [rpcID])
+			if Peers.IsUsingWebSocket(rpcID):
+				WebSocketServer.callv.call_deferred(methodName, args + [rpcID])
+			else:
+				ENetServer.callv.call_deferred(methodName, args + [rpcID])
 			return true
 	else:
 		if Peers.Footprint(rpcID, methodName, actionDelta):
-			callv.call("rpc_id", [1, methodName] + args + [uniqueID])
+			Client.multiplayerAPI.rpc(NetworkCommons.RidAuthority, self, methodName, args + [Client.uniqueID])
 			return true
-		else:
-			return false
 	return false
 
 func CallClient(methodName : String, args : Array, rpcID : int):
-	if Client:
+	if rpcID == NetworkCommons.RidSingleMode:
 		Client.callv.call_deferred(methodName, args)
+	elif Peers.IsUsingWebSocket(rpcID):
+		WebSocketServer.multiplayerAPI.rpc(rpcID, self, methodName, args)
 	else:
-		callv.call("rpc_id", [rpcID, methodName] + args)
-
-func CallClientGlobal(methodName : String, args : Array):
-	if Client:
-		Client.callv.call_deferred(methodName, args)
-	else:
-		callv.call("rpc", [methodName] + args)
+		ENetServer.multiplayerAPI.rpc(rpcID, self, methodName, args)
 
 # Service handling
 func Mode(isClient : bool, isServer : bool):
-	var useWebSocket : bool = NetworkCommons.ForceWebSocket
-	var isLocal : bool = OS.is_debug_build()
 	var isOffline : bool = isClient and isServer
-	var WebSocketPort : int = NetworkCommons.WebSocketPortTesting
-	var ENetPort : int = NetworkCommons.ENetPortTesting
-	var serverAddress : String = NetworkCommons.LocalServerAddress if isLocal else NetworkCommons.ServerAddressTesting
-
 	if isClient:
-		Client = NetClient.new()
+		Client = NetClient.new(LauncherCommons.isWeb, isOffline, isOffline or NetworkCommons.IsLocal, NetworkCommons.IsTesting)
+
 	if isServer:
-		Server = NetServer.new()
+		if NetworkCommons.UseENet:
+			ENetServer = NetServer.new(false, isOffline, NetworkCommons.IsLocal, NetworkCommons.IsTesting)
+		if NetworkCommons.UseWebSocket and not isOffline:
+			WebSocketServer = NetServer.new(true, isOffline, NetworkCommons.IsLocal, NetworkCommons.IsTesting)
 
-	if uniqueID != NetworkCommons.RidDefault:
-		pass
-
-	if useWebSocket:
-		peer = WebSocketMultiplayerPeer.new()
-	else:
-		peer = ENetMultiplayerPeer.new()
-
-	if isOffline:
-		uniqueID = NetworkCommons.RidSingleMode
-		Server.ConnectPeer(uniqueID)
-		Client.ConnectServer()
-	elif Client:
-		var ret : Error = FAILED
-		var tlsOptions : TLSOptions = TLSOptions.client_unsafe()
-		if useWebSocket:
-			var prefix : String = "ws://" if serverAddress == NetworkCommons.LocalServerAddress else "wss://"
-			ret = peer.create_client(prefix + serverAddress + ":" + str(WebSocketPort), tlsOptions)
-			assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, WebSocketPort])
-		else:
-			ret = peer.create_client(serverAddress, ENetPort)
-			if not isLocal:
-				ret = peer.host.dtls_client_setup(serverAddress, tlsOptions)
-			assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, ENetPort])
-		Launcher.Root.multiplayer.multiplayer_peer = peer
-	elif Server:
-		var ret : Error = FAILED
-		var tlsOptions : TLSOptions = null
-		if ResourceLoader.exists(NetworkCommons.ServerCertPath) and ResourceLoader.exists(NetworkCommons.ServerKeyPath):
-			var serverKey : CryptoKey = CryptoKey.new()
-			var serverCert : X509Certificate = X509Certificate.new()
-			serverKey.load(NetworkCommons.ServerKeyPath)
-			serverCert.load(NetworkCommons.ServerCertPath)
-			tlsOptions = TLSOptions.server(serverKey, serverCert)
-		if useWebSocket:
-			ret = peer.create_server(WebSocketPort, "*", tlsOptions)
-			assert(ret == OK, "Server could not be created, please check if your port %d is valid" % WebSocketPort)
-		else:
-			ret = peer.create_server(ENetPort)
-			if tlsOptions:
-				ret = peer.host.dtls_server_setup(tlsOptions)
-			assert(ret == OK, "Server could not be created, please check if your port %d is valid" % ENetPort)
-		if ret == OK:
-			Launcher.Root.multiplayer.multiplayer_peer = peer
-			uniqueID = Launcher.Root.multiplayer.get_unique_id()
+func _init():
+	online_agents_update.connect(OnlineList.UpdateJson)
 
 func Destroy():
-	if peer:
-		peer.close()
 	if Client:
 		Client.Destroy()
 		Client = null
-	if Server:
-		Server.Destroy()
-		Server = null
-	uniqueID = NetworkCommons.RidDefault
+	if ENetServer:
+		ENetServer.Destroy()
+		ENetServer = null
+	if WebSocketServer:
+		WebSocketServer.Destroy()
+		WebSocketServer = null

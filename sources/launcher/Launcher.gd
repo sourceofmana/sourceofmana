@@ -25,7 +25,7 @@ signal launchModeUpdated
 #
 func Mode(launchClient : bool = false, launchServer : bool = false) -> bool:
 	var isClientConnected : bool = Network.Client != null
-	var isServerConnected : bool = Network.Server != null
+	var isServerConnected : bool = Network.ENetServer != null or Network.WebSocketServer != null
 	if isClientConnected == launchClient and isServerConnected == launchServer:
 		return false
 
@@ -84,9 +84,12 @@ func Reset(clientStarted : bool, serverStarted : bool):
 			Player = null
 
 	if not serverStarted:
-		if Network.Server:
-			Network.Server.Destroy()
-			Network.Server = null
+		if Network.ENetServer:
+			Network.ENetServer.Destroy()
+			Network.ENetServer = null
+		if Network.WebSocketServer:
+			Network.WebSocketServer.Destroy()
+			Network.WebSocketServer = null
 		if World:
 			World.set_name("WorldDestroyed")
 			World.Destroy()

@@ -81,7 +81,7 @@ func RefreshFocusNodes(accountCreatorEnabled : bool):
 		passwordTextControl.set_focus_next(nameTextControl.get_path())
 
 func RefreshOnlineMode():
-	OnlineMode(Network.Client != null, Network.Server != null)
+	OnlineMode(Network.Client != null, Network.ENetServer != null or Network.WebSocketServer != null)
 
 func OnlineMode(_clientStarted : bool, serverStarted : bool):
 	if onlineIndicator:

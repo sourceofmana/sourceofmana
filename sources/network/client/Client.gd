@@ -1,4 +1,4 @@
-extends Object
+extends NetInterface
 class_name NetClient
 
 #
@@ -242,14 +242,14 @@ func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictio
 
 #
 func ConnectServer():
-	if not Network.Server:
-		Network.uniqueID = Launcher.Root.multiplayer.get_unique_id()
+	if multiplayerAPI:
+		uniqueID = multiplayerAPI.get_unique_id()
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
-	Peers.AddPeer(NetworkCommons.RidSingleMode)
+	Peers.AddPeer(NetworkCommons.RidSingleMode, NetworkCommons.UseWebSocket and not NetworkCommons.UseENet)
 
 func DisconnectServer():
-	Network.uniqueID = NetworkCommons.RidDefault
+	uniqueID = NetworkCommons.RidDefault
 	Launcher.Mode(true, true)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	Peers.RemovePeer(NetworkCommons.RidSingleMode)
@@ -259,18 +259,53 @@ func ConnectionFailed():
 	AuthError(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
 
 #
-func _init():
-	if not Launcher.Root.multiplayer.connected_to_server.is_connected(ConnectServer):
-		Launcher.Root.multiplayer.connected_to_server.connect(ConnectServer)
-	if not Launcher.Root.multiplayer.connection_failed.is_connected(ConnectionFailed):
-		Launcher.Root.multiplayer.connection_failed.connect(ConnectionFailed)
-	if not Launcher.Root.multiplayer.server_disconnected.is_connected(DisconnectServer):
-		Launcher.Root.multiplayer.server_disconnected.connect(DisconnectServer)
+func _enter_tree():
+	if isOffline:
+		uniqueID = NetworkCommons.RidSingleMode
+		ConnectServer.call_deferred()
+		return
+
+	if not multiplayerAPI.connected_to_server.is_connected(ConnectServer):
+		multiplayerAPI.connected_to_server.connect(ConnectServer)
+	if not multiplayerAPI.connection_failed.is_connected(ConnectionFailed):
+		multiplayerAPI.connection_failed.connect(ConnectionFailed)
+	if not multiplayerAPI.server_disconnected.is_connected(DisconnectServer):
+		multiplayerAPI.server_disconnected.connect(DisconnectServer)
+
+	var serverAddress : String = NetworkCommons.LocalServerAddress if isLocal else NetworkCommons.ServerAddress
+	var serverPort : int = NetworkCommons.WebSocketPort if useWebSocket else NetworkCommons.ENetPort
+	if isTesting:
+		serverAddress = NetworkCommons.LocalServerAddress if isLocal else NetworkCommons.ServerAddressTesting
+		serverPort = NetworkCommons.WebSocketPortTesting if useWebSocket else NetworkCommons.ENetPortTesting
+
+	var ret : Error = FAILED
+	var tlsOptions : TLSOptions = TLSOptions.client_unsafe()
+	if useWebSocket:
+		var prefix : String = "ws://" if isLocal else "wss://"
+		ret = currentPeer.create_client(prefix + serverAddress + ":" + str(serverPort), tlsOptions)
+	else:
+		ret = currentPeer.create_client(serverAddress, serverPort)
+		if ret == OK and not isLocal:
+			ret = currentPeer.host.dtls_client_setup(serverAddress, tlsOptions)
+
+	assert(ret == OK, "Client could not connect, please check the server adress %s and port number %d" % [serverAddress, serverPort])
+	if ret == OK:
+		currentPeer.set_target_peer(MultiplayerPeer.TARGET_PEER_SERVER)
+		multiplayerAPI.multiplayer_peer = currentPeer
+
+		Util.PrintLog("Client", "Initialized with: %s, %s, %s, %s" % [
+			"WebSocket" if useWebSocket else "ENet",
+			"Offline" if isOffline else "Online",
+			"Local" if isLocal else "Public",
+			"Testing" if isTesting else "Release"
+		])
 
 func Destroy():
-	if Launcher.Root.multiplayer.connected_to_server.is_connected(ConnectServer):
-		Launcher.Root.multiplayer.connected_to_server.disconnect(ConnectServer)
-	if Launcher.Root.multiplayer.connection_failed.is_connected(ConnectionFailed):
-		Launcher.Root.multiplayer.connection_failed.disconnect(ConnectionFailed)
-	if Launcher.Root.multiplayer.server_disconnected.is_connected(DisconnectServer):
-		Launcher.Root.multiplayer.server_disconnected.disconnect(DisconnectServer)
+	if multiplayerAPI.connected_to_server.is_connected(ConnectServer):
+		multiplayerAPI.connected_to_server.disconnect(ConnectServer)
+	if multiplayerAPI.connection_failed.is_connected(ConnectionFailed):
+		multiplayerAPI.connection_failed.disconnect(ConnectionFailed)
+	if multiplayerAPI.server_disconnected.is_connected(DisconnectServer):
+		multiplayerAPI.server_disconnected.disconnect(DisconnectServer)
+
+	super.Destroy()

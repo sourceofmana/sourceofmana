@@ -41,12 +41,11 @@ func _on_peer_connection_update():
 		var peer : Peers.Peer = Peers.GetPeer(rpcID)
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		var playerNickname : String = player.nick if player else "-1"
-		PeersLabel.add_text("RPC: %d\t\tAccount: %d\t\tCharacter: %d\t\tAgent: %s [%d] \n" % [rpcID, peer.accountRID, peer.characterRID, playerNickname, peer.agentRID])
+		PeersLabel.add_text("RPC: %d\t\tAccount: %d\t\tCharacter: %d\t\tAgent: %s [%d]\t\tMode: %s\n" % [rpcID, peer.accountRID, peer.characterRID, playerNickname, peer.agentRID, "WebSocket" if peer.usingWebSocket else "ENet"])
 
 #
 func _ready():
-	if Network.Server:
-		Network.Server.peer_update.connect(_on_peer_connection_update)
-		Network.Server.online_accounts_update.connect(_on_peer_connection_update)
-		Network.Server.online_characters_update.connect(_on_peer_connection_update)
-		Network.Server.online_agents_update.connect(_on_peer_connection_update)
+	Network.peer_update.connect(_on_peer_connection_update)
+	Network.online_accounts_update.connect(_on_peer_connection_update)
+	Network.online_characters_update.connect(_on_peer_connection_update)
+	Network.online_agents_update.connect(_on_peer_connection_update)

@@ -24,6 +24,7 @@ const MaxGuardbandDistSquared : float	= 64.0 * 64.0
 const RidUnknown : int					= -2
 const RidSingleMode : int				= -1
 const RidDefault : int					= 0
+const RidAuthority : int				= 1
 
 const DelayInstant : int				= 0
 const DelayDefault : int				= 50
@@ -37,7 +38,11 @@ const LoginAttemptTimeout : float		= 15
 const CharSelectionTimeout : float		= 15
 
 # Peer
-const ForceWebSocket : bool				= true
+const UseENet : bool					= true
+const UseWebSocket : bool				= true
+const IsLocal : bool					= true
+const IsTesting : bool					= true
+
 const ServerKeyPath : String			= "user://server.key"
 const ServerCertPath : String			= "user://server.crt"
 
