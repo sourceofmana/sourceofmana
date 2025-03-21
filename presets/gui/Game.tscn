@@ -300,7 +300,6 @@ theme_type_variation = &"PanelSideLeft"
 persistant = false
 
 [node name="Dialogue" parent="Overlay/VSections/Contexts" instance=ExtResource("24_fqnq4")]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

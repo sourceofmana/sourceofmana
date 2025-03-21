@@ -482,6 +482,7 @@ textures/decals/filter=0
 textures/light_projectors/filter=0
 global_illumination/sdfgi/frames_to_converge=0
 global_illumination/sdfgi/frames_to_update_lights=4
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 2d/snap/snap_2d_transforms_to_pixel=true
 environment/default_environment="res://default_env.tres"
 threads/thread_safe_bvh=true

@@ -24,8 +24,8 @@ func GetMapBoundaries() -> Rect2:
 	return currentMapNode.get_meta("MapBoundaries") if currentMapNode else Rect2()
 
 #
-func EmplaceMapNode(mapID : int):
-	if currentMapID == mapID:
+func EmplaceMapNode(mapID : int, force : bool = false):
+	if not force and currentMapID == mapID:
 		return
 
 	if currentMapNode:

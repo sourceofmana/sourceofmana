@@ -274,7 +274,9 @@ func RefreshOnce():
 		EnableCharacterCreator(isCharacterCreatorEnabled)
 		return
 
-	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMapID)
+	Clear()
+
+	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMapID, true)
 	Launcher.Camera.SetBoundaries()
 	currentCharacterID = ActorCommons.InvalidCharacterSlot
 	for slotID in charactersInfo.size():
@@ -284,13 +286,16 @@ func RefreshOnce():
 	UpdateSelectedCharacter({}, currentCharacterID)
 	Network.CharacterListing()
 
-func Leave():
-	FSM.EnterState(FSM.States.LOGIN_SCREEN)
-	Network.DisconnectAccount()
+func Clear():
 	for slotID in charactersInfo.size():
 		RemoveCharacter(slotID)
 	Launcher.GUI.buttonBoxes.ClearAll()
 	currentCharacterID = ActorCommons.InvalidCharacterSlot
+
+func Leave():
+	FSM.EnterState(FSM.States.LOGIN_SCREEN)
+	Network.DisconnectAccount()
+	Clear()
 
 func Close():
 	if isCharacterCreatorEnabled:
@@ -307,6 +312,7 @@ func _ready():
 	statsPanel.nextButton.pressed.connect(ChangeSelectedCharacter.bind(true))
 	traitsPanel.bodyUpdate.connect(UpdateCharacterCreatorBody)
 	traitsPanel.hairUpdate.connect(UpdateCharacterCreatorHair)
+	FSM.enter_game.connect(Clear)
 
 func _on_visibility_changed():
 	if not visible:
