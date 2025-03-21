@@ -74,14 +74,7 @@ func ClearAll():
 	_clear(tertiaryButton)
 	_clear(cancelButton)
 
-# Overriden
-func _ready():
-	ClearAll()
-
-func _unhandled_input(event : InputEvent):
-	if not visible or not Launcher.Action.IsEnabled():
-		return
-
+func HandleInput(event : InputEvent):
 	if primaryButton and primaryButton.is_visible() and event.is_action("ui_context_validate"):
 		if Launcher.Action.TryPressed(event, "ui_context_validate", true):
 			_call(primaryButton)
@@ -100,3 +93,13 @@ func _unhandled_input(event : InputEvent):
 	elif cancelButton and cancelButton.is_visible() and event.is_action("ui_cancel"):
 		if Launcher.Action.TryPressed(event, "ui_cancel", true):
 			_call(cancelButton)
+
+# Overriden
+func _ready():
+	ClearAll()
+
+func _unhandled_input(event : InputEvent):
+	if not visible or not Launcher.Action.IsEnabled():
+		return
+
+	HandleInput(event)

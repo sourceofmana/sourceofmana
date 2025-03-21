@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene load_steps=64 format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://4y5ck1nvjs0k" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -45,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://5fam1c22ucqh" path="res://data/graphics/gui/mobile/buttonB.png" id="24_idf5b"]
 [ext_resource type="Texture2D" uid="uid://c06gr2x25n6vt" path="res://data/graphics/gui/mobile/buttonA.png" id="25_6cklw"]
 [ext_resource type="Texture2D" uid="uid://rty5s2v4s24x" path="res://data/graphics/gui/mobile/buttonX_pressed.png" id="25_8t8bb"]
+[ext_resource type="PackedScene" uid="uid://bxstccebg2b32" path="res://presets/gui/MessageBox.tscn" id="25_tem4r"]
 [ext_resource type="PackedScene" uid="uid://h70yw73rukc0" path="res://presets/gui/ButtonBox.tscn" id="26_plhfr"]
 [ext_resource type="Texture2D" uid="uid://ddx5khysp6252" path="res://data/graphics/gui/mobile/buttonB_pressed.png" id="27_rgxqc"]
 [ext_resource type="Texture2D" uid="uid://dsj3d0a61n701" path="res://data/graphics/gui/mobile/buttonL.png" id="28_k5lnh"]
@@ -299,6 +300,7 @@ theme_type_variation = &"PanelSideLeft"
 persistant = false
 
 [node name="Dialogue" parent="Overlay/VSections/Contexts" instance=ExtResource("24_fqnq4")]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -321,6 +323,21 @@ offset_right = 146.0
 [node name="Character" parent="Overlay/VSections/Contexts" instance=ExtResource("49_78q3w")]
 visible = false
 layout_mode = 1
+
+[node name="MessageBox" parent="Overlay/VSections/Contexts" instance=ExtResource("25_tem4r")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -44.5
+offset_right = 275.0
+offset_bottom = 44.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ButtonBar" type="Control" parent="Overlay/VSections"]
 custom_minimum_size = Vector2(0, 96)

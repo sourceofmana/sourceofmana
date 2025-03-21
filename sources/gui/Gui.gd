@@ -14,6 +14,7 @@ extends ServiceBase
 @onready var dialogueContainer : PanelContainer	= $Overlay/VSections/Contexts/Dialogue/BottomVbox/Dialogue
 @onready var choiceContext : ContextMenu		= $Overlay/VSections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
 @onready var infoContext : ContextMenu			= $Overlay/VSections/Contexts/Info
+@onready var messageBox : Control				= $Overlay/VSections/Contexts/MessageBox
 @onready var loginPanel : Control				= $Overlay/VSections/Contexts/Login
 @onready var characterPanel : Control			= $Overlay/VSections/Contexts/Character
 

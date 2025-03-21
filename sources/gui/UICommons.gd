@@ -51,3 +51,7 @@ static func ColorToHSVA(color : Color) -> Vector4:
 	h /= 6.0
 
 	return Vector4(h, s, v, 1.0)
+
+static func MessageBox(text : String, primary = null, primaryText : String = "", cancel = null, cancelText : String = "", secondary = null, secondaryText : String = "", tertiary = null, tertiaryText : String = ""):
+	if Launcher.GUI and Launcher.GUI.messageBox:
+		Launcher.GUI.messageBox.Display(text, primary, primaryText, cancel, cancelText, secondary, secondaryText, tertiary, tertiaryText)

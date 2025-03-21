@@ -34,17 +34,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Empty4" type="Control" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
 [node name="ButtonSecondary" type="Button" parent="."]
 layout_mode = 2
 theme_type_variation = &"LargeButton"
 text = "Secondary"
 
-[node name="Empty5" type="Control" parent="."]
+[node name="Empty4" type="Control" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -54,7 +49,7 @@ layout_mode = 2
 theme_type_variation = &"LargeButton"
 text = "Primary"
 
-[node name="Empty6" type="Control" parent="."]
+[node name="Empty5" type="Control" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2

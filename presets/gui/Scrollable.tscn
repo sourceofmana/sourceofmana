@@ -12,6 +12,7 @@ script = ExtResource("2_8yd1q")
 
 [node name="Scroll" type="ScrollContainer" parent="."]
 layout_mode = 2
+mouse_filter = 0
 
 [node name="Margin" type="MarginContainer" parent="Scroll"]
 layout_mode = 2

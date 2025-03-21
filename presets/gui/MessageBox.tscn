@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxstccebg2b32"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_cvd62"]
+[ext_resource type="Script" uid="uid://kufs4gr64wpl" path="res://sources/gui/MessageBox.gd" id="2_a0m0i"]
+[ext_resource type="PackedScene" uid="uid://h70yw73rukc0" path="res://presets/gui/ButtonBox.tscn" id="3_fxiru"]
+
+[node name="MessageBox" type="PanelContainer"]
+z_index = 100
+custom_minimum_size = Vector2(550, 0)
+offset_left = 283.0
+offset_top = 144.0
+offset_right = 833.0
+offset_bottom = 233.0
+mouse_filter = 1
+theme = ExtResource("1_cvd62")
+theme_type_variation = &"DialogueBox"
+script = ExtResource("2_a0m0i")
+metadata/_edit_layout_mode = 1
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Margin/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/line_spacing = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+language = "en_GB"
+
+[node name="ButtonBoxes" parent="Margin/VBoxContainer" instance=ExtResource("3_fxiru")]
+layout_mode = 2

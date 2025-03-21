@@ -91,7 +91,7 @@ func _on_visibility_changed():
 	if respawnLabel and visible:
 		respawnLabel.text = deathMessages[randi() % deathMessages.size()]
 		Center()
-		respawnButton.call_deferred("grab_focus")
+		respawnButton.grab_focus.call_deferred()
 
 func _on_respawn_pressed():
 	Network.TriggerRespawn()
