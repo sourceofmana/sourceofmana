@@ -75,6 +75,26 @@ func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictio
 	Network.CharacterError(err, rpcID)
 	return err
 
+func DeleteCharacter(charName : String, rpcID : int = NetworkCommons.RidSingleMode):
+	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
+	var peer : Peers.Peer = Peers.GetPeer(rpcID)
+	if peer.accountRID == NetworkCommons.RidUnknown:
+		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
+	elif peer.characterRID != NetworkCommons.RidUnknown:
+		err = NetworkCommons.CharacterError.ERR_ALREADY_LOGGED_IN
+	else:
+		var charID : int = Launcher.SQL.GetCharacterID(peer.accountRID, charName)
+		if charID == NetworkCommons.RidUnknown:
+			err = NetworkCommons.CharacterError.ERR_NAME_VALID
+		elif not Launcher.SQL.RemoveCharacter(charID):
+			err = NetworkCommons.CharacterError.ERR_NAME_AVAILABLE
+		else:
+			Network.characters_list_update.emit()
+
+	Network.CharacterError(err, rpcID)
+	return err
+
+
 func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(rpcID)

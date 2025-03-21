@@ -242,7 +242,7 @@ func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictio
 
 #
 func ConnectServer():
-	if multiplayerAPI:
+	if not isOffline:
 		uniqueID = multiplayerAPI.get_unique_id()
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)

@@ -49,6 +49,10 @@ func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictio
 	return CallServer("CreateCharacter", [charName, traits, attributes], rpcID, NetworkCommons.DelayLogin)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func DeleteCharacter(charName : String, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
+	return CallServer("DeleteCharacter", [charName], rpcID, NetworkCommons.DelayLogin)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
 	return CallServer("ConnectCharacter", [nickname], rpcID, NetworkCommons.DelayLogin)
 
@@ -321,16 +325,16 @@ func NotifyInstance(inst : WorldInstance, callbackName : String, args : Array):
 
 # Peer calls
 func CallServer(methodName : String, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault) -> bool:
-	if rpcID != NetworkCommons.RidSingleMode:
+	if rpcID == NetworkCommons.RidSingleMode and not Client.isOffline:
+		if Peers.Footprint(rpcID, methodName, actionDelta):
+			Client.multiplayerAPI.rpc(NetworkCommons.RidAuthority, self, methodName, args + [Client.uniqueID])
+			return true
+	else:
 		if Peers.Footprint(rpcID, methodName, actionDelta):
 			if Peers.IsUsingWebSocket(rpcID):
 				WebSocketServer.callv.call_deferred(methodName, args + [rpcID])
 			else:
 				ENetServer.callv.call_deferred(methodName, args + [rpcID])
-			return true
-	else:
-		if Peers.Footprint(rpcID, methodName, actionDelta):
-			Client.multiplayerAPI.rpc(NetworkCommons.RidAuthority, self, methodName, args + [Client.uniqueID])
 			return true
 	return false
 

@@ -166,6 +166,16 @@ func SelectCharacter():
 	if Network.ConnectCharacter(characterNameDisplay.get_text()):
 		FSM.EnterState(FSM.States.CHAR_PROGRESS)
 
+func DeleteCharacter():
+	UICommons.MessageBox("Are you sure you want to delete this character?\n\
+This action is permanent, and you will not be able to recover or use this character again.",
+		Callback.Empty, "Cancel",
+		ConfirmDeleteCharacter, "Confirm")
+
+func ConfirmDeleteCharacter():
+	if Network.DeleteCharacter(characterNameDisplay.get_text()):
+		RemoveCharacter(currentCharacterID)
+
 func UpdateSelectedCharacter(info : Dictionary, slotID : int):
 	var displayInformation : bool = not info.is_empty() or isCharacterCreatorEnabled
 	characterName.set_visible(displayInformation)
@@ -233,6 +243,8 @@ func EnableCharacterCreator(enable : bool):
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Select", SelectCharacter)
 			if NextAvailableSlot() != ActorCommons.InvalidCharacterSlot:
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "New Player", EnableCharacterCreator.bind(true))
+			if currentCharacterID != ActorCommons.InvalidCharacterSlot:
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Delete Player", DeleteCharacter.bind())
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", Leave)
 
 func UpdateCharacterCreatorBody():
@@ -274,6 +286,7 @@ func RefreshOnce():
 
 func Leave():
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
+	Network.DisconnectAccount()
 	for slotID in charactersInfo.size():
 		RemoveCharacter(slotID)
 	Launcher.GUI.buttonBoxes.ClearAll()
