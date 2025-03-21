@@ -359,7 +359,8 @@ func Mode(isClient : bool, isServer : bool):
 			WebSocketServer = NetServer.new(true, isOffline, NetworkCommons.IsLocal, NetworkCommons.IsTesting)
 
 func _init():
-	online_agents_update.connect(OnlineList.UpdateJson)
+	if not NetworkCommons.OnlineListPath.is_empty():
+		online_agents_update.connect(OnlineList.UpdateJson)
 
 func Destroy():
 	if Client:

@@ -54,6 +54,9 @@ const PasswordMaxSize : int				= 30
 const EntryValidRegex : String			= "^[\\w#!@%&:;<>,\\$\\^*\\(\\)_+=\\{\\}\\[\\]\\.?/-]+$"
 const EmailValidRegex : String			= "^[\\w\\.\\+\\-]+@[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,}$"
 
+# Tools
+const OnlineListPath : String			= ""
+
 enum AuthError {
 	ERR_OK = 0,
 	ERR_NO_PEER_DATA,

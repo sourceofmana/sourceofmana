@@ -15,4 +15,4 @@ static func GetPlayerNames() -> Array[String]:
 
 static func UpdateJson():
 	var players : Array[String]	= GetPlayerNames()
-	FileSystem.SaveFile(OS.get_executable_path().get_base_dir() + "/" + JSONFileName, JSON.stringify(players))
+	FileSystem.SaveFile(NetworkCommons.OnlineListPath + "/" + JSONFileName, JSON.stringify(players))
