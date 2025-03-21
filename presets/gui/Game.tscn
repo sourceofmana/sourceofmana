@@ -342,6 +342,7 @@ grow_vertical = 2
 [node name="ButtonBar" type="Control" parent="Overlay/VSections"]
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="ButtonBoxes" parent="Overlay/VSections/ButtonBar" instance=ExtResource("26_plhfr")]
 visible = false
