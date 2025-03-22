@@ -190,7 +190,9 @@ func UpdateSelectedCharacter(info : Dictionary, slotID : int):
 			EnableCharacterSelectionFx(false, currentCharacterID)
 		EnableCharacterSelectionFx(true, slotID)
 
-	Launcher.Camera.EnableSceneCamera(ActorCommons.CharacterScreenLocations[GetDefaultSlot(slotID)])
+	if FSM.IsCharacterState():
+		Launcher.Camera.EnableSceneCamera(ActorCommons.CharacterScreenLocations[GetDefaultSlot(slotID)])
+
 	currentCharacterID = slotID
 
 func EnableCharacterSelectionFx(isEnabled : bool, slotID : int):

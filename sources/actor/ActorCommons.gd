@@ -279,7 +279,7 @@ static var SailingDestination : Destination	= Destination.new(DB.OceanHash, Vect
 # Navigation
 const DisplacementVector : Vector2			= Vector2(32, 32)
 const MaxDisplacementSquareLength : float	= 64 * 64
-const InputApproximationUnit : int			= 12
+const InputApproximationUnit : int			= 16
 const MaxEntityRadiusSize : int				= 256
 
 # Camera

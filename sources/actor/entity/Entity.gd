@@ -134,7 +134,7 @@ func LevelUp():
 func _physics_process(delta : float):
 	velocity = entityVelocity
 
-	if entityPosOffset.length_squared() > NetworkCommons.StartGuardbandDistSquared and delta > 0:
+	if delta > 0 and entityPosOffset.length_squared() > NetworkCommons.StartGuardbandDistSquared:
 		var signOffset = sign(entityPosOffset)
 		var posOffsetFix : Vector2 = stat.current.walkSpeed * 0.5 * delta * signOffset
 		entityPosOffset.x = max(0, entityPosOffset.x - posOffsetFix.x) if signOffset.x > 0 else min(0, entityPosOffset.x - posOffsetFix.x)

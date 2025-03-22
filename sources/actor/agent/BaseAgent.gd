@@ -35,7 +35,7 @@ func SwitchInputMode(clearCurrentInput : bool):
 func UpdateInput():
 	if isRelativeMode:
 		if currentDirection != Vector2.ZERO:
-			var pos : Vector2i = currentDirection.normalized() * ActorCommons.DisplacementVector + position
+			var pos : Vector2i = currentDirection * ActorCommons.DisplacementVector + position
 			if WorldNavigation.GetPathLengthSquared(self, pos) <= ActorCommons.MaxDisplacementSquareLength:
 				WalkToward(pos)
 				currentInput = currentDirection
@@ -43,7 +43,7 @@ func UpdateInput():
 			SwitchInputMode(true)
 
 	if hasCurrentGoal:
-		if agent && not agent.is_navigation_finished():
+		if agent and not agent.is_navigation_finished():
 			var clampedDirection : Vector2 = Vector2(global_position.direction_to(agent.get_next_path_position()).normalized() * ActorCommons.InputApproximationUnit)
 			currentInput = Vector2(clampedDirection) / ActorCommons.InputApproximationUnit
 
@@ -54,6 +54,7 @@ func UpdateInput():
 			SwitchInputMode(true)
 
 	currentVelocity = currentInput * currentWalkSpeed
+
 
 func SetVelocity():
 	if currentVelocity == Vector2i.ZERO and velocity.is_zero_approx():

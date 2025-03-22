@@ -64,7 +64,7 @@ func RemoveChildren():
 
 func RemoveChild(child : Node2D):
 	if child:
-		if currentFringe:
+		if currentFringe and child.get_parent() == currentFringe:
 			currentFringe.remove_child.call_deferred(child)
 		if child != Launcher.Player:
 			child.queue_free()
@@ -122,7 +122,7 @@ func RemoveEntity(agentID : int):
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int):
 	var entity : Entity = Entities.Get(agentID)
 	if entity:
-		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID)
+		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID, agentVelocity == Vector2.ZERO)
 
 # Drops
 func AddDrop(dropID : int, cell : BaseCell, pos : Vector2):
