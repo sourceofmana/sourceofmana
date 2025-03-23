@@ -128,7 +128,7 @@ func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
 	if peer:
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player:
-			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.get_name(), rpcID])
+			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.nick, rpcID])
 			Launcher.SQL.RefreshCharacter(player)
 			WorldAgent.RemoveAgent(player)
 			peer.SetAgent(NetworkCommons.RidUnknown)
