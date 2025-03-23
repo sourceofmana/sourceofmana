@@ -9,13 +9,10 @@ static func Get(ridEntity : int) -> Entity:
 	return entities.get(ridEntity, null)
 
 static func Clear():
-	var playerID : int = -1
-	for entityID in entities:
-		if entities[entityID] == Launcher.Player:
-			playerID = entityID
-			break
+	var playerID : int = Launcher.Player.agentID if Launcher.Player else NetworkCommons.RidUnknown
 	entities.clear()
-	entities[playerID] = Launcher.Player
+	if playerID != NetworkCommons.RidUnknown:
+		entities[playerID] = Launcher.Player
 
 static func Add(entity : Entity, ridEntity : int):
 	entities[ridEntity] = entity 
@@ -34,6 +31,7 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 		target = currentEntity
 
 	for entityID in entities:
+		print(Entities.entities[entityID])
 		var entity : Entity = Get(entityID)
 		if entity and entity != currentEntity and entity.state != ActorCommons.State.DEATH:
 			if entity.type == ActorCommons.Type.MONSTER or (interactable and entity.type == ActorCommons.Type.NPC):

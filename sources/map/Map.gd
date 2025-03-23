@@ -122,7 +122,12 @@ func RemoveEntity(agentID : int):
 func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int):
 	var entity : Entity = Entities.Get(agentID)
 	if entity:
-		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID, agentVelocity == Vector2.ZERO)
+		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID)
+
+func LeaveGame():
+	UnloadMapNode()
+	Launcher.Player = null
+	Entities.Clear()
 
 # Drops
 func AddDrop(dropID : int, cell : BaseCell, pos : Vector2):
@@ -157,7 +162,7 @@ func PickupNearestDrop():
 #
 func _post_launch():
 	isInitialized = true
+	FSM.exit_game.connect(LeaveGame)
 
 func Destroy():
-	UnloadMapNode()
-	Entities.Clear()
+	LeaveGame()

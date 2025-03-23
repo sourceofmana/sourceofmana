@@ -247,7 +247,7 @@ func _process(_delta):
 	if not animationTree:
 		return
 
-	var currentVelocity : Vector2 = get_parent().velocity
+	var currentVelocity : Vector2 = get_parent().entityVelocity
 	var isMoving : bool = currentVelocity.length_squared() > 1
 	var newOrientation : Vector2 = currentVelocity.normalized() if isMoving else get_parent().entityOrientation
 	var newState : ActorCommons.State = ActorCommons.State.WALK if isMoving else get_parent().state
