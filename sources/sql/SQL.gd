@@ -141,6 +141,10 @@ func UpdateCharacter(player : PlayerAgent) -> bool:
 		data["respawn_y"] = player.respawnDestination.pos.y
 		data["respawn_map"] = player.respawnDestination.mapID
 
+	if player.exploreOrigin != null:
+		data["explore_x"] = player.exploreOrigin.pos.x
+		data["explore_y"] = player.exploreOrigin.pos.y
+
 	return db.update_rows("character", "char_id = %d;" % charID, data)
 
 # Stats

@@ -13,18 +13,16 @@ static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.PLAYE
 
 #
 static func GetDestinationFromData(charData : Dictionary, destID : String, posXID : String, posYID : String) -> Destination:
-	var mapID = charData.get(destID, null)
-	var mapPosX = charData.get(posXID, null)
-	var mapPosY = charData.get(posYID, null)
-	if mapID != null and mapPosX != null and mapPosY != null:
-		var map : WorldMap = Launcher.World.GetMap(mapID)
-		if map:
-			return Destination.new(map.id, Vector2(mapPosX, mapPosY))
-	return null
+	var mapID = charData.get(destID, DB.UnknownHash)
+	var mapPosX = charData.get(posXID, 0)
+	var mapPosY = charData.get(posYID, 0)
+	var map : WorldMap = Launcher.World.GetMap(mapID) if mapID and mapID != DB.UnknownHash else null
+	var pos : Vector2 = Vector2(mapPosX if mapPosX else 0, mapPosY if mapPosY else 0)
+	return Destination.new(map.id if map else DB.UnknownHash, pos)
 
 static func GetSpawnFromData(charData : Dictionary) -> SpawnObject:
 	var destination : Destination = GetDestinationFromData(charData, "pos_map", "pos_x", "pos_y")
-	if destination:
+	if destination.mapID != DB.UnknownHash:
 		var spawnLocation : SpawnObject = SpawnObject.new()
 		spawnLocation.map				= Launcher.World.GetMap(destination.mapID)
 		spawnLocation.spawn_position	= destination.pos
@@ -37,6 +35,9 @@ static func GetRespawnFromData(charData : Dictionary) -> Destination:
 	var destination : Destination = GetDestinationFromData(charData, "respawn_map", "respawn_x", "respawn_y")
 	return destination if destination else Destination.new(WorldAgent.defaultSpawnLocation.map.id, WorldAgent.defaultSpawnLocation.spawn_position)
 
+static func GetExploreFromData(charData : Dictionary) -> Destination:
+	return GetDestinationFromData(charData, "explore_map", "explore_x", "explore_y")
+
 func SetCharacterInfo(charData : Dictionary, charID : int):
 	# Stats
 	stat.SetStats(charData)
@@ -48,6 +49,8 @@ func SetCharacterInfo(charData : Dictionary, charID : int):
 	inventory.ImportEquipment(equipmentData)
 	# Respawn
 	respawnDestination = GetRespawnFromData(charData)
+	# Respawn
+	exploreOrigin = GetExploreFromData(charData)
 	# Progress
 	progress.ImportProgress(charID)
 

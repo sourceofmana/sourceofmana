@@ -52,8 +52,8 @@ func FillWarningLabel(err : NetworkCommons.CharacterError):
 
 func FillMissingCharacterInfo(info : Dictionary):
 	Util.DicCheckOrAdd(info, "nickname", "")
-	Util.DicCheckOrAdd(info, "last_timestamp", 1 << 32)
-	Util.DicCheckOrAdd(info, "created_timestamp", 1 << 32)
+	Util.DicCheckOrAdd(info, "last_timestamp", ActorCommons.MaxStatValue)
+	Util.DicCheckOrAdd(info, "created_timestamp", ActorCommons.MaxStatValue)
 	Util.DicCheckOrAdd(info, "level", 1)
 	Util.DicCheckOrAdd(info, "pos_map", LauncherCommons.DefaultStartMapID)
 	Util.DicCheckOrAdd(info, "hairstyle", DB.UnknownHash)
@@ -75,6 +75,11 @@ func NextAvailableSlot() -> int:
 			availableSlot = charID
 			break
 	return availableSlot
+
+func MoreRecentThan(firstChar : Dictionary, secondChar : Dictionary) -> bool:
+	var firstVal : int = firstChar["created_timestamp"] if firstChar["last_timestamp"] == ActorCommons.MaxStatValue else firstChar["last_timestamp"]
+	var secondVal : int = secondChar["created_timestamp"] if secondChar["last_timestamp"] == ActorCommons.MaxStatValue else secondChar["last_timestamp"]
+	return firstVal > secondVal
 
 func AddCharacter(info : Dictionary, equipment : Dictionary, slotID : int = ActorCommons.InvalidCharacterSlot):
 	FillMissingCharacterInfo(info)
@@ -111,10 +116,7 @@ func AddCharacter(info : Dictionary, equipment : Dictionary, slotID : int = Acto
 	var randState : ActorCommons.State = ActorCommons.State.IDLE if isCharacterCreatorEnabled or randi() % 2 == 1 else ActorCommons.State.SIT
 	entity.Update(Vector2.ZERO, ActorCommons.CharacterScreenLocations[availableSlot], randDir, randState, -1, true)
 
-	if not HasSlot(currentCharacterID) or \
-		(charactersInfo[currentCharacterID]["last_timestamp"] <= info["last_timestamp"] or \
-		charactersInfo[currentCharacterID]["created_timestamp"] <= info["created_timestamp"] or \
-		info["nickname"].is_empty()):
+	if not HasSlot(currentCharacterID) or MoreRecentThan(info, charactersInfo[currentCharacterID]) or info["nickname"].is_empty():
 		UpdateSelectedCharacter(info, availableSlot)
 
 	RefreshCharacterList()
