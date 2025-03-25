@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://di478oovefcrt"
+path="res://.godot/imported/Cave x3.tsx-bf94ca4214c1adfb57304955f039ca0b.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/tonori/cave/Cave x3.tsx"
+dest_files=["res://.godot/imported/Cave x3.tsx-bf94ca4214c1adfb57304955f039ca0b.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

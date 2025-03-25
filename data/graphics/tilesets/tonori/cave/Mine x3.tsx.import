@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://nahhwsm1pnpn"
+path="res://.godot/imported/Mine x3.tsx-27d61daf3b19c9ef2999a4282cefc66c.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/tonori/cave/Mine x3.tsx"
+dest_files=["res://.godot/imported/Mine x3.tsx-27d61daf3b19c9ef2999a4282cefc66c.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
