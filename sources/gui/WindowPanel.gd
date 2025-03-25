@@ -26,8 +26,7 @@ func ClampFloatingWindow(globalPos : Vector2, moveLimit : Vector2):
 	return Vector2( clampf(globalPos.x, 0.0, moveLimit.x), clampf(globalPos.y, 0.0, moveLimit.y))
 
 func ClampToMargin(marginSize : Vector2):
-	if anchors_preset != LayoutPreset.PRESET_CENTER:
-		position = ClampFloatingWindow(position, marginSize - size)
+	position = ClampFloatingWindow(position, marginSize - size)
 
 func ResizeWindow(pos : Vector2, globalPos : Vector2):
 	var rectSize = size
