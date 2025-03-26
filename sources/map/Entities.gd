@@ -31,7 +31,6 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 		target = currentEntity
 
 	for entityID in entities:
-		print(Entities.entities[entityID])
 		var entity : Entity = Get(entityID)
 		if entity and entity != currentEntity and entity.state != ActorCommons.State.DEATH:
 			if entity.type == ActorCommons.Type.MONSTER or (interactable and entity.type == ActorCommons.Type.NPC):

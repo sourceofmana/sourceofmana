@@ -258,12 +258,13 @@
 		"SpritePreset": "Generic4Directions",
 		"Behaviour": ["Aggressive"],
 		"Collision": "Medium",
-		"Radius": "10",
+		"Radius": "5",
 		"Textures": {
 			"Body": "sprites/monsters/snake.png",
 		},
 		"Stat": {
 			"walkSpeed": 170,
+			"castAttackDelay": 0.1,
 		},
 	},
 	"1017": {
