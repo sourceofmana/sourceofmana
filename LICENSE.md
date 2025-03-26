@@ -424,6 +424,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./maps/splatyna/splatyna-third.tmx [Reid]
 ./maps/sewer/artis-sewer.tmx [Reid]
 ./maps/tonori/sandstorm/mine-entrance.tmx [Reid]
+./maps/tonori/desertpit/snake-pit.tmx [Reid]
 ./musics/Bart Kelsey - The Adventure Begins.ogg [BartK]
 ./musics/Bart Kelsey - In the forest of the birches.ogg [BartK]
 ./musics/Jose. S & Dakota. D - Lenia.ogg [Chicka-Maria]

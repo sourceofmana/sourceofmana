@@ -18,4 +18,5 @@
 	"Ship Hold": {						"Path" : "ship/ship-hold",},
 	"Ship Alige Hide": {				"Path" : "ship/ship-alige-hide",},
 	"Desert Mines": {					"Path" : "tonori/sandstorm/mine-entrance",},
+	"Desert Pit": {						"Path" : "tonori/desertpit/snake-pit",},
 }
