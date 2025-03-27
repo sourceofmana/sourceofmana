@@ -33,7 +33,7 @@ static func GetSpawnFromData(charData : Dictionary) -> SpawnObject:
 
 static func GetRespawnFromData(charData : Dictionary) -> Destination:
 	var destination : Destination = GetDestinationFromData(charData, "respawn_map", "respawn_x", "respawn_y")
-	return destination if destination else Destination.new(WorldAgent.defaultSpawnLocation.map.id, WorldAgent.defaultSpawnLocation.spawn_position)
+	return destination if destination.mapID != DB.UnknownHash else Destination.new(WorldAgent.defaultSpawnLocation.map.id, WorldAgent.defaultSpawnLocation.spawn_position)
 
 static func GetExploreFromData(charData : Dictionary) -> Destination:
 	return GetDestinationFromData(charData, "explore_map", "explore_x", "explore_y")
