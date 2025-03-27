@@ -2,7 +2,7 @@
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="18">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
-  <property name="lighting" type="float" value="0.8"/>
+  <property name="lighting" type="float" value="0.6"/>
   <property name="music" value="Lenia"/>
   <property name="name" value="Desert Mines"/>
  </properties>
