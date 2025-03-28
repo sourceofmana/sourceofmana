@@ -10,7 +10,7 @@ var target : Entity						= null
 var gender : ActorCommons.Gender		= ActorCommons.Gender.MALE
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
-var entityOrientation : Vector2			= Vector2.ZERO
+var entityOrientation : Vector2			= Vector2(0, 1)
 
 var agentID : int						= -1
 
@@ -33,7 +33,8 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	entityVelocity = nextVelocity
 	var previousState = state
 	state = nextState
-	entityOrientation = nextOrientation
+	if nextOrientation != Vector2.ZERO:
+		entityOrientation = nextOrientation
 
 	var dist = Vector2(entityPosOffset).length_squared()
 	if dist > NetworkCommons.MaxGuardbandDistSquared or forceValue:
