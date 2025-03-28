@@ -139,6 +139,7 @@ func _ready():
 # Call _post_launch functions for service depending on other services
 func _post_launch():
 	if Camera and not Camera.isInitialized:		Camera._post_launch()
+	if Map and not Map.isInitialized:			Map._post_launch()
 	if GUI and not GUI.isInitialized:			GUI._post_launch()
 	if Debug and not Debug.isInitialized:		Debug._post_launch()
 	if World and not World.isInitialized:		World._post_launch()
