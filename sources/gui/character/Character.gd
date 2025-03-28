@@ -318,6 +318,12 @@ func _ready():
 	traitsPanel.hairUpdate.connect(UpdateCharacterCreatorHair)
 	FSM.enter_game.connect(Clear)
 
+func _physics_process(_delta: float):
+	if currentCharacterID != ActorCommons.InvalidCharacterSlot:
+		var move : Vector2 = Launcher.Action.GetMove()
+		if move != Vector2.ZERO:
+			charactersNode[currentCharacterID].entityOrientation = move
+
 func _on_visibility_changed():
 	if not visible:
 		if statsPanel:
