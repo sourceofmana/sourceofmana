@@ -2,8 +2,13 @@
 	"Bald": "sprites/hairstyles/bald.png",
 	"Bun": "sprites/hairstyles/bun.png",
 	"Center Parting": "sprites/hairstyles/center-parting.png",
+	"Choppy": "sprites/hairstyles/choppy.png",
 	"Emo": "sprites/hairstyles/emo.png",
+	"Flat Ponytail": "sprites/hairstyles/flat-ponytail.png",
+	"Imperial": "sprites/hairstyles/imperial.png",
+	"Messy": "sprites/hairstyles/messy.png",
 	"Parted": "sprites/hairstyles/parted.png",
+	"Side Strand": "sprites/hairstyles/side-strand.png",
 	"Tapered Nape": "sprites/hairstyles/tapered-nape.png",
 	"Wild": "sprites/hairstyles/wild.png",
 }

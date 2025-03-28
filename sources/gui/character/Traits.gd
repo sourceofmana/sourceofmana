@@ -64,7 +64,7 @@ func _on_hairstyle_prev_button():
 	RefreshHairstyle()
 
 func _on_hairstyle_next_button():
-	hairstyleValue = hairstyleValue + 1 if hairstyleValue < hairstylesCount else 0
+	hairstyleValue = hairstyleValue + 1 if hairstyleValue < hairstylesCount - 1 else 0
 	RefreshHairstyle()
 
 # Haircolor
