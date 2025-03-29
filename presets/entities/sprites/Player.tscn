@@ -3525,10 +3525,6 @@ offset = Vector2(0, -26)
 hframes = 8
 vframes = 2
 
-[node name="Hair" type="Sprite2D" parent="."]
-offset = Vector2(0, -38)
-hframes = 5
-
 [node name="Feet" type="Sprite2D" parent="."]
 offset = Vector2(0, -28)
 hframes = 16
@@ -3547,13 +3543,11 @@ hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Hands" type="Sprite2D" parent="."]
-offset = Vector2(0, -28)
-hframes = 16
-vframes = 8
-frame = 64
+[node name="Hair" type="Sprite2D" parent="."]
+offset = Vector2(0, -38)
+hframes = 5
 
-[node name="Shield" type="Sprite2D" parent="."]
+[node name="Hands" type="Sprite2D" parent="."]
 offset = Vector2(0, -28)
 hframes = 16
 vframes = 8
@@ -3565,11 +3559,17 @@ hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Head" type="Sprite2D" parent="."]
+[node name="Shield" type="Sprite2D" parent="."]
+offset = Vector2(0, -28)
+hframes = 16
+vframes = 8
+frame = 64
+
+[node name="Neck" type="Sprite2D" parent="."]
 offset = Vector2(-1, -44)
 hframes = 5
 
-[node name="Neck" type="Sprite2D" parent="."]
+[node name="Head" type="Sprite2D" parent="."]
 offset = Vector2(-1, -44)
 hframes = 5
 
