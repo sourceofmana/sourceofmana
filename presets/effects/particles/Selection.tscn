@@ -48,7 +48,7 @@ turbulence_noise_strength = 6.03
 [node name="GPUParticles2D2" type="GPUParticles2D"]
 z_as_relative = false
 amount = 200
-process_material = SubResource("ParticleProcessMaterial_41gbv")
 texture = ExtResource("1_e5vgw")
 preprocess = 0.4
 local_coords = true
+process_material = SubResource("ParticleProcessMaterial_41gbv")

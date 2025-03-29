@@ -18,7 +18,7 @@ var lastPositions : Array[float]		= []
 
 var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
-var currentSkillID : int				= -1
+var currentSkillID : int				= DB.UnknownHash
 var currentVelocity : Vector2i			= Vector2i.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var forceUpdate : bool					= false
@@ -74,7 +74,7 @@ func SetVelocity():
 func SetCurrentState():
 	if stat.health <= 0:
 		SetState(ActorCommons.State.DEATH)
-	elif currentSkillID != DB.UnknownHash:
+	elif SkillCommons.CanCast(self):
 		SetState(DB.SkillsDB[currentSkillID].state)
 	elif currentVelocity == Vector2i.ZERO:
 		SetState(ActorCommons.State.IDLE)
@@ -88,7 +88,7 @@ func SetState(wantedState : ActorCommons.State) -> bool:
 	return state == wantedState
 
 func SetSkillCastID(skillID : int):
-	forceUpdate = forceUpdate or currentSkillID in DB.SkillsDB
+	forceUpdate = forceUpdate or skillID != DB.UnknownHash
 	currentSkillID = skillID
 
 func AddSkill(cell : SkillCell, proba : float):
@@ -116,7 +116,7 @@ func WalkToward(pos : Vector2):
 	if pos == position:
 		return
 
-	if DB.SkillsDB.has(currentSkillID):
+	if SkillCommons.CanCast(self):
 		Skill.Stopped(self)
 
 	hasCurrentGoal = true

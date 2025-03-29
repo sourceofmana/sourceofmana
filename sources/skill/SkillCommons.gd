@@ -97,6 +97,9 @@ static func IsTargetable(agent : BaseAgent, target : BaseAgent, skill : SkillCel
 static func IsInteractable(agent : BaseAgent, target : BaseAgent) -> bool:
 	return IsNotSelf(agent, target) and ActorCommons.IsAlive(target) and IsSameMap(agent, target)
 
+static func CanCast(agent : BaseAgent) -> bool:
+	return agent.currentSkillID != DB.UnknownHash and not DB.SkillsDB[agent.currentSkillID].castWalk
+
 static func IsCasting(agent : BaseAgent, skill : SkillCell = null) -> bool:
 	return (agent.currentSkillID == skill.id) if skill else DB.SkillsDB.has(agent.currentSkillID)
 

@@ -114,20 +114,26 @@ func DisplaySkill(emitter : Entity, skillID : int, cooldown : float):
 func DisplayProjectile(emitter : Entity, skill : SkillCell):
 	if Launcher.Map.currentFringe and skill and skill.projectilePreset:
 		var projectileNode : Node2D = skill.projectilePreset.instantiate()
-		if projectileNode:
+		if not projectileNode:
+			return
+		if projectileNode is Projectile:
 			projectileNode.origin = emitter.interactive.visibleNode.global_position
 			projectileNode.origin.y += ActorCommons.interactionDisplayOffset
 			projectileNode.destination = get_parent().interactive.visibleNode.global_position
 			projectileNode.destination.y += ActorCommons.interactionDisplayOffset
 			projectileNode.delay = emitter.stat.current.castAttackDelay
 			Launcher.Map.currentFringe.add_child(projectileNode)
+		else:
+			projectileNode.global_position = emitter.global_position
+			projectileNode.finished.connect(Util.RemoveNode.bind(projectileNode, Launcher.Map.currentFringe))
+			projectileNode.emitting = true
+			Launcher.Map.currentFringe.add_child(projectileNode)
 
 func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteration : ActorCommons.Alteration, skillID : int):
 	if Launcher.Map.currentFringe:
 		if alteration == ActorCommons.Alteration.PROJECTILE:
 			var skill : SkillCell = DB.SkillsDB[skillID]
-			if skill.mode != Skill.TargetMode.ZONE:
-				DisplayProjectile(emitter, skill)
+			DisplayProjectile(emitter, skill)
 		else:
 			var newLabel : Label = ActorCommons.AlterationLabel.instantiate()
 			newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())

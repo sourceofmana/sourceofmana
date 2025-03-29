@@ -6,6 +6,7 @@
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y2my7"]
 blend_mode = 1
+light_mode = 1
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l54cu"]
 particle_flag_disable_z = true
@@ -24,12 +25,12 @@ color = Color(1, 0.32549, 0, 0.443137)
 [node name="Fire" type="GPUParticles2D"]
 material = SubResource("CanvasItemMaterial_y2my7")
 amount = 6
-process_material = SubResource("ParticleProcessMaterial_l54cu")
 texture = ExtResource("1_0cgnc")
 lifetime = 2.0
 preprocess = 1.0
 randomness = 0.1
 local_coords = true
+process_material = SubResource("ParticleProcessMaterial_l54cu")
 script = ExtResource("2_ggro7")
 
 [node name="LightSource" parent="." instance=ExtResource("2_dg8t3")]

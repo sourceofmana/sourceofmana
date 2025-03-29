@@ -11,6 +11,7 @@ class_name SkillCell
 @export var castTextureOverride : Resource		= null
 @export var castColor : Color					= Color.BLACK
 @export var castTime : float					= 0.0
+@export var castWalk : bool						= false
 @export_category("Skill")
 @export var skillPreset : PackedScene			= null
 @export var skillColor : Color					= Color.BLACK

@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://ddaefiplprb55" path="res://data/graphics/effects/particles/cast.png" id="1_c4gs0"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i21r2"]
-blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_jt0pk"]
 offsets = PackedFloat32Array(0, 0.0861423, 0.842697, 1)
@@ -41,7 +40,6 @@ position = Vector2(0, -10)
 scale = Vector2(1, 0.7)
 emitting = false
 amount = 1
-process_material = SubResource("ParticleProcessMaterial_a4rd1")
 texture = ExtResource("1_c4gs0")
 lifetime = 4.0
 one_shot = true
@@ -50,3 +48,4 @@ randomness = 0.25
 fixed_fps = 0
 visibility_rect = Rect2(0, 0, 0, 0)
 local_coords = true
+process_material = SubResource("ParticleProcessMaterial_a4rd1")

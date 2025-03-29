@@ -50,8 +50,12 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 					Casted(agent, target, skill)
 					return
 			TargetMode.ZONE:
-				for zoneTarget in SkillCommons.GetSurroundingTargets(agent, skill):
-					Handle(agent, zoneTarget, skill, SkillCommons.GetRNG(hasStamina))
+				var handle : Callable = Skill.HandleZone.bind(agent, agent, skill, SkillCommons.GetRNG(hasStamina))
+				if SkillCommons.IsDelayed(skill):
+					Callback.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle)
+					Delayed(agent, agent, skill)
+				else:
+					handle.call()
 				Casted(agent, agent, skill)
 				return
 			TargetMode.SELF:
@@ -59,6 +63,10 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 				Casted(agent, agent, skill)
 				return
 		Missed(agent, target)
+
+static func HandleZone(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
+	for zoneTarget in SkillCommons.GetSurroundingTargets(target, skill):
+		Handle(agent, zoneTarget, skill, rng)
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
