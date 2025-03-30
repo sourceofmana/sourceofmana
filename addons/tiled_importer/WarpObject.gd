@@ -45,16 +45,18 @@ func ConfirmWarp():
 	Network.TriggerWarp()
 
 func DisplayLabel():
-	Launcher.GUI.choiceContext.Clear()
-	var mapData : FileData = DB.MapsDB.get(destinationID, null)
-	if mapData:
-		Launcher.GUI.choiceContext.Push(ContextData.new("gp_interact", mapData._name, ConfirmWarp.bind()))
-		Launcher.GUI.choiceContext.FadeIn()
-		contextDisplayed = true
+	if not Launcher.GUI.dialogueContainer.is_visible():
+		Launcher.GUI.choiceContext.Clear()
+		var mapData : FileData = DB.MapsDB.get(destinationID, null)
+		if mapData:
+			Launcher.GUI.choiceContext.Push(ContextData.new("gp_interact", mapData._name, ConfirmWarp.bind()))
+			Launcher.GUI.choiceContext.FadeIn()
+			contextDisplayed = true
 
 func HideLabel():
-	Launcher.GUI.choiceContext.FadeOut()
-	contextDisplayed = false
+	if not Launcher.GUI.dialogueContainer.is_visible():
+		Launcher.GUI.choiceContext.FadeOut()
+		contextDisplayed = false
 
 #
 func _ready():
