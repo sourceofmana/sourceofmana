@@ -131,15 +131,18 @@ func UpdateCharacter(player : PlayerAgent) -> bool:
 	data["total_time"] = SQLCommons.GetOrAddValue(data, "total_time", 0) + newTimestamp - SQLCommons.GetOrAddValue(data, "last_timestamp", newTimestamp)
 	data["last_timestamp"] = newTimestamp
 
-	if map != null and not map.HasFlags(WorldMap.Flags.NO_REJOIN):
+	if map != null and not map.HasFlags(WorldMap.Flags.NO_REJOIN) and ActorCommons.IsAlive(player):
 		data["pos_x"] = player.position.x
 		data["pos_y"] = player.position.y
 		data["pos_map"] = map.id
+	else:
+		data["pos_x"] = player.respawnDestination.pos.x
+		data["pos_y"] = player.respawnDestination.pos.y
+		data["pos_map"] = player.respawnDestination.mapID
 
-	if player.respawnDestination != null:
-		data["respawn_x"] = player.respawnDestination.pos.x
-		data["respawn_y"] = player.respawnDestination.pos.y
-		data["respawn_map"] = player.respawnDestination.mapID
+	data["respawn_x"] = player.respawnDestination.pos.x
+	data["respawn_y"] = player.respawnDestination.pos.y
+	data["respawn_map"] = player.respawnDestination.mapID
 
 	if player.exploreOrigin != null:
 		data["explore_x"] = player.exploreOrigin.pos.x

@@ -5,7 +5,7 @@ class_name PlayerAgent
 var rpcRID : int						= NetworkCommons.RidUnknown
 var lastStat : ActorStats				= ActorStats.new()
 var respawnDestination : Destination	= null
-var exploreOrigin : Destination			= Destination.new()
+var exploreOrigin : Destination			= null
 var ownScript : NpcScript				= null
 
 #
