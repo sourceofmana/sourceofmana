@@ -1,0 +1,93 @@
+name: "godot-ci export"
+on:
+  push:
+    branches:
+    - master
+
+env:
+  GODOT_VERSION: 4.3
+  EXPORT_NAME: "Source of Mana"
+  PROJECT_PATH: "."
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions: write-all
+    outputs:
+      timestamp: ${{ steps.get-timestamp.outputs.time }}
+    steps:
+      - name: Get build timestamp
+        id: get-timestamp
+        run: |
+          echo "time=$(/bin/date -u "+%Y-%m-%d-%H%M")" >> $GITHUB_OUTPUT
+      - name: Get env vars
+        id: generate_env_vars
+        run: |
+          echo "tag_name=som-experimental-"${{ steps.get-timestamp.outputs.time }} >> $GITHUB_OUTPUT
+          echo "release_name=Source of Mana experimental build ${{ steps.get-timestamp.outputs.time }}" >> $GITHUB_OUTPUT
+      - uses: actions/checkout@v4
+      - run: gh release create ${{ steps.generate_env_vars.outputs.tag_name }} --prerelease --title "${{ steps.generate_env_vars.outputs.release_name }}" --target "$(git log -1 --format='%H')"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  builds:
+    needs: release
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - name: Linux
+          artifact: linux
+          export_template: "Linux/X11"
+          ext: "x86_64"
+        - name: Linux (Headless Server)
+          artifact: linux-server-headless
+          export_template: "Linux/X11 Headless Server"
+          ext: "x86_64"
+        - name: Windows
+          artifact: windows
+          export_template: "Windows Desktop"
+          ext: "exe"
+        - name: macOS
+          artifact: macos
+          export_template: "macOS"
+          ext: "zip"
+        - name: Android
+          artifact: android
+          export_template: "Android"
+          ext: "apk"
+    runs-on: ubuntu-latest
+    permissions: write-all
+    container:
+      image: barichello/godot-ci:4.3
+    name: Export ${{ matrix.name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          echo "$DEBUG_KEYSTORE" | base64 -d > $HOME/debug_keystore
+          cp -r /root/.config/godot ~/.config/godot
+          cp -r /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+        env:
+          DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
+      - name: ${{ matrix.name }} Build
+        run: |
+          mkdir -v -p "build/${{ matrix.artifact }}"
+          cd "$PROJECT_PATH"
+          godot --headless --verbose --export-debug "${{ matrix.export_template }}" "build/${{ matrix.artifact }}/${EXPORT_NAME}-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}"
+      - name: Ensure github cli is present
+        run: |
+          wget https://github.com/cli/cli/releases/download/v2.55.0/gh_2.55.0_linux_amd64.deb
+          dpkg -i gh_2.55.0_linux_amd64.deb
+      - name: Upload artifact to release
+        run: |
+          git config --global --add safe.directory '*'
+          gh release upload som-experimental-${{ needs.release.outputs.timestamp }} "build/${{ matrix.artifact }}/${EXPORT_NAME}-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
