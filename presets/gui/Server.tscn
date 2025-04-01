@@ -30,8 +30,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RichTextLabel" parent="HSections/Info/VBox" instance=ExtResource("1_bk404")]
+[node name="ScrollContainer" type="ScrollContainer" parent="HSections/Info/VBox"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" parent="HSections/Info/VBox/ScrollContainer" instance=ExtResource("1_bk404")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="RefreshButon" type="Button" parent="HSections/Info/VBox"]
 layout_mode = 2
