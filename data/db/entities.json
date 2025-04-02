@@ -264,7 +264,7 @@
 		},
 		"Stat": {
 			"walkSpeed": 170,
-			"castAttackDelay": 0.1,
+			"castAttackDelay": 0.5,
 		},
 	},
 	"1017": {
