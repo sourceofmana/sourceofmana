@@ -18,6 +18,7 @@ offset_right = 400.0
 offset_bottom = 419.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
+mouse_force_pass_scroll_events = false
 theme = ExtResource("1_dhni5")
 script = ExtResource("2_v116i")
 
