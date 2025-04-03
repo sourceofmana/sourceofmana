@@ -229,6 +229,8 @@ enum Alteration
 	DODGE,
 	HEAL,
 	PROJECTILE,
+	EXP,
+	GP,
 }
 
 # Colors
@@ -236,8 +238,10 @@ const DodgeAttackColor : float				= 0.15
 const HealColor : float						= 0.42
 const LocalAttackColor : float				= 0.35
 const MissAttackColor : float				= 0.2
+const ExpColor : float						= 0.44
+const GPColor : float						= 0.16
 const MonsterAttackColor : float			= 0.0
-const PlayerAttackColor : float				= 0.6
+const PlayerAttackColor : float				= 0.51
 const LevelDifferenceColor : float			= 5.0
 
 # Interactive
