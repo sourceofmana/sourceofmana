@@ -20,4 +20,4 @@ embed_internal_images=false
 save_tiled_properties=false
 add_background=true
 export_navigation_mesh=true
-export_global_scene=false
+export_global_scene=true
