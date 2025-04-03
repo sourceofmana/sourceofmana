@@ -27,6 +27,8 @@ extends WindowPanel
 
 @onready var lAtk : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox/Value
 @onready var lDef : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox/Value
+@onready var lMAtk : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox/Value
+@onready var lMDef : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox/Value
 @onready var lAtkRange : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox/Value
 @onready var lCastDelay : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox/Value
 @onready var lCooldownDelay : Label				= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox/Value
@@ -114,6 +116,8 @@ func RefreshEntityStats(entity : Entity):
 
 	lAtk.set_text(str(entity.stat.current.attack))
 	lDef.set_text(str(entity.stat.current.defense))
+	lMAtk.set_text(str(entity.stat.current.mattack))
+	lMDef.set_text(str(entity.stat.current.mdefense))
 	lAtkRange.set_text(str(entity.stat.current.attackRange))
 	lCastDelay.set_text("%0.2fs" % entity.stat.current.castAttackDelay)
 	lCooldownDelay.set_text("%0.2fs" % entity.stat.current.cooldownAttackDelay)

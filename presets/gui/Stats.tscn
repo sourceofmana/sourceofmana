@@ -343,6 +343,32 @@ layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
+[node name="MAtkBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "M. Attack"
+
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+
+[node name="MDefBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "M. Defense"
+
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+
 [node name="AtkRangeBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
 layout_mode = 2
 
