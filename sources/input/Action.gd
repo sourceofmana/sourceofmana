@@ -120,7 +120,6 @@ func _physics_process(_deltaTime : float):
 				Network.SetMovePos(move)
 		else:
 			if previousMove != move:
-				Launcher.Player.entityVelocity = move
 				Network.ClearNavigation()
 		previousMove = move
 

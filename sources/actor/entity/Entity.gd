@@ -18,8 +18,12 @@ signal entity_died
 
 # Init
 func SetData():
-	SetVisual(data)
-	interactive.Init(data)
+	var altData : EntityData = null
+	var isMorph : bool = stat.IsMorph()
+	if isMorph:
+		altData = DB.EntitiesDB.get(stat.currentShape, null)
+	SetVisual(altData if altData else data)
+	interactive.Init(altData if altData else data)
 
 func SetVisual(altData : EntityData, morphed : bool = false):
 	if morphed:
@@ -59,7 +63,7 @@ func SetLocalPlayer():
 		Launcher.Camera.mainCamera.make_current()
 
 	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
-	Network.RetrieveInventory()
+	Network.RetrieveCharacterInformation()
 	FSM.EnterState(FSM.States.IN_GAME)
 
 func ClearTarget():
@@ -134,16 +138,11 @@ func LevelUp():
 
 #
 func _physics_process(delta : float):
-	velocity = entityVelocity
-
-	if delta > 0 and entityPosOffset.length_squared() > NetworkCommons.StartGuardbandDistSquared:
-		var signOffset = sign(entityPosOffset)
-		var posOffsetFix : Vector2 = stat.current.walkSpeed * 0.5 * delta * signOffset
-		entityPosOffset.x = max(0, entityPosOffset.x - posOffsetFix.x) if signOffset.x > 0 else min(0, entityPosOffset.x - posOffsetFix.x)
-		entityPosOffset.y = max(0, entityPosOffset.y - posOffsetFix.y) if signOffset.y > 0 else min(0, entityPosOffset.y - posOffsetFix.y)
-		velocity += posOffsetFix / delta
-
+	var totalVelocity : Vector2 = entityVelocity + entityPosOffset / delta
+	velocity = totalVelocity.limit_length(stat.current.walkSpeed)
 	if velocity != Vector2.ZERO:
+		var extraVelocity : Vector2 = velocity - entityVelocity
+		entityPosOffset -= extraVelocity * delta
 		move_and_slide()
 
 func _ready():

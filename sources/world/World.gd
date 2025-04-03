@@ -20,8 +20,9 @@ func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, instanceID : 
 	assert(newMap != null and agent != null, "Warp could not proceed, agent or new map missing")
 	if agent and newMap:
 		WorldAgent.PopAgent(agent)
+		if not agent.isRelativeMode:
+			agent.SwitchInputMode(true)
 		agent.position = agent.exploreOrigin.pos if newMap.HasFlags(WorldMap.Flags.ONLY_SPIRIT) and newPos == Vector2i.ZERO else newPos
-		agent.SwitchInputMode(true)
 		Spawn(newMap, agent, instanceID)
 
 func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
@@ -30,13 +31,8 @@ func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
 		var inst : WorldInstance = map.instances[instanceID]
 		assert(inst != null, "Spawn could not proceed, map instance missing")
 		if inst:
-			agent.ResetNav()
 			if agent.agent:
-				agent.agent.set_velocity_forced(Vector2.ZERO)
 				agent.agent.set_navigation_map(map.mapRID)
-			agent.currentVelocity = Vector2.ZERO
-			agent.state = ActorCommons.State.IDLE
-
 			WorldAgent.PushAgent(agent, inst)
 			Callback.OneShotCallback(agent.tree_entered, AgentWarped, [map, agent])
 
@@ -59,15 +55,41 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
 				var neighbourRID : int = neighbour.get_rid().get_id()
-				Network.AddEntity(neighbourRID, neighbour.GetEntityType(), neighbour.stat.shape, neighbour.stat.spirit, neighbour.stat.currentShape, neighbour.nick, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, agent.rpcRID)
-				Network.UpdatePublicStats(neighbourRID, neighbour.stat.level, neighbour.stat.health, neighbour.stat.hairstyle, neighbour.stat.haircolor, neighbour.stat.gender, neighbour.stat.race, neighbour.stat.skintone, neighbour.stat.currentShape, agent.rpcRID)
-				if neighbour.inventory:
-					Network.RefreshEquipments(neighbourRID, neighbour.inventory.ExportEquipment(), agent.rpcRID)
+				if neighbour is PlayerAgent:
+					Network.Bulk("AddPlayer", [
+						neighbourRID, neighbour.GetEntityType(), neighbour.stat.shape,
+						neighbour.stat.spirit, neighbour.stat.currentShape, neighbour.nick,
+						neighbour.velocity, neighbour.position, neighbour.currentOrientation,
+						neighbour.state, neighbour.currentSkillID,
+						neighbour.stat.level, neighbour.stat.health,
+						neighbour.stat.hairstyle, neighbour.stat.haircolor,
+						neighbour.stat.gender, neighbour.stat.race, neighbour.stat.skintone,
+						neighbour.inventory.ExportEquipment() if neighbour.inventory else {}
+					], agent.rpcRID)
+				else:
+					Network.Bulk("AddEntity", [
+						neighbourRID, neighbour.GetEntityType(), neighbour.stat.currentShape,
+						neighbour.velocity, neighbour.position, neighbour.currentOrientation,
+						neighbour.state, neighbour.currentSkillID,
+					], agent.rpcRID)
 
-		Network.RefreshProgress(agent.progress.skills, agent.progress.quests, agent.progress.bestiary, agent.rpcRID)
-	Network.NotifyNeighbours(agent, "AddEntity", [agent.GetEntityType(), agent.stat.shape, agent.stat.spirit, agent.stat.currentShape, agent.nick, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID], false)
-	if agent.inventory:
-		Network.NotifyNeighbours(agent, "RefreshEquipments", [agent.inventory.ExportEquipment()], false)
+	if agent is PlayerAgent:
+		Network.NotifyNeighbours(agent, "AddPlayer", [
+			agent.GetEntityType(),
+			agent.stat.shape, agent.stat.spirit, agent.stat.currentShape, agent.nick,
+			agent.velocity, agent.position, agent.currentOrientation,
+			agent.state, agent.currentSkillID,
+			agent.stat.level, agent.stat.health,
+			agent.stat.hairstyle, agent.stat.haircolor,
+			agent.stat.gender, agent.stat.race, agent.stat.skintone,
+			agent.inventory.ExportEquipment() if agent.inventory else {}
+		], false)
+	else:
+		Network.NotifyNeighbours(agent, "AddEntity", [
+			agent.GetEntityType(), agent.stat.currentShape,
+			agent.velocity, agent.position, agent.currentOrientation,
+			agent.state, agent.currentSkillID
+		], false)
 
 # Generic
 func BackupPlayers():

@@ -59,6 +59,22 @@ static func GetHeal(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rn
 	healValue = min(healValue, target.stat.current.maxHealth - target.stat.health)
 	return healValue
 
+static func GetZoneTargets(instance : WorldInstance, zonePos : Vector2, skill : SkillCell) -> Array[BaseAgent]:
+	var targets : Array[BaseAgent] = []
+
+	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
+		for neighbour in instance.mobs:
+			var filteredRange : float = skill.cellRange + neighbour.entityRadius
+			if neighbour.position.distance_squared_to(zonePos) <= filteredRange * filteredRange:
+				targets.append(neighbour)
+	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
+		for neighbour in instance.players:
+			var filteredRange : float = skill.cellRange + neighbour.entityRadius
+			if neighbour.position.distance_squared_to(zonePos) <= filteredRange * filteredRange:
+				targets.append(neighbour)
+
+	return targets
+
 static func GetSurroundingTargets(agent : BaseAgent, skill : SkillCell) -> Array[BaseAgent]:
 	var targets : Array[BaseAgent] = []
 	var neighbours : Array[Array] = WorldAgent.GetNeighboursFromAgent(agent)

@@ -242,7 +242,6 @@ func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
 func TriggerSelect(targetID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var target : BaseAgent = WorldAgent.GetAgent(targetID)
 	if target:
-		Network.UpdateAttributes(targetID, target.stat.strength, target.stat.vitality, target.stat.agility, target.stat.endurance, target.stat.concentration, rpcID)
 		Network.UpdatePublicStats(targetID, target.stat.level, target.stat.health, target.stat.hairstyle, target.stat.haircolor, target.stat.gender, target.stat.race, target.stat.skintone, target.stat.currentShape, rpcID)
 
 # Stats
@@ -261,41 +260,46 @@ func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.UseItem(cell)
 
-func DropItem(itemID : int, customfield : String, itemCount : int, rpcID : int = NetworkCommons.RidSingleMode):
+func DropItem(itemID : int, customfield : StringName, itemCount : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell:
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.DropItem(cell, itemCount)
 
-func EquipItem(itemID : int, customfield : String, rpcID : int = NetworkCommons.RidSingleMode):
+func EquipItem(itemID : int, customfield : StringName, rpcID : int = NetworkCommons.RidSingleMode):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell and cell.slot != ActorCommons.Slot.NONE:
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.EquipItem(cell)
 
-func UnequipItem(itemID : int, customfield : String, rpcID : int = NetworkCommons.RidSingleMode):
+func UnequipItem(itemID : int, customfield : StringName, rpcID : int = NetworkCommons.RidSingleMode):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell and cell.slot != ActorCommons.Slot.NONE:
 		var player : PlayerAgent = Peers.GetAgent(rpcID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.UnequipItem(cell)
 
-func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
-	var player : PlayerAgent = Peers.GetAgent(rpcID)
-	if player and player.inventory:
-		Network.RefreshInventory(player.inventory.ExportInventory(), rpcID)
-
 func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
 	var player : PlayerAgent = Peers.GetAgent(rpcID)
 	if player:
 		WorldDrop.PickupDrop(dropID, player)
 
+func RetrieveCharacterInformation(rpcID : int = NetworkCommons.RidSingleMode):
+	var player : PlayerAgent = Peers.GetAgent(rpcID)
+	if player and player.progress:
+		Network.RefreshProgress(player.progress.skills, player.progress.quests, player.progress.bestiary, rpcID)
+	if player and player.inventory:
+		Network.RefreshInventory(player.inventory.ExportInventory(), rpcID)
+	if player and player.stat:
+		Network.UpdateAttributes(player.stat.strength, player.stat.vitality, player.stat.agility, player.stat.endurance, player.stat.concentration, rpcID)
+
 # Peer handling
 func ConnectPeer(rpcID : int):
 	Util.PrintInfo("Server", "Peer connected: %d with %s" % [rpcID, "Websocket" if useWebSocket else "ENet"])
 	Peers.AddPeer(rpcID, useWebSocket)
+	bulks[rpcID] = {}
 	if currentPeer and currentPeer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
 		var clientPeer : PacketPeer = currentPeer.get_peer(rpcID)
 		if clientPeer and clientPeer is ENetPacketPeer:
@@ -305,6 +309,7 @@ func DisconnectPeer(rpcID : int):
 	Util.PrintInfo("Server", "Peer disconnected: %d" % rpcID)
 	var peer : Peers.Peer = Peers.GetPeer(rpcID)
 	if peer:
+		bulks.erase(rpcID)
 		if peer.accountRID != NetworkCommons.RidUnknown:
 			DisconnectAccount(rpcID)
 		Peers.RemovePeer(rpcID)

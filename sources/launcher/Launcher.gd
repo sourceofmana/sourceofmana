@@ -116,6 +116,8 @@ func _ready():
 	if "--server" in OS.get_cmdline_args():
 		Scene = FileSystem.LoadResource(Path.Pst + "Server" + Path.SceneExt)
 		Root.add_child.call_deferred(Scene)
+		Engine.set_max_fps(LauncherCommons.ServerMaxFPS)
+		Engine.set_physics_ticks_per_second(LauncherCommons.ServerMaxFPS)
 		startServer = true
 	else:
 		Scene = FileSystem.LoadResource(Path.Pst + "Client" + Path.SceneExt)

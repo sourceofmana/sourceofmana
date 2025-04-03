@@ -79,7 +79,6 @@ func UpdateLastStats():
 		lastStat.skintone			= stat.skintone
 		lastStat.currentShape		= stat.currentShape
 
-
 	if lastStat.experience != stat.experience or \
 	lastStat.gp != stat.gp or \
 	lastStat.mana != stat.mana or \
@@ -88,7 +87,7 @@ func UpdateLastStats():
 	lastStat.weight != stat.weight or \
 	lastStat.shape != stat.shape or \
 	lastStat.spirit != stat.spirit:
-		Network.UpdatePrivateStats(get_rid().get_id(), stat.experience, stat.gp, stat.mana, stat.stamina, stat.karma, stat.weight, stat.shape, stat.spirit, rpcRID)
+		Network.UpdatePrivateStats(stat.experience, stat.gp, stat.mana, stat.stamina, stat.karma, stat.weight, stat.shape, stat.spirit, rpcRID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 		lastStat.gp					= stat.gp
@@ -105,7 +104,7 @@ func UpdateLastStats():
 	lastStat.agility != stat.agility or \
 	lastStat.endurance != stat.endurance or \
 	lastStat.concentration != stat.concentration:
-		Network.UpdateAttributes(get_rid().get_id(), stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, rpcRID)
+		Network.UpdateAttributes(stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, rpcRID)
 		lastStat.strength			= stat.strength
 		lastStat.vitality			= stat.vitality
 		lastStat.agility			= stat.agility

@@ -9,8 +9,8 @@ var timer : Timer										= null
 func _on_info_update():
 	infoLabel.clear()
 	infoLabel.add_text("Time FPS: %.1f\n" % Performance.get_monitor(Performance.TIME_FPS))
-	infoLabel.add_text("Time Process: %.3f\n" % Performance.get_monitor(Performance.TIME_PROCESS))
-	infoLabel.add_text("Time Physics Process: %.3f\n" % Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS))
+	infoLabel.add_text("Time Process: %.3f\n" % [Performance.get_monitor(Performance.TIME_PROCESS)*1000.0])
+	infoLabel.add_text("Time Physics Process: %.3f\n" % [Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)*1000.0])
 	infoLabel.add_text("Time Navigation Process: %.3f\n" % Performance.get_monitor(Performance.TIME_NAVIGATION_PROCESS))
 	infoLabel.add_text("Memory Static: %.3f/%.3f MB\n" % [Performance.get_monitor(Performance.MEMORY_STATIC_MAX)/1000.0, Performance.get_monitor(Performance.MEMORY_STATIC)/1000.0])
 	infoLabel.add_text("Memory Message Buffer: %.3f MB\n" % [Performance.get_monitor(Performance.MEMORY_MESSAGE_BUFFER_MAX)/1000.0])

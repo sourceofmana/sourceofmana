@@ -75,41 +75,40 @@ func AddChild(child : Node2D):
 		currentFringe.add_child.call_deferred(child)
 
 # Entities
-func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int):
+func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int) -> Entity:
 	if not currentFringe:
-		return
+		return null
 
-	var entityData : EntityData = DB.EntitiesDB.get(currentShape, null)
+	var entityData : EntityData = DB.EntitiesDB.get(shape, null)
 	if not entityData:
-		return
+		return null
 
 	var entity : Entity = Entities.Get(agentID)
 	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
 	var isAlreadySpawned : bool = entity != null and entity.get_parent() == currentFringe
 
 	if not entity:
-		if nick.is_empty():
-			nick = entityData._name
-		entity = Instantiate.CreateEntity(entityType, entityData, nick, isLocalPlayer)
+		entity = Instantiate.CreateEntity(entityType, entityData, entityData._name if nick.is_empty() else nick, isLocalPlayer)
+		if not entity:
+			return
+
 		entity.agentID = agentID
 		if isLocalPlayer:
 			Launcher.Player = entity
 			Launcher.Player.SetLocalPlayer()
 
-	if entity:
-		entity.stat.shape = shape
-		entity.stat.spirit = spirit
-		entity.stat.currentShape = currentShape
+	entity.stat.shape = shape
+	entity.stat.spirit = spirit
+	entity.stat.currentShape = currentShape
 
-		if not isAlreadySpawned:
-			Callback.OneShotCallback(entity.tree_entered, entity.Update, [entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned])
-			AddChild(entity)
-			Entities.Add(entity, agentID)
-		else:
-			entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned)
+	if not isAlreadySpawned:
+		AddChild(entity)
+		Entities.Add(entity, agentID)
+	entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned)
 
-		if isLocalPlayer:
-			PlayerWarped.emit()
+	if isLocalPlayer:
+		PlayerWarped.emit()
+	return entity
 
 func RemoveEntity(agentID : int):
 	var entity : Entity = Entities.Get(agentID)
@@ -119,10 +118,16 @@ func RemoveEntity(agentID : int):
 		RemoveChild(entity)
 		Entities.Erase(agentID)
 
-func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int):
+func FullUpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int):
 	var entity : Entity = Entities.Get(agentID)
 	if entity:
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID)
+
+func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2):
+	var entity : Entity = Entities.Get(agentID)
+	if entity and entity.visual:
+		var agentOrientation : Vector2 = entity.entityOrientation if agentVelocity.is_zero_approx() else agentVelocity.normalized()
+		entity.Update(agentVelocity, agentPosition, agentOrientation, entity.state, entity.visual.skillCastID)
 
 func LeaveGame():
 	UnloadMapNode()

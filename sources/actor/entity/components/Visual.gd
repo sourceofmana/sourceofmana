@@ -239,9 +239,19 @@ func GetPlayerOffset() -> int:
 #
 func Init(data : EntityData):
 	Callback.PlugCallback(get_parent().stat.entity_stats_updated, self.UpdateScale)
-	sprites.resize(ActorCommons.SlotEquipmentCount + ActorCommons.SlotModifierCount)
-
 	LoadData(data)
+
+func RefreshTree():
+	if previousState in blendSpacePaths:
+		var blendSpacePath : String = blendSpacePaths[previousState]
+		animationTree[blendSpacePath] = previousOrientation
+
+	var stateName : String = ActorCommons.GetStateName(previousState)
+	animationTree[ActorCommons.playbackParameter].travel(stateName)
+
+#
+func _init():
+	sprites.resize(ActorCommons.SlotEquipmentCount + ActorCommons.SlotModifierCount)
 
 func _process(_delta):
 	if not animationTree:
@@ -256,11 +266,3 @@ func _process(_delta):
 		previousState = newState
 		previousOrientation = newOrientation
 		RefreshTree()
-
-func RefreshTree():
-	if previousState in blendSpacePaths:
-		var blendSpacePath : String = blendSpacePaths[previousState]
-		animationTree[blendSpacePath] = previousOrientation
-
-	var stateName : String = ActorCommons.GetStateName(previousState)
-	animationTree[ActorCommons.playbackParameter].travel(stateName)

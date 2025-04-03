@@ -30,6 +30,7 @@ repeat = true
 cooldownTime = 0.0
 castColor = Color(0, 0, 0, 1)
 castTime = 0.0
+castWalk = false
 skillColor = Color(0, 0, 0, 1)
 skillTime = 0.0
 id = -1

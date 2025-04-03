@@ -13,6 +13,9 @@ const ServerAddress : String			= "som.manasource.org"
 const LocalServerAddress : String		= "127.0.0.1"
 const MaxPlayerCount : int				= 128
 
+# Bulk
+const BulkMinSize : int					= 3
+
 # Navigation
 const NavigationSpawnTry : int			= 10
 
@@ -40,7 +43,7 @@ const CharSelectionTimeout : float		= 15
 # Peer
 const UseENet : bool					= true
 const UseWebSocket : bool				= true
-const IsLocal : bool					= true
+const IsLocal : bool					= false
 const IsTesting : bool					= true
 
 const ServerKeyPath : String			= "user://server.key"

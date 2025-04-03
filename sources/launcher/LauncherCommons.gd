@@ -13,6 +13,8 @@ const DefaultStartPos : Vector2			= Vector2(1753, 1487)
 const EnableMapPool : bool				= false
 const MapPoolMaxSize : int				= 10
 
-#
-static var isMobile : bool				= OS.get_name() == "Android" or OS.get_name() == "iOS"
-static var isWeb : bool					= OS.get_name() == "Web"
+const ServerMaxFPS : int				= 30
+
+# Common accessors
+static var isMobile : bool				= OS.has_feature("android") or OS.has_feature("ios")
+static var isWeb : bool					= OS.has_feature("web")

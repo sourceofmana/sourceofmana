@@ -142,7 +142,9 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			target.stat.health += value if alteration == ActorCommons.Alteration.HEAL else -value
 			target.stat.RefreshVitalStats()
 			if Launcher.Player == emitter:
-				DisplayHP()
+				var skill : SkillCell = DB.SkillsDB.get(skillID, null)
+				if skill and skill.mode == Skill.TargetMode.SINGLE:
+					DisplayHP()
 
 #
 func DisplaySpeech(speech : String):

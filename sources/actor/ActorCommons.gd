@@ -277,10 +277,11 @@ static func IsEquipped(cell : BaseCell) -> bool:
 static var SailingDestination : Destination	= Destination.new(DB.OceanHash, Vector2(71 * 32, 55 * 32))
 
 # Navigation
+const MaxEntityRadiusSize : int				= 256
 const DisplacementVector : Vector2			= Vector2(32, 32)
 const MaxDisplacementSquareLength : float	= 64 * 64
 const InputApproximationUnit : int			= 16
-const MaxEntityRadiusSize : int				= 256
+static var InputApproximationDelta : float	= 360.0 / InputApproximationUnit
 
 # Camera
 const CameraZoomLevels : PackedVector2Array	= [

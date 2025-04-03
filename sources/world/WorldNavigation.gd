@@ -25,11 +25,12 @@ static func GetPathLengthSquared(agent : BaseAgent, pos : Vector2) -> float:
 		var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 		if map:
 			var path : PackedVector2Array = NavigationServer2D.map_get_path(map.mapRID, agent.position, pos, true)
-			if path.size() >= 2:
+			var pathSize : int = path.size()
+			if pathSize >= 2:
 				var unrolledPos : Vector2 = Vector2.ZERO
-				for i in range(0, path.size()-1):
+				for i in range(0, pathSize-1):
 					unrolledPos += (path[i] - path[i+1]).abs()
-				return unrolledPos.length_squared()
+				return max(unrolledPos.length_squared(), (agent.position - pos).length_squared())
 	return INF
 
 # Utils

@@ -9,29 +9,33 @@ func WarpPlayer(mapID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 			Launcher.Map.EmplaceMapNode(mapID)
 			PushNotification(mapData._name, _rpcID)
 
-	if Launcher.Player:
-		Launcher.Player.entityVelocity = Vector2.ZERO
-
 func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	var entity : Entity = Entities.Get(playerID)
 	if entity && entity.get_parent() && entity.interactive:
 		entity.interactive.DisplayEmote.call_deferred(emoteID)
 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func AddPlayer(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipments : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
+		var entity : Entity = Launcher.Map.AddEntity(agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
+		if entity:
+			UpdatePublicStats(agentID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape, _rpcID)
+			RefreshEquipments(agentID, equipments, _rpcID)
+
+func AddEntity(agentID : int, entityType : ActorCommons.Type, currentShape : int, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Map:
+		Launcher.Map.AddEntity(agentID, entityType, currentShape, DB.UnknownHash, currentShape, "", velocity, position, orientation, state, skillCastID)
 
 func RemoveEntity(agentID : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentID)
 
-func ForceUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int):
+func FullUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, state, skillCastID)
+		Launcher.Map.FullUpdateEntity(ridAgent, velocity, position, orientation, state, skillCastID)
 
-func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int):
+func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position, orientation, state, skillCastID)
+		Launcher.Map.UpdateEntity(ridAgent, velocity, position)
 
 func ChatAgent(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -80,20 +84,6 @@ func Morphed(ridAgent : int, morphID : int, morphed : bool, _rpcID : int = Netwo
 			entity.stat.Morph(morphData)
 			entity.SetVisual(morphData, morphed)
 
-func UpdatePrivateStats(ridAgent : int, experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Map:
-		var entity : Entity = Entities.Get(ridAgent)
-		if entity and entity.stat:
-			entity.stat.experience		= experience
-			entity.stat.gp				= gp
-			entity.stat.mana			= mana
-			entity.stat.stamina			= stamina
-			entity.stat.karma			= karma
-			entity.stat.weight			= weight
-			entity.stat.shape			= shape
-			entity.stat.spirit			= spirit
-			entity.stat.RefreshVitalStats()
-
 func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(ridAgent)
@@ -118,16 +108,26 @@ func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : in
 
 			entity.stat.RefreshVitalStats()
 
-func UpdateAttributes(ridAgent : int, strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	if Launcher.Map:
-		var entity : Entity = Entities.Get(ridAgent)
-		if entity and entity.stat:
-			entity.stat.strength		= strength
-			entity.stat.vitality		= vitality
-			entity.stat.agility			= agility
-			entity.stat.endurance		= endurance
-			entity.stat.concentration	= concentration
-			entity.stat.RefreshAttributes()
+func UpdatePrivateStats(experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player and Launcher.Player.stat:
+		Launcher.Player.stat.experience		= experience
+		Launcher.Player.stat.gp				= gp
+		Launcher.Player.stat.mana			= mana
+		Launcher.Player.stat.stamina		= stamina
+		Launcher.Player.stat.karma			= karma
+		Launcher.Player.stat.weight			= weight
+		Launcher.Player.stat.shape			= shape
+		Launcher.Player.stat.spirit			= spirit
+		Launcher.Player.stat.RefreshVitalStats()
+
+func UpdateAttributes(strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.Player and Launcher.Player.stat:
+		Launcher.Player.stat.strength		= strength
+		Launcher.Player.stat.vitality		= vitality
+		Launcher.Player.stat.agility		= agility
+		Launcher.Player.stat.endurance		= endurance
+		Launcher.Player.stat.concentration	= concentration
+		Launcher.Player.stat.RefreshAttributes()
 
 func LevelUp(ridAgent : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
@@ -135,7 +135,7 @@ func LevelUp(ridAgent : int, _rpcID : int = NetworkCommons.RidSingleMode):
 		if entity and entity.get_parent() and entity.stat:
 			entity.LevelUp()
 
-func ItemAdded(itemID : int, customfield : String, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func ItemAdded(itemID : int, customfield : StringName, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player:
 		var cell : BaseCell = DB.GetItem(itemID, customfield)
 		if cell and Launcher.Player.inventory.PushItem(cell, count):
@@ -144,7 +144,7 @@ func ItemAdded(itemID : int, customfield : String, count : int, _rpcID : int = N
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
 
-func ItemRemoved(itemID : int, customfield : String, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func ItemRemoved(itemID : int, customfield : StringName, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player:
 		var cell : BaseCell = DB.GetItem(itemID, customfield)
 		if cell:
@@ -154,7 +154,7 @@ func ItemRemoved(itemID : int, customfield : String, count : int, _rpcID : int =
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
 
-func ItemEquiped(ridAgent : int, itemID : int, customfield : String, state : bool, _rpcID : int = NetworkCommons.RidSingleMode):
+func ItemEquiped(ridAgent : int, itemID : int, customfield : StringName, state : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	var entity : Entity = Entities.Get(ridAgent)
 	if entity:
 		var cell : ItemCell = DB.GetItem(itemID, customfield)
@@ -183,7 +183,7 @@ func RefreshEquipments(ridAgent : int, equipments : Dictionary, _rpcID : int = N
 		if entity == Launcher.Player and Launcher.GUI and Launcher.GUI.inventoryWindow:
 			Launcher.GUI.inventoryWindow.RefreshInventory()
 
-func DropAdded(dropID : int, itemID : int, customfield : String, pos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
+func DropAdded(dropID : int, itemID : int, customfield : StringName, pos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		Launcher.Map.AddDrop(dropID, DB.GetItem(itemID, customfield), pos)
 

@@ -80,4 +80,4 @@ func _ready():
 		AddCategories(jsonFile.get_data())
 
 func _richtextlabel_on_meta_clicked(meta):
-	OS.shell_open(str(meta))
+	OS.shell_open(str(meta).uri_encode())
