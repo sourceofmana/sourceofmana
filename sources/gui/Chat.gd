@@ -11,14 +11,15 @@ var enabledLastFrame : bool						= false
 
 #
 func AddPlayerText(playerName : String, speech : String):
-	AddText(playerName + ": " + speech, UICommons.LightTextColor)
+	AddText(playerName, UICommons.PlayerNameToColor(playerName))
+	AddText(": " + speech + "\n", UICommons.LightTextColor)
 
 func AddSystemText(speech : String):
-	AddText(speech, UICommons.TextColor)
+	AddText(speech + "\n", UICommons.TextColor)
 
 func AddText(speech : String, color : Color):
 	if tabContainer && tabContainer.get_current_tab_control():
-		tabContainer.get_current_tab_control().text += "[color=#" + color.to_html(false) + "]" + speech + "[/color]\n"
+		tabContainer.get_current_tab_control().text += "[color=#" + color.to_html(false) + "]" + speech + "[/color]"
 
 func isNewLineEnabled() -> bool:
 	return lineEdit.is_visible() and lineEdit.has_focus() if lineEdit else false
