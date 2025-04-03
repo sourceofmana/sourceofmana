@@ -2,6 +2,8 @@
 
 Client and Game development for Source of Mana, a The Mana World story.
 
+Both server and client save their data to `$XDG_DATA_HOME/SourceOfMana` on Linux or `\AppData\Roaming\SourceOfMana` on Windows or `~/Library/Application Support/SourceOfMana` on macOS.
+
 ## Tools
 
 Game editor:
@@ -26,7 +28,9 @@ With prebuilt binary:
 "./Source of Mana" --server --headless
 ```
 
-Note that SOM writes the list of online players, `online.json`, next to the SOM or godot executable.
+The server expects a fullchain certificate as `server.crt` and its private key as `server.key` in the root of its data directory, which is mentioned above.
+
+The server accepts connections on port 6118 (tcp) and port 6119 (udp).
 
 ## License
 
