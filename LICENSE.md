@@ -290,6 +290,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/hairstyles/side-strand.png [Sir_lance]
 ./graphics/sprites/hairstyles/parted.png [Modanung] [Reid]
 ./graphics/sprites/hairstyles/pompadour.png [Kineticstorm]
+./graphics/sprites/hairstyles/short-curly.png [Saphy] [Reid]
 ./graphics/sprites/hairstyles/tapered-nape.png [Ivosh] [Alige]
 ./graphics/sprites/hairstyles/wild.png [Mandi Paugh] [Ivosh, Reid]
 ./graphics/sprites/hairstyles/wave.png [Slave] [Reid]
