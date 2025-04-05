@@ -24,6 +24,8 @@ func Warped():
 func _ready():
 	scrollContainer.get_h_scroll_bar().scale = Vector2.ZERO
 	scrollContainer.get_v_scroll_bar().scale = Vector2.ZERO
+	if Launcher.Map and not Launcher.Map.PlayerWarped.is_connected(Warped):
+		Launcher.Map.PlayerWarped.connect(Warped)
 
 func _process(_delta : float):
 	if visible and Launcher.Camera != null && Launcher.Camera.mainCamera != null:
@@ -36,8 +38,3 @@ func _process(_delta : float):
 			maxSize = minimapWindowSize
 			scrollContainer.set_h_scroll(scrollPos.x)
 			scrollContainer.set_v_scroll(scrollPos.y)
-
-func _on_visibility_changed():
-	if Launcher.Map and not Launcher.Map.PlayerWarped.is_connected(Warped):
-		Launcher.Map.PlayerWarped.connect(Warped)
-	Warped()

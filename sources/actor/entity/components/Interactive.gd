@@ -140,12 +140,13 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			newLabel.SetValue(emitter, value, alteration)
 			Launcher.Map.currentFringe.add_child(newLabel)
 
-			if alteration == ActorCommons.Alteration.HEAL:
-				target.stat.health += value
-				target.stat.RefreshVitalStats()
-			elif alteration == ActorCommons.Alteration.HIT or alteration == ActorCommons.Alteration.CRIT:
-				target.stat.health -= value
-				target.stat.RefreshVitalStats()
+			if entity.type != ActorCommons.Type.PLAYER:
+				if alteration == ActorCommons.Alteration.HEAL:
+					target.stat.health += value
+					target.stat.RefreshVitalStats()
+				elif alteration == ActorCommons.Alteration.HIT or alteration == ActorCommons.Alteration.CRIT:
+					target.stat.health -= value
+					target.stat.RefreshVitalStats()
 
 			if emitter != target and Launcher.Player == emitter:
 				var skill : SkillCell = DB.SkillsDB.get(skillID, null)
