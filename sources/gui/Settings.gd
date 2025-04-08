@@ -17,6 +17,7 @@ const userSection : String						= "User"
 		"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
 		"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
 		"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
+		"Session-FirstLogin": [init_sessionfirstlogin, set_sessionfirstlogin, apply_sessionfirstlogin, null],
 		"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
 		"Session-ShortcutCells": [init_shortcutcells, set_shortcutcells, apply_shortcutcells, null],
 	}
@@ -204,6 +205,18 @@ func set_sessionaccountname(accountName : String):
 func apply_sessionaccountname(accountName : String):
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.nameTextControl.set_text(accountName)
+
+# Session First Login
+func init_sessionfirstlogin(apply : bool):
+	if apply:
+		var firstTime : bool = GetVal("Session-FirstLogin")
+		apply_sessionfirstlogin(firstTime)
+func set_sessionfirstlogin(firstTime : bool):
+	SetVal("Session-FirstLogin", firstTime)
+	apply_sessionfirstlogin(firstTime)
+func apply_sessionfirstlogin(firstTime : bool):
+	if Launcher.GUI and firstTime:
+		Launcher.GUI.DisplayFirstLogin()
 
 # Session Windows Overlay placement
 enum ESessionOverlay { NAME = 0, POSITION, SIZE, COUNT}

@@ -18,3 +18,6 @@ const ServerMaxFPS : int				= 30
 # Common accessors
 static var isMobile : bool				= OS.has_feature("android") or OS.has_feature("ios")
 static var isWeb : bool					= OS.has_feature("web")
+
+# Social
+const DiscordLink : String				= "https://discord.gg/bgDURH7X"

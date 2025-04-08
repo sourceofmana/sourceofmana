@@ -87,6 +87,30 @@ func DisplayInfoContext(actions : PackedStringArray):
 			infoContext.Push(ContextData.new(action))
 	infoContext.FadeIn()
 
+func OpenDiscord():
+	OS.shell_open(LauncherCommons.DiscordLink)
+
+func DisplayFirstLogin():
+	if LauncherCommons.isWeb:
+		UICommons.MessageBox("Welcome to Source of Mana!\n\
+\n\
+You're currently playing the web version, which may run slower and isn't as stable as the downloadable versions.\n\
+\n\
+This version is mainly here to showcase the game.\n\
+For the best experience, we recommend using the native client found on our itch.io page (Available on Windows, Linux, macOS, and Android).\n",
+			settingsWindow.set_sessionfirstlogin.bind(false), "OK",
+			OpenDiscord, "Join our Discord")
+	else:
+		UICommons.MessageBox("Welcome to Source of Mana!\n\
+\n\
+This is an open-source MMORPG and still a work in progress. You're welcome to explore, test, and enjoy the current features.\n\
+\n\
+We're also always looking for contributors!\n\
+If you'd like to get involved in development, design, writing, or testing, feel free to join our community.\n\
+Otherwise, have fun and thank you for playing!\n",
+			settingsWindow.set_sessionfirstlogin.bind(false), "OK",
+			OpenDiscord, "Join our Discord")
+
 #
 func EnterLoginMenu():
 	if progressTimer != null:
