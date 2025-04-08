@@ -190,7 +190,7 @@ func _velocity_computed(safeVelocity : Vector2i):
 
 	if wasZero or isZero:
 		requireFullUpdate = true
-	elif (currentVelocity - velocity).length_squared() > 12:
+	elif self is PlayerAgent or (currentVelocity - velocity).length_squared() > 12:
 		requireUpdate = true
 
 	velocity = currentVelocity
