@@ -22,7 +22,7 @@ func _process(delta : float):
 
 	var viewportSize : Vector2 = Launcher.Camera.mainCamera.get_viewport_rect().size / canvasScale
 	var cameraTopLeft : Vector2 = Launcher.Camera.mainCamera.global_position - viewportSize * 0.5
-	cameraTopLeft = cameraTopLeft.clamp(Launcher.Camera.minPos, Launcher.Camera.maxPos - viewportSize)
+	cameraTopLeft = cameraTopLeft.clamp(Vector2.ZERO, Launcher.Map.GetMapBoundaries() - viewportSize)
 	var cameraRect : Rect2 = Rect2(cameraTopLeft, viewportSize)
 
 	time += delta

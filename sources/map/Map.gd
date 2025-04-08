@@ -4,6 +4,7 @@ extends ServiceBase
 signal MapUnloaded
 signal MapLoaded
 signal PlayerWarped
+signal PlayerMoved
 
 #
 var pool								= FileSystem.LoadSource("map/MapPool.gd")
@@ -19,9 +20,9 @@ func RefreshTileMap():
 			currentFringe = child
 			break
 
-func GetMapBoundaries() -> Rect2:
+func GetMapBoundaries() -> Vector2:
 	assert(currentMapNode != null, "Map node not found on the current scene")
-	return currentMapNode.get_meta("MapBoundaries") if currentMapNode else Rect2()
+	return currentMapNode.get_meta("MapBoundaries", Vector2.ZERO) if currentMapNode else Vector2.ZERO
 
 #
 func EmplaceMapNode(mapID : int, force : bool = false):
@@ -108,6 +109,7 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spiri
 
 	if isLocalPlayer:
 		PlayerWarped.emit()
+		print(PlayerWarped.get_connections())
 	return entity
 
 func RemoveEntity(agentID : int):

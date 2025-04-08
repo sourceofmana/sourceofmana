@@ -44,6 +44,8 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	if dist > NetworkCommons.MaxGuardbandDistSquared or forceValue:
 		position = gardbandPosition
 		entityPosOffset = Vector2.ZERO
+		if Launcher.Player == self:
+			Launcher.Map.PlayerMoved.emit()
 
 	if visual and visual.skillCastID != nextskillCastID:
 		visual.skillCastID = nextskillCastID
@@ -144,6 +146,8 @@ func _physics_process(delta : float):
 		var extraVelocity : Vector2 = velocity - entityVelocity
 		entityPosOffset -= extraVelocity * delta
 		move_and_slide()
+		if Launcher.Player == self:
+			Launcher.Map.PlayerMoved.emit()
 
 func _ready():
 	if Launcher.Player == self:

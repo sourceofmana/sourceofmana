@@ -3,8 +3,6 @@ extends ServiceBase
 #
 var mainCamera : Camera2D		= null
 var sceneCamera : Camera2D		= null
-var minPos : Vector2			= Vector2.ZERO
-var maxPos : Vector2			= Vector2.ONE
 var lastZoomLevel : int			= ActorCommons.CameraZoomDefault
 var zoomLevel : int				= ActorCommons.CameraZoomDefault
 var zoomSceneTween : Tween		= null 
@@ -14,22 +12,20 @@ var zoomTimer : Timer			= null
 #
 func SetBoundaries():
 	if Launcher.Map:
-		var mapBoundaries : Rect2i	= Launcher.Map.GetMapBoundaries()
-		minPos						= mapBoundaries.position
-		maxPos						= mapBoundaries.end
+		var cameraBoundary : Vector2i = Launcher.Map.GetMapBoundaries()
 
 		if mainCamera:
-			mainCamera.limit_left		= int(mapBoundaries.position.x)
-			mainCamera.limit_right		= int(mapBoundaries.end.x)
-			mainCamera.limit_top		= int(mapBoundaries.position.y)
-			mainCamera.limit_bottom		= int(mapBoundaries.end.y)
+			mainCamera.limit_left		= 0
+			mainCamera.limit_right		= cameraBoundary.x
+			mainCamera.limit_top		= 0
+			mainCamera.limit_bottom		= cameraBoundary.y
 			mainCamera.set_global_position(Vector2.ZERO)
 
 		if sceneCamera:
-			sceneCamera.limit_left		= int(mapBoundaries.position.x)
-			sceneCamera.limit_right		= int(mapBoundaries.end.x)
-			sceneCamera.limit_top		= int(mapBoundaries.position.y)
-			sceneCamera.limit_bottom	= int(mapBoundaries.end.y)
+			sceneCamera.limit_left		= 0
+			sceneCamera.limit_right		= cameraBoundary.x
+			sceneCamera.limit_top		= 0
+			sceneCamera.limit_bottom	= cameraBoundary.y
 			sceneCamera.set_global_position(Vector2.ZERO)
 
 func EnableSceneCamera(pos : Vector2):

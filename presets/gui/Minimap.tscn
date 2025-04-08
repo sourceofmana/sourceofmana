@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://x1jkhsyls2i4"]
+[gd_scene load_steps=5 format=3 uid="uid://x1jkhsyls2i4"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_6u7q8"]
 [ext_resource type="Script" uid="uid://dsfutstaym80l" path="res://sources/gui/Minimap.gd" id="3_g8pkj"]
+[ext_resource type="Texture2D" uid="uid://cwlcajt78phca" path="res://data/graphics/effects/particles/orb.png" id="3_mlcjw"]
+[ext_resource type="Texture2D" uid="uid://dw5ppjee83tck" path="res://data/graphics/default.png" id="3_qp0wm"]
 
 [node name="Panel" type="PanelContainer"]
 custom_minimum_size = Vector2(160, 96)
-offset_right = 160.0
-offset_bottom = 96.0
+offset_right = 245.0
+offset_bottom = 168.0
 theme = ExtResource("1_6u7q8")
 script = ExtResource("3_g8pkj")
 
@@ -15,7 +17,16 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="ScrollContainer"]
 layout_mode = 2
+texture = ExtResource("3_qp0wm")
 stretch_mode = 2
+
+[node name="PlayerPoint" type="TextureRect" parent="ScrollContainer/TextureRect"]
+modulate = Color(1, 0.26, 0.26, 1)
+layout_mode = 1
+offset_right = 8.0
+offset_bottom = 8.0
+texture = ExtResource("3_mlcjw")
+stretch_mode = 3
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

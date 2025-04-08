@@ -4,7 +4,7 @@ uniform vec3 outline_color : source_color = vec3(1.0, 0.0, 0.0); // Red
 uniform float blink_speed : hint_range(0, 10) = 1.0;
 
 const vec2 OFFSETS[8] = {
-	vec2(-1, -1), vec2(-1, 0), vec2(-1, 1), vec2(0, -1), vec2(0, 1), 
+	vec2(-1, -1), vec2(-1, 0), vec2(-1, 1), vec2(0, -1), vec2(0, 1),
 	vec2(1, -1), vec2(1, 0), vec2(1, 1)
 };
 void vertex() {

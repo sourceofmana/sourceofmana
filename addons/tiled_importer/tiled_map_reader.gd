@@ -78,8 +78,8 @@ var cell_size = Vector2.ZERO
 var map_width = 0
 var map_height = 0
 var map_flags = WorldMap.Flags.NONE
+var map_boundaries : Rect2 = Rect2()
 var nav_region : NavigationRegion2D = NavigationRegion2D.new()
-var map_boundaries : Rect2 = Rect2()# Collision polygons
 var source_data : NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
 
 
@@ -184,17 +184,13 @@ func build_client(source_path, options) -> Node2D:
 	for tmxLayer in map.layers:
 		var layer : TileMapLayer = make_layer(tmxLayer, root, mapData, zOrder)
 		if layer:
-			map_boundaries = map_boundaries.merge(layer.get_used_rect())
 			root.add_child(layer)
 			layer.set_owner(root)
 			zOrder += 1
 
 	# Set metadata
-	map_boundaries.position.x *= cell_size.x
-	map_boundaries.end.x *= cell_size.x
-	map_boundaries.position.y *= cell_size.y
-	map_boundaries.end.y *= cell_size.y
-	root.set_meta("MapBoundaries", map_boundaries)
+	map_boundaries = Rect2(Vector2.ZERO, Vector2(map_width, map_height) * cell_size)
+	root.set_meta("MapBoundaries", map_boundaries.end)
 
 	# Background color
 	if options.add_background and "backgroundcolor" in map:

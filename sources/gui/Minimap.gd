@@ -1,7 +1,8 @@
 extends WindowPanel
 
-@onready var textureRect : TextureRect = $ScrollContainer/TextureRect
-@onready var scrollContainer : ScrollContainer = $ScrollContainer
+@onready var textureRect : TextureRect				= $ScrollContainer/TextureRect
+@onready var scrollContainer : ScrollContainer		= $ScrollContainer
+@onready var playerPoint : TextureRect				= $ScrollContainer/TextureRect/PlayerPoint
 
 #
 func Warped():
@@ -20,21 +21,39 @@ func Warped():
 		return
 	textureRect.set_texture(resource)
 
+func Moved():
+	var mapSize : Vector2 = Launcher.Map.GetMapBoundaries()
+	if mapSize.x != 0 and mapSize.y != 0:
+		var posRatio : Vector2 = Launcher.Player.position / mapSize
+		var minimapPlayerPos : Vector2 = posRatio * textureRect.size
+		# PlayerPos centered on the minimap minus scrollbar size (even hidden, they are still taking some extra spaces
+		var scrollPos : Vector2i = Vector2i(minimapPlayerPos - scrollContainer.size / 2 - Vector2(10, 10))
+		scrollContainer.set_h_scroll(scrollPos.x)
+		scrollContainer.set_v_scroll(scrollPos.y)
+		playerPoint.set_position(minimapPlayerPos)
+
 #
 func _ready():
-	scrollContainer.get_h_scroll_bar().scale = Vector2.ZERO
-	scrollContainer.get_v_scroll_bar().scale = Vector2.ZERO
-	if Launcher.Map and not Launcher.Map.PlayerWarped.is_connected(Warped):
-		Launcher.Map.PlayerWarped.connect(Warped)
+	var HBar : HScrollBar = scrollContainer.get_h_scroll_bar()
+	HBar.set_scale(Vector2.ZERO)
+	HBar.set_allow_greater(false)
 
-func _process(_delta : float):
-	if visible and Launcher.Camera != null && Launcher.Camera.mainCamera != null:
-		var screenCenter : Vector2	= Launcher.Camera.mainCamera.get_target_position()
-		var mapSize : Vector2		= Vector2(Launcher.Camera.mainCamera.get_limit(SIDE_RIGHT), Launcher.Camera.mainCamera.get_limit(SIDE_BOTTOM))
-		if not mapSize.is_zero_approx():
-			var posRatio : Vector2 = screenCenter / mapSize
-			var minimapWindowSize : Vector2 = textureRect.size
-			var scrollPos : Vector2i = Vector2i(minimapWindowSize * posRatio - size / 2)
-			maxSize = minimapWindowSize
-			scrollContainer.set_h_scroll(scrollPos.x)
-			scrollContainer.set_v_scroll(scrollPos.y)
+	var VBar : VScrollBar = scrollContainer.get_v_scroll_bar()
+	VBar.set_scale(Vector2.ZERO)
+	VBar.set_allow_greater(false)
+	_post_launch()
+
+func _post_launch():
+	if Launcher.Map:
+		Launcher.Map.PlayerWarped.connect(Warped)
+		Launcher.Map.PlayerMoved.connect(Moved)
+	textureRect.item_rect_changed.connect(Moved)
+
+func Destroy():
+	if Launcher.Map:
+		if Launcher.Map.PlayerWarped.is_connected(Warped):
+			Launcher.Map.PlayerWarped.disconnect(Warped)
+		if Launcher.Map.PlayerMoved.is_connected(Moved):
+			Launcher.Map.PlayerMoved.disconnect(Moved)
+	if textureRect.item_rect_changed.is_connected(Moved):
+		textureRect.item_rect_changed.disconnect(Moved)

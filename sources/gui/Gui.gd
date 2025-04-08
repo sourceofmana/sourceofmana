@@ -169,14 +169,25 @@ func EnterGame():
 
 #
 func _post_launch():
-	FSM.enter_login.connect(EnterLoginMenu)
-	FSM.enter_login_progress.connect(EnterLoginProgress)
-	FSM.enter_char.connect(EnterCharMenu)
-	FSM.enter_char_progress.connect(EnterCharProgress)
-	FSM.enter_game.connect(EnterGame)
+	if not FSM.enter_login.is_connected(EnterLoginMenu):
+		FSM.enter_login.connect(EnterLoginMenu)
+	if not FSM.enter_login_progress.is_connected(EnterLoginProgress):
+		FSM.enter_login_progress.connect(EnterLoginProgress)
+	if not FSM.enter_char.is_connected(EnterCharMenu):
+		FSM.enter_char.connect(EnterCharMenu)
+	if not FSM.enter_char_progress.is_connected(EnterCharProgress):
+		FSM.enter_char_progress.connect(EnterCharProgress)
+	if not FSM.enter_game.is_connected(EnterGame):
+		FSM.enter_game.connect(EnterGame)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
-
+	if minimapWindow:
+		minimapWindow._post_launch()
 	isInitialized = true
+
+func Destroy():
+	if minimapWindow:
+		minimapWindow.Destroy()
+	isInitialized = false
 
 func _notification(notif):
 	match notif:

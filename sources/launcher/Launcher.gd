@@ -76,6 +76,9 @@ func Reset(clientStarted : bool, serverStarted : bool):
 			Map.Destroy()
 			Map.queue_free()
 			Map = null
+		if GUI:
+			GUI.Destroy()
+			# GUI is not cleared, but all signals should be re-connected
 		if Network.Client:
 			Network.Client.Destroy()
 			Network.Client = null

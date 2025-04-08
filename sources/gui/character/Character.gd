@@ -281,7 +281,6 @@ func RefreshOnce():
 	Clear()
 
 	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMapID)
-	Launcher.Camera.SetBoundaries()
 	currentCharacterID = ActorCommons.InvalidCharacterSlot
 	for slotID in charactersInfo.size():
 		RemoveCharacter(slotID)
