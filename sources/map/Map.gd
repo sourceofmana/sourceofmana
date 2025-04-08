@@ -109,7 +109,6 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spiri
 
 	if isLocalPlayer:
 		PlayerWarped.emit()
-		print(PlayerWarped.get_connections())
 	return entity
 
 func RemoveEntity(agentID : int):

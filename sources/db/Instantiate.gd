@@ -27,6 +27,7 @@ static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = 
 			actor.ownScriptPath = spawn.own_script
 		"Monster":
 			actor = MonsterAgent.new(ActorCommons.Type.MONSTER, data, nick, true)
+			actor.currentOrientation = Vector2(randf_range(-1.0, 1.0), randf_range(-0.3, 1.0))
 			actor.spawnInfo = spawn
 		"Player":
 			actor = PlayerAgent.new(ActorCommons.Type.PLAYER, data, nick, true)

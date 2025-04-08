@@ -76,8 +76,8 @@ func RefreshInventory():
 			continue
 
 		count += 1
+		CellTile.RefreshShortcuts(cell, item.count)
 		if IsFiltered(cell, currentFilter):
-			CellTile.RefreshShortcuts(cell, item.count)
 			if cell.stackable:
 				if tile:
 					tile.AssignData(cell, item.count)
