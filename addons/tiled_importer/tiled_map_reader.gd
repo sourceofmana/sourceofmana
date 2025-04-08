@@ -370,7 +370,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 		layer.set_z_index(zindex)
 		if "Fringe" in tmxLayer.name:
 			layer.set_y_sort_enabled(true)
-			layer.set_y_sort_origin(cell_size.y / 2)
+			layer.set_y_sort_origin(0)
 
 		var offset = Vector2()
 		if "offsetx" in tmxLayer:
