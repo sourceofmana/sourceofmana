@@ -13,7 +13,7 @@ offset_right = 833.0
 offset_bottom = 233.0
 mouse_filter = 1
 theme = ExtResource("1_cvd62")
-theme_type_variation = &"DialogueBox"
+theme_type_variation = &"MessageBox"
 script = ExtResource("2_a0m0i")
 metadata/_edit_layout_mode = 1
 

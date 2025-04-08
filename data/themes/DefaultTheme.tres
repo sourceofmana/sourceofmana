@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=64 format=3 uid="uid://dhb6h35g1bk0x"]
+[gd_resource type="Theme" load_steps=66 format=3 uid="uid://dhb6h35g1bk0x"]
 
 [ext_resource type="Texture2D" uid="uid://c8dd1hfs2ws34" path="res://data/graphics/gui/tab/tab_fg.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://cw3cy5h2gk8qa" path="res://data/graphics/gui/window/window_bg_soft.png" id="2"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://ds361htqsjrmu" path="res://data/graphics/gui/checkbox/cb_small_lock_disabled.png" id="13"]
 [ext_resource type="Texture2D" uid="uid://cesdqicc7sxgk" path="res://data/graphics/gui/button/button_pressed.png" id="13_mn5yk"]
 [ext_resource type="Texture2D" uid="uid://daq6gf2m7eldb" path="res://data/graphics/gui/checkbox/cb_small_disabled.png" id="14"]
+[ext_resource type="Texture2D" uid="uid://ubtk8868awvl" path="res://data/graphics/gui/messagebox.png" id="14_ceaab"]
 [ext_resource type="Texture2D" uid="uid://db5wlgbj5a5mk" path="res://data/graphics/gui/panelsideleft.png" id="14_ydunl"]
 [ext_resource type="Texture2D" uid="uid://cwb3pymvkf25d" path="res://data/graphics/gui/panelsideright.png" id="15_a7lxq"]
 [ext_resource type="Texture2D" uid="uid://cxsevv3wmkp27" path="res://data/graphics/gui/button/button_focus.png" id="16"]
@@ -186,6 +187,13 @@ border_width_left = 4
 border_width_top = 2
 border_color = Color(0.176, 0.188, 0.2, 0.8)
 corner_detail = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5wphw"]
+texture = ExtResource("14_ceaab")
+texture_margin_left = 61.0
+texture_margin_top = 14.0
+texture_margin_right = 61.0
+texture_margin_bottom = 14.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kckym"]
 content_margin_top = 10.0
@@ -449,6 +457,8 @@ LineEdit/icons/clear = ExtResource("11_ilveh")
 LineEdit/styles/focus = SubResource("StyleBoxFlat_ia7e2")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_ia7e2")
 LineEdit/styles/read_only = SubResource("StyleBoxFlat_ia7e2")
+MessageBox/base_type = &"PanelContainer"
+MessageBox/styles/panel = SubResource("StyleBoxTexture_5wphw")
 NotificationBox/base_type = &"RichTextLabel"
 NotificationBox/colors/default_color = Color(0.933, 0.847, 0.631, 1)
 NotificationBox/styles/normal = SubResource("StyleBoxTexture_kckym")

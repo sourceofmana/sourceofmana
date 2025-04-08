@@ -129,6 +129,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/gui/menu/menubar_button_pressed.png [Reid]
 ./graphics/gui/menu/menubar_content.png [Reid]
 ./graphics/gui/menu/menubar_open.png [Reid]
+./graphics/gui/messagebox.png [Reid]
 ./graphics/gui/misc/loading.png [Reid]
 ./graphics/gui/misc/mouse.png [Crush]
 ./graphics/gui/mobile/background.png [Reid]
