@@ -64,8 +64,13 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 		Missed(agent, target)
 
 static func HandleZone(agent : BaseAgent, zonePos : Vector2, skill : SkillCell, rng : float):
-	for target in SkillCommons.GetZoneTargets(WorldAgent.GetInstanceFromAgent(agent), zonePos, skill):
-		Handle(agent, target, skill, rng)
+	var targets : Array[BaseAgent] = SkillCommons.GetZoneTargets(WorldAgent.GetInstanceFromAgent(agent), zonePos, skill)
+	if targets.is_empty():
+		return
+	var halfRNG : float = rng / 2.0
+	var scaledRNG : float = halfRNG + halfRNG / targets.size()
+	for target in targets:
+		Handle(agent, target, skill, scaledRNG)
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
