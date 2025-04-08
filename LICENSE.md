@@ -229,6 +229,8 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/minimaps/splatyna/splatyna-first.png [Reid]
 ./graphics/minimaps/splatyna/splatyna-second.png [Reid]
 ./graphics/minimaps/splatyna/splatyna-third.png [Reid]
+./graphics/minimaps/tonori/sandstorm/mine-entrance.png [Reid]
+./graphics/minimaps/tonori/desertpit/snake-pit.png [Reid]
 ./graphics/sprites/accessories/fire.png [Sharm] [Reid]
 ./graphics/sprites/accessories/ratto-tail.png [Coolkid782]
 ./graphics/sprites/equipments/chests/croptop-female.png [Crush] [Fate]
