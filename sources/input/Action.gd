@@ -90,15 +90,16 @@ func GetMove(forceMode : bool = false) -> Vector2:
 	return moveVector
 
 # Local player movement
+func MoveTo(pos : Vector2):
+	Network.SetClickPos(pos)
+	clickTimer.start()
+
 func _unhandled_input(event):
 	if event.is_action("gp_click_to") and supportMouse:
 		if FSM.IsGameState() and clickTimer:
 			if clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
-				var mousePos : Vector2 = Launcher.Camera.mainCamera.get_global_mouse_position()
-				Network.SetClickPos(mousePos)
-				clickTimer.start()
-
-	if not HasConsumed() and Launcher.Camera:
+				MoveTo(Launcher.Camera.mainCamera.get_global_mouse_position())
+	elif not HasConsumed() and Launcher.Camera:
 		if event is InputEventMagnifyGesture:
 			if event.factor > 1.0:
 				ConsumeAction("gp_zoom_in", true)

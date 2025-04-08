@@ -23,10 +23,22 @@ stretch_mode = 2
 [node name="PlayerPoint" type="TextureRect" parent="ScrollContainer/TextureRect"]
 modulate = Color(1, 0.26, 0.26, 1)
 layout_mode = 1
-offset_right = 8.0
-offset_bottom = 8.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_mlcjw")
-stretch_mode = 3
+stretch_mode = 2
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="resized" from="ScrollContainer" to="." method="Moved"]
+[connection signal="gui_input" from="ScrollContainer/TextureRect" to="." method="_on_texture_rect_gui_input"]
+[connection signal="item_rect_changed" from="ScrollContainer/TextureRect" to="." method="Moved"]
