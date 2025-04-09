@@ -458,6 +458,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./musics/Jose. S & Dakota. D - Lenia.ogg [Chicka-Maria]
 ./musics/Jose. S & Dakota. D - Night is calling.ogg [Chicka-Maria]
 ./musics/Hitctrl - Foreboding ambiance.ogg [Hitctrl]
+./musics/NYC Sound Design & Dariunas - Cave.ogg [NYC Sound Design] [Dariunas]
 ./press/logo/logo_bw.svg [Kolokolna] [Reid]
 ./press/logo/logo_colored.svg [Kolokolna] [Reid]
 ./press/logo/logo_seed.svg [Kolokolna] [Reid]

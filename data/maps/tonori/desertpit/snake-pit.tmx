@@ -3,7 +3,7 @@
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="lighting" type="float" value="0.6"/>
-  <property name="music" value="Lenia"/>
+  <property name="music" value="Desert Cave"/>
   <property name="name" value="Snake Pit"/>
  </properties>
  <tileset firstgid="1" source="../../../graphics/tilesets/tonori/cave/Cave.tsx"/>
