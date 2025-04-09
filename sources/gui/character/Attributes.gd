@@ -48,7 +48,7 @@ func Randomize():
 	var availablePoints : int = Formula.GetMaxAttributePoints(1)
 	var partitions : Array = []
 
-	for i in range(4):
+	for i in 4:
 		partitions.append(randi() % availablePoints)
 
 	partitions.append(availablePoints)

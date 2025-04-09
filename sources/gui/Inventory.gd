@@ -86,7 +86,7 @@ func RefreshInventory():
 				else:
 					break
 			else:
-				for cellIdx in range(item.count):
+				for cellIdx in item.count:
 					if tile:
 						tile.AssignData(cell)
 						tileIdx += 1
@@ -165,7 +165,7 @@ func RefreshDropMode():
 
 #
 func _ready():
-	for tileIdx in range(grid.maxCount):
+	for tileIdx in grid.maxCount:
 		var tile : CellTile = grid.GetTile(tileIdx)
 		if tile:
 			tile.selected.connect(SelectTile)

@@ -31,7 +31,7 @@ func PushItem(cell : ItemCell, count : int) -> bool:
 	else:
 		if items.size() + count > ActorCommons.InventorySize:
 			return false
-		for _i in range(count):
+		for _i in count:
 			if items.size() >= ActorCommons.InventorySize:
 				return false
 			items.append(Item.new(cell))

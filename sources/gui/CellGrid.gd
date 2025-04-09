@@ -19,7 +19,7 @@ func _on_panel_resized():
 
 func _ready():
 	tiles.resize(maxCount)
-	for tileIdx in range(maxCount):
+	for tileIdx in maxCount:
 		var tile : CellTile = UICommons.CellTilePreset.instantiate()
 		tile.AssignData(null, 0)
 		tiles[tileIdx] = tile

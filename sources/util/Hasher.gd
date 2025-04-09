@@ -8,7 +8,7 @@ const DefaultSaltSize : int				= 16
 static func GenerateSalt(length : int = DefaultSaltSize) -> String:
 	var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 	var salt : String = ""
-	for i in range(length):
+	for i in length:
 		# Printable ASCII characters
 		salt += char(rng.randi_range(33, 126))
 	return salt

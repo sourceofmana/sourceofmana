@@ -72,7 +72,7 @@ func populate_resolution_labels(resolution : Vector2i):
 		var minScreenSize : Vector2i = GetVal("Render-MinWindowSize")
 		var maxScreenSize : Vector2i = DisplayServer.screen_get_size()
 		var label : OptionButton = accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL]
-		for i in range(0, resolutionEntriesCount):
+		for i in resolutionEntriesCount:
 			var item : Vector2i = calculate_resolution(i, minScreenSize, maxScreenSize)
 			label.add_item(str(item))
 		label.add_separator()

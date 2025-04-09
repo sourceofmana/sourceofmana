@@ -28,7 +28,7 @@ static func GetPathLengthSquared(agent : BaseAgent, pos : Vector2) -> float:
 			var pathSize : int = path.size()
 			if pathSize >= 2:
 				var unrolledPos : Vector2 = Vector2.ZERO
-				for i in range(0, pathSize-1):
+				for i in (pathSize-1):
 					unrolledPos += (path[i] - path[i+1]).abs()
 				return max(unrolledPos.length_squared(), (agent.position - pos).length_squared())
 	return INF
