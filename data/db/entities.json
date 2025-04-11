@@ -400,6 +400,7 @@
 	"1027": {
 		"Name": "Lizandra",
 		"SpritePreset": "Lizzy",
+		"Behaviour": ["Aggressive"],
 		"Collision": "Medium",
 		"Radius": "16",
 		"Textures": {
@@ -407,6 +408,20 @@
 		},
 		"Stat": {
 			"walkSpeed": 80,
+		},
+	},
+	"1028": {
+		"Name": "Sand Snake",
+		"SpritePreset": "Generic4Directions",
+		"Behaviour": ["Aggressive"],
+		"Collision": "Medium",
+		"Radius": "5",
+		"Textures": {
+			"Body": "sprites/monsters/snake.png",
+		},
+		"Stat": {
+			"walkSpeed": 110,
+			"castAttackDelay": 0.5,
 		},
 	},
 
