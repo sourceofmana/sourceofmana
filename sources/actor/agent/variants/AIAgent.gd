@@ -52,6 +52,9 @@ func AddAttacker(attacker : BaseAgent, damage : int = 0):
 				follower.AddAttacker(attacker, damage)
 				AI.Refresh(follower)
 
+func ClearAttacker():
+	attackers.clear()
+
 func RemoveOldestAttacker():
 	attackers.sort_custom(func(a, b): return a.time < b.time)
 	attackers.erase(0)

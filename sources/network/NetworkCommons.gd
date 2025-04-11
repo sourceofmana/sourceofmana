@@ -30,6 +30,7 @@ const RidDefault : int					= 0
 const RidAuthority : int				= 1
 
 const DelayInstant : int				= 0
+const DelayShort : int					= 16
 const DelayDefault : int				= 50
 const DelayLogin : int					= 1000
 

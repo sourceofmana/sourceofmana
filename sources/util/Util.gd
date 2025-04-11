@@ -20,6 +20,16 @@ static func RemoveNode(node : Node, parent : Node):
 static func GetScreenCapture() -> Image:
 	return Launcher.get_viewport().get_texture().get_image()
 
+# Math
+static func UnrollPathLength(path : PackedVector2Array) -> float:
+	var pathSize : int = path.size()
+	if pathSize < 2:
+		return INF
+	var unrolledPos : Vector2 = Vector2.ZERO
+	for i in (pathSize-1):
+		unrolledPos += (path[i] - path[i+1]).abs()
+	return unrolledPos.length_squared()
+
 # Fade
 static func FadeInOutRatio(value : float, maxValue : float, fadeIn : float, fadeOut : float) -> float:
 	var ratio : float = 1.0

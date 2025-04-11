@@ -190,7 +190,7 @@ func TriggerExplore(rpcID : int = NetworkCommons.RidSingleMode):
 # Combat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerCast(entityID : int, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerCast", [entityID, skillID], rpcID)
+	CallServer("TriggerCast", [entityID, skillID], rpcID, NetworkCommons.DelayShort)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func TargetAlteration(agentID : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):

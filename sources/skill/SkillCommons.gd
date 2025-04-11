@@ -102,7 +102,7 @@ static func IsNotSelf(agent : BaseAgent, target : BaseAgent) -> bool:
 
 static func IsNear(agent : BaseAgent, target : BaseAgent, skillRange : int) -> bool:
 	var filteredRange : float = skillRange + agent.entityRadius + target.entityRadius
-	return WorldNavigation.GetPathLengthSquared(agent, target.position) <= filteredRange * filteredRange
+	return WorldNavigation.GetDistanceSquared(agent, target.position) <= filteredRange * filteredRange
 
 static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:
 	return WorldAgent.GetMapFromAgent(agent) == WorldAgent.GetMapFromAgent(target)
