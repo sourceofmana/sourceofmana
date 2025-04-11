@@ -53,3 +53,8 @@ jobs:
           mkdir -v -p "build/${{ matrix.artifact }}"
           cd "$PROJECT_PATH"
           godot --headless --verbose --export-debug "${{ matrix.export_template }}" "build/${{ matrix.artifact }}/${EXPORT_NAME}-${{ matrix.artifact }}-${{ needs.release.outputs.timestamp }}.${{ matrix.ext }}"
+      - name: Upload Artifact - ${{ matrix.name }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: build/${{ matrix.artifact }}
