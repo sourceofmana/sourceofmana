@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="60">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="60">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="lighting" type="float" value="0.8"/>
@@ -501,8 +501,8 @@
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="94"/>
-    <property name="dest_pos_y" type="int" value="231"/>
+    <property name="dest_pos_x" type="int" value="83"/>
+    <property name="dest_pos_y" type="int" value="226"/>
    </properties>
    <polygon points="0,0 32,32 64,0 96,-64 -32,-64"/>
   </object>

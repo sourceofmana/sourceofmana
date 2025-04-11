@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://beg15hwn3017w"
+path="res://.godot/imported/NYC Sound Design & Dariunas - Cave.ogg-b8e5263715cf81f6a918cfe54529c816.oggvorbisstr"
+
+[deps]
+
+source_file="res://data/musics/NYC Sound Design & Dariunas - Cave.ogg"
+dest_files=["res://.godot/imported/NYC Sound Design & Dariunas - Cave.ogg-b8e5263715cf81f6a918cfe54529c816.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
