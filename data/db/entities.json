@@ -419,6 +419,9 @@
 		"Textures": {
 			"Body": "sprites/monsters/snake.png",
 		},
+		"Shaders": {
+			"Body": "Snake Sand",
+		},
 		"Stat": {
 			"walkSpeed": 110,
 			"castAttackDelay": 0.5,

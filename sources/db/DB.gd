@@ -69,7 +69,7 @@ static func ParsePalettesDB():
 			var categoryIdx : int = int(categoryKey)
 			for key in category:
 				var id = SetCellHash(key)
-				assert(id not in HairstylesDB, "Duplicated cell in PalettesDB")
+				assert(id not in PalettesDB[categoryIdx], "Duplicated cell in PalettesDB")
 				PalettesDB[categoryIdx][id] = FileData.Create(key, category[key])
 
 static func ParseEntitiesDB():

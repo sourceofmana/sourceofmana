@@ -8,7 +8,7 @@ class_name EntityData
 @export var _radius : int						= 0
 @export var _equipments : Array[ItemCell]		= []
 @export var _customTextures : Array[String]		= []
-@export var _customShaders : Array[String]		= []
+@export var _customShaders : Array[FileData]	= []
 @export var _displayName : bool					= false
 @export var _behaviour : int					= AICommons.Behaviour.NEUTRAL
 @export var _stats : Dictionary					= ActorCommons.DefaultStats.duplicate()
@@ -47,7 +47,9 @@ static func Create(result : Dictionary) -> EntityData:
 			entity._customTextures[ActorCommons.GetSlotID(texture) - ActorCommons.Slot.FIRST_MODIFIER] = result.Textures[texture]
 	if "Shaders" in result:
 		for shader in result.Shaders:
-			entity._customShaders[ActorCommons.GetSlotID(shader) - ActorCommons.Slot.FIRST_MODIFIER] = result.Shaders[shader]
+			var paletteId : int = DB.GetCellHash(result.Shaders[shader])
+			entity._customShaders[ActorCommons.GetSlotID(shader) - ActorCommons.Slot.FIRST_MODIFIER] = DB.GetPalette(DB.Palette.SKIN, paletteId)
+
 	if "DisplayName" in result:
 		entity._displayName = result.DisplayName
 	if "Behaviour" in result:

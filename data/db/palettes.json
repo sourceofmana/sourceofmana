@@ -35,10 +35,11 @@
 		"Tritan Ocean": "races/tritan-skin-ocean.tres",
 		"Tritan Oranye": "races/tritan-skin-oranye.tres",
 		"Ukar Nordic": "races/ukar-skin-nordic.tres",
+		"Snake Sand": "monsters/mob-snake-sand.tres",
 	},
 	"2":
 	{
-		"Natural": "equipments/cloth-nqtural.tres",
+		"Natural": "equipments/cloth-natural.tres",
 		"Cerulean": "equipments/cloth-cerulean.tres",
 		"Crimson": "equipments/cloth-crimson.tres",
 		"Olive": "equipments/cloth-olive.tres",

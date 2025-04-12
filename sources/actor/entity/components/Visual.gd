@@ -192,7 +192,7 @@ func SetData(slot : int, data : EntityData):
 			if data._customTextures[rescaledSlot]:
 				sprite.set_texture(FileSystem.LoadGfx(data._customTextures[rescaledSlot]))
 			if data._customShaders[rescaledSlot]:
-				sprite.set_material(FileSystem.LoadResource(data._customShaders[rescaledSlot], false))
+				sprite.set_material(FileSystem.LoadPalette(data._customShaders[rescaledSlot]._path))
 
 	LoadSpriteSlot(slot, sprite)
 
