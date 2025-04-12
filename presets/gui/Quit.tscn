@@ -45,7 +45,7 @@ alignment = 2
 
 [node name="Quit" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice"]
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 6
 theme_type_variation = &"LargeButton"
 text = "Quit"
 
@@ -57,7 +57,7 @@ text = "Log Out"
 
 [node name="Stay" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice"]
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 6
 theme_type_variation = &"LargeButton"
 text = "Stay"
 

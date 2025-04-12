@@ -13,8 +13,11 @@ func EnableControl(state : bool):
 			logOutButton.set_visible(true)
 			logOutButton.grab_focus()
 		else:
-			logOutButton.set_visible(false)
-			quitButton.grab_focus()
+			if quitButton.is_visible():
+				logOutButton.set_visible(false)
+				quitButton.grab_focus()
+			else:
+				set_visible(false)
 
 #
 func _on_logout_pressed():
@@ -28,3 +31,7 @@ func _on_quit_pressed():
 
 func _on_stay_pressed():
 	ToggleControl()
+
+func _ready():
+	if LauncherCommons.isWeb:
+		quitButton.set_visible(false)
