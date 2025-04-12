@@ -16,7 +16,7 @@ func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = NetworkCommons.Ri
 
 func AddPlayer(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipments : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
-		var entity : Entity = Launcher.Map.AddEntity(agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
+		var entity : Entity = Launcher.Map.AddPlayer(agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
 		if entity:
 			UpdatePublicStats(agentID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape, _rpcID)
 			RefreshEquipments(agentID, equipments, _rpcID)

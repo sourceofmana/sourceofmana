@@ -76,6 +76,12 @@ func AddChild(child : Node2D):
 		currentFringe.add_child.call_deferred(child)
 
 # Entities
+func AddPlayer(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int) -> Entity:
+	var entity : Entity = AddEntity(agentID, entityType, shape, spirit, currentShape, nick, entityVelocity, entityPosition, entityOrientation, state, skillCastID)
+	if entity and entity == Launcher.Player:
+		PlayerWarped.emit()
+	return entity
+
 func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int) -> Entity:
 	if not currentFringe:
 		return null
@@ -85,10 +91,10 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spiri
 		return null
 
 	var entity : Entity = Entities.Get(agentID)
-	var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
 	var isAlreadySpawned : bool = entity != null and entity.get_parent() == currentFringe
 
 	if not entity:
+		var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
 		entity = Instantiate.CreateEntity(entityType, entityData, entityData._name if nick.is_empty() else nick, isLocalPlayer)
 		if not entity:
 			return
@@ -107,8 +113,6 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spiri
 		Entities.Add(entity, agentID)
 	entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned)
 
-	if isLocalPlayer:
-		PlayerWarped.emit()
 	return entity
 
 func RemoveEntity(agentID : int):
