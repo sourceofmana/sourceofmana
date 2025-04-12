@@ -23,3 +23,12 @@ class_name SkillCell
 func Use():
 	if usable:
 		Launcher.Player.Cast(self.id)
+
+#
+func _ready():
+	if castPreset:
+		castPreset.instantiate()
+	if skillPreset:
+		skillPreset.instantiate()
+	if projectilePreset:
+		projectilePreset.instantiate()
