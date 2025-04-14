@@ -51,7 +51,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 			if agent.stat.IsMorph():
 				agent.Morph(false, agent.stat.shape)
 
-		Network.WarpPlayer(map.id, agent.rpcRID)
+		Network.WarpPlayer(map.id, agent.position, agent.rpcRID)
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
 				var neighbourRID : int = neighbour.get_rid().get_id()

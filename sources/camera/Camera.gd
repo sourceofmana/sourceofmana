@@ -105,6 +105,11 @@ func SyncPlayerPosition():
 		mainCamera.set_position_smoothing_enabled(enableSmoothing)
 		mainCamera.set_position(Launcher.Player.get_position())
 
+func FocusPosition(position : Vector2):
+	if mainCamera:
+		mainCamera.set_position_smoothing_enabled(false)
+		mainCamera.set_position(position)
+
 #
 func _post_launch():
 	if Launcher.Map:

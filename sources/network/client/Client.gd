@@ -2,11 +2,12 @@ extends NetInterface
 class_name NetClient
 
 #
-func WarpPlayer(mapID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func WarpPlayer(mapID : int, playerPos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Map:
 		var mapData : FileData = DB.MapsDB.get(mapID, null)
 		if mapData:
 			Launcher.Map.EmplaceMapNode(mapID)
+			Launcher.Camera.FocusPosition(playerPos)
 			PushNotification(mapData._name, _rpcID)
 
 func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = NetworkCommons.RidSingleMode):
