@@ -91,7 +91,7 @@ static func StateAttack(agent : AIAgent):
 		if not agent.skillSelected:
 			if AICommons.CanWalk(agent):
 				ToFlee(agent, target)
-		elif SkillCommons.IsTargetable(agent, target, agent.skillSelected):
+		elif SkillCommons.IsAttackable(agent, target, agent.skillSelected):
 			ToAttack(agent, target)
 		elif target:
 			if AICommons.CanWalk(agent):

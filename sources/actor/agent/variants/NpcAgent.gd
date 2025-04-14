@@ -13,17 +13,19 @@ static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.NPC
 
 #
 func Interact(player : Actor):
-	if player is not PlayerAgent or not ActorCommons.IsAlive(player):
+	if player is not PlayerAgent:
 		return
 
 	if not player.ownScript:
-		player.AddScript(self)
+		if SkillCommons.IsTargetable(self, player):
+			player.AddScript(self)
 	else:
 		if player.ownScript.IsWaiting():
 			player.ownScript.OnContinue()
 		elif player.ownScript.npc == self:
 			player.ownScript.step += 1
-	if player.ownScript.npc == self:
+
+	if player.ownScript and player.ownScript.npc == self:
 		player.ownScript.ApplyStep()
 
 func AddInteraction():

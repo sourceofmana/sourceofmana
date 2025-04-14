@@ -93,13 +93,12 @@ func Target(source : Vector2, interactable : bool = true, nextTarget : bool = fa
 		Network.TriggerSelect(target.agentID)
 
 func JustInteract():
-	if not target or target.state == ActorCommons.State.DEATH:
+	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and Util.IsReachableSquared(position, target.position, ActorCommons.TargetMaxSquaredDistance)):
 		Target(position, true)
 	if target:
 		Interact()
-	else:
-		if stat.IsSailing():
-			interactive.DisplaySailContext()
+	elif stat.IsSailing():
+		interactive.DisplaySailContext()
 
 func Interact():
 	if target != null:
@@ -109,7 +108,7 @@ func Interact():
 			Cast(DB.GetCellHash(SkillCommons.SkillMeleeName))
 
 func Cast(skillID : int):
-	if Launcher.GUI.dialogueContainer.is_visible():
+	if Launcher.GUI.IsDialogueContextOpened():
 		return
 
 	assert(skillID in DB.SkillsDB, "Skill ID %x not found within our skill db" % skillID)

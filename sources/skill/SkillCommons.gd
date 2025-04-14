@@ -65,12 +65,12 @@ static func GetZoneTargets(instance : WorldInstance, zonePos : Vector2, skill : 
 	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
 		for neighbour in instance.mobs:
 			var filteredRange : float = skill.cellRange + neighbour.entityRadius
-			if ActorCommons.IsAlive(neighbour) and neighbour.position.distance_squared_to(zonePos) <= filteredRange * filteredRange:
+			if ActorCommons.IsAlive(neighbour) and Util.IsReachableSquared(neighbour.position, zonePos, filteredRange * filteredRange):
 				targets.append(neighbour)
 	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
 		for neighbour in instance.players:
 			var filteredRange : float = skill.cellRange + neighbour.entityRadius
-			if ActorCommons.IsAlive(neighbour) and neighbour.position.distance_squared_to(zonePos) <= filteredRange * filteredRange:
+			if ActorCommons.IsAlive(neighbour) and Util.IsReachableSquared(neighbour.position, zonePos, filteredRange * filteredRange):
 				targets.append(neighbour)
 
 	return targets
@@ -81,11 +81,11 @@ static func GetSurroundingTargets(agent : BaseAgent, skill : SkillCell) -> Array
 
 	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
 		for neighbour in neighbours[1]:
-			if IsTargetable(agent, neighbour, skill):
+			if IsAttackable(agent, neighbour, skill):
 				targets.append(neighbour)
 	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
 		for neighbour in neighbours[2]:
-			if IsTargetable(agent, neighbour, skill):
+			if IsAttackable(agent, neighbour, skill):
 				targets.append(neighbour)
 
 	return targets
@@ -94,7 +94,7 @@ static func GetRNG(hasStamina : bool) -> float:
 	return randf_range(0.9 if hasStamina else 0.1, 1.0)
 
 static func GetRange(agent : BaseAgent, skill : SkillCell) -> int:
-	return agent.stat.current.attackRange + skill.cellRange
+	return agent.stat.current.attackRange + (skill.cellRange if skill else 0)
 
 # Checks
 static func IsNotSelf(agent : BaseAgent, target : BaseAgent) -> bool:
@@ -107,8 +107,11 @@ static func IsNear(agent : BaseAgent, target : BaseAgent, skillRange : int) -> b
 static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:
 	return WorldAgent.GetMapFromAgent(agent) == WorldAgent.GetMapFromAgent(target)
 
-static func IsTargetable(agent : BaseAgent, target : BaseAgent, skill : SkillCell) -> bool:
+static func IsAttackable(agent : BaseAgent, target : BaseAgent, skill : SkillCell) -> bool:
 	return IsInteractable(agent, target) and IsNear(agent, target, GetRange(agent, skill))
+
+static func IsTargetable(agent : BaseAgent, target : BaseAgent) -> bool:
+	return IsInteractable(agent, target) and IsNear(agent, target, ActorCommons.TargetMaxDistance)
 
 static func IsInteractable(agent : BaseAgent, target : BaseAgent) -> bool:
 	return IsNotSelf(agent, target) and ActorCommons.IsAlive(target) and IsSameMap(agent, target)

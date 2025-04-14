@@ -253,7 +253,8 @@ const speechDecreaseDelay : float			= 1.5
 const speechIncreaseThreshold : int			= 15
 const speechMaxWidth : int					= 256
 const speechExtraWidth : int				= 20
-const TargetMaxSquaredDistance : float		= 512 * 512 # ~15 Tile squared length
+const TargetMaxDistance : int				= 256 # ~8 Tile squared length
+static var TargetMaxSquaredDistance : float	= TargetMaxDistance * TargetMaxDistance
 
 # Lifetime
 const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes

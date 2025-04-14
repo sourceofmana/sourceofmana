@@ -30,6 +30,9 @@ static func UnrollPathLength(path : PackedVector2Array) -> float:
 		unrolledPos += (path[i] - path[i+1]).abs()
 	return unrolledPos.length_squared()
 
+static func IsReachableSquared(pos1 : Vector2, pos2 : Vector2, threshold : float) -> bool:
+	return pos1.distance_squared_to(pos2) < threshold
+
 # Fade
 static func FadeInOutRatio(value : float, maxValue : float, fadeIn : float, fadeOut : float) -> float:
 	var ratio : float = 1.0

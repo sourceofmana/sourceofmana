@@ -45,7 +45,7 @@ func ConfirmWarp():
 	Network.TriggerWarp()
 
 func DisplayLabel():
-	if not Launcher.GUI.dialogueContainer.is_visible():
+	if not Launcher.GUI.IsDialogueContextOpened():
 		Launcher.GUI.choiceContext.Clear()
 		var mapData : FileData = DB.MapsDB.get(destinationID, null)
 		if mapData:
@@ -54,7 +54,7 @@ func DisplayLabel():
 			contextDisplayed = true
 
 func HideLabel():
-	if not Launcher.GUI.dialogueContainer.is_visible():
+	if not Launcher.GUI.IsDialogueContextOpened():
 		Launcher.GUI.choiceContext.FadeOut()
 		contextDisplayed = false
 

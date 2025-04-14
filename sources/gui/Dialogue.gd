@@ -92,7 +92,7 @@ func _ready():
 	scrollbar.changed.connect(AutoScroll)
 
 func _input(event : InputEvent):
-	if Launcher.GUI and Launcher.GUI.dialogueContainer.is_visible() and not Launcher.GUI.choiceContext.is_visible():
+	if Launcher.GUI and Launcher.GUI.IsDialogueContextOpened() and not Launcher.GUI.choiceContext.is_visible():
 		if Launcher.Action.TryJustPressed(event, "ui_accept", true):
 			ButtonPressed()
 		if Launcher.Action.TryJustPressed(event, "ui_cancel", true):

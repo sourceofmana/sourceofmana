@@ -39,7 +39,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 				if not ActorCommons.IsAlive(target):
 					Stopped(agent)
 					return
-				if SkillCommons.IsTargetable(agent, target, skill):
+				if SkillCommons.IsAttackable(agent, target, skill):
 					var handle : Callable = Skill.Handle.bind(agent, target, skill, SkillCommons.GetRNG(hasStamina))
 					if SkillCommons.IsDelayed(skill):
 						Callback.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle)
