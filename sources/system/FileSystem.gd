@@ -220,24 +220,30 @@ static func GetFiles(path : String) -> PackedStringArray:
 	return DirAccess.get_files_at(path)
 
 static func SaveScreenshot():
+	var dirPath : String = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)
+	if dirPath == "":
+		return
+
 	var image : Image = Util.GetScreenCapture()
 	assert(image != null, "Could not get a viewport screenshot")
-	if image:
-		var dir : DirAccess = DirAccess.open(OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS))
-		if not dir.dir_exists("Screenshots"):
-			dir.make_dir("Screenshots")
-		dir.change_dir("Screenshots")
+	if not image:
+		return
 
-		var date : Dictionary = Time.get_datetime_dict_from_system()
-		var savePath : String = dir.get_current_dir(true)
-		savePath += "/Screenshot-%d-%02d-%02d_%02d-%02d-%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second]
-		savePath += Path.GfxExt
+	var dir : DirAccess = DirAccess.open(dirPath)
+	if not dir.dir_exists("Screenshots"):
+		dir.make_dir("Screenshots")
+	dir.change_dir("Screenshots")
 
-		if not dir.dir_exists(savePath):
-			var ret : Error = image.save_png(savePath)
-			assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
-			if ret == OK:
-				Util.PrintInfo("FileSystem", "Saving capture: " + savePath)
+	var date : Dictionary = Time.get_datetime_dict_from_system()
+	var savePath : String = dir.get_current_dir(true)
+	savePath += "/Screenshot-%d-%02d-%02d_%02d-%02d-%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second]
+	savePath += Path.GfxExt
+
+	if not dir.dir_exists(savePath):
+		var ret : Error = image.save_png(savePath)
+		assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
+		if ret == OK:
+			Util.PrintInfo("FileSystem", "Saving capture: " + savePath)
 
 static func CopySQLDatabase(templateName : String, currentName : String) -> bool:
 	var dir : DirAccess = DirAccess.open(Path.TemplateRsc)
