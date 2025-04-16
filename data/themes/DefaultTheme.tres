@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=66 format=3 uid="uid://dhb6h35g1bk0x"]
+[gd_resource type="Theme" load_steps=76 format=3 uid="uid://dhb6h35g1bk0x"]
 
 [ext_resource type="Texture2D" uid="uid://c8dd1hfs2ws34" path="res://data/graphics/gui/tab/tab_fg.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://cw3cy5h2gk8qa" path="res://data/graphics/gui/window/window_bg_soft.png" id="2"]
@@ -7,8 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://djwvdhceu4dlg" path="res://data/graphics/gui/tab/tab_disabled.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://chsp33wllcy8d" path="res://data/graphics/gui/button/button.png" id="5_fw406"]
 [ext_resource type="Texture2D" uid="uid://dbdgyis3h8wnx" path="res://data/graphics/gui/chat.png" id="5_u08yo"]
+[ext_resource type="Texture2D" uid="uid://bv6fvdi8sbkvk" path="res://data/graphics/gui/checkbox/cb_symbol_enabled.png" id="6_chc74"]
 [ext_resource type="Texture2D" uid="uid://bwrw6ehlrqkjm" path="res://data/graphics/gui/checkbox/cb_compact_enabled.png" id="6_ffxkw"]
 [ext_resource type="Texture2D" uid="uid://da6j85rw7nqdq" path="res://data/graphics/gui/checkbox/cb_small_enabled.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://bexy52javkv1h" path="res://data/graphics/gui/checkbox/cb_symbol_disabled.png" id="7_cj0hx"]
 [ext_resource type="Texture2D" uid="uid://cmtn5fwyfajkm" path="res://data/graphics/gui/checkbox/cb_small_lock_enabled.png" id="8"]
 [ext_resource type="Texture2D" uid="uid://dosmkxm6lgwir" path="res://data/graphics/gui/checkbox/cb_compact_disabled.png" id="8_xo4rk"]
 [ext_resource type="Texture2D" uid="uid://dw0hbkvoxsv2x" path="res://data/graphics/gui/notification.png" id="9_5par7"]
@@ -25,6 +27,8 @@
 [ext_resource type="Texture2D" uid="uid://cxsevv3wmkp27" path="res://data/graphics/gui/button/button_focus.png" id="16"]
 [ext_resource type="FontFile" uid="uid://shxh5secawoq" path="res://data/graphics/fonts/alagard-16.ttf" id="18_v607h"]
 [ext_resource type="FontFile" uid="uid://bxtecswl0imti" path="res://data/graphics/fonts/romulus-16.ttf" id="22_e68kl"]
+[ext_resource type="Texture2D" uid="uid://ckqp851k875au" path="res://data/graphics/gui/split_bar.png" id="27_sv4ge"]
+[ext_resource type="Texture2D" uid="uid://ccnvk4w2d6iav" path="res://data/graphics/gui/split_background.png" id="28_44afm"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ls22y"]
 content_margin_left = 6.0
@@ -34,9 +38,9 @@ content_margin_bottom = 6.0
 texture = ExtResource("3")
 texture_margin_left = 3.0
 texture_margin_top = 3.0
-texture_margin_right = 3.0
+texture_margin_right = 4.0
 texture_margin_bottom = 3.0
-region_rect = Rect2(0, 0, 6, 6)
+region_rect = Rect2(0, 0, 8, 8)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t6qf4"]
 content_margin_left = 6.0
@@ -82,9 +86,9 @@ content_margin_bottom = 6.0
 texture = ExtResource("16")
 texture_margin_left = 3.0
 texture_margin_top = 3.0
-texture_margin_right = 3.0
+texture_margin_right = 4.0
 texture_margin_bottom = 3.0
-region_rect = Rect2(0, 0, 6, 6)
+region_rect = Rect2(0, 0, 8, 8)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l2tym"]
 texture = ExtResource("10_bgoy4")
@@ -103,6 +107,40 @@ texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cj0hx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sv4ge"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 6
+border_width_right = 6
+border_color = Color(0, 0, 0, 0)
+expand_margin_left = 6.0
+expand_margin_right = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yti7m"]
+bg_color = Color(0.76, 0.59242, 0.2812, 0.498039)
+border_width_left = 6
+border_width_right = 6
+border_color = Color(0, 0, 0, 0)
+expand_margin_left = 6.0
+expand_margin_right = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_44afm"]
+bg_color = Color(0.76, 0.59242, 0.2812, 0.247059)
+border_width_left = 6
+border_width_right = 6
+border_color = Color(0, 0, 0, 0)
+expand_margin_left = 6.0
+expand_margin_right = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cj0hx"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 6
+border_width_right = 6
+border_color = Color(0, 0, 0, 0)
+expand_margin_left = 6.0
+expand_margin_right = 6.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lpei3"]
 content_margin_left = 6.0
@@ -400,6 +438,13 @@ expand_margin_bottom = 1.0
 color = Color(0.780392, 0.6, 0.298039, 1)
 vertical = true
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_chc74"]
+texture = ExtResource("28_44afm")
+texture_margin_left = 41.0
+texture_margin_top = 1.0
+texture_margin_right = 41.0
+texture_margin_bottom = 1.0
+
 [resource]
 default_font = ExtResource("18_v607h")
 Button/colors/font_color = Color(0.933, 0.847, 0.631, 1)
@@ -423,6 +468,16 @@ ButtonTip/colors/font_color = Color(1, 1, 0.866667, 1)
 ButtonTip/styles/normal = SubResource("StyleBoxTexture_l2tym")
 ChatContainer/base_type = &"PanelContainer"
 ChatContainer/styles/panel = SubResource("StyleBoxTexture_mn5yk")
+CheckBox/icons/checked = ExtResource("6_chc74")
+CheckBox/icons/checked_disabled = SubResource("CompressedTexture2D_cj0hx")
+CheckBox/icons/unchecked = ExtResource("7_cj0hx")
+CheckBox/icons/unchecked_disabled = SubResource("CompressedTexture2D_cj0hx")
+CheckBox/styles/disabled = SubResource("StyleBoxFlat_sv4ge")
+CheckBox/styles/focus = SubResource("StyleBoxFlat_yti7m")
+CheckBox/styles/hover = SubResource("StyleBoxFlat_44afm")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_44afm")
+CheckBox/styles/normal = SubResource("StyleBoxFlat_cj0hx")
+CheckBox/styles/pressed = SubResource("StyleBoxFlat_cj0hx")
 CheckButton/icons/checked = ExtResource("7")
 CheckButton/icons/checked_disabled = ExtResource("8")
 CheckButton/icons/checked_disabled_mirrored = ExtResource("13")
@@ -522,3 +577,7 @@ TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_4jsee")
 Transparent/base_type = &"Button"
 Transparent/styles/normal = SubResource("StyleBoxFlat_5w3ht")
 VSeparator/styles/separator = SubResource("StyleBoxLine_q1nik")
+VSplitContainer/constants/autohide = 0
+VSplitContainer/constants/separation = 2
+VSplitContainer/icons/grabber = ExtResource("27_sv4ge")
+VSplitContainer/styles/split_bar_background = SubResource("StyleBoxTexture_chc74")
