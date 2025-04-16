@@ -62,3 +62,4 @@ func Destroy():
 		currentPeer.close()
 	uniqueID = NetworkCommons.RidDefault
 	Launcher.Root.remove_child(self)
+	queue_free()

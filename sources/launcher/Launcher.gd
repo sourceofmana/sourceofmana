@@ -107,6 +107,9 @@ func Reset(clientStarted : bool, serverStarted : bool):
 func Quit():
 	Reset(false, false)
 	Network.Destroy()
+	Root.remove_child(Scene)
+	Scene.free()
+	Network.free()
 	get_tree().quit()
 
 #

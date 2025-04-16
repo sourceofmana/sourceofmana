@@ -196,4 +196,5 @@ func _ready():
 func Destroy():
 	if clickTimer:
 		remove_child.call_deferred(clickTimer)
+		clickTimer.queue_free()
 		clickTimer = null

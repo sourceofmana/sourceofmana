@@ -46,6 +46,15 @@ static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:
 
 	return inst
 
+func Destroy():
+	for player in players:
+		WorldAgent.RemoveAgent(player)
+	for mob in mobs:
+		WorldAgent.RemoveAgent(mob)
+	for npc in npcs:
+		WorldAgent.RemoveAgent(npc)
+	Launcher.Root.remove_child(self)
+
 #
 func QueryProcessMode(delaySec : float = ActorCommons.MapProcessingToggleDelay):
 	Callback.SelfDestructTimer(Launcher, delaySec, RefreshProcessMode, [], "ProcessMode_" + name)

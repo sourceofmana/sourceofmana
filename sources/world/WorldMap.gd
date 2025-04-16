@@ -36,6 +36,15 @@ static func Create(mapID : int) -> WorldMap:
 
 	return map
 
+func Destroy():
+	for inst in instances:
+		inst.Destroy()
+		inst.queue_free()
+	instances.clear()
+	for warp in warps:
+		warp.queue_free()
+	warps.clear()
+
 func LoadMapData():
 	var node : Node = Instantiate.LoadMapData(id, Path.MapServerExt)
 	if node:
@@ -81,5 +90,6 @@ func LoadMapData():
 					portObject.autoWarp = port[3]
 					portObject.sailingPos = port[4]
 					warps.append(portObject)
+		node.queue_free()
 
 func HasFlags(checkedFlags : Flags) -> bool: return !!(flags & checkedFlags)

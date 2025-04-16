@@ -107,12 +107,5 @@ func _post_launch():
 
 func Destroy():
 	for area in areas.values():
-		for inst in area.instances:
-			for player in inst.players:
-				WorldAgent.RemoveAgent(player)
-			for mob in inst.mobs:
-				WorldAgent.RemoveAgent(mob)
-			for npc in inst.npcs:
-				WorldAgent.RemoveAgent(npc)
-			Launcher.Root.remove_child(inst)
-			inst.queue_free()
+		area.Destroy()
+	areas.clear()

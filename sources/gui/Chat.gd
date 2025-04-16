@@ -68,7 +68,7 @@ func _ready():
 	if tabContainer && tabInstance:
 		var newTab : RichTextLabel = tabInstance.instantiate()
 		newTab.set_name("General")
-		tabContainer.add_child(newTab)
+		tabContainer.add_child.call_deferred(newTab)
 
 		AddSystemText("Welcome to " + LauncherCommons.ProjectName)
 		SetNewLineEnabled(false)
