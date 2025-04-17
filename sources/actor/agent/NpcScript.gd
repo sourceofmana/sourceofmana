@@ -95,11 +95,15 @@ func Warp(mapID : int, position : Vector2):
 # Quest
 func SetQuest(questID : int, state : int):
 	if own and own.progress:
+		var questData : QuestData = DB.GetQuest(questID)
+		if not questData:
+			return
+
 		if own.progress.GetQuest(questID) == ProgressCommons.UnknownProgress:
-			Notification("Quest Started: " + ProgressCommons.QuestNames[questID])
+			Notification("Quest Started: " + questData.name)
 		own.progress.SetQuest(questID, state)
 		if state == ProgressCommons.CompletedProgress:
-			Notification("Quest Completed: " + ProgressCommons.QuestNames[questID])
+			Notification("Quest Completed: " + questData.name)
 
 func GetQuest(questID : int) -> int:
 	return own.progress.GetQuest(questID) if own and own.progress else ProgressCommons.UnknownProgress

@@ -178,7 +178,7 @@ static func LoadEntityVariant(instantiate : bool = true) -> Entity:
 	return LoadResource(fullPath, instantiate)
 
 # GUI
-static func LoadGui(path : String, instantiate : bool = true) -> Resource:
+static func LoadGui(path : String, instantiate : bool = true) -> Control:
 	var fullPath : String = Path.GuiPst + path + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
@@ -204,6 +204,11 @@ static func LoadCell(path : String) -> BaseCell:
 # Palette
 static func LoadPalette(path : String) -> Material:
 	var fullPath : String = Path.PalettesPst + path
+	return LoadResource(fullPath, false)
+
+# Quest
+static func LoadQuest(path : String) -> QuestData:
+	var fullPath : String = path
 	return LoadResource(fullPath, false)
 
 # Generic texture loading

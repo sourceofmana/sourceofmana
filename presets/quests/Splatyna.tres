@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=2 format=3 uid="uid://jv38bfafawjk"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_7vvcv"]
+
+[resource]
+script = ExtResource("1_7vvcv")
+id = 0
+name = "Splatyna's Offering"
+description = []
+giver = "Bicies"
+giverLocation = "Splatyna Cave Entrance"
+target = "Splatyna"
+targetLocation = "Splatyna's Chamber"
+reward = "Unknown"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

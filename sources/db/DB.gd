@@ -10,6 +10,7 @@ static var EntitiesDB : Dictionary[int, EntityData]			= {}
 static var EmotesDB : Dictionary[int, BaseCell]				= {}
 static var ItemsDB : Dictionary[int, ItemCell]				= {}
 static var SkillsDB : Dictionary[int, SkillCell]			= {}
+static var QuestsDB : Dictionary[int, QuestData]			= {}
 
 static var hashDB : Dictionary				= {}
 const UnknownHash : int						= -1
@@ -110,6 +111,15 @@ static func ParseSkillsDB():
 			assert(SkillsDB.has(cell.id) == false, "Duplicated cell in SkillsDB")
 			SkillsDB[cell.id] = cell
 
+static func ParseQuestsDB():
+	var result = FileSystem.LoadDB("quests.json")
+
+	if not result.is_empty():
+		for key in result:
+			var quest : QuestData = FileSystem.LoadQuest(Path.QuestPst + result[key].Path + Path.RscExt)
+			assert(QuestsDB.has(quest.id) == false, "Duplicated quest in QuestsDB")
+			QuestsDB[quest.id] = quest
+
 #
 static func HasCellHash(cellname : StringName) -> bool:
 	return hashDB.has(cellname)
@@ -130,9 +140,8 @@ static func GetCellHash(cellname : StringName) -> int:
 
 #
 static func GetItem(cellHash : int, customfield : String = "") -> ItemCell:
-	var hasInDB : bool = cellHash in ItemsDB
-	assert(hasInDB, "Could not find the identifier %s in ItemsDB" % [cellHash])
-	var cell : ItemCell = ItemsDB[cellHash] if hasInDB else null
+	var cell : ItemCell = ItemsDB.get(cellHash, null)
+	assert(cell != null, "Could not find the identifier %s in ItemsDB" % [cellHash])
 	if cell and customfield != cell.customfield:
 		var customCell = cell.duplicate()
 		customCell.customfield = customfield
@@ -148,29 +157,34 @@ static func GetItem(cellHash : int, customfield : String = "") -> ItemCell:
 		return cell
 
 static func GetEmote(cellHash : int) -> BaseCell:
-	var hasInDB : bool = cellHash in EmotesDB
-	assert(hasInDB, "Could not find the identifier %s in EmotesDB" % [cellHash])
-	return EmotesDB[cellHash] if hasInDB else null
+	var data : BaseCell = EmotesDB.get(cellHash, null)
+	assert(data != null, "Could not find the identifier %s in EmotesDB" % [cellHash])
+	return data
 
 static func GetSkill(cellHash : int) -> SkillCell:
-	var hasInDB : bool = cellHash in SkillsDB
-	assert(hasInDB, "Could not find the identifier %s in SkillsDB" % [cellHash])
-	return SkillsDB[cellHash] if hasInDB else null
+	var data : SkillCell = SkillsDB.get(cellHash, null)
+	assert(data != null, "Could not find the identifier %s in SkillsDB" % [cellHash])
+	return data
 
 static func GetRace(cellHash : int) -> RaceData:
-	var hasInDB : bool = cellHash in RacesDB
-	assert(hasInDB, "Could not find the identifier %s in RaceDB" % [cellHash])
-	return RacesDB[cellHash] if hasInDB else null
+	var data : RaceData = RacesDB.get(cellHash, null)
+	assert(data != null, "Could not find the identifier %s in RacesDB" % [cellHash])
+	return data
 
 static func GetHairstyle(cellHash : int) -> FileData:
-	var hasInDB : bool = cellHash in HairstylesDB
-	assert(hasInDB, "Could not find the identifier %d in HairstylesDB" % [cellHash])
-	return HairstylesDB[cellHash] if hasInDB else null
+	var data : FileData = HairstylesDB.get(cellHash, null)
+	assert(data != null, "Could not find the identifier %s in HairstylesDB" % [cellHash])
+	return data
 
 static func GetPalette(type : Palette, cellHash : int) -> FileData:
-	var hasInDB : bool = cellHash in PalettesDB[type]
-	assert(hasInDB, "Could not find the identifier %d in PalettesDB" % [cellHash])
-	return PalettesDB[type][cellHash] if hasInDB else null
+	var data : FileData = PalettesDB[type].get(cellHash, null)
+	assert(data != null, "Could not find the identifier %s in PalettesDB" % [cellHash])
+	return data
+
+static func GetQuest(questID : int) -> QuestData:
+	var data : QuestData = QuestsDB.get(questID, null)
+	assert(data != null, "Could not find the identifier %s in QuestsDB" % [questID])
+	return data
 
 #
 static func Init():
@@ -183,3 +197,4 @@ static func Init():
 	ParseItemsDB()
 	ParseSkillsDB()
 	ParseEntitiesDB()
+	ParseQuestsDB()

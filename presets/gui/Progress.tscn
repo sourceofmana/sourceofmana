@@ -28,10 +28,40 @@ layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Quest Log" type="ScrollContainer" parent="Margin/TabBar"]
+[node name="QuestLog" type="VSplitContainer" parent="Margin/TabBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+split_offset = 10
+metadata/_tab_index = 0
+
+[node name="QuestScroll" type="ScrollContainer" parent="Margin/TabBar/QuestLog"]
 layout_mode = 2
 size_flags_vertical = 3
-metadata/_tab_index = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = false
+
+[node name="QuestList" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Active" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList"]
+visible = false
+layout_mode = 2
+
+[node name="Completed" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Description" type="RichTextLabel" parent="Margin/TabBar/QuestLog"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_force_pass_scroll_events = false
+bbcode_enabled = true
 
 [node name="Manapedia" type="ScrollContainer" parent="Margin/TabBar"]
 visible = false

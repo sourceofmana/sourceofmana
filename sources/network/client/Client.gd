@@ -224,15 +224,17 @@ func UpdateBestiary(mobID : int, count : int, _rpcID : int = NetworkCommons.RidS
 	if Launcher.Player:
 		Launcher.Player.progress.AddBestiary(mobID, count)
 		if Launcher.GUI and Launcher.GUI.progressWindow:
-			Launcher.GUI.progressWindow.RefreshBestiary(mobID)
+			Launcher.GUI.progressWindow.RefreshBestiary(mobID, count)
 
 func UpdateQuest(questID : int, state : int, _rpcID : int = NetworkCommons.RidSingleMode):
 	if Launcher.Player:
 		Launcher.Player.progress.SetQuest(questID, state)
 		if Launcher.GUI and Launcher.GUI.progressWindow:
-			Launcher.GUI.progressWindow.RefreshQuest(questID)
+			Launcher.GUI.progressWindow.RefreshQuest(questID, state)
 
 func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
+	if Launcher.GUI and Launcher.GUI.progressWindow:
+		Launcher.GUI.progressWindow.Clear()
 	if Launcher.Player:
 		for skill in skills:
 			UpdateSkill(skill, skills[skill])
