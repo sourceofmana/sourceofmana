@@ -3,7 +3,7 @@ class_name QuestData
 
 @export var id : int							= DB.UnknownHash
 @export var name : String						= ""
-@export var description : PackedStringArray		= []
+@export_multiline var description : String		= ""
 @export var giver : String						= ""
 @export var giverLocation : String				= ""
 @export var target : String						= ""

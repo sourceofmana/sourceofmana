@@ -6,7 +6,10 @@
 script = ExtResource("1_7vvcv")
 id = 0
 name = "Splatyna's Offering"
-description = []
+description = "Bicies waits at the cave entrance, obsessed with a giant slime named Splatyna. He says she loves gold and keeps the corruption away.
+To reach her, you’ll need to defeat her three followers. Each one holds a key.
+
+Bring all three keys to the end of the cave, unlock the gate, and face Splatyna."
 giver = "Bicies"
 giverLocation = "Splatyna Cave Entrance"
 target = "Splatyna"

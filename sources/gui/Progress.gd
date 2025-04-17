@@ -81,10 +81,7 @@ func RefreshQuestDescription(questID : int):
 		return
 
 	if not questData.description.is_empty():
-		questDescription.text += "Description:\n[color=#%s]" % UICommons.TextColor.to_html(false)
-		for description in questData.description:
-			questDescription.text += "%s\n" % description
-		questDescription.text += "[/color]\n\n"
+		questDescription.text += "Description:\n[color=#%s]%s[/color]\n\n" % [UICommons.TextColor.to_html(false), questData.description]
 	if not questData.giver.is_empty():
 		questDescription.text += "Giver:\n[color=#%s]%s" % [UICommons.WarnTextColor.to_html(false), questData.giver]
 		if not questData.giverLocation.is_empty():
