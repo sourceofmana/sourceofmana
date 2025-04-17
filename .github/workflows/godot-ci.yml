@@ -46,8 +46,11 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mkdir -v -p ~/.config/
+          echo "$DEBUG_KEYSTORE" | base64 -d > $HOME/debug_keystore
           cp -r /root/.config/godot ~/.config/godot
           cp -r /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+        env:
+          DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
       - name: ${{ matrix.name }} Build
         run: |
           mkdir -v -p "build/${{ matrix.artifact }}"
