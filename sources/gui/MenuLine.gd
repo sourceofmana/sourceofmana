@@ -25,6 +25,7 @@ func _init(_id : int, labelName : String):
 	toggle_mode = true
 	id = _id
 	set_text(labelName)
+	set_name(labelName)
 
 func _gui_input(event):
 	if event is InputEventMouseButton:

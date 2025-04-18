@@ -156,6 +156,11 @@ static func GetItem(cellHash : int, customfield : String = "") -> ItemCell:
 	else:
 		return cell
 
+static func GetEntity(entityHash : int) -> EntityData:
+	var data : EntityData = EntitiesDB.get(entityHash, null)
+	assert(data != null, "Could not find the identifier %s in EntitiesDB" % [entityHash])
+	return data
+
 static func GetEmote(cellHash : int) -> BaseCell:
 	var data : BaseCell = EmotesDB.get(cellHash, null)
 	assert(data != null, "Could not find the identifier %s in EmotesDB" % [cellHash])

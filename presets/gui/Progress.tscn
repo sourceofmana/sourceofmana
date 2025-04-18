@@ -66,7 +66,24 @@ bbcode_enabled = true
 [node name="Manapedia" type="ScrollContainer" parent="Margin/TabBar"]
 visible = false
 layout_mode = 2
+mouse_filter = 0
+mouse_force_pass_scroll_events = false
 metadata/_tab_index = 1
+
+[node name="BestiaryList" type="VBoxContainer" parent="Margin/TabBar/Manapedia"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BestiaryLabel" type="RichTextLabel" parent="Margin/TabBar/Manapedia/BestiaryList"]
+layout_mode = 2
+text = "Bestiary"
+fit_content = true
+
+[node name="Monsters" type="VBoxContainer" parent="Margin/TabBar/Manapedia/BestiaryList"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
