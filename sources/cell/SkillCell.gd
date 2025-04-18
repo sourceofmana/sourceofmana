@@ -25,7 +25,7 @@ func Use():
 		Launcher.Player.Cast(self.id)
 
 #
-func _ready():
+func Instantiate():
 	if castPreset:
 		castPreset.instantiate()
 	if skillPreset:

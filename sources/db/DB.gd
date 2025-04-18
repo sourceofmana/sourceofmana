@@ -107,6 +107,7 @@ static func ParseSkillsDB():
 	if not result.is_empty():
 		for key in result:
 			var cell : SkillCell = FileSystem.LoadCell(Path.SkillPst + result[key].Path + Path.RscExt)
+			cell.Instantiate()
 			cell.id = SetCellHash(cell.name)
 			assert(SkillsDB.has(cell.id) == false, "Duplicated cell in SkillsDB")
 			SkillsDB[cell.id] = cell
