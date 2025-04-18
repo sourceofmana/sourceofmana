@@ -10,6 +10,7 @@ offset_left = 446.0
 offset_top = 176.0
 offset_right = 764.0
 offset_bottom = 486.0
+mouse_force_pass_scroll_events = false
 theme = ExtResource("1_q7m0j")
 script = ExtResource("2_j3ryh")
 saveOverlayState = true
@@ -37,7 +38,6 @@ metadata/_tab_index = 0
 [node name="QuestScroll" type="ScrollContainer" parent="Margin/TabBar/QuestLog"]
 layout_mode = 2
 size_flags_vertical = 3
-mouse_filter = 0
 mouse_force_pass_scroll_events = false
 
 [node name="QuestList" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll"]
@@ -52,6 +52,7 @@ size_flags_horizontal = 3
 [node name="HSeparator" type="HSeparator" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList"]
 visible = false
 layout_mode = 2
+mouse_filter = 1
 
 [node name="Completed" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList"]
 layout_mode = 2
@@ -60,13 +61,12 @@ size_flags_horizontal = 3
 [node name="Description" type="RichTextLabel" parent="Margin/TabBar/QuestLog"]
 layout_mode = 2
 size_flags_vertical = 3
-mouse_force_pass_scroll_events = false
+mouse_filter = 1
 bbcode_enabled = true
 
 [node name="Manapedia" type="ScrollContainer" parent="Margin/TabBar"]
 visible = false
 layout_mode = 2
-mouse_filter = 0
 mouse_force_pass_scroll_events = false
 metadata/_tab_index = 1
 
@@ -77,6 +77,7 @@ size_flags_vertical = 3
 
 [node name="BestiaryLabel" type="RichTextLabel" parent="Margin/TabBar/Manapedia/BestiaryList"]
 layout_mode = 2
+mouse_filter = 1
 text = "Bestiary"
 fit_content = true
 

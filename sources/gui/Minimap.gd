@@ -38,6 +38,8 @@ func Moved():
 	if mapSize.x != 0 and mapSize.y != 0:
 		var posRatio : Vector2 = Launcher.Player.position / mapSize
 		var minimapPlayerPos : Vector2 = posRatio * textureRect.size - Vector2(5, 5)
+		if minimapPlayerPos.is_equal_approx(playerPoint.get_position()):
+			return
 		var scrollPos : Vector2i = Vector2i(minimapPlayerPos - scrollContainer.size / 2)
 		scrollPos.x = clampi(scrollPos.x, 0, int(textureSize.x - scrollContainer.size.x))
 		scrollPos.y = clampi(scrollPos.y, 0, int(textureSize.y - scrollContainer.size.y))
