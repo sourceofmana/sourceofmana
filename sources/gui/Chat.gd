@@ -64,11 +64,5 @@ func _physics_process(_delta):
 		enabledLastFrame = false
 
 func _ready():
-	assert(tabContainer && tabInstance, "TabContainer or TabInstance not correctly set")
-	if tabContainer && tabInstance:
-		var newTab : RichTextLabel = tabInstance.instantiate()
-		newTab.set_name("General")
-		tabContainer.add_child.call_deferred(newTab)
-
-		AddSystemText("Welcome to " + LauncherCommons.ProjectName)
-		SetNewLineEnabled(false)
+	AddSystemText("Welcome to " + LauncherCommons.ProjectName)
+	SetNewLineEnabled(false)
