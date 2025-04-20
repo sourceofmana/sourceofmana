@@ -42,6 +42,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 
 #./path/to/file [Author] [Contributors]
 ./graphics/default.png [Reid]
+./graphics/effects/arrow.png [Alige]
 ./graphics/effects/particles/arc.png [Reid]
 ./graphics/effects/particles/cast.png [Reid]
 ./graphics/effects/particles/cast1.png [Reid]
@@ -207,6 +208,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/items/quest/letter.png [Reid]
 ./graphics/items/shield/leather-shield.png [Len]
 ./graphics/items/shield/raw-wood-shield.png [Enchilado]
+./graphics/items/skill/archer.png [Reid]
 ./graphics/items/skill/inma.png [7Soul] [Reid]
 ./graphics/items/skill/flar.png [Reid]
 ./graphics/items/skill/lum.png [7Soul] [Reid]

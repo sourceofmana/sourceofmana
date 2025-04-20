@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwn2rvrwbyq5f"]
+
+[ext_resource type="Texture2D" uid="uid://wbetk7403373" path="res://data/graphics/effects/arrow.png" id="1_od6t0"]
+[ext_resource type="Script" uid="uid://bu2axrh4eey4m" path="res://sources/effects/Projectile.gd" id="2_m1nhj"]
+
+[node name="Arrow" type="Sprite2D"]
+rotation = 6.28319
+texture = ExtResource("1_od6t0")
+script = ExtResource("2_m1nhj")
+canRotate = true

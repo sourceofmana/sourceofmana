@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="SkillCell" load_steps=9 format=3 uid="uid://bxcnb6yfr3men"]
+
+[ext_resource type="Texture2D" uid="uid://c3qsl0ija3lbw" path="res://data/graphics/items/skill/archer.png" id="1_obmo8"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_cmomi"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_ios71"]
+[ext_resource type="PackedScene" uid="uid://bwn2rvrwbyq5f" path="res://presets/effects/particles/Arrow.tscn" id="4_xq8n7"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="5_dspib"]
+
+[sub_resource type="Resource" id="Resource_klyse"]
+script = ExtResource("2_cmomi")
+_effect = 3
+_value = -10
+_persistent = false
+
+[sub_resource type="Resource" id="Resource_f1ymc"]
+script = ExtResource("2_cmomi")
+_effect = 20
+_value = 1.0
+_persistent = false
+metadata/_custom_type_script = "uid://hdd6y6syvlm6"
+
+[sub_resource type="Resource" id="Resource_uhivh"]
+script = ExtResource("3_ios71")
+_modifiers = Array[ExtResource("2_cmomi")]([SubResource("Resource_klyse"), SubResource("Resource_f1ymc")])
+
+[resource]
+script = ExtResource("5_dspib")
+state = 3
+cellRange = 100
+mode = 0
+repeat = true
+cooldownTime = 0.0
+castColor = Color(0, 0, 0, 1)
+castTime = 0.0
+castWalk = false
+skillColor = Color(0, 0, 0, 1)
+skillTime = 0.0
+projectilePreset = ExtResource("4_xq8n7")
+id = -1
+name = "Archer"
+description = "A simple bow attack, shoot one arrow at a time."
+icon = ExtResource("1_obmo8")
+type = 2
+weight = 0.0
+stackable = false
+usable = true
+modifiers = SubResource("Resource_uhivh")
