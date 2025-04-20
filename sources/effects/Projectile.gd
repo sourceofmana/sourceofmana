@@ -2,12 +2,14 @@ extends Node2D
 class_name Projectile
 
 #
+@export var canRotate : bool				= false
+
 var origin : Vector2					= Vector2.ZERO
 var destination : Vector2				= Vector2.ZERO
 var delay : float						= 0.0
 var elapsed : float						= 0.0
 var fade : float						= 0.15
-@onready var light						= $LightSource
+var light : LightSource					= null
 
 #
 func _physics_process(delta):
@@ -21,3 +23,9 @@ func _physics_process(delta):
 			light.rescale = scaleRatio
 		scale = lerp(Vector2.ZERO, Vector2.ONE, scaleRatio)
 		global_position = lerp(origin, destination, elapsed / delay)
+
+func _ready():
+	if has_node("LightSource"):
+		light = get_node("LightSource")
+	if canRotate:
+		rotation = origin.angle_to_point(destination)
