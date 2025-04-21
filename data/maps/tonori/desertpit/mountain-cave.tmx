@@ -260,7 +260,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="41" name="Sand Snake" type="Spawn" x="2103" y="3837" width="440" height="125">
+  <object id="41" name="Lynx" type="Spawn" x="2103" y="3837" width="440" height="125">
    <properties>
     <property name="count" value="3"/>
     <property name="type" value="Monster"/>

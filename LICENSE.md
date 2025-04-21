@@ -321,6 +321,7 @@ You must include a link to https://gitlab.com/sourceofmana in your credits along
 ./graphics/sprites/monsters/lilah.png [Neorice] [Reid]
 ./graphics/sprites/monsters/lizandra.png [Neorice] [Lizandra, Pateame, Reid]
 ./graphics/sprites/monsters/lizzy.png [Neorice] [Pateame, Reid]
+./graphics/sprites/monsters/lynx.png [Neorice] [Pateame, Reid]
 ./graphics/sprites/monsters/lulea.png [Neorice] [Reid]
 ./graphics/sprites/monsters/maggot.png [Neorice]
 ./graphics/sprites/monsters/maggot-giant.png [Neorice]

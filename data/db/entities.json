@@ -427,6 +427,17 @@
 			"castAttackDelay": 0.5,
 		},
 	},
+	"1029": {
+		"Name": "Lynx",
+		"SpritePreset": "Lynx",
+		"Behaviour": ["Aggressive"],
+		"Collision": "Medium",
+		"Radius": "20",
+		"Stat": {
+			"walkSpeed": 80,
+			"level": 10,
+		},
+	},
 
 	"2000": {
 		"Name": "Bicies",
