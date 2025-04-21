@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://b34oh8ogihcia"]
+
+[ext_resource type="Texture2D" uid="uid://b28fdhpryre1g" path="res://data/graphics/effects/sonic-wave.png" id="1_purmb"]
+[ext_resource type="Script" uid="uid://bu2axrh4eey4m" path="res://sources/effects/Projectile.gd" id="2_qqgsl"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y2my7"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqxrc"]
+atlas = ExtResource("1_purmb")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqgsl"]
+atlas = ExtResource("1_purmb")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjnd5"]
+atlas = ExtResource("1_purmb")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0lce"]
+atlas = ExtResource("1_purmb")
+region = Rect2(96, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cedtj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqxrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqgsl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjnd5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0lce")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="Fire" type="AnimatedSprite2D"]
+material = SubResource("CanvasItemMaterial_y2my7")
+sprite_frames = SubResource("SpriteFrames_cedtj")
+autoplay = "default"
+frame_progress = 0.240655
+script = ExtResource("2_qqgsl")
+canRotate = true

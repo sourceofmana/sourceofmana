@@ -29,3 +29,4 @@ func _ready():
 		light = get_node("LightSource")
 	if canRotate:
 		rotation = origin.angle_to_point(destination)
+	set("set_speed_scale", delay)
