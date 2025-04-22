@@ -43,16 +43,18 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 					var handle : Callable = Skill.Handle.bind(agent, target, skill, SkillCommons.GetRNG(hasStamina))
 					if SkillCommons.IsDelayed(skill):
 						Callback.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle)
-						Delayed(agent, target, skill)
+						ThrowProjectile(agent, target.position, skill)
 					else:
 						handle.call()
 					Casted(agent, target, skill)
 					return
+				if SkillCommons.IsInteractable(agent, target):
+					ThrowProjectile(agent, agent.position + agent.currentOrientation * Vector2(skill.cellRange, skill.cellRange), skill)
 			TargetMode.ZONE:
 				var handle : Callable = Skill.HandleZone.bind(agent, agent.get_position(), skill, SkillCommons.GetRNG(hasStamina))
 				if SkillCommons.IsDelayed(skill):
 					Callback.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle)
-					Delayed(agent, agent, skill)
+					ThrowProjectile(agent, agent.position, skill)
 				else:
 					handle.call()
 				Casted(agent, agent, skill)
@@ -117,5 +119,5 @@ static func Missed(agent : BaseAgent, target : BaseAgent):
 	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), 0, ActorCommons.Alteration.MISS, DB.UnknownHash], true, true)
 	Stopped(agent)
 
-static func Delayed(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
-	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), 0, ActorCommons.Alteration.PROJECTILE, skill.id])
+static func ThrowProjectile(agent : BaseAgent, targetPos : Vector2, skill : SkillCell):
+	Network.NotifyNeighbours(agent, "ThrowProjectile", [targetPos, skill.id])

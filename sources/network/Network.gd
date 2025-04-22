@@ -200,6 +200,10 @@ func TargetAlteration(agentID : int, targetID : int, value : int, alteration : A
 func Casted(agentID : int, skillID: int, cooldown : float, rpcID : int = NetworkCommons.RidSingleMode):
 	CallClient("Casted", [agentID, skillID, cooldown], rpcID)
 
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ThrowProjectile(agentID : int, targetPos : Vector2, skillID: int, rpcID : int = NetworkCommons.RidSingleMode):
+	CallClient("ThrowProjectile", [agentID, targetPos, skillID], rpcID)
+
 # Morph
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):

@@ -432,7 +432,10 @@
 		"SpritePreset": "Lynx",
 		"Behaviour": ["Aggressive"],
 		"Collision": "Medium",
-		"Radius": "20",
+		"Radius": "10",
+		"SkillSet": {
+			"Sonic Wave": 10.0,
+		},
 		"Stat": {
 			"walkSpeed": 80,
 			"level": 10,

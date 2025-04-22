@@ -77,6 +77,17 @@ func Casted(agentID : int, skillID : int, cooldown : float, _rpcID : int = Netwo
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplaySkill.call_deferred(entity, skillID, cooldown)
 
+func ThrowProjectile(agentID : int, targetPos : Vector2, skillID: int, _rpcID : int = NetworkCommons.RidSingleMode):
+	if not Launcher.Map or not Launcher.Map.currentFringe:
+		return
+	var skill : SkillCell = DB.SkillsDB.get(skillID, null)
+	if not skill:
+		return
+	var entity : Entity = Entities.Get(agentID)
+	if not entity or not entity.get_parent() or not entity.interactive:
+		return
+	entity.interactive.DisplayProjectile.call_deferred(targetPos, skill)
+
 func Morphed(ridAgent : int, morphID : int, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
 	var entity : Entity = Entities.Get(ridAgent)
 	if entity:

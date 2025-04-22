@@ -228,7 +228,6 @@ enum Alteration
 	MISS,
 	DODGE,
 	HEAL,
-	PROJECTILE,
 	EXP,
 	GP,
 }
