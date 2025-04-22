@@ -33,9 +33,6 @@ jobs:
           export_template: "Android"
           ext: "apk"
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
     permissions: write-all
     container:
       image: barichello/godot-ci:4.4
@@ -51,8 +48,7 @@ jobs:
           mkdir -v -p ~/.config/
           cp -r /root/.config/godot ~/.config/godot
           cp -r /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          echo "$DEBUG_KEYSTORE" | base64 -d > $HOME/debug.keystore
-          sed -i "s/\/root/${HOME//\//\\/}/g" ~/.config/godot/editor_settings-${GODOT_VERSION:0:3}.tres
+          echo "$DEBUG_KEYSTORE" | base64 -d > /root/debug.keystore
         env:
           DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
       - name: ${{ matrix.name }} Build
