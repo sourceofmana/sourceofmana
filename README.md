@@ -73,6 +73,7 @@ The game is still in early development but already offers a playable solo and mu
 
 We’re always looking for contributors of all kinds:
 - Pixel artists
+- SFX makers
 - GDScript or general programmers
 - UI/UX designers
 - Writers and worldbuilders
