@@ -2,7 +2,7 @@
 
 ![screenshot](data/press/readme/header.png)
 
-**Source of Mana** is a classic 2D MMORPG inspired by the golden era of pixel art RPGs. This game project is trully open source and welcomes contributions from around the globe.
+**Source of Mana** is a classic 2D MMORPG inspired by the golden era of pixel art RPGs. This game project is truly open source and welcomes contributions from around the globe.
 
 The game is still in early development but already offers a playable solo and multiplayer experience.
 
@@ -11,8 +11,8 @@ The game is still in early development but already offers a playable solo and mu
 **Engine:** Godot 4 (client and server)
 
 **Design Tools:**
-- Game editor: Godot current version is 'Godot 4.4.1' accessible on Godot's official website.
-- Level editor: Tiled current version is 'Tiled 1.11.2' accessible on Tiled's official website.
+- Game editor: The latest [Godot](https://godotengine.org/) version available, currently 4.4.1.
+- Level editor: The latest [Tiled](https://www.mapeditor.org/) version available, currently 1.11.2
 
 **Organization:** [Manasource](https://manasource.org)
 
