@@ -13,23 +13,18 @@ jobs:
       matrix:
         include:
         - name: Linux
-          artifact: linux
           export_template: "Linux/X11"
           ext: "x86_64"
         - name: Linux (Headless Server)
-          artifact: linux-server-headless
           export_template: "Linux/X11 Headless Server"
           ext: "x86_64"
         - name: Windows
-          artifact: windows
           export_template: "Windows Desktop"
           ext: "exe"
         - name: macOS
-          artifact: macos
           export_template: "macOS"
           ext: "zip"
         - name: Android
-          artifact: android
           export_template: "Android"
           ext: "apk"
     runs-on: ubuntu-latest
@@ -53,11 +48,11 @@ jobs:
           DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
       - name: ${{ matrix.name }} Build
         run: |
-          mkdir -v -p "build/${{ matrix.artifact }}"
+          mkdir -v -p "build/${{ matrix.name }}"
           cd "$PROJECT_PATH"
-          godot --headless --verbose --export-debug "${{ matrix.export_template }}" "build/${{ matrix.artifact }}/${EXPORT_NAME}-${{ matrix.artifact }}.${{ matrix.ext }}"
+          godot --headless --verbose --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
       - name: Upload Artifact - ${{ matrix.name }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact }}
-          path: build/${{ matrix.artifact }}
+          name: ${{ matrix.name }}
+          path: build/${{ matrix.name }}
