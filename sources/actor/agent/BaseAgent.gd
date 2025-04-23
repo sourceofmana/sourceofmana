@@ -190,7 +190,7 @@ func _velocity_computed(safeVelocity : Vector2i):
 
 	if wasZero or isZero:
 		requireFullUpdate = true
-	elif self is PlayerAgent or (currentVelocity - velocity).length_squared() > 12:
+	elif self is PlayerAgent or currentVelocity.distance_squared_to(velocity) > ActorCommons.InputApproximationUnit:
 		requireUpdate = true
 
 	velocity = currentVelocity
