@@ -76,3 +76,12 @@ static func DicCheckOrAdd(dic : Dictionary[Variant, Variant], key : Variant, val
 		dic[key] = value
 	elif dic[key] == null:
 		dic[key] = value
+
+# Platforms
+static func IsMobile() -> bool:
+	return OS.has_feature("mobile") or OS.has_feature("web_android") or OS.has_feature("web_ios")
+
+static func GetPlatformName() -> String:
+	if LauncherCommons.isWeb and IsMobile():
+		return "Android"
+	return OS.get_name()

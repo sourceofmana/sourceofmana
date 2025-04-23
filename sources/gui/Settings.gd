@@ -1,6 +1,6 @@
 extends WindowPanel
 
-var platformSection : String					= OS.get_name()
+var platformSection : String					= Util.GetPlatformName()
 const defaultSection : String					= "Default"
 const userSection : String						= "User"
 

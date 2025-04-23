@@ -96,17 +96,20 @@ static func GetActionInfo(action : String) -> Array:
 
 	if HasDeviceSupport():
 		for event in GetEvents(action):
-			if not LauncherCommons.isMobile and currentDeviceType == DeviceType.KEYBOARD and event is InputEventKey:
-				if event.keycode:
-					defaultValue = event.as_text_keycode()
-					break
-				elif event.physical_keycode:
-					defaultValue  = event.as_text_physical_keycode()
-					break
-			elif currentDeviceType == DeviceType.JOYSTICK and event is InputEventJoypadButton:
-				var inScope : bool = event.button_index >= 0 and event.button_index < joyButton.size()
-				defaultValue = joyButton[event.button_index] if inScope else str(event.button_index)
-				break
+			match currentDeviceType:
+				DeviceType.KEYBOARD:
+					if event is InputEventKey:
+						if event.keycode:
+							defaultValue = event.as_text_keycode()
+							break
+						elif event.physical_keycode:
+							defaultValue  = event.as_text_physical_keycode()
+							break
+				DeviceType.JOYSTICK:
+					if event is InputEventJoypadButton:
+						var inScope : bool = event.button_index >= 0 and event.button_index < joyButton.size()
+						defaultValue = joyButton[event.button_index] if inScope else str(event.button_index)
+						break
 
 	return [defaultValue, defaultDeviceType]
 
@@ -141,7 +144,8 @@ static func SendEventJoy(buttonID : int, state : bool = true):
 
 #
 static func DeviceChanged(deviceType : DeviceType):
-	currentDeviceType = deviceType
+	if LauncherCommons.isMobile:
+		return
 
-	if not LauncherCommons.isMobile:
-		Launcher.Action.deviceChanged.emit()
+	currentDeviceType = deviceType
+	Launcher.Action.deviceChanged.emit()

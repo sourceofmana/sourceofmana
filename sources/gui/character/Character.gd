@@ -169,8 +169,9 @@ func SelectCharacter():
 		FSM.EnterState(FSM.States.CHAR_PROGRESS)
 
 func DeleteCharacter():
-	UICommons.MessageBox("Are you sure you want to delete this character?\n\
-This action is permanent, and you will not be able to recover or use this character again.",
+	UICommons.MessageBox("""Are you sure you want to delete this character?
+This action is permanent, and you will not be able to recover or use this character again.
+""",
 		Callback.Empty, "Cancel",
 		ConfirmDeleteCharacter, "Confirm")
 
