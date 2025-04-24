@@ -386,13 +386,13 @@ func CallClient(methodName : StringName, args : Array, rpcID : int):
 func Mode(isClient : bool, isServer : bool):
 	var isOffline : bool = isClient and isServer
 	if isClient:
-		Client = NetClient.new(LauncherCommons.isWeb, isOffline, isOffline or NetworkCommons.IsLocal, NetworkCommons.IsTesting)
+		Client = NetClient.new(LauncherCommons.isWeb, isOffline, isOffline or NetworkCommons.IsLocal)
 
 	if isServer:
 		if NetworkCommons.UseENet:
-			ENetServer = NetServer.new(false, isOffline, NetworkCommons.IsLocal, NetworkCommons.IsTesting)
+			ENetServer = NetServer.new(false, isOffline, NetworkCommons.IsLocal)
 		if NetworkCommons.UseWebSocket and not isOffline:
-			WebSocketServer = NetServer.new(true, isOffline, NetworkCommons.IsLocal, NetworkCommons.IsTesting)
+			WebSocketServer = NetServer.new(true, isOffline, NetworkCommons.IsLocal)
 
 func _init():
 	if not NetworkCommons.OnlineListPath.is_empty():

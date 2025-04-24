@@ -327,7 +327,7 @@ func _enter_tree():
 		multiplayerAPI.peer_disconnected.connect(DisconnectPeer)
 
 	var serverPort : int = NetworkCommons.WebSocketPort if useWebSocket else NetworkCommons.ENetPort
-	if isTesting:
+	if LauncherCommons.IsTesting:
 		serverPort = NetworkCommons.WebSocketPortTesting if useWebSocket else NetworkCommons.ENetPortTesting
 
 	var tlsOptions : TLSOptions = null
@@ -355,7 +355,7 @@ func _enter_tree():
 			"WebSocket" if useWebSocket else "ENet",
 			"Offline" if isOffline else "Online",
 			"Local" if isLocal else "Public",
-			"Testing" if isTesting else "Release"
+			"Testing" if LauncherCommons.IsTesting else "Release"
 		])
 
 func Destroy():

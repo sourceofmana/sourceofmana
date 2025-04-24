@@ -9,14 +9,14 @@ var stopRequested : bool				= false
 #
 func CreateBackup() -> void:
 	var date : Dictionary = Time.get_datetime_dict_from_system()
-	var backupFile : String = Path.Local + SQLCommons.BackupDBPath + "%d-%02d-%02d_%02d-%02d-%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second] + Path.DBExt
+	var backupFile : String = SQLCommons.GetBackupPath() + "%d-%02d-%02d_%02d-%02d-%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second] + Path.DBExt
 	if Launcher.SQL.db.backup_to(backupFile):
 		Util.PrintInfo("SQL", "Backup created: " + backupFile)
 	else:
 		Util.PrintLog("SQL", "Backup failed: " + backupFile)
 
 func PruneBackups() -> void:
-	var dir : DirAccess = DirAccess.open("user://" + SQLCommons.BackupDBPath)
+	var dir : DirAccess = DirAccess.open(SQLCommons.GetBackupPath())
 	if not dir:
 		return
 	
@@ -52,7 +52,8 @@ func Run():
 			lastBackupTimestamp = timestamp
 
 		if timestamp - lastPlayerUpdateTimestamp >= SQLCommons.BackupPlayersSec:
-			Launcher.World.BackupPlayers()
+			if Launcher.World:
+				Launcher.World.BackupPlayers()
 			lastPlayerUpdateTimestamp = timestamp
 
 		if timestamp - lastStopCheckTimestamp >= SQLCommons.BackupCheckIntervalSec:
@@ -75,8 +76,8 @@ func Stop():
 
 #
 func _init():
-	var dir : DirAccess = DirAccess.open("user://")
-	if not dir.dir_exists(SQLCommons.BackupDBPath):
-		dir.make_dir(SQLCommons.BackupDBPath)
+	var backupPath : String = SQLCommons.GetBackupPath()
+	if not DirAccess.dir_exists_absolute(backupPath):
+		DirAccess.make_dir_absolute(backupPath)
 
 	Start()

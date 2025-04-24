@@ -350,15 +350,15 @@ func QueryBindings(query : String, params : Array) -> Array[Dictionary]:
 
 #
 func _post_launch():
-	if not FileSystem.FileExists(Path.Local + SQLCommons.CurrentDBName):
-		if not FileSystem.CopySQLDatabase(SQLCommons.TemplatePath, SQLCommons.CurrentDBName):
-			return
+	var dbPath : String = SQLCommons.GetDBPath()
+	if not FileSystem.FileExists(dbPath) and not SQLCommons.CopyDatabase(dbPath):
+		return
 
 	if LauncherCommons.isWeb:
 		db = DummySQL.new()
 	else:
 		db = SQLite.new()
-	db.path = Path.Local + SQLCommons.CurrentDBName
+	db.path = dbPath
 	db.verbosity_level = SQLite.VERBOSE if Launcher.Debug else SQLite.NORMAL
 
 	if not db.open_db():

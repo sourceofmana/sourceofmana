@@ -16,5 +16,6 @@ const MapPoolMaxSize : int				= 10
 const ServerMaxFPS : int				= 30
 
 # Common accessors
+const IsTesting : bool					= true
 static var isMobile : bool				= OS.has_feature("android") or OS.has_feature("ios") or Util.IsMobile()
 static var isWeb : bool					= OS.has_feature("web")

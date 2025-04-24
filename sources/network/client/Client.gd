@@ -288,7 +288,7 @@ func _enter_tree():
 
 	var serverAddress : String = NetworkCommons.LocalServerAddress if isLocal else NetworkCommons.ServerAddress
 	var serverPort : int = NetworkCommons.WebSocketPort if useWebSocket else NetworkCommons.ENetPort
-	if isTesting:
+	if LauncherCommons.IsTesting:
 		serverAddress = NetworkCommons.LocalServerAddress if isLocal else NetworkCommons.ServerAddressTesting
 		serverPort = NetworkCommons.WebSocketPortTesting if useWebSocket else NetworkCommons.ENetPortTesting
 
@@ -311,7 +311,7 @@ func _enter_tree():
 			"WebSocket" if useWebSocket else "ENet",
 			"Offline" if isOffline else "Online",
 			"Local" if isLocal else "Public",
-			"Testing" if isTesting else "Release"
+			"Testing" if LauncherCommons.IsTesting else "Release"
 		])
 
 func Destroy():

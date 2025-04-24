@@ -45,7 +45,6 @@ const CharSelectionTimeout : float		= 15
 const UseENet : bool					= true
 const UseWebSocket : bool				= true
 const IsLocal : bool					= false
-const IsTesting : bool					= true
 
 const ServerKeyPath : String			= "user://server.key"
 const ServerCertPath : String			= "user://server.crt"

@@ -12,7 +12,6 @@ var bulks : Dictionary[int, Dictionary]				= {}
 var useWebSocket : bool								= false
 var isOffline : bool								= false
 var isLocal : bool									= false
-var isTesting : bool								= false
 
 #
 func Bulk(methodName : StringName, args : Array, rpcID : int):
@@ -21,11 +20,10 @@ func Bulk(methodName : StringName, args : Array, rpcID : int):
 	bulks[rpcID][methodName].append(args)
 
 #
-func _init(_useWebSocket : bool, _isOffline : bool, _isLocal : bool, _isTesting : bool):
+func _init(_useWebSocket : bool, _isOffline : bool, _isLocal : bool):
 	useWebSocket	= _useWebSocket
 	isOffline		= _isOffline
 	isLocal			= _isLocal
-	isTesting		= _isTesting
 
 	multiplayerAPI.set_root_path(Launcher.Root.get_path())
 
