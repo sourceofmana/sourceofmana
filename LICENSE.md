@@ -2,8 +2,8 @@ This project is for the most part licensed under the MIT license at the exceptio
 
 Contact information: 
 Discord: https://discord.gg/yTYUaHGs 
-Git: https://gitlab.com/sourceofmana
-Mail: team [at] sourceofmana.org 
+Git: https://github.com/sourceofmana
+Mail: som [at] manasource.org 
 
 ------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ CC BY-SA 4.0: licensed under Creative Commons Attribution-ShareAlike 4.0 Interna
 https://creativecommons.org/licenses/by-sa/4.0/
 See also the "CC BY-SA 4.0" file.
 
-You must include a link to https://gitlab.com/sourceofmana in your credits along with appropriate author references and attributions. Artists information is found on data/db/credits.json file.
+You must include a link to https://github.com/sourceofmana in your credits along with appropriate author references and attributions. Artists information is found on data/db/credits.json file.
 
 #./path/to/file [Author] [Contributors]
 ./graphics/default.png [Reid]
