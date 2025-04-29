@@ -13,7 +13,7 @@ static func SetState(agent : AIAgent, state : AICommons.State, force : bool = fa
 				agent.skillSelected = null
 			else:
 				agent.ResetNav()
-		if agent.agent:
+		if AICommons.EnableAvoidance and agent.agent:
 			agent.agent.avoidance_enabled = agent.aiState == AICommons.State.ATTACK
 
 static func Reset(agent : AIAgent):

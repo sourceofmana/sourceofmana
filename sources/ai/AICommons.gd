@@ -73,6 +73,8 @@ const ReachDistance : float			= 400
 const ReachDistanceSquared : float	= ReachDistance * ReachDistance
 const MaxAttackerCount : int		= 8
 const WanderDistanceSquared : float	= MaxOffsetDistance * MaxOffsetDistance
+const EnableAvoidance : bool		= false
+
 #
 static func GeRandomtOffset() -> Vector2i:
 	return Vector2i(
