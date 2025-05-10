@@ -4,8 +4,6 @@
 [ext_resource type="Script" uid="uid://bu2axrh4eey4m" path="res://sources/effects/Projectile.gd" id="2_qqgsl"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y2my7"]
-blend_mode = 1
-light_mode = 1
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gqxrc"]
 atlas = ExtResource("1_purmb")
