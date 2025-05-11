@@ -9,7 +9,7 @@ var ownScript : NpcScript					= null
 var interactionCount : int					= 0
 
 #
-static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.NPC
+static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.NPC
 
 #
 func Interact(player : Actor):

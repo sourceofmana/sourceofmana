@@ -76,13 +76,13 @@ func AddChild(child : Node2D):
 		currentFringe.add_child.call_deferred(child)
 
 # Entities
-func AddPlayer(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int) -> Entity:
-	var entity : Entity = AddEntity(agentID, entityType, shape, spirit, currentShape, nick, entityVelocity, entityPosition, entityOrientation, state, skillCastID)
+func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int) -> Entity:
+	var entity : Entity = AddEntity(agentRID, actorType, shape, spirit, currentShape, nick, entityVelocity, entityPosition, entityOrientation, state, skillCastID)
 	if entity and entity == Launcher.Player:
 		PlayerWarped.emit()
 	return entity
 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int) -> Entity:
+func AddEntity(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int) -> Entity:
 	if not currentFringe:
 		return null
 
@@ -90,16 +90,16 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spiri
 	if not entityData:
 		return null
 
-	var entity : Entity = Entities.Get(agentID)
+	var entity : Entity = Entities.Get(agentRID)
 	var isAlreadySpawned : bool = entity != null and entity.get_parent() == currentFringe
 
 	if not entity:
-		var isLocalPlayer : bool = entityType == ActorCommons.Type.PLAYER and nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
-		entity = Instantiate.CreateEntity(entityType, entityData, entityData._name if nick.is_empty() else nick, isLocalPlayer)
+		var isLocalPlayer : bool = actorType == ActorCommons.Type.PLAYER and nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
+		entity = Instantiate.CreateEntity(actorType, entityData, entityData._name if nick.is_empty() else nick, isLocalPlayer)
 		if not entity:
 			return
 
-		entity.agentID = agentID
+		entity.agentRID = agentRID
 		if isLocalPlayer:
 			Launcher.Player = entity
 			Launcher.Player.SetLocalPlayer()
@@ -110,26 +110,26 @@ func AddEntity(agentID : int, entityType : ActorCommons.Type, shape : int, spiri
 
 	if not isAlreadySpawned:
 		AddChild(entity)
-		Entities.Add(entity, agentID)
+		Entities.Add(entity, agentRID)
 	entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned)
 
 	return entity
 
-func RemoveEntity(agentID : int):
-	var entity : Entity = Entities.Get(agentID)
+func RemoveEntity(agentRID : int):
+	var entity : Entity = Entities.Get(agentRID)
 	if entity:
 		if Launcher.Player.target == entity:
 			Launcher.Player.target = null
 		RemoveChild(entity)
-		Entities.Erase(agentID)
+		Entities.Erase(agentRID)
 
-func FullUpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int):
-	var entity : Entity = Entities.Get(agentID)
+func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int):
+	var entity : Entity = Entities.Get(agentRID)
 	if entity:
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID)
 
-func UpdateEntity(agentID : int, agentVelocity : Vector2, agentPosition : Vector2):
-	var entity : Entity = Entities.Get(agentID)
+func UpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2):
+	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.visual:
 		var agentOrientation : Vector2 = entity.entityOrientation if agentVelocity.is_zero_approx() else agentVelocity.normalized()
 		entity.Update(agentVelocity, agentPosition, agentOrientation, entity.state, entity.visual.skillCastID)

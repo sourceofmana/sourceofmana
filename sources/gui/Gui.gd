@@ -150,7 +150,7 @@ func EnterLoginProgress():
 	loadingControl.set_visible(true)
 
 func TimeoutLoginProgress():
-	Network.Client.AuthError(NetworkCommons.AuthError.ERR_TIMEOUT)
+	Network.AuthError(NetworkCommons.AuthError.ERR_TIMEOUT)
 	progressTimer = null
 
 func EnterCharMenu():
@@ -174,7 +174,7 @@ func EnterCharProgress():
 	loadingControl.set_visible(true)
 
 func TimeoutCharProgress():
-	Network.Client.CharacterError(NetworkCommons.CharacterError.ERR_TIMEOUT)
+	Network.CharacterError(NetworkCommons.CharacterError.ERR_TIMEOUT)
 	progressTimer = null
 
 func EnterGame():

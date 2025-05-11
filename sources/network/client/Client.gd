@@ -2,103 +2,103 @@ extends NetInterface
 class_name NetClient
 
 #
-func WarpPlayer(mapID : int, playerPos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
+func WarpPlayer(mapID : int, playerPos : Vector2, _peerID : int):
 	if Launcher.Map:
 		var mapData : FileData = DB.MapsDB.get(mapID, null)
 		if mapData:
 			Launcher.Map.EmplaceMapNode(mapID)
 			Launcher.Camera.FocusPosition(playerPos)
-			PushNotification(mapData._name, _rpcID)
+			PushNotification(mapData._name, _peerID)
 
-func EmotePlayer(playerID : int, emoteID : int, _rpcID : int = NetworkCommons.RidSingleMode):
-	var entity : Entity = Entities.Get(playerID)
-	if entity && entity.get_parent() && entity.interactive:
+func EmotePlayer(agentRID : int, emoteID : int, _peerID : int):
+	var entity : Entity = Entities.Get(agentRID)
+	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplayEmote.call_deferred(emoteID)
 
-func AddPlayer(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipments : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
+func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipments : Dictionary, _peerID : int):
 	if Launcher.Map:
-		var entity : Entity = Launcher.Map.AddPlayer(agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
+		var entity : Entity = Launcher.Map.AddPlayer(agentRID, actorType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
 		if entity:
-			UpdatePublicStats(agentID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape, _rpcID)
-			RefreshEquipments(agentID, equipments, _rpcID)
+			UpdatePublicStats(agentRID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape, _peerID)
+			RefreshEquipments(agentRID, equipments, _peerID)
 
-func AddEntity(agentID : int, entityType : ActorCommons.Type, currentShape : int, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentID, entityType, currentShape, DB.UnknownHash, currentShape, "", velocity, position, orientation, state, skillCastID)
+		Launcher.Map.AddEntity(agentRID, actorType, currentShape, DB.UnknownHash, currentShape, "", velocity, position, orientation, state, skillCastID)
 
-func RemoveEntity(agentID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func RemoveEntity(agentRID : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.RemoveEntity(agentID)
+		Launcher.Map.RemoveEntity(agentRID)
 
-func FullUpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int):
+func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.FullUpdateEntity(ridAgent, velocity, position, orientation, state, skillCastID)
+		Launcher.Map.FullUpdateEntity(agentRID, velocity, position, orientation, state, skillCastID)
 
-func UpdateEntity(ridAgent : int, velocity : Vector2, position : Vector2):
+func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(ridAgent, velocity, position)
+		Launcher.Map.UpdateEntity(agentRID, velocity, position)
 
-func ChatAgent(ridAgent : int, text : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func ChatAgent(agentRID : int, text : String, _peerID : int):
 	if Launcher.Map:
-		var entity : Entity = Entities.Get(ridAgent)
+		var entity : Entity = Entities.Get(agentRID)
 		if entity && entity.get_parent():
 			if entity.type == ActorCommons.Type.PLAYER && Launcher.GUI:
 				Launcher.GUI.chatContainer.AddPlayerText(entity.nick, text)
 			if entity.interactive:
 				entity.interactive.DisplaySpeech.call_deferred(text)
 
-func ToggleContext(enable : bool, _rpcID : int = NetworkCommons.RidSingleMode):
+func ToggleContext(enable : bool, _peerID : int):
 	Launcher.GUI.dialogueWindow.Toggle(enable)
 
-func ContextText(author : String, text : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func ContextText(author : String, text : String, _peerID : int):
 	if not author.is_empty():
 		Launcher.GUI.dialogueWindow.AddName(author)
 	Launcher.GUI.dialogueWindow.AddDialogue(text)
 	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
 
-func ContextContinue(_rpcID : int = NetworkCommons.RidSingleMode):
+func ContextContinue(_peerID : int):
 	Launcher.GUI.dialogueWindow.ToggleButton(true, "Next")
 
-func ContextClose(_rpcID : int = NetworkCommons.RidSingleMode):
+func ContextClose(_peerID : int):
 	Launcher.GUI.dialogueWindow.ToggleButton(true, "Close")
 
-func ContextChoice(texts : PackedStringArray, _rpcID : int = NetworkCommons.RidSingleMode):
+func ContextChoice(texts : PackedStringArray, _peerID : int):
 	Launcher.GUI.dialogueWindow.AddChoices(texts)
 
-func TargetAlteration(ridAgent : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, _peerID : int):
 	if Launcher.Map:
-		var entity : Entity = Entities.Get(targetID)
-		var caller : Entity = Entities.Get(ridAgent)
+		var entity : Entity = Entities.Get(targetRID)
+		var caller : Entity = Entities.Get(agentRID)
 		if caller && entity && entity.get_parent() and entity.interactive:
 			entity.interactive.DisplayAlteration.call_deferred(entity, caller, value, alteration, skillID)
 
-func Casted(agentID : int, skillID : int, cooldown : float, _rpcID : int = NetworkCommons.RidSingleMode):
-	var entity : Entity = Entities.Get(agentID)
+func Casted(agentRID : int, skillID : int, cooldown : float, _peerID : int):
+	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplaySkill.call_deferred(entity, skillID, cooldown)
 
-func ThrowProjectile(agentID : int, targetPos : Vector2, skillID: int, _rpcID : int = NetworkCommons.RidSingleMode):
+func ThrowProjectile(agentRID : int, targetPos : Vector2, skillID: int, _peerID : int):
 	if not Launcher.Map or not Launcher.Map.currentFringe:
 		return
 	var skill : SkillCell = DB.SkillsDB.get(skillID, null)
 	if not skill:
 		return
-	var entity : Entity = Entities.Get(agentID)
+	var entity : Entity = Entities.Get(agentRID)
 	if not entity or not entity.get_parent() or not entity.interactive:
 		return
 	entity.interactive.DisplayProjectile.call_deferred(targetPos, skill)
 
-func Morphed(ridAgent : int, morphID : int, morphed : bool, _rpcID : int = NetworkCommons.RidSingleMode):
-	var entity : Entity = Entities.Get(ridAgent)
+func Morphed(agentRID : int, morphID : int, morphed : bool, _peerID : int):
+	var entity : Entity = Entities.Get(agentRID)
 	if entity:
 		var morphData : EntityData = DB.EntitiesDB.get(morphID, null)
 		if morphData:
 			entity.stat.Morph(morphData)
 			entity.SetVisual(morphData, morphed)
 
-func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdatePublicStats(agentRID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, _peerID : int):
 	if Launcher.Map:
-		var entity : Entity = Entities.Get(ridAgent)
+		var entity : Entity = Entities.Get(agentRID)
 		if entity and entity.stat:
 			entity.stat.level			= level
 			entity.stat.health			= health
@@ -120,7 +120,7 @@ func UpdatePublicStats(ridAgent : int, level : int, health : int, hairstyle : in
 
 			entity.stat.RefreshVitalStats()
 
-func UpdatePrivateStats(experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdatePrivateStats(experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, _peerID : int):
 	if Launcher.Player and Launcher.Player.stat:
 		Launcher.Player.stat.experience		= experience
 		Launcher.Player.stat.gp				= gp
@@ -132,7 +132,7 @@ func UpdatePrivateStats(experience : int, gp : int, mana : int, stamina : int, k
 		Launcher.Player.stat.spirit			= spirit
 		Launcher.Player.stat.RefreshVitalStats()
 
-func UpdateAttributes(strength : int, vitality : int, agility : int, endurance : int, concentration : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdateAttributes(strength : int, vitality : int, agility : int, endurance : int, concentration : int, _peerID : int):
 	if Launcher.Player and Launcher.Player.stat:
 		Launcher.Player.stat.strength		= strength
 		Launcher.Player.stat.vitality		= vitality
@@ -141,13 +141,13 @@ func UpdateAttributes(strength : int, vitality : int, agility : int, endurance :
 		Launcher.Player.stat.concentration	= concentration
 		Launcher.Player.stat.RefreshAttributes()
 
-func LevelUp(ridAgent : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func LevelUp(agentRID : int, _peerID : int):
 	if Launcher.Map:
-		var entity : Entity = Entities.Get(ridAgent)
+		var entity : Entity = Entities.Get(agentRID)
 		if entity and entity.get_parent() and entity.stat:
 			entity.LevelUp()
 
-func ItemAdded(itemID : int, customfield : StringName, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func ItemAdded(itemID : int, customfield : StringName, count : int, _peerID : int):
 	if Launcher.Player:
 		var cell : BaseCell = DB.GetItem(itemID, customfield)
 		if cell and Launcher.Player.inventory.PushItem(cell, count):
@@ -156,7 +156,7 @@ func ItemAdded(itemID : int, customfield : StringName, count : int, _rpcID : int
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
 
-func ItemRemoved(itemID : int, customfield : StringName, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func ItemRemoved(itemID : int, customfield : StringName, count : int, _peerID : int):
 	if Launcher.Player:
 		var cell : BaseCell = DB.GetItem(itemID, customfield)
 		if cell:
@@ -166,8 +166,8 @@ func ItemRemoved(itemID : int, customfield : StringName, count : int, _rpcID : i
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 			cell.used.emit()
 
-func ItemEquiped(ridAgent : int, itemID : int, customfield : StringName, state : bool, _rpcID : int = NetworkCommons.RidSingleMode):
-	var entity : Entity = Entities.Get(ridAgent)
+func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state : bool, _peerID : int):
+	var entity : Entity = Entities.Get(agentRID)
 	if entity:
 		var cell : ItemCell = DB.GetItem(itemID, customfield)
 		if cell:
@@ -181,49 +181,49 @@ func ItemEquiped(ridAgent : int, itemID : int, customfield : StringName, state :
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 				cell.used.emit()
 
-func RefreshInventory(cells : Array[Dictionary], _rpcID : int = NetworkCommons.RidSingleMode):
+func RefreshInventory(cells : Array[Dictionary], _peerID : int):
 	if Launcher.Player and Launcher.Player.inventory:
 		Launcher.Player.inventory.ImportInventory(cells)
 	if Launcher.GUI and Launcher.GUI.inventoryWindow:
 		Launcher.GUI.inventoryWindow.RefreshInventory()
 
-func RefreshEquipments(ridAgent : int, equipments : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
-	var entity : Entity = Entities.Get(ridAgent)
+func RefreshEquipments(agentRID : int, equipments : Dictionary, _peerID : int):
+	var entity : Entity = Entities.Get(agentRID)
 	if entity:
 		if entity.inventory:
 			entity.inventory.ImportEquipment(equipments)
 		if entity == Launcher.Player and Launcher.GUI and Launcher.GUI.inventoryWindow:
 			Launcher.GUI.inventoryWindow.RefreshInventory()
 
-func DropAdded(dropID : int, itemID : int, customfield : StringName, pos : Vector2, _rpcID : int = NetworkCommons.RidSingleMode):
+func DropAdded(dropID : int, itemID : int, customfield : StringName, pos : Vector2, _peerID : int):
 	if Launcher.Map:
 		Launcher.Map.AddDrop(dropID, DB.GetItem(itemID, customfield), pos)
 
-func DropRemoved(dropID : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func DropRemoved(dropID : int, _peerID : int):
 	if Launcher.Map:
 		Launcher.Map.RemoveDrop(dropID)
 
 #
-func PushNotification(notif : String, _rpcID : int = NetworkCommons.RidSingleMode):
+func PushNotification(notif : String, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.notificationLabel.AddNotification(notif)
 
 #
-func AuthError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.RidSingleMode):
+func AuthError(err : NetworkCommons.AuthError, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.loginPanel.FillWarningLabel(err)
 		if err == NetworkCommons.AuthError.ERR_OK:
 			FSM.EnterState(FSM.States.CHAR_SCREEN)
 
-func CharacterError(err : NetworkCommons.AuthError, _rpcID : int = NetworkCommons.RidSingleMode):
+func CharacterError(err : NetworkCommons.AuthError, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.characterPanel.FillWarningLabel(err)
 
-func CharacterInfo(info : Dictionary, equipment : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
+func CharacterInfo(info : Dictionary, equipment : Dictionary, _peerID : int):
 	Launcher.GUI.characterPanel.AddCharacter(info, equipment)
 
 # Progress
-func UpdateSkill(skillID : int, level : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdateSkill(skillID : int, level : int, _peerID : int):
 	if Launcher.Player:
 		var skill : SkillCell = DB.GetSkill(skillID)
 		if skill:
@@ -231,51 +231,50 @@ func UpdateSkill(skillID : int, level : int, _rpcID : int = NetworkCommons.RidSi
 			if Launcher.GUI and Launcher.GUI.skillWindow:
 				Launcher.GUI.skillWindow.RefreshSkills()
 
-func UpdateBestiary(mobID : int, count : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdateBestiary(mobID : int, count : int, _peerID : int):
 	if Launcher.Player:
 		Launcher.Player.progress.AddBestiary(mobID, count)
 		if Launcher.GUI and Launcher.GUI.progressWindow:
 			Launcher.GUI.progressWindow.RefreshBestiary(mobID, count)
 
-func UpdateQuest(questID : int, state : int, _rpcID : int = NetworkCommons.RidSingleMode):
+func UpdateQuest(questID : int, state : int, _peerID : int):
 	if Launcher.Player:
 		Launcher.Player.progress.SetQuest(questID, state)
 		if Launcher.GUI and Launcher.GUI.progressWindow:
 			Launcher.GUI.progressWindow.RefreshQuest(questID, state)
 
-func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, _rpcID : int = NetworkCommons.RidSingleMode):
+func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, peerID : int):
 	if Launcher.GUI and Launcher.GUI.progressWindow:
 		Launcher.GUI.progressWindow.Clear()
 	if Launcher.Player:
 		for skill in skills:
-			UpdateSkill(skill, skills[skill])
+			UpdateSkill(skill, skills[skill], peerID)
 		for quest in quests:
-			UpdateQuest(quest, quests[quest])
+			UpdateQuest(quest, quests[quest], peerID)
 		for mob in bestiary:
-			UpdateBestiary(mob, bestiary[mob])
+			UpdateBestiary(mob, bestiary[mob], peerID)
 
 #
 func ConnectServer():
 	if not isOffline:
-		uniqueID = multiplayerAPI.get_unique_id()
+		interfaceID = multiplayerAPI.get_unique_id()
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
-	Peers.AddPeer(NetworkCommons.RidSingleMode, NetworkCommons.UseWebSocket and not NetworkCommons.UseENet)
+	Peers.AddPeer(NetworkCommons.PeerAuthorityID, NetworkCommons.UseWebSocket and not NetworkCommons.UseENet)
 
 func DisconnectServer():
-	uniqueID = NetworkCommons.RidDefault
 	Launcher.Mode(true, true)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
-	Peers.RemovePeer(NetworkCommons.RidSingleMode)
+	Peers.RemovePeer(NetworkCommons.PeerOfflineID)
 
 func ConnectionFailed():
 	DisconnectServer()
-	AuthError(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
+	AuthError(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE, NetworkCommons.PeerOfflineID)
 
 #
 func _enter_tree():
 	if isOffline:
-		uniqueID = NetworkCommons.RidSingleMode
+		interfaceID = NetworkCommons.PeerOfflineID
 		ConnectServer.call_deferred()
 		return
 

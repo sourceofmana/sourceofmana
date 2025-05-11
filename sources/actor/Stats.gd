@@ -189,11 +189,11 @@ func AddExperience(value : int):
 		level += 1
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
 	if actor is PlayerAgent:
-		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.EXP, DB.UnknownHash, actor.rpcRID)
+		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.EXP, DB.UnknownHash, actor.peerID)
 
 func AddGP(value : int):
 	if not ActorCommons.IsAlive(actor) or value <= 0:
 		return
 	gp += value
 	if actor is PlayerAgent:
-		Network.TargetAlteration(actor.rpcRID, actor.rpcRID, value, ActorCommons.Alteration.GP, DB.UnknownHash, actor.rpcRID)
+		Network.TargetAlteration(actor.peerID, actor.peerID, value, ActorCommons.Alteration.GP, DB.UnknownHash, actor.peerID)

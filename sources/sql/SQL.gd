@@ -36,7 +36,7 @@ func Login(username : String, triedPassword : String) -> int:
 			var hashedTriedPassword : String = Hasher.HashPassword(triedPassword, salt)
 			if hashedTriedPassword == correctPassword:
 				return accountID
-	return NetworkCommons.RidUnknown
+	return NetworkCommons.PeerUnknownID
 
 func UpdateAccount(accountID : int) -> bool:
 	var newTimestamp : int = SQLCommons.Timestamp()
@@ -61,7 +61,7 @@ func AddCharacter(accountID : int, nickname : String, stats : Dictionary, traits
 	return ret
 
 func RemoveCharacter(charID : int) -> bool:
-	if charID != NetworkCommons.RidUnknown:
+	if charID != NetworkCommons.PeerUnknownID:
 		return db.delete_rows("character", "char_id = %d" % charID)
 	return false
 
@@ -82,11 +82,11 @@ WHERE character.char_id = %d;" % charID)
 	return results[0] if results.size() > 0 else {}
 
 func RefreshCharacter(player : PlayerAgent) -> bool:
-	var charID : int = Peers.GetCharacter(player.rpcRID)
-	if charID == NetworkCommons.RidUnknown:
+	var charID : int = Peers.GetCharacter(player.peerID)
+	if charID == NetworkCommons.PeerUnknownID:
 		return false
 
-	var success : bool = charID != NetworkCommons.RidUnknown
+	var success : bool = charID != NetworkCommons.PeerUnknownID
 	success = success and UpdateAttribute(charID, player.stat)
 	success = success and UpdateTrait(charID, player.stat)
 	success = success and UpdateStat(charID, player.stat)
@@ -109,7 +109,7 @@ func CharacterLogin(charID : int) -> bool:
 func GetCharacterID(accountID : int, nickname : String) -> int:
 	var results : Array[Dictionary] = QueryBindings("SELECT char_id FROM character WHERE account_id = ? AND nickname = ?;", [accountID, nickname])
 	assert(results.size() <= 1, "Duplicated character row for account %d and nickname '%s'" % [accountID, nickname])
-	return results[0]["char_id"] if results.size() > 0 else NetworkCommons.RidUnknown
+	return results[0]["char_id"] if results.size() > 0 else NetworkCommons.PeerUnknownID
 
 func GetCharacter(charID : int) -> Dictionary:
 	var results : Array[Dictionary] = db.select_rows("character", "char_id = %d" % charID, ["*"])
@@ -120,8 +120,8 @@ func UpdateCharacter(player : PlayerAgent) -> bool:
 	if player == null:
 		return false
 
-	var charID : int = Peers.GetCharacter(player.rpcRID)
-	if charID == NetworkCommons.RidUnknown:
+	var charID : int = Peers.GetCharacter(player.peerID)
+	if charID == NetworkCommons.PeerUnknownID:
 		return false
 
 	var map : WorldMap = WorldAgent.GetMapFromAgent(player)

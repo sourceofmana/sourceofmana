@@ -25,310 +25,310 @@ enum EChannel
 
 # Auth
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func CreateAccount(accountName : String, password : String, email : String, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
-	return CallServer("CreateAccount", [accountName, password, email], rpcID, NetworkCommons.DelayLogin)
+func CreateAccount(accountName : String, password : String, email : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("CreateAccount", [accountName, password, email], peerID, NetworkCommons.DelayLogin)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func ConnectAccount(accountName : String, password : String, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
-	return CallServer("ConnectAccount", [accountName, password], rpcID, NetworkCommons.DelayLogin)
+func ConnectAccount(accountName : String, password : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("ConnectAccount", [accountName, password], peerID, NetworkCommons.DelayLogin)
 
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
-func AuthError(err : NetworkCommons.AuthError, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("AuthError", [err], rpcID)
+func AuthError(err : NetworkCommons.AuthError, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("AuthError", [err], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func DisconnectAccount(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("DisconnectAccount", [], rpcID)
+func DisconnectAccount(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("DisconnectAccount", [], peerID)
 
 # Character
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
-func CharacterInfo(info : Dictionary, equipment : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("CharacterInfo", [info, equipment], rpcID)
+func CharacterInfo(info : Dictionary, equipment : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("CharacterInfo", [info, equipment], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictionary, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
-	return CallServer("CreateCharacter", [charName, traits, attributes], rpcID, NetworkCommons.DelayLogin)
+func CreateCharacter(charName : String, traits : Dictionary, attributes : Dictionary, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("CreateCharacter", [charName, traits, attributes], peerID, NetworkCommons.DelayLogin)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func DeleteCharacter(charName : String, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
-	return CallServer("DeleteCharacter", [charName], rpcID, NetworkCommons.DelayLogin)
+func DeleteCharacter(charName : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("DeleteCharacter", [charName], peerID, NetworkCommons.DelayLogin)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func ConnectCharacter(nickname : String, rpcID : int = NetworkCommons.RidSingleMode) -> bool:
-	return CallServer("ConnectCharacter", [nickname], rpcID, NetworkCommons.DelayLogin)
+func ConnectCharacter(nickname : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("ConnectCharacter", [nickname], peerID, NetworkCommons.DelayLogin)
 
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
-func CharacterError(err : NetworkCommons.CharacterError, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("CharacterError", [err], rpcID)
+func CharacterError(err : NetworkCommons.CharacterError, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("CharacterError", [err], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func DisconnectCharacter(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("DisconnectCharacter", [], rpcID)
+func DisconnectCharacter(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("DisconnectCharacter", [], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func CharacterListing(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("CharacterListing", [], rpcID)
+func CharacterListing(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("CharacterListing", [], peerID)
 
 # Respawn
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerRespawn(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerRespawn", [], rpcID)
+func TriggerRespawn(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerRespawn", [], peerID)
 
 # Warp
 @rpc("any_peer", "call_remote", "unreliable", EChannel.MAP)
-func TriggerWarp(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerWarp", [], rpcID)
+func TriggerWarp(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerWarp", [], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP) 
-func WarpPlayer(mapID : int, playerPos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("WarpPlayer", [mapID, playerPos], rpcID)
+func WarpPlayer(mapID : int, playerPos : Vector2, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("WarpPlayer", [mapID, playerPos], peerID)
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func AddEntity(agentID : int, entityType : ActorCommons.Type, currentShape : int, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("AddEntity", [agentID, entityType, currentShape, velocity, position, orientation, state, skillCastID], rpcID)
+func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("AddEntity", [agentRID, actorType, currentShape, velocity, position, orientation, state, skillCastID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func AddPlayer(agentID : int, entityType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipments : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("AddPlayer", [agentID, entityType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID, level, health, hairstyle, haircolor, gender, race, skintone, equipments], rpcID)
+func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipments : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("AddPlayer", [agentRID, actorType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID, level, health, hairstyle, haircolor, gender, race, skintone, equipments], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func RemoveEntity(agentID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("RemoveEntity", [agentID], rpcID)
+func RemoveEntity(agentRID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RemoveEntity", [agentRID], peerID)
 
 # Notification
 @rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.MAP)
-func PushNotification(notif : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("PushNotification", [notif], rpcID)
+func PushNotification(notif : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("PushNotification", [notif], peerID)
 
 # Navigation
 @rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.NAVIGATION)
-func SetClickPos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("SetClickPos", [pos], rpcID)
+func SetClickPos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("SetClickPos", [pos], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
-func SetMovePos(pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("SetMovePos", [pos], rpcID, NetworkCommons.DelayInstant)
+func SetMovePos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("SetMovePos", [pos], peerID, NetworkCommons.DelayInstant)
 
 @rpc("authority", "call_remote", "unreliable_ordered", EChannel.NAVIGATION)
-func UpdateEntity(agentID : int, velocity : Vector2, position : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("UpdateEntity", [agentID, velocity, position], rpcID)
+func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdateEntity", [agentRID, velocity, position], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.NAVIGATION)
-func FullUpdateEntity(agentID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int,  rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("FullUpdateEntity", [agentID, velocity, position, orientation, agentState, skillCastID], rpcID)
+func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int,  peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("FullUpdateEntity", [agentRID, velocity, position, orientation, agentState, skillCastID], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
-func ClearNavigation(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("ClearNavigation", [], rpcID)
+func ClearNavigation(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("ClearNavigation", [], peerID)
 
 # Emote
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerEmote(emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerEmote", [emoteID], rpcID)
+func TriggerEmote(emoteID : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerEmote", [emoteID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION) 
-func EmotePlayer(senderAgentID : int, emoteID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("EmotePlayer", [senderAgentID, emoteID], rpcID)
+func EmotePlayer(senderagentRID : int, emoteID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("EmotePlayer", [senderagentRID, emoteID], peerID)
 
 # Sit
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerSit(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerSit", [], rpcID)
+func TriggerSit(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerSit", [], peerID)
 
 # Chat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerChat(text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerChat", [text], rpcID)
+func TriggerChat(text : String, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerChat", [text], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ChatAgent(ridAgent : int, text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ChatAgent", [ridAgent, text], rpcID)
+func ChatAgent(agentRID : int, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ChatAgent", [agentRID, text], peerID)
 
 # Context
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ToggleContext(enable : bool, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ToggleContext", [enable], rpcID)
+func ToggleContext(enable : bool, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ToggleContext", [enable], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ContextText(author : String, text : String, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ContextText", [author, text], rpcID)
+func ContextText(author : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ContextText", [author, text], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ContextContinue(rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ContextContinue", [], rpcID)
+func ContextContinue(peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ContextContinue", [], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ContextClose(rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ContextClose", [], rpcID)
+func ContextClose(peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ContextClose", [], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ContextChoice(texts : PackedStringArray, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ContextChoice", [texts], rpcID)
+func ContextChoice(texts : PackedStringArray, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ContextChoice", [texts], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerChoice(choiceID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerChoice", [choiceID], rpcID)
+func TriggerChoice(choiceID : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerChoice", [choiceID], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerCloseContext(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerCloseContext", [], rpcID)
+func TriggerCloseContext(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerCloseContext", [], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerNextContext(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerNextContext", [], rpcID)
+func TriggerNextContext(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerNextContext", [], peerID)
 
 # Interact
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerInteract(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerInteract", [entityID], rpcID)
+func TriggerInteract(targetRID : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerInteract", [targetRID], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerExplore(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerExplore", [], rpcID)
+func TriggerExplore(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerExplore", [], peerID)
 
 # Combat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerCast(entityID : int, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerCast", [entityID, skillID], rpcID, NetworkCommons.DelayShort)
+func TriggerCast(targetRID : int, skillID : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerCast", [targetRID, skillID], peerID, NetworkCommons.DelayShort)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func TargetAlteration(agentID : int, targetID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("TargetAlteration", [agentID, targetID, value, alteration, skillID], rpcID)
+func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("TargetAlteration", [agentRID, targetRID, value, alteration, skillID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func Casted(agentID : int, skillID: int, cooldown : float, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("Casted", [agentID, skillID, cooldown], rpcID)
+func Casted(agentRID : int, skillID: int, cooldown : float, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("Casted", [agentRID, skillID, cooldown], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ThrowProjectile(agentID : int, targetPos : Vector2, skillID: int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ThrowProjectile", [agentID, targetPos, skillID], rpcID)
+func ThrowProjectile(agentRID : int, targetPos : Vector2, skillID: int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ThrowProjectile", [agentRID, targetPos, skillID], peerID)
 
 # Morph
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerMorph(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerMorph", [], rpcID)
+func TriggerMorph(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerMorph", [], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func Morphed(agentID : int, morphID : int, notifyMorphing : bool, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("Morphed", [agentID, morphID, notifyMorphing], rpcID)
+func Morphed(agentRID : int, morphID : int, notifyMorphing : bool, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("Morphed", [agentRID, morphID, notifyMorphing], peerID)
 
 # Stats
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdatePublicStats(agentID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("UpdatePublicStats", [agentID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape], rpcID)
+func UpdatePublicStats(agentRID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdatePublicStats", [agentRID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdatePrivateStats(experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("UpdatePrivateStats", [experience, gp, mana, stamina, karma, weight, shape, spirit], rpcID)
+func UpdatePrivateStats(experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdatePrivateStats", [experience, gp, mana, stamina, karma, weight, shape, spirit], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdateAttributes(strength : int, vitality : int, agility : int, endurance : int, concentration : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("UpdateAttributes", [strength, vitality, agility, endurance, concentration], rpcID)
+func UpdateAttributes(strength : int, vitality : int, agility : int, endurance : int, concentration : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdateAttributes", [strength, vitality, agility, endurance, concentration], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func TriggerSelect(entityID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("TriggerSelect", [entityID], rpcID)
+func TriggerSelect(agentRID : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerSelect", [agentRID], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func AddAttribute(stat : ActorCommons.Attribute, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("AddAttribute", [stat], rpcID)
+func AddAttribute(stat : ActorCommons.Attribute, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("AddAttribute", [stat], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func LevelUp(agentID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("LevelUp", [agentID], rpcID)
+func LevelUp(agentRID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("LevelUp", [agentRID], peerID)
 
 # Inventory
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemAdded(itemID : int, customfield : StringName, count : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ItemAdded", [itemID, customfield, count], rpcID)
+func ItemAdded(itemID : int, customfield : StringName, count : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ItemAdded", [itemID, customfield, count], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemRemoved(itemID : int, customfield : StringName, count : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ItemRemoved", [itemID, customfield, count], rpcID)
+func ItemRemoved(itemID : int, customfield : StringName, count : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ItemRemoved", [itemID, customfield, count], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemEquiped(agentID : int, itemID : int, customfield : StringName, state : bool, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("ItemEquiped", [agentID, itemID, customfield, state], rpcID)
+func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state : bool, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ItemEquiped", [agentRID, itemID, customfield, state], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func UseItem(itemID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("UseItem", [itemID], rpcID)
+func UseItem(itemID : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("UseItem", [itemID], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func DropItem(itemID : int, customfield : StringName, itemCount : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("DropItem", [itemID, customfield, itemCount], rpcID)
+func DropItem(itemID : int, customfield : StringName, itemCount : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("DropItem", [itemID, customfield, itemCount], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func EquipItem(itemID : int, customfield : StringName, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("EquipItem", [itemID, customfield], rpcID)
+func EquipItem(itemID : int, customfield : StringName, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("EquipItem", [itemID, customfield], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func UnequipItem(itemID : int, customfield : StringName, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("UnequipItem", [itemID, customfield], rpcID)
+func UnequipItem(itemID : int, customfield : StringName, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("UnequipItem", [itemID, customfield], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func RetrieveInventory(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("RetrieveInventory", [], rpcID)
+func RetrieveInventory(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("RetrieveInventory", [], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func RefreshInventory(cells : Array[Dictionary], rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("RefreshInventory", [cells], rpcID)
+func RefreshInventory(cells : Array[Dictionary], peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RefreshInventory", [cells], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func RefreshEquipments(agentID : int, equipments : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("RefreshEquipments", [agentID, equipments], rpcID)
+func RefreshEquipments(agentRID : int, equipments : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RefreshEquipments", [agentRID, equipments], peerID)
 
 # Drop
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func DropAdded(dropID : int, itemID : int, customfield : StringName, pos : Vector2, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("DropAdded", [dropID, itemID, customfield, pos], rpcID)
+func DropAdded(dropID : int, itemID : int, customfield : StringName, pos : Vector2, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("DropAdded", [dropID, itemID, customfield, pos], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func DropRemoved(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("DropRemoved", [dropID], rpcID)
+func DropRemoved(dropID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("DropRemoved", [dropID], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func PickupDrop(dropID : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("PickupDrop", [dropID], rpcID)
+func PickupDrop(dropID : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("PickupDrop", [dropID], peerID)
 
 # Progress
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdateSkill(skillID : int, level : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("UpdateSkill", [skillID, level], rpcID)
+func UpdateSkill(skillID : int, level : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdateSkill", [skillID, level], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdateBestiary(mobID : int, count : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("UpdateBestiary", [mobID, count], rpcID)
+func UpdateBestiary(mobID : int, count : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdateBestiary", [mobID, count], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdateQuest(questID : int, state : int, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("UpdateQuest", [questID, state], rpcID)
+func UpdateQuest(questID : int, state : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdateQuest", [questID, state], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, rpcID : int = NetworkCommons.RidSingleMode):
-	CallClient("RefreshProgress", [skills, quests, bestiary], rpcID)
+func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RefreshProgress", [skills, quests, bestiary], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func RetrieveCharacterInformation(rpcID : int = NetworkCommons.RidSingleMode):
-	CallServer("RetrieveCharacterInformation", [], rpcID)
+func RetrieveCharacterInformation(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("RetrieveCharacterInformation", [], peerID)
 
 # Bulk RPC calls
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func BulkCall(methodName : StringName, bulkedArgs : Array, rpcID : int = NetworkCommons.RidSingleMode):
-	if rpcID == NetworkCommons.RidSingleMode:
+func BulkCall(methodName : StringName, bulkedArgs : Array, peerID : int = NetworkCommons.PeerOfflineID):
+	if WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
+		WebSocketServer.multiplayerAPI.rpc(peerID, self, "BulkCall", [methodName, bulkedArgs])
+	elif ENetServer and not ENetServer.isOffline:
+		ENetServer.multiplayerAPI.rpc(peerID, self, "BulkCall", [methodName, bulkedArgs])
+	else:
 		for args in bulkedArgs:
-			Client.callv.call_deferred(methodName, args)
-	elif Peers.IsUsingWebSocket(rpcID):
-		WebSocketServer.multiplayerAPI.rpc(rpcID, self, "BulkCall", [methodName, bulkedArgs])
-	else:
-		ENetServer.multiplayerAPI.rpc(rpcID, self, "BulkCall", [methodName, bulkedArgs])
+			Client.callv.call_deferred(methodName, args + [peerID])
 
-func Bulk(methodName : StringName, args : Array, rpcID : int):
-	if Peers.IsUsingWebSocket(rpcID):
-		WebSocketServer.Bulk(methodName, args, rpcID)
+func Bulk(methodName : StringName, args : Array, peerID : int):
+	if Peers.IsUsingWebSocket(peerID):
+		WebSocketServer.Bulk(methodName, args, peerID)
 	else:
-		ENetServer.Bulk(methodName, args, rpcID)
+		ENetServer.Bulk(methodName, args, peerID)
 
 # Notify peers
 func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array, inclusive : bool = true, bulk : bool = false):
@@ -336,51 +336,48 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 		assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
 		return
 
-	var currentAgentID = agent.get_rid().get_id()
+	var currentagentRID = agent.get_rid().get_id()
 	if inclusive and agent is PlayerAgent:
 		if bulk:
-			Network.Bulk(callbackName, [currentAgentID] + args, agent.rpcRID)
+			Network.Bulk(callbackName, [currentagentRID] + args, agent.peerID)
 		else:
-			Network.callv(callbackName, [currentAgentID] + args + [agent.rpcRID])
+			Network.callv(callbackName, [currentagentRID] + args + [agent.peerID])
 
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	if inst:
 		for player in inst.players:
-			if player != null and player != agent and player.rpcRID != NetworkCommons.RidUnknown:
+			if player != null and player != agent and player.peerID != NetworkCommons.PeerUnknownID:
 				if bulk:
-					Network.Bulk(callbackName, [currentAgentID] + args, player.rpcRID)
+					Network.Bulk(callbackName, [currentagentRID] + args, player.peerID)
 				else:
-					Network.callv(callbackName, [currentAgentID] + args + [player.rpcRID])
+					Network.callv(callbackName, [currentagentRID] + args + [player.peerID])
 
 func NotifyInstance(inst : WorldInstance, callbackName : StringName, args : Array):
 	if inst:
 		for player in inst.players:
 			if player != null:
-				if player.rpcRID != NetworkCommons.RidUnknown:
-					Network.callv(callbackName, args + [player.rpcRID])
+				if player.peerID != NetworkCommons.PeerUnknownID:
+					Network.callv(callbackName, args + [player.peerID])
 
 # Peer calls
-func CallServer(methodName : StringName, args : Array, rpcID : int, actionDelta : int = NetworkCommons.DelayDefault) -> bool:
-	if rpcID == NetworkCommons.RidSingleMode and not Client.isOffline:
-		if Peers.Footprint(rpcID, methodName, actionDelta):
-			Client.multiplayerAPI.rpc(NetworkCommons.RidAuthority, self, methodName, args + [Client.uniqueID])
-			return true
+func CallServer(methodName : StringName, args : Array, peerID : int, actionDelta : int = NetworkCommons.DelayDefault) -> bool:
+	if not Peers.Footprint(peerID, methodName, actionDelta):
+		return false
+	if Client and not Client.isOffline:
+		Client.multiplayerAPI.rpc(peerID, self, methodName, args + [Client.interfaceID])
+	elif Peers.IsUsingWebSocket(peerID):
+		WebSocketServer.callv.call_deferred(methodName, args + [peerID])
 	else:
-		if Peers.Footprint(rpcID, methodName, actionDelta):
-			if Peers.IsUsingWebSocket(rpcID):
-				WebSocketServer.callv.call_deferred(methodName, args + [rpcID])
-			else:
-				ENetServer.callv.call_deferred(methodName, args + [rpcID])
-			return true
-	return false
+		ENetServer.callv.call_deferred(methodName, args + [peerID])
+	return true
 
-func CallClient(methodName : StringName, args : Array, rpcID : int):
-	if rpcID == NetworkCommons.RidSingleMode:
-		Client.callv.call_deferred(methodName, args)
-	elif Peers.IsUsingWebSocket(rpcID):
-		WebSocketServer.multiplayerAPI.rpc(rpcID, self, methodName, args)
+func CallClient(methodName : StringName, args : Array, peerID : int):
+	if WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
+		WebSocketServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
+	elif ENetServer and not ENetServer.isOffline:
+		ENetServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
 	else:
-		ENetServer.multiplayerAPI.rpc(rpcID, self, methodName, args)
+		Client.callv.call_deferred(methodName, args + [peerID])
 
 # Service handling
 func Mode(isClient : bool, isServer : bool):

@@ -5,20 +5,20 @@ class_name Entities
 static var entities : Dictionary[int, Entity]		= {}
 
 #
-static func Get(ridEntity : int) -> Entity:
-	return entities.get(ridEntity, null)
+static func Get(agentRID : int) -> Entity:
+	return entities.get(agentRID, null)
 
 static func Clear():
-	var playerID : int = Launcher.Player.agentID if Launcher.Player else NetworkCommons.RidUnknown
+	var currentPlayerAgentRID : int = Launcher.Player.agentRID if Launcher.Player else NetworkCommons.PeerUnknownID
 	entities.clear()
-	if playerID != NetworkCommons.RidUnknown:
-		entities[playerID] = Launcher.Player
+	if currentPlayerAgentRID != NetworkCommons.PeerUnknownID:
+		entities[currentPlayerAgentRID] = Launcher.Player
 
-static func Add(entity : Entity, ridEntity : int):
-	entities[ridEntity] = entity 
+static func Add(entity : Entity, agentRID : int):
+	entities[agentRID] = entity
 
-static func Erase(ridEntity : int):
-	entities.erase(ridEntity)
+static func Erase(agentRID : int):
+	entities.erase(agentRID)
 
 #
 static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable : bool) -> Entity:
@@ -30,8 +30,7 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 		minThreshold = nearestDistance
 		target = currentEntity
 
-	for entityID in entities:
-		var entity : Entity = Get(entityID)
+	for entity in entities.values():
 		if entity and entity != currentEntity and entity.state != ActorCommons.State.DEATH:
 			if entity.type == ActorCommons.Type.MONSTER or (interactable and entity.type == ActorCommons.Type.NPC):
 				var distance : float = source.distance_squared_to(entity.position)

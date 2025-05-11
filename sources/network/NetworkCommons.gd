@@ -24,10 +24,9 @@ const StartGuardbandDistSquared : float	= 6.0 * 6.0
 const MaxGuardbandDistSquared : float	= 64.0 * 64.0
 
 # Connection
-const RidUnknown : int					= -2
-const RidSingleMode : int				= -1
-const RidDefault : int					= 0
-const RidAuthority : int				= 1
+const PeerUnknownID : int				= -2
+const PeerOfflineID : int				= -1
+const PeerAuthorityID : int				= 1
 
 const DelayInstant : int				= 0
 const DelayShort : int					= 16

@@ -2,14 +2,14 @@ extends BaseAgent
 class_name PlayerAgent
 
 #
-var rpcRID : int						= NetworkCommons.RidUnknown
+var peerID : int						= NetworkCommons.PeerUnknownID
 var lastStat : ActorStats				= ActorStats.new()
 var respawnDestination : Destination	= null
 var exploreOrigin : Destination			= null
 var ownScript : NpcScript				= null
 
 #
-static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
+static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
 
 #
 static func GetDestinationFromData(charData : Dictionary, destID : String, posXID : String, posYID : String) -> Destination:
@@ -56,7 +56,7 @@ func SetCharacterInfo(charData : Dictionary, charID : int):
 
 #
 func UpdateLastStats():
-	if rpcRID == NetworkCommons.RidUnknown:
+	if peerID == NetworkCommons.PeerUnknownID:
 		return
 
 	if lastStat.level != stat.level or \
@@ -87,7 +87,7 @@ func UpdateLastStats():
 	lastStat.weight != stat.weight or \
 	lastStat.shape != stat.shape or \
 	lastStat.spirit != stat.spirit:
-		Network.UpdatePrivateStats(stat.experience, stat.gp, stat.mana, stat.stamina, stat.karma, stat.weight, stat.shape, stat.spirit, rpcRID)
+		Network.UpdatePrivateStats(stat.experience, stat.gp, stat.mana, stat.stamina, stat.karma, stat.weight, stat.shape, stat.spirit, peerID)
 		lastStat.level				= stat.level
 		lastStat.experience			= stat.experience
 		lastStat.gp					= stat.gp
@@ -104,7 +104,7 @@ func UpdateLastStats():
 	lastStat.agility != stat.agility or \
 	lastStat.endurance != stat.endurance or \
 	lastStat.concentration != stat.concentration:
-		Network.UpdateAttributes(stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, rpcRID)
+		Network.UpdateAttributes(stat.strength, stat.vitality, stat.agility, stat.endurance, stat.concentration, peerID)
 		lastStat.strength			= stat.strength
 		lastStat.vitality			= stat.vitality
 		lastStat.agility			= stat.agility

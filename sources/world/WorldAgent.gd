@@ -26,10 +26,10 @@ static func GetNeighboursFromAgent(checkedAgent : BaseAgent) -> Array[Array]:
 	return neighbours
 
 # Basic Agent container handling
-static func GetAgent(agentID : int) -> BaseAgent:
+static func GetAgent(agentRID : int) -> BaseAgent:
 	var agent : BaseAgent = null
-	if agents.has(agentID):
-		agent = agents.get(agentID)
+	if agents.has(agentRID):
+		agent = agents.get(agentRID)
 	return agent
 
 static func AddAgent(agent : BaseAgent):

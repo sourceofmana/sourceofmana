@@ -2,13 +2,13 @@ extends Node
 class_name Instantiate
 
 # Entity
-static func CreateEntity(entityType : ActorCommons.Type, data : EntityData, nick : String = "", isManaged : bool = false) -> Entity:
+static func CreateEntity(actorType : ActorCommons.Type, data : EntityData, nick : String = "", isManaged : bool = false) -> Entity:
 	if not data:
 		return null
 
 	var actor : Entity = FileSystem.LoadEntityVariant()
 	if actor:
-		actor._init(entityType, data, nick, isManaged)
+		actor._init(actorType, data, nick, isManaged)
 	return actor
 
 static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = "") -> BaseAgent:

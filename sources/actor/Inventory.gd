@@ -117,9 +117,9 @@ func EquipItem(cell : ItemCell):
 		if cell and cell.modifiers:
 			cell.modifiers.Equip(actor)
 		actor.stat.RefreshEntityStats()
-		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			var charID : int = Peers.GetCharacter(actor.rpcRID)
-			if charID != NetworkCommons.RidUnknown:
+		if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
+			var charID : int = Peers.GetCharacter(actor.peerID)
+			if charID != NetworkCommons.PeerUnknownID:
 				Launcher.SQL.UpdateEquipment(charID, ExportEquipment())
 			Network.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, true])
 
@@ -129,30 +129,30 @@ func UnequipItem(cell : ItemCell):
 			cell.modifiers.Unequip(actor)
 		equipments[cell.slot] = null
 		actor.stat.RefreshEntityStats()
-		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			var charID : int = Peers.GetCharacter(actor.rpcRID)
-			if charID != NetworkCommons.RidUnknown:
+		if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
+			var charID : int = Peers.GetCharacter(actor.peerID)
+			if charID != NetworkCommons.PeerUnknownID:
 				Launcher.SQL.UpdateEquipment(charID, ExportEquipment())
 			Network.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, false])
 
 #
 func AddItem(cell : ItemCell, count : int = 1) -> bool:
 	if PushItem(cell, count):
-		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			var charID : int = Peers.GetCharacter(actor.rpcRID)
-			if charID != NetworkCommons.RidUnknown:
+		if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
+			var charID : int = Peers.GetCharacter(actor.peerID)
+			if charID != NetworkCommons.PeerUnknownID:
 				Launcher.SQL.AddItem(charID, cell.id, cell.customfield, count)
-			Network.ItemAdded(cell.id, cell.customfield, count, actor.rpcRID)
+			Network.ItemAdded(cell.id, cell.customfield, count, actor.peerID)
 		return true
 	return false
 
 func RemoveItem(cell : ItemCell, count : int = 1) -> bool:
 	if PopItem(cell, count):
-		if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-			var charID : int = Peers.GetCharacter(actor.rpcRID)
-			if charID != NetworkCommons.RidUnknown:
+		if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
+			var charID : int = Peers.GetCharacter(actor.peerID)
+			if charID != NetworkCommons.PeerUnknownID:
 				Launcher.SQL.RemoveItem(charID, cell.id, cell.customfield, count)
-			Network.ItemRemoved(cell.id, cell.customfield, count, actor.rpcRID)
+			Network.ItemRemoved(cell.id, cell.customfield, count, actor.peerID)
 		return true
 	return false
 

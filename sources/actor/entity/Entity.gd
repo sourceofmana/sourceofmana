@@ -12,7 +12,7 @@ var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
 var entityOrientation : Vector2			= Vector2(0, 1)
 
-var agentID : int						= -1
+var agentRID : int						= -1
 
 signal entity_died
 
@@ -90,7 +90,7 @@ func Target(source : Vector2, interactable : bool = true, nextTarget : bool = fa
 		elif target.type == ActorCommons.Type.MONSTER:
 			target.interactive.DisplayTarget(ActorCommons.Target.ENEMY)
 			target.interactive.DisplayHP()
-		Network.TriggerSelect(target.agentID)
+		Network.TriggerSelect(target.agentRID)
 
 func JustInteract():
 	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and Util.IsReachableSquared(position, target.position, ActorCommons.TargetMaxSquaredDistance)):
@@ -103,7 +103,7 @@ func JustInteract():
 func Interact():
 	if target != null:
 		if target.type == ActorCommons.Type.NPC:
-			Network.TriggerInteract(target.agentID)
+			Network.TriggerInteract(target.agentRID)
 		elif target.type == ActorCommons.Type.MONSTER:
 			Cast(DB.GetCellHash(SkillCommons.SkillMeleeName))
 
@@ -120,18 +120,18 @@ func Cast(skillID : int):
 	if skill == null:
 		return
 
-	var entityID : int = 0
+	var targetRID : int = 0
 	if skill.mode == Skill.TargetMode.SINGLE:
 		if not target or target.state == ActorCommons.State.DEATH or target.type != ActorCommons.Type.MONSTER:
 			Target(position, false)
 		if target and target.type == ActorCommons.Type.MONSTER:
-			entityID = target.agentID
+			targetRID = target.agentRID
 
-	Network.TriggerCast(entityID, skillID)
+	Network.TriggerCast(targetRID, skillID)
 
 func LevelUp():
 	if Launcher.Player == self:
-		Network.Client.PushNotification("Level %d reached.\nFeel the mana power growing inside you!" % (stat.level))
+		Network.PushNotification("Level %d reached.\nFeel the mana power growing inside you!" % (stat.level))
 
 	stat.RefreshAttributes()
 	if interactive:

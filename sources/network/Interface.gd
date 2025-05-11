@@ -4,7 +4,7 @@ class_name NetInterface
 #
 var multiplayerAPI : SceneMultiplayer				= MultiplayerAPI.create_default_interface()
 var currentPeer : MultiplayerPeer					= null
-var uniqueID : int									= NetworkCommons.RidDefault
+var interfaceID : int								= NetworkCommons.PeerUnknownID
 
 # Dictionary[Dictionary[StringName, Array[Array[...]]]]
 var bulks : Dictionary[int, Dictionary]				= {}
@@ -14,10 +14,10 @@ var isOffline : bool								= false
 var isLocal : bool									= false
 
 #
-func Bulk(methodName : StringName, args : Array, rpcID : int):
-	if methodName not in bulks[rpcID]:
-		bulks[rpcID][methodName] = []
-	bulks[rpcID][methodName].append(args)
+func Bulk(methodName : StringName, args : Array, peerID : int):
+	if methodName not in bulks[peerID]:
+		bulks[peerID][methodName] = []
+	bulks[peerID][methodName].append(args)
 
 #
 func _init(_useWebSocket : bool, _isOffline : bool, _isLocal : bool):
@@ -40,16 +40,16 @@ func _init(_useWebSocket : bool, _isOffline : bool, _isLocal : bool):
 	Launcher.Root.add_child.call_deferred(self)
 
 func _process(_delta: float):
-	for rpcID in bulks:
-		var peerBulks : Dictionary = bulks[rpcID]
+	for peerID in bulks:
+		var peerBulks : Dictionary = bulks[peerID]
 		for methodName in peerBulks:
 			var bulkedMethod : Array = peerBulks[methodName]
 			var bulkedMethodSize : int = bulkedMethod.size()
 			if bulkedMethodSize < NetworkCommons.BulkMinSize:
 				for args in bulkedMethod:
-					Network.callv(methodName, args + [rpcID])
+					Network.callv(methodName, args + [peerID])
 			else:
-				Network.BulkCall.call(methodName, bulkedMethod, rpcID)
+				Network.BulkCall.call(methodName, bulkedMethod, peerID)
 			bulkedMethod.clear()
 
 	if multiplayerAPI.has_multiplayer_peer():
@@ -58,6 +58,6 @@ func _process(_delta: float):
 func Destroy():
 	if currentPeer:
 		currentPeer.close()
-	uniqueID = NetworkCommons.RidDefault
+	interfaceID = NetworkCommons.PeerUnknownID
 	Launcher.Root.remove_child(self)
 	queue_free()

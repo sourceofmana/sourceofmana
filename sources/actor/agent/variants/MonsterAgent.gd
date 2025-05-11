@@ -2,7 +2,7 @@ extends AIAgent
 class_name MonsterAgent
 
 #
-static func GetEntityType() -> ActorCommons.Type: return ActorCommons.Type.MONSTER
+static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.MONSTER
 
 func Killed():
 	super.Killed()

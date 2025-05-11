@@ -19,8 +19,8 @@ func SetQuest(questID : int, state : int):
 	quests[questID] = state
 	questMutex.unlock()
 
-	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-		Network.UpdateQuest(questID, state, actor.rpcRID)
+	if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
+		Network.UpdateQuest(questID, state, actor.peerID)
 
 func GetQuest(questID : int) -> int:
 	var state : int = ProgressCommons.UnknownProgress
@@ -39,8 +39,8 @@ func AddBestiary(entityID : int, killedCount : int = 1):
 	bestiary[entityID] = totalCount
 	bestiaryMutex.unlock()
 
-	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-		Network.UpdateBestiary(entityID, totalCount, actor.rpcRID)
+	if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
+		Network.UpdateBestiary(entityID, totalCount, actor.peerID)
 
 func GetBestiary(monsterID : int) -> int:
 	var count : int = 0
@@ -65,8 +65,8 @@ func AddSkill(cell : SkillCell, proba : float, level : int = 1):
 	skillProbas[cell.id] = proba
 	probaSum += proba
 
-	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-		Network.UpdateSkill(cell.id, level, actor.rpcRID)
+	if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
+		Network.UpdateSkill(cell.id, level, actor.peerID)
 
 func GetSkillProba(cell : SkillCell) -> float:
 	return skillProbas.get(cell.id, 0.0) if cell else 0.0
@@ -83,8 +83,8 @@ func RemoveSkill(cell : SkillCell):
 	skills.erase(cell.id)
 	skillProbas.erase(cell.id)
 
-	if actor is PlayerAgent and actor.rpcRID != NetworkCommons.RidUnknown:
-		Network.UpdateSkill(cell.id, 0, actor.rpcRID)
+	if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
+		Network.UpdateSkill(cell.id, 0, actor.peerID)
 
 #
 func ImportProgress(charID : int):

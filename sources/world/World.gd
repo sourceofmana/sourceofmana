@@ -41,7 +41,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		return
 
 	if agent is PlayerAgent:
-		if agent.rpcRID == NetworkCommons.RidUnknown:
+		if agent.peerID == NetworkCommons.PeerUnknownID:
 			return
 
 		if map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
@@ -51,13 +51,13 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 			if agent.stat.IsMorph():
 				agent.Morph(false, agent.stat.shape)
 
-		Network.WarpPlayer(map.id, agent.position, agent.rpcRID)
+		Network.WarpPlayer(map.id, agent.position, agent.peerID)
 		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
 			for neighbour in neighbours:
 				var neighbourRID : int = neighbour.get_rid().get_id()
 				if neighbour is PlayerAgent:
 					Network.Bulk("AddPlayer", [
-						neighbourRID, neighbour.GetEntityType(), neighbour.stat.shape,
+						neighbourRID, neighbour.GetActorType(), neighbour.stat.shape,
 						neighbour.stat.spirit, neighbour.stat.currentShape, neighbour.nick,
 						neighbour.velocity, neighbour.position, neighbour.currentOrientation,
 						neighbour.state, neighbour.currentSkillID,
@@ -65,17 +65,17 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 						neighbour.stat.hairstyle, neighbour.stat.haircolor,
 						neighbour.stat.gender, neighbour.stat.race, neighbour.stat.skintone,
 						neighbour.inventory.ExportEquipment() if neighbour.inventory else {}
-					], agent.rpcRID)
+					], agent.peerID)
 				else:
 					Network.Bulk("AddEntity", [
-						neighbourRID, neighbour.GetEntityType(), neighbour.stat.currentShape,
+						neighbourRID, neighbour.GetActorType(), neighbour.stat.currentShape,
 						neighbour.velocity, neighbour.position, neighbour.currentOrientation,
 						neighbour.state, neighbour.currentSkillID,
-					], agent.rpcRID)
+					], agent.peerID)
 
 	if agent is PlayerAgent:
 		Network.NotifyNeighbours(agent, "AddPlayer", [
-			agent.GetEntityType(),
+			agent.GetActorType(),
 			agent.stat.shape, agent.stat.spirit, agent.stat.currentShape, agent.nick,
 			agent.velocity, agent.position, agent.currentOrientation,
 			agent.state, agent.currentSkillID,
@@ -86,7 +86,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		], false)
 	else:
 		Network.NotifyNeighbours(agent, "AddEntity", [
-			agent.GetEntityType(), agent.stat.currentShape,
+			agent.GetActorType(), agent.stat.currentShape,
 			agent.velocity, agent.position, agent.currentOrientation,
 			agent.state, agent.currentSkillID
 		], false)
