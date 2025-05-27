@@ -32,21 +32,10 @@ static func GetDBPath() -> String:
 static func CopyDatabase(targetPath : String) -> bool:
 	# Try to copy the live database
 	if LauncherCommons.IsTesting:
-		var livePath : String = Path.Local + DBName
-		if FileSystem.FileExists(livePath):
-			var err : Error = DirAccess.copy_absolute(livePath, targetPath)
-			assert(err == OK, "Could not copy the database from the source path: " + livePath)
-			if err == OK:
-				return true
-
-	# Try to copy the template database
-	var sourcePath : String = Path.TemplateRsc + DBNameTemplate
-	var hasTemplate : bool = FileSystem.FileExists(sourcePath)
-	assert(hasTemplate, "Could not copy the database from the source path: " + sourcePath)
-	if hasTemplate:
-		var err : Error = DirAccess.copy_absolute(sourcePath, targetPath)
-		assert(err == OK, "Could not copy the database from the source path: " + sourcePath)
-		if err == OK:
+		if FileSystem.CopyFile(Path.Local + DBName, targetPath):
 			return true
-
+	# Try to copy the template database
+	if FileSystem.CopyFile(Path.TemplateRsc + DBNameTemplate, targetPath):
+		return true
+	assert(false, "Could not find the default database template")
 	return false

@@ -224,6 +224,7 @@ static func LoadMinimap(path : String) -> Resource:
 static func GetFiles(path : String) -> PackedStringArray:
 	return DirAccess.get_files_at(path)
 
+# Utils
 static func SaveScreenshot():
 	var dirPath : String = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)
 	if dirPath == "":
@@ -249,3 +250,25 @@ static func SaveScreenshot():
 		assert(ret == OK, "Could not save the screenshot, error code: " + str(ret))
 		if ret == OK:
 			Util.PrintInfo("FileSystem", "Saving capture: " + savePath)
+
+static func CopyFile(sourcePath : String, targetPath : String) -> bool:
+	if not FileSystem.FileExists(sourcePath):
+		return false
+
+	var sourceFile = FileAccess.open(sourcePath, FileAccess.READ)
+	if not sourceFile:
+		push_error("Failed to open source file: " + sourcePath)
+		return false
+
+	var targetFile = FileAccess.open(targetPath, FileAccess.WRITE)
+	if not targetFile:
+		push_error("Failed to open target file: " + targetPath)
+		return false
+
+	var buffer = sourceFile.get_buffer(sourceFile.get_length())
+	targetFile.store_buffer(buffer)
+
+	sourceFile.close()
+	targetFile.close()
+
+	return true
