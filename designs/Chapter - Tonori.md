@@ -2,7 +2,7 @@
 
 ## Locations
 
-##Tulimshar - Level 1~10
+## Tulimshar - Level 1~10
 Tulimshar is an important geographical region and serves as a big trade city in the center place of trade routes from Argaes & Aurora continents.
 It is the main point of contact from the southern continent (Tonori) and connects with people from Argaes and Aurora.
 The city is alive only through their trading, they don't have much resources as the desert hit hard their crops and only some cactus fields remains within the city.
@@ -10,7 +10,7 @@ All their previous cactus fields and crops in the south, outside the city, are l
 Red queen is the main political figure from this city that switched the city economics from their harvests into a trading city.
 She is also the main antagonist of this region as she keep most of the city wealth for herself, the city remain in an acceptable state but is vowed to crumble with sand storm hitting by the south and natural erosion cause by the ocean on the north.
 
-###Inner locations
+### Inner locations
 City hall, learn how to create a party.
 Market, trade some common items and buy some local equipments made for your exploration in Tonori's desert.
 Port, assemble your crew and sail on the ocean to explore new regions.
@@ -18,7 +18,7 @@ Training Ground, explain how to fight monsters.
 Red queen mansion, main quest line place.
 Soul Mehnir, inactive, Nina is watching over this soul mehnir for somebody to re-active it.
 
-###NPCs
+### NPCs
 Elanore (Healer)
 Ishi & Aidan (Begginer Helper)
 Inar & Neko (Market Merchants)
@@ -31,7 +31,7 @@ Ian (Guide)
 Soul Mehnir (Respawn point)
 Sandra (Saw a Mr pickles)
 
-###Enemies
+### Enemies
 Small Cactus, Lvl.1 (static, dummy)
 Maggot, Lvl.2 (neutral)
 Ratto, Lvl.3 (high walkspeed, high attack speed, low hp, low attack)
