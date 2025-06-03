@@ -161,6 +161,7 @@ func CopyStats(source : ActorStats, target : ActorStats):
 	target.level = source.level
 	target.modifiers = source.modifiers
 	target.morphStat.walkSpeed = source.morphStat.walkSpeed
+	target.spirit = source.spirit
 
 	target.RefreshAttributes()
 
