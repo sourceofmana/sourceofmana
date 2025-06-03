@@ -17,3 +17,6 @@ publishing/*
 .mono
 
 .vscode
+
+# tmp files
+*.tmp
