@@ -24,6 +24,9 @@ extends WindowPanel
 @onready var lConcentrationToAdd : Label		= $Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/ToAdd
 @onready var lAvailablePoints : Label			= $Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/Value
 
+@onready var bSave : Button						= $Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/SaveButton
+@onready var bReset : Button					= $Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/ResetButton
+
 @onready var bStrengthPlus : Button				= $Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Button
 @onready var bVitalityPlus : Button				= $Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Button
 @onready var bAgilityPlus : Button				= $Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Button
@@ -60,47 +63,57 @@ var concentrationIncreased: int
 func IncreaseStrength():
 	strengthIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.STRENGTH)
+	RefreshSaveAndResetButtons()
 
 func ReduceStrength():
 	if strengthIncreased > 0:
 		strengthIncreased = max(0, strengthIncreased - 1)
 		panelStats.ReduceAttribute(ActorCommons.Attribute.STRENGTH)
+		RefreshSaveAndResetButtons()
 
 func IncreaseVitality():
 	vitalityIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.VITALITY)
+	RefreshSaveAndResetButtons()
 
 func ReduceVitality():
 	if vitalityIncreased > 0:
 		vitalityIncreased = max(0, vitalityIncreased - 1)
 		panelStats.ReduceAttribute(ActorCommons.Attribute.VITALITY)
+		RefreshSaveAndResetButtons()
 
 func IncreaseAgility():
 	agilityIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.AGILITY)
+	RefreshSaveAndResetButtons()
 	
 func ReduceAgility():
 	if agilityIncreased > 0:
 		agilityIncreased = max(0, agilityIncreased - 1)
 		panelStats.ReduceAttribute(ActorCommons.Attribute.AGILITY)
+		RefreshSaveAndResetButtons()
 
 func IncreaseEndurance():
 	enduranceIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.ENDURANCE)
+	RefreshSaveAndResetButtons()
 
 func ReduceEndurance():
 	if enduranceIncreased > 0:
 		enduranceIncreased = max(0, enduranceIncreased - 1)
 		panelStats.ReduceAttribute(ActorCommons.Attribute.ENDURANCE)
+		RefreshSaveAndResetButtons()
 
 func IncreaseConcentration():
 	concentrationIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.CONCENTRATION)
+	RefreshSaveAndResetButtons()
 
 func ReduceConcentration():
 	if concentrationIncreased > 0:
 		concentrationIncreased = max(0, concentrationIncreased - 1)
 		panelStats.ReduceAttribute(ActorCommons.Attribute.CONCENTRATION)
+		RefreshSaveAndResetButtons()
 
 func SubmitAttributeUpdate():
 	Network.AddAttributes({
@@ -115,6 +128,7 @@ func SubmitAttributeUpdate():
 #
 func Init(entity : Entity):
 	CopyStats(entity.stat, panelStats)
+	RefreshSaveAndResetButtons()
 
 	Callback.PlugCallback(panelStats.vital_stats_updated, RefreshVitalStats.bind(entity, panelStats))
 	Callback.PlugCallback(panelStats.attributes_updated, RefreshAttributes.bind(entity, panelStats))
@@ -220,6 +234,15 @@ func RefreshAttributes(entity : Entity, stats : ActorStats):
 	bAgilityMinus.set_disabled(agilityIncreased == 0)
 	bEnduranceMinus.set_disabled(enduranceIncreased == 0)
 	bConcentrationMinus.set_disabled(concentrationIncreased == 0)
+
+func RefreshSaveAndResetButtons():
+	var canSaveOrReset : bool = (strengthIncreased == 0
+			and vitalityIncreased == 0
+			and agilityIncreased == 0
+			and enduranceIncreased == 0
+			and concentrationIncreased == 0)
+	bSave.set_disabled(canSaveOrReset)
+	bReset.set_disabled(canSaveOrReset)
 	
 
 func ToAddString(attributePointsToAdd : int) -> String:
