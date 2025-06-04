@@ -245,11 +245,11 @@ func TriggerSelect(targetRID : int, peerID : int):
 		Network.UpdatePublicStats(targetRID, target.stat.level, target.stat.health, target.stat.hairstyle, target.stat.haircolor, target.stat.gender, target.stat.race, target.stat.skintone, target.stat.currentShape, peerID)
 
 # Stats
-func AddAttributes(attributes : Dictionary[ActorCommons.Attribute, int], peerID : int):
+func SetAttributes(strength, vitality, agility, endurance, concentration, peerID : int):
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if peer and peer.characterID != NetworkCommons.PeerUnknownID and player and player.stat:
-		player.stat.AddAttributes(attributes)
+		player.stat.SetAttributes(strength, vitality, agility, endurance, concentration)
 		Launcher.SQL.UpdateAttribute(peer.characterID, player.stat)
 
 # Inventory

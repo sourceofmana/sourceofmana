@@ -116,13 +116,11 @@ func ReduceConcentration():
 		RefreshSaveAndResetButtons()
 
 func SubmitAttributeUpdate():
-	Network.AddAttributes({
-		ActorCommons.Attribute.STRENGTH: strengthIncreased,
-		ActorCommons.Attribute.VITALITY: vitalityIncreased,
-		ActorCommons.Attribute.AGILITY: agilityIncreased,
-		ActorCommons.Attribute.ENDURANCE: enduranceIncreased,
-		ActorCommons.Attribute.CONCENTRATION: concentrationIncreased
-	})
+	Network.SetAttributes(panelStats.strength,
+		panelStats.vitality,
+		panelStats.agility,
+		panelStats.endurance,
+		panelStats.concentration)
 	ResetIncreased()
 
 #
@@ -171,6 +169,7 @@ func ResetIncreased():
 	agilityIncreased = 0
 	enduranceIncreased = 0
 	concentrationIncreased = 0
+	RefreshSaveAndResetButtons()
 
 func ResetPanel():
 	ResetIncreased()
@@ -215,11 +214,11 @@ func RefreshAttributes(entity : Entity, stats : ActorStats):
 	lEndurance.set_text(str(entity.stat.endurance))
 	lConcentration.set_text(str(entity.stat.concentration))
 	
-	lStrengthToAdd.set_text(ToAddString(strengthIncreased))
-	lVitalityToAdd.set_text(ToAddString(vitalityIncreased))
-	lAgilityToAdd.set_text(ToAddString(agilityIncreased))
-	lEnduranceToAdd.set_text(ToAddString(enduranceIncreased))
-	lConcentrationToAdd.set_text(ToAddString(concentrationIncreased))
+	lStrengthToAdd.set_text(GetAttributePointsToAddStr(strengthIncreased))
+	lVitalityToAdd.set_text(GetAttributePointsToAddStr(vitalityIncreased))
+	lAgilityToAdd.set_text(GetAttributePointsToAddStr(agilityIncreased))
+	lEnduranceToAdd.set_text(GetAttributePointsToAddStr(enduranceIncreased))
+	lConcentrationToAdd.set_text(GetAttributePointsToAddStr(concentrationIncreased))
 
 	var availablePoints : int = Formula.GetMaxAttributePoints(stats.level) - Formula.GetAssignedAttributePoints(stats)
 	lAvailablePoints.set_text(str(availablePoints))
@@ -246,7 +245,7 @@ func RefreshSaveAndResetButtons():
 	bReset.set_disabled(canSaveOrReset)
 	
 
-func ToAddString(attributePointsToAdd : int) -> String:
+func GetAttributePointsToAddStr(attributePointsToAdd : int) -> String:
 	if attributePointsToAdd == 0:
 		return ""
 	else:
