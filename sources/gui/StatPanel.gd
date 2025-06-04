@@ -52,6 +52,7 @@ extends WindowPanel
 
 var panelStats: ActorStats = ActorStats.new()
 signal panel_stats_reset
+signal panel_stats_updated
 
 var strengthIncreased: int
 var vitalityIncreased: int
@@ -63,57 +64,52 @@ var concentrationIncreased: int
 func IncreaseStrength():
 	strengthIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.STRENGTH)
-	RefreshSaveAndResetButtons()
+	panel_stats_updated.emit()
 
 func ReduceStrength():
-	if strengthIncreased > 0:
-		strengthIncreased = max(0, strengthIncreased - 1)
-		panelStats.ReduceAttribute(ActorCommons.Attribute.STRENGTH)
-		RefreshSaveAndResetButtons()
+	strengthIncreased = max(0, strengthIncreased - 1)
+	panelStats.ReduceAttribute(ActorCommons.Attribute.STRENGTH)
+	panel_stats_updated.emit()
 
 func IncreaseVitality():
 	vitalityIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.VITALITY)
-	RefreshSaveAndResetButtons()
+	panel_stats_updated.emit()
 
 func ReduceVitality():
-	if vitalityIncreased > 0:
-		vitalityIncreased = max(0, vitalityIncreased - 1)
-		panelStats.ReduceAttribute(ActorCommons.Attribute.VITALITY)
-		RefreshSaveAndResetButtons()
+	vitalityIncreased = max(0, vitalityIncreased - 1)
+	panelStats.ReduceAttribute(ActorCommons.Attribute.VITALITY)
+	panel_stats_updated.emit()
 
 func IncreaseAgility():
 	agilityIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.AGILITY)
-	RefreshSaveAndResetButtons()
+	panel_stats_updated.emit()
 	
 func ReduceAgility():
-	if agilityIncreased > 0:
-		agilityIncreased = max(0, agilityIncreased - 1)
-		panelStats.ReduceAttribute(ActorCommons.Attribute.AGILITY)
-		RefreshSaveAndResetButtons()
+	agilityIncreased = max(0, agilityIncreased - 1)
+	panelStats.ReduceAttribute(ActorCommons.Attribute.AGILITY)
+	panel_stats_updated.emit()
 
 func IncreaseEndurance():
 	enduranceIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.ENDURANCE)
-	RefreshSaveAndResetButtons()
+	panel_stats_updated.emit()
 
 func ReduceEndurance():
-	if enduranceIncreased > 0:
-		enduranceIncreased = max(0, enduranceIncreased - 1)
-		panelStats.ReduceAttribute(ActorCommons.Attribute.ENDURANCE)
-		RefreshSaveAndResetButtons()
+	enduranceIncreased = max(0, enduranceIncreased - 1)
+	panelStats.ReduceAttribute(ActorCommons.Attribute.ENDURANCE)
+	panel_stats_updated.emit()
 
 func IncreaseConcentration():
 	concentrationIncreased += 1
 	panelStats.AddAttribute(ActorCommons.Attribute.CONCENTRATION)
-	RefreshSaveAndResetButtons()
+	panel_stats_updated.emit()
 
 func ReduceConcentration():
-	if concentrationIncreased > 0:
-		concentrationIncreased = max(0, concentrationIncreased - 1)
-		panelStats.ReduceAttribute(ActorCommons.Attribute.CONCENTRATION)
-		RefreshSaveAndResetButtons()
+	concentrationIncreased = max(0, concentrationIncreased - 1)
+	panelStats.ReduceAttribute(ActorCommons.Attribute.CONCENTRATION)
+	panel_stats_updated.emit()
 
 func SubmitAttributeUpdate():
 	Network.SetAttributes(panelStats.strength,
@@ -125,12 +121,14 @@ func SubmitAttributeUpdate():
 
 #
 func Init(entity : Entity):
-	CopyStats(entity.stat, panelStats)
+	panelStats = entity.stat.duplicate()
+	panelStats.RefreshAttributes()
 	RefreshSaveAndResetButtons()
 
-	Callback.PlugCallback(panelStats.vital_stats_updated, RefreshVitalStats.bind(entity, panelStats))
-	Callback.PlugCallback(panelStats.attributes_updated, RefreshAttributes.bind(entity, panelStats))
-	Callback.PlugCallback(panelStats.entity_stats_updated, RefreshEntityStats.bind(entity, panelStats))
+	Callback.PlugCallback(self.panel_stats_updated, RefreshVitalStats.bind(entity))
+	Callback.PlugCallback(self.panel_stats_updated, RefreshAttributes.bind(entity))
+	Callback.PlugCallback(self.panel_stats_updated, RefreshEntityStats.bind(entity))
+	Callback.PlugCallback(self.panel_stats_updated, RefreshSaveAndResetButtons)
 	
 	Callback.PlugCallback(entity.stat.vital_stats_updated, RefreshPanelStats.bind(entity))
 	Callback.PlugCallback(entity.stat.attributes_updated, RefreshPanelStats.bind(entity))
@@ -138,30 +136,17 @@ func Init(entity : Entity):
 	
 	Callback.PlugCallback(self.panel_stats_reset, RefreshPanelStats.bind(entity))
 
-	RefreshVitalStats(entity, panelStats)
-	RefreshAttributes(entity, panelStats)
-	RefreshEntityStats(entity, panelStats)
+	RefreshVitalStats(entity)
+	RefreshAttributes(entity)
+	RefreshEntityStats(entity)
 
 func RefreshPanelStats(entity : Entity):
-	CopyStats(entity.stat, panelStats)
+	panelStats = entity.stat.duplicate()
+	panelStats.RefreshAttributes()
 	
-	RefreshVitalStats(entity, panelStats)
-	RefreshAttributes(entity, panelStats)
-	RefreshEntityStats(entity, panelStats)
-
-func CopyStats(source : ActorStats, target : ActorStats):
-	target.strength = source.strength + strengthIncreased
-	target.vitality = source.vitality + vitalityIncreased
-	target.agility = source.agility + agilityIncreased
-	target.endurance = source.endurance + enduranceIncreased
-	target.concentration = source.concentration + concentrationIncreased
-
-	target.level = source.level
-	target.modifiers = source.modifiers
-	target.morphStat.walkSpeed = source.morphStat.walkSpeed
-	target.spirit = source.spirit
-
-	target.RefreshAttributes()
+	RefreshVitalStats(entity)
+	RefreshAttributes(entity)
+	RefreshEntityStats(entity)
 
 func ResetIncreased():
 	strengthIncreased = 0
@@ -169,7 +154,7 @@ func ResetIncreased():
 	agilityIncreased = 0
 	enduranceIncreased = 0
 	concentrationIncreased = 0
-	RefreshSaveAndResetButtons()
+	self.panel_stats_updated.emit()
 
 func ResetPanel():
 	ResetIncreased()
@@ -186,25 +171,25 @@ func RefreshGender(entity : Entity):
 			texture = ActorCommons.GenderNonBinaryTexture
 	tGender.set_texture(texture)
 
-func RefreshVitalStats(entity : Entity, stats : ActorStats):
+func RefreshVitalStats(entity : Entity):
 	if not entity:
 		pass
 
 	RefreshGender(entity)
 	lName.set_text(entity.nick)
-	lLevel.set_text("Lv. %d" % stats.level)
-	var spiritData : EntityData = DB.EntitiesDB.get(stats.spirit, null)
+	lLevel.set_text("Lv. %d" % panelStats.level)
+	var spiritData : EntityData = DB.EntitiesDB.get(panelStats.spirit, null)
 	if spiritData:
 		lSpirit.set_text(spiritData._name)
 
-	pExperience.SetStat(stats.experience, Experience.GetNeededExperienceForNextLevel(stats.level))
-	pHealth.SetStat(stats.health, stats.current.maxHealth)
-	pMana.SetStat(stats.mana, stats.current.maxMana)
-	pStamina.SetStat(stats.stamina, stats.current.maxStamina)
-	pWeight.SetStat(stats.weight, stats.current.weightCapacity)
-	lGP.set_text("%s GP" % Util.GetFormatedText(str(stats.gp)))
+	pExperience.SetStat(panelStats.experience, Experience.GetNeededExperienceForNextLevel(panelStats.level))
+	pHealth.SetStat(panelStats.health, panelStats.current.maxHealth)
+	pMana.SetStat(panelStats.mana, panelStats.current.maxMana)
+	pStamina.SetStat(panelStats.stamina, panelStats.current.maxStamina)
+	pWeight.SetStat(panelStats.weight, panelStats.current.weightCapacity)
+	lGP.set_text("%s GP" % Util.GetFormatedText(str(panelStats.gp)))
 
-func RefreshAttributes(entity : Entity, stats : ActorStats):
+func RefreshAttributes(entity : Entity):
 	if not entity:
 		pass
 
@@ -220,14 +205,14 @@ func RefreshAttributes(entity : Entity, stats : ActorStats):
 	lEnduranceToAdd.set_text(GetAttributePointsToAddStr(enduranceIncreased))
 	lConcentrationToAdd.set_text(GetAttributePointsToAddStr(concentrationIncreased))
 
-	var availablePoints : int = Formula.GetMaxAttributePoints(stats.level) - Formula.GetAssignedAttributePoints(stats)
+	var availablePoints : int = Formula.GetMaxAttributePoints(panelStats.level) - Formula.GetAssignedAttributePoints(panelStats)
 	lAvailablePoints.set_text(str(availablePoints))
 
-	bStrengthPlus.set_disabled(availablePoints <= 0 or stats.strength >= ActorCommons.MaxPointPerAttributes)
-	bVitalityPlus.set_disabled(availablePoints <= 0 or stats.vitality >= ActorCommons.MaxPointPerAttributes)
-	bAgilityPlus.set_disabled(availablePoints <= 0 or stats.agility >= ActorCommons.MaxPointPerAttributes)
-	bEndurancePlus.set_disabled(availablePoints <= 0 or stats.endurance >= ActorCommons.MaxPointPerAttributes)
-	bConcentrationPlus.set_disabled(availablePoints <= 0 or stats.concentration >= ActorCommons.MaxPointPerAttributes)
+	bStrengthPlus.set_disabled(availablePoints <= 0 or panelStats.strength >= ActorCommons.MaxPointPerAttributes)
+	bVitalityPlus.set_disabled(availablePoints <= 0 or panelStats.vitality >= ActorCommons.MaxPointPerAttributes)
+	bAgilityPlus.set_disabled(availablePoints <= 0 or panelStats.agility >= ActorCommons.MaxPointPerAttributes)
+	bEndurancePlus.set_disabled(availablePoints <= 0 or panelStats.endurance >= ActorCommons.MaxPointPerAttributes)
+	bConcentrationPlus.set_disabled(availablePoints <= 0 or panelStats.concentration >= ActorCommons.MaxPointPerAttributes)
 
 	bStrengthMinus.set_disabled(strengthIncreased == 0)
 	bVitalityMinus.set_disabled(vitalityIncreased == 0)
@@ -236,13 +221,13 @@ func RefreshAttributes(entity : Entity, stats : ActorStats):
 	bConcentrationMinus.set_disabled(concentrationIncreased == 0)
 
 func RefreshSaveAndResetButtons():
-	var canSaveOrReset : bool = (strengthIncreased == 0
+	var cannotSaveOrReset : bool = (strengthIncreased == 0
 			and vitalityIncreased == 0
 			and agilityIncreased == 0
 			and enduranceIncreased == 0
 			and concentrationIncreased == 0)
-	bSave.set_disabled(canSaveOrReset)
-	bReset.set_disabled(canSaveOrReset)
+	bSave.set_disabled(cannotSaveOrReset)
+	bReset.set_disabled(cannotSaveOrReset)
 	
 
 func GetAttributePointsToAddStr(attributePointsToAdd : int) -> String:
@@ -251,20 +236,20 @@ func GetAttributePointsToAddStr(attributePointsToAdd : int) -> String:
 	else:
 		return "+" + str(attributePointsToAdd)
 
-func RefreshEntityStats(entity : Entity, stats : ActorStats):
+func RefreshEntityStats(entity : Entity):
 	if not entity:
 		pass
 
-	lAtk.set_text(str(stats.current.attack))
-	lDef.set_text(str(stats.current.defense))
-	lMAtk.set_text(str(stats.current.mattack))
-	lMDef.set_text(str(stats.current.mdefense))
-	lAtkRange.set_text(str(stats.current.attackRange))
-	lCastDelay.set_text("%0.2fs" % stats.current.castAttackDelay)
-	lCooldownDelay.set_text("%0.2fs" % stats.current.cooldownAttackDelay)
-	lCritRate.set_text("%.d%%" % (stats.current.critRate * 100.0))
-	lDodgeRate.set_text("%.d%%" % (stats.current.dodgeRate * 100.0))
-	lWalkSpeed.set_text(GetPercentString(stats.current.walkSpeed, stats.morphStat.walkSpeed))
+	lAtk.set_text(str(panelStats.current.attack))
+	lDef.set_text(str(panelStats.current.defense))
+	lMAtk.set_text(str(panelStats.current.mattack))
+	lMDef.set_text(str(panelStats.current.mdefense))
+	lAtkRange.set_text(str(panelStats.current.attackRange))
+	lCastDelay.set_text("%0.2fs" % panelStats.current.castAttackDelay)
+	lCooldownDelay.set_text("%0.2fs" % panelStats.current.cooldownAttackDelay)
+	lCritRate.set_text("%.d%%" % (panelStats.current.critRate * 100.0))
+	lDodgeRate.set_text("%.d%%" % (panelStats.current.dodgeRate * 100.0))
+	lWalkSpeed.set_text(GetPercentString(panelStats.current.walkSpeed, panelStats.morphStat.walkSpeed))
 
 #
 func GetPercentString(current : float, base : float) -> String:
