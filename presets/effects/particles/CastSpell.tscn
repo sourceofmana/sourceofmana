@@ -33,7 +33,7 @@ scale_curve = SubResource("CurveTexture_flrfh")
 color = Color(1, 1, 0.6, 1)
 color_ramp = SubResource("GradientTexture1D_lucto")
 
-[node name="CastParticles" type="GPUParticles2D"]
+[node name="Spell Cast Particles" type="GPUParticles2D"]
 z_index = -1
 material = SubResource("CanvasItemMaterial_i21r2")
 position = Vector2(0, -10)

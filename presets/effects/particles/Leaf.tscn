@@ -39,9 +39,9 @@ scale_min = 0.6
 scale_curve = SubResource("CurveTexture_shfc4")
 alpha_curve = SubResource("CurveTexture_08cts")
 
-[node name="GPUParticles2D" type="GPUParticles2D"]
+[node name="Falling Leaf" type="GPUParticles2D"]
 amount = 1
-process_material = SubResource("ParticleProcessMaterial_4x7xa")
 texture = ExtResource("1_cfro2")
 lifetime = 5.0
 preprocess = 5.0
+process_material = SubResource("ParticleProcessMaterial_4x7xa")

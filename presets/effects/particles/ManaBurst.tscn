@@ -38,7 +38,7 @@ gravity = Vector3(0, 0, 0)
 scale_min = 0.6
 scale_curve = SubResource("CurveTexture_0xjyr")
 
-[node name="GPUParticles2D" type="GPUParticles2D"]
+[node name="Mana Burst Particles" type="GPUParticles2D"]
 scale = Vector2(1, 0.7)
 emitting = false
 amount = 150

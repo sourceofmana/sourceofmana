@@ -26,7 +26,7 @@
  <tileset firstgid="1577" source="../../graphics/tilesets/isles/tropical/Box.tsx"/>
  <tileset firstgid="1613" source="../../graphics/tilesets/isles/tropical/Box x1x2.tsx"/>
  <tileset firstgid="1621" source="../../graphics/tilesets/aemil/aurora/artis/fountain.tsx"/>
- <tileset firstgid="1676" source="../../graphics/tilesets/aemil/aurora/artis/foutain x1x4.tsx"/>
+ <tileset firstgid="1676" source="../../graphics/tilesets/aemil/aurora/artis/fountain x1x4.tsx"/>
  <tileset firstgid="1687" source="../../graphics/tilesets/isles/tropical/accessory.tsx"/>
  <tileset firstgid="1751" source="../../graphics/tilesets/aemil/aurora/artis/harbour x6x4.tsx"/>
  <tileset firstgid="1752" source="../../graphics/tilesets/aemil/aurora/artis/harbour x4x6.tsx"/>
