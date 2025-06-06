@@ -19,11 +19,9 @@ func CreateDailyBackup() -> String:
 		return ""
 
 func CopyBackup(backupFilePath : String, backupFrequency : SQLCommons.BackupFrequency) -> String:
-	var dir : DirAccess = DirAccess.open(SQLCommons.GetBackupPath())
-
 	var frequencyDir : String = SQLCommons.BackupFrequency.keys()[backupFrequency]
 	var newFile : String = SQLCommons.GetBackupPath() + "%s/%s" % [frequencyDir, backupFilePath.get_file()]
-	var errorCode : Error = dir.copy(backupFilePath, newFile)
+	var errorCode : Error = DirAccess.copy_absolute(backupFilePath, newFile)
 
 	if (errorCode == Error.OK):
 		Util.PrintInfo("SQL", "Backup created: " + newFile)
@@ -111,5 +109,10 @@ func _init():
 	var backupPath : String = SQLCommons.GetBackupPath()
 	if not DirAccess.dir_exists_absolute(backupPath):
 		DirAccess.make_dir_absolute(backupPath)
+
+	for backupFrequency in SQLCommons.BackupFrequency.values():
+		var frequencyDir : String = SQLCommons.GetBackupPath() + SQLCommons.BackupFrequency.keys()[backupFrequency] + "/"
+		if not DirAccess.dir_exists_absolute(frequencyDir):
+			DirAccess.make_dir_absolute(frequencyDir)
 
 	Start()
