@@ -92,9 +92,10 @@ func AddEntity(agentRID : int, actorType : ActorCommons.Type, shape : int, spiri
 
 	var entity : Entity = Entities.Get(agentRID)
 	var isAlreadySpawned : bool = entity != null and entity.get_parent() == currentFringe
+	var isPlayerType : bool = actorType == ActorCommons.Type.PLAYER
 
 	if not entity:
-		var isLocalPlayer : bool = actorType == ActorCommons.Type.PLAYER and nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
+		var isLocalPlayer : bool = isPlayerType and nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
 		entity = Instantiate.CreateEntity(actorType, entityData, entityData._name if nick.is_empty() else nick, isLocalPlayer)
 		if not entity:
 			return
@@ -111,7 +112,7 @@ func AddEntity(agentRID : int, actorType : ActorCommons.Type, shape : int, spiri
 	if not isAlreadySpawned:
 		AddChild(entity)
 		Entities.Add(entity, agentRID)
-	entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned)
+	entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned or isPlayerType)
 
 	return entity
 
