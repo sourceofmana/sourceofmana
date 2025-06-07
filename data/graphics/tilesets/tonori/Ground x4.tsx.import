@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://c7mw30uwjtd3c"
+path="res://.godot/imported/Ground x4.tsx-571cdfcd4a3f46218c3c57164dcf66ac.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/tonori/Ground x4.tsx"
+dest_files=["res://.godot/imported/Ground x4.tsx-571cdfcd4a3f46218c3c57164dcf66ac.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://bo42eceost1de"
+path="res://.godot/imported/Accessory x3.tsx-7fadef403aa20e0659b5cf299b04a837.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/tonori/Accessory x3.tsx"
+dest_files=["res://.godot/imported/Accessory x3.tsx-7fadef403aa20e0659b5cf299b04a837.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
