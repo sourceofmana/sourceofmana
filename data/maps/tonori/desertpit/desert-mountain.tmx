@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="149">
+ <properties>
+  <property name="license" value="CC BY-SA 4.0 (c) 5t3v3 Reid"/>
+  <property name="music" value="Faith"/>
+  <property name="name" value="Desert Mountains"/>
+ </properties>
+ <tileset firstgid="1" source="../../../graphics/tilesets/tonori/Ground.tsx"/>
+ <tileset firstgid="257" source="../../../graphics/tilesets/tonori/Accessory.tsx"/>
+ <tileset firstgid="321" source="../../../graphics/tilesets/tonori/Ground x4.tsx"/>
+ <tileset firstgid="323" source="../../../graphics/tilesets/tonori/Accessory x2.tsx"/>
+ <tileset firstgid="339" source="../../../graphics/tilesets/tonori/Accessory x3.tsx"/>
+ <tileset firstgid="355" source="../../../graphics/tilesets/tonori/Collision Full.tsx"/>
+ <tileset firstgid="375" source="../../../graphics/tilesets/tonori/Ruin x3.tsx"/>
+ <tileset firstgid="381" name="Bridge Vertical" tilewidth="32" tileheight="32" tilecount="60" columns="6">
+  <image source="../../../graphics/tilesets/tonori/bridge-vertical.png" width="192" height="320"/>
+ </tileset>
+ <tileset firstgid="441" source="../../../graphics/tilesets/tonori/Tree x4.tsx"/>
+ <layer id="1" name="Ground" width="150" height="150">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <layer id="6" name="Ground 2" width="150" height="150">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <layer id="2" name="Fringe" width="150" height="150">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3dWY6UUBQA0GqNKzD2vxoXoDtwSLRtP3UtTr0l5y+nvYlJV0KoguIxvfvgnITYkR4YLvdeHlDsdgAA8T0+m/b7AIAY1O68bH9g7eQ5ANZCTSMicQlAbmNrkVo2r+fV9n1hG8MoTxxDq2J/UrfmPmTN6wZAeVLrkp5tW35W+/tXNf2235mJ3jgm+wViq/djY3szx3t+W9oHx9bV+QWQYo6csaU8HJV9AJQkSs6asiZGWSegH8cstLt0fIRTSs7q01u9uv6el4WsUzSemTgkZ8VTSs5q07b4n6oZn6vpSzV9raZv1fS98HVlOkPHF36sJIZKvk5Zes6Cqd3PvQC02uq5QMk1huHsd0ojZoE53Zjo98hVwFI857Ac2zWd8WBgi9QLgNP0iWlsr7xsf3LTX8K8HGPx+NxIACCSm7kXAAAAAIBe3N9BNH+qmPwrLmkhZ9GHOIlnq59DBBCBuggAAOXRx7N2r6sYf3N2+v9Yv5Ly3f93l4nTbdvv/4taDEwdwxfii4FKfeb/9s67ZpawVP2KXifPcy9ABmPr1KuEn+/zt/a56m3177vGdNWYdxU4lhimmSOWeo+rdw9vU1tf3SceUvsq7ySObUwtbIuXnD3P2No+9XlDqech0aT0XBHJg/nst31XDNX3T1f+as6r9+X1efVe/n01fbiePurhw5pq/LL0XFU69+FDmiE9+77/b/7s0+rrZz1/V4TxUT36oZRa2GcfqolEYdyTU5pjpF35q21eapzlGCNQ+/Jo1sx9vKXWyQj9ExBHSfeS5qb+wbSGHFN3d+mfjZXS++iTGKsrhrrO3e5U884Dx16UGhhlOebWFiv7c8Apc5X7Dpa1dAyPGcuc6vmaJcdTo+SIKMuxlHoeacZNW45xzYe9nNdc1hSHc+edLb6X9Vi/dSyn9a2Xc55rRqg7uZah6+/eCrBdoI/Ls8Mc0ZWDPAfPFI7F0ZjeqFkjjbGypKjxFqFHOyX3MqaMSw4Zw3SPH1Na0xhCXe48sAZR6xDdIsX+qXM89YyxXAtOFylHRHcsR6mNsB0R8+WpHNRVF42908cc9+6xTWKINRDHABDTw6o+37ueHvX4+oF6DgBwIOI1EAAAAAAAAAAAqHOPCwBD/QOhDd9AkF8BAA==
+  </data>
+ </layer>
+ <layer id="3" name="Over" width="150" height="150">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3d3Y7dNBDA8SxfZQU3UCggcQNLCwWuivoAveFB4T2AR8PW6Uiz1iR7TuJ47PH/J1naVu1upDPryTj2ZFlu90UaX6bx3Y7/C1ju0nhI41vvC0EoMlf94n0hCEXiCqjtR+8LAAAAAAAAwDSep/FBGh+m8VEaX/leDoLIz/p+Xi7PZV6n8VMaH6fxiedFYXj3aTxL49Pi6xxfzF3YK+91+Wa57E8ov86xxbyFPV4Xf9Y58es0XjS/IkQmOZE5C7VJTiS2UFvOiUfyIfu1YJE6ce+cRVxhTa4N985ZxBW25Dpxz5xFXGFLrg1Zd8AZiCucgbjCGYirPkT7DFgj7UO0uDq6RroXNeVj0eIqI678RYwrj/0zxFV8rffPSP+acj8P4mm5f0bmqvsGP2sEEXOg0Ptnzt4LTw58LHJcZbKnVJ4b1o6v5++/58NCr62ZlOcsjuylKeWYeii+P+Zhnbk4EltyllH6TMr3xEX0HFjSOXFvrShzlHwf/T0xt5yzXqbx6sb/J2sJZW4FxNsd/0dqPnLfutly4FEyV0nug424uo3MVc+8LwShsO6J2nQNCByRY0l6bekaEPvk+9O85pefTcza/0fmp7J3DfaT+4i8bjhL7zL5XdLzU7nmeUYNOFvtlN//Ib+jL52vpQVd61nPE6kBIfT90Vo+18/5rGeIgCb3R5K/cj7XeU7uH9fyHXUfStbelWu+7sE1cyzaW6vjrvnak87Heo/YzDV5D/SeTSuXWXtavPNdrkF1/bkW75yv9SFzVI957Sm57l7bw6X/frb1CG8jx1T2Jo0/lu33us6wztMTiSnWBlCLPgPKfijUos+AshaOo6xzMMAR1jkY4Kiy7gNqGKHu088gWSsfwwi5r1zLz2vlEmcjxNuMfVlHyH3XPuvW8dZTjM0YVyO65rl3T+977e16YPvnbln+TeO/u8d/Xz4T7Gn++nzhWXcEZa7UMeZxL/Z9Gr8u5MMItnKlxz4s+bnecyfqsfaI6V6DLT5rXc+SD2M6q9fgNT+X+jA+yY8tP2vpa0g+jE9yYovPWp9nIrZik5zY6rPW+ZfYiq31mqru9UtsxabrxBb38eUZX+IrrtbvspacmNdNOd8Ym/T9abXOZD3fZP6Kx+sdnp8tl2eJOj8yf8Xiee4+x1b5fJP5K4byeaLHZ2rlR+av8ZX7VL0+z/L55lN7gCL3mY70bFXnI8/5osyPspYrZwDk2iLHVbRnq2U+8twzWObHvEbxWxq/v7826aWDMVj7bbznsB77RY1I99/z+jytsxve8SVG6//jRc75635p5bs0PePMerend2xhnfR/3+qDa33t1R+/vAZiq09lf5u18/7WWULPPZn0Mu1f7rl3a12T/713Pz7vMxqIyzqjQWyhlrJmJLZQU49n/BEDORFn0Tkx0jNU+Ms5kfOpOANxhTO0PL+PuTBn4QwtzypiHq3PKmIexBXOQFwBAAAAAAAAY8ln/ORMKM+4+jLyWquc8WPNGDURVziDxBVnAfoy+u+4xBXn41DTD8vlrHtmnY8re8F49ONAH72dbvEujTfqz/p8nPSC0WfJc9+EV42vcXY5psqePCP2jLB6jom3afzpcVET0n2erJ483LdgD7n33XofMb27cQsr92lr/eiILVikTipz3xrrfcTMXRA6nnSOu4aVH737iMOf5Lyjfba3+rUSW/PQc9RWDX4L6/vwvuA56Hiy6rsarPqRe6+YdDxZOess1vs1uPca31P57r7BNWzlR2JsPHJPvra22dI166sSY+iTnqOsGs3TNe/+QH9kjvLId7fK1/ZXGn8vfV/n7CSmPPPdXrVrUtSR9x9YtR5wRPmeKeCosu4DjpL810Othzj02ROgBsl/I9V96JvkP+o+1CT5j3fHoyZ9rgGoQdeAQC0yVwG16BoQqIEaEGegBkRtMlfJfhKgBt2DDqhB5ir2UqImmauoAVGLrgFn8T+D3AR4kF8BAA==
+  </data>
+ </layer>
+ <layer id="7" name="Over 2" width="150" height="150">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3awQkAIAwEwViD/XeivekzCL4jOFPBfg8uAgAAAAAAAAAAAAAAAAAAAAAAADi16gAAAOCqVwcAAAAAAMDjfF8AAIBs7JEwDQUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD63AEKIqByQXwEA
+  </data>
+ </layer>
+ <layer id="4" name="Collision" width="150" height="150">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <objectgroup id="8" name="Objects">
+  <object id="67" name="To Desert Mountains" type="Warp" x="1212" y="808">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="41"/>
+    <property name="dest_pos_y" type="int" value="27"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="68" name="To Desert Mountains" type="Warp" x="1948" y="936">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="66"/>
+    <property name="dest_pos_y" type="int" value="27"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="69" name="To Desert Mountains" type="Warp" x="1724" y="840">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="54"/>
+    <property name="dest_pos_y" type="int" value="27"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="70" name="To Desert Mountains" type="Warp" x="2940" y="712">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="92"/>
+    <property name="dest_pos_y" type="int" value="24"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="71" name="To Desert Mountains" type="Warp" x="2716" y="712">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="82"/>
+    <property name="dest_pos_y" type="int" value="25"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="72" name="To Desert Mountains" type="Warp" x="3644" y="1544">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="114"/>
+    <property name="dest_pos_y" type="int" value="47"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="73" name="To Desert Mountains" type="Warp" x="3900" y="712">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="124"/>
+    <property name="dest_pos_y" type="int" value="22"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="74" name="To Desert Mountains" type="Warp" x="2460" y="1384">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="77"/>
+    <property name="dest_pos_y" type="int" value="44"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="75" name="To Desert Mountains" type="Warp" x="3292" y="1384">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="103"/>
+    <property name="dest_pos_y" type="int" value="44"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="76" name="To Desert Mountains" type="Warp" x="2556" y="3784">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="80"/>
+    <property name="dest_pos_y" type="int" value="120"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="77" name="To Desert Mountains" type="Warp" x="3548" y="2312">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="112"/>
+    <property name="dest_pos_y" type="int" value="74"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="78" name="To Desert Mountains" type="Warp" x="2940" y="1960">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="93"/>
+    <property name="dest_pos_y" type="int" value="63"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="79" name="To Desert Mountains" type="Warp" x="4060" y="1832">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="126"/>
+    <property name="dest_pos_y" type="int" value="57"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="80" name="To Desert Mountains" type="Warp" x="3516" y="1768">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="109"/>
+    <property name="dest_pos_y" type="int" value="56"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="81" name="To Desert Mountains" type="Warp" x="1084" y="3848">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="38"/>
+    <property name="dest_pos_y" type="int" value="121"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="82" name="To Desert Mountains" type="Warp" x="1660" y="2888">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="51"/>
+    <property name="dest_pos_y" type="int" value="91"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="83" name="To Desert Mountains" type="Warp" x="2300" y="2888">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="75"/>
+    <property name="dest_pos_y" type="int" value="90"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="84" name="To Desert Mountains" type="Warp" x="1916" y="1800">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="59"/>
+    <property name="dest_pos_y" type="int" value="65"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="85" name="To Desert Mountains" type="Warp" x="3868" y="3496">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Desert Mountain Cave"/>
+    <property name="dest_pos_x" type="int" value="123"/>
+    <property name="dest_pos_y" type="int" value="110"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="87" name="To Desert Pit" type="Warp" x="544" y="1120">
+   <properties>
+    <property name="dest_map" value="Desert Pit"/>
+    <property name="dest_pos_x" type="int" value="167"/>
+    <property name="dest_pos_y" type="int" value="105"/>
+   </properties>
+   <polygon points="0,0 0,32 16,48 288,-224 288,-240 272,-256 256,-256"/>
+  </object>
+  <object id="88" name="To Overworld" type="Warp" x="4161" y="3593">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_cellsize" type="int" value="16"/>
+    <property name="dest_map" value="Overworld"/>
+    <property name="dest_pos_x" type="int" value="94"/>
+    <property name="dest_pos_y" type="int" value="231"/>
+   </properties>
+   <polygon points="0,-57 0,55 15,55 47,24 47,-10"/>
+  </object>
+  <object id="134" name="Snake" type="Spawn" x="582" y="1090" width="416" height="542">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="135" name="Snake" type="Spawn" x="983" y="936" width="320" height="265">
+   <properties>
+    <property name="count" value="1"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="136" name="Desert Snake" type="Spawn" x="695" y="1363" width="160" height="224">
+   <properties>
+    <property name="count" value="1"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="137" name="Desert Snake" type="Spawn" x="1366" y="832" width="848" height="768">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="138" name="Desert Snake" type="Spawn" x="2310" y="640" width="1088" height="448">
+   <properties>
+    <property name="count" value="5"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="139" name="Desert Snake" type="Spawn" x="3398" y="736" width="736" height="1312">
+   <properties>
+    <property name="count" value="8"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="140" name="Desert Snake" type="Spawn" x="3577" y="1615" width="224" height="128">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="141" name="Desert Snake" type="Spawn" x="2214" y="1344" width="1184" height="384">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="142" name="Desert Snake" type="Spawn" x="2950" y="2048" width="832" height="504">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="143" name="Desert Snake" type="Spawn" x="2178" y="3040" width="484" height="736">
+   <properties>
+    <property name="count" value="4"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="144" name="Desert Snake" type="Spawn" x="2662" y="2656" width="1184" height="960">
+   <properties>
+    <property name="count" value="8"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="145" name="Desert Snake" type="Spawn" x="1286" y="1600" width="1600" height="992">
+   <properties>
+    <property name="count" value="8"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="146" name="Desert Snake" type="Spawn" x="2406" y="3648" width="1248" height="448">
+   <properties>
+    <property name="count" value="5"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="147" name="Desert Snake" type="Spawn" x="1254" y="3744" width="960" height="256">
+   <properties>
+    <property name="count" value="4"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="148" name="Scorpion" type="Spawn" x="614" y="2592" width="1088" height="1152">
+   <properties>
+    <property name="count" value="10"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

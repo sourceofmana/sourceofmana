@@ -19,6 +19,8 @@
 	"Ship Alige Hide": {				"Path" : "ship/ship-alige-hide",},
 	"Desert Mines": {					"Path" : "tonori/sandstorm/mine-entrance",},
 	"Desert Abandoned Level": {			"Path" : "tonori/sandstorm/mine-abandoned-level",},
-	"Desert Pit": {						"Path" : "tonori/desertpit/snake-pit",},
+	"Desert Pit": {						"Path" : "tonori/desertpit/desert-pit",},
+	"Snake Pit": {						"Path" : "tonori/desertpit/snake-pit",},
+	"Desert Mountains": {				"Path" : "tonori/desertpit/desert-mountain",},
 	"Desert Mountain Cave": {			"Path" : "tonori/desertpit/mountain-cave",},
 }
