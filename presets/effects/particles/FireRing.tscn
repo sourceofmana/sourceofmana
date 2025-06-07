@@ -47,10 +47,10 @@ scale_curve = SubResource("CurveTexture_3qrii")
 color_ramp = SubResource("GradientTexture1D_124iq")
 turbulence_noise_strength = 6.03
 
-[node name="GPUParticles2D2" type="GPUParticles2D"]
+[node name="Fire Ring" type="GPUParticles2D"]
 scale = Vector2(1, 0.7)
 amount = 1000
-process_material = SubResource("ParticleProcessMaterial_wevpf")
 texture = ExtResource("1_us37d")
 preprocess = 3.0
 local_coords = true
+process_material = SubResource("ParticleProcessMaterial_wevpf")

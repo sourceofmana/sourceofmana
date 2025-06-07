@@ -38,11 +38,10 @@ color_ramp = SubResource("GradientTexture1D_fefxr")
 hue_variation_min = -0.1
 hue_variation_max = 0.44
 
-[node name="LevelUpParticles" type="GPUParticles2D"]
+[node name="Level Up Particles" type="GPUParticles2D"]
 material = SubResource("CanvasItemMaterial_1pdty")
 emitting = false
 amount = 40
-process_material = SubResource("ParticleProcessMaterial_l3heo")
 texture = ExtResource("1_8gcyb")
 lifetime = 3.0
 one_shot = true
@@ -51,3 +50,4 @@ randomness = 0.25
 fixed_fps = 0
 visibility_rect = Rect2(-50, -90, 100, 100)
 local_coords = true
+process_material = SubResource("ParticleProcessMaterial_l3heo")

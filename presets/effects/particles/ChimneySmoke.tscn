@@ -3,23 +3,24 @@
 [ext_resource type="Texture2D" uid="uid://b0qa2td7svga7" path="res://data/graphics/effects/particles/smoke.png" id="1_nsogh"]
 
 [sub_resource type="Curve" id="Curve_clfq1"]
-_data = [Vector2(0.0141243, 0.34141), 0.0, 0.21846, 0, 0, Vector2(1, 0.506057), -4.7515, 0.0, 0, 0]
+_data = [Vector2(0.0048077, 0.438202), 0.0, -0.166934, 0, 0, Vector2(1, 0.640449), -4.7515, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_n5qwh"]
-offsets = PackedFloat32Array(0, 0.601227, 1)
-colors = PackedColorArray(0.689733, 0.713589, 0.785156, 1, 0.980392, 0.992157, 1, 0.819608, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.0549451, 0.601227, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.689733, 0.713589, 0.785156, 1, 0.980392, 0.992157, 1, 0.819608, 1, 1, 1, 0)
 
-[node name="CPUParticles2D" type="CPUParticles2D"]
+[node name="Chimney Smoke" type="CPUParticles2D"]
 z_index = 10
 amount = 20
-lifetime = 1.5
-preprocess = 1.5
 texture = ExtResource("1_nsogh")
-gravity = Vector2(0, -60)
+lifetime = 6.0
+preprocess = 6.0
+direction = Vector2(0, -1)
+gravity = Vector2(2.5, -5)
 initial_velocity_max = 5.35
-linear_accel_min = 25.13
-linear_accel_max = 40.64
+linear_accel_min = 1.0
+linear_accel_max = 1.0
 scale_amount_min = 0.8
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_clfq1")

@@ -45,7 +45,7 @@ hue_variation_min = -0.1
 hue_variation_max = 0.1
 turbulence_noise_strength = 6.03
 
-[node name="GPUParticles2D2" type="GPUParticles2D"]
+[node name="Selection Indicator Particles" type="GPUParticles2D"]
 z_as_relative = false
 amount = 200
 texture = ExtResource("1_e5vgw")

@@ -44,12 +44,12 @@ scale_curve = SubResource("CurveTexture_f3016")
 scale_over_velocity_curve = SubResource("CurveXYZTexture_t80j1")
 color = Color(1, 0.933333, 0.780392, 1)
 
-[node name="GPUParticles2D" type="GPUParticles2D"]
+[node name="Heal Particles" type="GPUParticles2D"]
 emitting = false
 amount = 40
-process_material = SubResource("ParticleProcessMaterial_mag5b")
 texture = ExtResource("1_dmemp")
 lifetime = 2.0
 one_shot = true
 explosiveness = 0.2
 randomness = 0.15
+process_material = SubResource("ParticleProcessMaterial_mag5b")

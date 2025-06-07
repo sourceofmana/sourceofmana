@@ -41,7 +41,7 @@ animations = [{
 "speed": 4.0
 }]
 
-[node name="Fire" type="AnimatedSprite2D"]
+[node name="Sonic Wave" type="AnimatedSprite2D"]
 material = SubResource("CanvasItemMaterial_y2my7")
 sprite_frames = SubResource("SpriteFrames_cedtj")
 autoplay = "default"

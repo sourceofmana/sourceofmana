@@ -33,11 +33,10 @@ tangential_accel_max = 5.0
 scale_curve = SubResource("CurveTexture_lmp7v")
 color_ramp = SubResource("GradientTexture1D_hyudh")
 
-[node name="MorphParticles" type="GPUParticles2D"]
+[node name="Morph Particles" type="GPUParticles2D"]
 material = SubResource("CanvasItemMaterial_1pdty")
 emitting = false
 amount = 20
-process_material = SubResource("ParticleProcessMaterial_a6d6g")
 texture = ExtResource("1_3o0mc")
 lifetime = 1.5
 one_shot = true
@@ -46,3 +45,4 @@ randomness = 0.25
 fixed_fps = 0
 local_coords = true
 draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_a6d6g")
