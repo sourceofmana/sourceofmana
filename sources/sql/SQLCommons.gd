@@ -7,10 +7,20 @@ const DBNameTesting : String			= "testing.db"
 const DBName : String					= "live.db"
 const BackupPath : String				= "sql-backups/"
 const BackupPathTesting : String		= "sql-testing-backups/"
-const BackupLimit : int					= 5
 const BackupCheckIntervalSec : int		= 2
-const BackupIntervalSec : int			= 60 * 60 * 24 # Every day
 const BackupPlayersSec : int			= 10 * 60 # Every minute
+
+const DailyBackupIntervalSec : int		= 60 * 60 * 24
+const WeeklyBackupIntervalSec : int		= 60 * 60 * 24 * 7
+const MonthlyBackupIntervalSec : int	= 60 * 60 * 24 * 7 * 4
+
+enum BackupFrequency {DAILY, WEEKLY, MONTHLY}
+
+const BackupLimits : Dictionary[BackupFrequency, int] = {
+	BackupFrequency.DAILY: 7,
+	BackupFrequency.WEEKLY: 4,
+	BackupFrequency.MONTHLY: 12
+}
 
 # Utils
 static func HasValue(data : Dictionary, key : String) -> bool:
