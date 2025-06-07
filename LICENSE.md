@@ -141,7 +141,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/gui/mobile/button.png [Reid]
 ./graphics/gui/mobile/button_mask.png
 ./graphics/gui/mobile/button_pressed.png [Reid]
-./graphics/gui/mobile/buttonA.png [Reid]
+./graphics/gui/mobile/bþuttonA.png [Reid]
 ./graphics/gui/mobile/buttonA_pressed.png [Reid]
 ./graphics/gui/mobile/buttonB.png [Reid]
 ./graphics/gui/mobile/buttonB_pressed.png [Reid]
@@ -469,6 +469,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./maps/tonori/desertpit/mountain-cave.tmx [5t3v3] [Reid]
 ./musics/Bart Kelsey - The Adventure Begins.ogg [BartK]
 ./musics/Bart Kelsey - In the forest of the birches.ogg [BartK]
+./musics/Dariunas = Faith.ogg [Dariunas]
 ./musics/Jose. S & Dakota. D - Lenia.ogg [Chicka-Maria]
 ./musics/Jose. S & Dakota. D - Night is calling.ogg [Chicka-Maria]
 ./musics/Hitctrl - Foreboding ambiance.ogg [Hitctrl]
