@@ -84,12 +84,12 @@ theme_override_constants/separation = 10
 
 [node name="StatBox" type="VBoxContainer" parent="Scroll/Margin/Layout/Stats"]
 layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="StrengthBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox"]
 layout_mode = 2
 
 [node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Strength"
@@ -98,6 +98,18 @@ text = "Strength"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "-"
+
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox"]
@@ -110,6 +122,7 @@ text = "+"
 layout_mode = 2
 
 [node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Vitality"
@@ -118,6 +131,18 @@ text = "Vitality"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "-"
+
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox"]
@@ -130,6 +155,7 @@ text = "+"
 layout_mode = 2
 
 [node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Agility"
@@ -138,6 +164,18 @@ text = "Agility"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "-"
+
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox"]
@@ -150,6 +188,7 @@ text = "+"
 layout_mode = 2
 
 [node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Endurance"
@@ -158,6 +197,18 @@ text = "Endurance"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "-"
+
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox"]
@@ -170,6 +221,7 @@ text = "+"
 layout_mode = 2
 
 [node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Concentration"
@@ -178,6 +230,18 @@ text = "Concentration"
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "-"
+
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox"]
@@ -194,19 +258,28 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Available points"
 
 [node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox"]
+custom_minimum_size = Vector2(59, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Empty" type="Control" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox"]
+[node name="ResetButton" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox"]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
+text = "Reset"
+
+[node name="SaveButton" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Save"
 
 [node name="HSeparator" type="HSeparator" parent="Scroll/Margin/Layout/Stats"]
 layout_mode = 2
@@ -448,8 +521,15 @@ size_flags_horizontal = 3
 horizontal_alignment = 2
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Minus" to="." method="ReduceStrength"]
 [connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Button" to="." method="IncreaseStrength"]
+[connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Minus" to="." method="ReduceVitality"]
 [connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Button" to="." method="IncreaseVitality"]
+[connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Minus" to="." method="ReduceAgility"]
 [connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Button" to="." method="IncreaseAgility"]
+[connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Minus" to="." method="ReduceEndurance"]
 [connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Button" to="." method="IncreaseEndurance"]
+[connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Minus" to="." method="ReduceConcentration"]
 [connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Button" to="." method="IncreaseConcentration"]
+[connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/ResetButton" to="." method="ResetPanel"]
+[connection signal="pressed" from="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/SaveButton" to="." method="SubmitAttributeUpdate"]
