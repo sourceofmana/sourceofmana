@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://gxsjokf0bow5"
+path="res://.godot/imported/Ruin x3.tsx-cd9688c9688198cc2a0c1c7d998254d7.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/tonori/Ruin x3.tsx"
+dest_files=["res://.godot/imported/Ruin x3.tsx-cd9688c9688198cc2a0c1c7d998254d7.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

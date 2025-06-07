@@ -9,7 +9,19 @@ static func PrintInfo(_logGroup : String, _logString : String):
 #	print("[%d.%03d][%s] %s" % [Time.get_ticks_msec() / 1000.0, Time.get_ticks_msec() % 1000, logGroup, logString])
 	pass
 
-# Node management
+# Object/Node management
+static func DuplicateObject(from : Object, to : Object):
+	for prop in from.get_property_list():
+		var name : StringName = prop.name
+		if prop.usage & PROPERTY_USAGE_SCRIPT_VARIABLE and name in to:
+			var value : Variant = from.get(name)
+			if typeof(value) in [TYPE_ARRAY, TYPE_DICTIONARY]:
+				to.set(name, value.duplicate(true))
+			elif value is Resource:
+				to.set(name, value.duplicate(true))
+			else:
+				to.set(name, value)
+
 static func RemoveNode(node : Node, parent : Node):
 	if node != null:
 		if parent != null:
