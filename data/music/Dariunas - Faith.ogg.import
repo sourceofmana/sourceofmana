@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ditte7kh6y84t"
+path="res://.godot/imported/Dariunas - Faith.ogg-de663a59024377ab5336354b3f7fe1cf.oggvorbisstr"
+
+[deps]
+
+source_file="res://data/music/Dariunas - Faith.ogg"
+dest_files=["res://.godot/imported/Dariunas - Faith.ogg-de663a59024377ab5336354b3f7fe1cf.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

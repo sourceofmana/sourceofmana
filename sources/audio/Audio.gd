@@ -15,7 +15,7 @@ func Load(soundID : int):
 			soundStream = null
 			currentTrack = DB.UnknownHash
 
-		var soundData : FileData = DB.MusicsDB.get(soundID, null)
+		var soundData : FileData = DB.MusicDB.get(soundID, null)
 		if not soundData:
 			assert(false, "Could not load music database id: %s" % soundID)
 			return

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dtqj134nhcgav"
+path="res://.godot/imported/Hitctrl - Foreboding ambiance.ogg-b2d5349fbd8663c979974f9789b803b5.oggvorbisstr"
+
+[deps]
+
+source_file="res://data/music/Hitctrl - Foreboding ambiance.ogg"
+dest_files=["res://.godot/imported/Hitctrl - Foreboding ambiance.ogg-b2d5349fbd8663c979974f9789b803b5.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
