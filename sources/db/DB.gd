@@ -2,7 +2,7 @@ extends Object
 class_name DB
 
 static var MapsDB : Dictionary[int, FileData]				= {}
-static var MusicsDB : Dictionary[int, FileData]				= {}
+static var MusicDB : Dictionary[int, FileData]				= {}
 static var RacesDB : Dictionary[int, RaceData]				= {}
 static var HairstylesDB : Dictionary[int, FileData]			= {}
 static var PalettesDB : Array[Dictionary]					= []
@@ -35,13 +35,13 @@ static func ParseMapsDB():
 			var data : FileData = FileData.Create(key, result[key].Path)
 			MapsDB[data._id] = data
 
-static func ParseMusicsDB():
-	var result = FileSystem.LoadDB("musics.json")
+static func ParseMusicDB():
+	var result = FileSystem.LoadDB("music.json")
 
 	if not result.is_empty():
 		for key in result:
 			var data : FileData = FileData.Create(key, result[key].Path)
-			MusicsDB[data._id] = data
+			MusicDB[data._id] = data
 
 static func ParseRacesDB():
 	var result = FileSystem.LoadDB("races.json")
@@ -195,7 +195,7 @@ static func GetQuest(questID : int) -> QuestData:
 #
 static func Init():
 	ParseMapsDB()
-	ParseMusicsDB()
+	ParseMusicDB()
 	ParsePalettesDB()
 	ParseRacesDB()
 	ParseHairstylesDB()
