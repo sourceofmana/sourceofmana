@@ -121,7 +121,7 @@ func SubmitAttributeUpdate():
 
 #
 func Init(entity : Entity):
-	panelStats = entity.stat.duplicate()
+	Util.DuplicateObject(entity.stat, panelStats)
 	panelStats.RefreshAttributes()
 	RefreshSaveAndResetButtons()
 
@@ -141,7 +141,13 @@ func Init(entity : Entity):
 	RefreshEntityStats(entity)
 
 func RefreshPanelStats(entity : Entity):
-	panelStats = entity.stat.duplicate()
+	Util.DuplicateObject(entity.stat, panelStats)
+	panelStats.strength += strengthIncreased
+	panelStats.agility += agilityIncreased
+	panelStats.vitality += vitalityIncreased
+	panelStats.endurance += enduranceIncreased
+	panelStats.concentration += concentrationIncreased
+
 	panelStats.RefreshAttributes()
 	
 	RefreshVitalStats(entity)

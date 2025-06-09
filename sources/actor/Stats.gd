@@ -1,37 +1,37 @@
-extends Node
+extends Object
 class_name ActorStats
 
 # Public and private stats, can be initialized through a dictionary from a SQL query or entities.json
-@export var level : int							= 0
-@export var experience : int					= 0
-@export var gp : int							= 0
-@export var health : int						= ActorCommons.MaxStatValue
-@export var mana : int							= ActorCommons.MaxStatValue
-@export var stamina : int						= ActorCommons.MaxStatValue
-@export var karma : int							= 0
-@export var weight : float						= 0.0
-@export var hairstyle : int						= DB.UnknownHash
-@export var haircolor : int						= DB.UnknownHash
-@export var gender : int						= ActorCommons.Gender.MALE
-@export var race : int							= DB.UnknownHash
-@export var skintone : int						= DB.UnknownHash
-@export var shape : int							= DB.UnknownHash
-@export var spirit : int						= DB.UnknownHash
-@export var currentShape : int					= DB.UnknownHash
-@export var baseExp : int						= 1
+var level : int							= 0
+var experience : int					= 0
+var gp : int							= 0
+var health : int						= ActorCommons.MaxStatValue
+var mana : int							= ActorCommons.MaxStatValue
+var stamina : int						= ActorCommons.MaxStatValue
+var karma : int							= 0
+var weight : float						= 0.0
+var hairstyle : int						= DB.UnknownHash
+var haircolor : int						= DB.UnknownHash
+var gender : int						= ActorCommons.Gender.MALE
+var race : int							= DB.UnknownHash
+var skintone : int						= DB.UnknownHash
+var shape : int							= DB.UnknownHash
+var spirit : int						= DB.UnknownHash
+var currentShape : int					= DB.UnknownHash
+var baseExp : int						= 1
 # Attributes
-@export var strength : int						= 0
-@export var vitality : int						= 0
-@export var agility : int						= 0
-@export var endurance : int						= 0
-@export var concentration : int					= 0
+var strength : int						= 0
+var vitality : int						= 0
+var agility : int						= 0
+var endurance : int						= 0
+var concentration : int					= 0
 
 # Entity Stats
-@export var entityStat : BaseStats				= BaseStats.new()
-@export var morphStat : BaseStats				= BaseStats.new()
-@export var current : BaseStats					= BaseStats.new()
-@export var actor : Actor						= null
-@export var modifiers : CellModifier			= CellModifier.new()
+var entityStat : BaseStats				= BaseStats.new()
+var morphStat : BaseStats				= BaseStats.new()
+var current : BaseStats					= BaseStats.new()
+var actor : Actor						= null
+var modifiers : CellModifier			= CellModifier.new()
 
 # Signals
 signal vital_stats_updated

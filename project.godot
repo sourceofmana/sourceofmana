@@ -35,7 +35,6 @@ FSM="*res://sources/launcher/FSM.gd"
 [debug]
 
 gdscript/warnings/unused_signal=0
-gdscript/warnings/inferred_declaration=1
 gdscript/warnings/treat_warnings_as_errors=true
 gdscript/completion/autocomplete_setters_and_getters=true
 
