@@ -138,18 +138,48 @@ func IsSailing() -> bool:
 	return currentShape == DB.ShipHash
 
 func AddAttribute(attribute : ActorCommons.Attribute):
-	if Formula.GetMaxAttributePoints(level) - Formula.GetAssignedAttributePoints(self) > 0:
-		match attribute:
-			ActorCommons.Attribute.STRENGTH:
-				strength = min(ActorCommons.MaxPointPerAttributes, strength + 1)
-			ActorCommons.Attribute.VITALITY:
-				vitality = min(ActorCommons.MaxPointPerAttributes, vitality + 1)
-			ActorCommons.Attribute.AGILITY:
-				agility = min(ActorCommons.MaxPointPerAttributes, agility + 1)
-			ActorCommons.Attribute.ENDURANCE:
-				endurance = min(ActorCommons.MaxPointPerAttributes, endurance + 1)
-			ActorCommons.Attribute.CONCENTRATION:
-				concentration = min(ActorCommons.MaxPointPerAttributes, concentration + 1)
+	match attribute:
+		ActorCommons.Attribute.STRENGTH:
+			strength = min(ActorCommons.MaxPointPerAttributes, strength + 1)
+		ActorCommons.Attribute.VITALITY:
+			vitality = min(ActorCommons.MaxPointPerAttributes, vitality + 1)
+		ActorCommons.Attribute.AGILITY:
+			agility = min(ActorCommons.MaxPointPerAttributes, agility + 1)
+		ActorCommons.Attribute.ENDURANCE:
+			endurance = min(ActorCommons.MaxPointPerAttributes, endurance + 1)
+		ActorCommons.Attribute.CONCENTRATION:
+			concentration = min(ActorCommons.MaxPointPerAttributes, concentration + 1)
+	RefreshAttributes()
+
+func ReduceAttribute(attribute : ActorCommons.Attribute):
+	match attribute:
+		ActorCommons.Attribute.STRENGTH:
+			strength = max(0, strength - 1)
+		ActorCommons.Attribute.VITALITY:
+			vitality = max(0, vitality - 1)
+		ActorCommons.Attribute.AGILITY:
+			agility = max(0, agility - 1)
+		ActorCommons.Attribute.ENDURANCE:
+			endurance = max(0, endurance - 1)
+		ActorCommons.Attribute.CONCENTRATION:
+			concentration = max(0, concentration - 1)
+	RefreshAttributes()
+
+func SetAttributes(newStrength: int, newVitality: int, newAgility: int, newEndurance: int, newConcentration: int):
+	var newAssignedAttributePoints: int = newStrength + newVitality + newAgility \
+			+ newEndurance + newConcentration
+	for attribute: ActorCommons.Attribute in ActorCommons.Attribute.values():
+		if newStrength < strength or newVitality < vitality or newAgility < agility \
+				or newEndurance < endurance or newConcentration < concentration:
+			assert(false, "Tried to lower attribute")
+			return
+
+	if Formula.GetMaxAttributePoints(level) - newAssignedAttributePoints >= 0:
+		strength = min(ActorCommons.MaxPointPerAttributes, newStrength)
+		vitality = min(ActorCommons.MaxPointPerAttributes, newVitality)
+		agility = min(ActorCommons.MaxPointPerAttributes, newAgility)
+		endurance = min(ActorCommons.MaxPointPerAttributes, newEndurance)
+		concentration = min(ActorCommons.MaxPointPerAttributes, newConcentration)
 		RefreshAttributes()
 
 func Regen():
