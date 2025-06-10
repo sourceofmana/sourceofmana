@@ -5,6 +5,7 @@ extends Control
 @onready var button : Button				= $MenuButton
 
 var progress_speed : float = 0.0
+const menu_speed : float = 1.1
 var is_playing : bool = false
 var is_opening : bool = false
 
@@ -32,12 +33,12 @@ func _ready():
 func _process(delta : float):
 	if is_playing:
 		if is_opening:
-			progress_speed += delta / 2.0
+			progress_speed += delta * menu_speed
 			if progress_speed >= 1.0:
 				progress_speed = 1.0
 				is_playing = false
 		else:
-			progress_speed -= delta
+			progress_speed -= delta * menu_speed
 			if progress_speed <= 0.0:
 				items.set_visible(false)
 				progress_speed = 0.0
