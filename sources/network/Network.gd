@@ -89,8 +89,8 @@ func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int
 	CallClient("AddEntity", [agentRID, actorType, currentShape, velocity, position, orientation, state, skillCastID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipments : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("AddPlayer", [agentRID, actorType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID, level, health, hairstyle, haircolor, gender, race, skintone, equipments], peerID)
+func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipment : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("AddPlayer", [agentRID, actorType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID, level, health, hairstyle, haircolor, gender, race, skintone, equipment], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func RemoveEntity(agentRID : int, peerID : int = NetworkCommons.PeerOfflineID):
@@ -276,8 +276,8 @@ func RefreshInventory(cells : Array[Dictionary], peerID : int = NetworkCommons.P
 	CallClient("RefreshInventory", [cells], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func RefreshEquipments(agentRID : int, equipments : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("RefreshEquipments", [agentRID, equipments], peerID)
+func RefreshEquipment(agentRID : int, equipment : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RefreshEquipment", [agentRID, equipment], peerID)
 
 # Drop
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)

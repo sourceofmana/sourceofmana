@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_br76x"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_gbp5r"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_0g3o6"]
-[ext_resource type="Material" uid="uid://lvqidalgcn6h" path="res://presets/palettes/equipments/material-leather.tres" id="3_8qyx4"]
-[ext_resource type="Texture2D" uid="uid://d3o47bvb21ccp" path="res://data/graphics/sprites/equipments/chests/leathershirt-male.png" id="4_wwj1c"]
-[ext_resource type="Texture2D" uid="uid://dbsykypmoslw7" path="res://data/graphics/sprites/equipments/chests/leathershirt-female.png" id="5_5kb20"]
+[ext_resource type="Material" uid="uid://lvqidalgcn6h" path="res://presets/palettes/equipment/material-leather.tres" id="3_8qyx4"]
+[ext_resource type="Texture2D" uid="uid://d3o47bvb21ccp" path="res://data/graphics/sprites/equipment/chest/leathershirt-male.png" id="4_wwj1c"]
+[ext_resource type="Texture2D" uid="uid://dbsykypmoslw7" path="res://data/graphics/sprites/equipment/chest/leathershirt-female.png" id="5_5kb20"]
 
 [sub_resource type="Resource" id="Resource_3nlvo"]
 script = ExtResource("2_gbp5r")

@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://cus02gdamc75t" path="res://data/graphics/items/legs/trousers.png" id="1_pmsey"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_ieq8h"]
-[ext_resource type="Texture2D" uid="uid://csdhial7vffyb" path="res://data/graphics/sprites/equipments/legs/trousers-male.png" id="3_4qmhy"]
-[ext_resource type="Texture2D" uid="uid://cxsg8ykd5ppg7" path="res://data/graphics/sprites/equipments/legs/trousers-female.png" id="4_jc85r"]
+[ext_resource type="Texture2D" uid="uid://csdhial7vffyb" path="res://data/graphics/sprites/equipment/legs/trousers-male.png" id="3_4qmhy"]
+[ext_resource type="Texture2D" uid="uid://cxsg8ykd5ppg7" path="res://data/graphics/sprites/equipment/legs/trousers-female.png" id="4_jc85r"]
 
 [resource]
 script = ExtResource("2_ieq8h")

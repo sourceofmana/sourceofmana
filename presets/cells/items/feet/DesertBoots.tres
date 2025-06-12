@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://eaohskbfniyf" path="res://data/graphics/items/feet/desert-boots.png" id="1_777fh"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_qf4c5"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_qntph"]
-[ext_resource type="Material" uid="uid://bgogdjky3fh42" path="res://presets/palettes/equipments/material-daim-light.tres" id="3_lxxc2"]
+[ext_resource type="Material" uid="uid://bgogdjky3fh42" path="res://presets/palettes/equipment/material-daim-light.tres" id="3_lxxc2"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_ubaej"]
-[ext_resource type="Texture2D" uid="uid://cfjjosglguhk5" path="res://data/graphics/sprites/equipments/feet/boots-male.png" id="4_w535q"]
-[ext_resource type="Texture2D" uid="uid://dlo5n0v1scwaf" path="res://data/graphics/sprites/equipments/feet/boots-female.png" id="5_4e7jx"]
+[ext_resource type="Texture2D" uid="uid://cfjjosglguhk5" path="res://data/graphics/sprites/equipment/feet/boots-male.png" id="4_w535q"]
+[ext_resource type="Texture2D" uid="uid://dlo5n0v1scwaf" path="res://data/graphics/sprites/equipment/feet/boots-female.png" id="5_4e7jx"]
 
 [sub_resource type="Resource" id="Resource_4ryrl"]
 script = ExtResource("2_qf4c5")

@@ -39,10 +39,10 @@
 	},
 	"2":
 	{
-		"Natural": "equipments/cloth-natural.tres",
-		"Cerulean": "equipments/cloth-cerulean.tres",
-		"Crimson": "equipments/cloth-crimson.tres",
-		"Olive": "equipments/cloth-olive.tres",
-		"Used": "equipments/cloth-used.tres",
+		"Natural": "equipment/cloth-natural.tres",
+		"Cerulean": "equipment/cloth-cerulean.tres",
+		"Crimson": "equipment/cloth-crimson.tres",
+		"Olive": "equipment/cloth-olive.tres",
+		"Used": "equipment/cloth-used.tres",
 	},
 }

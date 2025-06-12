@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://c8w6g0mumeaxd" path="res://data/graphics/items/chest/tanktop.png" id="1_ipbbs"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_y1gpw"]
-[ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipments/cloth-natural.tres" id="3_moa1a"]
-[ext_resource type="Texture2D" uid="uid://b1lrvhhyouqdc" path="res://data/graphics/sprites/equipments/chests/tanktop-male.png" id="4_uknfe"]
-[ext_resource type="Texture2D" uid="uid://cgv3lsjs6yi3l" path="res://data/graphics/sprites/equipments/chests/tanktop-female.png" id="5_0arl8"]
+[ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipment/cloth-natural.tres" id="3_moa1a"]
+[ext_resource type="Texture2D" uid="uid://b1lrvhhyouqdc" path="res://data/graphics/sprites/equipment/chest/tanktop-male.png" id="4_uknfe"]
+[ext_resource type="Texture2D" uid="uid://cgv3lsjs6yi3l" path="res://data/graphics/sprites/equipment/chest/tanktop-female.png" id="5_0arl8"]
 
 [resource]
 script = ExtResource("2_y1gpw")
