@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://pjuix81fkhsf" path="res://data/graphics/items/weapon/cleaver.png" id="1_6ay8c"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_66kaj"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_fwq6l"]
-[ext_resource type="Texture2D" uid="uid://d1u6pvhxej3t7" path="res://data/graphics/sprites/equipments/weapon/largeblade.png" id="3_26lpm"]
+[ext_resource type="Texture2D" uid="uid://d1u6pvhxej3t7" path="res://data/graphics/sprites/equipment/weapon/largeblade.png" id="3_26lpm"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_ilohe"]
 
 [sub_resource type="Resource" id="Resource_2xgca"]

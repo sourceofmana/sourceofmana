@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://7j2dhnhoqb5r" path="res://data/graphics/items/chest/vnecktee.png" id="1_7885e"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_oqyvd"]
-[ext_resource type="Texture2D" uid="uid://b1f6ofp4v2ft0" path="res://data/graphics/sprites/equipments/chests/vneckjumper-male.png" id="3_ea1q2"]
-[ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipments/cloth-natural.tres" id="3_lhni1"]
-[ext_resource type="Texture2D" uid="uid://dqtoepp2i8140" path="res://data/graphics/sprites/equipments/chests/vneckjumper-female.png" id="4_r5xxn"]
+[ext_resource type="Texture2D" uid="uid://b1f6ofp4v2ft0" path="res://data/graphics/sprites/equipment/chest/vneckjumper-male.png" id="3_ea1q2"]
+[ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipment/cloth-natural.tres" id="3_lhni1"]
+[ext_resource type="Texture2D" uid="uid://dqtoepp2i8140" path="res://data/graphics/sprites/equipment/chest/vneckjumper-female.png" id="4_r5xxn"]
 
 [resource]
 script = ExtResource("2_oqyvd")

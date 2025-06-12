@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dsr5s7hbgv4ga" path="res://data/graphics/items/neck/bandana-scarf.png" id="1_op2dy"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_lc3u8"]
-[ext_resource type="Texture2D" uid="uid://bhijmj8a0uwo6" path="res://data/graphics/sprites/equipments/neck/bandana-scarf.png" id="3_i0na6"]
+[ext_resource type="Texture2D" uid="uid://bhijmj8a0uwo6" path="res://data/graphics/sprites/equipment/neck/bandana-scarf.png" id="3_i0na6"]
 
 [resource]
 script = ExtResource("2_lc3u8")

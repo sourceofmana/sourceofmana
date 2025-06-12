@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://clx43g4noo76q" path="res://data/graphics/items/legs/cloud-pants.png" id="1_nii4d"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_m4rcn"]
-[ext_resource type="Texture2D" uid="uid://bi7aykushq5nc" path="res://data/graphics/sprites/equipments/legs/cloudpants-male.png" id="3_2spbt"]
-[ext_resource type="Texture2D" uid="uid://kmpre2dd85hr" path="res://data/graphics/sprites/equipments/legs/cloudpants-female.png" id="4_8yj4d"]
+[ext_resource type="Texture2D" uid="uid://bi7aykushq5nc" path="res://data/graphics/sprites/equipment/legs/cloudpants-male.png" id="3_2spbt"]
+[ext_resource type="Texture2D" uid="uid://kmpre2dd85hr" path="res://data/graphics/sprites/equipment/legs/cloudpants-female.png" id="4_8yj4d"]
 
 [resource]
 script = ExtResource("2_m4rcn")
