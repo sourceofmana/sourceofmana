@@ -170,7 +170,7 @@ func SetEquipment(slot : int, data : EntityData = null):
 	var slotMaterial : Material = null
 
 	if not entity.stat.IsMorph():
-		var cell : ItemCell = entity.inventory.equipments[slot] if entity.inventory else (data._equipments[slot] if data else null)
+		var cell : ItemCell = entity.inventory.equipment[slot] if entity.inventory else (data._equipment[slot] if data else null)
 		if cell != null:
 			slotTexture = cell.textures[entity.stat.gender]
 			slotMaterial = cell.shader

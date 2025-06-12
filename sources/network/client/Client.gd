@@ -15,12 +15,12 @@ func EmotePlayer(agentRID : int, emoteID : int, _peerID : int):
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplayEmote.call_deferred(emoteID)
 
-func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipments : Dictionary, _peerID : int):
+func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipment : Dictionary, _peerID : int):
 	if Launcher.Map:
 		var entity : Entity = Launcher.Map.AddPlayer(agentRID, actorType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
 		if entity:
 			UpdatePublicStats(agentRID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape, _peerID)
-			RefreshEquipments(agentRID, equipments, _peerID)
+			RefreshEquipment(agentRID, equipment, _peerID)
 
 func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _peerID : int):
 	if Launcher.Map:
@@ -187,11 +187,11 @@ func RefreshInventory(cells : Array[Dictionary], _peerID : int):
 	if Launcher.GUI and Launcher.GUI.inventoryWindow:
 		Launcher.GUI.inventoryWindow.RefreshInventory()
 
-func RefreshEquipments(agentRID : int, equipments : Dictionary, _peerID : int):
+func RefreshEquipment(agentRID : int, equipment : Dictionary, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity:
 		if entity.inventory:
-			entity.inventory.ImportEquipment(equipments)
+			entity.inventory.ImportEquipment(equipment)
 		if entity == Launcher.Player and Launcher.GUI and Launcher.GUI.inventoryWindow:
 			Launcher.GUI.inventoryWindow.RefreshInventory()
 

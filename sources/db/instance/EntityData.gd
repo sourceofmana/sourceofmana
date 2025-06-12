@@ -6,7 +6,7 @@ class_name EntityData
 @export var _spritePreset : String				= ""
 @export var _collision : String					= ""
 @export var _radius : int						= 0
-@export var _equipments : Array[ItemCell]		= []
+@export var _equipment : Array[ItemCell]		= []
 @export var _customTextures : Array[String]		= []
 @export var _customShaders : Array[FileData]	= []
 @export var _displayName : bool					= false
@@ -23,7 +23,7 @@ const hashedStats : PackedStringArray			= ["race", "skintone", "hairstyle", "hai
 func _init():
 	_customTextures.resize(ActorCommons.SlotModifierCount)
 	_customShaders.resize(ActorCommons.SlotModifierCount)
-	_equipments.resize(ActorCommons.SlotEquipmentCount)
+	_equipment.resize(ActorCommons.SlotEquipmentCount)
 
 static func Create(result : Dictionary) -> EntityData:
 	var entity : EntityData = EntityData.new()
@@ -35,13 +35,13 @@ static func Create(result : Dictionary) -> EntityData:
 		entity._collision = result.Collision
 	if "Radius" in result:
 		entity._radius = clampi(result.Radius.to_int(), 0, ActorCommons.MaxEntityRadiusSize)
-	if "Equipments" in result:
-		for itemName in result.Equipments:
+	if "Equipment" in result:
+		for itemName in result.Equipment:
 			var itemID : int = DB.GetCellHash(itemName)
 			if itemID != DB.UnknownHash:
 				var itemCell : ItemCell = DB.GetItem(itemID)
 				if itemCell and itemCell.slot != ActorCommons.Slot.NONE:
-					entity._equipments[itemCell.slot] = itemCell
+					entity._equipment[itemCell.slot] = itemCell
 	if "Textures" in result:
 		for texture in result.Textures:
 			entity._customTextures[ActorCommons.GetSlotID(texture) - ActorCommons.Slot.FIRST_MODIFIER] = result.Textures[texture]
