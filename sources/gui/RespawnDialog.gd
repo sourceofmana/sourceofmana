@@ -36,6 +36,7 @@ var deathMessages: PackedStringArray = [
 	"Do you want your possessions identified?", # NetHack reference.
 	"Sadly, no trace of you was ever found...", # Secret of Mana reference.
 	"Annihilated.", # Final Fantasy VI reference.
+	"Dying is easy. Living is harder.", # Final Fantasy XIV: Stormblood reference.
 	"Looks like you got your head handed to you.", # Earthbound reference.
 	"You screwed up again, dump your body down the tubes and get you another one.", # Leisure Suit Larry 1 reference.
 	"You're not dead yet. You're just resting.", # Monty Python reference.
