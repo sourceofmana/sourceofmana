@@ -259,9 +259,9 @@ metadata/_edit_layout_mode = 1
 [node name="HSeparator" type="HSeparator" parent="Margin/HBoxContainer/InfoBox"]
 layout_mode = 2
 
-[node name="Equipments" type="Label" parent="Margin/HBoxContainer/InfoBox"]
+[node name="Equipment" type="Label" parent="Margin/HBoxContainer/InfoBox"]
 layout_mode = 2
-text = "Equipments"
+text = "Equipment"
 
 [node name="EquipmentGrid" type="GridContainer" parent="Margin/HBoxContainer/InfoBox"]
 layout_mode = 2

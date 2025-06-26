@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://bvggn3wgc33fb" path="res://data/graphics/items/legs/jean-chaps.png" id="1_cs4ty"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_nvi0p"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_wixva"]
-[ext_resource type="Texture2D" uid="uid://cw2p0alwopora" path="res://data/graphics/sprites/equipments/legs/jeanschaps-male.png" id="3_nximn"]
+[ext_resource type="Texture2D" uid="uid://cw2p0alwopora" path="res://data/graphics/sprites/equipment/legs/jeanschaps-male.png" id="3_nximn"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_yki5u"]
-[ext_resource type="Texture2D" uid="uid://chhbubk8bjign" path="res://data/graphics/sprites/equipments/legs/jeanschaps-female.png" id="4_4ndxm"]
+[ext_resource type="Texture2D" uid="uid://chhbubk8bjign" path="res://data/graphics/sprites/equipment/legs/jeanschaps-female.png" id="4_4ndxm"]
 
 [sub_resource type="Resource" id="Resource_jtc25"]
 script = ExtResource("2_wixva")
