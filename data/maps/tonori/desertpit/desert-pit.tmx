@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="130" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="56">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="130" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="57">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) 5t3v3 Reid"/>
   <property name="music" value="Faith"/>
@@ -126,6 +126,14 @@
     <property name="dest_pos_y" type="int" value="32"/>
    </properties>
    <polygon points="0,0 0,48 16,48 273,-209 273,-224 257,-240 244,-245"/>
+  </object>
+  <object id="56" name="To Sandstorm" type="Warp" x="556" y="1218">
+   <properties>
+    <property name="dest_map" value="Sandstorm"/>
+    <property name="dest_pos_x" type="int" value="132"/>
+    <property name="dest_pos_y" type="int" value="81"/>
+   </properties>
+   <polygon points="20,45.8182 52,45.8182 52,189.818 20,189.818"/>
   </object>
  </objectgroup>
 </map>

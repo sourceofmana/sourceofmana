@@ -17,6 +17,7 @@
 	"Ship Nard Room": {					"Path" : "ship/ship-nard-room",},
 	"Ship Hold": {						"Path" : "ship/ship-hold",},
 	"Ship Alige Hide": {				"Path" : "ship/ship-alige-hide",},
+	"Sandstorm": {						"Path" : "tonori/sandstorm/sandstorm",},
 	"Desert Mines": {					"Path" : "tonori/sandstorm/mine-entrance",},
 	"Desert Abandoned Level": {			"Path" : "tonori/sandstorm/mine-abandoned-level",},
 	"Desert Pit": {						"Path" : "tonori/desertpit/desert-pit",},
