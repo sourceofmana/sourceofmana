@@ -104,9 +104,11 @@ func UseItem(cell : ItemCell):
 		cell.modifiers.Apply(actor)
 
 func DropItem(cell : ItemCell, count : int):
-	if RemoveItem(cell, count):
-		var item : Item = Item.new(cell, count)
-		WorldDrop.PushDrop(item, actor)
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(actor)
+	if inst and inst.map and not inst.map.HasFlags(WorldMap.Flags.NO_DROP):
+		if RemoveItem(cell, count):
+			var item : Item = Item.new(cell, count)
+			WorldDrop.PushDrop(item, actor)
 
 func EquipItem(cell : ItemCell):
 	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipment[cell.slot] != cell and actor:
