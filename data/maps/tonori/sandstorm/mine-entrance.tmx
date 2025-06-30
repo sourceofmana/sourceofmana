@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="18">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="19">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="lighting" type="float" value="0.6"/>
@@ -764,16 +764,14 @@
   <object id="16" name="To Sandstorm" type="Warp" x="1184" y="832">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_cellsize" type="int" value="16"/>
-    <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="85"/>
-    <property name="dest_pos_y" type="int" value="220"/>
+    <property name="dest_map" value="Sandstorm"/>
+    <property name="dest_pos_x" type="int" value="20"/>
+    <property name="dest_pos_y" type="int" value="97"/>
    </properties>
    <polygon points="0,32 32,0 64,32 80,64 55,81 9,81 -16,64"/>
   </object>
   <object id="17" name="To Deeper Level" type="Warp" x="2144" y="3072">
    <properties>
-    <property name="dest_cellsize" type="int" value="32"/>
     <property name="dest_map" value="Desert Abandoned Level"/>
     <property name="dest_pos_x" type="int" value="36"/>
     <property name="dest_pos_y" type="int" value="100"/>
