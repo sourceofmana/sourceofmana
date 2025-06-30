@@ -104,7 +104,7 @@ func RefreshInventory():
 	slotStat.SetStat(count, ActorCommons.InventorySize)
 
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
-		equipmentSlots[slot - ActorCommons.Slot.FIRST_EQUIPMENT].AssignData(Launcher.Player.inventory.equipments[slot - ActorCommons.Slot.FIRST_EQUIPMENT])
+		equipmentSlots[slot - ActorCommons.Slot.FIRST_EQUIPMENT].AssignData(Launcher.Player.inventory.equipment[slot - ActorCommons.Slot.FIRST_EQUIPMENT])
 
 	SelectTile(selectedTile if selectedTile else grid.GetTile(0))
 

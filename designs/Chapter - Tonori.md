@@ -12,7 +12,7 @@ She is also the main antagonist of this region as she keep most of the city weal
 
 ### Inner locations
 City hall, learn how to create a party.
-Market, trade some common items and buy some local equipments made for your exploration in Tonori's desert.
+Market, trade some common items and buy some local equipment made for your exploration in Tonori's desert.
 Port, assemble your crew and sail on the ocean to explore new regions.
 Training Ground, explain how to fight monsters.
 Red queen mansion, main quest line place.

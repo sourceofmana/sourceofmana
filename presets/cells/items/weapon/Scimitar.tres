@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_8apsm"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_8vn10"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_h5xm3"]
-[ext_resource type="Texture2D" uid="uid://t0n7cp141hoo" path="res://data/graphics/sprites/equipments/weapon/sword.png" id="3_u0la2"]
+[ext_resource type="Texture2D" uid="uid://t0n7cp141hoo" path="res://data/graphics/sprites/equipment/weapon/sword.png" id="3_u0la2"]
 
 [sub_resource type="Resource" id="Resource_085be"]
 script = ExtResource("2_8vn10")

@@ -3,7 +3,7 @@ class_name ActorInventory
 
 var actor : Actor					= null
 var items : Array[Item]				= []
-var equipments : Array[ItemCell]	= []
+var equipment : Array[ItemCell]	= []
 
 #
 func GetItem(cell : ItemCell) -> Item:
@@ -109,11 +109,11 @@ func DropItem(cell : ItemCell, count : int):
 		WorldDrop.PushDrop(item, actor)
 
 func EquipItem(cell : ItemCell):
-	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipments[cell.slot] != cell and actor:
-		var previousItem : ItemCell = equipments[cell.slot]
+	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipment[cell.slot] != cell and actor:
+		var previousItem : ItemCell = equipment[cell.slot]
 		if previousItem and previousItem.modifiers:
 			previousItem.modifiers.Unequip(actor)
-		equipments[cell.slot] = cell
+		equipment[cell.slot] = cell
 		if cell and cell.modifiers:
 			cell.modifiers.Equip(actor)
 		actor.stat.RefreshEntityStats()
@@ -124,10 +124,10 @@ func EquipItem(cell : ItemCell):
 			Network.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, true])
 
 func UnequipItem(cell : ItemCell):
-	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipments[cell.slot] == cell and actor:
+	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipment[cell.slot] == cell and actor:
 		if cell and cell.modifiers:
 			cell.modifiers.Unequip(actor)
-		equipments[cell.slot] = null
+		equipment[cell.slot] = null
 		actor.stat.RefreshEntityStats()
 		if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
 			var charID : int = Peers.GetCharacter(actor.peerID)
@@ -189,9 +189,9 @@ func ExportEquipment() -> Dictionary:
 	var dic : Dictionary = {}
 	for equipmentID in ActorCommons.SlotEquipmentCount:
 		var equipmentKey : String = ActorCommons.GetSlotName(equipmentID).to_lower()
-		if equipments[equipmentID]:
-			dic[equipmentKey] = equipments[equipmentID].id
-			dic[equipmentKey + "Custom"] = equipments[equipmentID].customfield
+		if equipment[equipmentID]:
+			dic[equipmentKey] = equipment[equipmentID].id
+			dic[equipmentKey + "Custom"] = equipment[equipmentID].customfield
 		else:
 			dic[equipmentKey] = DB.UnknownHash
 			dic[equipmentKey + "Custom"] = ""
@@ -200,8 +200,8 @@ func ExportEquipment() -> Dictionary:
 #
 func _init(actorNode : Actor):
 	actor = actorNode
-	equipments.resize(ActorCommons.SlotEquipmentCount)
-	for item in actor.data._equipments:
+	equipment.resize(ActorCommons.SlotEquipmentCount)
+	for item in actor.data._equipment:
 		if item and item is ItemCell:
 			AddItem(item)
 			EquipItem(item)
