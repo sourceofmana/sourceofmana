@@ -6,8 +6,8 @@ const ProjectName : String				= "Source of Mana"
 const SocialLink : String				= "https://discord.com/channels/581622549566193664/1013487216493854780"
 
 # Map
-static var DefaultStartMapID : int		= "Splatyna Cave Entrance".hash()
-const DefaultStartPos : Vector2			= Vector2(1753, 1487)
+static var DefaultStartMapID : int		= "Tulimshar".hash()
+const DefaultStartPos : Vector2			= Vector2(1824, 2208)
 
 # MapPool
 const EnableMapPool : bool				= false
