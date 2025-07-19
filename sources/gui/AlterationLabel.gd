@@ -39,9 +39,9 @@ func SetValue(dealer : Entity, value : int, alteration : ActorCommons.Alteration
 			if dealer == Launcher.Player:
 				hue = ActorCommons.LocalAttackColor
 			elif dealer.type == ActorCommons.Type.PLAYER:
-				hue = ActorCommons.PlayerAttackColor
+				hue = ActorCommons.PlayerColor
 			else:
-				hue = ActorCommons.MonsterAttackColor
+				hue = ActorCommons.MonsterColor
 			set_text(str(value))
 		ActorCommons.Alteration.MISS:
 			bounce = true

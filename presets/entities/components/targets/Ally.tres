@@ -1,8 +1,8 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c0ie2wa20bxhl"]
 
-[ext_resource type="Shader" path="res://sources/shaders/EntityOutline.gdshader" id="1_dtoph"]
+[ext_resource type="Shader" uid="uid://bgsxq2l0x2fdn" path="res://sources/shaders/EntityOutline.gdshader" id="1_dtoph"]
 
 [resource]
 shader = ExtResource("1_dtoph")
-shader_parameter/outline_color = Color(0.254902, 0.670588, 0.741176, 1)
+shader_parameter/outline_color = Color(0.146691, 0.446298, 0.496412, 1)
 shader_parameter/blink_speed = 7.0

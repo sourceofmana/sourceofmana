@@ -239,9 +239,11 @@ const LocalAttackColor : float				= 0.35
 const MissAttackColor : float				= 0.2
 const ExpColor : float						= 0.44
 const GPColor : float						= 0.16
-const MonsterAttackColor : float			= 0.0
-const PlayerAttackColor : float				= 0.51
+const MonsterColor : float					= 0.03
+const PlayerColor : float					= 0.53
 const LevelDifferenceColor : float			= 5.0
+const NPCTextColor : Color					= Color.LIGHT_BLUE
+const MonsterTextColor : Color				= Color.DARK_SALMON
 
 # Interactive
 const interactionDisplayOffset : int		= 32

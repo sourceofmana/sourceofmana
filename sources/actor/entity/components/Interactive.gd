@@ -48,10 +48,10 @@ func DisplayTarget(type : ActorCommons.Target):
 			return
 		ActorCommons.Target.ALLY:
 			nameLabel.material = ActorCommons.AllyTarget
-			DisplaySelection(0.53)
+			DisplaySelection(ActorCommons.PlayerColor)
 		ActorCommons.Target.ENEMY:
 			nameLabel.material = ActorCommons.EnemyTarget
-			DisplaySelection(0.03)
+			DisplaySelection(ActorCommons.MonsterColor)
 
 func DisplayEmote(emoteID : int):
 	assert(emoteFx != null, "No emote particle found, could not display emote")
@@ -221,9 +221,16 @@ func _physics_process(delta : float):
 
 func Init(data : EntityData):
 	displayName = entity.type == ActorCommons.Type.PLAYER or data._displayName
+
 	if nameLabel:
 		nameLabel.set_text(entity.nick)
 		nameLabel.set_visible(displayName)
+		match entity.type:
+			ActorCommons.Type.NPC:
+				nameLabel.set("theme_override_colors/font_color", ActorCommons.NPCTextColor)
+			ActorCommons.Type.MONSTER:
+				nameLabel.set("theme_override_colors/font_color", ActorCommons.MonsterTextColor)
+
 	if entity.visual:
 		entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
 		RefreshVisibleNodeOffset()
