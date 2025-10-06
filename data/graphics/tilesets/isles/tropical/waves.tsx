@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="Waves" tilewidth="32" tileheight="32" tilecount="200" columns="10">
+<tileset version="1.10" tiledversion="1.11.0" name="Waves" tilewidth="32" tileheight="32" tilecount="200" columns="10">
  <image source="waves.png" width="320" height="640"/>
  <tile id="0">
   <animation>
@@ -281,4 +281,32 @@
    <frame tileid="199" duration="130"/>
   </animation>
  </tile>
+ <wangsets>
+  <wangset name="Water" type="corner" tile="-1">
+   <wangcolor name="Sand" color="#ff0000" tile="-1" probability="1"/>
+   <wangcolor name="Wave" color="#00ff00" tile="-1" probability="1"/>
+   <wangtile tileid="0" wangid="0,1,0,2,0,1,0,1"/>
+   <wangtile tileid="10" wangid="0,2,0,2,0,1,0,1"/>
+   <wangtile tileid="20" wangid="0,2,0,1,0,1,0,1"/>
+   <wangtile tileid="30" wangid="0,1,0,2,0,2,0,1"/>
+   <wangtile tileid="40" wangid="0,2,0,1,0,1,0,2"/>
+   <wangtile tileid="50" wangid="0,1,0,1,0,2,0,1"/>
+   <wangtile tileid="60" wangid="0,1,0,1,0,2,0,2"/>
+   <wangtile tileid="70" wangid="0,1,0,1,0,1,0,2"/>
+   <wangtile tileid="80" wangid="0,2,0,0,0,2,0,1"/>
+   <wangtile tileid="90" wangid="0,0,0,0,0,2,0,2"/>
+   <wangtile tileid="100" wangid="0,0,0,2,0,1,0,2"/>
+   <wangtile tileid="110" wangid="0,2,0,0,0,0,0,2"/>
+   <wangtile tileid="119" wangid="0,1,0,1,0,1,0,1"/>
+   <wangtile tileid="120" wangid="0,0,0,2,0,2,0,0"/>
+   <wangtile tileid="129" wangid="0,2,0,2,0,2,0,2"/>
+   <wangtile tileid="130" wangid="0,1,0,2,0,0,0,2"/>
+   <wangtile tileid="140" wangid="0,2,0,2,0,0,0,0"/>
+   <wangtile tileid="150" wangid="0,2,0,1,0,2,0,0"/>
+   <wangtile tileid="160" wangid="0,0,0,0,0,2,0,0"/>
+   <wangtile tileid="170" wangid="0,0,0,0,0,0,0,2"/>
+   <wangtile tileid="180" wangid="0,0,0,2,0,0,0,0"/>
+   <wangtile tileid="190" wangid="0,2,0,0,0,0,0,0"/>
+  </wangset>
+ </wangsets>
 </tileset>
