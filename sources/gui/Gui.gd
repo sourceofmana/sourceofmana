@@ -80,6 +80,10 @@ func ToggleChatNewLine():
 			ToggleControl(chatWindow)
 		chatContainer.SetNewLineEnabled(true)
 
+func ToggleFullscreen():
+	if settingsWindow:
+		settingsWindow.set_fullscreen(!settingsWindow.is_fullscreen())
+
 func DisplayInfoContext(actions : PackedStringArray):
 	infoContext.Clear()
 	for action in actions:
@@ -242,6 +246,6 @@ func _on_ui_margin_resized():
 		CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
 
 	if settingsWindow:
-		settingsWindow.set_fullscreen(DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_FULLSCREEN)
+#		settingsWindow.set_fullscreen(DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_FULLSCREEN)
 		settingsWindow.set_windowPos(DisplayServer.window_get_position(0))
 		settingsWindow.set_resolution(DisplayServer.window_get_size(0))

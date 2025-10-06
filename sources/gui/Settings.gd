@@ -39,14 +39,17 @@ func apply_minwinsize(minSize : Vector2):
 
 # FullScreen
 func init_fullscreen(apply : bool):
-	var pressed : bool = GetVal("Render-Fullscreen")
+	var pressed : bool = is_fullscreen()
 	accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_pressed_no_signal(pressed)
 	if apply:
 		apply_fullscreen(pressed)
+func is_fullscreen() -> bool:
+	return GetVal("Render-Fullscreen")
 func set_fullscreen(pressed : bool):
 	SetVal("Render-Fullscreen", pressed)
 	apply_fullscreen(pressed)
 func apply_fullscreen(pressed : bool):
+	accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_pressed_no_signal(pressed)
 	if pressed:
 		apply_resolution(DisplayServer.screen_get_size())
 		clear_resolution_labels()
@@ -54,8 +57,8 @@ func apply_fullscreen(pressed : bool):
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		populate_resolution_labels(DisplayServer.screen_get_size())
-		if DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_FULLSCREEN:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		if DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_WINDOWED:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 
 # Window Resolution
 const resolutionEntriesCount : int = 5

@@ -181,6 +181,7 @@ func _input(event):
 			elif TryJustPressed(event, "ui_stat"):			Launcher.GUI.ToggleControl(Launcher.GUI.statWindow)
 			elif TryJustPressed(event, "ui_validate"):		Launcher.GUI.ToggleChatNewLine()
 			elif TryJustPressed(event, "ui_screenshot"):	FileSystem.SaveScreenshot()
+			elif TryJustPressed(event, "ui_fullscreen"):	Launcher.GUI.ToggleFullscreen()
 	consumed.clear()
 
 #
