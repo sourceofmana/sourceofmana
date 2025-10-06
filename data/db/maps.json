@@ -25,4 +25,11 @@
 	"Desert Mountains": {				"Path" : "tonori/desertpit/desert-mountain",},
 	"Desert Mountain Cave": {			"Path" : "tonori/desertpit/mountain-cave",},
 	"Tulimshar": {						"Path" : "tonori/tulimshar/tulimshar",},
+	"Tulimshar Bay" : {					"Path" : "tonori/tulimshar/tulimshar-bay",},
+	"Tulimshar Center" : {				"Path" : "tonori/tulimshar/tulimshar-center",},
+	"Tulimshar Beach" : {				"Path" : "tonori/tulimshar outskirts/tulimshar-beach",},
+	"Tulimshar Eastern Hills" : {		"Path" : "tonori/tulimshar outskirts/tulimshar-eastern-hills",},
+	"Tulimshar Southern Hills" : {		"Path" : "tonori/tulimshar outskirts/tulimshar-southern-hills",},
+	"Tulimshar Western Hills" : {		"Path" : "tonori/tulimshar outskirts/tulimshar-western-hills",},
+	"Manayir Beach" : {					"Path" : "tonori/manayir/manayir-beach",},
 }
