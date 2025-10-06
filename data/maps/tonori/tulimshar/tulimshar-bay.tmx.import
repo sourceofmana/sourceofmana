@@ -2,13 +2,13 @@
 
 importer="vnen.tiled_importer"
 type="PackedScene"
-uid="uid://br1yc45kx1ofx"
-path="res://.godot/imported/tulimshar.tmx-965504139b47993082049f0184e499bc.scn"
+uid="uid://dtjro28omsxqh"
+path="res://.godot/imported/tulimshar-bay.tmx-193a2ec28198d5740c1578d78d51c80d.scn"
 
 [deps]
 
-source_file="res://data/maps/tonori/tulimshar/tulimshar.tmx"
-dest_files=["res://.godot/imported/tulimshar.tmx-965504139b47993082049f0184e499bc.scn"]
+source_file="res://data/maps/tonori/tulimshar/tulimshar-bay.tmx"
+dest_files=["res://.godot/imported/tulimshar-bay.tmx-193a2ec28198d5740c1578d78d51c80d.scn"]
 
 [params]
 

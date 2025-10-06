@@ -45,9 +45,9 @@
   <object id="13" name="To Desert Mountains" type="Warp" x="1280" y="736">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_map" value="Desert Mountains"/>
-    <property name="dest_pos_x" type="int" value="38"/>
-    <property name="dest_pos_y" type="int" value="28"/>
+    <property name="dest_map" value="Desert Pit"/>
+    <property name="dest_pos_x" type="int" value="199"/>
+    <property name="dest_pos_y" type="int" value="129"/>
    </properties>
    <polygon points="0,32 32,0 64,32 80,64 55,81 9,81 -16,64"/>
   </object>

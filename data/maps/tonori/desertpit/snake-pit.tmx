@@ -51,16 +51,16 @@
   <object id="4" name="To Desert" type="Warp" x="1632" y="960">
    <properties>
     <property name="dest_map" value="Desert Pit"/>
-    <property name="dest_pos_x" type="int" value="89"/>
-    <property name="dest_pos_y" type="int" value="24"/>
+    <property name="dest_pos_x" type="int" value="102"/>
+    <property name="dest_pos_y" type="int" value="49"/>
    </properties>
    <polygon points="0,32 32,0 64,32 80,64 55,81 9,81 -16,64"/>
   </object>
   <object id="5" name="To Desert" type="Warp" x="1056" y="2528">
    <properties>
     <property name="dest_map" value="Desert Pit"/>
-    <property name="dest_pos_x" type="int" value="70"/>
-    <property name="dest_pos_y" type="int" value="77"/>
+    <property name="dest_pos_x" type="int" value="82"/>
+    <property name="dest_pos_y" type="int" value="102"/>
    </properties>
    <polygon points="0,32 32,0 64,32 80,64 55,81 9,81 -16,64"/>
   </object>
