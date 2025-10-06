@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://2vqimcbb0kpa"
+path="res://.godot/imported/Lighthouse x4 x4.tsx-aa22955f49e690e016d9f4921b8cca91.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/tonori/Lighthouse x4 x4.tsx"
+dest_files=["res://.godot/imported/Lighthouse x4 x4.tsx-aa22955f49e690e016d9f4921b8cca91.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
