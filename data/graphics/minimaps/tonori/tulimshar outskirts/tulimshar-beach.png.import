@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c7bb2ta5ns83x"
-path="res://.godot/imported/tulimshar-beach.png-4043b3222c4cd3aae8c8838b7456560d.ctex"
+path="res://.godot/imported/tulimshar-beach.png-af1f4ffab7f1090c77a1fd9ba941d066.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar/tulimshar-beach.png"
-dest_files=["res://.godot/imported/tulimshar-beach.png-4043b3222c4cd3aae8c8838b7456560d.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar outskirts/tulimshar-beach.png"
+dest_files=["res://.godot/imported/tulimshar-beach.png-af1f4ffab7f1090c77a1fd9ba941d066.ctex"]
 
 [params]
 

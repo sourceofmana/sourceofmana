@@ -3,12 +3,12 @@
 importer="vnen.tiled_importer"
 type="PackedScene"
 uid="uid://bpu4si2as1t05"
-path="res://.godot/imported/tulimshar-western-hills.tmx-106722199efc6278d24fb816b80876c3.scn"
+path="res://.godot/imported/tulimshar-western-hills.tmx-66c366bff3580d91b7f5d21edf524819.scn"
 
 [deps]
 
-source_file="res://data/maps/tonori/tulimshar/tulimshar-western-hills.tmx"
-dest_files=["res://.godot/imported/tulimshar-western-hills.tmx-106722199efc6278d24fb816b80876c3.scn"]
+source_file="res://data/maps/tonori/tulimshar outskirts/tulimshar-western-hills.tmx"
+dest_files=["res://.godot/imported/tulimshar-western-hills.tmx-66c366bff3580d91b7f5d21edf524819.scn"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="vnen.tiled_importer"
 type="PackedScene"
 uid="uid://qmyldg5v20pq"
-path="res://.godot/imported/tulimshar-eastern-hills.tmx-3b6a24304e38dcc5c386c3d6e794a114.scn"
+path="res://.godot/imported/tulimshar-eastern-hills.tmx-c70933b0f7a48e669d37ddb3034e18df.scn"
 
 [deps]
 
-source_file="res://data/maps/tonori/tulimshar/tulimshar-eastern-hills.tmx"
-dest_files=["res://.godot/imported/tulimshar-eastern-hills.tmx-3b6a24304e38dcc5c386c3d6e794a114.scn"]
+source_file="res://data/maps/tonori/tulimshar outskirts/tulimshar-eastern-hills.tmx"
+dest_files=["res://.godot/imported/tulimshar-eastern-hills.tmx-c70933b0f7a48e669d37ddb3034e18df.scn"]
 
 [params]
 

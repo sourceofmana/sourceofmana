@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7fq6nlc3cu10"
-path="res://.godot/imported/tulimshar-southern-hills.png-0c0964a630d50bb1341879f4af09b816.ctex"
+uid="uid://dpwefr035jhky"
+path="res://.godot/imported/wie.png-d2bcffd3162c557220a912440b39b160.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar outskirts/tulimshar-southern-hills.png"
-dest_files=["res://.godot/imported/tulimshar-southern-hills.png-0c0964a630d50bb1341879f4af09b816.ctex"]
+source_file="res://data/graphics/sprites/npcs/wie.png"
+dest_files=["res://.godot/imported/wie.png-d2bcffd3162c557220a912440b39b160.ctex"]
 
 [params]
 
