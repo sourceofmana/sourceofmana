@@ -510,4 +510,28 @@
 			"Body": "sprites/npcs/gabz.png",
 		},
 	},
+	"2005": {
+		"Name": "Andi",
+		"SpritePreset": "Static",
+		"Behaviour": ["Immobile", "Pacifist"],
+		"Collision": "Small",
+		"Radius": "16",
+		"DisplayName": true,
+		"Textures":
+		{
+			"Body": "sprites/npcs/andi.png",
+		},
+	},
+	"2006": {
+		"Name": "Wie",
+		"SpritePreset": "Static",
+		"Behaviour": ["Immobile", "Pacifist"],
+		"Collision": "Small",
+		"Radius": "16",
+		"DisplayName": true,
+		"Textures":
+		{
+			"Body": "sprites/npcs/wie.png",
+		},
+	},
 }
