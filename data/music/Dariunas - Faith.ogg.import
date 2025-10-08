@@ -3,12 +3,11 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://ditte7kh6y84t"
-path="res://.godot/imported/Dariunas - Faith.ogg-de663a59024377ab5336354b3f7fe1cf.oggvorbisstr"
+valid=false
 
 [deps]
 
 source_file="res://data/music/Dariunas - Faith.ogg"
-dest_files=["res://.godot/imported/Dariunas - Faith.ogg-de663a59024377ab5336354b3f7fe1cf.oggvorbisstr"]
 
 [params]
 
