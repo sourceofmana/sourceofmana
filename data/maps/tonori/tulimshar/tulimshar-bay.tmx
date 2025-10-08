@@ -113,8 +113,8 @@
     <property name="dest_map" value="Overworld"/>
     <property name="dest_pos_x" type="int" value="0"/>
     <property name="dest_pos_y" type="int" value="0"/>
-    <property name="sail_pos_x" type="int" value="274"/>
-    <property name="sail_pos_y" type="int" value="102"/>
+    <property name="sail_pos_x" type="int" value="86"/>
+    <property name="sail_pos_y" type="int" value="208"/>
    </properties>
    <polygon points="41.2025,60.7943 41.2025,29.1813 72.8964,29.1813 72.8964,60.7943"/>
   </object>
