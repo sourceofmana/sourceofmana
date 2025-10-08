@@ -6,7 +6,6 @@ static func LoadData(map : WorldMap):
 	var obj : Object = Instantiate.LoadMapData(map.id, Path.MapNavigationExt)
 	if obj:
 		map.navPoly = obj
-		map.navPoly.cell_size = 0.1
 
 static func CreateInstance(map : WorldMap, mapRID : RID):
 	if map.navPoly:
@@ -50,8 +49,7 @@ static func GetRandomPositionAABB(map : WorldMap, pos : Vector2i, offset : Vecto
 			var randPoint : Vector2i = Vector2i(randi_range(-offset.x, offset.x), randi_range(-offset.y, offset.y))
 			randPoint += pos
 
-			var closestPoint : Vector2i = NavigationServer2D.map_get_closest_point(map.mapRID, randPoint)
-			if randPoint == closestPoint:
+			if NavigationServer2D.region_owns_point(map.regionRID, randPoint):
 				return randPoint
 
 		return GetRandomPosition(map)
