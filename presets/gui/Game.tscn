@@ -114,7 +114,7 @@ mouse_filter = 1
 script = ExtResource("3_5uo3f")
 
 [node name="StatContent" parent="Overlay/VSections/Indicators/Stat" instance=ExtResource("2")]
-layout_mode = 2
+layout_mode = 0
 offset_right = 273.0
 offset_bottom = 61.0
 size_flags_horizontal = 2
@@ -138,7 +138,7 @@ mouse_filter = 1
 
 [node name="Notification" parent="Overlay/VSections/Indicators/Info" instance=ExtResource("17_64u4l")]
 modulate = Color(1, 1, 1, 0)
-layout_mode = 2
+layout_mode = 0
 offset_left = -250.0
 offset_top = -19.0
 offset_right = 250.0
@@ -165,7 +165,7 @@ script = ExtResource("6_npwx0")
 
 [node name="MenuContent" type="TextureRect" parent="Overlay/VSections/Indicators/Menu"]
 material = SubResource("ShaderMaterial_wjdwk")
-layout_mode = 2
+layout_mode = 0
 offset_left = -511.0
 offset_top = 13.0
 offset_right = -38.0
@@ -262,16 +262,16 @@ targetShortcut = &"ui_settings"
 [node name="MenuButton" type="Button" parent="Overlay/VSections/Indicators/Menu"]
 custom_minimum_size = Vector2(62, 61)
 layout_direction = 3
-layout_mode = 2
+layout_mode = 0
 offset_right = 62.0
 offset_bottom = 61.0
 size_flags_horizontal = 10
 size_flags_vertical = 0
-theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
-theme_override_styles/hover = SubResource("StyleBoxTexture_hg7ie")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_w48pk")
 theme_override_styles/normal = SubResource("StyleBoxTexture_hg7ie")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_w48pk")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hg7ie")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
+theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
 
 [node name="Contexts" type="Control" parent="Overlay/VSections"]
 z_index = 10
@@ -428,7 +428,7 @@ texture_pressed = ExtResource("31_udatq")
 [node name="Actions" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor"]
 visible = false
 layout_direction = 3
-layout_mode = 2
+layout_mode = 0
 offset_right = 155.0
 offset_bottom = 155.0
 size_flags_horizontal = 10
@@ -490,7 +490,7 @@ metadata/_edit_layout_mode = 1
 [node name="Inventory" parent="Windows/Floating" instance=ExtResource("35_j05ha")]
 visible = false
 show_behind_parent = false
-layout_mode = 2
+layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -501,11 +501,12 @@ offset_bottom = 404.0
 grow_horizontal = 1
 grow_vertical = 1
 saveOverlayState = true
+allowAutomaticResize = true
 
 [node name="Minimap" parent="Windows/Floating" instance=ExtResource("9_myjuo")]
 visible = false
 custom_minimum_size = Vector2(200, 125)
-layout_mode = 2
+layout_mode = 0
 offset_left = 1058.0
 offset_top = 6.0
 offset_right = 1258.0
@@ -515,7 +516,7 @@ saveOverlayState = true
 [node name="Emote" parent="Windows/Floating" instance=ExtResource("37_v7lrk")]
 visible = false
 custom_minimum_size = Vector2(38, 38)
-layout_mode = 2
+layout_mode = 0
 offset_left = 68.0
 offset_top = 25.0
 offset_right = 306.0
@@ -532,7 +533,7 @@ saveOverlayState = true
 
 [node name="Chat" parent="Windows/Floating" instance=ExtResource("5")]
 visible = false
-layout_mode = 2
+layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -543,10 +544,11 @@ offset_bottom = 622.0
 grow_horizontal = 1
 grow_vertical = 1
 saveOverlayState = true
+allowAutomaticResize = true
 
 [node name="Credit" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
 visible = false
-layout_mode = 2
+layout_mode = 0
 offset_left = 23.0
 offset_top = 85.0
 offset_right = 483.0
@@ -597,6 +599,7 @@ offset_left = 439.0
 offset_top = 46.0
 offset_right = 839.0
 offset_bottom = 427.0
+saveOverlayState = true
 
 [node name="Shaders" type="CanvasLayer" parent="."]
 layer = 128
