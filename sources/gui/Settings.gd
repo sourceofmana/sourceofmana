@@ -45,13 +45,13 @@ func init_fullscreen(apply : bool):
 		apply_fullscreen(pressed)
 func is_fullscreen() -> bool:
 	return GetVal("Render-Fullscreen")
-func set_fullscreen(pressed : bool):
+func set_fullscreen(pressed : bool, apply : bool = true):
 	SetVal("Render-Fullscreen", pressed)
-	apply_fullscreen(pressed)
+	if apply:
+		apply_fullscreen(pressed)
 func apply_fullscreen(pressed : bool):
 	accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_pressed_no_signal(pressed)
 	if pressed:
-		apply_resolution(DisplayServer.screen_get_size())
 		clear_resolution_labels()
 		if DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -88,9 +88,10 @@ func set_resolutionIdx(resolutionIdx : int):
 	var maxScreenSize : Vector2i = DisplayServer.screen_get_size()
 	var resolution : Vector2i = calculate_resolution(resolutionIdx, minScreenSize, maxScreenSize)
 	set_resolution(resolution)
-func set_resolution(resolution : Vector2i):
+func set_resolution(resolution : Vector2i, apply : bool = true):
 	SetVal("Render-WindowSize", resolution)
-	apply_resolution(resolution)
+	if apply:
+		apply_resolution(resolution)
 func apply_resolution(resolution : Vector2i):
 	var windowSize : Vector2i = DisplayServer.screen_get_size()
 	var minScreenSize : Vector2i = GetVal("Render-MinWindowSize")
@@ -98,26 +99,26 @@ func apply_resolution(resolution : Vector2i):
 	var newSize : Vector2i = clamp(resolution, minScreenSize, windowSize)
 	var currentPos : Vector2i = GetVal("Render-WindowPos")
 	if currentPos == Vector2i(-1, -1):
-		currentPos = (windowSize - resolution) / 2
-	var newPosition : Vector2i = Vector2i(clampi(currentPos.x, 0, (windowSize - resolution).x), clampi(currentPos.y, 0, (windowSize - resolution).y))
+		currentPos = (windowSize - newSize) / 2
+	var newPosition : Vector2i = Vector2i(clampi(currentPos.x, 0, (windowSize - newSize).x), clampi(currentPos.y, 0, (windowSize - newSize).y))
 	DisplayServer.window_set_size(newSize)
 	set_windowPos(newPosition)
 	init_actionoverlay(true)
-	populate_resolution_labels(resolution)
+	populate_resolution_labels(newSize)
 
 # Window Position
 func init_windowPos(apply : bool):
 	if apply:
 		var pos : Vector2 = GetVal("Render-WindowPos")
 		apply_windowPos(pos)
-func set_windowPos(pos : Vector2):
+func set_windowPos(pos : Vector2, apply : bool = true):
 	SetVal("Render-WindowPos", pos)
-	apply_windowPos(pos)
+	if apply:
+		apply_windowPos(pos)
 func save_windowPos():
 	set_windowPos(get_viewport().get_position())
 func apply_windowPos(pos : Vector2):
-	if pos != Vector2(-1, -1):
-		DisplayServer.window_set_position(pos)
+	DisplayServer.window_set_position(pos)
 
 # DoubleResolution
 func init_scaling(apply : bool):

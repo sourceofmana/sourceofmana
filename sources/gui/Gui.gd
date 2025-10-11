@@ -246,6 +246,6 @@ func _on_ui_margin_resized():
 		CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
 
 	if settingsWindow:
-#		settingsWindow.set_fullscreen(DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_FULLSCREEN)
-		settingsWindow.set_windowPos(DisplayServer.window_get_position(0))
-		settingsWindow.set_resolution(DisplayServer.window_get_size(0))
+		settingsWindow.set_fullscreen(DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_FULLSCREEN, false)
+		settingsWindow.set_windowPos(DisplayServer.window_get_position(0), false)
+		settingsWindow.set_resolution(DisplayServer.window_get_size(0), false)
