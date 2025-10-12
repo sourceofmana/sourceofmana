@@ -34,7 +34,7 @@ func EmplaceMapNode(mapID : int, force : bool = false):
 	LoadMapNode(mapID)
 
 	if LauncherCommons.EnableMapPool:
-		pool.RefreshPool(currentMapNode)
+		pool.RefreshPool()
 
 func UnloadMapNode():
 	if currentMapNode:

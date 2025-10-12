@@ -31,7 +31,7 @@ func RefreshPool():
 	if Launcher.Map.currentMapNode.has_node("Object"):
 		for object in Launcher.Map.currentMapNode.get_node("Object").get_children():
 			if object is WarpObject:
-				adjacentMaps.append(object.destinationMapHash)
+				adjacentMaps.append(object.destinationID)
 
 	for mapID in adjacentMaps:
 		if mapID not in pool:
