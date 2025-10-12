@@ -2,4 +2,3 @@
 
 [node name="PlayerCamera" type="Camera2D"]
 process_callback = 0
-position_smoothing_enabled = true

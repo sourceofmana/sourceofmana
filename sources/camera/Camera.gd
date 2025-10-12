@@ -101,13 +101,10 @@ func UpdateZoom():
 
 func SyncPlayerPosition():
 	if Launcher.Player and mainCamera:
-		var enableSmoothing : bool = mainCamera.get_global_position() != Vector2.ZERO
-		mainCamera.set_position_smoothing_enabled(enableSmoothing)
 		mainCamera.set_position(Launcher.Player.get_position())
 
 func FocusPosition(position : Vector2):
 	if mainCamera:
-		mainCamera.set_position_smoothing_enabled(false)
 		mainCamera.set_position(position)
 
 #
