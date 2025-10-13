@@ -81,3 +81,7 @@ func _ready():
 
 func _richtextlabel_on_meta_clicked(meta):
 	OS.shell_open(str(meta).uri_encode())
+
+func _on_gui_input(event : InputEvent):
+	Launcher.Action.TryConsume(event, "gp_zoom_in")
+	Launcher.Action.TryConsume(event, "gp_zoom_out")
