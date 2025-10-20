@@ -108,8 +108,8 @@
   <object id="27" name="To Tulimshar Bay" type="Warp" x="2835" y="1462">
    <properties>
     <property name="dest_map" value="Tulimshar Bay"/>
-    <property name="dest_pos_x" value="49"/>
-    <property name="dest_pos_y" value="76"/>
+    <property name="dest_pos_x" value="85"/>
+    <property name="dest_pos_y" value="104"/>
    </properties>
    <polygon points="109.083,10 285.083,10 285.083,42 109.083,42"/>
   </object>
