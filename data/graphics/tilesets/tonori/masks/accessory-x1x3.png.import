@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcddrnslu23tx"
-path="res://.godot/imported/palm-tree-x5.png-33221729c8b19b6a017846d4cae6aaac.ctex"
+uid="uid://b7svc04m1p6io"
+path="res://.godot/imported/accessory-x1x3.png-e5c2f2156154b9095d8abc542928511d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/tilesets/tonori/palm-tree-x5.png"
-dest_files=["res://.godot/imported/palm-tree-x5.png-33221729c8b19b6a017846d4cae6aaac.ctex"]
+source_file="res://data/graphics/tilesets/tonori/masks/accessory-x1x3.png"
+dest_files=["res://.godot/imported/accessory-x1x3.png-e5c2f2156154b9095d8abc542928511d.ctex"]
 
 [params]
 

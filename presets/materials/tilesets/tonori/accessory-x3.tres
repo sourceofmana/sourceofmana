@@ -1,0 +1,53 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://f0q6h8kshuer"]
+
+[ext_resource type="Texture2D" uid="uid://b7svc04m1p6io" path="res://data/graphics/tilesets/tonori/masks/accessory-x1x3.png" id="1_2a6rj"]
+
+[sub_resource type="Shader" id="Shader_cnoji"]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform float distortion : hint_range(0.0, 0.1) = 0.01;
+uniform sampler2D mask_texture : source_color, filter_nearest;
+
+/// Noise Texture System
+uniform float noise_speed = 1.0;
+uniform int noise_direction : hint_range(-1, 1) = -1;
+uniform sampler2D noise_texture : source_color ,repeat_enable;
+
+const float EPSILON = 0.0001;
+
+vec2 get_pixelated_uvs(vec2 uv, vec2 texture_pixel_size)
+{
+	vec2 texture_dimensions = 1.0 / texture_pixel_size + EPSILON;
+	vec2 pixel_coords = uv * texture_dimensions;
+	vec2 snapped_pixel_coords = vec2(round(pixel_coords.x), round(pixel_coords.y));
+	vec2 pixelated_uv = snapped_pixel_coords / texture_dimensions;
+	return pixelated_uv;
+}
+
+void fragment()
+{
+	vec2 uv = (TEXTURE_PIXEL_SIZE.x != 1.0) ? get_pixelated_uvs(UV, TEXTURE_PIXEL_SIZE) : UV;
+	vec4 uv_result = texture(noise_texture, uv + TIME * noise_speed * float(noise_direction));
+	vec2 noise_uv = mix(uv, uv_result.rg, distortion);
+
+	vec4 base = texture(TEXTURE, uv);
+	vec4 blend = texture(mask_texture, noise_uv);
+
+	if (blend.a == 1.0)
+	{
+		COLOR = mix(base, blend, blend.a);
+	}
+}
+"
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nb73s"]
+seamless = true
+
+[resource]
+shader = SubResource("Shader_cnoji")
+shader_parameter/distortion = 0.010000000475
+shader_parameter/mask_texture = ExtResource("1_2a6rj")
+shader_parameter/noise_speed = 0.1
+shader_parameter/noise_direction = 1
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_nb73s")

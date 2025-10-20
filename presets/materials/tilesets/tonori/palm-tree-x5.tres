@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://wobib8k3rmyx"]
+
+[ext_resource type="Shader" uid="uid://cs0tps6qhmsdq" path="res://sources/shaders/FoliageWindEffect.gdshader" id="1_lbf1p"]
+[ext_resource type="Texture2D" uid="uid://dn8l3iqdg3dsg" path="res://data/graphics/tilesets/tonori/masks/palm-tree-x5.png" id="2_4hxnb"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_82u1l"]
+seamless = true
+
+[resource]
+shader = ExtResource("1_lbf1p")
+shader_parameter/distortion = 0.010000000475
+shader_parameter/mask_texture = ExtResource("2_4hxnb")
+shader_parameter/noise_speed = 0.2
+shader_parameter/noise_direction = 1
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_82u1l")
