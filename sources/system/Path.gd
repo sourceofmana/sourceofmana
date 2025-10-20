@@ -26,6 +26,7 @@ const EntityPst : String				= Pst + "entities/"
 const CellPst : String					= Pst + "cells/"
 const PalettesPst : String				= Pst + "palettes/"
 const QuestPst : String					= Pst + "quests/"
+const MaterialPst : String				= Pst + "materials/"
 
 const EmotePst : String					= CellPst + "emotes/"
 const ItemPst : String					= CellPst + "items/"

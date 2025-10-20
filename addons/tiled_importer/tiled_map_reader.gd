@@ -1034,6 +1034,8 @@ func build_tileset_for_scene(tilesets, source_path, options, root):
 						tileData.set_collision_polygon_points(0, tilePolygonCount, polygonShape)
 			# Handle some specific features
 			if "tileproperties" in ts and rel_id in ts.tileproperties:
+				if "Material" in ts.tileproperties[rel_id]:
+					tileData.material = FileSystem.LoadMaterial("tilesets/" + ts.tileproperties[rel_id].Material)
 				if "custom" in ts.tileproperties[rel_id]:
 					match ts.tileproperties[rel_id].custom:
 						"LightSource":
@@ -1339,6 +1341,12 @@ func set_custom_properties(object, tiled_object):
 				lighting.lightLevel = properties[property]
 				object.add_child(lighting)
 				lighting.set_owner(object)
+		elif property == "ambient":
+			var ambient : Node = FileSystem.LoadEffect("Ambient/" + properties[property])
+			if ambient:
+				ambient.set_name("Ambient")
+				object.add_child(ambient)
+				ambient.set_owner(object)
 		elif property == "flagnodrop" and bool(properties[property]):
 			map_flags |= WorldMap.Flags.NO_DROP
 		elif property == "flagnospell" and bool(properties[property]):
