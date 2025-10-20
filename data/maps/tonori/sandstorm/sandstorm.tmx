@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="187" height="143" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="33">
  <properties>
+  <property name="ambient" value="Sandstorm"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Faith"/>
   <property name="name" value="Sandstorm"/>
@@ -45,7 +46,7 @@
  </layer>
  <layer id="4" name="Collision" width="187" height="143">
   <data encoding="base64" compression="gzip">
-   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
+   H4sIAAAAAAAACu2dDW/kJhRFN796m9m2SbS7TX92YyWoyALzYeA+4FzpqN3J2AbehQGM8ePp27cHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAmvz449Dzoej++rnfWXwbKAtbl+wf/Pn167f3jv39EePa+H/tO7jGPp7DXHx2vGeNRcQ3/OLBJKJ7O5zH/pVR7nBW5sqk9Dux4OeTrUNxa6+iPxPoq6uuE8ltyHnWcIe7lmXXlQefZXvUqdW3Q0UOj2mdLSpXlTwOx3p2Uevi2pp7Fvn98ntOO56pXPT3G8KPmrKDO6zm68iH6X/jdltdL/Znz/Zq2snX7aqXevRuI+a6EFPNZq/oxq0rqH2NUe7j7nzGN9LGFOjMiDeqY74h//3NWXXmz53yQK8NS/TYQ9x3p6fMaH1ydo8X5LEgd811RaKe591Be1THflRV1zpe1fKpjvisxWWl7S33q58vP54i85KZVHfNduRu3XKWul3uOFp/76nVPOPV3sOP12VSbF0UZqGO+K7FYxGSlbzOz1DHflX8M+3bFesXcupaUDs+9fPD6Reo+K4pLHevdyZG/Nu9HwXGlPphFoee3fB3ru0L36dSx3p0c+c/qt7zXWpKGFaSO9e7E+uy+B9266+83fLmSr2vyQl/dBiW6O2Zcxe+lUscYPmG82V/qGMMa63pnkDrOkOfzx0J1QZUXdZyhfTwVx1pQahyjjjOM88LuUscZbK8TWEnqOMMnpVpxrUpvqWMMdV5H+XLlq44xfLLK/Lrl3xt1jIH59VFSxxnSPn90rAc9z21J7NFrgxzt4slWOpcte5baYHeNKgPeYaZnBtWm01L+aNv1hHTXI5bnQxRy5cl+1Pa8fgi/9pE63juDxkod751B48TcI15XKLQPQOz5/1ZKjU/du2YZw+L1WlnKq3unve9n53H/vfdqX6zIapolT87zsXeDq32xIsie2F+jv9dX2Q8jpy6H9u6KtbEjhc/HeH0lzZo/tR9WZpW166tI7YeVUa7ptSpVnum/tOPcN32ewMczr1UoTbvaHyuBrqUcn9Km4/UdhM/xeqlq9v+3ILUvVgTZE2261uuzjgdTebVY39We2IU7mrU+WJPaA7twVf6WdKTHrQUsvZ9/zkvoPMy9rM9Osphfdfx3Ammljv9OzKie6R5ZJjyPp/H61Thz1jphVa482S9G43WLsp6+FmIvMFtet+i54/f/70C6Ys9fXM23KOdhaNtteX2EUs/zW5kj7CH/uVN83w/1u5JS9c1SfRwh3/ch1H6ZHTSP1F6ZnR5t+2rrB6zkR+2VFUBzSO2TFVD321uoV7211BaofbIKyI5YE9aXFdr2GYWvNaB2yi1Pdcx3BdXJb5tLfx/VMd+V1tql/pzL0fd7qgzUMd8VS4rtB3Codk+AVD5ryuCqv33nWOiL1b0dfd/0rJOl5055NdWfUcd7V47nMFdZTzVCuW3yldQx35GV1g32Vmm/I9a203/RYEkuPSXr0HuvV7nrS9/veFzDuS1P+b6lp+7WsVF1FG/axn+vWui9a46d5Oe7ZA5cHUtIe/ys94u/zaA7dTP2zH7K87TpNtlhHuXI558VeUw91xnyPD63ScznR3v2+oXVufNR4pn9ubnqsxzyv/uyudd7PLMfmyPiGelxHvf1yPzOQU3/oKf8tLdI39U4vaTcU++aCj0jjf/ryjvm8Zo5QWv+Dimnvpaoto1PlW0sncfnd+vZjqw+/vQVqofus9FtfKiNceOhkrEQ+x/lk7Oe6Orfs6pXPnLGrL7P/fH+29ffX06e939fQ/Xh3YCPZsHa83Iz16dYO+v3zc/rEWJxcZ5/O/3/w/P+8XvEHr3jvN/Km7Hz3O1fuHzVXr/0uNBYMjaH+1YRn3P/h37MeM+n/BDj6piW146du9V1znJ9j9j5a+boY3MJ+F3neXef8FDp9Vop5Ocrz/ufpdJxJ53ud6rG664vE7o+czPjfN/yPvhd3b1uTRpK03733uv5XK4Pz1h1bnI8NvKapQqNOVr0YWLpVMcL7ntPdd2YUn+/Uk0fO3T/KZROdaxgflqrtI+dex9bXU4wP71U0san/M76YWhJS7nzpdp42nRQcJ6Pyt3D6PzvQ+c1duc2vmQdKm06KKmRf+81d30ePgc1I9Yb4XOwQi+/43Gwzp11FwAzw951AAAAAAAAAAAAAABwxX+aMhJj1KEBAA==
   </data>
  </layer>
  <objectgroup id="5" name="Objects">
@@ -177,11 +178,11 @@
    </properties>
    <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
   </object>
-  <object id="27" name="To Northern Coast" type="Warp" x="1420" y="2488">
+  <object id="27" name="To Manayir Beach" type="Warp" x="1420" y="2488">
    <properties>
-    <property name="dest_map" value="Northern Coast"/>
+    <property name="dest_map" value="Manayir Beach"/>
     <property name="dest_pos_x" value="229"/>
-    <property name="dest_pos_y" value="91"/>
+    <property name="dest_pos_y" value="92"/>
    </properties>
    <polygon points="20,56 52,56 52,232 20,232"/>
   </object>
