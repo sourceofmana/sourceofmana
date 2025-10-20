@@ -472,22 +472,14 @@
 	},
 	"2002": {
 		"Name": "Elanore",
-		"SpritePreset": "Player",
-		"Equipment": [
-			"V-Neck Tee",
-			"Trousers"
-		],
-		"Behaviour": ["Pacifist"],
+		"SpritePreset": "Static",
+		"Behaviour": ["Immobile", "Pacifist"],
 		"Collision": "Small",
 		"Radius": "16",
 		"DisplayName": true,
-		"Stat": {
-			"walkSpeed": 50,
-			"hairstyle": "Bun",
-			"haircolor": "Forest Green",
-			"gender": "Female",
-			"race": "Human",
-			"skintone": "Tanned",
+		"Textures":
+		{
+			"Body": "sprites/npcs/elanore.png",
 		},
 	},
 	"2003": {
