@@ -481,6 +481,8 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/tilesets/tonori/water-sparkle.png [Len] [Reid]
 ./graphics/tilesets/tonori/water.png [Len] [Reid]
 ./graphics/tilesets/tonori/waves.png [Len] [Reid]
+./graphics/tilesets/tonori/masks/accessory-x1x3.png [Reid]
+./graphics/tilesets/tonori/masks/palm-tree-x5.png [Reid]
 ./maps/artis/artis.tmx [Reid]
 ./maps/candor/candor-arena.tmx [Reid]
 ./maps/candor/candor-cave.tmx [pydsigner] [Reid]
