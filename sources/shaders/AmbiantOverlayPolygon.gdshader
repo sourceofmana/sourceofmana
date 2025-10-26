@@ -9,8 +9,6 @@ uniform float transformative = 0.8;
 uniform vec2 mask_offset = vec2(1.0, 1.0);
 uniform vec2 mask_scale = vec2(1.0, 1.0);
 
-const vec2 VEC2_MIN_EPSILON = vec2(-0.01, -0.01);
-
 void fragment()
 {
 	vec2 normalized_direction = normalize(direction) * TIME;

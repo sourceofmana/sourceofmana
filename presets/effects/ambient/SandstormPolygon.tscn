@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqt74y8dc5e8w"]
+[gd_scene load_steps=11 format=3 uid="uid://bqt74y8dc5e8w"]
 
 [ext_resource type="Shader" uid="uid://ddntt3df6qap0" path="res://sources/shaders/AmbiantOverlayPolygon.gdshader" id="1_64lle"]
 [ext_resource type="Script" uid="uid://v87nfffxtfsr" path="res://sources/effects/AmbientPolygon.gd" id="2_2mobf"]
@@ -11,14 +11,10 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 0.9137255, 0.6745098, 0.5019608, 1, 0.9
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_vqhhq"]
 gradient = SubResource("Gradient_d3sn8")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_2mobf"]
-viewport_path = NodePath("SubViewport")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vqhhq"]
 resource_local_to_scene = true
 shader = ExtResource("1_64lle")
 shader_parameter/color_ramp = SubResource("GradientTexture1D_vqhhq")
-shader_parameter/mask = SubResource("ViewportTexture_2mobf")
 shader_parameter/direction = Vector2(10, -100)
 shader_parameter/perspective = Vector2(1, 0.3)
 shader_parameter/opacity = 0.6
@@ -51,7 +47,6 @@ gradient = SubResource("Gradient_82u1l")
 fill_from = Vector2(1, 1)
 
 [node name="SandstormPolygon" type="Polygon2D"]
-visible = false
 z_index = 255
 texture_repeat = 2
 material = SubResource("ShaderMaterial_vqhhq")
@@ -63,8 +58,6 @@ disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_repeat = 1
-size = Vector2i(5983, 4577)
-render_target_update_mode = 3
 
 [node name="Line2D" type="Line2D" parent="SubViewport"]
 material = SubResource("CanvasItemMaterial_82u1l")

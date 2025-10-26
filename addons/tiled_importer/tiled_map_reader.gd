@@ -621,7 +621,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							collisionObject = CollisionPolygon2D.new()
 						elif object.type == "Ambient":
 							customObject = FileSystem.LoadEffect("Ambient/" + object.name)
-							if customObject is not Polygon2D:
+							if customObject is not AmbientPolygon2D:
 								customObject.free()
 								customObject = null
 
