@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://by848wer8sbil"]
 
-[ext_resource type="Shader" uid="uid://bhb7qwpk3h3dg" path="res://sources/shaders/AmbiantOverlayAdvanced.gdshader" id="1_atlre"]
+[ext_resource type="Shader" uid="uid://bhb7qwpk3h3dg" path="res://sources/shaders/AmbiantOverlay.gdshader" id="1_atlre"]
 
 [sub_resource type="Gradient" id="Gradient_cnoji"]
 interpolation_mode = 1
@@ -15,8 +15,8 @@ shader = ExtResource("1_atlre")
 shader_parameter/color_ramp = SubResource("GradientTexture1D_ey04i")
 shader_parameter/direction = Vector2(10, -100)
 shader_parameter/perspective = Vector2(1, 0.3)
-shader_parameter/opacity = 0.5
-shader_parameter/transformative = 0.6
+shader_parameter/opacity = 0.6
+shader_parameter/transformative = 0.8
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_atlre"]
 noise_type = 0
@@ -34,14 +34,9 @@ normalize = false
 [node name="Ambient" type="TextureRect"]
 z_index = 255
 material = SubResource("ShaderMaterial_82u1l")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 5983.0
-offset_bottom = 4577.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+offset_right = 1024.0
+offset_bottom = 1024.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 texture = SubResource("NoiseTexture2D_tf4h8")
 stretch_mode = 1

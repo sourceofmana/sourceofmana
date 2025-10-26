@@ -8,8 +8,8 @@ seamless = true
 
 [resource]
 shader = ExtResource("1_lbf1p")
-shader_parameter/distortion = 0.010000000475
 shader_parameter/mask_texture = ExtResource("2_4hxnb")
+shader_parameter/distortion = 0.010000000475
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_82u1l")
 shader_parameter/noise_speed = 0.2
 shader_parameter/noise_direction = 1
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_82u1l")

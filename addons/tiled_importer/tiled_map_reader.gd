@@ -594,6 +594,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 						continue
 
 					# Regular shape
+					var points = null
 					if not ("polygon" in object or "polyline" in object):
 						customObject = CollisionShape2D.new()
 						customObject.shape = shape
@@ -618,10 +619,15 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 						elif object.type == "Port":
 							customObject = PortObject.new()
 							collisionObject = CollisionPolygon2D.new()
-						else:
+						elif object.type == "Ambient":
+							customObject = FileSystem.LoadEffect("Ambient/" + object.name)
+							if customObject is not Polygon2D:
+								customObject.free()
+								customObject = null
+
+						if not customObject:
 							customObject = Polygon2D.new()
 
-						var points = null
 						if shape is ConcavePolygonShape2D:
 							points = []
 							var segments = shape.segments
@@ -1347,6 +1353,8 @@ func set_custom_properties(object, tiled_object):
 				ambient.set_name("Ambient")
 				object.add_child(ambient)
 				ambient.set_owner(object)
+				ambient.position = Vector2(0, 0)
+				ambient.size = Vector2(map_width, map_height) * cell_size
 		elif property == "flagnodrop" and bool(properties[property]):
 			map_flags |= WorldMap.Flags.NO_DROP
 		elif property == "flagnospell" and bool(properties[property]):
