@@ -620,7 +620,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							customObject = PortObject.new()
 							collisionObject = CollisionPolygon2D.new()
 						elif object.type == "Ambient":
-							customObject = FileSystem.LoadEffect("Ambient/" + object.name)
+							customObject = FileSystem.LoadEffect("ambient/" + object.name)
 							if customObject is not AmbientPolygon2D:
 								customObject.free()
 								customObject = null
@@ -1348,7 +1348,7 @@ func set_custom_properties(object, tiled_object):
 				object.add_child(lighting)
 				lighting.set_owner(object)
 		elif property == "ambient":
-			var ambient : Node = FileSystem.LoadEffect("Ambient/" + properties[property])
+			var ambient : Node = FileSystem.LoadEffect("ambient/" + properties[property])
 			if ambient:
 				ambient.set_name("Ambient")
 				object.add_child(ambient)
