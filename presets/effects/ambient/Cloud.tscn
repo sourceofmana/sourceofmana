@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://bv6ktpj7t7fh6"]
+
+[ext_resource type="Shader" uid="uid://bhb7qwpk3h3dg" path="res://sources/shaders/AmbiantOverlay.gdshader" id="1_5gnke"]
+
+[sub_resource type="Gradient" id="Gradient_atlre"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5804196, 0.61538464)
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 0.19607843, 0, 0, 0, 0.39215687)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tf4h8"]
+gradient = SubResource("Gradient_atlre")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_82u1l"]
+shader = ExtResource("1_5gnke")
+shader_parameter/color_ramp = SubResource("GradientTexture1D_tf4h8")
+shader_parameter/direction = Vector2(0.8, -1.1)
+shader_parameter/speed = Vector2(0.04, 0.02)
+shader_parameter/perspective = Vector2(1, 0.3)
+shader_parameter/opacity = 0.5
+shader_parameter/transformative = 0.8
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_loll7"]
+noise_type = 0
+seed = 6578906
+frequency = 0.0014
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_55alh"]
+width = 1024
+height = 1024
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_loll7")
+seamless = true
+normalize = false
+
+[node name="Ambient" type="TextureRect"]
+z_index = 255
+material = SubResource("ShaderMaterial_82u1l")
+offset_right = 1024.0
+offset_bottom = 1024.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource("NoiseTexture2D_55alh")
+stretch_mode = 1

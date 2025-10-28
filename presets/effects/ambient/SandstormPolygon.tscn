@@ -16,6 +16,7 @@ resource_local_to_scene = true
 shader = ExtResource("1_64lle")
 shader_parameter/color_ramp = SubResource("GradientTexture1D_vqhhq")
 shader_parameter/direction = Vector2(10, -100)
+shader_parameter/speed = Vector2(1, 1)
 shader_parameter/perspective = Vector2(1, 0.3)
 shader_parameter/opacity = 0.6
 shader_parameter/transformative = 0.8

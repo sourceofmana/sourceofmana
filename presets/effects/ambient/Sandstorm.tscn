@@ -14,6 +14,7 @@ gradient = SubResource("Gradient_cnoji")
 shader = ExtResource("1_atlre")
 shader_parameter/color_ramp = SubResource("GradientTexture1D_ey04i")
 shader_parameter/direction = Vector2(10, -100)
+shader_parameter/speed = Vector2(1, 1)
 shader_parameter/perspective = Vector2(1, 0.3)
 shader_parameter/opacity = 0.6
 shader_parameter/transformative = 0.8
