@@ -765,8 +765,8 @@
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_map" value="Sandstorm"/>
-    <property name="dest_pos_x" type="int" value="20"/>
-    <property name="dest_pos_y" type="int" value="97"/>
+    <property name="dest_pos_x" type="int" value="42"/>
+    <property name="dest_pos_y" type="int" value="111"/>
    </properties>
    <polygon points="0,32 32,0 64,32 80,64 55,81 9,81 -16,64"/>
   </object>

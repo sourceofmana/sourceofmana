@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="261" height="153" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="3">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="261" height="153" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="4">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Faith"/>
@@ -977,6 +977,9 @@
     <property name="dest_pos_y" value="132"/>
    </properties>
    <polygon points="-29,58 67,58 67,90 -29,90"/>
+  </object>
+  <object id="3" name="SandstormPolygon" type="Ambient" x="6073" y="5053">
+   <polyline points="-39,9 482,-664 894,-848 916,-960 958,-1354 1149,-1499 1342,-1484 1476,-1606 1579,-2096 1394,-2936 1315,-3129 1337,-3770 2049,-4021 2404,-4023 2433,14"/>
   </object>
  </objectgroup>
 </map>
