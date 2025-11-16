@@ -473,6 +473,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/tilesets/tonori/lighthouse-x4-x4.png [Reid]
 ./graphics/tilesets/tonori/market.png [IvanMorve] [Reid, Hyptosis]
 ./graphics/tilesets/tonori/palm-tree-x5.png [Modanung] [Reid, Zabin]
+./graphics/tilesets/tonori/pillar-x2.png [Len] [Reid]
 ./graphics/tilesets/tonori/pillar-x2x2.png [Alige] [Reid]
 ./graphics/tilesets/tonori/ruin-x3.png [Meway] [Reid]
 ./graphics/tilesets/tonori/tree-x4.png [Len] [Modanung, Reid]
