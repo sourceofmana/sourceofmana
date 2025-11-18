@@ -14,10 +14,11 @@ gradient = SubResource("Gradient_atlre")
 shader = ExtResource("1_5gnke")
 shader_parameter/color_ramp = SubResource("GradientTexture1D_tf4h8")
 shader_parameter/direction = Vector2(0.8, -1.1)
-shader_parameter/speed = Vector2(0.04, 0.02)
+shader_parameter/speed = 0.03
 shader_parameter/perspective = Vector2(1, 0.3)
-shader_parameter/opacity = 0.5
+shader_parameter/opacity = 0.2
 shader_parameter/transformative = 0.8
+shader_parameter/zoom = 2.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_loll7"]
 noise_type = 0
