@@ -1,0 +1,83 @@
+{
+    "maps": [
+        {
+            "fileName": "manayir/manayir-beach.tmx",
+            "height": 4896,
+            "width": 8352,
+            "x": 608,
+            "y": 3296
+        },
+        {
+            "fileName": "desertpit/desert-pit.tmx",
+            "height": 5728,
+            "width": 7456,
+            "x": 11648,
+            "y": 4576
+        },
+        {
+            "fileName": "desertpit/desert-mountain.tmx",
+            "height": 4800,
+            "width": 4800,
+            "x": 16800,
+            "y": 7776
+        },
+        {
+            "fileName": "sandstorm/sandstorm.tmx",
+            "height": 4576,
+            "width": 5984,
+            "x": 6560,
+            "y": 3616
+        },
+        {
+            "fileName": "tulimshar/tulimshar.tmx",
+            "height": 4000,
+            "width": 5952,
+            "x": 7840,
+            "y": 1408
+        },
+        {
+            "fileName": "tulimshar/tulimshar-bay.tmx",
+            "height": 4928,
+            "width": 6944,
+            "x": 8416,
+            "y": -4000
+        },
+        {
+            "fileName": "tulimshar/tulimshar-center.tmx",
+            "height": 5376,
+            "width": 5664,
+            "x": 8128,
+            "y": -2048
+        },
+        {
+            "fileName": "tulimshar outskirts/tulimshar-beach.tmx",
+            "height": 5568,
+            "width": 4416,
+            "x": 5536,
+            "y": -64
+        },
+        {
+            "fileName": "tulimshar outskirts/tulimshar-eastern-hills.tmx",
+            "height": 6208,
+            "width": 3936,
+            "x": 12160,
+            "y": -3168
+        },
+        {
+            "fileName": "tulimshar outskirts/tulimshar-southern-hills.tmx",
+            "height": 5952,
+            "width": 4800,
+            "x": 11296,
+            "y": 1088
+        },
+        {
+            "fileName": "tulimshar outskirts/tulimshar-western-hills.tmx",
+            "height": 6176,
+            "width": 4160,
+            "x": 6208,
+            "y": -3616
+        }
+    ],
+    "onlyShowAdjacentMaps": false,
+    "type": "world"
+}
