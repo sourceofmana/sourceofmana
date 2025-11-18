@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="54">
  <properties>
+  <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Faith"/>
   <property name="name" value="Tulimshar"/>
