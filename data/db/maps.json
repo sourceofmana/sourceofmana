@@ -31,5 +31,6 @@
 	"Tulimshar Eastern Hills" : {		"Path" : "tonori/tulimshar outskirts/tulimshar-eastern-hills",},
 	"Tulimshar Southern Hills" : {		"Path" : "tonori/tulimshar outskirts/tulimshar-southern-hills",},
 	"Tulimshar Western Hills" : {		"Path" : "tonori/tulimshar outskirts/tulimshar-western-hills",},
+	"Manayir" : {						"Path" : "tonori/manayir/manayir",},
 	"Manayir Beach" : {					"Path" : "tonori/manayir/manayir-beach",},
 }
