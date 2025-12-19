@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=9 format=3 uid="uid://b58u4sccexbpg"]
+
+[ext_resource type="Texture2D" uid="uid://bfc24bssxbnjh" path="res://data/graphics/items/chest/desertarmor.png" id="1_w3t53"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_jyjh6"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_w3t53"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_qec1n"]
+[ext_resource type="Texture2D" uid="uid://baf8474h44e0v" path="res://data/graphics/sprites/equipment/chest/desertarmor-male.png" id="6_f0lni"]
+[ext_resource type="Texture2D" uid="uid://bcts6yj8msqb" path="res://data/graphics/sprites/equipment/chest/desertarmor-female.png" id="7_pos12"]
+
+[sub_resource type="Resource" id="Resource_748sy"]
+script = ExtResource("2_jyjh6")
+_effect = 14
+_value = 30.0
+_persistent = true
+metadata/_custom_type_script = "uid://hdd6y6syvlm6"
+
+[sub_resource type="Resource" id="Resource_thr1k"]
+script = ExtResource("3_qec1n")
+_modifiers = Array[ExtResource("2_jyjh6")]([SubResource("Resource_748sy")])
+metadata/_custom_type_script = "uid://btqmbqq2q7cm8"
+
+[resource]
+script = ExtResource("2_w3t53")
+slot = 0
+textures = Array[Texture2D]([ExtResource("6_f0lni"), ExtResource("7_pos12"), ExtResource("6_f0lni")])
+name = "Desert Armor"
+icon = ExtResource("1_w3t53")
+weight = 5000.0
+modifiers = SubResource("Resource_thr1k")
