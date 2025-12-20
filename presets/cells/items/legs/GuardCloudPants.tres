@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://b8awmxy22bpqi"]
+
+[ext_resource type="Texture2D" uid="uid://clx43g4noo76q" path="res://data/graphics/items/legs/cloud-pants.png" id="1_x4drf"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_vqpro"]
+[ext_resource type="Material" uid="uid://cnpqh4qibn8q8" path="res://presets/palettes/equipment/cloth-sage.tres" id="3_x4drf"]
+[ext_resource type="Texture2D" uid="uid://bi7aykushq5nc" path="res://data/graphics/sprites/equipment/legs/cloudpants-male.png" id="4_p5g0a"]
+[ext_resource type="Texture2D" uid="uid://kmpre2dd85hr" path="res://data/graphics/sprites/equipment/legs/cloudpants-female.png" id="5_b7ujf"]
+
+[resource]
+script = ExtResource("2_vqpro")
+slot = 1
+textures = Array[Texture2D]([ExtResource("4_p5g0a"), ExtResource("5_b7ujf"), ExtResource("4_p5g0a")])
+shader = ExtResource("3_x4drf")
+name = "Guard Cloud Pants"
+icon = ExtResource("1_x4drf")
+weight = 300.0
