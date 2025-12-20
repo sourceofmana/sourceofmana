@@ -22,9 +22,9 @@ func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spiri
 			UpdatePublicStats(agentRID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape, _peerID)
 			RefreshEquipment(agentRID, equipment, _peerID)
 
-func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _peerID : int):
+func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentRID, actorType, currentShape, DB.UnknownHash, currentShape, "", velocity, position, orientation, state, skillCastID)
+		Launcher.Map.AddEntity(agentRID, actorType, currentShape, DB.UnknownHash, currentShape, nick, velocity, position, orientation, state, skillCastID)
 
 func RemoveEntity(agentRID : int, _peerID : int):
 	if Launcher.Map:

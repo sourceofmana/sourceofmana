@@ -85,8 +85,8 @@ func WarpPlayer(mapID : int, playerPos : Vector2, peerID : int = NetworkCommons.
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("AddEntity", [agentRID, actorType, currentShape, velocity, position, orientation, state, skillCastID], peerID)
+func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("AddEntity", [agentRID, actorType, currentShape, nick, velocity, position, orientation, state, skillCastID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipment : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):

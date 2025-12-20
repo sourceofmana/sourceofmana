@@ -68,7 +68,8 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 					], agent.peerID)
 				else:
 					Network.Bulk("AddEntity", [
-						neighbourRID, neighbour.GetActorType(), neighbour.stat.currentShape,
+						neighbourRID, neighbour.GetActorType(),
+						neighbour.stat.currentShape, neighbour.nick,
 						neighbour.velocity, neighbour.position, neighbour.currentOrientation,
 						neighbour.state, neighbour.currentSkillID,
 					], agent.peerID)
@@ -86,7 +87,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		], false)
 	else:
 		Network.NotifyNeighbours(agent, "AddEntity", [
-			agent.GetActorType(), agent.stat.currentShape,
+			agent.GetActorType(), agent.stat.currentShape, agent.nick,
 			agent.velocity, agent.position, agent.currentOrientation,
 			agent.state, agent.currentSkillID
 		], false)
