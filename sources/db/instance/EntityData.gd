@@ -7,8 +7,8 @@ class_name EntityData
 @export var _collision : String					= ""
 @export var _radius : int						= 0
 @export var _equipment : Array[ItemCell]		= []
-@export var _customTextures : Array[String]		= []
-@export var _customShaders : Array[FileData]	= []
+@export var _customTexture : String				= ""
+@export var _customMaterial : FileData			= null
 @export var _displayName : bool					= false
 @export var _behaviour : int					= AICommons.Behaviour.NEUTRAL
 @export var _stats : Dictionary					= ActorCommons.DefaultStats.duplicate()
@@ -21,8 +21,6 @@ class_name EntityData
 const hashedStats : PackedStringArray			= ["race", "skintone", "hairstyle", "haircolor"]
 
 func _init():
-	_customTextures.resize(ActorCommons.SlotModifierCount)
-	_customShaders.resize(ActorCommons.SlotModifierCount)
 	_equipment.resize(ActorCommons.SlotEquipmentCount)
 
 static func Create(result : Dictionary) -> EntityData:
@@ -42,13 +40,11 @@ static func Create(result : Dictionary) -> EntityData:
 				var itemCell : ItemCell = DB.GetItem(itemID)
 				if itemCell and itemCell.slot != ActorCommons.Slot.NONE:
 					entity._equipment[itemCell.slot] = itemCell
-	if "Textures" in result:
-		for texture in result.Textures:
-			entity._customTextures[ActorCommons.GetSlotID(texture) - ActorCommons.Slot.FIRST_MODIFIER] = result.Textures[texture]
-	if "Shaders" in result:
-		for shader in result.Shaders:
-			var paletteId : int = DB.GetCellHash(result.Shaders[shader])
-			entity._customShaders[ActorCommons.GetSlotID(shader) - ActorCommons.Slot.FIRST_MODIFIER] = DB.GetPalette(DB.Palette.SKIN, paletteId)
+	if "Texture" in result:
+		entity._customTexture = result.Texture
+	if "Material" in result:
+		var paletteId : int = DB.GetCellHash(result.Material)
+		entity._customMaterial = DB.GetPalette(DB.Palette.SKIN, paletteId)
 
 	if "DisplayName" in result:
 		entity._displayName = result.DisplayName

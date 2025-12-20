@@ -42,10 +42,7 @@
 	"1001": {
 		"Name": "Dorian",
 		"SpritePreset": "Slime",
-		"Textures":
-		{
-			"Body": "sprites/monsters/dorian.png",
-		},
+		"Texture": "sprites/monsters/dorian.png",
 		"Behaviour": ["Aggressive", "Leader", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -60,10 +57,7 @@
 	"1002": {
 		"Name": "Emil",
 		"SpritePreset": "Slime",
-		"Textures":
-		{
-			"Body": "sprites/monsters/emil.png",
-		},
+		"Texture": "sprites/monsters/emil.png",
 		"Behaviour": ["Neutral", "Follower", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -74,10 +68,7 @@
 	"1003": {
 		"Name": "Gabriel",
 		"SpritePreset": "Slime",
-		"Textures":
-		{
-			"Body": "sprites/monsters/gabriel.png",
-		},
+		"Texture": "sprites/monsters/gabriel.png",
 		"Behaviour": ["Aggressive", "Leader", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -92,10 +83,7 @@
 	"1004": {
 		"Name": "Lilah",
 		"SpritePreset": "Slime",
-		"Textures":
-		{
-			"Body": "sprites/monsters/lilah.png",
-		},
+		"Texture": "sprites/monsters/lilah.png",
 		"Behaviour": ["Neutral", "Follower", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -106,10 +94,7 @@
 	"1005": {
 		"Name": "Lulea",
 		"SpritePreset": "Slime",
-		"Textures":
-		{
-			"Body": "sprites/monsters/lulea.png",
-		},
+		"Texture": "sprites/monsters/lulea.png",
 		"Behaviour": ["Neutral", "Follower", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -120,10 +105,7 @@
 	"1006": {
 		"Name": "Marvin",
 		"SpritePreset": "Slime",
-		"Textures":
-		{
-			"Body": "sprites/monsters/marvin.png",
-		},
+		"Texture": "sprites/monsters/marvin.png",
 		"Behaviour": ["Aggressive", "Leader", "Spawner", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -141,10 +123,7 @@
 	"1007": {
 		"Name": "Salt Slime",
 		"SpritePreset": "Slime",
-		"Textures":
-		{
-			"Body": "sprites/monsters/slime-salt.png",
-		},
+		"Texture": "sprites/monsters/slime-salt.png",
 		"Behaviour": ["Neutral", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -167,10 +146,7 @@
 	"1009": {
 		"Name": "Drain Slime",
 		"SpritePreset": "Slime",
-		"Textures":
-		{
-			"Body": "sprites/monsters/slime-drain.png",
-		},
+		"Texture": "sprites/monsters/slime-drain.png",
 		"Behaviour": ["Neutral", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -181,10 +157,7 @@
 	"1010": {
 		"Name": "Fire Skull",
 		"SpritePreset": "Skull",
-		"Textures":
-		{
-			"Body": "sprites/monsters/skull-fire.png",
-		},
+		"Texture": "sprites/monsters/skull-fire.png",
 		"Behaviour": ["Aggressive"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -199,10 +172,7 @@
 	"1011": {
 		"Name": "Sludge Slime",
 		"SpritePreset": "SlimeSludge",
-		"Textures":
-		{
-			"Body": "sprites/monsters/slime-sludge.png",
-		},
+		"Texture": "sprites/monsters/slime-sludge.png",
 		"Behaviour": ["Neutral", "Steal"],
 		"Collision": "Medium",
 		"Radius": "10",
@@ -259,9 +229,7 @@
 		"Behaviour": ["Aggressive"],
 		"Collision": "Medium",
 		"Radius": "5",
-		"Textures": {
-			"Body": "sprites/monsters/snake.png",
-		},
+		"Texture": "sprites/monsters/snake.png",
 		"Stat": {
 			"walkSpeed": 170,
 			"castAttackDelay": 0.5,
@@ -272,9 +240,7 @@
 		"SpritePreset": "Generic4Directions",
 		"Collision": "Medium",
 		"Radius": "10",
-		"Textures": {
-			"Body": "sprites/monsters/fluffy.png",
-		},
+		"Texture": "sprites/monsters/fluffy.png",
 		"Stat": {
 			"walkSpeed": 50,
 		},
@@ -284,9 +250,7 @@
 		"SpritePreset": "Generic4Directions",
 		"Collision": "Medium",
 		"Radius": "10",
-		"Textures": {
-			"Body": "sprites/monsters/maggot.png",
-		},
+		"Texture": "sprites/monsters/maggot.png",
 		"Stat": {
 			"walkSpeed": 50,
 		},
@@ -296,9 +260,7 @@
 		"SpritePreset": "Generic4Directions",
 		"Collision": "Medium",
 		"Radius": "10",
-		"Textures": {
-			"Body": "sprites/monsters/firegoblin.png",
-		},
+		"Texture": "sprites/monsters/firegoblin.png",
 		"SkillSet": {
 			"Spitfire": 2.0,
 		},
@@ -311,9 +273,7 @@
 		"SpritePreset": "Generic4Directions",
 		"Collision": "Medium",
 		"Radius": "10",
-		"Textures": {
-			"Body": "sprites/monsters/mushroom-spiky.png",
-		},
+		"Texture": "sprites/monsters/mushroom-spiky.png",
 		"Stat": {
 			"walkSpeed": 80,
 		},
@@ -323,9 +283,7 @@
 		"SpritePreset": "Generic4Directions",
 		"Collision": "Medium",
 		"Radius": "10",
-		"Textures": {
-			"Body": "sprites/monsters/mushroom-evil.png",
-		},
+		"Texture": "sprites/monsters/mushroom-evil.png",
 		"Stat": {
 			"walkSpeed": 80,
 		},
@@ -335,9 +293,7 @@
 		"SpritePreset": "Generic4Directions",
 		"Collision": "Medium",
 		"Radius": "20",
-		"Textures": {
-			"Body": "sprites/monsters/pinkie.png",
-		},
+		"Texture": "sprites/monsters/pinkie.png",
 		"Stat": {
 			"walkSpeed": 80,
 		},
@@ -347,9 +303,7 @@
 		"SpritePreset": "Generic4Directions",
 		"Collision": "Large",
 		"Radius": "70",
-		"Textures": {
-			"Body": "sprites/monsters/maggot-giant.png",
-		},
+		"Texture": "sprites/monsters/maggot-giant.png",
 		"Stat": {
 			"walkSpeed": 80,
 		},
@@ -359,9 +313,7 @@
 		"SpritePreset": "Generic4Directions",
 		"Collision": "Medium",
 		"Radius": "30",
-		"Textures": {
-			"Body": "sprites/monsters/scorpion.png",
-		},
+		"Texture": "sprites/monsters/scorpion.png",
 		"Stat": {
 			"walkSpeed": 60,
 		},
@@ -371,9 +323,7 @@
 		"SpritePreset": "Player",
 		"Collision": "Medium",
 		"Radius": "16",
-		"Textures": {
-			"Body": "sprites/monsters/skeleton.png",
-		},
+		"Texture": "sprites/monsters/skeleton.png",
 		"Stat": {
 			"walkSpeed": 80,
 		},
@@ -403,9 +353,7 @@
 		"Behaviour": ["Aggressive"],
 		"Collision": "Medium",
 		"Radius": "16",
-		"Textures": {
-			"Body": "sprites/monsters/lizandra.png",
-		},
+		"Texture": "sprites/monsters/lizandra.png",
 		"Stat": {
 			"walkSpeed": 80,
 		},
@@ -416,12 +364,8 @@
 		"Behaviour": ["Aggressive"],
 		"Collision": "Medium",
 		"Radius": "5",
-		"Textures": {
-			"Body": "sprites/monsters/snake.png",
-		},
-		"Shaders": {
-			"Body": "Snake Sand",
-		},
+		"Texture": "sprites/monsters/snake.png",
+		"Material": "Snake Sand",
 		"Stat": {
 			"walkSpeed": 110,
 			"castAttackDelay": 0.5,
@@ -477,10 +421,7 @@
 		"Collision": "Small",
 		"Radius": "16",
 		"DisplayName": true,
-		"Textures":
-		{
-			"Body": "sprites/npcs/elanore.png",
-		},
+		"Texture": "sprites/npcs/elanore.png",
 	},
 	"2003": {
 		"Name": "Locks",
@@ -497,10 +438,7 @@
 		"Collision": "Small",
 		"Radius": "16",
 		"DisplayName": true,
-		"Textures":
-		{
-			"Body": "sprites/npcs/gabz.png",
-		},
+		"Texture": "sprites/npcs/gabz.png",
 	},
 	"2005": {
 		"Name": "Andi",
@@ -509,10 +447,7 @@
 		"Collision": "Small",
 		"Radius": "16",
 		"DisplayName": true,
-		"Textures":
-		{
-			"Body": "sprites/npcs/andi.png",
-		},
+		"Texture": "sprites/npcs/andi.png",
 	},
 	"2006": {
 		"Name": "Wie",
@@ -521,9 +456,28 @@
 		"Collision": "Small",
 		"Radius": "16",
 		"DisplayName": true,
-		"Textures":
-		{
-			"Body": "sprites/npcs/wie.png",
+		"Texture": "sprites/npcs/wie.png",
+	},
+	"2000": {
+		"Name": "Tulimshar Guard 1",
+		"SpritePreset": "Player",
+		"Equipment": [
+			"Desert Armor",
+			"Guard Cloud Pants",
+			"Leather Boots",
+			"Desert Hood",
+		],
+		"Behaviour": ["Pacifist"],
+		"Collision": "Small",
+		"Radius": "16",
+		"DisplayName": true,
+		"Stat": {
+			"walkSpeed": 70,
+			"hairstyle": "Center Parting",
+			"haircolor": "Dark Brown",
+			"gender": "Male",
+			"race": "Human",
+			"skintone": "Dark",
 		},
 	},
 }

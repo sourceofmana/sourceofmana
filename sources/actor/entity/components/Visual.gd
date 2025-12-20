@@ -185,14 +185,11 @@ func SetData(slot : int, data : EntityData):
 	if not sprite:
 		return
 
-	if data:
-		var rescaledSlot : int = slot
-		if slot >= ActorCommons.Slot.FIRST_MODIFIER and slot < ActorCommons.Slot.LAST_MODIFIER:
-			rescaledSlot = slot - ActorCommons.Slot.FIRST_MODIFIER
-			if data._customTextures[rescaledSlot]:
-				sprite.set_texture(FileSystem.LoadGfx(data._customTextures[rescaledSlot]))
-			if data._customShaders[rescaledSlot]:
-				sprite.set_material(FileSystem.LoadPalette(data._customShaders[rescaledSlot]._path))
+	if data and  slot == ActorCommons.Slot.BODY:
+		if data._customTexture:
+			sprite.set_texture(FileSystem.LoadGfx(data._customTexture))
+		if data._customMaterial:
+			sprite.set_material(FileSystem.LoadPalette(data._customMaterial._path))
 
 	LoadSpriteSlot(slot, sprite)
 
