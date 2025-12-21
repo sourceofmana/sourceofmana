@@ -82,44 +82,33 @@ static func ParseEntitiesDB():
 			EntitiesDB[entity._id] = entity
 
 static func ParseEmotesDB():
-	var result = FileSystem.LoadDB("emotes.json")
-
-	if not result.is_empty():
-		for key in result:
-			var cell : BaseCell = FileSystem.LoadCell(Path.EmotePst + result[key].Path + Path.RscExt)
-			cell.id = SetCellHash(cell.name)
-			assert(EmotesDB.has(cell.id) == false, "Duplicated cell in EmotesDB")
-			EmotesDB[cell.id] = cell
+	for resourcePath in FileSystem.ParseResources(Path.EmotePst):
+		var cell : BaseCell = FileSystem.LoadResource(resourcePath, false)
+		cell.id = SetCellHash(cell.name)
+		assert(not EmotesDB.has(cell.id), "Duplicated cell in EmotesDB")
+		EmotesDB[cell.id] = cell
 
 static func ParseItemsDB():
-	var result = FileSystem.LoadDB("items.json")
-
-	if not result.is_empty():
-		for key in result:
-			var cell : ItemCell = FileSystem.LoadCell(Path.ItemPst + result[key].Path + Path.RscExt)
-			cell.id = SetCellHash(cell.name)
-			assert(ItemsDB.has(cell.id) == false, "Duplicated cell in ItemsDB")
-			ItemsDB[cell.id] = cell
+	for resourcePath in FileSystem.ParseResources(Path.ItemPst):
+		var cell : ItemCell = FileSystem.LoadResource(resourcePath, false)
+		cell.id = DB.SetCellHash(cell.name)
+		assert(not ItemsDB.has(cell.id), "Duplicated cell in ItemsDB")
+		ItemsDB[cell.id] = cell
 
 static func ParseSkillsDB():
-	var result = FileSystem.LoadDB("skills.json")
-
-	if not result.is_empty():
-		for key in result:
-			var cell : SkillCell = FileSystem.LoadCell(Path.SkillPst + result[key].Path + Path.RscExt)
-			cell.Instantiate()
-			cell.id = SetCellHash(cell.name)
-			assert(SkillsDB.has(cell.id) == false, "Duplicated cell in SkillsDB")
-			SkillsDB[cell.id] = cell
+	for resourcePath in FileSystem.ParseResources(Path.SkillPst):
+		var cell : SkillCell = FileSystem.LoadResource(resourcePath, false)
+		cell.Instantiate()
+		cell.id = SetCellHash(cell.name)
+		assert(SkillsDB.has(cell.id) == false, "Duplicated cell in SkillsDB")
+		SkillsDB[cell.id] = cell
 
 static func ParseQuestsDB():
-	var result = FileSystem.LoadDB("quests.json")
-
-	if not result.is_empty():
-		for key in result:
-			var quest : QuestData = FileSystem.LoadQuest(Path.QuestPst + result[key].Path + Path.RscExt)
-			assert(QuestsDB.has(quest.id) == false, "Duplicated quest in QuestsDB")
-			QuestsDB[quest.id] = quest
+	for resourcePath in FileSystem.ParseResources(Path.QuestPst):
+		var quest : QuestData = FileSystem.LoadResource(resourcePath, false)
+		quest.id = quest.name.hash()
+		assert(QuestsDB.has(quest.id) == false, "Duplicated quest in QuestsDB")
+		QuestsDB[quest.id] = quest
 
 #
 static func HasCellHash(cellname : StringName) -> bool:

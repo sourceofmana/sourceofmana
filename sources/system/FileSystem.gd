@@ -80,6 +80,24 @@ static func LoadDB(path : String) -> Dictionary:
 
 	return result
 
+static func ParseResources(path : String) -> Array[String]:
+	var resources : Array[String] = []
+	var dir : DirAccess = DirAccess.open(path)
+	if dir == null:
+		assert(false, "File path \"%s\" is not accessible" % path)
+		return resources
+
+	for directory in dir.get_directories():
+		var directoryPath : String = path.path_join(directory)
+		resources.append_array(ParseResources(directoryPath))
+
+	for file in dir.get_files():
+		if file.ends_with(".tres"):
+			var filePath : String = path.path_join(file)
+			resources.append(filePath)
+
+	return resources
+
 # Map
 static func LoadMap(path : String, ext : String) -> Object:
 	var mapInstance : Object	= null
@@ -201,19 +219,9 @@ static func LoadMusic(path : String) -> Resource:
 
 	return musicFile
 
-# Cell
-static func LoadCell(path : String) -> BaseCell:
-	var fullPath : String = path
-	return LoadResource(fullPath, false)
-
 # Palette
 static func LoadPalette(path : String) -> Material:
 	var fullPath : String = Path.PalettesPst + path
-	return LoadResource(fullPath, false)
-
-# Quest
-static func LoadQuest(path : String) -> QuestData:
-	var fullPath : String = path
 	return LoadResource(fullPath, false)
 
 # Generic texture loading
