@@ -257,9 +257,9 @@ func fill_polygon_pool(tileset : TileSet, cell_pos : Vector2, gid : int):
 			source_data.add_obstruction_outline(filtered_polygon)
 
 # Reads a collision pool and create a navigation mesh
-func build_server(source_path) -> Node:
+func build_server(source_path) -> Resource:
 	var root = MapServerData.new()
-	root.set_name(source_path.get_file().get_basename())
+	root.name = source_path.get_file().get_basename()
 	root.flags = map_flags
 
 	# Can't save an array of custom objects, every element will be null when loaded

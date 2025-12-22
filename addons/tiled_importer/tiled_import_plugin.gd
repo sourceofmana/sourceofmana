@@ -105,7 +105,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	var mapReader = TiledMapReader.new()
 
 	var client_scene : Node2D = mapReader.build_client(source_file, options)
-	var server_scene : Node = mapReader.build_server(source_file)
+	var server_resource : Resource = mapReader.build_server(source_file)
 	var nav_region : NavigationRegion2D = mapReader.build_navigation()
 
 	# Navigation import into a separate .tres
@@ -115,12 +115,8 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 
 	# Import file when opening the .tmx file
 	if options.export_global_scene:
-		if server_scene:
-			server_scene.set_name("ServerData")
-			client_scene.add_child(server_scene)
-			server_scene.set_owner(client_scene)
 		if nav_region:
-			server_scene.set_name("NavRegion")
+			nav_region.set_name("NavRegion")
 			client_scene.add_child(nav_region)
 			nav_region.set_owner(client_scene)
 		var packed_scene = PackedScene.new()
@@ -142,10 +138,8 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 			saveRet &= ResourceSaver.save(packed_scene, "%s.client.%s" % [source_file, _get_save_extension()])
 
 		# Server Data import (Spawn and warp locations)
-		if server_scene:
-			var packed_scene = PackedScene.new()
-			packed_scene.pack(server_scene)
-			saveRet &= ResourceSaver.save(packed_scene, "%s.server.%s" % [source_file, _get_save_extension()])
+		if server_resource:
+			saveRet &= ResourceSaver.save(server_resource, "%s.server.tres" % [source_file])
 
 		# Empty scene when the user want to open the .tmx, have to check the export_global_scene to generate a global unified scene
 		var empty_scene : Node2D = Node2D.new()

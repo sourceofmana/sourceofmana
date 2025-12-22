@@ -42,7 +42,7 @@ const Local : String					= "user://"
 # Extentions
 const GfxExt: String					= ".png"
 const MapClientExt: String				= ".tmx.client.scn"
-const MapServerExt: String				= ".tmx.server.scn"
+const MapServerExt: String				= ".tmx.server.tres"
 const MapNavigationExt: String			= ".tmx.navigation.tres"
 const MusicExt: String					= ".ogg"
 const DBExt: String						= ".db"

@@ -1,8 +1,8 @@
 @tool
-extends Node
-
+extends Resource
 class_name MapServerData
 
+@export var name : String					= ""
 @export var nav_poly : NavigationPolygon	= null
 @export var spawns : Array					= []
 @export var warps : Array					= []
