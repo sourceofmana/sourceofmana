@@ -24,12 +24,13 @@ func ApplyMigrations():
 	var currentVersion : int = GetVersion()
 	var patches : PackedStringArray = FileSystem.ParseSQL(Path.MigrationRsc)
 	var patchCount : int = patches.size()
-	if patchCount > currentVersion:
-		patches.sort()
-		while patchCount > currentVersion:
-			ApplyMigration(patches[currentVersion])
-			currentVersion += 1
-		SetVersion(currentVersion)
+	if patchCount == currentVersion:
+		return
+
+	while patchCount > currentVersion:
+		ApplyMigration(patches[currentVersion])
+		currentVersion += 1
+	SetVersion(currentVersion)
 
 func ApplyMigration(migrationFile : String):
 	var migration : String = FileAccess.get_file_as_string(migrationFile)
