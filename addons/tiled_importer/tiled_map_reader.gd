@@ -75,6 +75,7 @@ var tileDic : Dictionary = {}
 var specificDic : Dictionary = {}
 # Navigation mesh variables
 var cell_size = Vector2.ZERO
+var map_name = ""
 var map_width = 0
 var map_height = 0
 var map_flags = WorldMap.Flags.NONE
@@ -147,11 +148,11 @@ func build_client(source_path, options) -> Node2D:
 							map_pos_offset.y -= cell_size.y
 
 	var root = Node2D.new()
-	root.set_name(source_path.get_file().get_basename())
 	if options.save_tiled_properties:
 		set_tiled_properties_as_meta(root, map)
 	if options.custom_properties:
 		set_custom_properties(root, map)
+	root.set_name(map_name)
 
 	var tileset = build_tileset_for_scene(map.tilesets, source_path, options, root)
 	if typeof(tileset) != TYPE_OBJECT:
@@ -257,9 +258,9 @@ func fill_polygon_pool(tileset : TileSet, cell_pos : Vector2, gid : int):
 			source_data.add_obstruction_outline(filtered_polygon)
 
 # Reads a collision pool and create a navigation mesh
-func build_server(source_path) -> Resource:
+func build_server() -> Resource:
 	var root = MapServerData.new()
-	root.name = source_path.get_file().get_basename()
+	root.name = map_name
 	root.flags = map_flags
 
 	# Can't save an array of custom objects, every element will be null when loaded
@@ -1339,7 +1340,9 @@ func set_custom_properties(object, tiled_object):
 	var properties = get_custom_properties(tiled_object.properties, tiled_object.propertytypes)
 	for property in properties:
 		object.set_meta(property, properties[property])
-		if property == "lighting":
+		if property == "name":
+			map_name = properties[property]
+		elif property == "lighting":
 			var lighting : Node = object.get_node_or_null("LightingLayer")
 			if lighting == null:
 				lighting = FileSystem.LoadEffect("Lighting")

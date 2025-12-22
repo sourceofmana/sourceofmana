@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="93" height="59" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="12">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="93" height="59" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="12">
  <properties>
   <property name="license" value="CC BY-SA 4.0"/>
   <property name="lighting" type="float" value="0.9"/>
   <property name="music" value="LaJohanne"/>
-  <property name="name" value="Second Deck"/>
+  <property name="name" value="Ship Second Deck"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/generic/ship/indoor/Indoor.tsx"/>
  <tileset firstgid="129" source="../../graphics/tilesets/generic/ship/indoor/Fringe.tsx"/>

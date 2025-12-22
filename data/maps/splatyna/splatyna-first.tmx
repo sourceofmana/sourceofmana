@@ -441,7 +441,7 @@
  <objectgroup color="#c8c837" id="14" name="Object">
   <object id="27" name="Splatyna Cave" type="Warp" x="1216" y="1728">
    <properties>
-    <property name="dest_map" value="Splatyna Cave"/>
+    <property name="dest_map" value="Splatyna's Corridor"/>
     <property name="dest_pos_x" type="int" value="33"/>
     <property name="dest_pos_y" type="int" value="41"/>
    </properties>

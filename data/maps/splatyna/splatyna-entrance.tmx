@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="60">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="107" height="89" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="60">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="lighting" type="float" value="0.8"/>
   <property name="music" value="Lenia"/>
-  <property name="name" value="Splatyna Cave"/>
+  <property name="name" value="Splatyna Cave Entrance"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/aemil/cave/Cave.tsx"/>
  <tileset firstgid="257" source="../../graphics/tilesets/aemil/cave/Cave x2.tsx"/>
@@ -490,7 +490,7 @@
   <object id="51" name="Splatyna Cave" type="Warp" x="1504" y="896">
    <properties>
     <property name="dest_cellsize" type="int" value="32"/>
-    <property name="dest_map" value="Splatyna Cave"/>
+    <property name="dest_map" value="Splatyna's Corridor"/>
     <property name="dest_pos_x" type="int" value="70"/>
     <property name="dest_pos_y" type="int" value="42"/>
    </properties>

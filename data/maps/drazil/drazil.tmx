@@ -3,7 +3,7 @@
  <properties>
   <property name="ambient" value="Cloud"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
-  <property name="name" value="Drazil Island"/>
+  <property name="name" value="Drazil"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/isles/tropical/water.tsx"/>
  <tileset firstgid="91" source="../../graphics/tilesets/isles/tropical/Ground.tsx"/>

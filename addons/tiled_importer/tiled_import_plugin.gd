@@ -105,7 +105,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	var mapReader = TiledMapReader.new()
 
 	var client_scene : Node2D = mapReader.build_client(source_file, options)
-	var server_resource : Resource = mapReader.build_server(source_file)
+	var server_resource : Resource = mapReader.build_server()
 	var nav_region : NavigationRegion2D = mapReader.build_navigation()
 
 	# Navigation import into a separate .tres

@@ -278,7 +278,7 @@ static func ParseExtension(path : String, extension : String) -> PackedStringArr
 
 	for directory in dir.get_directories():
 		var directoryPath : String = path.path_join(directory)
-		resources.append_array(ParseResources(directoryPath))
+		resources.append_array(ParseExtension(directoryPath, extension))
 
 	for file in dir.get_files():
 		if file.ends_with(extension):

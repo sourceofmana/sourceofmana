@@ -4,7 +4,7 @@
   <property name="license" value="CC BY-SA 4.0"/>
   <property name="lighting" type="float" value="0.5"/>
   <property name="music" value="LaJohanne"/>
-  <property name="name" value="Alige's Hiding Place"/>
+  <property name="name" value="Ship Alige Hide"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/generic/ship/indoor/Indoor.tsx"/>
  <tileset firstgid="129" source="../../graphics/tilesets/generic/ship/indoor/Fringe.tsx"/>

@@ -28,12 +28,11 @@ enum Palette
 
 #
 static func ParseMapsDB():
-	var result = FileSystem.LoadDB("maps.json")
-
-	if not result.is_empty():
-		for key in result:
-			var data : FileData = FileData.Create(key, result[key].Path)
-			MapsDB[data._id] = data
+	for resourcePath in FileSystem.ParseExtension(Path.MapRsc, Path.MapServerExt):
+		var map : MapServerData = FileSystem.LoadResource(resourcePath, false)
+		var genericPath = resourcePath.get_slice(Path.MapRsc, 1).get_slice(Path.MapServerExt, 0)
+		var data : FileData = FileData.Create(map.name, genericPath)
+		MapsDB[data._id] = data
 
 static func ParseMusicDB():
 	var result = FileSystem.LoadDB("music.json")

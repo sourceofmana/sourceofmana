@@ -4,7 +4,7 @@
   <property name="license" value="CC BY-SA 4.0"/>
   <property name="lighting" type="float" value="0.5"/>
   <property name="music" value="LaJohanne"/>
-  <property name="name" value="Hold"/>
+  <property name="name" value="Ship Hold"/>
  </properties>
  <tileset firstgid="1" source="../../graphics/tilesets/generic/ship/indoor/Indoor.tsx"/>
  <tileset firstgid="129" source="../../graphics/tilesets/generic/ship/indoor/Fringe.tsx"/>
@@ -353,7 +353,7 @@
    </properties>
    <polygon points="0,0 0,32 32,32 32,0"/>
   </object>
-  <object id="4" name="To Second Deck" type="Warp" x="736" y="992">
+  <object id="4" name="To Alige Hide" type="Warp" x="736" y="992">
    <properties>
     <property name="dest_map" value="Ship Alige Hide"/>
     <property name="dest_pos_x" type="int" value="40"/>
