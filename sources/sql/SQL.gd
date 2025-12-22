@@ -5,6 +5,36 @@ var db : Object						= null
 var backups : SQLBackups			= null
 var queryMutex : Mutex				= Mutex.new()
 
+# Migrations
+func HasVersion() -> bool:
+	var result = Query("SELECT name FROM sqlite_master WHERE type=\"table\" AND name=\"migration\"")
+	return not result.is_empty()
+
+func GetVersion() -> int:
+	if HasVersion():
+		var result = Query("SELECT version FROM migration LIMIT 1;")
+		if not result.is_empty():
+			return result[0].get("version", 0)
+	return 0
+
+func SetVersion(version : int):
+	Query("UPDATE migration SET version = %d;" % version)
+
+func ApplyMigrations():
+	var currentVersion : int = GetVersion()
+	var patches : PackedStringArray = FileSystem.ParseSQL(Path.MigrationRsc)
+	var patchCount : int = patches.size()
+	if patchCount > currentVersion:
+		patches.sort()
+		while patchCount > currentVersion:
+			ApplyMigration(patches[currentVersion])
+			currentVersion += 1
+		SetVersion(currentVersion)
+
+func ApplyMigration(migrationFile : String):
+	var migration : String = FileAccess.get_file_as_string(migrationFile)
+	Query(migration)
+
 # Accounts
 func AddAccount(username : String, password : String, email : String) -> bool:
 	var salt : String = Hasher.GenerateSalt()
@@ -366,6 +396,8 @@ func _post_launch():
 	else:
 		if not Launcher.Debug:
 			backups = SQLBackups.new()
+
+	ApplyMigrations()
 
 	isInitialized = true
 

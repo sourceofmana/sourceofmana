@@ -80,24 +80,6 @@ static func LoadDB(path : String) -> Dictionary:
 
 	return result
 
-static func ParseResources(path : String) -> Array[String]:
-	var resources : Array[String] = []
-	var dir : DirAccess = DirAccess.open(path)
-	if dir == null:
-		assert(false, "File path \"%s\" is not accessible" % path)
-		return resources
-
-	for directory in dir.get_directories():
-		var directoryPath : String = path.path_join(directory)
-		resources.append_array(ParseResources(directoryPath))
-
-	for file in dir.get_files():
-		if file.ends_with(".tres"):
-			var filePath : String = path.path_join(file)
-			resources.append(filePath)
-
-	return resources
-
 # Map
 static func LoadMap(path : String, ext : String) -> Object:
 	var mapInstance : Object	= null
@@ -285,3 +267,28 @@ static func CopyFile(sourcePath : String, targetPath : String) -> bool:
 	targetFile.close()
 
 	return true
+
+# Parse
+static func ParseExtension(path : String, extension : String) -> PackedStringArray:
+	var resources : PackedStringArray = []
+	var dir : DirAccess = DirAccess.open(path)
+	if dir == null:
+		assert(false, "File path \"%s\" is not accessible" % path)
+		return resources
+
+	for directory in dir.get_directories():
+		var directoryPath : String = path.path_join(directory)
+		resources.append_array(ParseResources(directoryPath))
+
+	for file in dir.get_files():
+		if file.ends_with(extension):
+			var filePath : String = path.path_join(file)
+			resources.append(filePath)
+
+	return resources
+
+static func ParseResources(path : String) -> PackedStringArray:
+	return ParseExtension(path, Path.RscExt)
+
+static func ParseSQL(path : String) -> PackedStringArray:
+	return ParseExtension(path, Path.SQLExt)
