@@ -3,7 +3,10 @@ class_name AI
 
 #
 static func SetState(agent : AIAgent, state : AICommons.State, force : bool = false):
-	var newState : AICommons.State = state if force else AICommons.GetTransition(agent.aiState, state)
+	var newState : AICommons.State = state
+	if not force:
+		newState = AICommons.STATE_TRANSITIONS[agent.aiState * AICommons.State.COUNT + state] as AICommons.State
+
 	if agent.aiState != newState:
 		agent.aiState = newState
 		if AICommons.IsActionInProgress(agent):

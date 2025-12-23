@@ -35,19 +35,7 @@ static func GetGenderID(gender : String) -> Gender:
 		genderNonBinary:			return Gender.NONBINARY
 		_:							return Gender.MALE
 
-enum State
-{
-	UNKNOWN = -1,
-	IDLE = 0,
-	WALK,
-	SIT,
-	ATTACK,
-	DEATH,
-	TO_TRIGGER,
-	TRIGGER,
-	FROM_TRIGGER,
-	COUNT
-}
+
 
 enum Slot
 {
@@ -106,43 +94,53 @@ enum Target
 
 const playbackParameter : String = "parameters/playback"
 
-# Skip TO_TRIGGER & FROM_TRIGGER as they are only used as transition steps between idle/trigger.
-const stateTransitions : Array[Array] = [
-#	IDLE			WALK			SIT				ATTACK			DEATH			TO_TRIGGER		TRIGGER			FROM_TRIGGER		< To/From v
-	[State.IDLE,	State.WALK,		State.SIT,		State.ATTACK,	State.DEATH,	State.IDLE,		State.TRIGGER,	State.IDLE],		# IDLE
-	[State.IDLE,	State.WALK,		State.WALK,		State.ATTACK,	State.DEATH,	State.IDLE,		State.TRIGGER,	State.IDLE],		# WALK
-	[State.SIT,		State.WALK,		State.IDLE,		State.ATTACK,	State.DEATH,	State.IDLE,		State.TRIGGER,	State.IDLE],		# SIT
-	[State.IDLE,	State.WALK,		State.ATTACK,	State.ATTACK,	State.DEATH,	State.IDLE,		State.TRIGGER,	State.IDLE],		# ATTACK
-	[State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH,	State.DEATH],		# DEATH
-	[],																																	# TO_TRIGGER
-	[State.TRIGGER,	State.TRIGGER,	State.SIT,		State.ATTACK,	State.DEATH,	State.TRIGGER,	State.IDLE,		State.TRIGGER],		# TRIGGER
-	[]																																	# FROM_TRIGGER
+# State
+enum State
+{
+	UNKNOWN = -1,
+	IDLE = 0,
+	WALK,
+	SIT,
+	ATTACK,
+	DEATH,
+	TO_TRIGGER,
+	TRIGGER,
+	FROM_TRIGGER,
+	COUNT
+}
+
+static var STATE_TRANSITIONS : PackedByteArray = [
+# IDLE
+	State.IDLE,    State.WALK,      State.SIT,      State.ATTACK,   State.DEATH,    State.IDLE,         State.TRIGGER,  State.IDLE,
+# WALK
+	State.IDLE,    State.WALK,      State.WALK,     State.ATTACK,   State.DEATH,    State.IDLE,         State.TRIGGER,  State.IDLE,
+# SIT
+	State.SIT,     State.WALK,      State.IDLE,     State.ATTACK,   State.DEATH,    State.IDLE,         State.TRIGGER,  State.IDLE,
+# ATTACK
+	State.IDLE,    State.WALK,      State.ATTACK,   State.ATTACK,   State.DEATH,    State.IDLE,         State.TRIGGER,  State.IDLE,
+# DEATH
+	State.DEATH,   State.DEATH,     State.DEATH,    State.DEATH,    State.DEATH,    State.DEATH,        State.DEATH,    State.DEATH,
+# TO_TRIGGER
+	State.IDLE,    State.WALK,      State.SIT,      State.ATTACK,   State.DEATH,    State.TO_TRIGGER,   State.TRIGGER,  State.FROM_TRIGGER,
+# TRIGGER
+	State.TRIGGER, State.TRIGGER,   State.SIT,      State.ATTACK,   State.DEATH,    State.TRIGGER,      State.IDLE,     State.TRIGGER,
+# FROM_TRIGGER
+	State.IDLE,    State.WALK,      State.SIT,      State.ATTACK,   State.DEATH,    State.IDLE,         State.TRIGGER,  State.FROM_TRIGGER
 ]
 
-const stateIdle : String					= "Idle"
-const stateWalk : String					= "Walk"
-const stateSit : String						= "Sit"
-const stateAttack : String					= "Attack"
-const stateDeath : String					= "Death"
-const stateToTrigger : String				= "To Trigger"
-const stateTrigger : String					= "Trigger"
-const stateFromTrigger : String				= "From Trigger"
-
-# State
-static func GetNextTransition(currentState : State, newState : State) -> State:
-	return stateTransitions[currentState][newState]
+const STATE_NAMES : PackedStringArray = [
+	"Idle",
+	"Walk",
+	"Sit",
+	"Attack",
+	"Death",
+	"To Trigger",
+	"Trigger",
+	"From Trigger",
+]
 
 static func GetStateName(state : State) -> String:
-	match state:
-		State.IDLE:			return stateIdle
-		State.WALK:			return stateWalk
-		State.SIT:			return stateSit
-		State.ATTACK:		return stateAttack
-		State.DEATH:		return stateDeath
-		State.TO_TRIGGER:	return stateToTrigger
-		State.TRIGGER:		return stateTrigger
-		State.FROM_TRIGGER:	return stateFromTrigger
-		_:					return stateIdle
+	return STATE_NAMES[state]
 
 static func IsAlive(agent : Actor) -> bool:
 	return agent and agent.state != State.DEATH

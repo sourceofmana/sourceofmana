@@ -8,6 +8,7 @@ enum State
 	WALK,
 	ATTACK,
 	HALT,
+	COUNT
 }
 
 enum Behaviour
@@ -50,12 +51,16 @@ static func GetBehaviourFlags(behaviours : PackedStringArray) -> int:
 	return flags
 
 #
-const _transitions : Array[Array] = [
-#	IDLE				WALK			ATTACK			HALT			< To/From v
-	[State.IDLE,		State.WALK,		State.ATTACK,	State.HALT],	# IDLE
-	[State.IDLE,		State.WALK,		State.ATTACK,	State.HALT],	# WALK
-	[State.ATTACK,		State.ATTACK,	State.ATTACK,	State.HALT],	# ATTACK
-	[State.HALT,		State.HALT,		State.HALT,		State.HALT],	# HALT
+const STATE_TRANSITIONS : PackedByteArray = [
+#	IDLE            WALK            ATTACK          HALT        < To/From v
+# IDLE
+	State.IDLE,     State.WALK,     State.ATTACK,   State.HALT, # IDLE
+# WALK
+	State.IDLE,     State.WALK,     State.ATTACK,   State.HALT, # WALK
+# ATTACK
+	State.ATTACK,   State.ATTACK,   State.ATTACK,   State.HALT, # ATTACK
+# HALT
+	State.HALT,     State.HALT,     State.HALT,     State.HALT, # HALT
 ]
 
 const MinRefreshDelay : float		= 1.0
@@ -110,9 +115,6 @@ static func GetRandomSkill(agent : AIAgent) -> SkillCell:
 			if randProba <= 0.0:
 				return DB.GetSkill(skill)
 	return null
-
-static func GetTransition(prev : State, next : State) -> State:
-	return _transitions[prev][next]
 
 static func HasExpiredNodeGoal(agent : AIAgent):
 	return agent.hasNodeGoal and (agent.nodeGoal == null or (agent.nodeGoal is BaseAgent and not (ActorCommons.IsAlive(agent.nodeGoal) and SkillCommons.IsSameMap(agent, agent.nodeGoal))))

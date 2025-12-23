@@ -55,7 +55,8 @@ func UpdateInput():
 			SwitchInputMode(true)
 
 func SetState(wantedState : ActorCommons.State) -> bool:
-	var nextState : ActorCommons.State = ActorCommons.GetNextTransition(state, wantedState)
+	var stateIdx : int = state * ActorCommons.State.COUNT + wantedState
+	var nextState : ActorCommons.State = ActorCommons.STATE_TRANSITIONS[stateIdx] as ActorCommons.State
 	if nextState != state:
 		requireFullUpdate = true
 		state = nextState
