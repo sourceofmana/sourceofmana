@@ -371,6 +371,7 @@ static var DefaultInventory : Array[Dictionary] = [
 	{ "item_id": "Desert Jacket".hash(), "count": 1, "customfield": "" },
 	{ "item_id": "Desert Armor".hash(), "count": 1, "customfield": "" },
 	{ "item_id": "Ghutra".hash(), "count": 1, "customfield": "" },
+	{ "item_id": "Desert Goggles".hash(), "count": 1, "customfield": "" },
 ]
 static var DefaultSkills : Array[Dictionary] = [
 	{ "skill_id": "Melee".hash(), "level": 1 },
