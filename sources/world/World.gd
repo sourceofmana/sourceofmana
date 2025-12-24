@@ -52,29 +52,37 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 				agent.Morph(false, agent.stat.shape)
 
 		Network.WarpPlayer(map.id, agent.position, agent.peerID)
-		for neighbours in WorldAgent.GetNeighboursFromAgent(agent):
-			for neighbour in neighbours:
+		var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+		if instance:
+			for neighbour in instance.players:
 				var neighbourRID : int = neighbour.get_rid().get_id()
-				if neighbour is PlayerAgent:
-					Network.Bulk("AddPlayer", [
-						neighbourRID, neighbour.GetActorType(), neighbour.stat.shape,
-						neighbour.stat.spirit, neighbour.stat.currentShape, neighbour.nick,
-						neighbour.velocity, neighbour.position, neighbour.currentOrientation,
-						neighbour.state, neighbour.currentSkillID,
-						neighbour.stat.level, neighbour.stat.health,
-						neighbour.stat.hairstyle, neighbour.stat.haircolor,
-						neighbour.stat.gender, neighbour.stat.race, neighbour.stat.skintone,
-						neighbour.inventory.ExportEquipment() if neighbour.inventory else {}
-					], agent.peerID)
-				else:
-					Network.Bulk("AddEntity", [
-						neighbourRID, neighbour.GetActorType(),
-						neighbour.stat.currentShape, neighbour.nick,
-						neighbour.velocity, neighbour.position, neighbour.currentOrientation,
-						neighbour.state, neighbour.currentSkillID,
-					], agent.peerID)
+				Network.Bulk("AddPlayer", [
+					neighbourRID, neighbour.GetActorType(), neighbour.stat.shape,
+					neighbour.stat.spirit, neighbour.stat.currentShape, neighbour.nick,
+					neighbour.velocity, neighbour.position, neighbour.currentOrientation,
+					neighbour.state, neighbour.currentSkillID,
+					neighbour.stat.level, neighbour.stat.health,
+					neighbour.stat.hairstyle, neighbour.stat.haircolor,
+					neighbour.stat.gender, neighbour.stat.race, neighbour.stat.skintone,
+					neighbour.inventory.ExportEquipment() if neighbour.inventory else {}
+				], agent.peerID)
+			for neighbour in instance.npcs:
+				var neighbourRID : int = neighbour.get_rid().get_id()
+				Network.Bulk("AddEntity", [
+					neighbourRID, neighbour.GetActorType(),
+					neighbour.stat.currentShape, neighbour.nick,
+					neighbour.velocity, neighbour.position, neighbour.currentOrientation,
+					neighbour.state, neighbour.currentSkillID,
+				], agent.peerID)
+			for neighbour in instance.mobs:
+				var neighbourRID : int = neighbour.get_rid().get_id()
+				Network.Bulk("AddEntity", [
+					neighbourRID, neighbour.GetActorType(),
+					neighbour.stat.currentShape, neighbour.nick,
+					neighbour.velocity, neighbour.position, neighbour.currentOrientation,
+					neighbour.state, neighbour.currentSkillID,
+				], agent.peerID)
 
-	if agent is PlayerAgent:
 		Network.NotifyNeighbours(agent, "AddPlayer", [
 			agent.GetActorType(),
 			agent.stat.shape, agent.stat.spirit, agent.stat.currentShape, agent.nick,

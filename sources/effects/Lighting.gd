@@ -34,8 +34,8 @@ func _process(delta : float):
 					visibleLights.append(light)
 
 	for colorRect in colorRectArrays:
-		var lightData : Array[Vector4] = []
-		var colorData : Array[Color] = []
+		var lightData : PackedVector4Array = []
+		var colorData : PackedColorArray = []
 		var rescaledRect : Vector2 = colorRect.global_position / canvasScale
 		var rectTopLeft : Vector2 = rescaledRect - canvasTransform.origin
 		var rect : Rect2 = Rect2(Vector2(rectTopLeft), 	Vector2(colorRect.size))

@@ -27,7 +27,7 @@ func FreeMap(mapID : int):
 
 #
 func RefreshPool():
-	var adjacentMaps : Array = []
+	var adjacentMaps : Array[int] = []
 	if Launcher.Map.currentMapNode.has_node("Object"):
 		for object in Launcher.Map.currentMapNode.get_node("Object").get_children():
 			if object is WarpObject:
@@ -41,8 +41,8 @@ func RefreshPool():
 	if poolCurrentSize > LauncherCommons.MapPoolMaxSize:
 		ClearUnused(adjacentMaps, poolCurrentSize - LauncherCommons.MapPoolMaxSize)
 
-func ClearUnused(adjacentMaps : Array, nbToRemove : int):
-	var mapToFree : Array = []
+func ClearUnused(adjacentMaps : PackedInt64Array, nbToRemove : int):
+	var mapToFree : Array[int] = []
 	for mapID in pool:
 		if mapID != Launcher.Map.currentMapID and mapID not in adjacentMaps:
 			mapToFree.append(mapID)

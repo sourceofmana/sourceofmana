@@ -96,7 +96,7 @@ func RemoveCharacter(charID : int) -> bool:
 		return db.delete_rows("character", "char_id = %d" % charID)
 	return false
 
-func GetCharacters(accountID : int) -> Array[int]:
+func GetCharacters(accountID : int) -> PackedInt64Array:
 	var charIDs : Array[int] = []
 	for result in db.select_rows("character", "account_id = %d" % accountID, ["char_id"]):
 		charIDs.append(result["char_id"])

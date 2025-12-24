@@ -14,7 +14,7 @@ var cooldownTimers : Dictionary[int, bool]	= {}
 
 var hasCurrentGoal : bool				= false
 var isRelativeMode : bool				= false
-var lastPositions : Array[float]		= []
+var lastPositions : PackedFloat32Array	= []
 
 var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
@@ -48,9 +48,9 @@ func UpdateInput():
 			var clampedDirection : Vector2 = Vector2(global_position.direction_to(agent.get_next_path_position()).normalized() * ActorCommons.InputApproximationUnit)
 			currentInput = Vector2(clampedDirection) / ActorCommons.InputApproximationUnit
 
+			if lastPositions.size() + 1 > ActorCommons.LastMeanValueMax:
+				lastPositions.remove_at(0)
 			lastPositions.push_back(agent.distance_to_target())
-			if lastPositions.size() > ActorCommons.LastMeanValueMax:
-				lastPositions.pop_front()
 		else:
 			SwitchInputMode(true)
 

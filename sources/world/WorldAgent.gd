@@ -16,15 +16,6 @@ static func GetMapFromAgent(agent : BaseAgent) -> WorldMap:
 		map = inst.map
 	return map
 
-static func GetNeighboursFromAgent(checkedAgent : BaseAgent) -> Array[Array]:
-	var neighbours : Array[Array] = []
-	var instance : WorldInstance = GetInstanceFromAgent(checkedAgent)
-	if instance:
-		neighbours.append(instance.npcs)
-		neighbours.append(instance.mobs)
-		neighbours.append(instance.players)
-	return neighbours
-
 # Basic Agent container handling
 static func GetAgent(agentRID : int) -> BaseAgent:
 	var agent : BaseAgent = null

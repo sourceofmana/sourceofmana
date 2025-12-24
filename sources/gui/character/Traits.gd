@@ -37,12 +37,12 @@ signal hairUpdate
 
 #
 func GetValues():
-	var hairstyles : Array = DB.HairstylesDB.keys()
-	var haircolors : Array = DB.PalettesDB[DB.Palette.HAIR].keys()
-	var races : Array = DB.RacesDB.keys()
+	var hairstyles : PackedInt64Array = DB.HairstylesDB.keys()
+	var haircolors : PackedInt64Array = DB.PalettesDB[DB.Palette.HAIR].keys()
+	var races : PackedInt64Array = DB.RacesDB.keys()
 	var race : RaceData = DB.GetRace(races[raceValue])
-	var skins : Dictionary = race._skins if race else {}
-	var skinsKeys : Array = skins.keys()
+	var skins : Dictionary[int, FileData] = race._skins if race else {}
+	var skinsKeys : PackedInt64Array = skins.keys()
 
 	return {
 		"hairstyle" = hairstyles[hairstyleValue],
@@ -54,7 +54,7 @@ func GetValues():
 
 # Hairstyle
 func RefreshHairstyle():
-	var hairstyles : Array = DB.HairstylesDB.keys()
+	var hairstyles : PackedInt64Array = DB.HairstylesDB.keys()
 	if hairstyleValue >= 0 and hairstyleValue < hairstylesCount:
 		hairstyleLabel.set_text(DB.GetHairstyle(hairstyles[hairstyleValue])._name)
 		hairUpdate.emit()
@@ -69,7 +69,7 @@ func _on_hairstyle_next_button():
 
 # Haircolor
 func RefreshHaircolor():
-	var palettes : Array = DB.PalettesDB[DB.Palette.HAIR].keys()
+	var palettes : PackedInt64Array = DB.PalettesDB[DB.Palette.HAIR].keys()
 	if haircolorValue >= 0 and haircolorValue < haircolorsCount:
 		haircolorLabel.set_text(DB.GetPalette(DB.Palette.HAIR, palettes[haircolorValue])._name)
 		hairUpdate.emit()
@@ -97,7 +97,7 @@ func _on_gender_next_button():
 
 # Race
 func RefreshRace():
-	var races : Array = DB.RacesDB.keys()
+	var races : PackedInt64Array = DB.RacesDB.keys()
 	if raceValue >= 0 and raceValue < raceCount:
 		var data : RaceData = DB.GetRace(races[raceValue])
 		raceLabel.set_text(data._name)
@@ -114,11 +114,11 @@ func _on_race_next_button():
 
 # Skin tone
 func RefreshSkintone():
-	var races : Array = DB.RacesDB.keys()
+	var races : PackedInt64Array = DB.RacesDB.keys()
 	if raceValue >= 0 and raceValue < raceCount:
 		var data : RaceData = DB.GetRace(races[raceValue])
-		var skins : Dictionary = data._skins
-		var skinsKeys : Array = skins.keys()
+		var skins : Dictionary[int, FileData] = data._skins
+		var skinsKeys : PackedInt64Array = skins.keys()
 		skintoneCount = data._skins.size()
 		if skintoneValue < 0 or skintoneValue >= skintoneCount:
 			skintoneValue = 0

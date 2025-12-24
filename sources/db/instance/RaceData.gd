@@ -2,8 +2,8 @@ extends Node
 class_name RaceData
 
 @export var _name : String				= "Unknown"
-@export var _faces : Array[String]		= []
-@export var _bodies : Array[String]		= []
+@export var _faces : PackedStringArray			= []
+@export var _bodies : PackedStringArray			= []
 @export var _skins : Dictionary[int, FileData]	= {}
 
 func _init():

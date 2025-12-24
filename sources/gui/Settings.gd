@@ -4,24 +4,22 @@ var platformSection : String					= Util.GetPlatformName()
 const defaultSection : String					= "Default"
 const userSection : String						= "User"
 
-@onready var accessors : Array						= [
-	{
-		"Render-MinWindowSize": [init_minwinsize, set_minwinsize, apply_minwinsize, null],
-		"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
-		"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
-		"Render-WindowSize": [init_resolution, set_resolution, apply_resolution, $Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
-		"Render-WindowPos": [init_windowPos, set_windowPos, apply_windowPos, null],
-		"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
-		"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
-		"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
-		"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
-		"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
-		"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
-		"Session-FirstLogin": [init_sessionfirstlogin, set_sessionfirstlogin, apply_sessionfirstlogin, null],
-		"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
-		"Session-ShortcutCells": [init_shortcutcells, set_shortcutcells, apply_shortcutcells, null],
-	}
-]
+@onready var renderAccessors : Dictionary = {
+	"Render-MinWindowSize": [init_minwinsize, set_minwinsize, apply_minwinsize, null],
+	"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
+	"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
+	"Render-WindowSize": [init_resolution, set_resolution, apply_resolution, $Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
+	"Render-WindowPos": [init_windowPos, set_windowPos, apply_windowPos, null],
+	"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
+	"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
+	"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
+	"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
+	"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
+	"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
+	"Session-FirstLogin": [init_sessionfirstlogin, set_sessionfirstlogin, apply_sessionfirstlogin, null],
+	"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
+	"Session-ShortcutCells": [init_shortcutcells, set_shortcutcells, apply_shortcutcells, null],
+}
 
 enum CATEGORY { RENDER, SOUND, COUNT }
 enum ACC_TYPE { INIT, SET, APPLY, LABEL }
@@ -40,7 +38,7 @@ func apply_minwinsize(minSize : Vector2):
 # FullScreen
 func init_fullscreen(apply : bool):
 	var pressed : bool = is_fullscreen()
-	accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_pressed_no_signal(pressed)
+	renderAccessors["Render-Fullscreen"][ACC_TYPE.LABEL].set_pressed_no_signal(pressed)
 	if apply:
 		apply_fullscreen(pressed)
 func is_fullscreen() -> bool:
@@ -50,7 +48,7 @@ func set_fullscreen(pressed : bool, apply : bool = true):
 	if apply:
 		apply_fullscreen(pressed)
 func apply_fullscreen(pressed : bool):
-	accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_pressed_no_signal(pressed)
+	renderAccessors["Render-Fullscreen"][ACC_TYPE.LABEL].set_pressed_no_signal(pressed)
 	if pressed:
 		clear_resolution_labels()
 		if DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_FULLSCREEN:
@@ -68,13 +66,13 @@ func init_resolution(apply : bool):
 	if apply:
 		apply_resolution(resolution)
 func clear_resolution_labels():
-	accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL].clear()
+	renderAccessors["Render-WindowSize"][ACC_TYPE.LABEL].clear()
 func populate_resolution_labels(resolution : Vector2i):
 	clear_resolution_labels()
 	if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
 		var minScreenSize : Vector2i = GetVal("Render-MinWindowSize")
 		var maxScreenSize : Vector2i = DisplayServer.screen_get_size()
-		var label : OptionButton = accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL]
+		var label : OptionButton = renderAccessors["Render-WindowSize"][ACC_TYPE.LABEL]
 		for i in resolutionEntriesCount:
 			var item : Vector2i = calculate_resolution(i, minScreenSize, maxScreenSize)
 			label.add_item(str(item))
@@ -123,7 +121,7 @@ func apply_windowPos(pos : Vector2):
 # DoubleResolution
 func init_scaling(apply : bool):
 	var mode : int = GetVal("Render-Scaling")
-	accessors[CATEGORY.RENDER]["Render-Scaling"][ACC_TYPE.LABEL].selected = mode
+	renderAccessors["Render-Scaling"][ACC_TYPE.LABEL].selected = mode
 	if apply:
 		apply_scaling(mode)
 func set_scaling(mode : int):
@@ -136,7 +134,7 @@ func apply_scaling(mode : int):
 # ActionOverlay
 func init_actionoverlay(apply : bool):
 	var enable : bool = GetVal("Render-ActionOverlay")
-	accessors[CATEGORY.RENDER]["Render-ActionOverlay"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
+	renderAccessors["Render-ActionOverlay"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
 	if apply:
 		apply_actionoverlay(enable)
 func set_actionoverlay(enable : bool):
@@ -149,7 +147,7 @@ func apply_actionoverlay(enable : bool):
 # Lighting
 func init_lighting(apply : bool):
 	var enable : bool = GetVal("Render-Lighting")
-	accessors[CATEGORY.RENDER]["Render-Lighting"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
+	renderAccessors["Render-Lighting"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
 	if apply:
 		apply_lighting(enable)
 func set_lighting(enable : bool):
@@ -161,7 +159,7 @@ func apply_lighting(enable : bool):
 # HQ4x
 func init_hq4x(apply : bool):
 	var enable : bool = GetVal("Render-HQ4x")
-	accessors[CATEGORY.RENDER]["Render-HQ4x"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
+	renderAccessors["Render-HQ4x"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
 	if apply:
 		apply_hq4x(enable)
 func set_hq4x(enable : bool):
@@ -174,7 +172,7 @@ func apply_hq4x(enable : bool):
 # CRT
 func init_crt(apply : bool):
 	var enable : bool = GetVal("Render-CRT")
-	accessors[CATEGORY.RENDER]["Render-CRT"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
+	renderAccessors["Render-CRT"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
 	if apply:
 		apply_crt(enable)
 func set_crt(enable : bool):
@@ -187,7 +185,7 @@ func apply_crt(enable : bool):
 # Audio General
 func init_audiogeneral(apply : bool):
 	var volumeRatio : float = GetVal("Audio-General")
-	accessors[CATEGORY.RENDER]["Audio-General"][ACC_TYPE.LABEL].value = volumeRatio
+	renderAccessors["Audio-General"][ACC_TYPE.LABEL].value = volumeRatio
 	if apply:
 		apply_audiogeneral(volumeRatio)
 func set_audiogeneral(volumeRatio : float):
@@ -301,14 +299,13 @@ func _ready():
 	FSM.exit_game.connect(SaveSettings.bind())
 
 	if LauncherCommons.isMobile or LauncherCommons.isWeb:
-		accessors[CATEGORY.RENDER]["Render-WindowSize"][ACC_TYPE.LABEL].get_parent().set_visible(false)
-		accessors[CATEGORY.RENDER]["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
+		renderAccessors["Render-WindowSize"][ACC_TYPE.LABEL].get_parent().set_visible(false)
+		renderAccessors["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
 
 # Conf accessors
 func RefreshSettings(apply : bool):
-	for category in accessors:
-		for option in category:
-			category[option][ACC_TYPE.INIT].call_deferred(apply)
+	for option in renderAccessors:
+		renderAccessors[option][ACC_TYPE.INIT].call_deferred(apply)
 
 func SaveSettings():
 	save_sessionoverlay()

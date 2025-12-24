@@ -10,8 +10,8 @@ enum Type
 	COUNT
 }
 
-static var confFiles : Array		= []
-static var cache : Dictionary		= {}
+static var confFiles : Array[ConfigFile]		= []
+static var cache : Dictionary					= {}
 
 #
 static func GetCacheID(section : String, key : String, type : Type) -> String:

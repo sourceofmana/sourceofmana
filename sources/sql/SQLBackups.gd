@@ -38,19 +38,20 @@ func PruneBackups() -> void:
 			return
 		
 		var dirFiles : PackedStringArray = dir.get_files()
-		var backupFiles : Array[String] = []
+		var backupFiles : PackedStringArray = []
 		for file in dirFiles:
 			if file.get_extension() == "db":
 				backupFiles.append(file)
 
+		while backupFiles.size() > SQLCommons.BackupLimits[backupFrequency]:
 			backupFiles.sort() # Oldest backups first
-			while backupFiles.size() > SQLCommons.BackupLimits[backupFrequency]:
-				var prunedFile : String = backupFiles.pop_front()
-				var err : Error = dir.remove(prunedFile)
-				if err == OK:
-					Util.PrintInfo("SQL", "Backup removed: " + prunedFile)
-				else:
-					Util.PrintLog("SQL", "Backup removal failed: %s [%d]" % [prunedFile, err])
+			var prunedFile : String = backupFiles[0]
+			var err : Error = dir.remove(prunedFile)
+			if err == OK:
+				Util.PrintInfo("SQL", "Backup removed: " + prunedFile)
+			else:
+				Util.PrintLog("SQL", "Backup removal failed: %s [%d]" % [prunedFile, err])
+			backupFiles.remove_at(0)
 
 #
 func Run():

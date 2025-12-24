@@ -12,9 +12,9 @@ class_name EntityData
 @export var _displayName : bool					= false
 @export var _behaviour : int					= AICommons.Behaviour.NEUTRAL
 @export var _stats : Dictionary					= ActorCommons.DefaultStats.duplicate()
-@export var _skillSet : Array[int]				= []
+@export var _skillSet : PackedInt64Array		= []
 @export var _skillProba : Dictionary[int, float]= {}
-@export var _drops : Array[int]					= []
+@export var _drops : PackedInt64Array			= []
 @export var _dropsProba : Dictionary[int, float]= {}
 @export var _spawns : Dictionary[int, int]		= {}
 

@@ -6,7 +6,7 @@ var clickTimer : Timer			= null
 var previousMove : Vector2		= Vector2.ZERO
 const stickDeadzone : float		= 0.2
 
-var consumed : Array			= []
+var consumed : Array[String]	= []
 
 signal deviceChanged
 

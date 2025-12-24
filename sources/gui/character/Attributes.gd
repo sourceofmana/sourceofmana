@@ -46,12 +46,14 @@ func RefreshDisabledButtons():
 
 func Randomize():
 	var availablePoints : int = Formula.GetMaxAttributePoints(1)
-	var partitions : Array = []
+	var partitions : PackedInt32Array = [
+		randi() % availablePoints,
+		randi() % availablePoints,
+		randi() % availablePoints,
+		randi() % availablePoints,
+		availablePoints
+	]
 
-	for i in 4:
-		partitions.append(randi() % availablePoints)
-
-	partitions.append(availablePoints)
 	partitions.sort()
 
 	strengthValue = partitions[0]

@@ -254,10 +254,10 @@ func EnableCharacterCreator(enable : bool):
 
 func UpdateCharacterCreatorBody():
 	if isCharacterCreatorEnabled and charactersNode[ActorCommons.MaxCharacterCount]:
-		var races : Array = DB.RacesDB.keys()
+		var races : PackedInt64Array = DB.RacesDB.keys()
 		var race : RaceData = DB.GetRace(races[traitsPanel.raceValue])
-		var skins : Dictionary = race._skins if race else {}
-		var skinsKeys : Array = skins.keys()
+		var skins : Dictionary[int, FileData] = race._skins if race else {}
+		var skinsKeys : PackedInt64Array = skins.keys()
 		charactersNode[ActorCommons.MaxCharacterCount].stat.race = races[traitsPanel.raceValue]
 		charactersNode[ActorCommons.MaxCharacterCount].stat.skintone = skinsKeys[traitsPanel.skintoneValue]
 		charactersNode[ActorCommons.MaxCharacterCount].stat.gender = traitsPanel.genderValue
@@ -267,8 +267,8 @@ func UpdateCharacterCreatorBody():
 
 func UpdateCharacterCreatorHair():
 	if isCharacterCreatorEnabled and charactersNode[ActorCommons.MaxCharacterCount]:
-		var hairstyles : Array = DB.HairstylesDB.keys()
-		var haircolors : Array = DB.PalettesDB[DB.Palette.HAIR].keys()
+		var hairstyles : PackedInt64Array = DB.HairstylesDB.keys()
+		var haircolors : PackedInt64Array = DB.PalettesDB[DB.Palette.HAIR].keys()
 		charactersNode[ActorCommons.MaxCharacterCount].stat.hairstyle = hairstyles[traitsPanel.hairstyleValue]
 		charactersNode[ActorCommons.MaxCharacterCount].stat.haircolor = haircolors[traitsPanel.haircolorValue]
 		if charactersNode[ActorCommons.MaxCharacterCount].visual:

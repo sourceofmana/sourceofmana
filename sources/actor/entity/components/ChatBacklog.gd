@@ -2,7 +2,7 @@ extends Object
 class_name ChatBacklog
 
 #
-var sentLog : Array[String]				= []
+var sentLog : PackedStringArray			= []
 var currentIdx : int					= 0
 
 #

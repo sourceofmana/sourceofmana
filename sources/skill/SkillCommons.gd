@@ -77,16 +77,17 @@ static func GetZoneTargets(instance : WorldInstance, zonePos : Vector2, skill : 
 
 static func GetSurroundingTargets(agent : BaseAgent, skill : SkillCell) -> Array[BaseAgent]:
 	var targets : Array[BaseAgent] = []
-	var neighbours : Array[Array] = WorldAgent.GetNeighboursFromAgent(agent)
+	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 
-	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
-		for neighbour in neighbours[1]:
-			if IsAttackable(agent, neighbour, skill):
-				targets.append(neighbour)
-	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
-		for neighbour in neighbours[2]:
-			if IsAttackable(agent, neighbour, skill):
-				targets.append(neighbour)
+	if instance:
+		if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
+			for neighbour in instance.mobs:
+				if IsAttackable(agent, neighbour, skill):
+					targets.append(neighbour)
+		if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
+			for neighbour in instance.players:
+				if IsAttackable(agent, neighbour, skill):
+					targets.append(neighbour)
 
 	return targets
 

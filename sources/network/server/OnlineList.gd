@@ -5,7 +5,7 @@ class_name OnlineList
 const JSONFileName : String				= "online.json"
 
 #
-static func GetPlayerNames() -> Array[String]:
+static func GetPlayerNames() -> PackedStringArray:
 	var players : Array[String] = []
 	for peerID in Peers.peers:
 		var agent : PlayerAgent = Peers.GetAgent(peerID)
@@ -14,5 +14,5 @@ static func GetPlayerNames() -> Array[String]:
 	return players
 
 static func UpdateJson():
-	var players : Array[String]	= GetPlayerNames()
+	var players : PackedStringArray	= GetPlayerNames()
 	FileSystem.SaveFile(NetworkCommons.OnlineListPath + "/" + JSONFileName, JSON.stringify(players))

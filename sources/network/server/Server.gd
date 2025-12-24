@@ -140,7 +140,7 @@ func CharacterListing(peerID : int):
 	if accountID == NetworkCommons.PeerUnknownID:
 		err = NetworkCommons.CharacterError.ERR_NO_ACCOUNT_ID
 	else:
-		var characterIDs : Array[int] = Launcher.SQL.GetCharacters(accountID)
+		var characterIDs : PackedInt64Array = Launcher.SQL.GetCharacters(accountID)
 		if characterIDs.is_empty():
 			err = NetworkCommons.CharacterError.ERR_EMPTY_ACCOUNT
 		else:

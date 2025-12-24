@@ -5,7 +5,7 @@ var rewardExp : int		= 1000
 var rewardGP : int		= 10000
 
 # Wave parameters
-var monstersPool : Array			= []
+var monstersPool : Array[EntityData]	= []
 const checkDelay : float			= 2.0
 const waveDelay : float				= 300.0
 const maxWave : int					= 10
