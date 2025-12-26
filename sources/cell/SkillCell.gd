@@ -20,11 +20,6 @@ class_name SkillCell
 @export var projectilePreset : PackedScene		= null
 
 #
-func Use():
-	if usable:
-		Launcher.Player.Cast(self.id)
-
-#
 func Instantiate():
 	if castPreset:
 		castPreset.instantiate()
@@ -32,3 +27,8 @@ func Instantiate():
 		skillPreset.instantiate()
 	if projectilePreset:
 		projectilePreset.instantiate()
+
+func Hover(hovering : bool):
+	super.Hover(hovering)
+	if Launcher.Player and Launcher.Player.interactive:
+			Launcher.Player.interactive.DisplaySkillRange(self if hovering else null)

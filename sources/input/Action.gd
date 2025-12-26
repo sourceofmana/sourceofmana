@@ -35,7 +35,6 @@ func TryConsume(event : InputEvent, action : String, forceMode : bool = false) -
 		return true
 	return false
 
-
 func TryJustPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
 	if event.is_action_pressed(action, false, true) and IsActionJustPressed(action, forceMode):
 		ConsumeAction(action, true)
@@ -43,13 +42,13 @@ func TryJustPressed(event : InputEvent, action : String, forceMode : bool = fals
 	return false
 
 func TryPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
-	if event.is_action_pressed(action, false, true) and IsActionPressed(action, forceMode):
+	if event.is_action_pressed(action, true, true) and IsActionPressed(action, forceMode):
 		ConsumeAction(action, true)
 		return true
 	return false
 
 func TryOnlyPressed(event : InputEvent, action : String, forceMode : bool = false) -> bool:
-	if event.is_action_pressed(action, false, true) and IsActionOnlyPressed(action, forceMode):
+	if event.is_action_pressed(action, true, true) and IsActionOnlyPressed(action, forceMode):
 		ConsumeAction(action, true)
 		return true
 	return false
@@ -71,7 +70,7 @@ func IsActionOnlyPressed(action : String, forceMode : bool = false) -> bool:
 	return Input.is_action_pressed(action) && not Input.is_action_just_pressed(action) if forceMode or IsUsable(action) else false
 
 func IsActionJustReleased(action : String, forceMode : bool = false) -> bool:
-	return Input.is_action_just_released(action) if forceMode or IsUsable(action) else false
+	return Input.is_action_just_released(action) if forceMode or IsEnabled() else false
 
 func GetMove(forceMode : bool = false) -> Vector2:
 	var moveVector : Vector2 = Vector2.ZERO
@@ -125,13 +124,12 @@ func _physics_process(_deltaTime : float):
 		previousMove = move
 
 #
-func _input(event):
+func _input(event : InputEvent):
 	if event.is_pressed():
 		if event is InputEventJoypadButton and DeviceManager.currentDeviceType != DeviceManager.DeviceType.JOYSTICK:
 			DeviceManager.DeviceChanged(DeviceManager.DeviceType.JOYSTICK)
 		elif event is InputEventKey and DeviceManager.currentDeviceType != DeviceManager.DeviceType.KEYBOARD:
 			DeviceManager.DeviceChanged(DeviceManager.DeviceType.KEYBOARD)
-
 	if Launcher.Player and Launcher.GUI and Launcher.Map:
 		if TryJustPressed(event, "smile_1"):			Network.TriggerEmote(DB.GetCellHash("Dying"))
 		elif TryJustPressed(event, "smile_2"):			Network.TriggerEmote(DB.GetCellHash("Creeped"))
@@ -155,16 +153,6 @@ func _input(event):
 		elif TryJustPressed(event, "gp_untarget"):		Launcher.Player.ClearTarget()
 		elif TryJustPressed(event, "gp_interact"):		Launcher.Player.JustInteract()
 		elif TryPressed(event, "gp_interact"):			Launcher.Player.Interact()
-		elif TryJustPressed(event, "gp_shortcut_1"):	Launcher.GUI.actionBoxes.Trigger(0)
-		elif TryJustPressed(event, "gp_shortcut_2"):	Launcher.GUI.actionBoxes.Trigger(1)
-		elif TryJustPressed(event, "gp_shortcut_3"):	Launcher.GUI.actionBoxes.Trigger(2)
-		elif TryJustPressed(event, "gp_shortcut_4"):	Launcher.GUI.actionBoxes.Trigger(3)
-		elif TryJustPressed(event, "gp_shortcut_5"):	Launcher.GUI.actionBoxes.Trigger(4)
-		elif TryJustPressed(event, "gp_shortcut_6"):	Launcher.GUI.actionBoxes.Trigger(5)
-		elif TryJustPressed(event, "gp_shortcut_7"):	Launcher.GUI.actionBoxes.Trigger(6)
-		elif TryJustPressed(event, "gp_shortcut_8"):	Launcher.GUI.actionBoxes.Trigger(7)
-		elif TryJustPressed(event, "gp_shortcut_9"):	Launcher.GUI.actionBoxes.Trigger(8)
-		elif TryJustPressed(event, "gp_shortcut_10"):	Launcher.GUI.actionBoxes.Trigger(9)
 		elif TryJustPressed(event, "gp_pickup"):		Launcher.Map.PickupNearestDrop()
 		elif TryJustPressed(event, "gp_morph"):			Network.TriggerMorph()
 	if not HasConsumed() and Launcher.GUI:

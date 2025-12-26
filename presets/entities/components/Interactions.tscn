@@ -1,16 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://f2jxqr5e7i5e"]
+[gd_scene load_steps=6 format=3 uid="uid://f2jxqr5e7i5e"]
 
 [ext_resource type="Script" uid="uid://cvstlrlxs5iui" path="res://sources/actor/entity/components/Interactive.gd" id="1_b3bk6"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_wehdi"]
 [ext_resource type="PackedScene" uid="uid://c0wuhrlsdwo8s" path="res://presets/gui/HealthBar.tscn" id="2_5opbf"]
 [ext_resource type="PackedScene" uid="uid://08v0t5i6hvef" path="res://presets/effects/particles/Emote.tscn" id="2_gghi1"]
+[ext_resource type="Script" uid="uid://cbedrk7hxvhfu" path="res://sources/actor/entity/components/InteractiveSkillPreview.gd" id="5_mia2y"]
 
-[node name="Interactions" type="Node2D"]
-z_index = 1
+[node name="Interactions" type="Control"]
 z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_b3bk6")
 
 [node name="TopOffset" type="Node2D" parent="."]
+z_index = 255
 position = Vector2(0, -64)
 
 [node name="Emote" parent="TopOffset" instance=ExtResource("2_gghi1")]
@@ -43,6 +46,8 @@ layout_mode = 2
 alignment = 1
 
 [node name="UnderBox" type="VBoxContainer" parent="."]
+z_index = 255
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -53,7 +58,6 @@ offset_bottom = 56.0
 grow_horizontal = 2
 
 [node name="Name" type="Label" parent="UnderBox"]
-z_index = 255
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 8
@@ -68,3 +72,9 @@ custom_minimum_size = Vector2(56, 4)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="SkillPreview" type="Control" parent="."]
+z_index = 255
+anchors_preset = 0
+scale = Vector2(1, 0.7)
+script = ExtResource("5_mia2y")

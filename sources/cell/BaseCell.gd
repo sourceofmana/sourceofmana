@@ -28,3 +28,6 @@ func Use():
 				Launcher.Player.Cast(id)
 			_:
 				assert(false, "Cell type not recognized")
+
+func Hover(_hovering : bool):
+	pass

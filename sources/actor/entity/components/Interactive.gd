@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 class_name EntityInteractive
 
 #
@@ -7,6 +7,7 @@ class_name EntityInteractive
 @onready var emoteFx : GPUParticles2D		= $TopOffset/Emote
 @onready var healthBar : TextureProgressBar	= $UnderBox/HealthBar
 @onready var nameLabel : Label				= $UnderBox/Name
+@onready var skillPreview : Control			= $SkillPreview
 
 @onready var entity : Entity				= get_parent()
 
@@ -81,6 +82,13 @@ func DisplayLevelUp():
 		add_child(particle)
 
 #
+func DisplaySkillRange(skill : SkillCell):
+	if skill:
+		skillPreview.Display(skill.cellRange + entity.stat.current.attackRange)
+	else:
+		skillPreview.Hide()
+	skillPreview.queue_redraw()
+
 func DisplayCast(emitter : Entity, skillID : int):
 	if DB.SkillsDB.has(skillID):
 		var skill : SkillCell = DB.SkillsDB[skillID]

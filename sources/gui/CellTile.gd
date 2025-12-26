@@ -110,6 +110,10 @@ func UseCell():
 	if cell:
 		cell.Use()
 
+func Hover(hovering : bool):
+	if cell:
+		cell.Hover(hovering)
+
 func Used(cooldown : float = 0.0):
 	cooldownTimer = cooldown
 	set_process(true)
@@ -150,6 +154,8 @@ func _gui_input(event):
 				UseCell()
 			elif event.pressed:
 				selected.emit(self)
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			cell.DisplayRadius()
 
 func _process(delta : float):
 	if cooldownTimer != -INF:
@@ -171,3 +177,19 @@ func _process(delta : float):
 		icon.material.set_shader_parameter("progress", shineTimer)
 	else:
 		set_process(false)
+
+func Hold(holding : bool):
+	if cell:
+		cell.Hover(holding)
+
+func _on_focus_entered():
+	Hold(true)
+
+func _on_focus_exited():
+	Hold(false)
+
+func _on_mouse_entered():
+	Hold(true)
+
+func _on_mouse_exited():
+	Hold(false)

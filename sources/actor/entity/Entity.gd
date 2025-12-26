@@ -117,7 +117,7 @@ func Cast(skillID : int):
 
 	var skill : SkillCell = DB.SkillsDB[skillID]
 	assert(skill != null, "Skill ID is not found, can't cast it")
-	if skill == null:
+	if skill == null or not skill.usable:
 		return
 
 	var targetRID : int = 0
