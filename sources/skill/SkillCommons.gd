@@ -3,7 +3,7 @@ class_name SkillCommons
 
 # Constants
 const SkillMeleeName : String			= "Melee"
-
+const PerspectiveIncrease : Vector2		= Vector2(1.0, 1.42)
 # Actions
 static func TryConsume(agent : BaseAgent, modifier : CellCommons.Modifier, skill : SkillCell) -> bool:
 	if agent is not PlayerAgent:

@@ -40,6 +40,7 @@ static func UnrollPathLength(path : PackedVector2Array) -> float:
 	var unrolledPos : Vector2 = Vector2.ZERO
 	for i in (pathSize-1):
 		unrolledPos += (path[i] - path[i+1]).abs()
+	unrolledPos *= SkillCommons.PerspectiveIncrease
 	return unrolledPos.length_squared()
 
 static func IsReachableSquared(pos1 : Vector2, pos2 : Vector2, threshold : float) -> bool:
