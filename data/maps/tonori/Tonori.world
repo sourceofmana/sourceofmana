@@ -76,6 +76,13 @@
             "width": 4160,
             "x": 6208,
             "y": -3616
+        },
+        {
+            "fileName": "manayir/manayir.tmx",
+            "height": 5440,
+            "width": 4800,
+            "x": -224,
+            "y": -608
         }
     ],
     "onlyShowAdjacentMaps": false,
