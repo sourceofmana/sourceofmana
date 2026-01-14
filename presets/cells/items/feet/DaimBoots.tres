@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=11 format=3 uid="uid://csskh68is28g8"]
+
+[ext_resource type="Texture2D" uid="uid://cqpx2eql7kcet" path="res://data/graphics/items/feet/leather-boots.png" id="1_xvynf"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_j5b2w"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_mwmo2"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_q6ago"]
+[ext_resource type="Material" uid="uid://ibrdndrkc4ca" path="res://presets/palettes/equipment/material-daim-dark.tres" id="5_xvynf"]
+[ext_resource type="Texture2D" uid="uid://cfjjosglguhk5" path="res://data/graphics/sprites/equipment/feet/boots-male.png" id="6_mo6nh"]
+[ext_resource type="Texture2D" uid="uid://dlo5n0v1scwaf" path="res://data/graphics/sprites/equipment/feet/boots-female.png" id="7_c5om2"]
+
+[sub_resource type="Resource" id="Resource_uh8am"]
+script = ExtResource("2_j5b2w")
+_effect = 14
+_value = 5.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_f8kpx"]
+script = ExtResource("2_j5b2w")
+_effect = 18
+_value = 10.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_u2eud"]
+script = ExtResource("3_mwmo2")
+_modifiers = Array[ExtResource("2_j5b2w")]([SubResource("Resource_uh8am"), SubResource("Resource_f8kpx")])
+
+[resource]
+script = ExtResource("4_q6ago")
+slot = 2
+textures = Array[Texture2D]([ExtResource("6_mo6nh"), ExtResource("7_c5om2"), ExtResource("6_mo6nh")])
+shader = ExtResource("5_xvynf")
+name = "Daim Boots"
+icon = ExtResource("1_xvynf")
+weight = 300.0
+modifiers = SubResource("Resource_u2eud")
