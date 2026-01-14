@@ -458,7 +458,7 @@
 		"DisplayName": true,
 		"Texture": "sprites/npcs/wie.png",
 	},
-	"2000": {
+	"2007": {
 		"Name": "Tulimshar Guard 1",
 		"SpritePreset": "Player",
 		"Equipment": [
@@ -478,6 +478,28 @@
 			"gender": "Male",
 			"race": "Human",
 			"skintone": "Dark",
+		},
+	},
+	"2008": {
+		"Name": "Red Queen",
+		"SpritePreset": "Player",
+		"Equipment": [
+			"Gown",
+			"Guard Cloud Pants",
+			"Daim Boots",
+			"Tonori Crown",
+			"Gold Bracelets"
+		],
+		"Direction": "DOWN",
+		"State": "SIT",
+		"Behaviour": ["Immobile", "Pacifist"],
+		"DisplayName": true,
+		"Stat": {
+			"hairstyle": "Long and Curly",
+			"haircolor": "Pure Platinum",
+			"gender": "Female",
+			"race": "Kralog",
+			"skintone": "Fire",
 		},
 	},
 }

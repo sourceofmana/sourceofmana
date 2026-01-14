@@ -1426,6 +1426,32 @@
 			]
 		},
 		{
+			"category": "Aethyra",
+			"entries": [
+				{
+					"title": "Game Direction",
+					"contacts": [
+						{
+							"nick": "Tametomo"
+							"website": "github.com/Tametomo/Aethyra"
+						},
+						{
+							"nick": "Octalot"
+							"website": "home.claranet.co.uk/s.cotton/programming/tmwaethyra"
+						}
+					]
+				},
+				{
+					"title": "Art Department",
+					"contacts": [
+						{
+							"nick": "Frictor"
+						}
+					]
+				}
+			]
+		},
+		{
 			"category": "The Mana World - Brazil",
 			"entries": [
 				{
@@ -1515,6 +1541,10 @@
 							"name": "Bart Kelsey",
 							"nick": "BartK",
 							"website": "opengameart.org"
+						},
+						{
+							"nick": "Bivouac",
+							"website": "bivouac.itch.io"
 						},
 						{
 							"nick": "bluecarrot16",
