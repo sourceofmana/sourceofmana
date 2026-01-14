@@ -117,6 +117,9 @@ func SetData():
 	for skillID in data._skillSet:
 		AddSkill(DB.SkillsDB[skillID], data._skillProba[skillID])
 
+	if data._state != ActorCommons.State.UNKNOWN:
+		SetState(data._state)
+
 	# Navigation
 	if !(data._behaviour & AICommons.Behaviour.IMMOBILE):
 		if self is PlayerAgent:

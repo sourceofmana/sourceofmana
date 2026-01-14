@@ -10,7 +10,9 @@ class_name EntityData
 @export var _customTexture : String				= ""
 @export var _customMaterial : FileData			= null
 @export var _displayName : bool					= false
-@export var _behaviour : int					= AICommons.Behaviour.NEUTRAL
+@export var _direction : ActorCommons.Direction	= ActorCommons.Direction.UNKNOWN
+@export var _state : ActorCommons.State			= ActorCommons.State.UNKNOWN
+@export var _behaviour : AICommons.Behaviour	= AICommons.Behaviour.NEUTRAL
 @export var _stats : Dictionary					= ActorCommons.DefaultStats.duplicate()
 @export var _skillSet : PackedInt64Array		= []
 @export var _skillProba : Dictionary[int, float]= {}
@@ -48,6 +50,10 @@ static func Create(result : Dictionary) -> EntityData:
 
 	if "DisplayName" in result:
 		entity._displayName = result.DisplayName
+	if "Direction" in result:
+		entity._direction = ActorCommons.Direction.get(result.Direction, entity._direction)
+	if "State" in result:
+		entity._state = ActorCommons.State.get(result.State, entity._state)
 	if "Behaviour" in result:
 		entity._behaviour = AICommons.GetBehaviourFlags(result.Behaviour)
 	if "Stat" in result:

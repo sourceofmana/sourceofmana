@@ -24,30 +24,10 @@ enum Behaviour
 	STEAL		= 1 << 7,
 }
 
-const behaviourNone : String				= "None"
-const behaviourPacifist : String			= "Pacifist"
-const behaviourNeutral : String				= "Neutral"
-const behaviourAggressive : String			= "Aggressive"
-const behaviourImmobile : String			= "Immobile"
-const behaviourFollower : String			= "Follower"
-const behaviourLeader : String				= "Leader"
-const behaviourSpawner : String				= "Spawner"
-const behaviourSteal : String				= "Steal"
-
-static func GetBehaviourFlags(behaviours : PackedStringArray) -> int:
-	var flags : int = Behaviour.NONE
+static func GetBehaviourFlags(behaviours : PackedStringArray) -> Behaviour:
+	var flags : Behaviour = Behaviour.NONE
 	for behaviour in behaviours:
-		match behaviour:
-			behaviourNone:					flags |= Behaviour.NONE
-			behaviourPacifist:				flags |= Behaviour.PACIFIST
-			behaviourNeutral:				flags |= Behaviour.NEUTRAL
-			behaviourAggressive:			flags |= Behaviour.AGGRESSIVE
-			behaviourImmobile:				flags |= Behaviour.IMMOBILE
-			behaviourFollower:				flags |= Behaviour.FOLLOWER
-			behaviourLeader:				flags |= Behaviour.LEADER
-			behaviourSpawner:				flags |= Behaviour.SPAWNER
-			behaviourSteal:					flags |= Behaviour.STEAL
-			_:								assert(false, "Behaviour flag not recognized: %s" % [behaviour])
+		flags |= Behaviour.get(behaviour.to_upper(), Behaviour.NONE)
 	return flags
 
 #

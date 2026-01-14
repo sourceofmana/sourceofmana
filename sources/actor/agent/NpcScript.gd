@@ -283,8 +283,10 @@ func _init(_npc : NpcAgent, _own : BaseAgent):
 		OnStart()
 		if npc != own:
 			npc.AddInteraction()
-			own.LookAt(npc)
-			npc.LookAt(own)
+			if own.data._direction == ActorCommons.Direction.UNKNOWN:
+				own.LookAt(npc)
+			if npc.data._direction == ActorCommons.Direction.UNKNOWN:
+				npc.LookAt(own)
 
 func OnStart(): pass
 func OnContinue(): pass

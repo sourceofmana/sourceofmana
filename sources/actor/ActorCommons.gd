@@ -94,6 +94,35 @@ enum Target
 
 const playbackParameter : String = "parameters/playback"
 
+# Direction
+enum Direction
+{
+	UNKNOWN = -1,
+	DOWN,
+	DOWNLEFT,
+	LEFT,
+	UPLEFT,
+	UP,
+	UPRIGHT,
+	RIGHT,
+	DOWNRIGHT
+}
+
+static func GetRandomDirection() -> Vector2:
+	return Vector2(randf_range(-1.0, 1.0), randf_range(-0.3, 1.0))
+
+static func GetDirectionFromEnum(dir : Direction) -> Vector2:
+	match dir:
+		Direction.DOWN:			return Vector2(0.0, 1.0)
+		Direction.DOWNLEFT:		return Vector2(-1.0, 1.0)
+		Direction.LEFT:			return Vector2(-1.0, 0.0)
+		Direction.UPLEFT:		return Vector2(-1.0, -1.0)
+		Direction.UP:			return Vector2(0.0, -1.0)
+		Direction.UPRIGHT:		return Vector2(1.0, -1.0)
+		Direction.RIGHT:		return Vector2(1.0, 0.0)
+		Direction.DOWNRIGHT:	return Vector2(1.0, 1.0)
+		_:						return GetRandomDirection()
+
 # State
 enum State
 {
@@ -370,6 +399,13 @@ static var DefaultInventory : Array[Dictionary] = [
 	{ "item_id": "Desert Armor".hash(), "count": 1, "customfield": "" },
 	{ "item_id": "Ghutra".hash(), "count": 1, "customfield": "" },
 	{ "item_id": "Desert Goggles".hash(), "count": 1, "customfield": "" },
+	{ "item_id": "Gown".hash(), "count": 1, "customfield": "" },
+	{ "item_id": "Gold Bracelets".hash(), "count": 1, "customfield": "" },
+	{ "item_id": "Silver Bracelets".hash(), "count": 1, "customfield": "" },
+	{ "item_id": "Daim Boots".hash(), "count": 1, "customfield": "" },
+	{ "item_id": "Desert Armbands".hash(), "count": 1, "customfield": "" },
+	{ "item_id": "Desert Shield".hash(), "count": 1, "customfield": "" },
+	{ "item_id": "Tonori Crown".hash(), "count": 1, "customfield": "" },
 ]
 static var DefaultSkills : Array[Dictionary] = [
 	{ "skill_id": "Melee".hash(), "level": 1 },
