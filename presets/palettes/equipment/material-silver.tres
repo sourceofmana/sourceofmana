@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://5u6r7bgiffdm"]
+
+[ext_resource type="Shader" uid="uid://dyp1cvcwr410j" path="res://sources/shaders/ColorPalette.gdshader" id="1_3gtlj"]
+
+[resource]
+shader = ExtResource("1_3gtlj")
+shader_parameter/palette_size = 6
+shader_parameter/palette_in = PackedColorArray(0.235294, 0.235294, 0.235294, 1, 0.301961, 0.301961, 0.301961, 1, 0.407843, 0.407843, 0.407843, 1, 0.568627, 0.568627, 0.568627, 1, 0.713726, 0.713726, 0.713726, 1, 0.87451, 0.87451, 0.87451, 1)
+shader_parameter/palette_out = PackedColorArray(0.23137255, 0.2, 0.24705882, 1, 0.28235295, 0.28627452, 0.3529412, 1, 0.42745098, 0.47058824, 0.5647059, 1, 0.5686275, 0.6784314, 0.7176471, 1, 0.7764706, 0.90588236, 0.8509804, 1, 0.99607843, 0.99607843, 0.99607843, 1)
