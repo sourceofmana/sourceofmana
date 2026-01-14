@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://beq7sopsha47h"]
+
+[ext_resource type="Texture2D" uid="uid://cwyvspervas6b" path="res://data/graphics/items/chest/gown.png" id="1_cdryd"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_kckh3"]
+[ext_resource type="Material" uid="uid://bp6f0bq5m3hmr" path="res://presets/palettes/equipment/cloth-crimson.tres" id="3_kckh3"]
+[ext_resource type="Texture2D" uid="uid://btfq82btgojns" path="res://data/graphics/sprites/equipment/chest/gown-male.png" id="4_4mv6x"]
+[ext_resource type="Texture2D" uid="uid://da3x8iaaaxxda" path="res://data/graphics/sprites/equipment/chest/gown-female.png" id="5_lr6ih"]
+
+[resource]
+script = ExtResource("2_kckh3")
+slot = 0
+textures = Array[Texture2D]([ExtResource("4_4mv6x"), ExtResource("5_lr6ih"), ExtResource("4_4mv6x")])
+shader = ExtResource("3_kckh3")
+name = "Gown"
+icon = ExtResource("1_cdryd")
+weight = 800.0
