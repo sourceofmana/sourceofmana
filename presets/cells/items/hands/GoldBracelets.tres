@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://cm42xtw8qw7i2"]
+
+[ext_resource type="Texture2D" uid="uid://ga7dejrq0i46" path="res://data/graphics/items/hands/bracelets.png" id="1_im3vj"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_em2xu"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_ahmr6"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_rrowt"]
+[ext_resource type="Material" uid="uid://cwm7205ugcjpl" path="res://presets/palettes/equipment/material-gold.tres" id="5_mufop"]
+[ext_resource type="Texture2D" uid="uid://cl7neyffqrj1q" path="res://data/graphics/sprites/equipment/hands/bracelets-male.png" id="6_ndp77"]
+[ext_resource type="Texture2D" uid="uid://co2jt5kjpoft5" path="res://data/graphics/sprites/equipment/hands/bracelets-female.png" id="7_kuohs"]
+
+[sub_resource type="Resource" id="Resource_bshtt"]
+script = ExtResource("2_em2xu")
+_effect = 14
+_value = 15.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_fgb6i"]
+script = ExtResource("3_ahmr6")
+_modifiers = Array[ExtResource("2_em2xu")]([SubResource("Resource_bshtt")])
+
+[resource]
+script = ExtResource("4_rrowt")
+slot = 3
+textures = Array[Texture2D]([ExtResource("6_ndp77"), ExtResource("7_kuohs"), ExtResource("6_ndp77")])
+shader = ExtResource("5_mufop")
+name = "Gold Bracelets"
+icon = ExtResource("1_im3vj")
+weight = 100.0
+modifiers = SubResource("Resource_fgb6i")
