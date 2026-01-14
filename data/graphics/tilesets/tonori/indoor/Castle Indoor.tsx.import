@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://bt1rrqy4xmok1"
+path="res://.godot/imported/Castle Indoor.tsx-34f1e3718e9b8809440e53cfa8ffc11d.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/tonori/indoor/Castle Indoor.tsx"
+dest_files=["res://.godot/imported/Castle Indoor.tsx-34f1e3718e9b8809440e53cfa8ffc11d.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
