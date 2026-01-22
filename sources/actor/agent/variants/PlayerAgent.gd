@@ -134,6 +134,7 @@ func _ready():
 
 func _exit_tree():
 	ClearScript()
+	super._exit_tree()
 
 #
 func Respawn():

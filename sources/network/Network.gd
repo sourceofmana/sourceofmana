@@ -110,11 +110,11 @@ func SetClickPos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
 func SetMovePos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("SetMovePos", [pos], peerID, NetworkCommons.DelayInstant)
 
-@rpc("authority", "call_remote", "unreliable_ordered", EChannel.NAVIGATION)
+@rpc("authority", "call_remote", "unreliable_ordered", EChannel.ENTITY)
 func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("UpdateEntity", [agentRID, velocity, position], peerID)
 
-@rpc("authority", "call_remote", "reliable", EChannel.NAVIGATION)
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int,  peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("FullUpdateEntity", [agentRID, velocity, position, orientation, agentState, skillCastID], peerID)
 
@@ -338,10 +338,7 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 
 	var currentagentRID = agent.get_rid().get_id()
 	if inclusive and agent is PlayerAgent:
-		if bulk:
-			Network.Bulk(callbackName, [currentagentRID] + args, agent.peerID)
-		else:
-			Network.callv(callbackName, [currentagentRID] + args + [agent.peerID])
+		Network.callv(callbackName, [currentagentRID] + args + [agent.peerID])
 
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	if inst:

@@ -129,7 +129,6 @@ func SetData():
 		agent.set_radius(data._radius)
 		agent.set_neighbor_distance(data._radius * 2.0)
 		agent.set_avoidance_priority(clampf(data._radius / float(ActorCommons.MaxEntityRadiusSize), 0.0, 1.0))
-		agent.velocity_computed.connect(self._velocity_computed)
 		add_child.call_deferred(agent)
 		RefreshWalkSpeed()
 
@@ -156,6 +155,14 @@ func Killed():
 	SetSkillCastID(DB.UnknownHash)
 
 #
+func _enter_tree():
+	if agent:
+		Callback.AddCallback(agent.velocity_computed, self._velocity_computed, [])
+
+func _exit_tree():
+	if agent:
+		Callback.ClearCallbacks(agent.velocity_computed)
+
 func _physics_process(_delta : float):
 	UpdateInput()
 	if agent and agent.get_avoidance_enabled():
@@ -163,7 +170,6 @@ func _physics_process(_delta : float):
 	else:
 		_velocity_computed(currentInput * currentWalkSpeed)
 
-func _process(_delta : float):
 	if requireFullUpdate:
 		requireFullUpdate = false
 		requireUpdate = false

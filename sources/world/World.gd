@@ -33,8 +33,8 @@ func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
 		if inst:
 			if agent.agent:
 				agent.agent.set_navigation_map(map.mapRID)
-			WorldAgent.PushAgent(agent, inst)
 			Callback.OneShotCallback(agent.tree_entered, AgentWarped, [map, agent])
+			WorldAgent.PushAgent(agent, inst)
 
 func AgentWarped(map : WorldMap, agent : BaseAgent):
 	if agent == null:

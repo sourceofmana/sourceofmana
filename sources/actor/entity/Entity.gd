@@ -40,8 +40,7 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	if nextOrientation != Vector2.ZERO:
 		entityOrientation = nextOrientation
 
-	var dist = Vector2(entityPosOffset).length_squared()
-	if dist > NetworkCommons.MaxGuardbandDistSquared or forceValue:
+	if forceValue or Vector2(entityPosOffset).length_squared() > NetworkCommons.MaxGuardbandDistSquared:
 		position = gardbandPosition
 		entityPosOffset = Vector2.ZERO
 		if Launcher.Player == self:

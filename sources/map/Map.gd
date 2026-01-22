@@ -109,10 +109,10 @@ func AddEntity(agentRID : int, actorType : ActorCommons.Type, shape : int, spiri
 	entity.stat.spirit = spirit
 	entity.stat.currentShape = currentShape
 
+	entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned or isPlayerType)
 	if not isAlreadySpawned:
 		AddChild(entity)
 		Entities.Add(entity, agentRID)
-	entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned or isPlayerType)
 
 	return entity
 
