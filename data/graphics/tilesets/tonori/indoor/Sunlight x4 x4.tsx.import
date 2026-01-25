@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://xde4msqqxx4p"
+path="res://.godot/imported/Sunlight x4 x4.tsx-1a8adc868ca8fbc1b63db16badc73130.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/tonori/indoor/Sunlight x4 x4.tsx"
+dest_files=["res://.godot/imported/Sunlight x4 x4.tsx-1a8adc868ca8fbc1b63db16badc73130.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
