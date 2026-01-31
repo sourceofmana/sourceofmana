@@ -34,7 +34,9 @@ void fragment()
 		if (squared_dist < squared_radius)
 		{
 			float dist = squared_dist / squared_radius;
-			float value = dist < light_instance.z ? 0.0 : 1.0/light_instance.z*(dist-light_instance.z);
+			float value = dist < light_instance.z
+				? 0.0
+				: 1.0 / light_instance.z * (dist - light_instance.z);
 			if (value < m_value)
 			{
 				vec4 new_color = color_data[i];
@@ -47,7 +49,14 @@ void fragment()
 				break;
 		}
 	}
-
+	if (m_value < 0.01)
+		m_value = 0.0;
+	else if (m_value < 0.33)
+		m_value = 0.33;
+	else if (m_value < 0.66)
+		m_value = 0.66;
+	else
+		m_value = 1.0;
 	light_color.rgb = mix(light_color.rgb, dark_color.rgb, max(-0.2, (m_value - 0.5) / 0.5));
 
 	vec4 ambient_color = mix(light_color, dark_color, m_value);

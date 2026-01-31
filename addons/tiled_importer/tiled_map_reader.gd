@@ -310,7 +310,7 @@ func add_specific_nodes(parent : Node2D, cell_in_map : Vector2, gid : int):
 		var specificGid = specificDic[gid]
 		match specificGid[0]:
 			"LightSource":
-				var lighting : CanvasLayer = parent.get_node_or_null("LightingLayer")
+				var lighting : CanvasLayer = parent.get_node_or_null("Lighting")
 				if lighting:
 					var lightSource : LightSource = LightSource.new()
 					if lightSource:
@@ -1340,32 +1340,30 @@ func set_custom_properties(object, tiled_object):
 	var properties = get_custom_properties(tiled_object.properties, tiled_object.propertytypes)
 	for property in properties:
 		object.set_meta(property, properties[property])
-		if property == "name":
-			map_name = properties[property]
-		elif property == "lighting":
-			var lighting : Node = object.get_node_or_null("LightingLayer")
-			if lighting == null:
-				lighting = FileSystem.LoadEffect("Lighting")
-				lighting.set_name("LightingLayer")
-				lighting.lightLevel = properties[property]
-				object.add_child(lighting)
-				lighting.set_owner(object)
-		elif property == "ambient":
-			var ambient : Node = FileSystem.LoadEffect("ambient/" + properties[property])
-			if ambient:
-				ambient.set_name("Ambient")
-				object.add_child(ambient)
-				ambient.set_owner(object)
+
+	if properties.has("name"):
+		map_name = properties.get("name")
+
+	if properties.has("ambient"):
+		var ambient : Node = FileSystem.LoadEffect("ambient/" + properties["ambient"])
+		if ambient:
+			ambient.set_name(properties["ambient"])
+			object.add_child(ambient)
+			ambient.set_owner(object)
+			if ambient is Node2D or ambient is Control:
 				ambient.position = Vector2(0, 0)
 				ambient.size = Vector2(map_width, map_height) * cell_size
-		elif property == "flagnodrop" and bool(properties[property]):
-			map_flags |= WorldMap.Flags.NO_DROP
-		elif property == "flagnospell" and bool(properties[property]):
-			map_flags |= WorldMap.Flags.NO_SPELL
-		elif property == "flagnorejoin" and bool(properties[property]):
-			map_flags |= WorldMap.Flags.NO_REJOIN
-		elif property == "flagonlyspirit" and bool(properties[property]):
-			map_flags |= WorldMap.Flags.ONLY_SPIRIT
+			if properties.has("ambientintensity"):
+				ambient.intensity = properties["ambientintensity"]
+
+	if properties.get("flagnodrop", false):
+		map_flags |= WorldMap.Flags.NO_DROP
+	if properties.get("flagnospell", false):
+		map_flags |= WorldMap.Flags.NO_SPELL
+	if properties.get("flagnorejoin", false):
+		map_flags |= WorldMap.Flags.NO_REJOIN
+	if properties.get("flagonlyspirit", false):
+		map_flags |= WorldMap.Flags.ONLY_SPIRIT
 
 # Get the custom properties as a dictionary
 # Useful for tile meta, which is not stored directly

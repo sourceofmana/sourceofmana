@@ -4,8 +4,9 @@
   <export format="tmx"/>
  </editorsettings>
  <properties>
+  <property name="ambient" value="Lighting"/>
+  <property name="ambientintensity" type="float" value="0.5"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
-  <property name="lighting" type="float" value="0.5"/>
   <property name="music" value="Lenia"/>
   <property name="name" value="Artis Sewer"/>
  </properties>

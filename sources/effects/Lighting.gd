@@ -1,14 +1,22 @@
 extends CanvasLayer
 
 #
-@onready var colorRectArrays : Array[ColorRect]	= [$GridContainer/HBoxContainer/ColorRect, $GridContainer/HBoxContainer/ColorRect2, $GridContainer/HBoxContainer/ColorRect3, $GridContainer/HBoxContainer/ColorRect4, $GridContainer/HBoxContainer2/ColorRect5, $GridContainer/HBoxContainer2/ColorRect6, $GridContainer/HBoxContainer2/ColorRect7, $GridContainer/HBoxContainer2/ColorRect8]
-@export var lightLevel : float					= 0.5
+@export var intensity : float					= 0.5
 
+@onready var gridContainer : GridContainer		= $GridContainer
+@onready var lightingPreset : Node				= FileSystem.LoadEffect("Lighting", false)
+
+var colorRectArrays : Array[ColorRect]			= []
 var time : float								= 0.0
+var rectCount : int								= 8
+
 #
 func _ready():
-	for colorRect in colorRectArrays:
-		colorRect.material.set_shader_parameter("light_level", lightLevel)
+	for rectIdx in rectCount:
+		var lighting : ColorRect = lightingPreset.instantiate()
+		lighting.material.set_shader_parameter("light_level", intensity)
+		colorRectArrays.push_back(lighting)
+		gridContainer.add_child(lighting)
 
 func _process(delta : float):
 	if not visible or not Launcher.Camera.mainCamera or not Launcher.Camera.mainCamera.is_inside_tree():

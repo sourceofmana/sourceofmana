@@ -1,6 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=4 uid="uid://bw63xppmmv0rq"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=4 uid="uid://dsqtrp5ortggt"]
 
-[sub_resource type="Shader" id="Shader_ypmb7"]
+[sub_resource type="Shader" id="Shader_jf37b"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 render_mode unshaded;
@@ -64,8 +64,9 @@ void fragment()
 "
 
 [resource]
-shader = SubResource("Shader_ypmb7")
-shader_parameter/global_transform = null
+resource_local_to_scene = true
+shader = SubResource("Shader_jf37b")
+shader_parameter/global_transform = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
 shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)

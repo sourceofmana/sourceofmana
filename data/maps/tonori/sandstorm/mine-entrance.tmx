@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="19">
  <properties>
+  <property name="ambient" value="Lighting"/>
+  <property name="ambientintensity" type="float" value="0.6"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
-  <property name="lighting" type="float" value="0.6"/>
   <property name="music" value="Desert Cave"/>
   <property name="name" value="Desert Mines"/>
  </properties>
