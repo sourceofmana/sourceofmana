@@ -5,7 +5,7 @@
   <properties>
    <property name="custom" value="LightSource"/>
    <property name="light_color" value="FFFFFFAA"/>
-   <property name="light_radius" type="int" value="256"/>
+   <property name="light_radius" type="int" value="192"/>
    <property name="light_speed" type="float" value="0"/>
   </properties>
  </tile>
@@ -13,7 +13,7 @@
   <properties>
    <property name="custom" value="LightSource"/>
    <property name="light_color" value="FFFFFFAA"/>
-   <property name="light_radius" type="int" value="256"/>
+   <property name="light_radius" type="int" value="192"/>
    <property name="light_speed" type="float" value="0"/>
   </properties>
  </tile>

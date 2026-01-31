@@ -5,7 +5,7 @@
   <properties>
    <property name="custom" value="LightSource"/>
    <property name="light_color" value="FFD28DFF"/>
-   <property name="light_offset" type="int" value="24"/>
+   <property name="light_offset" type="int" value="32"/>
    <property name="light_radius" type="int" value="128"/>
   </properties>
   <animation>
