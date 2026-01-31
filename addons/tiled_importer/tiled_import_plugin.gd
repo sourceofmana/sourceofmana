@@ -130,7 +130,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	if nav_region:
 		var file_path : String = Path.MapNavPst + file_map_hierarchy + Path.RscExt
 		if not DirAccess.open(file_path):
-			DirAccess.make_dir_recursive_absolute(file_path.get_base_dir())
+			FileSystem.CreateRecursiveDirectory(file_path.get_base_dir())
 		saveRet &= ResourceSaver.save(nav_region.navigation_polygon, file_path)
 
 	# Client Data import (TileMap and warp locations)

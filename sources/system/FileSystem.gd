@@ -266,6 +266,19 @@ static func CopyFile(sourcePath : String, targetPath : String) -> bool:
 
 	return true
 
+static func CreateRecursiveDirectory(path : String) -> bool:
+	var dir : DirAccess = DirAccess.open(path)
+	if dir == null:
+		dir = DirAccess.open("res://")
+		if dir == null:
+			push_error("Could not access root resource path (\"res://\")")
+			return false
+		var err : Error = dir.make_dir_recursive(path.trim_prefix("res://"))
+		if err != OK:
+			push_error("Failed to create directory: %s" % path)
+			return false
+	return true
+
 # Parse
 static func ParseExtension(path : String, extension : String) -> PackedStringArray:
 	var resources : PackedStringArray = []
