@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdlq82b3tfg8c"
-path="res://.godot/imported/ship-first-deck.png-a0481d540b6086f812b162337c164e8b.ctex"
+uid="uid://dfm7b47dg8n0v"
+path="res://.godot/imported/Tulimshar Castle Corridors.png-d5eebb65c0f3dfb58f0316e3ffd03dbc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/ship/ship-first-deck.png"
-dest_files=["res://.godot/imported/ship-first-deck.png-a0481d540b6086f812b162337c164e8b.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar/Tulimshar Castle Corridors.png"
+dest_files=["res://.godot/imported/Tulimshar Castle Corridors.png-d5eebb65c0f3dfb58f0316e3ffd03dbc.ctex"]
 
 [params]
 

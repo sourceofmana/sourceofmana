@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bacnfgfmutqr"
-path="res://.godot/imported/desert-pit.png-8e3f3ddf60a89714de25bc38f12db43d.ctex"
+uid="uid://dqmuqb73iks18"
+path="res://.godot/imported/Candor Cave.png-a11c7b4571824291b6316ec3d43b429e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/desertpit/desert-pit.png"
-dest_files=["res://.godot/imported/desert-pit.png-8e3f3ddf60a89714de25bc38f12db43d.ctex"]
+source_file="res://data/graphics/minimaps/candor/Candor Cave.png"
+dest_files=["res://.godot/imported/Candor Cave.png-a11c7b4571824291b6316ec3d43b429e.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvef8khxixpfj"
-path="res://.godot/imported/castle.png-7a2a5aa78144314d93e0cdc28c5d2e57.ctex"
+uid="uid://oxgd0pv1isaf"
+path="res://.godot/imported/Tulimshar Center.png-8751edfccd5d4d0bccd7cbbc8c36cfc0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar/castle.png"
-dest_files=["res://.godot/imported/castle.png-7a2a5aa78144314d93e0cdc28c5d2e57.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar/Tulimshar Center.png"
+dest_files=["res://.godot/imported/Tulimshar Center.png-8751edfccd5d4d0bccd7cbbc8c36cfc0.ctex"]
 
 [params]
 

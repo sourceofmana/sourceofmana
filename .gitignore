@@ -6,9 +6,7 @@ publishing/*
 
 # imported files
 .godot/*
-*.tmx.client.scn*
-*.tmx.navigation.tres*
-*.tmx.server.tres*
+presets/maps/*
 
 # addons
 ~*.dll

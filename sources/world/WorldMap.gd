@@ -46,7 +46,7 @@ func Destroy():
 	warps.clear()
 
 func LoadMapData():
-	var resource : Resource = Instantiate.LoadMapData(id, Path.MapServerExt)
+	var resource : Resource = Instantiate.LoadMapData(id)
 	if resource:
 		flags = resource.flags
 		for spawn in resource.spawns:

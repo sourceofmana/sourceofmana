@@ -4,15 +4,11 @@ extends Node
 var pool : Dictionary[int, Node2D]		= {}
 
 #
-func LoadMapClientData(mapID : int) -> Node2D:
+func LoadMapLayers(mapID : int) -> Node2D:
 	var mapInstance : Node2D = GetMap(mapID)
 	if mapInstance == null:
-		var mapData : FileData = DB.MapsDB.get(mapID, null)
-		assert(mapData != null, "Could not load the map reference within our map db")
-		if mapData:
-			mapInstance = FileSystem.LoadMap(mapData._path, Path.MapClientExt)
-			mapInstance.set_name(mapData._name)
-			pool[mapID] = mapInstance
+		mapInstance = Instantiate.LoadMapLayers(mapID)
+		pool[mapID] = mapInstance
 	return mapInstance
 
 #
@@ -35,7 +31,7 @@ func RefreshPool():
 
 	for mapID in adjacentMaps:
 		if mapID not in pool:
-			pool[mapID] = LoadMapClientData(mapID)
+			pool[mapID] = Instantiate.LoadMapLayers(mapID)
 
 	var poolCurrentSize : int = pool.size()
 	if poolCurrentSize > LauncherCommons.MapPoolMaxSize:

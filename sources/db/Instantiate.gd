@@ -44,6 +44,16 @@ static func CreateDrop(cell : BaseCell, pos : Vector2) -> Sprite2D:
 	return node
 
 # Map
-static func LoadMapData(mapID : int, ext : String) -> Object:
+static func LoadMapData(mapID : int) -> Resource:
 	var mapData : FileData = DB.MapsDB.get(mapID, null)
-	return FileSystem.LoadMap(mapData._path, ext) if mapData else null
+	return FileSystem.LoadMap(Path.MapDataPst + mapData._path + Path.RscExt) if mapData else null
+
+static func LoadMapLayers(mapID : int) -> Node2D:
+	var mapData : FileData = DB.MapsDB.get(mapID, null)
+	var mapScene : Node2D = FileSystem.LoadMap(Path.MapLayerPst + mapData._path + Path.SceneExt) if mapData else null
+	mapScene.set_name(mapData._name)
+	return mapScene
+
+static func LoadMapNavigation(mapID : int) -> Object:
+	var mapData : FileData = DB.MapsDB.get(mapID, null)
+	return FileSystem.LoadMap(Path.MapNavPst + mapData._path + Path.RscExt) if mapData else null

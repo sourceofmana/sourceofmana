@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rvxk6b302t4r"
-path="res://.godot/imported/ship-hold.png-85c7b193924980b924dc53a58505a3cd.ctex"
+uid="uid://dej1vmrvm2iav"
+path="res://.godot/imported/Ship Hold.png-0896aeab6acbaf15d125ba466d1abc24.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/ship/ship-hold.png"
-dest_files=["res://.godot/imported/ship-hold.png-85c7b193924980b924dc53a58505a3cd.ctex"]
+source_file="res://data/graphics/minimaps/ship/Ship Hold.png"
+dest_files=["res://.godot/imported/Ship Hold.png-0896aeab6acbaf15d125ba466d1abc24.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8jq7x18gwopq"
-path="res://.godot/imported/ship-second-deck.png-cd7599e5ba5ef5343f47c0ba4cb6ae24.ctex"
+uid="uid://conicts4olrs0"
+path="res://.godot/imported/Tulimshar Bay.png-92338a85b825f51450cc37390cd744c9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/ship/ship-second-deck.png"
-dest_files=["res://.godot/imported/ship-second-deck.png-cd7599e5ba5ef5343f47c0ba4cb6ae24.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar/Tulimshar Bay.png"
+dest_files=["res://.godot/imported/Tulimshar Bay.png-92338a85b825f51450cc37390cd744c9.ctex"]
 
 [params]
 

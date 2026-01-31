@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2ha5oh0p8p78"
-path="res://.godot/imported/mine-abandoned-level.png-5b0893c7789aa809e40bb60d7285d291.ctex"
+uid="uid://dy0ytt03hj1nh"
+path="res://.godot/imported/Tulimshar Western Hills.png-9acecbbdcc6ab2e6fd47f122a9b421af.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/sandstorm/mine-abandoned-level.png"
-dest_files=["res://.godot/imported/mine-abandoned-level.png-5b0893c7789aa809e40bb60d7285d291.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar outskirts/Tulimshar Western Hills.png"
+dest_files=["res://.godot/imported/Tulimshar Western Hills.png-9acecbbdcc6ab2e6fd47f122a9b421af.ctex"]
 
 [params]
 

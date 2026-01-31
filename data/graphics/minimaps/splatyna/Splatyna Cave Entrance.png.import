@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blbfytwgxg7cn"
-path="res://.godot/imported/splatyna-third.png-c07d1a520fece8c88df383add31362c5.ctex"
+uid="uid://b1tv7tut20p2p"
+path="res://.godot/imported/Splatyna Cave Entrance.png-cf8fe3b64a7ed1b75a803290f3d21f7d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/splatyna/splatyna-third.png"
-dest_files=["res://.godot/imported/splatyna-third.png-c07d1a520fece8c88df383add31362c5.ctex"]
+source_file="res://data/graphics/minimaps/splatyna/Splatyna Cave Entrance.png"
+dest_files=["res://.godot/imported/Splatyna Cave Entrance.png-cf8fe3b64a7ed1b75a803290f3d21f7d.ctex"]
 
 [params]
 

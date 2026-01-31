@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chuc40aeqyu5"
-path="res://.godot/imported/candor-arena.png-5ed49f0203e0d06ec39d0e2dab918a58.ctex"
+uid="uid://bi0cw4mgap2re"
+path="res://.godot/imported/Artis Sewer.png-689be4e5bdbf2e93a92261322ba15029.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/candor/candor-arena.png"
-dest_files=["res://.godot/imported/candor-arena.png-5ed49f0203e0d06ec39d0e2dab918a58.ctex"]
+source_file="res://data/graphics/minimaps/sewer/Artis Sewer.png"
+dest_files=["res://.godot/imported/Artis Sewer.png-689be4e5bdbf2e93a92261322ba15029.ctex"]
 
 [params]
 

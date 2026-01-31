@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd5ghq46dvndx"
-path="res://.godot/imported/splatyna-corridor.png-ee22774ca43cb99436a1ece07d61a9cf.ctex"
+uid="uid://d2upjoxqafse1"
+path="res://.godot/imported/Splatyna's Corridor.png-029b7675c1bee62e86504d76cbd86a33.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/splatyna/splatyna-corridor.png"
-dest_files=["res://.godot/imported/splatyna-corridor.png-ee22774ca43cb99436a1ece07d61a9cf.ctex"]
+source_file="res://data/graphics/minimaps/splatyna/Splatyna's Corridor.png"
+dest_files=["res://.godot/imported/Splatyna's Corridor.png-029b7675c1bee62e86504d76cbd86a33.ctex"]
 
 [params]
 

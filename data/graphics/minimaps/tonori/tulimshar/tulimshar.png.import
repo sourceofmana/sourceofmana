@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxbrmpfswodd6"
-path="res://.godot/imported/tulimshar.png-817d9abe95c37944994e56786f0a8c38.ctex"
+uid="uid://l1vqtxbaih3w"
+path="res://.godot/imported/Tulimshar.png-8ea0021570398ed7c32a68875ad938d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar/tulimshar.png"
-dest_files=["res://.godot/imported/tulimshar.png-817d9abe95c37944994e56786f0a8c38.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar/Tulimshar.png"
+dest_files=["res://.godot/imported/Tulimshar.png-8ea0021570398ed7c32a68875ad938d6.ctex"]
 
 [params]
 

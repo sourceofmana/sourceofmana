@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6p6ohxc027nv"
-path="res://.godot/imported/manayir-beach.png-906f772c059b17a24f3cb2ad076ffbc4.ctex"
+uid="uid://cpx8o47hh6aps"
+path="res://.godot/imported/Ship First Deck.png-3fea6898ad7a20df8367570e24d52577.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/manayir/manayir-beach.png"
-dest_files=["res://.godot/imported/manayir-beach.png-906f772c059b17a24f3cb2ad076ffbc4.ctex"]
+source_file="res://data/graphics/minimaps/ship/Ship First Deck.png"
+dest_files=["res://.godot/imported/Ship First Deck.png-3fea6898ad7a20df8367570e24d52577.ctex"]
 
 [params]
 

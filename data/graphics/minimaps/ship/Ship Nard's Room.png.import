@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8ks5kapa7wy3"
-path="res://.godot/imported/wall-west-pathway.png-a22c65fc1ed7121e5645800b06b86ab3.ctex"
+uid="uid://b1oqcjtbce0wm"
+path="res://.godot/imported/Ship Nard's Room.png-c72353083561a1c0c53128c49440a12e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar/wall-west-pathway.png"
-dest_files=["res://.godot/imported/wall-west-pathway.png-a22c65fc1ed7121e5645800b06b86ab3.ctex"]
+source_file="res://data/graphics/minimaps/ship/Ship Nard's Room.png"
+dest_files=["res://.godot/imported/Ship Nard's Room.png-c72353083561a1c0c53128c49440a12e.ctex"]
 
 [params]
 

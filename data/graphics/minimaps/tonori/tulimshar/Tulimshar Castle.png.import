@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dky4k74b71icn"
-path="res://.godot/imported/candor-cave.png-e640a014a4be17453e8bdd2b34838931.ctex"
+uid="uid://byx7kwuvpmjls"
+path="res://.godot/imported/Tulimshar Castle.png-84e041ce6450834de5e96371de341373.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/candor/candor-cave.png"
-dest_files=["res://.godot/imported/candor-cave.png-e640a014a4be17453e8bdd2b34838931.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar/Tulimshar Castle.png"
+dest_files=["res://.godot/imported/Tulimshar Castle.png-84e041ce6450834de5e96371de341373.ctex"]
 
 [params]
 

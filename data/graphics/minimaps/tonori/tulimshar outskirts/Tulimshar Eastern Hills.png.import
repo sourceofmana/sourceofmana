@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blj01bst18usb"
-path="res://.godot/imported/splatyna-boss.png-140eddf8961d339f9ff74fcd1d2cb394.ctex"
+uid="uid://c0wxq7o64nrsm"
+path="res://.godot/imported/Tulimshar Eastern Hills.png-720b9a8dd992bbf17d84ed69114094d9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/splatyna/splatyna-boss.png"
-dest_files=["res://.godot/imported/splatyna-boss.png-140eddf8961d339f9ff74fcd1d2cb394.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar outskirts/Tulimshar Eastern Hills.png"
+dest_files=["res://.godot/imported/Tulimshar Eastern Hills.png-720b9a8dd992bbf17d84ed69114094d9.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxay741vqv8k5"
-path="res://.godot/imported/castle-corridors.png-227e7228158156619eff8cc3ffff8a5d.ctex"
+uid="uid://ciym2ggx4pli5"
+path="res://.godot/imported/Splatyna's Marvin Hole.png-4689924ca47c6da6d64803c97d1db3f9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar/castle-corridors.png"
-dest_files=["res://.godot/imported/castle-corridors.png-227e7228158156619eff8cc3ffff8a5d.ctex"]
+source_file="res://data/graphics/minimaps/splatyna/Splatyna's Marvin Hole.png"
+dest_files=["res://.godot/imported/Splatyna's Marvin Hole.png-4689924ca47c6da6d64803c97d1db3f9.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cn8jjsh3cksbl"
-path="res://.godot/imported/tulimshar-bay.png-d4ee28944b01969ae2fb90979afd751c.ctex"
+uid="uid://jsub5ux243a2"
+path="res://.godot/imported/Desert Mountains.png-59e15f60278ede9cdab9e755677d2c36.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar/tulimshar-bay.png"
-dest_files=["res://.godot/imported/tulimshar-bay.png-d4ee28944b01969ae2fb90979afd751c.ctex"]
+source_file="res://data/graphics/minimaps/tonori/desertpit/Desert Mountains.png"
+dest_files=["res://.godot/imported/Desert Mountains.png-59e15f60278ede9cdab9e755677d2c36.ctex"]
 
 [params]
 

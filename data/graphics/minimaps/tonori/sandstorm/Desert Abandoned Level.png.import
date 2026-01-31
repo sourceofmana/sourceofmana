@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch4crkol5rt2j"
-path="res://.godot/imported/ship-nard-room.png-eb5b445664d24665ce3cfff2f1ad67a9.ctex"
+uid="uid://cpb2301ues67s"
+path="res://.godot/imported/Desert Abandoned Level.png-84685df5be3b585d829288e44b321082.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/ship/ship-nard-room.png"
-dest_files=["res://.godot/imported/ship-nard-room.png-eb5b445664d24665ce3cfff2f1ad67a9.ctex"]
+source_file="res://data/graphics/minimaps/tonori/sandstorm/Desert Abandoned Level.png"
+dest_files=["res://.godot/imported/Desert Abandoned Level.png-84685df5be3b585d829288e44b321082.ctex"]
 
 [params]
 

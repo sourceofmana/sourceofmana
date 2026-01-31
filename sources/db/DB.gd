@@ -28,9 +28,9 @@ enum Palette
 
 #
 static func ParseMapsDB():
-	for resourcePath in FileSystem.ParseExtension(Path.MapRsc, Path.MapServerExt):
+	for resourcePath in FileSystem.ParseExtension(Path.MapDataPst, Path.RscExt):
 		var map : MapServerData = FileSystem.LoadResource(resourcePath, false)
-		var genericPath = resourcePath.get_slice(Path.MapRsc, 1).get_slice(Path.MapServerExt, 0)
+		var genericPath = resourcePath.get_slice(Path.MapDataPst, 1).get_slice(Path.RscExt, 0)
 		var data : FileData = FileData.Create(map.name, genericPath)
 		MapsDB[data._id] = data
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dptht8rkrb4jd"
-path="res://.godot/imported/splatyna-first.png-e53a6e2587ea6d7d8dcdbb1148de3433.ctex"
+uid="uid://c1vx7qixe2r2u"
+path="res://.godot/imported/Tulimshar Southern Hills.png-a6929031b56d35140efe6ffd302537d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/splatyna/splatyna-first.png"
-dest_files=["res://.godot/imported/splatyna-first.png-e53a6e2587ea6d7d8dcdbb1148de3433.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar outskirts/Tulimshar Southern Hills.png"
+dest_files=["res://.godot/imported/Tulimshar Southern Hills.png-a6929031b56d35140efe6ffd302537d6.ctex"]
 
 [params]
 

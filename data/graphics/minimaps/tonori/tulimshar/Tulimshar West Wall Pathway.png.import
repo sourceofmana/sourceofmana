@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://84wpdv1iumgk"
-path="res://.godot/imported/splatyna-entrance.png-3557bd181199993512283145bbefc237.ctex"
+uid="uid://be6qdlhm0nh7e"
+path="res://.godot/imported/Tulimshar West Wall Pathway.png-353dde3d789576977f828ff1646e7109.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/splatyna/splatyna-entrance.png"
-dest_files=["res://.godot/imported/splatyna-entrance.png-3557bd181199993512283145bbefc237.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar/Tulimshar West Wall Pathway.png"
+dest_files=["res://.godot/imported/Tulimshar West Wall Pathway.png-353dde3d789576977f828ff1646e7109.ctex"]
 
 [params]
 

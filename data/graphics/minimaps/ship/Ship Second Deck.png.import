@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmawjaqij3nlk"
-path="res://.godot/imported/mine-entrance.png-b1c25cb2a3a1796bed95bbe3b30cd228.ctex"
+uid="uid://bbd2d4pm3prny"
+path="res://.godot/imported/Ship Second Deck.png-2f235265ef2c3c747dbd9d9bb5deb958.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/sandstorm/mine-entrance.png"
-dest_files=["res://.godot/imported/mine-entrance.png-b1c25cb2a3a1796bed95bbe3b30cd228.ctex"]
+source_file="res://data/graphics/minimaps/ship/Ship Second Deck.png"
+dest_files=["res://.godot/imported/Ship Second Deck.png-2f235265ef2c3c747dbd9d9bb5deb958.ctex"]
 
 [params]
 

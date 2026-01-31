@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfx26lmgiljo6"
-path="res://.godot/imported/splatyna-second.png-39b2d3091f98dbfff635cd0edb9613d4.ctex"
+uid="uid://dbhefiinmxycg"
+path="res://.godot/imported/Manayir Beach.png-b8595dec8d56f4268fe5391f4f71a303.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/splatyna/splatyna-second.png"
-dest_files=["res://.godot/imported/splatyna-second.png-39b2d3091f98dbfff635cd0edb9613d4.ctex"]
+source_file="res://data/graphics/minimaps/tonori/manayir/Manayir Beach.png"
+dest_files=["res://.godot/imported/Manayir Beach.png-b8595dec8d56f4268fe5391f4f71a303.ctex"]
 
 [params]
 

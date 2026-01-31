@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dspaqd5won8k6"
-path="res://.godot/imported/snake-pit.png-56005ee0a1d2e1cb1fd2c80290e54de6.ctex"
+uid="uid://b7fumb1bkw0g2"
+path="res://.godot/imported/Ship Alige Hide.png-192ec6ce1b9804cb348a9e713b2719de.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/desertpit/snake-pit.png"
-dest_files=["res://.godot/imported/snake-pit.png-56005ee0a1d2e1cb1fd2c80290e54de6.ctex"]
+source_file="res://data/graphics/minimaps/ship/Ship Alige Hide.png"
+dest_files=["res://.godot/imported/Ship Alige Hide.png-192ec6ce1b9804cb348a9e713b2719de.ctex"]
 
 [params]
 

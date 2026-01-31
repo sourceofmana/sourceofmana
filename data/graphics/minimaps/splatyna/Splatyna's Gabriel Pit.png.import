@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk56gl7jfreic"
-path="res://.godot/imported/mountain-cave.png-afb16303801919ea724d9dfce01c7296.ctex"
+uid="uid://d2pxey6xjqw0l"
+path="res://.godot/imported/Splatyna's Gabriel Pit.png-bccc1ccee17ab37d7504dd71220d91b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/desertpit/mountain-cave.png"
-dest_files=["res://.godot/imported/mountain-cave.png-afb16303801919ea724d9dfce01c7296.ctex"]
+source_file="res://data/graphics/minimaps/splatyna/Splatyna's Gabriel Pit.png"
+dest_files=["res://.godot/imported/Splatyna's Gabriel Pit.png-bccc1ccee17ab37d7504dd71220d91b3.ctex"]
 
 [params]
 

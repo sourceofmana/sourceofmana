@@ -106,46 +106,58 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 
 	var client_scene : Node2D = mapReader.build_client(source_file, options)
 	var server_resource : Resource = mapReader.build_server()
-	var nav_region : NavigationRegion2D = mapReader.build_navigation()
-
-	# Navigation import into a separate .tres
-	if nav_region and options.export_navigation_mesh:
-		NavigationServer2D.bake_from_source_geometry_data(nav_region.navigation_polygon, mapReader.source_data)
-		saveRet &= ResourceSaver.save(nav_region.navigation_polygon, "%s.navigation.tres" % [source_file])
+	var nav_region : NavigationRegion2D = mapReader.build_navigation(options)
 
 	# Import file when opening the .tmx file
-	if options.export_global_scene:
-		if nav_region:
-			nav_region.set_name("NavRegion")
-			client_scene.add_child(nav_region)
-			nav_region.set_owner(client_scene)
+	if client_scene and nav_region:
+		var global_scene : Node2D = Node2D.new()
+		if options.export_global_scene:
+			var dup_client_scene : Node2D = client_scene.duplicate()
+			global_scene.add_child(dup_client_scene)
+			dup_client_scene.set_owner(global_scene)
+
+			var dup_nav_region : Node2D = nav_region.duplicate()
+			global_scene.add_child(dup_nav_region)
+			dup_nav_region.set_owner(global_scene)
+
+		var packed_scene = PackedScene.new()
+		packed_scene.pack(global_scene)
+		saveRet &= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()])
+
+	var file_map_hierarchy : String = source_file.get_slice(Path.MapRsc, 1).get_base_dir() + "/" + mapReader.map_name
+
+	# Navigation 2D polygon
+	if nav_region:
+		var file_path : String = Path.MapNavPst + file_map_hierarchy + Path.RscExt
+		if not DirAccess.open(file_path):
+			DirAccess.make_dir_recursive_absolute(file_path.get_base_dir())
+		saveRet &= ResourceSaver.save(nav_region.navigation_polygon, file_path)
+
+	# Client Data import (TileMap and warp locations)
+	if client_scene:
+		# Hide unused data from the client
+		for child in client_scene.get_children():
+			if child is TileMapLayer:
+				child.set_occlusion_enabled(false)
+				child.set_collision_enabled(false)
+				child.set_navigation_enabled(false)
+				if child.get_name() == "Collision":
+					client_scene.remove_child(child)
 		var packed_scene = PackedScene.new()
 		packed_scene.pack(client_scene)
-		saveRet &= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()]) # Mandatory 
-	else:
-		# Client Data import (TileMap and warp locations)
-		if client_scene:
-			# Hide unused data from the client
-			for child in client_scene.get_children():
-				if child is TileMapLayer:
-					child.set_occlusion_enabled(false)
-					child.set_collision_enabled(false)
-					child.set_navigation_enabled(false)
-					if child.get_name() == "Collision":
-						client_scene.remove_child(child)
-			var packed_scene = PackedScene.new()
-			packed_scene.pack(client_scene)
-			saveRet &= ResourceSaver.save(packed_scene, "%s.client.%s" % [source_file, _get_save_extension()])
 
-		# Server Data import (Spawn and warp locations)
-		if server_resource:
-			saveRet &= ResourceSaver.save(server_resource, "%s.server.tres" % [source_file])
+		var file_path : String = Path.MapLayerPst + file_map_hierarchy + Path.SceneExt
+		if not DirAccess.open(file_path):
+			DirAccess.make_dir_recursive_absolute(file_path.get_base_dir())
+		saveRet &= ResourceSaver.save(packed_scene, file_path)
 
-		# Empty scene when the user want to open the .tmx, have to check the export_global_scene to generate a global unified scene
-		var empty_scene : Node2D = Node2D.new()
-		empty_scene.set_name("Empty")
-		var packed_scene = PackedScene.new()
-		packed_scene.pack(empty_scene)
-		saveRet &= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()]) # Mandatory 
+	# Server Data import (Spawn and warp locations)
+	if server_resource:
+		var file_path : String = Path.MapDataPst + file_map_hierarchy + Path.RscExt
+		if not DirAccess.open(file_path):
+			DirAccess.make_dir_recursive_absolute(file_path.get_base_dir())
+		saveRet &= ResourceSaver.save(server_resource, file_path)
+
+	Util.PrintLog("Tiled", "Importing resource: " + source_file)
 
 	return saveRet

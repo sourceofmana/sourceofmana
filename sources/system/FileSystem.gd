@@ -81,17 +81,15 @@ static func LoadDB(path : String) -> Dictionary:
 	return result
 
 # Map
-static func LoadMap(path : String, ext : String) -> Object:
+static func LoadMap(fullPath : String) -> Object:
 	var mapInstance : Object	= null
 
-	var filePath : String		= Path.MapRsc + path
-	var scenePath : String		= filePath + ext
-	var pathExists : bool		= ResourceExists(scenePath)
+	var pathExists : bool		= ResourceExists(fullPath)
 
-	assert(pathExists, "Map file not found " + scenePath + " should be located at " + Path.MapRsc)
+	assert(pathExists, "Map file not found " + fullPath + " should be located at " + Path.MapRsc)
 	if pathExists:
-		mapInstance = ResourceInstanceOrLoad(scenePath)
-		Util.PrintLog("Map", "Loading resource: " + scenePath)
+		mapInstance = ResourceInstanceOrLoad(fullPath)
+		Util.PrintLog("Map", "Loading resource: " + fullPath)
 
 	return mapInstance
 

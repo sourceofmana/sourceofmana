@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biik8sritcc8k"
-path="res://.godot/imported/tulimshar-eastern-hills.png-76d2fb21e23806904375917a9ceeb487.ctex"
+uid="uid://50ccoyosphav"
+path="res://.godot/imported/Candor Arena.png-3d4cdbb30f473e0484eb9ccde1f70478.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar outskirts/tulimshar-eastern-hills.png"
-dest_files=["res://.godot/imported/tulimshar-eastern-hills.png-76d2fb21e23806904375917a9ceeb487.ctex"]
+source_file="res://data/graphics/minimaps/candor/Candor Arena.png"
+dest_files=["res://.godot/imported/Candor Arena.png-3d4cdbb30f473e0484eb9ccde1f70478.ctex"]
 
 [params]
 

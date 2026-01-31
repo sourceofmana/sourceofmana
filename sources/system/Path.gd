@@ -28,6 +28,7 @@ const CellPst : String					= Pst + "cells/"
 const PalettesPst : String				= Pst + "palettes/"
 const QuestPst : String					= Pst + "quests/"
 const MaterialPst : String				= Pst + "materials/"
+const MapPst : String					= Pst + "maps/"
 
 const EmotePst : String					= CellPst + "emotes/"
 const ItemPst : String					= CellPst + "items/"
@@ -36,19 +37,21 @@ const SkillPst : String					= CellPst + "skills/"
 const EntityComponent : String			= EntityPst + "components/"
 const EntitySprite : String				= EntityPst + "sprites/"
 
+const MapLayerPst : String				= MapPst + "layers/"
+const MapDataPst : String				= MapPst + "data/"
+const MapNavPst : String				= MapPst + "navigations/"
+
 # Local
 const Local : String					= "user://"
 
 # Extentions
 const GfxExt: String					= ".png"
-const MapClientExt: String				= ".tmx.client.scn"
-const MapServerExt: String				= ".tmx.server.tres"
-const MapNavigationExt: String			= ".tmx.navigation.tres"
 const MusicExt: String					= ".ogg"
 const DBExt: String						= ".db"
 const ConfExt: String					= ".cfg"
 const SceneExt: String					= ".tscn"
 const RscExt: String					= ".tres"
+const MapExt: String					= ".tmx"
 const DataExt: String					= ".json"
 const SQLExt: String					= ".sql"
 const RemapExt: String					= ".remap"

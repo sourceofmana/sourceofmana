@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hic7ra0un6lf"
-path="res://.godot/imported/manayir.png-08132ae1066615f72eaa5be5abf05740.ctex"
+uid="uid://c3b8xbltl4u4j"
+path="res://.godot/imported/Manayir.png-24feca228d062670b6a8b0446e042c05.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/manayir/manayir.png"
-dest_files=["res://.godot/imported/manayir.png-08132ae1066615f72eaa5be5abf05740.ctex"]
+source_file="res://data/graphics/minimaps/tonori/manayir/Manayir.png"
+dest_files=["res://.godot/imported/Manayir.png-24feca228d062670b6a8b0446e042c05.ctex"]
 
 [params]
 

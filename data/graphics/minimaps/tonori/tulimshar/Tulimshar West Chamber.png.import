@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3altm7nbjp8x"
-path="res://.godot/imported/wall-west-chamber.png-3e9a61f26c47a082b156732fe88159b1.ctex"
+uid="uid://b83ayttcy7ujd"
+path="res://.godot/imported/Tulimshar West Chamber.png-f2385c2dcb6afdded907f53b10d7ce05.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar/wall-west-chamber.png"
-dest_files=["res://.godot/imported/wall-west-chamber.png-3e9a61f26c47a082b156732fe88159b1.ctex"]
+source_file="res://data/graphics/minimaps/tonori/tulimshar/Tulimshar West Chamber.png"
+dest_files=["res://.godot/imported/Tulimshar West Chamber.png-f2385c2dcb6afdded907f53b10d7ce05.ctex"]
 
 [params]
 

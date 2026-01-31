@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bq4h7vn7kbv7w"
-path="res://.godot/imported/drazil.png-c8f1681a6eac57f6d1d09abf1b54a11f.ctex"
+uid="uid://psdsm3tsq7e3"
+path="res://.godot/imported/Drazil.png-9d80d26db3a3ae9567eb7bb1ed089e67.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/drazil/drazil.png"
-dest_files=["res://.godot/imported/drazil.png-c8f1681a6eac57f6d1d09abf1b54a11f.ctex"]
+source_file="res://data/graphics/minimaps/drazil/Drazil.png"
+dest_files=["res://.godot/imported/Drazil.png-9d80d26db3a3ae9567eb7bb1ed089e67.ctex"]
 
 [params]
 

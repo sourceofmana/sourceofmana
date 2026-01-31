@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm16yb4ikmhi5"
-path="res://.godot/imported/sandstorm.png-0aca17f4b98ade23436afd85ea367023.ctex"
+uid="uid://dt1rami5mgiqu"
+path="res://.godot/imported/Sandstorm.png-6699e56d85886dce01d8dfe1ebd222a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/sandstorm/sandstorm.png"
-dest_files=["res://.godot/imported/sandstorm.png-0aca17f4b98ade23436afd85ea367023.ctex"]
+source_file="res://data/graphics/minimaps/tonori/sandstorm/Sandstorm.png"
+dest_files=["res://.godot/imported/Sandstorm.png-6699e56d85886dce01d8dfe1ebd222a5.ctex"]
 
 [params]
 

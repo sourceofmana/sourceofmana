@@ -48,7 +48,7 @@ func UnloadMapNode():
 		MapUnloaded.emit()
 
 func LoadMapNode(mapID : int):
-	currentMapNode = pool.LoadMapClientData(mapID)
+	currentMapNode = pool.LoadMapLayers(mapID)
 	currentMapID = mapID
 	assert(currentMapNode != null, "Map instance could not be created")
 	if currentMapNode:

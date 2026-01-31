@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5p31ou7xp1b1"
-path="res://.godot/imported/tulimshar-center.png-cf4964d649d0750ba485534eaac33c8f.ctex"
+uid="uid://lijpj10e6bc7"
+path="res://.godot/imported/Desert Mountain Cave.png-0d3474df685551ba48d30163e299f0eb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar/tulimshar-center.png"
-dest_files=["res://.godot/imported/tulimshar-center.png-cf4964d649d0750ba485534eaac33c8f.ctex"]
+source_file="res://data/graphics/minimaps/tonori/desertpit/Desert Mountain Cave.png"
+dest_files=["res://.godot/imported/Desert Mountain Cave.png-0d3474df685551ba48d30163e299f0eb.ctex"]
 
 [params]
 

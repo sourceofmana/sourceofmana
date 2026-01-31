@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djufto6fvy18h"
-path="res://.godot/imported/desert-mountain.png-1ef709c8dd9cc21bb4c13641eac1df63.ctex"
+uid="uid://bowklj1uolmc2"
+path="res://.godot/imported/Desert Mines.png-ba7c3edc3aff29ff33174bf4787d9d2d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/desertpit/desert-mountain.png"
-dest_files=["res://.godot/imported/desert-mountain.png-1ef709c8dd9cc21bb4c13641eac1df63.ctex"]
+source_file="res://data/graphics/minimaps/tonori/sandstorm/Desert Mines.png"
+dest_files=["res://.godot/imported/Desert Mines.png-ba7c3edc3aff29ff33174bf4787d9d2d.ctex"]
 
 [params]
 

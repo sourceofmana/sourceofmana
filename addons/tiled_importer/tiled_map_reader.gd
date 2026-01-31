@@ -225,12 +225,16 @@ func build_client(source_path, options) -> Node2D:
 
 	return root
 
-func build_navigation() -> Node2D:
+func build_navigation(options) -> Node2D:
 	nav_region.set_name("NavRegion")
 	nav_region.navigation_polygon = NavigationPolygon.new()
 	nav_region.navigation_polygon.set_source_geometry_mode(NavigationPolygon.SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN)
 	nav_region.navigation_polygon.add_outline(PackedVector2Array([Vector2(map_boundaries.position.x, map_boundaries.position.y), Vector2(map_boundaries.position.x, map_boundaries.end.y), Vector2(map_boundaries.end.x, map_boundaries.end.y), Vector2(map_boundaries.end.x, map_boundaries.position.y)]))
 	nav_region.navigation_polygon.set_agent_radius(10 if cell_size.y == 32 else 4)
+
+	if options.export_navigation_mesh:
+		NavigationServer2D.bake_from_source_geometry_data(nav_region.navigation_polygon, source_data)
+
 	return nav_region
 
 func fill_polygon_pool(tileset : TileSet, cell_pos : Vector2, gid : int):

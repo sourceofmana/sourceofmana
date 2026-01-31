@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7bb2ta5ns83x"
-path="res://.godot/imported/tulimshar-beach.png-af1f4ffab7f1090c77a1fd9ba941d066.ctex"
+uid="uid://fdgl5nto4ahk"
+path="res://.godot/imported/Splatyna's Chamber.png-d4884d774a62b831e310b502d93026af.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/tulimshar outskirts/tulimshar-beach.png"
-dest_files=["res://.godot/imported/tulimshar-beach.png-af1f4ffab7f1090c77a1fd9ba941d066.ctex"]
+source_file="res://data/graphics/minimaps/splatyna/Splatyna's Chamber.png"
+dest_files=["res://.godot/imported/Splatyna's Chamber.png-d4884d774a62b831e310b502d93026af.ctex"]
 
 [params]
 
