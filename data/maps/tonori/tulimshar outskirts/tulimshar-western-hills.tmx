@@ -113,9 +113,9 @@
   <object id="23" name="To Tulimshar Center" type="Warp" x="2988" y="3478">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_map" value="Tulimshar Center"/>
-    <property name="dest_pos_x" value="48"/>
-    <property name="dest_pos_y" value="50"/>
+    <property name="dest_map" value="Tulimshar West Wall Pathway"/>
+    <property name="dest_pos_x" value="51"/>
+    <property name="dest_pos_y" value="74"/>
    </properties>
    <polygon points="20,56 52,56 68,74 52,90 19,90 4,74"/>
   </object>
