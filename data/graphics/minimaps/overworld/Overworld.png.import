@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3b8xbltl4u4j"
-path="res://.godot/imported/Manayir.png-24feca228d062670b6a8b0446e042c05.ctex"
+uid="uid://dgco0bd77dx4l"
+path="res://.godot/imported/Overworld.png-051b2593c2c97667788443eb0634712b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/minimaps/tonori/manayir/Manayir.png"
-dest_files=["res://.godot/imported/Manayir.png-24feca228d062670b6a8b0446e042c05.ctex"]
+source_file="res://data/graphics/minimaps/overworld/Overworld.png"
+dest_files=["res://.godot/imported/Overworld.png-051b2593c2c97667788443eb0634712b.ctex"]
 
 [params]
 
