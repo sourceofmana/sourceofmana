@@ -27,17 +27,19 @@ jobs:
         - name: Android
           export_template: "Android"
           ext: "apk"
+
     runs-on: ubuntu-latest
-    permissions: write-all
     container:
       image: barichello/godot-ci:4.5.1
     name: Export ${{ matrix.name }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
-      - name: Setup
+
+      - name: Setup Godot templates
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mkdir -v -p ~/.config/
@@ -46,11 +48,18 @@ jobs:
           echo "$DEBUG_KEYSTORE" | base64 -d > /root/debug.keystore
         env:
           DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
-      - name: ${{ matrix.name }} Build
+
+      - name: Import assets
         run: |
-          mkdir -v -p "build/${{ matrix.name }}"
+          cd "$PROJECT_PATH"
+          godot --headless --editor --import --verbose --quit
+
+      - name: Build ${{ matrix.name }}
+        run: |
+          mkdir -p "build/${{ matrix.name }}"
           cd "$PROJECT_PATH"
           godot --headless --verbose --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
+
       - name: Upload Artifact - ${{ matrix.name }}
         uses: actions/upload-artifact@v4
         with:
