@@ -1,76 +1,14 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=4 uid="uid://dsqtrp5ortggt"]
 
-[sub_resource type="Shader" id="Shader_jf37b"]
-resource_local_to_scene = true
-code = "shader_type canvas_item;
-render_mode unshaded;
-
-uniform mat4 global_transform;
-uniform int n_lights = 0;
-uniform vec4 dark_color : source_color = vec4(0.1, 0.08, 0.15, 1.0);
-uniform vec4 default_light_color : source_color;
-uniform float light_level : hint_range(0.0, 1.0) = 0.0;
-uniform float deadband : hint_range(1.0, 100.0) = 4.0;
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
-varying vec2 world_position;
-
-#define MAX_LIGHTS 64
-uniform vec4 light_data[MAX_LIGHTS];
-uniform vec4 color_data[MAX_LIGHTS];
-
-void vertex()
-{
-	world_position = (global_transform * vec4(VERTEX, 0.0, 1.0)).xy;
-}
-
-void fragment()
-{
-	vec2 frag_position = floor(world_position);
-	float m_value = 1.0; // 1.0 == dark, 0.0 == light
-	vec4 light_color = default_light_color;
-
-	for (int i = 0; i < n_lights; ++i)
-	{
-		vec4 light_instance = light_data[i];
-		vec2 normalized_position = light_instance.xy - frag_position;
-		normalized_position.y *= 1.3;
-		float squared_dist = dot(normalized_position, normalized_position);
-		float squared_radius = pow(light_instance.w, 2);
-		if (squared_dist < squared_radius)
-		{
-			float dist = sqrt(squared_dist) / sqrt(squared_radius);
-			float value = dist < 0.5 ? 0.0 : -pow(dist - 1.0, 2) * (deadband + light_instance.z * 0.2) + 1.0;
-			if (value < m_value)
-			{
-				vec4 new_color = color_data[i];
-				light_color.rgb = mix(light_color.rgb, new_color.rgb, m_value);
-				light_color.a = max(light_color.r, new_color.r);
-			}
-
-			m_value *= value;
-			if (m_value <= 0.0)
-				break;
-		}
-	}
-
-	light_color.rgb = mix(light_color.rgb, dark_color.rgb, max(-0.2, (m_value - 0.5) / 0.5));
-
-	vec4 ambient_color = mix(light_color, dark_color, m_value);
-	ambient_color.a *= 1.0 - light_level;
-	vec4 screen_color = texture(SCREEN_TEXTURE, SCREEN_UV);
-
-	COLOR = screen_color * ambient_color;
-}
-"
+[ext_resource type="Shader" uid="uid://e6trtfvhjes0" path="res://sources/shaders/Lighting.gdshader" id="1_q51t8"]
 
 [resource]
 resource_local_to_scene = true
-shader = SubResource("Shader_jf37b")
+shader = ExtResource("1_q51t8")
 shader_parameter/global_transform = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
 shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
-shader_parameter/deadband = 4.0
 shader_parameter/light_data = PackedVector4Array()
 shader_parameter/color_data = PackedVector4Array()

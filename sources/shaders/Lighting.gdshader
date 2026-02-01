@@ -7,6 +7,7 @@ uniform vec4 dark_color : source_color = vec4(0.1, 0.08, 0.15, 1.0);
 uniform vec4 default_light_color : source_color;
 uniform float light_level : hint_range(0.0, 1.0) = 0.0;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform float steps = 7.0;
 varying vec2 world_position;
 
 #define MAX_LIGHTS 64
@@ -49,14 +50,10 @@ void fragment()
 				break;
 		}
 	}
-	if (m_value < 0.01)
-		m_value = 0.0;
-	else if (m_value < 0.33)
-		m_value = 0.33;
-	else if (m_value < 0.66)
-		m_value = 0.66;
-	else
-		m_value = 1.0;
+
+    m_value = clamp(m_value, 0.0, 1.0);
+    m_value = floor(m_value * steps + 0.5) / steps;
+
 	light_color.rgb = mix(light_color.rgb, dark_color.rgb, max(-0.2, (m_value - 0.5) / 0.5));
 
 	vec4 ambient_color = mix(light_color, dark_color, m_value);
