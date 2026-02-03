@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=9 format=3 uid="uid://bsscppglk0qam"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://bsscppglk0qam"]
 
 [ext_resource type="Texture2D" uid="uid://bgooymn38fefo" path="res://data/graphics/items/head/ghutra.png" id="1_l2gou"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_uafrj"]

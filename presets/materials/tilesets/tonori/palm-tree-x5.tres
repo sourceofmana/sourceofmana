@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://wobib8k3rmyx"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://wobib8k3rmyx"]
 
 [ext_resource type="Shader" uid="uid://cs0tps6qhmsdq" path="res://sources/shaders/FoliageWindEffect.gdshader" id="1_lbf1p"]
 [ext_resource type="Texture2D" uid="uid://dn8l3iqdg3dsg" path="res://data/graphics/tilesets/tonori/masks/palm-tree-x5.png" id="2_4hxnb"]

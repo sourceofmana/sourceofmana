@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bd7dn71v6molq"]
+[gd_scene format=3 uid="uid://bd7dn71v6molq"]
 
 [ext_resource type="Texture2D" uid="uid://183h7gytrkx6" path="res://data/graphics/sprites/players/ship.png" id="1_7q1qd"]
 [ext_resource type="Texture2D" uid="uid://dyn6efv22dhja" path="res://data/graphics/effects/particles/ship-circles.png" id="1_uuuri"]
@@ -900,16 +900,16 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Ship" type="Node2D"]
+[node name="Ship" type="Node2D" unique_id=620145345]
 
-[node name="Circles" type="GPUParticles2D" parent="."]
+[node name="Circles" type="GPUParticles2D" parent="." unique_id=1861638691]
 material = SubResource("CanvasItemMaterial_pa6s6")
 position = Vector2(0, -8)
 amount = 6
 texture = ExtResource("1_uuuri")
 process_material = SubResource("ParticleProcessMaterial_fyt0m")
 
-[node name="Trails" type="GPUParticles2D" parent="."]
+[node name="Trails" type="GPUParticles2D" parent="." unique_id=1147237861]
 position = Vector2(0, -7)
 emitting = false
 amount = 100
@@ -918,21 +918,19 @@ lifetime = 2.0
 explosiveness = 0.03
 process_material = SubResource("ParticleProcessMaterial_cyqte")
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=2110265128]
 texture = ExtResource("1_7q1qd")
 offset = Vector2(0, -10)
 hframes = 3
 vframes = 3
 frame = 7
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=806164171]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 speed_scale = 0.519
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_m3lbd")]
+[node name="AnimationTree" parent="Animation" unique_id=565879730 instance=ExtResource("2_m3lbd")]
 root_node = NodePath("../../Body")
 callback_mode_discrete = 1
 parameters/Death/BlendSpace2D/blend_position = Vector2(0, -0.904762)

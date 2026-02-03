@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillCell" load_steps=12 format=3 uid="uid://dvgbbk4l2m11q"]
+[gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://dvgbbk4l2m11q"]
 
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_f6vbr"]
 [ext_resource type="Texture2D" uid="uid://cyg3qk423x8vq" path="res://data/graphics/effects/particles/cast4.png" id="2_llpnr"]
@@ -12,19 +12,16 @@
 script = ExtResource("4_qom12")
 _effect = 1
 _value = 50
-_persistent = false
 
 [sub_resource type="Resource" id="Resource_csoio"]
 script = ExtResource("4_qom12")
 _effect = 2
 _value = -10
-_persistent = false
 
 [sub_resource type="Resource" id="Resource_boo5s"]
 script = ExtResource("4_qom12")
 _effect = 3
 _value = -15
-_persistent = false
 
 [sub_resource type="Resource" id="Resource_2d4mj"]
 script = ExtResource("4_tb83y")
@@ -32,24 +29,18 @@ _modifiers = Array[ExtResource("4_qom12")]([SubResource("Resource_mlpd5"), SubRe
 
 [resource]
 script = ExtResource("4_p55re")
-state = 0
 cellRange = 128
-mode = 0
-repeat = false
 cooldownTime = 5.0
 castPreset = ExtResource("1_f6vbr")
 castTextureOverride = ExtResource("2_llpnr")
 castColor = Color(1, 1, 0.6, 1)
 castTime = 3.0
 skillPreset = ExtResource("5_0vmmd")
-skillColor = Color(0, 0, 0, 1)
 skillTime = 2.0
-id = -1
 name = "Inma"
 description = "Provide a light healing touch to allies or creatures."
 icon = ExtResource("3_jylje")
 type = 2
 weight = 0.0
-stackable = false
 usable = true
 modifiers = SubResource("Resource_2d4mj")

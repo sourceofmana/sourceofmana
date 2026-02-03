@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7swsvf2fkcft"]
+[gd_scene format=3 uid="uid://c7swsvf2fkcft"]
 
 [ext_resource type="Texture2D" uid="uid://c0tdh748svcb3" path="res://data/graphics/effects/particles/leaf.png" id="1_cfro2"]
 
@@ -13,8 +13,18 @@ curve = SubResource("Curve_pnx33")
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.340491, 0.526699), 108.008, 108.008, 0, 0, Vector2(0.509202, 0.558252), 146.581, 146.581, 0, 0, Vector2(0.674847, 0.439927), -30.8591, -30.8591, 0, 0, Vector2(1, 0.0218446), 0.0, 0.0, 0, 0]
 point_count = 5
 
+[sub_resource type="Curve" id="Curve_fei11"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_4mndo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_gm6fj"]
 curve_x = SubResource("Curve_040w4")
+curve_y = SubResource("Curve_fei11")
+curve_z = SubResource("Curve_4mndo")
 
 [sub_resource type="Curve" id="Curve_bvdh8"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.705521, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.495146), 0.0, 0.0, 0, 0]
@@ -39,7 +49,7 @@ scale_min = 0.6
 scale_curve = SubResource("CurveTexture_shfc4")
 alpha_curve = SubResource("CurveTexture_08cts")
 
-[node name="Falling Leaf" type="GPUParticles2D"]
+[node name="Falling Leaf" type="GPUParticles2D" unique_id=1880148223]
 amount = 1
 texture = ExtResource("1_cfro2")
 lifetime = 5.0

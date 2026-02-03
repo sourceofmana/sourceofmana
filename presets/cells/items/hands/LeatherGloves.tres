@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://b8ixnx1136r4m"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://b8ixnx1136r4m"]
 
 [ext_resource type="Texture2D" uid="uid://dylpf2bwsip1j" path="res://data/graphics/items/hands/leather-gloves.png" id="1_e120b"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_11t5n"]
@@ -23,13 +23,7 @@ script = ExtResource("2_11t5n")
 slot = 3
 textures = Array[Texture2D]([ExtResource("4_70lwe"), ExtResource("5_c1dr8"), ExtResource("4_70lwe")])
 shader = ExtResource("3_kswes")
-customfield = ""
-id = -1
 name = "Leather Gloves"
-description = ""
 icon = ExtResource("1_e120b")
-type = 0
 weight = 300.0
-stackable = false
-usable = false
 modifiers = SubResource("Resource_eqy3a")

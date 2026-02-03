@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0mvk3kt4enrl"]
+[gd_scene format=3 uid="uid://c0mvk3kt4enrl"]
 
 [ext_resource type="Texture2D" uid="uid://b0qa2td7svga7" path="res://data/graphics/effects/particles/smoke.png" id="1_nsogh"]
 
@@ -10,7 +10,7 @@ point_count = 2
 offsets = PackedFloat32Array(0, 0.0549451, 0.601227, 1)
 colors = PackedColorArray(1, 1, 1, 0, 0.689733, 0.713589, 0.785156, 1, 0.980392, 0.992157, 1, 0.819608, 1, 1, 1, 0)
 
-[node name="Chimney Smoke" type="CPUParticles2D"]
+[node name="Chimney Smoke" type="CPUParticles2D" unique_id=504376883]
 z_index = 10
 amount = 20
 texture = ExtResource("1_nsogh")

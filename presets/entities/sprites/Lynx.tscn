@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cs3cgktwqe00i"]
+[gd_scene format=3 uid="uid://cs3cgktwqe00i"]
 
 [ext_resource type="Texture2D" uid="uid://b672g8vfnoww1" path="res://data/graphics/sprites/monsters/lynx.png" id="1_4i34q"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_cy3cf"]
@@ -345,20 +345,18 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Generic" type="Node2D"]
+[node name="Generic" type="Node2D" unique_id=1023966928]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=1963735401]
 texture = ExtResource("1_4i34q")
 offset = Vector2(0, -30)
 hframes = 12
 vframes = 4
 frame = 19
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=619509206]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_cy3cf")]
+[node name="AnimationTree" parent="Animation" unique_id=40958837 instance=ExtResource("2_cy3cf")]
 root_node = NodePath("../../Body")

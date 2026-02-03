@@ -1,16 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmupihcekthcs"]
+[gd_scene format=3 uid="uid://dmupihcekthcs"]
 
 [ext_resource type="Script" uid="uid://u8eapvk20s88" path="res://sources/actor/entity/Entity.gd" id="1_h5sc8"]
 [ext_resource type="PackedScene" uid="uid://f2jxqr5e7i5e" path="res://presets/entities/components/Interactions.tscn" id="2_5gxse"]
 [ext_resource type="Script" uid="uid://c4lx7xeqbdpbw" path="res://sources/actor/entity/components/Visual.gd" id="4_d0h8p"]
 
-[node name="Entity" type="CharacterBody2D"]
+[node name="Entity" type="CharacterBody2D" unique_id=1751810393]
 collision_layer = 5
 collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_h5sc8")
 
-[node name="Interactive" parent="." instance=ExtResource("2_5gxse")]
+[node name="Interactive" parent="." unique_id=2040608016 instance=ExtResource("2_5gxse")]
 
-[node name="Visual" type="Node2D" parent="."]
+[node name="Visual" type="Node2D" parent="." unique_id=748043384]
 script = ExtResource("4_d0h8p")

@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5tdyq8opcs0u"]
+[gd_scene format=3 uid="uid://b5tdyq8opcs0u"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_al365"]
 [ext_resource type="Script" uid="uid://ci85y60tfmp4o" path="res://sources/gui/Settings.gd" id="2_wg4ki"]
 
-[node name="Panel" type="PanelContainer"]
+[node name="Panel" type="PanelContainer" unique_id=538660767]
 show_behind_parent = true
 custom_minimum_size = Vector2(180, 100)
 anchors_preset = 15
@@ -17,7 +17,7 @@ theme = ExtResource("1_al365")
 script = ExtResource("2_wg4ki")
 blockActions = true
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1944769664]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -26,33 +26,33 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="TabBar" type="TabContainer" parent="Margin"]
+[node name="TabBar" type="TabContainer" parent="Margin" unique_id=275798947]
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Render" type="ScrollContainer" parent="Margin/TabBar"]
+[node name="Render" type="ScrollContainer" parent="Margin/TabBar" unique_id=1273409067]
 layout_mode = 2
 size_flags_vertical = 3
 metadata/_tab_index = 0
 
-[node name="RenderVBox" type="VBoxContainer" parent="Margin/TabBar/Render"]
+[node name="RenderVBox" type="VBoxContainer" parent="Margin/TabBar/Render" unique_id=1601035936]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Preset" type="HBoxContainer" parent="Margin/TabBar/Render/RenderVBox"]
+[node name="Preset" type="HBoxContainer" parent="Margin/TabBar/Render/RenderVBox" unique_id=1564754193]
 visible = false
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox/Preset"]
+[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox/Preset" unique_id=1331934713]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Preset"
 
-[node name="Option" type="OptionButton" parent="Margin/TabBar/Render/RenderVBox/Preset"]
+[node name="Option" type="OptionButton" parent="Margin/TabBar/Render/RenderVBox/Preset" unique_id=1281262132]
 layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
@@ -62,40 +62,40 @@ popup/item_0/id = 0
 popup/item_1/text = "Mobile"
 popup/item_1/id = 1
 
-[node name="VisualVBox" type="VBoxContainer" parent="Margin/TabBar/Render/RenderVBox"]
+[node name="VisualVBox" type="VBoxContainer" parent="Margin/TabBar/Render/RenderVBox" unique_id=1244674521]
 layout_mode = 2
 
-[node name="Visual" type="Label" parent="Margin/TabBar/Render/RenderVBox/VisualVBox"]
+[node name="Visual" type="Label" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=355890167]
 layout_mode = 2
 text = "Visual"
 
-[node name="Fullscreen" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox"]
+[node name="Fullscreen" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=334337584]
 layout_mode = 2
 text = "Fullscreen Mode"
 
-[node name="WindowResolution" type="HBoxContainer" parent="Margin/TabBar/Render/RenderVBox/VisualVBox"]
+[node name="WindowResolution" type="HBoxContainer" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1027751738]
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution"]
+[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution" unique_id=1003187559]
 layout_mode = 2
 size_flags_horizontal = 3
 text = " Window Resolution"
 
-[node name="Option" type="OptionButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution"]
+[node name="Option" type="OptionButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution" unique_id=745099495]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Scaling" type="HBoxContainer" parent="Margin/TabBar/Render/RenderVBox/VisualVBox"]
+[node name="Scaling" type="HBoxContainer" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1909061268]
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling"]
+[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling" unique_id=1899750434]
 layout_mode = 2
 size_flags_horizontal = 3
 text = " Scaling"
 
-[node name="Option" type="OptionButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling"]
+[node name="Option" type="OptionButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling" unique_id=815910694]
 layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
@@ -107,54 +107,54 @@ popup/item_1/id = 1
 popup/item_2/text = "x3"
 popup/item_2/id = 2
 
-[node name="ActionOverlay" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox"]
+[node name="ActionOverlay" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1637200902]
 layout_mode = 2
 text = "Action Overlay"
 
-[node name="HSeparator2" type="HSeparator" parent="Margin/TabBar/Render/RenderVBox"]
+[node name="HSeparator2" type="HSeparator" parent="Margin/TabBar/Render/RenderVBox" unique_id=186324792]
 layout_mode = 2
 
-[node name="EffectVBox" type="VBoxContainer" parent="Margin/TabBar/Render/RenderVBox"]
+[node name="EffectVBox" type="VBoxContainer" parent="Margin/TabBar/Render/RenderVBox" unique_id=606052892]
 layout_mode = 2
 
-[node name="Effect" type="Label" parent="Margin/TabBar/Render/RenderVBox/EffectVBox"]
+[node name="Effect" type="Label" parent="Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=1300611624]
 layout_mode = 2
 text = "Effect"
 
-[node name="Lighting" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/EffectVBox"]
+[node name="Lighting" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=392747916]
 layout_mode = 2
 text = "Lighting"
 
-[node name="HQx4" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/EffectVBox"]
+[node name="HQx4" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=787563390]
 layout_mode = 2
 text = "High Quality Scale"
 
-[node name="CRT" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/EffectVBox"]
+[node name="CRT" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=307353882]
 layout_mode = 2
 text = "Cathode Ray Tube"
 
-[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox"]
+[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox" unique_id=1915786938]
 layout_mode = 2
 
-[node name="Audio" type="ScrollContainer" parent="Margin/TabBar"]
+[node name="Audio" type="ScrollContainer" parent="Margin/TabBar" unique_id=499767979]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin/TabBar/Audio"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin/TabBar/Audio" unique_id=124967174]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Global Volume" type="HBoxContainer" parent="Margin/TabBar/Audio/VBoxContainer"]
+[node name="Global Volume" type="HBoxContainer" parent="Margin/TabBar/Audio/VBoxContainer" unique_id=508225996]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Margin/TabBar/Audio/VBoxContainer/Global Volume"]
+[node name="Label" type="Label" parent="Margin/TabBar/Audio/VBoxContainer/Global Volume" unique_id=591312565]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Global Volume"
 
-[node name="HSlider" type="HSlider" parent="Margin/TabBar/Audio/VBoxContainer/Global Volume"]
+[node name="HSlider" type="HSlider" parent="Margin/TabBar/Audio/VBoxContainer/Global Volume" unique_id=1319659749]
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0

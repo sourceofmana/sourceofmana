@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://cvpjvvrg63wc5"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://cvpjvvrg63wc5"]
 
 [ext_resource type="Texture2D" uid="uid://c5yuy5eggxbft" path="res://data/graphics/items/chest/cotton-shirt.png" id="1_qatwx"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_nnkqv"]
@@ -11,12 +11,6 @@ script = ExtResource("2_nnkqv")
 slot = 0
 textures = Array[Texture2D]([ExtResource("4_j0vli"), ExtResource("5_l1k2v"), ExtResource("4_j0vli")])
 shader = ExtResource("3_4f3v5")
-customfield = ""
-id = -1
 name = "Cotton Shirt"
-description = ""
 icon = ExtResource("1_qatwx")
-type = 0
 weight = 300.0
-stackable = false
-usable = false

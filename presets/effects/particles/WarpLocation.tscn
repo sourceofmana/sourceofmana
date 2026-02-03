@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://blma0kmjc15pb"]
+[gd_scene format=3 uid="uid://blma0kmjc15pb"]
 
 [ext_resource type="Texture2D" uid="uid://o0usxnftyn4p" path="res://data/graphics/effects/particles/sparkle.png" id="1_bsjjb"]
 
@@ -13,14 +13,14 @@ point_count = 2
 offsets = PackedFloat32Array(0, 0.808511, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 0.522906, 0.318116, 0.321809, 1, 1, 1, 0)
 
-[node name="WarpParticles" type="CPUParticles2D"]
+[node name="WarpParticles" type="CPUParticles2D" unique_id=1460748020]
 material = SubResource("CanvasItemMaterial_1pdty")
 amount = 6
+texture = ExtResource("1_bsjjb")
 lifetime = 2.0
 preprocess = 3.0
 randomness = 0.25
 lifetime_randomness = 0.15
-texture = ExtResource("1_bsjjb")
 emission_shape = 4
 emission_points = PackedVector2Array()
 emission_colors = PackedColorArray()

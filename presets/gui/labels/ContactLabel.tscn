@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dhni5f5plbvft"]
 
-[node name="Control" type="RichTextLabel"]
+[node name="Control" type="RichTextLabel" unique_id=306532761]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

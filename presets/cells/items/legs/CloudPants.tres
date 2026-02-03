@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=6 format=3 uid="uid://bouv4idn0yg3i"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://bouv4idn0yg3i"]
 
 [ext_resource type="Texture2D" uid="uid://clx43g4noo76q" path="res://data/graphics/items/legs/cloud-pants.png" id="1_nii4d"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_m4rcn"]

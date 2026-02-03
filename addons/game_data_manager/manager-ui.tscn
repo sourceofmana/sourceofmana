@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjg64w82poqg3"]
+[gd_scene format=3 uid="uid://cjg64w82poqg3"]
 
 [ext_resource type="Script" uid="uid://chiiowuffij0c" path="res://addons/game_data_manager/RefreshButton.gd" id="1_02c80"]
 [ext_resource type="Script" uid="uid://bfufr7xg3rkwb" path="res://addons/game_data_manager/ItemList.gd" id="2_2kinw"]
 [ext_resource type="Script" uid="uid://c5t1lf8t4lnap" path="res://addons/game_data_manager/ItemTypeSelector.gd" id="7_nn4vo"]
 
-[node name="Manager-ui" type="Control"]
+[node name="Manager-ui" type="Control" unique_id=1312609025]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +14,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1135078041]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,50 +22,50 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=55472961]
 layout_mode = 2
 
-[node name="Reload" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Reload" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1247308516]
 layout_mode = 2
 text = "Reload"
 script = ExtResource("1_02c80")
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=693265578]
 layout_mode = 2
 text = "Item List, click on an item to inspect it."
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=772749063]
 layout_mode = 2
 size_flags_horizontal = 10
 placeholder_text = "Search"
 
-[node name="ItemList" type="ItemList" parent="VBoxContainer"]
+[node name="ItemList" type="ItemList" parent="VBoxContainer" unique_id=332358594]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("2_2kinw")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=1628108515]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer2" unique_id=172822066]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 placeholder_text = "Item Filename"
 
-[node name="ItemTypeSelector" type="MenuButton" parent="VBoxContainer/HBoxContainer2"]
+[node name="ItemTypeSelector" type="MenuButton" parent="VBoxContainer/HBoxContainer2" unique_id=1359827801]
 layout_mode = 2
 text = "Type: BaseItem"
 flat = false
 icon_alignment = 2
 script = ExtResource("7_nn4vo")
 
-[node name="create item" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="create item" type="Button" parent="VBoxContainer/HBoxContainer2" unique_id=907868567]
 layout_mode = 2
 text = "Create item"
 
-[node name="AcceptDialog" type="AcceptDialog" parent="VBoxContainer/HBoxContainer2"]
+[node name="AcceptDialog" type="AcceptDialog" parent="VBoxContainer/HBoxContainer2" unique_id=1294156129]
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Reload" to="VBoxContainer/HBoxContainer/Reload" method="_on_pressed"]
 [connection signal="text_changed" from="VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/ItemList" method="_on_line_edit_text_changed"]

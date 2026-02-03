@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=11 format=3 uid="uid://duhylo7w1pitx"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://duhylo7w1pitx"]
 
 [ext_resource type="Texture2D" uid="uid://dq5sfseqnqch2" path="res://data/graphics/items/weapon/rockknife.png" id="1_b8u7e"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_b65r6"]
@@ -34,13 +34,7 @@ script = ExtResource("2_b65r6")
 slot = 6
 textures = Array[Texture2D]([ExtResource("3_lgchf"), ExtResource("3_lgchf"), ExtResource("3_lgchf")])
 shader = ExtResource("3_14n6d")
-customfield = ""
-id = -1
 name = "Rock Knife"
-description = ""
 icon = ExtResource("1_b8u7e")
-type = 0
 weight = 400.0
-stackable = false
-usable = false
 modifiers = SubResource("Resource_8s3hv")

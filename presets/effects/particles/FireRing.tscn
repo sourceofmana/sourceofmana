@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://oxryxm5bfcy1"]
+[gd_scene format=3 uid="uid://oxryxm5bfcy1"]
 
 [ext_resource type="Texture2D" uid="uid://cwlcajt78phca" path="res://data/graphics/effects/particles/orb.png" id="1_us37d"]
 
@@ -47,7 +47,7 @@ scale_curve = SubResource("CurveTexture_3qrii")
 color_ramp = SubResource("GradientTexture1D_124iq")
 turbulence_noise_strength = 6.03
 
-[node name="Fire Ring" type="GPUParticles2D"]
+[node name="Fire Ring" type="GPUParticles2D" unique_id=70499095]
 scale = Vector2(1, 0.7)
 amount = 1000
 texture = ExtResource("1_us37d")

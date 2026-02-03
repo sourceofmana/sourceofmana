@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillCell" load_steps=8 format=3 uid="uid://lcvqesy5llmf"]
+[gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://lcvqesy5llmf"]
 
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="2_6glr6"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_yjg4f"]
@@ -9,13 +9,11 @@
 script = ExtResource("2_yjg4f")
 _effect = 20
 _value = 1
-_persistent = false
 
 [sub_resource type="Resource" id="Resource_nnkbv"]
 script = ExtResource("2_yjg4f")
 _effect = 3
 _value = -10
-_persistent = false
 
 [sub_resource type="Resource" id="Resource_kmmav"]
 script = ExtResource("2_6glr6")
@@ -24,21 +22,11 @@ _modifiers = Array[ExtResource("2_yjg4f")]([SubResource("Resource_ecwg5"), SubRe
 [resource]
 script = ExtResource("5_obt75")
 state = 3
-cellRange = 0
-mode = 0
 repeat = true
-cooldownTime = 0.0
-castColor = Color(0, 0, 0, 1)
-castTime = 0.0
-castWalk = false
-skillColor = Color(0, 0, 0, 1)
-skillTime = 0.0
-id = -1
 name = "Melee"
 description = "Close combat attack."
 icon = ExtResource("3_trswl")
 type = 2
 weight = 0.0
-stackable = false
 usable = true
 modifiers = SubResource("Resource_kmmav")

@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhxp5shmhixr3"]
+[gd_scene format=3 uid="uid://dhxp5shmhixr3"]
 
 [ext_resource type="Script" uid="uid://10ug6safb1d8" path="res://sources/effects/Lighting.gd" id="1_je1n6"]
 
-[node name="LightingLayer" type="CanvasLayer"]
+[node name="LightingLayer" type="CanvasLayer" unique_id=1219234960]
 script = ExtResource("1_je1n6")
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1116240667]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwsmt1b02q3pb"]
+[gd_scene format=3 uid="uid://dwsmt1b02q3pb"]
 
 [ext_resource type="Texture2D" uid="uid://cwlcajt78phca" path="res://data/graphics/effects/particles/orb.png" id="1_e5vgw"]
 
@@ -45,7 +45,7 @@ hue_variation_min = -0.1
 hue_variation_max = 0.1
 turbulence_noise_strength = 6.03
 
-[node name="Selection Indicator Particles" type="GPUParticles2D"]
+[node name="Selection Indicator Particles" type="GPUParticles2D" unique_id=2056597341]
 z_as_relative = false
 amount = 200
 texture = ExtResource("1_e5vgw")

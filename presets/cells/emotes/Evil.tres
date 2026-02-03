@@ -1,15 +1,12 @@
-[gd_resource type="Resource" script_class="BaseCell" load_steps=3 format=3 uid="uid://djpfd66mq04jh"]
+[gd_resource type="Resource" script_class="BaseCell" format=3 uid="uid://djpfd66mq04jh"]
 
 [ext_resource type="Texture2D" uid="uid://bnopeml58klxe" path="res://data/graphics/emotes/evil.png" id="1_ekikf"]
 [ext_resource type="Script" uid="uid://cxsn36lpngjtj" path="res://sources/cell/BaseCell.gd" id="2_ri0xv"]
 
 [resource]
 script = ExtResource("2_ri0xv")
-id = -1
 name = "Evil"
-description = ""
 icon = ExtResource("1_ekikf")
 type = 1
 weight = 0.0
-stackable = false
 usable = true

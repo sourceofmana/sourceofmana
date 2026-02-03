@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyr6go0b60dmi"]
+[gd_scene format=3 uid="uid://cyr6go0b60dmi"]
 
 [ext_resource type="Texture2D" uid="uid://xnxj6c36uknp" path="res://data/graphics/effects/particles/fire.png" id="1_1x4i0"]
 [ext_resource type="Script" uid="uid://bu2axrh4eey4m" path="res://sources/effects/Projectile.gd" id="2_62w43"]
@@ -15,7 +15,7 @@ gravity = Vector3(0, 0, 0)
 anim_speed_min = 1.0
 anim_speed_max = 3.0
 
-[node name="Fire" type="GPUParticles2D"]
+[node name="Fire" type="GPUParticles2D" unique_id=1726244084]
 material = SubResource("CanvasItemMaterial_y2my7")
 amount = 1
 texture = ExtResource("1_1x4i0")
@@ -24,6 +24,6 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_l54cu")
 script = ExtResource("2_62w43")
 
-[node name="LightSource" parent="." instance=ExtResource("3_ivd6x")]
+[node name="LightSource" parent="." unique_id=299494537 instance=ExtResource("3_ivd6x")]
 position = Vector2(0, 0)
 radius = 96

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=9 format=3 uid="uid://oddxnoy4pk24"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://oddxnoy4pk24"]
 
 [ext_resource type="Texture2D" uid="uid://pjuix81fkhsf" path="res://data/graphics/items/weapon/cleaver.png" id="1_6ay8c"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_66kaj"]
@@ -26,13 +26,8 @@ _modifiers = Array[ExtResource("2_66kaj")]([SubResource("Resource_2xgca"), SubRe
 script = ExtResource("2_fwq6l")
 slot = 6
 textures = Array[Texture2D]([ExtResource("3_26lpm"), ExtResource("3_26lpm"), ExtResource("3_26lpm")])
-customfield = ""
-id = -1
 name = "Cleaver"
 description = "A heavy blade crafted for sheer power and decisive strikes."
 icon = ExtResource("1_6ay8c")
-type = 0
 weight = 400.0
-stackable = false
-usable = false
 modifiers = SubResource("Resource_cav7e")

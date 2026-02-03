@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://q0vjlx00rv0n"]
+[gd_scene format=3 uid="uid://q0vjlx00rv0n"]
 
 [ext_resource type="Texture2D" uid="uid://cpabodldr1ssx" path="res://data/graphics/sprites/monsters/bat.png" id="1_fdkha"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_gsp5q"]
@@ -518,20 +518,18 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Bat" type="Node2D"]
+[node name="Bat" type="Node2D" unique_id=868539419]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=1834191447]
 texture = ExtResource("1_fdkha")
 offset = Vector2(0, -38)
 hframes = 4
 vframes = 5
 frame = 19
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1643336436]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_gsp5q")]
+[node name="AnimationTree" parent="Animation" unique_id=2022763397 instance=ExtResource("2_gsp5q")]
 root_node = NodePath("../../Body")

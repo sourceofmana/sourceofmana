@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://broh5bavnch5v"]
+[gd_scene format=3 uid="uid://broh5bavnch5v"]
 
 [ext_resource type="Texture2D" uid="uid://cnl7j0w3al54l" path="res://data/graphics/sprites/monsters/ratto.png" id="1_aito5"]
 [ext_resource type="Texture2D" uid="uid://66cm6ppa5dhi" path="res://data/graphics/sprites/accessories/ratto-tail.png" id="2_53tbt"]
@@ -845,27 +845,25 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Ratto" type="Node2D"]
+[node name="Ratto" type="Node2D" unique_id=1832314773]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=43602122]
 texture = ExtResource("1_aito5")
 offset = Vector2(0, -10)
 hframes = 7
 vframes = 10
 frame = 19
 
-[node name="Tail" type="Sprite2D" parent="."]
+[node name="Tail" type="Sprite2D" parent="." unique_id=571293787]
 texture = ExtResource("2_53tbt")
 offset = Vector2(1, -10)
 hframes = 3
 vframes = 9
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1067044716]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_xws22")]
+[node name="AnimationTree" parent="Animation" unique_id=2056373517 instance=ExtResource("2_xws22")]
 root_node = NodePath("../../Body")
 parameters/Death/BlendSpace2D/blend_position = Vector2(0, -0.904762)

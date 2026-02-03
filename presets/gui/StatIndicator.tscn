@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dtoeo3xx4wyyp"]
+[gd_scene format=3 uid="uid://dtoeo3xx4wyyp"]
 
 [ext_resource type="Texture2D" uid="uid://x8ftk53rmqmm" path="res://data/graphics/gui/stat/statindicator.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="2"]
@@ -9,13 +9,14 @@
 [ext_resource type="Texture2D" uid="uid://gscvi316alnm" path="res://data/graphics/gui/stat/expbar.png" id="6_6rl1b"]
 [ext_resource type="Script" uid="uid://v8uc3k2d1ge4" path="res://sources/gui/StatIndicator.gd" id="7"]
 
-[node name="StatIndicator" type="TextureRect"]
+[node name="StatIndicator" type="TextureRect" unique_id=995730389]
 size_flags_horizontal = 3
 theme = ExtResource("5")
 texture = ExtResource("1")
 script = ExtResource("7")
 
-[node name="Exp" parent="." instance=ExtResource("2")]
+[node name="Exp" parent="." unique_id=2064087853 instance=ExtResource("2")]
+layout_mode = 0
 offset_left = 3.0
 offset_top = 5.0
 offset_right = 59.0
@@ -30,7 +31,7 @@ displayMax = false
 displayRatio = true
 fillMode = 3
 
-[node name="HP" parent="." instance=ExtResource("2")]
+[node name="HP" parent="." unique_id=668107339 instance=ExtResource("2")]
 layout_mode = 1
 offset_left = 50.0
 offset_top = 15.0
@@ -40,7 +41,7 @@ textureProgress = ExtResource("6")
 labelColor = Color(1, 0.87451, 0.639216, 0.784314)
 labelOffset = Vector2(0, -2)
 
-[node name="Mana" parent="." instance=ExtResource("2")]
+[node name="Mana" parent="." unique_id=1907297512 instance=ExtResource("2")]
 layout_mode = 1
 offset_left = 50.0
 offset_top = 32.0
@@ -50,7 +51,7 @@ textureProgress = ExtResource("3")
 labelColor = Color(1, 0.87451, 0.639216, 0.784314)
 labelOffset = Vector2(0, -4)
 
-[node name="Stamina" parent="." instance=ExtResource("2")]
+[node name="Stamina" parent="." unique_id=1140652950 instance=ExtResource("2")]
 layout_mode = 1
 offset_left = 39.0
 offset_top = 49.0

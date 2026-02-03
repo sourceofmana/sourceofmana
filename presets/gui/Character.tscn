@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://duqpp1dik8h8h"]
+[gd_scene format=3 uid="uid://duqpp1dik8h8h"]
 
 [ext_resource type="Script" uid="uid://btujsudusgp8p" path="res://sources/gui/character/Character.gd" id="2_aacye"]
 [ext_resource type="Script" uid="uid://b73huh7ahb6av" path="res://sources/gui/character/Attributes.gd" id="2_nrudd"]
 [ext_resource type="Script" uid="uid://cjsfs480co2wp" path="res://sources/gui/character/Stats.gd" id="3_v4km6"]
 [ext_resource type="Script" uid="uid://2qjjdmjumwox" path="res://sources/gui/character/Traits.gd" id="4_1wiqu"]
 
-[node name="Character" type="VBoxContainer"]
+[node name="Character" type="VBoxContainer" unique_id=211751759]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -13,27 +13,27 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_aacye")
 
-[node name="PlayerName" type="PanelContainer" parent="."]
+[node name="PlayerName" type="PanelContainer" parent="." unique_id=1706669971]
 custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerName"]
+[node name="MarginContainer" type="MarginContainer" parent="PlayerName" unique_id=1720574612]
 layout_mode = 2
 theme_override_constants/margin_top = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayerName/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerName/MarginContainer" unique_id=2045156924]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="PlayerName/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="PlayerName/MarginContainer/VBoxContainer" unique_id=272842183]
 layout_mode = 2
 text = "Name"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="PlayerName/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="PlayerName/MarginContainer/VBoxContainer" unique_id=213403999]
 layout_mode = 2
 
-[node name="Entry" type="LineEdit" parent="PlayerName/MarginContainer/VBoxContainer"]
+[node name="Entry" type="LineEdit" parent="PlayerName/MarginContainer/VBoxContainer" unique_id=498853850]
 visible = false
 custom_minimum_size = Vector2(250, 32)
 layout_mode = 2
@@ -43,430 +43,430 @@ alignment = 1
 expand_to_text_length = true
 context_menu_enabled = false
 
-[node name="Name" type="Label" parent="PlayerName/MarginContainer/VBoxContainer"]
+[node name="Name" type="Label" parent="PlayerName/MarginContainer/VBoxContainer" unique_id=1879101140]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 1
 horizontal_alignment = 1
 
-[node name="EmptyTop" type="Control" parent="."]
+[node name="EmptyTop" type="Control" parent="." unique_id=340572763]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Display" type="HBoxContainer" parent="."]
+[node name="Display" type="HBoxContainer" parent="." unique_id=152549552]
 layout_mode = 2
 
-[node name="EmptyLeft" type="Control" parent="Display"]
+[node name="EmptyLeft" type="Control" parent="Display" unique_id=1100581019]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Attributes" type="PanelContainer" parent="Display"]
+[node name="Attributes" type="PanelContainer" parent="Display" unique_id=250347454]
 visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PanelSideLeft"
 script = ExtResource("2_nrudd")
 
-[node name="Margin" type="MarginContainer" parent="Display/Attributes"]
+[node name="Margin" type="MarginContainer" parent="Display/Attributes" unique_id=325288397]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_right = 12
 
-[node name="VBox" type="VBoxContainer" parent="Display/Attributes/Margin"]
+[node name="VBox" type="VBoxContainer" parent="Display/Attributes/Margin" unique_id=1754160769]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Display/Attributes/Margin/VBox"]
+[node name="Label" type="Label" parent="Display/Attributes/Margin/VBox" unique_id=1510561370]
 layout_mode = 2
 text = "Attributes"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Display/Attributes/Margin/VBox"]
+[node name="HSeparator" type="HSeparator" parent="Display/Attributes/Margin/VBox" unique_id=699008893]
 layout_mode = 2
 
-[node name="Strength" type="HBoxContainer" parent="Display/Attributes/Margin/VBox"]
+[node name="Strength" type="HBoxContainer" parent="Display/Attributes/Margin/VBox" unique_id=468674162]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Strength"]
+[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Strength" unique_id=696582095]
 layout_mode = 2
 text = "Strength"
 
-[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Strength"]
+[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Strength" unique_id=1139725080]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Strength"]
+[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Strength" unique_id=315134406]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "-"
 
-[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Strength"]
+[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Strength" unique_id=1443596080]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Strength"]
+[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Strength" unique_id=810725320]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "+"
 
-[node name="Vitality" type="HBoxContainer" parent="Display/Attributes/Margin/VBox"]
+[node name="Vitality" type="HBoxContainer" parent="Display/Attributes/Margin/VBox" unique_id=36312502]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Vitality"]
+[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Vitality" unique_id=83937011]
 layout_mode = 2
 text = "Vitality"
 
-[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Vitality"]
+[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Vitality" unique_id=1141358212]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Vitality"]
+[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Vitality" unique_id=962202882]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "-"
 
-[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Vitality"]
+[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Vitality" unique_id=865686166]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Vitality"]
+[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Vitality" unique_id=1017099889]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "+"
 
-[node name="Agility" type="HBoxContainer" parent="Display/Attributes/Margin/VBox"]
+[node name="Agility" type="HBoxContainer" parent="Display/Attributes/Margin/VBox" unique_id=1584022043]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Agility"]
+[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Agility" unique_id=1462890030]
 layout_mode = 2
 text = "Agility"
 
-[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Agility"]
+[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Agility" unique_id=1099748528]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Agility"]
+[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Agility" unique_id=1406792257]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "-"
 
-[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Agility"]
+[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Agility" unique_id=816918566]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Agility"]
+[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Agility" unique_id=908402508]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "+"
 
-[node name="Endurance" type="HBoxContainer" parent="Display/Attributes/Margin/VBox"]
+[node name="Endurance" type="HBoxContainer" parent="Display/Attributes/Margin/VBox" unique_id=360407874]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Endurance"]
+[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Endurance" unique_id=1361893594]
 layout_mode = 2
 text = "Endurance"
 
-[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Endurance"]
+[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Endurance" unique_id=1530779737]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Endurance"]
+[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Endurance" unique_id=2114647082]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "-"
 
-[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Endurance"]
+[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Endurance" unique_id=940854357]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Endurance"]
+[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Endurance" unique_id=329518352]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "+"
 
-[node name="Concentration" type="HBoxContainer" parent="Display/Attributes/Margin/VBox"]
+[node name="Concentration" type="HBoxContainer" parent="Display/Attributes/Margin/VBox" unique_id=476278434]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Concentration"]
+[node name="Name" type="Label" parent="Display/Attributes/Margin/VBox/Concentration" unique_id=1795650050]
 layout_mode = 2
 text = "Concentration"
 
-[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Concentration"]
+[node name="Empty" type="Control" parent="Display/Attributes/Margin/VBox/Concentration" unique_id=217455839]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Concentration"]
+[node name="Minus" type="Button" parent="Display/Attributes/Margin/VBox/Concentration" unique_id=1183139218]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "-"
 
-[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Concentration"]
+[node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Concentration" unique_id=1091348785]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Concentration"]
+[node name="Plus" type="Button" parent="Display/Attributes/Margin/VBox/Concentration" unique_id=744596801]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "+"
 
-[node name="Stats" type="PanelContainer" parent="Display"]
+[node name="Stats" type="PanelContainer" parent="Display" unique_id=53479688]
 visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PanelSideLeft"
 script = ExtResource("3_v4km6")
 
-[node name="Margin" type="MarginContainer" parent="Display/Stats"]
+[node name="Margin" type="MarginContainer" parent="Display/Stats" unique_id=126383822]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_right = 12
 
-[node name="VBox" type="VBoxContainer" parent="Display/Stats/Margin"]
+[node name="VBox" type="VBoxContainer" parent="Display/Stats/Margin" unique_id=1193712703]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Display/Stats/Margin/VBox"]
+[node name="Label" type="Label" parent="Display/Stats/Margin/VBox" unique_id=629851390]
 layout_mode = 2
 text = "Stats"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Display/Stats/Margin/VBox"]
+[node name="HSeparator" type="HSeparator" parent="Display/Stats/Margin/VBox" unique_id=287506530]
 layout_mode = 2
 
-[node name="Level" type="HBoxContainer" parent="Display/Stats/Margin/VBox"]
+[node name="Level" type="HBoxContainer" parent="Display/Stats/Margin/VBox" unique_id=90430913]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Display/Stats/Margin/VBox/Level"]
+[node name="Name" type="Label" parent="Display/Stats/Margin/VBox/Level" unique_id=172112829]
 layout_mode = 2
 text = "Level"
 
-[node name="Empty" type="Control" parent="Display/Stats/Margin/VBox/Level"]
+[node name="Empty" type="Control" parent="Display/Stats/Margin/VBox/Level" unique_id=2072743010]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Value" type="Label" parent="Display/Stats/Margin/VBox/Level"]
+[node name="Value" type="Label" parent="Display/Stats/Margin/VBox/Level" unique_id=1019038645]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "1"
 horizontal_alignment = 2
 
-[node name="Location" type="HBoxContainer" parent="Display/Stats/Margin/VBox"]
+[node name="Location" type="HBoxContainer" parent="Display/Stats/Margin/VBox" unique_id=262923159]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Display/Stats/Margin/VBox/Location"]
+[node name="Name" type="Label" parent="Display/Stats/Margin/VBox/Location" unique_id=527203426]
 layout_mode = 2
 text = "Location"
 
-[node name="Empty" type="Control" parent="Display/Stats/Margin/VBox/Location"]
+[node name="Empty" type="Control" parent="Display/Stats/Margin/VBox/Location" unique_id=2048625014]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Value" type="Label" parent="Display/Stats/Margin/VBox/Location"]
+[node name="Value" type="Label" parent="Display/Stats/Margin/VBox/Location" unique_id=902543333]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "Artis"
 horizontal_alignment = 1
 
-[node name="Selection" type="HBoxContainer" parent="Display/Stats/Margin/VBox"]
+[node name="Selection" type="HBoxContainer" parent="Display/Stats/Margin/VBox" unique_id=781703015]
 layout_mode = 2
 
-[node name="Previous" type="Button" parent="Display/Stats/Margin/VBox/Selection"]
+[node name="Previous" type="Button" parent="Display/Stats/Margin/VBox/Selection" unique_id=1267843052]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Previous"
 
-[node name="Empty" type="Control" parent="Display/Stats/Margin/VBox/Selection"]
+[node name="Empty" type="Control" parent="Display/Stats/Margin/VBox/Selection" unique_id=1345199402]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Next" type="Button" parent="Display/Stats/Margin/VBox/Selection"]
+[node name="Next" type="Button" parent="Display/Stats/Margin/VBox/Selection" unique_id=2015598780]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Next"
 
-[node name="EmptyMiddleLeft" type="Control" parent="Display"]
+[node name="EmptyMiddleLeft" type="Control" parent="Display" unique_id=1703734384]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="EmptyMiddleRight" type="Control" parent="Display"]
+[node name="EmptyMiddleRight" type="Control" parent="Display" unique_id=628766356]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Traits" type="PanelContainer" parent="Display"]
+[node name="Traits" type="PanelContainer" parent="Display" unique_id=1685537274]
 visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PanelSideRight"
 script = ExtResource("4_1wiqu")
 
-[node name="Margin" type="MarginContainer" parent="Display/Traits"]
+[node name="Margin" type="MarginContainer" parent="Display/Traits" unique_id=1742395285]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_right = 12
 
-[node name="VBox" type="VBoxContainer" parent="Display/Traits/Margin"]
+[node name="VBox" type="VBoxContainer" parent="Display/Traits/Margin" unique_id=479952749]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Display/Traits/Margin/VBox"]
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox" unique_id=2091144788]
 layout_mode = 2
 text = "Traits"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Display/Traits/Margin/VBox"]
+[node name="HSeparator" type="HSeparator" parent="Display/Traits/Margin/VBox" unique_id=83373938]
 layout_mode = 2
 
-[node name="Hairstyle" type="HBoxContainer" parent="Display/Traits/Margin/VBox"]
+[node name="Hairstyle" type="HBoxContainer" parent="Display/Traits/Margin/VBox" unique_id=240912796]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Hairstyle"]
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Hairstyle" unique_id=1332827135]
 layout_mode = 2
 text = "Hairstyle"
 
-[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/Hairstyle"]
+[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/Hairstyle" unique_id=1268846793]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Hairstyle"]
+[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Hairstyle" unique_id=1291419375]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "<"
 
-[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Hairstyle"]
+[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Hairstyle" unique_id=319746681]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Hairstyle"
 horizontal_alignment = 1
 
-[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Hairstyle"]
+[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Hairstyle" unique_id=765522096]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = ">"
 
-[node name="HairColor" type="HBoxContainer" parent="Display/Traits/Margin/VBox"]
+[node name="HairColor" type="HBoxContainer" parent="Display/Traits/Margin/VBox" unique_id=289470467]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/HairColor"]
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/HairColor" unique_id=640716039]
 layout_mode = 2
 text = "Hair Color"
 
-[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/HairColor"]
+[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/HairColor" unique_id=423652203]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/HairColor"]
+[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/HairColor" unique_id=1923626066]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "<"
 
-[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/HairColor"]
+[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/HairColor" unique_id=1555392213]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Hair Color"
 horizontal_alignment = 1
 
-[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/HairColor"]
+[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/HairColor" unique_id=94630505]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = ">"
 
-[node name="Gender" type="HBoxContainer" parent="Display/Traits/Margin/VBox"]
+[node name="Gender" type="HBoxContainer" parent="Display/Traits/Margin/VBox" unique_id=2035843360]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Gender"]
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Gender" unique_id=870030989]
 layout_mode = 2
 text = "Gender"
 
-[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/Gender"]
+[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/Gender" unique_id=1112144795]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Gender"]
+[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Gender" unique_id=1107373122]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "<"
 
-[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Gender"]
+[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Gender" unique_id=617445179]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Gender"
 horizontal_alignment = 1
 
-[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Gender"]
+[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Gender" unique_id=1600866414]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = ">"
 
-[node name="Race" type="HBoxContainer" parent="Display/Traits/Margin/VBox"]
+[node name="Race" type="HBoxContainer" parent="Display/Traits/Margin/VBox" unique_id=2040908106]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Race"]
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/Race" unique_id=1672928982]
 layout_mode = 2
 text = "Race"
 
-[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/Race"]
+[node name="Empty" type="Control" parent="Display/Traits/Margin/VBox/Race" unique_id=1153148062]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Race"]
+[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/Race" unique_id=362037139]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "<"
 
-[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Race"]
+[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Race" unique_id=744329124]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Ethnicity"
 horizontal_alignment = 1
 
-[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Race"]
+[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/Race" unique_id=865615364]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = ">"
 
-[node name="SkinTone" type="HBoxContainer" parent="Display/Traits/Margin/VBox"]
+[node name="SkinTone" type="HBoxContainer" parent="Display/Traits/Margin/VBox" unique_id=514701121]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/SkinTone"]
+[node name="Label" type="Label" parent="Display/Traits/Margin/VBox/SkinTone" unique_id=488796690]
 layout_mode = 2
 text = "Skin Tone"
 
-[node name="EmptyLeft" type="Control" parent="Display/Traits/Margin/VBox/SkinTone"]
+[node name="EmptyLeft" type="Control" parent="Display/Traits/Margin/VBox/SkinTone" unique_id=299524516]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/SkinTone"]
+[node name="Previous" type="Button" parent="Display/Traits/Margin/VBox/SkinTone" unique_id=640087404]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = "<"
 
-[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/SkinTone"]
+[node name="Name" type="Label" parent="Display/Traits/Margin/VBox/SkinTone" unique_id=1535606027]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Skin Tone"
 horizontal_alignment = 1
 
-[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/SkinTone"]
+[node name="Next" type="Button" parent="Display/Traits/Margin/VBox/SkinTone" unique_id=328821298]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 text = ">"
 
-[node name="EmptyRight" type="Control" parent="Display"]
+[node name="EmptyRight" type="Control" parent="Display" unique_id=735516532]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="EmptyBottom" type="Control" parent="."]
+[node name="EmptyBottom" type="Control" parent="." unique_id=1885027602]
 layout_mode = 2
 size_flags_vertical = 3
 

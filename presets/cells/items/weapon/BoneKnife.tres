@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://bj5p08ffbj617"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://bj5p08ffbj617"]
 
 [ext_resource type="Texture2D" uid="uid://cpwbknubtfeou" path="res://data/graphics/items/weapon/boneknife.png" id="1_uvles"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_6d7ht"]
@@ -28,13 +28,8 @@ script = ExtResource("2_i26ks")
 slot = 6
 textures = Array[Texture2D]([ExtResource("3_tr6hd"), ExtResource("3_tr6hd"), ExtResource("3_tr6hd")])
 shader = ExtResource("3_uxtf6")
-customfield = ""
-id = -1
 name = "Bone Knife"
 description = "A knife made from bones. Quite effective."
 icon = ExtResource("1_uvles")
-type = 0
 weight = 400.0
-stackable = false
-usable = false
 modifiers = SubResource("Resource_snree")

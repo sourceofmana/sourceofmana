@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://wnjimpdbdy3q"]
+[gd_scene format=3 uid="uid://wnjimpdbdy3q"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_qaxyq"]
 [ext_resource type="Script" uid="uid://cetgpb4h8xlr6" path="res://sources/gui/AlterationLabel.gd" id="3_heob5"]
 
-[node name="AlterationLabel" type="Label"]
+[node name="AlterationLabel" type="Label" unique_id=667714409]
 z_index = 10
 anchors_preset = 15
 anchor_right = 1.0

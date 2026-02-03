@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b34oh8ogihcia"]
+[gd_scene format=3 uid="uid://b34oh8ogihcia"]
 
 [ext_resource type="Texture2D" uid="uid://b28fdhpryre1g" path="res://data/graphics/effects/sonic-wave.png" id="1_purmb"]
 [ext_resource type="Script" uid="uid://bu2axrh4eey4m" path="res://sources/effects/Projectile.gd" id="2_qqgsl"]
@@ -41,7 +41,7 @@ animations = [{
 "speed": 4.0
 }]
 
-[node name="Sonic Wave" type="AnimatedSprite2D"]
+[node name="Sonic Wave" type="AnimatedSprite2D" unique_id=948497673]
 material = SubResource("CanvasItemMaterial_y2my7")
 sprite_frames = SubResource("SpriteFrames_cedtj")
 autoplay = "default"

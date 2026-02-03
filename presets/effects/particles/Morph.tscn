@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwgxr70dkhrro"]
+[gd_scene format=3 uid="uid://dwgxr70dkhrro"]
 
 [ext_resource type="Texture2D" uid="uid://beom6m0ab5pfv" path="res://data/graphics/effects/particles/fog.png" id="1_3o0mc"]
 
@@ -33,7 +33,7 @@ tangential_accel_max = 5.0
 scale_curve = SubResource("CurveTexture_lmp7v")
 color_ramp = SubResource("GradientTexture1D_hyudh")
 
-[node name="Morph Particles" type="GPUParticles2D"]
+[node name="Morph Particles" type="GPUParticles2D" unique_id=963087980]
 material = SubResource("CanvasItemMaterial_1pdty")
 emitting = false
 amount = 20

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://u31xl3ap3wd8"]
+[gd_scene format=3 uid="uid://u31xl3ap3wd8"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_al454"]
 [ext_resource type="Script" uid="uid://dhmr1oy7yo7x1" path="res://sources/gui/Inventory.gd" id="2_vkka2"]
@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://mij2lq0lkfjf" path="res://data/graphics/gui/inventory/slots/shield.png" id="13_cqujk"]
 [ext_resource type="Texture2D" uid="uid://bv7mmkjyv5bud" path="res://data/graphics/gui/inventory/slots/feet.png" id="14_c43pa"]
 
-[node name="Panel" type="PanelContainer"]
+[node name="Panel" type="PanelContainer" unique_id=932213900]
 show_behind_parent = true
 custom_minimum_size = Vector2(180, 100)
 anchors_preset = 15
@@ -29,51 +29,51 @@ theme = ExtResource("1_al454")
 theme_type_variation = &"DialogueWindow"
 script = ExtResource("2_vkka2")
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=431704789]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Margin"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Margin" unique_id=1456440881]
 layout_mode = 2
 
-[node name="ItemsBox" type="VBoxContainer" parent="Margin/HBoxContainer"]
+[node name="ItemsBox" type="VBoxContainer" parent="Margin/HBoxContainer" unique_id=1388308157]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_custom_anchors = true
 
-[node name="TabContainer" type="TabContainer" parent="Margin/HBoxContainer/ItemsBox"]
+[node name="TabContainer" type="TabContainer" parent="Margin/HBoxContainer/ItemsBox" unique_id=80679759]
 layout_mode = 2
 current_tab = 0
 
-[node name="All" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer"]
+[node name="All" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer" unique_id=960680010]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Equipment" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer"]
+[node name="Equipment" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer" unique_id=14018093]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Consumable" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer"]
+[node name="Consumable" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer" unique_id=1095954471]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="Resource" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer"]
+[node name="Resource" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer" unique_id=2083404597]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
-[node name="Quest" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer"]
+[node name="Quest" type="TabBar" parent="Margin/HBoxContainer/ItemsBox/TabContainer" unique_id=551888104]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 4
 
-[node name="Margin" type="MarginContainer" parent="Margin/HBoxContainer/ItemsBox"]
+[node name="Margin" type="MarginContainer" parent="Margin/HBoxContainer/ItemsBox" unique_id=1891276498]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -82,13 +82,13 @@ theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 
-[node name="Container" type="ScrollContainer" parent="Margin/HBoxContainer/ItemsBox/Margin"]
+[node name="Container" type="ScrollContainer" parent="Margin/HBoxContainer/ItemsBox/Margin" unique_id=1465271219]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
 
-[node name="Grid" type="GridContainer" parent="Margin/HBoxContainer/ItemsBox/Margin/Container"]
+[node name="Grid" type="GridContainer" parent="Margin/HBoxContainer/ItemsBox/Margin/Container" unique_id=535970541]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -97,107 +97,107 @@ theme_override_constants/v_separation = 4
 columns = 4
 script = ExtResource("5_p6o47")
 
-[node name="ButtonsSeparator" type="HSeparator" parent="Margin/HBoxContainer/ItemsBox"]
+[node name="ButtonsSeparator" type="HSeparator" parent="Margin/HBoxContainer/ItemsBox" unique_id=1984225155]
 layout_mode = 2
 
-[node name="ItemButtons" type="HBoxContainer" parent="Margin/HBoxContainer/ItemsBox"]
+[node name="ItemButtons" type="HBoxContainer" parent="Margin/HBoxContainer/ItemsBox" unique_id=1581008482]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Drop" type="Button" parent="Margin/HBoxContainer/ItemsBox/ItemButtons"]
+[node name="Drop" type="Button" parent="Margin/HBoxContainer/ItemsBox/ItemButtons" unique_id=1091602207]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Drop"
 
-[node name="Control" type="Control" parent="Margin/HBoxContainer/ItemsBox/ItemButtons"]
+[node name="Control" type="Control" parent="Margin/HBoxContainer/ItemsBox/ItemButtons" unique_id=1403898386]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="Unequip" type="Button" parent="Margin/HBoxContainer/ItemsBox/ItemButtons"]
+[node name="Unequip" type="Button" parent="Margin/HBoxContainer/ItemsBox/ItemButtons" unique_id=1312467309]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Unequip"
 
-[node name="Equip" type="Button" parent="Margin/HBoxContainer/ItemsBox/ItemButtons"]
+[node name="Equip" type="Button" parent="Margin/HBoxContainer/ItemsBox/ItemButtons" unique_id=157398225]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Equip"
 
-[node name="Use" type="Button" parent="Margin/HBoxContainer/ItemsBox/ItemButtons"]
+[node name="Use" type="Button" parent="Margin/HBoxContainer/ItemsBox/ItemButtons" unique_id=696456006]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Use"
 
-[node name="DropButtons" type="HBoxContainer" parent="Margin/HBoxContainer/ItemsBox"]
+[node name="DropButtons" type="HBoxContainer" parent="Margin/HBoxContainer/ItemsBox" unique_id=398422119]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Cancel" type="Button" parent="Margin/HBoxContainer/ItemsBox/DropButtons"]
+[node name="Cancel" type="Button" parent="Margin/HBoxContainer/ItemsBox/DropButtons" unique_id=635287806]
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Cancel"
 
-[node name="EmptyLeft" type="Control" parent="Margin/HBoxContainer/ItemsBox/DropButtons"]
+[node name="EmptyLeft" type="Control" parent="Margin/HBoxContainer/ItemsBox/DropButtons" unique_id=1373447532]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="Less" type="Button" parent="Margin/HBoxContainer/ItemsBox/DropButtons"]
+[node name="Less" type="Button" parent="Margin/HBoxContainer/ItemsBox/DropButtons" unique_id=1661094325]
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "<"
 
-[node name="Label" type="Label" parent="Margin/HBoxContainer/ItemsBox/DropButtons"]
+[node name="Label" type="Label" parent="Margin/HBoxContainer/ItemsBox/DropButtons" unique_id=860964691]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 text = "1"
 horizontal_alignment = 1
 
-[node name="More" type="Button" parent="Margin/HBoxContainer/ItemsBox/DropButtons"]
+[node name="More" type="Button" parent="Margin/HBoxContainer/ItemsBox/DropButtons" unique_id=696384189]
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = ">"
 
-[node name="EmptyRight" type="Control" parent="Margin/HBoxContainer/ItemsBox/DropButtons"]
+[node name="EmptyRight" type="Control" parent="Margin/HBoxContainer/ItemsBox/DropButtons" unique_id=594944188]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="Confirm" type="Button" parent="Margin/HBoxContainer/ItemsBox/DropButtons"]
+[node name="Confirm" type="Button" parent="Margin/HBoxContainer/ItemsBox/DropButtons" unique_id=987153991]
 layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"LargeButton"
 text = "Confirm"
 
-[node name="VSeparator" type="VSeparator" parent="Margin/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="Margin/HBoxContainer" unique_id=373120499]
 layout_mode = 2
 
-[node name="InfoBox" type="VBoxContainer" parent="Margin/HBoxContainer"]
+[node name="InfoBox" type="VBoxContainer" parent="Margin/HBoxContainer" unique_id=790805785]
 layout_mode = 2
 
-[node name="Bars" type="VBoxContainer" parent="Margin/HBoxContainer/InfoBox"]
+[node name="Bars" type="VBoxContainer" parent="Margin/HBoxContainer/InfoBox" unique_id=158213668]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="WeightLabel" type="Label" parent="Margin/HBoxContainer/InfoBox/Bars"]
+[node name="WeightLabel" type="Label" parent="Margin/HBoxContainer/InfoBox/Bars" unique_id=1812586609]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Weight"
 
-[node name="WeightTex" type="NinePatchRect" parent="Margin/HBoxContainer/InfoBox/Bars"]
+[node name="WeightTex" type="NinePatchRect" parent="Margin/HBoxContainer/InfoBox/Bars" unique_id=326178141]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -208,7 +208,7 @@ patch_margin_top = 2
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="ProgressBar" parent="Margin/HBoxContainer/InfoBox/Bars/WeightTex" instance=ExtResource("4_pr2vo")]
+[node name="ProgressBar" parent="Margin/HBoxContainer/InfoBox/Bars/WeightTex" unique_id=1691687926 instance=ExtResource("4_pr2vo")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -226,12 +226,12 @@ precisionDivider = 100
 numberAfterComma = 2
 metadata/_edit_layout_mode = 1
 
-[node name="SlotLabel" type="Label" parent="Margin/HBoxContainer/InfoBox/Bars"]
+[node name="SlotLabel" type="Label" parent="Margin/HBoxContainer/InfoBox/Bars" unique_id=1205139253]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Slot"
 
-[node name="SlotTex" type="NinePatchRect" parent="Margin/HBoxContainer/InfoBox/Bars"]
+[node name="SlotTex" type="NinePatchRect" parent="Margin/HBoxContainer/InfoBox/Bars" unique_id=641456832]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_vertical = 3
@@ -241,7 +241,7 @@ patch_margin_top = 2
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="ProgressBar" parent="Margin/HBoxContainer/InfoBox/Bars/SlotTex" instance=ExtResource("4_pr2vo")]
+[node name="ProgressBar" parent="Margin/HBoxContainer/InfoBox/Bars/SlotTex" unique_id=2126742071 instance=ExtResource("4_pr2vo")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -256,56 +256,56 @@ labelOffset = Vector2(0, -4)
 delayToFillSec = 2.0
 metadata/_edit_layout_mode = 1
 
-[node name="HSeparator" type="HSeparator" parent="Margin/HBoxContainer/InfoBox"]
+[node name="HSeparator" type="HSeparator" parent="Margin/HBoxContainer/InfoBox" unique_id=2122691433]
 layout_mode = 2
 
-[node name="Equipment" type="Label" parent="Margin/HBoxContainer/InfoBox"]
+[node name="Equipment" type="Label" parent="Margin/HBoxContainer/InfoBox" unique_id=1670075000]
 layout_mode = 2
 text = "Equipment"
 
-[node name="EquipmentGrid" type="GridContainer" parent="Margin/HBoxContainer/InfoBox"]
+[node name="EquipmentGrid" type="GridContainer" parent="Margin/HBoxContainer/InfoBox" unique_id=395032573]
 layout_mode = 2
 size_flags_vertical = 3
 columns = 3
 
-[node name="Empty" type="Control" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid"]
+[node name="Empty" type="Control" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=1780666226]
 layout_mode = 2
 
-[node name="Head" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" instance=ExtResource("6_e0ndm")]
+[node name="Head" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=1227354799 instance=ExtResource("6_e0ndm")]
 layout_mode = 2
 defaultIcon = ExtResource("7_75p06")
 
-[node name="Empty2" type="Control" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid"]
+[node name="Empty2" type="Control" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=102522849]
 layout_mode = 2
 
-[node name="Hands" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" instance=ExtResource("6_e0ndm")]
+[node name="Hands" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=1146900847 instance=ExtResource("6_e0ndm")]
 layout_mode = 2
 defaultIcon = ExtResource("8_gkthq")
 
-[node name="Chest" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" instance=ExtResource("6_e0ndm")]
+[node name="Chest" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=148223415 instance=ExtResource("6_e0ndm")]
 layout_mode = 2
 defaultIcon = ExtResource("9_iakqk")
 
-[node name="Neck" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" instance=ExtResource("6_e0ndm")]
+[node name="Neck" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=767905472 instance=ExtResource("6_e0ndm")]
 layout_mode = 2
 defaultIcon = ExtResource("10_eydmr")
 
-[node name="Weapon" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" instance=ExtResource("6_e0ndm")]
+[node name="Weapon" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=1564130752 instance=ExtResource("6_e0ndm")]
 layout_mode = 2
 defaultIcon = ExtResource("11_dploo")
 
-[node name="Legs" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" instance=ExtResource("6_e0ndm")]
+[node name="Legs" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=784576803 instance=ExtResource("6_e0ndm")]
 layout_mode = 2
 defaultIcon = ExtResource("12_o8mem")
 
-[node name="Shield" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" instance=ExtResource("6_e0ndm")]
+[node name="Shield" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=1818285740 instance=ExtResource("6_e0ndm")]
 layout_mode = 2
 defaultIcon = ExtResource("13_cqujk")
 
-[node name="Empty3" type="Control" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid"]
+[node name="Empty3" type="Control" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=1526972976]
 layout_mode = 2
 
-[node name="Feet" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" instance=ExtResource("6_e0ndm")]
+[node name="Feet" parent="Margin/HBoxContainer/InfoBox/EquipmentGrid" unique_id=922638327 instance=ExtResource("6_e0ndm")]
 layout_mode = 2
 defaultIcon = ExtResource("14_c43pa")
 

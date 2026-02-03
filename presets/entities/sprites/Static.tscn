@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cnpafioewxbag"]
+[gd_scene format=3 uid="uid://cnpafioewxbag"]
 
 [ext_resource type="Texture2D" uid="uid://dw5ppjee83tck" path="res://data/graphics/default.png" id="1_8rucx"]
 [ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="2_6w5rt"]
@@ -151,18 +151,16 @@ _data = {
 &"Walk": SubResource("Animation_yp2cr")
 }
 
-[node name="Chest" type="Node2D"]
+[node name="Chest" type="Node2D" unique_id=195182728]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=1781100429]
 position = Vector2(0, -12)
 texture = ExtResource("1_8rucx")
 offset = Vector2(0, -16)
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=336869200]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_gf7hs")
-}
+libraries/ = SubResource("AnimationLibrary_gf7hs")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_6w5rt")]
+[node name="AnimationTree" parent="Animation" unique_id=1584493948 instance=ExtResource("2_6w5rt")]
 root_node = NodePath("../../Body")

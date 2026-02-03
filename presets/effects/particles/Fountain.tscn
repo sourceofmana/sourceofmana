@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bbvkrrlmw4ujh"]
+[gd_scene format=3 uid="uid://bbvkrrlmw4ujh"]
 
 [ext_resource type="Texture2D" uid="uid://cee0t70xr512" path="res://data/graphics/effects/particles/orb-oval.png" id="1_43m3b"]
 
@@ -28,7 +28,7 @@ scale_curve = SubResource("CurveTexture_yh74y")
 color_ramp = SubResource("GradientTexture1D_2b5v4")
 turbulence_noise_strength = 5.14
 
-[node name="Fountain" type="GPUParticles2D"]
+[node name="Fountain" type="GPUParticles2D" unique_id=1855683333]
 z_index = 10
 amount = 400
 texture = ExtResource("1_43m3b")

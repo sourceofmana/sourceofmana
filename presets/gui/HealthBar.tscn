@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0wuhrlsdwo8s"]
+[gd_scene format=3 uid="uid://c0wuhrlsdwo8s"]
 
 [ext_resource type="Texture2D" uid="uid://cjnbc8hwuhqhv" path="res://data/graphics/gui/smallbar.png" id="1_qbml5"]
 [ext_resource type="Texture2D" uid="uid://socu3l7ce2pt" path="res://data/graphics/gui/smallbarprogress.png" id="2_8b3ae"]
 
-[node name="HealthBar" type="TextureProgressBar"]
+[node name="HealthBar" type="TextureProgressBar" unique_id=1355503075]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

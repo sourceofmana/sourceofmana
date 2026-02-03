@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkef572pka3gv"]
+[gd_scene format=3 uid="uid://bkef572pka3gv"]
 
 [ext_resource type="Texture2D" uid="uid://b8mrnubbyig8h" path="res://data/graphics/gui/inventory/background.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://dq71updymhno" path="res://data/graphics/gui/inventory/closebutton.png" id="3"]
 
-[node name="Window" type="Control"]
+[node name="Window" type="Control" unique_id=2054462632]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 1
 
-[node name="Background" type="NinePatchRect" parent="."]
+[node name="Background" type="NinePatchRect" parent="." unique_id=586502179]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,7 +19,7 @@ patch_margin_top = 6
 patch_margin_right = 5
 patch_margin_bottom = 5
 
-[node name="Close" type="Control" parent="."]
+[node name="Close" type="Control" parent="." unique_id=1104085667]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -27,7 +27,7 @@ anchor_right = 1.0
 grow_horizontal = 0
 mouse_filter = 1
 
-[node name="CloseButton" type="TextureButton" parent="Close"]
+[node name="CloseButton" type="TextureButton" parent="Close" unique_id=1302624926]
 layout_mode = 0
 anchor_left = -11.75
 anchor_top = -0.2

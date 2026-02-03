@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://cwqxojvsapgus"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://cwqxojvsapgus"]
 
 [ext_resource type="Texture2D" uid="uid://isxvnbvinfyl" path="res://data/graphics/items/shield/raw-wood-shield.png" id="1_p2nnm"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_cre1y"]
@@ -27,13 +27,7 @@ _modifiers = Array[ExtResource("2_cre1y")]([SubResource("Resource_hp128"), SubRe
 script = ExtResource("2_wtls8")
 slot = 7
 textures = Array[Texture2D]([ExtResource("3_ob0li"), ExtResource("4_th14s"), ExtResource("3_ob0li")])
-customfield = ""
-id = -1
 name = "Raw Wood Shield"
-description = ""
 icon = ExtResource("1_p2nnm")
-type = 0
 weight = 400.0
-stackable = false
-usable = false
 modifiers = SubResource("Resource_mx3yq")

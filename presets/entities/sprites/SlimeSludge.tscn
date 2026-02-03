@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cc7dl0ctjviwq"]
+[gd_scene format=3 uid="uid://cc7dl0ctjviwq"]
 
 [ext_resource type="Texture2D" uid="uid://dnrysjgetstj4" path="res://data/graphics/sprites/monsters/slime-sludge.png" id="1_vcu2t"]
 [ext_resource type="Texture2D" uid="uid://d1y3s58v1kslt" path="res://data/graphics/sprites/accessories/fire.png" id="2_j05ha"]
@@ -455,16 +455,16 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Slime" type="Node2D"]
+[node name="Slime" type="Node2D" unique_id=22814778]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=912386068]
 texture = ExtResource("1_vcu2t")
 offset = Vector2(0, -12)
 hframes = 9
 vframes = 4
 frame = 19
 
-[node name="Fire" type="AnimatedSprite2D" parent="."]
+[node name="Fire" type="AnimatedSprite2D" parent="." unique_id=1133801684]
 sprite_frames = SubResource("SpriteFrames_ofu36")
 animation = &"Idle"
 autoplay = "Idle"
@@ -472,15 +472,13 @@ frame_progress = 0.815769
 offset = Vector2(0, -22)
 script = ExtResource("3_4et6q")
 
-[node name="TorchGlow" parent="Fire" instance=ExtResource("3_7jtt6")]
+[node name="TorchGlow" parent="Fire" unique_id=1242748062 instance=ExtResource("3_7jtt6")]
 position = Vector2(0, -15)
 radius = 96
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1348625034]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("3_mg0gu")]
+[node name="AnimationTree" parent="Animation" unique_id=735565280 instance=ExtResource("3_mg0gu")]
 root_node = NodePath("../../Body")

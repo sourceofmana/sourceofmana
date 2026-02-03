@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://x0nnrhog4d3x"]
+[gd_scene format=3 uid="uid://x0nnrhog4d3x"]
 
 [ext_resource type="Texture2D" uid="uid://ddaefiplprb55" path="res://data/graphics/effects/particles/cast.png" id="1_c4gs0"]
 
@@ -33,7 +33,7 @@ scale_curve = SubResource("CurveTexture_flrfh")
 color = Color(1, 1, 0.6, 1)
 color_ramp = SubResource("GradientTexture1D_lucto")
 
-[node name="Spell Cast Particles" type="GPUParticles2D"]
+[node name="Spell Cast Particles" type="GPUParticles2D" unique_id=303712541]
 z_index = -1
 material = SubResource("CanvasItemMaterial_i21r2")
 position = Vector2(0, -10)

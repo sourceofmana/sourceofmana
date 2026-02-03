@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://b2g1xlar44gin"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://b2g1xlar44gin"]
 
 [ext_resource type="Texture2D" uid="uid://bnpfs53kem27q" path="res://data/graphics/items/weapon/gladius.png" id="1_hu2iu"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_brecq"]
@@ -28,13 +28,7 @@ script = ExtResource("2_brecq")
 slot = 6
 textures = Array[Texture2D]([ExtResource("3_1lytf"), ExtResource("3_1lytf"), ExtResource("3_1lytf")])
 shader = ExtResource("3_vtm0f")
-customfield = ""
-id = -1
 name = "Gladius"
-description = ""
 icon = ExtResource("1_hu2iu")
-type = 0
 weight = 400.0
-stackable = false
-usable = false
 modifiers = SubResource("Resource_pu81m")

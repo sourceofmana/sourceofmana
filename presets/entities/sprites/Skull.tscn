@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cwpq2bf8h07xi"]
+[gd_scene format=3 uid="uid://cwpq2bf8h07xi"]
 
 [ext_resource type="Texture2D" uid="uid://dwh7x3gvrmogx" path="res://data/graphics/sprites/monsters/skull-fire.png" id="1_55yx2"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_323v4"]
@@ -348,20 +348,18 @@ _data = {
 &"WalkUp": SubResource("Animation_g3fso")
 }
 
-[node name="Skull" type="Node2D"]
+[node name="Skull" type="Node2D" unique_id=328261493]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=753223556]
 texture = ExtResource("1_55yx2")
 offset = Vector2(0, -30)
 hframes = 10
 vframes = 4
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1324043760]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_323v4")]
+[node name="AnimationTree" parent="Animation" unique_id=2031241507 instance=ExtResource("2_323v4")]
 root_node = NodePath("../../Body")
 parameters/Death/BlendSpace2D/blend_position = Vector2(-1.09503, 0.0179641)

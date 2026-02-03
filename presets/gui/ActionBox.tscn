@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2q5vtkxo04dp"]
+[gd_scene format=3 uid="uid://c2q5vtkxo04dp"]
 
 [ext_resource type="Script" uid="uid://bihyv5pqaugf5" path="res://sources/gui/ActionBox.gd" id="1_ao5ox"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_btsj0"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b2t8xg8go0vsr" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="2_7lddn"]
 [ext_resource type="PackedScene" uid="uid://cq76gfx44nn6q" path="res://presets/gui/CellTile.tscn" id="3_gpxeb"]
 
-[node name="ActionBox" type="Control"]
+[node name="ActionBox" type="Control" unique_id=476396371]
 custom_minimum_size = Vector2(422, 96)
 layout_mode = 3
 anchor_right = 0.33
@@ -20,12 +20,12 @@ size_flags_vertical = 3
 theme = ExtResource("1_btsj0")
 script = ExtResource("1_ao5ox")
 
-[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton" type="TouchScreenButton" parent="." unique_id=1924909569]
 position = Vector2(0, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot" parent="TouchScreenButton" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot" parent="TouchScreenButton" unique_id=1076489072 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -41,7 +41,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton" unique_id=1379736865]
 offset_left = 10.0
 offset_top = 25.0
 offset_right = 29.0
@@ -53,12 +53,12 @@ theme_override_constants/outline_size = 2
 text = "1"
 metadata/_edit_use_anchors_ = true
 
-[node name="TouchScreenButton2" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="." unique_id=1750683244]
 position = Vector2(36, 0)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot2" parent="TouchScreenButton2" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot2" parent="TouchScreenButton2" unique_id=319148254 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -74,7 +74,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton2"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton2" unique_id=276245008]
 offset_left = 9.0
 offset_top = 24.0
 offset_right = 29.0
@@ -86,12 +86,12 @@ theme_override_constants/outline_size = 2
 text = "2"
 metadata/_edit_use_anchors_ = true
 
-[node name="TouchScreenButton3" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton3" type="TouchScreenButton" parent="." unique_id=1280233262]
 position = Vector2(72, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot3" parent="TouchScreenButton3" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot3" parent="TouchScreenButton3" unique_id=784014281 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -107,7 +107,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton3"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton3" unique_id=213318120]
 offset_left = 9.0
 offset_top = 24.0
 offset_right = 29.0
@@ -119,12 +119,12 @@ theme_override_constants/outline_size = 2
 text = "3"
 metadata/_edit_use_anchors_ = true
 
-[node name="TouchScreenButton4" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton4" type="TouchScreenButton" parent="." unique_id=1398758650]
 position = Vector2(108, 0)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot4" parent="TouchScreenButton4" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot4" parent="TouchScreenButton4" unique_id=1942691559 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -140,7 +140,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton4"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton4" unique_id=867392875]
 offset_left = 9.0
 offset_top = 24.0
 offset_right = 29.0
@@ -152,12 +152,12 @@ theme_override_constants/outline_size = 2
 text = "4"
 metadata/_edit_use_anchors_ = true
 
-[node name="TouchScreenButton5" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton5" type="TouchScreenButton" parent="." unique_id=1416190853]
 position = Vector2(144, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot5" parent="TouchScreenButton5" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot5" parent="TouchScreenButton5" unique_id=1149724108 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -175,7 +175,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton5"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton5" unique_id=1840061211]
 offset_left = 9.0
 offset_top = 24.0
 offset_right = 29.0
@@ -187,12 +187,12 @@ theme_override_constants/outline_size = 2
 text = "5"
 metadata/_edit_use_anchors_ = true
 
-[node name="TouchScreenButton6" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton6" type="TouchScreenButton" parent="." unique_id=1407344618]
 position = Vector2(216, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot6" parent="TouchScreenButton6" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot6" parent="TouchScreenButton6" unique_id=904885384 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -210,7 +210,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton6"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton6" unique_id=2082614234]
 offset_left = 9.0
 offset_top = 24.0
 offset_right = 29.0
@@ -222,12 +222,12 @@ theme_override_constants/outline_size = 2
 text = "6"
 metadata/_edit_use_anchors_ = true
 
-[node name="TouchScreenButton7" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton7" type="TouchScreenButton" parent="." unique_id=2140749036]
 position = Vector2(252, 0)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot7" parent="TouchScreenButton7" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot7" parent="TouchScreenButton7" unique_id=919628705 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -245,7 +245,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton7"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton7" unique_id=932603302]
 offset_left = 9.0
 offset_top = 24.0
 offset_right = 29.0
@@ -257,12 +257,12 @@ theme_override_constants/outline_size = 2
 text = "7"
 metadata/_edit_use_anchors_ = true
 
-[node name="TouchScreenButton8" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton8" type="TouchScreenButton" parent="." unique_id=424338926]
 position = Vector2(288, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot8" parent="TouchScreenButton8" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot8" parent="TouchScreenButton8" unique_id=560521247 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -280,7 +280,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton8"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton8" unique_id=2042995392]
 offset_left = 9.0
 offset_top = 24.0
 offset_right = 29.0
@@ -292,12 +292,12 @@ theme_override_constants/outline_size = 2
 text = "8"
 metadata/_edit_use_anchors_ = true
 
-[node name="TouchScreenButton9" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton9" type="TouchScreenButton" parent="." unique_id=746209374]
 position = Vector2(324, 0)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot9" parent="TouchScreenButton9" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot9" parent="TouchScreenButton9" unique_id=375710934 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -315,7 +315,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton9"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton9" unique_id=1912836109]
 offset_left = 9.0
 offset_top = 24.0
 offset_right = 29.0
@@ -327,12 +327,12 @@ theme_override_constants/outline_size = 2
 text = "9"
 metadata/_edit_use_anchors_ = true
 
-[node name="TouchScreenButton10" type="TouchScreenButton" parent="."]
+[node name="TouchScreenButton10" type="TouchScreenButton" parent="." unique_id=1222544710]
 position = Vector2(360, 35)
 texture_normal = ExtResource("1_pcpv2")
 texture_pressed = ExtResource("2_7lddn")
 
-[node name="CellSlot10" parent="TouchScreenButton10" instance=ExtResource("3_gpxeb")]
+[node name="CellSlot10" parent="TouchScreenButton10" unique_id=1919277810 instance=ExtResource("3_gpxeb")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -350,7 +350,7 @@ color = Color(1, 1, 1, 0)
 draggable = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ButtonLabel" type="Label" parent="TouchScreenButton10"]
+[node name="ButtonLabel" type="Label" parent="TouchScreenButton10" unique_id=446748101]
 offset_left = 9.0
 offset_top = 24.0
 offset_right = 29.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dko0qppid07hg"]
+[gd_scene format=3 uid="uid://dko0qppid07hg"]
 
 [ext_resource type="Texture2D" uid="uid://b0qa2td7svga7" path="res://data/graphics/effects/particles/smoke.png" id="1_0cgnc"]
 [ext_resource type="PackedScene" uid="uid://bpqxr3214t821" path="res://presets/effects/LightSource.tscn" id="2_dg8t3"]
@@ -22,7 +22,7 @@ scale_min = 0.6
 scale_max = 0.8
 color = Color(1, 0.32549, 0, 0.443137)
 
-[node name="Fire" type="GPUParticles2D"]
+[node name="Fire" type="GPUParticles2D" unique_id=1435230818]
 material = SubResource("CanvasItemMaterial_y2my7")
 amount = 6
 texture = ExtResource("1_0cgnc")
@@ -33,6 +33,6 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_l54cu")
 script = ExtResource("2_ggro7")
 
-[node name="LightSource" parent="." instance=ExtResource("2_dg8t3")]
+[node name="LightSource" parent="." unique_id=18114294 instance=ExtResource("2_dg8t3")]
 position = Vector2(0, 0)
 radius = 96

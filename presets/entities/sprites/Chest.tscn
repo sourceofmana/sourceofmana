@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dy3gyhmlew12g"]
+[gd_scene format=3 uid="uid://dy3gyhmlew12g"]
 
 [ext_resource type="Texture2D" uid="uid://csmocgom16lgd" path="res://data/graphics/sprites/npcs/large-chest.png" id="1_ql3k7"]
 [ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="2_dex3v"]
@@ -151,20 +151,18 @@ _data = {
 &"Walk": SubResource("Animation_yp2cr")
 }
 
-[node name="Chest" type="Node2D"]
+[node name="Chest" type="Node2D" unique_id=736036800]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=1965116628]
 position = Vector2(0, -4)
 texture = ExtResource("1_ql3k7")
 offset = Vector2(0, -16)
 hframes = 4
 frame = 3
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1756113725]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_gf7hs")
-}
+libraries/ = SubResource("AnimationLibrary_gf7hs")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_dex3v")]
+[node name="AnimationTree" parent="Animation" unique_id=1984405014 instance=ExtResource("2_dex3v")]
 root_node = NodePath("../../Body")

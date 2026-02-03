@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cr2by2nem8o87"]
+[gd_scene format=3 uid="uid://cr2by2nem8o87"]
 
 [ext_resource type="PackedScene" uid="uid://bq66pltgf5nhp" path="res://presets/gui/labels/ContentLabel.tscn" id="1_bk404"]
 [ext_resource type="Script" uid="uid://pdqsy1s1d8jr" path="res://sources/gui/ServerDisplay.gd" id="1_lgnu7"]
 
-[node name="PanelContainer" type="PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" unique_id=1400014647]
 clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,16 +13,16 @@ grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("1_lgnu7")
 
-[node name="HSections" type="TabContainer" parent="."]
+[node name="HSections" type="TabContainer" parent="." unique_id=1416462362]
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Info" type="TabBar" parent="HSections"]
+[node name="Info" type="TabBar" parent="HSections" unique_id=496741025]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="VBox" type="VBoxContainer" parent="HSections/Info"]
+[node name="VBox" type="VBoxContainer" parent="HSections/Info" unique_id=1370377126]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,25 +30,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSections/Info/VBox"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HSections/Info/VBox" unique_id=627928728]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RichTextLabel" parent="HSections/Info/VBox/ScrollContainer" instance=ExtResource("1_bk404")]
+[node name="RichTextLabel" parent="HSections/Info/VBox/ScrollContainer" unique_id=154489649 instance=ExtResource("1_bk404")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="RefreshButon" type="Button" parent="HSections/Info/VBox"]
+[node name="RefreshButon" type="Button" parent="HSections/Info/VBox" unique_id=1507395516]
 layout_mode = 2
 text = "Refresh"
 
-[node name="Peers" type="TabBar" parent="HSections"]
+[node name="Peers" type="TabBar" parent="HSections" unique_id=1129398495]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="RichTextLabel" parent="HSections/Peers" instance=ExtResource("1_bk404")]
+[node name="RichTextLabel" parent="HSections/Peers" unique_id=1281254424 instance=ExtResource("1_bk404")]
 layout_mode = 1
 
 [connection signal="pressed" from="HSections/Info/VBox/RefreshButon" to="." method="_on_info_update"]

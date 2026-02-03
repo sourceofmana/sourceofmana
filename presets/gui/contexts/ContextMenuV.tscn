@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://tqcjqyaicaol"]
+[gd_scene format=3 uid="uid://tqcjqyaicaol"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_sma80"]
 [ext_resource type="Script" uid="uid://btiruufqr3qn7" path="res://sources/gui/context/ContextMenu.gd" id="2_se8cc"]
 
-[node name="Context" type="PanelContainer"]
+[node name="Context" type="PanelContainer" unique_id=1528397048]
 offset_right = 72.0
 offset_bottom = 24.0
 size_flags_horizontal = 0
@@ -12,10 +12,10 @@ theme = ExtResource("1_sma80")
 theme_type_variation = &"TipPanel"
 script = ExtResource("2_se8cc")
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1700766678]
 layout_mode = 2
 
-[node name="List" type="VBoxContainer" parent="Margin"]
+[node name="List" type="VBoxContainer" parent="Margin" unique_id=1705885224]
 layout_mode = 2
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

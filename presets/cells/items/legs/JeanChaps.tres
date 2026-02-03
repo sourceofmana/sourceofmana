@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=9 format=3 uid="uid://celwklfusk6v8"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://celwklfusk6v8"]
 
 [ext_resource type="Texture2D" uid="uid://bvggn3wgc33fb" path="res://data/graphics/items/legs/jean-chaps.png" id="1_cs4ty"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_nvi0p"]

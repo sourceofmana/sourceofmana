@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dxixywo1th1gv"]
+[gd_scene format=3 uid="uid://dxixywo1th1gv"]
 
 [ext_resource type="Texture2D" uid="uid://crporj2g72m8b" path="res://data/graphics/sprites/monsters/piou.png" id="1_wtqld"]
 [ext_resource type="PackedScene" uid="uid://oxrams6nup8i" path="res://presets/entities/sprites/animations/8Directions.tscn" id="2_4wmrr"]
@@ -831,20 +831,18 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Piou" type="Node2D"]
+[node name="Piou" type="Node2D" unique_id=1385991917]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=1025230164]
 texture = ExtResource("1_wtqld")
 offset = Vector2(0, -5)
 hframes = 5
 vframes = 8
 frame = 19
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=772747029]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_4wmrr")]
+[node name="AnimationTree" parent="Animation" unique_id=2032131621 instance=ExtResource("2_4wmrr")]
 root_node = NodePath("../../Body")

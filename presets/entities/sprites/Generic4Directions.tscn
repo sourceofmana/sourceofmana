@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://e6bjjb4n155h"]
+[gd_scene format=3 uid="uid://e6bjjb4n155h"]
 
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="1_s4f1j"]
 
@@ -331,19 +331,17 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Generic" type="Node2D"]
+[node name="Generic" type="Node2D" unique_id=365187723]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=1172828296]
 offset = Vector2(0, -16)
 hframes = 10
 vframes = 4
 frame = 19
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=646837074]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("1_s4f1j")]
+[node name="AnimationTree" parent="Animation" unique_id=42027252 instance=ExtResource("1_s4f1j")]
 root_node = NodePath("../../Body")

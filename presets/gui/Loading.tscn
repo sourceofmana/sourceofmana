@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ds4k8qrgo3ko3"]
+[gd_scene format=3 uid="uid://ds4k8qrgo3ko3"]
 
 [ext_resource type="Script" uid="uid://102q2sf4ehue" path="res://sources/gui/Loading.gd" id="1_b1dqa"]
 [ext_resource type="Texture2D" uid="uid://crvywfmr7gc3e" path="res://data/graphics/gui/misc/loading.png" id="2_t0ltk"]
 
-[node name="Loading" type="Control"]
+[node name="Loading" type="Control" unique_id=1389477443]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -18,7 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b1dqa")
 
-[node name="Progress" type="TextureProgressBar" parent="."]
+[node name="Progress" type="TextureProgressBar" parent="." unique_id=2093267839]
 z_index = -1
 layout_mode = 1
 anchors_preset = 8
@@ -38,7 +38,7 @@ fill_mode = 4
 radial_fill_degrees = 60.0
 texture_progress = ExtResource("2_t0ltk")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=727848239]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

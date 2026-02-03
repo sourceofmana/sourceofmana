@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillCell" load_steps=12 format=3 uid="uid://cj0tgusolkqoe"]
+[gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://cj0tgusolkqoe"]
 
 [ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_jjkni"]
 [ext_resource type="Texture2D" uid="uid://b0sjefu0rrrlq" path="res://data/graphics/items/skill/mana-burst.png" id="1_lskrc"]

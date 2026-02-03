@@ -1,55 +1,55 @@
-[gd_scene load_steps=2 format=3 uid="uid://h70yw73rukc0"]
+[gd_scene format=3 uid="uid://h70yw73rukc0"]
 
 [ext_resource type="Script" uid="uid://bdx4agxptvd50" path="res://sources/gui/ButtonBox.gd" id="1_ciocy"]
 
-[node name="ButtonBoxes" type="HBoxContainer"]
+[node name="ButtonBoxes" type="HBoxContainer" unique_id=503170721]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 27.0
 grow_horizontal = 2
 script = ExtResource("1_ciocy")
 
-[node name="Empty" type="Control" parent="."]
+[node name="Empty" type="Control" parent="." unique_id=304245188]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ButtonCancel" type="Button" parent="."]
+[node name="ButtonCancel" type="Button" parent="." unique_id=1009317189]
 layout_mode = 2
 theme_type_variation = &"LargeButton"
 text = "Cancel"
 
-[node name="Empty2" type="Control" parent="."]
+[node name="Empty2" type="Control" parent="." unique_id=737062757]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ButtonTertiary" type="Button" parent="."]
+[node name="ButtonTertiary" type="Button" parent="." unique_id=1173223638]
 layout_mode = 2
 theme_type_variation = &"LargeButton"
 text = "Tertiary"
 
-[node name="Empty3" type="Control" parent="."]
+[node name="Empty3" type="Control" parent="." unique_id=1847335105]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ButtonSecondary" type="Button" parent="."]
+[node name="ButtonSecondary" type="Button" parent="." unique_id=884547512]
 layout_mode = 2
 theme_type_variation = &"LargeButton"
 text = "Secondary"
 
-[node name="Empty4" type="Control" parent="."]
+[node name="Empty4" type="Control" parent="." unique_id=1563780760]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ButtonPrimary" type="Button" parent="."]
+[node name="ButtonPrimary" type="Button" parent="." unique_id=1354935467]
 layout_mode = 2
 theme_type_variation = &"LargeButton"
 text = "Primary"
 
-[node name="Empty5" type="Control" parent="."]
+[node name="Empty5" type="Control" parent="." unique_id=1196498348]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2

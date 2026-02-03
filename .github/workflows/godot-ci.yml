@@ -2,7 +2,7 @@ name: "godot-ci export"
 on: push
 
 env:
-  GODOT_VERSION: 4.5.1
+  GODOT_VERSION: 4.6
   EXPORT_NAME: "Source of Mana"
   PROJECT_PATH: "."
 
@@ -30,7 +30,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.5.1
+      image: barichello/godot-ci:4.6
     name: Export ${{ matrix.name }}
 
     steps:

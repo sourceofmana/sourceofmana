@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dolxuw03u60eo"]
+[gd_scene format=3 uid="uid://dolxuw03u60eo"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_q7m0j"]
 [ext_resource type="Script" uid="uid://ci85y60tfmp4o" path="res://sources/gui/Settings.gd" id="2_j3ryh"]
 
-[node name="Progress" type="PanelContainer"]
+[node name="Progress" type="PanelContainer" unique_id=1241443839]
 show_behind_parent = true
 custom_minimum_size = Vector2(180, 100)
 offset_left = 446.0
@@ -15,7 +15,7 @@ theme = ExtResource("1_q7m0j")
 script = ExtResource("2_j3ryh")
 saveOverlayState = true
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1068376364]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -24,64 +24,65 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="TabBar" type="TabContainer" parent="Margin"]
+[node name="TabBar" type="TabContainer" parent="Margin" unique_id=1041603337]
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="QuestLog" type="VSplitContainer" parent="Margin/TabBar"]
+[node name="QuestLog" type="VSplitContainer" parent="Margin/TabBar" unique_id=1125672958]
 layout_mode = 2
 size_flags_horizontal = 3
+split_offsets = PackedInt32Array(10)
 split_offset = 10
 metadata/_tab_index = 0
 
-[node name="QuestScroll" type="ScrollContainer" parent="Margin/TabBar/QuestLog"]
+[node name="QuestScroll" type="ScrollContainer" parent="Margin/TabBar/QuestLog" unique_id=322372117]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_force_pass_scroll_events = false
 
-[node name="QuestList" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll"]
+[node name="QuestList" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll" unique_id=1894087679]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Active" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList"]
+[node name="Active" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList" unique_id=1371190783]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HSeparator" type="HSeparator" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList"]
+[node name="HSeparator" type="HSeparator" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList" unique_id=469527811]
 visible = false
 layout_mode = 2
 mouse_filter = 1
 
-[node name="Completed" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList"]
+[node name="Completed" type="VBoxContainer" parent="Margin/TabBar/QuestLog/QuestScroll/QuestList" unique_id=472361643]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Description" type="RichTextLabel" parent="Margin/TabBar/QuestLog"]
+[node name="Description" type="RichTextLabel" parent="Margin/TabBar/QuestLog" unique_id=1900845451]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
 
-[node name="Manapedia" type="ScrollContainer" parent="Margin/TabBar"]
+[node name="Manapedia" type="ScrollContainer" parent="Margin/TabBar" unique_id=816694770]
 visible = false
 layout_mode = 2
 mouse_force_pass_scroll_events = false
 metadata/_tab_index = 1
 
-[node name="BestiaryList" type="VBoxContainer" parent="Margin/TabBar/Manapedia"]
+[node name="BestiaryList" type="VBoxContainer" parent="Margin/TabBar/Manapedia" unique_id=373734723]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="BestiaryLabel" type="RichTextLabel" parent="Margin/TabBar/Manapedia/BestiaryList"]
+[node name="BestiaryLabel" type="RichTextLabel" parent="Margin/TabBar/Manapedia/BestiaryList" unique_id=2062008106]
 layout_mode = 2
 mouse_filter = 1
 text = "Bestiary"
 fit_content = true
 
-[node name="Monsters" type="VBoxContainer" parent="Margin/TabBar/Manapedia/BestiaryList"]
+[node name="Monsters" type="VBoxContainer" parent="Margin/TabBar/Manapedia/BestiaryList" unique_id=1287439083]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

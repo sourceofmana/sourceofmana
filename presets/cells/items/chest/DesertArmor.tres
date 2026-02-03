@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=9 format=3 uid="uid://b58u4sccexbpg"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://b58u4sccexbpg"]
 
 [ext_resource type="Texture2D" uid="uid://bfc24bssxbnjh" path="res://data/graphics/items/chest/desertarmor.png" id="1_w3t53"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_jyjh6"]

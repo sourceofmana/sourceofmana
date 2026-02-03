@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bon6v0tx330v0"]
+[gd_scene format=3 uid="uid://bon6v0tx330v0"]
 
 [ext_resource type="Shader" uid="uid://bhb7qwpk3h3dg" path="res://sources/shaders/AmbiantOverlay.gdshader" id="1_djb3g"]
 
@@ -33,7 +33,7 @@ noise = SubResource("FastNoiseLite_atlre")
 seamless = true
 normalize = false
 
-[node name="Ambient" type="TextureRect"]
+[node name="Ambient" type="TextureRect" unique_id=1227959501]
 z_index = 255
 material = SubResource("ShaderMaterial_lygls")
 offset_right = 8352.0

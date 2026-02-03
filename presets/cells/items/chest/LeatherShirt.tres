@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=10 format=3 uid="uid://cbw8ta1x6umf4"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://cbw8ta1x6umf4"]
 
 [ext_resource type="Texture2D" uid="uid://d2x6dlmqd3xfw" path="res://data/graphics/items/chest/leather-shirt.png" id="1_fwd6i"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_br76x"]

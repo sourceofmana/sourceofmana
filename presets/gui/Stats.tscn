@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhdq88so6g3yh"]
+[gd_scene format=3 uid="uid://dhdq88so6g3yh"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_dhni5"]
 [ext_resource type="Script" uid="uid://cguhlue4ygu63" path="res://sources/gui/StatPanel.gd" id="2_v116i"]
@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b1bm6d86bv1eq" path="res://data/graphics/gui/pixelblue.png" id="9_q6igb"]
 [ext_resource type="Texture2D" uid="uid://b7vc8pr8rl30g" path="res://data/graphics/gui/pixelgreen.png" id="10_h4ygu"]
 
-[node name="Stat" type="PanelContainer"]
+[node name="Stat" type="PanelContainer" unique_id=769858201]
 show_behind_parent = true
 custom_minimum_size = Vector2(180, 100)
 offset_right = 400.0
@@ -22,10 +22,10 @@ mouse_force_pass_scroll_events = false
 theme = ExtResource("1_dhni5")
 script = ExtResource("2_v116i")
 
-[node name="Scroll" type="ScrollContainer" parent="."]
+[node name="Scroll" type="ScrollContainer" parent="." unique_id=1393768041]
 layout_mode = 2
 
-[node name="Margin" type="MarginContainer" parent="Scroll"]
+[node name="Margin" type="MarginContainer" parent="Scroll" unique_id=745733304]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -35,487 +35,487 @@ theme_override_constants/margin_top = 7
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 7
 
-[node name="Layout" type="HBoxContainer" parent="Scroll/Margin"]
+[node name="Layout" type="HBoxContainer" parent="Scroll/Margin" unique_id=1739970364]
 layout_mode = 2
 
-[node name="Stats" type="VBoxContainer" parent="Scroll/Margin/Layout"]
+[node name="Stats" type="VBoxContainer" parent="Scroll/Margin/Layout" unique_id=1738959282]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Information" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats"]
+[node name="Information" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats" unique_id=1624133889]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/Information"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/Information" unique_id=320787605]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Test"
 
-[node name="Gender" type="TextureRect" parent="Scroll/Margin/Layout/Stats/Information"]
+[node name="Gender" type="TextureRect" parent="Scroll/Margin/Layout/Stats/Information" unique_id=785173096]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("3_4bqlt")
 
-[node name="Control" type="Control" parent="Scroll/Margin/Layout/Stats/Information"]
+[node name="Control" type="Control" parent="Scroll/Margin/Layout/Stats/Information" unique_id=696391821]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Level" type="Label" parent="Scroll/Margin/Layout/Stats/Information"]
+[node name="Level" type="Label" parent="Scroll/Margin/Layout/Stats/Information" unique_id=578063057]
 layout_mode = 2
 text = "Lvl. 2"
 horizontal_alignment = 1
 
-[node name="Control2" type="Control" parent="Scroll/Margin/Layout/Stats/Information"]
+[node name="Control2" type="Control" parent="Scroll/Margin/Layout/Stats/Information" unique_id=685774033]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SpiritSymbol" type="TextureRect" parent="Scroll/Margin/Layout/Stats/Information"]
+[node name="SpiritSymbol" type="TextureRect" parent="Scroll/Margin/Layout/Stats/Information" unique_id=18991427]
 layout_mode = 2
 size_flags_horizontal = 8
 texture = ExtResource("4_de8qp")
 
-[node name="Spirit" type="Label" parent="Scroll/Margin/Layout/Stats/Information"]
+[node name="Spirit" type="Label" parent="Scroll/Margin/Layout/Stats/Information" unique_id=1870001363]
 layout_mode = 2
 size_flags_horizontal = 8
 horizontal_alignment = 2
 
-[node name="HSeparator2" type="HSeparator" parent="Scroll/Margin/Layout/Stats"]
+[node name="HSeparator2" type="HSeparator" parent="Scroll/Margin/Layout/Stats" unique_id=277581076]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="StatBox" type="VBoxContainer" parent="Scroll/Margin/Layout/Stats"]
+[node name="StatBox" type="VBoxContainer" parent="Scroll/Margin/Layout/Stats" unique_id=1156727341]
 layout_mode = 2
 
-[node name="StrengthBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox"]
+[node name="StrengthBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox" unique_id=2040189211]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox" unique_id=1821557988]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Strength"
 
-[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox"]
+[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox" unique_id=1338229792]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox"]
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox" unique_id=1328613403]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "-"
 
-[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox"]
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox" unique_id=1424645298]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox"]
+[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/StrengthBox" unique_id=2126464894]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
 
-[node name="VitalityBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox"]
+[node name="VitalityBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox" unique_id=2060552985]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox" unique_id=633182837]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Vitality"
 
-[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox"]
+[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox" unique_id=1491674885]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox"]
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox" unique_id=1564956849]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "-"
 
-[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox"]
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox" unique_id=280046153]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox"]
+[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/VitalityBox" unique_id=847569034]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
 
-[node name="AgilityBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox"]
+[node name="AgilityBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox" unique_id=83915694]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox" unique_id=816330405]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Agility"
 
-[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox"]
+[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox" unique_id=1494958386]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox"]
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox" unique_id=965941322]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "-"
 
-[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox"]
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox" unique_id=245718018]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox"]
+[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AgilityBox" unique_id=771390749]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
 
-[node name="EnduranceBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox"]
+[node name="EnduranceBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox" unique_id=54602546]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox" unique_id=1103642879]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Endurance"
 
-[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox"]
+[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox" unique_id=1854145065]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox"]
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox" unique_id=839182236]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "-"
 
-[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox"]
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox" unique_id=1261772200]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox"]
+[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/EnduranceBox" unique_id=297156936]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
 
-[node name="ConcentrationBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox"]
+[node name="ConcentrationBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox" unique_id=1909398302]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox" unique_id=960337917]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Concentration"
 
-[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox"]
+[node name="Current" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox" unique_id=1093368796]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox"]
+[node name="Minus" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox" unique_id=887780009]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "-"
 
-[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox"]
+[node name="ToAdd" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox" unique_id=351802522]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox"]
+[node name="Button" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox" unique_id=1720013000]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "+"
 
-[node name="Control" type="Control" parent="Scroll/Margin/Layout/Stats/StatBox"]
+[node name="Control" type="Control" parent="Scroll/Margin/Layout/Stats/StatBox" unique_id=20387207]
 custom_minimum_size = Vector2(0, 3)
 layout_mode = 2
 
-[node name="AvailablePointsBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox"]
+[node name="AvailablePointsBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/StatBox" unique_id=1111281694]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox"]
+[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox" unique_id=75766093]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Available points"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox" unique_id=469370077]
 custom_minimum_size = Vector2(59, 0)
 layout_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ResetButton" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox"]
+[node name="ResetButton" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox" unique_id=478693947]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Reset"
 
-[node name="SaveButton" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox"]
+[node name="SaveButton" type="Button" parent="Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox" unique_id=1984999656]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Save"
 
-[node name="HSeparator" type="HSeparator" parent="Scroll/Margin/Layout/Stats"]
+[node name="HSeparator" type="HSeparator" parent="Scroll/Margin/Layout/Stats" unique_id=61609109]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="PreciseStats" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats"]
+[node name="PreciseStats" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats" unique_id=731888113]
 layout_mode = 2
 
-[node name="ActiveStatsBox" type="VBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats"]
+[node name="ActiveStatsBox" type="VBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats" unique_id=219496394]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ExperienceBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
+[node name="ExperienceBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox" unique_id=1446548954]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox"]
+[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox" unique_id=745624693]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Experience"
 
-[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox" instance=ExtResource("3_kjg3f")]
+[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox" unique_id=1801997528 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
 textureProgress = ExtResource("6_2hq2a")
 textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
-[node name="HealthBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
+[node name="HealthBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox" unique_id=763150739]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox"]
+[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox" unique_id=1669932858]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Health"
 
-[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox" instance=ExtResource("3_kjg3f")]
+[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox" unique_id=2046759406 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
 textureProgress = ExtResource("8_egmig")
 textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
-[node name="ManaBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
+[node name="ManaBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox" unique_id=1313784342]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox"]
+[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox" unique_id=1724439168]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Mana"
 
-[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox" instance=ExtResource("3_kjg3f")]
+[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox" unique_id=617359452 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
 textureProgress = ExtResource("9_q6igb")
 textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
-[node name="StaminaBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
+[node name="StaminaBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox" unique_id=776041199]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox"]
+[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox" unique_id=640182376]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Stamina"
 
-[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox" instance=ExtResource("3_kjg3f")]
+[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox" unique_id=754648958 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
 textureProgress = ExtResource("10_h4ygu")
 textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
-[node name="WeightBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
+[node name="WeightBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox" unique_id=1200166600]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox"]
+[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox" unique_id=372313290]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Weight"
 
-[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox" instance=ExtResource("3_kjg3f")]
+[node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox" unique_id=1645824016 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
 textureProgress = ExtResource("6_2hq2a")
 textureBackground = ExtResource("4_fxktc")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
-[node name="GPBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox"]
+[node name="GPBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox" unique_id=412458490]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/GPBox"]
+[node name="Label" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/GPBox" unique_id=658686980]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Money"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/GPBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/GPBox" unique_id=956398831]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "0"
 horizontal_alignment = 2
 
-[node name="VSeparator" type="VSeparator" parent="Scroll/Margin/Layout/Stats/PreciseStats"]
+[node name="VSeparator" type="VSeparator" parent="Scroll/Margin/Layout/Stats/PreciseStats" unique_id=718533410]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="AdvancedStatsBox" type="VBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats"]
+[node name="AdvancedStatsBox" type="VBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats" unique_id=435325828]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="AtkBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="AtkBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=1247337055]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox" unique_id=996213641]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Attack"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox" unique_id=557657845]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
-[node name="DefBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="DefBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=1280959268]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox" unique_id=968774066]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Defense"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox" unique_id=1760337933]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
-[node name="MAtkBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="MAtkBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=1486951896]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox" unique_id=663846801]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "M. Attack"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox" unique_id=1328255112]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
-[node name="MDefBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="MDefBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=429268318]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox" unique_id=714122601]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "M. Defense"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox" unique_id=492017037]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
-[node name="AtkRangeBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="AtkRangeBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=1556175340]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox" unique_id=541949597]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Attack Range"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox" unique_id=1781953864]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
-[node name="CastDelayBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="CastDelayBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=914549313]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox" unique_id=1685555095]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Cast Delay"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox" unique_id=517645900]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
-[node name="CooldownDelayBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="CooldownDelayBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=1806736502]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox" unique_id=686724756]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Cooldown Delay"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox" unique_id=849023670]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
-[node name="CritRateBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="CritRateBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=1736195836]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox" unique_id=244062382]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Crit Rate"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox" unique_id=632925413]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
-[node name="DodgeRateBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="DodgeRateBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=995455223]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox" unique_id=1457468721]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Dodge Rate"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox" unique_id=524703946]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
 
-[node name="WalkBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox"]
+[node name="WalkBox" type="HBoxContainer" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox" unique_id=1874135434]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox"]
+[node name="Name" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox" unique_id=524157223]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Walk Speed"
 
-[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox"]
+[node name="Value" type="Label" parent="Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox" unique_id=1862930236]
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2

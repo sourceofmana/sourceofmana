@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dqdpqrng1ptvv"]
+[gd_scene format=3 uid="uid://dqdpqrng1ptvv"]
 
 [ext_resource type="Texture2D" uid="uid://o8s2iqm8dwfx" path="res://data/graphics/sprites/monsters/croc.png" id="1_r57t1"]
 [ext_resource type="PackedScene" uid="uid://oxrams6nup8i" path="res://presets/entities/sprites/animations/8Directions.tscn" id="2_f1jyi"]
@@ -539,21 +539,19 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Croc" type="Node2D"]
+[node name="Croc" type="Node2D" unique_id=56048503]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=944756048]
 texture = ExtResource("1_r57t1")
 offset = Vector2(0, -10)
 hframes = 8
 vframes = 10
 frame = 19
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1169180601]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_f1jyi")]
+[node name="AnimationTree" parent="Animation" unique_id=2123717599 instance=ExtResource("2_f1jyi")]
 root_node = NodePath("../../Body")
 parameters/Death/BlendSpace2D/blend_position = Vector2(0, -0.904762)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://676e7kfvces4"]
+[gd_scene format=3 uid="uid://676e7kfvces4"]
 
 [ext_resource type="Texture2D" uid="uid://o0usxnftyn4p" path="res://data/graphics/effects/particles/sparkle.png" id="1_dmemp"]
 
@@ -44,7 +44,7 @@ scale_curve = SubResource("CurveTexture_f3016")
 scale_over_velocity_curve = SubResource("CurveXYZTexture_t80j1")
 color = Color(1, 0.933333, 0.780392, 1)
 
-[node name="Heal Particles" type="GPUParticles2D"]
+[node name="Heal Particles" type="GPUParticles2D" unique_id=755423675]
 emitting = false
 amount = 40
 texture = ExtResource("1_dmemp")

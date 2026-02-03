@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cesdnjj67k3c"]
+[gd_scene format=3 uid="uid://cesdnjj67k3c"]
 
 [ext_resource type="Texture2D" uid="uid://d3ncrbs57wejx" path="res://data/graphics/sprites/monsters/lulea.png" id="1_kcq17"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_gv6wv"]
@@ -332,20 +332,18 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Slime" type="Node2D"]
+[node name="Slime" type="Node2D" unique_id=198159022]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=875838069]
 texture = ExtResource("1_kcq17")
 offset = Vector2(0, -12)
 hframes = 9
 vframes = 4
 frame = 19
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1515236435]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_gv6wv")]
+[node name="AnimationTree" parent="Animation" unique_id=1877614185 instance=ExtResource("2_gv6wv")]
 root_node = NodePath("../../Body")

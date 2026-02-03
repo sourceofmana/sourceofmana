@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://owiltak1cxk8"]
+[gd_scene format=3 uid="uid://owiltak1cxk8"]
 
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://4y5ck1nvjs0k" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
@@ -72,10 +72,10 @@ texture = ExtResource("4_ah7dm")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w48pk"]
 texture = ExtResource("5_fdh06")
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1218639774]
 script = ExtResource("3")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1224479313]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -84,7 +84,7 @@ grow_vertical = 2
 texture = ExtResource("2_u1iab")
 expand_mode = 1
 
-[node name="Overlay" type="MarginContainer" parent="."]
+[node name="Overlay" type="MarginContainer" parent="." unique_id=1871510634]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -98,22 +98,22 @@ theme_override_constants/margin_top = 19
 theme_override_constants/margin_right = 19
 theme_override_constants/margin_bottom = 19
 
-[node name="VSections" type="VBoxContainer" parent="Overlay"]
+[node name="VSections" type="VBoxContainer" parent="Overlay" unique_id=1742168297]
 layout_mode = 2
 
-[node name="Indicators" type="HBoxContainer" parent="Overlay/VSections"]
+[node name="Indicators" type="HBoxContainer" parent="Overlay/VSections" unique_id=1520929200]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 alignment = 1
 
-[node name="Stat" type="Control" parent="Overlay/VSections/Indicators"]
+[node name="Stat" type="Control" parent="Overlay/VSections/Indicators" unique_id=1156802164]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 2
 mouse_filter = 1
 script = ExtResource("3_5uo3f")
 
-[node name="StatContent" parent="Overlay/VSections/Indicators/Stat" instance=ExtResource("2")]
+[node name="StatContent" parent="Overlay/VSections/Indicators/Stat" unique_id=79806359 instance=ExtResource("2")]
 layout_mode = 0
 offset_right = 273.0
 offset_bottom = 61.0
@@ -122,7 +122,7 @@ size_flags_vertical = 0
 mouse_filter = 2
 script = null
 
-[node name="StatButton" type="TextureButton" parent="Overlay/VSections/Indicators/Stat"]
+[node name="StatButton" type="TextureButton" parent="Overlay/VSections/Indicators/Stat" unique_id=1134635495]
 custom_minimum_size = Vector2(62, 61)
 layout_mode = 0
 offset_right = 62.0
@@ -130,13 +130,13 @@ offset_bottom = 61.0
 size_flags_horizontal = 10
 size_flags_vertical = 0
 
-[node name="Info" type="Control" parent="Overlay/VSections/Indicators"]
+[node name="Info" type="Control" parent="Overlay/VSections/Indicators" unique_id=1722134015]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
 
-[node name="Notification" parent="Overlay/VSections/Indicators/Info" instance=ExtResource("17_64u4l")]
+[node name="Notification" parent="Overlay/VSections/Indicators/Info" unique_id=1195237028 instance=ExtResource("17_64u4l")]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = -250.0
@@ -144,7 +144,7 @@ offset_top = -19.0
 offset_right = 250.0
 offset_bottom = 17.0
 
-[node name="PickUp" parent="Overlay/VSections/Indicators/Info" instance=ExtResource("21_5ivxk")]
+[node name="PickUp" parent="Overlay/VSections/Indicators/Info" unique_id=530703044 instance=ExtResource("21_5ivxk")]
 visible = false
 layout_mode = 1
 anchors_preset = 10
@@ -156,14 +156,14 @@ offset_bottom = 91.0
 grow_horizontal = 2
 mouse_filter = 1
 
-[node name="Menu" type="Control" parent="Overlay/VSections/Indicators"]
+[node name="Menu" type="Control" parent="Overlay/VSections/Indicators" unique_id=349554582]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 10
 mouse_filter = 1
 script = ExtResource("6_npwx0")
 
-[node name="MenuContent" type="TextureRect" parent="Overlay/VSections/Indicators/Menu"]
+[node name="MenuContent" type="TextureRect" parent="Overlay/VSections/Indicators/Menu" unique_id=401767902]
 material = SubResource("ShaderMaterial_wjdwk")
 layout_mode = 0
 offset_left = -511.0
@@ -177,7 +177,7 @@ size_flags_vertical = 0
 texture = ExtResource("6_mf0sy")
 stretch_mode = 3
 
-[node name="HBoxItems" type="HBoxContainer" parent="Overlay/VSections/Indicators/Menu/MenuContent"]
+[node name="HBoxItems" type="HBoxContainer" parent="Overlay/VSections/Indicators/Menu/MenuContent" unique_id=1930884178]
 use_parent_material = true
 layout_mode = 1
 anchors_preset = 6
@@ -194,7 +194,7 @@ grow_vertical = 2
 size_flags_vertical = 0
 alignment = 2
 
-[node name="Inventory" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Inventory" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1398346524 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("5_ntnop")
@@ -203,7 +203,7 @@ icon_alignment = 1
 targetWindow = NodePath("../../../../../../../Windows/Floating/Inventory")
 targetShortcut = &"ui_inventory"
 
-[node name="Skill" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Skill" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1054257533 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("13_h6wc7")
@@ -211,7 +211,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Skill")
 targetShortcut = &"ui_skill"
 
-[node name="Emote" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Emote" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=498199983 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("8_ppxwt")
@@ -219,7 +219,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Emote")
 targetShortcut = &"ui_emote"
 
-[node name="Chat" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Chat" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1407037298 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("6_2quic")
@@ -227,7 +227,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Chat")
 targetShortcut = &"ui_chat"
 
-[node name="Minimap" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Minimap" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=713811777 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("7_cv35r")
@@ -235,7 +235,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Minimap")
 targetShortcut = &"ui_minimap"
 
-[node name="Progress" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Progress" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=39792699 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("9_vtuwx")
@@ -243,7 +243,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Progress")
 targetShortcut = &"ui_progress"
 
-[node name="Credits" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Credits" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1520835010 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("10_mq57a")
@@ -251,7 +251,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Credit")
 targetShortcut = &"ui_credits"
 
-[node name="Settings" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Settings" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=55081747 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 use_parent_material = true
 layout_mode = 2
 icon = ExtResource("11_17vy0")
@@ -259,7 +259,7 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Settings")
 targetShortcut = &"ui_settings"
 
-[node name="MenuButton" type="Button" parent="Overlay/VSections/Indicators/Menu"]
+[node name="MenuButton" type="Button" parent="Overlay/VSections/Indicators/Menu" unique_id=1162161113]
 custom_minimum_size = Vector2(62, 61)
 layout_direction = 3
 layout_mode = 0
@@ -273,19 +273,19 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
 
-[node name="Contexts" type="Control" parent="Overlay/VSections"]
+[node name="Contexts" type="Control" parent="Overlay/VSections" unique_id=238552505]
 z_index = 10
 z_as_relative = false
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 
-[node name="Loading" parent="Overlay/VSections/Contexts" instance=ExtResource("22_cg00p")]
+[node name="Loading" parent="Overlay/VSections/Contexts" unique_id=1054234145 instance=ExtResource("22_cg00p")]
 visible = false
 layout_mode = 1
 mouse_filter = 2
 
-[node name="Info" parent="Overlay/VSections/Contexts" instance=ExtResource("20_px3po")]
+[node name="Info" parent="Overlay/VSections/Contexts" unique_id=382593800 instance=ExtResource("20_px3po")]
 visible = false
 layout_mode = 1
 anchors_preset = 4
@@ -299,7 +299,7 @@ mouse_filter = 1
 theme_type_variation = &"PanelSideLeft"
 persistant = false
 
-[node name="Dialogue" parent="Overlay/VSections/Contexts" instance=ExtResource("24_fqnq4")]
+[node name="Dialogue" parent="Overlay/VSections/Contexts" unique_id=1202850709 instance=ExtResource("24_fqnq4")]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -313,17 +313,17 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Login" parent="Overlay/VSections/Contexts" instance=ExtResource("7_lrq68")]
+[node name="Login" parent="Overlay/VSections/Contexts" unique_id=1945197527 instance=ExtResource("7_lrq68")]
 visible = false
 layout_mode = 1
 offset_left = -146.0
 offset_right = 146.0
 
-[node name="Character" parent="Overlay/VSections/Contexts" instance=ExtResource("49_78q3w")]
+[node name="Character" parent="Overlay/VSections/Contexts" unique_id=519458497 instance=ExtResource("49_78q3w")]
 visible = false
 layout_mode = 1
 
-[node name="MessageBox" parent="Overlay/VSections/Contexts" instance=ExtResource("25_tem4r")]
+[node name="MessageBox" parent="Overlay/VSections/Contexts" unique_id=242717945 instance=ExtResource("25_tem4r")]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -338,17 +338,17 @@ offset_bottom = 44.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ButtonBar" type="Control" parent="Overlay/VSections"]
+[node name="ButtonBar" type="Control" parent="Overlay/VSections" unique_id=300934480]
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 mouse_filter = 1
 
-[node name="ButtonBoxes" parent="Overlay/VSections/ButtonBar" instance=ExtResource("26_plhfr")]
+[node name="ButtonBoxes" parent="Overlay/VSections/ButtonBar" unique_id=2095262868 instance=ExtResource("26_plhfr")]
 visible = false
 layout_mode = 1
 offset_bottom = 24.0
 
-[node name="ActionBoxes" parent="Overlay/VSections/ButtonBar" instance=ExtResource("4")]
+[node name="ActionBoxes" parent="Overlay/VSections/ButtonBar" unique_id=1492458596 instance=ExtResource("4")]
 visible = false
 custom_minimum_size = Vector2(422, 0)
 layout_mode = 1
@@ -363,11 +363,11 @@ grow_vertical = 1
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
-[node name="Sections" type="Control" parent="Overlay"]
+[node name="Sections" type="Control" parent="Overlay" unique_id=1976953674]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Shortcuts" type="MarginContainer" parent="Overlay/Sections"]
+[node name="Shortcuts" type="MarginContainer" parent="Overlay/Sections" unique_id=1421421199]
 custom_minimum_size = Vector2(0, 155)
 layout_mode = 1
 anchors_preset = 12
@@ -379,26 +379,26 @@ grow_vertical = 0
 size_flags_vertical = 8
 mouse_filter = 2
 
-[node name="Sticks" type="HBoxContainer" parent="Overlay/Sections/Shortcuts"]
+[node name="Sticks" type="HBoxContainer" parent="Overlay/Sections/Shortcuts" unique_id=1844070546]
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("18_6nrx4")
 
-[node name="LeftAnchor" type="Control" parent="Overlay/Sections/Shortcuts/Sticks"]
+[node name="LeftAnchor" type="Control" parent="Overlay/Sections/Shortcuts/Sticks" unique_id=320642553]
 layout_mode = 2
 size_flags_horizontal = 2
 
-[node name="ButtonLeft" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/LeftAnchor"]
+[node name="ButtonLeft" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/LeftAnchor" unique_id=787860410]
 visible = false
 position = Vector2(4, -50)
 texture_normal = ExtResource("28_k5lnh")
 texture_pressed = ExtResource("29_5sssi")
 
-[node name="Direction" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/LeftAnchor"]
+[node name="Direction" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/LeftAnchor" unique_id=846250490]
 visible = false
 texture_normal = ExtResource("18_lb78w")
 
-[node name="Button" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/LeftAnchor/Direction"]
+[node name="Button" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/LeftAnchor/Direction" unique_id=846648080]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -416,16 +416,16 @@ theme = ExtResource("4_wx5hs")
 theme_type_variation = &"FilledLosangeButton"
 texture = ExtResource("20_1vdgt")
 
-[node name="RightAnchor" type="Control" parent="Overlay/Sections/Shortcuts/Sticks"]
+[node name="RightAnchor" type="Control" parent="Overlay/Sections/Shortcuts/Sticks" unique_id=148768381]
 layout_mode = 2
 
-[node name="ButtonRight" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor"]
+[node name="ButtonRight" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor" unique_id=1199117331]
 visible = false
 position = Vector2(-57, -50)
 texture_normal = ExtResource("30_gfxfv")
 texture_pressed = ExtResource("31_udatq")
 
-[node name="Actions" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor"]
+[node name="Actions" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor" unique_id=1817315034]
 visible = false
 layout_direction = 3
 layout_mode = 0
@@ -434,27 +434,27 @@ offset_bottom = 155.0
 size_flags_horizontal = 10
 texture = ExtResource("18_lb78w")
 
-[node name="ButtonY" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions"]
+[node name="ButtonY" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions" unique_id=1107274505]
 position = Vector2(51, 5)
 texture_normal = ExtResource("22_v5bsw")
 texture_pressed = ExtResource("23_veq0v")
 
-[node name="ButtonX" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions"]
+[node name="ButtonX" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions" unique_id=882193899]
 position = Vector2(4, 52)
 texture_normal = ExtResource("23_8ulos")
 texture_pressed = ExtResource("25_8t8bb")
 
-[node name="ButtonB" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions"]
+[node name="ButtonB" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions" unique_id=1753710870]
 position = Vector2(98, 52)
 texture_normal = ExtResource("24_idf5b")
 texture_pressed = ExtResource("27_rgxqc")
 
-[node name="ButtonA" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions"]
+[node name="ButtonA" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions" unique_id=510922320]
 position = Vector2(51, 99)
 texture_normal = ExtResource("25_6cklw")
 texture_pressed = ExtResource("29_ioa8a")
 
-[node name="Windows" type="MarginContainer" parent="."]
+[node name="Windows" type="MarginContainer" parent="." unique_id=106838770]
 z_index = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -465,12 +465,12 @@ mouse_filter = 2
 theme = ExtResource("4_wx5hs")
 theme_override_constants/margin_top = 80
 
-[node name="Floating" type="Control" parent="Windows"]
+[node name="Floating" type="Control" parent="Windows" unique_id=1811460908]
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("7")
 
-[node name="Quit" parent="Windows/Floating" instance=ExtResource("8")]
+[node name="Quit" parent="Windows/Floating" unique_id=1540640516 instance=ExtResource("8")]
 visible = false
 z_index = 100
 layout_mode = 1
@@ -487,7 +487,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
-[node name="Inventory" parent="Windows/Floating" instance=ExtResource("35_j05ha")]
+[node name="Inventory" parent="Windows/Floating" unique_id=1715311206 instance=ExtResource("35_j05ha")]
 visible = false
 show_behind_parent = false
 layout_mode = 0
@@ -503,7 +503,7 @@ grow_vertical = 1
 saveOverlayState = true
 allowAutomaticResize = true
 
-[node name="Minimap" parent="Windows/Floating" instance=ExtResource("9_myjuo")]
+[node name="Minimap" parent="Windows/Floating" unique_id=1978325832 instance=ExtResource("9_myjuo")]
 visible = false
 custom_minimum_size = Vector2(200, 125)
 layout_mode = 0
@@ -513,7 +513,7 @@ offset_right = 1258.0
 offset_bottom = 131.0
 saveOverlayState = true
 
-[node name="Emote" parent="Windows/Floating" instance=ExtResource("37_v7lrk")]
+[node name="Emote" parent="Windows/Floating" unique_id=1332906157 instance=ExtResource("37_v7lrk")]
 visible = false
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 0
@@ -523,7 +523,7 @@ offset_right = 306.0
 offset_bottom = 68.0
 saveOverlayState = true
 
-[node name="Skill" parent="Windows/Floating" instance=ExtResource("38_ompay")]
+[node name="Skill" parent="Windows/Floating" unique_id=849459379 instance=ExtResource("38_ompay")]
 layout_mode = 0
 offset_left = 0.0
 offset_top = 71.0
@@ -531,7 +531,7 @@ offset_right = 213.0
 offset_bottom = 114.0
 saveOverlayState = true
 
-[node name="Chat" parent="Windows/Floating" instance=ExtResource("5")]
+[node name="Chat" parent="Windows/Floating" unique_id=629841106 instance=ExtResource("5")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
@@ -546,7 +546,7 @@ grow_vertical = 1
 saveOverlayState = true
 allowAutomaticResize = true
 
-[node name="Credit" parent="Windows/Floating" instance=ExtResource("14_xidsc")]
+[node name="Credit" parent="Windows/Floating" unique_id=809635501 instance=ExtResource("14_xidsc")]
 visible = false
 layout_mode = 0
 offset_left = 23.0
@@ -555,7 +555,7 @@ offset_right = 483.0
 offset_bottom = 545.0
 jsonFile = ExtResource("16_pfh0e")
 
-[node name="Settings" parent="Windows/Floating" instance=ExtResource("16_gapih")]
+[node name="Settings" parent="Windows/Floating" unique_id=189263697 instance=ExtResource("16_gapih")]
 visible = false
 layout_mode = 1
 anchors_preset = 0
@@ -568,7 +568,7 @@ offset_bottom = 486.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="Progress" parent="Windows/Floating" instance=ExtResource("54_112vu")]
+[node name="Progress" parent="Windows/Floating" unique_id=1569988722 instance=ExtResource("54_112vu")]
 visible = false
 layout_mode = 0
 offset_left = 0.0
@@ -577,7 +577,7 @@ offset_right = 318.0
 offset_bottom = 310.0
 script = ExtResource("19_v8wo4")
 
-[node name="Respawn" parent="Windows/Floating" instance=ExtResource("44_7o5pa")]
+[node name="Respawn" parent="Windows/Floating" unique_id=1663296732 instance=ExtResource("44_7o5pa")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
@@ -592,7 +592,7 @@ offset_bottom = 80.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="Stat" parent="Windows/Floating" instance=ExtResource("35_d1kq3")]
+[node name="Stat" parent="Windows/Floating" unique_id=1490220876 instance=ExtResource("35_d1kq3")]
 visible = false
 layout_mode = 0
 offset_left = 439.0
@@ -601,14 +601,14 @@ offset_right = 839.0
 offset_bottom = 427.0
 saveOverlayState = true
 
-[node name="Shaders" type="CanvasLayer" parent="."]
+[node name="Shaders" type="CanvasLayer" parent="." unique_id=1012789573]
 layer = 128
 
-[node name="HQ4x" parent="Shaders" instance=ExtResource("10_id8es")]
+[node name="HQ4x" parent="Shaders" unique_id=1393577928 instance=ExtResource("10_id8es")]
 visible = false
 offset_right = 39.0
 
-[node name="CRT" parent="Shaders" instance=ExtResource("11_x7rk2")]
+[node name="CRT" parent="Shaders" unique_id=114995455 instance=ExtResource("11_x7rk2")]
 top_level = true
 
 [connection signal="resized" from="Overlay" to="." method="_on_ui_margin_resized"]

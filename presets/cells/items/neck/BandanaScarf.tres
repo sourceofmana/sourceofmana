@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=5 format=3 uid="uid://f40w6s2w07wu"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://f40w6s2w07wu"]
 
 [ext_resource type="Texture2D" uid="uid://dsr5s7hbgv4ga" path="res://data/graphics/items/neck/bandana-scarf.png" id="1_op2dy"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_lc3u8"]

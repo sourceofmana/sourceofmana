@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://brnhlf5u6acr8"]
+[gd_scene format=3 uid="uid://brnhlf5u6acr8"]
 
 [sub_resource type="ConvexPolygonShape2D" id="1"]
 points = PackedVector2Array(-32, -8, -32, 8, -12, 24, 12, 24, 32, 8, 32, -8, 12, -24, -12, -24)
 
-[node name="Collision" type="CollisionShape2D"]
+[node name="Collision" type="CollisionShape2D" unique_id=1206944220]
 position = Vector2(0, -22)
 shape = SubResource("1")

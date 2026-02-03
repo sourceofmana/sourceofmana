@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6nwveqo000dl"]
+[gd_scene format=3 uid="uid://c6nwveqo000dl"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1"]
 [ext_resource type="Script" uid="uid://cs3mhm82x5ejk" path="res://sources/gui/Quit.gd" id="3"]
 
-[node name="Panel" type="PanelContainer"]
+[node name="Panel" type="PanelContainer" unique_id=1683569672]
 custom_minimum_size = Vector2(290, 120)
 offset_right = 280.0
 offset_bottom = 120.0
@@ -11,17 +11,17 @@ theme = ExtResource("1")
 script = ExtResource("3")
 blockActions = true
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1098725605]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin" unique_id=1874963682]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Margin/VBoxContainer"]
+[node name="Label" type="Label" parent="Margin/VBoxContainer" unique_id=489598541]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 6
@@ -32,30 +32,30 @@ vertical_alignment = 1
 autowrap_mode = 2
 language = "en_GB"
 
-[node name="Container" type="MarginContainer" parent="Margin/VBoxContainer"]
+[node name="Container" type="MarginContainer" parent="Margin/VBoxContainer" unique_id=49731008]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 3
 
-[node name="ButtonChoice" type="HBoxContainer" parent="Margin/VBoxContainer/Container"]
+[node name="ButtonChoice" type="HBoxContainer" parent="Margin/VBoxContainer/Container" unique_id=603582126]
 layout_mode = 2
 alignment = 2
 
-[node name="Quit" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice"]
+[node name="Quit" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice" unique_id=461237770]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_type_variation = &"LargeButton"
 text = "Quit"
 
-[node name="LogOut" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice"]
+[node name="LogOut" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice" unique_id=1103632597]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_type_variation = &"LargeButton"
 text = "Log Out"
 
-[node name="Stay" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice"]
+[node name="Stay" type="Button" parent="Margin/VBoxContainer/Container/ButtonChoice" unique_id=1872319655]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_type_variation = &"LargeButton"

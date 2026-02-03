@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bagfvnt2bhttv"]
+[gd_scene format=3 uid="uid://bagfvnt2bhttv"]
 
 [ext_resource type="Shader" uid="uid://dv45yf81f0345" path="res://sources/shaders/CRT.gdshader" id="1_kwf7s"]
 [ext_resource type="Texture2D" uid="uid://c32m2ojog2a7v" path="res://data/graphics/gui/item.png" id="2_ujy33"]
@@ -27,7 +27,7 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.4
 shader_parameter/vignette_opacity = 0.197
 
-[node name="CRT" type="TextureRect"]
+[node name="CRT" type="TextureRect" unique_id=106042313]
 visible = false
 visibility_layer = 3
 material = SubResource("ShaderMaterial_vehbk")

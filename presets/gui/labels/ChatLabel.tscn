@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://uiwxfl4dyoyw"]
+[gd_scene format=3 uid="uid://uiwxfl4dyoyw"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_1ynyk"]
 
-[node name="Tab" type="RichTextLabel"]
+[node name="Tab" type="RichTextLabel" unique_id=1410534613]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

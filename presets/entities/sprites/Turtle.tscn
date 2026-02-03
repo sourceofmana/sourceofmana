@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://byvgi6883q6ux"]
+[gd_scene format=3 uid="uid://byvgi6883q6ux"]
 
 [ext_resource type="Texture2D" uid="uid://dystl3r4mnu6a" path="res://data/graphics/sprites/monsters/turtle.png" id="1_erabt"]
 [ext_resource type="PackedScene" uid="uid://oxrams6nup8i" path="res://presets/entities/sprites/animations/8Directions.tscn" id="3_vif8h"]
@@ -651,21 +651,19 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Turtle" type="Node2D"]
+[node name="Turtle" type="Node2D" unique_id=605242846]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=1419736561]
 texture = ExtResource("1_erabt")
 offset = Vector2(0, -10)
 hframes = 4
 vframes = 11
 frame = 19
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1221792743]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_iko4k")
-}
+libraries/ = SubResource("AnimationLibrary_iko4k")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("3_vif8h")]
+[node name="AnimationTree" parent="Animation" unique_id=704807797 instance=ExtResource("3_vif8h")]
 root_node = NodePath("../../Body")
 parameters/Death/BlendSpace2D/blend_position = Vector2(0, -0.904762)

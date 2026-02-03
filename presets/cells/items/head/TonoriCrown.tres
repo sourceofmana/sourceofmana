@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=9 format=3 uid="uid://dixbmdwj253ee"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://dixbmdwj253ee"]
 
 [ext_resource type="Texture2D" uid="uid://b6ukqnxo358u0" path="res://data/graphics/items/head/tonori-crown.png" id="1_wp0su"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_ha1vq"]

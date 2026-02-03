@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dphlgrm0elh6y"]
+[gd_scene format=3 uid="uid://dphlgrm0elh6y"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_qmu1c"]
 [ext_resource type="Script" uid="uid://c0xrx33sc2kb1" path="res://sources/gui/WindowPanel.gd" id="2_rx7is"]
 [ext_resource type="Script" uid="uid://cdlupkkupflkp" path="res://sources/gui/Chat.gd" id="3_ipdx4"]
 [ext_resource type="PackedScene" uid="uid://uiwxfl4dyoyw" path="res://presets/gui/labels/ChatLabel.tscn" id="4_eypvk"]
 
-[node name="Chat" type="PanelContainer"]
+[node name="Chat" type="PanelContainer" unique_id=1038850685]
 custom_minimum_size = Vector2(100, 100)
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,29 +19,29 @@ mouse_force_pass_scroll_events = false
 theme = ExtResource("1_qmu1c")
 script = ExtResource("2_rx7is")
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=928934705]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin" unique_id=190783859]
 layout_mode = 2
 script = ExtResource("3_ipdx4")
 
-[node name="ChatTabContainer" type="TabContainer" parent="Margin/VBoxContainer"]
+[node name="ChatTabContainer" type="TabContainer" parent="Margin/VBoxContainer" unique_id=1646927662]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_qmu1c")
 current_tab = 0
 drag_to_rearrange_enabled = true
 
-[node name="General" parent="Margin/VBoxContainer/ChatTabContainer" instance=ExtResource("4_eypvk")]
+[node name="General" parent="Margin/VBoxContainer/ChatTabContainer" unique_id=1625154428 instance=ExtResource("4_eypvk")]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="NewText" type="LineEdit" parent="Margin/VBoxContainer"]
+[node name="NewText" type="LineEdit" parent="Margin/VBoxContainer" unique_id=1138611423]
 layout_mode = 2
 focus_mode = 1
 placeholder_text = "Type here"

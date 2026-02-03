@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cppc7wshwpqof"]
+[gd_scene format=3 uid="uid://cppc7wshwpqof"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_mgiqr"]
 [ext_resource type="Script" uid="uid://bjbq5k66ht6m7" path="res://sources/gui/PickUp.gd" id="2_o631f"]
 
-[node name="PickUp" type="PanelContainer"]
+[node name="PickUp" type="PanelContainer" unique_id=1658948349]
 custom_minimum_size = Vector2(0, 62)
 offset_right = 156.0
 offset_bottom = 55.0
@@ -14,7 +14,7 @@ theme = ExtResource("1_mgiqr")
 theme_type_variation = &"DialogueBox"
 script = ExtResource("2_o631f")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1380758529]
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1

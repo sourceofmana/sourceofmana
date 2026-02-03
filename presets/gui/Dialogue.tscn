@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgvr3t4hmbkny"]
+[gd_scene format=3 uid="uid://bgvr3t4hmbkny"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_w0q73"]
 [ext_resource type="Script" uid="uid://bpaa4goe5rkfa" path="res://sources/gui/Dialogue.gd" id="1_xbnx6"]
@@ -9,7 +9,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qyvn"]
 
-[node name="Dialogue" type="VBoxContainer"]
+[node name="Dialogue" type="VBoxContainer" unique_id=554568421]
 custom_minimum_size = Vector2(676, 280)
 offset_right = 676.0
 offset_bottom = 364.0
@@ -17,28 +17,28 @@ mouse_filter = 2
 theme = ExtResource("1_w0q73")
 script = ExtResource("1_xbnx6")
 
-[node name="Buffer" type="Control" parent="."]
+[node name="Buffer" type="Control" parent="." unique_id=495780376]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="BottomVbox" type="VBoxContainer" parent="."]
+[node name="BottomVbox" type="VBoxContainer" parent="." unique_id=586264]
 custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Dialogue" type="PanelContainer" parent="BottomVbox"]
+[node name="Dialogue" type="PanelContainer" parent="BottomVbox" unique_id=1889534427]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"DialogueBox"
 
-[node name="FixedHBox" type="HBoxContainer" parent="BottomVbox/Dialogue"]
+[node name="FixedHBox" type="HBoxContainer" parent="BottomVbox/Dialogue" unique_id=1663083452]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Scrollable" parent="BottomVbox/Dialogue/FixedHBox" instance=ExtResource("2_415ce")]
+[node name="Scrollable" parent="BottomVbox/Dialogue/FixedHBox" unique_id=500462899 instance=ExtResource("2_415ce")]
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -46,26 +46,26 @@ size_flags_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_5qyvn")
 
-[node name="Buffer" type="Control" parent="BottomVbox/Dialogue/FixedHBox"]
+[node name="Buffer" type="Control" parent="BottomVbox/Dialogue/FixedHBox" unique_id=26321625]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Button" type="Control" parent="BottomVbox/Dialogue"]
+[node name="Button" type="Control" parent="BottomVbox/Dialogue" unique_id=919609542]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 mouse_filter = 2
 
-[node name="TouchButton" type="TouchScreenButton" parent="BottomVbox/Dialogue/Button"]
+[node name="TouchButton" type="TouchScreenButton" parent="BottomVbox/Dialogue/Button" unique_id=1536368917]
 position = Vector2(32, 0)
 texture_normal = ExtResource("3_5rxxj")
 texture_pressed = ExtResource("4_fspi0")
 
-[node name="Label" type="Label" parent="BottomVbox/Dialogue/Button"]
+[node name="Label" type="Label" parent="BottomVbox/Dialogue/Button" unique_id=366456701]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -81,18 +81,18 @@ grow_vertical = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ChoiceVbox" type="VBoxContainer" parent="BottomVbox"]
+[node name="ChoiceVbox" type="VBoxContainer" parent="BottomVbox" unique_id=1701815967]
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="BufferUp" type="Control" parent="BottomVbox/ChoiceVbox"]
+[node name="BufferUp" type="Control" parent="BottomVbox/ChoiceVbox" unique_id=1484291609]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Choice" parent="BottomVbox/ChoiceVbox" instance=ExtResource("5_6rp1f")]
+[node name="Choice" parent="BottomVbox/ChoiceVbox" unique_id=1475578944 instance=ExtResource("5_6rp1f")]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
@@ -103,7 +103,7 @@ fadeInDelay = 0.5
 displayDelay = 0.0
 fadeOutDelay = 0.3
 
-[node name="BufferDown" type="Control" parent="BottomVbox/ChoiceVbox"]
+[node name="BufferDown" type="Control" parent="BottomVbox/ChoiceVbox" unique_id=43001142]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2

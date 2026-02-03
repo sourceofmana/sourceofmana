@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwcss86fsbspu"]
+[gd_scene format=3 uid="uid://bwcss86fsbspu"]
 
 [ext_resource type="Texture2D" uid="uid://o0usxnftyn4p" path="res://data/graphics/effects/particles/sparkle.png" id="1_8gcyb"]
 
@@ -38,7 +38,7 @@ color_ramp = SubResource("GradientTexture1D_fefxr")
 hue_variation_min = -0.1
 hue_variation_max = 0.44
 
-[node name="Level Up Particles" type="GPUParticles2D"]
+[node name="Level Up Particles" type="GPUParticles2D" unique_id=1949327275]
 material = SubResource("CanvasItemMaterial_1pdty")
 emitting = false
 amount = 40

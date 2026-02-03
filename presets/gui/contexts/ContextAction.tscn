@@ -1,20 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqkyebisda4de"]
+[gd_scene format=3 uid="uid://dqkyebisda4de"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_80axu"]
 [ext_resource type="Script" uid="uid://k0khfcqx2quk" path="res://sources/gui/context/ContextAction.gd" id="2_pwujc"]
 
-[node name="Action" type="HBoxContainer"]
+[node name="Action" type="HBoxContainer" unique_id=1140323883]
 offset_right = 97.0
 offset_bottom = 14.0
 theme = ExtResource("1_80axu")
 script = ExtResource("2_pwujc")
 
-[node name="Icon" type="Button" parent="."]
+[node name="Icon" type="Button" parent="." unique_id=33477016]
 custom_minimum_size = Vector2(28, 24)
 layout_mode = 2
 theme_type_variation = &"ButtonTip"
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1619273637]
 layout_mode = 2
 size_flags_horizontal = 3
 

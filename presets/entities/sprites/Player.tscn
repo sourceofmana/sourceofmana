@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://clvy3m3dxh517"]
+[gd_scene format=3 uid="uid://clvy3m3dxh517"]
 
 [ext_resource type="Texture2D" uid="uid://cnigutvcmmvis" path="res://data/graphics/sprites/players/player-male.png" id="1_66oof"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_mvwfv"]
@@ -3510,74 +3510,72 @@ _data = {
 &"WalkUp": SubResource("5")
 }
 
-[node name="Node" type="Node2D"]
+[node name="Node" type="Node2D" unique_id=418954075]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=1820273204]
 texture = ExtResource("1_66oof")
 offset = Vector2(0, -28)
 hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Face" type="Sprite2D" parent="."]
+[node name="Face" type="Sprite2D" parent="." unique_id=135850711]
 position = Vector2(0, -13)
 offset = Vector2(0, -26)
 hframes = 8
 vframes = 2
 
-[node name="Feet" type="Sprite2D" parent="."]
+[node name="Feet" type="Sprite2D" parent="." unique_id=1100282093]
 offset = Vector2(0, -28)
 hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Legs" type="Sprite2D" parent="."]
+[node name="Legs" type="Sprite2D" parent="." unique_id=2086517905]
 offset = Vector2(0, -28)
 hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Chest" type="Sprite2D" parent="."]
+[node name="Chest" type="Sprite2D" parent="." unique_id=819004247]
 offset = Vector2(0, -28)
 hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Hair" type="Sprite2D" parent="."]
+[node name="Hair" type="Sprite2D" parent="." unique_id=1640176301]
 offset = Vector2(0, -38)
 hframes = 5
 
-[node name="Hands" type="Sprite2D" parent="."]
+[node name="Hands" type="Sprite2D" parent="." unique_id=493455759]
 offset = Vector2(0, -28)
 hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Weapon" type="Sprite2D" parent="."]
+[node name="Weapon" type="Sprite2D" parent="." unique_id=1607482861]
 offset = Vector2(0, -28)
 hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Shield" type="Sprite2D" parent="."]
+[node name="Shield" type="Sprite2D" parent="." unique_id=1386230515]
 offset = Vector2(0, -28)
 hframes = 16
 vframes = 8
 frame = 64
 
-[node name="Neck" type="Sprite2D" parent="."]
+[node name="Neck" type="Sprite2D" parent="." unique_id=19313706]
 offset = Vector2(-1, -44)
 hframes = 5
 
-[node name="Head" type="Sprite2D" parent="."]
+[node name="Head" type="Sprite2D" parent="." unique_id=1399435765]
 offset = Vector2(-1, -44)
 hframes = 5
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1944500379]
 root_node = NodePath("../Body")
-libraries = {
-&"": SubResource("AnimationLibrary_pnwib")
-}
+libraries/ = SubResource("AnimationLibrary_pnwib")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("2_mvwfv")]
+[node name="AnimationTree" parent="Animation" unique_id=2132837464 instance=ExtResource("2_mvwfv")]
 root_node = NodePath("../../Body")

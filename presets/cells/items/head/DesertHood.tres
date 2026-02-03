@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" load_steps=8 format=3 uid="uid://cfkwntfdq7qa6"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://cfkwntfdq7qa6"]
 
 [ext_resource type="Texture2D" uid="uid://1x2n5gxlxlrl" path="res://data/graphics/items/head/desert-hood.png" id="1_iqaxl"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_68b7j"]

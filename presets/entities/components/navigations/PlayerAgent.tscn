@@ -1,5 +1,5 @@
 [gd_scene format=3 uid="uid://cdrtwbrgy4e5o"]
 
-[node name="NavAgent" type="NavigationAgent2D"]
+[node name="NavAgent" type="NavigationAgent2D" unique_id=1461405035]
 path_desired_distance = 10.0
 radius = 24.0

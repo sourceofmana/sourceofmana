@@ -1,20 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://3ldimch2l6rv"]
+[gd_scene format=3 uid="uid://3ldimch2l6rv"]
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_3x28q"]
 [ext_resource type="Script" uid="uid://btbemuboy4dc5" path="res://sources/gui/Scrollable.gd" id="2_8yd1q"]
 
-[node name="Scrollable" type="PanelContainer"]
+[node name="Scrollable" type="PanelContainer" unique_id=1323191844]
 custom_minimum_size = Vector2(160, 96)
 offset_right = 438.0
 offset_bottom = 594.0
 theme = ExtResource("1_3x28q")
 script = ExtResource("2_8yd1q")
 
-[node name="Scroll" type="ScrollContainer" parent="."]
+[node name="Scroll" type="ScrollContainer" parent="." unique_id=111846525]
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="Margin" type="MarginContainer" parent="Scroll"]
+[node name="Margin" type="MarginContainer" parent="Scroll" unique_id=1790653432]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -23,7 +23,7 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="VBox" type="VBoxContainer" parent="Scroll/Margin"]
+[node name="VBox" type="VBoxContainer" parent="Scroll/Margin" unique_id=451547291]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 0

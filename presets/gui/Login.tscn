@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjgijbfxixe67"]
+[gd_scene format=3 uid="uid://cjgijbfxixe67"]
 
 [ext_resource type="Script" uid="uid://bfuwxwu1j6l6d" path="res://sources/gui/Login.gd" id="2_2pjk7"]
 [ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="3_6esv8"]
@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tk56e"]
 
-[node name="Login" type="MarginContainer"]
+[node name="Login" type="MarginContainer" unique_id=1508104274]
 custom_minimum_size = Vector2(540, 0)
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,49 +22,49 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("2_2pjk7")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=99826577]
 layout_mode = 2
 
-[node name="EmptyLeft" type="Control" parent="HBoxContainer"]
+[node name="EmptyLeft" type="Control" parent="HBoxContainer" unique_id=1771836882]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="PanelContainer" parent="HBoxContainer"]
+[node name="Panel" type="PanelContainer" parent="HBoxContainer" unique_id=1780314075]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_type_variation = &"DialogueBox"
 
-[node name="Margin" type="MarginContainer" parent="HBoxContainer/Panel"]
+[node name="Margin" type="MarginContainer" parent="HBoxContainer/Panel" unique_id=167517098]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Panel/Margin"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Panel/Margin" unique_id=521008732]
 layout_mode = 2
 metadata/_edit_use_custom_anchors = true
 
-[node name="LoginContainer" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer"]
+[node name="LoginContainer" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer" unique_id=986677218]
 custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 
-[node name="Name" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
+[node name="Name" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=1262510621]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name"]
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name" unique_id=2135318920]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Name"
 vertical_alignment = 1
 
-[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name"]
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name" unique_id=1969704285]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container"]
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container" unique_id=1874705842]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_next = NodePath("../../../Password/Container/Text")
@@ -74,21 +74,21 @@ clear_button_enabled = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="Password" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
+[node name="Password" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=917724367]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password"]
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password" unique_id=1046087328]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Password"
 vertical_alignment = 1
 
-[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password"]
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password" unique_id=1711016730]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container"]
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container" unique_id=91472582]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -101,21 +101,21 @@ caret_blink = true
 caret_blink_interval = 0.5
 secret = true
 
-[node name="Email" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
+[node name="Email" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=768420053]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email"]
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email" unique_id=518527520]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Email"
 vertical_alignment = 1
 
-[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email"]
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email" unique_id=815627564]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container"]
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container" unique_id=249140471]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -128,18 +128,18 @@ select_all_on_focus = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="OnlineIndicator" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
+[node name="OnlineIndicator" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=608763401]
 layout_mode = 2
 size_flags_vertical = 0
 theme_type_variation = &"PearlBox"
 disabled = true
 
-[node name="HSeparator2" type="HSeparator" parent="HBoxContainer/Panel/Margin/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer/Panel/Margin/VBoxContainer" unique_id=1967145083]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 32
 
-[node name="News" parent="HBoxContainer/Panel/Margin/VBoxContainer" instance=ExtResource("3_6esv8")]
+[node name="News" parent="HBoxContainer/Panel/Margin/VBoxContainer" unique_id=1103665273 instance=ExtResource("3_6esv8")]
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -147,7 +147,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_tk56e")
 jsonFile = ExtResource("3_mlkr6")
 
-[node name="Agreement" parent="HBoxContainer/Panel/Margin/VBoxContainer" instance=ExtResource("3_6esv8")]
+[node name="Agreement" parent="HBoxContainer/Panel/Margin/VBoxContainer" unique_id=668931611 instance=ExtResource("3_6esv8")]
 visible = false
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
@@ -156,7 +156,7 @@ mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxEmpty_tk56e")
 jsonFile = ExtResource("3_kh3en")
 
-[node name="EmptyRight" type="Control" parent="HBoxContainer"]
+[node name="EmptyRight" type="Control" parent="HBoxContainer" unique_id=1845477830]
 layout_mode = 2
 size_flags_horizontal = 3
 
