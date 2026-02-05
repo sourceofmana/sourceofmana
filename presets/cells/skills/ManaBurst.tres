@@ -1,9 +1,8 @@
 [gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://cj0tgusolkqoe"]
 
-[ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_jjkni"]
+[ext_resource type="PackedScene" uid="uid://c7lr4ad20me2t" path="res://presets/effects/particles/casts/ManaBurst.tscn" id="1_1m847"]
 [ext_resource type="Texture2D" uid="uid://b0sjefu0rrrlq" path="res://data/graphics/items/skill/mana-burst.png" id="1_lskrc"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="1_tou8y"]
-[ext_resource type="Texture2D" uid="uid://b04l4jblvixlt" path="res://data/graphics/effects/particles/cast1.png" id="2_ilyoo"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="4_amp31"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="4_sacis"]
 [ext_resource type="PackedScene" uid="uid://b48f227dxr4nh" path="res://presets/effects/particles/ManaBurst.tscn" id="5_703aq"]
@@ -32,12 +31,9 @@ script = ExtResource("1_tou8y")
 cellRange = 40
 mode = 1
 cooldownTime = 1.0
-castPreset = ExtResource("1_jjkni")
-castTextureOverride = ExtResource("2_ilyoo")
-castColor = Color(1, 1, 0.6, 1)
+castPreset = ExtResource("1_1m847")
 castTime = 2.0
 castWalk = true
-skillColor = Color(1, 1, 1, 1)
 skillTime = 2.0
 projectilePreset = ExtResource("5_703aq")
 name = "Mana Burst"

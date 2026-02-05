@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://bqg1nlmgehdkc"]
 
 [ext_resource type="Texture2D" uid="uid://bxesbi7rppedj" path="res://data/graphics/items/skill/spitfire.png" id="1_ns67t"]
+[ext_resource type="PackedScene" uid="uid://c7lr4ad20me2t" path="res://presets/effects/particles/casts/ManaBurst.tscn" id="1_nuwi7"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_kni4d"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_od8fb"]
 [ext_resource type="PackedScene" uid="uid://cyr6go0b60dmi" path="res://presets/effects/particles/Spitfire.tscn" id="4_65neb"]
@@ -31,6 +32,7 @@ state = 3
 cellRange = 32
 repeat = true
 cooldownTime = 1.0
+castPreset = ExtResource("1_nuwi7")
 skillTime = 0.1
 projectilePreset = ExtResource("4_65neb")
 name = "Spitfire"

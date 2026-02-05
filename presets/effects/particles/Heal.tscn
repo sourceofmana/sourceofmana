@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://676e7kfvces4"]
 
-[ext_resource type="Texture2D" uid="uid://o0usxnftyn4p" path="res://data/graphics/effects/particles/sparkle.png" id="1_dmemp"]
+[ext_resource type="Texture2D" uid="uid://cwlcajt78phca" path="res://data/graphics/effects/particles/orb.png" id="1_t5nlv"]
 
 [sub_resource type="Curve" id="Curve_k7fev"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.688474, 1), 0.0, 0.0, 0, 0, Vector2(0.993769, 0), -8.2664, 0.0, 0, 0]
@@ -10,17 +10,14 @@ point_count = 3
 curve = SubResource("Curve_k7fev")
 
 [sub_resource type="Curve" id="Curve_tfwdr"]
-_limits = [0.0, 3.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.999, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_vgmh4"]
-_limits = [0.0, 3.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_1wv7a"]
-_limits = [0.0, 3.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -31,6 +28,7 @@ curve_z = SubResource("Curve_1wv7a")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mag5b"]
 lifetime_randomness = 0.2
+particle_flag_rotate_y = true
 particle_flag_disable_z = true
 emission_shape_offset = Vector3(0, -5, 0)
 emission_shape_scale = Vector3(10, 5, 1)
@@ -38,16 +36,21 @@ emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
 angle_min = -5.0
 angle_max = 5.0
+angular_velocity_min = -180.00002
+angular_velocity_max = 359.99997
 gravity = Vector3(0, -40, 0)
-scale_min = 0.3
+radial_accel_min = -2.2351742e-06
+radial_accel_max = -2.2351742e-06
+scale_min = 0.29999998
 scale_curve = SubResource("CurveTexture_f3016")
 scale_over_velocity_curve = SubResource("CurveXYZTexture_t80j1")
-color = Color(1, 0.933333, 0.780392, 1)
+hue_variation_min = -0.100000024
+hue_variation_max = 0.09999997
 
 [node name="Heal Particles" type="GPUParticles2D" unique_id=755423675]
 emitting = false
-amount = 40
-texture = ExtResource("1_dmemp")
+amount = 80
+texture = ExtResource("1_t5nlv")
 lifetime = 2.0
 one_shot = true
 explosiveness = 0.2

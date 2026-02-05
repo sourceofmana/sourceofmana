@@ -1,7 +1,6 @@
 [gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://dvgbbk4l2m11q"]
 
-[ext_resource type="PackedScene" uid="uid://x0nnrhog4d3x" path="res://presets/effects/particles/CastSpell.tscn" id="1_f6vbr"]
-[ext_resource type="Texture2D" uid="uid://cyg3qk423x8vq" path="res://data/graphics/effects/particles/cast4.png" id="2_llpnr"]
+[ext_resource type="PackedScene" uid="uid://bxsasv3dy3fqo" path="res://presets/effects/particles/casts/Inma.tscn" id="1_0ywhq"]
 [ext_resource type="Texture2D" uid="uid://bffgldeyns80v" path="res://data/graphics/items/skill/inma.png" id="3_jylje"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_p55re"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="4_qom12"]
@@ -31,9 +30,7 @@ _modifiers = Array[ExtResource("4_qom12")]([SubResource("Resource_mlpd5"), SubRe
 script = ExtResource("4_p55re")
 cellRange = 128
 cooldownTime = 5.0
-castPreset = ExtResource("1_f6vbr")
-castTextureOverride = ExtResource("2_llpnr")
-castColor = Color(1, 1, 0.6, 1)
+castPreset = ExtResource("1_0ywhq")
 castTime = 3.0
 skillPreset = ExtResource("5_0vmmd")
 skillTime = 2.0

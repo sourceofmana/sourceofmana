@@ -86,7 +86,7 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	agent.SetSkillCastID(DB.UnknownHash)
 	var timeLeft : float = SkillCommons.GetCooldown(agent, skill)
 	Callback.SelfDestructTimer(agent, timeLeft, CooledDown, [agent, target, skill], skill.name + " CoolDown")
-	Network.NotifyNeighbours(agent, "Casted", [skill.id, timeLeft])
+	Network.NotifyNeighbours(target, "Casted", [skill.id, timeLeft])
 
 static func CooledDown(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	agent.cooldownTimers[skill.id] = false

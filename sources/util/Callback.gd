@@ -53,11 +53,16 @@ static func SelfDestructTimer(parent : Node, delay : float, callback : Callable 
 			timer = Timer.new()
 			timer.set_one_shot(true)
 			timer.set_autostart(true)
+			timer.set_wait_time(delay)
 			AddCallback(timer.timeout, Callback.SelfDestructCallback, [parent, timer, callback, args])
 			if not timerName.is_empty():
 				timer.name = timerName
 			parent.add_child(timer)
-		timer.start(delay)
+		else:
+			timer.set_one_shot(true)
+			timer.set_autostart(true)
+			timer.set_wait_time(delay)
+			timer.start()
 		return timer
 	return null
 

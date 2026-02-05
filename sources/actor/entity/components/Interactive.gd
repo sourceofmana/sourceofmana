@@ -89,17 +89,17 @@ func DisplaySkillRange(skill : SkillCell):
 		skillPreview.Hide()
 	skillPreview.queue_redraw()
 
+func HideCast(castFx : GPUParticles2D):
+	castFx.emitting = false
+
 func DisplayCast(emitter : Entity, skillID : int):
 	if DB.SkillsDB.has(skillID):
 		var skill : SkillCell = DB.SkillsDB[skillID]
 		if skill.castPreset:
 			var castFx : GPUParticles2D = skill.castPreset.instantiate()
 			if castFx:
+				Callback.SelfDestructTimer(castFx, skill.castTime + emitter.stat.current.castAttackDelay, HideCast.bind(castFx))
 				castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-				castFx.lifetime = skill.castTime + emitter.stat.current.castAttackDelay
-				castFx.texture = skill.castTextureOverride
-				if skill.castColor != Color.BLACK:
-					castFx.self_modulate = skill.castColor
 				castFx.emitting = true
 				add_child(castFx)
 
@@ -114,8 +114,6 @@ func DisplaySkill(emitter : Entity, skillID : int, cooldown : float):
 				if skillFx:
 					skillFx.finished.connect(Util.RemoveNode.bind(skillFx, emitter))
 					skillFx.lifetime = skill.skillTime
-					if skill.skillColor != Color.BLACK:
-						skillFx.process_material.set("color", skill.skillColor)
 					skillFx.emitting = true
 					emitter.add_child(skillFx)
 
