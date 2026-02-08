@@ -26,7 +26,11 @@ func _init():
 	_equipment.resize(ActorCommons.SlotEquipmentCount)
 
 static func Create(result : Dictionary) -> EntityData:
-	var entity : EntityData = EntityData.new()
+	var parent : EntityData = null
+	if "Parent" in result:
+		parent = DB.GetEntity(result.Parent.hash())
+
+	var entity : EntityData = parent.duplicate(true) if parent else EntityData.new()
 	entity._id = result.Name.hash()
 	entity._name = result.Name
 	if "SpritePreset" in result:

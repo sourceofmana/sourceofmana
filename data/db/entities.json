@@ -22,6 +22,27 @@
 			"defense": 0,
 		},
 	},
+	"2": {
+		"Name": "NPC",
+		"Collision": "Small",
+		"Radius": "16",
+		"DisplayName": true,
+	},
+	"3": {
+		"Name": "StaticNPC",
+		"Parent": "NPC",
+		"SpritePreset": "Static",
+		"Behaviour": ["Immobile", "Pacifist"],
+	},
+	"4": {
+		"Name": "WalkingNPC",
+		"Parent": "NPC",
+		"SpritePreset": "Player",
+		"Behaviour": ["Pacifist"],
+		"Stat": {
+			"walkSpeed": 160,
+		},
+	},
 
 	"1000": {
 		"Name": "Splatyna",
@@ -388,17 +409,12 @@
 
 	"2000": {
 		"Name": "Bicies",
-		"SpritePreset": "Player",
+		"Parent" : "WalkingNPC",
 		"Equipment": [
 			"V-Neck Tee",
 			"Trousers",
 		],
-		"Behaviour": ["Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
 		"Stat": {
-			"walkSpeed": 70,
 			"hairstyle": "Center Parting",
 			"haircolor": "Dark Brown",
 			"gender": "Male",
@@ -408,69 +424,47 @@
 	},
 	"2001": {
 		"Name": "Old Chest",
+		"Parent" : "StaticNPC",
 		"SpritePreset": "Chest",
-		"Behaviour": ["Immobile", "Pacifist"],
 		"Collision": "Large",
 		"Radius": "32",
-		"DisplayName": true,
 	},
 	"2002": {
 		"Name": "Elanore",
-		"SpritePreset": "Static",
-		"Behaviour": ["Immobile", "Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
+		"Parent" : "StaticNPC",
 		"Texture": "sprites/npcs/elanore.png",
 	},
 	"2003": {
 		"Name": "Locks",
+		"Parent" : "StaticNPC",
 		"SpritePreset": "CaveLocks",
-		"Behaviour": ["Immobile", "Pacifist"],
 		"Collision": "Large",
 		"Radius": "32",
-		"DisplayName": true,
 	},
 	"2004": {
 		"Name": "Gabz",
-		"SpritePreset": "Static",
-		"Behaviour": ["Immobile", "Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
+		"Parent" : "StaticNPC",
 		"Texture": "sprites/npcs/gabz.png",
 	},
 	"2005": {
 		"Name": "Andi",
-		"SpritePreset": "Static",
-		"Behaviour": ["Immobile", "Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
+		"Parent" : "StaticNPC",
 		"Texture": "sprites/npcs/andi.png",
 	},
 	"2006": {
 		"Name": "Wie",
-		"SpritePreset": "Static",
-		"Behaviour": ["Immobile", "Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
+		"Parent" : "StaticNPC",
 		"Texture": "sprites/npcs/wie.png",
 	},
 	"2007": {
 		"Name": "Tulimshar Desert Guard",
-		"SpritePreset": "Player",
+		"Parent" : "WalkingNPC",
 		"Equipment": [
 			"Desert Armor",
 			"Guard Cloud Pants",
 			"Leather Boots",
 			"Desert Hood",
 		],
-		"Behaviour": ["Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
 		"Stat": {
 			"hairstyle": "Center Parting",
 			"haircolor": "Dark Brown",
@@ -481,6 +475,7 @@
 	},
 	"2008": {
 		"Name": "Red Queen",
+		"Parent" : "NPC",
 		"SpritePreset": "Player",
 		"Equipment": [
 			"Gown",
@@ -492,7 +487,6 @@
 		"Direction": "DOWN",
 		"State": "SIT",
 		"Behaviour": ["Immobile", "Pacifist"],
-		"DisplayName": true,
 		"Stat": {
 			"hairstyle": "Long and Curly",
 			"haircolor": "Pure Platinum",
@@ -503,17 +497,13 @@
 	},
 	"2009": {
 		"Name": "Tulimshar Desert Sbire",
-		"SpritePreset": "Player",
+		"Parent" : "WalkingNPC",
 		"Equipment": [
 			"Desert Jacket",
 			"Guard Cloud Pants",
 			"Leather Boots",
 			"Ghutra",
 		],
-		"Behaviour": ["Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
 		"Stat": {
 			"hairstyle": "Tapered Nape",
 			"haircolor": "Dark Copper",
@@ -524,17 +514,13 @@
 	},
 	"2010": {
 		"Name": "Tulimshar Sbire",
-		"SpritePreset": "Player",
+		"Parent" : "WalkingNPC",
 		"Equipment": [
 			"Desert Jacket",
 			"Guard Cloud Pants",
 			"Leather Boots",
 			"Desert Goggles",
 		],
-		"Behaviour": ["Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
 		"Stat": {
 			"hairstyle": "Pompadour",
 			"haircolor": "Esperia Blue",
@@ -545,16 +531,12 @@
 	},
 	"2011": {
 		"Name": "Tulimshar Guard",
-		"SpritePreset": "Player",
+		"Parent" : "WalkingNPC",
 		"Equipment": [
 			"Desert Armor",
 			"Guard Cloud Pants",
 			"Leather Boots",
 		],
-		"Behaviour": ["Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
 		"Stat": {
 			"hairstyle": "Imperial",
 			"haircolor": "Light Violet",
@@ -565,20 +547,12 @@
 	},
 	"2012": {
 		"Name": "Nina",
-		"SpritePreset": "Static",
-		"Behaviour": ["Immobile", "Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
+		"Parent" : "StaticNPC",
 		"Texture": "sprites/npcs/nina.png",
 	},
 	"2013": {
 		"Name": "Ekiru",
-		"SpritePreset": "Static",
-		"Behaviour": ["Immobile", "Pacifist"],
-		"Collision": "Small",
-		"Radius": "16",
-		"DisplayName": true,
+		"Parent" : "StaticNPC",
 		"Texture": "sprites/npcs/ekiru.png",
 	},
 }
