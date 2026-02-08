@@ -1,4 +1,4 @@
-extends Object
+extends RefCounted
 class_name ActorStats
 
 # Public and private stats, can be initialized through a dictionary from a SQL query or entities.json

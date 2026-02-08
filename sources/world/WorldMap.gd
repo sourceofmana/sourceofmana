@@ -1,5 +1,5 @@
 class_name WorldMap
-extends Object
+extends RefCounted
 
 #
 enum Flags

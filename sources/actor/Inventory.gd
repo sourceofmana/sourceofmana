@@ -1,4 +1,4 @@
-extends Object
+extends RefCounted
 class_name ActorInventory
 
 var actor : Actor					= null

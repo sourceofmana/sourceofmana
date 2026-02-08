@@ -1,4 +1,4 @@
-extends Object
+extends RefCounted
 class_name DB
 
 static var MapsDB : Dictionary[int, FileData]				= {}

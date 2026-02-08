@@ -1,4 +1,4 @@
-extends Object
+extends RefCounted
 class_name ProgressCommons
 
 const UnknownProgress : int						= 0
