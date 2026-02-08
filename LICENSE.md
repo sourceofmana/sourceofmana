@@ -381,6 +381,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/npcs/cave-locks.png [Reid]
 ./graphics/sprites/npcs/elanore.png [Reid]
 ./graphics/sprites/npcs/gabz.png [Reid]
+./graphics/sprites/npcs/nina.png [Reid] [Freya]
 ./graphics/sprites/npcs/wie.png [Kyokai] [Reid]
 ./graphics/sprites/npcs/large-chest.png [Reid]
 ./graphics/sprites/players/heads/kralog-female.png [Modanung] [Reid]

@@ -154,9 +154,8 @@ _data = {
 [node name="Chest" type="Node2D" unique_id=195182728]
 
 [node name="Body" type="Sprite2D" parent="." unique_id=1781100429]
-position = Vector2(0, -12)
 texture = ExtResource("1_8rucx")
-offset = Vector2(0, -16)
+offset = Vector2(0, -28)
 
 [node name="Animation" type="AnimationPlayer" parent="." unique_id=336869200]
 root_node = NodePath("../Body")
