@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="55">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="57">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -216,28 +216,35 @@
    </properties>
    <polygon points="119,10 311,10 311,42 119,42"/>
   </object>
-  <object id="41" name="Bicies" type="Spawn" x="2180" y="1568">
+  <object id="41" name="Tulimshar Desert Sbire" type="Spawn" x="2180" y="1568">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="42" name="Bicies" type="Spawn" x="2238" y="1654">
+  <object id="42" name="Tulimshar Sbire" type="Spawn" x="2238" y="1654">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="43" name="Bicies" type="Spawn" x="1456" y="1494">
+  <object id="43" name="Tulimshar Guard" type="Spawn" x="1456" y="1494">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="45" name="Elanore" type="Spawn" x="2122" y="2443" width="146" height="128">
+  <object id="55" name="Tulimshar Desert Guard" type="Spawn" x="1573" y="1513">
+   <properties>
+    <property name="count" type="int" value="1"/>
+    <property name="player_script" value="generic/Default.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="45" name="Nina" type="Spawn" x="1503" y="2564" width="20" height="18">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
@@ -274,6 +281,13 @@
     <property name="dest_pos_y" value="68"/>
    </properties>
    <polygon points="11,24 27,8 58,8 73,24 58,42 25,42"/>
+  </object>
+  <object id="56" name="Elanore" type="Spawn" x="2172" y="2497" width="18" height="18">
+   <properties>
+    <property name="count" type="int" value="1"/>
+    <property name="player_script" value="generic/Default.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
   </object>
  </objectgroup>
 </map>
