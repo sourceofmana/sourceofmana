@@ -100,6 +100,39 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 			agent.state, agent.currentSkillID
 		], false)
 
+# Commands
+func RegisterCommands():
+	CommandManager.Register("spawn", CommandSpawn, ActorCommons.Permission.NONE, "spawn <mob_name> <count>" )
+	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.NONE, "warp <map>" )
+
+func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) -> bool:
+	if not caller:
+		return false
+
+	var count : int = countStr.to_int()
+	if count <= 0:
+		return false
+
+	var entityID : int = entityName.hash()
+	var entity : EntityData = DB.GetEntity(entityID)
+	if not entity:
+		return false
+
+	var spawnedAgents : Array[MonsterAgent] = NpcCommons.Spawn(caller, entityID, count, caller.position, Vector2(200, 200))
+	return not spawnedAgents.is_empty()
+
+func CommandWarp(caller : PlayerAgent, mapName : String) -> bool:
+	if not caller:
+		return false
+
+	var mapID : int = mapName.hash()
+	var map : WorldMap = GetMap(mapID)
+	if map:
+		var mapPos : Vector2 = WorldNavigation.GetRandomPosition(map)
+		Warp(caller, map, mapPos)
+		return true
+	return false
+
 # Generic
 func BackupPlayers():
 	for area in areas.values():
@@ -111,6 +144,7 @@ func _post_launch():
 	for mapID in DB.MapsDB:
 		areas[mapID] = WorldMap.Create(mapID)
 	WorldAgent._post_launch()
+	RegisterCommands()
 
 	isInitialized = true
 

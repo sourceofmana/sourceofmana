@@ -255,6 +255,11 @@ func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictio
 			UpdateBestiary(mob, bestiary[mob], peerID)
 
 #
+func CommandFeedback(feedback : String, _peerID : int):
+	if Launcher.GUI and Launcher.GUI.chatContainer:
+		Launcher.GUI.chatContainer.AddSystemText(feedback)
+
+#
 func ConnectServer():
 	if not isOffline:
 		interfaceID = multiplayerAPI.get_unique_id()

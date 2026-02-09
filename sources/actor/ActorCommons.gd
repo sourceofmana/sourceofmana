@@ -1,12 +1,20 @@
 extends RefCounted
 class_name ActorCommons
 
-#
+# Actor enums
 enum Type
 {
 	PLAYER = 0,
 	MONSTER,
 	NPC
+}
+
+enum Permission
+{
+	NONE = 0,
+	MODERATOR,
+	GM,
+	ADMIN
 }
 
 enum Gender
@@ -34,8 +42,6 @@ static func GetGenderID(gender : String) -> Gender:
 		genderFemale:				return Gender.FEMALE
 		genderNonBinary:			return Gender.NONBINARY
 		_:							return Gender.MALE
-
-
 
 enum Slot
 {

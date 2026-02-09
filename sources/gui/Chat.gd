@@ -40,7 +40,10 @@ func OnNewTextSubmitted(newText : String):
 			lineEdit.clear()
 			if Launcher.Player:
 				backlog.Add(newText)
-				Network.TriggerChat(newText)
+				if newText[0] == "/":
+					Network.TriggerCommand(newText.trim_prefix("/"))
+				else:
+					Network.TriggerChat(newText)
 				SetNewLineEnabled(false)
 		else:
 			SetNewLineEnabled(false)

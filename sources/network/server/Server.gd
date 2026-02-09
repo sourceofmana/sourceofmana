@@ -295,6 +295,12 @@ func RetrieveCharacterInformation(peerID : int):
 	if player and player.stat:
 		Network.UpdateAttributes(player.stat.strength, player.stat.vitality, player.stat.agility, player.stat.endurance, player.stat.concentration, peerID)
 
+# Commands
+func TriggerCommand(command : String, peerID : int):
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player:
+		CommandManager.Handle(player, command)
+
 # Peer handling
 func ConnectPeer(peerID : int):
 	Util.PrintInfo("Server", "Peer connected: %d with %s" % [peerID, "Websocket" if useWebSocket else "ENet"])

@@ -7,6 +7,7 @@ class Peer:
 	var accountID : int								= NetworkCommons.PeerUnknownID
 	var characterID : int							= NetworkCommons.PeerUnknownID
 	var agentRID : int								= NetworkCommons.PeerUnknownID
+	var permission : ActorCommons.Permission		= ActorCommons.Permission.NONE
 	var usingWebSocket : bool						= false
 	var rpcDeltas : Dictionary[StringName, int]		= {}
 
@@ -83,3 +84,7 @@ static func GetCharacter(peerID : int) -> int:
 static func GetAgent(peerID : int) -> PlayerAgent:
 	var peer : Peers.Peer = GetPeer(peerID)
 	return WorldAgent.GetAgent(peer.agentRID) if peer else null
+
+static func GetPermission(peerID : int) -> ActorCommons.Permission:
+	var peer : Peers.Peer = GetPeer(peerID)
+	return peer.permission if peer else ActorCommons.Permission.NONE

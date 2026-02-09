@@ -313,6 +313,15 @@ func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictio
 func RetrieveCharacterInformation(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("RetrieveCharacterInformation", [], peerID)
 
+# Commands
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func CommandFeedback(feedback : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("CommandFeedback", [feedback], peerID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
+func TriggerCommand(command : String, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerCommand", [command], peerID)
+
 # Bulk RPC calls
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func BulkCall(methodName : StringName, bulkedArgs : Array, peerID : int = NetworkCommons.PeerOfflineID):
