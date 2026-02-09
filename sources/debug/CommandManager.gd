@@ -18,7 +18,7 @@ static func Handle(caller : PlayerAgent, commandStr : String):
 	if args.is_empty():
 		Network.CommandFeedback("Invalid command sent", caller.peerID)
 
-	var commandName : String = args.pop_front()
+	var commandName : String = args.pop_front().to_lower()
 	var command : Command = commands.get(commandName, null)
 	var playerPermission : ActorCommons.Permission = Peers.GetPermission(caller.peerID)
 	if not command:
