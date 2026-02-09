@@ -555,4 +555,21 @@
 		"Parent" : "StaticNPC",
 		"Texture": "sprites/npcs/ekiru.png",
 	},
+	"2014": {
+		"Name": "Ekinu",
+		"Parent" : "WalkingNPC",
+		"Equipment": [
+			"Desert Armor",
+			"Guard Cloud Pants",
+			"Leather Boots",
+			"Leather Gloves",
+		],
+		"Stat": {
+			"hairstyle": "Flat Ponytail",
+			"haircolor": "Auburn Brown",
+			"gender": "Male",
+			"race": "Human",
+			"skintone": "Tanned",
+		},
+	},
 }
