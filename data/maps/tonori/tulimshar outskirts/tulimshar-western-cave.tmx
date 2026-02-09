@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="112" height="109" tilewidth="32" tileheight="32" infinite="0" nextlayerid="23" nextobjectid="24">
+ <properties>
+  <property name="ambient" value="CloudLight"/>
+  <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
+  <property name="music" value="Faith"/>
+  <property name="name" value="Tulimshar Western Cave"/>
+ </properties>
+ <tileset firstgid="1" source="../../../graphics/tilesets/tonori/Collision Full.tsx"/>
+ <tileset firstgid="21" source="../../../graphics/tilesets/isles/tropical/Box.tsx"/>
+ <tileset firstgid="57" source="../../../graphics/tilesets/tonori/cave/Cave.tsx"/>
+ <layer id="1" name="Ground" width="112" height="109">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3XS3KDMBBAQc7l+684VbYpF9ZnJDHC7kUvUgkyNc9S4DyO4wQAAAAAAAAAAAAAAACg6PVP9r0Q66bhc3zqpuPeSn00nDff1d2uPsM+nDvjFc1Ka9f2ZPZ8djezX3Qf1c7U7Bntata5teLs0y/WLjKzFftFv7F+PWffqvNOw7F2tdnd8eyo33i/2rOjfvv3y2roDI33a5mffnv3Oy9+bl1v9v1mz20Xvedky/z026PfzDX1u7ffLuuV1s+e3Q6etPf0Wz9v/fL67fZd0G/+LFrf/VbNX7/xfq+L6+96r9BvfBbRd44Z7yrajfWLNChdE10ne3bZ7jjHervpd1+/s3JtqYt++e1K82xtot1+/XrXjjz7ZM8v2139etaY1fkXzJrF+zqrZjzr+/YtVvdbeb/6jTW82msr+/U84/ySyDxqz/z66df6mdnz28GT+o18775V9Fm/1k/DZ/ZbNdur9fTrn3ep36o9+Gk9/eY3jKzX81nRe/4FrfPo7Tcy31q/7JntZqRf69yj7fTqm9fI3/b+vkf2nHYUnVWk30g7Ddvb9ezD2nqz+2k4p9/59jet12t2X7+eczQyb93WN4xcN+Ozs+fyNNn/l3TLaZl9r8Q6Zt8bAAAAAAAAAAAAAAAAZX8vBqstwL4AAA==
+  </data>
+ </layer>
+ <layer id="2" name="Ground 2" width="112" height="109">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BMQEAAADCoPVPbQlPoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeBhmlTDowL4AAA==
+  </data>
+ </layer>
+ <layer id="3" name="Fringe" width="112" height="109">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BMQEAAADCoPVPbQlPoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeBhmlTDowL4AAA==
+  </data>
+ </layer>
+ <layer id="4" name="Over" width="112" height="109">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BMQEAAADCoPVPbQlPoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeBhmlTDowL4AAA==
+  </data>
+ </layer>
+ <layer id="7" name="Over 2" width="112" height="109">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BMQEAAADCoPVPbQlPoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeBhmlTDowL4AAA==
+  </data>
+ </layer>
+ <layer id="5" name="Collision" width="112" height="109">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3Swa7kMAhE0Szy/9/c25blEMAQcHKRzmLexNiq6vM4jhMAAAAAAAAAAAAAAAAAAAAAAAAAIPqf6rfA19v/VL8Lvt7GqX4n5N40nVa/eSdZmWl6kaY6lx1EZyaN9rcT+Z6302S82p3mXOZv6q28eWv2RL6tOqeO7mZlV/T7qrPqSDuePRlvrM6rE+t49kS/tTqzTjxDf314p6LD6H1voB1Nfnfn6a+2v3Pyb+2+6PdW59bF3Xjy0+yhv/z+InfS37P9ddkn7a/OroPovCN30d/zeUfvo7/n8phN5/fuzpPF1bfjZOW/ev5NPFn8fz8b7X3We+kvLgtpMs5d/X6+biW/2XjOePdUZ1dNm9lKlt6hv/z+zpuzs9H2Sn/53Ul5zsbaMd3V9Gfdrf024r1vYc3Y259lR1TPXxCVxbgnK+NxqvOrFpXFuCcr33Gq8+vAm8cxOT/+LbO76P278uQhDf3Rn+XO6vw6sGYhTXZ/K7+7t7JmIU1mtuPOrHt2Y81BmsxsZ/ui79iVJe+7yejval/kHbuzZC6NZ5/lLu+bv0CbhzSa3CP7q86sG03eV6PN3dudd89XWLK6+9b6/5apzqkjb1ZX30l7IqY6r05Wspp9c7cjaqpz62I1p+OQd3nu9L7liyJy856Luv/rvPl5zmTsgK5HzUTcX53DG1im+q3w9Vj9NgAAAAAAAAAAAAAAAAAAAAAAAMh+w1hGdMC+AAA=
+  </data>
+ </layer>
+ <objectgroup id="6" name="Objects">
+  <object id="18" name="To Western Caves" type="Warp" x="1436" y="1416">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Tulimshar Western Hills"/>
+    <property name="dest_pos_x" value="69"/>
+    <property name="dest_pos_y" value="121"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="19" name="To Western Caves" type="Warp" x="2174" y="1128">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Tulimshar Western Hills"/>
+    <property name="dest_pos_x" value="46"/>
+    <property name="dest_pos_y" value="130"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="20" name="To Western Caves" type="Warp" x="2524" y="2184">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Tulimshar Western Hills"/>
+    <property name="dest_pos_x" value="69"/>
+    <property name="dest_pos_y" value="121"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="21" name="To Western Caves" type="Warp" x="1532" y="2376">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_map" value="Tulimshar Beach"/>
+    <property name="dest_pos_x" value="86"/>
+    <property name="dest_pos_y" value="32"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+ </objectgroup>
+</map>
