@@ -5,7 +5,7 @@ var wrongPos : ColorRect					= null
 
 var desyncDebug : bool						= false
 
-#
+# Position mismatch
 func OnPlayerEnterGame():
 	if desyncDebug:
 		assert(Launcher.Player != null, "Debug: Player is not accessible")
@@ -33,6 +33,7 @@ func OnPlayerEnterGame():
 func _post_launch():
 	if not FSM.enter_game.is_connected(OnPlayerEnterGame):
 		FSM.enter_game.connect(OnPlayerEnterGame)
+
 	isInitialized = true
 
 func Destroy():

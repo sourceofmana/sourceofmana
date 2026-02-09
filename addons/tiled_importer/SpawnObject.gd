@@ -1,5 +1,5 @@
 @tool
-extends Object
+extends RefCounted
 class_name SpawnObject
 
 @export var count : int 				= 0
