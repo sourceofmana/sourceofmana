@@ -7,12 +7,14 @@ func RegisterCommands():
 	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.NONE, "warp <map>" )
 	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.NONE, "goto <player>" )
 	CommandManager.Register("godmode", CommandGodmode, ActorCommons.Permission.NONE, "godmode <on/off>" )
+	CommandManager.Register("stat", CommandStat, ActorCommons.Permission.NONE, "stat <entry> <value>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
 	CommandManager.Unregister("warp")
 	CommandManager.Unregister("goto")
 	CommandManager.Unregister("godmode")
+	CommandManager.Unregister("stat")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) -> bool:
@@ -80,3 +82,12 @@ func CommandGodmode(caller : PlayerAgent, value : String):
 		caller.stat.RefreshAttributes()
 		return true
 	return false
+
+#
+func CommandStat(caller : PlayerAgent, entry : String, valueStr : String) -> bool:
+	if not caller or not caller.stat or entry not in caller.stat:
+		return false
+
+	caller.stat[entry] += valueStr.to_float()
+	caller.stat.RefreshAttributes()
+	return true
