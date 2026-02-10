@@ -5,10 +5,12 @@ class_name WorldCommands
 func RegisterCommands():
 	CommandManager.Register("spawn", CommandSpawn, ActorCommons.Permission.NONE, "spawn <mob_name> <count>" )
 	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.NONE, "warp <map>" )
+	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.NONE, "goto <map>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
 	CommandManager.Unregister("warp")
+	CommandManager.Unregister("goto")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) -> bool:
@@ -38,4 +40,18 @@ func CommandWarp(caller : PlayerAgent, mapName : String) -> bool:
 		var mapPos : Vector2 = WorldNavigation.GetRandomPosition(map)
 		Launcher.World.Warp(caller, map, mapPos)
 		return true
+	return false
+
+# Warp the current player to a specific map
+func CommandGoto(caller : PlayerAgent, agentName : String) -> bool:
+	if not caller:
+		return false
+
+	for area in Launcher.World.areas.values():
+		for inst in area.instances:
+			for player in inst.players:
+				if player.nick == agentName:
+					Launcher.World.Warp(caller, area, player.position)
+					return true
+
 	return false
