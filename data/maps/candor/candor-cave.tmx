@@ -574,13 +574,6 @@
    </properties>
    <polygon points="0,0 32,32 64,0 96,-64 96,-80 -32,-80 -32,-64"/>
   </object>
-  <object id="7" name="Elanore" type="Spawn" x="1557" y="1148" width="146" height="128">
-   <properties>
-    <property name="count" type="int" value="1"/>
-    <property name="player_script" value="generic/Default.gd"/>
-    <property name="type" value="Npc"/>
-   </properties>
-  </object>
   <object id="9" name="Warp Overworld" type="Warp" x="1600" y="832">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
