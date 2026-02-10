@@ -5,12 +5,14 @@ class_name WorldCommands
 func RegisterCommands():
 	CommandManager.Register("spawn", CommandSpawn, ActorCommons.Permission.NONE, "spawn <mob_name> <count>" )
 	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.NONE, "warp <map>" )
-	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.NONE, "goto <map>" )
+	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.NONE, "goto <player>" )
+	CommandManager.Register("godmode", CommandGodmode, ActorCommons.Permission.NONE, "godmode <on/off>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
 	CommandManager.Unregister("warp")
 	CommandManager.Unregister("goto")
+	CommandManager.Unregister("godmode")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) -> bool:
@@ -22,7 +24,7 @@ func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) 
 		return false
 
 	var entityID : int = entityName.hash()
-	var entity : EntityData = DB.GetEntity(entityID)
+	var entity : EntityData = DB.EntitiesDB.get(entityID, null)
 	if not entity:
 		return false
 
@@ -54,4 +56,27 @@ func CommandGoto(caller : PlayerAgent, agentName : String) -> bool:
 					Launcher.World.Warp(caller, area, player.position)
 					return true
 
+	return false
+
+#
+var godmodeModifier : StatModifier = null
+func CommandGodmode(caller : PlayerAgent, value : String):
+	if not caller:
+		return false
+
+	if not godmodeModifier:
+		godmodeModifier = StatModifier.new()
+		godmodeModifier._effect = CellCommons.Modifier.DodgeRate
+		godmodeModifier._value = 100000.0
+		godmodeModifier._persistent = true
+
+	if value == "on":
+		caller.stat.modifiers.Remove(godmodeModifier)
+		caller.stat.modifiers.Add(godmodeModifier)
+		caller.stat.RefreshAttributes()
+		return true
+	elif value == "off":
+		caller.stat.modifiers.Remove(godmodeModifier)
+		caller.stat.RefreshAttributes()
+		return true
 	return false
