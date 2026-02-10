@@ -56,9 +56,12 @@ func _input(event : InputEvent):
 		elif Launcher.Action.TryJustPressed(event, "ui_up", true):
 			backlog.Up()
 			lineEdit.text = backlog.Get()
+			lineEdit.set_caret_column(lineEdit.text.length())
+
 		elif Launcher.Action.TryJustPressed(event, "ui_down", true):
 			backlog.Down()
 			lineEdit.text = backlog.Get()
+			lineEdit.set_caret_column(lineEdit.text.length())
 		elif Launcher.Action.TryJustPressed(event, "ui_validate", true):
 			OnNewTextSubmitted(lineEdit.text)
 
