@@ -14,6 +14,18 @@ func _init(callable : Callable, permission : ActorCommons.Permission, descriptio
 
 # Handling
 func Call(caller : PlayerAgent, args : Array) -> bool:
-	if _callable and _callable.get_argument_count() == args.size() + 1:
+	var argCount : int = args.size() + _callable.get_bound_arguments_count() + 1
+	var minArgCount : int = 0
+	var maxArgCount : int = 0
+	var obj : Object = _callable.get_object()
+	var method_name : String = _callable.get_method()
+
+	for method in obj.get_method_list():
+		if method.name == method_name:
+			minArgCount = method.default_args.size()
+			maxArgCount = method.args.size()
+			break
+
+	if _callable and argCount >= minArgCount and argCount <= maxArgCount:
 		return _callable.callv([caller] + args)
 	return false

@@ -5,6 +5,7 @@ class_name StatModifier
 @export var _effect : CellCommons.Modifier	= CellCommons.Modifier.None
 @export var _value : Variant				= 0.0
 @export var _persistent : bool				= false
+var _command : bool							= false
 
 #
 func Parse(data : Array):
@@ -20,3 +21,4 @@ func Parse(data : Array):
 		_effect = data[0]
 		_value = data[1]
 		_persistent = data[2]
+		_command = false

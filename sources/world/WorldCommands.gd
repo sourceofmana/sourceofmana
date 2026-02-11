@@ -8,6 +8,13 @@ func RegisterCommands():
 	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.NONE, "goto <player>" )
 	CommandManager.Register("godmode", CommandGodmode, ActorCommons.Permission.NONE, "godmode <on/off>" )
 	CommandManager.Register("stat", CommandStat, ActorCommons.Permission.NONE, "stat <entry> <value>" )
+	CommandManager.Register("level", CommandSpecificStat.bind("level"), ActorCommons.Permission.NONE, "level <value>" )
+	CommandManager.Register("experience", CommandSpecificStat.bind("experience"), ActorCommons.Permission.NONE, "experience <value>" )
+	CommandManager.Register("gp", CommandSpecificStat.bind("gp"), ActorCommons.Permission.NONE, "gp <value>" )
+	CommandManager.Register("health", CommandSpecificStat.bind("health"), ActorCommons.Permission.NONE, "health <value>" )
+	CommandManager.Register("mana", CommandSpecificStat.bind("mana"), ActorCommons.Permission.NONE, "mana <value>" )
+	CommandManager.Register("stamina", CommandSpecificStat.bind("stamina"), ActorCommons.Permission.NONE, "stamina <value>" )
+	CommandManager.Register("speed", CommandSpecificModifier.bind("WalkSpeed"), ActorCommons.Permission.NONE, "speed <value>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -15,6 +22,13 @@ static func UnregisterCommands():
 	CommandManager.Unregister("goto")
 	CommandManager.Unregister("godmode")
 	CommandManager.Unregister("stat")
+	CommandManager.Unregister("level")
+	CommandManager.Unregister("experience")
+	CommandManager.Unregister("gp")
+	CommandManager.Unregister("health")
+	CommandManager.Unregister("mana")
+	CommandManager.Unregister("stamina")
+	CommandManager.Unregister("speed")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) -> bool:
@@ -34,14 +48,16 @@ func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) 
 	return not spawnedAgents.is_empty()
 
 # Warp the current player to a specific map
-func CommandWarp(caller : PlayerAgent, mapName : String) -> bool:
+func CommandWarp(caller : PlayerAgent, mapName : String, positionXStr : String = "0", positionYStr : String = "0") -> bool:
 	if not caller:
 		return false
 
 	var mapID : int = mapName.hash()
 	var map : WorldMap = Launcher.World.GetMap(mapID)
 	if map:
-		var mapPos : Vector2 = WorldNavigation.GetRandomPosition(map)
+		var mapPos : Vector2i = Vector2i(positionXStr.to_int(), positionYStr.to_int())
+		if mapPos == Vector2i.ZERO:
+			mapPos = WorldNavigation.GetRandomPosition(map)
 		Launcher.World.Warp(caller, map, mapPos)
 		return true
 	return false
@@ -60,31 +76,47 @@ func CommandGoto(caller : PlayerAgent, agentName : String) -> bool:
 
 	return false
 
-#
-var godmodeModifier : StatModifier = null
-func CommandGodmode(caller : PlayerAgent, value : String):
+# Modifiers
+func CommandGodmode(caller : PlayerAgent, toggleStr : String):
 	if not caller:
 		return false
 
-	if not godmodeModifier:
-		godmodeModifier = StatModifier.new()
-		godmodeModifier._effect = CellCommons.Modifier.DodgeRate
-		godmodeModifier._value = 100000.0
-		godmodeModifier._persistent = true
-
-	if value == "on":
-		caller.stat.modifiers.Remove(godmodeModifier)
-		caller.stat.modifiers.Add(godmodeModifier)
-		caller.stat.RefreshAttributes()
-		return true
-	elif value == "off":
-		caller.stat.modifiers.Remove(godmodeModifier)
-		caller.stat.RefreshAttributes()
-		return true
+	if toggleStr == "on":
+		return CommandSpecificModifier(caller, "10000", "DodgeRate")
+	elif toggleStr == "off":
+		return CommandSpecificModifier(caller, "-10000", "DodgeRate")
 	return false
 
-#
+func CommandSpecificModifier(caller : PlayerAgent, valueStr : String, entry : String) -> bool:
+	if not caller or not caller.stat or not caller.stat.modifiers:
+		return false
+
+	var effect : CellCommons.Modifier = CellCommons.Modifier.get(entry, CellCommons.Modifier.None)
+	if effect == CellCommons.Modifier.None:
+		return false
+
+	for modifier in caller.stat.modifiers._modifiers:
+		if modifier._effect == effect and modifier._command:
+			caller.stat.modifiers.Remove(modifier)
+
+	var value : float = valueStr.to_float()
+	Network.CommandModifier(effect, value, caller.peerID)
+	if value > 0.0:
+		var modifier : StatModifier = StatModifier.new()
+		modifier._effect = effect
+		modifier._value = value
+		modifier._persistent = true
+		modifier._command = true
+		caller.stat.modifiers.Add(modifier)
+
+	caller.stat.RefreshAttributes()
+	return true
+
+# Stats
 func CommandStat(caller : PlayerAgent, entry : String, valueStr : String) -> bool:
+	return CommandSpecificStat(caller, valueStr, entry)
+
+func CommandSpecificStat(caller : PlayerAgent, valueStr : String, entry : String) -> bool:
 	if not caller or not caller.stat or entry not in caller.stat:
 		return false
 
