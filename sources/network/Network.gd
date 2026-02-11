@@ -318,6 +318,10 @@ func RetrieveCharacterInformation(peerID : int = NetworkCommons.PeerAuthorityID)
 func CommandFeedback(feedback : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("CommandFeedback", [feedback], peerID)
 
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func CommandModifier(effect : CellCommons.Modifier, value : float, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("CommandModifier", [effect, value], peerID)
+
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func TriggerCommand(command : String, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerCommand", [command], peerID)

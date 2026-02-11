@@ -259,6 +259,24 @@ func CommandFeedback(feedback : String, _peerID : int):
 	if Launcher.GUI and Launcher.GUI.chatContainer:
 		Launcher.GUI.chatContainer.AddSystemText(feedback)
 
+func CommandModifier(effect : CellCommons.Modifier, value : float, _peerID : int):
+	if not Launcher.Player or not Launcher.Player.stat or not Launcher.Player.stat.modifiers:
+		return false
+
+	for modifier in Launcher.Player.stat.modifiers._modifiers:
+		if modifier._effect == effect and modifier._command:
+			Launcher.Player.stat.modifiers.Remove(modifier)
+
+	if value > 0.0:
+		var modifier : StatModifier = StatModifier.new()
+		modifier._effect = effect
+		modifier._value = value
+		modifier._persistent = true
+		modifier._command = true
+		Launcher.Player.stat.modifiers.Add(modifier)
+
+	Launcher.Player.stat.RefreshAttributes()
+
 #
 func ConnectServer():
 	if not isOffline:
