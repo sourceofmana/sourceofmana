@@ -464,6 +464,7 @@
 			"Guard Cloud Pants",
 			"Leather Boots",
 			"Desert Hood",
+			"Scimitar",
 		],
 		"Stat": {
 			"hairstyle": "Center Parting",
@@ -503,6 +504,7 @@
 			"Guard Cloud Pants",
 			"Leather Boots",
 			"Ghutra",
+			"Gladius",
 		],
 		"Stat": {
 			"hairstyle": "Tapered Nape",
@@ -520,6 +522,7 @@
 			"Guard Cloud Pants",
 			"Leather Boots",
 			"Desert Goggles",
+			"Gladius",
 		],
 		"Stat": {
 			"hairstyle": "Pompadour",
@@ -536,6 +539,7 @@
 			"Desert Armor",
 			"Guard Cloud Pants",
 			"Leather Boots",
+			"Scimitar",
 		],
 		"Stat": {
 			"hairstyle": "Imperial",
@@ -551,25 +555,29 @@
 		"Texture": "sprites/npcs/nina.png",
 	},
 	"2013": {
-		"Name": "Ekiru",
+		"Name": "Ekinu",
 		"Parent" : "StaticNPC",
-		"Texture": "sprites/npcs/ekiru.png",
+		"Texture": "sprites/npcs/ekinu.png",
 	},
 	"2014": {
-		"Name": "Ekinu",
-		"Parent" : "WalkingNPC",
+		"Name": "Ryan",
+		"Parent" : "NPC",
+		"SpritePreset": "Player",
+		"Behaviour": ["Immobile", "Pacifist"],
 		"Equipment": [
 			"Desert Armor",
 			"Guard Cloud Pants",
 			"Leather Boots",
 			"Leather Gloves",
+			"Bandana Scarf",
+			"Bone Knife",
 		],
 		"Stat": {
-			"hairstyle": "Flat Ponytail",
-			"haircolor": "Auburn Brown",
+			"hairstyle": "Tapered Nape",
+			"haircolor": "Golden Blonde",
 			"gender": "Male",
 			"race": "Human",
-			"skintone": "Tanned",
+			"skintone": "Dark",
 		},
 	},
 }

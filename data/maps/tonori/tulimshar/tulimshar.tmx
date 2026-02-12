@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="59">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="61">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -244,7 +244,7 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="45" name="Ekinu" type="Spawn" x="1736" y="2562" width="20" height="18">
+  <object id="45" name="Ekinu" type="Spawn" x="1880" y="2837" width="20" height="18">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
@@ -282,14 +282,21 @@
    </properties>
    <polygon points="11,24 27,8 58,8 73,24 58,42 25,42"/>
   </object>
-  <object id="56" name="Elanore" type="Spawn" x="2172" y="2497" width="18" height="18">
+  <object id="56" name="Elanore" type="Spawn" x="2189" y="2486" width="18" height="18">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="57" name="Nina" type="Spawn" x="1496" y="2563" width="20" height="18">
+  <object id="57" name="Nina" type="Spawn" x="1601" y="2432" width="20" height="18">
+   <properties>
+    <property name="count" type="int" value="1"/>
+    <property name="player_script" value="generic/Default.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="60" name="Ryan" type="Spawn" x="1660" y="2837" width="19" height="18">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
