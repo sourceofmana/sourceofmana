@@ -100,3 +100,22 @@ static func Warp(caller : BaseAgent, mapID : int, position : Vector2):
 		var map : WorldMap = Launcher.World.GetMap(mapID)
 		if map:
 			Launcher.World.Warp(caller, map, position)
+
+# Progress
+static func SetQuest(caller : BaseAgent, questID : int, state : int):
+	if caller is PlayerAgent and caller.progress:
+		var questData : QuestData = DB.GetQuest(questID)
+		if not questData:
+			return
+
+		if caller.progress.GetQuest(questID) == ProgressCommons.UnknownProgress:
+			PushNotification(caller, "Quest Started: " + questData.name)
+		caller.progress.SetQuest(questID, state)
+		if state == ProgressCommons.CompletedProgress:
+			PushNotification(caller, "Quest Completed: " + questData.name)
+
+static func AddBestiary(caller : BaseAgent, monsterID : int, count : int):
+	if caller is PlayerAgent and caller.progress:
+		var entityData : EntityData = DB.GetEntity(monsterID)
+		if entityData:
+			caller.progress.AddBestiary(monsterID, count)

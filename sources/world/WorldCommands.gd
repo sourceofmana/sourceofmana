@@ -17,6 +17,8 @@ func RegisterCommands():
 	CommandManager.Register("speed", CommandSpecificModifier.bind("WalkSpeed"), ActorCommons.Permission.NONE, "speed <value>" )
 	CommandManager.Register("localbroadcast", CommandLocalBroadcast, ActorCommons.Permission.NONE, "localbroadcast <text>" )
 	CommandManager.Register("broadcast", CommandBroadcast, ActorCommons.Permission.NONE, "broadcast <text>" )
+	CommandManager.Register("quest", CommandQuest, ActorCommons.Permission.NONE, "quest <name> <state>" )
+	CommandManager.Register("bestiary", CommandBestiary, ActorCommons.Permission.NONE, "bestiary <name> <state>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -31,6 +33,10 @@ static func UnregisterCommands():
 	CommandManager.Unregister("mana")
 	CommandManager.Unregister("stamina")
 	CommandManager.Unregister("speed")
+	CommandManager.Unregister("localbroadcast")
+	CommandManager.Unregister("broadcast")
+	CommandManager.Unregister("quest")
+	CommandManager.Unregister("bestiary")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) -> bool:
@@ -146,4 +152,23 @@ func CommandBroadcast(caller : PlayerAgent, text : String) -> bool:
 		var area = Launcher.World.areas[areaIdx]
 		for inst in area.instances:
 			Network.NotifyGlobal("PushNotification", [text])
+	return true
+
+# Progress
+func CommandQuest(caller : PlayerAgent, questStr : String, stateStr : String) -> bool:
+	if not caller and caller.progress:
+		return false
+
+	var questID : int = questStr.hash()
+	var state : int = stateStr.to_int()
+	NpcCommons.SetQuest(caller, questID, state)
+	return true
+
+func CommandBestiary(caller : PlayerAgent, monsterName : String, countStr : String) -> bool:
+	if not caller and caller.progress:
+		return false
+
+	var monsterID : int = monsterName.hash()
+	var count : int = countStr.to_int()
+	NpcCommons.AddBestiary(caller, monsterID, count)
 	return true
