@@ -369,6 +369,15 @@ func NotifyInstance(inst : WorldInstance, callbackName : StringName, args : Arra
 				if player.peerID != NetworkCommons.PeerUnknownID:
 					Network.callv(callbackName, args + [player.peerID])
 
+func NotifyArea(area : WorldMap, callbackName : StringName, args : Array):
+	for inst in area.instances:
+		NotifyInstance(inst, callbackName, args)
+
+func NotifyGlobal(callbackName : StringName, args : Array):
+	for areaIdx in Launcher.World.areas:
+		var area = Launcher.World.areas[areaIdx]
+		NotifyArea(area, callbackName, args)
+
 # Peer calls
 func CallServer(methodName : StringName, args : Array, peerID : int, actionDelta : int = NetworkCommons.DelayDefault) -> bool:
 	if not Peers.Footprint(peerID, methodName, actionDelta):

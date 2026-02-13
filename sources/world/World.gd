@@ -103,7 +103,8 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 
 # Generic
 func BackupPlayers():
-	for area in areas.values():
+	for areaIdx in areas:
+		var area = areas[areaIdx]
 		for inst in area.instances:
 			for player in inst.players:
 				Launcher.SQL.RefreshCharacter(player)
@@ -116,6 +117,6 @@ func _post_launch():
 	isInitialized = true
 
 func Destroy():
-	for area in areas.values():
-		area.Destroy()
+	for areaIdx in areas:
+		areas[areaIdx].Destroy()
 	areas.clear()

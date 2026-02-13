@@ -4,7 +4,7 @@ class_name WorldCommands
 # Command constructor and destructor
 func RegisterCommands():
 	CommandManager.Register("spawn", CommandSpawn, ActorCommons.Permission.NONE, "spawn <mob_name> <count>" )
-	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.NONE, "warp <map>" )
+	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.NONE, "warp <map> <posX> <posY>" )
 	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.NONE, "goto <player>" )
 	CommandManager.Register("godmode", CommandGodmode, ActorCommons.Permission.NONE, "godmode <on/off>" )
 	CommandManager.Register("stat", CommandStat, ActorCommons.Permission.NONE, "stat <entry> <value>" )
@@ -15,6 +15,8 @@ func RegisterCommands():
 	CommandManager.Register("mana", CommandSpecificStat.bind("mana"), ActorCommons.Permission.NONE, "mana <value>" )
 	CommandManager.Register("stamina", CommandSpecificStat.bind("stamina"), ActorCommons.Permission.NONE, "stamina <value>" )
 	CommandManager.Register("speed", CommandSpecificModifier.bind("WalkSpeed"), ActorCommons.Permission.NONE, "speed <value>" )
+	CommandManager.Register("localbroadcast", CommandLocalBroadcast, ActorCommons.Permission.NONE, "localbroadcast <text>" )
+	CommandManager.Register("broadcast", CommandBroadcast, ActorCommons.Permission.NONE, "broadcast <text>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -67,7 +69,8 @@ func CommandGoto(caller : PlayerAgent, agentName : String) -> bool:
 	if not caller:
 		return false
 
-	for area in Launcher.World.areas.values():
+	for areaIdx in Launcher.World.areas:
+		var area = Launcher.World.areas[areaIdx]
 		for inst in area.instances:
 			for player in inst.players:
 				if player.nick == agentName:
@@ -122,4 +125,25 @@ func CommandSpecificStat(caller : PlayerAgent, valueStr : String, entry : String
 
 	caller.stat[entry] += valueStr.to_float()
 	caller.stat.RefreshAttributes()
+	return true
+
+# Broadcast
+func CommandLocalBroadcast(caller : PlayerAgent, text : String) -> bool:
+	if not caller:
+		return false
+
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(caller)
+	if inst:
+		Network.NotifyInstance(inst, "PushNotification", [text])
+		return true
+	return false
+
+func CommandBroadcast(caller : PlayerAgent, text : String) -> bool:
+	if not caller:
+		return false
+
+	for areaIdx in Launcher.World.areas:
+		var area = Launcher.World.areas[areaIdx]
+		for inst in area.instances:
+			Network.NotifyGlobal("PushNotification", [text])
 	return true
