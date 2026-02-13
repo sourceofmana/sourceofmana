@@ -26,6 +26,9 @@ func Call(caller : PlayerAgent, args : Array) -> bool:
 			maxArgCount = method.args.size()
 			break
 
-	if _callable and argCount >= minArgCount and argCount <= maxArgCount:
-		return _callable.callv([caller] + args)
+	if _callable:
+		if argCount >= minArgCount and argCount <= maxArgCount:
+			return _callable.callv([caller] + args)
+		else:
+			return _callable.call(caller, " ".join(args))
 	return false
