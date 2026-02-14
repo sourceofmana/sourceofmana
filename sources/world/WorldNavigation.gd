@@ -38,7 +38,7 @@ static func GetDistanceSquared(agent : BaseAgent, pos : Vector2) -> float:
 static func GetRandomPosition(map : WorldMap) -> Vector2i:
 	assert(map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0, "No triangulation available")
 	if map != null && map.navPoly != null && map.navPoly.get_polygon_count() > 0:
-		return NavigationServer2D.map_get_random_point(map.mapRID, 1, false)
+		return NavigationServer2D.region_get_random_point(map.regionRID, 1, false)
 	assert(false, "Mob could not be spawned, no available point on the navigation mesh were found")
 	return Vector2i.ZERO
 
@@ -50,7 +50,7 @@ static func GetRandomPositionAABB(map : WorldMap, pos : Vector2i, offset : Vecto
 			randPoint += pos
 
 			if NavigationServer2D.region_owns_point(map.regionRID, randPoint):
-				return randPoint
+				return NavigationServer2D.region_get_closest_point(map.regionRID, randPoint)
 
 		return GetRandomPosition(map)
 	return Vector2i.ZERO
