@@ -26,7 +26,7 @@ static func Handle(caller : PlayerAgent, commandStr : String):
 	elif command._permission > playerPermission:
 		Network.CommandFeedback("Command '%s' could not be called due to unmet permissions" % commandName, caller.peerID)
 	else:
-		if args.is_empty() or args[0] == "?":
+		if not args.is_empty() and args[0] == "?":
 			Network.CommandFeedback("Command usage: %s" % command._description, caller.peerID)
 		elif not command.Call(caller, args):
 			Network.CommandFeedback("Command '%s' could not be called due to incorrect arguments" % commandName, caller.peerID)

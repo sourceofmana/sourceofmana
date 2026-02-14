@@ -20,6 +20,9 @@ func RegisterCommands():
 	CommandManager.Register("quest", CommandQuest, ActorCommons.Permission.NONE, "quest <name> <state>" )
 	CommandManager.Register("bestiary", CommandBestiary, ActorCommons.Permission.NONE, "bestiary <name> <state>" )
 	CommandManager.Register("item", CommandItem, ActorCommons.Permission.NONE, "item <name> <count> <custom>" )
+	CommandManager.Register("killall", CommandKillAll, ActorCommons.Permission.NONE, "killall <filter>" )
+	CommandManager.Register("kill", CommandKill, ActorCommons.Permission.NONE, "kill <nick>" )
+	CommandManager.Register("revive", CommandRevive, ActorCommons.Permission.NONE, "revive <nick>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -39,6 +42,9 @@ static func UnregisterCommands():
 	CommandManager.Unregister("quest")
 	CommandManager.Unregister("bestiary")
 	CommandManager.Unregister("item")
+	CommandManager.Unregister("killall")
+	CommandManager.Unregister("kill")
+	CommandManager.Unregister("revive")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) -> bool:
@@ -186,4 +192,40 @@ func CommandItem(caller : PlayerAgent, itemName : String, countStr : String = "1
 		return NpcCommons.AddItem(caller, itemID, count, customField)
 	elif count < 0:
 		return NpcCommons.RemoveItem(caller, itemID, -count, customField)
+	return false
+
+# Death
+func CommandKillAll(caller : PlayerAgent, filter : String = "") -> bool:
+	if not caller:
+		return false
+
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(caller)
+	if inst:
+		for mob in inst.mobs:
+			if mob and (filter.is_empty() or mob.nick == filter):
+				mob.Kill()
+	return true
+
+func CommandKill(caller : PlayerAgent, nick : String) -> bool:
+	if not caller:
+		return false
+
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(caller)
+	if inst:
+		for player in inst.players:
+			if player and player.nick == nick:
+				player.Kill()
+				return true
+	return false
+
+func CommandRevive(caller : PlayerAgent, nick : String) -> bool:
+	if not caller:
+		return false
+
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(caller)
+	if inst:
+		for player in inst.players:
+			if player and player.nick == nick:
+				player.Revive()
+				return true
 	return false

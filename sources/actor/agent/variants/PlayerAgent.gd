@@ -138,9 +138,7 @@ func _exit_tree():
 
 #
 func Respawn():
-	if not ActorCommons.IsAlive(self):
-		stat.health  = int(stat.current.maxHealth / 2.0)
-		state = ActorCommons.State.IDLE
+	if Revive():
 		WarpTo(respawnDestination)
 
 func Explore():

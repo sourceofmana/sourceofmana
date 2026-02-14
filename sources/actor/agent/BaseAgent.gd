@@ -150,9 +150,20 @@ func GetNextShapeID() -> int:
 func GetNextPortShapeID() -> int:
 	return stat.spirit if stat.IsSailing() else DB.ShipHash
 
+# Death
 func Killed():
 	agent_killed.emit(self)
 	SetSkillCastID(DB.UnknownHash)
+
+func Kill():
+	stat.SetHealth(-stat.current.maxHealth)
+
+func Revive() -> bool:
+	if not ActorCommons.IsAlive(self):
+		stat.SetHealth(int(stat.current.maxHealth / 2.0))
+		state = ActorCommons.State.IDLE
+		return true
+	return false
 
 #
 func _enter_tree():
