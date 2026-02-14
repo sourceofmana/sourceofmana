@@ -43,6 +43,7 @@ func PopItem(cell : ItemCell, count : int) -> bool:
 		return false
 
 	var toRemove : Array[Item] = []
+	var toRemoveCount : int = 0
 	for item in items:
 		if CellCommons.IsSameItem(cell, item):
 			if cell.stackable:
@@ -55,9 +56,11 @@ func PopItem(cell : ItemCell, count : int) -> bool:
 					return false
 			else:
 				toRemove.append(item)
-				break
+				toRemoveCount += 1
+				if toRemoveCount == count:
+					break
 
-	if not cell.stackable and toRemove.size() == count:
+	if not cell.stackable and toRemoveCount == count:
 		for item in toRemove:
 			UnequipItem(cell)
 			items.erase(item)
@@ -126,7 +129,7 @@ func EquipItem(cell : ItemCell):
 			Network.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, true])
 
 func UnequipItem(cell : ItemCell):
-	if cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and equipment[cell.slot] == cell and actor:
+	if actor and cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and CellCommons.IsSameCell(equipment[cell.slot], cell):
 		if cell and cell.modifiers:
 			cell.modifiers.Unequip(actor)
 		equipment[cell.slot] = null

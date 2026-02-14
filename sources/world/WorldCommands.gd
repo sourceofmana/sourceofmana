@@ -19,6 +19,7 @@ func RegisterCommands():
 	CommandManager.Register("broadcast", CommandBroadcast, ActorCommons.Permission.NONE, "broadcast <text>" )
 	CommandManager.Register("quest", CommandQuest, ActorCommons.Permission.NONE, "quest <name> <state>" )
 	CommandManager.Register("bestiary", CommandBestiary, ActorCommons.Permission.NONE, "bestiary <name> <state>" )
+	CommandManager.Register("item", CommandItem, ActorCommons.Permission.NONE, "item <name> <count> <custom>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -37,6 +38,7 @@ static func UnregisterCommands():
 	CommandManager.Unregister("broadcast")
 	CommandManager.Unregister("quest")
 	CommandManager.Unregister("bestiary")
+	CommandManager.Unregister("item")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) -> bool:
@@ -156,7 +158,7 @@ func CommandBroadcast(caller : PlayerAgent, text : String) -> bool:
 
 # Progress
 func CommandQuest(caller : PlayerAgent, questStr : String, stateStr : String) -> bool:
-	if not caller and caller.progress:
+	if not caller or not caller.progress:
 		return false
 
 	var questID : int = questStr.hash()
@@ -165,10 +167,23 @@ func CommandQuest(caller : PlayerAgent, questStr : String, stateStr : String) ->
 	return true
 
 func CommandBestiary(caller : PlayerAgent, monsterName : String, countStr : String) -> bool:
-	if not caller and caller.progress:
+	if not caller or not caller.progress:
 		return false
 
 	var monsterID : int = monsterName.hash()
 	var count : int = countStr.to_int()
 	NpcCommons.AddBestiary(caller, monsterID, count)
 	return true
+
+# Inventory
+func CommandItem(caller : PlayerAgent, itemName : String, countStr : String = "1", customField : String = "") -> bool:
+	if not caller or not caller.progress or not DB.HasCellHash(itemName):
+		return false
+
+	var itemID : int = itemName.hash()
+	var count : int = countStr.to_int()
+	if count > 0:
+		return NpcCommons.AddItem(caller, itemID, count, customField)
+	elif count < 0:
+		return NpcCommons.RemoveItem(caller, itemID, -count, customField)
+	return false

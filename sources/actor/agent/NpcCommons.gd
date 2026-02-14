@@ -119,3 +119,18 @@ static func AddBestiary(caller : BaseAgent, monsterID : int, count : int):
 		var entityData : EntityData = DB.GetEntity(monsterID)
 		if entityData:
 			caller.progress.AddBestiary(monsterID, count)
+
+# Inventory
+static func AddItem(caller : BaseAgent, itemID : int, count : int = 1, customfield : String = "") -> bool:
+	if caller is PlayerAgent and caller.inventory:
+		var cell : ItemCell = DB.GetItem(itemID, customfield)
+		if cell:
+			return caller.inventory.AddItem(cell, count)
+	return false
+
+static func RemoveItem(caller : BaseAgent, itemID : int, count : int = 1, customfield : String = "") -> bool:
+	if caller is PlayerAgent and caller.inventory:
+		var cell : ItemCell = DB.GetItem(itemID, customfield)
+		if cell:
+			return caller.inventory.RemoveItem(cell, count)
+	return false

@@ -187,17 +187,11 @@ func HasItemsSpace(items : Array) -> bool:
 func HasSpace(itemCount : int) -> bool:
 	return own.inventory.HasSpace(itemCount) if own is PlayerAgent else false
 
-func AddItem(itemID : int, count : int = 1) -> bool:
-	if own is PlayerAgent:
-		var cell : ItemCell = DB.GetItem(itemID)
-		return own.inventory.AddItem(cell, count) if cell else false
-	return false
+func AddItem(itemID : int, count : int = 1, customfield : String = "") -> bool:
+	return NpcCommons.AddItem(own, itemID, count, customfield)
 
-func RemoveItem(itemID : int, count : int = 1) -> bool:
-	if own is PlayerAgent:
-		var cell : ItemCell = DB.GetItem(itemID)
-		return own.inventory.RemoveItem(cell, count) if cell else false
-	return false
+func RemoveItem(itemID : int, count : int = 1, customfield : String = "") -> bool:
+	return NpcCommons.AddItem(own, itemID, count, customfield)
 
 # Money & Experience
 func AddExp(value : int):
