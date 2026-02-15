@@ -23,7 +23,7 @@ static func Handle(caller : PlayerAgent, commandStr : String):
 	var playerPermission : ActorCommons.Permission = Peers.GetPermission(caller.peerID)
 	if not command:
 		Network.CommandFeedback("Command '%s' is not registered" % commandName, caller.peerID)
-	elif command._permission > playerPermission:
+	elif not OS.is_debug_build() and command._permission > playerPermission:
 		Network.CommandFeedback("Command '%s' could not be called due to unmet permissions" % commandName, caller.peerID)
 	else:
 		if not args.is_empty() and args[0] == "?":

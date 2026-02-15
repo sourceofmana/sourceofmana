@@ -393,7 +393,7 @@ func _post_launch():
 	else:
 		db = SQLite.new()
 	db.path = dbPath
-	db.verbosity_level = SQLite.VERBOSE if Launcher.Debug else SQLite.NORMAL
+	db.verbosity_level = SQLite.VERBOSE if OS.is_debug_build() else SQLite.NORMAL
 
 	if not db.open_db():
 		assert(false, "Failed to open database: "+ db.error_message)
