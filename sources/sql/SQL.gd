@@ -56,8 +56,8 @@ func RemoveAccount(accountID : int) -> bool:
 func HasAccount(username : String) -> bool:
 	return not QueryBindings("SELECT account_id FROM account WHERE username = ?;", [username]).is_empty()
 
-func Login(username : String, triedPassword : String) -> int:
-	var results : Array[Dictionary] = QueryBindings("SELECT account_id, password, password_salt FROM account WHERE username = ?;", [username])
+func Login(username : String, triedPassword : String) -> Peers.AccountData:
+	var results : Array[Dictionary] = QueryBindings("SELECT account_id, password, password_salt, permission FROM account WHERE username = ?;", [username])
 	assert(results.size() <= 1, "Duplicated account row")
 	if not results.is_empty():
 		var salt = results[0].get("password_salt", null)
@@ -66,8 +66,11 @@ func Login(username : String, triedPassword : String) -> int:
 		if salt and correctPassword and accountID and salt is String and correctPassword is String and accountID is int:
 			var hashedTriedPassword : String = Hasher.HashPassword(triedPassword, salt)
 			if hashedTriedPassword == correctPassword:
-				return accountID
-	return NetworkCommons.PeerUnknownID
+				var permission = results[0].get("permission", null)
+				if not permission:
+					permission = ActorCommons.Permission.NONE
+				return Peers.AccountData.new(accountID, permission)
+	return null
 
 func UpdateAccount(accountID : int) -> bool:
 	var newTimestamp : int = SQLCommons.Timestamp()

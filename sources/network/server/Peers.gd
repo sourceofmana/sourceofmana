@@ -2,32 +2,53 @@ extends RefCounted
 class_name Peers
 
 #
-class Peer:
-	var peerID : int								= NetworkCommons.PeerUnknownID
+static var DisconnectedAccount : AccountData = AccountData.new(NetworkCommons.PeerUnknownID, ActorCommons.Permission.NONE)
+
+#
+class AccountData:
+	extends RefCounted
+
 	var accountID : int								= NetworkCommons.PeerUnknownID
+	var permission : ActorCommons.Permission		= ActorCommons.Permission.NONE
+
+	func _init(id : int, newPermission : ActorCommons.Permission):
+		accountID = id
+		permission = newPermission
+
+class Peer:
+	extends RefCounted
+
+	var accountID : int								= NetworkCommons.PeerUnknownID
+	var peerID : int								= NetworkCommons.PeerUnknownID
 	var characterID : int							= NetworkCommons.PeerUnknownID
 	var agentRID : int								= NetworkCommons.PeerUnknownID
 	var permission : ActorCommons.Permission		= ActorCommons.Permission.NONE
+	var accountData : AccountData					= null
 	var usingWebSocket : bool						= false
 	var rpcDeltas : Dictionary[StringName, int]		= {}
 
-	func _init(_peerID : int, _usingWebSocket : bool):
-		peerID = _peerID
-		usingWebSocket = _usingWebSocket
+	func _init(id : int, useWebSocket : bool):
+		peerID = id
+		usingWebSocket = useWebSocket
 
-	func SetAccount(id : int):
-		if id != NetworkCommons.PeerUnknownID:
-			var lastPeerID = Peers.accounts.get(id, NetworkCommons.PeerUnknownID)
+	func SetAccount(data : AccountData):
+		if accountID != NetworkCommons.PeerUnknownID:
+			var lastPeerID = Peers.accounts.get(data.accountID, NetworkCommons.PeerUnknownID)
 			if lastPeerID != NetworkCommons.PeerUnknownID and Peers.GetAccount(lastPeerID) != NetworkCommons.PeerUnknownID:
 				Network.DisconnectAccount(lastPeerID)
-				Network.AuthError(NetworkCommons.AuthError.ERR_DUPLICATE_CONNECTION, lastPeerID)
-
-		accountID = id
-		Peers.accounts[id] = peerID
+				if data.accountID == lastPeerID:
+					Network.AuthError(NetworkCommons.AuthError.ERR_DUPLICATE_CONNECTION, lastPeerID)
+			Peers.accounts[data.accountID] = NetworkCommons.PeerUnknownID
+		if data:
+			Peers.accounts[data.accountID] = peerID
+		accountID = data.accountID
+		permission = data.permission
 		Network.online_accounts_update.emit()
+
 	func SetCharacter(id : int):
 		characterID = id
 		Network.online_characters_update.emit()
+
 	func SetAgent(id : int):
 		agentRID = id
 		Network.online_agents_update.emit()

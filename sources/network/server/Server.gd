@@ -39,7 +39,7 @@ func DisconnectAccount(peerID : int):
 	if peer:
 		if peer.accountID != NetworkCommons.PeerUnknownID:
 			Launcher.SQL.UpdateAccount(peer.accountID)
-			peer.SetAccount(NetworkCommons.PeerUnknownID)
+			peer.SetAccount(Peers.DisconnectedAccount)
 		if peer.characterID != NetworkCommons.PeerUnknownID:
 			DisconnectCharacter(peerID)
 

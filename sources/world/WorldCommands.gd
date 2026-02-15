@@ -3,26 +3,26 @@ class_name WorldCommands
 
 # Command constructor and destructor
 func RegisterCommands():
-	CommandManager.Register("spawn", CommandSpawn, ActorCommons.Permission.NONE, "spawn <mob_name> <count>" )
-	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.NONE, "warp <map> <posX> <posY>" )
-	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.NONE, "goto <player>" )
-	CommandManager.Register("godmode", CommandGodmode, ActorCommons.Permission.NONE, "godmode <on/off>" )
-	CommandManager.Register("stat", CommandStat, ActorCommons.Permission.NONE, "stat <entry> <value>" )
-	CommandManager.Register("level", CommandSpecificStat.bind("level"), ActorCommons.Permission.NONE, "level <value>" )
-	CommandManager.Register("experience", CommandSpecificStat.bind("experience"), ActorCommons.Permission.NONE, "experience <value>" )
-	CommandManager.Register("gp", CommandSpecificStat.bind("gp"), ActorCommons.Permission.NONE, "gp <value>" )
-	CommandManager.Register("health", CommandSpecificStat.bind("health"), ActorCommons.Permission.NONE, "health <value>" )
-	CommandManager.Register("mana", CommandSpecificStat.bind("mana"), ActorCommons.Permission.NONE, "mana <value>" )
-	CommandManager.Register("stamina", CommandSpecificStat.bind("stamina"), ActorCommons.Permission.NONE, "stamina <value>" )
-	CommandManager.Register("speed", CommandSpecificModifier.bind("WalkSpeed"), ActorCommons.Permission.NONE, "speed <value>" )
-	CommandManager.Register("localbroadcast", CommandLocalBroadcast, ActorCommons.Permission.NONE, "localbroadcast <text>" )
-	CommandManager.Register("broadcast", CommandBroadcast, ActorCommons.Permission.NONE, "broadcast <text>" )
-	CommandManager.Register("quest", CommandQuest, ActorCommons.Permission.NONE, "quest <name> <state>" )
-	CommandManager.Register("bestiary", CommandBestiary, ActorCommons.Permission.NONE, "bestiary <name> <state>" )
-	CommandManager.Register("item", CommandItem, ActorCommons.Permission.NONE, "item <name> <count> <custom>" )
-	CommandManager.Register("killall", CommandKillAll, ActorCommons.Permission.NONE, "killall <filter>" )
-	CommandManager.Register("kill", CommandKill, ActorCommons.Permission.NONE, "kill <nick>" )
-	CommandManager.Register("revive", CommandRevive, ActorCommons.Permission.NONE, "revive <nick>" )
+	CommandManager.Register("spawn", CommandSpawn, ActorCommons.Permission.GM, "spawn <mob_name> <count>" )
+	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.MODERATOR, "warp <map> <posX> <posY>" )
+	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.MODERATOR, "goto <player>" )
+	CommandManager.Register("godmode", CommandGodmode, ActorCommons.Permission.MODERATOR, "godmode <on/off>" )
+	CommandManager.Register("stat", CommandStat, ActorCommons.Permission.ADMIN, "stat <entry> <value>" )
+	CommandManager.Register("level", CommandSpecificStat.bind("level"), ActorCommons.Permission.ADMIN, "level <value>" )
+	CommandManager.Register("experience", CommandSpecificStat.bind("experience"), ActorCommons.Permission.ADMIN, "experience <value>" )
+	CommandManager.Register("gp", CommandSpecificStat.bind("gp"), ActorCommons.Permission.GM, "gp <value>" )
+	CommandManager.Register("health", CommandSpecificStat.bind("health"), ActorCommons.Permission.MODERATOR, "health <value>" )
+	CommandManager.Register("mana", CommandSpecificStat.bind("mana"), ActorCommons.Permission.MODERATOR, "mana <value>" )
+	CommandManager.Register("stamina", CommandSpecificStat.bind("stamina"), ActorCommons.Permission.MODERATOR, "stamina <value>" )
+	CommandManager.Register("speed", CommandSpecificModifier.bind("WalkSpeed"), ActorCommons.Permission.ADMIN, "speed <value>" )
+	CommandManager.Register("localbroadcast", CommandLocalBroadcast, ActorCommons.Permission.MODERATOR, "localbroadcast <text>" )
+	CommandManager.Register("broadcast", CommandBroadcast, ActorCommons.Permission.MODERATOR, "broadcast <text>" )
+	CommandManager.Register("quest", CommandQuest, ActorCommons.Permission.ADMIN, "quest <name> <state>" )
+	CommandManager.Register("bestiary", CommandBestiary, ActorCommons.Permission.ADMIN, "bestiary <name> <state>" )
+	CommandManager.Register("item", CommandItem, ActorCommons.Permission.GM, "item <name> <count> <custom>" )
+	CommandManager.Register("killall", CommandKillAll, ActorCommons.Permission.ADMIN, "killall <filter>" )
+	CommandManager.Register("kill", CommandKill, ActorCommons.Permission.MODERATOR, "kill <nick>" )
+	CommandManager.Register("revive", CommandRevive, ActorCommons.Permission.MODERATOR, "revive <nick>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -47,7 +47,7 @@ static func UnregisterCommands():
 	CommandManager.Unregister("revive")
 
 # Spawn 'x' times a specific monster near the calling player
-func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String) -> bool:
+func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String = "1") -> bool:
 	if not caller:
 		return false
 
