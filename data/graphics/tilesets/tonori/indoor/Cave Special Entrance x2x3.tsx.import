@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+uid="uid://qrwi3dd6kj2e"
+path="res://.godot/imported/Cave Special Entrance x2x3.tsx-31e34e664b6c398b16dcda74e4d69d62.res"
+
+[deps]
+
+source_file="res://data/graphics/tilesets/tonori/indoor/Cave Special Entrance x2x3.tsx"
+dest_files=["res://.godot/imported/Cave Special Entrance x2x3.tsx-31e34e664b6c398b16dcda74e4d69d62.res"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""
