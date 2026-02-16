@@ -1,6 +1,7 @@
 # The MIT License (MIT)
 #
 # Copyright (c) 2018 George Marques
+# Copyright (c) 2021 - 2026 Source of Mana
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -232,8 +233,7 @@ func build_navigation(options) -> Node2D:
 	nav_region.navigation_polygon.add_outline(PackedVector2Array([Vector2(map_boundaries.position.x, map_boundaries.position.y), Vector2(map_boundaries.position.x, map_boundaries.end.y), Vector2(map_boundaries.end.x, map_boundaries.end.y), Vector2(map_boundaries.end.x, map_boundaries.position.y)]))
 	nav_region.navigation_polygon.set_agent_radius(10 if cell_size.y == 32 else 4)
 
-	if options.export_navigation_mesh:
-		NavigationServer2D.bake_from_source_geometry_data(nav_region.navigation_polygon, source_data)
+	NavigationServer2D.bake_from_source_geometry_data(nav_region.navigation_polygon, source_data)
 
 	return nav_region
 
@@ -425,7 +425,8 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 
 				layer.set_cell(cell, tileDic[gid][0], tileDic[gid][1])
 				add_specific_nodes(parent, cell_in_map, gid)
-				fill_polygon_pool(tileset, cell_in_map, gid)
+				if not options.collision_v2 or tmxLayer.name == "Collision":
+					fill_polygon_pool(tileset, cell_in_map, gid)
 
 				count += 1
 

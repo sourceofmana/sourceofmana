@@ -1,6 +1,7 @@
 # The MIT License (MIT)
 #
 # Copyright (c) 2018 George Marques
+# Copyright (c) 2021 - 2026 Source of Mana
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -86,8 +87,8 @@ func _get_import_options(path, preset):
 			"default_value": true
 		},
 		{
-			"name": "export_navigation_mesh",
-			"default_value": true
+			"name": "collision_v2",
+			"default_value": false
 		},
 		{
 			"name": "export_global_scene",
