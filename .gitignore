@@ -7,7 +7,6 @@ publishing/*
 # imported files
 .godot/*
 presets/maps/*
-*.tmx.import
 
 # addons
 ~*.dll

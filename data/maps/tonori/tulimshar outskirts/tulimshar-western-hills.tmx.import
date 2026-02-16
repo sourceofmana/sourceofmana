@@ -1,0 +1,23 @@
+[remap]
+
+importer="vnen.tiled_importer"
+type="PackedScene"
+uid="uid://rw0a6opk707p"
+path="res://.godot/imported/tulimshar-western-hills.tmx-66c366bff3580d91b7f5d21edf524819.scn"
+
+[deps]
+
+source_file="res://data/maps/tonori/tulimshar outskirts/tulimshar-western-hills.tmx"
+dest_files=["res://.godot/imported/tulimshar-western-hills.tmx-66c366bff3580d91b7f5d21edf524819.scn"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+uv_clip=true
+collision_layer=1
+embed_internal_images=false
+save_tiled_properties=false
+add_background=true
+collision_v2=true
+export_global_scene=false

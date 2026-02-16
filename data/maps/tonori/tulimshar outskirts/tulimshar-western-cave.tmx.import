@@ -1,0 +1,23 @@
+[remap]
+
+importer="vnen.tiled_importer"
+type="PackedScene"
+uid="uid://6ksmnc1dujr1"
+path="res://.godot/imported/tulimshar-western-cave.tmx-b24df0b583b92a562ff55e1e9bdaef8a.scn"
+
+[deps]
+
+source_file="res://data/maps/tonori/tulimshar outskirts/tulimshar-western-cave.tmx"
+dest_files=["res://.godot/imported/tulimshar-western-cave.tmx-b24df0b583b92a562ff55e1e9bdaef8a.scn"]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+uv_clip=true
+collision_layer=1
+embed_internal_images=false
+save_tiled_properties=false
+add_background=true
+collision_v2=true
+export_global_scene=false
