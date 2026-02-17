@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="61">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="62">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -301,6 +301,12 @@
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="61" name="Peyote" type="Spawn" x="2813" y="1246" width="269" height="207">
+   <properties>
+    <property name="count" value="5"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>

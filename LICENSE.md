@@ -367,6 +367,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/monsters/marvin.png [Neorice] [Reid]
 ./graphics/sprites/monsters/mushroom-evil.png [Yuuki] [FrosTr, Reid]
 ./graphics/sprites/monsters/mushroom-spiky.png [Yuuki] [FrosTr, Reid]
+./graphics/sprites/monsters/peyote.png [Reid] [Meway]
 ./graphics/sprites/monsters/pinkie.png [Crush] [FrosTr]
 ./graphics/sprites/monsters/piou.png [FotherJ, Reid]
 ./graphics/sprites/monsters/ratto.png [Coolkid782]
