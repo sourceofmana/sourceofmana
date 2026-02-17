@@ -41,8 +41,8 @@ class Peer:
 			Peers.accounts[data.accountID] = NetworkCommons.PeerUnknownID
 		if data:
 			Peers.accounts[data.accountID] = peerID
-		accountID = data.accountID
-		permission = data.permission
+			accountID = data.accountID
+			permission = data.permission
 		Network.online_accounts_update.emit()
 
 	func SetCharacter(id : int):
