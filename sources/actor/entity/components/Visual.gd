@@ -238,13 +238,18 @@ func Init(data : EntityData):
 	Callback.PlugCallback(get_parent().stat.entity_stats_updated, self.UpdateScale)
 	LoadData(data)
 
-func RefreshTree():
+func RefreshTree(resetOnTeleport : bool = true):
 	if previousState in blendSpacePaths:
 		var blendSpacePath : String = blendSpacePaths[previousState]
 		animationTree[blendSpacePath] = previousOrientation
 
-	var stateName : String = ActorCommons.GetStateName(previousState)
-	animationTree[ActorCommons.playbackParameter].travel(stateName)
+	if resetOnTeleport:
+		var stateName : String = ActorCommons.GetStateName(previousState)
+		animationTree[ActorCommons.playbackParameter].travel(stateName, true)
+
+		# Random default offset for IDLE and UNKNOWN state of [0;1] second
+		if previousState <= ActorCommons.State.IDLE:
+			animationTree.advance(randf())
 
 #
 func _init():
@@ -258,8 +263,8 @@ func _process(_delta):
 	var isMoving : bool = currentVelocity.length_squared() > 1
 	var newOrientation : Vector2 = currentVelocity.normalized() if isMoving else get_parent().entityOrientation
 	var newState : ActorCommons.State = ActorCommons.State.WALK if isMoving else get_parent().state
-
-	if previousState != newState or previousOrientation != newOrientation:
+	var differentState : bool = previousState != newState
+	if previousOrientation != newOrientation or differentState:
 		previousState = newState
 		previousOrientation = newOrientation
-		RefreshTree()
+		RefreshTree(differentState)
