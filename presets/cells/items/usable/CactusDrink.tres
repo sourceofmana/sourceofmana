@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://c2v50bj0vl45m"]
+
+[ext_resource type="Texture2D" uid="uid://c0t8472fo86hg" path="res://data/graphics/items/usable/cactus-drink.png" id="1_ml7mk"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_8o32r"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_3lt1g"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_ckwuv"]
+
+[sub_resource type="Resource" id="Resource_y0bgm"]
+script = ExtResource("2_8o32r")
+_effect = 1
+_value = 30
+
+[sub_resource type="Resource" id="Resource_2kgew"]
+script = ExtResource("3_3lt1g")
+_modifiers = Array[ExtResource("2_8o32r")]([SubResource("Resource_y0bgm")])
+
+[resource]
+script = ExtResource("4_ckwuv")
+name = "Cactus Drink"
+description = "A refreshing cactus drink."
+icon = ExtResource("1_ml7mk")
+weight = 5.0
+stackable = true
+usable = true
+modifiers = SubResource("Resource_2kgew")

@@ -412,6 +412,9 @@
 		"Behaviour": ["Immobile", "Pacifist"],
 		"Collision": "Medium",
 		"Radius": "10",
+		"Drops": {
+			"Cactus Drink": 0.1,
+		},
 	},
 
 	"2000": {

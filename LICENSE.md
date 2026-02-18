@@ -226,6 +226,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/items/skill/spell.png [Reid]
 ./graphics/items/skill/spitfire.png [Reid]
 ./graphics/items/usable/apple.png [Enchilado]
+./graphics/items/usable/cactus-drink.png [Meway] [Reid]
 ./graphics/items/weapon/boneknife.png [Enchilado]
 ./graphics/items/weapon/cleaver.png [Micksha]
 ./graphics/items/weapon/gladius.png [Reid]
