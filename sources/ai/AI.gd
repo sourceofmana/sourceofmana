@@ -78,6 +78,7 @@ static func HandleBehaviour(agent : AIAgent):
 #
 static func StateIdle(agent : AIAgent):
 	if not AICommons.IsActionInProgress(agent):
+		agent.UpdateDeltas(agent.aiRefreshDelay)
 		if AICommons.CanWalk(agent):
 			Callback.StartTimer(agent.actionTimer, AICommons.GetWalkTimer(), AI.ToWalk.bind(agent))
 

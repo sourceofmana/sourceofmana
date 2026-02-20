@@ -15,10 +15,6 @@ var hasCurrentGoal : bool				= false
 var isRelativeMode : bool				= false
 var lastPositions : PackedFloat32Array	= []
 
-var deltaHealth : float					= 0.0
-var deltaMana : float					= 0.0
-var deltaStamina : float				= 0.0
-
 var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
 var currentVelocity : Vector2			= Vector2.ZERO
@@ -131,26 +127,25 @@ func UpdateDeltas(delta : float):
 
 	if bonus != 0.0:
 		if stat.health < stat.current.maxHealth:
-			deltaHealth += (stat.current.regenHealth / ActorCommons.RegenDelay) * delta * bonus
+			stat.deltaHealth += (stat.current.regenHealth / ActorCommons.RegenDelay) * delta * bonus
 		if stat.mana < stat.current.maxMana:
-			deltaMana += (stat.current.regenMana / ActorCommons.RegenDelay) * delta * bonus
+			stat.deltaMana += (stat.current.regenMana / ActorCommons.RegenDelay) * delta * bonus
 		if stat.stamina < stat.current.maxStamina:
-			deltaStamina += (stat.current.regenStamina / ActorCommons.RegenDelay) * delta * bonus
+			stat.deltaStamina += (stat.current.regenStamina / ActorCommons.RegenDelay) * delta * bonus
 
-	if abs(deltaHealth) >= 1.0:
-		var healthChange : int = floori(abs(deltaHealth)) * int(sign(deltaHealth))
-		deltaHealth -= healthChange
+	if abs(stat.deltaHealth) >= 1.0:
+		var healthChange : int = floori(abs(stat.deltaHealth)) * int(sign(stat.deltaHealth))
+		stat.deltaHealth -= healthChange
 		stat.SetHealth(healthChange)
 
-	if abs(deltaMana) >= 1.0:
-		var manaChange : int = floori(abs(deltaMana)) * int(sign(deltaMana))
-		deltaMana -= manaChange
+	if abs(stat.deltaMana) >= 1.0:
+		var manaChange : int = floori(abs(stat.deltaMana)) * int(sign(stat.deltaMana))
+		stat.deltaMana -= manaChange
 		stat.SetMana(manaChange)
 
-	if abs(deltaStamina) >= 1.0:
-		var staminaChange : int = floori(abs(deltaStamina)) * int(sign(deltaStamina))
-		print("%d = %d %f" % [stat.stamina, staminaChange, deltaStamina])
-		deltaStamina -= staminaChange
+	if abs(stat.deltaStamina) >= 1.0:
+		var staminaChange : int = floori(abs(stat.deltaStamina)) * int(sign(stat.deltaStamina))
+		stat.deltaStamina -= staminaChange
 		stat.SetStamina(staminaChange)
 
 #
@@ -217,9 +212,8 @@ func _exit_tree():
 	if agent:
 		Callback.ClearCallbacks(agent.velocity_computed)
 
-func _physics_process(delta : float):
+func _physics_process(_delta : float):
 	UpdateInput()
-	UpdateDeltas(delta)
 
 	if agent and agent.get_avoidance_enabled():
 		agent.set_velocity(currentInput * currentWalkSpeed)

@@ -131,6 +131,7 @@ func SetRunning(enable : bool):
 #
 func _physics_process(delta):
 	super._physics_process(delta)
+	UpdateDeltas(delta)
 	UpdateLastStats()
 
 func _ready():
@@ -166,8 +167,8 @@ func Killed():
 
 func UpdateDeltas(delta : float):
 	if ActorCommons.IsRunning(self):
-		deltaStamina -= ActorCommons.RunningStaminaCostPerSecond * delta
-		if (stat.stamina + deltaStamina) <= 0.0:
+		stat.deltaStamina -= ActorCommons.RunningStaminaCostPerSecond * delta
+		if (stat.stamina + stat.deltaStamina) <= 0.0:
 			SetRunning(false)
 	super.UpdateDeltas(delta)
 

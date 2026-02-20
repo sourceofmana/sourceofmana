@@ -35,6 +35,11 @@ var current : BaseStats					= BaseStats.new()
 var actor : Actor						= null
 var modifiers : CellModifier			= CellModifier.new()
 
+# Regen deltas
+var deltaHealth : float					= 0.0
+var deltaMana : float					= 0.0
+var deltaStamina : float				= 0.0
+
 # Signals
 signal vital_stats_updated
 signal attributes_updated
