@@ -186,6 +186,12 @@ static func IsAttacking(agent : Actor) -> bool:
 static func IsSitting(agent : Actor) -> bool:
 	return agent and agent.state == State.SIT
 
+static func IsWalking(agent : Actor) -> bool:
+	return agent and agent.state == State.WALK
+
+static func IsRunning(agent : Actor) -> bool:
+	return IsWalking(agent) and agent.stat.isRunning
+
 static func IsTriggering(agent : Actor) -> bool:
 	return agent and agent.state == State.TRIGGER
 

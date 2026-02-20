@@ -9,12 +9,15 @@ var agent : NavigationAgent2D			= null
 var entityRadius : int					= 0
 
 var actionTimer : Timer					= null
-var regenTimer : Timer					= null
 var cooldownTimers : Dictionary[int, bool]	= {}
 
 var hasCurrentGoal : bool				= false
 var isRelativeMode : bool				= false
 var lastPositions : PackedFloat32Array	= []
+
+var deltaHealth : float					= 0.0
+var deltaMana : float					= 0.0
+var deltaStamina : float				= 0.0
 
 var currentDirection : Vector2			= Vector2.ZERO
 var currentOrientation : Vector2		= Vector2.ZERO
@@ -111,6 +114,45 @@ func ResetNav():
 	WalkToward(position)
 	SwitchInputMode(true)
 
+# Regen system
+func UpdateDeltas(delta : float):
+	if not ActorCommons.IsAlive(self):
+		return
+
+	var bonus : float = 1.0
+	if ActorCommons.IsAttacking(self):
+		bonus = 0.0
+	elif ActorCommons.IsRunning(self):
+		bonus = 0.0
+	elif ActorCommons.IsWalking(self):
+		bonus *= 0.5
+	elif ActorCommons.IsSitting(self):
+		bonus *= 2.0
+
+	if bonus != 0.0:
+		if stat.health < stat.current.maxHealth:
+			deltaHealth += (stat.current.regenHealth / ActorCommons.RegenDelay) * delta * bonus
+		if stat.mana < stat.current.maxMana:
+			deltaMana += (stat.current.regenMana / ActorCommons.RegenDelay) * delta * bonus
+		if stat.stamina < stat.current.maxStamina:
+			deltaStamina += (stat.current.regenStamina / ActorCommons.RegenDelay) * delta * bonus
+
+	if abs(deltaHealth) >= 1.0:
+		var healthChange : int = floori(abs(deltaHealth)) * int(sign(deltaHealth))
+		deltaHealth -= healthChange
+		stat.SetHealth(healthChange)
+
+	if abs(deltaMana) >= 1.0:
+		var manaChange : int = floori(abs(deltaMana)) * int(sign(deltaMana))
+		deltaMana -= manaChange
+		stat.SetMana(manaChange)
+
+	if abs(deltaStamina) >= 1.0:
+		var staminaChange : int = floori(abs(deltaStamina)) * int(sign(deltaStamina))
+		print("%d = %d %f" % [stat.stamina, staminaChange, deltaStamina])
+		deltaStamina -= staminaChange
+		stat.SetStamina(staminaChange)
+
 #
 func SetData():
 	entityRadius = data._radius
@@ -175,8 +217,9 @@ func _exit_tree():
 	if agent:
 		Callback.ClearCallbacks(agent.velocity_computed)
 
-func _physics_process(_delta : float):
+func _physics_process(delta : float):
 	UpdateInput()
+	UpdateDeltas(delta)
 
 	if agent and agent.get_avoidance_enabled():
 		agent.set_velocity(currentInput * currentWalkSpeed)

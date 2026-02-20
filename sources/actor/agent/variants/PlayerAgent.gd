@@ -7,7 +7,6 @@ var lastStat : ActorStats				= ActorStats.new()
 var respawnDestination : Destination	= null
 var exploreOrigin : Destination			= null
 var ownScript : NpcScript				= null
-var deltaRunningStamina : float			= 0.0
 
 #
 static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
@@ -124,31 +123,17 @@ func Morph(notifyMorphing : bool, morphID : int = DB.UnknownHash):
 # Running
 func SetRunning(enable : bool):
 	if stat.isRunning != enable:
-		requireFullUpdate = true
-		stat.isRunning = enable
-		RefreshWalkSpeed()
-
-func UpdateDeltas(delta : float):
-	if stat.isRunning and state == ActorCommons.State.WALK:
-		deltaRunningStamina += ActorCommons.RunningStaminaCostPerSecond * delta
-		if deltaRunningStamina > 1.0:
-			var cost : int = floori(deltaRunningStamina)
-			deltaRunningStamina -= cost
-			if cost > stat.stamina:
-				SetRunning(false)
-			stat.SetStamina(-cost)
+		if not enable or (stat.stamina > 0 and state == ActorCommons.State.WALK):
+			stat.isRunning = enable
+			RefreshWalkSpeed()
+			requireFullUpdate = true
 
 #
 func _physics_process(delta):
 	super._physics_process(delta)
-	UpdateDeltas(delta)
 	UpdateLastStats()
 
 func _ready():
-	regenTimer = Timer.new()
-	regenTimer.set_name("RegenTimer")
-	Callback.OneShotCallback(regenTimer.tree_entered, Callback.ResetTimer, [regenTimer, ActorCommons.RegenDelay, stat.Regen])
-	add_child.call_deferred(regenTimer)
 	super._ready()
 
 func _exit_tree():
@@ -178,6 +163,13 @@ func Killed():
 	super.Killed()
 	if ownScript:
 		ClearScript()
+
+func UpdateDeltas(delta : float):
+	if ActorCommons.IsRunning(self):
+		deltaStamina -= ActorCommons.RunningStaminaCostPerSecond * delta
+		if (stat.stamina + deltaStamina) <= 0.0:
+			SetRunning(false)
+	super.UpdateDeltas(delta)
 
 #
 func AddScript(npc : NpcAgent):

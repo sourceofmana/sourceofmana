@@ -20,6 +20,7 @@ var spirit : int						= DB.UnknownHash
 var currentShape : int					= DB.UnknownHash
 var baseExp : int						= 1
 var isRunning : bool					= false
+
 # Attributes
 var strength : int						= 0
 var vitality : int						= 0
@@ -182,21 +183,6 @@ func SetAttributes(newStrength: int, newVitality: int, newAgility: int, newEndur
 		endurance = min(ActorCommons.MaxPointPerAttributes, newEndurance)
 		concentration = min(ActorCommons.MaxPointPerAttributes, newConcentration)
 		RefreshAttributes()
-
-func Regen():
-	if ActorCommons.IsAlive(actor):
-		var bonus : float = 1.0
-		if ActorCommons.IsSitting(actor):
-			bonus *= 2.0
-		RefreshRegenStats()
-		if actor.stat.health < actor.stat.current.maxHealth:
-			SetHealth(floori(current.regenHealth * bonus))
-		if actor.stat.mana < actor.stat.current.maxMana:
-			SetMana(floori(current.regenMana * bonus))
-		if not ActorCommons.IsAttacking(actor) and actor.stat.stamina < actor.stat.current.maxStamina:
-			SetStamina(floori(current.regenStamina * bonus))
-
-	Callback.LoopTimer(actor.regenTimer, ActorCommons.RegenDelay)
 
 func SetHealth(bonus : int):
 	health = clampi(health + bonus, 0, current.maxHealth)
