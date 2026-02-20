@@ -133,9 +133,10 @@ func SetData():
 		RefreshWalkSpeed()
 
 func RefreshWalkSpeed():
+	var speed : float = Formula.GetWalkSpeed(stat)
 	if agent:
-		agent.set_max_speed(stat.current.walkSpeed)
-	currentWalkSpeed = Vector2(stat.current.walkSpeed, stat.current.walkSpeed)
+		agent.set_max_speed(speed)
+	currentWalkSpeed = Vector2(speed, speed)
 
 #
 func Damage(_caller : BaseAgent):
@@ -176,6 +177,7 @@ func _exit_tree():
 
 func _physics_process(_delta : float):
 	UpdateInput()
+
 	if agent and agent.get_avoidance_enabled():
 		agent.set_velocity(currentInput * currentWalkSpeed)
 	else:
@@ -184,7 +186,7 @@ func _physics_process(_delta : float):
 	if requireFullUpdate:
 		requireFullUpdate = false
 		requireUpdate = false
-		Network.NotifyNeighbours(self, "FullUpdateEntity", [velocity, position, currentOrientation, state, currentSkillID], true, true)
+		Network.NotifyNeighbours(self, "FullUpdateEntity", [velocity, position, currentOrientation, state, currentSkillID, stat.isRunning], true, true)
 	elif requireUpdate:
 		requireUpdate = false
 		Network.NotifyNeighbours(self, "UpdateEntity", [velocity, position], true, true)

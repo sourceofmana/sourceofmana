@@ -124,16 +124,16 @@ func RemoveEntity(agentRID : int):
 		RemoveChild(entity)
 		Entities.Erase(agentRID)
 
-func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int):
+func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity:
-		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID)
+		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID, false, isRunning)
 
 func UpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.visual:
 		var agentOrientation : Vector2 = entity.entityOrientation if agentVelocity.is_zero_approx() else agentVelocity.normalized()
-		entity.Update(agentVelocity, agentPosition, agentOrientation, entity.state, entity.visual.skillCastID)
+		entity.Update(agentVelocity, agentPosition, agentOrientation, entity.state, entity.visual.skillCastID, false, entity.stat.isRunning)
 
 func LeaveGame():
 	UnloadMapNode()

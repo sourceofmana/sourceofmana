@@ -19,6 +19,7 @@ var shape : int							= DB.UnknownHash
 var spirit : int						= DB.UnknownHash
 var currentShape : int					= DB.UnknownHash
 var baseExp : int						= 1
+var isRunning : bool					= false
 # Attributes
 var strength : int						= 0
 var vitality : int						= 0

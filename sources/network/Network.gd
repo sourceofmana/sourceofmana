@@ -115,8 +115,8 @@ func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, peerID
 	CallClient("UpdateEntity", [agentRID, velocity, position], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int,  peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("FullUpdateEntity", [agentRID, velocity, position, orientation, agentState, skillCastID], peerID)
+func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("FullUpdateEntity", [agentRID, velocity, position, orientation, agentState, skillCastID, isRunning], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
 func ClearNavigation(peerID : int = NetworkCommons.PeerAuthorityID):
@@ -135,6 +135,11 @@ func EmotePlayer(senderagentRID : int, emoteID : int, peerID : int = NetworkComm
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerSit(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerSit", [], peerID)
+
+# Run
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TriggerRun(enable : bool, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerRun", [enable], peerID)
 
 # Chat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)

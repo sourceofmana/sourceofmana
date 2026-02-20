@@ -30,9 +30,9 @@ func RemoveEntity(agentRID : int, _peerID : int):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentRID)
 
-func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _peerID : int):
+func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int, isRunning : bool, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.FullUpdateEntity(agentRID, velocity, position, orientation, state, skillCastID)
+		Launcher.Map.FullUpdateEntity(agentRID, velocity, position, orientation, state, skillCastID, isRunning)
 
 func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, _peerID : int):
 	if Launcher.Map:

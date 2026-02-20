@@ -184,6 +184,11 @@ func TriggerSit(peerID : int):
 	if player:
 		player.SetState(ActorCommons.State.SIT)
 
+func TriggerRun(enable : bool, peerID : int):
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player:
+		player.SetRunning(enable)
+
 func TriggerRespawn(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player is PlayerAgent:

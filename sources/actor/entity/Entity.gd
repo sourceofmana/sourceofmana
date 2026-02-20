@@ -32,7 +32,7 @@ func SetVisual(altData : EntityData, morphed : bool = false):
 		visual.Init(altData)
 
 #
-func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextskillCastID : int, forceValue : bool = false):
+func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation : Vector2, nextState : ActorCommons.State, nextskillCastID : int, forceValue : bool = false, isRunning : bool = false):
 	entityPosOffset = gardbandPosition - position
 	entityVelocity = nextVelocity
 	var previousState = state
@@ -45,6 +45,12 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 		entityPosOffset = Vector2.ZERO
 		if Launcher.Player == self:
 			Launcher.Map.PlayerMoved.emit()
+
+	if isRunning != stat.isRunning:
+		if stat.isRunning:
+			pass
+		stat.isRunning = isRunning
+		stat.RefreshEntityStats()
 
 	if visual and visual.skillCastID != nextskillCastID:
 		visual.skillCastID = nextskillCastID
