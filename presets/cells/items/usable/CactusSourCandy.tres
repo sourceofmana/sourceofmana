@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://ow4lnv5ink7e"]
+
+[ext_resource type="Texture2D" uid="uid://rui8rc5r53tk" path="res://data/graphics/items/usable/cactus-sour-candy.png" id="1_8ctvb"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_4rutc"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_53jia"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_0tnm7"]
+
+[sub_resource type="Resource" id="Resource_y0bgm"]
+script = ExtResource("2_4rutc")
+_effect = 1
+_value = 50.0
+
+[sub_resource type="Resource" id="Resource_ivqp6"]
+script = ExtResource("2_4rutc")
+_effect = 3
+_value = 50.0
+metadata/_custom_type_script = "uid://hdd6y6syvlm6"
+
+[sub_resource type="Resource" id="Resource_2kgew"]
+script = ExtResource("3_53jia")
+_modifiers = Array[ExtResource("2_4rutc")]([SubResource("Resource_y0bgm"), SubResource("Resource_ivqp6")])
+
+[resource]
+script = ExtResource("4_0tnm7")
+name = "Cactus Sour Candy"
+icon = ExtResource("1_8ctvb")
+weight = 5.0
+stackable = true
+usable = true
+modifiers = SubResource("Resource_2kgew")

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://cuvxft1k676b0"]
+
+[ext_resource type="Texture2D" uid="uid://c4fg5b37ka4rh" path="res://data/graphics/items/usable/croissant.png" id="1_mucoc"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_w5vmb"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_2vc8i"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_1ohq4"]
+
+[sub_resource type="Resource" id="Resource_y0bgm"]
+script = ExtResource("2_w5vmb")
+_effect = 2
+_value = 50.0
+
+[sub_resource type="Resource" id="Resource_ivqp6"]
+script = ExtResource("2_w5vmb")
+_effect = 3
+_value = 50.0
+metadata/_custom_type_script = "uid://hdd6y6syvlm6"
+
+[sub_resource type="Resource" id="Resource_2kgew"]
+script = ExtResource("3_2vc8i")
+_modifiers = Array[ExtResource("2_w5vmb")]([SubResource("Resource_y0bgm"), SubResource("Resource_ivqp6")])
+
+[resource]
+script = ExtResource("4_1ohq4")
+name = "Croissant"
+icon = ExtResource("1_mucoc")
+weight = 5.0
+stackable = true
+usable = true
+modifiers = SubResource("Resource_2kgew")
