@@ -172,18 +172,14 @@ func build_client(source_path, options) -> Node2D:
 		"infinite": bool(map.infinite) if "infinite" in map else false
 	}
 
-	var zOrder = 0
+	var zOrder : int = -32
 	tileset.tile_size = cell_size
-
-	# Set zOrders
-	for tmxLayer in map.layers:
-		if tmxLayer.name == "Fringe":
-			break
-		else:
-			zOrder -= 1
 
 	# Add each layers
 	for tmxLayer in map.layers:
+		if tmxLayer.name == "Fringe":
+			zOrder = 0
+
 		var layer : TileMapLayer = make_layer(tmxLayer, root, mapData, zOrder)
 		if layer:
 			root.add_child(layer)
