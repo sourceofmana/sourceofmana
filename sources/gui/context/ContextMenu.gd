@@ -15,6 +15,7 @@ var displayStep : float						= 0.0
 var fadeOutStep : float						= 0.0
 
 var canFadeOut : bool						= false
+var actionDisabled : bool					= false
 
 #
 func FlushDataBuffer():
@@ -59,19 +60,21 @@ func FadeOut():
 	canFadeOut = true
 	_process(0)
 
-func Show(disableAction):
+func Show(disableAction : bool):
 	visible = true
 	for child in contextList.get_children():
 		child._on_visibility_changed()
-	if Launcher.Action:
-		Launcher.Action.Enable(not disableAction)
+	if Launcher.Action and disableAction:
+		actionDisabled = true
+		Launcher.Action.Enable(false)
 
 func Hide():
 	visible = false
 	canFadeOut = false
 	currentStep = 0.0
-	if Launcher.Action:
+	if Launcher.Action and actionDisabled:
 		Launcher.Action.Enable(true)
+		actionDisabled = false
 	Clear()
 
 func Clear():

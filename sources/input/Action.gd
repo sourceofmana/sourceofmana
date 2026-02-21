@@ -1,5 +1,6 @@
 extends ServiceBase
 
+var disableCounter : int		= 0
 var isEnabled : bool			= true
 var supportMouse : bool			= true
 var clickTimer : Timer			= null
@@ -12,7 +13,10 @@ signal deviceChanged
 
 #
 func Enable(enable : bool):
-	isEnabled = enable
+	if enable:
+		pass
+	disableCounter = clampi(disableCounter + (1 if enable else -1), -256, 0)
+	isEnabled = disableCounter == 0
 
 func IsEnabled() -> bool:
 	return isEnabled
