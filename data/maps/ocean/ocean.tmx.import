@@ -19,5 +19,5 @@ collision_layer=1
 embed_internal_images=false
 save_tiled_properties=false
 add_background=true
-export_navigation_mesh=true
+collision_v2=false
 export_global_scene=false
