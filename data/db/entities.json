@@ -590,4 +590,9 @@
 			"skintone": "Dark",
 		},
 	},
+	"2015": {
+		"Name": "Riskim",
+		"Parent" : "StaticNPC",
+		"Texture": "sprites/npcs/riskim.png",
+	},
 }

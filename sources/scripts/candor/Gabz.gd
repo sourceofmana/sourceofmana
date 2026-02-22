@@ -89,6 +89,7 @@ func StartFight():
 			Mes("You'll need to bring me 5 apples as a tribute before we begin.")
 		elif own.stat.level < playerLevelRequirement:
 			Mes("You're not strong enough for this fight. Come back when you've reached level %d." % playerLevelRequirement)
-		elif RemoveItem(tributeItemID, tributeItemCount):
+		else:
+			RemoveItem(tributeItemID, tributeItemCount)
 			Chat("Ah, you're ready for this! The fight begins in 10 seconds, brace yourself!")
-			Trigger()
+			Action(Trigger)

@@ -10,8 +10,8 @@ const mapPosition : Vector2			= Vector2(1500, 2190)
 
 #
 func OnStart():
-	match GetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING):
-		ProgressCommons.STATE_SPLATYNA.INACTIVE: Inactive()
+	match GetQuest(ProgressCommons.Quest.SPLATYNA_OFFERING):
+		ProgressCommons.SPLATYNA_OFFERING.INACTIVE: Inactive()
 		_: AskChoice()
 
 func AskChoice():
@@ -24,10 +24,13 @@ func AskChoice():
 
 func TryOpen():
 	# Check and remove items to open the chest
-	if GetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING) != ProgressCommons.STATE_SPLATYNA.INACTIVE:
+	if GetQuest(ProgressCommons.Quest.SPLATYNA_OFFERING) != ProgressCommons.SPLATYNA_OFFERING.INACTIVE:
 		if HasItem(dorianKeyID) and HasItem(gabrielKeyID) and HasItem(marvinKeyID):
-			if RemoveItem(dorianKeyID) and RemoveItem(gabrielKeyID) and RemoveItem(marvinKeyID):
-				Warp(mapID, mapPosition)
+			RemoveItem(dorianKeyID)
+			RemoveItem(gabrielKeyID)
+			RemoveItem(marvinKeyID)
+			Warp(mapID, mapPosition)
+			Close()
 		else:
 			Chat("You need three different keys to unlock this passage.")
 

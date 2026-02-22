@@ -105,7 +105,6 @@ static func ParseSkillsDB():
 static func ParseQuestsDB():
 	for resourcePath in FileSystem.ParseResources(Path.QuestPst):
 		var quest : QuestData = FileSystem.LoadResource(resourcePath, false)
-		quest.id = quest.name.hash()
 		assert(QuestsDB.has(quest.id) == false, "Duplicated quest in QuestsDB")
 		QuestsDB[quest.id] = quest
 

@@ -92,7 +92,7 @@ func DisplayInfoContext(actions : PackedStringArray):
 	infoContext.FadeIn()
 
 func IsDialogueContextOpened() -> bool:
-	return Launcher.GUI.dialogueContainer.is_visible()
+	return dialogueContainer.is_visible()
 
 func OpenDiscord():
 	OS.shell_open(LauncherCommons.SocialLink)

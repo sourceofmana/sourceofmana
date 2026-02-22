@@ -134,3 +134,9 @@ static func RemoveItem(caller : BaseAgent, itemID : int, count : int = 1, custom
 		if cell:
 			return caller.inventory.RemoveItem(cell, count)
 	return false
+
+# Karma
+static func AddKarma(caller : BaseAgent, points : int) -> bool:
+	if caller is PlayerAgent and caller.stat:
+		caller.stat.karma += points
+	return false

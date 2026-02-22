@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://jv38bfafawjk"]
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://dlpi731txi584"]
 
 [ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_7vvcv"]
 

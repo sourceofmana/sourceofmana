@@ -10,9 +10,9 @@ var marvinKeyID : int				= DB.GetCellHash("Marvin's Key")
 
 #
 func OnStart():
-	match GetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING):
-		ProgressCommons.STATE_SPLATYNA.INACTIVE: Inactive()
-		ProgressCommons.STATE_SPLATYNA.STARTED: TryOpen()
+	match GetQuest(ProgressCommons.Quest.SPLATYNA_OFFERING):
+		ProgressCommons.SPLATYNA_OFFERING.INACTIVE: Inactive()
+		ProgressCommons.SPLATYNA_OFFERING.STARTED: TryOpen()
 		_: Empty()
 
 func Inactive():
@@ -28,7 +28,7 @@ func TryOpen():
 
 		# Chest is opened, you can withdraw your reward
 		if HasSpace(1):
-			SetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING, ProgressCommons.STATE_SPLATYNA.REWARDS_WITHDREW)
+			SetQuest(ProgressCommons.Quest.SPLATYNA_OFFERING, ProgressCommons.SPLATYNA_OFFERING.REWARDS_WITHDREW)
 			AddItem(appleID, 5)
 
 func Empty():

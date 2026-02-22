@@ -90,25 +90,36 @@ func AlivePlayerCount() -> int:
 
 # Warp
 func Warp(mapID : int, position : Vector2):
-	NpcCommons.Warp(own, mapID, position)
+	if not IsPlayer(): return
+	Action(NpcCommons.Warp.bind(own, mapID, position))
 
 # Quest
 func SetQuest(questID : int, state : int):
-	if own and own.progress:
-		NpcCommons.SetQuest(own, questID, state)
+	if not IsPlayer(): return
+	Action(NpcCommons.SetQuest.bind(own, questID, state))
 
 func GetQuest(questID : int) -> int:
-	return own.progress.GetQuest(questID) if own and own.progress else ProgressCommons.UnknownProgress
+	if not IsPlayer(): return ProgressCommons.UnknownProgress
+	return own.progress.GetQuest(questID)
+
+func IsQuestStarted(questID : int) -> bool:
+	return GetQuest(questID) != ProgressCommons.UnknownProgress
+
+func IsQuestCompleted(questID : int) -> bool:
+	return GetQuest(questID) == ProgressCommons.CompletedProgress
 
 # Display
 func Notification(text : String):
+	if not IsPlayer(): return
 	NpcCommons.PushNotification(own, text)
 
 # Dialogue
 func Mes(mes : String):
+	if not IsPlayer(): return
 	steps.append({"text": mes})
 
 func Choice(mes : String, callable : Callable = Callback.Empty):
+	if not IsPlayer(): return
 	if steps.is_empty():
 		steps.append({"choices": []})
 
@@ -118,17 +129,21 @@ func Choice(mes : String, callable : Callable = Callback.Empty):
 
 	dialogueStep["choices"].append({"text": mes, "action": callable})
 
+func Action(callable : Callable):
+	if not IsPlayer(): return
+	steps.append({"action": callable})
+
 func Chat(mes : String):
-	if npc != own:
-		NpcCommons.Chat(npc, own, mes)
+	if not IsPlayer(): return
+	NpcCommons.Chat(npc, own, mes)
 
 func Greeting():
-	if npc != own:
-		NpcCommons.Chat(npc, own, NpcCommons.GetRandomGreeting(own.nick))
+	if not IsPlayer(): return
+	NpcCommons.Chat(npc, own, NpcCommons.GetRandomGreeting(own.nick))
 
 func Farewell():
-	if npc != own:
-		NpcCommons.Chat(npc, own, NpcCommons.GetRandomFarewell(own.nick))
+	if not IsPlayer(): return
+	NpcCommons.Chat(npc, own, NpcCommons.GetRandomFarewell(own.nick))
 
 # Timer
 func AddTimer(caller : BaseAgent, delay : float, callback : Callable, timerName = "") -> Timer:
@@ -147,7 +162,7 @@ func TimeOut(callback : Callable):
 	timerCount -= 1
 	Callback.TriggerCallback(callback)
 	if own and IsDone():
-		own.ClearScript()
+		Close()
 
 func ClearTimer(timer : Timer):
 	if timer and not timer.is_stopped() and not timer.is_queued_for_deletion():
@@ -155,16 +170,16 @@ func ClearTimer(timer : Timer):
 		timer.queue_free()
 		timerCount -= 1
 		if own and IsDone():
-			own.ClearScript()
+			Close()
 
 # Inventory
 func HasItem(itemID : int, count : int = 1) -> bool:
-	if own is PlayerAgent:
-		var cell : ItemCell = DB.GetItem(itemID)
-		return own.inventory.HasItem(cell, count) if cell else false
-	return false
+	if not IsPlayer(): return false
+	var cell : ItemCell = DB.GetItem(itemID)
+	return own.inventory.HasItem(cell, count) if cell else false
 
 func HasItemsSpace(items : Array) -> bool:
+	if not IsPlayer(): return false
 	var totalCount : int = 0
 	for item in items:
 		var itemCount : int = 1
@@ -185,22 +200,30 @@ func HasItemsSpace(items : Array) -> bool:
 	return HasSpace(totalCount)
 
 func HasSpace(itemCount : int) -> bool:
-	return own.inventory.HasSpace(itemCount) if own is PlayerAgent else false
+	if not IsPlayer(): return false
+	return own.inventory.HasSpace(itemCount)
 
-func AddItem(itemID : int, count : int = 1, customfield : String = "") -> bool:
-	return NpcCommons.AddItem(own, itemID, count, customfield)
+func AddItem(itemID : int, count : int = 1, customfield : String = ""):
+	if not IsPlayer(): return false
+	Action(NpcCommons.AddItem.bind(own, itemID, count, customfield))
 
-func RemoveItem(itemID : int, count : int = 1, customfield : String = "") -> bool:
-	return NpcCommons.AddItem(own, itemID, count, customfield)
+func RemoveItem(itemID : int, count : int = 1, customfield : String = ""):
+	if not IsPlayer(): return false
+	Action(NpcCommons.RemoveItem.bind(own, itemID, count, customfield))
+
+# Karma
+func AddKarma(value : int):
+	if not IsPlayer(): return
+	Action(NpcCommons.AddKarma.bind(own, value))
 
 # Money & Experience
 func AddExp(value : int):
-	if value > 0 and own is PlayerAgent and own.stat:
-		own.stat.AddExperience(value)
+	if not IsPlayer() or value <= 0: return
+	Action(own.stat.AddExperience.bind(value))
 
 func AddGP(value : int):
-	if value > 0 and own is PlayerAgent and own.stat:
-		own.stat.AddGP(value)
+	if not IsPlayer() or value <= 0: return
+	Action(own.stat.AddGP.bind(value))
 
 # Interaction logic
 func ToggleWindow(toggle : bool):
@@ -225,16 +248,29 @@ func InteractChoice(choiceId : int):
 		ApplyStep()
 
 func ApplyStep():
+	var stepCount : int = steps.size()
 	if isWaitingForChoice:
 		pass # Skip the current step if we are waiting for a player choice
-	elif step < steps.size():
-		ToggleWindow(true)
-
+	elif step < stepCount:
 		var dialogueStep : Dictionary = steps[step]
+		while dialogueStep.has("action"):
+			dialogueStep["action"].call()
+			if step + 1 < stepCount:
+				step += 1
+				dialogueStep = steps[step]
+			else:
+				break
+
 		if dialogueStep.has("text"):
+			if not windowToggled:
+				ToggleWindow(true)
+
 			NpcCommons.ContextText(own, npc.nick, dialogueStep["text"])
 
 		if dialogueStep.has("choices"):
+			if not windowToggled:
+				ToggleWindow(true)
+
 			var choices : PackedStringArray = []
 			for choice in dialogueStep["choices"]:
 				if choice.has("text"):
@@ -243,7 +279,7 @@ func ApplyStep():
 				isWaitingForChoice = true
 				NpcCommons.ContextChoices(own, choices)
 		else:
-			if step + 1 < steps.size():
+			if step + 1 < stepCount:
 				NpcCommons.ContextContinue(own)
 			else:
 				NpcCommons.ContextClose(own)
@@ -251,14 +287,21 @@ func ApplyStep():
 		ToggleWindow(false)
 
 	if IsDone():
+		Close()
+
+func Close():
+	if IsPlayer():
 		ToggleWindow(false)
-		own.ClearScript()
+	own.ClearScript()
 
 func IsDone() -> bool:
 	return own != npc and step >= steps.size() and not IsWaiting()
 
 func IsWaiting() -> bool:
 	return own == npc or isWaitingForChoice or timerCount > 0
+
+func IsPlayer() -> bool:
+	return own is PlayerAgent
 
 # Default functions
 func _init(_npc : NpcAgent, _own : BaseAgent):
@@ -278,5 +321,5 @@ func OnStart(): pass
 func OnContinue(): pass
 func OnTrigger(): pass
 func OnQuit():
-	if npc and npc != own:
+	if not IsPlayer():
 		npc.SubInteraction()

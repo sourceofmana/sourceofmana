@@ -167,10 +167,12 @@ func CommandQuest(caller : PlayerAgent, questStr : String, stateStr : String) ->
 	if not caller or not caller.progress:
 		return false
 
-	var questID : int = questStr.hash()
+	var questID : int = questStr.to_int()
 	var state : int = stateStr.to_int()
-	NpcCommons.SetQuest(caller, questID, state)
-	return true
+	if questID in DB.QuestsDB:
+		NpcCommons.SetQuest(caller, questID, state)
+		return true
+	return false
 
 func CommandBestiary(caller : PlayerAgent, monsterName : String, countStr : String) -> bool:
 	if not caller or not caller.progress:
@@ -178,8 +180,10 @@ func CommandBestiary(caller : PlayerAgent, monsterName : String, countStr : Stri
 
 	var monsterID : int = monsterName.hash()
 	var count : int = countStr.to_int()
-	NpcCommons.AddBestiary(caller, monsterID, count)
-	return true
+	if monsterID in DB.EntitiesDB:
+		NpcCommons.AddBestiary(caller, monsterID, count)
+		return true
+	return false
 
 # Inventory
 func CommandItem(caller : PlayerAgent, itemName : String, countStr : String = "1", customField : String = "") -> bool:

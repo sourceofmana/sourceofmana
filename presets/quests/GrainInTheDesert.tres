@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://44q5odljwtye"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 1
+name = "Grain in the desert"
+description = "Riskim the baker is waiting for a grain shipment marked with a blue Artis seal. Check the crates at the docks."
+giver = "Riskim"
+giverLocation = "Tulmshar Center"
+target = "Crate"
+targetLocation = "Tulimshar Bay"
+reward = "Unknown"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

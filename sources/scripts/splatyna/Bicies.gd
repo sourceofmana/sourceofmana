@@ -2,9 +2,9 @@ extends NpcScript
 
 #
 func OnStart():
-	match GetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING):
-		ProgressCommons.STATE_SPLATYNA.INACTIVE: Inactive()
-		ProgressCommons.STATE_SPLATYNA.STARTED: OnRecap()
+	match GetQuest(ProgressCommons.Quest.SPLATYNA_OFFERING):
+		ProgressCommons.SPLATYNA_OFFERING.INACTIVE: Inactive()
+		ProgressCommons.SPLATYNA_OFFERING.STARTED: OnRecap()
 		_: OnFinish()
 
 func Inactive():
@@ -13,9 +13,9 @@ func Inactive():
 	InfoChoice()
 
 func InfoChoice(previousText : int = -1):
-	var questState : int = GetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING)
+	var questState : int = GetQuest(ProgressCommons.Quest.SPLATYNA_OFFERING)
 	if previousText != 0:
-		if questState == ProgressCommons.STATE_SPLATYNA.INACTIVE:
+		if questState == ProgressCommons.SPLATYNA_OFFERING.INACTIVE:
 			Choice("Sure, I'll bring her the offering.", OnAcceptQuest)
 		else:
 			Choice("What should I do?", OnRecap)
@@ -61,7 +61,7 @@ func OnAskAboutPlace():
 
 func OnAcceptQuest():
 	Mes("Very well, take this gold and offer it to Splatyna. She will judge your worth.")
-	SetQuest(ProgressCommons.QUEST_SPLATYNA_OFFERING, ProgressCommons.STATE_SPLATYNA.STARTED)
+	SetQuest(ProgressCommons.Quest.SPLATYNA_OFFERING, ProgressCommons.SPLATYNA_OFFERING.STARTED)
 	Farewell()
 
 func OnDecline():

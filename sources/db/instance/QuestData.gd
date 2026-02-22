@@ -1,7 +1,7 @@
 extends Resource
 class_name QuestData
 
-@export var id : int							= DB.UnknownHash
+@export var id : ProgressCommons.Quest			= ProgressCommons.Quest.UNKNOWN
 @export var name : String						= ""
 @export_multiline var description : String		= ""
 @export var giver : String						= ""
