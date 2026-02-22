@@ -34,6 +34,8 @@ scale_curve = SubResource("CurveTexture_lmp7v")
 color_ramp = SubResource("GradientTexture1D_hyudh")
 
 [node name="Morph Particles" type="GPUParticles2D" unique_id=963087980]
+z_index = 1
+z_as_relative = false
 material = SubResource("CanvasItemMaterial_1pdty")
 emitting = false
 amount = 20
