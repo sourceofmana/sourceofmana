@@ -23,18 +23,28 @@
 		},
 	},
 	"2": {
-		"Name": "NPC",
+		"Name": "Object",
 		"Collision": "Small",
 		"Radius": "16",
-		"DisplayName": true,
 	},
 	"3": {
-		"Name": "StaticNPC",
-		"Parent": "NPC",
+		"Name": "StaticObject",
+		"Parent": "Object",
 		"SpritePreset": "Static",
 		"Behaviour": ["Immobile", "Pacifist"],
 	},
 	"4": {
+		"Name": "NPC",
+		"Parent": "Object",
+		"DisplayName": true,
+	},
+	"5": {
+		"Name": "StaticNPC",
+		"Parent": "NPC",
+		"SpritePreset": "StaticNPC",
+		"Behaviour": ["Immobile", "Pacifist"],
+	},
+	"6": {
 		"Name": "WalkingNPC",
 		"Parent": "NPC",
 		"SpritePreset": "Player",
@@ -434,7 +444,7 @@
 	},
 	"2001": {
 		"Name": "Old Chest",
-		"Parent" : "StaticNPC",
+		"Parent" : "StaticObject",
 		"SpritePreset": "Chest",
 		"Collision": "Large",
 		"Radius": "32",
@@ -446,7 +456,7 @@
 	},
 	"2003": {
 		"Name": "Locks",
-		"Parent" : "StaticNPC",
+		"Parent" : "StaticObject",
 		"SpritePreset": "CaveLocks",
 		"Collision": "Large",
 		"Radius": "32",
@@ -486,7 +496,7 @@
 	},
 	"2008": {
 		"Name": "Red Queen",
-		"Parent" : "NPC",
+		"Parent" : "StaticNPC",
 		"SpritePreset": "Player",
 		"Equipment": [
 			"Gown",
@@ -497,7 +507,6 @@
 		],
 		"Direction": "DOWN",
 		"State": "SIT",
-		"Behaviour": ["Immobile", "Pacifist"],
 		"Stat": {
 			"hairstyle": "Long and Curly",
 			"haircolor": "Pure Platinum",
@@ -571,9 +580,8 @@
 	},
 	"2014": {
 		"Name": "Ryan",
-		"Parent" : "NPC",
+		"Parent" : "StaticNPC",
 		"SpritePreset": "Player",
-		"Behaviour": ["Immobile", "Pacifist"],
 		"Equipment": [
 			"Desert Armor",
 			"Guard Cloud Pants",
@@ -597,7 +605,7 @@
 	},
 	"2016": {
 		"Name": "Floor Barrel",
-		"Parent" : "StaticNPC",
+		"Parent" : "StaticObject",
 		"Texture": "sprites/npcs/floor-barrel.png",
 		"DisplayName": false,
 		"QuestFilter": {"GRAIN_IN_THE_SAND": "STARTED"},

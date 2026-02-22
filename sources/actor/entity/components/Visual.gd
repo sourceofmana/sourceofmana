@@ -94,11 +94,24 @@ func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array
 	var slotMaterial : Material = null
 
 	if not entity.stat.IsMorph():
-		slotTexture = FileSystem.LoadGfx(textures[entity.stat.gender])
-		if entity.stat.skintone in raceData._skins:
-			var skinData : FileData = raceData._skins[entity.stat.skintone]
-			if skinData and not skinData._path.is_empty():
-				slotMaterial = FileSystem.LoadPalette(skinData._path)
+		var hasOverrideTexture : bool = false
+		var hasOverrideMaterial : bool = false
+
+		if entity.data and slot == ActorCommons.Slot.BODY:
+			if entity.data._customTexture:
+				slotTexture = FileSystem.LoadGfx(entity.data._customTexture)
+				hasOverrideTexture = true
+			if entity.data._customMaterial:
+				slotMaterial = FileSystem.LoadPalette(entity.data._customMaterial._path)
+				hasOverrideMaterial = true
+
+		if not hasOverrideTexture:
+			slotTexture = FileSystem.LoadGfx(textures[entity.stat.gender])
+		if not hasOverrideMaterial:
+			if entity.stat.skintone in raceData._skins:
+				var skinData : FileData = raceData._skins[entity.stat.skintone]
+				if skinData and not skinData._path.is_empty():
+					slotMaterial = FileSystem.LoadPalette(skinData._path)
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
@@ -107,10 +120,10 @@ func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array
 func SetBody():
 	if entity.stat.race == DB.UnknownHash:
 		SetData(ActorCommons.Slot.BODY, entity.data)
-		return
-	var raceData : RaceData = DB.GetRace(entity.stat.race)
-	if raceData:
-		SetSkinSlot(ActorCommons.Slot.BODY, raceData, raceData._bodies)
+	else:
+		var raceData : RaceData = DB.GetRace(entity.stat.race)
+		if raceData:
+			SetSkinSlot(ActorCommons.Slot.BODY, raceData, raceData._bodies)
 
 func SetFace():
 	if entity.stat.race == DB.UnknownHash:
@@ -165,7 +178,7 @@ func SetData(slot : int, data : EntityData):
 	if not sprite:
 		return
 
-	if data and  slot == ActorCommons.Slot.BODY:
+	if data and slot == ActorCommons.Slot.BODY:
 		if data._customTexture:
 			sprite.set_texture(FileSystem.LoadGfx(data._customTexture))
 		if data._customMaterial:
