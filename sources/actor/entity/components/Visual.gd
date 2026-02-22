@@ -18,6 +18,7 @@ var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
 
 var blendSpacePaths : Dictionary[int, String]	= {}
 var timeScalePaths : Dictionary[int, String]	= {}
+var stateNamePaths : Dictionary[int, String]	= {}
 
 var skillCastID : int						= DB.UnknownHash
 var attackAnimLength : float				= 1.0
@@ -49,10 +50,10 @@ func LoadData(data : EntityData):
 	ResetData()
 
 	# Collision
-	if data._collision and get_parent().type == ActorCommons.Type.PLAYER:
+	if data._collision and entity.type == ActorCommons.Type.PLAYER:
 		collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
 		if collision:
-			get_parent().add_child.call_deferred(collision)
+			entity.add_child.call_deferred(collision)
 
 	# Sprite Preset
 	if data._spritePreset:
@@ -84,60 +85,39 @@ func LoadData(data : EntityData):
 
 	ResetAnimationValue()
 
-func SetBody():
-	var slotName : String = ActorCommons.GetSlotName(ActorCommons.Slot.BODY)
-	var sprite : Sprite2D = preset.get_node_or_null(slotName)
+func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array):
+	var sprite : Sprite2D = preset.get_node_or_null(ActorCommons.GetSlotName(slot))
 	if not sprite:
 		return
 
+	var slotTexture : Texture2D = sprite.get_texture()
+	var slotMaterial : Material = null
+
+	if not entity.stat.IsMorph():
+		slotTexture = FileSystem.LoadGfx(textures[entity.stat.gender])
+		if entity.stat.skintone in raceData._skins:
+			var skinData : FileData = raceData._skins[entity.stat.skintone]
+			if skinData and not skinData._path.is_empty():
+				slotMaterial = FileSystem.LoadPalette(skinData._path)
+
+	sprite.set_texture(slotTexture)
+	sprite.set_material(slotMaterial)
+	LoadSpriteSlot(slot, sprite)
+
+func SetBody():
 	if entity.stat.race == DB.UnknownHash:
 		SetData(ActorCommons.Slot.BODY, entity.data)
 		return
-
 	var raceData : RaceData = DB.GetRace(entity.stat.race)
-	if raceData == null:
-		return
-
-	var slotTexture : Texture2D = sprite.get_texture()
-	var slotMaterial : Material = null
-
-	if not entity.stat.IsMorph():
-		slotTexture = FileSystem.LoadGfx(raceData._bodies[entity.stat.gender])
-		if entity.stat.skintone in raceData._skins:
-			var skinData : FileData = raceData._skins[entity.stat.skintone]
-			if skinData and not skinData._path.is_empty():
-				slotMaterial = FileSystem.LoadPalette(raceData._skins[entity.stat.skintone]._path)
-
-	sprite.set_texture(slotTexture)
-	sprite.set_material(slotMaterial)
-	LoadSpriteSlot(ActorCommons.Slot.BODY, sprite)
+	if raceData:
+		SetSkinSlot(ActorCommons.Slot.BODY, raceData, raceData._bodies)
 
 func SetFace():
-	var slotName : String = ActorCommons.GetSlotName(ActorCommons.Slot.FACE)
-	var sprite : Sprite2D = preset.get_node_or_null(slotName)
-	if not sprite:
-		return
-
 	if entity.stat.race == DB.UnknownHash:
 		return
-
 	var raceData : RaceData = DB.GetRace(entity.stat.race)
-	if raceData == null:
-		return
-
-	var slotTexture : Texture2D = sprite.get_texture()
-	var slotMaterial : Material = null
-
-	if not entity.stat.IsMorph():
-		slotTexture = FileSystem.LoadGfx(raceData._faces[entity.stat.gender])
-		if entity.stat.skintone in raceData._skins:
-			var skinData : FileData = raceData._skins[entity.stat.skintone]
-			if skinData and not skinData._path.is_empty():
-				slotMaterial = FileSystem.LoadPalette(raceData._skins[entity.stat.skintone]._path)
-
-	sprite.set_texture(slotTexture)
-	sprite.set_material(slotMaterial)
-	LoadSpriteSlot(ActorCommons.Slot.FACE, sprite)
+	if raceData:
+		SetSkinSlot(ActorCommons.Slot.FACE, raceData, raceData._faces)
 
 func SetHair():
 	var slotName : String = ActorCommons.GetSlotName(ActorCommons.Slot.HAIR)
@@ -194,12 +174,15 @@ func SetData(slot : int, data : EntityData):
 	LoadSpriteSlot(slot, sprite)
 
 func LoadAnimationPaths():
+	if animation.has_animation("AttackDown"):
+		var attackAnim : Animation = animation.get_animation("AttackDown")
+		attackAnimLength = attackAnim.length if attackAnim else 1.0
+
 	for i in ActorCommons.State.COUNT:
 		var stateName : String		= ActorCommons.GetStateName(i)
 		var blendSpace : String		= "parameters/%s/BlendSpace2D/blend_position" % [stateName]
-		if animation.has_animation("AttackDown"):
-			var attackAnim : Animation	= animation.get_animation("AttackDown")
-			attackAnimLength = attackAnim.length if attackAnim else 1.0
+
+		stateNamePaths[i] = stateName
 
 		if blendSpace in animationTree:
 			blendSpacePaths[i] = blendSpace
@@ -215,9 +198,9 @@ func UpdateScale():
 		return
 
 	if ActorCommons.State.WALK in timeScalePaths:
-		animationTree[timeScalePaths[ActorCommons.State.WALK]] = Formula.GetWalkRatio(get_parent().stat)
-	if ActorCommons.State.ATTACK in timeScalePaths and get_parent().stat.current.castAttackDelay > 0:
-		animationTree[timeScalePaths[ActorCommons.State.ATTACK]] = attackAnimLength / get_parent().stat.current.castAttackDelay
+		animationTree[timeScalePaths[ActorCommons.State.WALK]] = Formula.GetWalkRatio(entity.stat)
+	if ActorCommons.State.ATTACK in timeScalePaths and entity.stat.current.castAttackDelay > 0:
+		animationTree[timeScalePaths[ActorCommons.State.ATTACK]] = attackAnimLength / entity.stat.current.castAttackDelay
 
 func ResetAnimationValue():
 	if not animationTree:
@@ -235,17 +218,15 @@ func GetPlayerOffset() -> int:
 
 #
 func Init(data : EntityData):
-	Callback.PlugCallback(get_parent().stat.entity_stats_updated, self.UpdateScale)
+	Callback.PlugCallback(entity.stat.entity_stats_updated, self.UpdateScale)
 	LoadData(data)
 
 func RefreshTree(resetOnTeleport : bool = true):
 	if previousState in blendSpacePaths:
-		var blendSpacePath : String = blendSpacePaths[previousState]
-		animationTree[blendSpacePath] = previousOrientation
+		animationTree[blendSpacePaths[previousState]] = previousOrientation
 
-	if resetOnTeleport:
-		var stateName : String = ActorCommons.GetStateName(previousState)
-		animationTree[ActorCommons.playbackParameter].travel(stateName, true)
+	if resetOnTeleport and previousState in stateNamePaths:
+		animationTree[ActorCommons.playbackParameter].travel(stateNamePaths[previousState], true)
 
 		# Random default offset for IDLE and UNKNOWN state of [0;1] second
 		if previousState <= ActorCommons.State.IDLE:
@@ -259,10 +240,10 @@ func _process(_delta):
 	if not animationTree:
 		return
 
-	var currentVelocity : Vector2 = get_parent().entityVelocity
+	var currentVelocity : Vector2 = entity.entityVelocity
 	var isMoving : bool = currentVelocity.length_squared() > 1
-	var newOrientation : Vector2 = currentVelocity.normalized() if isMoving else get_parent().entityOrientation
-	var newState : ActorCommons.State = ActorCommons.State.WALK if isMoving else get_parent().state
+	var newOrientation : Vector2 = currentVelocity.normalized() if isMoving else entity.entityOrientation
+	var newState : ActorCommons.State = ActorCommons.State.WALK if isMoving else entity.state
 	var differentState : bool = previousState != newState
 	if previousOrientation != newOrientation or differentState:
 		previousState = newState
