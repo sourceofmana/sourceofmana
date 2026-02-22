@@ -610,4 +610,14 @@
 		"DisplayName": false,
 		"QuestFilter": {"GRAIN_IN_THE_SAND": "STARTED"},
 	},
+	"2017": {
+		"Name": "Nicolas",
+		"Parent" : "StaticNPC",
+		"Texture": "sprites/npcs/nicolas.png",
+		"Stat": {
+			"gender": "Male",
+			"race": "Kralog",
+			"skintone": "Fire",
+		},
+	},
 }

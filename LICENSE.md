@@ -390,6 +390,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/npcs/floor-barrel.png [Reid]
 ./graphics/sprites/npcs/gabz.png [Reid]
 ./graphics/sprites/npcs/large-chest.png [Reid]
+./graphics/sprites/npcs/nicolas.png [Yuuki]
 ./graphics/sprites/npcs/nina.png [Reid] [Freya]
 ./graphics/sprites/npcs/riskim.png [Kyokai] [Reid]
 ./graphics/sprites/npcs/wie.png [Kyokai] [Reid]
