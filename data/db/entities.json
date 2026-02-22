@@ -600,5 +600,6 @@
 		"Parent" : "StaticNPC",
 		"Texture": "sprites/npcs/floor-barrel.png",
 		"DisplayName": false,
+		"QuestFilter": {"GRAIN_IN_THE_SAND": "STARTED"},
 	},
 }

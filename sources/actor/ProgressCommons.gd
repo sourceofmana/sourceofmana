@@ -26,3 +26,13 @@ enum GRAIN_IN_THE_SAND
 	SEARCHED_CRATES,
 	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
 }
+
+# Quest state lookup
+static var QuestStates : Dictionary[Quest, Variant] = {
+	Quest.SPLATYNA_OFFERING: SPLATYNA_OFFERING,
+	Quest.GRAIN_IN_THE_SAND: GRAIN_IN_THE_SAND,
+}
+
+static func GetQuestStateID(questID : int, stateName : String) -> int:
+	var questState : Variant = QuestStates.get(questID)
+	return questState.get(stateName, UnknownProgress) if questState else UnknownProgress

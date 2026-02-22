@@ -19,6 +19,8 @@ class_name EntityData
 @export var _drops : PackedInt64Array			= []
 @export var _dropsProba : Dictionary[int, float]= {}
 @export var _spawns : Dictionary[int, int]		= {}
+@export var _questID : int						= ProgressCommons.Quest.UNKNOWN
+@export var _questState : int					= ProgressCommons.UnknownProgress
 
 const hashedStats : PackedStringArray			= ["race", "skintone", "hairstyle", "haircolor"]
 
@@ -84,5 +86,9 @@ static func Create(result : Dictionary) -> EntityData:
 		for entityName in result.Spawns:
 			var entityID : int = entityName.hash()
 			entity._spawns[entityID] = int(result.Spawns[entityName])
+	if "QuestFilter" in result:
+		for questName in result.QuestFilter:
+			entity._questID = ProgressCommons.Quest.get(questName, ProgressCommons.Quest.UNKNOWN)
+			entity._questState = ProgressCommons.GetQuestStateID(entity._questID, result.QuestFilter[questName])
 
 	return entity

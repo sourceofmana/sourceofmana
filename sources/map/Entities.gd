@@ -33,6 +33,10 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 	for entity in entities.values():
 		if entity and entity != currentEntity and entity.state != ActorCommons.State.DEATH:
 			if entity.type == ActorCommons.Type.MONSTER or (interactable and entity.type == ActorCommons.Type.NPC):
+				var entityData : EntityData = DB.EntitiesDB.get(entity.stat.currentShape, null)
+				if entityData and entityData._questID != ProgressCommons.Quest.UNKNOWN:
+					if Launcher.Player.progress.GetQuest(entityData._questID) != entityData._questState:
+						continue
 				var distance : float = source.distance_squared_to(entity.position)
 				if distance > ActorCommons.TargetMaxSquaredDistance:
 					continue
