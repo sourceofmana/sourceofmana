@@ -595,4 +595,10 @@
 		"Parent" : "StaticNPC",
 		"Texture": "sprites/npcs/riskim.png",
 	},
+	"2016": {
+		"Name": "Floor Barrel",
+		"Parent" : "StaticNPC",
+		"Texture": "sprites/npcs/floor-barrel.png",
+		"DisplayName": false,
+	},
 }

@@ -10,12 +10,12 @@ func OnStart():
 	match questState:
 		ProgressCommons.GRAIN_IN_THE_SAND.INACTIVE:
 			OnInactive()
-		ProgressCommons.GRAIN_IN_THE_SAND.STARTED:
-			OnKeepLooking()
 		ProgressCommons.GRAIN_IN_THE_SAND.SEARCHED_CRATES:
 			OnReward()
 		ProgressCommons.GRAIN_IN_THE_SAND.REWARDS_WITHDREW:
 			OnComplete()
+		_:
+			OnKeepLooking()
 
 # Quest states
 func OnInactive():
@@ -47,12 +47,13 @@ func CompleteChoice(previousChoice : int = -1):
 	if previousChoice != 0:
 		Choice("Tell me about Artis.", OnAskArtis)
 	if previousChoice != 1:
-		Choice("How does Tulimshar survive out here?", OnAskCity)
+		Choice("How does Tulimshar survive?", OnAskCity)
 	if previousChoice != 2:
 		Choice("What's Sandstorm Bread?", OnAskBread)
 	if previousChoice != 3:
 		Choice("Does anything grow out here?", OnAskDesert)
-	Choice("Take care, Riskim.", OnFarewell)
+	if previousChoice != -1:
+		Choice("Take care.", OnFarewell)
 
 # Optional dialogue
 func OnAskBread():
