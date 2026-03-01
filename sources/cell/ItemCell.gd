@@ -21,4 +21,5 @@ func Use():
 #
 func _init():
 	super._init()
-	textures.resize(ActorCommons.Gender.COUNT)
+	if slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_EQUIPMENT:
+		textures.resize(ActorCommons.Gender.COUNT)

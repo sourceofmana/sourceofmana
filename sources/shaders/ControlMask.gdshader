@@ -2,21 +2,12 @@ shader_type canvas_item;
 
 uniform float progress : hint_range(0.0, 1.0) = 1.0;
 uniform bool inverted = false;
+uniform float edge_softness : hint_range(0.0, 0.2) = 0.05;
 
 void fragment() {
-	vec4 custom_color = texture(TEXTURE, UV);
-	if (custom_color.a != 0.0)
-	{
-		// Convert UV coordinates to local coordinates within the TextureRect
-		vec2 local_uv = vec2(mod(SCREEN_UV, 1.0));
-		float oriented_UV = inverted ? 1.0 - local_uv.x : local_uv.x;
-		if (progress == 0.0)
-		{
-			COLOR.a = 0.0;
-		}
-		else if (oriented_UV >= progress)
-		{
-			COLOR.a = custom_color.a * clamp(1.0 - (oriented_UV - progress) / progress, 0.0, 1.0);
-		}
-	}
+	float oriented_uv = inverted ? 1.0 - UV.x : UV.x;
+	float shifted = mix(-edge_softness, 1.0 + edge_softness, progress);
+	float mask = 1.0 - smoothstep(shifted - edge_softness, shifted + edge_softness, oriented_uv);
+	COLOR = texture(TEXTURE, UV);
+	COLOR.a *= mask;
 }

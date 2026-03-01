@@ -1,4 +1,5 @@
 extends Button
+class_name WindowButton
 
 @export var targetWindow : Control = null
 @export var targetShortcut : StringName = ""

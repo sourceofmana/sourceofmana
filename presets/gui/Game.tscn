@@ -65,6 +65,7 @@
 shader = ExtResource("4_60kv4")
 shader_parameter/progress = 0.0
 shader_parameter/inverted = true
+shader_parameter/edge_softness = 0.05
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hg7ie"]
 texture = ExtResource("4_ah7dm")
@@ -178,7 +179,6 @@ texture = ExtResource("6_mf0sy")
 stretch_mode = 3
 
 [node name="HBoxItems" type="HBoxContainer" parent="Overlay/VSections/Indicators/Menu/MenuContent" unique_id=1930884178]
-use_parent_material = true
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -195,7 +195,6 @@ size_flags_vertical = 0
 alignment = 2
 
 [node name="Inventory" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1398346524 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
 layout_mode = 2
 icon = ExtResource("5_ntnop")
 flat = true
@@ -204,7 +203,6 @@ targetWindow = NodePath("../../../../../../../Windows/Floating/Inventory")
 targetShortcut = &"ui_inventory"
 
 [node name="Skill" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1054257533 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
 layout_mode = 2
 icon = ExtResource("13_h6wc7")
 flat = true
@@ -212,7 +210,6 @@ targetWindow = NodePath("../../../../../../../Windows/Floating/Skill")
 targetShortcut = &"ui_skill"
 
 [node name="Emote" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=498199983 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
 layout_mode = 2
 icon = ExtResource("8_ppxwt")
 flat = true
@@ -220,7 +217,6 @@ targetWindow = NodePath("../../../../../../../Windows/Floating/Emote")
 targetShortcut = &"ui_emote"
 
 [node name="Chat" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1407037298 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
 layout_mode = 2
 icon = ExtResource("6_2quic")
 flat = true
@@ -228,7 +224,6 @@ targetWindow = NodePath("../../../../../../../Windows/Floating/Chat")
 targetShortcut = &"ui_chat"
 
 [node name="Minimap" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=713811777 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
 layout_mode = 2
 icon = ExtResource("7_cv35r")
 flat = true
@@ -236,7 +231,6 @@ targetWindow = NodePath("../../../../../../../Windows/Floating/Minimap")
 targetShortcut = &"ui_minimap"
 
 [node name="Progress" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=39792699 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
 layout_mode = 2
 icon = ExtResource("9_vtuwx")
 flat = true
@@ -244,7 +238,6 @@ targetWindow = NodePath("../../../../../../../Windows/Floating/Progress")
 targetShortcut = &"ui_progress"
 
 [node name="Credits" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1520835010 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
 layout_mode = 2
 icon = ExtResource("10_mq57a")
 flat = true
@@ -252,7 +245,6 @@ targetWindow = NodePath("../../../../../../../Windows/Floating/Credit")
 targetShortcut = &"ui_credits"
 
 [node name="Settings" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=55081747 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-use_parent_material = true
 layout_mode = 2
 icon = ExtResource("11_17vy0")
 flat = true
@@ -300,6 +292,7 @@ theme_type_variation = &"PanelSideLeft"
 persistant = false
 
 [node name="Dialogue" parent="Overlay/VSections/Contexts" unique_id=1202850709 instance=ExtResource("24_fqnq4")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
