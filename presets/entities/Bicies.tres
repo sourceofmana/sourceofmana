@@ -11,7 +11,6 @@ script = ExtResource("2_sc3qd")
 _parent = ExtResource("4_7hws1")
 _id = 2843189460
 _name = "Bicies"
-_equipment = Array[ExtResource("1_hd3nl")]([ExtResource("2_8x1jr"), ExtResource("3_7hws1"), null, null, null, null, null, null])
 _stats = {
 "gender": "Male",
 "haircolor": "Dark Brown",
@@ -20,5 +19,6 @@ _stats = {
 "race": "Human",
 "skintone": "Dark"
 }
+_equipment = Array[ExtResource("1_hd3nl")]([ExtResource("2_8x1jr"), ExtResource("3_7hws1"), null, null, null, null, null, null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

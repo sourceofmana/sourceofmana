@@ -10,10 +10,10 @@ _name = "Piou"
 _spritePreset = "Piou"
 _collision = "Medium"
 _radius = 8
-_equipment = Array[ExtResource("1_q3awk")]([null, null, null, null, null, null, null, null])
 _stats = {
 "level": 1,
 "walkSpeed": 30.0
 }
+_equipment = Array[ExtResource("1_q3awk")]([null, null, null, null, null, null, null, null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

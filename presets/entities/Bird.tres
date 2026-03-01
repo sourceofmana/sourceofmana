@@ -10,11 +10,11 @@ _name = "Bird"
 _spritePreset = "Bird"
 _collision = "Medium"
 _radius = 20
-_equipment = Array[ExtResource("1_w8ot5")]([null, null, null, null, null, null, null, null])
 _stats = {
 "castAttackDelay": 0.1,
 "level": 1,
 "walkSpeed": 200.0
 }
+_equipment = Array[ExtResource("1_w8ot5")]([null, null, null, null, null, null, null, null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

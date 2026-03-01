@@ -17,14 +17,14 @@ _name = "Sand Snake"
 _spritePreset = "Generic4Directions"
 _collision = "Medium"
 _radius = 16
-_equipment = Array[ExtResource("1_uctx6")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/snake.png"
-_customMaterial = SubResource("Resource_5d3f5")
-_behaviour = 4
 _stats = {
 "castAttackDelay": 0.5,
 "level": 1,
 "walkSpeed": 110.0
 }
+_equipment = Array[ExtResource("1_uctx6")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/snake.png"
+_customMaterial = SubResource("Resource_5d3f5")
+_behaviour = 4
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()
