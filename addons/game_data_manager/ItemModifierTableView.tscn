@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://ekskvsu6som5"]
+
+[ext_resource type="Script" uid="uid://dif56ty00w0v2" path="res://addons/game_data_manager/ItemModifierTableView.gd" id="1_item_modifier"]
+
+[node name="ItemModifierTableView" type="Control" unique_id=744252190]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_item_modifier")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=88947902]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="HBoxContainer" parent="VBoxContainer" unique_id=2025613836]
+layout_mode = 2
+
+[node name="RefreshButton" type="Button" parent="VBoxContainer/TopBar" unique_id=183478480]
+layout_mode = 2
+text = "Refresh"
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TopBar" unique_id=1626058759]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TopBar" unique_id=687878815]
+layout_mode = 2
+text = "Search:"
+
+[node name="SearchField" type="LineEdit" parent="VBoxContainer/TopBar" unique_id=2119836684]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Filter items by name..."
+
+[node name="ItemCount" type="Label" parent="VBoxContainer/TopBar" unique_id=1877426023]
+layout_mode = 2
+text = "0 items"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1056986725]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="VBoxContainer/ScrollContainer" unique_id=1379714125]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+column_titles_visible = true
+hide_root = true
+
+[connection signal="pressed" from="VBoxContainer/TopBar/RefreshButton" to="." method="_on_refresh_pressed"]
+[connection signal="text_changed" from="VBoxContainer/TopBar/SearchField" to="." method="_on_search_changed"]
+[connection signal="item_edited" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_edited"]

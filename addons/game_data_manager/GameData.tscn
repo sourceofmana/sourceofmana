@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://cjg64w82poqg3"]
+
+[ext_resource type="PackedScene" uid="uid://c8yn5xp4q0kew" path="res://addons/game_data_manager/ItemTableView.tscn" id="1_ximun"]
+[ext_resource type="PackedScene" uid="uid://ekskvsu6som5" path="res://addons/game_data_manager/ItemModifierTableView.tscn" id="2_k30rx"]
+[ext_resource type="PackedScene" uid="uid://dvcq8rbhqnm5p" path="res://addons/game_data_manager/SkillTableView.tscn" id="3_3chbd"]
+[ext_resource type="PackedScene" uid="uid://b8yn5xp4q0kew" path="res://addons/game_data_manager/SkillModifierTableView.tscn" id="4_fae5s"]
+[ext_resource type="PackedScene" uid="uid://c4j5nhq2mx37q" path="res://addons/game_data_manager/EntityTableView.tscn" id="5_c6p1j"]
+[ext_resource type="PackedScene" uid="uid://cg6lg30yr2ngy" path="res://addons/game_data_manager/EntityBaseStatsView.tscn" id="6_6tmhn"]
+[ext_resource type="PackedScene" uid="uid://b4upi2ooyvmgm" path="res://addons/game_data_manager/EntityStatsView.tscn" id="7_wu5iy"]
+[ext_resource type="PackedScene" uid="uid://civh46udpdijv" path="res://addons/game_data_manager/EntityEquipmentView.tscn" id="8_3ljk4"]
+[ext_resource type="PackedScene" uid="uid://cvwarb01swm6c" path="res://addons/game_data_manager/EntityDropsView.tscn" id="9_30upx"]
+[ext_resource type="PackedScene" uid="uid://cggq3pttkiprw" path="res://addons/game_data_manager/EntitySkillsView.tscn" id="10_6gu2f"]
+[ext_resource type="PackedScene" uid="uid://bk52sj6vf8dqn" path="res://addons/game_data_manager/EntityMigrator.tscn" id="11_jryrp"]
+
+[node name="Manager-ui" type="Control" unique_id=1312609025]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1135078041]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainTabs" type="TabContainer" parent="VBoxContainer" unique_id=1623119650]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Items" type="TabContainer" parent="VBoxContainer/MainTabs" unique_id=2097676864]
+layout_mode = 2
+current_tab = 0
+metadata/_tab_index = 0
+
+[node name="General" parent="VBoxContainer/MainTabs/Items" unique_id=1801144361 instance=ExtResource("1_ximun")]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Modifiers" parent="VBoxContainer/MainTabs/Items" unique_id=1985715002 instance=ExtResource("2_k30rx")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Skills" type="TabContainer" parent="VBoxContainer/MainTabs" unique_id=1216092278]
+visible = false
+layout_mode = 2
+current_tab = 0
+metadata/_tab_index = 1
+
+[node name="General" parent="VBoxContainer/MainTabs/Skills" unique_id=426322529 instance=ExtResource("3_3chbd")]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Modifiers" parent="VBoxContainer/MainTabs/Skills" unique_id=1490842217 instance=ExtResource("4_fae5s")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Entities" type="TabContainer" parent="VBoxContainer/MainTabs" unique_id=855884997]
+visible = false
+layout_mode = 2
+current_tab = 0
+metadata/_tab_index = 2
+
+[node name="General" parent="VBoxContainer/MainTabs/Entities" unique_id=1953589026 instance=ExtResource("5_c6p1j")]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Base Stats" parent="VBoxContainer/MainTabs/Entities" unique_id=498753066 instance=ExtResource("6_6tmhn")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Stats" parent="VBoxContainer/MainTabs/Entities" unique_id=264376813 instance=ExtResource("7_wu5iy")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Equipment" parent="VBoxContainer/MainTabs/Entities" unique_id=1993421788 instance=ExtResource("8_3ljk4")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="Drops" parent="VBoxContainer/MainTabs/Entities" unique_id=357434985 instance=ExtResource("9_30upx")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4
+
+[node name="Skills" parent="VBoxContainer/MainTabs/Entities" unique_id=1948509194 instance=ExtResource("10_6gu2f")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 5
+
+[node name="Migrator" parent="VBoxContainer/MainTabs/Entities" unique_id=275104421 instance=ExtResource("11_jryrp")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 6

@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://c4j5nhq2mx37q"]
+
+[ext_resource type="Script" uid="uid://dhlvc4l24ta77" path="res://addons/game_data_manager/EntityTableView.gd" id="1_entity"]
+
+[node name="EntityTableView" type="Control" unique_id=1237901227]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_entity")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1975426607]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="HBoxContainer" parent="VBoxContainer" unique_id=2070373682]
+layout_mode = 2
+
+[node name="CreateButton" type="Button" parent="VBoxContainer/TopBar" unique_id=1859584645]
+layout_mode = 2
+text = "Create Entity"
+
+[node name="DeleteButton" type="Button" parent="VBoxContainer/TopBar" unique_id=319420997]
+layout_mode = 2
+text = "Delete Selected"
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TopBar" unique_id=526900600]
+layout_mode = 2
+
+[node name="RefreshButton" type="Button" parent="VBoxContainer/TopBar" unique_id=1364878494]
+layout_mode = 2
+text = "Refresh"
+
+[node name="ExportCSVButton" type="Button" parent="VBoxContainer/TopBar" unique_id=338151539]
+layout_mode = 2
+text = "Export CSV"
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/TopBar" unique_id=1028854513]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TopBar" unique_id=525947074]
+layout_mode = 2
+text = "Search:"
+
+[node name="SearchField" type="LineEdit" parent="VBoxContainer/TopBar" unique_id=1787302665]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Filter entities..."
+
+[node name="Label2" type="Label" parent="VBoxContainer/TopBar" unique_id=1993150758]
+layout_mode = 2
+text = "In:"
+
+[node name="ColumnFilter" type="OptionButton" parent="VBoxContainer/TopBar" unique_id=545202983]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "All Fields"
+popup/item_0/id = 0
+
+[node name="ItemCount" type="Label" parent="VBoxContainer/TopBar" unique_id=1461691221]
+layout_mode = 2
+text = "0 entities"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1411272851]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="VBoxContainer/ScrollContainer" unique_id=1125524915]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 9
+column_titles_visible = true
+allow_reselect = true
+allow_rmb_select = true
+hide_root = true
+select_mode = 1
+
+[connection signal="pressed" from="VBoxContainer/TopBar/CreateButton" to="." method="_on_create_pressed"]
+[connection signal="pressed" from="VBoxContainer/TopBar/DeleteButton" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="VBoxContainer/TopBar/RefreshButton" to="." method="_on_refresh_pressed"]
+[connection signal="pressed" from="VBoxContainer/TopBar/ExportCSVButton" to="." method="_on_export_csv_pressed"]
+[connection signal="text_changed" from="VBoxContainer/TopBar/SearchField" to="." method="_on_search_changed"]
+[connection signal="button_clicked" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_button_clicked"]
+[connection signal="column_title_clicked" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_column_clicked"]
+[connection signal="item_activated" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_activated"]
+[connection signal="item_edited" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_edited"]

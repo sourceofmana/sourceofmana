@@ -155,7 +155,7 @@ func _on_text_focus_exited():
 	if Launcher.Action:
 		Launcher.Action.Enable(true)
 
-func _on_text_submitted(_new_text):
+func _on_text_submitted(_newText):
 	Launcher.GUI.buttonBoxes.Call(UICommons.ButtonBox.PRIMARY)
 
 #

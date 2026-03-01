@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bk52sj6vf8dqn"]
+
+[ext_resource type="Script" uid="uid://bnonwpieu0bt5" path="res://addons/game_data_manager/EntityMigrator.gd" id="1_migrator"]
+
+[node name="EntityMigrator" type="Control" unique_id=1046780260]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_migrator")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=249046158]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=721818618]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Entity Migration Tool"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=952891377]
+layout_mode = 2
+
+[node name="Description" type="Label" parent="VBoxContainer" unique_id=887826319]
+layout_mode = 2
+text = "This tool migrates entities from data/db/entities.json to individual .tres resource files in presets/entities/."
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer" unique_id=1299917363]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer" unique_id=226511809]
+layout_mode = 2
+text = "Checking status..."
+
+[node name="MigrateButton" type="Button" parent="VBoxContainer" unique_id=851500602]
+layout_mode = 2
+text = "Migrate Entities to .tres Files"
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer" unique_id=1575942855]
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer" unique_id=304866777]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=29709934]
+layout_mode = 2
+text = "Migration Log:"
+
+[node name="LogText" type="TextEdit" parent="VBoxContainer" unique_id=1854068880]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+
+[connection signal="pressed" from="VBoxContainer/MigrateButton" to="." method="_on_migrate_pressed"]

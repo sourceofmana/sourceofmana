@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://b4upi2ooyvmgm"]
+
+[ext_resource type="Script" uid="uid://xqfmkjcg2sm8" path="res://addons/game_data_manager/EntityStatsView.gd" id="1"]
+
+[node name="EntityStatsView" type="Control" unique_id=423183014]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=243269526]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="HBoxContainer" parent="VBoxContainer" unique_id=1571520475]
+layout_mode = 2
+
+[node name="RefreshButton" type="Button" parent="VBoxContainer/TopBar" unique_id=1772538183]
+layout_mode = 2
+text = "Refresh"
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TopBar" unique_id=950500988]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TopBar" unique_id=249464081]
+layout_mode = 2
+text = "Search:"
+
+[node name="SearchField" type="LineEdit" parent="VBoxContainer/TopBar" unique_id=1856660515]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Filter entities by name..."
+
+[node name="ItemCount" type="Label" parent="VBoxContainer/TopBar" unique_id=830767986]
+layout_mode = 2
+text = "0 entities"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1376756732]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="VBoxContainer/ScrollContainer" unique_id=1392076857]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+column_titles_visible = true
+hide_root = true
+
+[connection signal="pressed" from="VBoxContainer/TopBar/RefreshButton" to="." method="_on_refresh_pressed"]
+[connection signal="text_changed" from="VBoxContainer/TopBar/SearchField" to="." method="_on_search_changed"]
+[connection signal="item_edited" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_edited"]

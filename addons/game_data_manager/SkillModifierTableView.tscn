@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://b8yn5xp4q0kew"]
+
+[ext_resource type="Script" uid="uid://b5idl4j7w1xgq" path="res://addons/game_data_manager/SkillModifierTableView.gd" id="1_fwev2"]
+
+[node name="ModifierTableView" type="Control" unique_id=2123469469]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fwev2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1541759193]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="HBoxContainer" parent="VBoxContainer" unique_id=948882014]
+layout_mode = 2
+
+[node name="RefreshButton" type="Button" parent="VBoxContainer/TopBar" unique_id=706995679]
+layout_mode = 2
+text = "Refresh"
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TopBar" unique_id=35444485]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TopBar" unique_id=1156639947]
+layout_mode = 2
+text = "Search:"
+
+[node name="SearchField" type="LineEdit" parent="VBoxContainer/TopBar" unique_id=447479545]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Filter skills by name..."
+
+[node name="ItemCount" type="Label" parent="VBoxContainer/TopBar" unique_id=1732426363]
+layout_mode = 2
+text = "0 skills"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=600722703]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="VBoxContainer/ScrollContainer" unique_id=167955143]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+column_titles_visible = true
+hide_root = true
+
+[connection signal="pressed" from="VBoxContainer/TopBar/RefreshButton" to="." method="_on_refresh_pressed"]
+[connection signal="text_changed" from="VBoxContainer/TopBar/SearchField" to="." method="_on_search_changed"]
+[connection signal="item_edited" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_edited"]

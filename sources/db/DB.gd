@@ -80,11 +80,11 @@ static func ParseEntitiesDB():
 			if entity._parent:
 				entity = entity.GetMergedEntity()
 
-			for stat_name in EntityData.hashedStats:
-				if entity._stats.has(stat_name):
-					var value = entity._stats[stat_name]
+			for statStr in EntityData.hashedStats:
+				if entity._stats.has(statStr):
+					var value = entity._stats[statStr]
 					if value is String:
-						entity._stats[stat_name] = value.hash()
+						entity._stats[statStr] = value.hash()
 
 			if entity._stats.has("gender") and entity._stats["gender"] is String:
 				entity._stats["gender"] = ActorCommons.GetGenderID(entity._stats["gender"])
@@ -191,6 +191,7 @@ static func GetPalette(type : Palette, cellHash : int) -> FileData:
 
 static func GetQuest(questID : int) -> QuestData:
 	var data : QuestData = QuestsDB.get(questID, null)
+
 	assert(data != null, "Could not find the identifier %s in QuestsDB" % [questID])
 	return data
 
