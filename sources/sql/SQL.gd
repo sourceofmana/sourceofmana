@@ -236,7 +236,7 @@ func UpdateStat(charID : int, stats : ActorStats) -> bool:
 		"level" = stats.level,
 		"experience" = stats.experience,
 		"gp" = stats.gp,
-		"health" = stats.health,
+		"health" = max(1, stats.health),
 		"mana" = stats.mana,
 		"stamina" = stats.stamina,
 		"karma" = stats.karma
