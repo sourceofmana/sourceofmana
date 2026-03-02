@@ -96,8 +96,10 @@ static func CooledDown(agent : BaseAgent, target : BaseAgent, skill : SkillCell)
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	var info : AlterationInfo = SkillCommons.GetDamage(agent, target, skill, rng)
 	if target is AIAgent:
-		target.AddAttacker(agent, info.value)
+		target.AddAttacker(agent, clampi(info.value, 0, target.stat.health))
 		AI.Refresh(target)
+	# Re-calculate the clamp as AI.Refresh may have triggered the health regen
+	info.value = clampi(info.value, 0, target.stat.health)
 	target.stat.SetHealth(-info.value)
 	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill.id], true, true)
 

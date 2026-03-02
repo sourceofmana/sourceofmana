@@ -47,7 +47,6 @@ static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillCell, 
 		info.type = ActorCommons.Alteration.HIT
 		info.value = ceili(info.value * rng)
 
-	info.value += min(0, target.stat.health - info.value)
 	if info.value <= 0:
 		info.type = ActorCommons.Alteration.DODGE
 
