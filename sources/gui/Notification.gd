@@ -1,39 +1,48 @@
-extends RichTextLabel
+extends Control
 
-#
-@export var modulateInScaler : float	 = 10.0
-@export var modulateOutScaler : float	 = 2.0
+@export var openSpeed : float	= 4.0
+@export var closeSpeed : float	= 1.5
 
-@onready var timer : Timer				= $Timer
+@onready var clip : Control			= $ClipContainer
+@onready var label : RichTextLabel	= $ClipContainer/Label
+@onready var timer : Timer			= $Timer
 
-var way : UICommons.Way					= UICommons.Way.KEEP
+const HALF_WIDTH : float = 250.0
+var tween : Tween = null
 
 #
 func AddNotification(notif : String, delay : float = 5.0):
 	ClearNotification()
 	if notif.length() > 0 and delay > 0.0:
-		text = "[center]%s[/center]" % notif
+		label.text = "[center]%s[/center]" % notif
 		timer.start(delay)
-		way = UICommons.Way.SHOW
+		Animate(1.0, openSpeed)
 
 func ClearNotification():
 	if not timer.is_stopped():
 		timer.stop()
+	Animate(0.0, closeSpeed)
 
-	way = UICommons.Way.HIDE
+#
+func Animate(target : float, speed : float) -> void:
+	if tween:
+		tween.kill()
+	var current_half : float = clip.offset_right
+	var target_half : float = HALF_WIDTH * target
+	var duration : float = absf(target_half - current_half) / (HALF_WIDTH * speed)
+	tween = create_tween()
+	tween.tween_method(
+		func(v : float):
+			clip.offset_left = -v
+			clip.offset_right = v,
+		current_half, target_half, duration
+	)
 
 #
 func _on_timer_timeout():
 	ClearNotification()
 
 #
-func _physics_process(delta : float):
-	if way == UICommons.Way.SHOW and modulate.a < 1.0:
-		modulate.a = clampf(modulate.a + delta * modulateInScaler, 0.0, 1.0)
-	elif way == UICommons.Way.HIDE and modulate.a > 0.0:
-		modulate.a = clampf(modulate.a - delta * modulateOutScaler, 0.0, 1.0)
-	else:
-		way = UICommons.Way.KEEP
-
 func _ready():
-	modulate.a = 0.0
+	clip.offset_left = 0.0
+	clip.offset_right = 0.0

@@ -3,18 +3,37 @@
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_mgiqr"]
 [ext_resource type="Script" uid="uid://bjbq5k66ht6m7" path="res://sources/gui/PickUp.gd" id="2_o631f"]
 
-[node name="PickUp" type="PanelContainer" unique_id=1658948349]
-custom_minimum_size = Vector2(0, 62)
-offset_right = 156.0
-offset_bottom = 55.0
+[node name="PickUp" type="Control" unique_id=1658948349]
+layout_mode = 3
+anchors_preset = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
-theme = ExtResource("1_mgiqr")
-theme_type_variation = &"DialogueBox"
 script = ExtResource("2_o631f")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1380758529]
+[node name="ClipContainer" type="Control" parent="." unique_id=1380758529]
+clip_contents = true
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_top = 0.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="ClipContainer" unique_id=2947361284]
+layout_mode = 0
+custom_minimum_size = Vector2(0, 62)
+mouse_filter = 2
+theme = ExtResource("1_mgiqr")
+theme_type_variation = &"DialogueBox"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ClipContainer/PanelContainer" unique_id=3815204917]
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
+
+[node name="Timer" type="Timer" parent="." unique_id=552934611]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

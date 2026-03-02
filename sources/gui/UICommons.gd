@@ -16,13 +16,6 @@ const DelayPickUpNotification : float				= 5.0 * 1000.0
 const DialogueTextSpeed : float						= 0.02
 
 #
-enum Way
-{
-	HIDE = -1,
-	KEEP = 0,
-	SHOW = 1,
-}
-
 enum ButtonBox
 {
 	PRIMARY = 0,

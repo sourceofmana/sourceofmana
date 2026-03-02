@@ -5,8 +5,8 @@ extends ServiceBase
 # Overlay
 @onready var menu : Control						= $Overlay/VSections/Indicators/Menu
 @onready var stats : Control					= $Overlay/VSections/Indicators/Stat
-@onready var notificationLabel : RichTextLabel	= $Overlay/VSections/Indicators/Info/Notification
-@onready var pickupPanel : PanelContainer		= $Overlay/VSections/Indicators/Info/PickUp
+@onready var notificationLabel : Control		= $Overlay/VSections/Indicators/Info/Notification
+@onready var pickupPanel : Control				= $Overlay/VSections/Indicators/Info/PickUp
 
 # Contexts
 @onready var loadingControl : Control			= $Overlay/VSections/Contexts/Loading

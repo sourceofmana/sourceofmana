@@ -191,7 +191,6 @@ static func GetPalette(type : Palette, cellHash : int) -> FileData:
 
 static func GetQuest(questID : int) -> QuestData:
 	var data : QuestData = QuestsDB.get(questID, null)
-
 	assert(data != null, "Could not find the identifier %s in QuestsDB" % [questID])
 	return data
 

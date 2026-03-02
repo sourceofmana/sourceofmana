@@ -138,7 +138,6 @@ size_flags_vertical = 4
 mouse_filter = 1
 
 [node name="Notification" parent="Overlay/VSections/Indicators/Info" unique_id=1195237028 instance=ExtResource("17_64u4l")]
-modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = -250.0
 offset_top = -19.0
@@ -147,6 +146,7 @@ offset_bottom = 17.0
 
 [node name="PickUp" parent="Overlay/VSections/Indicators/Info" unique_id=530703044 instance=ExtResource("21_5ivxk")]
 visible = false
+custom_minimum_size = Vector2(0, 62)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -156,6 +156,8 @@ offset_right = 61.0
 offset_bottom = 91.0
 grow_horizontal = 2
 mouse_filter = 1
+theme = ExtResource("4_wx5hs")
+theme_type_variation = &"DialogueBox"
 
 [node name="Menu" type="Control" parent="Overlay/VSections/Indicators" unique_id=349554582]
 visible = false
