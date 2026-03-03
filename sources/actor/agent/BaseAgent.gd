@@ -59,12 +59,16 @@ func SetState(wantedState : ActorCommons.State) -> bool:
 	if nextState != state:
 		requireFullUpdate = true
 		state = nextState
+		if self is AIAgent:
+			set_physics_process(true)
 	return state == wantedState
 
 func SetSkillCastID(skillID : int):
 	if currentSkillID != skillID:
 		requireFullUpdate = true
 		currentSkillID = skillID
+		if self is AIAgent:
+			set_physics_process(true)
 
 func AddSkill(cell : SkillCell, proba : float):
 	if cell:
@@ -91,6 +95,9 @@ func WalkToward(pos : Vector2):
 	if pos == position:
 		return
 
+	if self is AIAgent:
+		set_physics_process(true)
+
 	if SkillCommons.CanCast(self):
 		Skill.Stopped(self)
 
@@ -105,6 +112,8 @@ func LookAt(target : BaseAgent):
 		if not newOrientation.is_equal_approx(currentDirection):
 			currentOrientation = newOrientation
 			requireFullUpdate = true
+			if self is AIAgent:
+				set_physics_process(true)
 
 func ResetNav():
 	WalkToward(position)
@@ -246,6 +255,8 @@ func _velocity_computed(safeVelocity : Vector2i):
 	var wasZero : bool = velocity.is_zero_approx()
 	var isZero : bool = safeVelocity == Vector2i.ZERO
 	if wasZero and isZero:
+		if self is AIAgent:
+			set_physics_process(false)
 		return
 
 	if wasZero or isZero:

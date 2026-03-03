@@ -191,14 +191,17 @@ func SetAttributes(newStrength: int, newVitality: int, newAgility: int, newEndur
 
 func SetHealth(bonus : int):
 	health = clampi(health + bonus, 0, current.maxHealth)
+	vital_stats_updated.emit()
 	if health <= 0:
 		actor.Killed()
 
 func SetMana(bonus : int):
 	mana = clampi(mana + bonus, 0, current.maxMana)
+	vital_stats_updated.emit()
 
 func SetStamina(bonus : int):
 	stamina = clampi(stamina + bonus, 0, current.maxStamina)
+	vital_stats_updated.emit()
 
 func AddExperience(value : int):
 	if not ActorCommons.IsAlive(actor) or value <= 0:
@@ -210,6 +213,7 @@ func AddExperience(value : int):
 		experience -= experiencelNeeded
 		level += 1
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
+	vital_stats_updated.emit()
 	if actor is PlayerAgent:
 		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.EXP, DB.UnknownHash, actor.peerID)
 
@@ -217,5 +221,6 @@ func AddGP(value : int):
 	if not ActorCommons.IsAlive(actor) or value <= 0:
 		return
 	gp += value
+	vital_stats_updated.emit()
 	if actor is PlayerAgent:
 		Network.TargetAlteration(actor.peerID, actor.peerID, value, ActorCommons.Alteration.GP, DB.UnknownHash, actor.peerID)

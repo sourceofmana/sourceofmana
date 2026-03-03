@@ -300,6 +300,7 @@ static var TargetMaxSquaredDistance : float	= TargetMaxDistance * TargetMaxDista
 # Lifetime
 const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
 const RegenDelay : float					= 3.0
+const RegenTickInterval : float				= 0.5
 const DeathDelay : float					= 10.0
 const DisplayHPDelay : float				= 7.0
 const MapProcessingToggleDelay : float		= 10.0

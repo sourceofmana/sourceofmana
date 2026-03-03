@@ -61,6 +61,8 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	if previousState != nextState and nextState == ActorCommons.State.DEATH:
 		entity_died.emit()
 
+	set_physics_process(true)
+
 # Local player specific functions
 func SetLocalPlayer():
 	collision_layer |= 2
@@ -154,6 +156,8 @@ func _physics_process(delta : float):
 		move_and_slide()
 		if Launcher.Player == self:
 			Launcher.Map.PlayerMoved.emit()
+	else:
+		set_physics_process(false)
 
 func _ready():
 	if Launcher.Player == self:

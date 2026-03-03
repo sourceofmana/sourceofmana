@@ -8,6 +8,9 @@ var respawnDestination : Destination	= null
 var exploreOrigin : Destination			= null
 var ownScript : NpcScript				= null
 
+var regenTimer : Timer					= null
+var statsUpdatePending : bool			= false
+
 #
 static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
 
@@ -129,13 +132,31 @@ func SetRunning(enable : bool):
 			requireFullUpdate = true
 
 #
-func _physics_process(delta):
-	super._physics_process(delta)
-	UpdateDeltas(delta)
+func OnRegenTick():
+	UpdateDeltas(ActorCommons.RegenTickInterval)
+
+func RequestStatsUpdate():
+	if not statsUpdatePending:
+		statsUpdatePending = true
+		call_deferred("FlushStatsUpdate")
+
+func FlushStatsUpdate():
+	statsUpdatePending = false
 	UpdateLastStats()
 
 func _ready():
 	super._ready()
+
+	regenTimer = Timer.new()
+	regenTimer.set_name("RegenTimer")
+	regenTimer.set_one_shot(false)
+	regenTimer.set_wait_time(ActorCommons.RegenTickInterval)
+	regenTimer.autostart = true
+	regenTimer.timeout.connect(OnRegenTick)
+	add_child.call_deferred(regenTimer)
+
+	stat.entity_stats_updated.connect(RequestStatsUpdate)
+	stat.vital_stats_updated.connect(RequestStatsUpdate)
 
 func _exit_tree():
 	ClearScript()
