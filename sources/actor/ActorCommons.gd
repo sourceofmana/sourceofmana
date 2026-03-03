@@ -329,6 +329,7 @@ const DisplacementVector : Vector2			= Vector2(32, 32)
 const MismatchPathSquaredThreshold : float	= 32 * 32
 const MaxDisplacementSquareLength : float	= 64 * 64
 const InputApproximationUnit : int			= 16
+const MinVelocityThreshold : float			= 5
 static var InputApproximationDelta : float	= 360.0 / InputApproximationUnit
 
 # Camera

@@ -52,9 +52,11 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 		stat.isRunning = isRunning
 		stat.RefreshEntityStats()
 
-	if visual and visual.skillCastID != nextskillCastID:
-		visual.skillCastID = nextskillCastID
-		interactive.DisplayCast(self, nextskillCastID)
+	if visual:
+		if visual.skillCastID != nextskillCastID:
+			visual.skillCastID = nextskillCastID
+			interactive.DisplayCast(self, nextskillCastID)
+		visual.Refresh()
 
 	if previousState != nextState and nextState == ActorCommons.State.DEATH:
 		entity_died.emit()

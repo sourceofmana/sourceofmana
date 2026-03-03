@@ -250,10 +250,11 @@ func _velocity_computed(safeVelocity : Vector2i):
 
 	if wasZero or isZero:
 		requireFullUpdate = true
-	elif self is PlayerAgent or currentVelocity.distance_squared_to(velocity) > ActorCommons.InputApproximationUnit:
+		velocity = currentVelocity
+	elif abs(currentVelocity.x - velocity.x) > ActorCommons.MinVelocityThreshold or abs(currentVelocity.y - velocity.y) > ActorCommons.MinVelocityThreshold:
 		requireUpdate = true
+		velocity = currentVelocity
 
-	velocity = currentVelocity
 	if velocity != Vector2.ZERO:
 		currentOrientation = velocity.normalized()
 		move_and_slide()

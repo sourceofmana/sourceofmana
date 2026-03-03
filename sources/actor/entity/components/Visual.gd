@@ -16,9 +16,9 @@ var sprites : Array[Sprite2D]				= []
 var previousOrientation : Vector2			= Vector2.ZERO
 var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
 
-var blendSpacePaths : Dictionary[int, String]	= {}
-var timeScalePaths : Dictionary[int, String]	= {}
-var stateNamePaths : Dictionary[int, String]	= {}
+var blendSpacePaths : Array[String]				= []
+var walkTimeScalePath : String					= ""
+var attackTimeScalePath : String				= ""
 
 var skillCastID : int						= DB.UnknownHash
 var attackAnimLength : float				= 1.0
@@ -191,29 +191,36 @@ func LoadAnimationPaths():
 		var attackAnim : Animation = animation.get_animation("AttackDown")
 		attackAnimLength = attackAnim.length if attackAnim else 1.0
 
+	blendSpacePaths.resize(ActorCommons.State.COUNT)
+	blendSpacePaths.fill("")
+	walkTimeScalePath = ""
+	attackTimeScalePath = ""
+
 	for i in ActorCommons.State.COUNT:
 		var stateName : String		= ActorCommons.GetStateName(i)
 		var blendSpace : String		= "parameters/%s/BlendSpace2D/blend_position" % [stateName]
-
-		stateNamePaths[i] = stateName
 
 		if blendSpace in animationTree:
 			blendSpacePaths[i] = blendSpace
 
 		# Only set dynamic time scale for attack and walk as other can stay static
-		if i == ActorCommons.State.ATTACK or i == ActorCommons.State.WALK:
+		if i == ActorCommons.State.WALK:
 			var timeScale : String = "parameters/%s/TimeScale/scale" % [stateName]
 			if timeScale in animationTree:
-				timeScalePaths[i] = timeScale
+				walkTimeScalePath = timeScale
+		elif i == ActorCommons.State.ATTACK:
+			var timeScale : String = "parameters/%s/TimeScale/scale" % [stateName]
+			if timeScale in animationTree:
+				attackTimeScalePath = timeScale
 
 func UpdateScale():
 	if not animationTree:
 		return
 
-	if ActorCommons.State.WALK in timeScalePaths:
-		animationTree[timeScalePaths[ActorCommons.State.WALK]] = Formula.GetWalkRatio(entity.stat)
-	if ActorCommons.State.ATTACK in timeScalePaths and entity.stat.current.castAttackDelay > 0:
-		animationTree[timeScalePaths[ActorCommons.State.ATTACK]] = attackAnimLength / entity.stat.current.castAttackDelay
+	if not walkTimeScalePath.is_empty():
+		animationTree[walkTimeScalePath] = Formula.GetWalkRatio(entity.stat)
+	if not attackTimeScalePath.is_empty() and entity.stat.current.castAttackDelay > 0:
+		animationTree[attackTimeScalePath] = attackAnimLength / entity.stat.current.castAttackDelay
 
 func ResetAnimationValue():
 	if not animationTree:
@@ -222,6 +229,7 @@ func ResetAnimationValue():
 	LoadAnimationPaths()
 	UpdateScale()
 	RefreshTree()
+	Refresh.call_deferred()
 
 func GetPlayerOffset() -> int:
 	var spriteOffset : int = ActorCommons.interactionDisplayOffset
@@ -235,22 +243,22 @@ func Init(data : EntityData):
 	LoadData(data)
 
 func RefreshTree(resetOnTeleport : bool = true):
-	if previousState in blendSpacePaths:
-		animationTree[blendSpacePaths[previousState]] = previousOrientation
+	if previousState >= 0:
+		var blendPath : String = blendSpacePaths[previousState]
+		if not blendPath.is_empty():
+			animationTree[blendPath] = previousOrientation
 
-	if resetOnTeleport and previousState in stateNamePaths:
-		animationTree[ActorCommons.playbackParameter].travel(stateNamePaths[previousState], true)
+		if resetOnTeleport:
+			animationTree[ActorCommons.playbackParameter].travel(ActorCommons.STATE_NAMES[previousState], true)
 
-		# Random default offset for IDLE and UNKNOWN state of [0;1] second
-		if previousState <= ActorCommons.State.IDLE:
-			animationTree.advance(randf())
+			# Random default offset for IDLE state of [0;1] second, need to call twice for the AnimationTree to properly apply it
+			if previousState == ActorCommons.State.IDLE or previousState == ActorCommons.State.SIT:
+				var randValue : float = randf()
+				animationTree.advance(randValue)
+				animationTree.advance(randValue)
 
-#
-func _init():
-	sprites.resize(ActorCommons.SlotEquipmentCount + ActorCommons.SlotModifierCount)
-
-func _process(_delta):
-	if not animationTree:
+func Refresh():
+	if not animationTree or not animationTree.is_inside_tree():
 		return
 
 	var currentVelocity : Vector2 = entity.entityVelocity
@@ -262,3 +270,11 @@ func _process(_delta):
 		previousState = newState
 		previousOrientation = newOrientation
 		RefreshTree(differentState)
+
+#
+func _notification(what : int):
+	if what == NOTIFICATION_ENTER_TREE and animationTree:
+		Refresh.call_deferred()
+
+func _init():
+	sprites.resize(ActorCommons.SlotEquipmentCount + ActorCommons.SlotModifierCount)

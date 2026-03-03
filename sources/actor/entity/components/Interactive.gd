@@ -14,6 +14,7 @@ class_name EntityInteractive
 var displayName : bool						= false
 var selectionFx : GPUParticles2D			= null
 var visualOffset : int						= -1
+var hpFadeTween : Tween					= null
 
 #
 func DisplaySelection(hue : float, alpha : float = 1.0):
@@ -168,6 +169,9 @@ func DisplaySpeech(speech : String):
 
 #
 func DisplayHP():
+	if hpFadeTween:
+		hpFadeTween.kill()
+		hpFadeTween = null
 	if not ActorCommons.IsAlive(entity) or entity.stat.health == 0 or (entity.stat.current.maxHealth == 0 and healthBar.max_value == 0):
 		HideHP()
 		return
@@ -200,7 +204,20 @@ func RefreshHP():
 		DisplayHP()
 
 func HideHP():
-	healthBar.modulate.a = 0.99
+	if not healthBar.visible:
+		return
+	if hpFadeTween:
+		hpFadeTween.kill()
+	var duration : float = healthBar.modulate.a / 2.0
+	hpFadeTween = create_tween()
+	hpFadeTween.tween_property(healthBar, "modulate:a", 0.0, duration)
+	if not displayName:
+		hpFadeTween.parallel().tween_property(nameLabel, "modulate:a", 0.0, duration)
+	hpFadeTween.tween_callback(func():
+		healthBar.visible = false
+		nameLabel.visible = displayName
+		hpFadeTween = null
+	)
 
 func DisplaySailContext():
 	Launcher.GUI.choiceContext.Clear()
@@ -217,15 +234,6 @@ func RefreshVisibleNodeOffset():
 		visualOffset = clampi(offset, 20, 256)
 
 #
-func _physics_process(delta : float):
-	if healthBar.visible and healthBar.modulate.a < 1:
-		healthBar.modulate.a = max(0, healthBar.modulate.a - delta * 2)
-		if not displayName:
-			nameLabel.modulate.a = healthBar.modulate.a
-		if healthBar.modulate.a == 0:
-			healthBar.visible = false
-			nameLabel.visible = displayName
-
 func Init(data : EntityData):
 	displayName = entity.type == ActorCommons.Type.PLAYER or data._displayName
 
