@@ -249,3 +249,6 @@ func _on_ui_margin_resized():
 		settingsWindow.set_fullscreen(DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_FULLSCREEN, false)
 		settingsWindow.set_windowPos(DisplayServer.window_get_position(0), false)
 		settingsWindow.set_resolution(DisplayServer.window_get_size(0), false)
+
+	if Launcher.Camera:
+		Launcher.Camera.SendViewportSize()

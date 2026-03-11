@@ -122,6 +122,10 @@ func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, or
 func ClearNavigation(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("ClearNavigation", [], peerID)
 
+@rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
+func SetViewportSize(halfWidth : float, halfHeight : float, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("SetViewportSize", [halfWidth, halfHeight], peerID, NetworkCommons.DelayInstant)
+
 # Emote
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerEmote(emoteID : int, peerID : int = NetworkCommons.PeerAuthorityID):
@@ -366,7 +370,7 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 	if inst:
 		for player in inst.players:
 			if player != null and player != agent and player.peerID != NetworkCommons.PeerUnknownID:
-				if NetworkCommons.IsVisible(player.position, agent.position):
+				if NetworkCommons.IsVisible(player.position, agent.position, player.visibilityHalfSize):
 					if not player.visibleAgents.has(currentagentRID):
 						player.visibleAgents[currentagentRID] = true
 						Network.Bulk("FullUpdateEntity", [currentagentRID, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID, agent.stat.isRunning], player.peerID)

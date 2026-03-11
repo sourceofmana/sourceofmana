@@ -170,6 +170,14 @@ func ClearNavigation(peerID : int):
 	if player:
 		player.SetRelativeMode(false, Vector2.ZERO)
 
+func SetViewportSize(halfWidth : float, halfHeight : float, peerID : int):
+	var agent : PlayerAgent = Peers.GetAgent(peerID)
+	if agent:
+		agent.visibilityHalfSize = Vector2(
+			minf(halfWidth + NetworkCommons.VisibilityBorder, NetworkCommons.MaxVisibilityHalfWidth),
+			minf(halfHeight + NetworkCommons.VisibilityBorder, NetworkCommons.MaxVisibilityHalfHeight)
+		)
+
 # Triggers
 func TriggerWarp(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)

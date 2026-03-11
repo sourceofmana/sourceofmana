@@ -16,6 +16,7 @@ var statsUpdatePending : bool			= false
 var visibleAgents : Dictionary[int, bool]= {}
 var lastCheckedPosition : Vector2		= Vector2.ZERO
 var visibilityTimer : float				= 0.0
+var visibilityHalfSize : Vector2		= Vector2(NetworkCommons.MaxVisibilityHalfWidth, NetworkCommons.MaxVisibilityHalfHeight)
 
 #
 static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
@@ -158,7 +159,7 @@ func FlushStatsUpdate():
 func CheckVisibility(neighbour : BaseAgent):
 	if not neighbour:
 		return
-	if NetworkCommons.IsVisible(position, neighbour.position):
+	if NetworkCommons.IsVisible(position, neighbour.position, visibilityHalfSize):
 		var agentRID : int = neighbour.get_rid().get_id()
 		if not visibleAgents.has(agentRID):
 			Network.Bulk("FullUpdateEntity", [agentRID, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, neighbour.stat.isRunning], peerID)

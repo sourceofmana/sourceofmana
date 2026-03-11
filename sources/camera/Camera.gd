@@ -99,6 +99,19 @@ func UpdateZoom():
 	zoomMainTween.play()
 	zoomMainTween.tween_callback(ZoomTweenCompleted.bind(true))
 
+	SendViewportSize()
+
+func GetViewportHalfSize() -> Vector2:
+	if zoomLevel < 0 or zoomLevel >= ActorCommons.CameraZoomLevels.size():
+		return Vector2(NetworkCommons.MaxVisibilityHalfWidth, NetworkCommons.MaxVisibilityHalfHeight)
+	var viewportSize : Vector2 = Vector2(DisplayServer.window_get_size())
+	var zoom : Vector2 = ActorCommons.CameraZoomLevels[zoomLevel]
+	return Vector2.ZERO if zoom.is_zero_approx() else viewportSize / zoom / 2.0
+
+func SendViewportSize():
+	var halfSize : Vector2 = GetViewportHalfSize()
+	Network.SetViewportSize(halfSize.x, halfSize.y)
+
 func SyncPlayerPosition():
 	if Launcher.Player and mainCamera:
 		mainCamera.set_position(Launcher.Player.get_position())

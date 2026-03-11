@@ -14,12 +14,13 @@ const LocalServerAddress : String		= "127.0.0.1"
 const MaxPlayerCount : int				= 128
 
 # Visibility
-const VisibilityHalfWidth : float		= 1920.0 / 2.0
-const VisibilityHalfHeight : float		= 1200.0 / 2.0
+const VisibilityBorder : float			= 64.0
+const MaxVisibilityHalfWidth : float	= 960.0
+const MaxVisibilityHalfHeight : float	= 540.0
 
-static func IsVisible(fromPos : Vector2, toPos : Vector2) -> bool:
-	var diff : Vector2 = toPos - fromPos
-	return abs(diff.x) <= VisibilityHalfWidth and abs(diff.y) <= VisibilityHalfHeight
+static func IsVisible(fromPos : Vector2, toPos : Vector2, halfSize : Vector2) -> bool:
+	var diff : Vector2 = (toPos - fromPos).abs()
+	return diff.x <= halfSize.x and diff.y <= halfSize.y
 
 # Bulk
 const BulkMinSize : int					= 3
