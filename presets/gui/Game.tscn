@@ -294,7 +294,6 @@ theme_type_variation = &"PanelSideLeft"
 persistant = false
 
 [node name="Dialogue" parent="Overlay/VSections/Contexts" unique_id=1202850709 instance=ExtResource("24_fqnq4")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
