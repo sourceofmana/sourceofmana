@@ -9,14 +9,16 @@ class_name LightSource
 @export var rescale : float = 1.0
 
 #
-var currentDeadband : float = 0.0
 var currentRadius : int = 128
 
 #
 func _ready():
 	add_to_group("lights")
 	if Effects.lightLayer:
-		radius = radius * (1 - Effects.lightLayer.intensity) * (2.5 + Effects.lightLayer.intensity)
-
-func _physics_process(_delta):
+		radius = int(radius * (1 - Effects.lightLayer.intensity) * (2.5 + Effects.lightLayer.intensity))
+		Effects.lightLayer.RegisterLight(self)
 	currentRadius = int(radius * rescale)
+
+func _exit_tree():
+	if Effects.lightLayer:
+		Effects.lightLayer.UnregisterLight(self)

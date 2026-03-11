@@ -1,12 +1,12 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform mat4 global_transform;
+uniform vec2 world_offset;
 uniform int n_lights = 0;
 uniform vec4 dark_color : source_color = vec4(0.1, 0.08, 0.15, 1.0);
 uniform vec4 default_light_color : source_color;
 uniform float light_level : hint_range(0.0, 1.0) = 0.0;
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear;
 uniform float steps = 7.0;
 varying vec2 world_position;
 
@@ -16,7 +16,7 @@ uniform vec4 color_data[MAX_LIGHTS];
 
 void vertex()
 {
-	world_position = (global_transform * vec4(VERTEX, 0.0, 1.0)).xy;
+	world_position = VERTEX + world_offset;
 }
 
 void fragment()
@@ -42,7 +42,7 @@ void fragment()
 			{
 				vec4 new_color = color_data[i];
 				light_color.rgb = mix(light_color.rgb, new_color.rgb, m_value);
-				light_color.a = max(light_color.r, new_color.r);
+				light_color.a = max(light_color.a, new_color.a);
 			}
 
 			m_value *= value;
@@ -54,7 +54,7 @@ void fragment()
     m_value = clamp(m_value, 0.0, 1.0);
     m_value = floor(m_value * steps + 0.5) / steps;
 
-	light_color.rgb = mix(light_color.rgb, dark_color.rgb, max(-0.2, (m_value - 0.5) / 0.5));
+	light_color.rgb = mix(light_color.rgb, dark_color.rgb, max(-0.2, (m_value - 0.5) * 2.0));
 
 	vec4 ambient_color = mix(light_color, dark_color, m_value);
 	ambient_color.a *= 1.0 - light_level;

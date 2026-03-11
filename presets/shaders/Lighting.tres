@@ -5,7 +5,7 @@
 [resource]
 resource_local_to_scene = true
 shader = ExtResource("1_q51t8")
-shader_parameter/global_transform = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+shader_parameter/world_offset = Vector2(0, 0)
 shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)

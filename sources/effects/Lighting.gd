@@ -3,27 +3,31 @@ extends CanvasLayer
 #
 @export var intensity : float					= 0.5
 
-@onready var gridContainer : GridContainer		= $GridContainer
-@onready var lightingPreset : Node				= FileSystem.LoadEffect("Lighting", false)
+@onready var colorRect : ColorRect				= $ColorRect
 
-var colorRectArrays : Array[ColorRect]			= []
+var registeredLights : Array[LightSource]		= []
+var lightDataBuffer : PackedVector4Array		= []
+var colorDataBuffer : PackedColorArray			= []
 var time : float								= 0.0
-var rectCount : int								= 8
+
+const MAX_LIGHTS : int							= 64
 
 #
 func _ready():
-	for rectIdx in rectCount:
-		var lighting : ColorRect = lightingPreset.instantiate()
-		lighting.material.set_shader_parameter("light_level", intensity)
-		colorRectArrays.push_back(lighting)
-		gridContainer.add_child(lighting)
+	colorRect.material.set_shader_parameter("light_level", intensity)
+	lightDataBuffer.resize(MAX_LIGHTS)
+	colorDataBuffer.resize(MAX_LIGHTS)
+
+func RegisterLight(light : LightSource) -> void:
+	if not registeredLights.has(light):
+		registeredLights.append(light)
+
+func UnregisterLight(light : LightSource) -> void:
+	registeredLights.erase(light)
 
 func _process(delta : float):
 	if not visible or not Launcher.Camera.mainCamera or not Launcher.Camera.mainCamera.is_inside_tree():
 		return
-
-	var lights : Array[Node] = get_tree().get_nodes_in_group("lights")
-	var visibleLights : Array[Node] = []
 
 	var canvasTransform : Transform2D = Launcher.Camera.mainCamera.get_canvas_transform()
 	var canvasScale : Vector2 = canvasTransform.get_scale()
@@ -34,31 +38,26 @@ func _process(delta : float):
 	var cameraRect : Rect2 = Rect2(cameraTopLeft, viewportSize)
 
 	time += delta
-	for light in lights:
-		if light and light is LightSource:
-			if cameraRect.grow(light.currentRadius).has_point(light.global_position):
-				light.currentDeadband = sin(light.speed * time + light.randomSeed) * 0.008 + 0.5 if light.speed > 0 else 0.5
-				if light.currentDeadband > 0:
-					visibleLights.append(light)
+	var lightCount : int = 0
 
-	for colorRect in colorRectArrays:
-		var lightData : PackedVector4Array = []
-		var colorData : PackedColorArray = []
-		var rescaledRect : Vector2 = colorRect.global_position / canvasScale
-		var rectTopLeft : Vector2 = rescaledRect - canvasTransform.origin
-		var rect : Rect2 = Rect2(Vector2(rectTopLeft), 	Vector2(colorRect.size))
+	for light in registeredLights:
+		if cameraRect.grow(light.currentRadius).has_point(light.global_position):
+			var deadband : float = sin(light.speed * time + light.randomSeed) * 0.008 + 0.5 if light.speed > 0 else 0.5
+			lightDataBuffer[lightCount] = Vector4(
+				light.global_position.x * canvasScale.x,
+				light.global_position.y * canvasScale.y,
+				deadband,
+				light.currentRadius * canvasScale.x
+			)
+			colorDataBuffer[lightCount] = light.color
+			lightCount += 1
+			if lightCount >= MAX_LIGHTS:
+				break
 
-		for light in visibleLights:
-			var rescaledPos : Vector2 = rescaledRect + (light.global_position - rescaledRect) * canvasScale
-			var rescaledRadius : float = light.currentRadius * canvasScale.x
-			if rect.grow(rescaledRadius).has_point(rescaledPos):
-				lightData.append(Vector4(rescaledPos.x, rescaledPos.y, light.currentDeadband, rescaledRadius))
-				colorData.append(light.color)
-
-		colorRect.material.set_shader_parameter("global_transform", Transform2D(0, rectTopLeft))
-		colorRect.material.set_shader_parameter("n_lights", lightData.size())
-		colorRect.material.set_shader_parameter("light_data", lightData)
-		colorRect.material.set_shader_parameter("color_data", colorData)
+	colorRect.material.set_shader_parameter("n_lights", lightCount)
+	colorRect.material.set_shader_parameter("world_offset", -canvasTransform.origin)
+	colorRect.material.set_shader_parameter("light_data", lightDataBuffer)
+	colorRect.material.set_shader_parameter("color_data", colorDataBuffer)
 
 func _enter_tree():
 	visible = Effects.lightingEnabled
