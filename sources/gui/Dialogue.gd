@@ -77,13 +77,15 @@ func AddChoices(choices : PackedStringArray):
 
 	ToggleButton(false, "")
 	Launcher.GUI.choiceContext.Clear()
-	if choices.size() > 0:
+
+	var choicesCount : int = choices.size()
+	if choicesCount > 0:
 		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_validate", choices[0], Network.TriggerChoice.bind(0)))
-	if choices.size() > 1:
+	if choicesCount > 1:
 		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_cancel", choices[1], Network.TriggerChoice.bind(1)))
-	if choices.size() > 2:
+	if choicesCount > 2:
 		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_secondary", choices[2], Network.TriggerChoice.bind(2)))
-	if choices.size() > 3:
+	if choicesCount > 3:
 		Launcher.GUI.choiceContext.Push(ContextData.new("ui_context_tertiary", choices[3], Network.TriggerChoice.bind(3)))
 	Launcher.GUI.choiceContext.FadeIn(true)
 

@@ -71,10 +71,10 @@ func QueryProcessMode(delaySec : float = ActorCommons.MapProcessingToggleDelay):
 	Callback.SelfDestructTimer(Launcher, delaySec, RefreshProcessMode, [], "ProcessMode_" + name)
 
 func RefreshProcessMode():
-	if players.size() == 0 and timers.get_child_count() > 0:
+	if players.is_empty() and timers.get_child_count() > 0:
 		QueryProcessMode(ActorCommons.MapProcessingToggleExtraDelay)
 	else:
-		var toggle : bool= players.size() == 0
+		var toggle : bool = players.is_empty()
 		set_process_mode(ProcessMode.PROCESS_MODE_DISABLED if toggle else ProcessMode.PROCESS_MODE_INHERIT)
 		for npc in npcs:
 			if npc.aiTimer:

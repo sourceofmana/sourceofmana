@@ -1069,7 +1069,7 @@ func _send_message_request(
 
 	if method == HTTPClient.METHOD_PATCH:
 		if typeof(messageorchannelid) == TYPE_OBJECT and typeof(messageorchannelid.attachments) == TYPE_ARRAY:
-			if messageorchannelid.attachments.size() == 0:
+			if messageorchannelid.attachments.is_empty():
 				payload.attachments = null
 			else:
 				# Add the attachments to keep to the payload

@@ -1,15 +1,21 @@
 extends BaseAgent
 class_name PlayerAgent
 
-#
+# Player-specific variables
 var peerID : int						= NetworkCommons.PeerUnknownID
 var lastStat : ActorStats				= ActorStats.new()
 var respawnDestination : Destination	= null
 var exploreOrigin : Destination			= null
 var ownScript : NpcScript				= null
 
+# Regen
 var regenTimer : Timer					= null
 var statsUpdatePending : bool			= false
+
+# Visible surrounding actors
+var visibleAgents : Dictionary[int, bool]= {}
+var lastCheckedPosition : Vector2		= Vector2.ZERO
+var visibilityTimer : float				= 0.0
 
 #
 static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
@@ -70,7 +76,9 @@ func UpdateLastStats():
 	lastStat.race != stat.race or \
 	lastStat.skintone != stat.skintone or \
 	lastStat.currentShape != stat.currentShape:
-		Network.NotifyNeighbours(self, "UpdatePublicStats", [stat.level, stat.health, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
+		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(self)
+		if inst:
+			Network.NotifyInstance(inst, "UpdatePublicStats", [get_rid().get_id(), stat.level, stat.health, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
 		if lastStat.level != 0 and lastStat.level < stat.level:
 			Network.NotifyNeighbours(self, "LevelUp", [])
 		lastStat.level				= stat.level
@@ -121,7 +129,10 @@ func Morph(notifyMorphing : bool, morphID : int = DB.UnknownHash):
 	var morphData : EntityData = DB.EntitiesDB.get(morphID, null)
 	if morphData:
 		stat.Morph(morphData)
-		Network.NotifyNeighbours(self, "Morphed", [morphID, notifyMorphing])
+		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(self)
+		if inst:
+			Network.NotifyInstance(inst, "Morphed", [get_rid().get_id(), morphID, notifyMorphing])
+
 
 # Running
 func SetRunning(enable : bool):
@@ -143,6 +154,49 @@ func RequestStatsUpdate():
 func FlushStatsUpdate():
 	statsUpdatePending = false
 	UpdateLastStats()
+
+func CheckVisibility(neighbour : BaseAgent):
+	if not neighbour:
+		return
+	if NetworkCommons.IsVisible(position, neighbour.position):
+		var agentRID : int = neighbour.get_rid().get_id()
+		if not visibleAgents.has(agentRID):
+			Network.Bulk("FullUpdateEntity", [agentRID, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, neighbour.stat.isRunning], peerID)
+		visibleAgents[agentRID] = true
+
+func UpdateVisibility():
+	if peerID == NetworkCommons.PeerUnknownID:
+		return
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(self)
+	if not inst:
+		return
+
+	# Pre-set every previously visible agents to false
+	for agentRID in visibleAgents:
+		visibleAgents[agentRID] = false
+
+	# Set every visible agents to true
+	for neighbour in inst.players:
+		if neighbour != self:
+			CheckVisibility(neighbour)
+	for neighbour in inst.npcs:
+		CheckVisibility(neighbour)
+	for neighbour in inst.mobs:
+		CheckVisibility(neighbour)
+
+	# Remove any previously visible agents that just disapeared
+	for agentRID in visibleAgents:
+		if not visibleAgents[agentRID]:
+			Network.Bulk("RemoveEntity", [agentRID], peerID)
+			visibleAgents.erase(agentRID)
+
+func _physics_process(delta : float):
+	super._physics_process(delta)
+	visibilityTimer += delta
+	if visibilityTimer >= ActorCommons.VisibilityCheckTimeInternal or position.distance_squared_to(lastCheckedPosition) >= ActorCommons.VisibilityCheckDistSqrd:
+		lastCheckedPosition = position
+		visibilityTimer = 0.0
+		UpdateVisibility()
 
 func _ready():
 	super._ready()

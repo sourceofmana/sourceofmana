@@ -47,6 +47,9 @@ func _ready():
 			label.set_visible(false)
 
 func _input(event : InputEvent):
+	if not Launcher.Player:
+		return
+
 	if Launcher.Action.TryPressed(event, "gp_shortcut_1"):			Hold(0)
 	elif Launcher.Action.TryPressed(event, "gp_shortcut_2"):		Hold(1)
 	elif Launcher.Action.TryPressed(event, "gp_shortcut_3"):		Hold(2)

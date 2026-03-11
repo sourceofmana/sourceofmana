@@ -30,6 +30,7 @@ func SwitchInputMode(clearCurrentInput : bool):
 
 	if clearCurrentInput:
 		currentInput = Vector2.ZERO
+		currentVelocity = Vector2.ZERO
 		currentDirection = Vector2.ZERO
 
 func UpdateInput():

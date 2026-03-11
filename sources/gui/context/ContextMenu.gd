@@ -19,7 +19,7 @@ var actionDisabled : bool					= false
 
 #
 func FlushDataBuffer():
-	while buffer.size() > 0:
+	while not buffer.is_empty():
 		var data : ContextData = buffer.pop_front()
 		var action : Control = UICommons.ContextAction.instantiate()
 		action.Init(data, self)

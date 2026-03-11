@@ -126,7 +126,9 @@ func EquipItem(cell : ItemCell):
 			var charID : int = Peers.GetCharacter(actor.peerID)
 			if charID != NetworkCommons.PeerUnknownID:
 				Launcher.SQL.UpdateEquipment(charID, ExportEquipment())
-			Network.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, true])
+			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(actor)
+			if inst:
+				Network.NotifyInstance(inst, "ItemEquiped", [actor.get_rid().get_id(), cell.id, cell.customfield, true])
 
 func UnequipItem(cell : ItemCell):
 	if actor and cell and cell.type == CellCommons.Type.ITEM and cell.slot != ActorCommons.Slot.NONE and CellCommons.IsSameCell(equipment[cell.slot], cell):
@@ -138,7 +140,9 @@ func UnequipItem(cell : ItemCell):
 			var charID : int = Peers.GetCharacter(actor.peerID)
 			if charID != NetworkCommons.PeerUnknownID:
 				Launcher.SQL.UpdateEquipment(charID, ExportEquipment())
-			Network.NotifyNeighbours(actor, "ItemEquiped", [cell.id, cell.customfield, false])
+			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(actor)
+			if inst:
+				Network.NotifyInstance(inst, "ItemEquiped", [actor.get_rid().get_id(), cell.id, cell.customfield, false])
 
 #
 func AddItem(cell : ItemCell, count : int = 1) -> bool:
@@ -184,8 +188,6 @@ func ImportEquipment(data : Dictionary):
 		var cellHash = data.get(equipmentKey, DB.UnknownHash)
 		if cellHash != null and cellHash != DB.UnknownHash:
 			var cellCustomfield = data.get(equipmentKey + "Custom", "")
-			if cellCustomfield == null:
-				cellCustomfield = ""
 			var cell : ItemCell = DB.GetItem(cellHash, cellCustomfield)
 			if cell:
 				EquipItem(cell)
@@ -201,6 +203,18 @@ func ExportEquipment() -> Dictionary:
 			dic[equipmentKey] = DB.UnknownHash
 			dic[equipmentKey + "Custom"] = ""
 	return dic
+
+static func UpdateExportedEquipment(equipmentDic : Dictionary, itemID : int, customfield : StringName, state : bool):
+	var cell : ItemCell = DB.GetItem(itemID, customfield)
+	if not cell or cell.slot == ActorCommons.Slot.NONE:
+		return
+	var slotKey : String = ActorCommons.GetSlotName(cell.slot).to_lower()
+	if state:
+		equipmentDic[slotKey] = itemID
+		equipmentDic[slotKey + "Custom"] = customfield
+	else:
+		equipmentDic[slotKey] = DB.UnknownHash
+		equipmentDic[slotKey + "Custom"] = ""
 
 #
 func _init(actorNode : Actor):

@@ -278,7 +278,7 @@ func ApplyStep():
 			for choice in dialogueStep["choices"]:
 				if choice.has("text"):
 					choices.append(choice["text"])
-			if choices.size() > 0:
+			if not choices.is_empty():
 				isWaitingForChoice = true
 				NpcCommons.ContextChoices(own, choices)
 		else:

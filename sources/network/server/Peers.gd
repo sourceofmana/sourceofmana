@@ -32,7 +32,7 @@ class Peer:
 		usingWebSocket = useWebSocket
 
 	func SetAccount(data : AccountData):
-		if accountID != NetworkCommons.PeerUnknownID:
+		if data and data.accountID != NetworkCommons.PeerUnknownID:
 			var lastPeerID = Peers.accounts.get(data.accountID, NetworkCommons.PeerUnknownID)
 			if lastPeerID != NetworkCommons.PeerUnknownID and Peers.GetAccount(lastPeerID) != NetworkCommons.PeerUnknownID:
 				Network.DisconnectAccount(lastPeerID)

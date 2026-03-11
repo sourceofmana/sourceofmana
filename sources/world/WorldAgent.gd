@@ -42,28 +42,23 @@ static func RemoveAgent(agent : BaseAgent):
 		agents.erase(agent.get_rid().get_id())
 		agent.queue_free()
 
-static func HasAgent(inst : WorldInstance, agent : BaseAgent):
-	var hasAgent : bool = false
-	assert(agent != null and inst != null, "Agent or instance are invalid, could not check if the agent is inside the instance")
-	if agent and inst:
-		if agent is PlayerAgent:
-			hasAgent = inst.players.has(agent)
-		elif agent is MonsterAgent:
-			hasAgent = inst.mobs.has(agent)
-		elif agent is NpcAgent:
-			hasAgent = inst.npcs.has(agent)
-	return hasAgent
-
 static func PopAgent(agent : BaseAgent):
 	assert(agent != null, "Agent is null, can't pop it")
 	if agent:
 		var inst : WorldInstance = GetInstanceFromAgent(agent)
 		if inst:
-			Network.NotifyNeighbours(agent, "RemoveEntity", [], false)
+			agent.set_physics_process(false)
 			if agent is PlayerAgent:
 				inst.players.erase(agent)
-				if inst.players.size() == 0:
+				agent.visibleAgents.clear()
+				if inst.players.is_empty():
 					inst.QueryProcessMode()
+				else:
+					var agentRID : int = agent.get_rid().get_id()
+					for neighbour in inst.players:
+						if neighbour and neighbour.visibleAgents.has(agentRID):
+							Network.Bulk("RemoveEntity", [agentRID], neighbour.peerID)
+							neighbour.visibleAgents.erase(agentRID)
 			elif agent is MonsterAgent:
 				inst.mobs.erase(agent)
 			elif agent is NpcAgent:
@@ -74,16 +69,16 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 	assert(agent != null, "Agent is null, can't push it")
 	assert(inst != null, "Instance is null, can't push the agent in it")		
 	if agent and inst:
-		if not HasAgent(inst, agent):
-			if agent is PlayerAgent:
-				inst.players.push_back(agent)
-				inst.RefreshProcessMode()
-			elif agent is MonsterAgent:
-				inst.mobs.push_back(agent)
-			elif agent is NpcAgent:
-				inst.npcs.push_back(agent)
+		agent.set_physics_process(true)
+		if agent is PlayerAgent:
+			inst.players.push_back(agent)
+			inst.RefreshProcessMode()
+		elif agent is MonsterAgent:
+			inst.mobs.push_back(agent)
+		elif agent is NpcAgent:
+			inst.npcs.push_back(agent)
 
-			inst.add_child.call_deferred(agent)
+		inst.add_child.call_deferred(agent)
 	else:
 		RemoveAgent(agent)
 

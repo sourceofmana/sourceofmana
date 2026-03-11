@@ -85,12 +85,12 @@ func WarpPlayer(mapID : int, playerPos : Vector2, peerID : int = NetworkCommons.
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("AddEntity", [agentRID, actorType, currentShape, nick, velocity, position, orientation, state, skillCastID], peerID)
+func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("PreloadEntity", [agentRID, actorType, currentShape, nick], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipment : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("AddPlayer", [agentRID, actorType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID, level, health, hairstyle, haircolor, gender, race, skintone, equipment], peerID)
+func PreloadPlayer(agentRID : int, spirit : int, currentShape : int, nick : String, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipment : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("PreloadPlayer", [agentRID, spirit, currentShape, nick, level, health, hairstyle, haircolor, gender, race, skintone, equipment], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func RemoveEntity(agentRID : int, peerID : int = NetworkCommons.PeerOfflineID):
@@ -358,7 +358,7 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 		assert(false, "Agent is misintantiated, could not notify instance players with " + callbackName)
 		return
 
-	var currentagentRID = agent.get_rid().get_id()
+	var currentagentRID : int = agent.get_rid().get_id()
 	if inclusive and agent is PlayerAgent:
 		Network.callv(callbackName, [currentagentRID] + args + [agent.peerID])
 
@@ -366,17 +366,27 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 	if inst:
 		for player in inst.players:
 			if player != null and player != agent and player.peerID != NetworkCommons.PeerUnknownID:
-				if bulk:
-					Network.Bulk(callbackName, [currentagentRID] + args, player.peerID)
-				else:
-					Network.callv(callbackName, [currentagentRID] + args + [player.peerID])
+				if NetworkCommons.IsVisible(player.position, agent.position):
+					if not player.visibleAgents.has(currentagentRID):
+						player.visibleAgents[currentagentRID] = true
+						Network.Bulk("FullUpdateEntity", [currentagentRID, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID, agent.stat.isRunning], player.peerID)
+					if bulk:
+						Network.Bulk(callbackName, [currentagentRID] + args, player.peerID)
+					else:
+						Network.callv(callbackName, [currentagentRID] + args + [player.peerID])
+				elif player.visibleAgents.has(currentagentRID):
+					player.visibleAgents.erase(currentagentRID)
+					Network.Bulk("RemoveEntity", [currentagentRID], player.peerID)
 
-func NotifyInstance(inst : WorldInstance, callbackName : StringName, args : Array):
-	if inst:
-		for player in inst.players:
-			if player != null:
-				if player.peerID != NetworkCommons.PeerUnknownID:
-					Network.callv(callbackName, args + [player.peerID])
+func NotifyInstance(inst : WorldInstance, callbackName : StringName, args : Array, exclude : BaseAgent = null):
+	if not inst:
+		assert(false, "World instance is missing, could not notify instance players with " + callbackName)
+		return
+
+	for player in inst.players:
+		if player != null and player != exclude:
+			if player.peerID != NetworkCommons.PeerUnknownID:
+				Network.callv(callbackName, args + [player.peerID])
 
 func NotifyArea(area : WorldMap, callbackName : StringName, args : Array):
 	for inst in area.instances:

@@ -131,7 +131,7 @@ static func GetDefaultEvents(action : String) -> Array:
 	return ProjectSettings.get_setting("input/" + action).events if ProjectSettings.has_setting("input/" + action) else []
 
 static func HasEvent(action : String) -> bool:
-	return GetEvents(action).size() > 0
+	return not GetEvents(action).is_empty()
 
 static func HasDeviceSupport() -> bool:
 	return DisplayServer.get_name() != "headless"

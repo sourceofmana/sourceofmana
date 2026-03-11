@@ -161,9 +161,17 @@ func _physics_process(delta : float):
 
 func _ready():
 	if Launcher.Player == self:
-		Launcher.Map.MapUnloaded.connect(ClearTarget)
+		if not Launcher.Map.MapUnloaded.is_connected(ClearTarget):
+			Launcher.Map.MapUnloaded.connect(ClearTarget)
 	elif type == ActorCommons.Type.MONSTER:
-		stat.vital_stats_updated.connect(interactive.RefreshHP)
+		if not stat.vital_stats_updated.is_connected(interactive.RefreshHP):
+			stat.vital_stats_updated.connect(interactive.RefreshHP)
+	else:
+		if stat.vital_stats_updated.is_connected(interactive.RefreshHP):
+			stat.vital_stats_updated.disconnect(interactive.RefreshHP)
 
-	entity_died.connect(interactive.HideHP)
-	entity_died.connect(interactive.DisplayTarget.bind(ActorCommons.Target.NONE))
+	if not entity_died.is_connected(interactive.HideHP):
+		entity_died.connect(interactive.HideHP)
+	var displayTargetNone : Callable = interactive.DisplayTarget.bind(ActorCommons.Target.NONE)
+	if not entity_died.is_connected(displayTargetNone):
+		entity_died.connect(displayTargetNone)

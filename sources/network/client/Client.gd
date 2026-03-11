@@ -7,6 +7,9 @@ func WarpPlayer(mapID : int, playerPos : Vector2, _peerID : int):
 		var mapData : FileData = DB.MapsDB.get(mapID, null)
 		if mapData:
 			Launcher.Map.EmplaceMapNode(mapID)
+			# Reset input in both the client and server to force re-send a new update once the map is loaded
+			Network.ClearNavigation()
+			Launcher.Action.previousMove = Vector2.ZERO
 			Launcher.Camera.FocusPosition(playerPos)
 			PushNotification(mapData._name, _peerID)
 
@@ -15,16 +18,13 @@ func EmotePlayer(agentRID : int, emoteID : int, _peerID : int):
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplayEmote.call_deferred(emoteID)
 
-func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipment : Dictionary, _peerID : int):
+func PreloadPlayer(agentRID : int, spirit : int, currentShape : int, nick : String, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipment : Dictionary, _peerID : int):
 	if Launcher.Map:
-		var entity : Entity = Launcher.Map.AddPlayer(agentRID, actorType, shape, spirit, currentShape, nick, velocity, position, orientation, state, skillCastID)
-		if entity:
-			UpdatePublicStats(agentRID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape, _peerID)
-			RefreshEquipment(agentRID, equipment, _peerID)
+		Launcher.Map.PreloadPlayer(agentRID, spirit, currentShape, nick, level, health, hairstyle, haircolor, gender, race, skintone, equipment)
 
-func AddEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, velocity : Vector2, position : Vector2i, orientation : Vector2, state : ActorCommons.State, skillCastID : int, _peerID : int):
+func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.AddEntity(agentRID, actorType, currentShape, DB.UnknownHash, currentShape, nick, velocity, position, orientation, state, skillCastID)
+		Launcher.Map.PreloadEntity(agentRID, actorType, currentShape, nick)
 
 func RemoveEntity(agentRID : int, _peerID : int):
 	if Launcher.Map:
@@ -101,28 +101,41 @@ func Morphed(agentRID : int, morphID : int, morphed : bool, _peerID : int):
 			entity.SetVisual(morphData, morphed)
 
 func UpdatePublicStats(agentRID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, _peerID : int):
-	if Launcher.Map:
-		var entity : Entity = Entities.Get(agentRID)
-		if entity and entity.stat:
-			entity.stat.level			= level
-			entity.stat.health			= health
-			entity.stat.currentShape	= currentShape
+	if not Launcher.Map:
+		return
 
-			var newHair : bool = entity.stat.hairstyle != hairstyle or entity.stat.haircolor != haircolor
-			entity.stat.hairstyle		= hairstyle
-			entity.stat.haircolor		= haircolor
-			if newHair and entity.visual:
-				entity.visual.SetHair()
+	var entry : EntityCacheEntry = Launcher.Map.entityCache.get(agentRID, null)
+	if entry:
+		entry.level			= level
+		entry.health		= health
+		entry.hairstyle		= hairstyle
+		entry.haircolor		= haircolor
+		entry.gender		= gender
+		entry.race			= race
+		entry.skintone		= skintone
+		entry.currentShape	= currentShape
 
-			var newBody : bool = entity.stat.gender != gender or entity.stat.race != race or entity.stat.skintone != skintone
-			entity.stat.gender			= gender
-			entity.stat.race			= race
-			entity.stat.skintone		= skintone
-			if newBody and entity.visual:
-				entity.visual.SetBody()
-				entity.visual.SetFace()
+	var entity : Entity = Entities.Get(agentRID)
+	if entity and entity.stat:
+		entity.stat.level			= level
+		entity.stat.health			= health
+		entity.stat.currentShape	= currentShape
 
-			entity.stat.RefreshVitalStats()
+		var newHair : bool = entity.stat.hairstyle != hairstyle or entity.stat.haircolor != haircolor
+		entity.stat.hairstyle		= hairstyle
+		entity.stat.haircolor		= haircolor
+		if newHair and entity.visual:
+			entity.visual.SetHair()
+
+		var newBody : bool = entity.stat.gender != gender or entity.stat.race != race or entity.stat.skintone != skintone
+		entity.stat.gender			= gender
+		entity.stat.race			= race
+		entity.stat.skintone		= skintone
+		if newBody and entity.visual:
+			entity.visual.SetBody()
+			entity.visual.SetFace()
+
+		entity.stat.RefreshVitalStats()
 
 func UpdatePrivateStats(experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, _peerID : int):
 	if Launcher.Player and Launcher.Player.stat:
@@ -172,6 +185,10 @@ func ItemRemoved(itemID : int, customfield : StringName, count : int, _peerID : 
 
 func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state : bool, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
+	if Launcher.Map:
+		var entry : EntityCacheEntry = Launcher.Map.entityCache.get(agentRID, null)
+		if entry:
+			ActorInventory.UpdateExportedEquipment(entry.equipment, itemID, customfield, state)
 	if entity:
 		var cell : ItemCell = DB.GetItem(itemID, customfield)
 		if cell:
@@ -192,6 +209,11 @@ func RefreshInventory(cells : Array[Dictionary], _peerID : int):
 		Launcher.GUI.inventoryWindow.RefreshInventory()
 
 func RefreshEquipment(agentRID : int, equipment : Dictionary, _peerID : int):
+	if Launcher.Map:
+		var entry : EntityCacheEntry = Launcher.Map.entityCache.get(agentRID, null)
+		if entry:
+			entry.equipment = equipment
+
 	var entity : Entity = Entities.Get(agentRID)
 	if entity:
 		if entity.inventory:

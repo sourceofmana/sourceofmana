@@ -113,7 +113,7 @@ INNER JOIN trait ON character.char_id = trait.char_id \
 INNER JOIN attribute ON character.char_id = attribute.char_id \
 WHERE character.char_id = %d;" % charID)
 	assert(results.size() == 1, "Character information tables are missing")
-	return results[0] if results.size() > 0 else {}
+	return {} if results.is_empty() else results[0]
 
 func RefreshCharacter(player : PlayerAgent) -> bool:
 	var charID : int = Peers.GetCharacter(player.peerID)
@@ -143,12 +143,12 @@ func CharacterLogin(charID : int) -> bool:
 func GetCharacterID(accountID : int, nickname : String) -> int:
 	var results : Array[Dictionary] = QueryBindings("SELECT char_id FROM character WHERE account_id = ? AND nickname = ?;", [accountID, nickname])
 	assert(results.size() <= 1, "Duplicated character row for account %d and nickname '%s'" % [accountID, nickname])
-	return results[0]["char_id"] if results.size() > 0 else NetworkCommons.PeerUnknownID
+	return NetworkCommons.PeerUnknownID if results.is_empty() else results[0]["char_id"]
 
 func GetCharacter(charID : int) -> Dictionary:
 	var results : Array[Dictionary] = db.select_rows("character", "char_id = %d" % charID, ["*"])
 	assert(results.size() <= 1, "Duplicated character row %d" % charID)
-	return results[0] if results.size() > 0 else {}
+	return {} if results.is_empty() else results[0]
 
 func UpdateCharacter(player : PlayerAgent) -> bool:
 	if player == null:
@@ -188,7 +188,7 @@ func UpdateCharacter(player : PlayerAgent) -> bool:
 func GetAttribute(charID : int) -> Dictionary:
 	var results : Array[Dictionary] = db.select_rows("attribute", "char_id = %d" % charID, ["*"])
 	assert(results.size() == 1, "Character attribute row is missing")
-	return results[0] if results.size() > 0 else {}
+	return {} if results.is_empty() else results[0]
 
 func UpdateAttribute(charID : int, stats : ActorStats) -> bool:
 	if stats == null:
@@ -206,7 +206,7 @@ func UpdateAttribute(charID : int, stats : ActorStats) -> bool:
 func GetTrait(charID : int) -> Dictionary:
 	var results : Array[Dictionary] = db.select_rows("trait", "char_id = %d" % charID, ["*"])
 	assert(results.size() == 1, "Character trait row is missing")
-	return results[0] if results.size() > 0 else {}
+	return {} if results.is_empty() else results[0]
 
 func UpdateTrait(charID : int, stats : ActorStats) -> bool:
 	if stats == null:
@@ -226,7 +226,7 @@ func UpdateTrait(charID : int, stats : ActorStats) -> bool:
 func GetStat(charID : int) -> Dictionary:
 	var results : Array[Dictionary] = db.select_rows("stat", "char_id = %d" % charID, ["*"])
 	assert(results.size() == 1, "Character stat row is missing")
-	return results[0] if results.size() > 0 else {}
+	return {} if results.is_empty() else results[0]
 
 func UpdateStat(charID : int, stats : ActorStats) -> bool:
 	if stats == null:
@@ -286,7 +286,7 @@ func GetStorage(charID : int, storageType : int = 0) -> Array[Dictionary]:
 func GetEquipment(charID : int) -> Dictionary:
 	var results : Array[Dictionary] = db.select_rows("equipment", "char_id = %d" % charID, ["*"])
 	assert(results.size() <= 1, "Duplicated equipment on character %d" % charID)
-	return results[0] if results.size() > 0 else {}
+	return {} if results.is_empty() else results[0]
 
 func UpdateEquipment(charID : int, data : Dictionary) -> bool:
 	return db.update_rows("equipment", "char_id = %d" % charID, data)
@@ -313,7 +313,7 @@ func SetSkill(charID : int, skillID : int, value : int) -> bool:
 	var results : Array[Dictionary] = db.select_rows("skill", "char_id = %d AND skill_id = %d" % [charID, skillID], ["*"])
 	assert(results.size() <= 1, "Duplicated skill for %d on character %d" % [skillID, charID])
 
-	if results.size() > 0:
+	if not results.is_empty():
 		results[0]["level"] = value
 		return db.update_rows("skill", "char_id = %d AND skill_id = %d" % [charID, skillID], results[0])
 
@@ -332,7 +332,7 @@ func SetBestiary(charID : int, mobID : int, value : int) -> bool:
 	var results : Array[Dictionary] = db.select_rows("bestiary", "char_id = %d AND mob_id = %d" % [charID, mobID], ["*"])
 	assert(results.size() <= 1, "Duplicated bestiary row for %d on character %d" % [mobID, charID])
 
-	if results.size() > 0:
+	if not results.is_empty():
 		results[0]["killed_count"] = value
 		return db.update_rows("bestiary", "char_id = %d AND mob_id = %d" % [charID, mobID], results[0])
 
@@ -351,7 +351,7 @@ func SetQuest(charID : int, questID : int, value : int) -> bool:
 	var results : Array[Dictionary] = db.select_rows("quest", "char_id = %d AND quest_id = %d" % [charID, questID], ["*"])
 	assert(results.size() <= 1, "Duplicated quest row for %d on character %d" % [questID, charID])
 
-	if results.size() > 0:
+	if not results.is_empty():
 		results[0]["state"] = value
 		return db.update_rows("quest", "char_id = %d AND quest_id = %d" % [charID, questID], results[0])
 

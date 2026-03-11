@@ -12,8 +12,10 @@ var currentMapID : int					= DB.UnknownHash
 var currentMapNode : Node2D				= null
 var currentFringe : TileMapLayer		= null
 var drops : Dictionary[int, Sprite2D]	= {}
+var entityCache : Dictionary[int, EntityCacheEntry] = {}
+var pendingWarp : bool					= true
 
-#
+# Map Scenes
 func RefreshTileMap():
 	for child in currentMapNode.get_children():
 		if child is TileMapLayer and child.name == "Fringe":
@@ -24,13 +26,11 @@ func GetMapBoundaries() -> Vector2:
 	assert(currentMapNode != null, "Map node not found on the current scene")
 	return currentMapNode.get_meta("MapBoundaries", Vector2.ZERO) if currentMapNode else Vector2.ZERO
 
-#
 func EmplaceMapNode(mapID : int, force : bool = false):
 	if not force and currentMapID == mapID:
 		return
 
-	if currentMapNode:
-		UnloadMapNode()
+	UnloadMapNode()
 	LoadMapNode(mapID)
 
 	if LauncherCommons.EnableMapPool:
@@ -39,11 +39,13 @@ func EmplaceMapNode(mapID : int, force : bool = false):
 func UnloadMapNode():
 	if currentMapNode:
 		RemoveChildren()
-		Launcher.remove_child.call_deferred(currentMapNode)
+		Launcher.remove_child(currentMapNode)
 		currentMapID = DB.UnknownHash
 		currentMapNode = null
 		currentFringe = null
 		drops.clear()
+		pendingWarp = true
+		entityCache.clear()
 		Entities.Clear()
 		MapUnloaded.emit()
 
@@ -53,15 +55,80 @@ func LoadMapNode(mapID : int):
 	assert(currentMapNode != null, "Map instance could not be created")
 	if currentMapNode:
 		RefreshTileMap()
-		Launcher.add_child.call_deferred(currentMapNode)
+		Launcher.add_child(currentMapNode)
 		MapLoaded.emit()
+
+# Entity cache
+func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String):
+	var entry : EntityCacheEntry = EntityCacheEntry.new()
+	entry.actorType = actorType
+	entry.currentShape = currentShape
+	entry.nick = nick
+	entityCache[agentRID] = entry
+
+func PreloadPlayer(agentRID : int, spirit : int, currentShape : int, nick : String, level : int, health : int, hairstyle : int, haircolor : int, gender : int, race : int, skintone : int, equipment : Dictionary):
+	var entry : EntityCacheEntry = EntityCacheEntry.new()
+	entry.actorType = ActorCommons.Type.PLAYER
+	entry.spirit = spirit
+	entry.currentShape = currentShape
+	entry.nick = nick
+	entry.level = level
+	entry.health = health
+	entry.hairstyle = hairstyle
+	entry.haircolor = haircolor
+	entry.gender = gender
+	entry.race = race
+	entry.skintone = skintone
+	entry.equipment = equipment
+	entityCache[agentRID] = entry
+
+func SpawnEntity(agentRID : int, entry : EntityCacheEntry) -> Entity:
+	if not currentFringe:
+		return null
+
+	var shape : int = ActorCommons.PlayerEntityID if entry.actorType == ActorCommons.Type.PLAYER else entry.currentShape
+	var entityData : EntityData = DB.EntitiesDB.get(shape, null)
+	if not entityData:
+		return null
+
+	var isPlayerType : bool = entry.actorType == ActorCommons.Type.PLAYER
+	var isLocalPlayer : bool = isPlayerType and entry.nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
+
+	var entity : Entity = Instantiate.CreateEntity(entry.actorType, entityData, entityData._name if entry.nick.is_empty() else entry.nick, isLocalPlayer)
+	entity.agentRID = agentRID
+	entity.stat.shape = shape
+	entity.stat.spirit = entry.spirit
+	entity.stat.currentShape = entry.currentShape
+
+	if isPlayerType:
+		entity.stat.level = entry.level
+		entity.stat.health = entry.health
+		entity.stat.hairstyle = entry.hairstyle
+		entity.stat.haircolor = entry.haircolor
+		entity.stat.gender = entry.gender
+		entity.stat.race = entry.race
+		entity.stat.skintone = entry.skintone
+		if entity.inventory and not entry.equipment.is_empty():
+			entity.inventory.ImportEquipment(entry.equipment)
+
+	if isLocalPlayer:
+		Launcher.Player = entity
+		Launcher.Player.SetLocalPlayer()
+
+	AddChild(entity)
+	Entities.Add(entity, agentRID)
+
+	if isLocalPlayer:
+		PlayerWarped.emit()
+
+	return entity
 
 # Generic fringe Node2D
 func RemoveChildren():
-	assert(currentFringe != null, "Current fringe layer not found, could not remove children")
-	for child in currentFringe.get_children():
-		if child is Node2D:
-			RemoveChild(child)
+	for entity in Entities.entities.values():
+		RemoveChild(entity)
+	for drop in drops.values():
+		RemoveChild(drop)
 
 func RemoveChild(child : Node2D):
 	if child:
@@ -76,64 +143,37 @@ func AddChild(child : Node2D):
 		currentFringe.add_child.call_deferred(child)
 
 # Entities
-func AddPlayer(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int) -> Entity:
-	var entity : Entity = AddEntity(agentRID, actorType, shape, spirit, currentShape, nick, entityVelocity, entityPosition, entityOrientation, state, skillCastID)
-	if entity and entity == Launcher.Player:
-		PlayerWarped.emit()
-	return entity
-
-func AddEntity(agentRID : int, actorType : ActorCommons.Type, shape : int, spirit : int, currentShape : int, nick : String, entityVelocity : Vector2, entityPosition : Vector2i, entityOrientation : Vector2, state : ActorCommons.State, skillCastID : int) -> Entity:
-	if not currentFringe:
-		return null
-
-	var entityData : EntityData = DB.EntitiesDB.get(shape, null)
-	if not entityData:
-		return null
-
-	var entity : Entity = Entities.Get(agentRID)
-	var isAlreadySpawned : bool = entity != null and entity.get_parent() == currentFringe
-	var isPlayerType : bool = actorType == ActorCommons.Type.PLAYER
-
-	if not entity:
-		var isLocalPlayer : bool = isPlayerType and nick == Launcher.GUI.characterPanel.characterNameDisplay.get_text()
-		entity = Instantiate.CreateEntity(actorType, entityData, entityData._name if nick.is_empty() else nick, isLocalPlayer)
-		if not entity:
-			return
-
-		entity.agentRID = agentRID
-		if isLocalPlayer:
-			Launcher.Player = entity
-			Launcher.Player.SetLocalPlayer()
-
-	entity.stat.shape = shape
-	entity.stat.spirit = spirit
-	entity.stat.currentShape = currentShape
-
-	entity.Update(entityVelocity, entityPosition, entityOrientation, state, skillCastID, isAlreadySpawned or isPlayerType)
-	if not isAlreadySpawned:
-		AddChild(entity)
-		Entities.Add(entity, agentRID)
-
-	return entity
-
-func RemoveEntity(agentRID : int):
-	var entity : Entity = Entities.Get(agentRID)
-	if entity:
-		if Launcher.Player.target == entity:
-			Launcher.Player.target = null
-		RemoveChild(entity)
-		Entities.Erase(agentRID)
-
 func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool):
 	var entity : Entity = Entities.Get(agentRID)
+	var isNewSpawn : bool = false
+	if entity == null:
+		var entry : EntityCacheEntry = entityCache.get(agentRID, null)
+		if entry:
+			entity = SpawnEntity(agentRID, entry)
+			isNewSpawn = true
+	elif entity == Launcher.Player and entity.get_parent() != currentFringe:
+		if pendingWarp:
+			pendingWarp = false
+			isNewSpawn = true
+			AddChild(entity)
+			PlayerWarped.emit()
+
 	if entity:
-		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID, false, isRunning)
+		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID, isNewSpawn, isRunning)
 
 func UpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.visual:
 		var agentOrientation : Vector2 = entity.entityOrientation if agentVelocity.is_zero_approx() else agentVelocity.normalized()
 		entity.Update(agentVelocity, agentPosition, agentOrientation, entity.state, entity.visual.skillCastID, false, entity.stat.isRunning)
+
+func RemoveEntity(agentRID : int):
+	var entity : Entity = Entities.Get(agentRID)
+	if entity:
+		if Launcher.Player and Launcher.Player.target == entity:
+			Launcher.Player.target = null
+		RemoveChild(entity)
+		Entities.Erase(agentRID)
 
 func LeaveGame():
 	UnloadMapNode()

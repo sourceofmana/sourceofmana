@@ -265,7 +265,7 @@ func set_shortcutcells(cells : Array):
 func apply_shortcutcells(cells : Array):
 	if Launcher.GUI and Launcher.GUI:
 		for tile in Launcher.GUI.get_tree().get_nodes_in_group("CellTile"):
-			if cells.size() == 0:
+			if cells.is_empty():
 				break
 			if tile and tile.draggable:
 				for cellInfo in cells:

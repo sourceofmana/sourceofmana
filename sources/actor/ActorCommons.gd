@@ -258,6 +258,9 @@ const GenderFemaleTexture : Texture2D		= preload("res://data/graphics/gui/stat/g
 const GenderNonBinaryTexture : Texture2D	= preload("res://data/graphics/gui/stat/gender-nonbinary.png")
 
 const LastMeanValueMax : int				= 5
+const VisibilityCheckTimeInternal : float	= 1.0
+const VisibilityCheckDistSqrd : float		= 16.0 * 16.0
+static var PlayerEntityID : int				= "Player".hash()
 
 # Skill
 enum Alteration

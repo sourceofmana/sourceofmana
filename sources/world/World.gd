@@ -24,10 +24,30 @@ func GetGlobalPlayer(nickname : String) -> PlayerAgent:
 				if player.nick == nickname:
 					return player
 	return null
+
+# Helper
+func BulkPreload(agent : BaseAgent, agentRID : int, peerID : int):
+	if agent is PlayerAgent:
+		Network.Bulk("PreloadPlayer", [
+			agentRID, agent.stat.spirit, agent.stat.currentShape, agent.nick,
+			agent.stat.level, agent.stat.health,
+			agent.stat.hairstyle, agent.stat.haircolor,
+			agent.stat.gender, agent.stat.race, agent.stat.skintone,
+			agent.inventory.ExportEquipment() if agent.inventory else {}
+		], peerID)
+	else:
+		Network.Bulk("PreloadEntity", [
+			agentRID, agent.GetActorType(), agent.stat.currentShape, agent.nick
+		], peerID)
+
 # Core functions
 func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, instanceID : int = 0):
 	assert(newMap != null and agent != null, "Warp could not proceed, agent or new map missing")
 	if agent and newMap:
+		# Force reset velocity to prevent any input residue due to the map transition
+		agent._velocity_computed(Vector2.ZERO)
+		agent.currentVelocity = Vector2.ZERO
+		agent.velocity = Vector2.ZERO
 		WorldAgent.PopAgent(agent)
 		if not agent.isRelativeMode:
 			agent.SwitchInputMode(true)
@@ -61,53 +81,45 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 				agent.Morph(false, agent.stat.shape)
 
 		Network.WarpPlayer(map.id, agent.position, agent.peerID)
+		agent.visibleAgents.clear()
 		var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 		if instance:
+			var agentRID : int = agent.get_rid().get_id()
 			for neighbour in instance.players:
+				if not neighbour:
+					continue
 				var neighbourRID : int = neighbour.get_rid().get_id()
-				Network.Bulk("AddPlayer", [
-					neighbourRID, neighbour.GetActorType(), neighbour.stat.shape,
-					neighbour.stat.spirit, neighbour.stat.currentShape, neighbour.nick,
-					neighbour.velocity, neighbour.position, neighbour.currentOrientation,
-					neighbour.state, neighbour.currentSkillID,
-					neighbour.stat.level, neighbour.stat.health,
-					neighbour.stat.hairstyle, neighbour.stat.haircolor,
-					neighbour.stat.gender, neighbour.stat.race, neighbour.stat.skintone,
-					neighbour.inventory.ExportEquipment() if neighbour.inventory else {}
-				], agent.peerID)
+				BulkPreload(neighbour, neighbourRID, agent.peerID)
 			for neighbour in instance.npcs:
+				if not neighbour:
+					continue
 				var neighbourRID : int = neighbour.get_rid().get_id()
-				Network.Bulk("AddEntity", [
-					neighbourRID, neighbour.GetActorType(),
-					neighbour.stat.currentShape, neighbour.nick,
-					neighbour.velocity, neighbour.position, neighbour.currentOrientation,
-					neighbour.state, neighbour.currentSkillID,
-				], agent.peerID)
+				BulkPreload(neighbour, neighbourRID, agent.peerID)
 			for neighbour in instance.mobs:
+				if not neighbour:
+					continue
 				var neighbourRID : int = neighbour.get_rid().get_id()
-				Network.Bulk("AddEntity", [
-					neighbourRID, neighbour.GetActorType(),
-					neighbour.stat.currentShape, neighbour.nick,
-					neighbour.velocity, neighbour.position, neighbour.currentOrientation,
-					neighbour.state, neighbour.currentSkillID,
-				], agent.peerID)
+				BulkPreload(neighbour, neighbourRID, agent.peerID)
 
-		Network.NotifyNeighbours(agent, "AddPlayer", [
-			agent.GetActorType(),
-			agent.stat.shape, agent.stat.spirit, agent.stat.currentShape, agent.nick,
-			agent.velocity, agent.position, agent.currentOrientation,
-			agent.state, agent.currentSkillID,
-			agent.stat.level, agent.stat.health,
-			agent.stat.hairstyle, agent.stat.haircolor,
-			agent.stat.gender, agent.stat.race, agent.stat.skintone,
-			agent.inventory.ExportEquipment() if agent.inventory else {}
-		], false)
+			# Spawn self
+			Network.Bulk("FullUpdateEntity", [
+				agentRID, agent.velocity, agent.position, agent.currentOrientation,
+				agent.state, agent.currentSkillID, agent.stat.isRunning
+			], agent.peerID)
+
+			# Notify existing players about the new arrival
+			for player in instance.players:
+				if not player or player == agent or player.peerID == NetworkCommons.PeerUnknownID:
+					continue
+				BulkPreload(agent, agentRID, player.peerID)
 	else:
-		Network.NotifyNeighbours(agent, "AddEntity", [
-			agent.GetActorType(), agent.stat.currentShape, agent.nick,
-			agent.velocity, agent.position, agent.currentOrientation,
-			agent.state, agent.currentSkillID
-		], false)
+		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+		var agentRID : int = agent.get_rid().get_id()
+		if inst:
+			for player in inst.players:
+				if not player or player.peerID == NetworkCommons.PeerUnknownID:
+					continue
+				BulkPreload(agent, agentRID, player.peerID)
 
 # Generic
 func BackupPlayers():

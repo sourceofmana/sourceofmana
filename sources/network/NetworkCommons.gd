@@ -13,6 +13,14 @@ const ServerAddress : String			= "som.manasource.org"
 const LocalServerAddress : String		= "127.0.0.1"
 const MaxPlayerCount : int				= 128
 
+# Visibility
+const VisibilityHalfWidth : float		= 1920.0 / 2.0
+const VisibilityHalfHeight : float		= 1200.0 / 2.0
+
+static func IsVisible(fromPos : Vector2, toPos : Vector2) -> bool:
+	var diff : Vector2 = toPos - fromPos
+	return abs(diff.x) <= VisibilityHalfWidth and abs(diff.y) <= VisibilityHalfHeight
+
 # Bulk
 const BulkMinSize : int					= 3
 

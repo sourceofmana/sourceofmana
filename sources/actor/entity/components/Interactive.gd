@@ -247,5 +247,6 @@ func Init(data : EntityData):
 				nameLabel.set("theme_override_colors/font_color", ActorCommons.MonsterTextColor)
 
 	if entity.visual:
-		entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
+		if not entity.visual.spriteOffsetUpdate.is_connected(RefreshVisibleNodeOffset):
+			entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
 		RefreshVisibleNodeOffset()
