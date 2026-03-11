@@ -65,10 +65,19 @@ func _ready():
 	self.body_entered.connect(bodyEntered)
 	self.body_exited.connect(bodyExited)
 
-	var particle : CPUParticles2D = WarpFx.instantiate()
-	particle.emission_shape = CPUParticles2D.EmissionShape.EMISSION_SHAPE_POINTS
-	particle.emission_points = randomPoints
-	add_child.call_deferred(particle)
+	var particle : GPUParticles2D = WarpFx.instantiate()
+
+	if not randomPoints.is_empty():
+		var image := Image.create(randomPoints.size(), 1, false, Image.FORMAT_RGBF)
+		for i in range(randomPoints.size()):
+			var point : Vector2 = randomPoints[i]
+			image.set_pixel(i, 0, Color(point.x, point.y, 0.0))
+		var mat : ParticleProcessMaterial = particle.process_material as ParticleProcessMaterial
+		mat.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_POINTS
+		mat.emission_shape_scale = Vector3(1.0, 1.0, 1.0)
+		mat.emission_point_count = randomPoints.size()
+		mat.emission_point_texture = ImageTexture.create_from_image(image)
 
 	var areaRatio : float = areaSize / (32*32)
 	particle.amount = int(float(defaultParticlesCount) * areaRatio)
+	add_child.call_deferred(particle)

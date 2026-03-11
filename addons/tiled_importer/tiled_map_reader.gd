@@ -243,8 +243,7 @@ func fill_polygon_pool(tileset : TileSet, cell_pos : Vector2, gid : int):
 
 	for tile_polygon in tile_polygon_count:
 		var polygon : PackedVector2Array = tile_data.get_collision_polygon_points(0, tile_polygon)
-
-		if polygon.size() > 0:
+		if not polygon.is_empty():
 			var last_vertex = Vector2(-1, -1)
 			var first_vertex = polygon[0]
 			var filtered_polygon : PackedVector2Array = []
@@ -306,7 +305,7 @@ func build_server() -> Resource:
 
 # Specific nodes to add per tiles (i.e.: Particle effects, light sources, etc...)
 func add_specific_nodes(parent : Node2D, cell_in_map : Vector2, gid : int):
-	if gid in specificDic and specificDic[gid].size() > 0:
+	if gid in specificDic and not specificDic[gid].is_empty():
 		var specificGid = specificDic[gid]
 		match specificGid[0]:
 			"LightSource":
@@ -661,7 +660,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							customObject.areaSize = area
 
 							var pointsInPolygon: Array = []
-							var numPoints : int = area / (32*32) * 4
+							var numPoints : int = area / (32*32) * 24
 							pointsInPolygon.append_array(points)
 							while pointsInPolygon.size() < numPoints:
 								var randomPoint : Vector2 = Vector2(randf_range(areaMin.x, areaMax.x), randf_range(areaMin.y, areaMax.y))

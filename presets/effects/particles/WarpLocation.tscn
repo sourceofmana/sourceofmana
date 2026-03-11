@@ -2,36 +2,48 @@
 
 [ext_resource type="Texture2D" uid="uid://o0usxnftyn4p" path="res://data/graphics/effects/particles/sparkle.png" id="1_bsjjb"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1pdty"]
-blend_mode = 1
+[sub_resource type="Curve" id="Curve_relop"]
+_data = [Vector2(0.08955223, 0), 0.0, -0.5685593, 0, 0, Vector2(0.3313433, 1), 0.0, 0.0, 0, 0, Vector2(0.7253731, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -10.049291, 0.0, 0, 0]
+point_count = 4
 
-[sub_resource type="Curve" id="Curve_8fcf5"]
-_data = [Vector2(0, 0), 0.0, 5.89079, 0, 0, Vector2(1, 0.484211), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="CurveTexture" id="CurveTexture_f233n"]
+curve = SubResource("Curve_relop")
 
-[sub_resource type="Gradient" id="Gradient_iwmu7"]
-offsets = PackedFloat32Array(0, 0.808511, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 0.522906, 0.318116, 0.321809, 1, 1, 1, 0)
+[sub_resource type="Gradient" id="Gradient_relop"]
+offsets = PackedFloat32Array(0, 0.4854369, 1)
+colors = PackedColorArray(0.94983333, 1, 0.57, 1, 0.51, 1, 0.60800004, 1, 0.32999998, 0.7096666, 1, 1)
 
-[node name="WarpParticles" type="CPUParticles2D" unique_id=1460748020]
-material = SubResource("CanvasItemMaterial_1pdty")
-amount = 6
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f233n"]
+gradient = SubResource("Gradient_relop")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_41gbv"]
+resource_local_to_scene = true
+lifetime_randomness = 0.2
+particle_flag_rotate_y = true
+emission_shape_scale = Vector3(16, 10, 1)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+angular_velocity_min = 179.99998
+angular_velocity_max = 479.99997
+radial_velocity_min = -10.000022
+radial_velocity_max = 9.999977
+gravity = Vector3(0, -20, 0)
+linear_accel_min = -10.000002
+linear_accel_max = -2.2351742e-06
+attractor_interaction_enabled = false
+scale_min = 0.099999994
+color_initial_ramp = SubResource("GradientTexture1D_f233n")
+alpha_curve = SubResource("CurveTexture_f233n")
+turbulence_noise_strength = 6.03
+
+[node name="Warp Particles" type="GPUParticles2D" unique_id=2056597341]
+z_as_relative = false
+amount = 10
 texture = ExtResource("1_bsjjb")
 lifetime = 2.0
-preprocess = 3.0
-randomness = 0.25
-lifetime_randomness = 0.15
-emission_shape = 4
-emission_points = PackedVector2Array()
-emission_colors = PackedColorArray()
-direction = Vector2(0, -1)
-gravity = Vector2(0, 0)
-initial_velocity_min = 10.0
-initial_velocity_max = 25.0
-angular_velocity_min = -180.0
-angular_velocity_max = 180.0
-angle_max = 360.0
-scale_amount_min = 0.0
-scale_amount_curve = SubResource("Curve_8fcf5")
-color = Color(1, 0.85098, 0.572549, 1)
-color_ramp = SubResource("Gradient_iwmu7")
+preprocess = 2.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_41gbv")
