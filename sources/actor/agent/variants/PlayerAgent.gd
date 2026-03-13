@@ -240,6 +240,7 @@ func Killed():
 	super.Killed()
 	if ownScript:
 		ClearScript()
+		NpcCommons.ToggleContext(self, false)
 
 func UpdateDeltas(delta : float):
 	if ActorCommons.IsRunning(self):
