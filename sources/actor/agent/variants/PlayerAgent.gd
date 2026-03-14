@@ -150,7 +150,7 @@ func OnRegenTick():
 func RequestStatsUpdate():
 	if not statsUpdatePending:
 		statsUpdatePending = true
-		call_deferred("FlushStatsUpdate")
+		FlushStatsUpdate.call_deferred()
 
 func FlushStatsUpdate():
 	statsUpdatePending = false
