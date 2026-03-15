@@ -96,6 +96,15 @@ func PreloadPlayer(agentRID : int, spirit : int, currentShape : int, nick : Stri
 func RemoveEntity(agentRID : int, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("RemoveEntity", [agentRID], peerID)
 
+# Tracker
+@rpc("authority", "call_remote", "reliable", EChannel.MAP)
+func DisplayProgressionTracker(label : String, value : int, maxValue : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("DisplayProgressionTracker", [label, value, maxValue], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.MAP)
+func ClearProgressionTracker(peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ClearProgressionTracker", [], peerID)
+
 # Notification
 @rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.MAP)
 func PushNotification(notif : String, peerID : int = NetworkCommons.PeerOfflineID):

@@ -3,6 +3,8 @@ class_name BaseAgent
 
 #
 signal agent_killed
+signal agent_damaged(value : int)
+signal agent_healed(value : int)
 
 #
 var agent : NavigationAgent2D			= null

@@ -137,6 +137,14 @@ func UpdatePublicStats(agentRID : int, level : int, health : int, hairstyle : in
 
 		entity.stat.RefreshVitalStats()
 
+func DisplayProgressionTracker(label : String, value : int, maxValue : int, _peerID : int):
+	if Launcher.GUI and Launcher.GUI.progressionTracker:
+		Launcher.GUI.progressionTracker.Display(label, value, maxValue)
+
+func ClearProgressionTracker(_peerID : int):
+	if Launcher.GUI and Launcher.GUI.progressionTracker:
+		Launcher.GUI.progressionTracker.Clear()
+
 func UpdatePrivateStats(experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, _peerID : int):
 	if Launcher.Player and Launcher.Player.stat:
 		Launcher.Player.stat.experience		= experience

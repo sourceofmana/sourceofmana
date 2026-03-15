@@ -10,12 +10,12 @@ _name = "Lynx"
 _spritePreset = "Lynx"
 _collision = "Medium"
 _radius = 24
-_equipment = Array[ExtResource("1_dfoc1")]([null, null, null, null, null, null, null, null])
-_behaviour = 4
 _stats = {
 "level": 10,
 "walkSpeed": 80.0
 }
+_equipment = Array[ExtResource("1_dfoc1")]([null, null, null, null, null, null, null, null])
+_behaviour = 4
 _skillSet = PackedInt64Array(123697108)
 _skillProba = Dictionary[int, float]({
 123697108: 10.0

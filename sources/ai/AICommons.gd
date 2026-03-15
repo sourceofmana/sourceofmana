@@ -82,7 +82,7 @@ static func IsAgentMoving(agent : AIAgent):
 	return agent.hasCurrentGoal
 
 static func IsReachable(agent : AIAgent, target : BaseAgent) -> bool:
-	return SkillCommons.IsInteractable(agent, target) and WorldNavigation.GetDistanceSquared(agent, target.position) < ReachDistanceSquared
+	return SkillCommons.IsInteractable(agent, target) and WorldNavigation.GetDistanceSquaredSafe(agent, target.position) < ReachDistanceSquared
 
 static func CanWalk(agent: AIAgent):
 	return agent.agent != null
@@ -128,7 +128,7 @@ static func ApplyAggressiveBehaviour(agent : AIAgent) -> bool:
 	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	for player in instance.players:
 		if SkillCommons.IsInteractable(agent, player):
-			var currentDist : float = WorldNavigation.GetDistanceSquared(agent, player.position)
+			var currentDist : float = WorldNavigation.GetDistanceSquaredSafe(agent, player.position)
 			if currentDist < nearestSquaredDist:
 				nearest = player
 				nearestSquaredDist = currentDist
@@ -150,7 +150,7 @@ static func ApplyStealBehaviour(agent : AIAgent) -> bool:
 			for dropIdx in instance.drops:
 				var drop : Drop = instance.drops[dropIdx]
 				if drop:
-					var dist : float = WorldNavigation.GetDistanceSquared(agent, drop.position)
+					var dist : float = WorldNavigation.GetDistanceSquaredSafe(agent, drop.position)
 					if dist < nearestDist and dist < ReachDistanceSquared:
 						nearest = drop
 						nearestDist = dist

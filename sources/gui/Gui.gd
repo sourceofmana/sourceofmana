@@ -7,6 +7,7 @@ extends ServiceBase
 @onready var stats : Control					= $Overlay/VSections/Indicators/Stat
 @onready var notificationLabel : Control		= $Overlay/VSections/Indicators/Info/Notification
 @onready var pickupPanel : Control				= $Overlay/VSections/Indicators/Info/PickUp
+@onready var progressionTracker : Control		= $Overlay/VSections/Indicators/Info/ProgressionTracker
 
 # Contexts
 @onready var loadingControl : Control			= $Overlay/VSections/Contexts/Loading
@@ -127,6 +128,7 @@ func EnterLoginMenu():
 		progressTimer = null
 
 	infoContext.set_visible(false)
+	progressionTracker.set_visible(false)
 	menu.SetItemsVisible(false)
 	stats.set_visible(false)
 	statWindow.set_visible(false)

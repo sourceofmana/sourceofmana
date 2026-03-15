@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://kip2f00ckvg3"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_vqcj6"]
+[ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_5dpsi"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_1y5ap"]
+
+[resource]
+script = ExtResource("3_1y5ap")
+_parent = ExtResource("2_5dpsi")
+_id = 1190851605
+_name = "Snake Pit Pond"
+_radius = 20
+_stats = {
+"level": 1
+}
+_equipment = Array[ExtResource("1_vqcj6")]([null, null, null, null, null, null, null, null])
+_behaviour = 9
+_skillSet = PackedInt64Array()
+_drops = PackedInt64Array()
+_questID = 3
+_questState = 1
+_questStateMax = 1

@@ -37,7 +37,7 @@ func RemoveAll():
 	timestampsMs.clear()
 
 #
-func Animate(targetHalf : float, speed : float, callable : Callable = Callable()) -> void:
+func Animate(targetHalf : float, speed : float, callable : Callable = Callable()):
 	var panelHalf : float = panel.size.x * 0.5
 	if panelHalf <= 0.0 or speed == 0.0:
 		if callable.is_valid():

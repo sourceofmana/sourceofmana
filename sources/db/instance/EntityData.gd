@@ -30,6 +30,8 @@ class_name EntityData
 @export var _questID : int						= ProgressCommons.Quest.UNKNOWN
 @export var _questState : int					= ProgressCommons.UnknownProgress
 @export var _questStateMax : int				= ProgressCommons.CompletedProgress
+@export_category("Flags")
+@export var _isBoss : bool						= false
 
 const hashedStats : PackedStringArray			= ["race", "skintone", "hairstyle", "haircolor"]
 
@@ -43,8 +45,7 @@ func GetMergedEntity() -> EntityData:
 
 	# Recursively merge parent (in case parent also has a parent)
 	var merged : EntityData = _parent.GetMergedEntity().duplicate(true)
-
-	merged._id = _id if _id != DB.UnknownHash else merged._id
+	merged._id = _id if _id != DB.UnknownHash else _name.hash()
 	merged._name = _name if _name != "" else merged._name
 	merged._spritePreset = _spritePreset if _spritePreset != "" else merged._spritePreset
 	merged._collision = _collision if _collision != "" else merged._collision
@@ -85,6 +86,10 @@ func GetMergedEntity() -> EntityData:
 	merged._questID = _questID if _questID != ProgressCommons.Quest.UNKNOWN else merged._questID
 	merged._questState = _questState if _questState != ProgressCommons.UnknownProgress else merged._questState
 	merged._questStateMax = _questStateMax if _questStateMax != ProgressCommons.UnknownProgress else merged._questStateMax
+
+	# Flags
+	if _isBoss:
+		merged._isBoss = true
 
 	return merged
 
@@ -147,6 +152,8 @@ static func Create(result : Dictionary) -> EntityData:
 		for entityName in result.Spawns:
 			var entityID : int = entityName.hash()
 			entity._spawns[entityID] = int(result.Spawns[entityName])
+	if "IsBoss" in result:
+		entity._isBoss = bool(result.IsBoss)
 	if "QuestFilter" in result:
 		for questName in result.QuestFilter:
 			entity._questID = ProgressCommons.Quest.get(questName, ProgressCommons.Quest.UNKNOWN)

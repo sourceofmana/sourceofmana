@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://bsblyavpy10s5"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_yw5um"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_23djo"]
+[ext_resource type="Resource" uid="uid://b1kgjqcht72fg" path="res://presets/cells/items/feet/LeatherBoots.tres" id="2_cbi1h"]
+[ext_resource type="Resource" uid="uid://d00eqktrfrrkj" path="res://presets/cells/items/chest/TankTop.tres" id="2_mm1kb"]
+[ext_resource type="Resource" uid="uid://b8ixnx1136r4m" path="res://presets/cells/items/hands/LeatherGloves.tres" id="3_mm1kb"]
+[ext_resource type="Resource" uid="uid://bouv4idn0yg3i" path="res://presets/cells/items/legs/CloudPants.tres" id="3_tl3bk"]
+[ext_resource type="Resource" uid="uid://f40w6s2w07wu" path="res://presets/cells/items/neck/BandanaScarf.tres" id="4_tl3bk"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="5_hhh52"]
+
+[resource]
+script = ExtResource("2_23djo")
+_parent = ExtResource("5_hhh52")
+_id = 229085321
+_name = "Mauro"
+_spritePreset = "Player"
+_stats = {
+"gender": "Male",
+"haircolor": "Twisted Teal",
+"hairstyle": "Choppy",
+"race": "Human",
+"skintone": "Dark"
+}
+_equipment = Array[ExtResource("1_yw5um")]([ExtResource("2_mm1kb"), ExtResource("3_tl3bk"), ExtResource("2_cbi1h"), ExtResource("3_mm1kb"), null, ExtResource("4_tl3bk"), null, null])
+_direction = 0
+_state = 2
+_behaviour = 8
+_skillSet = PackedInt64Array()
+_drops = PackedInt64Array()

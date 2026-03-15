@@ -295,7 +295,7 @@ func ApplyStep():
 func Close():
 	if IsPlayer():
 		ToggleWindow(false)
-	own.ClearScript()
+		own.ClearScript()
 
 func IsDone() -> bool:
 	return own != npc and step >= steps.size() and not IsWaiting()

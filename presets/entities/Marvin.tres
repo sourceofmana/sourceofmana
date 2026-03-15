@@ -10,13 +10,13 @@ _name = "Marvin"
 _spritePreset = "Slime"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_t1rhf")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/marvin.png"
-_behaviour = 228
 _stats = {
 "level": 5,
 "walkSpeed": 40.0
 }
+_equipment = Array[ExtResource("1_t1rhf")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/marvin.png"
+_behaviour = 228
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array(1975170517)
 _dropsProba = Dictionary[int, float]({

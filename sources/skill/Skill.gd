@@ -101,11 +101,13 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rn
 	# Re-calculate the clamp as AI.Refresh may have triggered the health regen
 	info.value = clampi(info.value, 0, target.stat.health)
 	target.stat.SetHealth(-info.value)
+	target.agent_damaged.emit(target, info.value)
 	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill.id], true, true)
 
 static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	var heal : int = SkillCommons.GetHeal(agent, target, skill, rng)
 	target.stat.SetHealth(heal)
+	target.agent_healed.emit(target, heal)
 	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), heal, ActorCommons.Alteration.HEAL, skill.id], true, true)
 
 static func Stopped(agent : BaseAgent):

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://dw4saxmb2kqp1"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_prslr"]
+
+[resource]
+script = ExtResource("1_prslr")
+id = 3
+name = "A Biting Thirst"
+description = "Mauro near a cave entrance tried to fetch water from a small pond inside, but some snakes bit him until he spilled and drank what little remained.
+He handed you an empty jug and ask if you can do better."
+giver = "Mauro"
+giverLocation = "Desert Pit"
+target = "Water point"
+targetLocation = "Snake Pit"
+reward = "Unknown"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

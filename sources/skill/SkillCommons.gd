@@ -104,9 +104,9 @@ static func IsNear(agent : BaseAgent, target : BaseAgent, skillRange : int) -> b
 	var filteredRange : float = skillRange + agent.entityRadius + target.entityRadius
 	var distanceSquared : float = 0.0
 	if not target.agent:
-		distanceSquared = WorldNavigation.GetPathLengthSquared(agent, target.position)
-	else:
 		distanceSquared = WorldNavigation.GetDistanceSquared(agent, target.position)
+	else:
+		distanceSquared = WorldNavigation.GetDistanceSquaredSafe(agent, target.position)
 	return distanceSquared <= filteredRange * filteredRange
 
 static func IsSameMap(agent : BaseAgent, target : BaseAgent) -> bool:

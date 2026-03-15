@@ -9,10 +9,11 @@ script = ExtResource("2_7rgm6")
 _parent = ExtResource("2_eksoy")
 _id = 193464646
 _name = "NPC"
-_equipment = Array[ExtResource("1_fd1rq")]([null, null, null, null, null, null, null, null])
-_displayName = true
 _stats = {
 "level": 1
 }
+_equipment = Array[ExtResource("1_fd1rq")]([null, null, null, null, null, null, null, null])
+_displayName = true
+_behaviour = 3
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()
