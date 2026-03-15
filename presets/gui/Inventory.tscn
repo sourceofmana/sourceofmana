@@ -221,7 +221,7 @@ textureProgress = null
 labelColor = Color(0.32549, 0.305882, 0.290196, 1)
 labelUnit = " kg"
 labelOffset = Vector2(0, -4)
-delayToFillSec = 2.0
+fillDuration = 2.0
 precisionDivider = 100
 numberAfterComma = 2
 metadata/_edit_layout_mode = 1
@@ -253,7 +253,7 @@ grow_vertical = 2
 textureProgress = null
 labelColor = Color(0.32549, 0.305882, 0.290196, 1)
 labelOffset = Vector2(0, -4)
-delayToFillSec = 2.0
+fillDuration = 2.0
 metadata/_edit_layout_mode = 1
 
 [node name="HSeparator" type="HSeparator" parent="Margin/HBoxContainer/InfoBox" unique_id=2122691433]

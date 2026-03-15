@@ -14,8 +14,8 @@ script = ExtResource("1")
 textureProgress = ExtResource("2")
 labelColor = Color(0.6, 0.407843, 0.0196078, 1)
 labelScale = 1.0
-delayToFillSec = 1.0
-delayToInitSec = 3.0
+fillDuration = 1.0
+initDuration = 3.0
 
 [node name="Bar" type="TextureProgressBar" parent="." unique_id=441001127]
 layout_mode = 1
