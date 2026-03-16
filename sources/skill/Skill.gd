@@ -134,12 +134,9 @@ static func ThrowProjectile(agent : BaseAgent, targetPos : Vector2, skill : Skil
 	Network.NotifyNeighbours(agent, "ThrowProjectile", [targetPos, skill.id])
 
 static func CastAbility(agent : BaseAgent, skill : SkillCell):
-	if skill.id == "Morph".hash():
-		if agent.stat.spirit == DB.UnknownHash:
-			return
-		var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
-		if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
-			return
-		agent.Morph(true)
-	elif skill.id == "Run".hash():
-		agent.SetRunning(!agent.stat.isRunning)
+	if not skill.abilityScript:
+		return
+
+	var ability : AbilityScript = skill.abilityScript.new()
+	if ability:
+		ability.Execute(agent)

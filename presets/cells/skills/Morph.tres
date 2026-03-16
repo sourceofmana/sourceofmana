@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="1_morph"]
 [ext_resource type="PackedScene" uid="uid://wlnx16hfndql" path="res://presets/effects/particles/casts/Morph.tscn" id="1_txhfk"]
 [ext_resource type="Texture2D" uid="uid://d3dkgbn68guu8" path="res://data/graphics/items/skill/morph.png" id="2_ceoac"]
+[ext_resource type="Script" uid="uid://dl62d4rgmj4d4" path="res://sources/skill/abilities/MorphAbility.gd" id="2_morphability"]
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="3_skhas"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="4_47mak"]
 
@@ -30,6 +31,7 @@ mode = 2
 cooldownTime = 5.0
 castPreset = ExtResource("1_txhfk")
 castTime = 10.0
+abilityScript = ExtResource("2_morphability")
 id = 0
 name = "Morph"
 description = "Transform into your spirit form."
