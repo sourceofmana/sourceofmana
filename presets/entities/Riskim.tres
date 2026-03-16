@@ -9,10 +9,13 @@ script = ExtResource("2_6g8wa")
 _parent = ExtResource("2_jvyv1")
 _id = 3469933044
 _name = "Riskim"
+_stats = {
+"gender": "Male",
+"level": 1,
+"race": "Raijin",
+"skintone": "Light"
+}
 _equipment = Array[ExtResource("1_ogvrf")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/npcs/riskim.png"
-_stats = {
-"level": 1
-}
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

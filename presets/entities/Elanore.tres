@@ -9,10 +9,13 @@ script = ExtResource("2_yh3w3")
 _parent = ExtResource("2_02rcd")
 _id = 3325600555
 _name = "Elanore"
+_stats = {
+"gender": "Female",
+"level": 1,
+"race": "Human",
+"skintone": "Tanned"
+}
 _equipment = Array[ExtResource("1_kbsb8")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/npcs/elanore.png"
-_stats = {
-"level": 1
-}
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()
