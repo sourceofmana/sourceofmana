@@ -149,11 +149,6 @@ func EmotePlayer(senderagentRID : int, emoteID : int, peerID : int = NetworkComm
 func TriggerSit(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerSit", [], peerID)
 
-# Run
-@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerRun(enable : bool, peerID : int = NetworkCommons.PeerAuthorityID):
-	CallServer("TriggerRun", [enable], peerID)
-
 # Chat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerChat(text : String, channelID : GUICommons.ChatChannel, peerID : int = NetworkCommons.PeerAuthorityID):
@@ -211,8 +206,8 @@ func TriggerExplore(peerID : int = NetworkCommons.PeerAuthorityID):
 
 # Combat
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerCast(targetRID : int, skillID : int, peerID : int = NetworkCommons.PeerAuthorityID):
-	CallServer("TriggerCast", [targetRID, skillID], peerID, NetworkCommons.DelayShort)
+func TriggerSkill(targetRID : int, skillID : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerSkill", [targetRID, skillID], peerID, NetworkCommons.DelayShort)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, peerID : int = NetworkCommons.PeerOfflineID):
@@ -225,11 +220,6 @@ func Casted(agentRID : int, skillID: int, cooldown : float, peerID : int = Netwo
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ThrowProjectile(agentRID : int, targetPos : Vector2, skillID: int, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("ThrowProjectile", [agentRID, targetPos, skillID], peerID)
-
-# Morph
-@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerMorph(peerID : int = NetworkCommons.PeerAuthorityID):
-	CallServer("TriggerMorph", [], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func Morphed(agentRID : int, morphID : int, notifyMorphing : bool, peerID : int = NetworkCommons.PeerOfflineID):

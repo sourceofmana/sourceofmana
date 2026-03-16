@@ -14,7 +14,8 @@ class_name EntityInteractive
 var displayName : bool						= false
 var selectionFx : GPUParticles2D			= null
 var visualOffset : int						= -1
-var hpFadeTween : Tween					= null
+var hpFadeTween : Tween						= null
+var currentCastFx : GPUParticles2D			= null
 
 #
 func DisplaySelection(hue : float, alpha : float = 1.0):
@@ -91,19 +92,24 @@ func DisplaySkillRange(skill : SkillCell):
 		skillPreview.Hide()
 	skillPreview.queue_redraw()
 
-func HideCast(castFx : GPUParticles2D):
-	castFx.emitting = false
+func StopCasting():
+	if currentCastFx:
+		currentCastFx.emitting = false
+		currentCastFx = null
 
 func DisplayCast(emitter : Entity, skillID : int):
 	if DB.SkillsDB.has(skillID):
 		var skill : SkillCell = DB.SkillsDB[skillID]
 		if skill.castPreset:
-			var castFx : GPUParticles2D = skill.castPreset.instantiate()
-			if castFx:
-				Callback.SelfDestructTimer(castFx, skill.castTime + emitter.stat.current.castAttackDelay, HideCast.bind(castFx))
-				castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-				castFx.emitting = true
-				add_child(castFx)
+			StopCasting()
+			currentCastFx = skill.castPreset.instantiate()
+			if currentCastFx:
+				Callback.SelfDestructTimer(currentCastFx, skill.castTime + emitter.stat.current.castAttackDelay, StopCasting)
+				currentCastFx.finished.connect(Util.RemoveNode.bind(currentCastFx, self))
+				currentCastFx.emitting = true
+				add_child(currentCastFx)
+	else:
+		StopCasting()
 
 func DisplaySkill(emitter : Entity, skillID : int, cooldown : float):
 	if DB.SkillsDB.has(skillID):

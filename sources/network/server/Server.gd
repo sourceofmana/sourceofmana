@@ -195,11 +195,6 @@ func TriggerSit(peerID : int):
 	if player:
 		player.SetState(ActorCommons.State.SIT)
 
-func TriggerRun(enable : bool, peerID : int):
-	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player:
-		player.SetRunning(enable)
-
 func TriggerRespawn(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player is PlayerAgent:
@@ -248,22 +243,11 @@ func TriggerExplore(peerID : int):
 	if player is PlayerAgent:
 		player.Explore()
 
-func TriggerCast(targetRID : int, skillID : int, peerID : int):
+func TriggerSkill(targetRID : int, skillID : int, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player and DB.SkillsDB.has(skillID):
 		var target : BaseAgent = WorldAgent.GetAgent(targetRID)
 		Skill.Cast(player, target, DB.SkillsDB[skillID])
-
-func TriggerMorph(peerID : int):
-	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if not player:
-		return
-	if player.stat.spirit == DB.UnknownHash:
-		return
-	var map : Object = WorldAgent.GetMapFromAgent(player)
-	if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
-		return
-	player.Morph(true)
 
 func TriggerSelect(targetRID : int, peerID : int):
 	var target : BaseAgent = WorldAgent.GetAgent(targetRID)

@@ -115,7 +115,8 @@ static func ParseSkillsDB():
 		if not Engine.is_editor_hint():
 			cell.Instantiate()
 		cell.id = SetCellHash(cell.name)
-		assert(SkillsDB.has(cell.id) == false, "Duplicated cell in SkillsDB")
+		assert(SkillsDB.has(cell.id) == false, "Duplicated cell in SkillsDB for %d" % cell.id)
+		assert(cell.modifiers, "Modifiers not set for %s" % cell.name)
 		SkillsDB[cell.id] = cell
 
 static func ParseQuestsDB():

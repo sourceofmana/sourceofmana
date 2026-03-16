@@ -9,10 +9,7 @@ static func Get(agentRID : int) -> Entity:
 	return entities.get(agentRID, null)
 
 static func Clear():
-	var currentPlayerAgentRID : int = Launcher.Player.agentRID if Launcher.Player else NetworkCommons.PeerUnknownID
 	entities.clear()
-	if currentPlayerAgentRID != NetworkCommons.PeerUnknownID:
-		entities[currentPlayerAgentRID] = Launcher.Player
 
 static func Add(entity : Entity, agentRID : int):
 	entities[agentRID] = entity

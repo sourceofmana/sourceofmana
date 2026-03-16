@@ -317,7 +317,7 @@ const PickupSquaredDistance : float			= 48 * 48 # 1.5 Tile squared length
 const MaxStatValue : int					= 1 << 32
 const MaxPointPerAttributes : int			= 20
 const InventorySize : int					= 100
-const RunningStaminaCostPerSecond : int		= 10
+const RunningStaminaCostPerSecond : int		= 5
 
 static func IsEquipped(cell : BaseCell) -> bool:
 	return cell and cell is ItemCell and \
@@ -432,4 +432,8 @@ static var DefaultSkills : Array[Dictionary] = [
 	{ "skill_id": "Lum".hash(), "level": 1 },
 	{ "skill_id": "Inma".hash(), "level": 1 },
 	{ "skill_id": "Mana Burst".hash(), "level": 1 },
+	{ "skill_id": "Run".hash(), "level": 1 },
+	{ "skill_id": "Morph".hash(), "level": 1 },
+	{ "skill_id": "Spitfire".hash(), "level": 1 },
+	{ "skill_id": "Sonic Wave".hash(), "level": 1 },
 ]

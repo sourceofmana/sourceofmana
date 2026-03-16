@@ -101,7 +101,7 @@ func WalkToward(pos : Vector2):
 	if self is AIAgent:
 		set_physics_process(true)
 
-	if SkillCommons.CanCast(self):
+	if SkillCommons.IsStaticCasting(self):
 		Skill.Stopped(self)
 
 	hasCurrentGoal = true
@@ -243,7 +243,7 @@ func _physics_process(_delta : float):
 func _velocity_computed(safeVelocity : Vector2i):
 	if stat.health <= 0:
 		SetState(ActorCommons.State.DEATH)
-	elif SkillCommons.CanCast(self):
+	elif SkillCommons.IsStaticCasting(self):
 		SetState(DB.SkillsDB[currentSkillID].state)
 	elif safeVelocity == Vector2i.ZERO:
 		SetState(ActorCommons.State.IDLE)

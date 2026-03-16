@@ -116,6 +116,8 @@ func SpawnEntity(agentRID : int, entry : EntityCacheEntry) -> Entity:
 		Launcher.Player.SetLocalPlayer()
 
 	AddChild(entity)
+	if entry.currentShape != shape:
+		entity.SetData.call_deferred()
 	Entities.Add(entity, agentRID)
 
 	if isLocalPlayer:

@@ -4,6 +4,7 @@ extends ColumnTableView
 #
 const COLUMNS : Array[Dictionary] = [
 	{ "name" : "Name", "property" : "name", "type" : TYPE_STRING, "editable" : true, "width" : 150 },
+	{ "name" : "Category", "property" : "category", "type" : TYPE_INT, "editable" : true, "width" : 100, "is_enum" : true, "enum_name" : "Category" },
 	{ "name" : "State", "property" : "state", "type" : TYPE_INT, "editable" : true, "width" : 100, "is_enum" : true, "enum_name" : "State" },
 	{ "name" : "Range", "property" : "cellRange", "type" : TYPE_INT, "editable" : true, "width" : 80 },
 	{ "name" : "Mode", "property" : "mode", "type" : TYPE_INT, "editable" : true, "width" : 100, "is_enum" : true, "enum_name" : "Mode" },
@@ -36,6 +37,11 @@ func GetCountText(filtered : int, total : int) -> String:
 
 func GetEnumName(enumType : String, value : int) -> String:
 	match enumType:
+		"Category":
+			for key in SkillCell.Category.keys():
+				if SkillCell.Category[key] == value:
+					return key
+			return "UNKNOWN"
 		"State":
 			for key in ActorCommons.State.keys():
 				if ActorCommons.State[key] == value:
@@ -50,6 +56,8 @@ func GetEnumName(enumType : String, value : int) -> String:
 
 func GetEnumValue(enumType : String, enumKey : String) -> int:
 	match enumType:
+		"Category":
+			return SkillCell.Category.get(enumKey.to_upper(), SkillCell.Category.SPELL)
 		"State":
 			return ActorCommons.State.get(enumKey.to_upper(), ActorCommons.State.UNKNOWN)
 		"Mode":
@@ -59,6 +67,9 @@ func GetEnumValue(enumType : String, enumKey : String) -> int:
 func PopulateEnumPopup(enumType : String, currentValue : int):
 	enumPopup.clear()
 	match enumType:
+		"Category":
+			for key in SkillCell.Category.keys():
+				enumPopup.add_item(key, SkillCell.Category[key])
 		"State":
 			for key in ActorCommons.State.keys():
 				enumPopup.add_item(key, ActorCommons.State[key])

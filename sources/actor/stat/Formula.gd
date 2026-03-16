@@ -13,7 +13,7 @@ const coefRegenHealth : float					= 1.0
 const coefDefense : float						= 2.0
 const coefAttack : float						= 2.0
 const weightSnap : float						= 0.001
-const runningSpeedMultiplier : float			= 1.5
+const runningSpeedIncrease : float				= 50
 
 # Base formulas functions
 static func F(val) -> int:
@@ -88,8 +88,10 @@ static func GetBaseWalkSpeed(stat : ActorStats) -> float:
 	return stat.morphStat.walkSpeed + Fifth(stat.strength + stat.level) + stat.modifiers.Get(CellCommons.Modifier.WalkSpeed, true)
 
 static func GetWalkSpeed(stat : ActorStats) -> float:
-	var baseSpeed : float = GetBaseWalkSpeed(stat)
-	return baseSpeed * runningSpeedMultiplier if stat.isRunning else baseSpeed
+	var walkSpeed : float = GetBaseWalkSpeed(stat)
+	if stat.isRunning:
+		walkSpeed += runningSpeedIncrease
+	return walkSpeed
 
 static func GetWeightCapacity(stat : ActorStats) -> float:
 	return snappedf(stat.morphStat.weightCapacity + Half(stat.strength + stat.level), weightSnap) + stat.modifiers.Get(CellCommons.Modifier.WeightCapacity, true)
@@ -114,9 +116,7 @@ static func GetWeight(inventory : ActorInventory) -> float:
 static func GetWalkRatio(stat : ActorStats) -> float:
 	var ratio : float = 1.0
 	if stat.current.walkSpeed > 0:
-		ratio *= stat.morphStat.walkSpeed / stat.current.walkSpeed
-	if stat.isRunning:
-		ratio = ratio * runningSpeedMultiplier
+		ratio *= stat.current.walkSpeed / stat.morphStat.walkSpeed
 	return ratio
 
 # Experience management

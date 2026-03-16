@@ -117,9 +117,12 @@ func UpdatePublicStats(agentRID : int, level : int, health : int, hairstyle : in
 
 	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.stat:
+		var newShape : bool = entity.stat.currentShape != currentShape
 		entity.stat.level			= level
 		entity.stat.health			= health
 		entity.stat.currentShape	= currentShape
+		if newShape:
+			entity.SetData()
 
 		var newHair : bool = entity.stat.hairstyle != hairstyle or entity.stat.haircolor != haircolor
 		entity.stat.hairstyle		= hairstyle

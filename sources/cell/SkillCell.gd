@@ -2,6 +2,14 @@
 extends BaseCell
 class_name SkillCell
 
+enum Category
+{
+	SPELL    = 0,
+	PHYSICAL = 1,
+	ABILITY  = 2,
+}
+
+@export var category : Category					= Category.SPELL
 @export var state : ActorCommons.State			= ActorCommons.State.IDLE
 @export var cellRange : int						= 0
 @export var mode : Skill.TargetMode				= Skill.TargetMode.SINGLE

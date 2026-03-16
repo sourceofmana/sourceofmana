@@ -1,30 +1,30 @@
-[gd_scene format=3 uid="uid://bq3n8kx1vw7e2"]
+[gd_scene format=3 uid="uid://b12q3nvdjbdxf"]
 
-[ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="1"]
-[ext_resource type="Script" uid="uid://bn632xfw5o0t7" path="res://sources/gui/TrackerBar.gd" id="2"]
-[ext_resource type="Texture2D" uid="uid://dw0hbkvoxsv2x" path="res://data/graphics/gui/notification.png" id="4_ciai5"]
-[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="5"]
+[ext_resource type="Texture2D" uid="uid://dw0hbkvoxsv2x" path="res://data/graphics/gui/notification.png" id="1_lky6h"]
+[ext_resource type="Script" uid="uid://bn632xfw5o0t7" path="res://sources/gui/TrackerBar.gd" id="2_xsfdd"]
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="3_5y8xl"]
+[ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="4_8dprc"]
 
 [sub_resource type="Gradient" id="Gradient_ciai5"]
 offsets = PackedFloat32Array(0, 0.081850536, 0.9323843, 1)
-colors = PackedColorArray(0.120000005, 0.56, 1, 0.49803922, 0.1511131, 0.59498054, 0.99645317, 1, 0.45577964, 0.970173, 0.95959663, 1, 0.48000002, 1, 0.9566666, 0.49803922)
+colors = PackedColorArray(0.73, 0.20439999, 0.27447993, 0.49803922, 0.73, 0.20439999, 0.27447993, 1, 1, 0.61333334, 0.6, 1, 1, 0.61333334, 0.6, 0.49803922)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_yh6rj"]
 gradient = SubResource("Gradient_ciai5")
 
-[node name="ProgressionTracker" type="NinePatchRect" unique_id=546682608]
+[node name="BossTracker" type="NinePatchRect" unique_id=546682608]
 custom_minimum_size = Vector2(500, 40)
 offset_right = 122.0
 offset_bottom = 55.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("4_ciai5")
+texture = ExtResource("1_lky6h")
 region_rect = Rect2(0, 0, 123, 35)
 patch_margin_left = 61
 patch_margin_top = 17
 patch_margin_right = 61
 patch_margin_bottom = 17
-script = ExtResource("2")
+script = ExtResource("2_xsfdd")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=78809309]
 layout_mode = 1
@@ -42,23 +42,20 @@ theme_override_constants/margin_bottom = 3
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme = ExtResource("5")
+theme = ExtResource("3_5y8xl")
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1470869521]
 layout_mode = 2
 size_flags_vertical = 0
 horizontal_alignment = 1
 
-[node name="Bar" parent="MarginContainer/VBoxContainer" unique_id=1908903569 instance=ExtResource("1")]
+[node name="Bar" parent="MarginContainer/VBoxContainer" unique_id=1908903569 instance=ExtResource("4_8dprc")]
 layout_mode = 2
 size_flags_vertical = 3
 textureProgress = SubResource("GradientTexture1D_yh6rj")
 labelColor = Color(1, 1, 0.8666667, 1)
-labelUnit = "%"
+labelUnit = "HP"
 labelOffset = Vector2(0, -2)
 fillDuration = 0.1
-initDuration = 0.0
-precisionDivider = 100
-displayMax = false
-displayRatio = true
+initDuration = 1.0
 metadata/_edit_layout_mode = 1

@@ -4,6 +4,7 @@ class_name SkillCommons
 # Constants
 const SkillMeleeName : String			= "Melee"
 const PerspectiveIncrease : Vector2		= Vector2(1.0, 1.42)
+
 # Actions
 static func TryConsume(agent : BaseAgent, modifier : CellCommons.Modifier, skill : SkillCell) -> bool:
 	if agent is not PlayerAgent:
@@ -124,7 +125,7 @@ static func IsTargetable(agent : BaseAgent, target : BaseAgent) -> bool:
 static func IsInteractable(agent : BaseAgent, target : BaseAgent) -> bool:
 	return IsNotSelf(agent, target) and ActorCommons.IsAlive(target) and IsSameInstance(agent, target)
 
-static func CanCast(agent : BaseAgent) -> bool:
+static func IsStaticCasting(agent : BaseAgent) -> bool:
 	return agent.currentSkillID != DB.UnknownHash and not DB.SkillsDB[agent.currentSkillID].castWalk
 
 static func IsCasting(agent : BaseAgent, skill : SkillCell = null) -> bool:
@@ -141,6 +142,9 @@ static func IsDelayed(skill : SkillCell) -> bool:
 
 static func HasSkill(agent : BaseAgent, skill : SkillCell) -> bool:
 	return agent.progress and agent.progress.HasSkill(skill)
+
+static func IsInstantAbility(skill : SkillCell) -> bool:
+	return skill.category == SkillCell.Category.ABILITY and not skill.modifiers.HasAny() and skill.castTime == 0.0 and skill.cooldownTime == 0.0
 
 static func HasActionInProgress(agent : BaseAgent) -> bool:
 	return agent.currentSkillID != DB.UnknownHash or not agent.actionTimer.is_stopped()

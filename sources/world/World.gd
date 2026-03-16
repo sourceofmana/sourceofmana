@@ -44,6 +44,11 @@ func BulkPreload(agent : BaseAgent, agentRID : int, peerID : int):
 func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, instanceID : int = 0):
 	assert(newMap != null and agent != null, "Warp could not proceed, agent or new map missing")
 	if agent and newMap:
+		if agent is PlayerAgent:
+			var currentMap : WorldMap = WorldAgent.GetMapFromAgent(agent)
+			if currentMap and currentMap.HasFlags(WorldMap.Flags.ONLY_SPIRIT) and not newMap.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
+				agent.Morph(false, agent.stat.shape)
+
 		# Force reset velocity to prevent any input residue due to the map transition
 		agent._velocity_computed(Vector2.ZERO)
 		agent.currentVelocity = Vector2.ZERO
@@ -76,9 +81,6 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		if map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
 			if not agent.stat.IsMorph():
 				agent.Morph(false, agent.stat.spirit)
-		else:
-			if agent.stat.IsMorph():
-				agent.Morph(false, agent.stat.shape)
 
 		Network.WarpPlayer(map.id, agent.position, agent.peerID)
 		agent.visibleAgents.clear()

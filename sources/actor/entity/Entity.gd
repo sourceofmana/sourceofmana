@@ -136,7 +136,11 @@ func Cast(skillID : int):
 		if target and target.type == ActorCommons.Type.MONSTER:
 			targetRID = target.agentRID
 
-	Network.TriggerCast(targetRID, skillID)
+	Network.TriggerSkill(targetRID, skillID)
+
+func Run(shouldRun : bool):
+	if shouldRun != stat.isRunning:
+		Network.TriggerSkill(DB.UnknownHash, DB.GetCellHash("Run"))
 
 func LevelUp():
 	if Launcher.Player == self:

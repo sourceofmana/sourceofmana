@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://cmorphskil11a"]
+
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="1_morph"]
+[ext_resource type="PackedScene" uid="uid://wlnx16hfndql" path="res://presets/effects/particles/casts/Morph.tscn" id="1_txhfk"]
+[ext_resource type="Texture2D" uid="uid://d3dkgbn68guu8" path="res://data/graphics/items/skill/morph.png" id="2_ceoac"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="3_skhas"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="4_47mak"]
+
+[sub_resource type="Resource" id="Resource_skhas"]
+script = ExtResource("3_skhas")
+_effect = 3
+_value = -50.0
+metadata/_custom_type_script = "uid://hdd6y6syvlm6"
+
+[sub_resource type="Resource" id="Resource_47mak"]
+script = ExtResource("3_skhas")
+_effect = 2
+_value = -50.0
+metadata/_custom_type_script = "uid://hdd6y6syvlm6"
+
+[sub_resource type="Resource" id="Resource_3lf1a"]
+script = ExtResource("4_47mak")
+_modifiers = Array[ExtResource("3_skhas")]([SubResource("Resource_skhas"), SubResource("Resource_47mak")])
+metadata/_custom_type_script = "uid://btqmbqq2q7cm8"
+
+[resource]
+script = ExtResource("1_morph")
+category = 2
+mode = 2
+cooldownTime = 5.0
+castPreset = ExtResource("1_txhfk")
+castTime = 10.0
+id = 0
+name = "Morph"
+description = "Transform into your spirit form."
+icon = ExtResource("2_ceoac")
+type = 2
+weight = 0.0
+usable = true
+modifiers = SubResource("Resource_3lf1a")

@@ -23,14 +23,18 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	if map and map.HasFlags(WorldMap.Flags.NO_SPELL):
 		return
 
+	if SkillCommons.IsInstantAbility(skill):
+		CastAbility(agent, skill)
+		return
+
 	if SkillCommons.TryConsume(agent, CellCommons.Modifier.Mana, skill):
 		Stopped(agent)
 		agent.SetSkillCastID(skill.id)
-		Callback.StartTimer(agent.actionTimer, skill.castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill), true)
+		Callback.StartTimer(agent.actionTimer, skill.castTime + agent.stat.current.castAttackDelay, Skill.Process.bind(agent, target, skill), true)
 		if skill.mode == TargetMode.SINGLE:
 			agent.LookAt(target)
 
-static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
+static func Process(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	if ActorCommons.IsAlive(agent) and SkillCommons.IsCasting(agent) and SkillCommons.HasSkill(agent, skill):
 		var hasStamina : bool = SkillCommons.TryConsume(agent, CellCommons.Modifier.Stamina, skill)
 
@@ -75,10 +79,13 @@ static func HandleZone(agent : BaseAgent, zonePos : Vector2, skill : SkillCell, 
 		Handle(agent, target, skill, scaledRNG)
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
-	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
-		Damaged(agent, target, skill, rng)
-	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
-		Healed(agent, target, skill, rng)
+	if skill.category == SkillCell.Category.ABILITY:
+		CastAbility(agent, skill)
+	else:
+		if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
+			Damaged(agent, target, skill, rng)
+		if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
+			Healed(agent, target, skill, rng)
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
@@ -125,3 +132,14 @@ static func Missed(agent : BaseAgent, target : BaseAgent):
 
 static func ThrowProjectile(agent : BaseAgent, targetPos : Vector2, skill : SkillCell):
 	Network.NotifyNeighbours(agent, "ThrowProjectile", [targetPos, skill.id])
+
+static func CastAbility(agent : BaseAgent, skill : SkillCell):
+	if skill.id == "Morph".hash():
+		if agent.stat.spirit == DB.UnknownHash:
+			return
+		var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
+		if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
+			return
+		agent.Morph(true)
+	elif skill.id == "Run".hash():
+		agent.SetRunning(!agent.stat.isRunning)

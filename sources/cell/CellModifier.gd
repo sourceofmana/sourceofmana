@@ -4,7 +4,7 @@ class_name CellModifier
 #
 @export var _modifiers : Array[StatModifier]			= []
 
-#
+# Getter/Setter
 func Get(effect : CellCommons.Modifier, persistent : bool = false, default : Variant = 0) -> Variant:
 	var value : Variant = default
 	for modifier in _modifiers:
@@ -18,6 +18,9 @@ func Add(modifier : StatModifier):
 
 func Remove(modifier : StatModifier):
 	_modifiers.erase(modifier)
+
+func HasAny() -> bool:
+	return not _modifiers.is_empty()
 
 #
 func Apply(actor : Actor):

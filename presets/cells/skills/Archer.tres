@@ -23,6 +23,7 @@ _modifiers = Array[ExtResource("2_cmomi")]([SubResource("Resource_klyse"), SubRe
 
 [resource]
 script = ExtResource("5_dspib")
+category = 1
 state = 3
 cellRange = 100
 repeat = true

@@ -158,9 +158,9 @@ func _input(event : InputEvent):
 		elif TryJustPressed(event, "gp_interact"):		Launcher.Player.JustInteract()
 		elif TryPressed(event, "gp_interact"):			Launcher.Player.Interact()
 		elif TryJustPressed(event, "gp_pickup"):		Launcher.Map.PickupNearestDrop()
-		elif TryJustPressed(event, "gp_morph"):			Network.TriggerMorph()
-		elif TryJustPressed(event, "gp_run"):			Network.TriggerRun(true)
-		elif TryJustReleased(event, "gp_run"):			Network.TriggerRun(false)
+		elif TryJustPressed(event, "gp_morph"):			Network.TriggerSkill(DB.UnknownHash, DB.GetCellHash("Morph"))
+		elif TryJustPressed(event, "gp_run"):			Launcher.Player.Run(true)
+		elif TryJustReleased(event, "gp_run"):			Launcher.Player.Run(false)
 	if not HasConsumed() and Launcher.GUI:
 		if TryJustPressed(event, "ui_close"):			Launcher.GUI.CloseWindow()
 		elif TryJustPressed(event, "ui_close", true):	Launcher.GUI.CloseCurrent()

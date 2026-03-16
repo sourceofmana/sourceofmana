@@ -224,6 +224,8 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/items/skill/lum.png [7Soul] [Reid]
 ./graphics/items/skill/mana-burst.png [Reid]
 ./graphics/items/skill/melee.png [Reid]
+./graphics/items/skill/morph.png [7Soul] [Reid]
+./graphics/items/skill/run.png [7Soul] [Reid]
 ./graphics/items/skill/sonic-wave.png [Reid]
 ./graphics/items/skill/spell.png [Reid]
 ./graphics/items/skill/spitfire.png [Reid]
