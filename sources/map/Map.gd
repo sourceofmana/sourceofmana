@@ -153,11 +153,13 @@ func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : V
 		if entry:
 			entity = SpawnEntity(agentRID, entry)
 			isNewSpawn = true
-	elif entity == Launcher.Player and entity.get_parent() != currentFringe:
+	elif entity == Launcher.Player:
 		if pendingWarp:
 			pendingWarp = false
-			isNewSpawn = true
-			AddChild(entity)
+			isNewSpawn = entity.get_parent() != currentFringe
+			entity.SetData()
+			if isNewSpawn:
+				AddChild(entity)
 			PlayerWarped.emit()
 
 	if entity:

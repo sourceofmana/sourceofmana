@@ -197,10 +197,7 @@ func EnterGame():
 	menu.set_visible(true)
 	actionBoxes.set_visible(true)
 	shortcuts.set_visible(true)
-
 	menu.SetItemsVisible(true)
-	stats.Init()
-	statWindow.Init(Launcher.Player)
 
 #
 func _post_launch():

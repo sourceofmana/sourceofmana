@@ -13,10 +13,15 @@ func Refresh():
 		staminaStat.SetStat(Launcher.Player.stat.stamina, Launcher.Player.stat.current.maxStamina)
 		expStat.SetStat(Launcher.Player.stat.experience, Experience.GetNeededExperienceForNextLevel(Launcher.Player.stat.level))
 
-func Init():
-	Callback.PlugCallback(Launcher.Player.stat.vital_stats_updated, Refresh)
-	Refresh()
+func Connect():
+	if Launcher.Player:
+		if not Launcher.Player.stat.vital_stats_updated.is_connected(Refresh):
+			Launcher.Player.stat.vital_stats_updated.connect(Refresh)
 
 #
+func _ready():
+	if Launcher.Map:
+		Callback.PlugCallback(Launcher.Map.PlayerWarped, Connect)
+
 func _on_button_pressed():
 	Launcher.GUI.ToggleControl(Launcher.GUI.statWindow)

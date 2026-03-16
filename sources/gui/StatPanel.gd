@@ -120,28 +120,8 @@ func SubmitAttributeUpdate():
 	ResetIncreased()
 
 #
-func Init(entity : Entity):
-	Util.DuplicateObject(entity.stat, panelStats)
-	panelStats.RefreshAttributes()
-	RefreshSaveAndResetButtons()
-
-	Callback.PlugCallback(self.panel_stats_updated, RefreshVitalStats.bind(entity))
-	Callback.PlugCallback(self.panel_stats_updated, RefreshAttributes.bind(entity))
-	Callback.PlugCallback(self.panel_stats_updated, RefreshEntityStats.bind(entity))
-	Callback.PlugCallback(self.panel_stats_updated, RefreshSaveAndResetButtons)
-	
-	Callback.PlugCallback(entity.stat.vital_stats_updated, RefreshPanelStats.bind(entity))
-	Callback.PlugCallback(entity.stat.attributes_updated, RefreshPanelStats.bind(entity))
-	Callback.PlugCallback(entity.stat.entity_stats_updated, RefreshPanelStats.bind(entity))
-	
-	Callback.PlugCallback(self.panel_stats_reset, RefreshPanelStats.bind(entity))
-
-	RefreshVitalStats(entity)
-	RefreshAttributes(entity)
-	RefreshEntityStats(entity)
-
-func RefreshPanelStats(entity : Entity):
-	Util.DuplicateObject(entity.stat, panelStats)
+func RefreshPanelStats():
+	Util.DuplicateObject(Launcher.Player.stat, panelStats)
 	panelStats.strength += strengthIncreased
 	panelStats.agility += agilityIncreased
 	panelStats.vitality += vitalityIncreased
@@ -150,9 +130,9 @@ func RefreshPanelStats(entity : Entity):
 
 	panelStats.RefreshAttributes()
 	
-	RefreshVitalStats(entity)
-	RefreshAttributes(entity)
-	RefreshEntityStats(entity)
+	RefreshVitalStats()
+	RefreshAttributes()
+	RefreshEntityStats()
 
 func ResetIncreased():
 	strengthIncreased = 0
@@ -160,15 +140,15 @@ func ResetIncreased():
 	agilityIncreased = 0
 	enduranceIncreased = 0
 	concentrationIncreased = 0
-	self.panel_stats_updated.emit()
+	panel_stats_updated.emit()
 
 func ResetPanel():
 	ResetIncreased()
-	self.panel_stats_reset.emit()
+	panel_stats_reset.emit()
 
-func RefreshGender(entity : Entity):
+func RefreshGender():
 	var texture : Texture2D = null
-	match entity.gender:
+	match Launcher.Player.gender:
 		ActorCommons.Gender.MALE:
 			texture = ActorCommons.GenderMaleTexture
 		ActorCommons.Gender.FEMALE:
@@ -177,12 +157,12 @@ func RefreshGender(entity : Entity):
 			texture = ActorCommons.GenderNonBinaryTexture
 	tGender.set_texture(texture)
 
-func RefreshVitalStats(entity : Entity):
-	if not entity:
+func RefreshVitalStats():
+	if not Launcher.Player:
 		pass
 
-	RefreshGender(entity)
-	lName.set_text(entity.nick)
+	RefreshGender()
+	lName.set_text(Launcher.Player.nick)
 	lLevel.set_text("Lv. %d" % panelStats.level)
 	var spiritData : EntityData = DB.EntitiesDB.get(panelStats.spirit, null)
 	if spiritData:
@@ -195,15 +175,15 @@ func RefreshVitalStats(entity : Entity):
 	pWeight.SetStat(panelStats.weight, panelStats.current.weightCapacity)
 	lGP.set_text("%s GP" % Util.GetFormatedText(str(panelStats.gp)))
 
-func RefreshAttributes(entity : Entity):
-	if not entity:
+func RefreshAttributes():
+	if not Launcher.Player:
 		pass
 
-	lStrength.set_text(str(entity.stat.strength))
-	lVitality.set_text(str(entity.stat.vitality))
-	lAgility.set_text(str(entity.stat.agility))
-	lEndurance.set_text(str(entity.stat.endurance))
-	lConcentration.set_text(str(entity.stat.concentration))
+	lStrength.set_text(str(Launcher.Player.stat.strength))
+	lVitality.set_text(str(Launcher.Player.stat.vitality))
+	lAgility.set_text(str(Launcher.Player.stat.agility))
+	lEndurance.set_text(str(Launcher.Player.stat.endurance))
+	lConcentration.set_text(str(Launcher.Player.stat.concentration))
 	
 	lStrengthToAdd.set_text(GetAttributePointsToAddStr(strengthIncreased))
 	lVitalityToAdd.set_text(GetAttributePointsToAddStr(vitalityIncreased))
@@ -242,8 +222,8 @@ func GetAttributePointsToAddStr(attributePointsToAdd : int) -> String:
 	else:
 		return "+" + str(attributePointsToAdd)
 
-func RefreshEntityStats(entity : Entity):
-	if not entity:
+func RefreshEntityStats():
+	if not Launcher.Player:
 		pass
 
 	lAtk.set_text(str(panelStats.current.attack))
@@ -260,3 +240,32 @@ func RefreshEntityStats(entity : Entity):
 #
 func GetPercentString(current : float, base : float) -> String:
 	return "%d%%" % (int(current / base * 100.0) if base > 0 else 100)
+
+#
+func Connect():
+	if not Launcher.Player:
+		return
+
+	Util.DuplicateObject(Launcher.Player.stat, panelStats)
+	panelStats.RefreshAttributes()
+	RefreshSaveAndResetButtons()
+
+	Callback.PlugCallback(panel_stats_updated, RefreshVitalStats)
+	Callback.PlugCallback(panel_stats_updated, RefreshAttributes)
+	Callback.PlugCallback(panel_stats_updated, RefreshEntityStats)
+	Callback.PlugCallback(panel_stats_updated, RefreshSaveAndResetButtons)
+
+	Callback.PlugCallback(Launcher.Player.stat.vital_stats_updated, RefreshPanelStats)
+	Callback.PlugCallback(Launcher.Player.stat.attributes_updated, RefreshPanelStats)
+	Callback.PlugCallback(Launcher.Player.stat.entity_stats_updated, RefreshPanelStats)
+
+	Callback.PlugCallback(panel_stats_reset, RefreshPanelStats)
+
+	RefreshVitalStats()
+	RefreshAttributes()
+	RefreshEntityStats()
+
+#
+func _ready():
+	if Launcher.Map:
+		Callback.PlugCallback(Launcher.Map.PlayerWarped, Connect)
