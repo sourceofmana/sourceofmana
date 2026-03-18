@@ -245,7 +245,7 @@ func UpdateStat(charID : int, stats : ActorStats) -> bool:
 
 # Inventory
 func GetItem(charID : int, itemID : int, customfield : String, storageType : int = 0) -> Dictionary:
-	var results : Array[Dictionary] = db.select_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = '%s'" % [itemID, charID, storageType, customfield], ["*"])
+	var results : Array[Dictionary] = QueryBindings("SELECT * FROM item WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [itemID, charID, storageType, customfield])
 	assert(results.size() <= 1, "Duplicated item %d on character %d with storage %d" % [itemID, charID, storageType])
 	return {} if results.is_empty() else results[0]
 
@@ -253,8 +253,7 @@ func AddItem(charID : int, itemID : int, customfield : String, itemCount : int =
 	var data : Dictionary = GetItem(charID, itemID, customfield, storageType)
 	# Increment item count
 	if not data.is_empty():
-		data["count"] += 1
-		return db.update_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = '%s'" % [itemID, charID, storageType, customfield], data)
+		return ExecuteBindings("UPDATE item SET count = ? WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [data["count"] + 1, itemID, charID, storageType, customfield])
 
 	# Insert new item
 	data = {
@@ -268,15 +267,13 @@ func AddItem(charID : int, itemID : int, customfield : String, itemCount : int =
 
 func RemoveItem(charID : int, itemID : int, customfield : String, itemCount : int = 1, storageType : int = 0) -> bool:
 	var data : Dictionary = GetItem(charID, itemID, customfield, storageType)
-	var condition : String = "item_id = %d AND char_id = %d AND storage = %d AND customfield = '%s'" % [itemID, charID, storageType, customfield]
 	if not data.is_empty():
 		# Decrement item count
 		if data["count"] > itemCount:
-			data["count"] -= itemCount
-			return db.update_rows("item", condition, data)
+			return ExecuteBindings("UPDATE item SET count = ? WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [data["count"] - itemCount, itemID, charID, storageType, customfield])
 		# Remove item
 		elif data["count"] == itemCount:
-			return db.delete_rows("item", condition)
+			return ExecuteBindings("DELETE FROM item WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [itemID, charID, storageType, customfield])
 	return false
 
 func GetStorage(charID : int, storageType : int = 0) -> Array[Dictionary]:
@@ -421,6 +418,12 @@ func QueryBindings(query : String, params : Array) -> Array[Dictionary]:
 		data = db.query_result
 	queryMutex.unlock()
 	return data
+
+func ExecuteBindings(query : String, params : Array) -> bool:
+	queryMutex.lock()
+	var ret : bool = db.query_with_bindings(query, params)
+	queryMutex.unlock()
+	return ret
 
 #
 func _post_launch():
