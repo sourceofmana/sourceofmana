@@ -10,16 +10,17 @@ _name = "Splatyna"
 _spritePreset = "Splatyna"
 _collision = "Large"
 _radius = 26
-_equipment = Array[ExtResource("1_qoprb")]([null, null, null, null, null, null, null, null])
-_displayName = true
-_behaviour = 100
 _stats = {
 "level": 10,
 "walkSpeed": 50.0
 }
+_equipment = Array[ExtResource("1_qoprb")]([null, null, null, null, null, null, null, null])
+_displayName = true
+_behaviour = 100
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()
 _spawns = Dictionary[int, int]({
 228176527: 3,
 228607896: 3
 })
+_isBoss = true

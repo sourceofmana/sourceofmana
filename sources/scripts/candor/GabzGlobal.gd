@@ -21,7 +21,7 @@ var originalPlayerCount : int		= 0
 func OnStart():
 	for mobID in DB.EntitiesDB:
 		var mob : EntityData = DB.EntitiesDB[mobID]
-		if !!(mob._behaviour & AICommons.Behaviour.AGGRESSIVE) and !(mob._behaviour & AICommons.Behaviour.IMMOBILE):
+		if !!(mob._behaviour & AICommons.Behaviour.AGGRESSIVE) and !(mob._behaviour & AICommons.Behaviour.IMMOBILE) and !mob._isBoss:
 			monstersPool.append(mob)
 
 func OnCancel():

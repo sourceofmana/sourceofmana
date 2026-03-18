@@ -1,6 +1,7 @@
 class_name EntityCacheEntry
 extends Object
 
+#
 var actorType : ActorCommons.Type	= ActorCommons.Type.MONSTER
 var spirit : int					= DB.UnknownHash
 var currentShape : int				= DB.UnknownHash

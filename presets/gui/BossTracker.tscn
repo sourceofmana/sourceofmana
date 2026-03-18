@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b12q3nvdjbdxf"]
 
 [ext_resource type="Texture2D" uid="uid://dw0hbkvoxsv2x" path="res://data/graphics/gui/notification.png" id="1_lky6h"]
-[ext_resource type="Script" uid="uid://bn632xfw5o0t7" path="res://sources/gui/TrackerBar.gd" id="2_xsfdd"]
+[ext_resource type="Script" uid="uid://d1gt6qe11qcax" path="res://sources/gui/BossTrackerBar.gd" id="2_lky6h"]
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="3_5y8xl"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="4_8dprc"]
 
@@ -24,7 +24,7 @@ patch_margin_left = 61
 patch_margin_top = 17
 patch_margin_right = 61
 patch_margin_bottom = 17
-script = ExtResource("2_xsfdd")
+script = ExtResource("2_lky6h")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=78809309]
 layout_mode = 1
@@ -54,7 +54,7 @@ layout_mode = 2
 size_flags_vertical = 3
 textureProgress = SubResource("GradientTexture1D_yh6rj")
 labelColor = Color(1, 1, 0.8666667, 1)
-labelUnit = "HP"
+labelUnit = " HP"
 labelOffset = Vector2(0, -2)
 fillDuration = 0.1
 initDuration = 1.0

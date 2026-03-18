@@ -12,7 +12,7 @@ var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
 var entityOrientation : Vector2			= Vector2(0, 1)
 
-var agentRID : int						= -1
+var agentRID : int						= DB.UnknownHash
 
 signal entity_died
 
@@ -170,6 +170,8 @@ func _ready():
 	elif type == ActorCommons.Type.MONSTER:
 		if not stat.vital_stats_updated.is_connected(interactive.RefreshHP):
 			stat.vital_stats_updated.connect(interactive.RefreshHP)
+		if data._isBoss:
+			stat.vital_stats_updated.connect(Launcher.GUI.bossTracker.OnStatsUpdated.bind(agentRID))
 	else:
 		if stat.vital_stats_updated.is_connected(interactive.RefreshHP):
 			stat.vital_stats_updated.disconnect(interactive.RefreshHP)

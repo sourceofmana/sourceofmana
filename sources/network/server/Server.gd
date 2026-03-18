@@ -252,7 +252,7 @@ func TriggerSkill(targetRID : int, skillID : int, peerID : int):
 func TriggerSelect(targetRID : int, peerID : int):
 	var target : BaseAgent = WorldAgent.GetAgent(targetRID)
 	if target:
-		Network.UpdatePublicStats(targetRID, target.stat.level, target.stat.health, target.stat.hairstyle, target.stat.haircolor, target.stat.gender, target.stat.race, target.stat.skintone, target.stat.currentShape, peerID)
+		Network.UpdatePublicStats(targetRID, target.stat.level, target.stat.health, target.stat.current.maxHealth, target.stat.hairstyle, target.stat.haircolor, target.stat.gender, target.stat.race, target.stat.skintone, target.stat.currentShape, peerID)
 
 # Stats
 func SetAttributes(strength, vitality, agility, endurance, concentration, peerID : int):

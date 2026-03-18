@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://c6nwveqo000dl" path="res://presets/gui/Quit.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://bq3n8kx1vw7e2" path="res://presets/gui/ProgressionTracker.tscn" id="8_5o8ki"]
 [ext_resource type="Texture2D" uid="uid://d2oyvnoxsg6ky" path="res://data/graphics/gui/icon/emotes.png" id="8_ppxwt"]
+[ext_resource type="PackedScene" uid="uid://b12q3nvdjbdxf" path="res://presets/gui/BossTracker.tscn" id="9_8gxxm"]
 [ext_resource type="PackedScene" uid="uid://x1jkhsyls2i4" path="res://presets/gui/Minimap.tscn" id="9_myjuo"]
 [ext_resource type="Texture2D" uid="uid://mktipo1pqtnk" path="res://data/graphics/gui/icon/quests.png" id="9_vtuwx"]
 [ext_resource type="PackedScene" uid="uid://6pundiwfj5s1" path="res://presets/shaders/HQ4x.tscn" id="10_id8es"]
@@ -151,6 +152,10 @@ theme = ExtResource("4_wx5hs")
 theme_type_variation = &"DialogueBox"
 
 [node name="ProgressionTracker" parent="Overlay/VSections/Indicators/Info" unique_id=546682608 instance=ExtResource("8_5o8ki")]
+visible = false
+layout_mode = 2
+
+[node name="BossTracker" parent="Overlay/VSections/Indicators/Info" unique_id=1094831342 instance=ExtResource("9_8gxxm")]
 visible = false
 layout_mode = 2
 
@@ -510,10 +515,10 @@ saveOverlayState = true
 
 [node name="Skill" parent="Windows/Floating" unique_id=849459379 instance=ExtResource("38_ompay")]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 71.0
-offset_right = 213.0
-offset_bottom = 114.0
+offset_left = 69.0
+offset_top = 74.0
+offset_right = 282.0
+offset_bottom = 154.0
 saveOverlayState = true
 
 [node name="Chat" parent="Windows/Floating" unique_id=629841106 instance=ExtResource("5")]

@@ -1,4 +1,5 @@
 extends Control
+class_name TrackerBar
 
 #
 @onready var label : Label				= $MarginContainer/VBoxContainer/Label

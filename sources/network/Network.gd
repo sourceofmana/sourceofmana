@@ -227,8 +227,8 @@ func Morphed(agentRID : int, morphID : int, notifyMorphing : bool, peerID : int 
 
 # Stats
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdatePublicStats(agentRID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("UpdatePublicStats", [agentRID, level, health, hairstyle, haircolor, gender, race, skintone, currentShape], peerID)
+func UpdatePublicStats(agentRID : int, level : int, health : int, maxHealth : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdatePublicStats", [agentRID, level, health, maxHealth, hairstyle, haircolor, gender, race, skintone, currentShape], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func UpdatePrivateStats(experience : int, gp : int, mana : int, stamina : int, karma : int, weight : float, shape : int, spirit : int, peerID : int = NetworkCommons.PeerOfflineID):

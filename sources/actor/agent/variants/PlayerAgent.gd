@@ -79,7 +79,7 @@ func UpdateLastStats():
 	lastStat.currentShape != stat.currentShape:
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(self)
 		if inst:
-			Network.NotifyInstance(inst, "UpdatePublicStats", [get_rid().get_id(), stat.level, stat.health, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
+			Network.NotifyInstance(inst, "UpdatePublicStats", [get_rid().get_id(), stat.level, stat.health, stat.current.maxHealth, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
 		if lastStat.level != 0 and lastStat.level < stat.level:
 			Network.NotifyNeighbours(self, "LevelUp", [])
 		lastStat.level				= stat.level

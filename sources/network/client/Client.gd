@@ -100,7 +100,7 @@ func Morphed(agentRID : int, morphID : int, morphed : bool, _peerID : int):
 			entity.stat.Morph(morphData)
 			entity.SetVisual(morphData, morphed)
 
-func UpdatePublicStats(agentRID : int, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, _peerID : int):
+func UpdatePublicStats(agentRID : int, level : int, health : int, maxHealth : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, currentShape : int, _peerID : int):
 	if not Launcher.Map:
 		return
 
@@ -116,11 +116,15 @@ func UpdatePublicStats(agentRID : int, level : int, health : int, hairstyle : in
 		entry.currentShape	= currentShape
 
 	var entity : Entity = Entities.Get(agentRID)
-	if entity and entity.stat:
+	if not entity:
+		return
+
+	if entity.stat:
 		var newShape : bool = entity.stat.currentShape != currentShape
-		entity.stat.level			= level
-		entity.stat.health			= health
-		entity.stat.currentShape	= currentShape
+		entity.stat.level				= level
+		entity.stat.health				= health
+		entity.stat.current.maxHealth	= maxHealth
+		entity.stat.currentShape		= currentShape
 		if newShape:
 			entity.SetData()
 

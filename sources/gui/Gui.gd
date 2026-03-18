@@ -8,6 +8,7 @@ extends ServiceBase
 @onready var notificationLabel : Control		= $Overlay/VSections/Indicators/Info/Notification
 @onready var pickupPanel : Control				= $Overlay/VSections/Indicators/Info/PickUp
 @onready var progressionTracker : Control		= $Overlay/VSections/Indicators/Info/ProgressionTracker
+@onready var bossTracker : Control				= $Overlay/VSections/Indicators/Info/BossTracker
 
 # Contexts
 @onready var loadingControl : Control			= $Overlay/VSections/Contexts/Loading
@@ -129,6 +130,7 @@ func EnterLoginMenu():
 
 	infoContext.set_visible(false)
 	progressionTracker.set_visible(false)
+	bossTracker.set_visible(false)
 	menu.SetItemsVisible(false)
 	stats.set_visible(false)
 	statWindow.set_visible(false)
