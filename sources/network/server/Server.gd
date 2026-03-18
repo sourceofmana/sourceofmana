@@ -354,6 +354,9 @@ func _enter_tree():
 		serverCert.load(NetworkCommons.ServerCertPath)
 		tlsOptions = TLSOptions.server(serverKey, serverCert)
 
+	multiplayerAPI.auth_callback = _ValidateAuth
+	multiplayerAPI.auth_timeout = NetworkCommons.LoginAttemptTimeout
+
 	var ret : Error = FAILED
 	if useWebSocket:
 		ret = currentPeer.create_server(serverPort, "*", tlsOptions)
@@ -373,6 +376,13 @@ func _enter_tree():
 			"Local" if isLocal else "Public",
 			"Testing" if LauncherCommons.IsTesting else "Release"
 		])
+
+func _ValidateAuth(peerID: int, data: PackedByteArray):
+	if data.size() >= 4 and data.decode_s32(0) == NetworkCommons.ProtocolVersion:
+		multiplayerAPI.send_auth(peerID, PackedByteArray([1]))
+		multiplayerAPI.complete_auth(peerID)
+	else:
+		currentPeer.disconnect_peer(peerID)
 
 func Destroy():
 	if multiplayerAPI.peer_connected.is_connected(ConnectPeer):

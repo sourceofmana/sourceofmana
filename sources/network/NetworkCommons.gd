@@ -1,6 +1,9 @@
 extends RefCounted
 class_name NetworkCommons
 
+# Protocol
+const ProtocolVersion : int				= 1
+
 # Server
 const WebSocketPortTesting : int		= 6118
 const ENetPortTesting : int				= 6119

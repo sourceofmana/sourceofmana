@@ -348,6 +348,9 @@ func _enter_tree():
 		multiplayerAPI.connection_failed.connect(ConnectionFailed)
 	if not multiplayerAPI.server_disconnected.is_connected(DisconnectServer):
 		multiplayerAPI.server_disconnected.connect(DisconnectServer)
+	if not multiplayerAPI.peer_authenticating.is_connected(_OnServerAuthenticating):
+		multiplayerAPI.peer_authenticating.connect(_OnServerAuthenticating)
+	multiplayerAPI.auth_callback = _ValidateServerAuth
 
 	var serverAddress : String = NetworkCommons.LocalServerAddress if isLocal else NetworkCommons.ServerAddress
 	var serverPort : int = NetworkCommons.WebSocketPort if useWebSocket else NetworkCommons.ENetPort
@@ -377,6 +380,15 @@ func _enter_tree():
 			"Testing" if LauncherCommons.IsTesting else "Release"
 		])
 
+func _OnServerAuthenticating(peerID: int):
+	var authData : PackedByteArray = PackedByteArray()
+	authData.resize(4)
+	authData.encode_s32(0, NetworkCommons.ProtocolVersion)
+	multiplayerAPI.send_auth(peerID, authData)
+
+func _ValidateServerAuth(peerID: int, _data: PackedByteArray):
+	multiplayerAPI.complete_auth(peerID)
+
 func Destroy():
 	if multiplayerAPI.connected_to_server.is_connected(ConnectServer):
 		multiplayerAPI.connected_to_server.disconnect(ConnectServer)
@@ -384,5 +396,7 @@ func Destroy():
 		multiplayerAPI.connection_failed.disconnect(ConnectionFailed)
 	if multiplayerAPI.server_disconnected.is_connected(DisconnectServer):
 		multiplayerAPI.server_disconnected.disconnect(DisconnectServer)
+	if multiplayerAPI.peer_authenticating.is_connected(_OnServerAuthenticating):
+		multiplayerAPI.peer_authenticating.disconnect(_OnServerAuthenticating)
 
 	super.Destroy()
