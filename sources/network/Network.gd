@@ -243,7 +243,7 @@ func TriggerSelect(agentRID : int, peerID : int = NetworkCommons.PeerAuthorityID
 	CallServer("TriggerSelect", [agentRID], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func SetAttributes(strength, vitality, agility, endurance, concentration, peerID : int = NetworkCommons.PeerAuthorityID):
+func SetAttributes(strength : int, vitality : int, agility : int, endurance : int, concentration : int, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("SetAttributes", [strength, vitality, agility, endurance, concentration], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)

@@ -173,14 +173,12 @@ func ReduceAttribute(attribute : ActorCommons.Attribute):
 	RefreshAttributes()
 
 func SetAttributes(newStrength: int, newVitality: int, newAgility: int, newEndurance: int, newConcentration: int):
+	if newStrength < strength or newVitality < vitality or newAgility < agility \
+			or newEndurance < endurance or newConcentration < concentration:
+		return
+
 	var newAssignedAttributePoints: int = newStrength + newVitality + newAgility \
 			+ newEndurance + newConcentration
-	for attribute: ActorCommons.Attribute in ActorCommons.Attribute.values():
-		if newStrength < strength or newVitality < vitality or newAgility < agility \
-				or newEndurance < endurance or newConcentration < concentration:
-			assert(false, "Tried to lower attribute")
-			return
-
 	if Formula.GetMaxAttributePoints(level) - newAssignedAttributePoints >= 0:
 		strength = min(ActorCommons.MaxPointPerAttributes, newStrength)
 		vitality = min(ActorCommons.MaxPointPerAttributes, newVitality)
