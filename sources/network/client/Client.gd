@@ -144,9 +144,9 @@ func UpdatePublicStats(agentRID : int, level : int, health : int, maxHealth : in
 
 		entity.stat.RefreshVitalStats()
 
-func DisplayProgressionTracker(label : String, value : int, maxValue : int, _peerID : int):
+func DisplayProgressionTracker(label : String, value : int, maxValue : int, unit : String, _peerID : int):
 	if Launcher.GUI and Launcher.GUI.progressionTracker:
-		Launcher.GUI.progressionTracker.Display(label, value, maxValue)
+		Launcher.GUI.progressionTracker.Display(label, value, maxValue, unit)
 
 func ClearProgressionTracker(_peerID : int):
 	if Launcher.GUI and Launcher.GUI.progressionTracker:

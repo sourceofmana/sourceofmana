@@ -12,11 +12,14 @@ const maxWave : int					= 10
 const spawnCenter : Vector2i		= Vector2i(54 * 32, 67 * 32)
 const spawnRadius : Vector2i		= Vector2i(200, 200)
 const startFightDelay : float		= 10.0
+const warmUpTickDelay : float		= 1.0
 
 # Local variables
 var waveTimer : Timer				= null
 var waveCount : int					= 0
 var originalPlayerCount : int		= 0
+var waveMaxMonsters : int			= 0
+
 #
 func OnStart():
 	for mobID in DB.EntitiesDB:
@@ -29,6 +32,7 @@ func OnCancel():
 	Reset()
 	if IsTriggering():
 		Trigger()
+	ClearTracker()
 	KillMonsters()
 	var ownInstance : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
 	for player in ownInstance.players:
@@ -37,6 +41,14 @@ func OnCancel():
 
 func OnTrigger():
 	AddTimer(npc, startFightDelay, StartFight)
+	TickWarmUp(0)
+
+func TickWarmUp(tick : int):
+	if not IsTriggering():
+		return
+	DisplayTracker("Warm Up", tick, int(startFightDelay), "s")
+	if tick < int(startFightDelay):
+		AddTimer(npc, warmUpTickDelay, TickWarmUp.bind(tick + 1), "WarmUpTimer")
 
 #
 func StartFight():
@@ -47,11 +59,13 @@ func StartFight():
 
 func NextWave():
 	waveCount += 1
-	Notification("Wave %d." % waveCount)
 	if waveCount > maxWave:
 		Reward()
 	else:
+		Notification("Wave %d." % waveCount)
 		SpawnMonsters()
+		waveMaxMonsters = AliveMonsterCount()
+		DisplayTracker("Monsters", 0, waveMaxMonsters)
 		waveTimer.start(waveDelay)
 		AddTimer(npc, checkDelay, CheckWave, "CheckTimer")
 
@@ -59,9 +73,11 @@ func Reset():
 	waveTimer = null
 	waveCount = 0
 	originalPlayerCount = 0
+	waveMaxMonsters = 0
 
 func Reward():
 	Notification("Congrats, you won")
+	ClearTracker()
 	AddExp(rewardExp)
 	AddGP(rewardGP)
 	Reset()
@@ -90,10 +106,8 @@ func CheckWave():
 	else:
 		var mobCount : int = AliveMonsterCount()
 		if mobCount > 0:
-			if mobCount > 1:
-				Notification("%d kaore corrupted beings are still around." % mobCount)
-			else:
-				Notification("One kaore corrupted being left to kill.")
+			waveMaxMonsters = max(waveMaxMonsters, mobCount)
+			DisplayTracker("Monsters", waveMaxMonsters - mobCount, waveMaxMonsters)
 			AddTimer(npc, checkDelay, CheckWave, "CheckTimer")
 		else:
 			NextWave()

@@ -47,6 +47,11 @@ func _ready():
 		label.position += labelOffset
 
 # Public setter
+func SetUnit(unit : String):
+	labelUnit = unit
+	displayRatio = unit == "%"
+	displayMax = unit != "%"
+
 func SetStat(value : float, maxValue : float):
 	assert(bar != null and label != null, "ProgressBar: children are missing")
 

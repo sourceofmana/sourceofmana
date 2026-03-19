@@ -29,14 +29,32 @@ static var Farewells : PackedStringArray = [
 ]
 
 # Display
-static func PushNotification(pc : BaseAgent, text : String):
-	if pc:
-		if pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
-			Network.PushNotification(text, pc.peerID)
-		elif pc is NpcAgent:
-			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(pc)
+static func PushNotification(agent : BaseAgent, text : String):
+	if agent:
+		if agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
+			Network.PushNotification(text, agent.peerID)
+		elif agent is NpcAgent:
+			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 			if inst:
 				Network.NotifyInstance(inst, "PushNotification", [text])
+
+static func PushTracker(agent : BaseAgent, label : String, value : int, maxValue : int, unit : String = ""):
+	if agent:
+		if agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
+			Network.DisplayProgressionTracker(label, value, maxValue, unit, agent.peerID)
+		elif agent is NpcAgent:
+			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+			if inst:
+				Network.NotifyInstance(inst, "DisplayProgressionTracker", [label, value, maxValue, unit])
+
+static func ClearTracker(agent : BaseAgent):
+	if agent:
+		if agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
+			Network.ClearProgressionTracker(agent.peerID)
+		elif agent is NpcAgent:
+			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+			if inst:
+				Network.NotifyInstance(inst, "ClearProgressionTracker", [])
 
 # Context sent to client
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):

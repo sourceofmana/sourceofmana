@@ -90,15 +90,18 @@ func AlivePlayerCount() -> int:
 
 # Warp
 func Warp(mapID : int, position : Vector2):
+	assert(IsPlayer(), "Warp() requires a player agent")
 	if not IsPlayer(): return
 	Action(NpcCommons.Warp.bind(own, mapID, position))
 
 # Quest
 func SetQuest(questID : int, state : int):
+	assert(IsPlayer(), "SetQuest() requires a player agent")
 	if not IsPlayer(): return
 	Action(NpcCommons.SetQuest.bind(own, questID, state))
 
 func GetQuest(questID : int) -> int:
+	assert(IsPlayer(), "GetQuest() requires a player agent")
 	if not IsPlayer(): return ProgressCommons.UnknownProgress
 	return own.progress.GetQuest(questID)
 
@@ -113,15 +116,22 @@ func GetState(questID : int) -> Variant:
 
 # Display
 func Notification(text : String):
-	if not IsPlayer(): return
 	NpcCommons.PushNotification(own, text)
+
+func DisplayTracker(label : String, value : int, maxValue : int, unit : String = ""):
+	NpcCommons.PushTracker(own, label, value, maxValue, unit)
+
+func ClearTracker():
+	NpcCommons.ClearTracker(own)
 
 # Dialogue
 func Mes(mes : String):
+	assert(IsPlayer(), "Mes() requires a player agent")
 	if not IsPlayer(): return
 	steps.append({"text": mes})
 
 func Choice(mes : String, callable : Callable = Callback.Empty):
+	assert(IsPlayer(), "Choice() requires a player agent")
 	if not IsPlayer(): return
 	if steps.is_empty():
 		steps.append({"choices": []})
@@ -133,18 +143,22 @@ func Choice(mes : String, callable : Callable = Callback.Empty):
 	dialogueStep["choices"].append({"text": mes, "action": callable})
 
 func Action(callable : Callable):
+	assert(IsPlayer(), "Action() requires a player agent")
 	if not IsPlayer(): return
 	steps.append({"action": callable})
 
 func Chat(mes : String):
+	assert(IsPlayer(), "Chat() requires a player agent")
 	if not IsPlayer(): return
 	NpcCommons.Chat(npc, own, mes)
 
 func Greeting():
+	assert(IsPlayer(), "Greeting() requires a player agent")
 	if not IsPlayer(): return
 	NpcCommons.Chat(npc, own, NpcCommons.GetRandomGreeting(own.nick))
 
 func Farewell():
+	assert(IsPlayer(), "Farewell() requires a player agent")
 	if not IsPlayer(): return
 	NpcCommons.Chat(npc, own, NpcCommons.GetRandomFarewell(own.nick))
 
@@ -177,11 +191,13 @@ func ClearTimer(timer : Timer):
 
 # Inventory
 func HasItem(itemID : int, count : int = 1) -> bool:
+	assert(IsPlayer(), "HasItem() requires a player agent")
 	if not IsPlayer(): return false
 	var cell : ItemCell = DB.GetItem(itemID)
 	return own.inventory.HasItem(cell, count) if cell else false
 
 func HasItemsSpace(items : Array) -> bool:
+	assert(IsPlayer(), "HasItemsSpace() requires a player agent")
 	if not IsPlayer(): return false
 	var totalCount : int = 0
 	for item in items:
@@ -203,28 +219,34 @@ func HasItemsSpace(items : Array) -> bool:
 	return HasSpace(totalCount)
 
 func HasSpace(itemCount : int) -> bool:
+	assert(IsPlayer(), "HasSpace() requires a player agent")
 	if not IsPlayer(): return false
 	return own.inventory.HasSpace(itemCount)
 
 func AddItem(itemID : int, count : int = 1, customfield : String = ""):
+	assert(IsPlayer(), "AddItem() requires a player agent")
 	if not IsPlayer(): return false
 	Action(NpcCommons.AddItem.bind(own, itemID, count, customfield))
 
 func RemoveItem(itemID : int, count : int = 1, customfield : String = ""):
+	assert(IsPlayer(), "RemoveItem() requires a player agent")
 	if not IsPlayer(): return false
 	Action(NpcCommons.RemoveItem.bind(own, itemID, count, customfield))
 
 # Karma
 func AddKarma(value : int):
+	assert(IsPlayer(), "AddKarma() requires a player agent")
 	if not IsPlayer(): return
 	Action(NpcCommons.AddKarma.bind(own, value))
 
 # Money & Experience
 func AddExp(value : int):
+	assert(IsPlayer(), "AddExp() requires a player agent")
 	if not IsPlayer() or value <= 0: return
 	Action(own.stat.AddExperience.bind(value))
 
 func AddGP(value : int):
+	assert(IsPlayer(), "AddGP() requires a player agent")
 	if not IsPlayer() or value <= 0: return
 	Action(own.stat.AddGP.bind(value))
 

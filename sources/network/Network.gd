@@ -98,8 +98,8 @@ func RemoveEntity(agentRID : int, peerID : int = NetworkCommons.PeerOfflineID):
 
 # Tracker
 @rpc("authority", "call_remote", "reliable", EChannel.MAP)
-func DisplayProgressionTracker(label : String, value : int, maxValue : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("DisplayProgressionTracker", [label, value, maxValue], peerID)
+func DisplayProgressionTracker(label : String, value : int, maxValue : int, unit : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("DisplayProgressionTracker", [label, value, maxValue, unit], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.MAP)
 func ClearProgressionTracker(peerID : int = NetworkCommons.PeerOfflineID):

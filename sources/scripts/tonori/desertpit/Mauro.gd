@@ -37,7 +37,7 @@ func OnInProgress():
 
 func OnDeliverWater():
 	WaterPondGlobal.StopJugTransport(own)
-	Network.ClearProgressionTracker(own.peerID)
+	ClearTracker()
 	Mes("You made it! And with the water!")
 	Mes("Here, take this. It's all I have left.")
 	SetQuest(WaterPondGlobal.QUEST_ID, ProgressCommons.SNAKE_PIT_BITING_THIRST.REWARDS_WITHDREW)

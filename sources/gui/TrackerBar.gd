@@ -8,8 +8,9 @@ class_name TrackerBar
 var tween : Tween						= null
 
 # Accessors
-func Display(text : String, value : int, maxValue : int):
+func Display(text : String, value : int, maxValue : int, unit : String = ""):
 	label.text = text
+	bar.SetUnit(unit)
 	bar.SetStat(value, maxValue)
 	if not is_visible() or modulate.a < 1.0:
 		FadeIn()

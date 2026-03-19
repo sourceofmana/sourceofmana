@@ -36,30 +36,30 @@ static func OnBite(player : PlayerAgent, value : int):
 
 	var remaining : int = biteCounters[rid] - 1
 	biteCounters[rid] = remaining
-	Network.DisplayProgressionTracker("Jug Integrity", remaining, MAX_BITES, player.peerID)
+	NpcCommons.PushTracker(player, "Jug Integrity", remaining, MAX_BITES, "%")
 	if remaining <= 0:
 		Spill(player)
 
 static func Spill(player : PlayerAgent):
 	StopJugTransport(player)
 	NpcCommons.SetQuest(player, QUEST_ID, ProgressCommons.SNAKE_PIT_BITING_THIRST.STARTED)
-	Network.ClearProgressionTracker(player.peerID)
+	NpcCommons.ClearTracker(player)
 	NpcCommons.PushNotification(player, "You were bitten too many times! Return to the water source to refill.")
 
 # Jug filling handling
 func OnFillTick(player : PlayerAgent, startPos : Vector2, tick : int):
 	if player.position.distance_to(startPos) > MOVE_TOLERANCE:
-		Network.ClearProgressionTracker(player.peerID)
+		NpcCommons.ClearTracker(player)
 	else:
 		if tick >= FILL_TICKS:
 			CompleteFill(player)
 		else:
-			Network.DisplayProgressionTracker("Filling...", tick, FILL_TICKS, player.peerID)
+			NpcCommons.PushTracker(player, "Filling...", tick, FILL_TICKS, "%")
 			ScheduleTick(player, startPos, tick)
 
 func ScheduleTick(player : PlayerAgent, startPos : Vector2, tick : int):
 	AddTimer(own, FILL_TICK_TIME, OnFillTick.bind(player, startPos, tick + 1), player.nick)
 
 func CompleteFill(player : PlayerAgent):
-	WaterPondGlobal.StartJugTransport(player)
-	Network.DisplayProgressionTracker("Jug Integrity", WaterPondGlobal.MAX_BITES, WaterPondGlobal.MAX_BITES, player.peerID)
+	StartJugTransport(player)
+	NpcCommons.PushTracker(player, "Jug Integrity", MAX_BITES, MAX_BITES, "%")
