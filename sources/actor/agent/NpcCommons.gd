@@ -158,3 +158,12 @@ static func AddKarma(caller : BaseAgent, points : int) -> bool:
 	if caller is PlayerAgent and caller.stat:
 		caller.stat.karma += points
 	return false
+
+# Gain
+static func AddExp(caller : BaseAgent, value : int):
+	if caller is PlayerAgent and caller.stat and value > 0:
+		caller.stat.AddExperience(value)
+
+static func AddGP(caller : BaseAgent, value : int):
+	if caller is PlayerAgent and caller.stat and value > 0:
+		caller.stat.AddGP(value)

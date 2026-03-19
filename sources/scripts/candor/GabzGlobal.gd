@@ -19,6 +19,7 @@ var waveTimer : Timer				= null
 var waveCount : int					= 0
 var originalPlayerCount : int		= 0
 var waveMaxMonsters : int			= 0
+var playerList : Array[PlayerAgent]	= []
 
 #
 func OnStart():
@@ -29,15 +30,12 @@ func OnStart():
 
 func OnCancel():
 	ClearTimer(waveTimer)
+	ClearPlayerList()
 	Reset()
 	if IsTriggering():
 		Trigger()
 	ClearTracker()
 	KillMonsters()
-	var ownInstance : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
-	for player in ownInstance.players:
-		Callback.ClearOneShot(player.tree_exiting)
-		Callback.ClearOneShot(player.agent_killed)
 
 func OnTrigger():
 	AddTimer(npc, startFightDelay, StartFight)
@@ -51,9 +49,25 @@ func TickWarmUp(tick : int):
 		AddTimer(npc, warmUpTickDelay, TickWarmUp.bind(tick + 1), "WarmUpTimer")
 
 #
+func RemoveFromPlayerList(player : PlayerAgent):
+	playerList.erase(player)
+
+func ClearPlayerList():
+	for player in playerList:
+		Callback.ClearOneShot(player.tree_exiting)
+		Callback.ClearOneShot(player.agent_killed)
+	playerList.clear()
+
 func StartFight():
 	Reset()
-	originalPlayerCount = AlivePlayerCount()
+	var ownInstance : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
+	if ownInstance:
+		for player : PlayerAgent in ownInstance.players:
+			if ActorCommons.IsAlive(player):
+				playerList.append(player)
+				Callback.OneShotCallback(player.tree_exiting, RemoveFromPlayerList.bind(player))
+				Callback.OneShotCallback(player.agent_killed, RemoveFromPlayerList.bind(player))
+	originalPlayerCount = playerList.size()
 	waveTimer = AddTimer(npc, waveDelay, TimeoutWave)
 	NextWave()
 
@@ -78,8 +92,10 @@ func Reset():
 func Reward():
 	Notification("Congrats, you won")
 	ClearTracker()
-	AddExp(rewardExp)
-	AddGP(rewardGP)
+	for player : PlayerAgent in playerList:
+		NpcCommons.AddExp(player, rewardExp)
+		NpcCommons.AddGP(player, rewardGP)
+	ClearPlayerList()
 	Reset()
 	if IsTriggering():
 		Trigger()
