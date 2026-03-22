@@ -153,6 +153,15 @@ static func RemoveItem(caller : BaseAgent, itemID : int, count : int = 1, custom
 			return caller.inventory.RemoveItem(cell, count)
 	return false
 
+# Skills
+static func TeachSkill(caller : BaseAgent, skillID : int, level : int = 1) -> bool:
+	if caller is PlayerAgent and caller.progress:
+		var cell : SkillCell = DB.GetSkill(skillID)
+		if cell:
+			caller.progress.AddSkill(cell, 1.0, level)
+			return true
+	return false
+
 # Karma
 static func AddKarma(caller : BaseAgent, points : int) -> bool:
 	if caller is PlayerAgent and caller.stat:

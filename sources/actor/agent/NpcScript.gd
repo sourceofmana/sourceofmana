@@ -233,6 +233,18 @@ func RemoveItem(itemID : int, count : int = 1, customfield : String = ""):
 	if not IsPlayer(): return false
 	Action(NpcCommons.RemoveItem.bind(own, itemID, count, customfield))
 
+# Skills
+func HasSkill(skillID : int) -> bool:
+	assert(IsPlayer(), "HasSkill() requires a player agent")
+	if not IsPlayer(): return false
+	var cell : SkillCell = DB.GetSkill(skillID)
+	return own.progress.HasSkill(cell) if cell else false
+
+func TeachSkill(skillID : int, level : int = 1):
+	assert(IsPlayer(), "TeachSkill() requires a player agent")
+	if not IsPlayer(): return
+	Action(NpcCommons.TeachSkill.bind(own, skillID, level))
+
 # Karma
 func AddKarma(value : int):
 	assert(IsPlayer(), "AddKarma() requires a player agent")
