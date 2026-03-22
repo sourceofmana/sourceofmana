@@ -1,9 +1,6 @@
 extends RefCounted
 class_name NetworkCommons
 
-# Protocol
-const ProtocolVersion : int				= 1
-
 # Server
 const WebSocketPortTesting : int		= 6118
 const ENetPortTesting : int				= 6119
@@ -51,6 +48,27 @@ const TimeoutMax : int					= 60000
 
 const LoginAttemptTimeout : float		= 15
 const CharSelectionTimeout : float		= 15
+
+# Protocol
+static var ProtocolVersion : int		= 0
+
+static func ComputeProtocolVersion(network : Node) -> int:
+	var rpcConfig : Dictionary = network.get_script().get_rpc_config()
+	var methods : Array = rpcConfig.keys()
+	methods.sort()
+
+	var serialized : String = ""
+	for method in methods:
+		var config : Dictionary = rpcConfig[method]
+		var keys : Array = config.keys()
+		keys.sort()
+
+		serialized += method
+		for key in keys:
+			serialized += ",%s:%s" % [key, config[key]]
+		serialized += "\n"
+
+	return hash(serialized)
 
 # Peer
 const UseENet : bool					= true

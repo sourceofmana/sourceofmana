@@ -432,6 +432,9 @@ func Mode(isClient : bool, isServer : bool):
 		if NetworkCommons.UseWebSocket and not isOffline:
 			WebSocketServer = NetServer.new(true, isOffline, NetworkCommons.IsLocal)
 
+func _ready():
+	NetworkCommons.ProtocolVersion = NetworkCommons.ComputeProtocolVersion(self)
+
 func _init():
 	if not NetworkCommons.OnlineListPath.is_empty():
 		online_agents_update.connect(OnlineList.UpdateJson)
