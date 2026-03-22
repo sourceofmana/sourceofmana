@@ -41,6 +41,8 @@ const MapLayerPst : String				= MapPst + "layers/"
 const MapDataPst : String				= MapPst + "data/"
 const MapNavPst : String				= MapPst + "navigations/"
 
+const ParticlePst : String				= EffectsPst + "particles/"
+
 # Local
 const Local : String					= "user://"
 

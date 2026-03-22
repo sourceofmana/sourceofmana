@@ -43,6 +43,7 @@ extends ServiceBase
 @onready var emoteContainer : Container			= $Windows/Floating/Emote/ItemContainer/Grid
 
 # Shaders
+@onready var shaders : CanvasLayer				= $Shaders
 @onready var CRTShader : TextureRect			= $Shaders/CRT
 @onready var HQ4xShader : TextureRect			= $Shaders/HQ4x
 
@@ -241,6 +242,7 @@ func _ready():
 
 	assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
 	CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
+	DB.WarmShaders()
 
 func _on_ui_margin_resized():
 	if CRTShader and CRTShader.material:

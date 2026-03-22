@@ -196,6 +196,23 @@ static func GetQuest(questID : int) -> QuestData:
 	assert(data != null, "Could not find the identifier %s in QuestsDB" % [questID])
 	return data
 
+static func WarmShaders():
+	var tree : SceneTree = Launcher.get_tree()
+	for resourcePath in FileSystem.ParseExtension(Path.ParticlePst, Path.SceneExt):
+		var preset : PackedScene = FileSystem.LoadResource(resourcePath, false)
+		if preset:
+			var node : Node = preset.instantiate()
+			if node is GPUParticles2D:
+				node.emitting = true
+				node.one_shot = true
+			if node is Projectile:
+				node.delay = 1.0
+				node.set_physics_process(false)
+
+			Launcher.GUI.shaders.add_child(node)
+			await tree.process_frame
+			node.queue_free()
+
 #
 static func Init():
 	ParseMapsDB()
