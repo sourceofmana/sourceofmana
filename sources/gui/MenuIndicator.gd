@@ -65,7 +65,6 @@ func _on_button_pressed():
 	if not is_opening:
 		tween.tween_callback(func():
 			items.set_visible(false)
-			SetItemsVisible(false)
 		)
 
 #

@@ -152,6 +152,7 @@ func AddItem(cell : ItemCell, count : int = 1) -> bool:
 			if charID != NetworkCommons.PeerUnknownID:
 				Launcher.SQL.AddItem(charID, cell.id, cell.customfield, count)
 			Network.ItemAdded(cell.id, cell.customfield, count, actor.peerID)
+		actor.stat.weight += cell.weight * count / 1000.0
 		return true
 	return false
 
@@ -162,6 +163,7 @@ func RemoveItem(cell : ItemCell, count : int = 1) -> bool:
 			if charID != NetworkCommons.PeerUnknownID:
 				Launcher.SQL.RemoveItem(charID, cell.id, cell.customfield, count)
 			Network.ItemRemoved(cell.id, cell.customfield, count, actor.peerID)
+		actor.stat.weight -= cell.weight * count / 1000.0
 		return true
 	return false
 
@@ -174,6 +176,7 @@ func ImportInventory(data : Array[Dictionary]):
 		if cell:
 			var count : int = item.get("count", 1)
 			PushItem(cell, count)
+	actor.stat.weight = Formula.GetWeight(actor.inventory)
 
 func ExportInventory() -> Array[Dictionary]:
 	var data : Array[Dictionary] = []

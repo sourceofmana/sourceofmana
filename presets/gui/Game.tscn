@@ -514,6 +514,7 @@ offset_bottom = 68.0
 saveOverlayState = true
 
 [node name="Skill" parent="Windows/Floating" unique_id=849459379 instance=ExtResource("38_ompay")]
+visible = false
 layout_mode = 0
 offset_left = 69.0
 offset_top = 74.0
@@ -587,8 +588,8 @@ visible = false
 layout_mode = 0
 offset_left = 439.0
 offset_top = 46.0
-offset_right = 839.0
-offset_bottom = 427.0
+offset_right = 838.0
+offset_bottom = 486.0
 saveOverlayState = true
 
 [node name="Shaders" type="CanvasLayer" parent="." unique_id=1012789573]

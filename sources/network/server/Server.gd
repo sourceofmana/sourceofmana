@@ -97,7 +97,6 @@ func DeleteCharacter(charName : String, peerID : int):
 	Network.CharacterError(err, peerID)
 	return err
 
-
 func ConnectCharacter(nickname : String, peerID : int):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
@@ -298,12 +297,12 @@ func PickupDrop(dropID : int, peerID : int):
 
 func RetrieveCharacterInformation(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player and player.progress:
-		Network.RefreshProgress(player.progress.skills, player.progress.quests, player.progress.bestiary, peerID)
-	if player and player.inventory:
-		Network.RefreshInventory(player.inventory.ExportInventory(), peerID)
-	if player and player.stat:
-		Network.UpdateAttributes(player.stat.strength, player.stat.vitality, player.stat.agility, player.stat.endurance, player.stat.concentration, peerID)
+	if player:
+		player.RequestStatsUpdate()
+		if player.progress:
+			Network.RefreshProgress(player.progress.skills, player.progress.quests, player.progress.bestiary, peerID)
+		if player.inventory:
+			Network.RefreshInventory(player.inventory.ExportInventory(), peerID)
 
 # Commands
 func TriggerCommand(command : String, peerID : int):

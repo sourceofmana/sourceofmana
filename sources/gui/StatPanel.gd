@@ -248,6 +248,7 @@ func Connect():
 
 	Util.DuplicateObject(Launcher.Player.stat, panelStats)
 	panelStats.RefreshAttributes()
+	panelStats.RefreshEntityStats()
 	RefreshSaveAndResetButtons()
 
 	Callback.PlugCallback(panel_stats_updated, RefreshVitalStats)

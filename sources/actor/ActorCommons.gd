@@ -322,6 +322,7 @@ const RunningStaminaCostPerSecond : int		= 5
 static func IsEquipped(cell : BaseCell) -> bool:
 	return cell and cell is ItemCell and \
 	cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and cell.slot < ActorCommons.Slot.LAST_EQUIPMENT and \
+	Launcher.Player and Launcher.Player.inventory and Launcher.Player.inventory.equipment and \
 	CellCommons.IsSameCell(cell, Launcher.Player.inventory.equipment[cell.slot])
 
 # Explore

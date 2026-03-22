@@ -49,3 +49,39 @@ enum Modifier {
 	Attack,
 	Count
 }
+
+static func GetModifierDisplayName(effect : Modifier) -> String:
+	match effect:
+		Modifier.Health:		return "Health"
+		Modifier.Mana:			return "Mana"
+		Modifier.Stamina:		return "Stamina"
+		Modifier.MaxHealth:		return "Max Health"
+		Modifier.MaxMana:		return "Max Mana"
+		Modifier.MaxStamina:	return "Max Stamina"
+		Modifier.Attack:		return "Attack"
+		Modifier.Defense:		return "Defense"
+		Modifier.MAttack:		return "M. Attack"
+		Modifier.MDefense:		return "M. Defense"
+		Modifier.AttackRange:	return "Atk Range"
+		Modifier.CritRate:		return "Crit Rate"
+		Modifier.DodgeRate:		return "Dodge Rate"
+		Modifier.CastDelay:		return "Cast Delay"
+		Modifier.CooldownDelay:	return "Cooldown"
+		Modifier.RegenHealth:	return "HP Regen"
+		Modifier.RegenMana:		return "MP Regen"
+		Modifier.RegenStamina:	return "SP Regen"
+		Modifier.WalkSpeed:		return "Walk Speed"
+		Modifier.WeightCapacity: return "Carry Weight"
+		_:						return "Unknown"
+
+static func FormatModifierValue(effect : Modifier, value : Variant) -> String:
+	match effect:
+		Modifier.CritRate, Modifier.DodgeRate:
+			var intVal : int = int(float(value) * 100.0)
+			return ("+" if intVal >= 0 else "") + str(intVal) + "%"
+		Modifier.CastDelay, Modifier.CooldownDelay:
+			var floatVal : float = float(value)
+			return ("+" if floatVal >= 0.0 else "") + ("%.2f" % floatVal) + "s"
+		_:
+			var intVal : int = int(value)
+			return ("+" if intVal >= 0 else "") + str(intVal)
