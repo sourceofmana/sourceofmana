@@ -146,6 +146,9 @@ func AddChild(child : Node2D):
 
 # Entities
 func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool):
+	if not currentFringe:
+		return
+
 	var entity : Entity = Entities.Get(agentRID)
 	var isNewSpawn : bool = false
 	if entity == null:
@@ -160,7 +163,6 @@ func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : V
 			entity.SetData()
 			if isNewSpawn:
 				AddChild(entity)
-			PlayerWarped.emit()
 
 	if entity:
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID, isNewSpawn, isRunning)

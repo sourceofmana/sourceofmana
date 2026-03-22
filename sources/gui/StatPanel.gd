@@ -267,6 +267,10 @@ func Connect():
 	RefreshEntityStats()
 
 #
-func _ready():
+func _post_launch():
 	if Launcher.Map:
-		Callback.PlugCallback(Launcher.Map.PlayerWarped, Connect)
+		if not Launcher.Map.PlayerWarped.is_connected(Connect):
+			Launcher.Map.PlayerWarped.connect(Connect)
+
+func _ready():
+	_post_launch()

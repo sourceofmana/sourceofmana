@@ -217,6 +217,12 @@ func _post_launch():
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	if minimapWindow:
 		minimapWindow._post_launch()
+	if stats:
+		stats._post_launch()
+	if statWindow:
+		statWindow._post_launch()
+	if inventoryWindow:
+		inventoryWindow._post_launch()
 	isInitialized = true
 
 func Destroy():

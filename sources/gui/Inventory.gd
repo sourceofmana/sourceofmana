@@ -223,8 +223,12 @@ func _ready():
 		if tile:
 			tile.selected.connect(SelectTile)
 	SetButtonMode(ButtonMode.ITEM)
+	_post_launch()
+
+func _post_launch():
 	if Launcher.Map:
-		Callback.PlugCallback(Launcher.Map.PlayerWarped, Connect)
+		if not Launcher.Map.PlayerWarped.is_connected(Connect):
+			Launcher.Map.PlayerWarped.connect(Connect)
 
 func _on_visibility_changed():
 	if visible and grid:
