@@ -4,7 +4,7 @@ class_name DB
 static var MapsDB : Dictionary[int, FileData]				= {}
 static var MusicDB : Dictionary[int, FileData]				= {}
 static var RacesDB : Dictionary[int, RaceData]				= {}
-static var HairstylesDB : Dictionary[int, FileData]			= {}
+static var HairstylesDB : Dictionary[int, HairstyleData]		= {}
 static var PalettesDB : Array[Dictionary]					= []
 static var EntitiesDB : Dictionary[int, EntityData]			= {}
 static var EmotesDB : Dictionary[int, BaseCell]				= {}
@@ -52,12 +52,11 @@ static func ParseRacesDB():
 			RacesDB[id] = RaceData.Create(key, result[key])
 
 static func ParseHairstylesDB():
-	var result : Dictionary = FileSystem.LoadDB("hairstyles.json")
-
-	if not result.is_empty():
-		for key in result:
-			var data : FileData = FileData.Create(key, result[key])
-			HairstylesDB[data._id] = data
+	for resourcePath in FileSystem.ParseResources(Path.HairstylePst):
+		var data : HairstyleData = FileSystem.LoadResource(resourcePath, false)
+		data._id = SetCellHash(data._name)
+		assert(not HairstylesDB.has(data._id), "Duplicated cell in HairstylesDB")
+		HairstylesDB[data._id] = data
 
 static func ParsePalettesDB():
 	PalettesDB.resize(Palette.COUNT)
@@ -181,8 +180,8 @@ static func GetRace(cellHash : int) -> RaceData:
 	assert(data != null, "Could not find the identifier %s in RacesDB" % [cellHash])
 	return data
 
-static func GetHairstyle(cellHash : int) -> FileData:
-	var data : FileData = HairstylesDB.get(cellHash, null)
+static func GetHairstyle(cellHash : int) -> HairstyleData:
+	var data : HairstyleData = HairstylesDB.get(cellHash, null)
 	assert(data != null, "Could not find the identifier %s in HairstylesDB" % [cellHash])
 	return data
 

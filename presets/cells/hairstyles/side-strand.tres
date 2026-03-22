@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HairstyleData" format=3]
+
+[ext_resource type="Script" path="res://sources/db/instance/HairstyleData.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+_name = "Side Strand"
+_path = "sprites/hairstyles/side-strand.png"

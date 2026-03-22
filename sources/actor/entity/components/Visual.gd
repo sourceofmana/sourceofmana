@@ -16,12 +16,15 @@ var sprites : Array[Sprite2D]				= []
 var previousOrientation : Vector2			= Vector2.ZERO
 var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
 
-var blendSpacePaths : Array[String]				= []
-var walkTimeScalePath : String					= ""
-var attackTimeScalePath : String				= ""
+var blendSpacePaths : Array[String]			= []
+var walkTimeScalePath : String				= ""
+var attackTimeScalePath : String			= ""
 
 var skillCastID : int						= DB.UnknownHash
 var attackAnimLength : float				= 1.0
+var originalAnimationLib : AnimationLibrary	= null
+var defaultHframes : Dictionary				= {}
+var defaultVframes : Dictionary				= {}
 
 #
 func LoadSpriteSlot(slot : ActorCommons.Slot, sprite : Sprite2D):
@@ -42,6 +45,7 @@ func ResetData():
 	for spriteID in sprites.size():
 		sprites[spriteID] = null
 	preset = null
+	originalAnimationLib = null
 	if collision:
 		collision.queue_free()
 		collision = null
@@ -79,10 +83,11 @@ func LoadData(data : EntityData):
 				elif slot == ActorCommons.Slot.FACE:
 					SetFace()
 				elif slot == ActorCommons.Slot.HAIR:
-					SetHair()
+					SetHair(false)
 				elif slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_EQUIPMENT:
-					SetEquipment(slot, data)
+					SetEquipment(slot, data, false)
 
+	ApplyAnimationOverrides()
 	ResetAnimationValue()
 
 func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array):
@@ -132,17 +137,23 @@ func SetFace():
 	if raceData:
 		SetSkinSlot(ActorCommons.Slot.FACE, raceData, raceData._faces)
 
-func SetHair():
+func SetHair(applyOverrides : bool = true):
 	var slotName : String = ActorCommons.GetSlotName(ActorCommons.Slot.HAIR)
 	var sprite : Sprite2D = preset.get_node_or_null(slotName)
 	if not sprite:
 		return
 
+	var slot : int = ActorCommons.Slot.HAIR
+	if slot not in defaultHframes:
+		defaultHframes[slot] = sprite.hframes
+		defaultVframes[slot] = sprite.vframes
+
 	var slotTexture : Texture2D = null
 	var slotMaterial : Material = null
+	var hairstyleData : HairstyleData = null
 
 	if not entity.stat.IsMorph():
-		var hairstyleData : FileData = DB.GetHairstyle(entity.stat.hairstyle) if entity.stat.hairstyle != DB.UnknownHash else null
+		hairstyleData = DB.GetHairstyle(entity.stat.hairstyle) if entity.stat.hairstyle != DB.UnknownHash else null
 		var haircolorData : FileData = DB.GetPalette(DB.Palette.HAIR, entity.stat.haircolor) if entity.stat.haircolor != DB.UnknownHash else null
 		if hairstyleData != null and haircolorData != null:
 			slotTexture = FileSystem.LoadGfx(hairstyleData._path)
@@ -151,26 +162,50 @@ func SetHair():
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
 
-	LoadSpriteSlot(ActorCommons.Slot.HAIR, sprite)
+	if hairstyleData and hairstyleData._spriteHframes > 0:
+		sprite.hframes = hairstyleData._spriteHframes
+		sprite.vframes = max(1, hairstyleData._spriteVframes)
+	else:
+		sprite.hframes = defaultHframes[slot]
+		sprite.vframes = defaultVframes[slot]
 
-func SetEquipment(slot : int, data : EntityData = null):
+	LoadSpriteSlot(slot, sprite)
+	if applyOverrides:
+		ApplyAnimationOverrides()
+
+func SetEquipment(slot : int, data : EntityData = null, applyOverrides : bool = true):
 	var slotName : String = ActorCommons.GetSlotName(slot)
 	var sprite : Sprite2D = preset.get_node_or_null(slotName)
 	if not sprite:
 		return
 
+	if slot not in defaultHframes:
+		defaultHframes[slot] = sprite.hframes
+		defaultVframes[slot] = sprite.vframes
+
 	var slotTexture : Texture2D = null
 	var slotMaterial : Material = null
+	var cell : ItemCell = null
 
 	if not entity.stat.IsMorph():
-		var cell : ItemCell = entity.inventory.equipment[slot] if entity.inventory else (data._equipment[slot] if data else null)
+		cell = entity.inventory.equipment[slot] if entity.inventory else (data._equipment[slot] if data else null)
 		if cell != null:
 			slotTexture = cell.textures[entity.stat.gender]
 			slotMaterial = cell.shader
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
+
+	if cell and cell.spriteHframes > 0:
+		sprite.hframes = cell.spriteHframes
+		sprite.vframes = max(1, cell.spriteVframes)
+	else:
+		sprite.hframes = defaultHframes[slot]
+		sprite.vframes = defaultVframes[slot]
+
 	LoadSpriteSlot(slot, sprite)
+	if applyOverrides:
+		ApplyAnimationOverrides()
 
 func SetData(slot : int, data : EntityData):
 	var slotName : String = ActorCommons.GetSlotName(slot)
@@ -270,6 +305,68 @@ func Refresh():
 		previousState = newState
 		previousOrientation = newOrientation
 		RefreshTree(differentState)
+
+#
+func CollectAnimationOverrides() -> Array[AnimationLibrary]:
+	var allOverrides : Array[AnimationLibrary] = []
+
+	if entity.inventory:
+		for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
+			var cell : ItemCell = entity.inventory.equipment[slot]
+			if cell and cell.animationOverrides:
+				allOverrides.append(cell.animationOverrides)
+
+	if entity.stat.hairstyle != DB.UnknownHash:
+		var hairstyleData : HairstyleData = DB.GetHairstyle(entity.stat.hairstyle)
+		if hairstyleData and hairstyleData._animationOverrides:
+			allOverrides.append(hairstyleData._animationOverrides)
+
+	return allOverrides
+
+func ApplyAnimationOverrides():
+	if not animation:
+		return
+
+	var allOverrides : Array[AnimationLibrary] = CollectAnimationOverrides()
+
+	if allOverrides.is_empty():
+		if originalAnimationLib:
+			animation.remove_animation_library("")
+			animation.add_animation_library("", originalAnimationLib)
+			originalAnimationLib = null
+		return
+
+	if not originalAnimationLib:
+		originalAnimationLib = animation.get_animation_library("")
+
+	var lib : AnimationLibrary = originalAnimationLib.duplicate(true)
+
+	for overrideLib in allOverrides:
+		for animName in overrideLib.get_animation_list():
+			if not lib.has_animation(animName):
+				continue
+
+			var baseAnim : Animation = lib.get_animation(animName)
+			var overrideAnim : Animation = overrideLib.get_animation(animName)
+			for trackIdx in overrideAnim.get_track_count():
+				var trackPath : NodePath = overrideAnim.track_get_path(trackIdx)
+				var trackType : Animation.TrackType = overrideAnim.track_get_type(trackIdx)
+				var baseTrackIdx : int = baseAnim.find_track(trackPath, trackType)
+				if baseTrackIdx < 0:
+					continue
+
+				while baseAnim.track_get_key_count(baseTrackIdx) > 0:
+					baseAnim.track_remove_key(baseTrackIdx, 0)
+				for keyIdx in overrideAnim.track_get_key_count(trackIdx):
+					baseAnim.track_insert_key(
+						baseTrackIdx,
+						overrideAnim.track_get_key_time(trackIdx, keyIdx),
+						overrideAnim.track_get_key_value(trackIdx, keyIdx),
+						overrideAnim.track_get_key_transition(trackIdx, keyIdx)
+					)
+
+	animation.remove_animation_library("")
+	animation.add_animation_library("", lib)
 
 #
 func _notification(what : int):

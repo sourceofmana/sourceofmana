@@ -350,6 +350,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/hairstyles/messy.png [Tayoko] [Reid]
 ./graphics/sprites/hairstyles/mohawk.png [Modanung]
 ./graphics/sprites/hairstyles/pigtails.png [Saphy] [Reid]
+./graphics/sprites/hairstyles/ponytail.png [Modanung] [Reid]
 ./graphics/sprites/hairstyles/side-strand.png [Sir_lance]
 ./graphics/sprites/hairstyles/parted.png [Modanung] [Reid]
 ./graphics/sprites/hairstyles/pompadour.png [Kineticstorm]

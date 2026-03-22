@@ -8,7 +8,7 @@ func OnStart():
 	Choice("None", OnQuit)
 
 func OnHairstyle():
-	var hairstyles : Array[FileData] = DB.HairstylesDB.values()
+	var hairstyles : Array[HairstyleData] = DB.HairstylesDB.values()
 	var count : int = hairstyles.size() -1
 	var randIdx : int = randi_range(0, count)
 

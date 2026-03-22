@@ -94,7 +94,7 @@ func GetStatValue(stats : Variant, statStr : String) -> String:
 				var race : RaceData = DB.RacesDB.get(value)
 				return race._name if race else str(value)
 			"hairstyle":
-				var hairstyle : FileData = DB.HairstylesDB.get(value)
+				var hairstyle : HairstyleData = DB.HairstylesDB.get(value)
 				return hairstyle._name if hairstyle else str(value)
 			"haircolor":
 				var palette : FileData = DB.PalettesDB[DB.Palette.HAIR].get(value)
