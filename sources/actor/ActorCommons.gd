@@ -178,7 +178,7 @@ static func GetStateName(state : State) -> String:
 	return STATE_NAMES[state]
 
 static func IsAlive(agent : Actor) -> bool:
-	return agent and agent.state != State.DEATH
+	return agent and agent.state != State.DEATH and agent.stat.health > 0
 
 static func IsAttacking(agent : Actor) -> bool:
 	return agent and agent.state == State.ATTACK

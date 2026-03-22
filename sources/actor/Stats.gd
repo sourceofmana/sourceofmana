@@ -188,9 +188,10 @@ func SetAttributes(newStrength: int, newVitality: int, newAgility: int, newEndur
 		RefreshAttributes()
 
 func SetHealth(bonus : int):
+	var previousHealth : int = health
 	health = clampi(health + bonus, 0, current.maxHealth)
 	vital_stats_updated.emit()
-	if health <= 0:
+	if health <= 0 and previousHealth > 0:
 		actor.Killed()
 
 func SetMana(bonus : int):
