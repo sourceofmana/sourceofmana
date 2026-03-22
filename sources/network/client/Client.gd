@@ -382,8 +382,8 @@ func _enter_tree():
 
 func _OnServerAuthenticating(peerID: int):
 	var authData : PackedByteArray = PackedByteArray()
-	authData.resize(4)
-	authData.encode_s32(0, NetworkCommons.ProtocolVersion)
+	authData.resize(8)
+	authData.encode_s64(0, NetworkCommons.ProtocolVersion)
 	multiplayerAPI.send_auth(peerID, authData)
 
 func _ValidateServerAuth(peerID: int, _data: PackedByteArray):
