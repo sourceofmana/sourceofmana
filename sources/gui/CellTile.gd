@@ -208,18 +208,37 @@ func ClearCooldown():
 
 # Drag
 func _get_drag_data(_position : Vector2):
-	if cell and cell.usable:
-		if icon:
-			set_drag_preview(icon.duplicate())
-		return cell
+	if cell:
+		if cell.usable or IsInEquipmentSlot():
+			if icon:
+				set_drag_preview(icon.duplicate())
+			return cell
 	return null
 
 func _can_drop_data(_at_position : Vector2, data):
-	return draggable and data is BaseCell and data != cell and data.usable
+	if draggable and data is BaseCell and data != cell and data.usable:
+		return true
+	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot() and not ActorCommons.IsEquipped(data):
+		return true
+	if not draggable and not defaultIcon and data is ItemCell and ActorCommons.IsEquipped(data):
+		return true
+	return false
 
 func _drop_data(_at_position : Vector2, data):
-	AssignData(data)
-	CellTile.RefreshShortcuts(data)
+	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot():
+		Network.EquipItem(data.id, data.customfield)
+	elif not draggable and not defaultIcon and data is ItemCell and ActorCommons.IsEquipped(data):
+		Network.UnequipItem(data.id, data.customfield)
+	elif draggable:
+		AssignData(data)
+		CellTile.RefreshShortcuts(data)
+
+func _get_equipment_slot() -> ActorCommons.Slot:
+	if defaultIcon:
+		var slot : ActorCommons.Slot = ActorCommons.GetSlotID(name)
+		if slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_EQUIPMENT:
+			return slot
+	return ActorCommons.Slot.NONE
 
 # Default
 func _ready():
