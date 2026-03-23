@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_s2hlw"]
 [ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/equipment/cloth-natural.tres" id="5_idn60"]
 [ext_resource type="Texture2D" uid="uid://dnpxtiulacy0c" path="res://data/graphics/sprites/equipment/head/ghutra.png" id="5_uafrj"]
-[ext_resource type="AnimationLibrary" path="res://presets/animations/overrides/Ghutra.tres" id="6_overrides"]
+[ext_resource type="AnimationLibrary" uid="uid://dp0m76ygh75g3" path="res://presets/animations/overrides/Ghutra.tres" id="6_overrides"]
 
 [sub_resource type="Resource" id="Resource_u2a5x"]
 script = ExtResource("2_uafrj")
