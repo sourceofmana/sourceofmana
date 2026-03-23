@@ -15,7 +15,7 @@ var statsUpdatePending : bool			= false
 # Visible surrounding actors
 var visibleAgents : Dictionary[int, bool]= {}
 var lastCheckedPosition : Vector2		= Vector2.ZERO
-var visibilityTimer : float				= 0.0
+var visibilityTimer : Timer				= null
 var visibilityHalfSize : Vector2		= Vector2(NetworkCommons.MaxVisibilityHalfWidth, NetworkCommons.MaxVisibilityHalfHeight)
 
 #
@@ -191,12 +191,10 @@ func UpdateVisibility():
 			Network.Bulk("RemoveEntity", [agentRID], peerID)
 			visibleAgents.erase(agentRID)
 
-func _physics_process(delta : float):
-	super._physics_process(delta)
-	visibilityTimer += delta
-	if visibilityTimer >= ActorCommons.VisibilityCheckTimeInternal or position.distance_squared_to(lastCheckedPosition) >= ActorCommons.VisibilityCheckDistSqrd:
+func NotifyPosition():
+	super.NotifyPosition()
+	if position.distance_squared_to(lastCheckedPosition) >= ActorCommons.VisibilityCheckDistSqrd:
 		lastCheckedPosition = position
-		visibilityTimer = 0.0
 		UpdateVisibility()
 
 func _ready():
@@ -209,6 +207,14 @@ func _ready():
 	regenTimer.autostart = true
 	regenTimer.timeout.connect(OnRegenTick)
 	add_child.call_deferred(regenTimer)
+
+	visibilityTimer = Timer.new()
+	visibilityTimer.set_name("VisibilityTimer")
+	visibilityTimer.set_one_shot(false)
+	visibilityTimer.set_wait_time(ActorCommons.VisibilityCheckTimeInternal)
+	visibilityTimer.autostart = true
+	visibilityTimer.timeout.connect(UpdateVisibility)
+	add_child.call_deferred(visibilityTimer)
 
 	stat.entity_stats_updated.connect(RequestStatsUpdate)
 	stat.vital_stats_updated.connect(RequestStatsUpdate)

@@ -233,6 +233,9 @@ func _physics_process(_delta : float):
 	else:
 		_velocity_computed(currentInput * currentWalkSpeed)
 
+	NotifyPosition()
+
+func NotifyPosition():
 	if requireFullUpdate:
 		requireFullUpdate = false
 		requireUpdate = false
