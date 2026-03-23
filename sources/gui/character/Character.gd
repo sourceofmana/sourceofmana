@@ -320,9 +320,18 @@ func _ready():
 
 func _physics_process(_delta: float):
 	if currentCharacterID != ActorCommons.InvalidCharacterSlot:
-		var move : Vector2 = Launcher.Action.GetMove()
-		if move != Vector2.ZERO:
-			charactersNode[currentCharacterID].entityOrientation = move
+		var entity : Entity = charactersNode[currentCharacterID]
+		if entity:
+			var needsRefresh : bool = false
+			var move : Vector2 = Launcher.Action.GetMove()
+			if move != Vector2.ZERO:
+				entity.entityOrientation = move
+				needsRefresh = true
+			if Launcher.Action.IsActionJustPressed("gp_sit"):
+				entity.state = ActorCommons.State.IDLE if entity.state == ActorCommons.State.SIT else ActorCommons.State.SIT
+				needsRefresh = true
+			if needsRefresh and entity.visual:
+				entity.visual.Refresh()
 
 func _on_visibility_changed():
 	if not visible:
