@@ -69,6 +69,14 @@ func ContextClose(_peerID : int):
 func ContextChoice(texts : PackedStringArray, _peerID : int):
 	Launcher.GUI.dialogueWindow.AddChoices(texts)
 
+func CameraLookAt(pos : Vector2, _peerID : int):
+	if Launcher.Camera:
+		Launcher.Camera.LookAt(pos)
+
+func CameraReset(_peerID : int):
+	if Launcher.Camera:
+		Launcher.Camera.ResetCinematic()
+
 func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, _peerID : int):
 	if Launcher.Map:
 		var entity : Entity = Entities.Get(targetRID)

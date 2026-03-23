@@ -101,7 +101,7 @@ func _unhandled_input(event):
 	if event.is_action("gp_click_to") and supportMouse:
 		if FSM.IsGameState() and clickTimer:
 			if clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
-				MoveTo(Launcher.Camera.mainCamera.get_global_mouse_position())
+				MoveTo(Launcher.Camera.camera.get_global_mouse_position())
 	elif not HasConsumed() and Launcher.Camera:
 		if event is InputEventMagnifyGesture:
 			if event.factor > 1.0:

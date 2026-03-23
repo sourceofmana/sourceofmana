@@ -56,6 +56,15 @@ static func ClearTracker(agent : BaseAgent):
 			if inst:
 				Network.NotifyInstance(inst, "ClearProgressionTracker", [])
 
+# Camera
+static func CameraLookAt(pc : BaseAgent, pos : Vector2):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.CameraLookAt(pos, pc.peerID)
+
+static func CameraReset(pc : BaseAgent):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.CameraReset(pc.peerID)
+
 # Context sent to client
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
 	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:

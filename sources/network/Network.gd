@@ -195,6 +195,15 @@ func TriggerCloseContext(peerID : int = NetworkCommons.PeerAuthorityID):
 func TriggerNextContext(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerNextContext", [], peerID)
 
+# Camera
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func CameraLookAt(pos : Vector2, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("CameraLookAt", [pos], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func CameraReset(peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("CameraReset", [], peerID)
+
 # Interact
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerInteract(targetRID : int, peerID : int = NetworkCommons.PeerAuthorityID):

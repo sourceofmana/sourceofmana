@@ -26,14 +26,14 @@ func UnregisterLight(light : LightSource) -> void:
 	registeredLights.erase(light)
 
 func _process(delta : float):
-	if not visible or not Launcher.Camera.mainCamera or not Launcher.Camera.mainCamera.is_inside_tree():
+	if not visible or not Launcher.Camera.camera or not Launcher.Camera.camera.is_inside_tree():
 		return
 
-	var canvasTransform : Transform2D = Launcher.Camera.mainCamera.get_canvas_transform()
+	var canvasTransform : Transform2D = Launcher.Camera.camera.get_canvas_transform()
 	var canvasScale : Vector2 = canvasTransform.get_scale()
 
-	var viewportSize : Vector2 = Launcher.Camera.mainCamera.get_viewport_rect().size / canvasScale
-	var cameraTopLeft : Vector2 = Launcher.Camera.mainCamera.global_position - viewportSize * 0.5
+	var viewportSize : Vector2 = Launcher.Camera.camera.get_viewport_rect().size / canvasScale
+	var cameraTopLeft : Vector2 = Launcher.Camera.camera.global_position - viewportSize * 0.5
 	cameraTopLeft = cameraTopLeft.clamp(Vector2.ZERO, Launcher.Map.GetMapBoundaries() - viewportSize)
 	var cameraRect : Rect2 = Rect2(cameraTopLeft, viewportSize)
 

@@ -1,45 +1,45 @@
 extends ServiceBase
 
 #
-var mainCamera : Camera2D		= null
-var sceneCamera : Camera2D		= null
+var camera : Camera2D			= null
+var remoteTransform : RemoteTransform2D = null
+var cinematic : bool			= false
 var lastZoomLevel : int			= ActorCommons.CameraZoomDefault
 var zoomLevel : int				= ActorCommons.CameraZoomDefault
-var zoomSceneTween : Tween		= null 
-var zoomMainTween : Tween		= null
+var zoomTween : Tween			= null
 var zoomTimer : Timer			= null
 
 #
 func SetBoundaries():
-	if Launcher.Map:
+	if Launcher.Map and camera:
 		var cameraBoundary : Vector2i = Launcher.Map.GetMapBoundaries()
+		camera.limit_left		= 0
+		camera.limit_right		= cameraBoundary.x
+		camera.limit_top		= 0
+		camera.limit_bottom		= cameraBoundary.y
+		camera.set_global_position(Vector2.ZERO)
+		camera.set_enabled(true)
+		camera.make_current()
 
-		if mainCamera:
-			mainCamera.limit_left		= 0
-			mainCamera.limit_right		= cameraBoundary.x
-			mainCamera.limit_top		= 0
-			mainCamera.limit_bottom		= cameraBoundary.y
-			mainCamera.set_global_position(Vector2.ZERO)
-
-		if sceneCamera:
-			sceneCamera.limit_left		= 0
-			sceneCamera.limit_right		= cameraBoundary.x
-			sceneCamera.limit_top		= 0
-			sceneCamera.limit_bottom	= cameraBoundary.y
-			sceneCamera.set_global_position(Vector2.ZERO)
-
-func EnableSceneCamera(pos : Vector2):
-	if not sceneCamera:
+func LookAt(pos : Vector2):
+	if not camera:
 		return
 
-	var enableSmoothing : bool = sceneCamera.get_global_position() != Vector2.ZERO
-	sceneCamera.set_position_smoothing_enabled(enableSmoothing)
-	sceneCamera.set_global_position(pos)
-	sceneCamera.set_enabled(true)
-	sceneCamera.make_current()
+	cinematic = true
+	camera.set_position_smoothing_enabled(true)
+	if remoteTransform:
+		remoteTransform.set_update_position(false)
+	camera.set_global_position(pos)
 
-func DisableSceneCamera():
-	sceneCamera.set_enabled(false)
+func ResetCinematic():
+	if not camera or not cinematic:
+		return
+
+	cinematic = false
+	camera.set_position_smoothing_enabled(false)
+	if remoteTransform:
+		remoteTransform.set_update_position(true)
+	SyncPlayerPosition()
 
 func IsZooming(level : int) -> bool:
 	return zoomLevel == level
@@ -63,11 +63,8 @@ func ZoomReset():
 		zoomLevel = ActorCommons.CameraZoomDefault
 		UpdateZoom()
 
-func ZoomTweenCompleted(isMainCamera : bool):
-	if isMainCamera:
-		zoomMainTween = null
-	else:
-		zoomSceneTween = null
+func ZoomTweenCompleted():
+	zoomTween = null
 
 func ZoomTimerCompleted():
 	zoomTimer = null
@@ -77,7 +74,7 @@ func UpdateZoom():
 		return
 
 	lastZoomLevel = zoomLevel
-	zoomTimer = Callback.SelfDestructTimer(mainCamera, ActorCommons.CameraZoomDelay / 2.0, ZoomTimerCompleted, [], "ZoomTimer")
+	zoomTimer = Callback.SelfDestructTimer(camera, ActorCommons.CameraZoomDelay / 2.0, ZoomTimerCompleted, [], "ZoomTimer")
 
 	if zoomLevel < 0 or zoomLevel >= ActorCommons.CameraZoomLevels.size():
 		assert(false, "Trying to set a wrong zoom level to our camera(s)")
@@ -85,19 +82,12 @@ func UpdateZoom():
 
 	var zoomVector : Vector2 = ActorCommons.CameraZoomLevels[zoomLevel]
 
-	if zoomSceneTween:
-		zoomSceneTween.kill()
-	zoomSceneTween = sceneCamera.create_tween()
-	zoomSceneTween.tween_property(sceneCamera, "zoom", zoomVector, ActorCommons.CameraZoomDelay).from(sceneCamera.zoom)
-	zoomSceneTween.play()
-	zoomSceneTween.tween_callback(ZoomTweenCompleted.bind(false))
-
-	if zoomMainTween:
-		zoomMainTween.kill()
-	zoomMainTween = mainCamera.create_tween()
-	zoomMainTween.tween_property(mainCamera, "zoom", zoomVector, ActorCommons.CameraZoomDelay).from(mainCamera.zoom)
-	zoomMainTween.play()
-	zoomMainTween.tween_callback(ZoomTweenCompleted.bind(true))
+	if zoomTween:
+		zoomTween.kill()
+	zoomTween = camera.create_tween()
+	zoomTween.tween_property(camera, "zoom", zoomVector, ActorCommons.CameraZoomDelay).from(camera.zoom)
+	zoomTween.play()
+	zoomTween.tween_callback(ZoomTweenCompleted)
 
 	SendViewportSize()
 
@@ -113,12 +103,17 @@ func SendViewportSize():
 	Network.SetViewportSize(halfSize.x, halfSize.y)
 
 func SyncPlayerPosition():
-	if Launcher.Player and mainCamera:
-		mainCamera.set_position(Launcher.Player.get_position())
+	if Launcher.Player and camera and not cinematic:
+		camera.set_position_smoothing_enabled(false)
+		camera.set_position(Launcher.Player.get_position())
+		camera.force_update_scroll()
 
 func FocusPosition(position : Vector2):
-	if mainCamera:
-		mainCamera.set_position(position)
+	if camera:
+		camera.set_position(position)
+
+func OnPlayerMoved():
+	ResetCinematic()
 
 #
 func _post_launch():
@@ -127,27 +122,20 @@ func _post_launch():
 			Launcher.Map.MapLoaded.connect(SetBoundaries)
 		if not Launcher.Map.PlayerWarped.is_connected(SyncPlayerPosition):
 			Launcher.Map.PlayerWarped.connect(SyncPlayerPosition)
+		if not Launcher.Map.PlayerMoved.is_connected(OnPlayerMoved):
+			Launcher.Map.PlayerMoved.connect(OnPlayerMoved)
 
 	if Launcher.Scene:
 		var cameraPreset : PackedScene = FileSystem.LoadEntityComponent("Camera", false)
-		sceneCamera = cameraPreset.instantiate()
-		sceneCamera.set_name("SceneCamera")
-		if sceneCamera:
-			Launcher.Scene.add_child.call_deferred(sceneCamera)
-
-		mainCamera = cameraPreset.instantiate()
-		mainCamera.set_name("MainCamera")
-		if mainCamera:
-			Launcher.Scene.add_child.call_deferred(mainCamera)
+		camera = cameraPreset.instantiate()
+		camera.set_name("Camera")
+		if camera:
+			Launcher.Scene.add_child.call_deferred(camera)
 
 	isInitialized = true
 
 func Destroy():
 	if Launcher.Scene:
-		if sceneCamera:
-			sceneCamera.queue_free()
-			sceneCamera = null
-
-		if mainCamera:
-			mainCamera.queue_free()
-			mainCamera = null
+		if camera:
+			camera.queue_free()
+			camera = null

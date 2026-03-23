@@ -124,6 +124,26 @@ func DisplayTracker(label : String, value : int, maxValue : int, unit : String =
 func ClearTracker():
 	NpcCommons.ClearTracker(own)
 
+# Camera
+func LookAtPosition(pos : Vector2):
+	assert(IsPlayer(), "LookAtPosition() requires a player agent")
+	if not IsPlayer(): return
+	Action(NpcCommons.CameraLookAt.bind(own, pos))
+
+func LookAtNpc(npcName : String):
+	assert(IsPlayer(), "LookAtNpc() requires a player agent")
+	if not IsPlayer(): return
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
+	if inst:
+		for npcAgent in inst.npcs:
+			if npcAgent and npcAgent.nick == npcName:
+				Action(NpcCommons.CameraLookAt.bind(own, npcAgent.get_position()))
+
+func ResetCamera():
+	assert(IsPlayer(), "ResetCamera() requires a player agent")
+	if not IsPlayer(): return
+	Action(NpcCommons.CameraReset.bind(own))
+
 # Dialogue
 func Mes(mes : String):
 	assert(IsPlayer(), "Mes() requires a player agent")

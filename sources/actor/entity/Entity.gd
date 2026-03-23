@@ -67,11 +67,11 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 func SetLocalPlayer():
 	collision_layer |= 2
 
-	if Launcher.Camera and Launcher.Camera.mainCamera:
-		var remotePos : RemoteTransform2D = RemoteTransform2D.new()
-		add_child.call_deferred(remotePos)
-		remotePos.set_remote_node(Launcher.Camera.mainCamera.get_path())
-		Launcher.Camera.mainCamera.make_current()
+	if Launcher.Camera and Launcher.Camera.camera:
+		Launcher.Camera.remoteTransform = RemoteTransform2D.new()
+		add_child.call_deferred(Launcher.Camera.remoteTransform)
+		Launcher.Camera.remoteTransform.set_remote_node(Launcher.Camera.camera.get_path())
+		Launcher.Camera.camera.make_current()
 
 	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
 	Network.RetrieveCharacterInformation()

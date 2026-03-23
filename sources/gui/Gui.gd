@@ -193,7 +193,7 @@ func EnterGame():
 	loadingControl.set_visible(false)
 	background.set_visible(false)
 
-	Launcher.Camera.DisableSceneCamera()
+	Launcher.Camera.ResetCinematic()
 	DisplayInfoContext(["gp_interact", "gp_untarget", "gp_morph", "gp_sit", "gp_target", "gp_pickup"])
 
 	stats.set_visible(true)
