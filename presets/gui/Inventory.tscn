@@ -13,8 +13,18 @@
 [ext_resource type="Texture2D" uid="uid://mij2lq0lkfjf" path="res://data/graphics/gui/inventory/slots/shield.png" id="13_cqujk"]
 [ext_resource type="Texture2D" uid="uid://bv7mmkjyv5bud" path="res://data/graphics/gui/inventory/slots/feet.png" id="14_c43pa"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="15_pbar"]
-[ext_resource type="Texture2D" uid="uid://bgmnxng3agmdr" path="res://data/graphics/gui/pixelbrown.png" id="16_brown"]
-[ext_resource type="Texture2D" uid="uid://dc0oen67nnoqp" path="res://data/graphics/gui/pixeldark.png" id="17_dark"]
+
+[sub_resource type="Gradient" id="Gradient_brown"]
+colors = PackedColorArray(0.6, 0.407843, 0.019608, 1, 0.6, 0.407843, 0.019608, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_brown"]
+gradient = SubResource("Gradient_brown")
+
+[sub_resource type="Gradient" id="Gradient_dark"]
+colors = PackedColorArray(0.176471, 0.188235, 0.2, 1, 0.176471, 0.188235, 0.2, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dark"]
+gradient = SubResource("Gradient_dark")
 
 [node name="Panel" type="PanelContainer" unique_id=932213900]
 show_behind_parent = true
@@ -275,8 +285,8 @@ text = "Weight"
 
 [node name="WeightBar" parent="Margin/HBoxContainer/InfoScroll/InfoBox/WeightBox" unique_id=-1294967286 instance=ExtResource("15_pbar")]
 layout_mode = 2
-textureProgress = ExtResource("16_brown")
-textureBackground = ExtResource("17_dark")
+textureProgress = SubResource("GradientTexture1D_brown")
+textureBackground = SubResource("GradientTexture1D_dark")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
@@ -290,8 +300,8 @@ text = "Slots"
 
 [node name="SlotsBar" parent="Margin/HBoxContainer/InfoScroll/InfoBox/SlotsBox" unique_id=-1294967283 instance=ExtResource("15_pbar")]
 layout_mode = 2
-textureProgress = ExtResource("16_brown")
-textureBackground = ExtResource("17_dark")
+textureProgress = SubResource("GradientTexture1D_brown")
+textureBackground = SubResource("GradientTexture1D_dark")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 

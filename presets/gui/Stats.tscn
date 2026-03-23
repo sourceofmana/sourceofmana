@@ -5,11 +5,36 @@
 [ext_resource type="Texture2D" uid="uid://lbbhr5w3jhrf" path="res://data/graphics/gui/stat/gender-female.png" id="3_4bqlt"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="3_kjg3f"]
 [ext_resource type="Texture2D" uid="uid://3jqhykq3lnpt" path="res://data/graphics/gui/stat/spirit-hook.png" id="4_de8qp"]
-[ext_resource type="Texture2D" uid="uid://dc0oen67nnoqp" path="res://data/graphics/gui/pixeldark.png" id="4_fxktc"]
-[ext_resource type="Texture2D" uid="uid://bgmnxng3agmdr" path="res://data/graphics/gui/pixelbrown.png" id="6_2hq2a"]
-[ext_resource type="Texture2D" uid="uid://nbo82cnov3wx" path="res://data/graphics/gui/pixelred.png" id="8_egmig"]
-[ext_resource type="Texture2D" uid="uid://b1bm6d86bv1eq" path="res://data/graphics/gui/pixelblue.png" id="9_q6igb"]
-[ext_resource type="Texture2D" uid="uid://b7vc8pr8rl30g" path="res://data/graphics/gui/pixelgreen.png" id="10_h4ygu"]
+
+[sub_resource type="Gradient" id="Gradient_brown"]
+colors = PackedColorArray(0.6, 0.407843, 0.019608, 1, 0.6, 0.407843, 0.019608, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_brown"]
+gradient = SubResource("Gradient_brown")
+
+[sub_resource type="Gradient" id="Gradient_dark"]
+colors = PackedColorArray(0.176471, 0.188235, 0.2, 1, 0.176471, 0.188235, 0.2, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dark"]
+gradient = SubResource("Gradient_dark")
+
+[sub_resource type="Gradient" id="Gradient_red"]
+colors = PackedColorArray(0.819608, 0.25098, 0.243137, 1, 0.819608, 0.25098, 0.243137, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_red"]
+gradient = SubResource("Gradient_red")
+
+[sub_resource type="Gradient" id="Gradient_blue"]
+colors = PackedColorArray(0.431373, 0.470588, 0.772549, 1, 0.431373, 0.470588, 0.772549, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_blue"]
+gradient = SubResource("Gradient_blue")
+
+[sub_resource type="Gradient" id="Gradient_green"]
+colors = PackedColorArray(0.235294, 0.482353, 0.4, 1, 0.235294, 0.482353, 0.4, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_green"]
+gradient = SubResource("Gradient_green")
 
 [node name="Stat" type="PanelContainer" unique_id=769858201]
 show_behind_parent = true
@@ -302,8 +327,8 @@ text = "Experience"
 
 [node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox" unique_id=1801997528 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("6_2hq2a")
-textureBackground = ExtResource("4_fxktc")
+textureProgress = SubResource("GradientTexture1D_brown")
+textureBackground = SubResource("GradientTexture1D_dark")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
@@ -317,8 +342,8 @@ text = "Health"
 
 [node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox" unique_id=2046759406 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("8_egmig")
-textureBackground = ExtResource("4_fxktc")
+textureProgress = SubResource("GradientTexture1D_red")
+textureBackground = SubResource("GradientTexture1D_dark")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
@@ -332,8 +357,8 @@ text = "Mana"
 
 [node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox" unique_id=617359452 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("9_q6igb")
-textureBackground = ExtResource("4_fxktc")
+textureProgress = SubResource("GradientTexture1D_blue")
+textureBackground = SubResource("GradientTexture1D_dark")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
@@ -347,8 +372,8 @@ text = "Stamina"
 
 [node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox" unique_id=754648958 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("10_h4ygu")
-textureBackground = ExtResource("4_fxktc")
+textureProgress = SubResource("GradientTexture1D_green")
+textureBackground = SubResource("GradientTexture1D_dark")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
@@ -362,8 +387,8 @@ text = "Weight"
 
 [node name="ProgressBar" parent="Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox" unique_id=1645824016 instance=ExtResource("3_kjg3f")]
 layout_mode = 2
-textureProgress = ExtResource("6_2hq2a")
-textureBackground = ExtResource("4_fxktc")
+textureProgress = SubResource("GradientTexture1D_brown")
+textureBackground = SubResource("GradientTexture1D_dark")
 labelColor = Color(0.843137, 0.717647, 0.482353, 1)
 labelOffset = Vector2(0, -3)
 
