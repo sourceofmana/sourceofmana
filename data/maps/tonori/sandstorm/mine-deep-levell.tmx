@@ -4,6 +4,7 @@
   <property name="ambient" value="Lighting"/>
   <property name="ambientintensity" type="float" value="0.2"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
+  <property name="flagnorejoin" type="bool" value="true"/>
   <property name="music" value="Desert Cave"/>
   <property name="name" value="Desert Deep Level"/>
  </properties>

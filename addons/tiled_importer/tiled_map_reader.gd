@@ -594,6 +594,23 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							spawn_pool.push_back(spawn_object)
 						continue
 
+					# FX objects load a particle effect scene and add it to the Effects node
+					elif object.type == "FX":
+						var fx : Node2D = FileSystem.LoadEffect("particles/" + object.name)
+						if fx:
+							fx.position = pos
+
+							var effects : Node2D = parent.get_node_or_null("Effects")
+							if not effects:
+								effects = Node2D.new()
+								effects.name = "Effects"
+								parent.add_child(effects)
+								effects.set_owner(parent)
+
+							effects.add_child(fx)
+							fx.set_owner(parent)
+						continue
+
 					# Regular shape
 					var points = null
 					if not ("polygon" in object or "polyline" in object):

@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b1kfl4gvrsdj7"]
+
+[ext_resource type="Texture2D" uid="uid://beom6m0ab5pfv" path="res://data/graphics/effects/particles/fog.png" id="1_yydjn"]
+
+[sub_resource type="Curve" id="Curve_alpha"]
+_data = [Vector2(0, 0), 0.0, 4.0, 0, 0, Vector2(0.15, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 0.2), 0.0, 0.0, 0, 0, Vector2(0.7, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -4.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_alpha"]
+curve = SubResource("Curve_alpha")
+
+[sub_resource type="Gradient" id="Gradient_color"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.88933337, 0.17000002, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_color"]
+gradient = SubResource("Gradient_color")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_crack"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -32, 0)
+emission_shape = 3
+emission_box_extents = Vector3(12, 24, 1)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, -1, 0)
+spread = 30.0
+initial_velocity_min = 2.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 0, 0)
+color_initial_ramp = SubResource("GradientTexture1D_color")
+alpha_curve = SubResource("CurveTexture_alpha")
+
+[node name="DeepLevelCrack" type="GPUParticles2D" unique_id=1538725904]
+texture = ExtResource("1_yydjn")
+lifetime = 1.5
+preprocess = 1.5
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_crack")
