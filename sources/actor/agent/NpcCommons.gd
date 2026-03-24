@@ -116,9 +116,9 @@ static func Spawn(caller : BaseAgent, mobID : int, count : int = 1, position : V
 			spawnObject.id					= mobID
 			spawnObject.count				= count
 			if position == Vector2.ZERO:
-				spawnObject.spawn_position	= WorldNavigation.GetRandomPosition(inst.map)
+				spawnObject.spawn_position	= WorldNavigation.GetRandomPosition(inst)
 			else:
-				spawnObject.spawn_position	= WorldNavigation.GetRandomPositionAABB(inst.map, position, spawnRadius)
+				spawnObject.spawn_position	= WorldNavigation.GetRandomPositionAABB(inst, position, spawnRadius)
 			agents.push_back(WorldAgent.CreateAgent(spawnObject, inst.id))
 	return agents
 
@@ -127,6 +127,15 @@ static func Warp(caller : BaseAgent, mapID : int, position : Vector2):
 		var map : WorldMap = Launcher.World.GetMap(mapID)
 		if map:
 			Launcher.World.Warp(caller, map, position)
+
+static func WarpInstance(caller : BaseAgent, mapID : int, position : Vector2):
+	if caller is PlayerAgent:
+		var map : WorldMap = Launcher.World.GetMap(mapID)
+		if map:
+			var instanceID : int = caller.get_rid().get_id()
+			if not map.instances.has(instanceID):
+				map.CreateInstance(instanceID)
+			Launcher.World.Warp(caller, map, position, instanceID)
 
 # Progress
 static func SetQuest(caller : BaseAgent, questID : int, state : int):

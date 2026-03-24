@@ -94,6 +94,11 @@ func Warp(mapID : int, position : Vector2):
 	if not IsPlayer(): return
 	Action(NpcCommons.Warp.bind(own, mapID, position))
 
+func WarpInstance(mapID : int, position : Vector2):
+	assert(IsPlayer(), "WarpInstance() requires a player agent")
+	if not IsPlayer(): return
+	Action(NpcCommons.WarpInstance.bind(own, mapID, position))
+
 # Quest
 func SetQuest(questID : int, state : int):
 	assert(IsPlayer(), "SetQuest() requires a player agent")

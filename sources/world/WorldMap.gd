@@ -14,7 +14,7 @@ enum Flags
 #
 var id : int							= DB.UnknownHash
 var name : String						= ""
-var instances : Array[WorldInstance]	= []
+var instances : Dictionary[int, WorldInstance]	= {}
 var spawns : Array[SpawnObject]			= []
 var warps : Array[WarpObject]			= []
 var flags : int							= Flags.NONE
@@ -32,15 +32,24 @@ static func Create(mapID : int) -> WorldMap:
 		map.name = mapData._name
 		map.LoadMapData()
 		WorldNavigation.LoadData(map)
-		map.instances.append(WorldInstance.Create(map))
+		map.CreateInstance(0)
 
 	return map
 
-func Destroy():
-	for inst in instances:
+func CreateInstance(instanceID : int) -> WorldInstance:
+	var inst : WorldInstance = WorldInstance.Create(self, instanceID)
+	instances[instanceID] = inst
+	return inst
+
+func DestroyInstance(instanceID : int):
+	var inst : WorldInstance = instances.get(instanceID, null)
+	if inst:
 		inst.Destroy()
-		inst.queue_free()
-	instances.clear()
+		instances.erase(instanceID)
+
+func Destroy():
+	for instanceID in instances.keys():
+		DestroyInstance(instanceID)
 	for warp in warps:
 		warp.queue_free()
 	warps.clear()

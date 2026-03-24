@@ -85,7 +85,9 @@ func CommandWarp(caller : PlayerAgent, mapName : String, positionXStr : String =
 	if map:
 		var mapPos : Vector2i = Vector2i(positionXStr.to_int(), positionYStr.to_int())
 		if mapPos == Vector2i.ZERO:
-			mapPos = WorldNavigation.GetRandomPosition(map)
+			var inst : WorldInstance = map.instances.get(0, null)
+			if inst:
+				mapPos = WorldNavigation.GetRandomPosition(inst)
 		Launcher.World.Warp(caller, map, mapPos)
 		return true
 	return false
@@ -100,7 +102,9 @@ func CommandGoto(caller : PlayerAgent, nickname : String) -> bool:
 		Network.CommandFeedback("Player '%s' is disconnected" % nickname, caller.peerID)
 		return false
 
-	Launcher.World.Warp(caller, WorldAgent.GetMapFromAgent(target), target.position)
+	var targetInst : WorldInstance = WorldAgent.GetInstanceFromAgent(target)
+	if targetInst:
+		Launcher.World.Warp(caller, targetInst.map, target.position, targetInst.id)
 	return true
 
 # Modifiers
@@ -168,7 +172,7 @@ func CommandBroadcast(caller : PlayerAgent, text : String) -> bool:
 
 	for areaIdx in Launcher.World.areas:
 		var area = Launcher.World.areas[areaIdx]
-		for inst in area.instances:
+		for inst in area.instances.values():
 			Network.NotifyGlobal("PushNotification", [text])
 	return true
 

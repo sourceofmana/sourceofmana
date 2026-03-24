@@ -52,7 +52,10 @@ static func PopAgent(agent : BaseAgent):
 				inst.players.erase(agent)
 				agent.visibleAgents.clear()
 				if inst.players.is_empty():
-					inst.QueryProcessMode()
+					if inst.id != 0 and inst.map:
+						inst.map.DestroyInstance.call_deferred(inst.id)
+					else:
+						inst.QueryProcessMode()
 				else:
 					var agentRID : int = agent.get_rid().get_id()
 					for neighbour in inst.players:
@@ -90,8 +93,9 @@ static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : St
 
 	# Fallback to the spawn_position if the spawn area is less or equal to one pixel squared
 	var position : Vector2 = spawn.spawn_position
-	if spawn.spawn_offset.length_squared() > 2.0:
-		position = WorldNavigation.GetSpawnPosition(spawn.map, spawn)
+	var inst : WorldInstance = spawn.map.instances.get(instanceID, null)
+	if inst and spawn.spawn_offset.length_squared() > 2.0:
+		position = WorldNavigation.GetSpawnPosition(inst, spawn)
 	if Vector2i(position) == Vector2i.ZERO:
 		return null
 

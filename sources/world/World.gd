@@ -19,7 +19,7 @@ func GetMap(mapID : int) -> WorldMap:
 func GetGlobalPlayer(nickname : String) -> PlayerAgent:
 	for areaIdx in areas:
 		var area = areas[areaIdx]
-		for inst in area.instances:
+		for inst in area.instances.values():
 			for player in inst.players:
 				if player.nick == nickname:
 					return player
@@ -60,8 +60,8 @@ func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, instanceID : 
 		Spawn(newMap, agent, instanceID)
 
 func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
-	assert(map != null and instanceID < map.instances.size() and agent != null, "Spawn could not proceed, agent or map missing")
-	if map and instanceID < map.instances.size() and agent:
+	assert(map != null and map.instances.has(instanceID) and agent != null, "Spawn could not proceed, agent or map missing")
+	if map and map.instances.has(instanceID) and agent:
 		var inst : WorldInstance = map.instances[instanceID]
 		assert(inst != null, "Spawn could not proceed, map instance missing")
 		if inst:
@@ -127,7 +127,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 func BackupPlayers():
 	for areaIdx in areas:
 		var area = areas[areaIdx]
-		for inst in area.instances:
+		for inst in area.instances.values():
 			for player in inst.players:
 				Launcher.SQL.RefreshCharacter(player)
 

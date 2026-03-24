@@ -108,12 +108,12 @@ static func StateAttack(agent : AIAgent):
 
 # Could be delayed, always check if agent is inside a map
 static func ToWalk(agent : AIAgent):
-	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
-	if map:
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+	if inst:
 		SetState(agent, AICommons.State.WALK, true)
 		var position : Vector2i = agent.position
 		if agent.leader != null:
-			position = WorldNavigation.GetRandomPositionAABB(map, agent.leader.position, AICommons.MaxOffsetVector)
+			position = WorldNavigation.GetRandomPositionAABB(inst, agent.leader.position, AICommons.MaxOffsetVector)
 			agent.SetNodeGoal(agent.leader, position)
 		else:
 			# Check if agent is within its spawn wandering zone
@@ -121,9 +121,9 @@ static func ToWalk(agent : AIAgent):
 			if agent.spawnInfo.is_global or \
 			abs(deltaPosition.x) <= agent.spawnInfo.spawn_offset.x and abs(deltaPosition.y) <= agent.spawnInfo.spawn_offset.y or \
 			(deltaPosition - Vector2(agent.spawnInfo.spawn_offset)).length_squared() <= AICommons.WanderDistanceSquared:
-				position = WorldNavigation.GetRandomPositionAABB(map, agent.position, AICommons.MaxOffsetVector)
+				position = WorldNavigation.GetRandomPositionAABB(inst, agent.position, AICommons.MaxOffsetVector)
 			else:
-				position = WorldNavigation.GetRandomPositionAABB(map, agent.spawnInfo.spawn_position, agent.spawnInfo.spawn_offset)
+				position = WorldNavigation.GetRandomPositionAABB(inst, agent.spawnInfo.spawn_position, agent.spawnInfo.spawn_offset)
 			agent.SetNodeGoal(agent, position)
 			var walkSpeed : int = randi_range(agent.minWanderingSpeed, agent.maxWanderingSpeed)
 			agent.currentWalkSpeed = Vector2(walkSpeed, walkSpeed)

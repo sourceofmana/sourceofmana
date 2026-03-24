@@ -401,7 +401,7 @@ func NotifyInstance(inst : WorldInstance, callbackName : StringName, args : Arra
 				Network.callv(callbackName, args + [player.peerID])
 
 func NotifyArea(area : WorldMap, callbackName : StringName, args : Array):
-	for inst in area.instances:
+	for inst in area.instances.values():
 		NotifyInstance(inst, callbackName, args)
 
 func NotifyGlobal(callbackName : StringName, args : Array):
