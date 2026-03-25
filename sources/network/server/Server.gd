@@ -2,7 +2,7 @@ extends NetInterface
 class_name NetServer
 
 # Auth
-func CreateAccount(accountName : String, password : String, email : String, peerID : int):
+func CreateAccount(accountName : String, password : String, email : String, rememberMe : bool, peerID : int):
 	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if not peer:
@@ -16,10 +16,12 @@ func CreateAccount(accountName : String, password : String, email : String, peer
 				err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
 			else:
 				Network.accounts_list_update.emit()
-				peer.SetAccount(Launcher.SQL.Login(accountName, password))
+				var accountData : Peers.AccountData = Launcher.SQL.ValidateAuthPassword(accountName, password)
+				if accountData:
+					err = Peers.FinalizeLogin(peer, accountName, accountData, rememberMe)
 	Network.AuthError(err, peerID)
 
-func ConnectAccount(accountName : String, password : String, peerID : int):
+func LoginWithPassword(accountName : String, password : String, rememberMe : bool, peerID : int):
 	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if not peer:
@@ -27,14 +29,31 @@ func ConnectAccount(accountName : String, password : String, peerID : int):
 	else:
 		err = NetworkCommons.CheckAuthInformation(accountName, password)
 		if err == NetworkCommons.AuthError.ERR_OK:
-			peer.SetAccount(Launcher.SQL.Login(accountName, password))
-			if peer.accountID == NetworkCommons.PeerUnknownID:
+			var accountData : Peers.AccountData = Launcher.SQL.ValidateAuthPassword(accountName, password)
+			if not accountData:
 				err = NetworkCommons.AuthError.ERR_AUTH
-			elif Peers.IsBanned(peer.accountID):
-				peer.SetAccount(Peers.DisconnectedAccount)
-				err = NetworkCommons.AuthError.ERR_BANNED
 			else:
-				Launcher.SQL.UpdateAccount(peer.accountID)
+				err = Peers.FinalizeLogin(peer, accountName, accountData, rememberMe)
+	Network.AuthError(err, peerID)
+
+func LoginWithToken(accountName : String, token : String, peerID : int):
+	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer:
+		err = NetworkCommons.AuthError.ERR_NO_PEER_DATA
+	else:
+		var accountID : int = Launcher.SQL.GetAccountID(accountName)
+		if accountID == NetworkCommons.PeerUnknownID:
+			err = NetworkCommons.AuthError.ERR_TOKEN
+		else:
+			var ipAddress : String = Peers.GetPeerIP(peerID)
+			var tokenHash : String = Hasher.HashPassword(token)
+			var accountData : Peers.AccountData = Launcher.SQL.ValidateAuthToken(accountID, tokenHash, ipAddress)
+			if not accountData:
+				err = NetworkCommons.AuthError.ERR_TOKEN
+			else:
+				err = Peers.FinalizeLogin(peer, accountName, accountData)
+				Launcher.SQL.RefreshAuthToken(peer.accountID, ipAddress)
 	Network.AuthError(err, peerID)
 
 func DisconnectAccount(peerID : int):

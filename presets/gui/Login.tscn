@@ -128,9 +128,17 @@ select_all_on_focus = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="OnlineIndicator" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=608763401]
+[node name="IndicatorRow" type="HBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
 layout_mode = 2
-size_flags_vertical = 0
+
+[node name="RememberMe" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow" unique_id=608763400]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Remember me"
+
+[node name="OnlineIndicator" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow" unique_id=608763401]
+layout_mode = 2
+size_flags_horizontal = 10
 theme_type_variation = &"PearlBox"
 disabled = true
 
@@ -160,12 +168,14 @@ jsonFile = ExtResource("3_kh3en")
 layout_mode = 2
 size_flags_horizontal = 3
 
+[connection signal="toggled" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/RememberMe" to="." method="_on_remember_me_toggled"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text" to="." method="_on_text_focus_exited"]
 [connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text" to="." method="_on_text_submitted"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_focus_exited"]
+[connection signal="text_changed" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_password_text_changed"]
 [connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_submitted"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_focus_exited"]

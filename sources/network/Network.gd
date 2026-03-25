@@ -25,16 +25,24 @@ enum EChannel
 
 # Auth
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func CreateAccount(accountName : String, password : String, email : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
-	return CallServer("CreateAccount", [accountName, password, email], peerID, NetworkCommons.DelayLogin)
+func CreateAccount(accountName : String, password : String, email : String, rememberMe : bool, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("CreateAccount", [accountName, password, email, rememberMe], peerID, NetworkCommons.DelayLogin)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
-func ConnectAccount(accountName : String, password : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
-	return CallServer("ConnectAccount", [accountName, password], peerID, NetworkCommons.DelayLogin)
+func LoginWithPassword(accountName : String, password : String, rememberMe : bool, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("LoginWithPassword", [accountName, password, rememberMe], peerID, NetworkCommons.DelayLogin)
 
 @rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
 func AuthError(err : NetworkCommons.AuthError, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("AuthError", [err], peerID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func LoginWithToken(accountName : String, token : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("LoginWithToken", [accountName, token], peerID, NetworkCommons.DelayLogin)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func AuthTokenResult(accountName : String, token : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("AuthTokenResult", [accountName, token], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func DisconnectAccount(peerID : int = NetworkCommons.PeerAuthorityID):

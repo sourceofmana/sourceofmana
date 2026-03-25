@@ -3,6 +3,7 @@ class_name Hasher
 
 #
 const DefaultSaltSize : int				= 16
+const DefaultTokenSize : int			= 32
 
 # Password
 static func GenerateSalt(length : int = DefaultSaltSize) -> String:
@@ -13,7 +14,7 @@ static func GenerateSalt(length : int = DefaultSaltSize) -> String:
 		salt += char(rng.randi_range(33, 126))
 	return salt
 
-static func HashPassword(password : String, salt : String) -> String:
+static func HashPassword(password : String, salt : String = "") -> String:
 	var hashContext : HashingContext = HashingContext.new()
 	hashContext.start(HashingContext.HASH_SHA256)
 	hashContext.update((salt + password).to_utf8_buffer())

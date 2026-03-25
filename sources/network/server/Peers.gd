@@ -101,6 +101,21 @@ static func GetAssociatedNetServer(peerID : int) -> NetServer:
 		return Network.WebSocketServer if IsUsingWebSocket(peerID) else Network.ENetServer
 	return null
 
+static func GetPeerIP(peerID : int) -> String:
+	var peer : Peers.Peer = GetPeer(peerID)
+	if peer:
+		if peer.usingWebSocket and Network.WebSocketServer and not Network.WebSocketServer.isOffline:
+			var packetPeer : PacketPeer = Network.WebSocketServer.currentPeer.get_peer(peerID)
+			if packetPeer and packetPeer is WebSocketPeer:
+				return packetPeer.get_connected_host()
+		elif Network.ENetServer and not Network.ENetServer.isOffline:
+			var packetPeer : PacketPeer = Network.ENetServer.currentPeer.get_peer(peerID)
+			if packetPeer and packetPeer is ENetPacketPeer:
+				return packetPeer.get_remote_address()
+		else:
+			return NetworkCommons.LocalServerAddress
+	return ""
+
 # Info getters
 static func HasPeer(peerID : int) -> bool:
 	return peerID in Peers.peers
@@ -123,3 +138,23 @@ static func GetAgent(peerID : int) -> PlayerAgent:
 static func GetPermission(peerID : int) -> ActorCommons.Permission:
 	var peer : Peers.Peer = GetPeer(peerID)
 	return peer.permission if peer else ActorCommons.Permission.NONE
+
+# Auth validation
+static func FinalizeLogin(peer : Peer, accountName : String, accountData : AccountData, rememberMe : bool = false) -> NetworkCommons.AuthError:
+	if IsBanned(accountData.accountID):
+		return NetworkCommons.AuthError.ERR_BANNED
+
+	peer.SetAccount(accountData)
+	Launcher.SQL.UpdateAccount(peer.accountID)
+
+	if rememberMe:
+		IssueAuthToken(peer, accountName)
+
+	return NetworkCommons.AuthError.ERR_OK
+
+static func IssueAuthToken(peer : Peer, accountName : String) -> void:
+	var ipAddress : String = GetPeerIP(peer.peerID)
+	var token : String = Hasher.GenerateSalt(Hasher.DefaultTokenSize)
+	var tokenHash : String = Hasher.HashPassword(token)
+	Launcher.SQL.AddAuthToken(peer.accountID, tokenHash, ipAddress)
+	Network.AuthTokenResult(accountName, token, peer.peerID)

@@ -7,12 +7,17 @@ extends Control
 @onready var passwordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text
 @onready var emailControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email
 @onready var emailTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text
-@onready var onlineIndicator : CheckBox		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/OnlineIndicator
+@onready var indicatorRow : HBoxContainer	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow
+@onready var rememberMeCheckBox : CheckBox	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/RememberMe
+@onready var onlineIndicator : CheckBox		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/OnlineIndicator
 @onready var news : Scrollable				= $HBoxContainer/Panel/Margin/VBoxContainer/News
 @onready var agreement : Scrollable			= $HBoxContainer/Panel/Margin/VBoxContainer/Agreement
 
+var nameText : String						= ""
+var savedToken : String						= ""
+var savedAccountName : String				= ""
+var fillingFields : bool					= false
 var isAccountCreatorEnabled : bool			= false
-var nameText : String = ""
 
 #
 func FillWarningLabel(err : NetworkCommons.AuthError):
@@ -30,6 +35,10 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 	match err:
 		NetworkCommons.AuthError.ERR_OK:
 			warn = ""
+		NetworkCommons.AuthError.ERR_TOKEN:
+			warn = "Invalid token, enter your password"
+			passwordTextControl.clear()
+			ClearSavedToken()
 		NetworkCommons.AuthError.ERR_DUPLICATE_CONNECTION:
 			warn = "Another connection happened with the same login."
 		NetworkCommons.AuthError.ERR_AUTH:
@@ -66,7 +75,7 @@ func EnableAccountCreator(enable : bool):
 	emailControl.set_visible(isAccountCreatorEnabled)
 	agreement.set_visible(isAccountCreatorEnabled)
 
-	onlineIndicator.set_visible(not isAccountCreatorEnabled)
+	indicatorRow.set_visible(not isAccountCreatorEnabled)
 	news.set_visible(not isAccountCreatorEnabled)
 	EnableButtons(true)
 	RefreshFocusNodes(enable)
@@ -113,14 +122,55 @@ func RefreshOnce():
 	EnableAccountCreator(isAccountCreatorEnabled)
 	_on_visibility_changed()
 
+# Token persistence
+func SaveToken(accountName : String, token : String):
+	if not rememberMeCheckBox.button_pressed:
+		return
+	Conf.SetValue("auth", "account_name", Conf.Type.AUTH_TOKEN, accountName)
+	Conf.SetValue("auth", "token", Conf.Type.AUTH_TOKEN, token)
+	Conf.SaveType("auth_token", Conf.Type.AUTH_TOKEN)
+
+func LoadSavedToken() -> bool:
+	savedAccountName = Conf.GetString("auth", "account_name", Conf.Type.AUTH_TOKEN)
+	savedToken = Conf.GetString("auth", "token", Conf.Type.AUTH_TOKEN)
+	if savedAccountName.is_empty() or savedToken.is_empty():
+		return false
+	nameText = savedAccountName
+	return true
+
+func ClearSavedToken():
+	passwordTextControl.clear()
+	savedToken = ""
+	savedAccountName = ""
+	Conf.confFiles[Conf.Type.AUTH_TOKEN].clear()
+	Conf.cache.clear()
+	DirAccess.remove_absolute(Path.Local + "auth_token" + Path.ConfExt)
+
+func FillFieldsFromToken():
+	if savedToken.is_empty():
+		return
+
+	fillingFields = true
+	nameTextControl.set_text(nameText)
+	passwordTextControl.set_text("tokentokentoken")
+	fillingFields = false
+
 #
 func Connect():
 	nameText = nameTextControl.get_text()
+	if not savedToken.is_empty():
+		if Network.LoginWithToken(savedAccountName, savedToken):
+			nameText = savedAccountName
+			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
+			if Launcher.GUI.settingsWindow:
+				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
+		savedToken = ""
+		return
 	var passwordText : String = passwordTextControl.get_text()
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
 	FillWarningLabel(authError)
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		if Network.ConnectAccount(nameText, passwordText):
+		if Network.LoginWithPassword(nameText, passwordText, rememberMeCheckBox.button_pressed):
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
 			if Launcher.GUI.settingsWindow:
 				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
@@ -135,7 +185,7 @@ func CreateAccount():
 		authError = NetworkCommons.CheckEmailInformation(emailText)
 
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		if Network.CreateAccount(nameText, passwordText, emailText):
+		if Network.CreateAccount(nameText, passwordText, emailText, rememberMeCheckBox.button_pressed):
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
 	else:
 		FillWarningLabel(authError)
@@ -161,6 +211,8 @@ func _on_text_submitted(_newText):
 #
 func _on_visibility_changed():
 	if visible:
+		LoadSavedToken()
+		FillFieldsFromToken()
 		if nameTextControl and nameTextControl.is_visible() and nameTextControl.get_text().length() == 0:
 			nameTextControl.grab_focus()
 		elif passwordTextControl and passwordTextControl.is_visible() and passwordTextControl.get_text().length() == 0:
@@ -172,5 +224,15 @@ func SwitchOnlineMode(toggled : bool):
 	if Launcher.Mode(true, toggled):
 		EnableButtons(false)
 
+func _on_password_text_changed(_newText : String):
+	if not fillingFields:
+		savedToken = ""
+
+func _on_remember_me_toggled(toggled_on : bool):
+	if not toggled_on:
+		ClearSavedToken()
+
 func _ready():
 	Launcher.launchModeUpdated.connect(OnlineMode)
+	if LoadSavedToken():
+		rememberMeCheckBox.button_pressed = true

@@ -86,6 +86,9 @@ const PasswordMaxSize : int				= 30
 const EntryValidRegex : String			= "^[\\w#!@%&:;<>,\\$\\^*\\(\\)_+=\\{\\}\\[\\]\\.?/-]+$"
 const EmailValidRegex : String			= "^[\\w\\.\\+\\-]+@[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,}$"
 
+# Token
+const TokenExpirySec : int				= 30 * 24 * 60 * 60
+
 # Tools
 const OnlineListPath : String			= ""
 
@@ -104,6 +107,7 @@ enum AuthError {
 	ERR_EMAIL_VALID,
 	ERR_DUPLICATE_CONNECTION,
 	ERR_BANNED,
+	ERR_TOKEN,
 }
 
 static func CheckSize(entry : String, minSize : int, maxSize : int) -> bool:

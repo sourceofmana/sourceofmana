@@ -56,7 +56,7 @@ func RemoveAccount(accountID : int) -> bool:
 func HasAccount(username : String) -> bool:
 	return not QueryBindings("SELECT account_id FROM account WHERE username = ?;", [username]).is_empty()
 
-func Login(username : String, triedPassword : String) -> Peers.AccountData:
+func ValidateAuthPassword(username : String, triedPassword : String) -> Peers.AccountData:
 	var results : Array[Dictionary] = QueryBindings("SELECT account_id, password, password_salt, permission FROM account WHERE username = ?;", [username])
 	assert(results.size() <= 1, "Duplicated account row")
 	if not results.is_empty():
@@ -362,6 +362,40 @@ func SetQuest(charID : int, questID : int, value : int) -> bool:
 func GetQuests(charID : int) -> Array[Dictionary]:
 	return db.select_rows("quest", "char_id = %d" % [charID], ["*"])
 
+# Auth Token
+func AddAuthToken(accountID : int, tokenHash : String, ipAddress : String) -> bool:
+	ExecuteBindings("DELETE FROM auth_token WHERE account_id = ? AND ip_address = ?;", [accountID, ipAddress])
+	var now : int = SQLCommons.Timestamp()
+	var data : Dictionary = {
+		"token_hash": tokenHash,
+		"account_id": accountID,
+		"ip_address": ipAddress,
+		"created_timestamp": now,
+		"expires_timestamp": now + NetworkCommons.TokenExpirySec,
+	}
+	return db.insert_row("auth_token", data)
+
+func ValidateAuthToken(accountID : int, tokenHash : String, ipAddress : String) -> Peers.AccountData:
+	var results : Array[Dictionary] = QueryBindings("SELECT auth_token.account_id, auth_token.expires_timestamp, account.permission FROM auth_token INNER JOIN account ON auth_token.account_id = account.account_id WHERE auth_token.account_id = ? AND auth_token.token_hash = ? AND auth_token.ip_address = ?;", [accountID, tokenHash, ipAddress])
+	if not results.is_empty():
+		if results[0].get("expires_timestamp", 0) <= SQLCommons.Timestamp():
+			RemoveAuthToken(accountID, tokenHash)
+			return null
+		var permission : Variant = results[0].get("permission", null)
+		if not permission:
+			permission = ActorCommons.Permission.NONE
+		return Peers.AccountData.new(accountID, permission)
+	return null
+
+func RefreshAuthToken(accountID : int, ipAddress : String) -> bool:
+	return ExecuteBindings("UPDATE auth_token SET expires_timestamp = ? WHERE account_id = ? AND ip_address = ?;", [SQLCommons.Timestamp() + NetworkCommons.TokenExpirySec, accountID, ipAddress])
+
+func RemoveAuthToken(accountID : int, tokenHash : String) -> bool:
+	return ExecuteBindings("DELETE FROM auth_token WHERE account_id = ? AND token_hash = ?;", [accountID, tokenHash])
+
+func CleanExpiredTokens():
+	db.delete_rows("auth_token", "expires_timestamp <= %d" % SQLCommons.Timestamp())
+
 # Ban
 func BanAccount(accountID : int, unbanTimestamp : int, reason : String = "") -> bool:
 	var results : Array[Dictionary] = db.select_rows("ban", "account_id = %d" % accountID, ["*"])
@@ -446,6 +480,7 @@ func _post_launch():
 
 	ApplyMigrations()
 	Peers.bannedAccounts = LoadBans()
+	CleanExpiredTokens()
 
 	isInitialized = true
 
@@ -458,6 +493,7 @@ func Destroy():
 func Wipe():
 	db.delete_rows("account", "")
 	db.delete_rows("attribute", "")
+	db.delete_rows("auth_token", "")
 	db.delete_rows("ban", "")
 	db.delete_rows("bestiary", "")
 	db.delete_rows("character", "")

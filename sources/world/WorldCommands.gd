@@ -279,16 +279,9 @@ func CommandIpCheck(caller : PlayerAgent, nickname : String) -> bool:
 		Network.CommandFeedback("Player '%s' is disconnected" % nickname, caller.peerID)
 		return false
 
-	var ip : String = "unavailable"
-	if peer.usingWebSocket and Network.WebSocketServer:
-		var packetPeer : PacketPeer = Network.WebSocketServer.currentPeer.get_peer(target.peerID)
-		if packetPeer and packetPeer is WebSocketPeer:
-			ip = packetPeer.get_connected_host()
-	elif Network.ENetServer:
-		var packetPeer : PacketPeer = Network.ENetServer.currentPeer.get_peer(target.peerID)
-		if packetPeer and packetPeer is ENetPacketPeer:
-			ip = packetPeer.get_remote_address()
-
+	var ip : String = Peers.GetPeerIP(target.peerID)
+	if ip.is_empty():
+		ip = "unavailable"
 	Network.CommandFeedback("IP for '%s': %s" % [nickname, ip], caller.peerID)
 	return true
 

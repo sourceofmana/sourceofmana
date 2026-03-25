@@ -264,6 +264,10 @@ func AuthError(err : NetworkCommons.AuthError, _peerID : int):
 		if err == NetworkCommons.AuthError.ERR_OK:
 			FSM.EnterState(FSM.States.CHAR_SCREEN)
 
+func AuthTokenResult(accountName : String, token : String, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.loginPanel.SaveToken(accountName, token)
+
 func CharacterError(err : NetworkCommons.AuthError, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.characterPanel.FillWarningLabel(err)
