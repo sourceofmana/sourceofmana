@@ -45,6 +45,14 @@ func AuthTokenResult(accountName : String, token : String, peerID : int = Networ
 	CallClient("AuthTokenResult", [accountName, token], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func RequestPasswordReset(accountName : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("RequestPasswordReset", [accountName], peerID, NetworkCommons.DelayLogin)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func ConfirmPasswordReset(accountName : String, code : String, newPassword : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("ConfirmPasswordReset", [accountName, code, newPassword], peerID, NetworkCommons.DelayLogin)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func DisconnectAccount(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("DisconnectAccount", [], peerID)
 

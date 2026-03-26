@@ -16,6 +16,7 @@ var Map : ServiceBase				= null
 var World : ServiceBase				= null
 var SQL : ServiceBase				= null
 var Discord : ServiceBase			= null
+var Email : EmailService			= null
 
 # Accessors
 var Player : Entity					= null
@@ -55,10 +56,12 @@ func Server():
 	World			= FileSystem.LoadSource("world/World.gd", "World")
 	SQL				= FileSystem.LoadSource("sql/SQL.gd", "SQL")
 	Discord			= FileSystem.LoadSource("discord/Discord.gd", "Discord")
+	Email			= EmailService.new()
 
 	add_child.call_deferred(World)
 	add_child.call_deferred(SQL)
 	add_child.call_deferred(Discord)
+	add_child.call_deferred(Email)
 
 func Reset(clientStarted : bool, serverStarted : bool):
 	if not clientStarted:
@@ -111,6 +114,9 @@ func Reset(clientStarted : bool, serverStarted : bool):
 			Discord.Destroy()
 			Discord.queue_free()
 			Discord = null
+		if Email:
+			Email.queue_free()
+			Email = null
 
 func Quit():
 	Reset(false, false)

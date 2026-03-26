@@ -89,6 +89,11 @@ const EmailValidRegex : String			= "^[\\w\\.\\+\\-]+@[a-zA-Z0-9\\.\\-]+\\.[a-zA-
 # Token
 const TokenExpirySec : int				= 30 * 24 * 60 * 60
 
+# Password Reset
+const ResetCodeExpiryMinutes : int		= 15
+const ResetCodeCooldownMinutes : int	= 5
+const ResetCodeSize : int				= 6
+
 # Tools
 const OnlineListPath : String			= ""
 
@@ -108,6 +113,10 @@ enum AuthError {
 	ERR_DUPLICATE_CONNECTION,
 	ERR_BANNED,
 	ERR_TOKEN,
+	ERR_RESET_UNAVAILABLE,
+	ERR_RESET_EMAIL_SENT,
+	ERR_RESET_INVALID_CODE,
+	ERR_RESET_PASSWORD_UPDATED,
 }
 
 static func CheckSize(entry : String, minSize : int, maxSize : int) -> bool:
@@ -125,14 +134,20 @@ static func CheckAuthInformation(nameText : String, passwordText : String) -> Au
 		return AuthError.ERR_NAME_SIZE
 	elif not CheckValid(nameText, EntryValidRegex):
 		return AuthError.ERR_NAME_VALID
-	elif not CheckSize(passwordText, PasswordMinSize, PasswordMaxSize):
+	return CheckPasswordInformation(passwordText)
+
+static func CheckPasswordInformation(passwordText : String) -> AuthError:
+	if not CheckSize(passwordText, PasswordMinSize, PasswordMaxSize):
 		return AuthError.ERR_PASSWORD_SIZE
-	elif not CheckValid(nameText, EntryValidRegex):
+	elif not CheckValid(passwordText, EntryValidRegex):
 		return AuthError.ERR_PASSWORD_VALID
 	return AuthError.ERR_OK
 
 static func CheckEmailInformation(emailText : String) -> AuthError:
 	return AuthError.ERR_OK if CheckValid(emailText, EmailValidRegex) else AuthError.ERR_EMAIL_VALID
+
+static func CheckResetCode(code : String) -> bool:
+	return code.length() == ResetCodeSize and code.is_valid_int()
 
 # Character
 enum CharacterError {

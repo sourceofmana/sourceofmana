@@ -56,6 +56,39 @@ func LoginWithToken(accountName : String, token : String, peerID : int):
 				Launcher.SQL.RefreshAuthToken(peer.accountID, ipAddress)
 	Network.AuthError(err, peerID)
 
+func RequestPasswordReset(accountName : String, peerID : int):
+	if not Launcher.Email or not Launcher.Email.IsConfigured():
+		Network.AuthError(NetworkCommons.AuthError.ERR_RESET_UNAVAILABLE, peerID)
+		return
+
+	var accountID : int = Launcher.SQL.GetAccountID(accountName)
+	if accountID != NetworkCommons.PeerUnknownID:
+		if not Launcher.Email.HasRecentReset(accountID):
+			var email : String = Launcher.SQL.GetAccountEmail(accountID)
+			if not email.is_empty():
+				var code : String = Hasher.GenerateResetCode()
+				var codeHash : String = Hasher.HashPassword(code)
+				Launcher.Email.CreateReset(accountID, codeHash)
+				Launcher.Email.SendPasswordResetEmail(email, code)
+
+	Network.AuthError(NetworkCommons.AuthError.ERR_RESET_EMAIL_SENT, peerID)
+
+func ConfirmPasswordReset(accountName : String, code : String, newPassword : String, peerID : int):
+	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_RESET_INVALID_CODE
+
+	var passwordErr : NetworkCommons.AuthError = NetworkCommons.CheckPasswordInformation(newPassword)
+	if passwordErr == NetworkCommons.AuthError.ERR_OK and NetworkCommons.CheckResetCode(code):
+		var accountID : int = Launcher.SQL.GetAccountID(accountName)
+		if accountID != NetworkCommons.PeerUnknownID:
+			var codeHash : String = Hasher.HashPassword(code)
+			if Launcher.Email.ValidateReset(accountID, codeHash):
+				Launcher.SQL.UpdateAccountPassword(accountID, newPassword)
+				Launcher.Email.RemoveReset(accountID)
+				Launcher.SQL.RemoveAllAuthTokens(accountID)
+				err = NetworkCommons.AuthError.ERR_RESET_PASSWORD_UPDATED
+
+	Network.AuthError(err, peerID)
+
 func DisconnectAccount(peerID : int):
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if peer:

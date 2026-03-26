@@ -8,6 +8,7 @@ enum Type
 	SETTINGS = 0,
 	USERSETTINGS,
 	DISCORD,
+	EMAIL,
 	AUTH_TOKEN,
 	COUNT
 }
@@ -81,6 +82,7 @@ static func Init():
 	confFiles.append(FileSystem.LoadConfig("settings"))
 	confFiles.append(FileSystem.LoadConfig("settings", true))
 	confFiles.append(FileSystem.LoadConfig("discord", true))
+	confFiles.append(FileSystem.LoadConfig("email", true))
 	confFiles.append(FileSystem.LoadConfig("auth_token", true))
 
 	assert(confFiles.size() == Type.COUNT, "Config files count mismatch")

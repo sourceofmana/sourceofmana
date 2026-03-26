@@ -396,6 +396,22 @@ func RemoveAuthToken(accountID : int, tokenHash : String) -> bool:
 func CleanExpiredTokens():
 	db.delete_rows("auth_token", "expires_timestamp <= %d" % SQLCommons.Timestamp())
 
+func GetAccountEmail(accountID : int) -> String:
+	var results : Array[Dictionary] = QueryBindings("SELECT email FROM account WHERE account_id = ?;", [accountID])
+	if not results.is_empty():
+		var email : Variant = results[0].get("email", null)
+		if email is String:
+			return email
+	return ""
+
+func UpdateAccountPassword(accountID : int, newPassword : String) -> bool:
+	var salt : String = Hasher.GenerateSalt()
+	var hashedPassword : String = Hasher.HashPassword(newPassword, salt)
+	return ExecuteBindings("UPDATE account SET password = ?, password_salt = ? WHERE account_id = ?;", [hashedPassword, salt, accountID])
+
+func RemoveAllAuthTokens(accountID : int) -> bool:
+	return ExecuteBindings("DELETE FROM auth_token WHERE account_id = ?;", [accountID])
+
 # Ban
 func BanAccount(accountID : int, unbanTimestamp : int, reason : String = "") -> bool:
 	var results : Array[Dictionary] = db.select_rows("ban", "account_id = %d" % accountID, ["*"])
