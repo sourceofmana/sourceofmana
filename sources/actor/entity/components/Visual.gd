@@ -310,11 +310,14 @@ func Refresh():
 func CollectAnimationOverrides() -> Array[AnimationLibrary]:
 	var allOverrides : Array[AnimationLibrary] = []
 
-	if entity.inventory:
-		for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
-			var cell : ItemCell = entity.inventory.equipment[slot]
-			if cell and cell.animationOverrides:
-				allOverrides.append(cell.animationOverrides)
+	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
+		var cell : ItemCell = null
+		if entity.inventory:
+			cell = entity.inventory.equipment[slot]
+		elif entity.data:
+			cell = entity.data._equipment[slot]
+		if cell and cell.animationOverrides:
+			allOverrides.append(cell.animationOverrides)
 
 	if entity.stat.hairstyle != DB.UnknownHash:
 		var hairstyleData : HairstyleData = DB.GetHairstyle(entity.stat.hairstyle)
