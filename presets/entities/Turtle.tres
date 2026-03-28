@@ -10,12 +10,12 @@ _name = "Turtle"
 _spritePreset = "Turtle"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_t7tku")]([null, null, null, null, null, null, null, null])
 _stats = {
 "attack": 1,
 "defense": 10,
 "level": 1,
 "walkSpeed": 30.0
 }
+_equipment = Array[ExtResource("1_t7tku")]([null, null, null, null, null, null, null, null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

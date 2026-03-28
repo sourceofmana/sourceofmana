@@ -10,11 +10,11 @@ _name = "Ratto"
 _spritePreset = "Ratto"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_jchlc")]([null, null, null, null, null, null, null, null])
-_behaviour = 130
 _stats = {
 "level": 1,
 "walkSpeed": 90.0
 }
+_equipment = Array[ExtResource("1_jchlc")]([null, null, null, null, null, null, null, null])
+_behaviour = 130
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

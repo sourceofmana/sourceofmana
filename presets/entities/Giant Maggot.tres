@@ -10,11 +10,11 @@ _name = "Giant Maggot"
 _spritePreset = "Generic4Directions"
 _collision = "Large"
 _radius = 25
-_equipment = Array[ExtResource("1_5l8kn")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/maggot-giant.png"
 _stats = {
 "level": 1,
 "walkSpeed": 80.0
 }
+_equipment = Array[ExtResource("1_5l8kn")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/maggot-giant.png"
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

@@ -10,13 +10,13 @@ _name = "Gabriel"
 _spritePreset = "Slime"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_f62vb")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/gabriel.png"
-_behaviour = 164
 _stats = {
 "level": 5,
 "walkSpeed": 40.0
 }
+_equipment = Array[ExtResource("1_f62vb")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/gabriel.png"
+_behaviour = 164
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array(2961268734)
 _dropsProba = Dictionary[int, float]({

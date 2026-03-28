@@ -10,11 +10,11 @@ _name = "Scorpion"
 _spritePreset = "Generic4Directions"
 _collision = "Medium"
 _radius = 18
-_equipment = Array[ExtResource("1_exyli")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/scorpion.png"
 _stats = {
 "level": 1,
 "walkSpeed": 60.0
 }
+_equipment = Array[ExtResource("1_exyli")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/scorpion.png"
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

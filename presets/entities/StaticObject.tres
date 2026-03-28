@@ -10,10 +10,10 @@ _parent = ExtResource("2_yjqq5")
 _id = 1629942628
 _name = "StaticObject"
 _spritePreset = "Static"
-_equipment = Array[ExtResource("1_8i0jd")]([null, null, null, null, null, null, null, null])
-_behaviour = 9
 _stats = {
 "level": 1
 }
+_equipment = Array[ExtResource("1_8i0jd")]([null, null, null, null, null, null, null, null])
+_behaviour = 9
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

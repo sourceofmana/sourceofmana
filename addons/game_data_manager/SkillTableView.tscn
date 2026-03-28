@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dvcq8rbhqnm5p"]
 
-[ext_resource type="Script" path="res://addons/game_data_manager/SkillTableView.gd" id="1_skill"]
+[ext_resource type="Script" uid="uid://btgngg7nv3lu6" path="res://addons/game_data_manager/SkillTableView.gd" id="1_skill"]
 
-[node name="SkillTableView" type="Control"]
+[node name="SkillTableView" type="Control" unique_id=507708024]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_skill")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=69752792]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,76 +19,76 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopBar" type="HBoxContainer" parent="VBoxContainer"]
+[node name="TopBar" type="HBoxContainer" parent="VBoxContainer" unique_id=1691119444]
 layout_mode = 2
 
-[node name="CreateButton" type="Button" parent="VBoxContainer/TopBar"]
+[node name="CreateButton" type="Button" parent="VBoxContainer/TopBar" unique_id=525966593]
 layout_mode = 2
 text = "Create Skill"
 
-[node name="DeleteButton" type="Button" parent="VBoxContainer/TopBar"]
+[node name="DeleteButton" type="Button" parent="VBoxContainer/TopBar" unique_id=1410736382]
 layout_mode = 2
 text = "Delete Selected"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TopBar"]
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TopBar" unique_id=1715037211]
 layout_mode = 2
 
-[node name="RefreshButton" type="Button" parent="VBoxContainer/TopBar"]
+[node name="RefreshButton" type="Button" parent="VBoxContainer/TopBar" unique_id=1450398440]
 layout_mode = 2
 text = "Refresh"
 
-[node name="ExportCSVButton" type="Button" parent="VBoxContainer/TopBar"]
+[node name="ExportCSVButton" type="Button" parent="VBoxContainer/TopBar" unique_id=2122249543]
 layout_mode = 2
 text = "Export CSV"
 
-[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/TopBar"]
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/TopBar" unique_id=621553255]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/TopBar"]
+[node name="Label" type="Label" parent="VBoxContainer/TopBar" unique_id=1960765294]
 layout_mode = 2
 text = "Search:"
 
-[node name="SearchField" type="LineEdit" parent="VBoxContainer/TopBar"]
+[node name="SearchField" type="LineEdit" parent="VBoxContainer/TopBar" unique_id=999000652]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Filter skills..."
 
-[node name="Label2" type="Label" parent="VBoxContainer/TopBar"]
+[node name="Label2" type="Label" parent="VBoxContainer/TopBar" unique_id=688975063]
 layout_mode = 2
 text = "In:"
 
-[node name="ColumnFilter" type="OptionButton" parent="VBoxContainer/TopBar"]
+[node name="ColumnFilter" type="OptionButton" parent="VBoxContainer/TopBar" unique_id=2078598644]
 layout_mode = 2
 selected = 0
 item_count = 1
 popup/item_0/text = "All Fields"
 popup/item_0/id = 0
 
-[node name="ItemCount" type="Label" parent="VBoxContainer/TopBar"]
+[node name="ItemCount" type="Label" parent="VBoxContainer/TopBar" unique_id=1322225773]
 layout_mode = 2
 text = "0 skills"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=378620760]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Tree" type="Tree" parent="VBoxContainer/ScrollContainer"]
+[node name="Tree" type="Tree" parent="VBoxContainer/ScrollContainer" unique_id=2032407889]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 13
 column_titles_visible = true
-hide_root = true
-select_mode = 1
 allow_reselect = true
 allow_rmb_select = true
+hide_root = true
+select_mode = 1
 
 [connection signal="pressed" from="VBoxContainer/TopBar/CreateButton" to="." method="_on_create_pressed"]
 [connection signal="pressed" from="VBoxContainer/TopBar/DeleteButton" to="." method="_on_delete_pressed"]
 [connection signal="pressed" from="VBoxContainer/TopBar/RefreshButton" to="." method="_on_refresh_pressed"]
 [connection signal="pressed" from="VBoxContainer/TopBar/ExportCSVButton" to="." method="_on_export_csv_pressed"]
 [connection signal="text_changed" from="VBoxContainer/TopBar/SearchField" to="." method="_on_search_changed"]
-[connection signal="column_title_clicked" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_column_clicked"]
-[connection signal="item_edited" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_edited"]
-[connection signal="item_activated" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_activated"]
 [connection signal="button_clicked" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_button_clicked"]
+[connection signal="column_title_clicked" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_column_clicked"]
+[connection signal="item_activated" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_activated"]
+[connection signal="item_edited" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_edited"]

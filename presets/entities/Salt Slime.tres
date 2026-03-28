@@ -10,13 +10,13 @@ _name = "Salt Slime"
 _spritePreset = "Slime"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_n178d")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/slime-salt.png"
-_behaviour = 130
 _stats = {
 "level": 1,
 "walkSpeed": 40.0
 }
+_equipment = Array[ExtResource("1_n178d")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/slime-salt.png"
+_behaviour = 130
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array(215387671)
 _dropsProba = Dictionary[int, float]({

@@ -10,11 +10,11 @@ _name = "Fluffy"
 _spritePreset = "Generic4Directions"
 _collision = "Medium"
 _radius = 16
-_equipment = Array[ExtResource("1_2hm4i")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/fluffy.png"
 _stats = {
 "level": 1,
 "walkSpeed": 50.0
 }
+_equipment = Array[ExtResource("1_2hm4i")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/fluffy.png"
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

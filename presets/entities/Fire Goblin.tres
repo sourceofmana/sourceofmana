@@ -10,12 +10,12 @@ _name = "Fire Goblin"
 _spritePreset = "Generic4Directions"
 _collision = "Medium"
 _radius = 16
-_equipment = Array[ExtResource("1_82due")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/firegoblin.png"
 _stats = {
 "level": 1,
 "walkSpeed": 80.0
 }
+_equipment = Array[ExtResource("1_82due")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/firegoblin.png"
 _skillSet = PackedInt64Array(3219153995)
 _skillProba = Dictionary[int, float]({
 3219153995: 2.0

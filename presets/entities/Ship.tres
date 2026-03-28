@@ -10,13 +10,13 @@ _name = "Ship"
 _spritePreset = "Ship"
 _collision = "Medium"
 _radius = 16
-_equipment = Array[ExtResource("1_yqrvc")]([null, null, null, null, null, null, null, null])
-_behaviour = 0
 _stats = {
 "attack": 0.0,
 "defense": 0.0,
 "level": 1,
 "walkSpeed": 20.0
 }
+_equipment = Array[ExtResource("1_yqrvc")]([null, null, null, null, null, null, null, null])
+_behaviour = 0
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

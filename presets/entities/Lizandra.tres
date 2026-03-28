@@ -10,12 +10,12 @@ _name = "Lizandra"
 _spritePreset = "Lizzy"
 _collision = "Medium"
 _radius = 16
-_equipment = Array[ExtResource("1_40ubl")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/lizandra.png"
-_behaviour = 4
 _stats = {
 "level": 1,
 "walkSpeed": 80.0
 }
+_equipment = Array[ExtResource("1_40ubl")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/lizandra.png"
+_behaviour = 4
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

@@ -15,9 +15,6 @@ _parent = ExtResource("7_ym3au")
 _id = 3662818686
 _name = "Red Queen"
 _spritePreset = "Player"
-_equipment = Array[ExtResource("1_dgo6c")]([ExtResource("2_u2vba"), ExtResource("3_ym3au"), ExtResource("4_5kpg1"), ExtResource("5_0cngs"), ExtResource("6_nym5j"), null, null, null])
-_direction = 0
-_state = 2
 _stats = {
 "gender": "Female",
 "haircolor": "Pure Platinum",
@@ -26,5 +23,8 @@ _stats = {
 "race": "Kralog",
 "skintone": "Fire"
 }
+_equipment = Array[ExtResource("1_dgo6c")]([ExtResource("2_u2vba"), ExtResource("3_ym3au"), ExtResource("4_5kpg1"), ExtResource("5_0cngs"), ExtResource("6_nym5j"), null, null, null])
+_direction = 0
+_state = 2
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

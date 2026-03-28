@@ -10,12 +10,12 @@ _name = "Lilah"
 _spritePreset = "Slime"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_ignr6")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/lilah.png"
-_behaviour = 146
 _stats = {
 "level": 1,
 "walkSpeed": 40.0
 }
+_equipment = Array[ExtResource("1_ignr6")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/lilah.png"
+_behaviour = 146
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

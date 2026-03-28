@@ -13,7 +13,6 @@ script = ExtResource("2_b016p")
 _parent = ExtResource("6_2ug6c")
 _id = 3639315857
 _name = "Tulimshar Guard"
-_equipment = Array[ExtResource("1_rwjk6")]([ExtResource("2_f4e3t"), ExtResource("3_2ug6c"), ExtResource("4_cmdgh"), null, null, null, ExtResource("5_fge4m"), null])
 _stats = {
 "gender": "Female",
 "haircolor": "Light Violet",
@@ -22,5 +21,6 @@ _stats = {
 "race": "Human",
 "skintone": "Dark"
 }
+_equipment = Array[ExtResource("1_rwjk6")]([ExtResource("2_f4e3t"), ExtResource("3_2ug6c"), ExtResource("4_cmdgh"), null, null, null, ExtResource("5_fge4m"), null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

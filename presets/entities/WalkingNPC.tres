@@ -10,11 +10,11 @@ _parent = ExtResource("2_lg1ca")
 _id = 2377595219
 _name = "WalkingNPC"
 _spritePreset = "Player"
-_equipment = Array[ExtResource("1_inbjp")]([null, null, null, null, null, null, null, null])
-_behaviour = 1
 _stats = {
 "level": 1,
 "walkSpeed": 160.0
 }
+_equipment = Array[ExtResource("1_inbjp")]([null, null, null, null, null, null, null, null])
+_behaviour = 1
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

@@ -10,10 +10,10 @@ _name = "Lizzy"
 _spritePreset = "Lizzy"
 _collision = "Medium"
 _radius = 16
-_equipment = Array[ExtResource("1_4npla")]([null, null, null, null, null, null, null, null])
 _stats = {
 "level": 1,
 "walkSpeed": 80.0
 }
+_equipment = Array[ExtResource("1_4npla")]([null, null, null, null, null, null, null, null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

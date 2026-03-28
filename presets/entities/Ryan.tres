@@ -16,7 +16,6 @@ _parent = ExtResource("8_nj4j6")
 _id = 2089555519
 _name = "Ryan"
 _spritePreset = "Player"
-_equipment = Array[ExtResource("1_1vo0r")]([ExtResource("2_s882y"), ExtResource("3_nj4j6"), ExtResource("4_1yc2g"), ExtResource("5_8rmxg"), null, ExtResource("6_kj0uk"), ExtResource("7_0ewu5"), null])
 _stats = {
 "gender": "Male",
 "haircolor": "Golden Blonde",
@@ -25,5 +24,6 @@ _stats = {
 "race": "Human",
 "skintone": "Dark"
 }
+_equipment = Array[ExtResource("1_1vo0r")]([ExtResource("2_s882y"), ExtResource("3_nj4j6"), ExtResource("4_1yc2g"), ExtResource("5_8rmxg"), null, ExtResource("6_kj0uk"), ExtResource("7_0ewu5"), null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

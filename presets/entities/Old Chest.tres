@@ -12,9 +12,9 @@ _name = "Old Chest"
 _spritePreset = "Chest"
 _collision = "Large"
 _radius = 26
-_equipment = Array[ExtResource("1_n3wkw")]([null, null, null, null, null, null, null, null])
 _stats = {
 "level": 1
 }
+_equipment = Array[ExtResource("1_n3wkw")]([null, null, null, null, null, null, null, null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

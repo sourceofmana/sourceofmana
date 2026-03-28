@@ -10,11 +10,11 @@ _name = "Pinkie"
 _spritePreset = "Generic4Directions"
 _collision = "Medium"
 _radius = 12
-_equipment = Array[ExtResource("1_ay1s3")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/pinkie.png"
 _stats = {
 "level": 1,
 "walkSpeed": 80.0
 }
+_equipment = Array[ExtResource("1_ay1s3")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/pinkie.png"
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

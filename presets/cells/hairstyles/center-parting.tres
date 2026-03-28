@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="HairstyleData" format=3]
+[gd_resource type="Resource" script_class="HairstyleData" format=3 uid="uid://b64d31pwhaftf"]
 
-[ext_resource type="Script" path="res://sources/db/instance/HairstyleData.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://cit7nvkotee4" path="res://sources/db/instance/HairstyleData.gd" id="1_script"]
 
 [resource]
 script = ExtResource("1_script")

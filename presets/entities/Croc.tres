@@ -10,12 +10,12 @@ _name = "Croc"
 _spritePreset = "Croc"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_s75xo")]([null, null, null, null, null, null, null, null])
 _stats = {
 "attack": 10,
 "defense": 10,
 "level": 1,
 "walkSpeed": 80.0
 }
+_equipment = Array[ExtResource("1_s75xo")]([null, null, null, null, null, null, null, null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

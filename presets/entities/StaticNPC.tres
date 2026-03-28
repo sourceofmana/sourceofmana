@@ -10,10 +10,10 @@ _parent = ExtResource("2_4hm1b")
 _id = 89439950
 _name = "StaticNPC"
 _spritePreset = "StaticNPC"
-_equipment = Array[ExtResource("1_nshyd")]([null, null, null, null, null, null, null, null])
-_behaviour = 9
 _stats = {
 "level": 1
 }
+_equipment = Array[ExtResource("1_nshyd")]([null, null, null, null, null, null, null, null])
+_behaviour = 9
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

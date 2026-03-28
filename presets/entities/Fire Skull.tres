@@ -10,13 +10,13 @@ _name = "Fire Skull"
 _spritePreset = "Skull"
 _collision = "Medium"
 _radius = 12
-_equipment = Array[ExtResource("1_akvej")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/skull-fire.png"
-_behaviour = 4
 _stats = {
 "level": 10,
 "walkSpeed": 50.0
 }
+_equipment = Array[ExtResource("1_akvej")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/skull-fire.png"
+_behaviour = 4
 _skillSet = PackedInt64Array(2089110122)
 _skillProba = Dictionary[int, float]({
 2089110122: 1.0

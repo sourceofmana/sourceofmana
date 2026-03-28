@@ -4,7 +4,6 @@
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="3"]
 
 [sub_resource type="Gradient" id="Gradient_default"]
-offsets = PackedFloat32Array(0, 1)
 colors = PackedColorArray(0.756863, 0.592157, 0.278431, 1, 0.6, 0.407843, 0.019608, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_default"]
@@ -19,7 +18,6 @@ size_flags_horizontal = 3
 script = ExtResource("1")
 textureProgress = SubResource("GradientTexture1D_default")
 labelColor = Color(0.6, 0.407843, 0.0196078, 1)
-labelScale = 1.0
 fillDuration = 1.0
 initDuration = 3.0
 

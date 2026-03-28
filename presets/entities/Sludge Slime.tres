@@ -10,12 +10,12 @@ _name = "Sludge Slime"
 _spritePreset = "SlimeSludge"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_f0h6j")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/slime-sludge.png"
-_behaviour = 130
 _stats = {
 "level": 1,
 "walkSpeed": 50.0
 }
+_equipment = Array[ExtResource("1_f0h6j")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/slime-sludge.png"
+_behaviour = 130
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

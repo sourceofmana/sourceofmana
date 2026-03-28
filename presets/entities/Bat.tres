@@ -10,12 +10,12 @@ _name = "Bat"
 _spritePreset = "Bat"
 _collision = "Medium"
 _radius = 12
-_equipment = Array[ExtResource("1_npq0n")]([null, null, null, null, null, null, null, null])
 _stats = {
 "attack": 5,
 "defense": 5,
 "level": 1,
 "walkSpeed": 100.0
 }
+_equipment = Array[ExtResource("1_npq0n")]([null, null, null, null, null, null, null, null])
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

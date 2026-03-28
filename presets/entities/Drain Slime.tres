@@ -10,12 +10,12 @@ _name = "Drain Slime"
 _spritePreset = "Slime"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_cptef")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/slime-drain.png"
-_behaviour = 130
 _stats = {
 "level": 1,
 "walkSpeed": 70.0
 }
+_equipment = Array[ExtResource("1_cptef")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/slime-drain.png"
+_behaviour = 130
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

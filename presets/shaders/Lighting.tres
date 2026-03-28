@@ -10,5 +10,6 @@ shader_parameter/n_lights = 0
 shader_parameter/dark_color = Color(0.1, 0.08, 0.15, 1)
 shader_parameter/default_light_color = Color(1, 0.878431, 0.741176, 1)
 shader_parameter/light_level = 0.5
+shader_parameter/steps = 7.0
 shader_parameter/light_data = PackedVector4Array()
 shader_parameter/color_data = PackedVector4Array()

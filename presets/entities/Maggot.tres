@@ -10,11 +10,11 @@ _name = "Maggot"
 _spritePreset = "Generic4Directions"
 _collision = "Medium"
 _radius = 10
-_equipment = Array[ExtResource("1_bbb2k")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/maggot.png"
 _stats = {
 "level": 1,
 "walkSpeed": 50.0
 }
+_equipment = Array[ExtResource("1_bbb2k")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/monsters/maggot.png"
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()
