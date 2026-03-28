@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="62">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="64">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -244,7 +244,7 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="45" name="Ekinu" type="Spawn" x="1880" y="2837" width="20" height="18">
+  <object id="45" name="Ekinu" type="Spawn" x="1880" y="2837" width="1" height="1">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
@@ -296,7 +296,7 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="60" name="Ryan" type="Spawn" x="1660" y="2837" width="19" height="18">
+  <object id="60" name="Ryan" type="Spawn" x="1660" y="2837" width="1" height="1">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
@@ -307,6 +307,13 @@
    <properties>
     <property name="count" value="5"/>
     <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="63" name="Kyle" type="Spawn" x="2866" y="2102" width="1" height="1">
+   <properties>
+    <property name="count" type="int" value="1"/>
+    <property name="player_script" value="generic/Default.gd"/>
+    <property name="type" value="Npc"/>
    </properties>
   </object>
  </objectgroup>

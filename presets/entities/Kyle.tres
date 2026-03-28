@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://c11h8y8va1jhu"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_tcmrs"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_upok7"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_xwl2d"]
+
+[resource]
+script = ExtResource("2_upok7")
+_parent = ExtResource("2_xwl2d")
+_id = 2089304314
+_name = "Kyle"
+_stats = {
+"gender": "Male",
+"level": 1,
+"race": "Human",
+"skintone": "Light"
+}
+_equipment = Array[ExtResource("1_tcmrs")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/npcs/kyle.png"
+_skillSet = PackedInt64Array()
+_drops = PackedInt64Array()
