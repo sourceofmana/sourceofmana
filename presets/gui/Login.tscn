@@ -101,6 +101,33 @@ caret_blink = true
 caret_blink_interval = 0.5
 secret = true
 
+[node name="ConfirmPassword" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=1781570789]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword" unique_id=2061717808]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Confirm Password"
+vertical_alignment = 1
+
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword" unique_id=5731306]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container" unique_id=2107626192]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 1
+max_length = 255
+clear_button_enabled = true
+select_all_on_focus = true
+caret_blink = true
+caret_blink_interval = 0.5
+secret = true
+
 [node name="Email" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=768420053]
 layout_mode = 2
 
@@ -128,33 +155,33 @@ select_all_on_focus = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="Code" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
+[node name="Code" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=1048370893]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code"]
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code" unique_id=1389644927]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Reset Code"
 vertical_alignment = 1
 
-[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code"]
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code" unique_id=298921391]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container"]
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container" unique_id=136911564]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 focus_mode = 1
-max_length = 6
 placeholder_text = "000000"
+max_length = 6
 clear_button_enabled = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="IndicatorRow" type="HBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer"]
+[node name="IndicatorRow" type="HBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=1665552271]
 layout_mode = 2
 
 [node name="RememberMe" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow" unique_id=608763400]
@@ -194,7 +221,6 @@ jsonFile = ExtResource("3_kh3en")
 layout_mode = 2
 size_flags_horizontal = 3
 
-[connection signal="toggled" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/RememberMe" to="." method="_on_remember_me_toggled"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text" to="." method="_on_text_focus_exited"]
@@ -203,9 +229,13 @@ size_flags_horizontal = 3
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_focus_exited"]
 [connection signal="text_changed" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_password_text_changed"]
 [connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_submitted"]
+[connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text" to="." method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text" to="." method="_on_text_submitted"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_focus_exited"]
 [connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_submitted"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text" to="." method="_on_text_focus_exited"]
 [connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text" to="." method="_on_text_submitted"]
+[connection signal="toggled" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/RememberMe" to="." method="_on_remember_me_toggled"]

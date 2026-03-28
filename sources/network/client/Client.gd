@@ -260,9 +260,12 @@ func PushNotification(notif : String, _peerID : int):
 #
 func AuthError(err : NetworkCommons.AuthError, _peerID : int):
 	if Launcher.GUI:
-		Launcher.GUI.loginPanel.FillWarningLabel(err)
-		if err == NetworkCommons.AuthError.ERR_OK:
-			FSM.EnterState(FSM.States.CHAR_SCREEN)
+		if err == NetworkCommons.AuthError.ERR_PASSWORD_CHANGE_OK or err == NetworkCommons.AuthError.ERR_PASSWORD_CHANGE_WRONG:
+			Launcher.GUI.settingsWindow.set_account_password(err)
+		else:
+			Launcher.GUI.loginPanel.FillWarningLabel(err)
+			if err == NetworkCommons.AuthError.ERR_OK:
+				FSM.EnterState(FSM.States.CHAR_SCREEN)
 
 func AuthTokenResult(accountName : String, token : String, _peerID : int):
 	if Launcher.GUI:

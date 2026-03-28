@@ -404,6 +404,12 @@ func GetAccountEmail(accountID : int) -> String:
 			return email
 	return ""
 
+func CheckAccountPassword(accountID : int, triedPassword : String) -> bool:
+	var results : Array[Dictionary] = QueryBindings("SELECT password, password_salt FROM account WHERE account_id = ?;", [accountID])
+	if results.is_empty():
+		return false
+	return Hasher.HashPassword(triedPassword, results[0]["password_salt"]) == results[0]["password"]
+
 func UpdateAccountPassword(accountID : int, newPassword : String) -> bool:
 	var salt : String = Hasher.GenerateSalt()
 	var hashedPassword : String = Hasher.HashPassword(newPassword, salt)

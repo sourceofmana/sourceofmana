@@ -89,6 +89,25 @@ func ConfirmPasswordReset(accountName : String, code : String, newPassword : Str
 
 	Network.AuthError(err, peerID)
 
+func ChangePassword(currentPassword : String, newPassword : String, peerID : int):
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer or peer.accountID == NetworkCommons.PeerUnknownID:
+		Network.AuthError(NetworkCommons.AuthError.ERR_NO_PEER_DATA, peerID)
+		return
+
+	var passwordErr : NetworkCommons.AuthError = NetworkCommons.CheckPasswordInformation(newPassword)
+	if passwordErr != NetworkCommons.AuthError.ERR_OK:
+		Network.AuthError(NetworkCommons.AuthError.ERR_PASSWORD_CHANGE_WRONG, peerID)
+		return
+
+	if not Launcher.SQL.CheckAccountPassword(peer.accountID, currentPassword):
+		Network.AuthError(NetworkCommons.AuthError.ERR_PASSWORD_CHANGE_WRONG, peerID)
+		return
+
+	Launcher.SQL.UpdateAccountPassword(peer.accountID, newPassword)
+	Launcher.SQL.RemoveAllAuthTokens(peer.accountID)
+	Network.AuthError(NetworkCommons.AuthError.ERR_PASSWORD_CHANGE_OK, peerID)
+
 func DisconnectAccount(peerID : int):
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if peer:

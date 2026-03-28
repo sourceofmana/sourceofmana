@@ -53,6 +53,10 @@ func ConfirmPasswordReset(accountName : String, code : String, newPassword : Str
 	return CallServer("ConfirmPasswordReset", [accountName, code, newPassword], peerID, NetworkCommons.DelayLogin)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func ChangePassword(currentPassword : String, newPassword : String, peerID : int = NetworkCommons.PeerAuthorityID) -> bool:
+	return CallServer("ChangePassword", [currentPassword, newPassword], peerID, NetworkCommons.DelayLogin)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func DisconnectAccount(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("DisconnectAccount", [], peerID)
 

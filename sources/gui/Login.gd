@@ -6,6 +6,8 @@ extends Control
 @onready var passwordControl : Control		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password
 @onready var passwordLabel : Label			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Label
 @onready var passwordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text
+@onready var confirmPasswordControl : Control	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword
+@onready var confirmPasswordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text
 @onready var emailControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email
 @onready var emailTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text
 @onready var resetCodeControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code
@@ -13,6 +15,8 @@ extends Control
 @onready var indicatorRow : HBoxContainer	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow
 @onready var rememberMeCheckBox : CheckBox	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/RememberMe
 @onready var onlineIndicator : CheckBox		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/OnlineIndicator
+@onready var panel : PanelContainer			= $HBoxContainer/Panel
+@onready var separator : HSeparator			= $HBoxContainer/Panel/Margin/VBoxContainer/HSeparator2
 @onready var news : Scrollable				= $HBoxContainer/Panel/Margin/VBoxContainer/News
 @onready var agreement : Scrollable			= $HBoxContainer/Panel/Margin/VBoxContainer/Agreement
 
@@ -68,6 +72,9 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 		NetworkCommons.AuthError.ERR_NAME_SIZE:
 			warn = "Name length should be inbetween %d and %d character long." % [NetworkCommons.PlayerNameMinSize, NetworkCommons.PlayerNameMaxSize]
 			nameTextControl.grab_focus()
+		NetworkCommons.AuthError.ERR_PASSWORD_MISMATCH:
+			warn = "Passwords do not match."
+			confirmPasswordTextControl.grab_focus()
 		NetworkCommons.AuthError.ERR_EMAIL_VALID:
 			warn = "Email is incorrect, please us a normal email format."
 			emailTextControl.grab_focus()
@@ -104,21 +111,28 @@ func SetRecoveryState(state : RecoveryState):
 			passwordControl.set_visible(true)
 			passwordLabel.text = "Password"
 			passwordTextControl.secret = true
+			confirmPasswordControl.set_visible(false)
 			emailControl.set_visible(false)
 			resetCodeControl.set_visible(false)
 			indicatorRow.set_visible(true)
+			separator.set_visible(true)
 			news.set_visible(true)
 			agreement.set_visible(false)
+			SetPanelExpand(true)
 			passwordTextControl.clear()
+			confirmPasswordTextControl.clear()
 			resetCodeTextControl.clear()
 		RecoveryState.REQUEST_EMAIL:
 			nameControl.set_visible(true)
 			passwordControl.set_visible(false)
+			confirmPasswordControl.set_visible(false)
 			emailControl.set_visible(false)
 			resetCodeControl.set_visible(false)
 			indicatorRow.set_visible(false)
+			separator.set_visible(false)
 			news.set_visible(false)
 			agreement.set_visible(false)
+			SetPanelExpand(false)
 			nameTextControl.grab_focus()
 		RecoveryState.ENTER_CODE:
 			nameControl.set_visible(false)
@@ -126,11 +140,15 @@ func SetRecoveryState(state : RecoveryState):
 			passwordLabel.text = "New Password"
 			passwordTextControl.secret = true
 			passwordTextControl.clear()
+			confirmPasswordControl.set_visible(true)
+			confirmPasswordTextControl.clear()
 			emailControl.set_visible(false)
 			resetCodeControl.set_visible(true)
 			indicatorRow.set_visible(false)
+			separator.set_visible(false)
 			news.set_visible(false)
 			agreement.set_visible(false)
+			SetPanelExpand(false)
 			resetCodeTextControl.grab_focus()
 	EnableButtons(true)
 
@@ -138,6 +156,7 @@ func EnableAccountCreator(enable : bool):
 	recoveryState = RecoveryState.NONE
 	isAccountCreatorEnabled = enable
 
+	confirmPasswordControl.set_visible(isAccountCreatorEnabled)
 	emailControl.set_visible(isAccountCreatorEnabled)
 	agreement.set_visible(isAccountCreatorEnabled)
 	resetCodeControl.set_visible(false)
@@ -147,15 +166,27 @@ func EnableAccountCreator(enable : bool):
 	passwordLabel.text = "Password"
 	passwordTextControl.secret = true
 	indicatorRow.set_visible(not isAccountCreatorEnabled)
+	separator.set_visible(true)
 	news.set_visible(not isAccountCreatorEnabled)
+	SetPanelExpand(true)
+	if not isAccountCreatorEnabled:
+		confirmPasswordTextControl.clear()
 	EnableButtons(true)
 	RefreshFocusNodes(enable)
+
+func SetPanelExpand(expand : bool):
+	if expand:
+		panel.size_flags_vertical = Control.SIZE_FILL
+	else:
+		panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
 #
 func RefreshFocusNodes(accountCreatorEnabled : bool):
 	if accountCreatorEnabled:
 		nameTextControl.set_focus_previous(emailTextControl.get_path())
-		passwordTextControl.set_focus_next(emailTextControl.get_path())
+		passwordTextControl.set_focus_next(confirmPasswordTextControl.get_path())
+		confirmPasswordTextControl.set_focus_next(emailTextControl.get_path())
+		confirmPasswordTextControl.set_focus_previous(passwordTextControl.get_path())
 	else:
 		nameTextControl.set_focus_previous(passwordTextControl.get_path())
 		passwordTextControl.set_focus_next(nameTextControl.get_path())
@@ -256,9 +287,13 @@ func Connect():
 func CreateAccount():
 	nameText = nameTextControl.get_text()
 	var passwordText : String = passwordTextControl.get_text()
+	var confirmText : String = confirmPasswordTextControl.get_text()
 	var emailText : String = emailTextControl.get_text()
 
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
+	if authError == NetworkCommons.AuthError.ERR_OK:
+		if passwordText != confirmText:
+			authError = NetworkCommons.AuthError.ERR_PASSWORD_MISMATCH
 	if authError == NetworkCommons.AuthError.ERR_OK:
 		authError = NetworkCommons.CheckEmailInformation(emailText)
 
@@ -278,6 +313,7 @@ func RequestReset():
 func ConfirmReset():
 	var codeText : String = resetCodeTextControl.get_text()
 	var newPassword : String = passwordTextControl.get_text()
+	var confirmText : String = confirmPasswordTextControl.get_text()
 
 	if not NetworkCommons.CheckResetCode(codeText):
 		FillWarningLabel(NetworkCommons.AuthError.ERR_RESET_INVALID_CODE)
@@ -286,6 +322,10 @@ func ConfirmReset():
 	var passwordErr : NetworkCommons.AuthError = NetworkCommons.CheckPasswordInformation(newPassword)
 	if passwordErr != NetworkCommons.AuthError.ERR_OK:
 		FillWarningLabel(passwordErr)
+		return
+
+	if newPassword != confirmText:
+		FillWarningLabel(NetworkCommons.AuthError.ERR_PASSWORD_MISMATCH)
 		return
 
 	Network.ConfirmPasswordReset(nameText, codeText, newPassword)

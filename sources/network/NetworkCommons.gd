@@ -117,6 +117,9 @@ enum AuthError {
 	ERR_RESET_EMAIL_SENT,
 	ERR_RESET_INVALID_CODE,
 	ERR_RESET_PASSWORD_UPDATED,
+	ERR_PASSWORD_MISMATCH,
+	ERR_PASSWORD_CHANGE_OK,
+	ERR_PASSWORD_CHANGE_WRONG,
 }
 
 static func CheckSize(entry : String, minSize : int, maxSize : int) -> bool:

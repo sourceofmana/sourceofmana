@@ -20,6 +20,7 @@ const userSection : String						= "User"
 	"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
 	"Session-ShortcutCells": [init_shortcutcells, set_shortcutcells, apply_shortcutcells, null],
 	"Input-Bindings": [init_inputbindings, null, null, null],
+	"Account-PasswordChange": [null, set_account_password, null, $Margin/TabBar/Account],
 }
 
 enum CATEGORY { RENDER, SOUND, INPUT, COUNT }
@@ -292,6 +293,10 @@ func init_inputbindings(apply : bool):
 	if apply:
 		InputBindings.LoadBindings()
 
+# Account
+func set_account_password(err : NetworkCommons.AuthError):
+	renderAccessors["Account-PasswordChange"][ACC_TYPE.LABEL].OnPasswordChangeResult(err)
+
 #
 func _on_visibility_changed():
 	RefreshSettings(false)
@@ -311,7 +316,9 @@ func _ready():
 # Conf accessors
 func RefreshSettings(apply : bool):
 	for option in renderAccessors:
-		renderAccessors[option][ACC_TYPE.INIT].call_deferred(apply)
+		var initFunc = renderAccessors[option][ACC_TYPE.INIT]
+		if initFunc:
+			initFunc.call_deferred(apply)
 
 func SaveSettings():
 	save_sessionoverlay()

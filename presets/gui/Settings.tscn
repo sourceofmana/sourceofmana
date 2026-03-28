@@ -2,7 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_al365"]
 [ext_resource type="Script" uid="uid://ci85y60tfmp4o" path="res://sources/gui/Settings.gd" id="2_wg4ki"]
-[ext_resource type="Script" path="res://sources/gui/settings/InputBindings.gd" id="3_input"]
+[ext_resource type="Script" uid="uid://ckxlj27w21747" path="res://sources/gui/settings/InputBindings.gd" id="3_input"]
+[ext_resource type="Script" uid="uid://dwccbam37j8kv" path="res://sources/gui/settings/AccountSettings.gd" id="4_ehe4h"]
 
 [node name="Panel" type="PanelContainer" unique_id=538660767]
 show_behind_parent = true
@@ -163,12 +164,75 @@ step = 0.1
 tick_count = 10
 ticks_on_borders = true
 
-[node name="Input" type="TabContainer" parent="Margin/TabBar"]
+[node name="Input" type="TabContainer" parent="Margin/TabBar" unique_id=753213710]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("3_input")
 metadata/_tab_index = 2
+
+[node name="Account" type="ScrollContainer" parent="Margin/TabBar" unique_id=922323282]
+visible = false
+layout_mode = 2
+script = ExtResource("4_ehe4h")
+metadata/_tab_index = 3
+
+[node name="AccountVBox" type="VBoxContainer" parent="Margin/TabBar/Account" unique_id=1151872733]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="PasswordLabel" type="Label" parent="Margin/TabBar/Account/AccountVBox" unique_id=453651108]
+layout_mode = 2
+text = "Change Password"
+
+[node name="CurrentPassword" type="HBoxContainer" parent="Margin/TabBar/Account/AccountVBox" unique_id=763886695]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Margin/TabBar/Account/AccountVBox/CurrentPassword" unique_id=1792890057]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Current Password"
+
+[node name="Text" type="LineEdit" parent="Margin/TabBar/Account/AccountVBox/CurrentPassword" unique_id=895317565]
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+
+[node name="NewPassword" type="HBoxContainer" parent="Margin/TabBar/Account/AccountVBox" unique_id=1828967856]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Margin/TabBar/Account/AccountVBox/NewPassword" unique_id=1074344070]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " New Password"
+
+[node name="Text" type="LineEdit" parent="Margin/TabBar/Account/AccountVBox/NewPassword" unique_id=628449545]
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+
+[node name="ConfirmPassword" type="HBoxContainer" parent="Margin/TabBar/Account/AccountVBox" unique_id=1523694092]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Margin/TabBar/Account/AccountVBox/ConfirmPassword" unique_id=1467792528]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Confirm Password"
+
+[node name="Text" type="LineEdit" parent="Margin/TabBar/Account/AccountVBox/ConfirmPassword" unique_id=986277347]
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+
+[node name="ChangeButton" type="Button" parent="Margin/TabBar/Account/AccountVBox" unique_id=1463781895]
+layout_mode = 2
+text = "Change Password"
+
+[node name="StatusLabel" type="RichTextLabel" parent="Margin/TabBar/Account/AccountVBox" unique_id=1960191140]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
@@ -180,3 +244,4 @@ metadata/_tab_index = 2
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4" to="." method="set_hq4x"]
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/CRT" to="." method="set_crt"]
 [connection signal="value_changed" from="Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider" to="." method="set_audiogeneral"]
+[connection signal="pressed" from="Margin/TabBar/Account/AccountVBox/ChangeButton" to="Margin/TabBar/Account" method="_on_change_button_pressed"]
