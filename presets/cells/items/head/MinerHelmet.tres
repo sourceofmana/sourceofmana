@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3]
+
+[ext_resource type="Texture2D" path="res://data/graphics/items/head/miner-helmet.png" id="1_icon"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_script"]
+[ext_resource type="Texture2D" path="res://data/graphics/sprites/equipment/head/miner-helmet.png" id="3_sprite"]
+
+[resource]
+script = ExtResource("2_script")
+slot = 4
+textures = Array[Texture2D]([ExtResource("3_sprite"), ExtResource("3_sprite"), ExtResource("3_sprite")])
+id = 0
+name = "Miner Helmet"
+icon = ExtResource("1_icon")
+weight = 300.0
