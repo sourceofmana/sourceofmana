@@ -38,6 +38,10 @@ func UpdateIconsVisibility(progress : float, thresholds : Array[float]):
 
 #
 func _on_button_pressed():
+	if not FSM.IsGameState():
+		Launcher.GUI.ToggleControl(Launcher.GUI.settingsWindow)
+		return
+
 	is_opening = !is_opening
 
 	if tween:

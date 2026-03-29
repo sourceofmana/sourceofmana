@@ -138,7 +138,6 @@ func EnterLoginMenu():
 	dialogueContainer.set_visible(false)
 	pickupPanel.set_visible(false)
 	loadingControl.set_visible(false)
-	menu.set_visible(false)
 	actionBoxes.set_visible(false)
 	quitWindow.set_visible(false)
 	respawnWindow.EnableControl(false)

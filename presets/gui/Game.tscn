@@ -160,7 +160,6 @@ visible = false
 layout_mode = 2
 
 [node name="Menu" type="Control" parent="Overlay/VSections/Indicators" unique_id=349554582]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 10
 mouse_filter = 1
@@ -181,6 +180,7 @@ texture = ExtResource("6_mf0sy")
 stretch_mode = 3
 
 [node name="HBoxItems" type="HBoxContainer" parent="Overlay/VSections/Indicators/Menu/MenuContent" unique_id=1930884178]
+visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -445,7 +445,7 @@ texture_normal = ExtResource("25_6cklw")
 texture_pressed = ExtResource("29_ioa8a")
 
 [node name="Windows" type="MarginContainer" parent="." unique_id=106838770]
-z_index = 1
+z_index = 100
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
