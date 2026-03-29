@@ -20,6 +20,7 @@ var blendSpacePaths : Array[String]			= []
 var walkTimeScalePath : String				= ""
 var attackTimeScalePath : String			= ""
 
+var equipmentEffects : Array[Node2D]		= []
 var skillCastID : int						= DB.UnknownHash
 var attackAnimLength : float				= 1.0
 var originalAnimationLib : AnimationLibrary	= null
@@ -44,6 +45,7 @@ func ResetData():
 		child.queue_free()
 	for spriteID in sprites.size():
 		sprites[spriteID] = null
+	equipmentEffects.fill(null)
 	preset = null
 	originalAnimationLib = null
 	if collision:
@@ -203,9 +205,23 @@ func SetEquipment(slot : int, data : EntityData = null, applyOverrides : bool = 
 		sprite.hframes = defaultHframes[slot]
 		sprite.vframes = defaultVframes[slot]
 
+	SetEquipmentMetadata(slot, cell)
 	LoadSpriteSlot(slot, sprite)
 	if applyOverrides:
 		ApplyAnimationOverrides()
+
+func SetEquipmentMetadata(slot : int, cell : ItemCell):
+	if equipmentEffects[slot]:
+		equipmentEffects[slot].queue_free()
+		equipmentEffects[slot] = null
+	if cell and cell.has_meta("light_radius"):
+		var light : LightSource = FileSystem.LoadEffect("LightSource")
+		if light:
+			light.radius = cell.get_meta("light_radius")
+			if cell.has_meta("light_color"):
+				light.color = cell.get_meta("light_color")
+			equipmentEffects[slot] = light
+			add_child.call_deferred(light)
 
 func SetData(slot : int, data : EntityData):
 	var slotName : String = ActorCommons.GetSlotName(slot)
@@ -378,3 +394,4 @@ func _notification(what : int):
 
 func _init():
 	sprites.resize(ActorCommons.SlotEquipmentCount + ActorCommons.SlotModifierCount)
+	equipmentEffects.resize(ActorCommons.State.COUNT)

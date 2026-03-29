@@ -12,3 +12,5 @@ id = 0
 name = "Miner Helmet"
 icon = ExtResource("1_icon")
 weight = 300.0
+metadata/light_radius = 96
+metadata/light_color = Color(1, 0.824, 0.553, 1)
