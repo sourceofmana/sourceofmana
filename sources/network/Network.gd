@@ -398,7 +398,7 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 	if inst:
 		for player in inst.players:
 			if player != null and player != agent and player.peerID != NetworkCommons.PeerUnknownID:
-				if NetworkCommons.IsVisible(player.position, agent.position, player.visibilityHalfSize):
+				if NetworkCommons.IsAlwaysVisible(agent) or NetworkCommons.IsVisible(player.position, agent.position, player.visibilityHalfSize):
 					if not player.visibleAgents.has(currentagentRID):
 						player.visibleAgents[currentagentRID] = true
 						Network.Bulk("FullUpdateEntity", [currentagentRID, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID, agent.stat.isRunning], player.peerID)

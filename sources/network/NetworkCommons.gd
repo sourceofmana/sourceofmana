@@ -18,6 +18,9 @@ const VisibilityBorder : float			= 64.0
 const MaxVisibilityHalfWidth : float	= 960.0
 const MaxVisibilityHalfHeight : float	= 540.0
 
+static func IsAlwaysVisible(agent : BaseAgent):
+	return agent and agent.spawnInfo and agent.spawnInfo.is_always_visible
+
 static func IsVisible(fromPos : Vector2, toPos : Vector2, halfSize : Vector2) -> bool:
 	var diff : Vector2 = (toPos - fromPos).abs()
 	return diff.x <= halfSize.x and diff.y <= halfSize.y

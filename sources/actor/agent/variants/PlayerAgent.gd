@@ -159,7 +159,7 @@ func FlushStatsUpdate():
 func CheckVisibility(neighbour : BaseAgent):
 	if not neighbour:
 		return
-	if NetworkCommons.IsVisible(position, neighbour.position, visibilityHalfSize):
+	if NetworkCommons.IsAlwaysVisible(neighbour) or NetworkCommons.IsVisible(position, neighbour.position, visibilityHalfSize):
 		var agentRID : int = neighbour.get_rid().get_id()
 		if not visibleAgents.has(agentRID):
 			Network.Bulk("FullUpdateEntity", [agentRID, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, neighbour.stat.isRunning], peerID)

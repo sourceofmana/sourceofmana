@@ -275,6 +275,7 @@ func build_server() -> Resource:
 		spawn_array.append(spawn.player_script)
 		spawn_array.append(spawn.own_script)
 		spawn_array.append(spawn.nick)
+		spawn_array.append(spawn.is_always_visible)
 		root.spawns.append(spawn_array)
 
 	# Can't save an array of custom objects, every element will be null when loaded
@@ -591,6 +592,8 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 									spawn_object.respawn_delay = object.properties.respawn_delay
 								if "nick" in object.properties:
 									spawn_object.nick = object.properties.nick
+								if "is_always_visible" in object.properties:
+									spawn_object.is_always_visible = object.properties.is_always_visible
 							spawn_pool.push_back(spawn_object)
 						continue
 

@@ -76,7 +76,7 @@ static func ParseEntitiesDB():
 		var resource = FileSystem.LoadResource(resourcePath, false)
 		if resource is EntityData:
 			var entity : EntityData = resource as EntityData
-			assert(entity._id != UnknownHash, "ID for entity %s is not set, add: %d" % [entity._name, entity._name.hash()])
+			assert(entity._id == entity._name.hash(), "ID for entity %s is not set, add: %d" % [entity._name, entity._name.hash()])
 			if entity._parent:
 				entity = entity.GetMergedEntity()
 
