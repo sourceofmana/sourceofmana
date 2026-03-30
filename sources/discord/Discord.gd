@@ -26,17 +26,9 @@ func Destroy():
 		bot = null
 
 func _ready():
-	# Initial copy of the cfg file
-	var userConfigPath : String = Path.Local + "discord" + Path.ConfExt
-	if not FileSystem.FileExists(userConfigPath):
-		var defaultConfigPath : String = Path.ConfRsc + "discord" + Path.ConfExt
-		if FileSystem.FileExists(defaultConfigPath):
-			FileSystem.CopyFile(defaultConfigPath, userConfigPath)
-			Util.PrintLog("Discord", "Copied default discord.cfg to user directory")
-
-	enabled = Conf.GetBool("Default", "Discord-Enabled", Conf.Type.DISCORD)
-	botToken = Conf.GetString("Default", "Discord-Token", Conf.Type.DISCORD)
-	channelID = Conf.GetString("Default", "Discord-ChannelID", Conf.Type.DISCORD)
+	enabled = Conf.GetBool("Discord", "Discord-Enabled", Conf.Type.CREDENTIAL)
+	botToken = Conf.GetString("Discord", "Discord-Token", Conf.Type.CREDENTIAL)
+	channelID = Conf.GetString("Discord", "Discord-ChannelID", Conf.Type.CREDENTIAL)
 
 	if not enabled:
 		Util.PrintInfo("Discord", "Discord bot disabled")
@@ -91,9 +83,3 @@ func SendToDiscord(playerName : String, messageText : String):
 
 	var formattedText : String = "**%s**: %s" % [playerName, messageText]
 	bot.send(channelID, formattedText)
-
-func SaveConfig():
-	Conf.SetValue("Default", "Discord-Enabled", Conf.Type.DISCORD, enabled)
-	Conf.SetValue("Default", "Discord-Token", Conf.Type.DISCORD, botToken)
-	Conf.SetValue("Default", "Discord-ChannelID", Conf.Type.DISCORD, channelID)
-	Conf.SaveType("discord", Conf.Type.DISCORD)

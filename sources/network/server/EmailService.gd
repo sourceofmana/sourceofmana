@@ -16,9 +16,9 @@ var pendingResets : Dictionary			= {}
 
 #
 func _ready():
-	apiKey = Conf.GetString("Default", "Email-ApiKey", Conf.Type.EMAIL)
-	senderName = Conf.GetString("Default", "Email-SenderName", Conf.Type.EMAIL)
-	senderEmail = Conf.GetString("Default", "Email-SenderAddress", Conf.Type.EMAIL)
+	apiKey = Conf.GetString("Email", "Email-ApiKey", Conf.Type.CREDENTIAL)
+	senderName = Conf.GetString("Email", "Email-SenderName", Conf.Type.CREDENTIAL)
+	senderEmail = Conf.GetString("Email", "Email-SenderAddress", Conf.Type.CREDENTIAL)
 	if senderName.is_empty():
 		senderName = "Source of Mana"
 	passwordResetTemplate = FileSystem.LoadFile(PasswordResetTemplatePath)
