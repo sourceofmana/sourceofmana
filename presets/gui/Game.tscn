@@ -112,7 +112,7 @@ alignment = 1
 [node name="Stat" type="Control" parent="Overlay/VSections/Indicators" unique_id=1156802164]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 0
 mouse_filter = 1
 script = ExtResource("3_5uo3f")
 
@@ -135,7 +135,7 @@ size_flags_vertical = 0
 
 [node name="Info" type="VBoxContainer" parent="Overlay/VSections/Indicators" unique_id=823456764]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 6
 size_flags_vertical = 4
 
 [node name="Notification" parent="Overlay/VSections/Indicators/Info" unique_id=1195237028 instance=ExtResource("17_64u4l")]
@@ -161,7 +161,7 @@ layout_mode = 2
 
 [node name="Menu" type="Control" parent="Overlay/VSections/Indicators" unique_id=349554582]
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 8
 mouse_filter = 1
 script = ExtResource("6_npwx0")
 
