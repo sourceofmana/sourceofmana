@@ -7,10 +7,10 @@ func WarpPlayer(mapID : int, playerPos : Vector2, _peerID : int):
 		var mapData : FileData = DB.MapsDB.get(mapID, null)
 		if mapData:
 			Launcher.Map.EmplaceMapNode(mapID)
+			Launcher.Camera.LookAt(playerPos, false)
 			# Reset input in both the client and server to force re-send a new update once the map is loaded
 			Network.ClearNavigation()
 			Launcher.Action.previousMove = Vector2.ZERO
-			Launcher.Camera.FocusPosition(playerPos)
 			PushNotification(mapData._name, _peerID)
 
 func EmotePlayer(agentRID : int, emoteID : int, _peerID : int):

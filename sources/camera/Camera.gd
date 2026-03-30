@@ -17,19 +17,21 @@ func SetBoundaries():
 		camera.limit_right		= cameraBoundary.x
 		camera.limit_top		= 0
 		camera.limit_bottom		= cameraBoundary.y
-		camera.set_global_position(Vector2.ZERO)
-		camera.set_enabled(true)
-		camera.make_current()
 
-func LookAt(pos : Vector2):
+func LookAt(pos : Vector2, smooth : bool = true):
 	if not camera:
 		return
 
-	cinematic = true
-	camera.set_position_smoothing_enabled(true)
-	if remoteTransform:
-		remoteTransform.set_update_position(false)
+	var smoothCinematic : bool = smooth and camera.get_global_position() != Vector2.ZERO
+	cinematic = smoothCinematic
+	camera.set_position_smoothing_enabled(smoothCinematic)
 	camera.set_global_position(pos)
+	if smoothCinematic:
+		if remoteTransform:
+			remoteTransform.set_update_position(false)
+	else:
+		camera.reset_physics_interpolation()
+		camera.force_update_scroll()
 
 func ResetCinematic():
 	if not camera or not cinematic:
@@ -107,10 +109,6 @@ func SyncPlayerPosition():
 		camera.set_position_smoothing_enabled(false)
 		camera.set_position(Launcher.Player.get_position())
 		camera.force_update_scroll()
-
-func FocusPosition(position : Vector2):
-	if camera:
-		camera.set_position(position)
 
 func OnPlayerMoved():
 	ResetCinematic()

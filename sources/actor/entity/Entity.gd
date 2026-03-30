@@ -47,8 +47,6 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 			Launcher.Map.PlayerMoved.emit()
 
 	if isRunning != stat.isRunning:
-		if stat.isRunning:
-			pass
 		stat.isRunning = isRunning
 		stat.RefreshEntityStats()
 
