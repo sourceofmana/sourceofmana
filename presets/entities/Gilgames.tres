@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://b7svx5kquvgks"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_1vo0r"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_hegge"]
+[ext_resource type="Resource" uid="uid://b58u4sccexbpg" path="res://presets/cells/items/chest/DesertArmor.tres" id="2_s882y"]
+[ext_resource type="Resource" uid="uid://b8awmxy22bpqi" path="res://presets/cells/items/legs/GuardCloudPants.tres" id="3_nj4j6"]
+[ext_resource type="Resource" uid="uid://b1kgjqcht72fg" path="res://presets/cells/items/feet/LeatherBoots.tres" id="4_1yc2g"]
+[ext_resource type="Resource" uid="uid://b8ixnx1136r4m" path="res://presets/cells/items/hands/LeatherGloves.tres" id="5_8rmxg"]
+[ext_resource type="Resource" uid="uid://f40w6s2w07wu" path="res://presets/cells/items/neck/BandanaScarf.tres" id="6_kj0uk"]
+[ext_resource type="Resource" uid="uid://bj5p08ffbj617" path="res://presets/cells/items/weapon/BoneKnife.tres" id="7_0ewu5"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="8_nj4j6"]
+
+[resource]
+script = ExtResource("2_hegge")
+_parent = ExtResource("8_nj4j6")
+_id = 2550418766
+_name = "Gilgames"
+_spritePreset = "Player"
+_stats = {
+"gender": "Male",
+"haircolor": "Golden Blonde",
+"hairstyle": "Tapered Nape",
+"level": 1,
+"race": "Human",
+"skintone": "Dark"
+}
+_equipment = Array[ExtResource("1_1vo0r")]([ExtResource("2_s882y"), ExtResource("3_nj4j6"), ExtResource("4_1yc2g"), ExtResource("5_8rmxg"), null, ExtResource("6_kj0uk"), ExtResource("7_0ewu5"), null])
+_skillSet = PackedInt64Array()
+_drops = PackedInt64Array()

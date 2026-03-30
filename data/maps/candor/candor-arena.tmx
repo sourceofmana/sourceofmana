@@ -548,7 +548,7 @@
    </properties>
    <polygon points="0,32 32,0 64,32 80,64 80,110 -16,110 -16,64"/>
   </object>
-  <object id="33" name="Gabz" type="Spawn" x="1744.46" y="1851.19" width="23" height="21">
+  <object id="33" name="Gabz" type="Spawn" x="1744.46" y="1851.19">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="own_script" value="candor/GabzGlobal.gd"/>

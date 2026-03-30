@@ -142,14 +142,14 @@
    </properties>
    <polygon points="19.8333,10 51.8333,10 51.8333,42 19.8333,42"/>
   </object>
-  <object id="31" name="Wie" type="Spawn" x="3823" y="2624" width="1" height="1">
+  <object id="31" name="Wie" type="Spawn" x="3823" y="2624">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/Wie.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="32" name="Andi" type="Spawn" x="4382" y="2169" width="1" height="1">
+  <object id="32" name="Andi" type="Spawn" x="3951" y="2592">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/Andi.gd"/>

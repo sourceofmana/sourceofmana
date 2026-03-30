@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csmocgom16lgd"
-path="res://.godot/imported/large-chest.png-89608a5c3f04a6f93d093c46b5a7f284.ctex"
+uid="uid://d073x7fif3tmr"
+path="res://.godot/imported/chest-large.png-ab20c2d0a2b6f4d061912b90816b2fae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/sprites/npcs/large-chest.png"
-dest_files=["res://.godot/imported/large-chest.png-89608a5c3f04a6f93d093c46b5a7f284.ctex"]
+source_file="res://data/graphics/sprites/npcs/chest-large.png"
+dest_files=["res://.godot/imported/chest-large.png-ab20c2d0a2b6f4d061912b90816b2fae.ctex"]
 
 [params]
 

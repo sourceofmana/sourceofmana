@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://bnaqbs0np0lkj"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_n3wkw"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_02asj"]
+[ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_7ndjh"]
+
+[resource]
+script = ExtResource("2_02asj")
+_parent = ExtResource("2_7ndjh")
+_id = 217460284
+_name = "Chest"
+_spritePreset = "Chest"
+_collision = "Large"
+_radius = 26
+_stats = {
+"level": 1
+}
+_equipment = Array[ExtResource("1_n3wkw")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/npcs/chest-small.png"
+_skillSet = PackedInt64Array()
+_drops = PackedInt64Array()

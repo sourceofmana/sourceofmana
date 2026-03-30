@@ -1175,7 +1175,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="31" name="Piou" type="Spawn" x="0" y="0">
+  <object id="31" name="Piou" type="Spawn" x="-24" y="16">
    <properties>
     <property name="count" type="int" value="4"/>
     <property name="respawn_delay" type="float" value="15000"/>

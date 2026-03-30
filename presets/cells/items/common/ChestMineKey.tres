@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://dh7m3lap2x4wn"]
+
+[ext_resource type="Texture2D" uid="uid://6djajxhhk1c7" path="res://data/graphics/items/common/treasure-key.png" id="1_epkb0"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+slot = 11
+id = 0
+name = "Chest Mine Key"
+description = "A rusty key found in the abandoned mine."
+icon = ExtResource("1_epkb0")
+weight = 15.0
+stackable = true

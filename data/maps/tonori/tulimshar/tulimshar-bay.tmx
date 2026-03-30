@@ -152,28 +152,28 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="34" name="Flour Barrel" type="Spawn" x="1268" y="1587" width="1" height="1">
+  <object id="34" name="Flour Barrel" type="Spawn" x="1268" y="1587">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/FlourBarrel.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="35" name="Flour Barrel" type="Spawn" x="1551" y="1843" width="1" height="1">
+  <object id="35" name="Flour Barrel" type="Spawn" x="1551" y="1843">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/Barrel.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="36" name="Flour Barrel" type="Spawn" x="1265" y="2056" width="1" height="1">
+  <object id="36" name="Flour Barrel" type="Spawn" x="1265" y="2056">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/Barrel.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="37" name="Flour Barrel" type="Spawn" x="1521" y="2411" width="1" height="1">
+  <object id="37" name="Flour Barrel" type="Spawn" x="1521" y="2411">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/Barrel.gd"/>
