@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cud1m0r5spk2n"]
+
+[ext_resource type="Texture2D" uid="uid://bijq3a5f8qur6" path="res://data/graphics/effects/particles/twinkle.png" id="1_gcm2v"]
+
+[sub_resource type="Gradient" id="Gradient_alpha"]
+resource_local_to_scene = true
+offsets = PackedFloat32Array(0, 0.2, 0.5, 0.8, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 0.95, 0.75, 0.8, 1, 1, 1, 1, 1, 0.95, 0.75, 0.8, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_alpha"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_alpha")
+
+[sub_resource type="Curve" id="Curve_8wb8n"]
+_data = [Vector2(0, 0.34831464), 0.0, 0.0, 0, 0, Vector2(0.15450644, 1), 0.0, 0.0, 0, 0, Vector2(0.39055794, 0.7086207), -2.901341, -2.901341, 0, 0, Vector2(1, 0.18189657), -0.609066, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_ywaie"]
+curve = SubResource("Curve_8wb8n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_twinkle"]
+resource_local_to_scene = true
+lifetime_randomness = 0.6
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0, 0, 0)
+spread = 0.0
+angular_velocity_min = 249.99998
+angular_velocity_max = 399.99997
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_ywaie")
+color_ramp = SubResource("GradientTexture1D_alpha")
+
+[node name="Twinkle Particles" type="GPUParticles2D" unique_id=773227535]
+amount = 4
+texture = ExtResource("1_gcm2v")
+lifetime = 6.0
+explosiveness = 0.41
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_twinkle")

@@ -64,6 +64,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/effects/particles/ship-trails.png [Reid]
 ./graphics/effects/particles/smoke.png [Reid]
 ./graphics/effects/particles/sparkle.png [Reid]
+./graphics/effects/particles/twinkle.png [Reid]
 ./graphics/effects/sonic-wave.png [Pateame] [Reid]
 ./graphics/emotes/amused.png [Modanung]
 ./graphics/emotes/angel.png [Modanung]
