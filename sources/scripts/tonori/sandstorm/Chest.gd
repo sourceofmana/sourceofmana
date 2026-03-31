@@ -1,7 +1,7 @@
 extends NpcScript
 
 # Quest ID
-const questID : int = ProgressCommons.Quest.MINE_CHEST
+const questID : int = ProgressCommons.Quest.SANDSTORM_MINE_ABANDONED_TREASURE
 
 # Required items
 var chestMineKeyID : int = DB.GetCellHash("Chest Mine Key")
@@ -12,8 +12,8 @@ var shortSwordID : int = DB.GetCellHash("Short Sword")
 #
 func OnStart():
 	match GetQuest(questID):
-		ProgressCommons.MINE_CHEST.KEY_FOUND: OnTryOpen()
-		ProgressCommons.MINE_CHEST.REWARDS_WITHDREW: OnEmpty()
+		ProgressCommons.SANDSTORM_MINE_ABANDONED_TREASURE.KEY_FOUND: OnTryOpen()
+		ProgressCommons.SANDSTORM_MINE_ABANDONED_TREASURE.REWARDS_WITHDREW: OnEmpty()
 		_: OnLocked()
 
 func OnTryOpen():
@@ -26,7 +26,7 @@ func OnTryOpen():
 
 	if HasSpace(1):
 		RemoveItem(chestMineKeyID, 1)
-		SetQuest(questID, ProgressCommons.MINE_CHEST.REWARDS_WITHDREW)
+		SetQuest(questID, ProgressCommons.SANDSTORM_MINE_ABANDONED_TREASURE.REWARDS_WITHDREW)
 		AddItem(shortSwordID, 1)
 
 func OnEmpty():

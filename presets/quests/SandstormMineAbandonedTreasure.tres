@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://bdwm2jixh7ftc"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_quest"]
+
+[resource]
+script = ExtResource("1_quest")
+id = 4
+name = "Sandstorm Mine Abandoned Treasure"
+description = "A rusty key lies hidden in the depths of the abandoned mine
+ Find it and use it to unlock the small chest nearby to claim what was left behind."
+giver = "Mine Key"
+giverLocation = "Abandoned Mine"
+target = "Chest"
+targetLocation = "Abandoned Mine"
+reward = "Short Sword"
+metadata/_custom_type_script = "uid://bqxdwogial88g"
