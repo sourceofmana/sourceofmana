@@ -72,6 +72,8 @@ func LoadMapData():
 				spawnObject.own_script = spawn[7]
 				spawnObject.nick = spawn[8]
 				spawnObject.is_always_visible = spawn[9] if spawn.size() > 9 else false
+				spawnObject.direction = spawn[10] if spawn.size() > 10 else ActorCommons.Direction.UNKNOWN
+				spawnObject.state = spawn[11] if spawn.size() > 11 else ActorCommons.State.UNKNOWN
 				spawnObject.is_global = spawnObject.spawn_position < Vector2i.LEFT
 				spawnObject.is_persistant = true
 				spawnObject.map = self

@@ -22,14 +22,20 @@ static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = 
 	match spawn.type:
 		"Npc":
 			actor = NpcAgent.new(ActorCommons.Type.NPC, data, nick, true)
-			if data._direction != ActorCommons.Direction.UNKNOWN:
-				actor.currentOrientation = ActorCommons.GetDirectionFromEnum(data._direction)
+			var npcDir : ActorCommons.Direction = spawn.direction if spawn.direction != ActorCommons.Direction.UNKNOWN else data._direction
+			if npcDir != ActorCommons.Direction.UNKNOWN:
+				actor.currentOrientation = ActorCommons.GetDirectionFromEnum(npcDir as ActorCommons.Direction)
+			if spawn.state != ActorCommons.State.UNKNOWN:
+				actor.defaultState = spawn.state as ActorCommons.State
 			actor.spawnInfo = spawn
 			actor.playerScriptPath = spawn.player_script
 			actor.ownScriptPath = spawn.own_script
 		"Monster":
 			actor = MonsterAgent.new(ActorCommons.Type.MONSTER, data, nick, true)
-			actor.currentOrientation = ActorCommons.GetDirectionFromEnum(data._direction)
+			var mobDir : int = spawn.direction if spawn.direction != ActorCommons.Direction.UNKNOWN else data._direction
+			actor.currentOrientation = ActorCommons.GetDirectionFromEnum(mobDir as ActorCommons.Direction)
+			if spawn.state != ActorCommons.State.UNKNOWN:
+				actor.defaultState = spawn.state as ActorCommons.State
 			actor.spawnInfo = spawn
 		"Player":
 			actor = PlayerAgent.new(ActorCommons.Type.PLAYER, data, nick, true)

@@ -55,7 +55,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="5" name="Tulimshar Desert Guard" type="Spawn" x="1451" y="3629">
+  <object id="5" name="Tulimshar Desert Guard" type="Spawn" x="1145" y="3629" width="510" height="202">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="nick" value="Nathan"/>
@@ -63,7 +63,7 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="6" name="Tulimshar Desert Sbire" type="Spawn" x="1680" y="2640">
+  <object id="6" name="Tulimshar Desert Sbire" type="Spawn" x="1592" y="2628" width="152" height="380">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="nick" value="Sawyl"/>
@@ -187,7 +187,7 @@
   <object id="36" name="SandstormPolygon" type="Ambient" x="121" y="4733">
    <polyline points="-39,9 482,-664 894,-848 916,-960 958,-1354 1149,-1499 1342,-1484 1476,-1606 1579,-2096 1394,-2936 1315,-3129 1337,-3770 2049,-4021 4691,-4030 4582,-3509 4918,-3106 4872,-2260 5043,-1878 4949,-1672 3367,-1242 3652,-997 3640,-611 3367,-573 3366,-481 3676,-335 3758,-12"/>
   </object>
-  <object id="37" name="Tulimshar Desert Guard" type="Spawn" x="2955" y="1145">
+  <object id="37" name="Tulimshar Desert Guard" type="Spawn" x="2863" y="1063" width="180" height="170">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="nick" value="Dausen"/>
@@ -195,7 +195,7 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="39" name="Tulimshar Desert Sbire" type="Spawn" x="4533" y="2964">
+  <object id="39" name="Tulimshar Desert Sbire" type="Spawn" x="4357" y="2384" width="264" height="528">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="nick" value="Elias"/>

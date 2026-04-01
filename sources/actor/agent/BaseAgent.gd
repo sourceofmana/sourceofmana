@@ -23,6 +23,7 @@ var currentVelocity : Vector2			= Vector2.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var currentWalkSpeed : Vector2			= Vector2.ZERO
 var currentSkillID : int				= DB.UnknownHash
+var defaultState : ActorCommons.State	= ActorCommons.State.UNKNOWN
 var requireFullUpdate : bool			= false
 var requireUpdate : bool				= false
 
@@ -166,15 +167,19 @@ func SetData():
 	for skillID in data._skillSet:
 		AddSkill(DB.SkillsDB[skillID], data._skillProba[skillID])
 
-	if data._state != ActorCommons.State.UNKNOWN:
-		SetState(data._state)
+	if defaultState == ActorCommons.State.UNKNOWN and data._state != ActorCommons.State.UNKNOWN:
+		defaultState = data._state
+	if defaultState != ActorCommons.State.UNKNOWN:
+		SetState(defaultState)
 
 	# Navigation
-	if !(data._behaviour & AICommons.Behaviour.IMMOBILE):
-		if self is PlayerAgent:
-			agent = FileSystem.LoadEntityComponent("navigations/PlayerAgent")
-		else:
+	if self is AIAgent:
+		if not AICommons.IsStationary(self):
 			agent = FileSystem.LoadEntityComponent("navigations/NPAgent")
+	elif self is PlayerAgent:
+		agent = FileSystem.LoadEntityComponent("navigations/PlayerAgent")
+
+	if agent:
 		agent.set_radius(data._radius)
 		agent.set_neighbor_distance(data._radius * 2.0)
 		agent.set_avoidance_priority(clampf(data._radius / float(ActorCommons.MaxEntityRadiusSize), 0.0, 1.0))
@@ -185,7 +190,7 @@ func RefreshWalkSpeed():
 	var speed : float = Formula.GetWalkSpeed(stat)
 	if agent:
 		agent.set_max_speed(speed)
-	currentWalkSpeed = Vector2(speed, speed)
+		currentWalkSpeed = Vector2(speed, speed)
 
 #
 func Damage(_caller : BaseAgent):
@@ -250,7 +255,7 @@ func _velocity_computed(safeVelocity : Vector2i):
 	elif SkillCommons.IsStaticCasting(self):
 		SetState(DB.SkillsDB[currentSkillID].state)
 	elif safeVelocity == Vector2i.ZERO:
-		SetState(ActorCommons.State.IDLE)
+		SetState(defaultState if defaultState != ActorCommons.State.UNKNOWN else ActorCommons.State.IDLE)
 	else:
 		SetState(ActorCommons.State.WALK)
 

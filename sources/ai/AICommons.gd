@@ -84,6 +84,10 @@ static func IsAgentMoving(agent : AIAgent):
 static func IsReachable(agent : AIAgent, target : BaseAgent) -> bool:
 	return SkillCommons.IsInteractable(agent, target) and WorldNavigation.GetDistanceSquaredSafe(agent, target.position) < ReachDistanceSquared
 
+static func IsStationary(agent : AIAgent) -> bool:
+	return (agent.data and agent.data._behaviour & AICommons.Behaviour.IMMOBILE) or \
+		(agent.spawnInfo and agent.spawnInfo.spawn_offset == Vector2i.ZERO and not agent.spawnInfo.is_global)
+
 static func CanWalk(agent: AIAgent):
 	return agent.agent != null
 

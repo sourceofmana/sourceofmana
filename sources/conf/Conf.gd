@@ -83,5 +83,4 @@ static func Init():
 	confFiles[Type.USERSETTINGS] = FileSystem.LoadConfig("settings", true)
 	confFiles[Type.CREDENTIAL] = FileSystem.LoadConfig("credential", true)
 	confFiles[Type.AUTH_TOKEN] = FileSystem.LoadConfig("auth_token", true)
-	print(confFiles[Type.CREDENTIAL])
 	assert(confFiles.size() == Type.COUNT, "Config files count mismatch")
