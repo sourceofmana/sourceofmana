@@ -317,11 +317,10 @@ func ApplyStep():
 		var dialogueStep : Dictionary = steps[step]
 		while dialogueStep.has("action"):
 			dialogueStep["action"].call()
-			if step + 1 < stepCount:
-				step += 1
-				dialogueStep = steps[step]
-			else:
+			step += 1
+			if step >= stepCount:
 				break
+			dialogueStep = steps[step]
 
 		if dialogueStep.has("text"):
 			if not windowToggled:
