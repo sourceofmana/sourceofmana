@@ -4,7 +4,7 @@
 
 [sub_resource type="Gradient" id="Gradient_alpha"]
 resource_local_to_scene = true
-offsets = PackedFloat32Array(0, 0.2, 0.5, 0.8, 1)
+offsets = PackedFloat32Array(0, 0.14009662, 0.5, 0.8695652, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 0.95, 0.75, 0.8, 1, 1, 1, 1, 1, 0.95, 0.75, 0.8, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_alpha"]
@@ -31,14 +31,13 @@ angular_velocity_min = 249.99998
 angular_velocity_max = 399.99997
 gravity = Vector3(0, 0, 0)
 scale_min = 0.5
-scale_max = 2.0
 scale_curve = SubResource("CurveTexture_ywaie")
 color_ramp = SubResource("GradientTexture1D_alpha")
 
 [node name="Twinkle Particles" type="GPUParticles2D" unique_id=773227535]
-amount = 4
+amount = 1
 texture = ExtResource("1_gcm2v")
 lifetime = 6.0
 explosiveness = 0.41
-randomness = 0.5
+randomness = 0.83
 process_material = SubResource("ParticleProcessMaterial_twinkle")

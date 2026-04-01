@@ -25,7 +25,7 @@
  </layer>
  <layer id="6" name="Ground 2" width="128" height="128">
   <data encoding="base64" compression="gzip">
-   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
+   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
   </data>
  </layer>
  <layer id="2" name="Fringe" width="128" height="128">
@@ -72,7 +72,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="34" name="Mine Key" type="Spawn" x="2559" y="3090">
+  <object id="34" name="Mine Key" type="Spawn" x="2881" y="2938">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/sandstorm/MineKey.gd"/>
@@ -94,6 +94,6 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="35" name="Twinkle" type="FX" x="2559" y="3090"/>
+  <object id="35" name="Twinkle" type="FX" x="2881" y="2929"/>
  </objectgroup>
 </map>
