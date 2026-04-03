@@ -43,7 +43,12 @@ func AddTrigger():
 	var triggerObject : TriggerObject = TriggerObject.new()
 	triggerObject.linkedNpc = self
 
-	if spawnInfo.trigger_radius > 0.0:
+	if not spawnInfo.trigger_polygon.is_empty():
+		# Use polygon shape
+		var collisionPolygon : CollisionPolygon2D = CollisionPolygon2D.new()
+		collisionPolygon.polygon = spawnInfo.trigger_polygon
+		triggerObject.add_child(collisionPolygon)
+	elif spawnInfo.trigger_radius > 0.0:
 		# Use explicit trigger radius
 		var collisionShape : CollisionShape2D = CollisionShape2D.new()
 		var circle : CircleShape2D = CircleShape2D.new()

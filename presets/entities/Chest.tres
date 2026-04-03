@@ -10,7 +10,6 @@ _parent = ExtResource("2_7ndjh")
 _id = 217460284
 _name = "Chest"
 _spritePreset = "Chest"
-_collision = "Large"
 _radius = 26
 _stats = {
 "level": 1

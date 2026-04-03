@@ -5,14 +5,6 @@ var areas : Dictionary[int, WorldMap]				= {}
 var commands : WorldCommands						= WorldCommands.new()
 
 # Getters
-func CanWarp(agent : BaseAgent) -> WarpObject:
-	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
-	if map:
-		for warp in map.warps:
-			if warp and Geometry2D.is_point_in_polygon(agent.get_position(), warp.polygon):
-				return warp
-	return null
-
 func GetMap(mapID : int) -> WorldMap:
 	return areas.get(mapID, null)
 
@@ -88,20 +80,17 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 		if instance:
 			var agentRID : int = agent.get_rid().get_id()
 			for neighbour in instance.players:
-				if not neighbour:
-					continue
-				var neighbourRID : int = neighbour.get_rid().get_id()
-				BulkPreload(neighbour, neighbourRID, agent.peerID)
+				if neighbour:
+					var neighbourRID : int = neighbour.get_rid().get_id()
+					BulkPreload(neighbour, neighbourRID, agent.peerID)
 			for neighbour in instance.npcs:
-				if not neighbour:
-					continue
-				var neighbourRID : int = neighbour.get_rid().get_id()
-				BulkPreload(neighbour, neighbourRID, agent.peerID)
+				if neighbour and neighbour.data and not neighbour.data._spritePreset.is_empty():
+					var neighbourRID : int = neighbour.get_rid().get_id()
+					BulkPreload(neighbour, neighbourRID, agent.peerID)
 			for neighbour in instance.mobs:
-				if not neighbour:
-					continue
-				var neighbourRID : int = neighbour.get_rid().get_id()
-				BulkPreload(neighbour, neighbourRID, agent.peerID)
+				if neighbour:
+					var neighbourRID : int = neighbour.get_rid().get_id()
+					BulkPreload(neighbour, neighbourRID, agent.peerID)
 
 			# Spawn self
 			Network.Bulk("FullUpdateEntity", [
@@ -111,17 +100,15 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 
 			# Notify existing players about the new arrival
 			for player in instance.players:
-				if not player or player == agent or player.peerID == NetworkCommons.PeerUnknownID:
-					continue
-				BulkPreload(agent, agentRID, player.peerID)
+				if player and player != agent and player.peerID != NetworkCommons.PeerUnknownID:
+					BulkPreload(agent, agentRID, player.peerID)
 	else:
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 		var agentRID : int = agent.get_rid().get_id()
 		if inst:
 			for player in inst.players:
-				if not player or player.peerID == NetworkCommons.PeerUnknownID:
-					continue
-				BulkPreload(agent, agentRID, player.peerID)
+				if player and player.peerID != NetworkCommons.PeerUnknownID:
+					BulkPreload(agent, agentRID, player.peerID)
 
 # Generic
 func BackupPlayers():

@@ -249,17 +249,6 @@ func SetViewportSize(halfWidth : float, halfHeight : float, peerID : int):
 		)
 
 # Triggers
-func TriggerWarp(peerID : int):
-	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player and player.ownScript == null:
-		var warp : WarpObject = Launcher.World.CanWarp(player)
-		if warp:
-			var nextMap : WorldMap = Launcher.World.GetMap(warp.destinationID)
-			if nextMap:
-				Launcher.World.Warp(player, nextMap, warp.getDestinationPos(player))
-				if warp is PortObject:
-					player.Morph(false, player.GetNextPortShapeID())
-
 func TriggerSit(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player:

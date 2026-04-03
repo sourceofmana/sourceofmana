@@ -1,7 +1,7 @@
 extends NpcScript
 
 #
-const mapPos : Vector2i = Vector2i(1728, 2560)
+const mapPos : Vector2i = Vector2i(1760, 2560)
 var mapName : int = "Desert Deep Level".hash()
 
 #

@@ -72,23 +72,22 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="34" name="Mine Key" type="Spawn" x="2881" y="2938">
+  <object id="34" name="SandstormMineKey" type="Spawn" x="2881" y="2938">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/sandstorm/MineKey.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="33" name="Object" type="Spawn" x="2877" y="2430">
+  <object id="33" name="SandstormMineCrack" type="Spawn" x="2880" y="2442">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="has_trigger" type="bool" value="true"/>
     <property name="own_script" value="tonori/sandstorm/DeepLevelEntranceGlobal.gd"/>
-    <property name="trigger_radius" type="float" value="20"/>
+    <property name="trigger_radius" type="float" value="16"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="32" name="DeepLevelCrack" type="FX" x="2877" y="2430"/>
   <object id="34" name="Nickos" type="Spawn" x="2860" y="1832">
    <properties>
     <property name="count" type="int" value="1"/>
@@ -99,6 +98,5 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="35" name="Twinkle" type="FX" x="2881" y="2929"/>
  </objectgroup>
 </map>

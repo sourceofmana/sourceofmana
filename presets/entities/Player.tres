@@ -9,7 +9,7 @@ _id = 3394588274
 _name = "Player"
 _spritePreset = "Player"
 _collision = "Medium"
-_radius = 20
+_radius = 10
 _stats = {
 "level": 1,
 "walkSpeed": 160.0

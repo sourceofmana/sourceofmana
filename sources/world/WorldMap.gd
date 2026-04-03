@@ -16,7 +16,6 @@ var id : int							= DB.UnknownHash
 var name : String						= ""
 var instances : Dictionary[int, WorldInstance]	= {}
 var spawns : Array[SpawnObject]			= []
-var warps : Array[WarpObject]			= []
 var flags : int							= Flags.NONE
 var navPoly : NavigationPolygon			= null
 var mapRID : RID						= RID()
@@ -50,16 +49,13 @@ func DestroyInstance(instanceID : int):
 func Destroy():
 	for instanceID in instances.keys():
 		DestroyInstance(instanceID)
-	for warp in warps:
-		warp.queue_free()
-	warps.clear()
 
 func LoadMapData():
 	var resource : Resource = Instantiate.LoadMapData(id)
 	if resource:
 		flags = resource.flags
 		for spawn in resource.spawns:
-			assert(spawn != null, "Warp format is not supported")
+			assert(spawn != null, "Spawn format is not supported")
 			if spawn:
 				var spawnObject = SpawnObject.new()
 				spawnObject.count = spawn[0]
@@ -74,29 +70,15 @@ func LoadMapData():
 				spawnObject.is_always_visible = spawn[9] if spawn.size() > 9 else false
 				spawnObject.direction = spawn[10] if spawn.size() > 10 else ActorCommons.Direction.UNKNOWN
 				spawnObject.state = spawn[11] if spawn.size() > 11 else ActorCommons.State.UNKNOWN
+				spawnObject.has_trigger = spawn[12] if spawn.size() > 12 else false
+				spawnObject.trigger_radius = spawn[13] if spawn.size() > 13 else 0.0
+				spawnObject.trigger_polygon = spawn[14] if spawn.size() > 14 else PackedVector2Array()
+				spawnObject.destination_map = spawn[15] if spawn.size() > 15 else DB.UnknownHash
+				spawnObject.destination_pos = spawn[16] if spawn.size() > 16 else Vector2.ZERO
+				spawnObject.auto_warp = spawn[17] if spawn.size() > 17 else true
+				spawnObject.sailing_pos = spawn[18] if spawn.size() > 18 else Vector2.ZERO
 				spawnObject.is_global = spawnObject.spawn_position < Vector2i.LEFT
 				spawnObject.is_persistant = true
 				spawnObject.map = self
 				spawns.append(spawnObject)
-		for warp in resource.warps:
-			assert(warp != null, "Warp format is not supported")
-			if warp:
-				var warpObject = WarpObject.new()
-				warpObject.destinationID = warp[0]
-				warpObject.destinationPos = warp[1]
-				warpObject.polygon = warp[2]
-				if warp.size() > 3:
-					warpObject.autoWarp = warp[3]
-				warps.append(warpObject)
-		for port in resource.ports:
-			assert(port != null, "Port format is not supported")
-			if port:
-				var portObject = PortObject.new()
-				portObject.destinationID = port[0]
-				portObject.destinationPos = port[1]
-				portObject.polygon = port[2]
-				portObject.autoWarp = port[3]
-				portObject.sailingPos = port[4]
-				warps.append(portObject)
-
 func HasFlags(checkedFlags : Flags) -> bool: return !!(flags & checkedFlags)

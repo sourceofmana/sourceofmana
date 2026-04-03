@@ -265,48 +265,74 @@ func build_server() -> Resource:
 	# Can't save an array of custom objects, every element will be null when loaded
 #	root.spawns = spawn_pool
 	for spawn in spawn_pool:
-		var spawn_array : Array = []
-		spawn_array.append(spawn.count)
-		spawn_array.append(spawn.id)
-		spawn_array.append(spawn.type)
-		spawn_array.append(spawn.spawn_position)
-		spawn_array.append(spawn.spawn_offset)
-		spawn_array.append(spawn.respawn_delay)
-		spawn_array.append(spawn.player_script)
-		spawn_array.append(spawn.own_script)
-		spawn_array.append(spawn.nick)
-		spawn_array.append(spawn.is_always_visible)
-		spawn_array.append(spawn.direction)
-		spawn_array.append(spawn.state)
-		spawn_array.append(spawn.has_trigger)
-		spawn_array.append(spawn.trigger_radius)
-		root.spawns.append(spawn_array)
+		root.spawns.append(_serialize_spawn(spawn))
 
-	# Can't save an array of custom objects, every element will be null when loaded
+	# Convert warps and ports to NPC spawn entries
 	for warp in warp_pool:
-		var warp_polygon : PackedVector2Array = []
-		for warp_vertex in warp.polygon:
-			warp_polygon.append(warp_vertex + warp.position)
-		var warp_array : Array = []
-		warp_array.append(warp.destinationID)
-		warp_array.append(warp.destinationPos)
-		warp_array.append(warp_polygon)
-		warp_array.append(warp.autoWarp)
-		root.warps.append(warp_array)
+		root.spawns.append(_serialize_warp_spawn(warp))
 
 	for port in port_pool:
-		var port_polygon : PackedVector2Array = []
-		for port_vertex in port.polygon:
-			port_polygon.append(port_vertex + port.position)
-		var port_array : Array = []
-		port_array.append(port.destinationID)
-		port_array.append(port.destinationPos)
-		port_array.append(port_polygon)
-		port_array.append(port.autoWarp)
-		port_array.append(port.sailingPos)
-		root.ports.append(port_array)
+		root.spawns.append(_serialize_warp_spawn(port))
 
 	return root
+
+const WarpHash : int = 2089709631 # "Warp".hash()
+
+func _serialize_spawn(spawn : SpawnObject) -> Array:
+	var spawn_array : Array = []
+	spawn_array.append(spawn.count)
+	spawn_array.append(spawn.id)
+	spawn_array.append(spawn.type)
+	spawn_array.append(spawn.spawn_position)
+	spawn_array.append(spawn.spawn_offset)
+	spawn_array.append(spawn.respawn_delay)
+	spawn_array.append(spawn.player_script)
+	spawn_array.append(spawn.own_script)
+	spawn_array.append(spawn.nick)
+	spawn_array.append(spawn.is_always_visible)
+	spawn_array.append(spawn.direction)
+	spawn_array.append(spawn.state)
+	spawn_array.append(spawn.has_trigger)
+	spawn_array.append(spawn.trigger_radius)
+	spawn_array.append(spawn.trigger_polygon)
+	spawn_array.append(spawn.destination_map)
+	spawn_array.append(spawn.destination_pos)
+	spawn_array.append(spawn.auto_warp)
+	spawn_array.append(spawn.sailing_pos)
+	return spawn_array
+
+func _serialize_warp_spawn(warp : WarpObject) -> Array:
+	var warp_polygon : PackedVector2Array = warp.polygon
+
+	var spawn_array : Array = []
+	spawn_array.append(1)											# count
+	spawn_array.append(WarpHash)									# id
+	spawn_array.append("Npc")										# type
+	spawn_array.append(Vector2i(warp.position))						# spawn_position
+	spawn_array.append(Vector2i.ZERO)								# spawn_offset
+	spawn_array.append(0.0)											# respawn_delay
+	var isPort : bool = warp is PortObject
+	if warp.autoWarp:
+		spawn_array.append("")										# player_script
+	else:
+		spawn_array.append("generic/Warp.gd")						# player_script
+	if isPort:
+		spawn_array.append("generic/PortGlobal.gd")				# own_script
+	else:
+		spawn_array.append("generic/WarpGlobal.gd")				# own_script
+	spawn_array.append("")											# nick
+	spawn_array.append(false)										# is_always_visible
+	spawn_array.append(ActorCommons.Direction.UNKNOWN)				# direction
+	spawn_array.append(ActorCommons.State.UNKNOWN)					# state
+	spawn_array.append(true)										# has_trigger
+	spawn_array.append(0.0)											# trigger_radius
+	spawn_array.append(warp_polygon)								# trigger_polygon
+	spawn_array.append(warp.destinationID)							# destination_map
+	spawn_array.append(warp.destinationPos)							# destination_pos
+	spawn_array.append(warp.autoWarp)								# auto_warp
+	var sailing_pos : Vector2 = warp.sailingPos if warp is PortObject else Vector2.ZERO
+	spawn_array.append(sailing_pos)									# sailing_pos
+	return spawn_array
 
 # Specific nodes to add per tiles (i.e.: Particle effects, light sources, etc...)
 func add_specific_nodes(parent : Node2D, cell_in_map : Vector2, gid : int):
@@ -656,10 +682,8 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 					else:
 						if object.type == "Warp":
 							customObject = WarpObject.new()
-							collisionObject = CollisionPolygon2D.new()
 						elif object.type == "Port":
 							customObject = PortObject.new()
-							collisionObject = CollisionPolygon2D.new()
 						elif object.type == "Ambient":
 							customObject = FileSystem.LoadEffect("ambient/" + object.name)
 							if customObject is not AmbientPolygon2D:
@@ -685,6 +709,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 						if collisionObject:
 							collisionObject.polygon = points
 
+						if customObject is WarpObject:
 							var area : float = 0.0
 							var areaMin : Vector2 = Vector2.ZERO
 							var areaMax : Vector2 = Vector2.ZERO
@@ -698,17 +723,16 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							area += points[points.size() - 1].x * points[0].y - points[0].x * points[points.size() - 1].y
 							area = abs(area) / 2
 
-							if customObject is WarpObject:
-								customObject.areaSize = area
+							customObject.areaSize = area
 
-								var pointsInPolygon: Array = []
-								var numPoints : int = area / (32*32) * 24
-								pointsInPolygon.append_array(points)
-								while pointsInPolygon.size() < numPoints:
-									var randomPoint : Vector2 = Vector2(randf_range(areaMin.x, areaMax.x), randf_range(areaMin.y, areaMax.y))
-									if Geometry2D.is_point_in_polygon(randomPoint, points):
-										pointsInPolygon.append(randomPoint)
-								customObject.randomPoints = pointsInPolygon
+							var pointsInPolygon: Array = []
+							var numPoints : int = area / (32*32) * 24
+							pointsInPolygon.append_array(points)
+							while pointsInPolygon.size() < numPoints:
+								var randomPoint : Vector2 = Vector2(randf_range(areaMin.x, areaMax.x), randf_range(areaMin.y, areaMax.y))
+								if Geometry2D.is_point_in_polygon(randomPoint, points):
+									pointsInPolygon.append(randomPoint)
+							customObject.randomPoints = pointsInPolygon
 
 						customObject.polygon = points
 
@@ -747,10 +771,10 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
 						if "auto_warp" in object.properties:
 							customObject.autoWarp = object.properties.auto_warp
-						if "sail_pos_x" in object.properties and "sail_pos_y" in object.properties:
-							customObject.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize
 
 						if customObject is PortObject:
+							if "sail_pos_x" in object.properties and "sail_pos_y" in object.properties:
+								customObject.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize
 							port_pool.append(customObject)
 						elif customObject is WarpObject:
 							warp_pool.append(customObject)

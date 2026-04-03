@@ -95,11 +95,7 @@ func TriggerRespawn(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerRespawn", [], peerID)
 
 # Warp
-@rpc("any_peer", "call_remote", "unreliable", EChannel.MAP)
-func TriggerWarp(peerID : int = NetworkCommons.PeerAuthorityID):
-	CallServer("TriggerWarp", [], peerID)
-
-@rpc("authority", "call_remote", "reliable", EChannel.MAP) 
+@rpc("authority", "call_remote", "reliable", EChannel.MAP)
 func WarpPlayer(mapID : int, playerPos : Vector2, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("WarpPlayer", [mapID, playerPos], peerID)
 

@@ -150,11 +150,6 @@ func CreateEntityFromJson(json : Dictionary, parent : EntityData) -> EntityData:
 		if not parent or parent._spritePreset != value:
 			entity._spritePreset = value
 
-	if "Collision" in json:
-		var value : String = json.Collision
-		if not parent or parent._collision != value:
-			entity._collision = value
-
 	if "Radius" in json:
 		var value : int = clampi(str(json.Radius).to_int(), 0, 64)
 		if not parent or parent._radius != value:

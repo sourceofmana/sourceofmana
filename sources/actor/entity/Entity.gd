@@ -63,8 +63,6 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 
 # Local player specific functions
 func SetLocalPlayer():
-	collision_layer |= 2
-
 	if Launcher.Camera and Launcher.Camera.camera:
 		Launcher.Camera.remoteTransform = RemoteTransform2D.new()
 		add_child.call_deferred(Launcher.Camera.remoteTransform)

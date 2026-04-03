@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://bnn0hg5s025wh"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_7sdca"]
+[ext_resource type="Resource" uid="uid://dx6dcrwjjqbjj" path="res://presets/entities/Object.tres" id="2_vtp66"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_dsnwk"]
+
+[sub_resource type="Resource" id="Resource_6o40j"]
+script = ExtResource("3_dsnwk")
+_parent = ExtResource("2_vtp66")
+_id = 817801695
+_name = "DeepLevelCrack"
+_spritePreset = "DeepLevelCrack"
+_stats = {
+"level": 1
+}
+_equipment = Array[ExtResource("1_7sdca")]([null, null, null, null, null, null, null, null])
+_behaviour = 9
+_skillSet = PackedInt64Array()
+_drops = PackedInt64Array()
+
+[resource]
+script = ExtResource("3_dsnwk")
+_parent = SubResource("Resource_6o40j")
+_id = 434267405
+_name = "SandstormMineCrack"
+_spritePreset = "SandstormMineCrack"
+_radius = 10
+_stats = {
+"level": 1
+}
+_behaviour = 8
+_skillSet = PackedInt64Array()
+_drops = PackedInt64Array()

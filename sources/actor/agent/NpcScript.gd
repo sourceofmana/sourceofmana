@@ -329,9 +329,6 @@ func ApplyStep():
 			NpcCommons.ContextText(own, npc.nick, dialogueStep["text"])
 
 		if dialogueStep.has("choices"):
-			if not windowToggled:
-				ToggleWindow(true)
-
 			var choices : PackedStringArray = []
 			for choice in dialogueStep["choices"]:
 				if choice.has("text"):

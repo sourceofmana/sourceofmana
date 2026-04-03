@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://b1kfl4gvrsdj7"]
+
+[ext_resource type="PackedScene" uid="uid://byv0fnv3qmr7c" path="res://presets/effects/particles/SandstormMineCrack.tscn" id="1_7f24v"]
+[ext_resource type="PackedScene" uid="uid://bpqxr3214t821" path="res://presets/effects/LightSource.tscn" id="2_v4a54"]
+
+[node name="Node2D" type="Node2D" unique_id=660855007]
+
+[node name="DeepLevelCrack" parent="." unique_id=1538725904 instance=ExtResource("1_7f24v")]
+
+[node name="TorchGlow" parent="." unique_id=1465313373 instance=ExtResource("2_v4a54")]
+position = Vector2(0, -15)
+radius = 32

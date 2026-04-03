@@ -6,7 +6,6 @@ const COLUMNS : Array[Dictionary] = [
 	{ "name" : "Name", "property" : "_name", "type" : TYPE_STRING, "editable" : true, "width" : 150 },
 	{ "name" : "Parent", "property" : "_parent", "type" : TYPE_OBJECT, "editable" : false, "width" : 120 },
 	{ "name" : "Sprite", "property" : "_spritePreset", "type" : TYPE_STRING, "editable" : true, "width" : 120 },
-	{ "name" : "Collision", "property" : "_collision", "type" : TYPE_STRING, "editable" : true, "width" : 100 },
 	{ "name" : "Radius", "property" : "_radius", "type" : TYPE_INT, "editable" : true, "width" : 70 },
 	{ "name" : "Display Name", "property" : "_displayName", "type" : TYPE_BOOL, "editable" : true, "width" : 100 },
 	{ "name" : "Direction", "property" : "_direction", "type" : TYPE_INT, "editable" : true, "width" : 90, "is_enum" : true, "enum_name" : "Direction" },

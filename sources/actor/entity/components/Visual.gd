@@ -8,7 +8,6 @@ signal spriteOffsetUpdate
 @onready var entity : Entity				= get_parent()
 
 var preset : Node2D							= null
-var collision : CollisionShape2D			= null
 var animation : AnimationPlayer				= null
 var animationTree : AnimationTree			= null
 var sprites : Array[Sprite2D]				= []
@@ -48,18 +47,9 @@ func ResetData():
 	equipmentEffects.fill(null)
 	preset = null
 	originalAnimationLib = null
-	if collision:
-		collision.queue_free()
-		collision = null
 
 func LoadData(data : EntityData):
 	ResetData()
-
-	# Collision
-	if data._collision and entity.type == ActorCommons.Type.PLAYER:
-		collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
-		if collision:
-			entity.add_child.call_deferred(collision)
 
 	# Sprite Preset
 	if data._spritePreset:

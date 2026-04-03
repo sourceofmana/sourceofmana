@@ -8,7 +8,6 @@ class_name EntityData
 @export var _id : int							= DB.UnknownHash
 @export var _name : String 						= ""
 @export var _spritePreset : String				= ""
-@export var _collision : String					= ""
 @export var _radius : int						= 0
 @export var _stats : Dictionary					= ActorCommons.DefaultStats.duplicate()
 @export_category("Visual")
@@ -48,7 +47,6 @@ func GetMergedEntity() -> EntityData:
 	merged._id = _id if _id != DB.UnknownHash else _name.hash()
 	merged._name = _name if _name != "" else merged._name
 	merged._spritePreset = _spritePreset if _spritePreset != "" else merged._spritePreset
-	merged._collision = _collision if _collision != "" else merged._collision
 	merged._radius = _radius if _radius != 0 else merged._radius
 	merged._customTexture = _customTexture if _customTexture != "" else merged._customTexture
 	merged._customMaterial = _customMaterial if _customMaterial != null else merged._customMaterial
@@ -103,8 +101,6 @@ static func Create(result : Dictionary) -> EntityData:
 	entity._name = result.Name
 	if "SpritePreset" in result:
 		entity._spritePreset = result.SpritePreset
-	if "Collision" in result:
-		entity._collision = result.Collision
 	if "Radius" in result:
 		entity._radius = clampi(result.Radius.to_int(), 0, ActorCommons.MaxEntityRadiusSize)
 	if "Equipment" in result:
