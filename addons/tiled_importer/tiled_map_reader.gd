@@ -278,6 +278,8 @@ func build_server() -> Resource:
 		spawn_array.append(spawn.is_always_visible)
 		spawn_array.append(spawn.direction)
 		spawn_array.append(spawn.state)
+		spawn_array.append(spawn.has_trigger)
+		spawn_array.append(spawn.trigger_radius)
 		root.spawns.append(spawn_array)
 
 	# Can't save an array of custom objects, every element will be null when loaded
@@ -608,6 +610,10 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 										if ActorCommons.State.keys()[state_id + 1] == state_name:
 											spawn_object.state = state_id
 											break
+								if "has_trigger" in object.properties:
+									spawn_object.has_trigger = object.properties.has_trigger
+								if "trigger_radius" in object.properties:
+									spawn_object.trigger_radius = object.properties.trigger_radius
 							spawn_pool.push_back(spawn_object)
 						continue
 
@@ -691,16 +697,18 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 
 							area += points[points.size() - 1].x * points[0].y - points[0].x * points[points.size() - 1].y
 							area = abs(area) / 2
-							customObject.areaSize = area
 
-							var pointsInPolygon: Array = []
-							var numPoints : int = area / (32*32) * 24
-							pointsInPolygon.append_array(points)
-							while pointsInPolygon.size() < numPoints:
-								var randomPoint : Vector2 = Vector2(randf_range(areaMin.x, areaMax.x), randf_range(areaMin.y, areaMax.y))
-								if Geometry2D.is_point_in_polygon(randomPoint, points):
-									pointsInPolygon.append(randomPoint)
-							customObject.randomPoints = pointsInPolygon
+							if customObject is WarpObject:
+								customObject.areaSize = area
+
+								var pointsInPolygon: Array = []
+								var numPoints : int = area / (32*32) * 24
+								pointsInPolygon.append_array(points)
+								while pointsInPolygon.size() < numPoints:
+									var randomPoint : Vector2 = Vector2(randf_range(areaMin.x, areaMax.x), randf_range(areaMin.y, areaMax.y))
+									if Geometry2D.is_point_in_polygon(randomPoint, points):
+										pointsInPolygon.append(randomPoint)
+								customObject.randomPoints = pointsInPolygon
 
 						customObject.polygon = points
 

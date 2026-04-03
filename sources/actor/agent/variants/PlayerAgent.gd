@@ -4,18 +4,20 @@ class_name PlayerAgent
 # Player-specific variables
 var peerID : int						= NetworkCommons.PeerUnknownID
 var lastStat : ActorStats				= ActorStats.new()
+var triggerShape : CollisionShape2D		= CollisionShape2D.new()
+var circleShape : CircleShape2D			= CircleShape2D.new()
 var respawnDestination : Destination	= null
 var exploreOrigin : Destination			= null
 var ownScript : NpcScript				= null
 
 # Regen
-var regenTimer : Timer					= null
+var regenTimer : Timer					= Timer.new()
 var statsUpdatePending : bool			= false
 
 # Visible surrounding actors
 var visibleAgents : Dictionary[int, bool]= {}
 var lastCheckedPosition : Vector2		= Vector2.ZERO
-var visibilityTimer : Timer				= null
+var visibilityTimer : Timer				= Timer.new()
 var visibilityHalfSize : Vector2		= Vector2(NetworkCommons.MaxVisibilityHalfWidth, NetworkCommons.MaxVisibilityHalfHeight)
 
 #
@@ -197,10 +199,20 @@ func NotifyPosition():
 		lastCheckedPosition = position
 		UpdateVisibility()
 
+# Override
+func SetData():
+	super.SetData()
+	circleShape.radius = entityRadius
+
 func _ready():
 	super._ready()
 
-	regenTimer = Timer.new()
+	collision_mask = 0
+	triggerShape.set_name("TriggerShape")
+	circleShape.radius = 1.0
+	triggerShape.shape = circleShape
+	add_child.call_deferred(triggerShape)
+
 	regenTimer.set_name("RegenTimer")
 	regenTimer.set_one_shot(false)
 	regenTimer.set_wait_time(ActorCommons.RegenTickInterval)
@@ -208,7 +220,6 @@ func _ready():
 	regenTimer.timeout.connect(OnRegenTick)
 	add_child.call_deferred(regenTimer)
 
-	visibilityTimer = Timer.new()
 	visibilityTimer.set_name("VisibilityTimer")
 	visibilityTimer.set_one_shot(false)
 	visibilityTimer.set_wait_time(ActorCommons.VisibilityCheckTimeInternal)

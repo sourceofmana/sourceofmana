@@ -381,6 +381,8 @@ func _init(_npc : NpcAgent, _own : BaseAgent):
 func OnStart(): pass
 func OnContinue(): pass
 func OnTrigger(): pass
+func OnAreaEnter(_player : PlayerAgent): pass
+func OnAreaExit(_player : PlayerAgent): pass
 func OnQuit():
 	if not IsPlayer():
 		npc.SubInteraction()

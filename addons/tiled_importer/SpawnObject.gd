@@ -15,6 +15,8 @@ class_name SpawnObject
 @export var state : ActorCommons.State	= ActorCommons.State.UNKNOWN
 @export var is_global : bool			= false
 @export var is_always_visible : bool	= false
+@export var has_trigger : bool			= false
+@export var trigger_radius : float		= 0.0
 
 var is_persistant : bool				= false
 var map : WorldMap						= null
