@@ -8,7 +8,6 @@ script = ExtResource("2_vkvo0")
 _id = 3264744754
 _name = "Marvin"
 _spritePreset = "Slime"
-_collision = "Medium"
 _radius = 10
 _stats = {
 "level": 5,

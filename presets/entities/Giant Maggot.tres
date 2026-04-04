@@ -8,7 +8,6 @@ script = ExtResource("2_gol0b")
 _id = 2624609623
 _name = "Giant Maggot"
 _spritePreset = "Generic4Directions"
-_collision = "Large"
 _radius = 25
 _stats = {
 "level": 1,

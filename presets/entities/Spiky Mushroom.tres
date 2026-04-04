@@ -8,7 +8,6 @@ script = ExtResource("2_l2mfi")
 _id = 2549154767
 _name = "Spiky Mushroom"
 _spritePreset = "Generic4Directions"
-_collision = "Medium"
 _radius = 16
 _stats = {
 "level": 1,

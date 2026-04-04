@@ -3,5 +3,4 @@
 [ext_resource type="Script" uid="uid://cotu7uabq3nay" path="res://sources/effects/LightSource.gd" id="1_0jqv3"]
 
 [node name="LightSource" type="Marker2D" unique_id=1465313373 groups=["lights"]]
-position = Vector2(0, 0)
 script = ExtResource("1_0jqv3")

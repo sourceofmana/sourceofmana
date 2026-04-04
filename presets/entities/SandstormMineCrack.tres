@@ -28,6 +28,7 @@ _radius = 10
 _stats = {
 "level": 1
 }
+_equipment = Array[ExtResource("1_7sdca")]([null, null, null, null, null, null, null, null])
 _behaviour = 8
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

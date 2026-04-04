@@ -8,7 +8,6 @@ script = ExtResource("2_juena")
 _id = 1836204198
 _name = "Fire Goblin"
 _spritePreset = "Generic4Directions"
-_collision = "Medium"
 _radius = 16
 _stats = {
 "level": 1,

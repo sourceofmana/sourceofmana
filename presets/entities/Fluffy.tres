@@ -8,7 +8,6 @@ script = ExtResource("2_5m01e")
 _id = 3003932433
 _name = "Fluffy"
 _spritePreset = "Generic4Directions"
-_collision = "Medium"
 _radius = 16
 _stats = {
 "level": 1,

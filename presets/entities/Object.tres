@@ -7,7 +7,6 @@
 script = ExtResource("2_wjckm")
 _id = 3343895260
 _name = "Object"
-_collision = "Small"
 _radius = 16
 _stats = {
 "level": 1

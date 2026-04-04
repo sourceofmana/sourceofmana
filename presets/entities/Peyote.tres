@@ -8,7 +8,6 @@ script = ExtResource("2_2r2rl")
 _id = 3387138907
 _name = "Peyote"
 _spritePreset = "Peyote"
-_collision = "Medium"
 _radius = 14
 _stats = {
 "level": 1

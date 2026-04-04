@@ -8,7 +8,6 @@ script = ExtResource("2_xb367")
 _id = 2089573209
 _name = "Ship"
 _spritePreset = "Ship"
-_collision = "Medium"
 _radius = 16
 _stats = {
 "attack": 0.0,

@@ -10,7 +10,6 @@ _parent = ExtResource("2_xd5ga")
 _id = 228382689
 _name = "Locks"
 _spritePreset = "CaveLocks"
-_collision = "Large"
 _radius = 26
 _stats = {
 "level": 1

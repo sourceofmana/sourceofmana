@@ -8,7 +8,6 @@ script = ExtResource("2_yfu84")
 _id = 4234567318
 _name = "Fire Skull"
 _spritePreset = "Skull"
-_collision = "Medium"
 _radius = 12
 _stats = {
 "level": 10,

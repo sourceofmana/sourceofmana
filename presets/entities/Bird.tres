@@ -8,7 +8,6 @@ script = ExtResource("2_jh7ao")
 _id = 2088963654
 _name = "Bird"
 _spritePreset = "Bird"
-_collision = "Medium"
 _radius = 20
 _stats = {
 "castAttackDelay": 0.1,

@@ -10,7 +10,6 @@ _parent = ExtResource("2_qiwmn")
 _id = 970294591
 _name = "Thiefs Chest"
 _spritePreset = "Chest"
-_collision = "Large"
 _radius = 26
 _stats = {
 "level": 1

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://dh7m3lap2x4wn"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://dyi21ir1lsl71"]
 
 [ext_resource type="Texture2D" uid="uid://6djajxhhk1c7" path="res://data/graphics/items/common/treasure-key.png" id="1_epkb0"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_script"]
