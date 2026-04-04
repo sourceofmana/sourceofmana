@@ -68,6 +68,7 @@ var _tileset_path_to_first_gid = {}
 var spawn_pool : Array = []
 var warp_pool : Array = []
 var port_pool : Array = []
+var adjacent_map_ids : Array[int] = []
 # JSON Instance
 var JSONInstance = JSON.new()
 # Tile DB
@@ -189,6 +190,8 @@ func build_client(source_path, options) -> Node2D:
 	# Set metadata
 	map_boundaries = Rect2(Vector2.ZERO, Vector2(map_width, map_height) * cell_size)
 	root.set_meta("MapBoundaries", map_boundaries.end)
+	if not adjacent_map_ids.is_empty():
+		root.set_meta("AdjacentMapIDs", PackedInt64Array(adjacent_map_ids))
 
 	# Background color
 	if options.add_background and "backgroundcolor" in map:
@@ -276,7 +279,47 @@ func build_server() -> Resource:
 
 	return root
 
-const WarpHash : int = 2089709631 # "Warp".hash()
+var WarpHash : int = "Warp".hash()
+const WarpFx : PackedScene = preload("res://presets/effects/particles/WarpLocation.tscn")
+const defaultParticlesCount : int = 12
+
+func _build_warp_particles(warpNode : Node2D, parent : Node, points : Array):
+	var area : float = 0.0
+	var areaMin : Vector2 = Vector2.ZERO
+	var areaMax : Vector2 = Vector2.ZERO
+	for i in range(points.size() - 1):
+		areaMin.x = min(areaMin.x, points[i].x)
+		areaMin.y = min(areaMin.y, points[i].y)
+		areaMax.x = max(areaMax.x, points[i].x)
+		areaMax.y = max(areaMax.y, points[i].y)
+		area += points[i].x * points[i + 1].y - points[i + 1].x * points[i].y
+	area += points[points.size() - 1].x * points[0].y - points[0].x * points[points.size() - 1].y
+	area = abs(area) / 2
+	var areaRatio : float = area / (32*32)
+
+	var randomPoints : Array = []
+	var numPoints : int = areaRatio * defaultParticlesCount * 2
+	randomPoints.append_array(points)
+	while randomPoints.size() < numPoints:
+		var randomPoint : Vector2 = Vector2(randf_range(areaMin.x, areaMax.x), randf_range(areaMin.y, areaMax.y))
+		if Geometry2D.is_point_in_polygon(randomPoint, points):
+			randomPoints.append(randomPoint)
+
+	var particle : GPUParticles2D = WarpFx.instantiate()
+	if not randomPoints.is_empty():
+		var image := Image.create(randomPoints.size(), 1, false, Image.FORMAT_RGBF)
+		for i in range(randomPoints.size()):
+			var point : Vector2 = randomPoints[i]
+			image.set_pixel(i, 0, Color(point.x, point.y, 0.0))
+		var mat : ParticleProcessMaterial = particle.process_material as ParticleProcessMaterial
+		mat.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_POINTS
+		mat.emission_shape_scale = Vector3(1.0, 1.0, 1.0)
+		mat.emission_point_count = randomPoints.size()
+		mat.emission_point_texture = ImageTexture.create_from_image(image)
+
+	particle.amount = floori(areaRatio * float(defaultParticlesCount))
+	warpNode.add_child(particle)
+	particle.set_owner(parent)
 
 func _serialize_spawn(spawn : SpawnObject) -> Array:
 	var spawn_array : Array = []
@@ -301,9 +344,7 @@ func _serialize_spawn(spawn : SpawnObject) -> Array:
 	spawn_array.append(spawn.sailing_pos)
 	return spawn_array
 
-func _serialize_warp_spawn(warp : WarpObject) -> Array:
-	var warp_polygon : PackedVector2Array = warp.polygon
-
+func _serialize_warp_spawn(warp : Dictionary) -> Array:
 	var spawn_array : Array = []
 	spawn_array.append(1)											# count
 	spawn_array.append(WarpHash)									# id
@@ -311,27 +352,25 @@ func _serialize_warp_spawn(warp : WarpObject) -> Array:
 	spawn_array.append(Vector2i(warp.position))						# spawn_position
 	spawn_array.append(Vector2i.ZERO)								# spawn_offset
 	spawn_array.append(0.0)											# respawn_delay
-	var isPort : bool = warp is PortObject
 	if warp.autoWarp:
 		spawn_array.append("")										# player_script
 	else:
 		spawn_array.append("generic/Warp.gd")						# player_script
-	if isPort:
-		spawn_array.append("generic/PortGlobal.gd")				# own_script
+	if warp.isPort:
+		spawn_array.append("generic/PortGlobal.gd")					# own_script
 	else:
-		spawn_array.append("generic/WarpGlobal.gd")				# own_script
-	spawn_array.append("")											# nick
+		spawn_array.append("generic/WarpGlobal.gd")					# own_script
+	spawn_array.append(warp.name)									# nick
 	spawn_array.append(false)										# is_always_visible
 	spawn_array.append(ActorCommons.Direction.UNKNOWN)				# direction
 	spawn_array.append(ActorCommons.State.UNKNOWN)					# state
 	spawn_array.append(true)										# has_trigger
 	spawn_array.append(0.0)											# trigger_radius
-	spawn_array.append(warp_polygon)								# trigger_polygon
+	spawn_array.append(PackedVector2Array(warp.polygon))			# trigger_polygon
 	spawn_array.append(warp.destinationID)							# destination_map
 	spawn_array.append(warp.destinationPos)							# destination_pos
 	spawn_array.append(warp.autoWarp)								# auto_warp
-	var sailing_pos : Vector2 = warp.sailingPos if warp is PortObject else Vector2.ZERO
-	spawn_array.append(sailing_pos)									# sailing_pos
+	spawn_array.append(warp.sailingPos)								# sailing_pos
 	return spawn_array
 
 # Specific nodes to add per tiles (i.e.: Particle effects, light sources, etc...)
@@ -662,6 +701,8 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 
 					# Regular shape
 					var points = null
+					var isWarp : bool = object.type == "Warp"
+					var isPort : bool = object.type == "Port"
 					if not ("polygon" in object or "polyline" in object):
 						customObject = CollisionShape2D.new()
 						customObject.shape = shape
@@ -680,10 +721,8 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 						customObject.position = offset
 					# Hand-drawn polygons
 					else:
-						if object.type == "Warp":
-							customObject = WarpObject.new()
-						elif object.type == "Port":
-							customObject = PortObject.new()
+						if isWarp or isPort:
+							customObject = Node2D.new()
 						elif object.type == "Ambient":
 							customObject = FileSystem.LoadEffect("ambient/" + object.name)
 							if customObject is not AmbientPolygon2D:
@@ -709,36 +748,14 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 						if collisionObject:
 							collisionObject.polygon = points
 
-						if customObject is WarpObject:
-							var area : float = 0.0
-							var areaMin : Vector2 = Vector2.ZERO
-							var areaMax : Vector2 = Vector2.ZERO
-							for i in range(points.size() - 1):
-								areaMin.x = min(areaMin.x, points[i].x)
-								areaMin.y = min(areaMin.y, points[i].y)
-								areaMax.x = max(areaMax.x, points[i].x)
-								areaMax.y = max(areaMax.y, points[i].y)
-								area += points[i].x * points[i + 1].y - points[i + 1].x * points[i].y
-
-							area += points[points.size() - 1].x * points[0].y - points[0].x * points[points.size() - 1].y
-							area = abs(area) / 2
-
-							customObject.areaSize = area
-
-							var pointsInPolygon: Array = []
-							var numPoints : int = area / (32*32) * 24
-							pointsInPolygon.append_array(points)
-							while pointsInPolygon.size() < numPoints:
-								var randomPoint : Vector2 = Vector2(randf_range(areaMin.x, areaMax.x), randf_range(areaMin.y, areaMax.y))
-								if Geometry2D.is_point_in_polygon(randomPoint, points):
-									pointsInPolygon.append(randomPoint)
-							customObject.randomPoints = pointsInPolygon
-
-						customObject.polygon = points
+						if customObject is Polygon2D:
+							customObject.polygon = points
 
 #					customObject.one_way_collision = object.type == "one-way"
 
+					var objectName : String = ""
 					if "name" in object and not str(object.name).is_empty():
+						objectName = str(object.name)
 						customObject.set_name(str(object.name))
 					elif "id" in object and not str(object.id).is_empty():
 						customObject.set_name(str(object.id))
@@ -761,23 +778,37 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 						set_custom_properties(customObject, object)
 
 					# Warp
-					if "type" in object and "properties" in object:
-						var dest_cellsize = cell_size
-						if "dest_cellsize" in object.properties:
-							dest_cellsize = object.properties.dest_cellsize
-						if "dest_map" in object.properties and not str(object.properties.dest_map).is_empty():
-							customObject.destinationID = object.properties.dest_map.hash()
-						if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
-							customObject.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
-						if "auto_warp" in object.properties:
-							customObject.autoWarp = object.properties.auto_warp
+					if isWarp or isPort:
+						_build_warp_particles(customObject, parent, points)
 
-						if customObject is PortObject:
-							if "sail_pos_x" in object.properties and "sail_pos_y" in object.properties:
-								customObject.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize
-							port_pool.append(customObject)
-						elif customObject is WarpObject:
-							warp_pool.append(customObject)
+						var warpData : Dictionary = {
+							"name": objectName,
+							"position": pos,
+							"polygon": points,
+							"destinationID": DB.UnknownHash,
+							"destinationPos": Vector2.ZERO,
+							"autoWarp": true,
+							"isPort": isPort,
+							"sailingPos": Vector2.ZERO,
+						}
+						if "properties" in object:
+							var dest_cellsize = cell_size
+							if "dest_cellsize" in object.properties:
+								dest_cellsize = object.properties.dest_cellsize
+							if "dest_map" in object.properties and not str(object.properties.dest_map).is_empty():
+								warpData.destinationID = object.properties.dest_map.hash()
+								if warpData.destinationID not in adjacent_map_ids:
+									adjacent_map_ids.append(warpData.destinationID)
+							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
+								warpData.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
+							if "auto_warp" in object.properties:
+								warpData.autoWarp = object.properties.auto_warp
+							if isPort and "sail_pos_x" in object.properties and "sail_pos_y" in object.properties:
+								warpData.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize
+						if isPort:
+							port_pool.append(warpData)
+						else:
+							warp_pool.append(warpData)
 
 					customObject.visible = bool(object.visible) if "visible" in object else true
 					customObject.position = pos
