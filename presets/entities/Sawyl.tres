@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://chnr2m7qw5ur7"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_sr7u8"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_m6dmi"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_cwxe8"]
+
+[resource]
+script = ExtResource("3_cwxe8")
+_parent = ExtResource("2_m6dmi")
+_id = 236203253
+_name = "Sawyl"
+_stats = {
+"gender": "Female",
+"level": 1,
+"race": "Human",
+"skintone": "Medium"
+}
+_equipment = Array[ExtResource("1_sr7u8")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/npcs/sawyl.png"
+_skillSet = PackedInt64Array()
+_drops = PackedInt64Array()

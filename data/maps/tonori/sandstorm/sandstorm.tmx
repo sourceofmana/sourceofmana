@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="187" height="143" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="42">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="187" height="143" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="43">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Faith"/>
@@ -58,19 +58,20 @@
   <object id="5" name="Tulimshar Desert Guard" type="Spawn" x="1145" y="3629" width="510" height="202">
    <properties>
     <property name="count" type="int" value="1"/>
+    <property name="is_always_visible" type="bool" value="true"/>
     <property name="nick" value="Nathan"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="6" name="Tulimshar Desert Sbire" type="Spawn" x="1592" y="2628" width="152" height="380">
+  <object id="6" name="Sawyl" type="Spawn" x="1617" y="2794">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="nick" value="Sawyl"/>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="tonori/sandstorm/Sawyl.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
+  <object id="42" name="PipeSmoke" type="FX" x="1632" y="2769"/>
   <object id="13" name="Maggot" type="Spawn" x="3752" y="3864" width="354" height="380">
    <properties>
     <property name="count" value="10"/>
@@ -195,11 +196,10 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="39" name="Tulimshar Desert Sbire" type="Spawn" x="4357" y="2384" width="264" height="528">
+  <object id="39" name="Elias" type="Spawn" x="4595" y="3245">
    <properties>
     <property name="count" type="int" value="1"/>
-    <property name="nick" value="Elias"/>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="tonori/sandstorm/Elias.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
