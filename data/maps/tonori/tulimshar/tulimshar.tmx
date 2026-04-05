@@ -297,7 +297,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="63" name="Kyle" type="Spawn" x="2866" y="2102">
+  <object id="63" name="Kael" type="Spawn" x="2866" y="2102">
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="is_always_visible" type="bool" value="true"/>

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://c11h8y8va1jhu"]
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://chhe75wc1l6qw"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_tcmrs"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_upok7"]
@@ -7,8 +7,8 @@
 [resource]
 script = ExtResource("2_upok7")
 _parent = ExtResource("2_xwl2d")
-_id = 2089304314
-_name = "Kyle"
+_id = 2089277954
+_name = "Kael"
 _stats = {
 "gender": "Male",
 "level": 1,
@@ -16,6 +16,6 @@ _stats = {
 "skintone": "Tanned"
 }
 _equipment = Array[ExtResource("1_tcmrs")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/npcs/kyle.png"
+_customTexture = "sprites/npcs/kael.png"
 _skillSet = PackedInt64Array()
 _drops = PackedInt64Array()

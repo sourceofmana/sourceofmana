@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dedge3r4k7hxl"
-path="res://.godot/imported/kyle.png-2ce7ba42cebf1bb0cbd9952f85f5cf3d.ctex"
+uid="uid://dgssqb3p4mprr"
+path="res://.godot/imported/kael.png-e8bd47f8e908815360d3db746e2d56ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/graphics/sprites/npcs/kyle.png"
-dest_files=["res://.godot/imported/kyle.png-2ce7ba42cebf1bb0cbd9952f85f5cf3d.ctex"]
+source_file="res://data/graphics/sprites/npcs/kael.png"
+dest_files=["res://.godot/imported/kael.png-e8bd47f8e908815360d3db746e2d56ed.ctex"]
 
 [params]
 
