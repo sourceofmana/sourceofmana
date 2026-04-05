@@ -107,13 +107,14 @@
   <object id="53" name="To Snake Pit" type="Warp" x="2620" y="3144">
    <properties>
     <property name="dest_map" value="Snake Pit"/>
-    <property name="dest_pos_x" type="int" value="34"/>
-    <property name="dest_pos_y" type="int" value="82"/>
+    <property name="dest_pos_x" type="int" value="32"/>
+    <property name="dest_pos_y" type="int" value="88"/>
    </properties>
    <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
   </object>
   <object id="54" name="To Snake Pit" type="Warp" x="3228" y="1448">
    <properties>
+    <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_map" value="Snake Pit"/>
     <property name="dest_pos_x" type="int" value="52"/>
     <property name="dest_pos_y" type="int" value="33"/>
@@ -159,6 +160,7 @@
    <properties>
     <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/desertpit/Mauro.gd"/>
+    <property name="state" value="sit"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
