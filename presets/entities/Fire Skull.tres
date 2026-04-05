@@ -16,8 +16,6 @@ _stats = {
 _equipment = Array[ExtResource("1_akvej")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/monsters/skull-fire.png"
 _behaviour = 4
-_skillSet = PackedInt64Array(2089110122)
-_skillProba = Dictionary[int, float]({
-2089110122: 1.0
+_skills = Dictionary[String, float]({
+"Flar": 1.0
 })
-_drops = PackedInt64Array()

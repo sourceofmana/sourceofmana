@@ -14,5 +14,3 @@ _stats = {
 "skintone": "Dark"
 }
 _customTexture = "sprites/npcs/hyland.png"
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

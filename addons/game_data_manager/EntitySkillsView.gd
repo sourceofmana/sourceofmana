@@ -54,8 +54,8 @@ func PopulateEntityList():
 		entityList.add_item(resource._name if resource.get("_name") else "Unnamed")
 		var idx : int = entityList.item_count - 1
 		entityList.set_item_metadata(idx, resource)
-		var skillsArray : PackedInt64Array = resource.get("_skillSet")
-		if not skillsArray or skillsArray.is_empty():
+		var skills : Dictionary = resource.get("_skills")
+		if not skills or skills.is_empty():
 			entityList.set_item_custom_fg_color(idx, Color.LIGHT_SLATE_GRAY)
 
 func _on_entity_selected(index : int):
@@ -71,21 +71,20 @@ func RefreshSkillsDisplay():
 	if not selectedEntity:
 		return
 
-	var skillsArray : PackedInt64Array = selectedEntity.get("_skillSet")
-	var skillsProba : Dictionary = selectedEntity.get("_skillProba")
+	var skills : Dictionary = selectedEntity.get("_skills")
 
-	if not skillsArray or skillsArray.is_empty():
+	if not skills or skills.is_empty():
 		var noSkillsLabel : Label = Label.new()
 		noSkillsLabel.text = "No skills configured. Click 'Add Skill' to add one."
 		skillsContainer.add_child(noSkillsLabel)
 		return
 
-	for i in skillsArray.size():
-		var skillId : int = skillsArray[i]
-		var probability : float = skillsProba.get(skillId, 100.0) if skillsProba else 100.0
-		CreateSkillWidget(skillId, probability, i)
+	var index : int = 0
+	for skillName in skills:
+		CreateSkillWidget(skillName, skills[skillName], index)
+		index += 1
 
-func CreateSkillWidget(skillId : int, probability : float, index : int):
+func CreateSkillWidget(skillName : String, probability : float, index : int):
 	var hbox : HBoxContainer = HBoxContainer.new()
 
 	var iconRect : TextureRect = TextureRect.new()
@@ -93,7 +92,7 @@ func CreateSkillWidget(skillId : int, probability : float, index : int):
 	iconRect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 	iconRect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
-	var skillCell : SkillCell = skillCache.get(skillId)
+	var skillCell : SkillCell = skillCache.get(skillName.hash())
 	if skillCell and skillCell.icon:
 		iconRect.texture = skillCell.icon
 
@@ -102,11 +101,9 @@ func CreateSkillWidget(skillId : int, probability : float, index : int):
 	var skillNameEdit : LineEdit = LineEdit.new()
 	skillNameEdit.custom_minimum_size = Vector2(150, 0)
 	skillNameEdit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	if skillCell:
-		skillNameEdit.text = skillCell.name
+	skillNameEdit.text = skillName
 	skillNameEdit.placeholder_text = "Skill name"
-	skillNameEdit.set_meta("skill_index", index)
-	skillNameEdit.text_submitted.connect(_on_skill_name_changed.bind(index))
+	skillNameEdit.text_submitted.connect(_on_skill_name_changed.bind(skillName))
 	hbox.add_child(skillNameEdit)
 
 	var probLabel : Label = Label.new()
@@ -120,79 +117,52 @@ func CreateSkillWidget(skillId : int, probability : float, index : int):
 	probSpin.value = probability
 	probSpin.suffix = "%"
 	probSpin.custom_minimum_size = Vector2(100, 0)
-	probSpin.set_meta("skill_index", index)
-	probSpin.value_changed.connect(_on_skill_probability_changed.bind(index))
+	probSpin.value_changed.connect(_on_skill_probability_changed.bind(skillName))
 	hbox.add_child(probSpin)
 
 	var deleteBtn : Button = Button.new()
 	deleteBtn.text = "X"
-	deleteBtn.set_meta("skill_index", index)
-	deleteBtn.pressed.connect(_on_delete_skill_pressed.bind(index))
+	deleteBtn.pressed.connect(_on_delete_skill_pressed.bind(skillName))
 	hbox.add_child(deleteBtn)
 
 	skillsContainer.add_child(hbox)
 
-func _on_skill_name_changed(newName : String, index : int):
+func _on_skill_name_changed(newName : String, oldName : String):
 	if not selectedEntity:
 		return
 
-	var skillsArray : PackedInt64Array = selectedEntity.get("_skillSet")
-	var skillsProba : Dictionary = selectedEntity.get("_skillProba")
-	if not skillsArray or index >= skillsArray.size():
+	var skills : Dictionary = selectedEntity.get("_skills")
+	if not skills:
 		return
 
 	var skillCell : SkillCell = FindSkillByName(newName)
-	if skillCell:
-		var oldSkillId : int = skillsArray[index]
-		var oldProb : float = skillsProba.get(oldSkillId, 100.0) if skillsProba else 100.0
-
-		skillsArray[index] = skillCell.id
-
-		if not skillsProba:
-			skillsProba = {}
-			selectedEntity.set("_skillProba", skillsProba)
-
-		if skillsProba.has(oldSkillId):
-			skillsProba.erase(oldSkillId)
-		skillsProba[skillCell.id] = oldProb
-
+	if skillCell and skills.has(oldName):
+		var oldProb : float = skills[oldName]
+		skills.erase(oldName)
+		skills[skillCell.name] = oldProb
 		SaveEntity()
 		RefreshSkillsDisplay()
 
-func _on_skill_probability_changed(newValue : float, index : int):
+func _on_skill_probability_changed(newValue : float, skillName : String):
 	if not selectedEntity:
 		return
 
-	var skillsArray : PackedInt64Array = selectedEntity.get("_skillSet")
-	var skillsProba : Dictionary = selectedEntity.get("_skillProba")
-	if not skillsArray or index >= skillsArray.size():
+	var skills : Dictionary = selectedEntity.get("_skills")
+	if not skills or not skills.has(skillName):
 		return
 
-	var skillId : int = skillsArray[index]
-
-	if not skillsProba:
-		skillsProba = {}
-		selectedEntity.set("_skillProba", skillsProba)
-
-	skillsProba[skillId] = newValue
+	skills[skillName] = newValue
 	SaveEntity()
 
-func _on_delete_skill_pressed(index : int):
+func _on_delete_skill_pressed(skillName : String):
 	if not selectedEntity:
 		return
 
-	var skillsArray : PackedInt64Array = selectedEntity.get("_skillSet")
-	var skillsProba : Dictionary = selectedEntity.get("_skillProba")
-	if not skillsArray or index >= skillsArray.size():
+	var skills : Dictionary = selectedEntity.get("_skills")
+	if not skills or not skills.has(skillName):
 		return
 
-	var skillId : int = skillsArray[index]
-
-	skillsArray.remove_at(index)
-
-	if skillsProba and skillsProba.has(skillId):
-		skillsProba.erase(skillId)
-
+	skills.erase(skillName)
 	SaveEntity()
 	RefreshSkillsDisplay()
 
@@ -200,20 +170,12 @@ func _on_add_skill_pressed():
 	if not selectedEntity:
 		return
 
-	var skillsArray : PackedInt64Array = selectedEntity.get("_skillSet")
-	var skillsProba : Dictionary = selectedEntity.get("_skillProba")
+	var skills : Dictionary = selectedEntity.get("_skills")
+	if not skills:
+		skills = {}
+		selectedEntity.set("_skills", skills)
 
-	if not skillsArray:
-		skillsArray = PackedInt64Array()
-		selectedEntity.set("_skillSet", skillsArray)
-
-	if not skillsProba:
-		skillsProba = {}
-		selectedEntity.set("_skillProba", skillsProba)
-
-	skillsArray.append(0)
-	skillsProba[0] = 100.0
-
+	skills[""] = 100.0
 	SaveEntity()
 	RefreshSkillsDisplay()
 

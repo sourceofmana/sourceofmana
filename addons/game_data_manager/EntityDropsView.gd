@@ -54,8 +54,8 @@ func PopulateEntityList():
 		entityList.add_item(resource._name if resource.get("_name") else "Unnamed")
 		var idx : int = entityList.item_count - 1
 		entityList.set_item_metadata(idx, resource)
-		var dropsArray : PackedInt64Array = resource.get("_drops")
-		if not dropsArray or dropsArray.is_empty():
+		var drops : Dictionary = resource.get("_drops")
+		if not drops or drops.is_empty():
 			entityList.set_item_custom_fg_color(idx, Color.LIGHT_SLATE_GRAY)
 
 func _on_entity_selected(index : int):
@@ -71,21 +71,20 @@ func RefreshDropsDisplay():
 	if not selectedEntity:
 		return
 
-	var dropsArray : PackedInt64Array = selectedEntity.get("_drops")
-	var dropsProba : Dictionary = selectedEntity.get("_dropsProba")
+	var drops : Dictionary = selectedEntity.get("_drops")
 
-	if not dropsArray or dropsArray.is_empty():
+	if not drops or drops.is_empty():
 		var noDropsLabel : Label = Label.new()
 		noDropsLabel.text = "No drops configured. Click 'Add Drop' to add one."
 		dropsContainer.add_child(noDropsLabel)
 		return
 
-	for i in dropsArray.size():
-		var itemId : int = dropsArray[i]
-		var probability : float = dropsProba.get(itemId, 1.0) if dropsProba else 1.0
-		CreateDropWidget(itemId, probability, i)
+	var index : int = 0
+	for itemName in drops:
+		CreateDropWidget(itemName, drops[itemName], index)
+		index += 1
 
-func CreateDropWidget(itemId : int, probability : float, index : int):
+func CreateDropWidget(itemName : String, probability : float, index : int):
 	var hbox : HBoxContainer = HBoxContainer.new()
 
 	var iconRect : TextureRect = TextureRect.new()
@@ -93,7 +92,7 @@ func CreateDropWidget(itemId : int, probability : float, index : int):
 	iconRect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 	iconRect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
-	var itemCell : ItemCell = itemCache.get(itemId)
+	var itemCell : ItemCell = itemCache.get(itemName.hash())
 	if itemCell and itemCell.icon:
 		iconRect.texture = itemCell.icon
 
@@ -102,11 +101,10 @@ func CreateDropWidget(itemId : int, probability : float, index : int):
 	var itemNameEdit : LineEdit = LineEdit.new()
 	itemNameEdit.custom_minimum_size = Vector2(150, 0)
 	itemNameEdit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	if itemCell:
-		itemNameEdit.text = itemCell.name
+	itemNameEdit.text = itemName
 	itemNameEdit.placeholder_text = "Item name"
 	itemNameEdit.set_meta("drop_index", index)
-	itemNameEdit.text_submitted.connect(_on_drop_item_changed.bind(index))
+	itemNameEdit.text_submitted.connect(_on_drop_item_changed.bind(itemName))
 	hbox.add_child(itemNameEdit)
 
 	var probLabel : Label = Label.new()
@@ -120,79 +118,52 @@ func CreateDropWidget(itemId : int, probability : float, index : int):
 	probSpin.value = probability
 	probSpin.suffix = "%"
 	probSpin.custom_minimum_size = Vector2(100, 0)
-	probSpin.set_meta("drop_index", index)
-	probSpin.value_changed.connect(_on_drop_probability_changed.bind(index))
+	probSpin.value_changed.connect(_on_drop_probability_changed.bind(itemName))
 	hbox.add_child(probSpin)
 
 	var deleteBtn : Button = Button.new()
 	deleteBtn.text = "X"
-	deleteBtn.set_meta("drop_index", index)
-	deleteBtn.pressed.connect(_on_delete_drop_pressed.bind(index))
+	deleteBtn.pressed.connect(_on_delete_drop_pressed.bind(itemName))
 	hbox.add_child(deleteBtn)
 
 	dropsContainer.add_child(hbox)
 
-func _on_drop_item_changed(newName : String, index : int):
+func _on_drop_item_changed(newName : String, oldName : String):
 	if not selectedEntity:
 		return
 
-	var dropsArray : PackedInt64Array = selectedEntity.get("_drops")
-	var dropsProba : Dictionary = selectedEntity.get("_dropsProba")
-	if not dropsArray or index >= dropsArray.size():
+	var drops : Dictionary = selectedEntity.get("_drops")
+	if not drops:
 		return
 
 	var itemCell : ItemCell = FindItemByName(newName)
-	if itemCell:
-		var oldItemId : int = dropsArray[index]
-		var oldProb : float = dropsProba.get(oldItemId, 1.0) if dropsProba else 1.0
-
-		dropsArray[index] = itemCell.id
-
-		if not dropsProba:
-			dropsProba = {}
-			selectedEntity.set("_dropsProba", dropsProba)
-
-		if dropsProba.has(oldItemId):
-			dropsProba.erase(oldItemId)
-		dropsProba[itemCell.id] = oldProb
-
+	if itemCell and drops.has(oldName):
+		var oldProb : float = drops[oldName]
+		drops.erase(oldName)
+		drops[itemCell.name] = oldProb
 		SaveEntity()
 		RefreshDropsDisplay()
 
-func _on_drop_probability_changed(newValue : float, index : int):
+func _on_drop_probability_changed(newValue : float, itemName : String):
 	if not selectedEntity:
 		return
 
-	var dropsArray : PackedInt64Array = selectedEntity.get("_drops")
-	var dropsProba : Dictionary = selectedEntity.get("_dropsProba")
-	if not dropsArray or index >= dropsArray.size():
+	var drops : Dictionary = selectedEntity.get("_drops")
+	if not drops or not drops.has(itemName):
 		return
 
-	var itemId : int = dropsArray[index]
-
-	if not dropsProba:
-		dropsProba = {}
-		selectedEntity.set("_dropsProba", dropsProba)
-
-	dropsProba[itemId] = newValue
+	drops[itemName] = newValue
 	SaveEntity()
 
-func _on_delete_drop_pressed(index : int):
+func _on_delete_drop_pressed(itemName : String):
 	if not selectedEntity:
 		return
 
-	var dropsArray : PackedInt64Array = selectedEntity.get("_drops")
-	var dropsProba : Dictionary = selectedEntity.get("_dropsProba")
-	if not dropsArray or index >= dropsArray.size():
+	var drops : Dictionary = selectedEntity.get("_drops")
+	if not drops or not drops.has(itemName):
 		return
 
-	var itemId : int = dropsArray[index]
-
-	dropsArray.remove_at(index)
-
-	if dropsProba and dropsProba.has(itemId):
-		dropsProba.erase(itemId)
-
+	drops.erase(itemName)
 	SaveEntity()
 	RefreshDropsDisplay()
 
@@ -200,20 +171,12 @@ func _on_add_drop_pressed():
 	if not selectedEntity:
 		return
 
-	var dropsArray : PackedInt64Array = selectedEntity.get("_drops")
-	var dropsProba : Dictionary = selectedEntity.get("_dropsProba")
+	var drops : Dictionary = selectedEntity.get("_drops")
+	if not drops:
+		drops = {}
+		selectedEntity.set("_drops", drops)
 
-	if not dropsArray:
-		dropsArray = PackedInt64Array()
-		selectedEntity.set("_drops", dropsArray)
-
-	if not dropsProba:
-		dropsProba = {}
-		selectedEntity.set("_dropsProba", dropsProba)
-
-	dropsArray.append(0)
-	dropsProba[0] = 1.0
-
+	drops[""] = 1.0
 	SaveEntity()
 	RefreshDropsDisplay()
 

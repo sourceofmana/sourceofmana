@@ -22,5 +22,3 @@ _stats = {
 "skintone": "Dark"
 }
 _equipment = Array[ExtResource("1_rwjk6")]([ExtResource("2_f4e3t"), ExtResource("3_2ug6c"), ExtResource("4_cmdgh"), null, null, null, ExtResource("5_fge4m"), null])
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

@@ -15,5 +15,3 @@ _stats = {
 "walkSpeed": 200.0
 }
 _equipment = Array[ExtResource("1_w8ot5")]([null, null, null, null, null, null, null, null])
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

@@ -26,5 +26,3 @@ _equipment = Array[ExtResource("1_yw5um")]([ExtResource("2_mm1kb"), ExtResource(
 _direction = 0
 _state = 2
 _behaviour = 8
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

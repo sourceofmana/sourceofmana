@@ -15,8 +15,6 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_82due")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/monsters/firegoblin.png"
-_skillSet = PackedInt64Array(3219153995)
-_skillProba = Dictionary[int, float]({
-3219153995: 2.0
+_skills = Dictionary[String, float]({
+"Spitfire": 2.0
 })
-_drops = PackedInt64Array()

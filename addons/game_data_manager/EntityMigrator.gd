@@ -213,28 +213,24 @@ func CreateEntityFromJson(json : Dictionary, parent : EntityData) -> EntityData:
 	if "SkillSet" in json:
 		var skillSetData : Dictionary = json.SkillSet
 		if skillSetData is Dictionary and not skillSetData.is_empty():
-			entity._skillSet = PackedInt64Array()
-			entity._skillProba = {}
+			entity._skills = {}
 
 			for skillName in skillSetData:
 				var skillId : int = skillName.hash()
 				if DB.SkillsDB.has(skillId):
-					entity._skillSet.append(skillId)
-					entity._skillProba[skillId] = float(skillSetData[skillName])
+					entity._skills[skillName] = float(skillSetData[skillName])
 				else:
 					print("  WARNING: Skill '%s' (ID: %d) not found in DB for entity '%s'" % [skillName, skillId, entity._name])
 
 	if "Drops" in json:
 		var drops : Dictionary = json.Drops
 		if drops is Dictionary and not drops.is_empty():
-			entity._drops = PackedInt64Array()
-			entity._dropsProba = {}
+			entity._drops = {}
 
 			for itemName in drops:
 				var itemId : int = itemName.hash()
 				if DB.ItemsDB.has(itemId):
-					entity._drops.append(itemId)
-					entity._dropsProba[itemId] = float(drops[itemName])
+					entity._drops[itemName] = float(drops[itemName])
 				else:
 					print("  WARNING: Item '%s' (ID: %d) not found in DB for entity '%s'" % [itemName, itemId, entity._name])
 

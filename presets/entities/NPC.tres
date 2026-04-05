@@ -15,5 +15,3 @@ _stats = {
 _equipment = Array[ExtResource("1_fd1rq")]([null, null, null, null, null, null, null, null])
 _displayName = true
 _behaviour = 3
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

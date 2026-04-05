@@ -16,10 +16,8 @@ _stats = {
 _equipment = Array[ExtResource("1_t1rhf")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/monsters/marvin.png"
 _behaviour = 228
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array(1975170517)
-_dropsProba = Dictionary[int, float]({
-1975170517: 1.0
+_drops = Dictionary[String, float]({
+"Marvin's Key": 1.0
 })
 _spawns = Dictionary[int, int]({
 228176527: 2

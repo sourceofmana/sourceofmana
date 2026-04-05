@@ -12,5 +12,3 @@ _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_xrw6j")]([null, null, null, null, null, null, null, null])
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

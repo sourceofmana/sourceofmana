@@ -16,8 +16,6 @@ _stats = {
 _equipment = Array[ExtResource("1_bmwd8")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/monsters/dorian.png"
 _behaviour = 164
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array(3151885029)
-_dropsProba = Dictionary[int, float]({
-3151885029: 1.0
+_drops = Dictionary[String, float]({
+"Dorian's Key": 1.0
 })

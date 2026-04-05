@@ -19,11 +19,9 @@ class_name EntityData
 @export var _state : ActorCommons.State			= ActorCommons.State.UNKNOWN
 @export_category("Skills")
 @export var _behaviour : AICommons.Behaviour	= AICommons.Behaviour.NEUTRAL
-@export var _skillSet : PackedInt64Array		= []
-@export var _skillProba : Dictionary[int, float]= {}
+@export var _skills : Dictionary[String, float]	= {}
 @export_category("Drops")
-@export var _drops : PackedInt64Array			= []
-@export var _dropsProba : Dictionary[int, float]= {}
+@export var _drops : Dictionary[String, float]	= {}
 @export var _spawns : Dictionary[int, int]		= {}
 @export_category("Quests")
 @export var _questID : int						= ProgressCommons.Quest.UNKNOWN
@@ -65,20 +63,14 @@ func GetMergedEntity() -> EntityData:
 			merged._equipment[i] = _equipment[i]
 
 	# Skills
-	if not _skillSet.is_empty() or not _skillProba.is_empty():
-		if not _skillSet.is_empty():
-			merged._skillSet = _skillSet.duplicate()
-		if not _skillProba.is_empty():
-			merged._skillProba = _skillProba.duplicate()
+	if not _skills.is_empty():
+		merged._skills = _skills.duplicate()
 	for spawn_key in _spawns:
 		merged._spawns[spawn_key] = _spawns[spawn_key]
 
 	# Drops
-	if not _drops.is_empty() or not _dropsProba.is_empty():
-		if not _drops.is_empty():
-			merged._drops = _drops.duplicate()
-		if not _dropsProba.is_empty():
-			merged._dropsProba = _dropsProba.duplicate()
+	if not _drops.is_empty():
+		merged._drops = _drops.duplicate()
 
 	# Quest
 	merged._questID = _questID if _questID != ProgressCommons.Quest.UNKNOWN else merged._questID
@@ -134,16 +126,14 @@ static func Create(result : Dictionary) -> EntityData:
 				entity._stats[statName] = result.Stat[statName]
 	if "SkillSet" in result:
 		for skillName in result.SkillSet:
-			var skillID : int = DB.GetCellHash(skillName)
-			if DB.SkillsDB.has(skillID):
-				entity._skillSet.append(skillID)
-				entity._skillProba[skillID] = result.SkillSet[skillName]
+			assert(DB.HasCellHash(skillName), "Unknown skill '%s' in entity '%s'" % [skillName, entity._name])
+			if DB.HasCellHash(skillName):
+				entity._skills[skillName] = result.SkillSet[skillName]
 	if "Drops" in result:
 		for itemName in result.Drops:
-			var itemID : int = DB.GetCellHash(itemName)
-			if DB.ItemsDB.has(itemID):
-				entity._drops.append(itemID)
-				entity._dropsProba[itemID] = result.Drops[itemName]
+			assert(DB.HasCellHash(itemName), "Unknown drop '%s' in entity '%s'" % [itemName, entity._name])
+			if DB.HasCellHash(itemName):
+				entity._drops[itemName] = result.Drops[itemName]
 	if "Spawns" in result:
 		for entityName in result.Spawns:
 			var entityID : int = entityName.hash()

@@ -15,5 +15,3 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_exyli")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/monsters/scorpion.png"
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

@@ -16,8 +16,6 @@ _stats = {
 _equipment = Array[ExtResource("1_f62vb")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/monsters/gabriel.png"
 _behaviour = 164
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array(2961268734)
-_dropsProba = Dictionary[int, float]({
-2961268734: 1.0
+_drops = Dictionary[String, float]({
+"Gabriel's Key": 1.0
 })

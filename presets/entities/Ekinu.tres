@@ -17,5 +17,3 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_tcmrs")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/npcs/ekinu.png"
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

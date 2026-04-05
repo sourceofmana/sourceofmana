@@ -14,5 +14,3 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_oghli")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/npcs/flour-barrel.png"
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

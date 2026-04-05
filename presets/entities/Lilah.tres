@@ -16,5 +16,3 @@ _stats = {
 _equipment = Array[ExtResource("1_ignr6")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/monsters/lilah.png"
 _behaviour = 146
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
