@@ -550,7 +550,6 @@
   </object>
   <object id="33" name="Gabz" type="Spawn" x="1744.46" y="1851.19">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="own_script" value="candor/GabzGlobal.gd"/>
     <property name="player_script" value="candor/Gabz.gd"/>
     <property name="type" value="Npc"/>

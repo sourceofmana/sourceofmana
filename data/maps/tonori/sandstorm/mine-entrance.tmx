@@ -781,21 +781,18 @@
   </object>
   <object id="19" name="Naem" type="Spawn" x="1132" y="1586">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="20" name="Ryan" type="Spawn" x="1080" y="994">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="21" name="Sema" type="Spawn" x="3062" y="1902">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>

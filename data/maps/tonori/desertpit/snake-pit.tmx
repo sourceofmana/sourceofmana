@@ -68,42 +68,36 @@
   </object>
   <object id="6" name="Snake Pit Clue" type="Spawn" x="2725" y="1007">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/desertpit/Clue1.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="7" name="Snake Pit Clue" type="Spawn" x="2572" y="1165">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/desertpit/Clue2.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="8" name="Snake Pit Clue" type="Spawn" x="2814" y="1028">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/desertpit/Clue3.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="9" name="Snake Pit Clue" type="Spawn" x="2708" y="1125">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/desertpit/Clue4.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="10" name="Snake Pit Clue" type="Spawn" x="2833" y="1137">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/desertpit/Clue5.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="12" name="Snake Pit Pond" type="Spawn" x="2616" y="2555" width="1" height="1">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="own_script" value="tonori/desertpit/WaterPondGlobal.gd"/>
     <property name="player_script" value="tonori/desertpit/WaterPond.gd"/>
     <property name="type" value="Npc"/>
@@ -111,7 +105,6 @@
   </object>
   <object id="13" name="Snake Pit Pond" type="Spawn" x="2851" y="2823" width="1" height="1">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="own_script" value="tonori/desertpit/WaterPondGlobal.gd"/>
     <property name="player_script" value="tonori/desertpit/WaterPond.gd"/>
     <property name="type" value="Npc"/>

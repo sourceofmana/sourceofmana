@@ -1078,28 +1078,24 @@
   </object>
   <object id="8" name="Bicies" type="Spawn" x="2601" y="2869">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="9" name="Bicies" type="Spawn" x="2275" y="3032">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="10" name="Bicies" type="Spawn" x="1367" y="3230">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="11" name="Bicies" type="Spawn" x="3623" y="3101">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>

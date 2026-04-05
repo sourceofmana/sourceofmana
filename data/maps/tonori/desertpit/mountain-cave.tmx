@@ -372,7 +372,6 @@
   </object>
   <object id="70" name="Thiefs Chest" type="Spawn" x="3684" y="3269">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="own_script" value="generic/ChestGlobal.gd"/>
     <property name="player_script" value="tonori/desertpit/ThiefsChest.gd"/>
     <property name="type" value="Npc"/>
