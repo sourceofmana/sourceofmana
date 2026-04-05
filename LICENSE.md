@@ -395,7 +395,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/npcs/elias.png [Modanung]
 ./graphics/sprites/npcs/flour-barrel.png [Reid]
 ./graphics/sprites/npcs/gabz.png [Reid]
-./graphics/sprites/npcs/hyland.png [Lien] [Reid]
+./graphics/sprites/npcs/hyland.png [Skipy] [Reid]
 ./graphics/sprites/npcs/kael.png [Reid]
 ./graphics/sprites/npcs/naem.png [Reid]
 ./graphics/sprites/npcs/nickos.png [Reid]
