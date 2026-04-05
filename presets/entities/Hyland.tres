@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://bsd70kv6l3aar"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_gluwa"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_lpdfm"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_vlt8s"]
+
+[resource]
+script = ExtResource("3_vlt8s")
+_parent = ExtResource("2_lpdfm")
+_id = 3097291557
+_name = "Hyland"
+_stats = {
+"race": "Human",
+"skintone": "Dark"
+}
+_customTexture = "sprites/npcs/hyland.png"
+_skillSet = PackedInt64Array()
+_drops = PackedInt64Array()
