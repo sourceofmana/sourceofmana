@@ -7,6 +7,7 @@ var playerScriptPreset : GDScript			= null
 var ownScriptPath : String					= ""
 var ownScript : NpcScript					= null
 var interactionCount : int					= 0
+var isVisible : bool						= false
 
 #
 static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.NPC
@@ -82,7 +83,10 @@ func _ready():
 	if not ownScriptPath.is_empty():
 		ownScript = FileSystem.LoadScript(ownScriptPath, false).new(self, self)
 
-	if spawnInfo and spawnInfo.has_trigger:
+	if data:
+		isVisible = not data._spritePreset.is_empty()
+
+	if spawnInfo and (spawnInfo.trigger_radius > 0.0 or not spawnInfo.trigger_polygon.is_empty()):
 		AddTrigger()
 
 	super._ready()

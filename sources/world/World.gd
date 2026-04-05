@@ -84,7 +84,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 					var neighbourRID : int = neighbour.get_rid().get_id()
 					BulkPreload(neighbour, neighbourRID, agent.peerID)
 			for neighbour in instance.npcs:
-				if neighbour and neighbour.data and not neighbour.data._spritePreset.is_empty():
+				if neighbour and neighbour.isVisible:
 					var neighbourRID : int = neighbour.get_rid().get_id()
 					BulkPreload(neighbour, neighbourRID, agent.peerID)
 			for neighbour in instance.mobs:

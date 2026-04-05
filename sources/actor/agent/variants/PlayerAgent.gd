@@ -183,7 +183,7 @@ func UpdateVisibility():
 		if neighbour != self:
 			CheckVisibility(neighbour)
 	for neighbour in inst.npcs:
-		if neighbour and neighbour.data and not neighbour.data._spritePreset.is_empty():
+		if neighbour and neighbour.isVisible:
 			CheckVisibility(neighbour)
 	for neighbour in inst.mobs:
 		CheckVisibility(neighbour)
