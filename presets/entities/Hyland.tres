@@ -13,4 +13,5 @@ _stats = {
 "race": "Human",
 "skintone": "Dark"
 }
+_equipment = Array[ExtResource("1_gluwa")]([null, null, null, null, null, null, null, null])
 _customTexture = "sprites/npcs/hyland.png"
