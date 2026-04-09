@@ -55,23 +55,27 @@ static func _NewDeck() -> Array:
 
 # General flow
 func OnStart():
-	Mes("Ah, another brave soul! Sit down, sit down. The cards have been waiting.")
+	Mes("Welcome, welcome! Are you here for a game of cards?")
+	Mes("Do you know a game called blackjack? I happen to be the inventor of it!")
+	Mes("Sit down, sit down. Show me what you can do. The cards are waiting.")
 	DisplayChoices()
 
 func DisplayChoices():
-	Choice("Challenge you", StartDealer)
+	Choice("Challenge Hyland", StartDealer)
 	Choice("Find me a worthy opponent", StartPvP)
 	Choice("Rules", ShowRules)
 	Choice("Not today", Decline)
 
 func ShowRules():
-	Mes("Even the guards could learn this one, and that's saying something.")
-	Mes("Get as close to 21 as you can without going over. Number cards are face value, face cards are 10, and Aces... Well, Aces are tricky. They can be 1 or 11.")
+	Mes("The rules are simple. I should know, I made them!")
+	Mes("Get as close to 21 as you can without going over.")
+	Mes("Number cards are face value, face cards are 10, and Aces... Well, Aces are tricky. They can be 1 or 11. Whatever suits you best.")
 	Mes("Beat me, and I'll tip my hat. Go over 21, and you bust. That's the game.")
+	Mes("Even the guards could learn this one, and that's saying something.")
 	DisplayChoices()
 
 func Decline():
-	Chat("Off you go then. You know where to find me.")
+	Chat("No game? What a shame. Well, you know where to find me.")
 
 func OnQuit():
 	if npc and npc.ownScript:
@@ -191,7 +195,7 @@ func _PvPWait():
 	if game.has("result"):
 		_PvPShowResult(game)
 	else:
-		Mes("Your part's done. Now we wait for the other one...")
+		Mes("Your part's done. Now we wait for your opponent...")
 		Choice("Check", _PvPWaitCheck)
 		Choice("Forfeit", _PvPForfeit)
 
@@ -200,7 +204,7 @@ func _PvPWaitCheck():
 	if game.has("result"):
 		_PvPShowResult(game)
 	else:
-		Mes("Still thinking... Some people take forever.")
+		Mes("Still thinking... Good players take their time!")
 		Choice("Check", _PvPWaitCheck)
 		Choice("Forfeit", _PvPForfeit)
 
@@ -216,7 +220,7 @@ func _PvPShowResult(game : Dictionary):
 	if result == "draw":
 		Mes("A draw! Evenly matched. That doesn't happen often at my table.")
 	elif (result == "p1" and isP1) or (result == "p2" and not isP1):
-		Mes("Victory is yours! The cards favored you today.")
+		Mes("Victory is yours! Well done, the cards favoured you today.")
 	else:
 		Mes("Tough break. The cards are fickle, but they always come back around.")
 	npc.ownScript.call("CleanupGame", own)
