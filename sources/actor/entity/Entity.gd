@@ -101,15 +101,16 @@ func JustInteract():
 	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and not Util.IsReachableSquared(position, target.position, ActorCommons.TargetMaxSquaredDistance)):
 		Target(position, true)
 	if target:
-		Interact()
+		if target.type == ActorCommons.Type.NPC:
+			Network.TriggerInteract(target.agentRID)
+		else:
+			Interact()
 	elif stat.IsSailing():
 		interactive.DisplaySailContext()
 
 func Interact():
 	if target != null:
-		if target.type == ActorCommons.Type.NPC:
-			Network.TriggerInteract(target.agentRID)
-		elif target.type == ActorCommons.Type.MONSTER:
+		if target.type == ActorCommons.Type.MONSTER:
 			Cast(DB.GetCellHash(SkillCommons.SkillMeleeName))
 
 func Cast(skillID : int):
