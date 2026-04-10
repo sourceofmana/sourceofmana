@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_7vvcv"]
+
+[resource]
+script = ExtResource("1_7vvcv")
+id = 5
+name = "Xakelbael's Challenge"
+description = ""
+giver = "Xakelbael"
+giverLocation = "Desert Deep Level"
+target = "Xakelbael"
+targetLocation = "Desert Deep Level"
+reward = "Unknown"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

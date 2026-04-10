@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 class_name EntityInteractive
 
 #
@@ -21,7 +21,6 @@ var currentCastFx : GPUParticles2D			= null
 func DisplaySelection(hue : float, alpha : float = 1.0):
 	if selectionFx == null:
 		selectionFx = ActorCommons.SelectionFx.instantiate()
-		selectionFx.finished.connect(remove_child.bind(selectionFx))
 		add_child(selectionFx)
 
 		if selectionFx and ActorCommons.interactionDisplayOffset > 0:
@@ -46,6 +45,7 @@ func DisplayTarget(type : ActorCommons.Target):
 			if selectionFx and selectionFx.emitting:
 				DisplaySelection(0.0, 0.0)
 				selectionFx.emitting = false
+				Callback.SelfDestructTimer(selectionFx, selectionFx.lifetime, Util.RemoveNode, [selectionFx, self])
 				selectionFx = null
 			if nameLabel and nameLabel.material:
 				nameLabel.material = null
@@ -95,17 +95,16 @@ func DisplaySkillRange(skill : SkillCell):
 func StopCasting():
 	if currentCastFx:
 		currentCastFx.emitting = false
+		Callback.SelfDestructTimer(currentCastFx, currentCastFx.lifetime, Util.RemoveNode, [currentCastFx, self])
 		currentCastFx = null
 
-func DisplayCast(emitter : Entity, skillID : int):
+func DisplayCast(skillID : int):
 	if DB.SkillsDB.has(skillID):
 		var skill : SkillCell = DB.SkillsDB[skillID]
 		if skill.castPreset:
 			StopCasting()
 			currentCastFx = skill.castPreset.instantiate()
 			if currentCastFx:
-				Callback.SelfDestructTimer(currentCastFx, skill.castTime + emitter.stat.current.castAttackDelay, StopCasting)
-				currentCastFx.finished.connect(Util.RemoveNode.bind(currentCastFx, self))
 				currentCastFx.emitting = true
 				add_child(currentCastFx)
 	else:

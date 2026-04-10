@@ -31,8 +31,10 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 		target = currentEntity
 
 	for entity in entities.values():
-		if entity and entity != currentEntity and entity.state != ActorCommons.State.DEATH:
-			if entity.type == ActorCommons.Type.MONSTER or (interactable and entity.type == ActorCommons.Type.NPC):
+		if entity and entity != currentEntity:
+			var isAliveMonster : bool = entity.type == ActorCommons.Type.MONSTER and entity.state != ActorCommons.State.DEATH
+			var isNpc : bool = interactable and entity.type == ActorCommons.Type.NPC
+			if isAliveMonster or isNpc:
 				var entityData : EntityData = DB.EntitiesDB.get(entity.stat.currentShape, null)
 				if entityData and entityData._questID != ProgressCommons.Quest.UNKNOWN:
 					var questState : int = Launcher.Player.progress.GetQuest(entityData._questID) if Launcher.Player else ProgressCommons.UnknownProgress

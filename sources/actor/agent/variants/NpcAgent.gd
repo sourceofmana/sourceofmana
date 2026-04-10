@@ -6,6 +6,7 @@ var playerScriptPath : String				= ""
 var playerScriptPreset : GDScript			= null
 var ownScriptPath : String					= ""
 var ownScript : NpcScript					= null
+var triggerObject : TriggerObject			= null
 var interactionCount : int					= 0
 var isVisible : bool						= false
 
@@ -41,7 +42,11 @@ func SubInteraction():
 		AI.Reset(self)
 
 func AddTrigger():
-	var triggerObject : TriggerObject = TriggerObject.new()
+	assert(!triggerObject, "Support only one trigger object per NPC (%s)" % nick)
+	if triggerObject:
+		return
+
+	triggerObject = TriggerObject.new()
 	triggerObject.linkedNpc = self
 
 	if not spawnInfo.trigger_polygon.is_empty():
@@ -75,6 +80,11 @@ func AddTrigger():
 		return
 
 	add_child.call_deferred(triggerObject)
+
+func RemoveTrigger():
+	if triggerObject:
+		triggerObject.linkedNpc = null
+		triggerObject.queue_free()
 
 #
 func _ready():

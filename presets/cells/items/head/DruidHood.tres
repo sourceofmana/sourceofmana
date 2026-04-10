@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ItemCell" format=3]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://s626p30qb6py"]
 
-[ext_resource type="Texture2D" path="res://data/graphics/items/head/druid-hood.png" id="1_icon"]
+[ext_resource type="Texture2D" uid="uid://cahw33orrndke" path="res://data/graphics/items/head/druid-hood.png" id="1_icon"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_script"]
-[ext_resource type="Material" path="res://presets/palettes/faction/faction-druid.tres" id="3_shader"]
+[ext_resource type="Material" uid="uid://5yvrp71nvksp" path="res://presets/palettes/faction/faction-druid.tres" id="3_shader"]
 [ext_resource type="Texture2D" uid="uid://cenwjphbtrwu7" path="res://data/graphics/sprites/equipment/head/druid-hood.png" id="4_sprite"]
 
 [resource]

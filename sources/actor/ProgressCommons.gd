@@ -13,6 +13,7 @@ enum Quest
 	SNAKE_PIT_THIEF,
 	SNAKE_PIT_BITING_THIRST,
 	SANDSTORM_MINE_ABANDONED_TREASURE,
+	DESERT_DEEP_XAKELBAEL,
 }
 
 # Quest enums
@@ -49,6 +50,12 @@ enum SANDSTORM_MINE_ABANDONED_TREASURE
 	KEY_FOUND,
 	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
 }
+enum DESERT_DEEP_XAKELBAEL
+{
+	INACTIVE = ProgressCommons.UnknownProgress,
+	FIGHTING,
+	DEFEATED,
+}
 
 # Quest state lookup
 static var QuestStates : Dictionary[Quest, Variant] = {
@@ -57,6 +64,7 @@ static var QuestStates : Dictionary[Quest, Variant] = {
 	Quest.SNAKE_PIT_THIEF: SNAKE_PIT_THIEF,
 	Quest.SNAKE_PIT_BITING_THIRST: SNAKE_PIT_BITING_THIRST,
 	Quest.SANDSTORM_MINE_ABANDONED_TREASURE: SANDSTORM_MINE_ABANDONED_TREASURE,
+	Quest.DESERT_DEEP_XAKELBAEL: DESERT_DEEP_XAKELBAEL,
 }
 
 static func GetQuestStateID(questID : int, stateName : String) -> int:

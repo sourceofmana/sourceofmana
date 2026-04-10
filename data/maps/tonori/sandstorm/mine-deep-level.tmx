@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="97" height="128" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="35">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="97" height="128" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="36">
  <properties>
   <property name="ambient" value="Lighting"/>
   <property name="ambientintensity" type="float" value="0.2"/>
@@ -51,17 +51,14 @@
   </data>
  </layer>
  <objectgroup id="5" name="Objects">
-  <object id="34" name="Xakelbael" type="Spawn" x="1326" y="1473" width="10" height="10">
+  <object id="35" name="Object" type="Spawn" x="1755" y="2587" width="10" height="10">
    <properties>
-    <property name="direction" value="UP"/>
-    <property name="own_script" value="tonori/sandstorm/XakelbaelGlobal.gd"/>
-    <property name="player_script" value="tonori/sandstorm/Xakelbael.gd"/>
-    <property name="state" value="IDLE"/>
-    <property name="trigger_radius" type="float" value="120"/>
+    <property name="own_script" value="tonori/sandstorm/ManaTreeGlobal.gd"/>
+    <property name="trigger_radius" type="float" value="200"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="32" name="To Deeper Level" type="Warp" x="1727" y="2431">
+  <object id="32" name="To Abandoned Level" type="Warp" x="1727" y="2431">
    <properties>
     <property name="dest_map" value="Desert Abandoned Level"/>
     <property name="dest_pos_x" type="int" value="89"/>

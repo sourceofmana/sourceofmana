@@ -1,24 +1,18 @@
 extends NpcScript
 
 #
-const checkDelay : float = 2.0
-
-#
 func OnStart():
-	Mes("Who comes here?")
-	Action(StartFight)
-
-func StartFight():
-	SetVisible(false)
-	Spawn(npc.data._id, 1, npc.position, Vector2.ZERO)
-	AddTimer(own, checkDelay, CheckFight)
-
-func CheckFight():
-	if AliveMonsterCount() > 0:
-		AddTimer(own, checkDelay, CheckFight)
+	var questState : int = GetQuest(ProgressCommons.Quest.DESERT_DEEP_XAKELBAEL)
+	if questState == ProgressCommons.DESERT_DEEP_XAKELBAEL.DEFEATED:
+		Mes("You are stronger than I thought.")
+		Mes("We will meet again...")
+		Mes("This is not the last you have seen of me!")
 	else:
-		EndFight()
+		Mes("Who comes here?")
+		Action(npc.ownScript.StartFight)
 
-func EndFight():
-	SetVisible(true)
-	Mes("You are stronger than I thought.")
+func OnQuit():
+	super.OnQuit()
+	var questState : int = GetQuest(ProgressCommons.Quest.DESERT_DEEP_XAKELBAEL)
+	if questState == ProgressCommons.DESERT_DEEP_XAKELBAEL.DEFEATED:
+		npc.ownScript.RunAway.call_deferred()

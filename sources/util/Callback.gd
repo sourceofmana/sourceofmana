@@ -25,7 +25,7 @@ static func ShootCallback(args : Array):
 static func TriggerCallback(callback : Callable, args : Array = []):
 	if callback and callback is Callable and not callback.is_null() and callback.is_valid():
 		for argId in args.size():
-			if not is_instance_valid(args[argId]) and typeof(args[argId]) == TYPE_NIL:
+			if typeof(args[argId]) == TYPE_OBJECT and not is_instance_valid(args[argId]):
 				args[argId] = null
 		callback.callv(args)
 

@@ -115,6 +115,7 @@ static func Spawn(caller : BaseAgent, mobID : int, count : int = 1, position : V
 			spawnObject.type				= "Monster"
 			spawnObject.id					= mobID
 			spawnObject.count				= count
+			spawnObject.spawn_offset		= spawnRadius
 			if position == Vector2.ZERO:
 				spawnObject.spawn_position	= WorldNavigation.GetRandomPosition(inst)
 			else:

@@ -53,7 +53,7 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	if visual:
 		if visual.skillCastID != nextskillCastID:
 			visual.skillCastID = nextskillCastID
-			interactive.DisplayCast(self, nextskillCastID)
+			interactive.DisplayCast(nextskillCastID)
 		visual.Refresh()
 
 	if previousState != nextState and nextState == ActorCommons.State.DEATH:
@@ -98,7 +98,7 @@ func Target(source : Vector2, interactable : bool = true, nextTarget : bool = fa
 		Network.TriggerSelect(target.agentRID)
 
 func JustInteract():
-	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and Util.IsReachableSquared(position, target.position, ActorCommons.TargetMaxSquaredDistance)):
+	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and not Util.IsReachableSquared(position, target.position, ActorCommons.TargetMaxSquaredDistance)):
 		Target(position, true)
 	if target:
 		Interact()
@@ -148,8 +148,7 @@ func LevelUp():
 
 #
 func _physics_process(delta : float):
-	var totalVelocity : Vector2 = entityVelocity + entityPosOffset / delta
-	velocity = totalVelocity.limit_length(stat.current.walkSpeed)
+	velocity = entityVelocity + entityPosOffset / delta
 	if velocity != Vector2.ZERO:
 		var extraVelocity : Vector2 = velocity - entityVelocity
 		entityPosOffset -= extraVelocity * delta
