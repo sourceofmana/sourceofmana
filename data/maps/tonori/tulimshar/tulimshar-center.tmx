@@ -144,14 +144,12 @@
   </object>
   <object id="31" name="Wie" type="Spawn" x="3823" y="2624">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/Wie.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="32" name="Andi" type="Spawn" x="3951" y="2592">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/Andi.gd"/>
     <property name="type" value="Npc"/>
    </properties>
@@ -167,21 +165,18 @@
   </object>
   <object id="34" name="Riskim" type="Spawn" x="2889" y="3124">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/Riskim.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="39" name="Nicolas" type="Spawn" x="1471" y="2995">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Barber.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="47" name="Hyland" type="Spawn" x="2418" y="3606">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="own_script" value="tonori/tulimshar/HylandGlobal.gd"/>
     <property name="player_script" value="tonori/tulimshar/Hyland.gd"/>
     <property name="type" value="Npc"/>

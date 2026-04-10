@@ -1082,7 +1082,6 @@
   </object>
   <object id="40" name="Locks" type="Spawn" x="3552" y="4160" width="1" height="1">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="splatyna/Locks.gd"/>
     <property name="type" value="Npc"/>
    </properties>

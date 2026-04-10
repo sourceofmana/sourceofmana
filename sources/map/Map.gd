@@ -163,6 +163,7 @@ func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : V
 			entity.SetData()
 			if isNewSpawn:
 				AddChild(entity)
+				PlayerWarped.emit.call_deferred()
 
 	if entity:
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID, isNewSpawn, isRunning)

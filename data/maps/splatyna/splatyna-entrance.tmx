@@ -483,7 +483,6 @@
  <objectgroup color="#c8c837" id="14" name="Object">
   <object id="48" name="Bicies" type="Spawn" x="1352" y="1287" width="146" height="128">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="splatyna/Bicies.gd"/>
     <property name="type" value="Npc"/>
    </properties>

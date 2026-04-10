@@ -57,10 +57,16 @@ func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
 		var inst : WorldInstance = map.instances[instanceID]
 		assert(inst != null, "Spawn could not proceed, map instance missing")
 		if inst:
-			if agent.agent:
-				agent.agent.set_navigation_map(map.mapRID)
+			if agent.is_node_ready():
+				AgentCreated(agent, map.mapRID)
+			else:
+				Callback.OneShotCallback(agent.ready, AgentCreated, [agent, map.mapRID])
 			Callback.OneShotCallback(agent.tree_entered, AgentWarped, [map, agent])
 			WorldAgent.PushAgent(agent, inst)
+
+func AgentCreated(agent : BaseAgent, mapRID : RID):
+	if agent and agent.agent:
+		agent.agent.set_navigation_map(mapRID)
 
 func AgentWarped(map : WorldMap, agent : BaseAgent):
 	if agent == null:
@@ -84,7 +90,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 					var neighbourRID : int = neighbour.get_rid().get_id()
 					BulkPreload(neighbour, neighbourRID, agent.peerID)
 			for neighbour in instance.npcs:
-				if neighbour and neighbour.data and not neighbour.data._spritePreset.is_empty():
+				if neighbour and neighbour.isVisible:
 					var neighbourRID : int = neighbour.get_rid().get_id()
 					BulkPreload(neighbour, neighbourRID, agent.peerID)
 			for neighbour in instance.mobs:

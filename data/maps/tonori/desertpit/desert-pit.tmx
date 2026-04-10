@@ -158,7 +158,6 @@
   </object>
   <object id="62" name="Mauro" type="Spawn" x="2554" y="3239">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/desertpit/Mauro.gd"/>
     <property name="state" value="sit"/>
     <property name="type" value="Npc"/>

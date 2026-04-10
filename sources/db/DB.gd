@@ -209,9 +209,6 @@ static func WarmShaders():
 			if node is GPUParticles2D:
 				node.emitting = true
 				node.one_shot = true
-			if node is Projectile:
-				node.delay = 1.0
-				node.set_physics_process(false)
 
 			Launcher.GUI.shaders.add_child(node)
 			await tree.process_frame

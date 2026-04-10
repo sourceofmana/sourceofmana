@@ -265,17 +265,15 @@ func build_server() -> Resource:
 	root.name = map_name
 	root.flags = map_flags
 
-	# Can't save an array of custom objects, every element will be null when loaded
-#	root.spawns = spawn_pool
 	for spawn in spawn_pool:
-		root.spawns.append(_serialize_spawn(spawn))
+		root.spawns.append(spawn)
 
 	# Convert warps and ports to NPC spawn entries
 	for warp in warp_pool:
-		root.spawns.append(_serialize_warp_spawn(warp))
+		root.spawns.append(_create_warp_spawn(warp))
 
 	for port in port_pool:
-		root.spawns.append(_serialize_warp_spawn(port))
+		root.spawns.append(_create_warp_spawn(port))
 
 	return root
 
@@ -321,57 +319,27 @@ func _build_warp_particles(warpNode : Node2D, parent : Node, points : Array):
 	warpNode.add_child(particle)
 	particle.set_owner(parent)
 
-func _serialize_spawn(spawn : SpawnObject) -> Array:
-	var spawn_array : Array = []
-	spawn_array.append(spawn.count)
-	spawn_array.append(spawn.id)
-	spawn_array.append(spawn.type)
-	spawn_array.append(spawn.spawn_position)
-	spawn_array.append(spawn.spawn_offset)
-	spawn_array.append(spawn.respawn_delay)
-	spawn_array.append(spawn.player_script)
-	spawn_array.append(spawn.own_script)
-	spawn_array.append(spawn.nick)
-	spawn_array.append(spawn.is_always_visible)
-	spawn_array.append(spawn.direction)
-	spawn_array.append(spawn.state)
-	spawn_array.append(spawn.has_trigger)
-	spawn_array.append(spawn.trigger_radius)
-	spawn_array.append(spawn.trigger_polygon)
-	spawn_array.append(spawn.destination_map)
-	spawn_array.append(spawn.destination_pos)
-	spawn_array.append(spawn.auto_warp)
-	spawn_array.append(spawn.sailing_pos)
-	return spawn_array
-
-func _serialize_warp_spawn(warp : Dictionary) -> Array:
-	var spawn_array : Array = []
-	spawn_array.append(1)											# count
-	spawn_array.append(WarpHash)									# id
-	spawn_array.append("Npc")										# type
-	spawn_array.append(Vector2i(warp.position))						# spawn_position
-	spawn_array.append(Vector2i.ZERO)								# spawn_offset
-	spawn_array.append(0.0)											# respawn_delay
-	if warp.autoWarp:
-		spawn_array.append("")										# player_script
-	else:
-		spawn_array.append("generic/Warp.gd")						# player_script
+func _create_warp_spawn(warp : Dictionary) -> SpawnObject:
+	var spawn := SpawnObject.new()
+	spawn.id = WarpHash
+	spawn.type = "Npc"
+	spawn.spawn_position = Vector2i(warp.position)
+	spawn.respawn_delay = 0.0
+	if not warp.autoWarp:
+		spawn.player_script = "generic/Warp.gd"
 	if warp.isPort:
-		spawn_array.append("generic/PortGlobal.gd")					# own_script
+		spawn.own_script = "generic/PortGlobal.gd"
 	else:
-		spawn_array.append("generic/WarpGlobal.gd")					# own_script
-	spawn_array.append(warp.name)									# nick
-	spawn_array.append(false)										# is_always_visible
-	spawn_array.append(ActorCommons.Direction.UNKNOWN)				# direction
-	spawn_array.append(ActorCommons.State.UNKNOWN)					# state
-	spawn_array.append(true)										# has_trigger
-	spawn_array.append(0.0)											# trigger_radius
-	spawn_array.append(PackedVector2Array(warp.polygon))			# trigger_polygon
-	spawn_array.append(warp.destinationID)							# destination_map
-	spawn_array.append(warp.destinationPos)							# destination_pos
-	spawn_array.append(warp.autoWarp)								# auto_warp
-	spawn_array.append(warp.sailingPos)								# sailing_pos
-	return spawn_array
+		spawn.own_script = "generic/WarpGlobal.gd"
+	spawn.nick = warp.name
+	spawn.trigger_polygon = PackedVector2Array(warp.polygon)
+	spawn.destination_map = warp.destinationID
+	spawn.destination_pos = warp.destinationPos
+	spawn.auto_warp = warp.autoWarp
+	spawn.sailing_pos = warp.sailingPos
+	spawn.is_global = spawn.spawn_position < Vector2i.LEFT
+	spawn.is_persistant = true
+	return spawn
 
 # Specific nodes to add per tiles (i.e.: Particle effects, light sources, etc...)
 func add_specific_nodes(parent : Node2D, cell_in_map : Vector2, gid : int):
@@ -675,10 +643,10 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 										if ActorCommons.State.keys()[state_id + 1] == state_name:
 											spawn_object.state = state_id
 											break
-								if "has_trigger" in object.properties:
-									spawn_object.has_trigger = object.properties.has_trigger
 								if "trigger_radius" in object.properties:
 									spawn_object.trigger_radius = object.properties.trigger_radius
+							spawn_object.is_global = spawn_object.spawn_position < Vector2i.LEFT
+							spawn_object.is_persistant = true
 							spawn_pool.push_back(spawn_object)
 						continue
 

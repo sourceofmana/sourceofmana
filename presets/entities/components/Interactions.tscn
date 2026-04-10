@@ -6,10 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://08v0t5i6hvef" path="res://presets/effects/particles/Emote.tscn" id="2_gghi1"]
 [ext_resource type="Script" uid="uid://cbedrk7hxvhfu" path="res://sources/actor/entity/components/InteractiveSkillPreview.gd" id="5_mia2y"]
 
-[node name="Interactions" type="Control" unique_id=281545227]
+[node name="Interactions" type="Node2D" unique_id=260754091]
 z_as_relative = false
-layout_mode = 3
-anchors_preset = 0
 script = ExtResource("1_b3bk6")
 
 [node name="TopOffset" type="Node2D" parent="." unique_id=1944343598]
@@ -47,7 +45,6 @@ alignment = 1
 
 [node name="UnderBox" type="VBoxContainer" parent="." unique_id=2073778132]
 z_index = 255
-layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -75,6 +72,7 @@ size_flags_vertical = 4
 
 [node name="SkillPreview" type="Control" parent="." unique_id=1781727879]
 z_index = 255
+layout_mode = 3
 anchors_preset = 0
 scale = Vector2(1, 0.7)
 script = ExtResource("5_mia2y")

@@ -46,7 +46,6 @@
  <objectgroup id="5" name="Objects">
   <object id="24" name="Chest" type="Spawn" x="2924" y="1353">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="own_script" value="generic/ChestGlobal.gd"/>
     <property name="player_script" value="tonori/sandstorm/Chest.gd"/>
     <property name="type" value="Npc"/>
@@ -74,15 +73,12 @@
   </object>
   <object id="34" name="SandstormMineKey" type="Spawn" x="2881" y="2938">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/sandstorm/MineKey.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="33" name="SandstormMineCrack" type="Spawn" x="2880" y="2442">
    <properties>
-    <property name="count" type="int" value="1"/>
-    <property name="has_trigger" type="bool" value="true"/>
     <property name="own_script" value="tonori/sandstorm/DeepLevelEntranceGlobal.gd"/>
     <property name="trigger_radius" type="float" value="16"/>
     <property name="type" value="Npc"/>
@@ -90,8 +86,6 @@
   </object>
   <object id="34" name="Nickos" type="Spawn" x="2860" y="1832">
    <properties>
-    <property name="count" type="int" value="1"/>
-    <property name="has_trigger" type="bool" value="true"/>
     <property name="own_script" value="generic/TriggerGlobal.gd"/>
     <property name="player_script" value="tonori/sandstorm/Nickos.gd"/>
     <property name="trigger_radius" type="float" value="80"/>

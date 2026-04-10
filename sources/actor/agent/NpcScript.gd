@@ -40,6 +40,20 @@ func Trigger() -> bool:
 func IsTriggering() -> bool:
 	return ActorCommons.IsTriggering(npc)
 
+# Visibility
+func SetVisible(enable : bool):
+	if npc:
+		npc.isVisible = enable
+
+func IsVisible() -> bool:
+	return npc.isVisible if npc else false
+
+# State
+func SetState(newState : ActorCommons.State):
+	if npc:
+		npc.state = newState
+		npc.requireFullUpdate = true
+
 # Monster
 func Spawn(mobID : int, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
 	return NpcCommons.Spawn(npc, mobID, count, position, spawnRadius)
@@ -76,6 +90,9 @@ func KillMonsters():
 	if inst:
 		for mob in inst.mobs:
 			mob.stat.SetHealth(-mob.stat.current.maxHealth)
+
+func RemoveAgent(agent : BaseAgent):
+	WorldAgent.RemoveAgent(agent)
 
 # Players
 func AlivePlayerCount() -> int:

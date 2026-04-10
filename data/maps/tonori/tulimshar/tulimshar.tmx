@@ -218,7 +218,6 @@
   </object>
   <object id="42" name="Tulimshar Sbire" type="Spawn" x="2016" y="1497" width="296" height="193">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="nick" value="Shimris"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
@@ -226,7 +225,6 @@
   </object>
   <object id="43" name="Tulimshar Desert Sbire" type="Spawn" x="1165" y="1494" width="291" height="216">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="nick" value="Aanshir"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
@@ -234,7 +232,6 @@
   </object>
   <object id="45" name="Ekinu" type="Spawn" x="1880" y="2837">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
@@ -272,21 +269,18 @@
   </object>
   <object id="56" name="Elanore" type="Spawn" x="2189" y="2486">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/tulimshar/Elanore.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="57" name="Nina" type="Spawn" x="1601" y="2432">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="60" name="Gilgames" type="Spawn" x="1660" y="2837">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
    </properties>
@@ -299,7 +293,6 @@
   </object>
   <object id="63" name="Kael" type="Spawn" x="2866" y="2102">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="is_always_visible" type="bool" value="true"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
@@ -307,7 +300,6 @@
   </object>
   <object id="64" name="Tulimshar Desert Guard" type="Spawn" x="-64" y="80">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="nick" value="Maci"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
@@ -315,7 +307,6 @@
   </object>
   <object id="67" name="Tulimshar Guard" type="Spawn" x="1354" y="2078">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="direction" value="left"/>
     <property name="nick" value="Aacheron"/>
     <property name="state" value="attack"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="250" height="175" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="125">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="250" height="175" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="127">
  <properties>
   <property name="ambient" value="Cloud"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1708,7 +1708,6 @@
   </object>
   <object id="87" name="Piousse" type="spawn" x="-30" y="31">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="150"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1729,7 +1728,6 @@
   </object>
   <object id="90" name="Piou" type="spawn" x="5216" y="608" width="768" height="992">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="60"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1743,7 +1741,6 @@
   </object>
   <object id="92" name="Pikpik" type="spawn" x="736" y="3008" width="224" height="160">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="20"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1757,163 +1754,141 @@
   </object>
   <object id="94" name="Coconut Tree" type="spawn" x="1440" y="4352">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="95" name="Coconut Tree" type="spawn" x="2240" y="4352">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="96" name="Manana Tree" type="spawn" x="1184" y="4032">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="97" name="Manana Tree" type="spawn" x="1088" y="4160">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="98" name="Manana Tree" type="spawn" x="1312" y="4128">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="99" name="Manana Tree" type="spawn" x="1152" y="2464">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="100" name="Manana Tree" type="spawn" x="1184" y="2528">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="101" name="Manana Tree" type="spawn" x="1248" y="2336">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="102" name="Manana Tree" type="spawn" x="1376" y="2240">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="103" name="Manana Tree" type="spawn" x="1536" y="2272">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="104" name="Manana Tree" type="spawn" x="1280" y="2144">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="105" name="Manana Tree" type="spawn" x="1472" y="2080">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="106" name="Manana Tree" type="spawn" x="4864" y="832">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="107" name="Manana Tree" type="spawn" x="4864" y="1024">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="108" name="Manana Tree" type="spawn" x="4960" y="1184">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="109" name="Manana Tree" type="spawn" x="5056" y="928">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="110" name="Manana Tree" type="spawn" x="6496" y="1632">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="111" name="Manana Tree" type="spawn" x="6336" y="1600">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="112" name="Manana Tree" type="spawn" x="6368" y="1760">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="113" name="Manana Tree" type="spawn" x="5920" y="2080">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="114" name="Manana Tree" type="spawn" x="6112" y="2016">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="115" name="Manana Tree" type="spawn" x="6400" y="2112">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="116" name="Warp Sewer South" type="Warp" x="2752" y="4191" width="32" height="32">
    <properties>
+    <property name="dest_map" value="Artis Sewer"/>
     <property name="dest_pos_x" type="int" value="81"/>
     <property name="dest_pos_y" type="int" value="138"/>
-    <property name="map" value="Artis Sewer"/>
    </properties>
    <polygon points="0,0 32,0 32,32 0,32"/>
   </object>
@@ -1928,6 +1903,14 @@
     <property name="sail_pos_y" type="int" value="102"/>
    </properties>
    <polygon points="41.2025,60.7943 41.2025,29.1813 72.8964,29.1813 72.8964,60.7943"/>
+  </object>
+  <object id="126" name="Warp Sewer North" type="Warp" x="4866" y="1663" width="32" height="32">
+   <properties>
+    <property name="dest_map" value="Artis Sewer"/>
+    <property name="dest_pos_x" type="int" value="103"/>
+    <property name="dest_pos_y" type="int" value="30"/>
+   </properties>
+   <polygon points="0,0 32,0 32,32 0,32"/>
   </object>
  </objectgroup>
 </map>

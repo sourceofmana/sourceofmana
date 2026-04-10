@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://4g2ulgiu7dct"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_cekxu"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_qwxl7"]
+[ext_resource type="Resource" uid="uid://eoof30db2qry" path="res://presets/cells/items/chest/DruidRobe.tres" id="3_chest"]
+[ext_resource type="Resource" uid="uid://bi4288d5a7kbn" path="res://presets/cells/items/legs/LeatherPants.tres" id="4_legs"]
+[ext_resource type="Resource" uid="uid://bcc00vd45ls38" path="res://presets/cells/items/feet/DesertBoots.tres" id="5_feet"]
+[ext_resource type="Resource" uid="uid://s626p30qb6py" path="res://presets/cells/items/head/DruidHood.tres" id="6_head"]
+
+[resource]
+script = ExtResource("2_qwxl7")
+_id = 2715760142
+_name = "Xakelbael"
+_spritePreset = "Player"
+_radius = 20
+_stats = {
+"defense": 0,
+"gender": "Male",
+"level": 20,
+"race": "Raijin",
+"skintone": "Dark"
+}
+_equipment = Array[ExtResource("1_cekxu")]([ExtResource("3_chest"), ExtResource("4_legs"), ExtResource("5_feet"), null, ExtResource("6_head"), null, null, null])
+_behaviour = 4
+_skills = Dictionary[String, float]({
+"Flar": 0.3,
+"Sonic Wave": 0.3,
+"Spitfire": 0.3
+})
+_isBoss = true

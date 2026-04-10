@@ -57,7 +57,6 @@
   </object>
   <object id="5" name="Tulimshar Desert Guard" type="Spawn" x="1145" y="3629" width="510" height="202">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="is_always_visible" type="bool" value="true"/>
     <property name="nick" value="Nathan"/>
     <property name="player_script" value="generic/Default.gd"/>
@@ -66,7 +65,6 @@
   </object>
   <object id="6" name="Sawyl" type="Spawn" x="1617" y="2794">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/sandstorm/Sawyl.gd"/>
     <property name="type" value="Npc"/>
    </properties>
@@ -190,7 +188,6 @@
   </object>
   <object id="37" name="Tulimshar Desert Guard" type="Spawn" x="2863" y="1063" width="180" height="170">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="nick" value="Dausen"/>
     <property name="player_script" value="generic/Default.gd"/>
     <property name="type" value="Npc"/>
@@ -198,7 +195,6 @@
   </object>
   <object id="39" name="Elias" type="Spawn" x="4595" y="3245">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="player_script" value="tonori/sandstorm/Elias.gd"/>
     <property name="type" value="Npc"/>
    </properties>
