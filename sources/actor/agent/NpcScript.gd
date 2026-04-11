@@ -30,12 +30,12 @@ func GetGlobal(scriptFunc : String) -> Callable:
 	return Callable()
 
 func Trigger() -> bool:
-	if npc and npc.SetState(ActorCommons.State.TRIGGER):
-		CallGlobal("OnTrigger")
-		return true
-	else:
-		CallGlobal("OnQuit")
-		return false
+	if npc:
+		if npc.defaultState != ActorCommons.State.UNKNOWN or npc.SetState(ActorCommons.State.TRIGGER):
+			CallGlobal("OnTrigger")
+			return true
+	CallGlobal("OnQuit")
+	return false
 
 func IsTriggering() -> bool:
 	return ActorCommons.IsTriggering(npc)

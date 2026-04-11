@@ -256,7 +256,8 @@ func _velocity_computed(safeVelocity : Vector2i):
 	elif SkillCommons.IsStaticCasting(self):
 		SetState(DB.SkillsDB[currentSkillID].state)
 	elif safeVelocity == Vector2i.ZERO:
-		SetState(defaultState if defaultState != ActorCommons.State.UNKNOWN else ActorCommons.State.IDLE)
+		if defaultState == ActorCommons.State.UNKNOWN:
+			SetState(ActorCommons.State.IDLE)
 	else:
 		SetState(ActorCommons.State.WALK)
 
