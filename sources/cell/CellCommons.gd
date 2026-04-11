@@ -9,8 +9,7 @@ enum Type
 	COUNT
 }
 
-
-
+#
 static func CompareCell(cell : BaseCell, id : int, customfield : String) -> bool:
 	return cell and \
 	cell.id == id and \
@@ -24,6 +23,14 @@ static func IsSameItem(cell : BaseCell, item : Item) -> bool:
 
 static func IsSameCell(cellA : BaseCell, cellB : BaseCell) -> bool:
 	return cellB and CompareCell(cellA, cellB.id, cellB.customfield if cellB is ItemCell else "")
+
+static func IsEquipment(cell : ItemCell) -> bool:
+	return cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and cell.slot < ActorCommons.Slot.LAST_EQUIPMENT
+
+static func IsEquipped(cell : BaseCell) -> bool:
+	return cell and cell is ItemCell and IsEquipment(cell) and \
+	Launcher.Player and Launcher.Player.inventory and Launcher.Player.inventory.equipment and \
+	IsSameCell(cell, Launcher.Player.inventory.equipment[cell.slot])
 
 enum Modifier {
 	None = 0,

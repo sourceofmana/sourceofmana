@@ -62,7 +62,8 @@ func PopItem(cell : ItemCell, count : int) -> bool:
 
 	if not cell.stackable and toRemoveCount == count:
 		for item in toRemove:
-			UnequipItem(cell)
+			if CellCommons.IsEquipped(cell):
+				UnequipItem(cell)
 			items.erase(item)
 		return true
 
