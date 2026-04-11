@@ -15,3 +15,6 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_mtoxs")]([null, null, null, null, null, null, null, null])
 _behaviour = 9
+_questID = 2
+_questState = 0
+_questStateMax = 31

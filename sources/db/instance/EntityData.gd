@@ -26,7 +26,7 @@ class_name EntityData
 @export_category("Quests")
 @export var _questID : int						= ProgressCommons.Quest.UNKNOWN
 @export var _questState : int					= ProgressCommons.UnknownProgress
-@export var _questStateMax : int				= ProgressCommons.CompletedProgress
+@export var _questStateMax : int				= ProgressCommons.UnknownProgress
 @export_category("Flags")
 @export var _isBoss : bool						= false
 
