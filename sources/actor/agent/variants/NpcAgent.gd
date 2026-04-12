@@ -60,6 +60,7 @@ func AddTrigger():
 		var circle : CircleShape2D = CircleShape2D.new()
 		circle.radius = spawnInfo.trigger_radius
 		collisionShape.shape = circle
+		collisionShape.scale.x = 1.3
 		triggerObject.add_child(collisionShape)
 	elif spawnInfo.spawn_offset != Vector2i.ZERO:
 		# Use spawn rectangle area

@@ -59,4 +59,5 @@ func LoadMapData():
 			if spawn:
 				spawn.map = self
 				spawns.append(spawn)
+
 func HasFlags(checkedFlags : Flags) -> bool: return !!(flags & checkedFlags)

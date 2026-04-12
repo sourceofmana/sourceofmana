@@ -16,4 +16,3 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_rxrwl")]([null, null, null, null, null, null, null, null])
 _questID = 4
-_questState = 0

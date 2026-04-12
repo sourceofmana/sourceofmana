@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://4a84rgeosi0e"]
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://vb4wyd355w6x"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_mtoxs"]
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_b0nde"]
@@ -7,13 +7,13 @@
 [resource]
 script = ExtResource("2_pyd2m")
 _parent = ExtResource("2_b0nde")
-_id = 1190381389
-_name = "Snake Pit Clue"
+_id = 3922677720
+_name = "Letter Stash"
 _radius = 8
 _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_mtoxs")]([null, null, null, null, null, null, null, null])
 _behaviour = 9
-_questID = 2
-_questStateMax = 31
+_questID = 6
+_questState = 1

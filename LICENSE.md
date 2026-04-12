@@ -213,6 +213,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/items/legs/shorts.png [Reid]
 ./graphics/items/legs/trousers.png [Reid]
 ./graphics/items/neck/bandana-scarf.png [Reid]
+./graphics/items/quest/envelope.png [Reid]
 ./graphics/items/quest/letter.png [Reid]
 ./graphics/items/shield/leather-shield.png [Len]
 ./graphics/items/shield/raw-wood-shield.png [Enchilado]

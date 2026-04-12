@@ -334,6 +334,7 @@ func ApplyStep():
 		var dialogueStep : Dictionary = steps[step]
 		while dialogueStep.has("action"):
 			dialogueStep["action"].call()
+			stepCount = steps.size()
 			step += 1
 			if step >= stepCount:
 				break

@@ -27,7 +27,12 @@ func bodyExited(body : CollisionObject2D):
 		return
 	var rid : int = body.get_rid().get_id()
 	if playersInside.has(rid):
-		pendingExits[rid] = [ExitGraceTicks, body]
+		pendingExits[rid] = [ExitGraceTicks, weakref(body)]
+		Callback.OneShotCallback(body.tree_exiting, _OnPlayerLeft, [rid])
+
+func _OnPlayerLeft(rid : int):
+	pendingExits.erase(rid)
+	playersInside.erase(rid)
 
 func _physics_process(_delta : float):
 	if pendingExits.is_empty():
@@ -35,12 +40,15 @@ func _physics_process(_delta : float):
 	for rid in pendingExits.keys():
 		pendingExits[rid][0] -= 1
 		if pendingExits[rid][0] <= 0:
-			var player : PlayerAgent = pendingExits[rid][1]
+			var playerRef : WeakRef = pendingExits[rid][1]
 			pendingExits.erase(rid)
-			if playersInside.has(rid):
+			var player : PlayerAgent = playerRef.get_ref()
+			if player and playersInside.has(rid):
 				playersInside.erase(rid)
 				if linkedNpc and linkedNpc.ownScript:
 					linkedNpc.ownScript.OnAreaExit.call_deferred(player)
+			else:
+				playersInside.erase(rid)
 
 #
 func _ready():
