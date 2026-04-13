@@ -195,6 +195,12 @@ static func IsRunning(agent : Actor) -> bool:
 static func IsTriggering(agent : Actor) -> bool:
 	return agent and agent.state == State.TRIGGER
 
+static func IsHiddenFromMobs(agent : Actor) -> bool:
+	return agent and agent.stat and (agent.stat.isHidden or agent.stat.isInvisible)
+
+static func IsInvisibleToPlayers(agent : Actor) -> bool:
+	return agent and agent.stat and agent.stat.isInvisible
+
 #
 const slotChest : String					= "Chest"
 const slotLegs : String						= "Legs"

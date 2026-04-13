@@ -54,6 +54,8 @@ enum Modifier {
 	WalkSpeed,
 	WeightCapacity,
 	Attack,
+	Hide,
+	Invisible,
 	Count
 }
 

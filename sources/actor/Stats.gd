@@ -20,6 +20,8 @@ var spirit : int						= DB.UnknownHash
 var currentShape : int					= DB.UnknownHash
 var baseExp : int						= 1
 var isRunning : bool					= false
+var isHidden : bool						= false
+var isInvisible : bool					= false
 
 # Attributes
 var strength : int						= 0
@@ -73,6 +75,8 @@ func RefreshEntityStats():
 	current.cooldownAttackDelay = Formula.GetCooldownAttackDelay(self)
 	current.walkSpeed		= Formula.GetWalkSpeed(self)
 	current.weightCapacity	= Formula.GetWeightCapacity(self)
+	isHidden				= Formula.IsHidden(self)
+	isInvisible				= Formula.IsInvisible(self)
 	entity_stats_updated.emit()
 
 	RefreshVitalStats()

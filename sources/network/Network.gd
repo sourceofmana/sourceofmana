@@ -394,6 +394,11 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 	if inst:
 		for player in inst.players:
 			if player != null and player != agent and player.peerID != NetworkCommons.PeerUnknownID:
+				if ActorCommons.IsInvisibleToPlayers(agent):
+					if player.visibleAgents.has(currentagentRID):
+						player.visibleAgents.erase(currentagentRID)
+						Network.Bulk("RemoveEntity", [currentagentRID], player.peerID)
+					continue
 				if NetworkCommons.IsAlwaysVisible(agent) or NetworkCommons.IsVisible(player.position, agent.position, player.visibilityHalfSize):
 					if not player.visibleAgents.has(currentagentRID):
 						player.visibleAgents[currentagentRID] = true
