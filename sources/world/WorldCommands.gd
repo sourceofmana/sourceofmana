@@ -6,8 +6,13 @@ func RegisterCommands():
 	CommandManager.Register("spawn", CommandSpawn, ActorCommons.Permission.GM, "spawn <mob_name> <count>" )
 	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.MODERATOR, "warp <map> <posX> <posY>" )
 	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.MODERATOR, "goto <player>" )
+	CommandManager.Register("recall", CommandRecall, ActorCommons.Permission.MODERATOR, "recall <player>" )
+	CommandManager.Register("recallnpc", CommandRecallNpc, ActorCommons.Permission.ADMIN, "recallnpc <npc_name>" )
 	CommandManager.Register("godmode", CommandGodmode, ActorCommons.Permission.MODERATOR, "godmode <on/off>" )
+	CommandManager.Register("hide", CommandHide, ActorCommons.Permission.MODERATOR, "hide <on/off>" )
+	CommandManager.Register("invisible", CommandInvisible, ActorCommons.Permission.GM, "invisible <on/off>" )
 	CommandManager.Register("stat", CommandStat, ActorCommons.Permission.ADMIN, "stat <entry> <value>" )
+	CommandManager.Register("setstat", CommandSetStat, ActorCommons.Permission.ADMIN, "setstat <player> <entry> <value>" )
 	CommandManager.Register("level", CommandSpecificStat.bind("level"), ActorCommons.Permission.ADMIN, "level <value>" )
 	CommandManager.Register("experience", CommandSpecificStat.bind("experience"), ActorCommons.Permission.ADMIN, "experience <value>" )
 	CommandManager.Register("gp", CommandSpecificStat.bind("gp"), ActorCommons.Permission.GM, "gp <value>" )
@@ -24,6 +29,7 @@ func RegisterCommands():
 	CommandManager.Register("kill", CommandKill, ActorCommons.Permission.MODERATOR, "kill <nick>" )
 	CommandManager.Register("revive", CommandRevive, ActorCommons.Permission.MODERATOR, "revive <nick>" )
 	CommandManager.Register("permission", CommandPermission, ActorCommons.Permission.ADMIN, "permission <player_name> <level>, with level: None=0, Moderator=1, GM=2, Admin=3" )
+	CommandManager.Register("privilege", CommandPermission, ActorCommons.Permission.ADMIN, "privilege <player_name> <level>, with level: None=0, Moderator=1, GM=2, Admin=3" )
 	CommandManager.Register("ipcheck", CommandIpCheck, ActorCommons.Permission.MODERATOR, "ipcheck <player_name>" )
 	CommandManager.Register("kick", CommandKick, ActorCommons.Permission.MODERATOR, "kick <player_name>" )
 	CommandManager.Register("ban", CommandBan, ActorCommons.Permission.GM, "ban <player_name> <time> <reason>" )
@@ -34,8 +40,13 @@ static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
 	CommandManager.Unregister("warp")
 	CommandManager.Unregister("goto")
+	CommandManager.Unregister("recall")
+	CommandManager.Unregister("recallnpc")
 	CommandManager.Unregister("godmode")
+	CommandManager.Unregister("hide")
+	CommandManager.Unregister("invisible")
 	CommandManager.Unregister("stat")
+	CommandManager.Unregister("setstat")
 	CommandManager.Unregister("level")
 	CommandManager.Unregister("experience")
 	CommandManager.Unregister("gp")
@@ -52,6 +63,7 @@ static func UnregisterCommands():
 	CommandManager.Unregister("kill")
 	CommandManager.Unregister("revive")
 	CommandManager.Unregister("permission")
+	CommandManager.Unregister("privilege")
 	CommandManager.Unregister("ipcheck")
 	CommandManager.Unregister("kick")
 	CommandManager.Unregister("ban")
@@ -107,6 +119,38 @@ func CommandGoto(caller : PlayerAgent, nickname : String) -> bool:
 		Launcher.World.Warp(caller, targetInst.map, target.position, targetInst.id)
 	return true
 
+# Recall a player to the caller's position
+func CommandRecall(caller : PlayerAgent, nickname : String) -> bool:
+	if not caller:
+		return false
+
+	var target : PlayerAgent = Launcher.World.GetGlobalPlayer(nickname)
+	if not target:
+		Network.CommandFeedback("Player '%s' is disconnected" % nickname, caller.peerID)
+		return false
+
+	var callerInst : WorldInstance = WorldAgent.GetInstanceFromAgent(caller)
+	if callerInst:
+		Launcher.World.Warp(target, callerInst.map, caller.position, callerInst.id)
+	return true
+
+# Recall an NPC to the caller's position
+func CommandRecallNpc(caller : PlayerAgent, npcName : String) -> bool:
+	if not caller:
+		return false
+
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(caller)
+	if not inst:
+		return false
+
+	for npc in inst.npcs:
+		if npc and npc.nick == npcName:
+			RecallAgent(npc, caller.position)
+			return true
+
+	Network.CommandFeedback("NPC '%s' not found in current instance" % npcName, caller.peerID)
+	return false
+
 # Modifiers
 func CommandGodmode(caller : PlayerAgent, toggleStr : String) -> bool:
 	if not caller:
@@ -117,6 +161,56 @@ func CommandGodmode(caller : PlayerAgent, toggleStr : String) -> bool:
 	elif toggleStr == "off":
 		return CommandSpecificModifier(caller, "-10000", "DodgeRate")
 	return false
+
+func CommandHide(caller : PlayerAgent, toggleStr : String) -> bool:
+	if not caller:
+		return false
+
+	if toggleStr == "on":
+		return CommandSpecificModifier(caller, "1", "Hide")
+	elif toggleStr == "off":
+		return CommandSpecificModifier(caller, "0", "Hide")
+	return false
+
+func CommandInvisible(caller : PlayerAgent, toggleStr : String) -> bool:
+	if not caller:
+		return false
+
+	if toggleStr == "on":
+		var result : bool = CommandSpecificModifier(caller, "1", "Invisible")
+		if result:
+			RemoveFromNearbyPlayers(caller)
+		return result
+	elif toggleStr == "off":
+		var result : bool = CommandSpecificModifier(caller, "0", "Invisible")
+		if result:
+			ShowToNearbyPlayers(caller)
+		return result
+	return false
+
+func RecallAgent(agent : AIAgent, pos : Vector2):
+	agent.position = pos
+	agent.ResetNav()
+	agent.set_physics_process(true)
+	agent.requireFullUpdate = true
+	if agent.agent:
+		agent.agent.target_position = pos
+
+func RemoveFromNearbyPlayers(agent : PlayerAgent):
+	var agentRID : int = agent.get_rid().get_id()
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+	if inst:
+		for player in inst.players:
+			if player != agent and player is PlayerAgent and player.visibleAgents.has(agentRID):
+				player.visibleAgents.erase(agentRID)
+				Network.Bulk("RemoveEntity", [agentRID], player.peerID)
+
+func ShowToNearbyPlayers(agent : PlayerAgent):
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+	if inst:
+		for player in inst.players:
+			if player != agent and player is PlayerAgent:
+				player.CheckVisibility(agent)
 
 func CommandSpecificModifier(caller : PlayerAgent, valueStr : String, entry : String) -> bool:
 	if not caller or not caller.stat or not caller.stat.modifiers:
@@ -153,6 +247,23 @@ func CommandSpecificStat(caller : PlayerAgent, valueStr : String, entry : String
 
 	caller.stat[entry] += valueStr.to_float()
 	caller.stat.RefreshAttributes()
+	return true
+
+func CommandSetStat(caller : PlayerAgent, nickname : String, entry : String, valueStr : String) -> bool:
+	if not caller:
+		return false
+
+	var target : PlayerAgent = Launcher.World.GetGlobalPlayer(nickname)
+	if not target:
+		Network.CommandFeedback("Player '%s' is disconnected" % nickname, caller.peerID)
+		return false
+
+	if not target.stat or entry not in target.stat:
+		Network.CommandFeedback("Stat '%s' not found" % entry, caller.peerID)
+		return false
+
+	target.stat[entry] += valueStr.to_float()
+	target.stat.RefreshAttributes()
 	return true
 
 # Broadcast

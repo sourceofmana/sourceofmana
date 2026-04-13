@@ -195,6 +195,12 @@ static func IsRunning(agent : Actor) -> bool:
 static func IsTriggering(agent : Actor) -> bool:
 	return agent and agent.state == State.TRIGGER
 
+static func IsHiddenFromMobs(agent : Actor) -> bool:
+	return agent and agent.stat and (agent.stat.isHidden or agent.stat.isInvisible)
+
+static func IsInvisibleToPlayers(agent : Actor) -> bool:
+	return agent and agent.stat and agent.stat.isInvisible
+
 #
 const slotChest : String					= "Chest"
 const slotLegs : String						= "Legs"
@@ -318,12 +324,6 @@ const MaxStatValue : int					= 1 << 32
 const MaxPointPerAttributes : int			= 20
 const InventorySize : int					= 100
 const RunningStaminaCostPerSecond : int		= 5
-
-static func IsEquipped(cell : BaseCell) -> bool:
-	return cell and cell is ItemCell and \
-	cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and cell.slot < ActorCommons.Slot.LAST_EQUIPMENT and \
-	Launcher.Player and Launcher.Player.inventory and Launcher.Player.inventory.equipment and \
-	CellCommons.IsSameCell(cell, Launcher.Player.inventory.equipment[cell.slot])
 
 # Explore
 static var SailingDestination : Destination	= Destination.new(DB.OceanHash, Vector2(71 * 32, 55 * 32))

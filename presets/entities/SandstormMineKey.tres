@@ -15,3 +15,4 @@ _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_rxrwl")]([null, null, null, null, null, null, null, null])
+_questID = 4

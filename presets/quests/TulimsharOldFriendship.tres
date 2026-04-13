@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 6
+name = "An Old Friendship"
+description = "Frost, a man sitting on a bench in Tulimshar, asks you to retrieve old letters from the castle corridor. Stay in the shadows to avoid the guards."
+giver = "Frost"
+giverLocation = "Tulimshar Center"
+target = "Ben"
+targetLocation = "Tulimshar West Wall Pathway"
+reward = "1000 GP"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

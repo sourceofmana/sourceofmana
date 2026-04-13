@@ -7,7 +7,7 @@ const MAX_BITES : int									= 5
 const FILL_TIME : float									= 5.0
 const FILL_TICKS : int									= 10
 const FILL_TICK_TIME : float							= FILL_TIME / FILL_TICKS
-const MOVE_TOLERANCE : float							= 8.0
+const MOVE_TOLERANCE_SQUARED : float					= 8.0 * 8.0
 
 # Per-player bite counters [PlayerRID, BiteCount]
 static var biteCounters : Dictionary[int, int]			= {}
@@ -48,7 +48,7 @@ static func Spill(player : PlayerAgent):
 
 # Jug filling handling
 func OnFillTick(player : PlayerAgent, startPos : Vector2, tick : int):
-	if player.position.distance_to(startPos) > MOVE_TOLERANCE:
+	if player.position.distance_squared_to(startPos) > MOVE_TOLERANCE_SQUARED:
 		NpcCommons.ClearTracker(player)
 	else:
 		if tick >= FILL_TICKS:

@@ -62,7 +62,8 @@ func PopItem(cell : ItemCell, count : int) -> bool:
 
 	if not cell.stackable and toRemoveCount == count:
 		for item in toRemove:
-			UnequipItem(cell)
+			if CellCommons.IsEquipped(cell):
+				UnequipItem(cell)
 			items.erase(item)
 		return true
 
@@ -90,7 +91,7 @@ func HasSpace(count : int) -> bool:
 			var cell : ItemCell = DB.GetItem(item.cellID)
 			if cell:
 				inventoryCount += 1 if cell.stackable else item.count
-	return inventoryCount + count < ActorCommons.InventorySize
+	return inventoryCount + count <= ActorCommons.InventorySize
 
 #
 func GetWeight() -> float:
@@ -103,8 +104,13 @@ func GetWeight() -> float:
 	return weight / 1000.0
 
 func UseItem(cell : ItemCell):
-	if cell and cell.modifiers and cell.type == CellCommons.Type.ITEM and cell.usable and actor and RemoveItem(cell):
-		cell.modifiers.Apply(actor)
+	if cell and cell.type == CellCommons.Type.ITEM and cell.usable and actor and RemoveItem(cell):
+		if cell.modifiers:
+			cell.modifiers.Apply(actor)
+		if cell.cellScript:
+			var script : CellScript = cell.cellScript.new()
+			if script:
+				script.Execute(actor)
 
 func DropItem(cell : ItemCell, count : int):
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(actor)

@@ -159,7 +159,7 @@ func FlushStatsUpdate():
 	UpdateLastStats()
 
 func CheckVisibility(neighbour : BaseAgent):
-	if not neighbour:
+	if not neighbour or ActorCommons.IsInvisibleToPlayers(neighbour):
 		return
 	if NetworkCommons.IsAlwaysVisible(neighbour) or NetworkCommons.IsVisible(position, neighbour.position, visibilityHalfSize):
 		var agentRID : int = neighbour.get_rid().get_id()

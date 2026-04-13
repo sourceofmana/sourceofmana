@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://2uxfn14vfc3e"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_entity"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="3_parent"]
+[ext_resource type="Texture2D" uid="uid://dnpxtiulacy0c" path="res://data/graphics/sprites/equipment/head/ghutra.png" id="4_ghutra_tex"]
+[ext_resource type="Material" uid="uid://cpo1seggn3swm" path="res://presets/palettes/equipment/cloth-sand.tres" id="5_sand"]
+[ext_resource type="AnimationLibrary" uid="uid://dp0m76ygh75g3" path="res://presets/animations/overrides/Ghutra.tres" id="6_ghutra_anim"]
+[ext_resource type="Texture2D" uid="uid://d3o47bvb21ccp" path="res://data/graphics/sprites/equipment/chest/leathershirt-male.png" id="7_shirt_m"]
+[ext_resource type="Texture2D" uid="uid://dbsykypmoslw7" path="res://data/graphics/sprites/equipment/chest/leathershirt-female.png" id="8_shirt_f"]
+[ext_resource type="Material" uid="uid://ckqgd3iyjewcy" path="res://presets/palettes/equipment/cloth-salamander.tres" id="9_salamander"]
+[ext_resource type="Resource" uid="uid://bouv4idn0yg3i" path="res://presets/cells/items/legs/CloudPants.tres" id="10_legs"]
+[ext_resource type="Resource" uid="uid://b1kgjqcht72fg" path="res://presets/cells/items/feet/LeatherBoots.tres" id="11_feet"]
+
+[sub_resource type="Resource" id="shirt_salamander"]
+script = ExtResource("1_item")
+slot = 0
+textures = Array[Texture2D]([ExtResource("7_shirt_m"), ExtResource("8_shirt_f"), ExtResource("7_shirt_m")])
+shader = ExtResource("9_salamander")
+customfield = "Salamander"
+name = "Leather Shirt"
+
+[sub_resource type="Resource" id="ghutra_sand"]
+script = ExtResource("1_item")
+slot = 4
+textures = Array[Texture2D]([ExtResource("4_ghutra_tex"), ExtResource("4_ghutra_tex"), ExtResource("4_ghutra_tex")])
+shader = ExtResource("5_sand")
+customfield = "Sand"
+animationOverrides = ExtResource("6_ghutra_anim")
+spriteHframes = 15
+spriteVframes = 2
+name = "Ghutra"
+
+[resource]
+script = ExtResource("2_entity")
+_parent = ExtResource("3_parent")
+_id = 221388307
+_name = "Frost"
+_spritePreset = "Player"
+_stats = {
+"gender": "Male",
+"haircolor": "Light Violet",
+"hairstyle": "Side Strand",
+"level": 1,
+"race": "Human",
+"skintone": "Dark"
+}
+_equipment = Array[ExtResource("1_item")]([SubResource("shirt_salamander"), ExtResource("10_legs"), ExtResource("11_feet"), null, SubResource("ghutra_sand"), null, null, null])
+_state = 1

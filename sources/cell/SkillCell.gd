@@ -24,8 +24,6 @@ enum Category
 @export var skillTime : float					= 0.0
 @export_category("Projectile")
 @export var projectilePreset : PackedScene		= null
-@export_category("Ability")
-@export var abilityScript : Script				= null
 
 #
 func Instantiate():

@@ -181,6 +181,20 @@ static func TeachSkill(caller : BaseAgent, skillID : int, level : int = 1) -> bo
 			return true
 	return false
 
+# Modifier
+static func AddModifier(agent : BaseAgent, effect : CellCommons.Modifier, value : Variant) -> StatModifier:
+	var modifier : StatModifier = StatModifier.new()
+	modifier._effect = effect
+	modifier._value = value
+	modifier._persistent = true
+	agent.stat.modifiers.Add(modifier)
+	agent.stat.RefreshEntityStats()
+	return modifier
+
+static func RemoveModifier(agent : BaseAgent, modifier : StatModifier):
+	agent.stat.modifiers.Remove(modifier)
+	agent.stat.RefreshEntityStats()
+
 # Karma
 static func AddKarma(caller : BaseAgent, points : int) -> bool:
 	if caller is PlayerAgent and caller.stat:

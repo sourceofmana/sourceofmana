@@ -134,9 +134,9 @@ static func ThrowProjectile(agent : BaseAgent, targetPos : Vector2, skill : Skil
 	Network.NotifyNeighbours(agent, "ThrowProjectile", [targetPos, skill.id])
 
 static func CastAbility(agent : BaseAgent, skill : SkillCell):
-	if not skill.abilityScript:
+	if not skill.cellScript:
 		return
 
-	var ability : AbilityScript = skill.abilityScript.new()
+	var ability : CellScript = skill.cellScript.new()
 	if ability:
 		ability.Execute(agent)

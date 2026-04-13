@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://c3ww666y3gb2"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_entity"]
+[ext_resource type="Resource" uid="uid://b58u4sccexbpg" path="res://presets/cells/items/chest/DesertArmor.tres" id="3_chest"]
+[ext_resource type="Resource" uid="uid://b8awmxy22bpqi" path="res://presets/cells/items/legs/GuardCloudPants.tres" id="4_legs"]
+[ext_resource type="Resource" uid="uid://b1kgjqcht72fg" path="res://presets/cells/items/feet/LeatherBoots.tres" id="5_feet"]
+[ext_resource type="Resource" uid="uid://b8ixnx1136r4m" path="res://presets/cells/items/hands/LeatherGloves.tres" id="6_hands"]
+[ext_resource type="Resource" uid="uid://bj5p08ffbj617" path="res://presets/cells/items/weapon/BoneKnife.tres" id="7_weapon"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="8_parent"]
+
+[resource]
+script = ExtResource("2_entity")
+_parent = ExtResource("8_parent")
+_id = 193452314
+_name = "Ben"
+_spritePreset = "Player"
+_stats = {
+"gender": "Male",
+"haircolor": "Dark Brown",
+"hairstyle": "Tapered Nape",
+"level": 1,
+"race": "Human",
+"skintone": "Medium"
+}
+_equipment = Array[ExtResource("1_item")]([ExtResource("3_chest"), ExtResource("4_legs"), ExtResource("5_feet"), ExtResource("6_hands"), null, null, ExtResource("7_weapon"), null])

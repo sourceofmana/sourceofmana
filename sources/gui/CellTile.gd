@@ -109,7 +109,7 @@ func _make_custom_tooltip(for_text : String) -> Object:
 
 func UpdateCountLabel():
 	if countLabel:
-		if not defaultIcon and ActorCommons.IsEquipped(cell):
+		if not defaultIcon and CellCommons.IsEquipped(cell):
 			countLabel.text = "~"
 		elif count >= 1000:
 			countLabel.text = "999+"
@@ -218,16 +218,16 @@ func _get_drag_data(_position : Vector2):
 func _can_drop_data(_at_position : Vector2, data):
 	if draggable and data is BaseCell and data != cell and data.usable:
 		return true
-	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot() and not ActorCommons.IsEquipped(data):
+	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot() and not CellCommons.IsEquipped(data):
 		return true
-	if not draggable and not defaultIcon and data is ItemCell and ActorCommons.IsEquipped(data):
+	if not draggable and not defaultIcon and data is ItemCell and CellCommons.IsEquipped(data):
 		return true
 	return false
 
 func _drop_data(_at_position : Vector2, data):
 	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot():
 		Network.EquipItem(data.id, data.customfield)
-	elif not draggable and not defaultIcon and data is ItemCell and ActorCommons.IsEquipped(data):
+	elif not draggable and not defaultIcon and data is ItemCell and CellCommons.IsEquipped(data):
 		Network.UnequipItem(data.id, data.customfield)
 	elif draggable:
 		AssignData(data)
@@ -280,7 +280,7 @@ func RefreshColor():
 	var targetColor : Color
 	if hovered:
 		targetColor = UICommons.CellTileColorHovered
-	elif cell and ActorCommons.IsEquipped(cell):
+	elif cell and CellCommons.IsEquipped(cell):
 		targetColor = UICommons.CellTileColorEquipped
 	else:
 		targetColor = UICommons.CellTileColorDefault

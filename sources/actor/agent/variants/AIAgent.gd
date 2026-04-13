@@ -63,7 +63,7 @@ func GetMostValuableAttacker() -> BaseAgent:
 	var target : BaseAgent = null
 	var maxDamage : int = -1
 	for entry in attackers:
-		if entry.attacker and SkillCommons.IsInteractable(self, entry.attacker) and entry.damage > maxDamage:
+		if entry.attacker and not ActorCommons.IsHiddenFromMobs(entry.attacker) and SkillCommons.IsInteractable(self, entry.attacker) and entry.damage > maxDamage:
 			maxDamage = entry.damage
 			target = entry.attacker
 	return target
@@ -72,7 +72,7 @@ func GetNearbyMostValuableAttacker() -> BaseAgent:
 	var target : BaseAgent = null
 	var maxDamage : int = -1
 	for entry in attackers:
-		if entry.attacker and entry.damage > maxDamage and AICommons.IsReachable(self, entry.attacker):
+		if entry.attacker and not ActorCommons.IsHiddenFromMobs(entry.attacker) and entry.damage > maxDamage and AICommons.IsReachable(self, entry.attacker):
 			maxDamage = entry.damage
 			target = entry.attacker
 	return target

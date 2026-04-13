@@ -131,6 +131,8 @@ static func ApplyAggressiveBehaviour(agent : AIAgent) -> bool:
 	var nearestSquaredDist : float = ReachDistanceSquared
 	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	for player in instance.players:
+		if ActorCommons.IsHiddenFromMobs(player):
+			continue
 		if SkillCommons.IsInteractable(agent, player):
 			var currentDist : float = WorldNavigation.GetDistanceSquaredSafe(agent, player.position)
 			if currentDist < nearestSquaredDist:

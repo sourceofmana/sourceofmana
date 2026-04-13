@@ -30,12 +30,12 @@ func GetGlobal(scriptFunc : String) -> Callable:
 	return Callable()
 
 func Trigger() -> bool:
-	if npc and npc.SetState(ActorCommons.State.TRIGGER):
-		CallGlobal("OnTrigger")
-		return true
-	else:
-		CallGlobal("OnQuit")
-		return false
+	if npc:
+		if npc.defaultState != ActorCommons.State.UNKNOWN or npc.SetState(ActorCommons.State.TRIGGER):
+			CallGlobal("OnTrigger")
+			return true
+	CallGlobal("OnQuit")
+	return false
 
 func IsTriggering() -> bool:
 	return ActorCommons.IsTriggering(npc)
@@ -220,8 +220,11 @@ func AddTimer(caller : BaseAgent, delay : float, callback : Callable, timerName 
 func TimeOut(callback : Callable):
 	timerCount -= 1
 	Callback.TriggerCallback(callback)
-	if own and IsDone():
-		Close()
+	if own:
+		if IsDone():
+			Close()
+		else:
+			ApplyStep()
 
 func ClearTimer(timer : Timer):
 	if timer and not timer.is_stopped() and not timer.is_queued_for_deletion():
@@ -257,7 +260,12 @@ func HasItemsSpace(items : Array) -> bool:
 			return false
 
 		if cell:
-			totalCount += 1 if cell.stackable else itemCount
+			if cell.stackable and HasItem(cell.id):
+				var inventoryItem : Item = own.inventory.GetItem(cell)
+				if itemCount < 0 and inventoryItem.count == -itemCount:
+					totalCount -= 1
+			else:
+				totalCount += 1 if cell.stackable else itemCount
 	return HasSpace(totalCount)
 
 func HasSpace(itemCount : int) -> bool:
@@ -286,6 +294,13 @@ func TeachSkill(skillID : int, level : int = 1):
 	assert(IsPlayer(), "TeachSkill() requires a player agent")
 	if not IsPlayer(): return
 	Action(NpcCommons.TeachSkill.bind(own, skillID, level))
+
+# Modifier
+func AddModifier(effect : CellCommons.Modifier, value : Variant, agent : BaseAgent = null) -> StatModifier:
+	return NpcCommons.AddModifier(agent if agent else own, effect, value)
+
+func RemoveModifier(modifier : StatModifier, agent : BaseAgent = null):
+	NpcCommons.RemoveModifier(agent if agent else own, modifier)
 
 # Karma
 func AddKarma(value : int):
@@ -334,6 +349,7 @@ func ApplyStep():
 		var dialogueStep : Dictionary = steps[step]
 		while dialogueStep.has("action"):
 			dialogueStep["action"].call()
+			stepCount = steps.size()
 			step += 1
 			if step >= stepCount:
 				break

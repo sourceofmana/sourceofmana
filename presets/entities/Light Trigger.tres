@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://662yrisygsu7"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_mtoxs"]
+[ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_b0nde"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_pyd2m"]
+
+[resource]
+script = ExtResource("2_pyd2m")
+_parent = ExtResource("2_b0nde")
+_id = 31947249
+_name = "Light Trigger"
+_stats = {
+"level": 1
+}
+_equipment = Array[ExtResource("1_mtoxs")]([null, null, null, null, null, null, null, null])
+_behaviour = 9

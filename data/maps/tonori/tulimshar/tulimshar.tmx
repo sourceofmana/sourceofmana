@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="68">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="71">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -310,6 +310,24 @@
     <property name="direction" value="left"/>
     <property name="nick" value="Aacheron"/>
     <property name="state" value="attack"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="68" name="Well" type="Spawn" x="4736" y="1776">
+   <properties>
+    <property name="player_script" value="generic/Well.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="69" name="Well" type="Spawn" x="3584" y="1456">
+   <properties>
+    <property name="player_script" value="generic/Well.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="70" name="Well" type="Spawn" x="1280" y="1615">
+   <properties>
+    <property name="player_script" value="generic/Well.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

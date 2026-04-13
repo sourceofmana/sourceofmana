@@ -171,7 +171,7 @@ func RefreshItemMode():
 
 	if selectedTile and selectedTile.cell and selectedTile.count > 0:
 		var isEquipment : bool = selectedTile.cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and selectedTile.cell.slot < ActorCommons.Slot.LAST_EQUIPMENT
-		var isEquiped : bool = isEquipment and ActorCommons.IsEquipped(selectedTile.cell)
+		var isEquiped : bool = isEquipment and CellCommons.IsEquipped(selectedTile.cell)
 		var isQuestItem : bool = selectedTile.cell.slot == ActorCommons.Slot.QUEST
 
 		useButton.set_visible(selectedTile.cell.usable)

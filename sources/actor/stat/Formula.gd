@@ -99,6 +99,13 @@ static func GetWeightCapacity(stat : ActorStats) -> float:
 static func GetAttack(stat : ActorStats) -> int:
 	return stat.morphStat.attack + F(stat.strength * coefAttack) + stat.level + stat.modifiers.Get(CellCommons.Modifier.Attack, true)
 
+# GM modifiers
+static func IsHidden(stat : ActorStats) -> bool:
+	return stat.modifiers.Get(CellCommons.Modifier.Hide, true) > 0
+
+static func IsInvisible(stat : ActorStats) -> bool:
+	return stat.modifiers.Get(CellCommons.Modifier.Invisible, true) > 0
+
 #
 static func ClampHealth(stat : ActorStats) -> int:
 	return clampi(stat.health, 0, stat.current.maxHealth)
