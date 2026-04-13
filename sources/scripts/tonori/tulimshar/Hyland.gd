@@ -75,7 +75,7 @@ func ShowRules():
 	DisplayChoices()
 
 func Decline():
-	Chat("No game? What a shame. Well, you know where to find me.")
+	Chat("You know where to find me if you want to play a game of cards.")
 
 func OnQuit():
 	if npc and npc.ownScript:
@@ -152,8 +152,7 @@ func _PvPCheck():
 
 func _PvPCancel():
 	npc.ownScript.call("LeavePvP", own)
-	Chat("Cold feet, eh? No shame in that.")
-
+	Chat("No game? What a shame. Oh well, maybe you'll change your mind.")
 func _PvPBegin():
 	playerHand = npc.ownScript.call("GetHand", own)
 	Mes("Ha! We've got a match! Let's see what you're both made of.")
