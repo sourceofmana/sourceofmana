@@ -22,10 +22,10 @@ func OnStart():
 
 func QuestInactive():
 	Mes("Careful where you step. The radishes are just coming in.")
-	Mes("Sorry, I don't get many visitors. Used to be a guard up in these walls.")
+	Mes("Sorry, I don't get many visitors. Not sicne I used to be a counsellor up in the palace.")
 	Mes("Quit a few years back. Too much weight on everyone's shoulders up there, you know?")
-	Mes("Out here it's just me and the dirt, still very useful for the city so I don't mind it.")
-	Mes("Did you ever run the same scenario over and over in your head and wondered how different things would be if you took a different decision?")
+	Mes("Out here it's just me and the dirt. Farming is useful for the city though, so I don't mind it.")
+	Mes("Do you ever run the same scenario over and over in your head and wonder how different things would be if you took a different decision?")
 	Choice("What's on your mind?", Lore)
 	Choice("I should get going", Dismiss)
 
@@ -37,7 +37,8 @@ func QuestStarted():
 
 func QuestEnvelopesFound():
 	Mes("You found them. Good, good.")
-	Mes("Bring the sealed letters to Ben. He's in the western wall corridor you've seen it.")
+	Mes("Bring the sealed letters to Ben. I just saw him walk into the corridor as soon as you left.")
+	Mes("He has good instincts, or maybe you made noise while focusing on not being seen. Anyway, he'll be in there.")
 
 func QuestRewards():
 	if HasItem(heavyEnvelopeID):
@@ -46,8 +47,8 @@ func QuestRewards():
 		Mes("...")
 		Mes("Gold. He put gold in here. With my name on it.")
 		Mes("When the Queen first stationed us together, we each set aside a share for the other. In case things got bad enough that one of us needed to get out.")
-		Mes("I thought he'd thrown his away after I left. I would have understood if he did.")
-		Mes("I don't deserve this. It belongs to someone who was a better friend than I managed to be.")
+		Mes("I thought he'd spent this after I left. I would have understood if he did.")
+		Mes("I don't deserve this. It should belong to someone who is a better friend than I managed to be.")
 		Mes("Here. You take it. You've done more for us in one afternoon than we managed in years.")
 		RemoveItem(heavyEnvelopeID)
 		AddGP(1000)
@@ -71,9 +72,9 @@ func Lore():
 func Conflict():
 	Mes("The Queen happened. Or kept happening I guess. Always more demands, always her way.")
 	Mes("I started making rules. Procedures for everything. I thought if I could just organize it all, maybe the pressure wouldn't crush us.")
-	Mes("Ben saw it differently. Said I was piling more chains on top of the ones we already wore.")
+	Mes("Ben saw it differently. Said I was piling even more pressure on top of what we were already under.")
 	Mes("And he just did things. Decided things. Without telling me, without telling anyone. I'd find out after the fact.")
-	Mes("We were both trying to keep the same wall standing. But somewhere along the way we stopped talking about it and started fighting about it instead.")
+	Mes("We were both trying to keep the same walls standing. But somewhere along the way we stopped talking about it and started fighting about it instead.")
 	Mes("I've made too many mistakes to think I was right about everything. But back then, neither of us would bend.")
 	Mes("He told me to leave. And I just did. I'm not proud of how I handled it, but I got out of the way.")
 	Mes("That was years ago. I still think about it more than I should.")
@@ -83,16 +84,16 @@ func Conflict():
 
 func Quest():
 	Mes("Actually... there might be.")
-	Mes("At the far end of the western wall corridor, past Ben's patrols, there's a small chamber with a library shelf.")
+	Mes("At the far end of the western wall corridor near us, past Ben's patrols, there's a small chamber with a library shelf.")
 	Mes("There's an envelope on that shelf. Letters we wrote each other, back when the Queen had us stationed apart. Before everything went wrong.")
-	Mes("I don't know if it'll change anything. But maybe he'd remember we weren't always like this.")
-	Mes("The corridors are patrolled, though. If you step into the light, the guards will catch you.")
+	Mes("I don't know if it'll change anything. But maybe if he read them again he'd remember we weren't always like this.")
+	Mes("The corridors are patrolled, though. You should stick to the shadows. If you step into the light, the guards will catch you.")
 	Choice("I'll do it", Accept)
 	Choice("Not now", Decline)
 
 func Directions():
-	Mes("Far end of the western wall corridor on top of the library shelf.")
-	Mes("And stay out of the light. The guards aren't the forgiving type.")
+	Mes("Far end of the western wall corridor to our left, on top of the library shelf.")
+	Mes("And stay out of the light. The guards are on strict orders to escort any unauthorised citizens out.")
 
 func Accept():
 	SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.STARTED)
