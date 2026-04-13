@@ -11,11 +11,13 @@ var WATER_BOTTLE_ID : int								= "Water Bottle".hash()
 
 #
 func OnStart():
-	if HasItem(BOTTLE_ID):
+	if not HasItem(BOTTLE_ID):
+		Mes("You would need a bottle to draw water from this well.")
+	elif not HasItemsSpace([[BOTTLE_ID, -1], [WATER_BOTTLE_ID, 1]]):
+		Mes("You don't have any available space on your inventory.")
+	else:
 		Mes("Hold still while your bottle is filling...")
 		Action(StartFill)
-	else:
-		Mes("You would need a bottle to draw water from this well.")
 
 func StartFill():
 	OnFillTick(own.position, 0)
