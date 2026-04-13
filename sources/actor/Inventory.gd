@@ -91,7 +91,7 @@ func HasSpace(count : int) -> bool:
 			var cell : ItemCell = DB.GetItem(item.cellID)
 			if cell:
 				inventoryCount += 1 if cell.stackable else item.count
-	return inventoryCount + count < ActorCommons.InventorySize
+	return inventoryCount + count <= ActorCommons.InventorySize
 
 #
 func GetWeight() -> float:

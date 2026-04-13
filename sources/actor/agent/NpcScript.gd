@@ -220,8 +220,11 @@ func AddTimer(caller : BaseAgent, delay : float, callback : Callable, timerName 
 func TimeOut(callback : Callable):
 	timerCount -= 1
 	Callback.TriggerCallback(callback)
-	if own and IsDone():
-		Close()
+	if own:
+		if IsDone():
+			Close()
+		else:
+			ApplyStep()
 
 func ClearTimer(timer : Timer):
 	if timer and not timer.is_stopped() and not timer.is_queued_for_deletion():
@@ -257,7 +260,12 @@ func HasItemsSpace(items : Array) -> bool:
 			return false
 
 		if cell:
-			totalCount += 1 if cell.stackable else itemCount
+			if cell.stackable and HasItem(cell.id):
+				var inventoryItem : Item = own.inventory.GetItem(cell)
+				if itemCount < 0 and inventoryItem.count == -itemCount:
+					totalCount -= 1
+			else:
+				totalCount += 1 if cell.stackable else itemCount
 	return HasSpace(totalCount)
 
 func HasSpace(itemCount : int) -> bool:
