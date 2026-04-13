@@ -20,7 +20,7 @@ func OnInactive():
 	Mes("People used to come here to collect water, but a few years ago the place became infested with snakes.")
 	Mes("I thought I could fight the snakes back, but I did not expect to find this many!")
 	Mes("I tried to reach the pond but the snakes keep attacking and I spill all the water that I collect.")
-	Mes("Do you think you could give it a try? I am so tired. I will need at least one full jug to journey back to the city.
+	Mes("Do you think you could give it a try? I am so tired. I will need at least one full jug to journey back to the city.")
 	Mes("These are not venomous snakes, but they are aggressive and there are so many...")
 	Choice("I can give it a try.", OnAccept)
 	Choice("Not today.", OnDecline)
