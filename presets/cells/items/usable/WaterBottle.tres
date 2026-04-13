@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_aigdi"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_lqbcw"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_6ukje"]
+[ext_resource type="Script" uid="uid://dp2006gfkydbm" path="res://sources/cell/scripts/WaterBottleScript.gd" id="5_wbscr"]
 
 [sub_resource type="Resource" id="Resource_qi6b5"]
 script = ExtResource("2_aigdi")
@@ -26,3 +27,4 @@ weight = 50.0
 stackable = true
 usable = true
 modifiers = SubResource("Resource_t00vx")
+cellScript = ExtResource("5_wbscr")

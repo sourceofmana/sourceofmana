@@ -1,4 +1,4 @@
-extends AbilityScript
+extends CellScript
 
 #
 func Execute(agent : BaseAgent):

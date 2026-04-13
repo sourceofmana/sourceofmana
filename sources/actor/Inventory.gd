@@ -104,8 +104,13 @@ func GetWeight() -> float:
 	return weight / 1000.0
 
 func UseItem(cell : ItemCell):
-	if cell and cell.modifiers and cell.type == CellCommons.Type.ITEM and cell.usable and actor and RemoveItem(cell):
-		cell.modifiers.Apply(actor)
+	if cell and cell.type == CellCommons.Type.ITEM and cell.usable and actor and RemoveItem(cell):
+		if cell.modifiers:
+			cell.modifiers.Apply(actor)
+		if cell.cellScript:
+			var script : CellScript = cell.cellScript.new()
+			if script:
+				script.Execute(actor)
 
 func DropItem(cell : ItemCell, count : int):
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(actor)

@@ -11,6 +11,7 @@ class_name BaseCell
 @export var stackable : bool					= false
 @export var usable : bool						= false
 @export var modifiers : CellModifier			= null
+@export var cellScript : Script					= null
 
 signal used
 
