@@ -35,17 +35,11 @@ func OnPlayerLeft():
 # Player modifier
 func AddPlayerModifier():
 	if not playerModifier and player:
-		playerModifier = StatModifier.new()
-		playerModifier._effect = CellCommons.Modifier.DodgeRate
-		playerModifier._value = 10000
-		playerModifier._persistent = true
-		player.stat.modifiers.Add(playerModifier)
-		player.stat.RefreshEntityStats()
+		playerModifier = AddModifier(CellCommons.Modifier.DodgeRate, 10000, player)
 
 func RemovePlayerModifier():
 	if playerModifier and player:
-		player.stat.modifiers.Remove(playerModifier)
-		player.stat.RefreshEntityStats()
+		RemoveModifier(playerModifier, player)
 	playerModifier = null
 
 # Actions
@@ -83,12 +77,7 @@ func RunAway():
 
 	SetState(ActorCommons.State.IDLE)
 
-	var speedBoost : StatModifier = StatModifier.new()
-	speedBoost._effect = CellCommons.Modifier.WalkSpeed
-	speedBoost._value = 200
-	speedBoost._persistent = true
-	npc.stat.modifiers.Add(speedBoost)
-	npc.stat.RefreshAttributes()
+	AddModifier(CellCommons.Modifier.WalkSpeed, 200)
 
 	AI.Reset(npc)
 	npc.WalkToward(exitPosition)

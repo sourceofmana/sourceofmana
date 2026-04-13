@@ -63,12 +63,7 @@ static func StartGuardNavigation(player : PlayerAgent, guard : NpcAgent, playerR
 		Cleanup(player, guard, playerRID)
 		return
 
-	var speedBoost : StatModifier = StatModifier.new()
-	speedBoost._effect = CellCommons.Modifier.WalkSpeed
-	speedBoost._value = GUARD_SPEED_BOOST
-	speedBoost._persistent = true
-	guard.stat.modifiers.Add(speedBoost)
-	guard.stat.RefreshAttributes()
+	NpcCommons.AddModifier(guard, CellCommons.Modifier.WalkSpeed, GUARD_SPEED_BOOST)
 
 	AI.Stop(guard)
 

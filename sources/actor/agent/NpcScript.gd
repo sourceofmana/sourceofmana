@@ -295,6 +295,13 @@ func TeachSkill(skillID : int, level : int = 1):
 	if not IsPlayer(): return
 	Action(NpcCommons.TeachSkill.bind(own, skillID, level))
 
+# Modifier
+func AddModifier(effect : CellCommons.Modifier, value : Variant, agent : BaseAgent = null) -> StatModifier:
+	return NpcCommons.AddModifier(agent if agent else own, effect, value)
+
+func RemoveModifier(modifier : StatModifier, agent : BaseAgent = null):
+	NpcCommons.RemoveModifier(agent if agent else own, modifier)
+
 # Karma
 func AddKarma(value : int):
 	assert(IsPlayer(), "AddKarma() requires a player agent")
