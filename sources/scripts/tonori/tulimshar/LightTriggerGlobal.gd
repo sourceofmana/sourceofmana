@@ -22,12 +22,14 @@ static func CallGuard(player : PlayerAgent):
 		return
 
 	var questState : int = player.progress.GetQuest(QUEST_ID)
-	if questState >= ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.LETTERS_DELIVERED:
+	if questState >= ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.GIVE_LETTER_TO_FROST:
 		return
 
 	if player.SetState(ActorCommons.State.TRIGGER):
 		activeCatches[playerRID] = true
-		NpcCommons.PushNotification(player, "A guard saw you!")
+		# Do not send a message when being escorted out voluntarily as you are not being caught
+		if questState != ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.LETTERS_DELIVERED:
+			NpcCommons.PushNotification(player, "A guard saw you!")
 
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(player)
 		if inst:

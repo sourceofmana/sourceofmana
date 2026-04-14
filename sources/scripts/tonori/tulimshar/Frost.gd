@@ -15,7 +15,7 @@ func OnStart():
 			QuestStarted()
 		ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.ENVELOPES_FOUND:
 			QuestEnvelopesFound()
-		ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.LETTERS_DELIVERED:
+		ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.GIVE_LETTER_TO_FROST:
 			QuestRewards()
 		ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.REWARDS_WITHDREW:
 			QuestCompleted()

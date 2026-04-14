@@ -14,6 +14,7 @@ func OnStart():
 		ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.REWARDS_WITHDREW:
 			FreeRoaming()
 		_:
+			Chat("Who goes there? Guards!")
 			TulimsharWestWallLightTrigerGlobal.CallGuard(own)
 
 func ReceiveLetters():
@@ -36,9 +37,20 @@ func ReceiveLetters():
 		SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.LETTERS_DELIVERED)
 		Mes("Take this envelope back to him. He'll know what's inside.")
 		Mes("And tell him the walls still stand. He'll... Yeah. Tell him that.")
+		Mes("Do you want one of my guards to escort you back out?")
+		Choice("Yes, please.", CallEscort)
+		Choice("No, I want to look around.", Dismiss)
+
 	else:
 		Mes("You look like you want to say something. But your hands are empty.")
 		Mes("Come back when you've got something to show me. I have work to do.")
+
+func CallEscort():
+	TulimsharWestWallLightTrigerGlobal.CallGuard(own)
+
+func Dismiss():
+	SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.GIVE_LETTER_TO_FROST)
+	Chat("Alright.")
 
 func FreeRoaming():
 	Mes("You again. Corridors are open to you now, I meant that.")
