@@ -22,7 +22,7 @@ func OnStart():
 
 func QuestInactive():
 	Mes("Careful where you step. The radishes are just coming in.")
-	Mes("Sorry, I don't get many visitors. Not sicne I used to be a counsellor up in the palace.")
+	Mes("Sorry, I don't get many visitors. Not since I used to be a counsellor up in the palace.")
 	Mes("Quit a few years back. Too much weight on everyone's shoulders up there, you know?")
 	Mes("Out here it's just me and the dirt. Farming is useful for the city though, so I don't mind it.")
 	Mes("Do you ever run the same scenario over and over in your head and wonder how different things would be if you took a different decision?")
