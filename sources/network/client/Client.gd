@@ -83,6 +83,11 @@ func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration :
 		var caller : Entity = Entities.Get(agentRID)
 		if caller && entity && entity.get_parent() and entity.interactive:
 			entity.interactive.DisplayAlteration.call_deferred(entity, caller, value, alteration, skillID)
+		if Launcher.GUI and entity == Launcher.Player:
+			if alteration == ActorCommons.Alteration.EXP:
+				Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " exp")
+			elif alteration == ActorCommons.Alteration.GP:
+				Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " GP")
 
 func Casted(agentRID : int, skillID : int, cooldown : float, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
@@ -194,6 +199,8 @@ func ItemAdded(itemID : int, customfield : StringName, count : int, _peerID : in
 			if Launcher.GUI:
 				Launcher.GUI.pickupPanel.AddLast(cell, count)
 				Launcher.GUI.inventoryWindow.RefreshInventory()
+				var countText : String = " x" + str(count) if count > 1 else ""
+				Launcher.GUI.chatContainer.AddSystemText("You receive " + cell.name + countText)
 			cell.used.emit()
 
 func ItemRemoved(itemID : int, customfield : StringName, count : int, _peerID : int):

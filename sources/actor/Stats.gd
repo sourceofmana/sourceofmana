@@ -226,7 +226,7 @@ func AddGP(value : int):
 	gp += value
 	vital_stats_updated.emit()
 	if actor is PlayerAgent:
-		Network.TargetAlteration(actor.peerID, actor.peerID, value, ActorCommons.Alteration.GP, DB.UnknownHash, actor.peerID)
+		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.GP, DB.UnknownHash, actor.peerID)
 
 func SetHairstyle(newStyle : int):
 	if DB.HairstylesDB.has(newStyle):
