@@ -7,8 +7,6 @@ class_name ChatContainer
 @onready var tabInstance : Control				= FileSystem.LoadGui("labels/ChatLabel", false)
 @onready var backlog : ChatBacklog				= ChatBacklog.new()
 
-var enabledLastFrame : bool						= false
-
 #
 func AddPlayerText(channelID : GUICommons.ChatChannel, playerName : String, speech : String):
 	AddText(channelID, playerName, UICommons.PlayerNameToColor(playerName))
@@ -27,8 +25,7 @@ func isNewLineEnabled() -> bool:
 	return lineEdit.is_visible() and lineEdit.has_focus() if lineEdit else false
 
 func SetNewLineEnabled(enable : bool):
-	if Launcher.Action and lineEdit and not enabledLastFrame:
-		enabledLastFrame = true
+	if Launcher.Action and lineEdit:
 		if not LauncherCommons.isMobile:
 			lineEdit.set_visible(enable)
 		if enable:
@@ -65,10 +62,6 @@ func _input(event : InputEvent):
 			lineEdit.set_caret_column(lineEdit.text.length())
 		elif Launcher.Action.TryJustPressed(event, "ui_validate", true):
 			OnNewTextSubmitted(lineEdit.text)
-
-func _physics_process(_delta):
-	if enabledLastFrame:
-		enabledLastFrame = false
 
 func _ready():
 	AddSystemText("Welcome to " + LauncherCommons.ProjectName)
