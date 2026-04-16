@@ -2,20 +2,37 @@
 extends Resource
 class_name EntityData
 
-# Parent entity for inheritance (avoids duplication in .tres files)
+## Parent entity for inheritance (avoids duplication in .tres files)
 @export var _parent : EntityData					= null
 
+## Unique CRC32 hash.
 @export var _id : int								= DB.UnknownHash
+## Name of the NPC. E.g "Tulimshar Guard".
 @export var _name : String 							= ""
+## Can take any file in [code]presets/entities/*.tres[/code].
+##
+## Defaults to [code]Player[/code] which is suitable for humanoid NPCs.
 @export var _spritePreset : String					= ""
+## How far away (in pixels) the player can be to interact with the NPC.
 @export var _radius : int							= 0
+## Attributes/stats of the NPC. See [BaseStats].
 @export var _stats : Dictionary						= ActorCommons.DefaultStats.duplicate()
 @export_category("Visual")
+## Array of [ItemCell].
 @export var _equipment : Array[ItemCell]			= []
+## If the NPC has a custom texture, usually located in [code]data/graphics/sprites/npcs[/code].
+##
+## Takes path that is relative to data/graphics. E.g [code]sprites/npcs/elanore.png[/code]
 @export var _customTexture : Texture2D				= null
+## Custom material, usually a shader.
 @export var _customMaterial : Material				= null
+## Whether the NPC name tag is displayed.
 @export var _displayName : bool						= false
+## Default direction the NPC will face. Takes [enum ActorCommons.Direction].
 @export var _direction : ActorCommons.Direction		= ActorCommons.Direction.UNKNOWN
+## Default state. Takes [enum ActorCommons.State].
+##
+## Useful if you want a NPC e.g sitting down by default.
 @export var _state : ActorCommons.State				= ActorCommons.State.UNKNOWN
 @export_category("Skills")
 @export_flags("Pacifist", "Neutral", "Aggressive", "Immobile", "Follower", "Leader", "Spawner", "Steal") var _behaviour : int = AICommons.Behaviour.NEUTRAL
@@ -24,10 +41,14 @@ class_name EntityData
 @export var _drops : Dictionary[ItemCell, float]	= {}
 @export var _spawns : Dictionary[EntityData, int]	= {}
 @export_category("Quests")
+## Set this to an [enum ProgressCommons.Quest] enum to only make the NPC appear when a quest is active.
 @export var _questID : int							= ProgressCommons.Quest.UNKNOWN
+## Minimum quest state that is required for it to appear.
 @export var _questState : int						= ProgressCommons.UnknownProgress
+## Maxinum quest state after which the NPC will not show anymore.
 @export var _questStateMax : int					= ProgressCommons.UnknownProgress
 @export_category("Flags")
+## Controls whether or not a big boss health bar will appear when fighting it.
 @export var _isBoss : bool							= false
 
 const hashedStats : PackedStringArray				= ["race", "skintone", "hairstyle", "haircolor"]
