@@ -31,7 +31,6 @@ func SetNewLineEnabled(enable : bool):
 		enabledLastFrame = true
 		if not LauncherCommons.isMobile:
 			lineEdit.set_visible(enable)
-			Launcher.Action.Enable(!enable)
 		if enable:
 			lineEdit.grab_focus()
 
@@ -74,3 +73,6 @@ func _physics_process(_delta):
 func _ready():
 	AddSystemText("Welcome to " + LauncherCommons.ProjectName)
 	SetNewLineEnabled(false)
+
+func _on_new_text_editing_toggled(toggled_on):
+	Launcher.Action.Enable(!toggled_on)

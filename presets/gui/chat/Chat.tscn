@@ -55,3 +55,4 @@ caret_blink = true
 caret_blink_interval = 0.5
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
+[connection signal="editing_toggled" from="Margin/VBoxContainer/NewText" to="Margin/VBoxContainer" method="_on_new_text_editing_toggled"]
