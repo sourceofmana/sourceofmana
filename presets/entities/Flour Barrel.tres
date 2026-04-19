@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_oghli"]
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_3d05s"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_shytn"]
+[ext_resource type="Texture2D" uid="uid://b07qfrcar1m7x" path="res://data/graphics/sprites/npcs/flour-barrel.png" id="3_tex"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_ddhvx"]
 
 [resource]
 script = ExtResource("2_shytn")
@@ -13,6 +15,6 @@ _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_oghli")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/npcs/flour-barrel.png"
+_customTexture = ExtResource("3_tex")
 _questID = 1
 _questState = 1

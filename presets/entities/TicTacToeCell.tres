@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_item"]
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_parent"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_script"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_knbn7"]
+[ext_resource type="Texture2D" uid="uid://c7hjgw2qfjq6l" path="res://data/graphics/sprites/npcs/tictactoe-cell.png" id="4_tex"]
 
 [resource]
 script = ExtResource("3_script")
@@ -15,5 +17,5 @@ _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_item")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/npcs/tictactoe-cell.png"
+_customTexture = ExtResource("4_tex")
 _state = 0

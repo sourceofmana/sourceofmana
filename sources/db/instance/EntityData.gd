@@ -3,34 +3,34 @@ extends Resource
 class_name EntityData
 
 # Parent entity for inheritance (avoids duplication in .tres files)
-@export var _parent : EntityData				= null
+@export var _parent : EntityData					= null
 
-@export var _id : int							= DB.UnknownHash
-@export var _name : String 						= ""
-@export var _spritePreset : String				= ""
-@export var _radius : int						= 0
-@export var _stats : Dictionary					= ActorCommons.DefaultStats.duplicate()
+@export var _id : int								= DB.UnknownHash
+@export var _name : String 							= ""
+@export var _spritePreset : String					= ""
+@export var _radius : int							= 0
+@export var _stats : Dictionary						= ActorCommons.DefaultStats.duplicate()
 @export_category("Visual")
-@export var _equipment : Array[ItemCell]		= []
-@export var _customTexture : String				= ""
-@export var _customMaterial : FileData			= null
-@export var _displayName : bool					= false
-@export var _direction : ActorCommons.Direction	= ActorCommons.Direction.UNKNOWN
-@export var _state : ActorCommons.State			= ActorCommons.State.UNKNOWN
+@export var _equipment : Array[ItemCell]			= []
+@export var _customTexture : Texture2D				= null
+@export var _customMaterial : Material				= null
+@export var _displayName : bool						= false
+@export var _direction : ActorCommons.Direction		= ActorCommons.Direction.UNKNOWN
+@export var _state : ActorCommons.State				= ActorCommons.State.UNKNOWN
 @export_category("Skills")
-@export var _behaviour : AICommons.Behaviour	= AICommons.Behaviour.NEUTRAL
-@export var _skills : Dictionary[String, float]	= {}
+@export_flags("Pacifist", "Neutral", "Aggressive", "Immobile", "Follower", "Leader", "Spawner", "Steal") var _behaviour : int = AICommons.Behaviour.NEUTRAL
+@export var _skills : Dictionary[SkillCell, float]	= {}
 @export_category("Drops")
-@export var _drops : Dictionary[String, float]	= {}
-@export var _spawns : Dictionary[int, int]		= {}
+@export var _drops : Dictionary[ItemCell, float]	= {}
+@export var _spawns : Dictionary[EntityData, int]	= {}
 @export_category("Quests")
-@export var _questID : int						= ProgressCommons.Quest.UNKNOWN
-@export var _questState : int					= ProgressCommons.UnknownProgress
-@export var _questStateMax : int				= ProgressCommons.UnknownProgress
+@export var _questID : int							= ProgressCommons.Quest.UNKNOWN
+@export var _questState : int						= ProgressCommons.UnknownProgress
+@export var _questStateMax : int					= ProgressCommons.UnknownProgress
 @export_category("Flags")
-@export var _isBoss : bool						= false
+@export var _isBoss : bool							= false
 
-const hashedStats : PackedStringArray			= ["race", "skintone", "hairstyle", "haircolor"]
+const hashedStats : PackedStringArray				= ["race", "skintone", "hairstyle", "haircolor"]
 
 func _init():
 	_equipment.resize(ActorCommons.SlotEquipmentCount)
@@ -46,7 +46,7 @@ func GetMergedEntity() -> EntityData:
 	merged._name = _name if _name != "" else merged._name
 	merged._spritePreset = _spritePreset if _spritePreset != "" else merged._spritePreset
 	merged._radius = _radius if _radius != 0 else merged._radius
-	merged._customTexture = _customTexture if _customTexture != "" else merged._customTexture
+	merged._customTexture = _customTexture if _customTexture != null else merged._customTexture
 	merged._customMaterial = _customMaterial if _customMaterial != null else merged._customMaterial
 	merged._displayName = _displayName if _displayName != false else merged._displayName
 	merged._direction = _direction if _direction != ActorCommons.Direction.UNKNOWN else merged._direction
@@ -103,10 +103,11 @@ static func Create(result : Dictionary) -> EntityData:
 				if itemCell and itemCell.slot != ActorCommons.Slot.NONE:
 					entity._equipment[itemCell.slot] = itemCell
 	if "Texture" in result:
-		entity._customTexture = result.Texture
+		entity._customTexture = FileSystem.LoadGfx(result.Texture)
 	if "Material" in result:
-		var paletteId : int = DB.GetCellHash(result.Material)
-		entity._customMaterial = DB.GetPalette(DB.Palette.SKIN, paletteId)
+		var paletteData : FileData = DB.GetPalette(DB.Palette.SKIN, DB.GetCellHash(result.Material))
+		if paletteData:
+			entity._customMaterial = FileSystem.LoadPalette(paletteData._path)
 
 	if "DisplayName" in result:
 		entity._displayName = result.DisplayName
@@ -128,16 +129,21 @@ static func Create(result : Dictionary) -> EntityData:
 		for skillName in result.SkillSet:
 			assert(DB.HasCellHash(skillName), "Unknown skill '%s' in entity '%s'" % [skillName, entity._name])
 			if DB.HasCellHash(skillName):
-				entity._skills[skillName] = result.SkillSet[skillName]
+				var skillCell : SkillCell = DB.GetSkill(DB.GetCellHash(skillName))
+				if skillCell:
+					entity._skills[skillCell] = result.SkillSet[skillName]
 	if "Drops" in result:
 		for itemName in result.Drops:
 			assert(DB.HasCellHash(itemName), "Unknown drop '%s' in entity '%s'" % [itemName, entity._name])
 			if DB.HasCellHash(itemName):
-				entity._drops[itemName] = result.Drops[itemName]
+				var dropCell : ItemCell = DB.GetItem(DB.GetCellHash(itemName))
+				if dropCell:
+					entity._drops[dropCell] = result.Drops[itemName]
 	if "Spawns" in result:
 		for entityName in result.Spawns:
-			var entityID : int = entityName.hash()
-			entity._spawns[entityID] = int(result.Spawns[entityName])
+			var spawnEntity : EntityData = DB.GetEntity(entityName.hash())
+			if spawnEntity:
+				entity._spawns[spawnEntity] = int(result.Spawns[entityName])
 	if "IsBoss" in result:
 		entity._isBoss = bool(result.IsBoss)
 	if "QuestFilter" in result:

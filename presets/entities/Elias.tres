@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_l6qbm"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_xxgpu"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_tkxhb"]
+[ext_resource type="Texture2D" uid="uid://clxk016bqri2o" path="res://data/graphics/sprites/npcs/elias.png" id="4_tex"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_tkxhb"]
 
 [resource]
 script = ExtResource("3_tkxhb")
@@ -16,4 +18,4 @@ _stats = {
 "skintone": "Medium"
 }
 _equipment = Array[ExtResource("1_l6qbm")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/npcs/elias.png"
+_customTexture = ExtResource("4_tex")

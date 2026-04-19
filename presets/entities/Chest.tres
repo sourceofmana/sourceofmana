@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_n3wkw"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_02asj"]
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_7ndjh"]
+[ext_resource type="Texture2D" uid="uid://djkvk5b85leb3" path="res://data/graphics/sprites/npcs/chest-small.png" id="3_tex"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_alqon"]
 
 [resource]
 script = ExtResource("2_02asj")
@@ -15,4 +17,4 @@ _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_n3wkw")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/npcs/chest-small.png"
+_customTexture = ExtResource("3_tex")

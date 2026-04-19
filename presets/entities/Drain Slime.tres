@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_cptef"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_jxq6m"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_k480p"]
+[ext_resource type="Texture2D" uid="uid://edgk8w7nd6u2" path="res://data/graphics/sprites/monsters/slime-drain.png" id="3_tex"]
 
 [resource]
 script = ExtResource("2_jxq6m")
@@ -14,5 +16,5 @@ _stats = {
 "walkSpeed": 70.0
 }
 _equipment = Array[ExtResource("1_cptef")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/slime-drain.png"
+_customTexture = ExtResource("3_tex")
 _behaviour = 130

@@ -6,6 +6,10 @@
 [ext_resource type="Resource" uid="uid://bi4288d5a7kbn" path="res://presets/cells/items/legs/LeatherPants.tres" id="4_legs"]
 [ext_resource type="Resource" uid="uid://bcc00vd45ls38" path="res://presets/cells/items/feet/DesertBoots.tres" id="5_feet"]
 [ext_resource type="Resource" uid="uid://s626p30qb6py" path="res://presets/cells/items/head/DruidHood.tres" id="6_head"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="7_skill"]
+[ext_resource type="Resource" uid="uid://cot2eu3ix5rdm" path="res://presets/cells/skills/Flar.tres" id="8_flar"]
+[ext_resource type="Resource" uid="uid://dlftukimhm3l1" path="res://presets/cells/skills/SonicWave.tres" id="9_sonic"]
+[ext_resource type="Resource" uid="uid://bqg1nlmgehdkc" path="res://presets/cells/skills/Spitfire.tres" id="10_spit"]
 
 [resource]
 script = ExtResource("2_qwxl7")
@@ -22,9 +26,10 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_cekxu")]([ExtResource("3_chest"), ExtResource("4_legs"), ExtResource("5_feet"), null, ExtResource("6_head"), null, null, null])
 _behaviour = 4
-_skills = Dictionary[String, float]({
-"Flar": 0.3,
-"Sonic Wave": 0.3,
-"Spitfire": 0.3
+_skills = Dictionary[ExtResource("7_skill"), float]({
+ExtResource("8_flar"): 0.3,
+ExtResource("9_sonic"): 0.3,
+ExtResource("10_spit"): 0.3
 })
+_questStateMax = 255
 _isBoss = true

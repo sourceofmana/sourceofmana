@@ -89,11 +89,6 @@ static func ParseEntitiesDB():
 			if entity._stats.has("gender") and entity._stats["gender"] is String:
 				entity._stats["gender"] = ActorCommons.GetGenderID(entity._stats["gender"])
 
-			for skillName in entity._skills:
-				assert(HasCellHash(skillName), "Unknown skill '%s' in entity '%s'" % [skillName, entity._name])
-			for dropName in entity._drops:
-				assert(HasCellHash(dropName), "Unknown drop '%s' in entity '%s'" % [dropName, entity._name])
-
 			if entity._id != UnknownHash:
 				assert(not EntitiesDB.has(entity._id), "Duplicated entity in EntitiesDB: " + entity._name)
 				EntitiesDB[entity._id] = entity

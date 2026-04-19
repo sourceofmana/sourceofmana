@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_gluwa"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_lpdfm"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_vlt8s"]
+[ext_resource type="Texture2D" uid="uid://dmai017da7614" path="res://data/graphics/sprites/npcs/hyland.png" id="4_tex"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_vlt8s"]
 
 [resource]
 script = ExtResource("3_vlt8s")
@@ -14,4 +16,4 @@ _stats = {
 "skintone": "Dark"
 }
 _equipment = Array[ExtResource("1_gluwa")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/npcs/hyland.png"
+_customTexture = ExtResource("4_tex")

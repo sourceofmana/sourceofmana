@@ -1,14 +1,10 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://c4sdajdiox2ke"]
 
-[ext_resource type="Script" uid="uid://db4wi3qfkte3f" path="res://sources/db/instance/FileData.gd" id="1_fj57b"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_uctx6"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_fj57b"]
-
-[sub_resource type="Resource" id="Resource_5d3f5"]
-script = ExtResource("1_fj57b")
-_id = 841469853
-_name = "Snake Sand"
-_path = "monsters/mob-snake-sand.tres"
+[ext_resource type="Texture2D" uid="uid://tp667v46h13l" path="res://data/graphics/sprites/monsters/snake.png" id="3_tex"]
+[ext_resource type="Material" uid="uid://ce5qgivfdfo" path="res://presets/palettes/monsters/mob-snake-sand.tres" id="4_mat"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_umopc"]
 
 [resource]
 script = ExtResource("2_fj57b")
@@ -22,6 +18,6 @@ _stats = {
 "walkSpeed": 110.0
 }
 _equipment = Array[ExtResource("1_uctx6")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/snake.png"
-_customMaterial = SubResource("Resource_5d3f5")
+_customTexture = ExtResource("3_tex")
+_customMaterial = ExtResource("4_mat")
 _behaviour = 4

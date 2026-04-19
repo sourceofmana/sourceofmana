@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_bbb2k"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_lo0gq"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_bguxx"]
+[ext_resource type="Texture2D" uid="uid://t81s8gpayata" path="res://data/graphics/sprites/monsters/maggot.png" id="3_tex"]
 
 [resource]
 script = ExtResource("2_lo0gq")
@@ -14,4 +16,4 @@ _stats = {
 "walkSpeed": 50.0
 }
 _equipment = Array[ExtResource("1_bbb2k")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/maggot.png"
+_customTexture = ExtResource("3_tex")

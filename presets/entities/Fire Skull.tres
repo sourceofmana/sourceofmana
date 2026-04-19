@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_akvej"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_yfu84"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_skill"]
+[ext_resource type="Resource" uid="uid://cot2eu3ix5rdm" path="res://presets/cells/skills/Flar.tres" id="4_flar"]
+[ext_resource type="Texture2D" uid="uid://dwh7x3gvrmogx" path="res://data/graphics/sprites/monsters/skull-fire.png" id="5_tex"]
 
 [resource]
 script = ExtResource("2_yfu84")
@@ -14,8 +17,8 @@ _stats = {
 "walkSpeed": 50.0
 }
 _equipment = Array[ExtResource("1_akvej")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/skull-fire.png"
+_customTexture = ExtResource("5_tex")
 _behaviour = 4
-_skills = Dictionary[String, float]({
-"Flar": 1.0
+_skills = Dictionary[ExtResource("3_skill"), float]({
+ExtResource("4_flar"): 1.0
 })

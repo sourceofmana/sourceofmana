@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cgv6ftq4nlfws"]
 
 [ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="1_anim"]
 
@@ -150,15 +150,15 @@ _data = {
 &"Walk": SubResource("Animation_walk")
 }
 
-[node name="TicTacToeCell" type="Node2D"]
+[node name="TicTacToeCell" type="Node2D" unique_id=1423560780]
 
-[node name="Body" type="Sprite2D" parent="."]
+[node name="Body" type="Sprite2D" parent="." unique_id=1855293554]
 offset = Vector2(0, -16)
 hframes = 3
 
-[node name="Animation" type="AnimationPlayer" parent="."]
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1415157917]
 root_node = NodePath("../Body")
 libraries/ = SubResource("AnimationLibrary_ttt")
 
-[node name="AnimationTree" parent="Animation" instance=ExtResource("1_anim")]
+[node name="AnimationTree" parent="Animation" unique_id=1636833952 instance=ExtResource("1_anim")]
 root_node = NodePath("../../Body")
