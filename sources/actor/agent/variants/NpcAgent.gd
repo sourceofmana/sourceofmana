@@ -24,6 +24,7 @@ func Interact(player : Actor):
 	if not player.ownScript:
 		if SkillCommons.IsTargetable(player, self):
 			player.AddScript(self)
+			Network.Untarget(player.peerID)
 	else:
 		if player.ownScript.IsWaiting():
 			player.ownScript.OnContinue()
