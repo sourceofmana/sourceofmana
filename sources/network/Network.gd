@@ -184,6 +184,10 @@ func ChatGlobal(agentName : String, text : String, peerID : int = NetworkCommons
 	CallClient("ChatGlobal", [agentName, text], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func Express(agentRID : int, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("Express", [agentRID, text], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ChatAgent(agentRID : int, text : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("ChatAgent", [agentRID, text], peerID)
 

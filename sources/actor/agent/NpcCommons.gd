@@ -74,6 +74,10 @@ static func Emote(npc : NpcAgent, emoteID : int):
 	if npc:
 		Network.NotifyNeighbours(npc, "Emote", [emoteID])
 
+static func Express(npc : NpcAgent, pc : BaseAgent, text : String):
+	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.Express(npc.get_rid().get_id(), text, pc.peerID)
+
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
 	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
 		Network.ChatAgent(npc.get_rid().get_id(), chat, pc.peerID)

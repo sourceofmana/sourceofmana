@@ -40,14 +40,19 @@ func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, _peerI
 
 func ChatGlobal(agentName : String, text : String, _peerID : int):
 	if Launcher.GUI:
-		Launcher.GUI.chatContainer.AddPlayerText(GUICommons.ChatChannel.Global, agentName, text)
+		Launcher.GUI.chatContainer.AddEntityText(GUICommons.ChatChannel.Global, agentName, text)
+
+func Express(agentRID : int, text : String, _peerID : int):
+	if Launcher.GUI:
+		var entity : Entity = Entities.Get(agentRID)
+		if entity && entity.get_parent() && entity.interactive:
+			entity.interactive.DisplaySpeech.call_deferred(text)
 
 func ChatAgent(agentRID : int, text : String, _peerID : int):
 	if Launcher.GUI:
 		var entity : Entity = Entities.Get(agentRID)
 		if entity && entity.get_parent():
-			if entity.type == ActorCommons.Type.PLAYER && Launcher.GUI:
-				Launcher.GUI.chatContainer.AddPlayerText(GUICommons.ChatChannel.Local, entity.nick, text)
+			Launcher.GUI.chatContainer.AddEntityText(GUICommons.ChatChannel.Local, entity.nick, text)
 			if entity.interactive:
 				entity.interactive.DisplaySpeech.call_deferred(text)
 

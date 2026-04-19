@@ -200,6 +200,11 @@ func Action(callable : Callable):
 func Emote(emoteID : int):
 	NpcCommons.Emote(npc, emoteID)
 
+func Express(mes : String):
+	assert(IsPlayer(), "Express() requires a player agent")
+	if not IsPlayer(): return
+	NpcCommons.Express(npc, own, mes)
+
 func Chat(mes : String):
 	assert(IsPlayer(), "Chat() requires a player agent")
 	if not IsPlayer(): return

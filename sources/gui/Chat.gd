@@ -8,8 +8,8 @@ class_name ChatContainer
 @onready var backlog : ChatBacklog				= ChatBacklog.new()
 
 #
-func AddPlayerText(channelID : GUICommons.ChatChannel, playerName : String, speech : String):
-	AddText(channelID, playerName, UICommons.PlayerNameToColor(playerName))
+func AddEntityText(channelID : GUICommons.ChatChannel, entityName : String, speech : String):
+	AddText(channelID, entityName, UICommons.PlayerNameToColor(entityName))
 	AddText(channelID, ": " + speech + "\n", UICommons.LightTextColor)
 
 func AddSystemText(speech : String):
