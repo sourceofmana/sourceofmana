@@ -402,6 +402,7 @@ func _init(_npc : NpcAgent, _own : BaseAgent):
 		npc = _npc
 		OnStart()
 		if npc != own:
+			npc.interacted.emit(own)
 			npc.AddInteraction()
 			if own.data._direction == ActorCommons.Direction.UNKNOWN:
 				own.LookAt(npc)

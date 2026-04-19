@@ -11,6 +11,9 @@ var interactionCount : int					= 0
 var isVisible : bool						= false
 
 #
+signal interacted
+
+#
 static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.NPC
 
 #
