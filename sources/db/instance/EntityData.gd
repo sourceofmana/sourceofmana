@@ -6,12 +6,12 @@ class_name EntityData
 @export var _parent : EntityData					= null
 
 ## Unique CRC32 hash.
+#
+## Once commited to production [b]it must not be changed anymore[/b] or it will mess up the database index.
 @export var _id : int								= DB.UnknownHash
 ## Name of the NPC. E.g "Tulimshar Guard".
 @export var _name : String 							= ""
-## Can take any file in [code]presets/entities/*.tres[/code].
-##
-## Defaults to [code]Player[/code] which is suitable for humanoid NPCs.
+## Can take any file path in [code]presets/entities/*.tres[/code].
 @export var _spritePreset : String					= ""
 ## How far away (in pixels) the player can be to interact with the NPC.
 @export var _radius : int							= 0
@@ -26,9 +26,9 @@ class_name EntityData
 @export var _customTexture : Texture2D				= null
 ## Custom material, usually a shader.
 @export var _customMaterial : Material				= null
-## Whether the NPC name tag is displayed.
+## Whether the entity name tag is displayed.
 @export var _displayName : bool						= false
-## Default direction the NPC will face. Takes [enum ActorCommons.Direction].
+## Default direction the entity will face. Takes [enum ActorCommons.Direction].
 @export var _direction : ActorCommons.Direction		= ActorCommons.Direction.UNKNOWN
 ## Default state. Takes [enum ActorCommons.State].
 ##
