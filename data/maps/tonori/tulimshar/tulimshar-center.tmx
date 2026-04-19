@@ -178,7 +178,7 @@
   </object>
   <object id="47" name="Hyland" type="Spawn" x="2418" y="3606">
    <properties>
-    <property name="own_script" value="tonori/tulimshar/HylandGlobal.gd"/>
+    <property name="own_script" value="generic/games/BlackjackGlobal.gd"/>
     <property name="player_script" value="tonori/tulimshar/Hyland.gd"/>
     <property name="type" value="Npc"/>
    </properties>

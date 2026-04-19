@@ -5,15 +5,12 @@ var waitingPlayer : PlayerAgent		= null
 var games : Dictionary				= {}
 
 #
-func OnStart():
-	pass
-
 func JoinPvP(player : PlayerAgent) -> int:
 	if waitingPlayer and is_instance_valid(waitingPlayer) and waitingPlayer != player:
 		var game : Dictionary = _CreateGame(waitingPlayer, player)
 		games[waitingPlayer.get_rid().get_id()] = game
 		games[player.get_rid().get_id()] = game
-		NpcCommons.PushNotification(waitingPlayer, "An opponent has arrived! Talk to Al.")
+		NpcCommons.PushNotification(waitingPlayer, "An opponent has arrived! Talk to %s." % npc.nick)
 		waitingPlayer = null
 		return 1
 	waitingPlayer = player
