@@ -34,6 +34,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ------------------------------------------------------------------------
 
+DejaVuSans fonts are (c) Bitstream (see data\graphics\fonts\DejaVuSans - LICENSE). DejaVu changes are in public domain.
+Glyphs imported from Arev fonts are (c) Tavmjong Bah (see data\graphics\fonts\DejaVuSans - LICENSE).
+
+------------------------------------------------------------------------
+
 CC BY-SA 4.0: licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://creativecommons.org/licenses/by-sa/4.0/
 See also the "CC BY-SA 4.0" file.
