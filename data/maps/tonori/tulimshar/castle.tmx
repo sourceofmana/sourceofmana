@@ -683,7 +683,7 @@
   <object id="5" name="Red Queen" type="Spawn" x="1792" y="1003">
    <properties>
     <property name="count" value="1"/>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
