@@ -26,23 +26,32 @@ func AddName(text : String):
 	if lastName != text:
 		lastName = text
 		var label : RichTextLabel = PlayerNameLabel.instantiate() if lastName == Launcher.Player.nick else NPCNameLabel.instantiate()
-		label.text = "[color=#" + UICommons.LightTextColor.to_html(false) + "]" + lastName + "[/color]"
+		label.set_text("[color=#%s]%s[/color]" % [UICommons.LightTextColor.to_html(false), lastName])
 		scrollable.textContainer.add_child.call_deferred(label)
 
 func AddDialogue(text : String):
 	var isPlayer : bool = lastName == Launcher.Player.nick
 	var label : RichTextLabel = PlayerDialogueLabel.instantiate() if isPlayer else Scrollable.contentLabel.instantiate()
-	label.text = "[color=#" + UICommons.TextColor.to_html(false) + "]" + text + "[/color]"
+	label.set_text("[color=#%s]%s[/color]" % [UICommons.TextColor.to_html(false), text])
 	scrollable.textContainer.add_child.call_deferred(label)
-
 	if not isPlayer:
-		var textSize : int = label.text.length()
-		label.visible_characters = 0
-		if lastTween:
-			lastTween.custom_step(INF)
-		lastTween = create_tween()
-		lastTween.tween_property(label, "visible_characters", textSize, textSize * UICommons.DialogueTextSpeed)
-		lastTween.tween_callback(DialogueDisplayed)
+		TweenText(label)
+
+func AddThink(text : String):
+	var label : RichTextLabel = Scrollable.contentLabel.instantiate()
+	label.set_text("[color=#%s]%s[/color]" % [UICommons.DarkTextColor.to_html(false), text])
+	label.set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER)
+	scrollable.textContainer.add_child.call_deferred(label)
+	TweenText(label)
+
+func TweenText(label : RichTextLabel):
+	var textSize : int = label.text.length()
+	label.visible_characters = 0
+	if lastTween:
+		lastTween.custom_step(INF)
+	lastTween = create_tween()
+	lastTween.tween_property(label, "visible_characters", textSize, textSize * UICommons.DialogueTextSpeed)
+	lastTween.tween_callback(DialogueDisplayed)
 
 func DialogueDisplayed():
 	lastTween = null
@@ -63,7 +72,7 @@ func ButtonPressed():
 
 	if Launcher.Player:
 		Network.TriggerNextContext()
-	if buttonLabel.text == "Close":
+	if buttonLabel.get_text() == "Close":
 		Launcher.GUI.dialogueContainer.set_visible(false)
 
 func Clear():

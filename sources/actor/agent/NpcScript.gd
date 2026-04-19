@@ -175,6 +175,11 @@ func Mes(mes : String):
 	if not IsPlayer(): return
 	steps.append({"text": mes})
 
+func Think(mes : String):
+	assert(IsPlayer(), "Think() requires a player agent")
+	if not IsPlayer(): return
+	steps.append({"text": mes, "think": true})
+
 func Choice(mes : String, callable : Callable = Callback.Empty):
 	assert(IsPlayer(), "Choice() requires a player agent")
 	if not IsPlayer(): return
@@ -191,6 +196,9 @@ func Action(callable : Callable):
 	assert(IsPlayer(), "Action() requires a player agent")
 	if not IsPlayer(): return
 	steps.append({"action": callable})
+
+func Emote(emoteID : int):
+	NpcCommons.Emote(npc, emoteID)
 
 func Chat(mes : String):
 	assert(IsPlayer(), "Chat() requires a player agent")
@@ -362,7 +370,10 @@ func ApplyStep():
 			if not windowToggled:
 				ToggleWindow(true)
 
-			NpcCommons.ContextText(own, npc.nick, dialogueStep["text"])
+			if dialogueStep.get("think", false):
+				NpcCommons.ContextThink(own, npc.nick, dialogueStep["text"])
+			else:
+				NpcCommons.ContextText(own, npc.nick, dialogueStep["text"])
 
 		if dialogueStep.has("choices"):
 			var choices : PackedStringArray = []

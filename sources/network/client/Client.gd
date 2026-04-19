@@ -13,7 +13,7 @@ func WarpPlayer(mapID : int, playerPos : Vector2, _peerID : int):
 			Launcher.Action.previousMove = Vector2.ZERO
 			PushNotification(mapData._name, _peerID)
 
-func EmotePlayer(agentRID : int, emoteID : int, _peerID : int):
+func Emote(agentRID : int, emoteID : int, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplayEmote.call_deferred(emoteID)
@@ -58,6 +58,12 @@ func ContextText(author : String, text : String, _peerID : int):
 	if not author.is_empty():
 		Launcher.GUI.dialogueWindow.AddName(author)
 	Launcher.GUI.dialogueWindow.AddDialogue(text)
+	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
+
+func ContextThink(author : String, text : String, _peerID : int):
+	if not author.is_empty():
+		Launcher.GUI.dialogueWindow.AddName(author)
+	Launcher.GUI.dialogueWindow.AddThink(text)
 	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
 
 func ContextContinue(_peerID : int):

@@ -166,8 +166,8 @@ func TriggerEmote(emoteID : int, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerEmote", [emoteID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION) 
-func EmotePlayer(senderagentRID : int, emoteID : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("EmotePlayer", [senderagentRID, emoteID], peerID)
+func Emote(senderagentRID : int, emoteID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("Emote", [senderagentRID, emoteID], peerID)
 
 # Sit
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
@@ -195,6 +195,10 @@ func ToggleContext(enable : bool, peerID : int = NetworkCommons.PeerOfflineID):
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextText(author : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("ContextText", [author, text], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ContextThink(author : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ContextThink", [author, text], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextContinue(peerID : int = NetworkCommons.PeerOfflineID):
