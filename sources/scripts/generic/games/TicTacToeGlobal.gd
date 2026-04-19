@@ -81,13 +81,13 @@ func DespawnCells():
 	for cellIdx in CELL_COUNT:
 		if boardNpcs[cellIdx]:
 			if is_instance_valid(boardNpcs[cellIdx]):
-				WorldAgent.RemoveAgent(boardNpcs[cellIdx])
+				WorldAgent.RemoveAgent.call_deferred(boardNpcs[cellIdx])
 			boardNpcs[cellIdx] = null
 
 func DespawnUnusedCells():
 	for cellIdx in CELL_COUNT:
 		if boardStates[cellIdx] == State.NONE and boardNpcs[cellIdx] and is_instance_valid(boardNpcs[cellIdx]):
-			WorldAgent.RemoveAgent(boardNpcs[cellIdx])
+			WorldAgent.RemoveAgent.call_deferred(boardNpcs[cellIdx])
 			boardNpcs[cellIdx] = null
 
 # PvP matchmaking

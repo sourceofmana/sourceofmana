@@ -140,6 +140,9 @@ func GetState(questID : int) -> Variant:
 func Notification(text : String):
 	NpcCommons.PushNotification(own, text)
 
+func DisplayActions(actions : PackedStringArray):
+	NpcCommons.DisplayActions(own, actions)
+
 func DisplayTracker(label : String, value : int, maxValue : int, unit : String = ""):
 	NpcCommons.PushTracker(own, label, value, maxValue, unit)
 

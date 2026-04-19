@@ -15,7 +15,7 @@ const PlayerDialogueLabel : PackedScene	= preload("res://presets/gui/labels/Play
 #
 func Toggle(toggle : bool):
 	if toggle:
-		Launcher.GUI.DisplayInfoContext(["ui_accept", "ui_cancel"])
+		Launcher.GUI.DisplayActions(["ui_accept", "ui_cancel"])
 		Launcher.GUI.dialogueWindow.Clear()
 	else:
 		Launcher.GUI.infoContext.FadeOut()

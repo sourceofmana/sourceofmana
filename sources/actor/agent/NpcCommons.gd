@@ -29,6 +29,10 @@ static var Farewells : PackedStringArray = [
 ]
 
 # Display
+static func DisplayActions(agent : BaseAgent, actions : PackedStringArray):
+	if agent and agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
+		Network.DisplayActions(actions, agent.peerID)
+
 static func PushNotification(agent : BaseAgent, text : String):
 	if agent:
 		if agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:

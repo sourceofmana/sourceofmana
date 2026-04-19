@@ -121,6 +121,11 @@ func DisplayProgressionTracker(label : String, value : int, maxValue : int, unit
 func ClearProgressionTracker(peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("ClearProgressionTracker", [], peerID)
 
+# Controls
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func DisplayActions(actions : PackedStringArray, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("DisplayActions", [actions], peerID)
+
 # Notification
 @rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.MAP)
 func PushNotification(notif : String, peerID : int = NetworkCommons.PeerOfflineID):

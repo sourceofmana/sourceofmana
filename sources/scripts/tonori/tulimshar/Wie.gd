@@ -55,6 +55,7 @@ func Decline():
 func StartPvE():
 	var globalScript : TicTacToeGlobal = (npc.ownScript as TicTacToeGlobal)
 	if globalScript.startStep == TicTacToeGlobal.State.NONE and globalScript.StartPvE(own):
+		DisplayActions(["gp_target", "gp_untarget"])
 		Mes("You're X! Pick a square, go go go!")
 	else:
 		Mes("Hang on, someone's already playing! Wait your turn.")
@@ -67,6 +68,7 @@ func StartPvP():
 			Mes("Now we wait for someone to show up...")
 			return
 		TicTacToeGlobal.State.O:
+			DisplayActions(["gp_target", "gp_untarget"])
 			Mes("Yay, you're both here! Have fun!")
 			return
 		TicTacToeGlobal.State.NONE:

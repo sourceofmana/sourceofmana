@@ -260,6 +260,10 @@ func DropRemoved(dropID : int, _peerID : int):
 		Launcher.Map.RemoveDrop(dropID)
 
 #
+func DisplayActions(actions : PackedStringArray, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.DisplayActions(actions)
+
 func PushNotification(notif : String, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.notificationLabel.AddNotification(notif)
