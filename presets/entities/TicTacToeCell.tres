@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://qrqkj751wqfh"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_item"]
+[ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_parent"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_script"]
+
+[resource]
+script = ExtResource("3_script")
+_parent = ExtResource("2_parent")
+_id = 1060916485
+_name = "TicTacToeCell"
+_spritePreset = "TicTacToeCell"
+_radius = 16
+_stats = {
+"level": 1
+}
+_equipment = Array[ExtResource("1_item")]([null, null, null, null, null, null, null, null])
+_customTexture = "sprites/npcs/tictactoe-cell.png"
+_state = 0

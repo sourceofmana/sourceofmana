@@ -411,6 +411,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/npcs/ryan.png [Reid]
 ./graphics/sprites/npcs/sawyl.png [Modanung]
 ./graphics/sprites/npcs/sema.png [Reid]
+./graphics/sprites/npcs/tictactoe-cell.png [Reid]
 ./graphics/sprites/npcs/wie.png [Kyokai] [Reid]
 ./graphics/sprites/players/heads/kralog-female.png [Modanung] [Reid]
 ./graphics/sprites/players/heads/kralog-male.png [Modanung] [Reid]
