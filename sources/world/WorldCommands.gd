@@ -5,6 +5,7 @@ class_name WorldCommands
 func RegisterCommands():
 	CommandManager.Register("spawn", CommandSpawn, ActorCommons.Permission.GM, "spawn <mob_name> <count>" )
 	CommandManager.Register("warp", CommandWarp, ActorCommons.Permission.MODERATOR, "warp <map> <posX> <posY>" )
+	CommandManager.Register("jump", CommandJump, ActorCommons.Permission.MODERATOR, "jump" )
 	CommandManager.Register("goto", CommandGoto, ActorCommons.Permission.MODERATOR, "goto <player>" )
 	CommandManager.Register("recall", CommandRecall, ActorCommons.Permission.MODERATOR, "recall <player>" )
 	CommandManager.Register("recallnpc", CommandRecallNpc, ActorCommons.Permission.ADMIN, "recallnpc <npc_name>" )
@@ -39,6 +40,7 @@ func RegisterCommands():
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
 	CommandManager.Unregister("warp")
+	CommandManager.Unregister("jump")
 	CommandManager.Unregister("goto")
 	CommandManager.Unregister("recall")
 	CommandManager.Unregister("recallnpc")
@@ -103,6 +105,17 @@ func CommandWarp(caller : PlayerAgent, mapName : String, positionXStr : String =
 		Launcher.World.Warp(caller, map, mapPos)
 		return true
 	return false
+
+# Jump to a random position within the current map
+func CommandJump(caller : PlayerAgent) -> bool:
+	if not caller:
+		return false
+
+	var map : WorldMap = WorldAgent.GetMapFromAgent(caller)
+	if not map:
+		return false
+
+	return CommandWarp(caller, map.name)
 
 # Warp the current player to a specific map
 func CommandGoto(caller : PlayerAgent, nickname : String) -> bool:

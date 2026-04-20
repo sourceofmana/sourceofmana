@@ -164,9 +164,8 @@ func UpdateDeltas(delta : float):
 #
 func SetData():
 	entityRadius = data._radius
-	for skillName in data._skills:
-		var skillID : int = DB.GetCellHash(skillName)
-		AddSkill(DB.SkillsDB[skillID], data._skills[skillName])
+	for skillCell : SkillCell in data._skills:
+		AddSkill(skillCell, data._skills[skillCell])
 
 	if defaultState == ActorCommons.State.UNKNOWN and data._state != ActorCommons.State.UNKNOWN:
 		defaultState = data._state

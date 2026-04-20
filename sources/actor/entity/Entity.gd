@@ -100,6 +100,10 @@ func Target(source : Vector2, interactable : bool = true, nextTarget : bool = fa
 func JustInteract():
 	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and not Util.IsReachableSquared(position, target.position, ActorCommons.TargetMaxSquaredDistance)):
 		Target(position, true)
+	if target and target.type == ActorCommons.Type.NPC:
+		var entityData : EntityData = DB.EntitiesDB.get(target.stat.currentShape, null)
+		if entityData and entityData._state != ActorCommons.State.UNKNOWN and target.state != entityData._state:
+			ClearTarget()
 	if target:
 		if target.type == ActorCommons.Type.NPC:
 			Network.TriggerInteract(target.agentRID)

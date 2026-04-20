@@ -260,7 +260,7 @@ func TriggerRespawn(peerID : int):
 		player.Respawn()
 
 func TriggerEmote(emoteID : int, peerID : int):
-	Network.NotifyNeighbours(Peers.GetAgent(peerID), "EmotePlayer", [emoteID])
+	Network.NotifyNeighbours(Peers.GetAgent(peerID), "Emote", [emoteID])
 
 func TriggerChat(text : String, channelID : GUICommons.ChatChannel, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)

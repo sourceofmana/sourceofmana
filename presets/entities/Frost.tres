@@ -11,6 +11,7 @@
 [ext_resource type="Material" uid="uid://ckqgd3iyjewcy" path="res://presets/palettes/equipment/cloth-salamander.tres" id="9_salamander"]
 [ext_resource type="Resource" uid="uid://bouv4idn0yg3i" path="res://presets/cells/items/legs/CloudPants.tres" id="10_legs"]
 [ext_resource type="Resource" uid="uid://b1kgjqcht72fg" path="res://presets/cells/items/feet/LeatherBoots.tres" id="11_feet"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="11_rqd8i"]
 
 [sub_resource type="Resource" id="shirt_salamander"]
 script = ExtResource("1_item")

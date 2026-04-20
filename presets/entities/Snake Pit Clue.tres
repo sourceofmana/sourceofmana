@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_mtoxs"]
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_b0nde"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_pyd2m"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_b0nde"]
 
 [resource]
 script = ExtResource("2_pyd2m")

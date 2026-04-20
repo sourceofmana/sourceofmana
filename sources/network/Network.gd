@@ -121,6 +121,15 @@ func DisplayProgressionTracker(label : String, value : int, maxValue : int, unit
 func ClearProgressionTracker(peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("ClearProgressionTracker", [], peerID)
 
+# Controls
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func DisplayActions(actions : PackedStringArray, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("DisplayActions", [actions], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func Untarget(peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("Untarget", [], peerID)
+
 # Notification
 @rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.MAP)
 func PushNotification(notif : String, peerID : int = NetworkCommons.PeerOfflineID):
@@ -157,8 +166,8 @@ func TriggerEmote(emoteID : int, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerEmote", [emoteID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION) 
-func EmotePlayer(senderagentRID : int, emoteID : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("EmotePlayer", [senderagentRID, emoteID], peerID)
+func Emote(senderagentRID : int, emoteID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("Emote", [senderagentRID, emoteID], peerID)
 
 # Sit
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
@@ -175,6 +184,10 @@ func ChatGlobal(agentName : String, text : String, peerID : int = NetworkCommons
 	CallClient("ChatGlobal", [agentName, text], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func Express(agentRID : int, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("Express", [agentRID, text], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ChatAgent(agentRID : int, text : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("ChatAgent", [agentRID, text], peerID)
 
@@ -186,6 +199,10 @@ func ToggleContext(enable : bool, peerID : int = NetworkCommons.PeerOfflineID):
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextText(author : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("ContextText", [author, text], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ContextThink(author : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ContextThink", [author, text], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ContextContinue(peerID : int = NetworkCommons.PeerOfflineID):

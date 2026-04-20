@@ -96,10 +96,10 @@ func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array
 
 		if entity.data and slot == ActorCommons.Slot.BODY:
 			if entity.data._customTexture:
-				slotTexture = FileSystem.LoadGfx(entity.data._customTexture)
+				slotTexture = entity.data._customTexture
 				hasOverrideTexture = true
 			if entity.data._customMaterial:
-				slotMaterial = FileSystem.LoadPalette(entity.data._customMaterial._path)
+				slotMaterial = entity.data._customMaterial
 				hasOverrideMaterial = true
 
 		if not hasOverrideTexture:
@@ -221,9 +221,9 @@ func SetData(slot : int, data : EntityData):
 
 	if data and slot == ActorCommons.Slot.BODY:
 		if data._customTexture:
-			sprite.set_texture(FileSystem.LoadGfx(data._customTexture))
+			sprite.set_texture(data._customTexture)
 		if data._customMaterial:
-			sprite.set_material(FileSystem.LoadPalette(data._customMaterial._path))
+			sprite.set_material(data._customMaterial)
 
 	LoadSpriteSlot(slot, sprite)
 

@@ -13,7 +13,7 @@ func WarpPlayer(mapID : int, playerPos : Vector2, _peerID : int):
 			Launcher.Action.previousMove = Vector2.ZERO
 			PushNotification(mapData._name, _peerID)
 
-func EmotePlayer(agentRID : int, emoteID : int, _peerID : int):
+func Emote(agentRID : int, emoteID : int, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplayEmote.call_deferred(emoteID)
@@ -40,14 +40,19 @@ func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, _peerI
 
 func ChatGlobal(agentName : String, text : String, _peerID : int):
 	if Launcher.GUI:
-		Launcher.GUI.chatContainer.AddPlayerText(GUICommons.ChatChannel.Global, agentName, text)
+		Launcher.GUI.chatContainer.AddEntityText(GUICommons.ChatChannel.Global, agentName, text)
+
+func Express(agentRID : int, text : String, _peerID : int):
+	if Launcher.GUI:
+		var entity : Entity = Entities.Get(agentRID)
+		if entity && entity.get_parent() && entity.interactive:
+			entity.interactive.DisplaySpeech.call_deferred(text)
 
 func ChatAgent(agentRID : int, text : String, _peerID : int):
 	if Launcher.GUI:
 		var entity : Entity = Entities.Get(agentRID)
 		if entity && entity.get_parent():
-			if entity.type == ActorCommons.Type.PLAYER && Launcher.GUI:
-				Launcher.GUI.chatContainer.AddPlayerText(GUICommons.ChatChannel.Local, entity.nick, text)
+			Launcher.GUI.chatContainer.AddEntityText(GUICommons.ChatChannel.Local, entity.nick, text)
 			if entity.interactive:
 				entity.interactive.DisplaySpeech.call_deferred(text)
 
@@ -58,6 +63,12 @@ func ContextText(author : String, text : String, _peerID : int):
 	if not author.is_empty():
 		Launcher.GUI.dialogueWindow.AddName(author)
 	Launcher.GUI.dialogueWindow.AddDialogue(text)
+	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
+
+func ContextThink(author : String, text : String, _peerID : int):
+	if not author.is_empty():
+		Launcher.GUI.dialogueWindow.AddName(author)
+	Launcher.GUI.dialogueWindow.AddThink(text)
 	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
 
 func ContextContinue(_peerID : int):
@@ -83,6 +94,11 @@ func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration :
 		var caller : Entity = Entities.Get(agentRID)
 		if caller && entity && entity.get_parent() and entity.interactive:
 			entity.interactive.DisplayAlteration.call_deferred(entity, caller, value, alteration, skillID)
+		if Launcher.GUI and entity == Launcher.Player:
+			if alteration == ActorCommons.Alteration.EXP:
+				Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " exp")
+			elif alteration == ActorCommons.Alteration.GP:
+				Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " GP")
 
 func Casted(agentRID : int, skillID : int, cooldown : float, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
@@ -194,6 +210,8 @@ func ItemAdded(itemID : int, customfield : StringName, count : int, _peerID : in
 			if Launcher.GUI:
 				Launcher.GUI.pickupPanel.AddLast(cell, count)
 				Launcher.GUI.inventoryWindow.RefreshInventory()
+				var countText : String = " x" + str(count) if count > 1 else ""
+				Launcher.GUI.chatContainer.AddSystemText("You receive " + cell.name + countText)
 			cell.used.emit()
 
 func ItemRemoved(itemID : int, customfield : StringName, count : int, _peerID : int):
@@ -253,6 +271,14 @@ func DropRemoved(dropID : int, _peerID : int):
 		Launcher.Map.RemoveDrop(dropID)
 
 #
+func DisplayActions(actions : PackedStringArray, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.DisplayActions(actions)
+
+func Untarget(_peerID : int):
+	if Launcher.Player:
+		Launcher.Player.ClearTarget()
+
 func PushNotification(notif : String, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.notificationLabel.AddNotification(notif)

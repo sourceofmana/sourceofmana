@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://f40w6s2w07wu" path="res://presets/cells/items/neck/BandanaScarf.tres" id="6_kj0uk"]
 [ext_resource type="Resource" uid="uid://bj5p08ffbj617" path="res://presets/cells/items/weapon/BoneKnife.tres" id="7_0ewu5"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="8_nj4j6"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="9_rj4v6"]
 
 [resource]
 script = ExtResource("2_hegge")

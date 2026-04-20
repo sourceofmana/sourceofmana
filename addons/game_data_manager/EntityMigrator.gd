@@ -198,17 +198,18 @@ func CreateEntityFromJson(json : Dictionary, parent : EntityData) -> EntityData:
 						entity._equipment[itemCell.slot] = itemCell
 
 	if "Texture" in json:
-		var value : String = json.Texture
-		if not parent or parent._customTexture != value:
-			entity._customTexture = value
+		var texture : Texture2D = FileSystem.LoadGfx(json.Texture)
+		if texture and (not parent or parent._customTexture != texture):
+			entity._customTexture = texture
 
 	if "Material" in json:
 		var materialName : String = json.Material
 		var paletteId : int = materialName.hash()
 		if DB.PalettesDB[DB.Palette.SKIN].has(paletteId):
 			var paletteData : FileData = DB.GetPalette(DB.Palette.SKIN, paletteId)
-			if not parent or parent._customMaterial != paletteData:
-				entity._customMaterial = paletteData
+			var material : Material = FileSystem.LoadPalette(paletteData._path)
+			if material and (not parent or parent._customMaterial != material):
+				entity._customMaterial = material
 
 	if "SkillSet" in json:
 		var skillSetData : Dictionary = json.SkillSet
@@ -218,7 +219,7 @@ func CreateEntityFromJson(json : Dictionary, parent : EntityData) -> EntityData:
 			for skillName in skillSetData:
 				var skillId : int = skillName.hash()
 				if DB.SkillsDB.has(skillId):
-					entity._skills[skillName] = float(skillSetData[skillName])
+					entity._skills[DB.SkillsDB[skillId]] = float(skillSetData[skillName])
 				else:
 					print("  WARNING: Skill '%s' (ID: %d) not found in DB for entity '%s'" % [skillName, skillId, entity._name])
 
@@ -230,14 +231,18 @@ func CreateEntityFromJson(json : Dictionary, parent : EntityData) -> EntityData:
 			for itemName in drops:
 				var itemId : int = itemName.hash()
 				if DB.ItemsDB.has(itemId):
-					entity._drops[itemName] = float(drops[itemName])
+					entity._drops[DB.ItemsDB[itemId]] = float(drops[itemName])
 				else:
 					print("  WARNING: Item '%s' (ID: %d) not found in DB for entity '%s'" % [itemName, itemId, entity._name])
 
 	if "Spawns" in json:
 		var spawns : Dictionary = json.Spawns
 		for spawnName in spawns:
-			entity._spawns[spawnName.hash()] = int(spawns[spawnName])
+			var spawnEntity : EntityData = DB.GetEntity(spawnName.hash())
+			if spawnEntity:
+				entity._spawns[spawnEntity] = int(spawns[spawnName])
+			else:
+				print("  WARNING: Entity '%s' not found in DB for spawn in '%s'" % [spawnName, entity._name])
 
 	if "QuestFilter" in json:
 		print("  WARNING: QuestFilter not migrated for " + entity._name + " (requires manual setup)")

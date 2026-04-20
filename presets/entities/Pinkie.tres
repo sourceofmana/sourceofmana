@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_ay1s3"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_ya1ra"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_30u75"]
+[ext_resource type="Texture2D" uid="uid://bn68hjgisdd1q" path="res://data/graphics/sprites/monsters/pinkie.png" id="3_tex"]
 
 [resource]
 script = ExtResource("2_ya1ra")
@@ -14,4 +16,4 @@ _stats = {
 "walkSpeed": 80.0
 }
 _equipment = Array[ExtResource("1_ay1s3")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/pinkie.png"
+_customTexture = ExtResource("3_tex")

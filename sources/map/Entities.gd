@@ -36,14 +36,20 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 			var isNpc : bool = interactable and entity.type == ActorCommons.Type.NPC
 			if isAliveMonster or isNpc:
 				var entityData : EntityData = DB.EntitiesDB.get(entity.stat.currentShape, null)
-				if entityData and entityData._questID != ProgressCommons.Quest.UNKNOWN:
-					var questState : int = Launcher.Player.progress.GetQuest(entityData._questID) if Launcher.Player else ProgressCommons.UnknownProgress
-					if entityData._questStateMax != ProgressCommons.UnknownProgress:
-						if questState < entityData._questState or questState > entityData._questStateMax:
-							continue
-					else:
-						if questState != entityData._questState:
-							continue
+				if entityData:
+					# If is in a different state than the overridden one
+					if entityData._state != ActorCommons.State.UNKNOWN and entity.state != entityData._state:
+						continue
+					# If the current quest state forbides the selection
+					if entityData._questID != ProgressCommons.Quest.UNKNOWN:
+						var questState : int = Launcher.Player.progress.GetQuest(entityData._questID) if Launcher.Player else ProgressCommons.UnknownProgress
+						if entityData._questStateMax != ProgressCommons.UnknownProgress:
+							if questState < entityData._questState or questState > entityData._questStateMax:
+								continue
+						else:
+							if questState != entityData._questState:
+								continue
+				# If too far away
 				var distance : float = source.distance_squared_to(entity.position)
 				if distance > ActorCommons.TargetMaxSquaredDistance:
 					continue

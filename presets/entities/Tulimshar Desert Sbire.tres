@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://bsscppglk0qam" path="res://presets/cells/items/head/Ghutra.tres" id="5_pqrqd"]
 [ext_resource type="Resource" uid="uid://b2g1xlar44gin" path="res://presets/cells/items/weapon/Gladius.tres" id="6_uduh7"]
 [ext_resource type="Resource" uid="uid://b1fircprcri7h" path="res://presets/entities/WalkingNPC.tres" id="7_x06ni"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="8_eh012"]
 
 [resource]
 script = ExtResource("2_md4lg")

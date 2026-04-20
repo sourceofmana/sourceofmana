@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_dxecr"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_2r2rl"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_1rtr2"]
+[ext_resource type="Resource" uid="uid://c2v50bj0vl45m" path="res://presets/cells/items/usable/CactusDrink.tres" id="3_cactus"]
 
 [resource]
 script = ExtResource("2_2r2rl")
@@ -14,6 +16,6 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_dxecr")]([null, null, null, null, null, null, null, null])
 _behaviour = 9
-_drops = Dictionary[String, float]({
-"Cactus Drink": 0.1
+_drops = Dictionary[ExtResource("1_dxecr"), float]({
+ExtResource("3_cactus"): 0.1
 })

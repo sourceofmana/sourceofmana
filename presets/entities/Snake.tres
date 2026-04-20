@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_q84qv"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_dfnee"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_5h6di"]
+[ext_resource type="Texture2D" uid="uid://tp667v46h13l" path="res://data/graphics/sprites/monsters/snake.png" id="3_tex"]
 
 [resource]
 script = ExtResource("2_dfnee")
@@ -15,5 +17,5 @@ _stats = {
 "walkSpeed": 170.0
 }
 _equipment = Array[ExtResource("1_q84qv")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/snake.png"
+_customTexture = ExtResource("3_tex")
 _behaviour = 4

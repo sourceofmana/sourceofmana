@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_82due"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_juena"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_skill"]
+[ext_resource type="Resource" uid="uid://bqg1nlmgehdkc" path="res://presets/cells/skills/Spitfire.tres" id="4_spit"]
+[ext_resource type="Texture2D" uid="uid://b84mwc1b6hjdr" path="res://data/graphics/sprites/monsters/firegoblin.png" id="5_tex"]
 
 [resource]
 script = ExtResource("2_juena")
@@ -14,7 +17,7 @@ _stats = {
 "walkSpeed": 80.0
 }
 _equipment = Array[ExtResource("1_82due")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/firegoblin.png"
-_skills = Dictionary[String, float]({
-"Spitfire": 2.0
+_customTexture = ExtResource("5_tex")
+_skills = Dictionary[ExtResource("3_skill"), float]({
+ExtResource("4_spit"): 2.0
 })

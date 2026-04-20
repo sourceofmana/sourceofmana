@@ -110,9 +110,8 @@ func SetSkillCastID(skillID : int):
 
 func SetData():
 	aiBehaviour = data._behaviour
-	for dropName in data._drops:
-		var dropID : int = DB.GetCellHash(dropName)
-		AddItem(DB.ItemsDB[dropID], data._drops[dropName])
+	for dropCell : ItemCell in data._drops:
+		AddItem(dropCell, data._drops[dropCell])
 	minWanderingSpeed = int(stat.current.walkSpeed / 4)
 	maxWanderingSpeed = int(stat.current.walkSpeed / 2)
 	super.SetData()

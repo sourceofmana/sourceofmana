@@ -10,9 +10,9 @@ static func RemoveCallback(objectSignal : Signal, callback : Callable):
 	if objectSignal.is_connected(callback):
 		objectSignal.disconnect(callback)
 
-static func AddCallback(objectSignal : Signal, callback : Callable, args : Array):
+static func AddCallback(objectSignal : Signal, callback : Callable, args : Array, flags : int = 0):
 	var bundledCallback : Callable = callback.bind(args) if callback == Callback.ShootCallback else callback.bindv(args)
-	objectSignal.connect(bundledCallback)
+	objectSignal.connect(bundledCallback, flags)
 
 static func PlugCallback(objectSignal : Signal, callback : Callable, args : Array = []):
 	RemoveCallback(objectSignal, callback)

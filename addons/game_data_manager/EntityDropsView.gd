@@ -80,11 +80,11 @@ func RefreshDropsDisplay():
 		return
 
 	var index : int = 0
-	for itemName in drops:
-		CreateDropWidget(itemName, drops[itemName], index)
+	for itemCell : ItemCell in drops:
+		CreateDropWidget(itemCell, drops[itemCell], index)
 		index += 1
 
-func CreateDropWidget(itemName : String, probability : float, index : int):
+func CreateDropWidget(itemCell : ItemCell, probability : float, index : int):
 	var hbox : HBoxContainer = HBoxContainer.new()
 
 	var iconRect : TextureRect = TextureRect.new()
@@ -92,7 +92,6 @@ func CreateDropWidget(itemName : String, probability : float, index : int):
 	iconRect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 	iconRect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
-	var itemCell : ItemCell = itemCache.get(itemName.hash())
 	if itemCell and itemCell.icon:
 		iconRect.texture = itemCell.icon
 
@@ -101,10 +100,10 @@ func CreateDropWidget(itemName : String, probability : float, index : int):
 	var itemNameEdit : LineEdit = LineEdit.new()
 	itemNameEdit.custom_minimum_size = Vector2(150, 0)
 	itemNameEdit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	itemNameEdit.text = itemName
+	itemNameEdit.text = itemCell.name if itemCell else ""
 	itemNameEdit.placeholder_text = "Item name"
 	itemNameEdit.set_meta("drop_index", index)
-	itemNameEdit.text_submitted.connect(_on_drop_item_changed.bind(itemName))
+	itemNameEdit.text_submitted.connect(_on_drop_item_changed.bind(itemCell))
 	hbox.add_child(itemNameEdit)
 
 	var probLabel : Label = Label.new()
@@ -118,17 +117,17 @@ func CreateDropWidget(itemName : String, probability : float, index : int):
 	probSpin.value = probability
 	probSpin.suffix = "%"
 	probSpin.custom_minimum_size = Vector2(100, 0)
-	probSpin.value_changed.connect(_on_drop_probability_changed.bind(itemName))
+	probSpin.value_changed.connect(_on_drop_probability_changed.bind(itemCell))
 	hbox.add_child(probSpin)
 
 	var deleteBtn : Button = Button.new()
 	deleteBtn.text = "X"
-	deleteBtn.pressed.connect(_on_delete_drop_pressed.bind(itemName))
+	deleteBtn.pressed.connect(_on_delete_drop_pressed.bind(itemCell))
 	hbox.add_child(deleteBtn)
 
 	dropsContainer.add_child(hbox)
 
-func _on_drop_item_changed(newName : String, oldName : String):
+func _on_drop_item_changed(newName : String, oldCell : ItemCell):
 	if not selectedEntity:
 		return
 
@@ -136,34 +135,34 @@ func _on_drop_item_changed(newName : String, oldName : String):
 	if not drops:
 		return
 
-	var itemCell : ItemCell = FindItemByName(newName)
-	if itemCell and drops.has(oldName):
-		var oldProb : float = drops[oldName]
-		drops.erase(oldName)
-		drops[itemCell.name] = oldProb
+	var newCell : ItemCell = FindItemByName(newName)
+	if newCell and drops.has(oldCell):
+		var oldProb : float = drops[oldCell]
+		drops.erase(oldCell)
+		drops[newCell] = oldProb
 		SaveEntity()
 		RefreshDropsDisplay()
 
-func _on_drop_probability_changed(newValue : float, itemName : String):
+func _on_drop_probability_changed(newValue : float, itemCell : ItemCell):
 	if not selectedEntity:
 		return
 
 	var drops : Dictionary = selectedEntity.get("_drops")
-	if not drops or not drops.has(itemName):
+	if not drops or not drops.has(itemCell):
 		return
 
-	drops[itemName] = newValue
+	drops[itemCell] = newValue
 	SaveEntity()
 
-func _on_delete_drop_pressed(itemName : String):
+func _on_delete_drop_pressed(itemCell : ItemCell):
 	if not selectedEntity:
 		return
 
 	var drops : Dictionary = selectedEntity.get("_drops")
-	if not drops or not drops.has(itemName):
+	if not drops or not drops.has(itemCell):
 		return
 
-	drops.erase(itemName)
+	drops.erase(itemCell)
 	SaveEntity()
 	RefreshDropsDisplay()
 
@@ -176,7 +175,8 @@ func _on_add_drop_pressed():
 		drops = {}
 		selectedEntity.set("_drops", drops)
 
-	drops[""] = 1.0
+	var emptyCell : ItemCell = ItemCell.new()
+	drops[emptyCell] = 1.0
 	SaveEntity()
 	RefreshDropsDisplay()
 

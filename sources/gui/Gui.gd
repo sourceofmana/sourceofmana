@@ -87,7 +87,7 @@ func ToggleFullscreen():
 	if settingsWindow:
 		settingsWindow.set_fullscreen(!settingsWindow.is_fullscreen())
 
-func DisplayInfoContext(actions : PackedStringArray):
+func DisplayActions(actions : PackedStringArray):
 	infoContext.Clear()
 	for action in actions:
 		if DeviceManager.HasActionName(action):
@@ -193,7 +193,7 @@ func EnterGame():
 	background.set_visible(false)
 
 	Launcher.Camera.ResetCinematic()
-	DisplayInfoContext(["gp_interact", "gp_target", "gp_untarget", "gp_pickup", "gp_sit"])
+	DisplayActions(["gp_interact", "gp_target", "gp_untarget", "gp_pickup", "gp_sit"])
 
 	stats.set_visible(true)
 	menu.set_visible(true)
