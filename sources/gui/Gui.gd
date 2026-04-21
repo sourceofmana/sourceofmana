@@ -191,6 +191,9 @@ func EnterGame():
 		progressTimer = null
 	loadingControl.set_visible(false)
 	background.set_visible(false)
+	loginPanel.set_visible(false)
+	characterPanel.set_visible(false)
+	buttonBoxes.set_visible(false)
 
 	Launcher.Camera.ResetCinematic()
 	DisplayActions(["gp_interact", "gp_target", "gp_untarget", "gp_pickup", "gp_sit"])
