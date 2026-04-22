@@ -16,7 +16,6 @@ static var hashDB : Dictionary				= {}
 const UnknownHash : int						= -1
 static var PlayerHash : int					= "Player".hash()
 static var ShipHash : int					= "Ship".hash()
-static var OceanHash : int					= "Ocean".hash()
 
 enum Palette
 {
