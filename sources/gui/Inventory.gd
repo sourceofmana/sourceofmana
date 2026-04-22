@@ -67,6 +67,8 @@ func RefreshInventory():
 	var count : int			= 0
 	var tileIdx : int		= 0
 	var tile : CellTile		= grid.GetTile(tileIdx)
+	var equippedSlotShown : Array[bool] = []
+	equippedSlotShown.resize(ActorCommons.SlotEquipmentCount)
 
 	for item in Launcher.Player.inventory.items:
 		if not item or item.cellID == DB.UnknownHash:
@@ -81,6 +83,7 @@ func RefreshInventory():
 		if IsFiltered(cell, currentFilter):
 			if cell.stackable:
 				if tile:
+					tile.equipped = false
 					tile.AssignData(cell, item.count)
 					tileIdx += 1
 					tile = grid.GetTile(tileIdx)
@@ -89,6 +92,10 @@ func RefreshInventory():
 			else:
 				for cellIdx in item.count:
 					if tile:
+						var isEquip : bool = CellCommons.IsEquipped(cell) and not equippedSlotShown[cell.slot]
+						tile.equipped = isEquip
+						if isEquip:
+							equippedSlotShown[cell.slot] = true
 						tile.AssignData(cell)
 						tileIdx += 1
 						tile = grid.GetTile(tileIdx)
@@ -99,10 +106,14 @@ func RefreshInventory():
 			selectedTile = null
 
 	for remainingIdx in range(tileIdx, grid.maxCount):
+		grid.tiles[remainingIdx].equipped = false
 		grid.tiles[remainingIdx].AssignData(null, 0)
 
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
-		equipmentSlots[slot - ActorCommons.Slot.FIRST_EQUIPMENT].AssignData(Launcher.Player.inventory.equipment[slot - ActorCommons.Slot.FIRST_EQUIPMENT])
+		var slotIdx : int = slot - ActorCommons.Slot.FIRST_EQUIPMENT
+		var equippedCell : ItemCell = Launcher.Player.inventory.equipment[slotIdx]
+		equipmentSlots[slotIdx].equipped = equippedCell != null
+		equipmentSlots[slotIdx].AssignData(equippedCell)
 
 	RefreshModifiers(count)
 	SelectTile(selectedTile if selectedTile else grid.GetTile(0))
@@ -171,7 +182,7 @@ func RefreshItemMode():
 
 	if selectedTile and selectedTile.cell and selectedTile.count > 0:
 		var isEquipment : bool = selectedTile.cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and selectedTile.cell.slot < ActorCommons.Slot.LAST_EQUIPMENT
-		var isEquiped : bool = isEquipment and CellCommons.IsEquipped(selectedTile.cell)
+		var isEquiped : bool = isEquipment and selectedTile.equipped
 		var isQuestItem : bool = selectedTile.cell.slot == ActorCommons.Slot.QUEST
 
 		useButton.set_visible(selectedTile.cell.usable)

@@ -53,7 +53,7 @@
     <property name="dest_pos_x" type="int" value="66"/>
     <property name="dest_pos_y" type="int" value="27"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="69" name="To Desert Mountains" type="Warp" x="1724" y="840">
    <properties>
@@ -62,7 +62,7 @@
     <property name="dest_pos_x" type="int" value="54"/>
     <property name="dest_pos_y" type="int" value="27"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="70" name="To Desert Mountains" type="Warp" x="2940" y="712">
    <properties>
@@ -71,7 +71,7 @@
     <property name="dest_pos_x" type="int" value="92"/>
     <property name="dest_pos_y" type="int" value="24"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="71" name="To Desert Mountains" type="Warp" x="2716" y="712">
    <properties>
@@ -80,7 +80,7 @@
     <property name="dest_pos_x" type="int" value="82"/>
     <property name="dest_pos_y" type="int" value="25"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="72" name="To Desert Mountains" type="Warp" x="3644" y="1544">
    <properties>
@@ -89,7 +89,7 @@
     <property name="dest_pos_x" type="int" value="114"/>
     <property name="dest_pos_y" type="int" value="47"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="73" name="To Desert Mountains" type="Warp" x="3900" y="712">
    <properties>
@@ -98,7 +98,7 @@
     <property name="dest_pos_x" type="int" value="124"/>
     <property name="dest_pos_y" type="int" value="22"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="74" name="To Desert Mountains" type="Warp" x="2460" y="1384">
    <properties>
@@ -107,7 +107,7 @@
     <property name="dest_pos_x" type="int" value="77"/>
     <property name="dest_pos_y" type="int" value="44"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="75" name="To Desert Mountains" type="Warp" x="3292" y="1384">
    <properties>
@@ -116,7 +116,7 @@
     <property name="dest_pos_x" type="int" value="103"/>
     <property name="dest_pos_y" type="int" value="44"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="76" name="To Desert Mountains" type="Warp" x="2556" y="3784">
    <properties>
@@ -125,7 +125,7 @@
     <property name="dest_pos_x" type="int" value="80"/>
     <property name="dest_pos_y" type="int" value="120"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="77" name="To Desert Mountains" type="Warp" x="3548" y="2312">
    <properties>
@@ -134,7 +134,7 @@
     <property name="dest_pos_x" type="int" value="112"/>
     <property name="dest_pos_y" type="int" value="74"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="78" name="To Desert Mountains" type="Warp" x="2940" y="1960">
    <properties>
@@ -143,7 +143,7 @@
     <property name="dest_pos_x" type="int" value="93"/>
     <property name="dest_pos_y" type="int" value="63"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="79" name="To Desert Mountains" type="Warp" x="4060" y="1832">
    <properties>
@@ -152,7 +152,7 @@
     <property name="dest_pos_x" type="int" value="126"/>
     <property name="dest_pos_y" type="int" value="57"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="80" name="To Desert Mountains" type="Warp" x="3516" y="1768">
    <properties>
@@ -161,7 +161,7 @@
     <property name="dest_pos_x" type="int" value="109"/>
     <property name="dest_pos_y" type="int" value="56"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="81" name="To Desert Mountains" type="Warp" x="1084" y="3848">
    <properties>
@@ -170,7 +170,7 @@
     <property name="dest_pos_x" type="int" value="38"/>
     <property name="dest_pos_y" type="int" value="121"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="82" name="To Desert Mountains" type="Warp" x="1660" y="2888">
    <properties>
@@ -179,7 +179,7 @@
     <property name="dest_pos_x" type="int" value="51"/>
     <property name="dest_pos_y" type="int" value="91"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="83" name="To Desert Mountains" type="Warp" x="2300" y="2888">
    <properties>
@@ -188,7 +188,7 @@
     <property name="dest_pos_x" type="int" value="75"/>
     <property name="dest_pos_y" type="int" value="90"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="84" name="To Desert Mountains" type="Warp" x="1916" y="1800">
    <properties>
@@ -197,7 +197,7 @@
     <property name="dest_pos_x" type="int" value="59"/>
     <property name="dest_pos_y" type="int" value="65"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="85" name="To Desert Mountains" type="Warp" x="3868" y="3496">
    <properties>
@@ -206,7 +206,7 @@
     <property name="dest_pos_x" type="int" value="123"/>
     <property name="dest_pos_y" type="int" value="110"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="88" name="To Overworld" type="Warp" x="4161" y="3593">
    <properties>

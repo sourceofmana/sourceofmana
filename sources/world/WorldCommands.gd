@@ -102,7 +102,7 @@ func CommandWarp(caller : PlayerAgent, mapName : String, positionXStr : String =
 			var inst : WorldInstance = map.instances.get(0, null)
 			if inst:
 				mapPos = WorldNavigation.GetRandomPosition(inst)
-		Launcher.World.Warp(caller, map, mapPos)
+		Launcher.World.Warp(caller, map, mapPos, ActorCommons.Direction.UNKNOWN)
 		return true
 	return false
 
@@ -129,7 +129,7 @@ func CommandGoto(caller : PlayerAgent, nickname : String) -> bool:
 
 	var targetInst : WorldInstance = WorldAgent.GetInstanceFromAgent(target)
 	if targetInst:
-		Launcher.World.Warp(caller, targetInst.map, target.position, targetInst.id)
+		Launcher.World.Warp(caller, targetInst.map, target.position, ActorCommons.Direction.UNKNOWN, targetInst.id)
 	return true
 
 # Recall a player to the caller's position
@@ -144,7 +144,7 @@ func CommandRecall(caller : PlayerAgent, nickname : String) -> bool:
 
 	var callerInst : WorldInstance = WorldAgent.GetInstanceFromAgent(caller)
 	if callerInst:
-		Launcher.World.Warp(target, callerInst.map, caller.position, callerInst.id)
+		Launcher.World.Warp(target, callerInst.map, caller.position, ActorCommons.Direction.UNKNOWN, callerInst.id)
 	return true
 
 # Recall an NPC to the caller's position

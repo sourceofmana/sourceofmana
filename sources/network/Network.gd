@@ -464,7 +464,7 @@ func CallClient(methodName : StringName, args : Array, peerID : int):
 		WebSocketServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
 	elif ENetServer and not ENetServer.isOffline:
 		ENetServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
-	else:
+	elif Client:
 		Client.callv.call_deferred(methodName, args + [peerID])
 
 # Service handling

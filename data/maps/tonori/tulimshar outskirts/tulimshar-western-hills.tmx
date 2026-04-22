@@ -72,7 +72,7 @@
     <property name="dest_pos_x" value="69"/>
     <property name="dest_pos_y" value="121"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="19" name="To Western Caves" type="Warp" x="2174" y="3784">
    <properties>
@@ -81,7 +81,7 @@
     <property name="dest_pos_x" value="46"/>
     <property name="dest_pos_y" value="130"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="20" name="To Western Caves" type="Warp" x="2524" y="4840">
    <properties>
@@ -90,7 +90,7 @@
     <property name="dest_pos_x" value="69"/>
     <property name="dest_pos_y" value="121"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="21" name="To Western Caves" type="Warp" x="1532" y="5032">
    <properties>
@@ -99,25 +99,25 @@
     <property name="dest_pos_x" value="86"/>
     <property name="dest_pos_y" value="32"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="22" name="To Tulimshar Bay" type="Warp" x="3005" y="936">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_map" value="Tulimshar Bay"/>
     <property name="dest_pos_x" value="38"/>
-    <property name="dest_pos_y" value="64"/>
+    <property name="dest_pos_y" value="65"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="23" name="To Tulimshar Center" type="Warp" x="2988" y="3478">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_map" value="Tulimshar West Wall Pathway"/>
     <property name="dest_pos_x" value="51"/>
-    <property name="dest_pos_y" value="74"/>
+    <property name="dest_pos_y" value="75"/>
    </properties>
-   <polygon points="20,56 52,56 68,74 52,90 19,90 4,74"/>
+   <polygon points="68,74 52,90 19,90 4,74"/>
   </object>
  </objectgroup>
 </map>

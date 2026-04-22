@@ -106,15 +106,15 @@ func AlivePlayerCount() -> int:
 	return count
 
 # Warp
-func Warp(mapID : int, position : Vector2):
+func Warp(mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
 	assert(IsPlayer(), "Warp() requires a player agent")
 	if not IsPlayer(): return
-	Action(NpcCommons.Warp.bind(own, mapID, position))
+	Action(NpcCommons.Warp.bind(own, mapID, position, direction))
 
-func WarpInstance(mapID : int, position : Vector2):
+func WarpInstance(mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
 	assert(IsPlayer(), "WarpInstance() requires a player agent")
 	if not IsPlayer(): return
-	Action(NpcCommons.WarpInstance.bind(own, mapID, position))
+	Action(NpcCommons.WarpInstance.bind(own, mapID, position, direction))
 
 # Quest
 func SetQuest(questID : int, state : int):

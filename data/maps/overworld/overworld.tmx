@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="385" height="290" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="79">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="385" height="290" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="81">
  <properties>
   <property name="flagnodrop" type="bool" value="true"/>
   <property name="flagnorejoin" type="bool" value="true"/>
@@ -1780,7 +1780,7 @@
 </data>
  </layer>
  <objectgroup color="#c8c837" id="5" name="Object">
-  <object id="53" name="Warp Candor Cave" type="Warp" x="1771" y="2048">
+  <object id="53" name="Warp Candor Cave" type="Warp" x="1788" y="2054">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
@@ -1788,9 +1788,9 @@
     <property name="dest_pos_x" type="int" value="50"/>
     <property name="dest_pos_y" type="int" value="30"/>
    </properties>
-   <polygon points="60.437,59.7065 60.437,28.6592 106.927,28.6592 106.927,59.7065"/>
+   <polygon points="43.6319,45.4915 43.6319,21.836 77.1949,21.836 77.1949,45.4915"/>
   </object>
-  <object id="56" name="Mountain Cave" type="Warp" x="1438.29" y="3634.88">
+  <object id="56" name="Mountain Cave" type="Warp" x="1438.29" y="3637.89">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
@@ -1798,9 +1798,9 @@
     <property name="dest_pos_x" type="int" value="40"/>
     <property name="dest_pos_y" type="int" value="26"/>
    </properties>
-   <polygon points="47.32,69.3105 47.32,33.2691 83.72,33.2691 83.72,69.3105"/>
+   <polygon points="49.71,50.1091 49.71,30.1091 81.71,30.1091 81.71,50.1091"/>
   </object>
-  <object id="72" name="Splatyna Cave" type="Warp" x="1263" y="3555">
+  <object id="72" name="Splatyna Cave" type="Warp" x="1265" y="3561.6">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
@@ -1808,45 +1808,29 @@
     <property name="dest_pos_x" type="int" value="54"/>
     <property name="dest_pos_y" type="int" value="51"/>
    </properties>
-   <polygon points="47.32,69.3105 47.32,33.2691 83.72,33.2691 83.72,69.3105"/>
+   <polygon points="47,46.4 47,26.4 79,26.4 79,46.4"/>
   </object>
-  <object id="63" name="Tulimshar Port" type="Port" x="1326" y="3262.67">
+  <object id="75" name="Hurnscald Port" type="Port" x="1374.5" y="2377.44">
    <properties>
-    <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="86"/>
-    <property name="dest_pos_y" type="int" value="211"/>
-    <property name="sail_pos_x" type="int" value="86"/>
-    <property name="sail_pos_y" type="int" value="208"/>
-   </properties>
-   <polygon points="41.8323,129.335 41.8323,62.0808 74.0107,62.0808 74.0107,129.335"/>
-  </object>
-  <object id="75" name="Hurnscald Port" type="Port" x="1334.27" y="2377.44">
-   <properties>
-    <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_cellsize" type="int" value="16"/>
-    <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="89"/>
+    <property name="dest_pos_x" type="int" value="88"/>
     <property name="dest_pos_y" type="int" value="151"/>
-    <property name="sail_pos_x" type="int" value="92"/>
+    <property name="sail_pos_x" type="int" value="93"/>
     <property name="sail_pos_y" type="int" value="151"/>
    </properties>
-   <polygon points="91.2328,65.2324 91.2328,31.3116 161.411,31.3116 161.411,65.2324"/>
+   <polygon points="58.5007,65.2324 58.5007,31.3116 103.501,31.3116 103.501,65.2324"/>
   </object>
-  <object id="65" name="Artis Port" type="Port" x="4255" y="1591">
+  <object id="65" name="Artis Port" type="Port" x="4289.1" y="1595">
    <properties>
-    <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
     <property name="dest_pos_x" type="int" value="270"/>
     <property name="dest_pos_y" type="int" value="102"/>
-    <property name="sail_pos_x" type="int" value="274"/>
+    <property name="sail_pos_x" type="int" value="275"/>
     <property name="sail_pos_y" type="int" value="102"/>
    </properties>
-   <polygon points="83.3061,60.7943 83.3061,29.1813 147.387,29.1813 147.387,60.7943"/>
+   <polygon points="55.9006,60.7943 55.9006,29.1813 98.9006,29.1813 98.9006,60.7943"/>
   </object>
-  <object id="66" name="Warp Artis" type="Warp" x="4248" y="1591">
+  <object id="66" name="Warp Artis" type="Warp" x="4271" y="1609">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
@@ -1854,21 +1838,19 @@
     <property name="dest_pos_x" type="int" value="197"/>
     <property name="dest_pos_y" type="int" value="104"/>
    </properties>
-   <polygon points="50.7082,61.5241 50.7082,29.5316 89.7142,29.5316 89.7142,61.5241"/>
+   <polygon points="34.1796,41.2854 34.1796,19.817 60.4714,19.817 60.4714,41.2854"/>
   </object>
-  <object id="68" name="Drazil Port" type="Port" x="1744" y="2078">
+  <object id="68" name="Drazil Port" type="Port" x="1742.4" y="2109.15">
    <properties>
-    <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
     <property name="dest_pos_x" type="int" value="112"/>
     <property name="dest_pos_y" type="int" value="133"/>
     <property name="sail_pos_x" type="int" value="112"/>
-    <property name="sail_pos_y" type="int" value="137"/>
+    <property name="sail_pos_y" type="int" value="138"/>
    </properties>
-   <polygon points="42.5025,128.498 42.5025,61.6789 75.1964,61.6789 75.1964,128.498"/>
+   <polygon points="41.6004,78.846 41.6004,37.846 73.6004,37.846 73.6004,78.846"/>
   </object>
-  <object id="69" name="Warp Drazil" type="Warp" x="1732" y="2071">
+  <object id="69" name="Warp Drazil" type="Warp" x="1751" y="2083">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
@@ -1876,9 +1858,9 @@
     <property name="dest_pos_x" type="int" value="83"/>
     <property name="dest_pos_y" type="int" value="109"/>
    </properties>
-   <polygon points="50.7082,61.5241 50.7082,29.5316 89.7142,29.5316 89.7142,61.5241"/>
+   <polygon points="35.4796,45.1316 35.4796,21.6632 62.7714,21.6632 62.7714,45.1316"/>
   </object>
-  <object id="70" name="Snake Pit" type="Warp" x="1550.51" y="3486.85">
+  <object id="70" name="Snake Pit" type="Warp" x="1550.51" y="3498.56">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
@@ -1886,9 +1868,9 @@
     <property name="dest_pos_x" type="int" value="32"/>
     <property name="dest_pos_y" type="int" value="66"/>
    </properties>
-   <polygon points="47.32,69.3105 47.32,33.2691 83.72,33.2691 83.72,69.3105"/>
+   <polygon points="49.49,45.4396 49.49,28.4396 81.49,28.4396 81.49,45.4396"/>
   </object>
-  <object id="71" name="Mine" type="Warp" x="1256" y="3478">
+  <object id="71" name="Mine" type="Warp" x="1265" y="3495">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
@@ -1896,7 +1878,7 @@
     <property name="dest_pos_x" type="int" value="37"/>
     <property name="dest_pos_y" type="int" value="30"/>
    </properties>
-   <polygon points="47.32,69.3105 47.32,33.2691 83.72,33.2691 83.72,69.3105"/>
+   <polygon points="47,57 47,34 75,34 75,57"/>
   </object>
   <object id="76" name="Tulimshar" type="Warp" x="1357" y="3353">
    <properties>
@@ -1906,9 +1888,9 @@
     <property name="dest_pos_x" type="int" value="44"/>
     <property name="dest_pos_y" type="int" value="83"/>
    </properties>
-   <polygon points="50.7082,61.5241 50.7082,29.5316 89.7142,29.5316 89.7142,61.5241"/>
+   <polygon points="51,55 51,34 90.006,34 90.006,55"/>
   </object>
-  <object id="77" name="Warp Sewer" type="Warp" x="4289" y="1508">
+  <object id="77" name="Warp Sewer" type="Warp" x="4314" y="1521">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
@@ -1916,7 +1898,7 @@
     <property name="dest_pos_x" type="int" value="62"/>
     <property name="dest_pos_y" type="int" value="47"/>
    </properties>
-   <polygon points="50.7082,61.5241 50.7082,29.5316 89.7142,29.5316 89.7142,61.5241"/>
+   <polygon points="32.8796,37.4393 32.8796,17.9709 58.1714,17.9709 58.1714,37.4393"/>
   </object>
   <object id="78" name="Tulimshar Southern Hills" type="Warp" x="1428" y="3367">
    <properties>
@@ -1926,7 +1908,27 @@
     <property name="dest_pos_x" type="int" value="61"/>
     <property name="dest_pos_y" type="int" value="138"/>
    </properties>
-   <polygon points="47.32,69.3105 47.32,33.2691 83.72,33.2691 83.72,69.3105"/>
+   <polygon points="60,69 60,34 83.72,33.2691 83.72,69.3105"/>
+  </object>
+  <object id="79" name="Manayir" type="Warp" x="1082.29" y="3478">
+   <properties>
+    <property name="auto_warp" type="bool" value="false"/>
+    <property name="dest_cellsize" type="int" value="32"/>
+    <property name="dest_map" value="Manayir"/>
+    <property name="dest_pos_x" type="int" value="76"/>
+    <property name="dest_pos_y" type="int" value="142"/>
+   </properties>
+   <polygon points="53.7143,57 53.7143,34 85.7143,34 85.7143,57"/>
+  </object>
+  <object id="80" name="Tulimshar Port" type="Port" x="1326" y="3309.07">
+   <properties>
+    <property name="dest_map" value="Overworld"/>
+    <property name="dest_pos_x" type="int" value="86"/>
+    <property name="dest_pos_y" type="int" value="213"/>
+    <property name="sail_pos_x" type="int" value="86"/>
+    <property name="sail_pos_y" type="int" value="207"/>
+   </properties>
+   <polygon points="41.6004,72.7806 41.6004,34.9346 73.6004,34.9346 73.6004,72.7806"/>
   </object>
  </objectgroup>
 </map>

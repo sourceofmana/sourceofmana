@@ -12,7 +12,7 @@ func OnAreaEnter(player : PlayerAgent):
 			npc.Interact(player)
 
 func OnWarpConfirm(player : PlayerAgent):
-	NpcCommons.Warp(player, npc.spawnInfo.destination_map, npc.spawnInfo.destination_pos)
+	NpcCommons.Warp(player, npc.spawnInfo.destination_map, npc.spawnInfo.destination_pos, npc.spawnInfo.direction)
 
 func GetWarpField(_player : PlayerAgent) -> String:
 	return warpName

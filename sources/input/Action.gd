@@ -13,8 +13,6 @@ signal deviceChanged
 
 #
 func Enable(enable : bool):
-	if enable:
-		pass
 	disableCounter = clampi(disableCounter + (1 if enable else -1), -256, 0)
 	isEnabled = disableCounter == 0
 

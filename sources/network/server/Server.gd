@@ -437,7 +437,6 @@ func _enter_tree():
 		])
 
 func _ValidateAuth(peerID: int, data: PackedByteArray):
-	print(str(data.decode_s32(0)) + "  " + str(NetworkCommons.ProtocolVersion))
 	if data.size() >= 8 and data.decode_s64(0) == NetworkCommons.ProtocolVersion:
 		multiplayerAPI.send_auth(peerID, PackedByteArray([1]))
 		multiplayerAPI.complete_auth(peerID)

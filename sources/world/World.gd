@@ -33,7 +33,7 @@ func BulkPreload(agent : BaseAgent, agentRID : int, peerID : int):
 		], peerID)
 
 # Core functions
-func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, instanceID : int = 0):
+func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, direction : ActorCommons.Direction, instanceID : int = 0):
 	assert(newMap != null and agent != null, "Warp could not proceed, agent or new map missing")
 	if agent and newMap:
 		if agent is PlayerAgent:
@@ -45,10 +45,16 @@ func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, instanceID : 
 		agent._velocity_computed(Vector2.ZERO)
 		agent.currentVelocity = Vector2.ZERO
 		agent.velocity = Vector2.ZERO
+		if agent is PlayerAgent:
+			agent.isWarping = true
 		WorldAgent.PopAgent(agent)
 		if not agent.isRelativeMode:
 			agent.SwitchInputMode(true)
+
 		agent.position = agent.exploreOrigin.pos if newMap.HasFlags(WorldMap.Flags.ONLY_SPIRIT) and newPos == Vector2i.ZERO else newPos
+		if direction != ActorCommons.Direction.UNKNOWN:
+			agent.currentOrientation = ActorCommons.GetDirectionFromEnum(direction)
+
 		Spawn(newMap, agent, instanceID)
 
 func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
@@ -63,6 +69,11 @@ func Spawn(map : WorldMap, agent : BaseAgent, instanceID : int = 0):
 				Callback.OneShotCallback(agent.ready, AgentCreated, [agent, map.mapRID])
 			Callback.OneShotCallback(agent.tree_entered, AgentWarped, [map, agent])
 			WorldAgent.PushAgent(agent, inst)
+
+func ClearWarpFlag(agent : PlayerAgent):
+	if agent and agent.is_inside_tree():
+		await agent.get_tree().physics_frame
+		agent.isWarping = false
 
 func AgentCreated(agent : BaseAgent, mapRID : RID):
 	if agent and agent.agent:
@@ -81,6 +92,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 				agent.Morph(false, agent.stat.spirit)
 
 		Network.WarpPlayer(map.id, agent.position, agent.peerID)
+		ClearWarpFlag.call_deferred(agent)
 		agent.visibleAgents.clear()
 		var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 		if instance:

@@ -13,6 +13,7 @@ var cooldownTimer : float				= -INF
 var shineTimer : float					= -INF
 var count : int							= 0
 var hovered : bool						= false
+var equipped : bool						= false
 
 const modulateDisable : float			= 0.5
 
@@ -109,7 +110,7 @@ func _make_custom_tooltip(for_text : String) -> Object:
 
 func UpdateCountLabel():
 	if countLabel:
-		if not defaultIcon and CellCommons.IsEquipped(cell):
+		if not defaultIcon and equipped:
 			countLabel.text = "~"
 		elif count >= 1000:
 			countLabel.text = "999+"
@@ -182,6 +183,7 @@ static func RefreshShortcuts(baseCell : BaseCell, newCount : int = -1):
 	for shortcutTile in tiles:
 		if shortcutTile and shortcutTile.is_visible() and shortcutTile.draggable and shortcutTile.cell == baseCell:
 			shortcutTile.count = newCount
+			shortcutTile.equipped = CellCommons.IsEquipped(baseCell)
 			shortcutTile.UpdateCountLabel()
 
 func UseCell():
@@ -280,7 +282,7 @@ func RefreshColor():
 	var targetColor : Color
 	if hovered:
 		targetColor = UICommons.CellTileColorHovered
-	elif cell and CellCommons.IsEquipped(cell):
+	elif cell and equipped:
 		targetColor = UICommons.CellTileColorEquipped
 	else:
 		targetColor = UICommons.CellTileColorDefault

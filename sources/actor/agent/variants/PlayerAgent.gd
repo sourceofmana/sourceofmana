@@ -9,6 +9,7 @@ var circleShape : CircleShape2D			= CircleShape2D.new()
 var respawnDestination : Destination	= null
 var exploreOrigin : Destination			= null
 var ownScript : NpcScript				= null
+var isWarping : bool					= false
 
 # Regen
 var regenTimer : Timer					= Timer.new()
@@ -252,7 +253,7 @@ func Explore():
 func WarpTo(dest : Destination):
 	var nextMap : WorldMap = Launcher.World.GetMap(dest.mapID)
 	if nextMap:
-		Launcher.World.Warp(self, nextMap, dest.pos, dest.instance)
+		Launcher.World.Warp(self, nextMap, dest.pos, ActorCommons.Direction.UNKNOWN, dest.instance)
 
 func Killed():
 	super.Killed()

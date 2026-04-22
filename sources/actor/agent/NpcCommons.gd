@@ -139,20 +139,20 @@ static func Spawn(caller : BaseAgent, mobID : int, count : int = 1, position : V
 			agents.push_back(WorldAgent.CreateAgent(spawnObject, inst.id))
 	return agents
 
-static func Warp(caller : BaseAgent, mapID : int, position : Vector2):
+static func Warp(caller : BaseAgent, mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
 	if caller is PlayerAgent:
 		var map : WorldMap = Launcher.World.GetMap(mapID)
 		if map:
-			Launcher.World.Warp(caller, map, position)
+			Launcher.World.Warp(caller, map, position, direction, 0)
 
-static func WarpInstance(caller : BaseAgent, mapID : int, position : Vector2):
+static func WarpInstance(caller : BaseAgent, mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
 	if caller is PlayerAgent:
 		var map : WorldMap = Launcher.World.GetMap(mapID)
 		if map:
 			var instanceID : int = caller.get_rid().get_id()
 			if not map.instances.has(instanceID):
 				map.CreateInstance(instanceID)
-			Launcher.World.Warp(caller, map, position, instanceID)
+			Launcher.World.Warp(caller, map, position, direction, instanceID)
 
 # Progress
 static func SetQuest(caller : BaseAgent, questID : int, state : int):

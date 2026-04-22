@@ -9,12 +9,7 @@ class_name ContextMenu
 @onready var contextList : Control			= $Margin/List
 
 var buffer : Array[ContextData]				= []
-var currentStep : float						= 0.0
-var fadeInStep : float						= 0.0
-var displayStep : float						= 0.0
-var fadeOutStep : float						= 0.0
-
-var canFadeOut : bool						= false
+var fadeTween : Tween						= null
 var actionDisabled : bool					= false
 
 #
@@ -25,40 +20,52 @@ func FlushDataBuffer():
 		action.Init(data, self)
 		contextList.add_child.call_deferred(action)
 
-func ResetSteps():
-	fadeInStep = fadeInDelay
-	displayStep = fadeInStep + displayDelay
-	fadeOutStep = displayStep + displayDelay
+func KillTween():
+	if fadeTween:
+		fadeTween.kill()
+		fadeTween = null
 
-	if currentStep >= displayStep:
-		if fadeOutDelay > 0:
-			currentStep = (1 - (currentStep - displayStep) / fadeOutDelay) * fadeInStep
-		else:
-			currentStep = 0.0
-	_process(0) # Force refresh
+func StartFadeIn(canFadeOut : bool):
+	KillTween()
+	var startAlpha : float = modulate.a
+	fadeTween = create_tween()
+	if fadeInDelay > 0.0:
+		var remainingFadeIn : float = (1.0 - startAlpha) * fadeInDelay
+		if remainingFadeIn > 0.0:
+			fadeTween.tween_property(self, "modulate:a", 1.0, remainingFadeIn)
+	else:
+		modulate.a = 1.0
+	if canFadeOut:
+		fadeTween.tween_interval(displayDelay)
+		AppendFadeOut(fadeTween)
+
+func AppendFadeOut(tw : Tween):
+	if fadeOutDelay > 0.0:
+		tw.tween_property(self, "modulate:a", 0.0, fadeOutDelay)
+	else:
+		tw.tween_callback(func(): modulate.a = 0.0)
+	tw.tween_callback(Hide)
 
 func Push(data : ContextData):
 	buffer.push_back(data)
 
 func FadeIn(disableAction : bool = false):
-	ResetSteps()
 	Show(disableAction)
 	FlushDataBuffer()
-
-	canFadeOut = not persistant
-	_process(0)
+	StartFadeIn(not persistant)
 
 func FadeOut():
-	if currentStep < fadeInStep:
-		if fadeInStep > 0:
-			currentStep = (1 - currentStep / fadeInStep) * fadeOutDelay + displayStep
-		else:
-			currentStep = displayStep
-	elif currentStep < displayStep:
-		currentStep = displayStep
-
-	canFadeOut = true
-	_process(0)
+	KillTween()
+	var currentAlpha : float = modulate.a
+	if currentAlpha <= 0.0:
+		Hide()
+		return
+	fadeTween = create_tween()
+	if fadeOutDelay > 0.0:
+		fadeTween.tween_property(self, "modulate:a", 0.0, currentAlpha * fadeOutDelay)
+	else:
+		modulate.a = 0.0
+	fadeTween.tween_callback(Hide)
 
 func Show(disableAction : bool):
 	visible = true
@@ -69,9 +76,9 @@ func Show(disableAction : bool):
 		Launcher.Action.Enable(false)
 
 func Hide():
+	KillTween()
 	visible = false
-	canFadeOut = false
-	currentStep = 0.0
+	modulate.a = 0.0
 	if Launcher.Action and actionDisabled:
 		Launcher.Action.Enable(true)
 		actionDisabled = false
@@ -83,24 +90,5 @@ func Clear():
 		child.queue_free()
 
 #
-func _process(delta):
-	if not visible:
-		return
-
-	if canFadeOut or currentStep <= displayStep:
-		currentStep += delta
-		if currentStep <= fadeInStep:
-			if fadeInStep > 0.0:
-				modulate.a = currentStep / fadeInStep
-		elif currentStep <= displayStep:
-			if displayStep > 0.0:
-				modulate.a = 1.0
-		elif canFadeOut:
-			if currentStep <= fadeOutStep:
-				if fadeOutDelay > 0.0:
-					modulate.a = 1.0 - (currentStep - displayStep) / fadeOutDelay
-			else:
-				Hide()
-
 func _ready():
 	Hide()
