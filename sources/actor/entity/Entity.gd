@@ -13,6 +13,7 @@ var entityPosOffset : Vector2			= Vector2.ZERO
 var entityOrientation : Vector2			= Vector2(0, 1)
 
 var agentRID : int						= DB.UnknownHash
+var defaultState : ActorCommons.State	= ActorCommons.State.UNKNOWN
 
 signal entity_died
 
@@ -101,8 +102,7 @@ func JustInteract():
 	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and not Util.IsReachableSquared(position, target.position, ActorCommons.TargetMaxSquaredDistance)):
 		Target(position, true)
 	if target and target.type == ActorCommons.Type.NPC:
-		var entityData : EntityData = DB.EntitiesDB.get(target.stat.currentShape, null)
-		if entityData and entityData._state != ActorCommons.State.UNKNOWN and target.state != entityData._state:
+		if target.defaultState != ActorCommons.State.UNKNOWN and target.state != target.defaultState:
 			ClearTarget()
 	if target:
 		if target.type == ActorCommons.Type.NPC:

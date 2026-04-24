@@ -59,11 +59,12 @@ func LoadMapNode(mapID : int):
 		MapLoaded.emit()
 
 # Entity cache
-func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String):
+func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, defaultState : ActorCommons.State):
 	var entry : EntityCacheEntry = EntityCacheEntry.new()
 	entry.actorType = actorType
 	entry.currentShape = currentShape
 	entry.nick = nick
+	entry.defaultState = defaultState
 	entityCache[agentRID] = entry
 
 func PreloadPlayer(agentRID : int, spirit : int, currentShape : int, nick : String, level : int, health : int, hairstyle : int, haircolor : int, gender : int, race : int, skintone : int, equipment : Dictionary):
@@ -96,6 +97,7 @@ func SpawnEntity(agentRID : int, entry : EntityCacheEntry) -> Entity:
 
 	var entity : Entity = Instantiate.CreateEntity(entry.actorType, entityData, entityData._name if entry.nick.is_empty() else entry.nick, isLocalPlayer)
 	entity.agentRID = agentRID
+	entity.defaultState = entry.defaultState
 	entity.stat.shape = shape
 	entity.stat.spirit = entry.spirit
 	entity.stat.currentShape = entry.currentShape

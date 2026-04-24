@@ -29,7 +29,7 @@ func BulkPreload(agent : BaseAgent, agentRID : int, peerID : int):
 		], peerID)
 	else:
 		Network.Bulk("PreloadEntity", [
-			agentRID, agent.GetActorType(), agent.stat.currentShape, agent.nick
+			agentRID, agent.GetActorType(), agent.stat.currentShape, agent.nick, agent.defaultState
 		], peerID)
 
 # Core functions

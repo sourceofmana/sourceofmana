@@ -47,4 +47,4 @@ _stats = {
 "skintone": "Dark"
 }
 _equipment = Array[ExtResource("1_item")]([SubResource("shirt_salamander"), ExtResource("10_legs"), ExtResource("11_feet"), null, SubResource("ghutra_sand"), null, null, null])
-_state = 1
+_state = 2

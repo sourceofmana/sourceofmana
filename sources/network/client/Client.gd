@@ -22,9 +22,9 @@ func PreloadPlayer(agentRID : int, spirit : int, currentShape : int, nick : Stri
 	if Launcher.Map:
 		Launcher.Map.PreloadPlayer(agentRID, spirit, currentShape, nick, level, health, hairstyle, haircolor, gender, race, skintone, equipment)
 
-func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, _peerID : int):
+func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, defaultState : ActorCommons.State, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.PreloadEntity(agentRID, actorType, currentShape, nick)
+		Launcher.Map.PreloadEntity(agentRID, actorType, currentShape, nick, defaultState)
 
 func RemoveEntity(agentRID : int, _peerID : int):
 	if Launcher.Map:

@@ -101,8 +101,8 @@ func WarpPlayer(mapID : int, playerPos : Vector2, peerID : int = NetworkCommons.
 
 # Entities
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("PreloadEntity", [agentRID, actorType, currentShape, nick], peerID)
+func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, defaultState : ActorCommons.State, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("PreloadEntity", [agentRID, actorType, currentShape, nick, defaultState], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func PreloadPlayer(agentRID : int, spirit : int, currentShape : int, nick : String, level : int, health : int, hairstyle : int, haircolor : int, gender : ActorCommons.Gender, race : int, skintone : int, equipment : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
