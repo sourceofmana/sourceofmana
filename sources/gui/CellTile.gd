@@ -224,27 +224,28 @@ func _get_drag_data(_position : Vector2):
 		if cell.usable or IsInEquipmentSlot():
 			if icon:
 				set_drag_preview(icon.duplicate())
-			return cell
+			return self
 	return null
 
 func _can_drop_data(_at_position : Vector2, data):
-	if draggable and data is BaseCell and data != cell and data.usable:
+	if not data is CellTile:
+		return false
+	if draggable and data.cell is BaseCell and data.cell != cell and data.cell.usable:
 		return true
-	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot() and not CellCommons.IsEquipped(data):
+	if defaultIcon and data.cell is ItemCell and data.cell.slot == _get_equipment_slot() and not CellCommons.IsEquipped(data.cell):
 		return true
-	if not draggable and not defaultIcon and data is ItemCell and CellCommons.IsEquipped(data):
+	if not draggable and not defaultIcon and data.cell is ItemCell and CellCommons.IsEquipped(data.cell):
 		return true
 	return false
 
 func _drop_data(_at_position : Vector2, data):
-	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot():
-		var dragItemIndex : int = Launcher.Player.inventory.FindItemIndex(data)
-		Network.EquipItem(data.id, data.customfield, dragItemIndex)
-	elif not draggable and not defaultIcon and data is ItemCell and CellCommons.IsEquipped(data):
-		Network.UnequipItem(data.id, data.customfield)
+	if defaultIcon and data.cell is ItemCell and data.cell.slot == _get_equipment_slot():
+		Network.EquipItem(data.cell.id, data.cell.customfield, data.itemIndex)
+	elif not draggable and not defaultIcon and data.cell is ItemCell and CellCommons.IsEquipped(data.cell):
+		Network.UnequipItem(data.cell.id, data.cell.customfield)
 	elif draggable:
-		AssignData(data)
-		CellTile.RefreshShortcuts(data)
+		AssignData(data.cell)
+		CellTile.RefreshShortcuts(data.cell)
 
 func _get_equipment_slot() -> ActorCommons.Slot:
 	if defaultIcon:
