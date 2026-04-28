@@ -67,8 +67,6 @@ func RefreshInventory():
 	var count : int			= 0
 	var tileIdx : int		= 0
 	var tile : CellTile		= grid.GetTile(tileIdx)
-	var equippedSlotShown : Array[bool] = []
-	equippedSlotShown.resize(ActorCommons.SlotEquipmentCount)
 
 	for item in Launcher.Player.inventory.items:
 		if not item or item.cellID == DB.UnknownHash:
@@ -84,34 +82,33 @@ func RefreshInventory():
 			if cell.stackable:
 				if tile:
 					tile.equipped = false
+					tile.itemIndex = tileIdx
 					tile.AssignData(cell, item.count)
 					tileIdx += 1
 					tile = grid.GetTile(tileIdx)
 				else:
 					break
 			else:
-				for cellIdx in item.count:
-					if tile:
-						var isEquip : bool = CellCommons.IsEquipped(cell) and not equippedSlotShown[cell.slot]
-						tile.equipped = isEquip
-						if isEquip:
-							equippedSlotShown[cell.slot] = true
-						tile.AssignData(cell)
-						tileIdx += 1
-						tile = grid.GetTile(tileIdx)
-					else:
-						break
+				if tile:
+					tile.equipped = Launcher.Player.inventory.IsItemEquipped(item)
+					tile.itemIndex = tileIdx
+					tile.AssignData(cell)
+					tileIdx += 1
+					tile = grid.GetTile(tileIdx)
+				else:
+					break
 		elif selectedTile and item and cell == selectedTile.cell:
 			SelectTile(null)
 			selectedTile = null
 
 	for remainingIdx in range(tileIdx, grid.maxCount):
 		grid.tiles[remainingIdx].equipped = false
+		grid.tiles[remainingIdx].itemIndex = -1
 		grid.tiles[remainingIdx].AssignData(null, 0)
 
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
 		var slotIdx : int = slot - ActorCommons.Slot.FIRST_EQUIPMENT
-		var equippedCell : ItemCell = Launcher.Player.inventory.equipment[slotIdx]
+		var equippedCell : ItemCell = Launcher.Player.inventory.GetEquipmentCell(slotIdx)
 		equipmentSlots[slotIdx].equipped = equippedCell != null
 		equipmentSlots[slotIdx].AssignData(equippedCell)
 
@@ -131,7 +128,7 @@ func MakeModifierBBCode(effect : CellCommons.Modifier, value : Variant) -> Strin
 func GetEquipmentModifierTotals() -> Dictionary:
 	var totals : Dictionary = {}
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
-		var equippedCell : ItemCell = Launcher.Player.inventory.equipment[slot - ActorCommons.Slot.FIRST_EQUIPMENT]
+		var equippedCell : ItemCell = Launcher.Player.inventory.GetEquipmentCell(slot - ActorCommons.Slot.FIRST_EQUIPMENT)
 		if equippedCell and equippedCell.modifiers:
 			for modifier in equippedCell.modifiers._modifiers:
 				if modifier and modifier._persistent:
@@ -251,7 +248,7 @@ func _on_use_pressed():
 
 func _on_equip_pressed():
 	if selectedTile and selectedTile.cell:
-		Network.EquipItem(selectedTile.cell.id, selectedTile.cell.customfield)
+		Network.EquipItem(selectedTile.cell.id, selectedTile.cell.customfield, selectedTile.itemIndex)
 
 func _on_unequip_pressed():
 	if selectedTile and selectedTile.cell:
@@ -278,7 +275,7 @@ func _on_drop_more_pressed():
 
 func _on_confirm_drop_pressed():
 	if selectedTile and selectedTile.cell:
-		Network.DropItem(selectedTile.cell.id, selectedTile.cell.customfield, dropValue)
+		Network.DropItem(selectedTile.cell.id, selectedTile.cell.customfield, dropValue, selectedTile.itemIndex)
 	SetButtonMode(ButtonMode.ITEM)
 
 func _on_info_scroll_gui_input(event : InputEvent):

@@ -180,7 +180,11 @@ func SetEquipment(slot : int, data : EntityData = null, applyOverrides : bool = 
 	var cell : ItemCell = null
 
 	if not entity.stat.IsMorph():
-		cell = entity.inventory.equipment[slot] if entity.inventory else (data._equipment[slot] if data else null)
+		if entity.inventory:
+			cell = entity.inventory.GetEquipmentCell(slot)
+		elif data:
+			cell = data._equipment[slot]
+
 		if cell != null:
 			slotTexture = cell.textures[entity.stat.gender]
 			slotMaterial = cell.shader
@@ -319,7 +323,7 @@ func CollectAnimationOverrides() -> Array[AnimationLibrary]:
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
 		var cell : ItemCell = null
 		if entity.inventory:
-			cell = entity.inventory.equipment[slot]
+			cell = entity.inventory.GetEquipmentCell(slot)
 		elif entity.data:
 			cell = entity.data._equipment[slot]
 		if cell and cell.animationOverrides:

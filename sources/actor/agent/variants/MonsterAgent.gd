@@ -8,11 +8,13 @@ func Killed():
 	super.Killed()
 	Formula.ApplyXp(self)
 
-	for item in inventory.items:
+	# Iterate from last to first to keep idx linear even with dropped items
+	for idx in range(inventory.items.size() - 1, -1, -1):
+		var item : Item = inventory.items[idx]
 		if item:
 			var cell : ItemCell = DB.GetItem(item.cellID, item.cellCustomfield)
 			if cell and cell in data._drops:
-				inventory.DropItem(cell, item.count)
+				inventory.DropItem(cell, item.count, idx)
 
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(self)
 	if inst and inst.timers:

@@ -185,7 +185,8 @@ static func RemoveItem(caller : BaseAgent, itemID : int, count : int = 1, custom
 	if caller is PlayerAgent and caller.inventory:
 		var cell : ItemCell = DB.GetItem(itemID, customfield)
 		if cell:
-			return caller.inventory.RemoveItem(cell, count)
+			var itemIndex : int = caller.inventory.FindItemIndex(cell)
+			return caller.inventory.RemoveItem(cell, count, itemIndex)
 	return false
 
 # Skills

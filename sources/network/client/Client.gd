@@ -212,19 +212,21 @@ func ItemAdded(itemID : int, customfield : StringName, count : int, _peerID : in
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 				var countText : String = " x" + str(count) if count > 1 else ""
 				Launcher.GUI.chatContainer.AddSystemText("You receive " + cell.name + countText)
-			cell.used.emit()
+			if not (cell is ItemCell and CellCommons.IsEquipment(cell)):
+				cell.used.emit()
 
-func ItemRemoved(itemID : int, customfield : StringName, count : int, _peerID : int):
+func ItemRemoved(itemID : int, customfield : StringName, count : int, itemIndex : int, _peerID : int):
 	if Launcher.Player:
 		var cell : BaseCell = DB.GetItem(itemID, customfield)
 		if cell:
-			Launcher.Player.inventory.PopItem(cell, count)
+			Launcher.Player.inventory.PopItem(cell, count, itemIndex)
 			CellTile.RefreshShortcuts(cell)
 			if Launcher.GUI and Launcher.GUI.inventoryWindow:
 				Launcher.GUI.inventoryWindow.RefreshInventory()
-			cell.used.emit()
+			if not (cell is ItemCell and CellCommons.IsEquipment(cell)):
+				cell.used.emit()
 
-func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state : bool, _peerID : int):
+func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state : bool, itemIndex : int, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if Launcher.Map:
 		var entry : EntityCacheEntry = Launcher.Map.entityCache.get(agentRID, null)
@@ -234,14 +236,15 @@ func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state :
 		var cell : ItemCell = DB.GetItem(itemID, customfield)
 		if cell:
 			if state:
-				entity.inventory.EquipItem(cell)
+				entity.inventory.EquipItem(cell, itemIndex)
 			else:
 				entity.inventory.UnequipItem(cell)
 
 			entity.visual.SetEquipment(cell.slot)
 			if entity == Launcher.Player:
 				Launcher.GUI.inventoryWindow.RefreshInventory()
-				cell.used.emit()
+				if not CellCommons.IsEquipment(cell):
+					cell.used.emit()
 
 func RefreshInventory(cells : Array[Dictionary], _peerID : int):
 	if Launcher.Player and Launcher.Player.inventory:

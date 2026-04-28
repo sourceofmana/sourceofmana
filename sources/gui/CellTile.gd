@@ -8,10 +8,12 @@ class_name CellTile
 @onready var cooldownLabel : Label		= $Cooldown
 
 var cell : BaseCell						= null
+var defaultMaterial : Material			= null
 var selection : TextureRect				= null
 var cooldownTimer : float				= -INF
 var shineTimer : float					= -INF
 var count : int							= 0
+var itemIndex : int						= -1
 var hovered : bool						= false
 var equipped : bool						= false
 
@@ -55,7 +57,7 @@ func IsInEquipmentSlot() -> bool:
 func GetCurrentEquipped() -> ItemCell:
 	if not (IsInEquipmentSlot() and Launcher.Player and Launcher.Player.inventory):
 		return null
-	return Launcher.Player.inventory.equipment[cell.slot]
+	return Launcher.Player.inventory.GetEquipmentCell(cell.slot)
 
 func GetTooltipModifiers(currentEquipped : ItemCell) -> String:
 	if not (cell is ItemCell):
@@ -148,6 +150,8 @@ func UpdateData():
 		icon.set_texture(cell.icon if cell else defaultIcon)
 		if cell and cell is ItemCell and cell.shader != null:
 			icon.set_material(cell.shader)
+		else:
+			icon.set_material(defaultMaterial)
 
 	UpdateCountLabel()
 	SetToolTip()
@@ -188,7 +192,13 @@ static func RefreshShortcuts(baseCell : BaseCell, newCount : int = -1):
 
 func UseCell():
 	if cell:
-		cell.Use()
+		if cell is ItemCell and not cell.usable and IsInEquipmentSlot():
+			if equipped:
+				Network.UnequipItem(cell.id, cell.customfield)
+			else:
+				Network.EquipItem(cell.id, cell.customfield, itemIndex)
+		else:
+			cell.Use()
 
 func Hover(isHovering : bool):
 	hovered = isHovering
@@ -228,7 +238,8 @@ func _can_drop_data(_at_position : Vector2, data):
 
 func _drop_data(_at_position : Vector2, data):
 	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot():
-		Network.EquipItem(data.id, data.customfield)
+		var dragItemIndex : int = Launcher.Player.inventory.FindItemIndex(data)
+		Network.EquipItem(data.id, data.customfield, dragItemIndex)
 	elif not draggable and not defaultIcon and data is ItemCell and CellCommons.IsEquipped(data):
 		Network.UnequipItem(data.id, data.customfield)
 	elif draggable:
@@ -244,6 +255,7 @@ func _get_equipment_slot() -> ActorCommons.Slot:
 
 # Default
 func _ready():
+	defaultMaterial = icon.material if icon else null
 	UpdateData()
 	set_process(false)
 
@@ -255,7 +267,7 @@ func _gui_input(event):
 			elif event.pressed:
 				selected.emit(self)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			cell.DisplayRadius()
+			UnassignData(cell)
 
 func _process(delta : float):
 	if cooldownTimer != -INF:

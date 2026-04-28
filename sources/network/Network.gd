@@ -298,24 +298,24 @@ func ItemAdded(itemID : int, customfield : StringName, count : int, peerID : int
 	CallClient("ItemAdded", [itemID, customfield, count], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemRemoved(itemID : int, customfield : StringName, count : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("ItemRemoved", [itemID, customfield, count], peerID)
+func ItemRemoved(itemID : int, customfield : StringName, count : int, itemIndex : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ItemRemoved", [itemID, customfield, count, itemIndex], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state : bool, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("ItemEquiped", [agentRID, itemID, customfield, state], peerID)
+func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state : bool, itemIndex : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ItemEquiped", [agentRID, itemID, customfield, state, itemIndex], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func UseItem(itemID : int, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("UseItem", [itemID], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func DropItem(itemID : int, customfield : StringName, itemCount : int, peerID : int = NetworkCommons.PeerAuthorityID):
-	CallServer("DropItem", [itemID, customfield, itemCount], peerID)
+func DropItem(itemID : int, customfield : StringName, itemCount : int, itemIndex : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("DropItem", [itemID, customfield, itemCount, itemIndex], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
-func EquipItem(itemID : int, customfield : StringName, peerID : int = NetworkCommons.PeerAuthorityID):
-	CallServer("EquipItem", [itemID, customfield], peerID)
+func EquipItem(itemID : int, customfield : StringName, itemIndex : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("EquipItem", [itemID, customfield, itemIndex], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func UnequipItem(itemID : int, customfield : StringName, peerID : int = NetworkCommons.PeerAuthorityID):

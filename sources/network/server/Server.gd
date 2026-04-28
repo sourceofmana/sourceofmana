@@ -329,19 +329,19 @@ func UseItem(itemID : int, peerID : int):
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.UseItem(cell)
 
-func DropItem(itemID : int, customfield : StringName, itemCount : int, peerID : int):
+func DropItem(itemID : int, customfield : StringName, itemCount : int, itemIndex : int, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
-			player.inventory.DropItem(cell, itemCount)
+			player.inventory.DropItem(cell, itemCount, itemIndex)
 
-func EquipItem(itemID : int, customfield : StringName, peerID : int):
+func EquipItem(itemID : int, customfield : StringName, itemIndex : int, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell and cell.slot != ActorCommons.Slot.NONE:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
-			player.inventory.EquipItem(cell)
+			player.inventory.EquipItem(cell, itemIndex)
 
 func UnequipItem(itemID : int, customfield : StringName, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
