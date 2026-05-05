@@ -30,9 +30,9 @@ func OnCheckProgress():
 		OnDeliverWater()
 
 func OnInProgress():
-	Mes("A water zone is deep inside the cave, best way to find it is to get lost.")
+	Mes("There is much water deep inside the cave, best way to find it is to get lost.")
 	Mes("Fill my jug if you find it and bring it back here.")
-	Mes("But watch out, you will loose some water along the way every time one of these snakes will bit you!")
+	Mes("But watch out, you will lose some water along the way every time one of these snakes will bite you!")
 	Mes("An empty jug is useless to me, so you will have to refill it to retry!")
 
 func OnDeliverWater():
@@ -59,5 +59,5 @@ func OnAccept():
 	Mes("Here is the jug. The water source is deep inside the cave, here is an important tip for you:")
 	Mes("To find the source I remember I first went north then east...")
 	Mes("Then south? Or maybe I went further to the east then north again...")
-	Mes("Thruth be told, all I remember are these damn snakes...")
+	Mes("Truth be told, all I remember are these damn snakes...")
 	Mes("Good luck out there, I'd still recommend for you to not go there all alone.")
