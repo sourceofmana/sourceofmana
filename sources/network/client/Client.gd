@@ -316,36 +316,40 @@ func CharacterInfo(info : Dictionary, equipment : Dictionary, _peerID : int):
 	Launcher.GUI.characterPanel.AddCharacter(info, equipment)
 
 # Progress
-func UpdateSkill(skillID : int, level : int, _peerID : int):
+func UpdateSkill(skillID : int, level : int, _peerID : int, notify : bool = true):
 	if Launcher.Player:
 		var skill : SkillCell = DB.GetSkill(skillID)
 		if skill:
 			Launcher.Player.progress.AddSkill(skill, 1.0, level)
 			if Launcher.GUI and Launcher.GUI.skillWindow:
 				Launcher.GUI.skillWindow.RefreshSkills()
+			if notify:
+				Launcher.Player.sfx.HandleAlteration(ActorCommons.Alteration.SKILL_UP)
 
-func UpdateBestiary(mobID : int, count : int, _peerID : int):
+func UpdateBestiary(mobID : int, count : int, _peerID : int, _notify : bool = true):
 	if Launcher.Player:
 		Launcher.Player.progress.AddBestiary(mobID, count)
 		if Launcher.GUI and Launcher.GUI.progressWindow:
 			Launcher.GUI.progressWindow.RefreshBestiary(mobID, count)
 
-func UpdateQuest(questID : int, state : int, _peerID : int):
+func UpdateQuest(questID : int, state : int, _peerID : int, notify : bool = true):
 	if Launcher.Player:
 		Launcher.Player.progress.SetQuest(questID, state)
 		if Launcher.GUI and Launcher.GUI.progressWindow:
 			Launcher.GUI.progressWindow.RefreshQuest(questID, state)
+		if notify:
+			Launcher.Player.sfx.HandleAlteration(ActorCommons.Alteration.QUEST_COMPLETE if state == ProgressCommons.CompletedProgress else ActorCommons.Alteration.QUEST_UPDATE)
 
 func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, peerID : int):
 	if Launcher.GUI and Launcher.GUI.progressWindow:
 		Launcher.GUI.progressWindow.Clear()
 	if Launcher.Player:
 		for skill in skills:
-			UpdateSkill(skill, skills[skill], peerID)
+			UpdateSkill(skill, skills[skill], peerID, false)
 		for quest in quests:
-			UpdateQuest(quest, quests[quest], peerID)
+			UpdateQuest(quest, quests[quest], peerID, false)
 		for mob in bestiary:
-			UpdateBestiary(mob, bestiary[mob], peerID)
+			UpdateBestiary(mob, bestiary[mob], peerID, false)
 
 #
 func CommandFeedback(feedback : String, _peerID : int):

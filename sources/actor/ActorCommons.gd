@@ -281,7 +281,10 @@ enum Alteration
 	HEAL,
 	EXP,
 	GP,
-	LVLUP,
+	LVL_UP,
+	SKILL_UP,
+	QUEST_COMPLETE,
+	QUEST_UPDATE
 }
 
 # Colors
@@ -448,11 +451,14 @@ static var DefaultSkills : Array[Dictionary] = [
 	{ "skill_id": "Sonic Wave".hash(), "level": 1 },
 ]
 static var DefaultSfx : Dictionary[ActorCommons.Alteration, AudioStream] = {
-	Alteration.HIT:		preload("res://data/sounds/alteration/hit.ogg"),
-	Alteration.CRIT:	preload("res://data/sounds/alteration/crit.ogg"),
-	Alteration.DODGE:	preload("res://data/sounds/alteration/dodge.ogg"),
-	Alteration.HEAL:	preload("res://data/sounds/alteration/heal.ogg"),
-	Alteration.EXP:		preload("res://data/sounds/alteration/exp.ogg"),
-	Alteration.GP:		preload("res://data/sounds/alteration/gp.ogg"),
-	Alteration.LVLUP:	preload("res://data/sounds/alteration/levelup.ogg"),
+	Alteration.HIT:				preload("res://data/sounds/alteration/hit.ogg"),
+	Alteration.CRIT:			preload("res://data/sounds/alteration/crit.ogg"),
+	Alteration.DODGE:			preload("res://data/sounds/alteration/dodge.ogg"),
+	Alteration.HEAL:			preload("res://data/sounds/alteration/heal.ogg"),
+	Alteration.EXP:				preload("res://data/sounds/alteration/exp.ogg"),
+	Alteration.GP:				preload("res://data/sounds/alteration/gp.ogg"),
+	Alteration.LVL_UP:			preload("res://data/sounds/alteration/levelup.ogg"),
+	Alteration.SKILL_UP:		preload("res://data/sounds/alteration/skillup.ogg"),
+	Alteration.QUEST_COMPLETE:	preload("res://data/sounds/alteration/quest-done.ogg"),
+	Alteration.QUEST_UPDATE:	preload("res://data/sounds/alteration/quest-update.ogg"),
 }

@@ -153,7 +153,7 @@ func LevelUp():
 	if interactive:
 		interactive.DisplayLevelUp.call_deferred()
 	if sfx:
-		sfx.HandleAlteration(ActorCommons.Alteration.LVLUP)
+		sfx.HandleAlteration(ActorCommons.Alteration.LVL_UP)
 
 #
 func _physics_process(delta : float):
