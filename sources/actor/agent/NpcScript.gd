@@ -328,12 +328,12 @@ func AddKarma(value : int):
 func AddExp(value : int):
 	assert(IsPlayer(), "AddExp() requires a player agent")
 	if not IsPlayer() or value <= 0: return
-	Action(own.stat.AddExperience.bind(value))
+	Action(NpcCommons.AddExp.bind(own, value))
 
 func AddGP(value : int):
 	assert(IsPlayer(), "AddGP() requires a player agent")
 	if not IsPlayer() or value <= 0: return
-	Action(own.stat.AddGP.bind(value))
+	Action(NpcCommons.AddGP.bind(own, value))
 
 # Interaction logic
 func ToggleWindow(toggle : bool):

@@ -175,6 +175,8 @@ const STATE_NAMES : PackedStringArray = [
 ]
 
 static func GetStateName(state : State) -> String:
+	if state <= State.UNKNOWN or state >= State.COUNT:
+		return ""
 	return STATE_NAMES[state]
 
 static func IsAlive(agent : Actor) -> bool:
@@ -271,6 +273,7 @@ static var PlayerEntityID : int				= "Player".hash()
 # Skill
 enum Alteration
 {
+	UNKNOWN = -1,
 	HIT = 0,
 	CRIT,
 	MISS,
@@ -278,6 +281,7 @@ enum Alteration
 	HEAL,
 	EXP,
 	GP,
+	LVLUP,
 }
 
 # Colors
@@ -292,6 +296,11 @@ const PlayerColor : float					= 0.53
 const LevelDifferenceColor : float			= 5.0
 const NPCTextColor : Color					= Color.LIGHT_BLUE
 const MonsterTextColor : Color				= Color.DARK_SALMON
+
+# Sfx
+const SfxMaxDistance : float				= 500.0
+const SfxAlterationBus : StringName			= &"Alteration SFX"
+const SfxStateBus : StringName				= &"State SFX"
 
 # Interactive
 const interactionDisplayOffset : int		= 32
@@ -438,3 +447,12 @@ static var DefaultSkills : Array[Dictionary] = [
 	{ "skill_id": "Spitfire".hash(), "level": 1 },
 	{ "skill_id": "Sonic Wave".hash(), "level": 1 },
 ]
+static var DefaultSfx : Dictionary[ActorCommons.Alteration, AudioStream] = {
+	Alteration.HIT:		preload("res://data/sounds/alteration/hit.ogg"),
+	Alteration.CRIT:	preload("res://data/sounds/alteration/crit.ogg"),
+	Alteration.DODGE:	preload("res://data/sounds/alteration/dodge.ogg"),
+	Alteration.HEAL:	preload("res://data/sounds/alteration/heal.ogg"),
+	Alteration.EXP:		preload("res://data/sounds/alteration/exp.ogg"),
+	Alteration.GP:		preload("res://data/sounds/alteration/gp.ogg"),
+	Alteration.LVLUP:	preload("res://data/sounds/alteration/levelup.ogg"),
+}

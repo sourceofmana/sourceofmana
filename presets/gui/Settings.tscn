@@ -164,6 +164,40 @@ step = 0.1
 tick_count = 10
 ticks_on_borders = true
 
+[node name="Alteration SFX Volume" type="HBoxContainer" parent="Margin/TabBar/Audio/VBoxContainer" unique_id=201837465]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume" unique_id=201837466]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Alteration SFX Volume"
+
+[node name="HSlider" type="HSlider" parent="Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume" unique_id=201837467]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+tick_count = 10
+ticks_on_borders = true
+
+[node name="State SFX Volume" type="HBoxContainer" parent="Margin/TabBar/Audio/VBoxContainer" unique_id=201837468]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Margin/TabBar/Audio/VBoxContainer/State SFX Volume" unique_id=201837469]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "State SFX Volume"
+
+[node name="HSlider" type="HSlider" parent="Margin/TabBar/Audio/VBoxContainer/State SFX Volume" unique_id=201837470]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+tick_count = 10
+ticks_on_borders = true
+
 [node name="Input" type="TabContainer" parent="Margin/TabBar" unique_id=753213710]
 visible = false
 layout_mode = 2
@@ -244,4 +278,6 @@ fit_content = true
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4" to="." method="set_hq4x"]
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/CRT" to="." method="set_crt"]
 [connection signal="value_changed" from="Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider" to="." method="set_audiogeneral"]
+[connection signal="value_changed" from="Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider" to="." method="set_audioalteration"]
+[connection signal="value_changed" from="Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider" to="." method="set_audiostate"]
 [connection signal="pressed" from="Margin/TabBar/Account/AccountVBox/ChangeButton" to="Margin/TabBar/Account" method="_on_change_button_pressed"]

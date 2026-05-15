@@ -3,6 +3,7 @@ class_name EntityVisual
 
 #
 signal spriteOffsetUpdate
+signal state_changed(state : ActorCommons.State)
 
 #
 @onready var entity : Entity				= get_parent()
@@ -14,6 +15,7 @@ var sprites : Array[Sprite2D]				= []
 
 var previousOrientation : Vector2			= Vector2.ZERO
 var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
+var previousAnimState : ActorCommons.State	= ActorCommons.State.UNKNOWN
 
 var blendSpacePaths : Array[String]			= []
 var walkTimeScalePath : String				= ""
@@ -37,7 +39,6 @@ func LoadSpriteSlot(slot : ActorCommons.Slot, sprite : Sprite2D):
 			sprites[slot] = sprite
 			if slot == ActorCommons.Slot.BODY:
 				spriteOffsetUpdate.emit()
-
 
 func ResetData():
 	for child in get_children():
@@ -267,6 +268,15 @@ func UpdateScale():
 	if not attackTimeScalePath.is_empty() and entity.stat.current.castAttackDelay > 0:
 		animationTree[attackTimeScalePath] = attackAnimLength / entity.stat.current.castAttackDelay
 
+func OnAnimationStarted(animName : StringName):
+	for stateIdx in ActorCommons.State.COUNT:
+		if animName == ActorCommons.STATE_NAMES[stateIdx]:
+			var stateId : ActorCommons.State = stateIdx as ActorCommons.State
+			if stateId != previousAnimState:
+				previousAnimState = stateId
+				state_changed.emit(stateId)
+			return
+
 func ResetAnimationValue():
 	if not animationTree:
 		return
@@ -275,6 +285,8 @@ func ResetAnimationValue():
 	UpdateScale()
 	RefreshTree()
 	Refresh.call_deferred()
+	if not animationTree.animation_started.is_connected(OnAnimationStarted):
+		animationTree.animation_started.connect(OnAnimationStarted)
 
 func GetPlayerOffset() -> int:
 	var spriteOffset : int = ActorCommons.interactionDisplayOffset
@@ -347,39 +359,38 @@ func ApplyAnimationOverrides():
 			animation.remove_animation_library("")
 			animation.add_animation_library("", originalAnimationLib)
 			originalAnimationLib = null
-		return
+	else:
+		if not originalAnimationLib:
+			originalAnimationLib = animation.get_animation_library("")
 
-	if not originalAnimationLib:
-		originalAnimationLib = animation.get_animation_library("")
+		var lib : AnimationLibrary = originalAnimationLib.duplicate(true)
 
-	var lib : AnimationLibrary = originalAnimationLib.duplicate(true)
-
-	for overrideLib in allOverrides:
-		for animName in overrideLib.get_animation_list():
-			if not lib.has_animation(animName):
-				continue
-
-			var baseAnim : Animation = lib.get_animation(animName)
-			var overrideAnim : Animation = overrideLib.get_animation(animName)
-			for trackIdx in overrideAnim.get_track_count():
-				var trackPath : NodePath = overrideAnim.track_get_path(trackIdx)
-				var trackType : Animation.TrackType = overrideAnim.track_get_type(trackIdx)
-				var baseTrackIdx : int = baseAnim.find_track(trackPath, trackType)
-				if baseTrackIdx < 0:
+		for overrideLib in allOverrides:
+			for animName in overrideLib.get_animation_list():
+				if not lib.has_animation(animName):
 					continue
 
-				while baseAnim.track_get_key_count(baseTrackIdx) > 0:
-					baseAnim.track_remove_key(baseTrackIdx, 0)
-				for keyIdx in overrideAnim.track_get_key_count(trackIdx):
-					baseAnim.track_insert_key(
-						baseTrackIdx,
-						overrideAnim.track_get_key_time(trackIdx, keyIdx),
-						overrideAnim.track_get_key_value(trackIdx, keyIdx),
-						overrideAnim.track_get_key_transition(trackIdx, keyIdx)
-					)
+				var baseAnim : Animation = lib.get_animation(animName)
+				var overrideAnim : Animation = overrideLib.get_animation(animName)
+				for trackIdx in overrideAnim.get_track_count():
+					var trackPath : NodePath = overrideAnim.track_get_path(trackIdx)
+					var trackType : Animation.TrackType = overrideAnim.track_get_type(trackIdx)
+					var baseTrackIdx : int = baseAnim.find_track(trackPath, trackType)
+					if baseTrackIdx < 0:
+						continue
 
-	animation.remove_animation_library("")
-	animation.add_animation_library("", lib)
+					while baseAnim.track_get_key_count(baseTrackIdx) > 0:
+						baseAnim.track_remove_key(baseTrackIdx, 0)
+					for keyIdx in overrideAnim.track_get_key_count(trackIdx):
+						baseAnim.track_insert_key(
+							baseTrackIdx,
+							overrideAnim.track_get_key_time(trackIdx, keyIdx),
+							overrideAnim.track_get_key_value(trackIdx, keyIdx),
+							overrideAnim.track_get_key_transition(trackIdx, keyIdx)
+						)
+
+		animation.remove_animation_library("")
+		animation.add_animation_library("", lib)
 
 #
 func _notification(what : int):

@@ -136,7 +136,7 @@ static func ApplyXp(agent : BaseAgent):
 		if entry.attacker != null and not entry.attacker.is_queued_for_deletion():
 			var damageRatio : float = agent.GetDamageRatio(entry.attacker)
 			var bonusScaled : int = int(bonus * damageRatio)
-			entry.attacker.stat.AddExperience(bonusScaled)
+			entry.attacker.stat.AddExperience(bonusScaled, false)
 			if damageRatio > 0.5:
 				entry.attacker.progress.AddBestiary(agent.data._id, 1)
 

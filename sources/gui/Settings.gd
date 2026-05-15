@@ -15,6 +15,8 @@ const userSection : String						= "User"
 	"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
 	"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
 	"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
+	"Audio-Alteration": [init_audioalteration, set_audioalteration, apply_audioalteration, $"Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider"],
+	"Audio-State": [init_audiostate, set_audiostate, apply_audiostate, $"Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider"],
 	"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
 	"Session-FirstLogin": [init_sessionfirstlogin, set_sessionfirstlogin, apply_sessionfirstlogin, null],
 	"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
@@ -195,8 +197,31 @@ func set_audiogeneral(volumeRatio : float):
 	apply_audiogeneral(volumeRatio)
 func apply_audiogeneral(volumeRatio : float):
 	if Launcher.Audio:
-		var interpolation : float = clamp((log(clampf(volumeRatio, 0.0, 1.0)) + 5.0) / 5.0, 0.0, 1.06)
-		Launcher.Audio.SetVolume((1.0 - interpolation) * -80.0)
+		Launcher.Audio.SetVolume(Util.VolumeRatioToDb(volumeRatio))
+
+# Audio Alteration SFX
+func init_audioalteration(apply : bool):
+	var volumeRatio : float = GetVal("Audio-Alteration")
+	renderAccessors["Audio-Alteration"][ACC_TYPE.LABEL].value = volumeRatio
+	if apply:
+		apply_audioalteration(volumeRatio)
+func set_audioalteration(volumeRatio : float):
+	SetVal("Audio-Alteration", volumeRatio)
+	apply_audioalteration(volumeRatio)
+func apply_audioalteration(volumeRatio : float):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(ActorCommons.SfxAlterationBus), Util.VolumeRatioToDb(volumeRatio))
+
+# Audio State SFX
+func init_audiostate(apply : bool):
+	var volumeRatio : float = GetVal("Audio-State")
+	renderAccessors["Audio-State"][ACC_TYPE.LABEL].value = volumeRatio
+	if apply:
+		apply_audiostate(volumeRatio)
+func set_audiostate(volumeRatio : float):
+	SetVal("Audio-State", volumeRatio)
+	apply_audiostate(volumeRatio)
+func apply_audiostate(volumeRatio : float):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(ActorCommons.SfxStateBus), Util.VolumeRatioToDb(volumeRatio))
 
 # Session Account Name
 func init_sessionaccountname(apply : bool):

@@ -4,6 +4,7 @@ class_name Entity
 #
 @onready var interactive : EntityInteractive	= $Interactive
 @onready var visual : EntityVisual				= $Visual
+@onready var sfx : EntitySfx					= $Sfx
 
 var target : Entity						= null
 
@@ -57,8 +58,9 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 			interactive.DisplayCast(nextskillCastID)
 		visual.Refresh()
 
-	if previousState != nextState and nextState == ActorCommons.State.DEATH:
-		entity_died.emit()
+	if previousState != nextState:
+		if nextState == ActorCommons.State.DEATH:
+			entity_died.emit()
 
 	set_physics_process(true)
 
@@ -85,7 +87,7 @@ func ClearTarget():
 		target = null
 
 func Target(source : Vector2, interactable : bool = true, nextTarget : bool = false):
-	var newTarget = Entities.GetNextTarget(source, target if nextTarget and target != null else null, interactable)
+	var newTarget : Entity = Entities.GetNextTarget(source, target if nextTarget and target != null else null, interactable)
 	if newTarget != target:
 		ClearTarget()
 		target = newTarget
@@ -150,6 +152,8 @@ func LevelUp():
 	stat.RefreshAttributes()
 	if interactive:
 		interactive.DisplayLevelUp.call_deferred()
+	if sfx:
+		sfx.HandleAlteration(ActorCommons.Alteration.LVLUP)
 
 #
 func _physics_process(delta : float):
@@ -181,3 +185,6 @@ func _ready():
 	var displayTargetNone : Callable = interactive.DisplayTarget.bind(ActorCommons.Target.NONE)
 	if not entity_died.is_connected(displayTargetNone):
 		entity_died.connect(displayTargetNone)
+
+	if sfx and not visual.state_changed.is_connected(sfx.HandleState):
+		visual.state_changed.connect(sfx.HandleState)

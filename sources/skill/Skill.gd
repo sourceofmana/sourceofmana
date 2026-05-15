@@ -109,13 +109,13 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rn
 	info.value = clampi(info.value, 0, target.stat.health)
 	target.stat.SetHealth(-info.value)
 	target.agent_damaged.emit(target, info.value)
-	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill.id], true, true)
+	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill.id, true], true, true)
 
 static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	var heal : int = SkillCommons.GetHeal(agent, target, skill, rng)
 	target.stat.SetHealth(heal)
 	target.agent_healed.emit(target, heal)
-	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), heal, ActorCommons.Alteration.HEAL, skill.id], true, true)
+	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), heal, ActorCommons.Alteration.HEAL, skill.id, true], true, true)
 
 static func Stopped(agent : BaseAgent):
 	if SkillCommons.HasActionInProgress(agent):
@@ -127,7 +127,7 @@ static func Stopped(agent : BaseAgent):
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:
 		return
-	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), 0, ActorCommons.Alteration.MISS, DB.UnknownHash], true, true)
+	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), 0, ActorCommons.Alteration.MISS, DB.UnknownHash, true], true, true)
 	Stopped(agent)
 
 static func ThrowProjectile(agent : BaseAgent, targetPos : Vector2, skill : SkillCell):

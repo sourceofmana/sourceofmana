@@ -252,8 +252,8 @@ func TriggerSkill(targetRID : int, skillID : int, peerID : int = NetworkCommons.
 	CallServer("TriggerSkill", [targetRID, skillID], peerID, NetworkCommons.DelayShort)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("TargetAlteration", [agentRID, targetRID, value, alteration, skillID], peerID)
+func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, hasFeedback : bool, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("TargetAlteration", [agentRID, targetRID, value, alteration, skillID, hasFeedback], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func Casted(agentRID : int, skillID: int, cooldown : float, peerID : int = NetworkCommons.PeerOfflineID):

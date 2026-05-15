@@ -88,17 +88,25 @@ func CameraReset(_peerID : int):
 	if Launcher.Camera:
 		Launcher.Camera.ResetCinematic()
 
-func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, _peerID : int):
-	if Launcher.Map:
-		var entity : Entity = Entities.Get(targetRID)
-		var caller : Entity = Entities.Get(agentRID)
-		if caller && entity && entity.get_parent() and entity.interactive:
-			entity.interactive.DisplayAlteration.call_deferred(entity, caller, value, alteration, skillID)
-		if Launcher.GUI and entity == Launcher.Player:
-			if alteration == ActorCommons.Alteration.EXP:
-				Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " exp")
-			elif alteration == ActorCommons.Alteration.GP:
-				Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " GP")
+func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, hasFeedback : bool, _peerID : int):
+	var entity : Entity = Entities.Get(targetRID)
+	var caller : Entity = Entities.Get(agentRID)
+	if not caller or not entity or not entity.get_parent():
+		return
+
+	if entity.interactive:
+		entity.interactive.DisplayAlteration.call_deferred(entity, caller, value, alteration, skillID)
+
+	if hasFeedback:
+		if caller.sfx:
+			entity.sfx.HandleAlteration(alteration)
+
+		if entity == Launcher.Player:
+			match alteration:
+				ActorCommons.Alteration.EXP:
+					Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " exp")
+				ActorCommons.Alteration.GP:
+					Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " GP")
 
 func Casted(agentRID : int, skillID : int, cooldown : float, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)

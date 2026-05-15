@@ -4,6 +4,8 @@
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_qiwmn"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_ydrke"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_qiwmn"]
+[ext_resource type="AudioStream" uid="uid://cf5twqbe8lmb1" path="res://data/sounds/entities/chest/open.ogg" id="4_chest_open"]
+[ext_resource type="AudioStream" uid="uid://bq46qh21ja0cq" path="res://data/sounds/entities/chest/close.ogg" id="5_chest_close"]
 
 [resource]
 script = ExtResource("2_ydrke")
@@ -18,3 +20,7 @@ _stats = {
 _equipment = Array[ExtResource("1_wugrw")]([null, null, null, null, null, null, null, null])
 _questID = 2
 _questState = 32
+_sfx = Dictionary[int, AudioStream]({
+5: ExtResource("4_chest_open"),
+7: ExtResource("5_chest_close")
+})

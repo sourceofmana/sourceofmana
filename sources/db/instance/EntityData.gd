@@ -27,6 +27,8 @@ class_name EntityData
 @export var _questID : int							= ProgressCommons.Quest.UNKNOWN
 @export var _questState : int						= ProgressCommons.UnknownProgress
 @export var _questStateMax : int					= ProgressCommons.UnknownProgress
+@export_category("Audio")
+@export var _sfx : Dictionary[ActorCommons.State, AudioStream]	= {}
 @export_category("Flags")
 @export var _isBoss : bool							= false
 
@@ -76,6 +78,10 @@ func GetMergedEntity() -> EntityData:
 	merged._questID = _questID if _questID != ProgressCommons.Quest.UNKNOWN else merged._questID
 	merged._questState = _questState if _questState != ProgressCommons.UnknownProgress else merged._questState
 	merged._questStateMax = _questStateMax if _questStateMax != ProgressCommons.UnknownProgress else merged._questStateMax
+
+	# Sfx
+	for key : ActorCommons.State in _sfx:
+		merged._sfx[key] = _sfx[key]
 
 	# Flags
 	if _isBoss:
