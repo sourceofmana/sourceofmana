@@ -40,6 +40,7 @@
 [ext_resource type="PackedScene" uid="uid://tqcjqyaicaol" path="res://presets/gui/contexts/ContextMenuV.tscn" id="20_px3po"]
 [ext_resource type="PackedScene" uid="uid://cppc7wshwpqof" path="res://presets/gui/PickUp.tscn" id="21_5ivxk"]
 [ext_resource type="PackedScene" uid="uid://ds4k8qrgo3ko3" path="res://presets/gui/Loading.tscn" id="22_cg00p"]
+[ext_resource type="Texture2D" uid="uid://c6uvo1g52eiqy" path="res://data/graphics/gui/icon/social.png" id="22_ubwl8"]
 [ext_resource type="Texture2D" uid="uid://devqmk12ra1pf" path="res://data/graphics/gui/mobile/buttonY.png" id="22_v5bsw"]
 [ext_resource type="Texture2D" uid="uid://k02ws8i1amnb" path="res://data/graphics/gui/mobile/buttonX.png" id="23_8ulos"]
 [ext_resource type="Texture2D" uid="uid://cit8myij7ugwy" path="res://data/graphics/gui/mobile/buttonY_pressed.png" id="23_veq0v"]
@@ -196,6 +197,13 @@ grow_vertical = 2
 size_flags_vertical = 0
 alignment = 2
 
+[node name="Stat" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1852078003 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+layout_mode = 2
+icon = ExtResource("10_mq57a")
+flat = true
+targetWindow = NodePath("../../../../../../../Windows/Floating/Stat")
+targetShortcut = &"ui_stat"
+
 [node name="Inventory" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1398346524 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 icon = ExtResource("5_ntnop")
@@ -241,7 +249,7 @@ targetShortcut = &"ui_progress"
 
 [node name="Credits" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1520835010 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
-icon = ExtResource("10_mq57a")
+icon = ExtResource("22_ubwl8")
 flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Credit")
 targetShortcut = &"ui_credits"
@@ -478,6 +486,7 @@ grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
 [node name="Inventory" parent="Windows/Floating" unique_id=1715311206 instance=ExtResource("35_j05ha")]
+visible = false
 show_behind_parent = false
 layout_mode = 0
 anchors_preset = 0
@@ -493,6 +502,7 @@ saveOverlayState = true
 allowAutomaticResize = true
 
 [node name="Minimap" parent="Windows/Floating" unique_id=1978325832 instance=ExtResource("9_myjuo")]
+visible = false
 custom_minimum_size = Vector2(200, 125)
 layout_mode = 0
 offset_left = 1058.0
@@ -502,6 +512,7 @@ offset_bottom = 131.0
 saveOverlayState = true
 
 [node name="Emote" parent="Windows/Floating" unique_id=1332906157 instance=ExtResource("37_v7lrk")]
+visible = false
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 0
 offset_left = 24.0
@@ -511,6 +522,7 @@ offset_bottom = 144.0
 saveOverlayState = true
 
 [node name="Skill" parent="Windows/Floating" unique_id=849459379 instance=ExtResource("38_ompay")]
+visible = false
 layout_mode = 0
 offset_left = 24.0
 offset_top = 153.0
@@ -519,6 +531,7 @@ offset_bottom = 284.0
 saveOverlayState = true
 
 [node name="Chat" parent="Windows/Floating" unique_id=629841106 instance=ExtResource("5")]
+visible = false
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
@@ -535,9 +548,9 @@ allowAutomaticResize = true
 [node name="Credit" parent="Windows/Floating" unique_id=809635501 instance=ExtResource("14_xidsc")]
 visible = false
 layout_mode = 0
-offset_left = 23.0
+offset_left = 395.0
 offset_top = 85.0
-offset_right = 483.0
+offset_right = 855.0
 offset_bottom = 545.0
 jsonFile = ExtResource("16_pfh0e")
 
@@ -555,6 +568,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Progress" parent="Windows/Floating" unique_id=1569988722 instance=ExtResource("54_112vu")]
+visible = false
 layout_mode = 0
 offset_left = 1032.0
 offset_top = 157.0
@@ -578,6 +592,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Stat" parent="Windows/Floating" unique_id=1490220876 instance=ExtResource("35_d1kq3")]
+visible = false
 layout_mode = 0
 offset_left = 242.0
 offset_top = 19.0
