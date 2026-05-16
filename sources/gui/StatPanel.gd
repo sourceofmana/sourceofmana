@@ -148,7 +148,7 @@ func ResetPanel():
 
 func RefreshGender():
 	var texture : Texture2D = null
-	match Launcher.Player.gender:
+	match Launcher.Player.stat.gender:
 		ActorCommons.Gender.MALE:
 			texture = ActorCommons.GenderMaleTexture
 		ActorCommons.Gender.FEMALE:

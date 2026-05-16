@@ -8,7 +8,6 @@ class_name Entity
 
 var target : Entity						= null
 
-var gender : ActorCommons.Gender		= ActorCommons.Gender.MALE
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
 var entityOrientation : Vector2			= Vector2(0, 1)
