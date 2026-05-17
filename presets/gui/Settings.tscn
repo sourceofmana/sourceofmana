@@ -268,6 +268,28 @@ layout_mode = 2
 bbcode_enabled = true
 fit_content = true
 
+[node name="Credits" type="ScrollContainer" parent="Margin/TabBar" unique_id=850000001]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_tab_index = 4
+horizontal_scroll_mode = 0
+
+[node name="Margin" type="MarginContainer" parent="Margin/TabBar/Credits" unique_id=850000002]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBox" type="VBoxContainer" parent="Margin/TabBar/Credits/Margin" unique_id=850000003]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen" to="." method="set_fullscreen"]

@@ -4,6 +4,10 @@ var platformSection : String					= Util.GetPlatformName()
 const defaultSection : String					= "Default"
 const userSection : String						= "User"
 
+const creditsJson : JSON						= preload("res://data/db/credits.json")
+
+@onready var creditsContainer : VBoxContainer	= $Margin/TabBar/Credits/Margin/VBox
+
 @onready var renderAccessors : Dictionary = {
 	"Render-MinWindowSize": [init_minwinsize, set_minwinsize, apply_minwinsize, null],
 	"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
@@ -326,7 +330,12 @@ func set_account_password(err : NetworkCommons.AuthError):
 func _on_visibility_changed():
 	RefreshSettings(false)
 
+func PopulateCredits():
+	Scrollable.AddCategories(creditsContainer, creditsJson.get_data())
+
 func _ready():
+	PopulateCredits()
+
 	if not FSM:
 		return
 
