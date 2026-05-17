@@ -46,12 +46,12 @@ static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:
 	return inst
 
 func Destroy():
-	for player in players:
-		WorldAgent.RemoveAgent(player)
-	for mob in mobs:
-		WorldAgent.RemoveAgent(mob)
-	for npc in npcs:
-		WorldAgent.RemoveAgent(npc)
+	for i in range(players.size() - 1, -1, -1):
+		WorldAgent.RemoveAgent(players[i])
+	for i in range(mobs.size() - 1, -1, -1):
+		WorldAgent.RemoveAgent(mobs[i])
+	for i in range(npcs.size() - 1, -1, -1):
+		WorldAgent.RemoveAgent(npcs[i])
 	Launcher.Root.remove_child(self)
 	queue_free()
 
