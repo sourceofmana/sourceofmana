@@ -385,7 +385,7 @@ const CharacterScreenLocations : PackedVector2Array = [
 
 # New player
 static var DefaultTraits : Dictionary = {
-	"shape": DB.PlayerHash,
+	"shape": "Player".hash(),
 	"spirit": "Piou".hash()
 }
 static var DefaultAttributes : Dictionary = {
