@@ -334,11 +334,10 @@ func PopulateCredits():
 	Scrollable.AddCategories(creditsContainer, creditsJson.get_data())
 
 func _ready():
-	PopulateCredits()
-
 	if not FSM:
 		return
 
+	PopulateCredits()
 	RefreshSettings(true)
 	FSM.enter_game.connect(RefreshSettings.bind(true))
 	FSM.exit_game.connect(SaveSettings.bind())

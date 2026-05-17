@@ -193,6 +193,7 @@ func ConnectCharacter(nickname : String, peerID : int):
 					agent.SetCharacterInfo(charInfo, peer.characterID)
 					Launcher.SQL.CharacterLogin(peer.characterID)
 					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, peerID])
+					Network.online_player_connected.emit(nickname)
 
 	Network.CharacterError(err, peerID)
 
@@ -201,11 +202,16 @@ func DisconnectCharacter(peerID : int):
 	if peer:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player:
-			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.nick, peerID])
+			var playerName : String = player.nick
+			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [playerName, peerID])
 			Launcher.SQL.RefreshCharacter(player)
 			WorldAgent.RemoveAgent(player)
 			peer.SetAgent(NetworkCommons.PeerUnknownID)
+			Network.online_player_disconnected.emit(playerName)
 		peer.SetCharacter(NetworkCommons.PeerUnknownID)
+
+func RequestOnlineList(peerID : int):
+	Network.RefreshOnlineList(OnlineList.GetPlayerNames(), peerID)
 
 func CharacterListing(peerID : int):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK

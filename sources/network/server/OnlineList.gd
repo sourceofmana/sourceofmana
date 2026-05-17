@@ -13,6 +13,14 @@ static func GetPlayerNames() -> PackedStringArray:
 			players.append(agent.nick)
 	return players
 
-static func UpdateJson():
-	var players : PackedStringArray	= GetPlayerNames()
-	FileSystem.SaveFile(NetworkCommons.OnlineListPath + "/" + JSONFileName, JSON.stringify(players))
+static func UpdateJson(players : PackedStringArray):
+	if not NetworkCommons.OnlineListPath.is_empty():
+		FileSystem.SaveFile(NetworkCommons.OnlineListPath + "/" + JSONFileName, JSON.stringify(players))
+
+static func OnPlayerConnected(playerName : String):
+	UpdateJson(GetPlayerNames())
+	Network.NotifyGlobal("AddOnlinePlayer", [playerName])
+
+static func OnPlayerDisconnected(playerName : String):
+	UpdateJson(GetPlayerNames())
+	Network.NotifyGlobal("RemoveOnlinePlayer", [playerName])

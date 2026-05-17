@@ -29,9 +29,8 @@
 [ext_resource type="Texture2D" uid="uid://brc1lvxeku7m4" path="res://data/graphics/gui/icon/settings.png" id="11_17vy0"]
 [ext_resource type="PackedScene" uid="uid://bagfvnt2bhttv" path="res://presets/shaders/CRT.tscn" id="11_x7rk2"]
 [ext_resource type="Texture2D" uid="uid://cwq5nqa8pyd0i" path="res://data/graphics/gui/icon/skills.png" id="13_h6wc7"]
-[ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="14_xidsc"]
+[ext_resource type="PackedScene" uid="uid://cex7a43njhjex" path="res://presets/gui/Social.tscn" id="14_xidsc"]
 [ext_resource type="PackedScene" uid="uid://b5tdyq8opcs0u" path="res://presets/gui/Settings.tscn" id="16_gapih"]
-[ext_resource type="JSON" path="res://data/db/credits.json" id="16_pfh0e"]
 [ext_resource type="PackedScene" uid="uid://lkl6f0td76mu" path="res://presets/gui/Notification.tscn" id="17_64u4l"]
 [ext_resource type="Script" uid="uid://c32qnr066pqrl" path="res://sources/gui/Sticks.gd" id="18_6nrx4"]
 [ext_resource type="Texture2D" uid="uid://dy3mdamfcvd4v" path="res://data/graphics/gui/mobile/background.png" id="18_lb78w"]
@@ -219,19 +218,12 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Skill")
 targetShortcut = &"ui_skill"
 
-[node name="Emote" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=498199983 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Progress" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=39792699 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
-icon = ExtResource("8_ppxwt")
+icon = ExtResource("9_vtuwx")
 flat = true
-targetWindow = NodePath("../../../../../../../Windows/Floating/Emote")
-targetShortcut = &"ui_emote"
-
-[node name="Chat" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1407037298 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
-layout_mode = 2
-icon = ExtResource("6_2quic")
-flat = true
-targetWindow = NodePath("../../../../../../../Windows/Floating/Chat")
-targetShortcut = &"ui_chat"
+targetWindow = NodePath("../../../../../../../Windows/Floating/Progress")
+targetShortcut = &"ui_progress"
 
 [node name="Minimap" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=713811777 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
@@ -240,19 +232,26 @@ flat = true
 targetWindow = NodePath("../../../../../../../Windows/Floating/Minimap")
 targetShortcut = &"ui_minimap"
 
-[node name="Progress" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=39792699 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Chat" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1407037298 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
-icon = ExtResource("9_vtuwx")
+icon = ExtResource("6_2quic")
 flat = true
-targetWindow = NodePath("../../../../../../../Windows/Floating/Progress")
-targetShortcut = &"ui_progress"
+targetWindow = NodePath("../../../../../../../Windows/Floating/Chat")
+targetShortcut = &"ui_chat"
 
-[node name="Credits" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1520835010 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+[node name="Emote" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=498199983 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+layout_mode = 2
+icon = ExtResource("8_ppxwt")
+flat = true
+targetWindow = NodePath("../../../../../../../Windows/Floating/Emote")
+targetShortcut = &"ui_emote"
+
+[node name="Social" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1520835010 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
 icon = ExtResource("22_ubwl8")
 flat = true
-targetWindow = NodePath("../../../../../../../Windows/Floating/Credit")
-targetShortcut = &"ui_credits"
+targetWindow = NodePath("../../../../../../../Windows/Floating/Social")
+targetShortcut = &"ui_social"
 
 [node name="Settings" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=55081747 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
 layout_mode = 2
@@ -505,10 +504,10 @@ allowAutomaticResize = true
 visible = false
 custom_minimum_size = Vector2(200, 125)
 layout_mode = 0
-offset_left = 1058.0
+offset_left = 1032.0
 offset_top = 6.0
 offset_right = 1258.0
-offset_bottom = 131.0
+offset_bottom = 138.0
 saveOverlayState = true
 
 [node name="Emote" parent="Windows/Floating" unique_id=1332906157 instance=ExtResource("37_v7lrk")]
@@ -536,23 +535,22 @@ layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 22.0
-offset_top = 472.0
-offset_right = 420.0
-offset_bottom = 622.0
+offset_left = 20.0
+offset_top = 288.0
+offset_right = 394.0
+offset_bottom = 465.0
 grow_horizontal = 1
 grow_vertical = 1
 saveOverlayState = true
 allowAutomaticResize = true
 
-[node name="Credit" parent="Windows/Floating" unique_id=809635501 instance=ExtResource("14_xidsc")]
+[node name="Social" parent="Windows/Floating" unique_id=809635501 instance=ExtResource("14_xidsc")]
 visible = false
 layout_mode = 0
-offset_left = 395.0
-offset_top = 85.0
-offset_right = 855.0
-offset_bottom = 545.0
-jsonFile = ExtResource("16_pfh0e")
+offset_left = 811.0
+offset_top = 6.0
+offset_right = 1021.0
+offset_bottom = 138.0
 
 [node name="Settings" parent="Windows/Floating" unique_id=189263697 instance=ExtResource("16_gapih")]
 visible = false
@@ -570,10 +568,10 @@ grow_vertical = 1
 [node name="Progress" parent="Windows/Floating" unique_id=1569988722 instance=ExtResource("54_112vu")]
 visible = false
 layout_mode = 0
-offset_left = 1032.0
-offset_top = 157.0
-offset_right = 1258.0
-offset_bottom = 466.0
+offset_left = 1030.0
+offset_top = 159.0
+offset_right = 1256.0
+offset_bottom = 468.0
 script = ExtResource("19_v8wo4")
 
 [node name="Respawn" parent="Windows/Floating" unique_id=1663296732 instance=ExtResource("44_7o5pa")]
@@ -594,10 +592,10 @@ grow_vertical = 1
 [node name="Stat" parent="Windows/Floating" unique_id=1490220876 instance=ExtResource("35_d1kq3")]
 visible = false
 layout_mode = 0
-offset_left = 242.0
-offset_top = 19.0
-offset_right = 638.0
-offset_bottom = 469.0
+offset_left = 243.0
+offset_top = 15.0
+offset_right = 639.0
+offset_bottom = 465.0
 saveOverlayState = true
 
 [node name="Shaders" type="CanvasLayer" parent="." unique_id=1012789573]

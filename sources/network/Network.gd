@@ -6,7 +6,8 @@ signal accounts_list_update
 signal characters_list_update
 signal online_accounts_update
 signal online_characters_update
-signal online_agents_update
+signal online_player_connected(playerName : String)
+signal online_player_disconnected(playerName : String)
 
 #
 var Client							= null
@@ -88,6 +89,23 @@ func DisconnectCharacter(peerID : int = NetworkCommons.PeerAuthorityID):
 @rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
 func CharacterListing(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("CharacterListing", [], peerID)
+
+# Online list
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func RequestOnlineList(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("RequestOnlineList", [], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func RefreshOnlineList(players : PackedStringArray, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RefreshOnlineList", [players], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func AddOnlinePlayer(playerName : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("AddOnlinePlayer", [playerName], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func RemoveOnlinePlayer(playerName : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RemoveOnlinePlayer", [playerName], peerID)
 
 # Respawn
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
@@ -483,8 +501,8 @@ func _ready():
 	NetworkCommons.ProtocolVersion = NetworkCommons.ComputeProtocolVersion(self)
 
 func _init():
-	if not NetworkCommons.OnlineListPath.is_empty():
-		online_agents_update.connect(OnlineList.UpdateJson)
+	online_player_connected.connect(OnlineList.OnPlayerConnected)
+	online_player_disconnected.connect(OnlineList.OnPlayerDisconnected)
 
 func Destroy():
 	if Client:

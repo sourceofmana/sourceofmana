@@ -294,6 +294,18 @@ func PushNotification(notif : String, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.notificationLabel.AddNotification(notif)
 
+func RefreshOnlineList(players : PackedStringArray, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.socialWindow.RefreshOnline(players)
+
+func AddOnlinePlayer(playerName : String, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.socialWindow.AddOnlinePlayer(playerName)
+
+func RemoveOnlinePlayer(playerName : String, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.socialWindow.RemoveOnlinePlayer(playerName)
+
 #
 func AuthError(err : NetworkCommons.AuthError, _peerID : int):
 	if Launcher.GUI:

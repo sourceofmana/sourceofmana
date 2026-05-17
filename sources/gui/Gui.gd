@@ -38,6 +38,7 @@ extends ServiceBase
 @onready var quitWindow : WindowPanel			= $Windows/Floating/Quit
 @onready var respawnWindow : WindowPanel		= $Windows/Floating/Respawn
 @onready var statWindow : WindowPanel			= $Windows/Floating/Stat
+@onready var socialWindow : WindowPanel			= $Windows/Floating/Social
 
 @onready var chatContainer : ChatContainer		= $Windows/Floating/Chat/Margin/VBoxContainer
 @onready var emoteContainer : Container			= $Windows/Floating/Emote/ItemContainer/Grid
