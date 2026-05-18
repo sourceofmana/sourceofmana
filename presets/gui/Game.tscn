@@ -511,30 +511,31 @@ saveOverlayState = true
 visible = false
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 0
-offset_left = 24.0
-offset_top = 16.0
-offset_right = 235.0
-offset_bottom = 144.0
+offset_left = 26.0
+offset_top = -24.0
+offset_right = 237.0
+offset_bottom = 113.0
 saveOverlayState = true
 
 [node name="Skill" parent="Windows/Floating" unique_id=849459379 instance=ExtResource("38_ompay")]
 visible = false
 layout_mode = 0
 offset_left = 24.0
-offset_top = 153.0
+offset_top = 115.0
 offset_right = 233.0
 offset_bottom = 284.0
 saveOverlayState = true
 
 [node name="Chat" parent="Windows/Floating" unique_id=629841106 instance=ExtResource("5")]
 visible = false
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 20.0
 offset_top = 288.0
-offset_right = 394.0
+offset_right = 437.0
 offset_bottom = 465.0
 grow_horizontal = 1
 grow_vertical = 1
@@ -544,9 +545,9 @@ allowAutomaticResize = true
 [node name="Social" parent="Windows/Floating" unique_id=809635501 instance=ExtResource("14_xidsc")]
 visible = false
 layout_mode = 0
-offset_left = 811.0
-offset_top = 6.0
-offset_right = 1021.0
+offset_left = 812.0
+offset_top = -23.0
+offset_right = 1022.0
 offset_bottom = 138.0
 
 [node name="Settings" parent="Windows/Floating" unique_id=189263697 instance=ExtResource("16_gapih")]
@@ -555,17 +556,17 @@ layout_mode = 1
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 419.0
-offset_top = 130.0
-offset_right = 840.0
-offset_bottom = 481.0
+offset_left = 403.0
+offset_top = 69.0
+offset_right = 824.0
+offset_bottom = 467.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Progress" parent="Windows/Floating" unique_id=1569988722 instance=ExtResource("54_112vu")]
 visible = false
 layout_mode = 0
-offset_left = 1030.0
+offset_left = 1027.0
 offset_top = 159.0
 offset_right = 1256.0
 offset_bottom = 468.0
@@ -589,10 +590,10 @@ grow_vertical = 1
 [node name="Stat" parent="Windows/Floating" unique_id=1490220876 instance=ExtResource("35_d1kq3")]
 visible = false
 layout_mode = 0
-offset_left = 243.0
-offset_top = 15.0
-offset_right = 639.0
-offset_bottom = 465.0
+offset_left = 241.0
+offset_top = -20.0
+offset_right = 637.0
+offset_bottom = 467.0
 saveOverlayState = true
 
 [node name="Shaders" type="CanvasLayer" parent="." unique_id=1012789573]

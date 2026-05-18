@@ -174,29 +174,12 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qal60"]
-texture = ExtResource("12_wxj0b")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4trm7"]
-texture = ExtResource("13_qal60")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h6yt3"]
-texture = ExtResource("13_ovqsu")
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kxyva"]
 texture = ExtResource("9_5par7")
 texture_margin_left = 61.0
 texture_margin_top = 14.0
 texture_margin_right = 61.0
 texture_margin_bottom = 14.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_adrfc"]
-content_margin_top = 4.0
-texture = ExtResource("13_yti7m")
-texture_margin_left = 6.0
-texture_margin_top = 38.0
-texture_margin_right = 6.0
-texture_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ytr4r"]
 color = Color(0.780392, 0.6, 0.298039, 1)
@@ -467,10 +450,27 @@ texture_margin_top = 1.0
 texture_margin_right = 41.0
 texture_margin_bottom = 1.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_adrfc"]
+content_margin_top = 4.0
+texture = ExtResource("13_yti7m")
+texture_margin_left = 6.0
+texture_margin_top = 38.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yti7m"]
 texture = ExtResource("29_44afm")
 texture_margin_left = 62.0
 texture_margin_right = 62.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qal60"]
+texture = ExtResource("12_wxj0b")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4trm7"]
+texture = ExtResource("13_qal60")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h6yt3"]
+texture = ExtResource("13_ovqsu")
 
 [resource]
 default_font = ExtResource("18_v607h")
@@ -517,16 +517,8 @@ CheckButton/styles/hover = SubResource("StyleBoxEmpty_lpei3")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_lpei3")
 CheckButton/styles/normal = SubResource("StyleBoxEmpty_lpei3")
 CheckButton/styles/pressed = SubResource("StyleBoxEmpty_lpei3")
-WindowTitleButton/base_type = &"Button"
-WindowTitleButton/styles/disabled = SubResource("StyleBoxTexture_qal60")
-WindowTitleButton/styles/focus = SubResource("StyleBoxTexture_4trm7")
-WindowTitleButton/styles/hover = SubResource("StyleBoxTexture_4trm7")
-WindowTitleButton/styles/normal = SubResource("StyleBoxTexture_qal60")
-WindowTitleButton/styles/pressed = SubResource("StyleBoxTexture_h6yt3")
 DialogueBox/base_type = &"PanelContainer"
 DialogueBox/styles/panel = SubResource("StyleBoxTexture_kxyva")
-WindowPanel/base_type = &"PanelContainer"
-WindowPanel/styles/panel = SubResource("StyleBoxTexture_adrfc")
 HSeparator/styles/separator = SubResource("StyleBoxLine_ytr4r")
 KeyTip/base_type = &"Button"
 KeyTip/colors/font_color = Color(1, 1, 0.866667, 1)
@@ -616,5 +608,13 @@ VSplitContainer/constants/autohide = 0
 VSplitContainer/constants/separation = 2
 VSplitContainer/icons/grabber = ExtResource("27_sv4ge")
 VSplitContainer/styles/split_bar_background = SubResource("StyleBoxTexture_chc74")
+WindowPanel/base_type = &"PanelContainer"
+WindowPanel/styles/panel = SubResource("StyleBoxTexture_adrfc")
 WindowTitleBar/base_type = &"PanelContainer"
 WindowTitleBar/styles/panel = SubResource("StyleBoxTexture_yti7m")
+WindowTitleButton/base_type = &"Button"
+WindowTitleButton/styles/disabled = SubResource("StyleBoxTexture_qal60")
+WindowTitleButton/styles/focus = SubResource("StyleBoxTexture_4trm7")
+WindowTitleButton/styles/hover = SubResource("StyleBoxTexture_4trm7")
+WindowTitleButton/styles/normal = SubResource("StyleBoxTexture_qal60")
+WindowTitleButton/styles/pressed = SubResource("StyleBoxTexture_h6yt3")
