@@ -2,8 +2,8 @@ extends WindowPanel
 class_name Social
 
 #
-@onready var playerList : VBoxContainer			= $Margin/TabBar/Online/Scroll/PlayerList
-@onready var onlineCount : Label				= $Margin/TabBar/Online/OnlineCount
+@onready var playerList : VBoxContainer			= $Layout/Margin/TabBar/Online/Scroll/PlayerList
+@onready var onlineCount : Label				= $Layout/Margin/TabBar/Online/OnlineCount
 
 #
 func UpdateCount() -> void:

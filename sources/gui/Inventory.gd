@@ -1,33 +1,33 @@
 extends WindowPanel
 
-@onready var grid : GridContainer		= $Margin/HBoxContainer/ItemsBox/Margin/Container/Grid
+@onready var grid : GridContainer		= $Layout/Margin/HBoxContainer/ItemsBox/Margin/Container/Grid
 
-@onready var itemButtons : Control		= $Margin/HBoxContainer/ItemsBox/ItemButtons
-@onready var dropButtons : Control		= $Margin/HBoxContainer/ItemsBox/DropButtons
+@onready var itemButtons : Control		= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons
+@onready var dropButtons : Control		= $Layout/Margin/HBoxContainer/ItemsBox/DropButtons
 
-@onready var dropButton : Button		= $Margin/HBoxContainer/ItemsBox/ItemButtons/Drop
-@onready var useButton : Button			= $Margin/HBoxContainer/ItemsBox/ItemButtons/Use
-@onready var equipButton : Button		= $Margin/HBoxContainer/ItemsBox/ItemButtons/Equip
-@onready var unequipButton : Button		= $Margin/HBoxContainer/ItemsBox/ItemButtons/Unequip
+@onready var dropButton : Button		= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons/Drop
+@onready var useButton : Button			= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons/Use
+@onready var equipButton : Button		= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons/Equip
+@onready var unequipButton : Button		= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons/Unequip
 
-@onready var lessDropButton : Button	= $Margin/HBoxContainer/ItemsBox/DropButtons/Less
-@onready var moreDropButton : Button	= $Margin/HBoxContainer/ItemsBox/DropButtons/More
-@onready var dropLabel : Label			= $Margin/HBoxContainer/ItemsBox/DropButtons/Label
+@onready var lessDropButton : Button	= $Layout/Margin/HBoxContainer/ItemsBox/DropButtons/Less
+@onready var moreDropButton : Button	= $Layout/Margin/HBoxContainer/ItemsBox/DropButtons/More
+@onready var dropLabel : Label			= $Layout/Margin/HBoxContainer/ItemsBox/DropButtons/Label
 
 @onready var equipmentSlots : Array[CellTile] = [
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Chest,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Legs,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Feet,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Hands,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Head,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Neck,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Weapon,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Shield,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Chest,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Legs,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Feet,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Hands,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Head,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Neck,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Weapon,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Shield,
 ]
 
-@onready var modifiersText : RichTextLabel	= $Margin/HBoxContainer/InfoScroll/InfoBox/ModifiersText
-@onready var weightBar : Control			= $Margin/HBoxContainer/InfoScroll/InfoBox/WeightBox/WeightBar
-@onready var slotsBar : Control				= $Margin/HBoxContainer/InfoScroll/InfoBox/SlotsBox/SlotsBar
+@onready var modifiersText : RichTextLabel	= $Layout/Margin/HBoxContainer/InfoScroll/InfoBox/ModifiersText
+@onready var weightBar : Control			= $Layout/Margin/HBoxContainer/InfoScroll/InfoBox/WeightBox/WeightBar
+@onready var slotsBar : Control				= $Layout/Margin/HBoxContainer/InfoScroll/InfoBox/SlotsBox/SlotsBar
 
 enum ButtonMode
 {

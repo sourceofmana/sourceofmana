@@ -6,27 +6,27 @@ const userSection : String						= "User"
 
 const creditsJson : JSON						= preload("res://data/db/credits.json")
 
-@onready var creditsContainer : VBoxContainer	= $Margin/TabBar/Credits/Margin/VBox
+@onready var creditsContainer : VBoxContainer	= $Layout/Margin/TabBar/Credits/Margin/VBox
 
 @onready var renderAccessors : Dictionary = {
 	"Render-MinWindowSize": [init_minwinsize, set_minwinsize, apply_minwinsize, null],
-	"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
-	"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
-	"Render-WindowSize": [init_resolution, set_resolution, apply_resolution, $Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
+	"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
+	"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
+	"Render-WindowSize": [init_resolution, set_resolution, apply_resolution, $Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
 	"Render-WindowPos": [init_windowPos, set_windowPos, apply_windowPos, null],
-	"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
-	"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
-	"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
-	"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
-	"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
-	"Audio-Alteration": [init_audioalteration, set_audioalteration, apply_audioalteration, $"Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider"],
-	"Audio-State": [init_audiostate, set_audiostate, apply_audiostate, $"Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider"],
+	"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
+	"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
+	"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
+	"Render-CRT": [init_crt, set_crt, apply_crt, $Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
+	"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
+	"Audio-Alteration": [init_audioalteration, set_audioalteration, apply_audioalteration, $"Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider"],
+	"Audio-State": [init_audiostate, set_audiostate, apply_audiostate, $"Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider"],
 	"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
 	"Session-FirstLogin": [init_sessionfirstlogin, set_sessionfirstlogin, apply_sessionfirstlogin, null],
 	"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
 	"Session-ShortcutCells": [init_shortcutcells, set_shortcutcells, apply_shortcutcells, null],
 	"Input-Bindings": [init_inputbindings, null, null, null],
-	"Account-PasswordChange": [null, set_account_password, null, $Margin/TabBar/Account],
+	"Account-PasswordChange": [null, set_account_password, null, $Layout/Margin/TabBar/Account],
 }
 
 enum CATEGORY { RENDER, SOUND, INPUT, COUNT }

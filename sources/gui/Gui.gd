@@ -41,7 +41,7 @@ extends ServiceBase
 @onready var socialWindow : WindowPanel			= $Windows/Floating/Social
 
 @onready var chatContainer : ChatContainer		= $Windows/Floating/Chat/Margin/VBoxContainer
-@onready var emoteContainer : Container			= $Windows/Floating/Emote/ItemContainer/Grid
+@onready var emoteContainer : Container			= $Windows/Floating/Emote/Layout/ItemContainer/Grid
 
 # Shaders
 @onready var shaders : CanvasLayer				= $Shaders

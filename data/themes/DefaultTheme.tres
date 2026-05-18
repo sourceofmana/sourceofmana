@@ -18,8 +18,12 @@
 [ext_resource type="Texture2D" uid="uid://cdoj01eyemcx6" path="res://data/graphics/gui/key.png" id="10_rveh2"]
 [ext_resource type="Texture2D" uid="uid://kqorkv70t0yi" path="res://data/graphics/gui/window/close.png" id="11_ilveh"]
 [ext_resource type="Texture2D" uid="uid://ds7o2y47g3f1l" path="res://data/graphics/gui/window/window_bg_title_full.png" id="11_ue8tk"]
+[ext_resource type="Texture2D" uid="uid://bjt1jig7b0blc" path="res://data/graphics/gui/button/titlebar/button.png" id="12_wxj0b"]
 [ext_resource type="Texture2D" uid="uid://ds361htqsjrmu" path="res://data/graphics/gui/checkbox/cb_small_lock_disabled.png" id="13"]
 [ext_resource type="Texture2D" uid="uid://cesdqicc7sxgk" path="res://data/graphics/gui/button/button_pressed.png" id="13_mn5yk"]
+[ext_resource type="Texture2D" uid="uid://bea2vgefhxxcs" path="res://data/graphics/gui/button/titlebar/button_pressed.png" id="13_ovqsu"]
+[ext_resource type="Texture2D" uid="uid://ko18g84fwomp" path="res://data/graphics/gui/button/titlebar/button_hovered.png" id="13_qal60"]
+[ext_resource type="Texture2D" uid="uid://detvokdbhxpyu" path="res://data/graphics/gui/window/window_bg_soft_title.png" id="13_yti7m"]
 [ext_resource type="Texture2D" uid="uid://daq6gf2m7eldb" path="res://data/graphics/gui/checkbox/cb_small_disabled.png" id="14"]
 [ext_resource type="Texture2D" uid="uid://ubtk8868awvl" path="res://data/graphics/gui/messagebox.png" id="14_ceaab"]
 [ext_resource type="Texture2D" uid="uid://db5wlgbj5a5mk" path="res://data/graphics/gui/panelsideleft.png" id="14_ydunl"]
@@ -29,6 +33,7 @@
 [ext_resource type="FontFile" uid="uid://bxtecswl0imti" path="res://data/graphics/fonts/romulus-16.ttf" id="22_e68kl"]
 [ext_resource type="Texture2D" uid="uid://ckqp851k875au" path="res://data/graphics/gui/split_bar.png" id="27_sv4ge"]
 [ext_resource type="Texture2D" uid="uid://ccnvk4w2d6iav" path="res://data/graphics/gui/split_background.png" id="28_44afm"]
+[ext_resource type="Texture2D" uid="uid://bqthtc7tyobb5" path="res://data/graphics/gui/window/titlebar_bg.png" id="29_44afm"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ls22y"]
 content_margin_left = 6.0
@@ -169,12 +174,29 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qal60"]
+texture = ExtResource("12_wxj0b")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4trm7"]
+texture = ExtResource("13_qal60")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h6yt3"]
+texture = ExtResource("13_ovqsu")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kxyva"]
 texture = ExtResource("9_5par7")
 texture_margin_left = 61.0
 texture_margin_top = 14.0
 texture_margin_right = 61.0
 texture_margin_bottom = 14.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_adrfc"]
+content_margin_top = 4.0
+texture = ExtResource("13_yti7m")
+texture_margin_left = 6.0
+texture_margin_top = 38.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ytr4r"]
 color = Color(0.780392, 0.6, 0.298039, 1)
@@ -187,7 +209,7 @@ texture_margin_right = 5.0
 texture_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ad0ai"]
-texture = ExtResource("3")
+texture = ExtResource("5_fw406")
 texture_margin_left = 5.0
 texture_margin_top = 4.0
 texture_margin_right = 6.0
@@ -445,6 +467,11 @@ texture_margin_top = 1.0
 texture_margin_right = 41.0
 texture_margin_bottom = 1.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yti7m"]
+texture = ExtResource("29_44afm")
+texture_margin_left = 62.0
+texture_margin_right = 62.0
+
 [resource]
 default_font = ExtResource("18_v607h")
 Button/colors/font_color = Color(0.933, 0.847, 0.631, 1)
@@ -490,8 +517,16 @@ CheckButton/styles/hover = SubResource("StyleBoxEmpty_lpei3")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_lpei3")
 CheckButton/styles/normal = SubResource("StyleBoxEmpty_lpei3")
 CheckButton/styles/pressed = SubResource("StyleBoxEmpty_lpei3")
+WindowTitleButton/base_type = &"Button"
+WindowTitleButton/styles/disabled = SubResource("StyleBoxTexture_qal60")
+WindowTitleButton/styles/focus = SubResource("StyleBoxTexture_4trm7")
+WindowTitleButton/styles/hover = SubResource("StyleBoxTexture_4trm7")
+WindowTitleButton/styles/normal = SubResource("StyleBoxTexture_qal60")
+WindowTitleButton/styles/pressed = SubResource("StyleBoxTexture_h6yt3")
 DialogueBox/base_type = &"PanelContainer"
 DialogueBox/styles/panel = SubResource("StyleBoxTexture_kxyva")
+WindowPanel/base_type = &"PanelContainer"
+WindowPanel/styles/panel = SubResource("StyleBoxTexture_adrfc")
 HSeparator/styles/separator = SubResource("StyleBoxLine_ytr4r")
 KeyTip/base_type = &"Button"
 KeyTip/colors/font_color = Color(1, 1, 0.866667, 1)
@@ -581,3 +616,5 @@ VSplitContainer/constants/autohide = 0
 VSplitContainer/constants/separation = 2
 VSplitContainer/icons/grabber = ExtResource("27_sv4ge")
 VSplitContainer/styles/split_bar_background = SubResource("StyleBoxTexture_chc74")
+WindowTitleBar/base_type = &"PanelContainer"
+WindowTitleBar/styles/panel = SubResource("StyleBoxTexture_yti7m")

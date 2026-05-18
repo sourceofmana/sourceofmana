@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_al365"]
 [ext_resource type="Script" uid="uid://ci85y60tfmp4o" path="res://sources/gui/Settings.gd" id="2_wg4ki"]
+[ext_resource type="PackedScene" uid="uid://da8nt01w5gjsp" path="res://presets/gui/TitleBar.tscn" id="tb_scene"]
 [ext_resource type="Script" uid="uid://ckxlj27w21747" path="res://sources/gui/settings/InputBindings.gd" id="3_input"]
 [ext_resource type="Script" uid="uid://dwccbam37j8kv" path="res://sources/gui/settings/AccountSettings.gd" id="4_ehe4h"]
 
@@ -18,8 +19,18 @@ grow_vertical = 2
 theme = ExtResource("1_al365")
 script = ExtResource("2_wg4ki")
 blockActions = true
+theme_type_variation = &"WindowPanel"
 
-[node name="Margin" type="MarginContainer" parent="." unique_id=1944769664]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=2100000001]
+layout_mode = 2
+
+[node name="TitleBar" parent="Layout" instance=ExtResource("tb_scene")]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 1
+titleText = "Settings"
+
+[node name="Margin" type="MarginContainer" parent="Layout" unique_id=1944769664]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 size_flags_vertical = 3
@@ -28,33 +39,33 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="TabBar" type="TabContainer" parent="Margin" unique_id=275798947]
+[node name="TabBar" type="TabContainer" parent="Layout/Margin" unique_id=275798947]
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Render" type="ScrollContainer" parent="Margin/TabBar" unique_id=1273409067]
+[node name="Render" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=1273409067]
 layout_mode = 2
 size_flags_vertical = 3
 metadata/_tab_index = 0
 
-[node name="RenderVBox" type="VBoxContainer" parent="Margin/TabBar/Render" unique_id=1601035936]
+[node name="RenderVBox" type="VBoxContainer" parent="Layout/Margin/TabBar/Render" unique_id=1601035936]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Preset" type="HBoxContainer" parent="Margin/TabBar/Render/RenderVBox" unique_id=1564754193]
+[node name="Preset" type="HBoxContainer" parent="Layout/Margin/TabBar/Render/RenderVBox" unique_id=1564754193]
 visible = false
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox/Preset" unique_id=1331934713]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Render/RenderVBox/Preset" unique_id=1331934713]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Preset"
 
-[node name="Option" type="OptionButton" parent="Margin/TabBar/Render/RenderVBox/Preset" unique_id=1281262132]
+[node name="Option" type="OptionButton" parent="Layout/Margin/TabBar/Render/RenderVBox/Preset" unique_id=1281262132]
 layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
@@ -64,40 +75,40 @@ popup/item_0/id = 0
 popup/item_1/text = "Mobile"
 popup/item_1/id = 1
 
-[node name="VisualVBox" type="VBoxContainer" parent="Margin/TabBar/Render/RenderVBox" unique_id=1244674521]
+[node name="VisualVBox" type="VBoxContainer" parent="Layout/Margin/TabBar/Render/RenderVBox" unique_id=1244674521]
 layout_mode = 2
 
-[node name="Visual" type="Label" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=355890167]
+[node name="Visual" type="Label" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=355890167]
 layout_mode = 2
 text = "Visual"
 
-[node name="Fullscreen" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=334337584]
+[node name="Fullscreen" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=334337584]
 layout_mode = 2
 text = "Fullscreen Mode"
 
-[node name="WindowResolution" type="HBoxContainer" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1027751738]
+[node name="WindowResolution" type="HBoxContainer" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1027751738]
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution" unique_id=1003187559]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution" unique_id=1003187559]
 layout_mode = 2
 size_flags_horizontal = 3
 text = " Window Resolution"
 
-[node name="Option" type="OptionButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution" unique_id=745099495]
+[node name="Option" type="OptionButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution" unique_id=745099495]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Scaling" type="HBoxContainer" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1909061268]
+[node name="Scaling" type="HBoxContainer" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1909061268]
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling" unique_id=1899750434]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling" unique_id=1899750434]
 layout_mode = 2
 size_flags_horizontal = 3
 text = " Scaling"
 
-[node name="Option" type="OptionButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling" unique_id=815910694]
+[node name="Option" type="OptionButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling" unique_id=815910694]
 layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
@@ -109,54 +120,54 @@ popup/item_1/id = 1
 popup/item_2/text = "x3"
 popup/item_2/id = 2
 
-[node name="ActionOverlay" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1637200902]
+[node name="ActionOverlay" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1637200902]
 layout_mode = 2
 text = "Action Overlay"
 
-[node name="HSeparator2" type="HSeparator" parent="Margin/TabBar/Render/RenderVBox" unique_id=186324792]
+[node name="HSeparator2" type="HSeparator" parent="Layout/Margin/TabBar/Render/RenderVBox" unique_id=186324792]
 layout_mode = 2
 
-[node name="EffectVBox" type="VBoxContainer" parent="Margin/TabBar/Render/RenderVBox" unique_id=606052892]
+[node name="EffectVBox" type="VBoxContainer" parent="Layout/Margin/TabBar/Render/RenderVBox" unique_id=606052892]
 layout_mode = 2
 
-[node name="Effect" type="Label" parent="Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=1300611624]
+[node name="Effect" type="Label" parent="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=1300611624]
 layout_mode = 2
 text = "Effect"
 
-[node name="Lighting" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=392747916]
+[node name="Lighting" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=392747916]
 layout_mode = 2
 text = "Lighting"
 
-[node name="HQx4" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=787563390]
+[node name="HQx4" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=787563390]
 layout_mode = 2
 text = "High Quality Scale"
 
-[node name="CRT" type="CheckButton" parent="Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=307353882]
+[node name="CRT" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=307353882]
 layout_mode = 2
 text = "Cathode Ray Tube"
 
-[node name="Label" type="Label" parent="Margin/TabBar/Render/RenderVBox" unique_id=1915786938]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Render/RenderVBox" unique_id=1915786938]
 layout_mode = 2
 
-[node name="Audio" type="ScrollContainer" parent="Margin/TabBar" unique_id=499767979]
+[node name="Audio" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=499767979]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin/TabBar/Audio" unique_id=124967174]
+[node name="VBoxContainer" type="VBoxContainer" parent="Layout/Margin/TabBar/Audio" unique_id=124967174]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Global Volume" type="HBoxContainer" parent="Margin/TabBar/Audio/VBoxContainer" unique_id=508225996]
+[node name="Global Volume" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer" unique_id=508225996]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Margin/TabBar/Audio/VBoxContainer/Global Volume" unique_id=591312565]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume" unique_id=591312565]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Global Volume"
 
-[node name="HSlider" type="HSlider" parent="Margin/TabBar/Audio/VBoxContainer/Global Volume" unique_id=1319659749]
+[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume" unique_id=1319659749]
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0
@@ -164,16 +175,16 @@ step = 0.1
 tick_count = 10
 ticks_on_borders = true
 
-[node name="Alteration SFX Volume" type="HBoxContainer" parent="Margin/TabBar/Audio/VBoxContainer" unique_id=201837465]
+[node name="Alteration SFX Volume" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer" unique_id=201837465]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume" unique_id=201837466]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume" unique_id=201837466]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Alteration SFX Volume"
 
-[node name="HSlider" type="HSlider" parent="Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume" unique_id=201837467]
+[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume" unique_id=201837467]
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0
@@ -181,16 +192,16 @@ step = 0.1
 tick_count = 10
 ticks_on_borders = true
 
-[node name="State SFX Volume" type="HBoxContainer" parent="Margin/TabBar/Audio/VBoxContainer" unique_id=201837468]
+[node name="State SFX Volume" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer" unique_id=201837468]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Margin/TabBar/Audio/VBoxContainer/State SFX Volume" unique_id=201837469]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume" unique_id=201837469]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "State SFX Volume"
 
-[node name="HSlider" type="HSlider" parent="Margin/TabBar/Audio/VBoxContainer/State SFX Volume" unique_id=201837470]
+[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume" unique_id=201837470]
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0
@@ -198,84 +209,84 @@ step = 0.1
 tick_count = 10
 ticks_on_borders = true
 
-[node name="Input" type="TabContainer" parent="Margin/TabBar" unique_id=753213710]
+[node name="Input" type="TabContainer" parent="Layout/Margin/TabBar" unique_id=753213710]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("3_input")
 metadata/_tab_index = 2
 
-[node name="Account" type="ScrollContainer" parent="Margin/TabBar" unique_id=922323282]
+[node name="Account" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=922323282]
 visible = false
 layout_mode = 2
 script = ExtResource("4_ehe4h")
 metadata/_tab_index = 3
 
-[node name="AccountVBox" type="VBoxContainer" parent="Margin/TabBar/Account" unique_id=1151872733]
+[node name="AccountVBox" type="VBoxContainer" parent="Layout/Margin/TabBar/Account" unique_id=1151872733]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="PasswordLabel" type="Label" parent="Margin/TabBar/Account/AccountVBox" unique_id=453651108]
+[node name="PasswordLabel" type="Label" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=453651108]
 layout_mode = 2
 text = "Change Password"
 
-[node name="CurrentPassword" type="HBoxContainer" parent="Margin/TabBar/Account/AccountVBox" unique_id=763886695]
+[node name="CurrentPassword" type="HBoxContainer" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=763886695]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Margin/TabBar/Account/AccountVBox/CurrentPassword" unique_id=1792890057]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Account/AccountVBox/CurrentPassword" unique_id=1792890057]
 layout_mode = 2
 size_flags_horizontal = 3
 text = " Current Password"
 
-[node name="Text" type="LineEdit" parent="Margin/TabBar/Account/AccountVBox/CurrentPassword" unique_id=895317565]
+[node name="Text" type="LineEdit" parent="Layout/Margin/TabBar/Account/AccountVBox/CurrentPassword" unique_id=895317565]
 layout_mode = 2
 size_flags_horizontal = 3
 secret = true
 
-[node name="NewPassword" type="HBoxContainer" parent="Margin/TabBar/Account/AccountVBox" unique_id=1828967856]
+[node name="NewPassword" type="HBoxContainer" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=1828967856]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Margin/TabBar/Account/AccountVBox/NewPassword" unique_id=1074344070]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Account/AccountVBox/NewPassword" unique_id=1074344070]
 layout_mode = 2
 size_flags_horizontal = 3
 text = " New Password"
 
-[node name="Text" type="LineEdit" parent="Margin/TabBar/Account/AccountVBox/NewPassword" unique_id=628449545]
+[node name="Text" type="LineEdit" parent="Layout/Margin/TabBar/Account/AccountVBox/NewPassword" unique_id=628449545]
 layout_mode = 2
 size_flags_horizontal = 3
 secret = true
 
-[node name="ConfirmPassword" type="HBoxContainer" parent="Margin/TabBar/Account/AccountVBox" unique_id=1523694092]
+[node name="ConfirmPassword" type="HBoxContainer" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=1523694092]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Margin/TabBar/Account/AccountVBox/ConfirmPassword" unique_id=1467792528]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Account/AccountVBox/ConfirmPassword" unique_id=1467792528]
 layout_mode = 2
 size_flags_horizontal = 3
 text = " Confirm Password"
 
-[node name="Text" type="LineEdit" parent="Margin/TabBar/Account/AccountVBox/ConfirmPassword" unique_id=986277347]
+[node name="Text" type="LineEdit" parent="Layout/Margin/TabBar/Account/AccountVBox/ConfirmPassword" unique_id=986277347]
 layout_mode = 2
 size_flags_horizontal = 3
 secret = true
 
-[node name="ChangeButton" type="Button" parent="Margin/TabBar/Account/AccountVBox" unique_id=1463781895]
+[node name="ChangeButton" type="Button" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=1463781895]
 layout_mode = 2
 text = "Change Password"
 
-[node name="StatusLabel" type="RichTextLabel" parent="Margin/TabBar/Account/AccountVBox" unique_id=1960191140]
+[node name="StatusLabel" type="RichTextLabel" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=1960191140]
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
 
-[node name="Credits" type="ScrollContainer" parent="Margin/TabBar" unique_id=850000001]
+[node name="Credits" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=850000001]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 metadata/_tab_index = 4
 horizontal_scroll_mode = 0
 
-[node name="Margin" type="MarginContainer" parent="Margin/TabBar/Credits" unique_id=850000002]
+[node name="Margin" type="MarginContainer" parent="Layout/Margin/TabBar/Credits" unique_id=850000002]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -284,7 +295,7 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="VBox" type="VBoxContainer" parent="Margin/TabBar/Credits/Margin" unique_id=850000003]
+[node name="VBox" type="VBoxContainer" parent="Layout/Margin/TabBar/Credits/Margin" unique_id=850000003]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 0
@@ -292,14 +303,14 @@ alignment = 1
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen" to="." method="set_fullscreen"]
-[connection signal="item_selected" from="Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option" to="." method="set_resolutionIdx"]
-[connection signal="item_selected" from="Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option" to="." method="set_scaling"]
-[connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay" to="." method="set_actionoverlay"]
-[connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting" to="." method="set_lighting"]
-[connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4" to="." method="set_hq4x"]
-[connection signal="toggled" from="Margin/TabBar/Render/RenderVBox/EffectVBox/CRT" to="." method="set_crt"]
-[connection signal="value_changed" from="Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider" to="." method="set_audiogeneral"]
-[connection signal="value_changed" from="Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider" to="." method="set_audioalteration"]
-[connection signal="value_changed" from="Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider" to="." method="set_audiostate"]
-[connection signal="pressed" from="Margin/TabBar/Account/AccountVBox/ChangeButton" to="Margin/TabBar/Account" method="_on_change_button_pressed"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen" to="." method="set_fullscreen"]
+[connection signal="item_selected" from="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option" to="." method="set_resolutionIdx"]
+[connection signal="item_selected" from="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option" to="." method="set_scaling"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay" to="." method="set_actionoverlay"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting" to="." method="set_lighting"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4" to="." method="set_hq4x"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/CRT" to="." method="set_crt"]
+[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider" to="." method="set_audiogeneral"]
+[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider" to="." method="set_audioalteration"]
+[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider" to="." method="set_audiostate"]
+[connection signal="pressed" from="Layout/Margin/TabBar/Account/AccountVBox/ChangeButton" to="Layout/Margin/TabBar/Account" method="_on_change_button_pressed"]

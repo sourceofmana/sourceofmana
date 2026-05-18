@@ -56,3 +56,14 @@ static func PlayerNameToColor(name : StringName) -> Color:
 static func MessageBox(text : String, primary = null, primaryText : String = "", cancel = null, cancelText : String = "", secondary = null, secondaryText : String = "", tertiary = null, tertiaryText : String = ""):
 	if Launcher.GUI and Launcher.GUI.messageBox:
 		Launcher.GUI.messageBox.Display(text, primary, primaryText, cancel, cancelText, secondary, secondaryText, tertiary, tertiaryText)
+
+static func GetWindowPanelAncestor(control : Control):
+	if not control:
+		return
+
+	var ancestor : Control = control.get_parent()
+	while ancestor:
+		if ancestor is WindowPanel:
+			return ancestor
+		ancestor = ancestor.get_parent()
+	return null

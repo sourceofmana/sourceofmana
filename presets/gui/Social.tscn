@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_theme"]
 [ext_resource type="Script" uid="uid://pvhl3wyaotv2" path="res://sources/gui/Social.gd" id="2_socgd"]
+[ext_resource type="PackedScene" uid="uid://da8nt01w5gjsp" path="res://presets/gui/TitleBar.tscn" id="tb_scene"]
 
 [node name="Social" type="PanelContainer" unique_id=720451001]
 custom_minimum_size = Vector2(180, 100)
@@ -9,8 +10,18 @@ offset_right = 180.0
 offset_bottom = 100.0
 theme = ExtResource("1_theme")
 script = ExtResource("2_socgd")
+theme_type_variation = &"WindowPanel"
 
-[node name="Margin" type="MarginContainer" parent="." unique_id=720451002]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=2100000001]
+layout_mode = 2
+
+[node name="TitleBar" parent="Layout" instance=ExtResource("tb_scene")]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 1
+titleText = "Social"
+
+[node name="Margin" type="MarginContainer" parent="Layout" unique_id=720451002]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 2
@@ -18,62 +29,62 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="TabBar" type="TabContainer" parent="Margin" unique_id=720451003]
+[node name="TabBar" type="TabContainer" parent="Layout/Margin" unique_id=720451003]
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Online" type="VBoxContainer" parent="Margin/TabBar" unique_id=720451004]
+[node name="Online" type="VBoxContainer" parent="Layout/Margin/TabBar" unique_id=720451004]
 layout_mode = 2
 size_flags_vertical = 3
 metadata/_tab_index = 0
 
-[node name="Scroll" type="ScrollContainer" parent="Margin/TabBar/Online" unique_id=720451012]
+[node name="Scroll" type="ScrollContainer" parent="Layout/Margin/TabBar/Online" unique_id=720451012]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="PlayerList" type="VBoxContainer" parent="Margin/TabBar/Online/Scroll" unique_id=720451005]
+[node name="PlayerList" type="VBoxContainer" parent="Layout/Margin/TabBar/Online/Scroll" unique_id=720451005]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HSeparator" type="HSeparator" parent="Margin/TabBar/Online" unique_id=638143277]
+[node name="HSeparator" type="HSeparator" parent="Layout/Margin/TabBar/Online" unique_id=638143277]
 layout_mode = 2
 
-[node name="OnlineCount" type="Label" parent="Margin/TabBar/Online" unique_id=720451013]
+[node name="OnlineCount" type="Label" parent="Layout/Margin/TabBar/Online" unique_id=720451013]
 layout_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Party" type="ScrollContainer" parent="Margin/TabBar" unique_id=720451006]
+[node name="Party" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=720451006]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 metadata/_tab_index = 1
 
-[node name="PartyList" type="VBoxContainer" parent="Margin/TabBar/Party" unique_id=720451007]
+[node name="PartyList" type="VBoxContainer" parent="Layout/Margin/TabBar/Party" unique_id=720451007]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PartyPlaceholder" type="Label" parent="Margin/TabBar/Party/PartyList" unique_id=720451008]
+[node name="PartyPlaceholder" type="Label" parent="Layout/Margin/TabBar/Party/PartyList" unique_id=720451008]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "No party joined"
 horizontal_alignment = 1
 
-[node name="Guild" type="ScrollContainer" parent="Margin/TabBar" unique_id=720451009]
+[node name="Guild" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=720451009]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 metadata/_tab_index = 2
 
-[node name="GuildList" type="VBoxContainer" parent="Margin/TabBar/Guild" unique_id=720451010]
+[node name="GuildList" type="VBoxContainer" parent="Layout/Margin/TabBar/Guild" unique_id=720451010]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GuildPlaceholder" type="Label" parent="Margin/TabBar/Guild/GuildList" unique_id=720451011]
+[node name="GuildPlaceholder" type="Label" parent="Layout/Margin/TabBar/Guild/GuildList" unique_id=720451011]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "No guild joined"
