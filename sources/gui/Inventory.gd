@@ -66,14 +66,17 @@ func IsFiltered(cell : ItemCell, filter : FilterTab) -> bool:
 func RefreshInventory():
 	var count : int			= 0
 	var tileIdx : int		= 0
+	var inventoryIdx : int	= 0
 	var tile : CellTile		= grid.GetTile(tileIdx)
 
 	for item in Launcher.Player.inventory.items:
 		if not item or item.cellID == DB.UnknownHash:
+			inventoryIdx += 1
 			continue
 
 		var cell : ItemCell = DB.GetItem(item.cellID, item.cellCustomfield)
 		if not cell:
+			inventoryIdx += 1
 			continue
 
 		count += 1
@@ -82,24 +85,27 @@ func RefreshInventory():
 			if cell.stackable:
 				if tile:
 					tile.equipped = false
-					tile.itemIndex = tileIdx
+					tile.itemIndex = inventoryIdx
 					tile.AssignData(cell, item.count)
 					tileIdx += 1
 					tile = grid.GetTile(tileIdx)
 				else:
+					inventoryIdx += 1
 					break
 			else:
 				if tile:
 					tile.equipped = Launcher.Player.inventory.IsItemEquipped(item)
-					tile.itemIndex = tileIdx
+					tile.itemIndex = inventoryIdx
 					tile.AssignData(cell)
 					tileIdx += 1
 					tile = grid.GetTile(tileIdx)
 				else:
+					inventoryIdx += 1
 					break
 		elif selectedTile and item and cell == selectedTile.cell:
 			SelectTile(null)
 			selectedTile = null
+		inventoryIdx += 1
 
 	for remainingIdx in range(tileIdx, grid.maxCount):
 		grid.tiles[remainingIdx].equipped = false
