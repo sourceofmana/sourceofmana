@@ -788,9 +788,9 @@
    </properties>
    <polygon points="24,36 24,4 56,-28 56,68"/>
   </object>
-  <object id="18" name="Ben" type="Spawn" x="1562" y="2367">
+  <object id="18" name="Bones" type="Spawn" x="1562" y="2367">
    <properties>
-    <property name="player_script" value="tonori/tulimshar/Ben.gd"/>
+    <property name="player_script" value="tonori/tulimshar/Bones.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

@@ -31,13 +31,13 @@ func QuestInactive():
 
 func QuestStarted():
 	Mes("Still at it? Those corridors aren't friendly.")
-	Choice("Tell me about Ben again", Lore)
+	Choice("Tell me about Bones again", Lore)
 	Choice("Where are the letters?", Directions)
 	Choice("I'm on it", Dismiss)
 
 func QuestEnvelopesFound():
 	Mes("You found them. Good, good.")
-	Mes("Bring the sealed letters to Ben. I just saw him walk into the corridor as soon as you left.")
+	Mes("Bring the sealed letters to Councillor Bones. I just saw him walk into the corridor as soon as you left.")
 	Mes("He has good instincts, or maybe you made noise while focusing on not being seen. Anyway, he'll be in there.")
 
 func QuestRewards():
@@ -54,7 +54,7 @@ func QuestRewards():
 		AddGP(1000)
 		SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.REWARDS_WITHDREW)
 	else:
-		Mes("Did you find Ben? He's in the western wall corridor.")
+		Mes("Did you find Bones? He's in the western wall corridor.")
 
 func QuestCompleted():
 	Mes("Radishes are coming in nicely this year.")
@@ -62,7 +62,7 @@ func QuestCompleted():
 	Mes("He kept those letters. That's something, right?")
 
 func Lore():
-	Mes("There was someone I worked with. Ben. Brilliant man. Could fix anything, build anything.")
+	Mes("There was someone I worked with. Councillor Bones. Brilliant man. Could fix anything, build anything.")
 	Mes("Quiet, though. He'd rather tear down a wall and rebuild it than explain why it needed fixing.")
 	Mes("Me, I was the one who talked to people. Organized shifts, sorted out disagreements, kept things running.")
 	Mes("We held these walls together for years. Under the Queen, that's no small thing.")
@@ -72,7 +72,7 @@ func Lore():
 func Conflict():
 	Mes("The Queen happened. Or kept happening I guess. Always more demands, always her way.")
 	Mes("I started making rules. Procedures for everything. I thought if I could just organize it all, maybe the pressure wouldn't crush us.")
-	Mes("Ben saw it differently. Said I was piling even more pressure on top of what we were already under.")
+	Mes("Bones saw it differently. Said I was piling even more pressure on top of what we were already under.")
 	Mes("And he just did things. Decided things. Without telling me, without telling anyone. I'd find out after the fact.")
 	Mes("We were both trying to keep the same walls standing. But somewhere along the way we stopped talking about it and started fighting about it instead.")
 	Mes("I've made too many mistakes to think I was right about everything. But back then, neither of us would bend.")
@@ -84,7 +84,7 @@ func Conflict():
 
 func Quest():
 	Mes("Actually... there might be.")
-	Mes("At the far end of the western wall corridor near us, past Ben's patrols, there's a small chamber with a library shelf.")
+	Mes("At the far end of the western wall corridor near us, past Councillor Bones's patrols, there's a small chamber with a library shelf.")
 	Mes("There's an envelope on that shelf. Letters we wrote each other, back when the Queen had us stationed apart. Before everything went wrong.")
 	Mes("I don't know if it'll change anything. But maybe if he read them again he'd remember we weren't always like this.")
 	Mes("The corridors are patrolled, though. You should stick to the shadows. If you step into the light, the guards will catch you.")

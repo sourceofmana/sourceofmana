@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://c3ww666y3gb2"]
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://cr7q0tf8gjj6o"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_item"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_entity"]
@@ -13,8 +13,8 @@
 [resource]
 script = ExtResource("2_entity")
 _parent = ExtResource("8_parent")
-_id = 193452314
-_name = "Ben"
+_id = 216535260
+_name = "Bones"
 _spritePreset = "Player"
 _stats = {
 "gender": "Male",
