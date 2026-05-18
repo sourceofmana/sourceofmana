@@ -1,8 +1,8 @@
 extends WindowPanel
 
-@onready var spellGrid : GridContainer		= $VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid
-@onready var physicalGrid : GridContainer	= $VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid
-@onready var abilityGrid : GridContainer	= $VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid
+@onready var spellGrid : GridContainer		= $Layout/VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid
+@onready var physicalGrid : GridContainer	= $Layout/VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid
+@onready var abilityGrid : GridContainer	= $Layout/VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid
 
 #
 func RefreshSkills():

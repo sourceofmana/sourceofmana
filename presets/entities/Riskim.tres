@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_ogvrf"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_6g8wa"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_jvyv1"]
+[ext_resource type="Texture2D" uid="uid://br7c6w0xcpxll" path="res://data/graphics/sprites/npcs/riskim.png" id="3_tex"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_ymt6v"]
 
 [resource]
 script = ExtResource("2_6g8wa")
@@ -16,4 +18,4 @@ _stats = {
 "skintone": "Light"
 }
 _equipment = Array[ExtResource("1_ogvrf")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/npcs/riskim.png"
+_customTexture = ExtResource("3_tex")

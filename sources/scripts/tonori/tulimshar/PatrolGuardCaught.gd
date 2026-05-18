@@ -6,7 +6,7 @@ const ENTRANCE_POS : Vector2 = Vector2(1536, 1600) # tile (48, 50)
 #
 func OnStart():
 	Mes("Hold it right there.")
-	Mes("Ben's orders. Nobody walks these corridors without clearance.")
+	Mes("Councillor Bones' orders. Nobody walks these corridors without clearance.")
 	Mes("I don't care why you're here. Turn around.")
 	Action(Escort)
 

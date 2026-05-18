@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_5ty27"]
 [ext_resource type="Script" uid="uid://ckmw8jevrbqwu" path="res://sources/gui/Skill.gd" id="2_m74ld"]
+[ext_resource type="PackedScene" uid="uid://da8nt01w5gjsp" path="res://presets/gui/TitleBar.tscn" id="tb_scene"]
 [ext_resource type="Script" uid="uid://cuhwrw40yxve1" path="res://sources/gui/CellGrid.gd" id="3_vf0uc"]
 
 [node name="Skill" type="PanelContainer" unique_id=753831765]
@@ -12,22 +13,32 @@ offset_right = 196.0
 offset_bottom = 105.0
 theme = ExtResource("1_5ty27")
 script = ExtResource("2_m74ld")
+theme_type_variation = &"WindowPanel"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=100000001]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=2100000001]
+layout_mode = 2
+
+[node name="TitleBar" parent="Layout" instance=ExtResource("tb_scene")]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 1
+titleText = "Skills"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Layout" unique_id=100000001]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TabContainer" type="TabContainer" parent="VBoxContainer" unique_id=100000002]
+[node name="TabContainer" type="TabContainer" parent="Layout/VBoxContainer" unique_id=100000002]
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Spells" type="Control" parent="VBoxContainer/TabContainer" unique_id=100000003]
+[node name="Spells" type="Control" parent="Layout/VBoxContainer/TabContainer" unique_id=100000003]
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TabContainer/Spells" unique_id=100000004]
+[node name="ScrollContainer" type="ScrollContainer" parent="Layout/VBoxContainer/TabContainer/Spells" unique_id=100000004]
 custom_minimum_size = Vector2(34, 34)
 layout_mode = 1
 anchors_preset = 15
@@ -37,7 +48,7 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 3
 
-[node name="SpellGrid" type="GridContainer" parent="VBoxContainer/TabContainer/Spells/ScrollContainer" unique_id=100000005]
+[node name="SpellGrid" type="GridContainer" parent="Layout/VBoxContainer/TabContainer/Spells/ScrollContainer" unique_id=100000005]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -47,13 +58,13 @@ theme_override_constants/v_separation = 4
 script = ExtResource("3_vf0uc")
 maxCount = 17
 
-[node name="Physical" type="Control" parent="VBoxContainer/TabContainer" unique_id=100000006]
+[node name="Physical" type="Control" parent="Layout/VBoxContainer/TabContainer" unique_id=100000006]
 visible = false
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TabContainer/Physical" unique_id=100000007]
+[node name="ScrollContainer" type="ScrollContainer" parent="Layout/VBoxContainer/TabContainer/Physical" unique_id=100000007]
 custom_minimum_size = Vector2(34, 34)
 layout_mode = 1
 anchors_preset = 15
@@ -63,7 +74,7 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 3
 
-[node name="PhysicalGrid" type="GridContainer" parent="VBoxContainer/TabContainer/Physical/ScrollContainer" unique_id=100000008]
+[node name="PhysicalGrid" type="GridContainer" parent="Layout/VBoxContainer/TabContainer/Physical/ScrollContainer" unique_id=100000008]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -73,13 +84,13 @@ theme_override_constants/v_separation = 4
 script = ExtResource("3_vf0uc")
 maxCount = 8
 
-[node name="Abilities" type="Control" parent="VBoxContainer/TabContainer" unique_id=100000009]
+[node name="Abilities" type="Control" parent="Layout/VBoxContainer/TabContainer" unique_id=100000009]
 visible = false
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TabContainer/Abilities" unique_id=100000010]
+[node name="ScrollContainer" type="ScrollContainer" parent="Layout/VBoxContainer/TabContainer/Abilities" unique_id=100000010]
 custom_minimum_size = Vector2(34, 34)
 layout_mode = 1
 anchors_preset = 15
@@ -89,7 +100,7 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 3
 
-[node name="AbilityGrid" type="GridContainer" parent="VBoxContainer/TabContainer/Abilities/ScrollContainer" unique_id=100000011]
+[node name="AbilityGrid" type="GridContainer" parent="Layout/VBoxContainer/TabContainer/Abilities/ScrollContainer" unique_id=100000011]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -100,9 +111,9 @@ script = ExtResource("3_vf0uc")
 maxCount = 8
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
-[connection signal="gui_input" from="VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid" to="VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid" method="_on_gui_input"]
-[connection signal="resized" from="VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid" to="VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid" method="_on_panel_resized"]
-[connection signal="gui_input" from="VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid" to="VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid" method="_on_gui_input"]
-[connection signal="resized" from="VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid" to="VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid" method="_on_panel_resized"]
-[connection signal="gui_input" from="VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid" to="VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid" method="_on_gui_input"]
-[connection signal="resized" from="VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid" to="VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid" method="_on_panel_resized"]
+[connection signal="gui_input" from="Layout/VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid" to="Layout/VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid" method="_on_gui_input"]
+[connection signal="resized" from="Layout/VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid" to="Layout/VBoxContainer/TabContainer/Spells/ScrollContainer/SpellGrid" method="_on_panel_resized"]
+[connection signal="gui_input" from="Layout/VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid" to="Layout/VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid" method="_on_gui_input"]
+[connection signal="resized" from="Layout/VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid" to="Layout/VBoxContainer/TabContainer/Physical/ScrollContainer/PhysicalGrid" method="_on_panel_resized"]
+[connection signal="gui_input" from="Layout/VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid" to="Layout/VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid" method="_on_gui_input"]
+[connection signal="resized" from="Layout/VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid" to="Layout/VBoxContainer/TabContainer/Abilities/ScrollContainer/AbilityGrid" method="_on_panel_resized"]

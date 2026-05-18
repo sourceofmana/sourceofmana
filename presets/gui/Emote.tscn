@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_dnsxy"]
 [ext_resource type="Script" uid="uid://da1qit03a4t2l" path="res://sources/gui/Emote.gd" id="2_fbark"]
+[ext_resource type="PackedScene" uid="uid://da8nt01w5gjsp" path="res://presets/gui/TitleBar.tscn" id="tb_scene"]
 [ext_resource type="Script" uid="uid://cuhwrw40yxve1" path="res://sources/gui/CellGrid.gd" id="3_2xdy7"]
 
 [node name="Panel" type="PanelContainer" unique_id=518538651]
@@ -10,14 +11,24 @@ offset_right = 160.0
 offset_bottom = 96.0
 theme = ExtResource("1_dnsxy")
 script = ExtResource("2_fbark")
+theme_type_variation = &"WindowPanel"
 
-[node name="ItemContainer" type="ScrollContainer" parent="." unique_id=1414144521]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=2100000001]
+layout_mode = 2
+
+[node name="TitleBar" parent="Layout" instance=ExtResource("tb_scene")]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 1
+titleText = "Emotes"
+
+[node name="ItemContainer" type="ScrollContainer" parent="Layout" unique_id=1414144521]
 custom_minimum_size = Vector2(34, 34)
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 3
 
-[node name="Grid" type="GridContainer" parent="ItemContainer" unique_id=1886916753]
+[node name="Grid" type="GridContainer" parent="Layout/ItemContainer" unique_id=1886916753]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -28,5 +39,5 @@ script = ExtResource("3_2xdy7")
 maxCount = 17
 
 [connection signal="gui_input" from="." to="." method="OnGuiInput"]
-[connection signal="gui_input" from="ItemContainer/Grid" to="ItemContainer/Grid" method="_on_gui_input"]
-[connection signal="resized" from="ItemContainer/Grid" to="ItemContainer/Grid" method="_on_panel_resized"]
+[connection signal="gui_input" from="Layout/ItemContainer/Grid" to="Layout/ItemContainer/Grid" method="_on_gui_input"]
+[connection signal="resized" from="Layout/ItemContainer/Grid" to="Layout/ItemContainer/Grid" method="_on_panel_resized"]

@@ -13,7 +13,7 @@ func WarpPlayer(mapID : int, playerPos : Vector2, _peerID : int):
 			Launcher.Action.previousMove = Vector2.ZERO
 			PushNotification(mapData._name, _peerID)
 
-func EmotePlayer(agentRID : int, emoteID : int, _peerID : int):
+func Emote(agentRID : int, emoteID : int, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplayEmote.call_deferred(emoteID)
@@ -22,9 +22,9 @@ func PreloadPlayer(agentRID : int, spirit : int, currentShape : int, nick : Stri
 	if Launcher.Map:
 		Launcher.Map.PreloadPlayer(agentRID, spirit, currentShape, nick, level, health, hairstyle, haircolor, gender, race, skintone, equipment)
 
-func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, _peerID : int):
+func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, defaultState : ActorCommons.State, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.PreloadEntity(agentRID, actorType, currentShape, nick)
+		Launcher.Map.PreloadEntity(agentRID, actorType, currentShape, nick, defaultState)
 
 func RemoveEntity(agentRID : int, _peerID : int):
 	if Launcher.Map:
@@ -40,14 +40,19 @@ func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, _peerI
 
 func ChatGlobal(agentName : String, text : String, _peerID : int):
 	if Launcher.GUI:
-		Launcher.GUI.chatContainer.AddPlayerText(GUICommons.ChatChannel.Global, agentName, text)
+		Launcher.GUI.chatContainer.AddEntityText(GUICommons.ChatChannel.Global, agentName, text)
+
+func Express(agentRID : int, text : String, _peerID : int):
+	if Launcher.GUI:
+		var entity : Entity = Entities.Get(agentRID)
+		if entity && entity.get_parent() && entity.interactive:
+			entity.interactive.DisplaySpeech.call_deferred(text)
 
 func ChatAgent(agentRID : int, text : String, _peerID : int):
 	if Launcher.GUI:
 		var entity : Entity = Entities.Get(agentRID)
 		if entity && entity.get_parent():
-			if entity.type == ActorCommons.Type.PLAYER && Launcher.GUI:
-				Launcher.GUI.chatContainer.AddPlayerText(GUICommons.ChatChannel.Local, entity.nick, text)
+			Launcher.GUI.chatContainer.AddEntityText(GUICommons.ChatChannel.Local, entity.nick, text)
 			if entity.interactive:
 				entity.interactive.DisplaySpeech.call_deferred(text)
 
@@ -58,6 +63,12 @@ func ContextText(author : String, text : String, _peerID : int):
 	if not author.is_empty():
 		Launcher.GUI.dialogueWindow.AddName(author)
 	Launcher.GUI.dialogueWindow.AddDialogue(text)
+	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
+
+func ContextThink(author : String, text : String, _peerID : int):
+	if not author.is_empty():
+		Launcher.GUI.dialogueWindow.AddName(author)
+	Launcher.GUI.dialogueWindow.AddThink(text)
 	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
 
 func ContextContinue(_peerID : int):
@@ -77,17 +88,25 @@ func CameraReset(_peerID : int):
 	if Launcher.Camera:
 		Launcher.Camera.ResetCinematic()
 
-func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, _peerID : int):
-	if Launcher.Map:
-		var entity : Entity = Entities.Get(targetRID)
-		var caller : Entity = Entities.Get(agentRID)
-		if caller && entity && entity.get_parent() and entity.interactive:
-			entity.interactive.DisplayAlteration.call_deferred(entity, caller, value, alteration, skillID)
-		if Launcher.GUI and entity == Launcher.Player:
-			if alteration == ActorCommons.Alteration.EXP:
-				Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " exp")
-			elif alteration == ActorCommons.Alteration.GP:
-				Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " GP")
+func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, hasFeedback : bool, _peerID : int):
+	var entity : Entity = Entities.Get(targetRID)
+	var caller : Entity = Entities.Get(agentRID)
+	if not caller or not entity or not entity.get_parent():
+		return
+
+	if entity.interactive:
+		entity.interactive.DisplayAlteration.call_deferred(entity, caller, value, alteration, skillID)
+
+	if hasFeedback:
+		if caller.sfx:
+			entity.sfx.HandleAlteration(alteration)
+
+		if entity == Launcher.Player:
+			match alteration:
+				ActorCommons.Alteration.EXP:
+					Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " exp")
+				ActorCommons.Alteration.GP:
+					Launcher.GUI.chatContainer.AddSystemText("You receive " + str(value) + " GP")
 
 func Casted(agentRID : int, skillID : int, cooldown : float, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
@@ -201,19 +220,21 @@ func ItemAdded(itemID : int, customfield : StringName, count : int, _peerID : in
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 				var countText : String = " x" + str(count) if count > 1 else ""
 				Launcher.GUI.chatContainer.AddSystemText("You receive " + cell.name + countText)
-			cell.used.emit()
+			if not (cell is ItemCell and CellCommons.IsEquipment(cell)):
+				cell.used.emit()
 
-func ItemRemoved(itemID : int, customfield : StringName, count : int, _peerID : int):
+func ItemRemoved(itemID : int, customfield : StringName, count : int, itemIndex : int, _peerID : int):
 	if Launcher.Player:
 		var cell : BaseCell = DB.GetItem(itemID, customfield)
 		if cell:
-			Launcher.Player.inventory.PopItem(cell, count)
+			Launcher.Player.inventory.PopItem(cell, count, itemIndex)
 			CellTile.RefreshShortcuts(cell)
 			if Launcher.GUI and Launcher.GUI.inventoryWindow:
 				Launcher.GUI.inventoryWindow.RefreshInventory()
-			cell.used.emit()
+			if not (cell is ItemCell and CellCommons.IsEquipment(cell)):
+				cell.used.emit()
 
-func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state : bool, _peerID : int):
+func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state : bool, itemIndex : int, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if Launcher.Map:
 		var entry : EntityCacheEntry = Launcher.Map.entityCache.get(agentRID, null)
@@ -223,14 +244,15 @@ func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state :
 		var cell : ItemCell = DB.GetItem(itemID, customfield)
 		if cell:
 			if state:
-				entity.inventory.EquipItem(cell)
+				entity.inventory.EquipItem(cell, itemIndex)
 			else:
 				entity.inventory.UnequipItem(cell)
 
 			entity.visual.SetEquipment(cell.slot)
 			if entity == Launcher.Player:
 				Launcher.GUI.inventoryWindow.RefreshInventory()
-				cell.used.emit()
+				if not CellCommons.IsEquipment(cell):
+					cell.used.emit()
 
 func RefreshInventory(cells : Array[Dictionary], _peerID : int):
 	if Launcher.Player and Launcher.Player.inventory:
@@ -260,9 +282,29 @@ func DropRemoved(dropID : int, _peerID : int):
 		Launcher.Map.RemoveDrop(dropID)
 
 #
+func DisplayActions(actions : PackedStringArray, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.DisplayActions(actions)
+
+func Untarget(_peerID : int):
+	if Launcher.Player:
+		Launcher.Player.ClearTarget()
+
 func PushNotification(notif : String, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.notificationLabel.AddNotification(notif)
+
+func RefreshOnlineList(players : PackedStringArray, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.socialWindow.RefreshOnline(players)
+
+func AddOnlinePlayer(playerName : String, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.socialWindow.AddOnlinePlayer(playerName)
+
+func RemoveOnlinePlayer(playerName : String, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.socialWindow.RemoveOnlinePlayer(playerName)
 
 #
 func AuthError(err : NetworkCommons.AuthError, _peerID : int):
@@ -286,36 +328,40 @@ func CharacterInfo(info : Dictionary, equipment : Dictionary, _peerID : int):
 	Launcher.GUI.characterPanel.AddCharacter(info, equipment)
 
 # Progress
-func UpdateSkill(skillID : int, level : int, _peerID : int):
+func UpdateSkill(skillID : int, level : int, _peerID : int, notify : bool = true):
 	if Launcher.Player:
 		var skill : SkillCell = DB.GetSkill(skillID)
 		if skill:
 			Launcher.Player.progress.AddSkill(skill, 1.0, level)
 			if Launcher.GUI and Launcher.GUI.skillWindow:
 				Launcher.GUI.skillWindow.RefreshSkills()
+			if notify:
+				Launcher.Player.sfx.HandleAlteration(ActorCommons.Alteration.SKILL_UP)
 
-func UpdateBestiary(mobID : int, count : int, _peerID : int):
+func UpdateBestiary(mobID : int, count : int, _peerID : int, _notify : bool = true):
 	if Launcher.Player:
 		Launcher.Player.progress.AddBestiary(mobID, count)
 		if Launcher.GUI and Launcher.GUI.progressWindow:
 			Launcher.GUI.progressWindow.RefreshBestiary(mobID, count)
 
-func UpdateQuest(questID : int, state : int, _peerID : int):
+func UpdateQuest(questID : int, state : int, _peerID : int, notify : bool = true):
 	if Launcher.Player:
 		Launcher.Player.progress.SetQuest(questID, state)
 		if Launcher.GUI and Launcher.GUI.progressWindow:
 			Launcher.GUI.progressWindow.RefreshQuest(questID, state)
+		if notify:
+			Launcher.Player.sfx.HandleAlteration(ActorCommons.Alteration.QUEST_COMPLETE if state == ProgressCommons.CompletedProgress else ActorCommons.Alteration.QUEST_UPDATE)
 
 func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictionary, peerID : int):
 	if Launcher.GUI and Launcher.GUI.progressWindow:
 		Launcher.GUI.progressWindow.Clear()
 	if Launcher.Player:
 		for skill in skills:
-			UpdateSkill(skill, skills[skill], peerID)
+			UpdateSkill(skill, skills[skill], peerID, false)
 		for quest in quests:
-			UpdateQuest(quest, quests[quest], peerID)
+			UpdateQuest(quest, quests[quest], peerID, false)
 		for mob in bestiary:
-			UpdateBestiary(mob, bestiary[mob], peerID)
+			UpdateBestiary(mob, bestiary[mob], peerID, false)
 
 #
 func CommandFeedback(feedback : String, _peerID : int):

@@ -185,24 +185,25 @@ static func ApplyImmobileBehaviour(_agent : AIAgent) -> bool:
 
 static func ApplySpawnerBehaviour(agent : AIAgent) -> bool:
 	var nbSpawned : int = 0
-	for spawn in agent.data._spawns:
-		var toSpawn : int = agent.data._spawns[spawn]
-		if spawn in agent.followers:
-			toSpawn -= agent.followers[spawn].size()
+	for spawnData : EntityData in agent.data._spawns:
+		var toSpawn : int = agent.data._spawns[spawnData]
+		var spawnID : int = spawnData._id
+		if spawnID in agent.followers:
+			toSpawn -= agent.followers[spawnID].size()
 		else:
-			agent.followers[spawn] = []
+			agent.followers[spawnID] = []
 		if toSpawn > 0:
 			var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 			if instance:
 				for mob in instance.mobs:
-					if mob.leader == null and mob.aiBehaviour & Behaviour.FOLLOWER and mob.data._id == spawn and mob.spawnInfo.is_persistant == false:
+					if mob.leader == null and mob.aiBehaviour & Behaviour.FOLLOWER and mob.data._id == spawnID and mob.spawnInfo.is_persistant == false:
 						agent.AddFollower(mob)
 						toSpawn -= 1
 					if toSpawn == 0:
 						break
 
 		if toSpawn > 0:
-			var spawnedAgents : Array[MonsterAgent] = NpcCommons.Spawn(agent, spawn, toSpawn, agent.position, GeRandomtOffset())
+			var spawnedAgents : Array[MonsterAgent] = NpcCommons.Spawn(agent, spawnID, toSpawn, agent.position, GeRandomtOffset())
 			for spawnedAgent in spawnedAgents:
 				agent.AddFollower(spawnedAgent)
 			nbSpawned += spawnedAgents.size()

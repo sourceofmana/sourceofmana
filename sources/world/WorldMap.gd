@@ -49,6 +49,9 @@ func DestroyInstance(instanceID : int):
 func Destroy():
 	for instanceID in instances.keys():
 		DestroyInstance(instanceID)
+	if regionRID.is_valid():
+		NavigationServer2D.free_rid(regionRID)
+		regionRID = RID()
 
 func LoadMapData():
 	var resource : Resource = Instantiate.LoadMapData(id)

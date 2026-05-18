@@ -141,6 +141,8 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_182y7"]
 switch_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_start"]
+
 [sub_resource type="AnimationNodeStateMachine" id="22"]
 states/Attack/node = SubResource("AnimationNodeBlendTree_vioql")
 states/Attack/position = Vector2(532, 31.1887)
@@ -160,7 +162,7 @@ states/Trigger/node = SubResource("AnimationNodeBlendTree_gaaw6")
 states/Trigger/position = Vector2(333, 203)
 states/Walk/node = SubResource("AnimationNodeBlendTree_18lfr")
 states/Walk/position = Vector2(650, 299)
-transitions = ["Idle", "Sit", SubResource("AnimationNodeStateMachineTransition_so0lp"), "Sit", "Idle", SubResource("AnimationNodeStateMachineTransition_l0fi0"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_h431x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_56gkn"), "Sit", "Walk", SubResource("AnimationNodeStateMachineTransition_iv2dw"), "Sit", "Death", SubResource("AnimationNodeStateMachineTransition_a0xty"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_vr1f8"), "Death", "Idle", SubResource("AnimationNodeStateMachineTransition_ti5sl"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_0bg4p"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_rnq6v"), "Attack", "Death", SubResource("AnimationNodeStateMachineTransition_1nsiy"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_8teg0"), "Idle", "To Trigger", SubResource("AnimationNodeStateMachineTransition_c1x30"), "To Trigger", "Trigger", SubResource("AnimationNodeStateMachineTransition_ji4y7"), "Trigger", "From Trigger", SubResource("AnimationNodeStateMachineTransition_umvw2"), "From Trigger", "Idle", SubResource("AnimationNodeStateMachineTransition_182y7")]
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_start"), "Idle", "Sit", SubResource("AnimationNodeStateMachineTransition_so0lp"), "Sit", "Idle", SubResource("AnimationNodeStateMachineTransition_l0fi0"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_h431x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_56gkn"), "Sit", "Walk", SubResource("AnimationNodeStateMachineTransition_iv2dw"), "Sit", "Death", SubResource("AnimationNodeStateMachineTransition_a0xty"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_vr1f8"), "Death", "Idle", SubResource("AnimationNodeStateMachineTransition_ti5sl"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_0bg4p"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_rnq6v"), "Attack", "Death", SubResource("AnimationNodeStateMachineTransition_1nsiy"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_8teg0"), "Idle", "To Trigger", SubResource("AnimationNodeStateMachineTransition_c1x30"), "To Trigger", "Trigger", SubResource("AnimationNodeStateMachineTransition_ji4y7"), "Trigger", "From Trigger", SubResource("AnimationNodeStateMachineTransition_umvw2"), "From Trigger", "Idle", SubResource("AnimationNodeStateMachineTransition_182y7")]
 graph_offset = Vector2(0, 12.0199)
 
 [node name="AnimationTree" type="AnimationTree" unique_id=247165675]

@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_bmwd8"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_eol0d"]
+[ext_resource type="Resource" uid="uid://dkqjldxwvwjm8" path="res://presets/cells/items/common/DorianKey.tres" id="3_dorkey"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_aoe72"]
+[ext_resource type="Texture2D" uid="uid://bwxulplws3lva" path="res://data/graphics/sprites/monsters/dorian.png" id="4_tex"]
 
 [resource]
 script = ExtResource("2_eol0d")
@@ -14,8 +17,8 @@ _stats = {
 "walkSpeed": 40.0
 }
 _equipment = Array[ExtResource("1_bmwd8")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/dorian.png"
+_customTexture = ExtResource("4_tex")
 _behaviour = 164
-_drops = Dictionary[String, float]({
-"Dorian's Key": 1.0
+_drops = Dictionary[ExtResource("1_bmwd8"), float]({
+ExtResource("3_dorkey"): 1.0
 })

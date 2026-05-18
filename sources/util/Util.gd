@@ -32,6 +32,11 @@ static func RemoveNode(node : Node, parent : Node):
 static func GetScreenCapture() -> Image:
 	return Launcher.get_viewport().get_texture().get_image()
 
+# Audio
+static func VolumeRatioToDb(volumeRatio : float) -> float:
+	var interpolation : float = clamp((log(clampf(volumeRatio, 0.0, 1.0)) + 5.0) / 5.0, 0.0, 1.06)
+	return (1.0 - interpolation) * -80.0
+
 # Math
 static func UnrollPathLength(path : PackedVector2Array) -> float:
 	var pathSize : int = path.size()

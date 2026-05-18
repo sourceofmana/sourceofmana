@@ -34,6 +34,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ------------------------------------------------------------------------
 
+DejaVuSans fonts are (c) Bitstream (see data\graphics\fonts\DejaVuSans - LICENSE). DejaVu changes are in public domain.
+Glyphs imported from Arev fonts are (c) Tavmjong Bah (see data\graphics\fonts\DejaVuSans - LICENSE).
+
+------------------------------------------------------------------------
+
 CC BY-SA 4.0: licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://creativecommons.org/licenses/by-sa/4.0/
 See also the "CC BY-SA 4.0" file.
@@ -92,6 +97,9 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/gui/button/button_focus.png [Reid]
 ./graphics/gui/button/button_hover.png [Reid]
 ./graphics/gui/button/button_pressed.png [Reid]
+./graphics/gui/button/titlebar/button.png [Reid]
+./graphics/gui/button/titlebar/button_hovered.png [Reid]
+./graphics/gui/button/titlebar/button_pressed.png [Reid]
 ./graphics/gui/button.png [hal9000]
 ./graphics/gui/chat.png [Reid]
 ./graphics/gui/checkbox/cb_disabled.png [Reid]
@@ -176,8 +184,10 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/gui/tab/tab_disabled.png [Reid]
 ./graphics/gui/tab/tab_fg.png [Reid]
 ./graphics/gui/window/close.png [Reid]
+./graphics/gui/window/titlebar_bg.png [Reid]
 ./graphics/gui/window/window_bg.png [Reid]
 ./graphics/gui/window/window_bg_soft.png [Reid]
+./graphics/gui/window/window_bg_soft_title.png [Reid]
 ./graphics/gui/window/window_bg_title.png [Reid]
 ./graphics/gui/window/window_bg_title_full.png [Reid]
 ./graphics/gui/window/window_bg_title_nodrag.png [Reid]
@@ -411,6 +421,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/npcs/ryan.png [Reid]
 ./graphics/sprites/npcs/sawyl.png [Modanung]
 ./graphics/sprites/npcs/sema.png [Reid]
+./graphics/sprites/npcs/tictactoe-cell.png [Reid]
 ./graphics/sprites/npcs/wie.png [Kyokai] [Reid]
 ./graphics/sprites/players/heads/kralog-female.png [Modanung] [Reid]
 ./graphics/sprites/players/heads/kralog-male.png [Modanung] [Reid]
@@ -596,3 +607,19 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./press/map/worldmap.png [WildX] [Reid]
 ./press/splash/splashscreen.png [Kolokolna] [Reid]
 ./press/web/sky_background.png [ColdOneK]
+./sounds/alteration/crit.ogg [Kenny690]
+./sounds/alteration/dodge.ogg [Kenny690]
+./sounds/alteration/exp.ogg [Kenny690]
+./sounds/alteration/gp.ogg [Kenny690]
+./sounds/alteration/heal.ogg [Ledmitz]
+./sounds/alteration/hit.ogg [Kenny690]
+./sounds/alteration/levelup.ogg [Kenny690]
+./sounds/alteration/quest-done.ogg [Kenny690]
+./sounds/alteration/quest-update.ogg [Kenny690]
+./sounds/alteration/skillup.ogg [Kenny690]
+./sounds/entities/chest/close.ogg [Ledmitz]
+./sounds/entities/chest/open.ogg [Ledmitz]
+./sounds/entities/piou/death.ogg [Ezili]
+./sounds/entities/piou/hit.ogg [Ezili]
+./sounds/entities/piou/hurt.ogg [Ezili]
+./sounds/entities/piou/miss.ogg [Ezili]

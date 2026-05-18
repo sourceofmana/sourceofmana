@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://da8nt01w5gjsp"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_lr32e"]
+[ext_resource type="Script" uid="uid://cm6kixumyoyn0" path="res://sources/gui/TitleBar.gd" id="1_tbscr"]
+
+[node name="Control" type="Control" unique_id=2010241681]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 163.0
+offset_bottom = 32.0
+size_flags_horizontal = 3
+theme = ExtResource("1_lr32e")
+script = ExtResource("1_tbscr")
+
+[node name="TitleBar" type="PanelContainer" parent="." unique_id=300451368]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_lr32e")
+theme_type_variation = &"WindowTitleBar"
+
+[node name="Title" type="Label" parent="TitleBar" unique_id=1955664925]
+layout_mode = 2
+size_flags_horizontal = 6
+horizontal_alignment = 1
+
+[node name="HideButton" type="Button" parent="." unique_id=1993315858]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -8.5
+offset_bottom = 8.5
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+theme_type_variation = &"WindowTitleButton"
+
+[connection signal="pressed" from="HideButton" to="." method="_on_hide_button_pressed"]

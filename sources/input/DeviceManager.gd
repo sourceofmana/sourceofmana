@@ -64,7 +64,7 @@ static var actionNames : Dictionary[String, String] = {
 	"ui_settings" : "Settings",
 	"ui_stat": "Stat Window",
 	"ui_progress": "Progress Window",
-	"ui_credits": "Credits Window",
+	"ui_social": "Social Window",
 	"ui_fullscreen": "Toggle Fullscreen",
 	"gp_shortcut_1" : "Shortcut 1",
 	"gp_shortcut_2" : "Shortcut 2",

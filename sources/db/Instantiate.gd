@@ -47,6 +47,8 @@ static func CreateDrop(cell : BaseCell, pos : Vector2) -> Sprite2D:
 	var node : Sprite2D = Sprite2D.new()
 	node.texture = cell.icon
 	node.position = pos
+	if cell is ItemCell and cell.shader != null:
+		node.material = cell.shader
 	return node
 
 # Map

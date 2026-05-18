@@ -4,23 +4,29 @@ var platformSection : String					= Util.GetPlatformName()
 const defaultSection : String					= "Default"
 const userSection : String						= "User"
 
+const creditsJson : JSON						= preload("res://data/db/credits.json")
+
+@onready var creditsContainer : VBoxContainer	= $Layout/Margin/TabBar/Credits/Margin/VBox
+
 @onready var renderAccessors : Dictionary = {
 	"Render-MinWindowSize": [init_minwinsize, set_minwinsize, apply_minwinsize, null],
-	"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
-	"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
-	"Render-WindowSize": [init_resolution, set_resolution, apply_resolution, $Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
+	"Render-Fullscreen": [init_fullscreen, set_fullscreen, apply_fullscreen, $Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Fullscreen],
+	"Render-Scaling": [init_scaling, set_scaling, apply_scaling, $Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling/Option],
+	"Render-WindowSize": [init_resolution, set_resolution, apply_resolution, $Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution/Option],
 	"Render-WindowPos": [init_windowPos, set_windowPos, apply_windowPos, null],
-	"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
-	"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
-	"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
-	"Render-CRT": [init_crt, set_crt, apply_crt, $Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
-	"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
+	"Render-ActionOverlay": [init_actionoverlay, set_actionoverlay, apply_actionoverlay, $Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/ActionOverlay],
+	"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
+	"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
+	"Render-CRT": [init_crt, set_crt, apply_crt, $Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
+	"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
+	"Audio-Alteration": [init_audioalteration, set_audioalteration, apply_audioalteration, $"Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider"],
+	"Audio-State": [init_audiostate, set_audiostate, apply_audiostate, $"Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider"],
 	"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
 	"Session-FirstLogin": [init_sessionfirstlogin, set_sessionfirstlogin, apply_sessionfirstlogin, null],
 	"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
 	"Session-ShortcutCells": [init_shortcutcells, set_shortcutcells, apply_shortcutcells, null],
 	"Input-Bindings": [init_inputbindings, null, null, null],
-	"Account-PasswordChange": [null, set_account_password, null, $Margin/TabBar/Account],
+	"Account-PasswordChange": [null, set_account_password, null, $Layout/Margin/TabBar/Account],
 }
 
 enum CATEGORY { RENDER, SOUND, INPUT, COUNT }
@@ -195,8 +201,31 @@ func set_audiogeneral(volumeRatio : float):
 	apply_audiogeneral(volumeRatio)
 func apply_audiogeneral(volumeRatio : float):
 	if Launcher.Audio:
-		var interpolation : float = clamp((log(clampf(volumeRatio, 0.0, 1.0)) + 5.0) / 5.0, 0.0, 1.06)
-		Launcher.Audio.SetVolume((1.0 - interpolation) * -80.0)
+		Launcher.Audio.SetVolume(Util.VolumeRatioToDb(volumeRatio))
+
+# Audio Alteration SFX
+func init_audioalteration(apply : bool):
+	var volumeRatio : float = GetVal("Audio-Alteration")
+	renderAccessors["Audio-Alteration"][ACC_TYPE.LABEL].value = volumeRatio
+	if apply:
+		apply_audioalteration(volumeRatio)
+func set_audioalteration(volumeRatio : float):
+	SetVal("Audio-Alteration", volumeRatio)
+	apply_audioalteration(volumeRatio)
+func apply_audioalteration(volumeRatio : float):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(ActorCommons.SfxAlterationBus), Util.VolumeRatioToDb(volumeRatio))
+
+# Audio State SFX
+func init_audiostate(apply : bool):
+	var volumeRatio : float = GetVal("Audio-State")
+	renderAccessors["Audio-State"][ACC_TYPE.LABEL].value = volumeRatio
+	if apply:
+		apply_audiostate(volumeRatio)
+func set_audiostate(volumeRatio : float):
+	SetVal("Audio-State", volumeRatio)
+	apply_audiostate(volumeRatio)
+func apply_audiostate(volumeRatio : float):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(ActorCommons.SfxStateBus), Util.VolumeRatioToDb(volumeRatio))
 
 # Session Account Name
 func init_sessionaccountname(apply : bool):
@@ -301,10 +330,14 @@ func set_account_password(err : NetworkCommons.AuthError):
 func _on_visibility_changed():
 	RefreshSettings(false)
 
+func PopulateCredits():
+	Scrollable.AddCategories(creditsContainer, creditsJson.get_data())
+
 func _ready():
 	if not FSM:
 		return
 
+	PopulateCredits()
 	RefreshSettings(true)
 	FSM.enter_game.connect(RefreshSettings.bind(true))
 	FSM.exit_game.connect(SaveSettings.bind())

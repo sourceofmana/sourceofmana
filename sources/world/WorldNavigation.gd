@@ -11,8 +11,6 @@ static func CreateInstance(inst : WorldInstance):
 	if inst.map.navPoly:
 		if not inst.map.mapRID.is_valid():
 			inst.map.mapRID = inst.get_world_2d().get_navigation_map()
-			if not inst.map.mapRID.is_valid():
-				inst.map.mapRID = NavigationServer2D.map_create()
 			NavigationServer2D.map_set_active(inst.map.mapRID, true)
 			NavigationServer2D.map_set_cell_size(inst.map.mapRID, inst.map.navPoly.cell_size)
 

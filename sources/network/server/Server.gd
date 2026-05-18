@@ -193,6 +193,7 @@ func ConnectCharacter(nickname : String, peerID : int):
 					agent.SetCharacterInfo(charInfo, peer.characterID)
 					Launcher.SQL.CharacterLogin(peer.characterID)
 					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, peerID])
+					Network.online_player_connected.emit(nickname)
 
 	Network.CharacterError(err, peerID)
 
@@ -201,11 +202,16 @@ func DisconnectCharacter(peerID : int):
 	if peer:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player:
-			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.nick, peerID])
+			var playerName : String = player.nick
+			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [playerName, peerID])
 			Launcher.SQL.RefreshCharacter(player)
 			WorldAgent.RemoveAgent(player)
 			peer.SetAgent(NetworkCommons.PeerUnknownID)
+			Network.online_player_disconnected.emit(playerName)
 		peer.SetCharacter(NetworkCommons.PeerUnknownID)
+
+func RequestOnlineList(peerID : int):
+	Network.RefreshOnlineList(OnlineList.GetPlayerNames(), peerID)
 
 func CharacterListing(peerID : int):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
@@ -260,7 +266,7 @@ func TriggerRespawn(peerID : int):
 		player.Respawn()
 
 func TriggerEmote(emoteID : int, peerID : int):
-	Network.NotifyNeighbours(Peers.GetAgent(peerID), "EmotePlayer", [emoteID])
+	Network.NotifyNeighbours(Peers.GetAgent(peerID), "Emote", [emoteID])
 
 func TriggerChat(text : String, channelID : GUICommons.ChatChannel, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
@@ -329,19 +335,19 @@ func UseItem(itemID : int, peerID : int):
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.UseItem(cell)
 
-func DropItem(itemID : int, customfield : StringName, itemCount : int, peerID : int):
+func DropItem(itemID : int, customfield : StringName, itemCount : int, itemIndex : int, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
-			player.inventory.DropItem(cell, itemCount)
+			player.inventory.DropItem(cell, itemCount, itemIndex)
 
-func EquipItem(itemID : int, customfield : StringName, peerID : int):
+func EquipItem(itemID : int, customfield : StringName, itemIndex : int, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell and cell.slot != ActorCommons.Slot.NONE:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
-			player.inventory.EquipItem(cell)
+			player.inventory.EquipItem(cell, itemIndex)
 
 func UnequipItem(itemID : int, customfield : StringName, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
@@ -437,7 +443,6 @@ func _enter_tree():
 		])
 
 func _ValidateAuth(peerID: int, data: PackedByteArray):
-	print(str(data.decode_s32(0)) + "  " + str(NetworkCommons.ProtocolVersion))
 	if data.size() >= 8 and data.decode_s64(0) == NetworkCommons.ProtocolVersion:
 		multiplayerAPI.send_auth(peerID, PackedByteArray([1]))
 		multiplayerAPI.complete_auth(peerID)

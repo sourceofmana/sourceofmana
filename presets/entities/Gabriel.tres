@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_f62vb"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_uv7nx"]
+[ext_resource type="Resource" uid="uid://fn26nshedn1c" path="res://presets/cells/items/common/GabrielKey.tres" id="3_gabkey"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_82sx6"]
+[ext_resource type="Texture2D" uid="uid://dpubqmrxx3yyy" path="res://data/graphics/sprites/monsters/gabriel.png" id="4_tex"]
 
 [resource]
 script = ExtResource("2_uv7nx")
@@ -14,8 +17,8 @@ _stats = {
 "walkSpeed": 40.0
 }
 _equipment = Array[ExtResource("1_f62vb")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/gabriel.png"
+_customTexture = ExtResource("4_tex")
 _behaviour = 164
-_drops = Dictionary[String, float]({
-"Gabriel's Key": 1.0
+_drops = Dictionary[ExtResource("1_f62vb"), float]({
+ExtResource("3_gabkey"): 1.0
 })

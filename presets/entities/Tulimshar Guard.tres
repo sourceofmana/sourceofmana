@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://b1kgjqcht72fg" path="res://presets/cells/items/feet/LeatherBoots.tres" id="4_cmdgh"]
 [ext_resource type="Resource" uid="uid://dw678a4b7ps2w" path="res://presets/cells/items/weapon/Scimitar.tres" id="5_fge4m"]
 [ext_resource type="Resource" uid="uid://b1fircprcri7h" path="res://presets/entities/WalkingNPC.tres" id="6_2ug6c"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="7_cmdgh"]
 
 [resource]
 script = ExtResource("2_b016p")

@@ -755,7 +755,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							"polygon": points,
 							"destinationID": DB.UnknownHash,
 							"destinationPos": Vector2.ZERO,
-							"autoWarp": true,
+							"autoWarp": !isPort,
 							"isPort": isPort,
 							"sailingPos": Vector2.ZERO,
 						}

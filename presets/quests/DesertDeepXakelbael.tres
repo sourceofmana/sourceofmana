@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QuestData" format=3]
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://d1n77irj1e16p"]
 
 [ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_7vvcv"]
 
@@ -6,7 +6,6 @@
 script = ExtResource("1_7vvcv")
 id = 5
 name = "Xakelbael's Challenge"
-description = ""
 giver = "Xakelbael"
 giverLocation = "Desert Deep Level"
 target = "Xakelbael"

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_rxrwl"]
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_g3bif"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_g3bif"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_ts2iq"]
 
 [resource]

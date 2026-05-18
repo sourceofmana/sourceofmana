@@ -572,7 +572,7 @@
     <property name="dest_pos_x" type="int" value="63"/>
     <property name="dest_pos_y" type="int" value="23"/>
    </properties>
-   <polygon points="0,0 32,32 64,0 96,-64 96,-80 -32,-80 -32,-64"/>
+   <polygon points="0,0 32,32 64,0 96,-64 -32,-64"/>
   </object>
   <object id="9" name="Warp Overworld" type="Warp" x="1600" y="832">
    <properties>
@@ -582,7 +582,7 @@
     <property name="dest_pos_x" type="int" value="115"/>
     <property name="dest_pos_y" type="int" value="132"/>
    </properties>
-   <polygon points="0,32 32,0 64,32 80,64 80,110 -16,110 -16,64"/>
+   <polygon points="0,32 32,0 64,32 80,64 80,96 -16,96 -16,64"/>
   </object>
  </objectgroup>
 </map>

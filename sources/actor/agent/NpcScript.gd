@@ -106,15 +106,15 @@ func AlivePlayerCount() -> int:
 	return count
 
 # Warp
-func Warp(mapID : int, position : Vector2):
+func Warp(mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
 	assert(IsPlayer(), "Warp() requires a player agent")
 	if not IsPlayer(): return
-	Action(NpcCommons.Warp.bind(own, mapID, position))
+	Action(NpcCommons.Warp.bind(own, mapID, position, direction))
 
-func WarpInstance(mapID : int, position : Vector2):
+func WarpInstance(mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
 	assert(IsPlayer(), "WarpInstance() requires a player agent")
 	if not IsPlayer(): return
-	Action(NpcCommons.WarpInstance.bind(own, mapID, position))
+	Action(NpcCommons.WarpInstance.bind(own, mapID, position, direction))
 
 # Quest
 func SetQuest(questID : int, state : int):
@@ -139,6 +139,9 @@ func GetState(questID : int) -> Variant:
 # Display
 func Notification(text : String):
 	NpcCommons.PushNotification(own, text)
+
+func DisplayActions(actions : PackedStringArray):
+	NpcCommons.DisplayActions(own, actions)
 
 func DisplayTracker(label : String, value : int, maxValue : int, unit : String = ""):
 	NpcCommons.PushTracker(own, label, value, maxValue, unit)
@@ -172,6 +175,11 @@ func Mes(mes : String):
 	if not IsPlayer(): return
 	steps.append({"text": mes})
 
+func Think(mes : String):
+	assert(IsPlayer(), "Think() requires a player agent")
+	if not IsPlayer(): return
+	steps.append({"text": mes, "think": true})
+
 func Choice(mes : String, callable : Callable = Callback.Empty):
 	assert(IsPlayer(), "Choice() requires a player agent")
 	if not IsPlayer(): return
@@ -188,6 +196,14 @@ func Action(callable : Callable):
 	assert(IsPlayer(), "Action() requires a player agent")
 	if not IsPlayer(): return
 	steps.append({"action": callable})
+
+func Emote(emoteID : int):
+	NpcCommons.Emote(npc, emoteID)
+
+func Express(mes : String):
+	assert(IsPlayer(), "Express() requires a player agent")
+	if not IsPlayer(): return
+	NpcCommons.Express(npc, own, mes)
 
 func Chat(mes : String):
 	assert(IsPlayer(), "Chat() requires a player agent")
@@ -312,12 +328,12 @@ func AddKarma(value : int):
 func AddExp(value : int):
 	assert(IsPlayer(), "AddExp() requires a player agent")
 	if not IsPlayer() or value <= 0: return
-	Action(own.stat.AddExperience.bind(value))
+	Action(NpcCommons.AddExp.bind(own, value))
 
 func AddGP(value : int):
 	assert(IsPlayer(), "AddGP() requires a player agent")
 	if not IsPlayer() or value <= 0: return
-	Action(own.stat.AddGP.bind(value))
+	Action(NpcCommons.AddGP.bind(own, value))
 
 # Interaction logic
 func ToggleWindow(toggle : bool):
@@ -359,7 +375,10 @@ func ApplyStep():
 			if not windowToggled:
 				ToggleWindow(true)
 
-			NpcCommons.ContextText(own, npc.nick, dialogueStep["text"])
+			if dialogueStep.get("think", false):
+				NpcCommons.ContextThink(own, npc.nick, dialogueStep["text"])
+			else:
+				NpcCommons.ContextText(own, npc.nick, dialogueStep["text"])
 
 		if dialogueStep.has("choices"):
 			var choices : PackedStringArray = []
@@ -402,6 +421,7 @@ func _init(_npc : NpcAgent, _own : BaseAgent):
 		npc = _npc
 		OnStart()
 		if npc != own:
+			npc.interacted.emit(own)
 			npc.AddInteraction()
 			if own.data._direction == ActorCommons.Direction.UNKNOWN:
 				own.LookAt(npc)

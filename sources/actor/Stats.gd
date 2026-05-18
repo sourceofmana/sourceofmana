@@ -206,7 +206,7 @@ func SetStamina(bonus : int):
 	stamina = clampi(stamina + bonus, 0, current.maxStamina)
 	vital_stats_updated.emit()
 
-func AddExperience(value : int):
+func AddExperience(value : int, hasFeedback : bool = true):
 	if not ActorCommons.IsAlive(actor) or value <= 0:
 		return
 	experience += value
@@ -218,15 +218,15 @@ func AddExperience(value : int):
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
 	vital_stats_updated.emit()
 	if actor is PlayerAgent:
-		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.EXP, DB.UnknownHash, actor.peerID)
+		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.EXP, DB.UnknownHash, hasFeedback, actor.peerID)
 
-func AddGP(value : int):
+func AddGP(value : int, hasFeedback : bool = true):
 	if not ActorCommons.IsAlive(actor) or value <= 0:
 		return
 	gp += value
 	vital_stats_updated.emit()
 	if actor is PlayerAgent:
-		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.GP, DB.UnknownHash, actor.peerID)
+		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.GP, DB.UnknownHash, hasFeedback, actor.peerID)
 
 func SetHairstyle(newStyle : int):
 	if DB.HairstylesDB.has(newStyle):

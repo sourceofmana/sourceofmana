@@ -110,7 +110,7 @@
     <property name="dest_pos_x" type="int" value="32"/>
     <property name="dest_pos_y" type="int" value="88"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="54" name="To Snake Pit" type="Warp" x="3228" y="1448">
    <properties>
@@ -119,7 +119,7 @@
     <property name="dest_pos_x" type="int" value="52"/>
     <property name="dest_pos_y" type="int" value="33"/>
    </properties>
-   <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+   <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
   <object id="56" name="To Sandstorm" type="Warp" x="940" y="1986">
    <properties>

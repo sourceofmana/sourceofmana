@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://dv0nbhtbnjamy"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_4npla"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_c3gkw"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_ptnqc"]
 
 [resource]

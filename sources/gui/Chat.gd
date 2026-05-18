@@ -7,11 +7,9 @@ class_name ChatContainer
 @onready var tabInstance : Control				= FileSystem.LoadGui("labels/ChatLabel", false)
 @onready var backlog : ChatBacklog				= ChatBacklog.new()
 
-var enabledLastFrame : bool						= false
-
 #
-func AddPlayerText(channelID : GUICommons.ChatChannel, playerName : String, speech : String):
-	AddText(channelID, playerName, UICommons.PlayerNameToColor(playerName))
+func AddEntityText(channelID : GUICommons.ChatChannel, entityName : String, speech : String):
+	AddText(channelID, entityName, UICommons.PlayerNameToColor(entityName))
 	AddText(channelID, ": " + speech + "\n", UICommons.LightTextColor)
 
 func AddSystemText(speech : String):
@@ -27,11 +25,9 @@ func isNewLineEnabled() -> bool:
 	return lineEdit.is_visible() and lineEdit.has_focus() if lineEdit else false
 
 func SetNewLineEnabled(enable : bool):
-	if Launcher.Action and lineEdit and not enabledLastFrame:
-		enabledLastFrame = true
+	if Launcher.Action and lineEdit:
 		if not LauncherCommons.isMobile:
 			lineEdit.set_visible(enable)
-			Launcher.Action.Enable(!enable)
 		if enable:
 			lineEdit.grab_focus()
 
@@ -67,10 +63,9 @@ func _input(event : InputEvent):
 		elif Launcher.Action.TryJustPressed(event, "ui_validate", true):
 			OnNewTextSubmitted(lineEdit.text)
 
-func _physics_process(_delta):
-	if enabledLastFrame:
-		enabledLastFrame = false
-
 func _ready():
 	AddSystemText("Welcome to " + LauncherCommons.ProjectName)
 	SetNewLineEnabled(false)
+
+func _on_new_text_editing_toggled(toggled_on):
+	Launcher.Action.Enable(!toggled_on)

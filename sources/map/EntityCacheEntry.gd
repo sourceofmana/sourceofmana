@@ -14,3 +14,4 @@ var gender : int					= ActorCommons.Gender.MALE
 var race : int						= DB.UnknownHash
 var skintone : int					= DB.UnknownHash
 var equipment : Dictionary			= {}
+var defaultState : ActorCommons.State	= ActorCommons.State.UNKNOWN

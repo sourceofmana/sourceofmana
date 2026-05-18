@@ -51,7 +51,6 @@ class Peer:
 
 	func SetAgent(id : int):
 		agentRID = id
-		Network.online_agents_update.emit()
 
 static var peers : Dictionary[int, Peer]			= {}
 static var accounts : Dictionary[int, int]			= {}

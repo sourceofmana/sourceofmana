@@ -1056,7 +1056,7 @@
     <property name="dest_pos_x" type="int" value="38"/>
     <property name="dest_pos_y" type="int" value="51"/>
    </properties>
-   <polygon points="0,32 32,0 64,32 80,64 54,80 10,80 -16,64"/>
+   <polygon points="0,32 32,0 64,32 80,64 -16,64"/>
   </object>
   <object id="30" name="Splatyna's Dorian Dead End" type="Warp" x="1408" y="3456">
    <properties>
@@ -1072,7 +1072,7 @@
     <property name="dest_pos_x" type="int" value="35"/>
     <property name="dest_pos_y" type="int" value="53"/>
    </properties>
-   <polygon points="0,32 32,0 64,32 80,64 56,80 9,80 -16,64"/>
+   <polygon points="0,32 32,0 64,32 80,64 -16,64"/>
   </object>
   <object id="38" name="Salt Slime" type="Spawn" x="-200" y="120" width="32" height="32">
    <properties>

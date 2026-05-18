@@ -59,7 +59,7 @@
    <properties>
     <property name="is_always_visible" type="bool" value="true"/>
     <property name="nick" value="Nathan"/>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="tonori/sandstorm/Nathan.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
@@ -189,7 +189,7 @@
   <object id="37" name="Tulimshar Desert Guard" type="Spawn" x="2863" y="1063" width="180" height="170">
    <properties>
     <property name="nick" value="Dausen"/>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="tonori/sandstorm/Dausen.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

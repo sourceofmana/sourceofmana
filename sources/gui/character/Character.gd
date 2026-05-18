@@ -89,7 +89,7 @@ func AddCharacter(info : Dictionary, equipment : Dictionary, slotID : int = Acto
 		assert(false, "No free available placement")
 		return
 
-	var entityData : EntityData = DB.EntitiesDB.get(DB.PlayerHash, null)
+	var entityData : EntityData = DB.EntitiesDB.get("Player".hash(), null)
 	if not entityData:
 		assert(false, "Could not retrieve the default entity database entry")
 		return

@@ -97,7 +97,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="20" name="Maggots" type="Spawn" x="4608" y="2080" width="416" height="768">
+  <object id="20" name="Maggot" type="Spawn" x="4608" y="2080" width="416" height="768">
    <properties>
     <property name="count" value="2"/>
     <property name="type" value="Monster"/>
@@ -219,20 +219,20 @@
   <object id="42" name="Tulimshar Sbire" type="Spawn" x="2016" y="1497" width="296" height="193">
    <properties>
     <property name="nick" value="Shimris"/>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="43" name="Tulimshar Desert Sbire" type="Spawn" x="1165" y="1494" width="291" height="216">
    <properties>
     <property name="nick" value="Aanshir"/>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="45" name="Ekinu" type="Spawn" x="1880" y="2837">
    <properties>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
@@ -243,9 +243,6 @@
     <property name="dest_pos_y" value="30"/>
    </properties>
    <polygon points="140.147,10.2397 364.381,10.2397 364.381,42.4215 140.147,42.4215"/>
-  </object>
-  <object id="48" x="-4416" y="1296">
-   <ellipse/>
   </object>
   <object id="49" name="To House" type="Warp" x="4813" y="1109">
    <properties>
@@ -275,13 +272,13 @@
   </object>
   <object id="57" name="Nina" type="Spawn" x="1601" y="2432">
    <properties>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="60" name="Gilgames" type="Spawn" x="1660" y="2837">
    <properties>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
@@ -294,14 +291,14 @@
   <object id="63" name="Kael" type="Spawn" x="2866" y="2102">
    <properties>
     <property name="is_always_visible" type="bool" value="true"/>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="64" name="Tulimshar Desert Guard" type="Spawn" x="-64" y="80">
    <properties>
     <property name="nick" value="Maci"/>
-    <property name="player_script" value="generic/Default.gd"/>
+    <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

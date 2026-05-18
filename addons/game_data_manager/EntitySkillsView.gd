@@ -80,11 +80,11 @@ func RefreshSkillsDisplay():
 		return
 
 	var index : int = 0
-	for skillName in skills:
-		CreateSkillWidget(skillName, skills[skillName], index)
+	for skillCell : SkillCell in skills:
+		CreateSkillWidget(skillCell, skills[skillCell], index)
 		index += 1
 
-func CreateSkillWidget(skillName : String, probability : float, index : int):
+func CreateSkillWidget(skillCell : SkillCell, probability : float, index : int):
 	var hbox : HBoxContainer = HBoxContainer.new()
 
 	var iconRect : TextureRect = TextureRect.new()
@@ -92,7 +92,6 @@ func CreateSkillWidget(skillName : String, probability : float, index : int):
 	iconRect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 	iconRect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
-	var skillCell : SkillCell = skillCache.get(skillName.hash())
 	if skillCell and skillCell.icon:
 		iconRect.texture = skillCell.icon
 
@@ -101,9 +100,9 @@ func CreateSkillWidget(skillName : String, probability : float, index : int):
 	var skillNameEdit : LineEdit = LineEdit.new()
 	skillNameEdit.custom_minimum_size = Vector2(150, 0)
 	skillNameEdit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	skillNameEdit.text = skillName
+	skillNameEdit.text = skillCell.name if skillCell else ""
 	skillNameEdit.placeholder_text = "Skill name"
-	skillNameEdit.text_submitted.connect(_on_skill_name_changed.bind(skillName))
+	skillNameEdit.text_submitted.connect(_on_skill_name_changed.bind(skillCell))
 	hbox.add_child(skillNameEdit)
 
 	var probLabel : Label = Label.new()
@@ -114,20 +113,20 @@ func CreateSkillWidget(skillName : String, probability : float, index : int):
 	probSpin.min_value = 0
 	probSpin.max_value = 100
 	probSpin.step = 0.1
-	probSpin.value = probability
+	probSpin.value = probability * 100.0
 	probSpin.suffix = "%"
 	probSpin.custom_minimum_size = Vector2(100, 0)
-	probSpin.value_changed.connect(_on_skill_probability_changed.bind(skillName))
+	probSpin.value_changed.connect(_on_skill_probability_changed.bind(skillCell))
 	hbox.add_child(probSpin)
 
 	var deleteBtn : Button = Button.new()
 	deleteBtn.text = "X"
-	deleteBtn.pressed.connect(_on_delete_skill_pressed.bind(skillName))
+	deleteBtn.pressed.connect(_on_delete_skill_pressed.bind(skillCell))
 	hbox.add_child(deleteBtn)
 
 	skillsContainer.add_child(hbox)
 
-func _on_skill_name_changed(newName : String, oldName : String):
+func _on_skill_name_changed(newName : String, oldCell : SkillCell):
 	if not selectedEntity:
 		return
 
@@ -135,34 +134,34 @@ func _on_skill_name_changed(newName : String, oldName : String):
 	if not skills:
 		return
 
-	var skillCell : SkillCell = FindSkillByName(newName)
-	if skillCell and skills.has(oldName):
-		var oldProb : float = skills[oldName]
-		skills.erase(oldName)
-		skills[skillCell.name] = oldProb
+	var newCell : SkillCell = FindSkillByName(newName)
+	if newCell and skills.has(oldCell):
+		var oldProb : float = skills[oldCell]
+		skills.erase(oldCell)
+		skills[newCell] = oldProb
 		SaveEntity()
 		RefreshSkillsDisplay()
 
-func _on_skill_probability_changed(newValue : float, skillName : String):
+func _on_skill_probability_changed(newValue : float, skillCell : SkillCell):
 	if not selectedEntity:
 		return
 
 	var skills : Dictionary = selectedEntity.get("_skills")
-	if not skills or not skills.has(skillName):
+	if not skills or not skills.has(skillCell):
 		return
 
-	skills[skillName] = newValue
+	skills[skillCell] = newValue / 100.0
 	SaveEntity()
 
-func _on_delete_skill_pressed(skillName : String):
+func _on_delete_skill_pressed(skillCell : SkillCell):
 	if not selectedEntity:
 		return
 
 	var skills : Dictionary = selectedEntity.get("_skills")
-	if not skills or not skills.has(skillName):
+	if not skills or not skills.has(skillCell):
 		return
 
-	skills.erase(skillName)
+	skills.erase(skillCell)
 	SaveEntity()
 	RefreshSkillsDisplay()
 
@@ -175,7 +174,8 @@ func _on_add_skill_pressed():
 		skills = {}
 		selectedEntity.set("_skills", skills)
 
-	skills[""] = 100.0
+	var emptyCell : SkillCell = SkillCell.new()
+	skills[emptyCell] = 1.0
 	SaveEntity()
 	RefreshSkillsDisplay()
 

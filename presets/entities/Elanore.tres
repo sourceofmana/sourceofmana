@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_kbsb8"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_02rcd"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_yh3w3"]
+[ext_resource type="Texture2D" uid="uid://7qo3v4nk11eu" path="res://data/graphics/sprites/npcs/elanore.png" id="3_tex"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_meugr"]
 
 [resource]
 script = ExtResource("2_yh3w3")
@@ -16,4 +18,4 @@ _stats = {
 "skintone": "Tanned"
 }
 _equipment = Array[ExtResource("1_kbsb8")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/npcs/elanore.png"
+_customTexture = ExtResource("3_tex")

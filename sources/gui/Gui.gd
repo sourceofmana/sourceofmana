@@ -38,9 +38,10 @@ extends ServiceBase
 @onready var quitWindow : WindowPanel			= $Windows/Floating/Quit
 @onready var respawnWindow : WindowPanel		= $Windows/Floating/Respawn
 @onready var statWindow : WindowPanel			= $Windows/Floating/Stat
+@onready var socialWindow : WindowPanel			= $Windows/Floating/Social
 
 @onready var chatContainer : ChatContainer		= $Windows/Floating/Chat/Margin/VBoxContainer
-@onready var emoteContainer : Container			= $Windows/Floating/Emote/ItemContainer/Grid
+@onready var emoteContainer : Container			= $Windows/Floating/Emote/Layout/ItemContainer/Grid
 
 # Shaders
 @onready var shaders : CanvasLayer				= $Shaders
@@ -87,7 +88,7 @@ func ToggleFullscreen():
 	if settingsWindow:
 		settingsWindow.set_fullscreen(!settingsWindow.is_fullscreen())
 
-func DisplayInfoContext(actions : PackedStringArray):
+func DisplayActions(actions : PackedStringArray):
 	infoContext.Clear()
 	for action in actions:
 		if DeviceManager.HasActionName(action):
@@ -191,9 +192,12 @@ func EnterGame():
 		progressTimer = null
 	loadingControl.set_visible(false)
 	background.set_visible(false)
+	loginPanel.set_visible(false)
+	characterPanel.set_visible(false)
+	buttonBoxes.set_visible(false)
 
 	Launcher.Camera.ResetCinematic()
-	DisplayInfoContext(["gp_interact", "gp_target", "gp_untarget", "gp_pickup", "gp_sit"])
+	DisplayActions(["gp_interact", "gp_target", "gp_untarget", "gp_pickup", "gp_sit"])
 
 	stats.set_visible(true)
 	menu.set_visible(true)

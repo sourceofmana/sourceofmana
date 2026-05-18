@@ -1,6 +1,6 @@
 extends WindowPanel
 
-@onready var grid : GridContainer		= $ItemContainer/Grid
+@onready var grid : GridContainer		= $Layout/ItemContainer/Grid
 
 #
 func RefreshEmotes():

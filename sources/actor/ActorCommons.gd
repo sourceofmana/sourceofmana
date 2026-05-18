@@ -175,6 +175,8 @@ const STATE_NAMES : PackedStringArray = [
 ]
 
 static func GetStateName(state : State) -> String:
+	if state <= State.UNKNOWN or state >= State.COUNT:
+		return ""
 	return STATE_NAMES[state]
 
 static func IsAlive(agent : Actor) -> bool:
@@ -271,6 +273,7 @@ static var PlayerEntityID : int				= "Player".hash()
 # Skill
 enum Alteration
 {
+	UNKNOWN = -1,
 	HIT = 0,
 	CRIT,
 	MISS,
@@ -278,6 +281,10 @@ enum Alteration
 	HEAL,
 	EXP,
 	GP,
+	LVL_UP,
+	SKILL_UP,
+	QUEST_COMPLETE,
+	QUEST_UPDATE
 }
 
 # Colors
@@ -292,6 +299,11 @@ const PlayerColor : float					= 0.53
 const LevelDifferenceColor : float			= 5.0
 const NPCTextColor : Color					= Color.LIGHT_BLUE
 const MonsterTextColor : Color				= Color.DARK_SALMON
+
+# Sfx
+const SfxMaxDistance : float				= 500.0
+const SfxAlterationBus : StringName			= &"Alteration SFX"
+const SfxStateBus : StringName				= &"State SFX"
 
 # Interactive
 const interactionDisplayOffset : int		= 32
@@ -326,7 +338,7 @@ const InventorySize : int					= 100
 const RunningStaminaCostPerSecond : int		= 5
 
 # Explore
-static var SailingDestination : Destination	= Destination.new(DB.OceanHash, Vector2(71 * 32, 55 * 32))
+static var SailingDestination : Destination	= Destination.new("Ocean".hash(), Vector2(71 * 32, 55 * 32))
 
 # Navigation
 const MaxEntityRadiusSize : int				= 256
@@ -373,7 +385,7 @@ const CharacterScreenLocations : PackedVector2Array = [
 
 # New player
 static var DefaultTraits : Dictionary = {
-	"shape": DB.PlayerHash,
+	"shape": "Player".hash(),
 	"spirit": "Piou".hash()
 }
 static var DefaultAttributes : Dictionary = {
@@ -438,3 +450,15 @@ static var DefaultSkills : Array[Dictionary] = [
 	{ "skill_id": "Spitfire".hash(), "level": 1 },
 	{ "skill_id": "Sonic Wave".hash(), "level": 1 },
 ]
+static var DefaultSfx : Dictionary[ActorCommons.Alteration, AudioStream] = {
+	Alteration.HIT:				preload("res://data/sounds/alteration/hit.ogg"),
+	Alteration.CRIT:			preload("res://data/sounds/alteration/crit.ogg"),
+	Alteration.DODGE:			preload("res://data/sounds/alteration/dodge.ogg"),
+	Alteration.HEAL:			preload("res://data/sounds/alteration/heal.ogg"),
+	Alteration.EXP:				preload("res://data/sounds/alteration/exp.ogg"),
+	Alteration.GP:				preload("res://data/sounds/alteration/gp.ogg"),
+	Alteration.LVL_UP:			preload("res://data/sounds/alteration/levelup.ogg"),
+	Alteration.SKILL_UP:		preload("res://data/sounds/alteration/skillup.ogg"),
+	Alteration.QUEST_COMPLETE:	preload("res://data/sounds/alteration/quest-done.ogg"),
+	Alteration.QUEST_UPDATE:	preload("res://data/sounds/alteration/quest-update.ogg"),
+}

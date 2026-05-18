@@ -29,6 +29,10 @@ static var Farewells : PackedStringArray = [
 ]
 
 # Display
+static func DisplayActions(agent : BaseAgent, actions : PackedStringArray):
+	if agent and agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
+		Network.DisplayActions(actions, agent.peerID)
+
 static func PushNotification(agent : BaseAgent, text : String):
 	if agent:
 		if agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
@@ -66,6 +70,14 @@ static func CameraReset(pc : BaseAgent):
 		Network.CameraReset(pc.peerID)
 
 # Context sent to client
+static func Emote(npc : NpcAgent, emoteID : int):
+	if npc:
+		Network.NotifyNeighbours(npc, "Emote", [emoteID])
+
+static func Express(npc : NpcAgent, pc : BaseAgent, text : String):
+	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.Express(npc.get_rid().get_id(), text, pc.peerID)
+
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
 	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
 		Network.ChatAgent(npc.get_rid().get_id(), chat, pc.peerID)
@@ -73,6 +85,10 @@ static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
 static func ContextText(pc : BaseAgent, author : String, text : String):
 	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
 		Network.ContextText(author, text, pc.peerID)
+
+static func ContextThink(pc : BaseAgent, author : String, text : String):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.ContextThink(author, text, pc.peerID)
 
 static func ContextChoices(pc : BaseAgent, texts : PackedStringArray):
 	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
@@ -123,20 +139,20 @@ static func Spawn(caller : BaseAgent, mobID : int, count : int = 1, position : V
 			agents.push_back(WorldAgent.CreateAgent(spawnObject, inst.id))
 	return agents
 
-static func Warp(caller : BaseAgent, mapID : int, position : Vector2):
+static func Warp(caller : BaseAgent, mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
 	if caller is PlayerAgent:
 		var map : WorldMap = Launcher.World.GetMap(mapID)
 		if map:
-			Launcher.World.Warp(caller, map, position)
+			Launcher.World.Warp(caller, map, position, direction, 0)
 
-static func WarpInstance(caller : BaseAgent, mapID : int, position : Vector2):
+static func WarpInstance(caller : BaseAgent, mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
 	if caller is PlayerAgent:
 		var map : WorldMap = Launcher.World.GetMap(mapID)
 		if map:
 			var instanceID : int = caller.get_rid().get_id()
 			if not map.instances.has(instanceID):
 				map.CreateInstance(instanceID)
-			Launcher.World.Warp(caller, map, position, instanceID)
+			Launcher.World.Warp(caller, map, position, direction, instanceID)
 
 # Progress
 static func SetQuest(caller : BaseAgent, questID : int, state : int):
@@ -169,7 +185,8 @@ static func RemoveItem(caller : BaseAgent, itemID : int, count : int = 1, custom
 	if caller is PlayerAgent and caller.inventory:
 		var cell : ItemCell = DB.GetItem(itemID, customfield)
 		if cell:
-			return caller.inventory.RemoveItem(cell, count)
+			var itemIndex : int = caller.inventory.FindItemIndex(cell)
+			return caller.inventory.RemoveItem(cell, count, itemIndex)
 	return false
 
 # Skills

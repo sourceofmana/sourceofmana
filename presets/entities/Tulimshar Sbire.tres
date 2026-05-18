@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://bf2yqtsy1hg4i" path="res://presets/cells/items/head/DesertGoggles.tres" id="5_lyoca"]
 [ext_resource type="Resource" uid="uid://b2g1xlar44gin" path="res://presets/cells/items/weapon/Gladius.tres" id="6_gc6ux"]
 [ext_resource type="Resource" uid="uid://b1fircprcri7h" path="res://presets/entities/WalkingNPC.tres" id="7_auq1h"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="8_p5emb"]
 
 [resource]
 script = ExtResource("2_48frj")

@@ -8,12 +8,17 @@ func OnAreaEnter(player : PlayerAgent):
 		else:
 			npc.Interact(player)
 
+func OnAreaExit(player : PlayerAgent):
+	if player and not npc.spawnInfo.auto_warp:
+		NpcCommons.ToggleContext(player, false)
+		player.ClearScript()
+
 func OnWarpConfirm(player : PlayerAgent):
 	var pos : Vector2 = npc.spawnInfo.destination_pos
 	if not player.stat.IsSailing():
 		pos = npc.spawnInfo.sailing_pos
 	player.Morph(false, player.GetNextPortShapeID())
-	NpcCommons.Warp(player, npc.spawnInfo.destination_map, pos)
+	NpcCommons.Warp(player, npc.spawnInfo.destination_map, pos, npc.spawnInfo.direction)
 
 func GetWarpField(player : PlayerAgent) -> String:
 	return "Disembark" if player.stat.IsSailing() else "Sail"

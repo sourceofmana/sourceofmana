@@ -30,7 +30,7 @@ static func IsEquipment(cell : ItemCell) -> bool:
 static func IsEquipped(cell : BaseCell) -> bool:
 	return cell and cell is ItemCell and IsEquipment(cell) and \
 	Launcher.Player and Launcher.Player.inventory and Launcher.Player.inventory.equipment and \
-	IsSameCell(cell, Launcher.Player.inventory.equipment[cell.slot])
+	IsSameItem(cell, Launcher.Player.inventory.equipment[cell.slot])
 
 enum Modifier {
 	None = 0,

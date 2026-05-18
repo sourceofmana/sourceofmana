@@ -8,11 +8,14 @@ class_name CellTile
 @onready var cooldownLabel : Label		= $Cooldown
 
 var cell : BaseCell						= null
+var defaultMaterial : Material			= null
 var selection : TextureRect				= null
 var cooldownTimer : float				= -INF
 var shineTimer : float					= -INF
 var count : int							= 0
+var itemIndex : int						= -1
 var hovered : bool						= false
+var equipped : bool						= false
 
 const modulateDisable : float			= 0.5
 
@@ -54,7 +57,7 @@ func IsInEquipmentSlot() -> bool:
 func GetCurrentEquipped() -> ItemCell:
 	if not (IsInEquipmentSlot() and Launcher.Player and Launcher.Player.inventory):
 		return null
-	return Launcher.Player.inventory.equipment[cell.slot]
+	return Launcher.Player.inventory.GetEquipmentCell(cell.slot)
 
 func GetTooltipModifiers(currentEquipped : ItemCell) -> String:
 	if not (cell is ItemCell):
@@ -109,7 +112,7 @@ func _make_custom_tooltip(for_text : String) -> Object:
 
 func UpdateCountLabel():
 	if countLabel:
-		if not defaultIcon and CellCommons.IsEquipped(cell):
+		if not defaultIcon and equipped:
 			countLabel.text = "~"
 		elif count >= 1000:
 			countLabel.text = "999+"
@@ -147,6 +150,8 @@ func UpdateData():
 		icon.set_texture(cell.icon if cell else defaultIcon)
 		if cell and cell is ItemCell and cell.shader != null:
 			icon.set_material(cell.shader)
+		else:
+			icon.set_material(defaultMaterial)
 
 	UpdateCountLabel()
 	SetToolTip()
@@ -182,11 +187,18 @@ static func RefreshShortcuts(baseCell : BaseCell, newCount : int = -1):
 	for shortcutTile in tiles:
 		if shortcutTile and shortcutTile.is_visible() and shortcutTile.draggable and shortcutTile.cell == baseCell:
 			shortcutTile.count = newCount
+			shortcutTile.equipped = CellCommons.IsEquipped(baseCell)
 			shortcutTile.UpdateCountLabel()
 
 func UseCell():
 	if cell:
-		cell.Use()
+		if cell is ItemCell and not cell.usable and IsInEquipmentSlot():
+			if equipped:
+				Network.UnequipItem(cell.id, cell.customfield)
+			else:
+				Network.EquipItem(cell.id, cell.customfield, itemIndex)
+		else:
+			cell.Use()
 
 func Hover(isHovering : bool):
 	hovered = isHovering
@@ -212,26 +224,28 @@ func _get_drag_data(_position : Vector2):
 		if cell.usable or IsInEquipmentSlot():
 			if icon:
 				set_drag_preview(icon.duplicate())
-			return cell
+			return self
 	return null
 
 func _can_drop_data(_at_position : Vector2, data):
-	if draggable and data is BaseCell and data != cell and data.usable:
+	if not data is CellTile:
+		return false
+	if draggable and data.cell is BaseCell and data.cell != cell and data.cell.usable:
 		return true
-	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot() and not CellCommons.IsEquipped(data):
+	if defaultIcon and data.cell is ItemCell and data.cell.slot == _get_equipment_slot() and not CellCommons.IsEquipped(data.cell):
 		return true
-	if not draggable and not defaultIcon and data is ItemCell and CellCommons.IsEquipped(data):
+	if not draggable and not defaultIcon and data.cell is ItemCell and CellCommons.IsEquipped(data.cell):
 		return true
 	return false
 
 func _drop_data(_at_position : Vector2, data):
-	if defaultIcon and data is ItemCell and data.slot == _get_equipment_slot():
-		Network.EquipItem(data.id, data.customfield)
-	elif not draggable and not defaultIcon and data is ItemCell and CellCommons.IsEquipped(data):
-		Network.UnequipItem(data.id, data.customfield)
+	if defaultIcon and data.cell is ItemCell and data.cell.slot == _get_equipment_slot():
+		Network.EquipItem(data.cell.id, data.cell.customfield, data.itemIndex)
+	elif not draggable and not defaultIcon and data.cell is ItemCell and CellCommons.IsEquipped(data.cell):
+		Network.UnequipItem(data.cell.id, data.cell.customfield)
 	elif draggable:
-		AssignData(data)
-		CellTile.RefreshShortcuts(data)
+		AssignData(data.cell)
+		CellTile.RefreshShortcuts(data.cell)
 
 func _get_equipment_slot() -> ActorCommons.Slot:
 	if defaultIcon:
@@ -242,6 +256,7 @@ func _get_equipment_slot() -> ActorCommons.Slot:
 
 # Default
 func _ready():
+	defaultMaterial = icon.material if icon else null
 	UpdateData()
 	set_process(false)
 
@@ -253,7 +268,7 @@ func _gui_input(event):
 			elif event.pressed:
 				selected.emit(self)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			cell.DisplayRadius()
+			UnassignData(cell)
 
 func _process(delta : float):
 	if cooldownTimer != -INF:
@@ -280,7 +295,7 @@ func RefreshColor():
 	var targetColor : Color
 	if hovered:
 		targetColor = UICommons.CellTileColorHovered
-	elif cell and CellCommons.IsEquipped(cell):
+	elif cell and equipped:
 		targetColor = UICommons.CellTileColorEquipped
 	else:
 		targetColor = UICommons.CellTileColorDefault

@@ -1,33 +1,33 @@
 extends WindowPanel
 
-@onready var grid : GridContainer		= $Margin/HBoxContainer/ItemsBox/Margin/Container/Grid
+@onready var grid : GridContainer		= $Layout/Margin/HBoxContainer/ItemsBox/Margin/Container/Grid
 
-@onready var itemButtons : Control		= $Margin/HBoxContainer/ItemsBox/ItemButtons
-@onready var dropButtons : Control		= $Margin/HBoxContainer/ItemsBox/DropButtons
+@onready var itemButtons : Control		= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons
+@onready var dropButtons : Control		= $Layout/Margin/HBoxContainer/ItemsBox/DropButtons
 
-@onready var dropButton : Button		= $Margin/HBoxContainer/ItemsBox/ItemButtons/Drop
-@onready var useButton : Button			= $Margin/HBoxContainer/ItemsBox/ItemButtons/Use
-@onready var equipButton : Button		= $Margin/HBoxContainer/ItemsBox/ItemButtons/Equip
-@onready var unequipButton : Button		= $Margin/HBoxContainer/ItemsBox/ItemButtons/Unequip
+@onready var dropButton : Button		= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons/Drop
+@onready var useButton : Button			= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons/Use
+@onready var equipButton : Button		= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons/Equip
+@onready var unequipButton : Button		= $Layout/Margin/HBoxContainer/ItemsBox/ItemButtons/Unequip
 
-@onready var lessDropButton : Button	= $Margin/HBoxContainer/ItemsBox/DropButtons/Less
-@onready var moreDropButton : Button	= $Margin/HBoxContainer/ItemsBox/DropButtons/More
-@onready var dropLabel : Label			= $Margin/HBoxContainer/ItemsBox/DropButtons/Label
+@onready var lessDropButton : Button	= $Layout/Margin/HBoxContainer/ItemsBox/DropButtons/Less
+@onready var moreDropButton : Button	= $Layout/Margin/HBoxContainer/ItemsBox/DropButtons/More
+@onready var dropLabel : Label			= $Layout/Margin/HBoxContainer/ItemsBox/DropButtons/Label
 
 @onready var equipmentSlots : Array[CellTile] = [
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Chest,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Legs,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Feet,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Hands,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Head,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Neck,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Weapon,
-	$Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Shield,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Chest,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Legs,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Feet,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Hands,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Head,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Neck,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Weapon,
+	$Layout/Margin/HBoxContainer/InfoScroll/InfoBox/EquipmentGrid/Shield,
 ]
 
-@onready var modifiersText : RichTextLabel	= $Margin/HBoxContainer/InfoScroll/InfoBox/ModifiersText
-@onready var weightBar : Control			= $Margin/HBoxContainer/InfoScroll/InfoBox/WeightBox/WeightBar
-@onready var slotsBar : Control				= $Margin/HBoxContainer/InfoScroll/InfoBox/SlotsBox/SlotsBar
+@onready var modifiersText : RichTextLabel	= $Layout/Margin/HBoxContainer/InfoScroll/InfoBox/ModifiersText
+@onready var weightBar : Control			= $Layout/Margin/HBoxContainer/InfoScroll/InfoBox/WeightBox/WeightBar
+@onready var slotsBar : Control				= $Layout/Margin/HBoxContainer/InfoScroll/InfoBox/SlotsBox/SlotsBar
 
 enum ButtonMode
 {
@@ -66,14 +66,17 @@ func IsFiltered(cell : ItemCell, filter : FilterTab) -> bool:
 func RefreshInventory():
 	var count : int			= 0
 	var tileIdx : int		= 0
+	var inventoryIdx : int	= 0
 	var tile : CellTile		= grid.GetTile(tileIdx)
 
 	for item in Launcher.Player.inventory.items:
 		if not item or item.cellID == DB.UnknownHash:
+			inventoryIdx += 1
 			continue
 
 		var cell : ItemCell = DB.GetItem(item.cellID, item.cellCustomfield)
 		if not cell:
+			inventoryIdx += 1
 			continue
 
 		count += 1
@@ -81,28 +84,39 @@ func RefreshInventory():
 		if IsFiltered(cell, currentFilter):
 			if cell.stackable:
 				if tile:
+					tile.equipped = false
+					tile.itemIndex = inventoryIdx
 					tile.AssignData(cell, item.count)
 					tileIdx += 1
 					tile = grid.GetTile(tileIdx)
 				else:
+					inventoryIdx += 1
 					break
 			else:
-				for cellIdx in item.count:
-					if tile:
-						tile.AssignData(cell)
-						tileIdx += 1
-						tile = grid.GetTile(tileIdx)
-					else:
-						break
+				if tile:
+					tile.equipped = Launcher.Player.inventory.IsItemEquipped(item)
+					tile.itemIndex = inventoryIdx
+					tile.AssignData(cell)
+					tileIdx += 1
+					tile = grid.GetTile(tileIdx)
+				else:
+					inventoryIdx += 1
+					break
 		elif selectedTile and item and cell == selectedTile.cell:
 			SelectTile(null)
 			selectedTile = null
+		inventoryIdx += 1
 
 	for remainingIdx in range(tileIdx, grid.maxCount):
+		grid.tiles[remainingIdx].equipped = false
+		grid.tiles[remainingIdx].itemIndex = -1
 		grid.tiles[remainingIdx].AssignData(null, 0)
 
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
-		equipmentSlots[slot - ActorCommons.Slot.FIRST_EQUIPMENT].AssignData(Launcher.Player.inventory.equipment[slot - ActorCommons.Slot.FIRST_EQUIPMENT])
+		var slotIdx : int = slot - ActorCommons.Slot.FIRST_EQUIPMENT
+		var equippedCell : ItemCell = Launcher.Player.inventory.GetEquipmentCell(slotIdx)
+		equipmentSlots[slotIdx].equipped = equippedCell != null
+		equipmentSlots[slotIdx].AssignData(equippedCell)
 
 	RefreshModifiers(count)
 	SelectTile(selectedTile if selectedTile else grid.GetTile(0))
@@ -120,7 +134,7 @@ func MakeModifierBBCode(effect : CellCommons.Modifier, value : Variant) -> Strin
 func GetEquipmentModifierTotals() -> Dictionary:
 	var totals : Dictionary = {}
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
-		var equippedCell : ItemCell = Launcher.Player.inventory.equipment[slot - ActorCommons.Slot.FIRST_EQUIPMENT]
+		var equippedCell : ItemCell = Launcher.Player.inventory.GetEquipmentCell(slot - ActorCommons.Slot.FIRST_EQUIPMENT)
 		if equippedCell and equippedCell.modifiers:
 			for modifier in equippedCell.modifiers._modifiers:
 				if modifier and modifier._persistent:
@@ -171,7 +185,7 @@ func RefreshItemMode():
 
 	if selectedTile and selectedTile.cell and selectedTile.count > 0:
 		var isEquipment : bool = selectedTile.cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and selectedTile.cell.slot < ActorCommons.Slot.LAST_EQUIPMENT
-		var isEquiped : bool = isEquipment and CellCommons.IsEquipped(selectedTile.cell)
+		var isEquiped : bool = isEquipment and selectedTile.equipped
 		var isQuestItem : bool = selectedTile.cell.slot == ActorCommons.Slot.QUEST
 
 		useButton.set_visible(selectedTile.cell.usable)
@@ -240,7 +254,7 @@ func _on_use_pressed():
 
 func _on_equip_pressed():
 	if selectedTile and selectedTile.cell:
-		Network.EquipItem(selectedTile.cell.id, selectedTile.cell.customfield)
+		Network.EquipItem(selectedTile.cell.id, selectedTile.cell.customfield, selectedTile.itemIndex)
 
 func _on_unequip_pressed():
 	if selectedTile and selectedTile.cell:
@@ -267,7 +281,7 @@ func _on_drop_more_pressed():
 
 func _on_confirm_drop_pressed():
 	if selectedTile and selectedTile.cell:
-		Network.DropItem(selectedTile.cell.id, selectedTile.cell.customfield, dropValue)
+		Network.DropItem(selectedTile.cell.id, selectedTile.cell.customfield, dropValue, selectedTile.itemIndex)
 	SetButtonMode(ButtonMode.ITEM)
 
 func _on_info_scroll_gui_input(event : InputEvent):

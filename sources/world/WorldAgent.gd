@@ -70,7 +70,7 @@ static func PopAgent(agent : BaseAgent):
 
 static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 	assert(agent != null, "Agent is null, can't push it")
-	assert(inst != null, "Instance is null, can't push the agent in it")		
+	assert(inst != null, "Instance is null, can't push the agent in it")
 	if agent and inst:
 		agent.set_physics_process(true)
 		if agent is PlayerAgent:
@@ -104,7 +104,7 @@ static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : St
 		return null
 
 	AddAgent(agent)
-	Launcher.World.Warp(agent, spawn.map, position, instanceID)
+	Launcher.World.Warp(agent, spawn.map, position, ActorCommons.Direction.UNKNOWN, instanceID)
 	return agent
 
 static func _post_launch():

@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://b8ixnx1136r4m" path="res://presets/cells/items/hands/LeatherGloves.tres" id="6_hands"]
 [ext_resource type="Resource" uid="uid://bj5p08ffbj617" path="res://presets/cells/items/weapon/BoneKnife.tres" id="7_weapon"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="8_parent"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="8_yvmuu"]
 
 [resource]
 script = ExtResource("2_entity")

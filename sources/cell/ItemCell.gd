@@ -15,11 +15,12 @@ func Use():
 	if usable:
 		super.Use()
 	elif slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_EQUIPMENT and Launcher.Player and Launcher.Player.inventory:
-		var equipmentCell : ItemCell = Launcher.Player.inventory.equipment[slot]
+		var equipmentCell : ItemCell = Launcher.Player.inventory.GetEquipmentCell(slot)
 		if CellCommons.IsSameCell(self, equipmentCell):
 			Network.UnequipItem(id, customfield)
 		else:
-			Network.EquipItem(id, customfield)
+			var itemIndex : int = Launcher.Player.inventory.FindItemIndex(self)
+			Network.EquipItem(id, customfield, itemIndex)
 
 #
 func _init():

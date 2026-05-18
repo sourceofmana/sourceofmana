@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_dfoc1"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_4cr5i"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_skill"]
+[ext_resource type="Resource" uid="uid://dlftukimhm3l1" path="res://presets/cells/skills/SonicWave.tres" id="4_sonic"]
 
 [resource]
 script = ExtResource("2_4cr5i")
@@ -15,6 +17,6 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_dfoc1")]([null, null, null, null, null, null, null, null])
 _behaviour = 4
-_skills = Dictionary[String, float]({
-"Sonic Wave": 10.0
+_skills = Dictionary[ExtResource("3_skill"), float]({
+ExtResource("4_sonic"): 10.0
 })

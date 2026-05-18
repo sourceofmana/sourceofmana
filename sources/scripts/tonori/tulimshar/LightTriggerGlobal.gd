@@ -7,7 +7,7 @@ const GUARD_SPEED_BOOST : int = 200
 const APPROACH_DISTANCE : float = 48.0
 
 #
-static var activeCatches : Dictionary[int, bool] = {}
+static var activeCatches : Dictionary[int, NpcAgent] = {}
 
 #
 func OnAreaEnter(player : PlayerAgent):
@@ -26,13 +26,13 @@ static func CallGuard(player : PlayerAgent):
 		return
 
 	if player.SetState(ActorCommons.State.TRIGGER):
-		activeCatches[playerRID] = true
-		NpcCommons.PushNotification(player, "A guard saw you!")
-
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(player)
 		if inst:
 			var guard : BaseAgent = SpawnGuard(inst)
 			if guard:
+				activeCatches[playerRID] = guard
+				NpcCommons.PushNotification(player, "A guard saw you!")
+				Callback.AddCallback(player.tree_exiting, Cleanup, [player, guard, playerRID], ConnectFlags.CONNECT_ONE_SHOT)
 				Callback.OneShotCallback(guard.ready, OnGuardReady.bind(player, guard, playerRID))
 
 static func SpawnGuard(inst : WorldInstance) -> BaseAgent:
@@ -67,11 +67,14 @@ static func StartGuardNavigation(player : PlayerAgent, guard : NpcAgent, playerR
 
 	AI.Stop(guard)
 
+	# Check if in correct distance to start the guard interaction
+	if (guard.position - player.position).length() < APPROACH_DISTANCE / 2.0:
+		OnGuardArrived(player, guard, playerRID)
 	# Stop right before the player position but still within the trigger position
-	var stopPos : Vector2 = player.position + (guard.position - player.position).normalized() * APPROACH_DISTANCE / 2.0
-	guard.WalkToward(stopPos)
-	Callback.OneShotCallback(guard.agent.navigation_finished, OnGuardArrived.bind(player, guard, playerRID))
-	Callback.OneShotCallback(player.tree_exiting, Cleanup.bind(player, guard, playerRID))
+	else:
+		var stopPos : Vector2 = player.position + (guard.position - player.position).normalized() * APPROACH_DISTANCE / 2.0
+		guard.WalkToward(stopPos)
+		Callback.OneShotCallback(guard.agent.navigation_finished, OnGuardArrived.bind(player, guard, playerRID))
 
 static func OnGuardArrived(player : PlayerAgent, guard : NpcAgent, playerRID : int):
 	if not guard or not ActorCommons.IsAlive(player):
