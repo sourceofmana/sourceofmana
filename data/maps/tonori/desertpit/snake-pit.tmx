@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.0" orientation="orthogonal" renderorder="right-down" width="120" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="16">
+<map version="1.10" tiledversion="1.12.0" orientation="orthogonal" renderorder="right-down" width="120" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="15">
  <properties>
   <property name="ambient" value="Lighting"/>
   <property name="ambientintensity" type="float" value="0.6"/>
@@ -103,16 +103,16 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="15" name="Snake Pit Pond" type="Spawn" x="1507.33" y="2615.33" width="1" height="1">
-   <properties>
-    <property name="player_script" value="tonori/desertpit/WaterPondFilthy.gd"/>
-    <property name="type" value="Npc"/>
-   </properties>
-  </object>
   <object id="13" name="Snake Pit Pond" type="Spawn" x="2851" y="2823" width="1" height="1">
    <properties>
     <property name="own_script" value="tonori/desertpit/WaterPondGlobal.gd"/>
     <property name="player_script" value="tonori/desertpit/WaterPond.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="14" name="Snake Pit Pond" type="Spawn" x="1507" y="2615" width="1" height="1">
+   <properties>
+    <property name="player_script" value="tonori/desertpit/WaterPondFilthy.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
