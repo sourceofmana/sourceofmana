@@ -1,26 +1,20 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://csg7jts46j2ng"]
 
+[ext_resource type="Texture2D" uid="uid://d073x7fif3tmr" path="res://data/graphics/sprites/npcs/chest-large.png" id="1_8noqe"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_wugrw"]
-[ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_qiwmn"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_ydrke"]
+[ext_resource type="Resource" uid="uid://bnaqbs0np0lkj" path="res://presets/entities/Chest.tres" id="3_dyg1f"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_qiwmn"]
-[ext_resource type="AudioStream" uid="uid://cf5twqbe8lmb1" path="res://data/sounds/entities/chest/open.ogg" id="4_chest_open"]
-[ext_resource type="AudioStream" uid="uid://bq46qh21ja0cq" path="res://data/sounds/entities/chest/close.ogg" id="5_chest_close"]
 
 [resource]
 script = ExtResource("2_ydrke")
-_parent = ExtResource("2_qiwmn")
+_parent = ExtResource("3_dyg1f")
 _id = 970294591
 _name = "Thiefs Chest"
-_spritePreset = "Chest"
 _radius = 26
 _stats = {
 "level": 1
 }
-_equipment = Array[ExtResource("1_wugrw")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("1_8noqe")
 _questID = 2
 _questState = 32
-_sfx = Dictionary[int, AudioStream]({
-5: ExtResource("4_chest_open"),
-7: ExtResource("5_chest_close")
-})
