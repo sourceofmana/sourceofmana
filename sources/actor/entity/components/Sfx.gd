@@ -36,7 +36,8 @@ func StopAlteration():
 
 func HandleAlteration(alteration : ActorCommons.Alteration):
 	currentAlteration = alteration
-	PlayAlteration(ActorCommons.DefaultSfx.get(alteration))
+	var audioStream : AudioStream = entity.data._alterationSFX[alteration] if entity.data._alterationSFX.has(alteration) else ActorCommons.DefaultSfx.get(alteration)
+	PlayAlteration(audioStream)
 
 # State player
 func PlayState(audioStream : AudioStream):
@@ -63,7 +64,7 @@ func StopState():
 func HandleState(state : ActorCommons.State):
 	if currentState != state:
 		currentState = state
-		if entity.data and entity.data._sfx.has(state):
-			PlayState(entity.data._sfx.get(state))
+		if entity.data and entity.data._stateSFX.has(state):
+			PlayState(entity.data._stateSFX[state])
 		else:
 			StopState()

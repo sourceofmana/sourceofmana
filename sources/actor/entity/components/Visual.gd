@@ -3,7 +3,6 @@ class_name EntityVisual
 
 #
 signal spriteOffsetUpdate
-signal state_changed(state : ActorCommons.State)
 
 #
 @onready var entity : Entity				= get_parent()
@@ -15,7 +14,6 @@ var sprites : Array[Sprite2D]				= []
 
 var previousOrientation : Vector2			= Vector2.ZERO
 var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
-var previousAnimState : ActorCommons.State	= ActorCommons.State.UNKNOWN
 
 var blendSpacePaths : Array[String]			= []
 var walkTimeScalePath : String				= ""
@@ -268,15 +266,6 @@ func UpdateScale():
 	if not attackTimeScalePath.is_empty() and entity.stat.current.castAttackDelay > 0:
 		animationTree[attackTimeScalePath] = attackAnimLength / entity.stat.current.castAttackDelay
 
-func OnAnimationStarted(animName : StringName):
-	for stateIdx in ActorCommons.State.COUNT:
-		if animName == ActorCommons.STATE_NAMES[stateIdx]:
-			var stateId : ActorCommons.State = stateIdx as ActorCommons.State
-			if stateId != previousAnimState:
-				previousAnimState = stateId
-				state_changed.emit(stateId)
-			return
-
 func ResetAnimationValue():
 	if not animationTree:
 		return
@@ -285,8 +274,6 @@ func ResetAnimationValue():
 	UpdateScale()
 	RefreshTree()
 	Refresh.call_deferred()
-	if not animationTree.animation_started.is_connected(OnAnimationStarted):
-		animationTree.animation_started.connect(OnAnimationStarted)
 
 func GetPlayerOffset() -> int:
 	var spriteOffset : int = ActorCommons.interactionDisplayOffset
