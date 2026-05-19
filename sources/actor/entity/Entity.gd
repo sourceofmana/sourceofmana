@@ -58,7 +58,8 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 		visual.Refresh()
 
 	if previousState != nextState:
-		sfx.HandleState(nextState)
+		if sfx:
+			sfx.HandleState(nextState)
 		if nextState == ActorCommons.State.DEATH:
 			entity_died.emit()
 
@@ -185,3 +186,6 @@ func _ready():
 	var displayTargetNone : Callable = interactive.DisplayTarget.bind(ActorCommons.Target.NONE)
 	if not entity_died.is_connected(displayTargetNone):
 		entity_died.connect(displayTargetNone)
+
+	if sfx and not visual.state_changed.is_connected(sfx.HandleState):
+		visual.state_changed.connect(sfx.HandleState)
