@@ -60,6 +60,15 @@ static func ClearTracker(agent : BaseAgent):
 			if inst:
 				Network.NotifyInstance(inst, "ClearProgressionTracker", [])
 
+# Tutorial
+static func HighlightUI(pc : BaseAgent, target : UICommons.UITarget):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.HighlightUI(target, pc.peerID)
+
+static func ClearHighlightUI(pc : BaseAgent):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.ClearHighlightUI(pc.peerID)
+
 # Camera
 static func CameraLookAt(pc : BaseAgent, pos : Vector2):
 	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:

@@ -29,6 +29,21 @@ enum ButtonBox
 	CANCEL
 }
 
+enum UITarget
+{
+	MENU = 0,
+	STAT,
+	INVENTORY,
+	CHAT,
+	SKILL,
+	MINIMAP,
+	PROGRESS,
+	SOCIAL,
+	EMOTE,
+	SETTINGS,
+	ACTION_BAR,
+}
+
 static func ColorToHSVA(color : Color) -> Vector4:
 	var maxc : float = max(color.r, max(color.g, color.b))
 	var minc : float = min(color.r, min(color.g, color.b))

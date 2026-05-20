@@ -136,6 +136,13 @@ func IsQuestCompleted(questID : int) -> bool:
 func GetState(questID : int) -> Variant:
 	return ProgressCommons.QuestStates.get(questID)
 
+# Tutorial
+func Highlight(target : UICommons.UITarget):
+	Action(NpcCommons.HighlightUI.bind(own, target))
+
+func ClearHighlight():
+	Action(NpcCommons.ClearHighlightUI.bind(own))
+
 # Display
 func Notification(text : String):
 	NpcCommons.PushNotification(own, text)

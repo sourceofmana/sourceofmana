@@ -80,6 +80,14 @@ func ContextClose(_peerID : int):
 func ContextChoice(texts : PackedStringArray, _peerID : int):
 	Launcher.GUI.dialogueWindow.AddChoices(texts)
 
+func HighlightUI(target : int, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.ShowHighlight(target as UICommons.UITarget)
+
+func ClearHighlightUI(_peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.ClearHighlight()
+
 func CameraLookAt(pos : Vector2, _peerID : int):
 	if Launcher.Camera:
 		Launcher.Camera.LookAt(pos)

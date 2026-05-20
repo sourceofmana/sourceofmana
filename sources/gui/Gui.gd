@@ -48,6 +48,9 @@ extends ServiceBase
 @onready var CRTShader : TextureRect			= $Shaders/CRT
 @onready var HQ4xShader : TextureRect			= $Shaders/HQ4x
 
+# Highlight
+var highlight : UIHighlight						= null
+
 # State transition
 var progressTimer : Timer						= null
 
@@ -245,6 +248,33 @@ func _notification(notif):
 		Node.NOTIFICATION_DRAG_END:
 			Launcher.Action.Enable(true)
 
+func ShowHighlight(target : UICommons.UITarget):
+	if highlight:
+		var node : Control = GetHighlightTarget(target)
+		if node:
+			if node is WindowPanel and not node.is_visible():
+				ToggleControl(node)
+			highlight.Show(node)
+
+func ClearHighlight():
+	if highlight:
+		highlight.Clear()
+
+func GetHighlightTarget(target : UICommons.UITarget) -> Control:
+	match target:
+		UICommons.UITarget.MENU:       return menu
+		UICommons.UITarget.STAT:       return stats
+		UICommons.UITarget.INVENTORY:  return inventoryWindow
+		UICommons.UITarget.CHAT:       return chatWindow
+		UICommons.UITarget.SKILL:      return skillWindow
+		UICommons.UITarget.MINIMAP:    return minimapWindow
+		UICommons.UITarget.PROGRESS:   return progressWindow
+		UICommons.UITarget.SOCIAL:     return socialWindow
+		UICommons.UITarget.EMOTE:      return emoteWindow
+		UICommons.UITarget.SETTINGS:   return settingsWindow
+		UICommons.UITarget.ACTION_BAR: return actionBoxes
+		_:                                   return null
+
 func _ready():
 	get_tree().set_auto_accept_quit(false)
 	get_tree().set_quit_on_go_back(false)
@@ -252,6 +282,9 @@ func _ready():
 	assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
 	CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
 	DB.WarmShaders()
+
+	highlight = UIHighlight.new()
+	add_child(highlight)
 
 func _on_ui_margin_resized():
 	if CRTShader and CRTShader.material:

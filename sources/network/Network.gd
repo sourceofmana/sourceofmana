@@ -246,6 +246,15 @@ func TriggerCloseContext(peerID : int = NetworkCommons.PeerAuthorityID):
 func TriggerNextContext(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerNextContext", [], peerID)
 
+# Tutorial
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func HighlightUI(target : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("HighlightUI", [target], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ClearHighlightUI(peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ClearHighlightUI", [], peerID)
+
 # Camera
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func CameraLookAt(pos : Vector2, peerID : int = NetworkCommons.PeerOfflineID):
