@@ -4,9 +4,11 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_mr4dg"]
 [ext_resource type="Texture2D" uid="uid://dnrysjgetstj4" path="res://data/graphics/sprites/monsters/slime-sludge.png" id="3_tex"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_w1pht"]
+[ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="3_xbbvo"]
 
 [resource]
 script = ExtResource("2_mr4dg")
+_parent = ExtResource("3_xbbvo")
 _id = 2450367875
 _name = "Sludge Slime"
 _spritePreset = "SlimeSludge"
@@ -18,3 +20,5 @@ _stats = {
 _equipment = Array[ExtResource("1_f0h6j")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
 _behaviour = 130
+_stateSFX = null
+_alterationSFX = null

@@ -1,8 +1,11 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://cruegsb84bath"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_s75xo"]
+[ext_resource type="AudioStream" uid="uid://2e3h5yarg27o" path="res://data/sounds/entities/croc/hit.ogg" id="1_ubkm5"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_dil16"]
+[ext_resource type="AudioStream" uid="uid://dxx1kj71y6eqc" path="res://data/sounds/entities/croc/dodge.ogg" id="2_fdhrd"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_w81gt"]
+[ext_resource type="AudioStream" uid="uid://dq07saoqfahh2" path="res://data/sounds/entities/croc/attack.ogg" id="6_dvo0c"]
 
 [resource]
 script = ExtResource("2_dil16")
@@ -17,3 +20,10 @@ _stats = {
 "walkSpeed": 80.0
 }
 _equipment = Array[ExtResource("1_s75xo")]([null, null, null, null, null, null, null, null])
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_dvo0c")
+})
+_alterationSFX = Dictionary[int, AudioStream]({
+0: ExtResource("1_ubkm5"),
+3: ExtResource("2_fdhrd")
+})

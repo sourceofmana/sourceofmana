@@ -3,11 +3,13 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_qoprb"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_7qgir"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_raowf"]
+[ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="2_ty53i"]
 [ext_resource type="Resource" uid="uid://dle132272116a" path="res://presets/entities/Lilah.tres" id="3_lilah"]
 [ext_resource type="Resource" uid="uid://dcygfugnyiuaf" path="res://presets/entities/Lulea.tres" id="4_lulea"]
 
 [resource]
 script = ExtResource("2_7qgir")
+_parent = ExtResource("2_ty53i")
 _id = 3314548081
 _name = "Splatyna"
 _spritePreset = "Splatyna"
@@ -23,4 +25,6 @@ _spawns = Dictionary[ExtResource("2_7qgir"), int]({
 ExtResource("3_lilah"): 3,
 ExtResource("4_lulea"): 3
 })
+_stateSFX = null
+_alterationSFX = null
 _isBoss = true

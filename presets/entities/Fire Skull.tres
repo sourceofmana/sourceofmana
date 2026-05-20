@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_skill"]
 [ext_resource type="Resource" uid="uid://cot2eu3ix5rdm" path="res://presets/cells/skills/Flar.tres" id="4_flar"]
 [ext_resource type="Texture2D" uid="uid://dwh7x3gvrmogx" path="res://data/graphics/sprites/monsters/skull-fire.png" id="5_tex"]
+[ext_resource type="AudioStream" uid="uid://dnru4y5xrg2ue" path="res://data/sounds/entities/fire-skull/attack.ogg" id="6_n0w5d"]
 
 [resource]
 script = ExtResource("2_yfu84")
@@ -22,3 +23,7 @@ _behaviour = 4
 _skills = Dictionary[ExtResource("3_skill"), float]({
 ExtResource("4_flar"): 1.0
 })
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_n0w5d")
+})
+_alterationSFX = null

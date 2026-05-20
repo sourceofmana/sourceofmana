@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_cptef"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_jxq6m"]
+[ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="3_0tiq2"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_k480p"]
 [ext_resource type="Texture2D" uid="uid://edgk8w7nd6u2" path="res://data/graphics/sprites/monsters/slime-drain.png" id="3_tex"]
 
 [resource]
 script = ExtResource("2_jxq6m")
+_parent = ExtResource("3_0tiq2")
 _id = 2469123693
 _name = "Drain Slime"
 _spritePreset = "Slime"
@@ -18,3 +20,5 @@ _stats = {
 _equipment = Array[ExtResource("1_cptef")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
 _behaviour = 130
+_stateSFX = null
+_alterationSFX = null

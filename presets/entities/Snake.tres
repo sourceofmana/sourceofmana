@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_dfnee"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_5h6di"]
 [ext_resource type="Texture2D" uid="uid://tp667v46h13l" path="res://data/graphics/sprites/monsters/snake.png" id="3_tex"]
+[ext_resource type="AudioStream" uid="uid://cy46l0s1gs7h" path="res://data/sounds/entities/snake/attack.ogg" id="5_orgth"]
 
 [resource]
 script = ExtResource("2_dfnee")
@@ -19,3 +20,7 @@ _stats = {
 _equipment = Array[ExtResource("1_q84qv")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
 _behaviour = 4
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("5_orgth")
+})
+_alterationSFX = null

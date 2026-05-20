@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_npq0n"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_bka63"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_wu7ge"]
+[ext_resource type="AudioStream" uid="uid://cchod7sufq5er" path="res://data/sounds/entities/bat/attack.ogg" id="4_bka63"]
+[ext_resource type="AudioStream" uid="uid://did2kqv51vboy" path="res://data/sounds/entities/bat/death.ogg" id="5_p1o7w"]
 
 [resource]
 script = ExtResource("2_wu7ge")
@@ -17,3 +19,8 @@ _stats = {
 "walkSpeed": 100.0
 }
 _equipment = Array[ExtResource("1_npq0n")]([null, null, null, null, null, null, null, null])
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("4_bka63"),
+4: ExtResource("5_p1o7w")
+})
+_alterationSFX = null

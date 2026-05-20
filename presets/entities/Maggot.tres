@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_lo0gq"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_bguxx"]
 [ext_resource type="Texture2D" uid="uid://t81s8gpayata" path="res://data/graphics/sprites/monsters/maggot.png" id="3_tex"]
+[ext_resource type="AudioStream" uid="uid://hxejvtfj74bd" path="res://data/sounds/entities/maggot/attack.ogg" id="5_mxmhf"]
+[ext_resource type="AudioStream" uid="uid://dnjxafax7stqw" path="res://data/sounds/entities/maggot/death.ogg" id="6_qtjwj"]
 
 [resource]
 script = ExtResource("2_lo0gq")
@@ -17,3 +19,8 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_bbb2k")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("5_mxmhf"),
+4: ExtResource("6_qtjwj")
+})
+_alterationSFX = null

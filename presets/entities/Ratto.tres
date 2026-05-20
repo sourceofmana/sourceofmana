@@ -1,8 +1,11 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://csfvrrmmkshgs"]
 
+[ext_resource type="AudioStream" uid="uid://cf8mc7uolfi74" path="res://data/sounds/entities/ratto/hit.ogg" id="1_1cndx"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_jchlc"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_t3ig3"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_tilun"]
+[ext_resource type="AudioStream" uid="uid://bq8byp2bo1ur" path="res://data/sounds/entities/ratto/death.ogg" id="5_v8lwk"]
+[ext_resource type="AudioStream" uid="uid://cgjn6we5pvgp" path="res://data/sounds/entities/ratto/attack.ogg" id="6_fx47f"]
 
 [resource]
 script = ExtResource("2_t3ig3")
@@ -16,3 +19,10 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_jchlc")]([null, null, null, null, null, null, null, null])
 _behaviour = 130
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_fx47f"),
+4: ExtResource("5_v8lwk")
+})
+_alterationSFX = Dictionary[int, AudioStream]({
+0: ExtResource("1_1cndx")
+})

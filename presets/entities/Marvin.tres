@@ -3,12 +3,14 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_t1rhf"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_vkvo0"]
 [ext_resource type="Resource" uid="uid://jvifo7cagr5n" path="res://presets/cells/items/common/MarvinKey.tres" id="3_mrvkey"]
+[ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="4_jsxmo"]
 [ext_resource type="Resource" uid="uid://dle132272116a" path="res://presets/entities/Lilah.tres" id="4_lilah"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_o7lnd"]
 [ext_resource type="Texture2D" uid="uid://b8f7qdmb4rksv" path="res://data/graphics/sprites/monsters/marvin.png" id="5_tex"]
 
 [resource]
 script = ExtResource("2_vkvo0")
+_parent = ExtResource("4_jsxmo")
 _id = 3264744754
 _name = "Marvin"
 _spritePreset = "Slime"
@@ -26,3 +28,5 @@ ExtResource("3_mrvkey"): 1.0
 _spawns = Dictionary[ExtResource("2_vkvo0"), int]({
 ExtResource("4_lilah"): 2
 })
+_stateSFX = null
+_alterationSFX = null

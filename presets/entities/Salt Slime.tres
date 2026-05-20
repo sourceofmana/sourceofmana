@@ -3,11 +3,13 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_n178d"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_iqu4k"]
 [ext_resource type="Resource" uid="uid://1guycf8ymnqp" path="res://presets/cells/items/usable/Apple.tres" id="3_apple"]
+[ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="4_77cdu"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_frf6u"]
 [ext_resource type="Texture2D" uid="uid://craef2u2k12kr" path="res://data/graphics/sprites/monsters/slime-salt.png" id="4_tex"]
 
 [resource]
 script = ExtResource("2_iqu4k")
+_parent = ExtResource("4_77cdu")
 _id = 2250973363
 _name = "Salt Slime"
 _spritePreset = "Slime"
@@ -22,3 +24,5 @@ _behaviour = 130
 _drops = Dictionary[ExtResource("1_n178d"), float]({
 ExtResource("3_apple"): 0.7
 })
+_stateSFX = null
+_alterationSFX = null

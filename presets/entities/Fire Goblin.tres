@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://6tbubgxpjsgb"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_82due"]
+[ext_resource type="AudioStream" uid="uid://b40da1jxg2knf" path="res://data/sounds/entities/fire-goblin/dodge.ogg" id="1_txwbe"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_juena"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_skill"]
 [ext_resource type="Resource" uid="uid://bqg1nlmgehdkc" path="res://presets/cells/skills/Spitfire.tres" id="4_spit"]
 [ext_resource type="Texture2D" uid="uid://b84mwc1b6hjdr" path="res://data/graphics/sprites/monsters/firegoblin.png" id="5_tex"]
+[ext_resource type="AudioStream" uid="uid://cdowss8b51os6" path="res://data/sounds/entities/fire-goblin/attack.ogg" id="7_x38au"]
 
 [resource]
 script = ExtResource("2_juena")
@@ -20,4 +22,10 @@ _equipment = Array[ExtResource("1_82due")]([null, null, null, null, null, null, 
 _customTexture = ExtResource("5_tex")
 _skills = Dictionary[ExtResource("3_skill"), float]({
 ExtResource("4_spit"): 2.0
+})
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("7_x38au")
+})
+_alterationSFX = Dictionary[int, AudioStream]({
+3: ExtResource("1_txwbe")
 })

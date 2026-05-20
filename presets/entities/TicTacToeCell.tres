@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_script"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_knbn7"]
 [ext_resource type="Texture2D" uid="uid://c7hjgw2qfjq6l" path="res://data/graphics/sprites/npcs/tictactoe-cell.png" id="4_tex"]
+[ext_resource type="AudioStream" uid="uid://bp2ogfu5dyiki" path="res://data/sounds/entities/tictactoe/trigger.ogg" id="6_liipe"]
 
 [resource]
 script = ExtResource("3_script")
@@ -19,3 +20,6 @@ _stats = {
 _equipment = Array[ExtResource("1_item")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("4_tex")
 _state = 0
+_stateSFX = Dictionary[int, AudioStream]({
+6: ExtResource("6_liipe")
+})

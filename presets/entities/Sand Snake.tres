@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://tp667v46h13l" path="res://data/graphics/sprites/monsters/snake.png" id="3_tex"]
 [ext_resource type="Material" uid="uid://ce5qgivfdfo" path="res://presets/palettes/monsters/mob-snake-sand.tres" id="4_mat"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_umopc"]
+[ext_resource type="AudioStream" uid="uid://cy46l0s1gs7h" path="res://data/sounds/entities/snake/attack.ogg" id="6_gi6ty"]
 
 [resource]
 script = ExtResource("2_fj57b")
@@ -21,3 +22,7 @@ _equipment = Array[ExtResource("1_uctx6")]([null, null, null, null, null, null, 
 _customTexture = ExtResource("3_tex")
 _customMaterial = ExtResource("4_mat")
 _behaviour = 4
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_gi6ty")
+})
+_alterationSFX = null

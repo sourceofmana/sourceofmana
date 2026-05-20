@@ -1,9 +1,12 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://b5fy25emw04go"]
 
+[ext_resource type="AudioStream" uid="uid://baoya6566nvxe" path="res://data/sounds/entities/shroom/hit.ogg" id="1_6ayky"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_f2r5s"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_l2mfi"]
 [ext_resource type="Texture2D" uid="uid://cyy6fv0yn4vyg" path="res://data/graphics/sprites/monsters/mushroom-spiky.png" id="3_tex"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_vs1yp"]
+[ext_resource type="AudioStream" uid="uid://bs1t88rvdbvko" path="res://data/sounds/entities/shroom/attack.ogg" id="6_548tf"]
+[ext_resource type="AudioStream" uid="uid://0iw7ebp5loly" path="res://data/sounds/entities/shroom/death.ogg" id="7_dsif2"]
 
 [resource]
 script = ExtResource("2_l2mfi")
@@ -17,3 +20,10 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_f2r5s")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_548tf"),
+4: ExtResource("7_dsif2")
+})
+_alterationSFX = Dictionary[int, AudioStream]({
+0: ExtResource("1_6ayky")
+})

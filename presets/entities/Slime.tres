@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://coqp0ev4seayx"]
+
+[ext_resource type="AudioStream" uid="uid://bg07pmac4ytk2" path="res://data/sounds/entities/slime/hit.ogg" id="1_mphar"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_mphar"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_fal55"]
+[ext_resource type="AudioStream" uid="uid://c1ay0csy681us" path="res://data/sounds/entities/slime/attack.ogg" id="5_cqjuh"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="5_nwwuy"]
+[ext_resource type="AudioStream" uid="uid://duc3xk5l28f4k" path="res://data/sounds/entities/slime/death.ogg" id="6_fal55"]
+
+[resource]
+script = ExtResource("5_nwwuy")
+_id = 236582911
+_name = "Slime"
+_spritePreset = "Slime"
+_radius = 10
+_stats = {
+"level": 1,
+"walkSpeed": 40.0
+}
+_behaviour = 130
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("5_cqjuh"),
+4: ExtResource("6_fal55")
+})
+_alterationSFX = Dictionary[int, AudioStream]({
+0: ExtResource("1_mphar")
+})
