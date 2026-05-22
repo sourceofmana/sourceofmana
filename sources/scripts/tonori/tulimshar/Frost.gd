@@ -21,7 +21,7 @@ func OnStart():
 			QuestCompleted()
 
 func QuestInactive():
-	Mes("Careful where you step. The radishes are just coming in.")
+	Mes("Careful where you step. The cacti are just coming in.")
 	Mes("Sorry, I don't get many visitors. Not since I used to be a counsellor up in the palace.")
 	Mes("Quit a few years back. Too much weight on everyone's shoulders up there, you know?")
 	Mes("Out here it's just me and the dirt. Farming is useful for the city though, so I don't mind it.")
@@ -57,7 +57,7 @@ func QuestRewards():
 		Mes("Did you find Bones? He's in the western wall corridor.")
 
 func QuestCompleted():
-	Mes("Radishes are coming in nicely this year.")
+	Mes("Cacti are coming in nicely this year.")
 	Mes("I keep thinking I should walk over there. To the corridor. Not today, but I decided I will.")
 	Mes("He kept those letters. That's something, right?")
 
@@ -104,4 +104,4 @@ func Decline():
 	Chat("No I understand. It's a lot to ask of a stranger.")
 
 func Dismiss():
-	Chat("Right. Well, the radishes won't water themselves.")
+	Chat("Right. Well, the cacti won't take care of themselves.")
