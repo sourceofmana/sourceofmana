@@ -281,6 +281,20 @@ func TriggerChat(text : String, channelID : GUICommons.ChatChannel, peerID : int
 			_:
 				assert(false, "Unsupported chat channel ID (%s)" % channelID)
 
+func TriggerWhisper(targetName : String, text : String, peerID : int):
+	var caller : PlayerAgent = Peers.GetAgent(peerID)
+	if not caller:
+		return
+
+	var target : PlayerAgent = Launcher.World.GetGlobalPlayer(targetName)
+	if not target:
+		Network.callv("ChatSystem", [targetName, "Player '%s' is no longer online" % targetName, caller.peerID])
+		return
+
+	Network.callv("ChatWhisper", [caller.nick, caller.nick, text, target.peerID])
+	Network.callv("ChatWhisper", [target.nick, caller.nick, text, caller.peerID])
+
+
 func TriggerChoice(choiceID : int, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player and player.ownScript:

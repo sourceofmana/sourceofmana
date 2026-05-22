@@ -36,6 +36,8 @@ func RegisterCommands():
 	CommandManager.Register("ban", CommandBan, ActorCommons.Permission.GM, "ban <player_name> <time> <reason>" )
 	CommandManager.Register("unban", CommandUnban, ActorCommons.Permission.GM, "unban <player_name>" )
 	CommandManager.Register("banlist", CommandBanList, ActorCommons.Permission.MODERATOR, "banlist <filter>" )
+	CommandManager.Register("whisper", CommandWhisper, ActorCommons.Permission.NONE, "whisper <player> <message>" )
+	CommandManager.Register("w", CommandWhisper, ActorCommons.Permission.NONE, "w <player> <message>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -71,6 +73,8 @@ static func UnregisterCommands():
 	CommandManager.Unregister("ban")
 	CommandManager.Unregister("unban")
 	CommandManager.Unregister("banlist")
+	CommandManager.Unregister("whisper")
+	CommandManager.Unregister("w")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String = "1") -> bool:
@@ -496,6 +500,24 @@ func CommandBanList(caller : PlayerAgent, filter : String = "") -> bool:
 			Network.CommandFeedback("%s: %s remaining" % [username, Util.FormatDuration(remaining)], caller.peerID)
 		else:
 			Network.CommandFeedback("%s: %s remaining (%s)" % [username, Util.FormatDuration(remaining), banReason], caller.peerID)
+	return true
+
+# Whisper
+func CommandWhisper(caller : PlayerAgent, targetName : String, text : String) -> bool:
+	if not caller or targetName.is_empty() or text.is_empty():
+		return false
+
+	var target : PlayerAgent = Launcher.World.GetGlobalPlayer(targetName)
+	if not target:
+		Network.CommandFeedback("Player '%s' is not online" % targetName, caller.peerID)
+		return true
+
+	if target == caller:
+		Network.CommandFeedback("You cannot whisper to yourself", caller.peerID)
+		return true
+
+	Network.callv("ChatWhisper", [caller.nick, caller.nick, text, target.peerID])
+	Network.callv("ChatWhisper", [target.nick, caller.nick, text, caller.peerID])
 	return true
 
 # Helpers

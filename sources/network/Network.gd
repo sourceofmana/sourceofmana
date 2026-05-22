@@ -209,6 +209,18 @@ func Express(agentRID : int, text : String, peerID : int = NetworkCommons.PeerOf
 func ChatAgent(agentRID : int, text : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("ChatAgent", [agentRID, text], peerID)
 
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TriggerWhisper(targetName : String, text : String, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerWhisper", [targetName, text], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ChatWhisper(partnerName : String, senderName : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ChatWhisper", [partnerName, senderName, text], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ChatSystem(partnerName : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ChatSystem", [partnerName, text], peerID)
+
 # Context
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ToggleContext(enable : bool, peerID : int = NetworkCommons.PeerOfflineID):

@@ -35,8 +35,6 @@ static func Handle(caller : PlayerAgent, commandStr : String):
 			Network.CommandFeedback("Command usage: %s" % command._description, caller.peerID)
 		elif not command.Call(caller, args):
 			Network.CommandFeedback("Command '%s' could not be called due to incorrect arguments" % commandName, caller.peerID)
-		else:
-			Network.CommandFeedback("Command '%s' sent" % commandName, caller.peerID)
 
 # Utils
 static func Parse(command : String) -> Array:

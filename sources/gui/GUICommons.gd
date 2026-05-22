@@ -5,5 +5,6 @@ class_name GUICommons
 enum ChatChannel
 {
 	Local = 0,
-	Global = 1,
+	Global,
+	DefaultCount,
 }
