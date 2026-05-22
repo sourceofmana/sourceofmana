@@ -36,7 +36,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_qmu1c")
 current_tab = 0
-drag_to_rearrange_enabled = true
+tab_focus_mode = 1
 
 [node name="Local" parent="Margin/VBoxContainer/ChatTabContainer" unique_id=1625154428 instance=ExtResource("4_eypvk")]
 layout_mode = 2
@@ -49,7 +49,14 @@ metadata/_tab_index = 1
 
 [node name="NewText" type="LineEdit" parent="Margin/VBoxContainer" unique_id=1138611423]
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
 focus_mode = 1
+theme_type_variation = &"LineEditBorder"
 placeholder_text = "Type here"
 max_length = 255
 caret_blink = true

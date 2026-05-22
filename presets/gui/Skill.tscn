@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_5ty27"]
 [ext_resource type="Script" uid="uid://ckmw8jevrbqwu" path="res://sources/gui/Skill.gd" id="2_m74ld"]
-[ext_resource type="PackedScene" uid="uid://da8nt01w5gjsp" path="res://presets/gui/TitleBar.tscn" id="tb_scene"]
 [ext_resource type="Script" uid="uid://cuhwrw40yxve1" path="res://sources/gui/CellGrid.gd" id="3_vf0uc"]
+[ext_resource type="PackedScene" uid="uid://da8nt01w5gjsp" path="res://presets/gui/TitleBar.tscn" id="tb_scene"]
 
 [node name="Skill" type="PanelContainer" unique_id=753831765]
 custom_minimum_size = Vector2(200, 80)
@@ -12,13 +12,13 @@ offset_top = 25.0
 offset_right = 196.0
 offset_bottom = 105.0
 theme = ExtResource("1_5ty27")
-script = ExtResource("2_m74ld")
 theme_type_variation = &"WindowPanel"
+script = ExtResource("2_m74ld")
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=2100000001]
 layout_mode = 2
 
-[node name="TitleBar" parent="Layout" instance=ExtResource("tb_scene")]
+[node name="TitleBar" parent="Layout" unique_id=1068437761 instance=ExtResource("tb_scene")]
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 1
@@ -32,6 +32,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
+tab_focus_mode = 1
 
 [node name="Spells" type="Control" parent="Layout/VBoxContainer/TabContainer" unique_id=100000003]
 layout_mode = 2

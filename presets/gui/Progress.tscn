@@ -13,14 +13,14 @@ offset_right = 764.0
 offset_bottom = 486.0
 mouse_force_pass_scroll_events = false
 theme = ExtResource("1_q7m0j")
+theme_type_variation = &"WindowPanel"
 script = ExtResource("2_j3ryh")
 saveOverlayState = true
-theme_type_variation = &"WindowPanel"
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=2100000001]
 layout_mode = 2
 
-[node name="TitleBar" parent="Layout" instance=ExtResource("tb_scene")]
+[node name="TitleBar" parent="Layout" unique_id=994988684 instance=ExtResource("tb_scene")]
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 1
@@ -39,6 +39,7 @@ theme_override_constants/margin_bottom = 2
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
+tab_focus_mode = 1
 
 [node name="QuestLog" type="VSplitContainer" parent="Layout/Margin/TabBar" unique_id=1125672958]
 layout_mode = 2

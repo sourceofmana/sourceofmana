@@ -69,6 +69,7 @@ metadata/_edit_use_custom_anchors = true
 [node name="TabContainer" type="TabContainer" parent="Layout/Margin/HBoxContainer/ItemsBox" unique_id=80679759]
 layout_mode = 2
 current_tab = 0
+tab_focus_mode = 1
 
 [node name="All" type="TabBar" parent="Layout/Margin/HBoxContainer/ItemsBox/TabContainer" unique_id=960680010]
 layout_mode = 2
