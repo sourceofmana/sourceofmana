@@ -81,7 +81,7 @@ static func CameraReset(pc : BaseAgent):
 # Context sent to client
 static func Emote(npc : NpcAgent, emoteID : int):
 	if npc:
-		Network.NotifyNeighbours(npc, "Emote", [emoteID])
+		Network.NotifyNeighbours(npc, "Emote", [npc.get_rid().get_id(), emoteID])
 
 static func Express(npc : NpcAgent, pc : BaseAgent, text : String):
 	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
@@ -89,7 +89,7 @@ static func Express(npc : NpcAgent, pc : BaseAgent, text : String):
 
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
 	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
-		Network.ChatAgent(npc.get_rid().get_id(), chat, pc.peerID)
+		Network.ChatPlayer(npc.nick, chat, pc.peerID)
 
 static func ContextText(pc : BaseAgent, author : String, text : String):
 	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:

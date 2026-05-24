@@ -244,10 +244,10 @@ func NotifyPosition():
 	if requireFullUpdate:
 		requireFullUpdate = false
 		requireUpdate = false
-		Network.NotifyNeighbours(self, "FullUpdateEntity", [velocity, position, currentOrientation, state, currentSkillID, stat.isRunning], true, true)
+		Network.NotifyNeighbours(self, "FullUpdateEntity", [get_rid().get_id(), velocity, position, currentOrientation, state, currentSkillID, stat.isRunning], true, true)
 	elif requireUpdate:
 		requireUpdate = false
-		Network.NotifyNeighbours(self, "UpdateEntity", [velocity, position], true, true)
+		Network.NotifyNeighbours(self, "UpdateEntity", [get_rid().get_id(), velocity, position], true, true)
 
 func _velocity_computed(safeVelocity : Vector2i):
 	if stat.health <= 0:

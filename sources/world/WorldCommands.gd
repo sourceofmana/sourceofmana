@@ -38,6 +38,8 @@ func RegisterCommands():
 	CommandManager.Register("banlist", CommandBanList, ActorCommons.Permission.MODERATOR, "banlist <filter>" )
 	CommandManager.Register("whisper", CommandWhisper, ActorCommons.Permission.NONE, "whisper <player> <message>" )
 	CommandManager.Register("w", CommandWhisper, ActorCommons.Permission.NONE, "w <player> <message>" )
+	CommandManager.Register("query", CommandQuery, ActorCommons.Permission.NONE, "query <player>" )
+	CommandManager.Register("q", CommandQuery, ActorCommons.Permission.NONE, "q <player>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -75,6 +77,8 @@ static func UnregisterCommands():
 	CommandManager.Unregister("banlist")
 	CommandManager.Unregister("whisper")
 	CommandManager.Unregister("w")
+	CommandManager.Unregister("query")
+	CommandManager.Unregister("q")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String = "1") -> bool:
@@ -502,9 +506,26 @@ func CommandBanList(caller : PlayerAgent, filter : String = "") -> bool:
 			Network.CommandFeedback("%s: %s remaining (%s)" % [username, Util.FormatDuration(remaining), banReason], caller.peerID)
 	return true
 
-# Whisper
-func CommandWhisper(caller : PlayerAgent, targetName : String, text : String) -> bool:
-	if not caller or targetName.is_empty() or text.is_empty():
+# Private messages
+func CommandWhisper(caller : PlayerAgent, channelName : String, text : String) -> bool:
+	if not caller or channelName.is_empty() or text.is_empty():
+		return false
+
+	var target : PlayerAgent = Launcher.World.GetGlobalPlayer(channelName)
+	if not target:
+		Network.ChatSystem(channelName, "Player '%s' is no longer online" % channelName, caller.peerID)
+		return true
+
+	if target == caller:
+		Network.ChatSystem(channelName, "You cannot whisper to yourself", caller.peerID)
+		return true
+
+	Network.ChatPlayer(caller.nick, caller.nick, text, target.peerID)
+	Network.ChatPlayer(target.nick, caller.nick, text, caller.peerID)
+	return true
+
+func CommandQuery(caller : PlayerAgent, targetName : String) -> bool:
+	if not caller or targetName.is_empty():
 		return false
 
 	var target : PlayerAgent = Launcher.World.GetGlobalPlayer(targetName)
@@ -513,11 +534,10 @@ func CommandWhisper(caller : PlayerAgent, targetName : String, text : String) ->
 		return true
 
 	if target == caller:
-		Network.CommandFeedback("You cannot whisper to yourself", caller.peerID)
+		Network.CommandFeedback("You cannot query yourself", caller.peerID)
 		return true
 
-	Network.callv("ChatWhisper", [caller.nick, caller.nick, text, target.peerID])
-	Network.callv("ChatWhisper", [target.nick, caller.nick, text, caller.peerID])
+	Network.ChatQuery(target.nick, caller.peerID)
 	return true
 
 # Helpers

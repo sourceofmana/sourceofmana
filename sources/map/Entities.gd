@@ -8,6 +8,13 @@ static var entities : Dictionary[int, Entity]		= {}
 static func Get(agentRID : int) -> Entity:
 	return entities.get(agentRID, null)
 
+static func GetNamed(agentName : String) -> Entity:
+	for entityIdx in entities:
+		var entity : Entity = entities[entityIdx]
+		if entity.nick == agentName:
+			return entity
+	return null
+
 static func Clear():
 	var currentPlayerAgentRID : int = Launcher.Player.agentRID if Launcher.Player else NetworkCommons.PeerUnknownID
 	entities.clear()

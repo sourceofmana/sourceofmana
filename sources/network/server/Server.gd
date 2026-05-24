@@ -266,34 +266,26 @@ func TriggerRespawn(peerID : int):
 		player.Respawn()
 
 func TriggerEmote(emoteID : int, peerID : int):
-	Network.NotifyNeighbours(Peers.GetAgent(peerID), "Emote", [emoteID])
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player is PlayerAgent:
+		Network.NotifyNeighbours(player, "Emote", [player.get_rid().get_id(), emoteID])
 
-func TriggerChat(text : String, channelID : GUICommons.ChatChannel, peerID : int):
+func TriggerChat(channelName : String, text : String, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player:
-		match channelID:
-			GUICommons.ChatChannel.Local:
-				Network.NotifyNeighbours(player, "ChatAgent", [text])
-			GUICommons.ChatChannel.Global:
-				Network.NotifyGlobal("ChatGlobal", [player.nick, text])
-				if Launcher.Discord:
-					Launcher.Discord.SendToDiscord(player.nick, text)
-			_:
-				assert(false, "Unsupported chat channel ID (%s)" % channelID)
-
-func TriggerWhisper(targetName : String, text : String, peerID : int):
-	var caller : PlayerAgent = Peers.GetAgent(peerID)
-	if not caller:
-		return
-
-	var target : PlayerAgent = Launcher.World.GetGlobalPlayer(targetName)
-	if not target:
-		Network.callv("ChatSystem", [targetName, "Player '%s' is no longer online" % targetName, caller.peerID])
-		return
-
-	Network.callv("ChatWhisper", [caller.nick, caller.nick, text, target.peerID])
-	Network.callv("ChatWhisper", [target.nick, caller.nick, text, caller.peerID])
-
+		if channelName == str(GUICommons.ChatChannel.LOCAL):
+			Network.NotifyNeighbours(player, "ChatPlayer", [str(GUICommons.ChatChannel.LOCAL), player.nick, text])
+		elif channelName == str(GUICommons.ChatChannel.GLOBAL):
+			Network.NotifyGlobal("ChatPlayer", [str(GUICommons.ChatChannel.GLOBAL), player.nick, text])
+#			if Launcher.Discord:
+#				Launcher.Discord.SendToDiscord(player.nick, text)
+		else:
+			var target : PlayerAgent = Launcher.World.GetGlobalPlayer(channelName)
+			if not target:
+				Network.ChatSystem(channelName, "Player '%s' is no longer online" % channelName, peerID)
+			else:
+				Network.ChatPlayer(player.nick, player.nick, text, target.peerID)
+				Network.ChatPlayer(target.nick, player.nick, text, player.peerID)
 
 func TriggerChoice(choiceID : int, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)

@@ -193,33 +193,25 @@ func TriggerSit(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerSit", [], peerID)
 
 # Chat
-@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerChat(text : String, channelID : GUICommons.ChatChannel, peerID : int = NetworkCommons.PeerAuthorityID):
-	CallServer("TriggerChat", [text, channelID], peerID)
-
-@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ChatGlobal(agentName : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("ChatGlobal", [agentName, text], peerID)
-
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func Express(agentRID : int, text : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("Express", [agentRID, text], peerID)
 
-@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ChatAgent(agentRID : int, text : String, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("ChatAgent", [agentRID, text], peerID)
-
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
-func TriggerWhisper(targetName : String, text : String, peerID : int = NetworkCommons.PeerAuthorityID):
-	CallServer("TriggerWhisper", [targetName, text], peerID)
+func TriggerChat(channelName : String, text : String, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TriggerChat", [channelName, text], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ChatWhisper(partnerName : String, senderName : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("ChatWhisper", [partnerName, senderName, text], peerID)
+func ChatQuery(channelName : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ChatQuery", [channelName], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ChatSystem(partnerName : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("ChatSystem", [partnerName, text], peerID)
+func ChatPlayer(channelName : String, callerName : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ChatPlayer", [channelName, callerName, text], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func ChatSystem(channelName : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ChatSystem", [channelName, text], peerID)
 
 # Context
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
@@ -444,7 +436,7 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 
 	var currentagentRID : int = agent.get_rid().get_id()
 	if inclusive and agent is PlayerAgent:
-		Network.callv(callbackName, [currentagentRID] + args + [agent.peerID])
+		Network.callv(callbackName, args + [agent.peerID])
 
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	if inst:
@@ -460,9 +452,9 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 						player.visibleAgents[currentagentRID] = true
 						Network.Bulk("FullUpdateEntity", [currentagentRID, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID, agent.stat.isRunning], player.peerID)
 					if bulk:
-						Network.Bulk(callbackName, [currentagentRID] + args, player.peerID)
+						Network.Bulk(callbackName, args, player.peerID)
 					else:
-						Network.callv(callbackName, [currentagentRID] + args + [player.peerID])
+						Network.callv(callbackName, args + [player.peerID])
 				elif player.visibleAgents.has(currentagentRID):
 					player.visibleAgents.erase(currentagentRID)
 					Network.Bulk("RemoveEntity", [currentagentRID], player.peerID)

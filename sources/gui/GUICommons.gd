@@ -4,7 +4,8 @@ class_name GUICommons
 # Chat pre-defined channel IDs
 enum ChatChannel
 {
-	Local = 0,
-	Global,
-	DefaultCount,
+	UNKNOWN = -1,
+	LOCAL = 0,
+	GLOBAL,
+	DEFAULT_CHANNEL_COUNT,
 }

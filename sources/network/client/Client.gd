@@ -38,33 +38,25 @@ func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, _peerI
 	if Launcher.Map:
 		Launcher.Map.UpdateEntity(agentRID, velocity, position)
 
-func ChatGlobal(agentName : String, text : String, _peerID : int):
-	if Launcher.GUI:
-		Launcher.GUI.chatContainer.AddEntityText(GUICommons.ChatChannel.Global, agentName, text)
-
 func Express(agentRID : int, text : String, _peerID : int):
 	if Launcher.GUI:
 		var entity : Entity = Entities.Get(agentRID)
-		if entity && entity.get_parent() && entity.interactive:
-			entity.interactive.DisplaySpeech.call_deferred(text)
+		if entity and entity.get_parent() and entity.interactive:
+			entity.interactive.DisplaySpeech(text)
 
-func ChatAgent(agentRID : int, text : String, _peerID : int):
+func ChatQuery(channelName : String, _peerID : int):
 	if Launcher.GUI:
-		var entity : Entity = Entities.Get(agentRID)
-		if entity && entity.get_parent():
-			Launcher.GUI.chatContainer.AddEntityText(GUICommons.ChatChannel.Local, entity.nick, text)
-			if entity.interactive:
-				entity.interactive.DisplaySpeech.call_deferred(text)
+		var channelIdx : GUICommons.ChatChannel = Launcher.GUI.chatContainer.GetChannelIndex(channelName)
+		if channelIdx != GUICommons.ChatChannel.UNKNOWN:
+			Launcher.GUI.chatContainer.SetChannelIndex(channelIdx)
 
-func ChatWhisper(partnerName : String, senderName : String, text : String, _peerID : int):
+func ChatPlayer(channelName : String, callerName : String, text : String, _peerID : int):
 	if Launcher.GUI:
-		var channelIndex : int = Launcher.GUI.chatContainer.GetChannelIndex(partnerName)
-		Launcher.GUI.chatContainer.AddEntityText(channelIndex, senderName, text)
+		Launcher.GUI.chatContainer.AddPlayerChat(channelName, callerName, text)
 
-func ChatSystem(partnerName : String, text : String, _peerID : int):
+func ChatSystem(channelName : String, text : String, _peerID : int):
 	if Launcher.GUI:
-		var channelIndex : int = Launcher.GUI.chatContainer.GetChannelIndex(partnerName)
-		Launcher.GUI.chatContainer.AddSystemText(channelIndex, text)
+		Launcher.GUI.chatContainer.AddSystemChat(channelName, text)
 
 func ToggleContext(enable : bool, _peerID : int):
 	Launcher.GUI.dialogueWindow.Toggle(enable)
@@ -122,9 +114,9 @@ func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration :
 		if entity == Launcher.Player:
 			match alteration:
 				ActorCommons.Alteration.EXP:
-					Launcher.GUI.chatContainer.AddSystemText(GUICommons.ChatChannel.Local, "You receive " + str(value) + " exp")
+					Launcher.GUI.chatContainer.AddLocalFeedback("You receive " + str(value) + " exp")
 				ActorCommons.Alteration.GP:
-					Launcher.GUI.chatContainer.AddSystemText(GUICommons.ChatChannel.Local, "You receive " + str(value) + " GP")
+					Launcher.GUI.chatContainer.AddLocalFeedback("You receive " + str(value) + " GP")
 
 func Casted(agentRID : int, skillID : int, cooldown : float, _peerID : int):
 	var entity : Entity = Entities.Get(agentRID)
@@ -237,7 +229,7 @@ func ItemAdded(itemID : int, customfield : StringName, count : int, _peerID : in
 				Launcher.GUI.pickupPanel.AddLast(cell, count)
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 				var countText : String = " x" + str(count) if count > 1 else ""
-				Launcher.GUI.chatContainer.AddSystemText(GUICommons.ChatChannel.Local, "You receive " + cell.name + countText)
+				Launcher.GUI.chatContainer.AddLocalFeedback("You receive " + cell.name + countText)
 			if not (cell is ItemCell and CellCommons.IsEquipment(cell)):
 				cell.used.emit()
 
@@ -384,7 +376,7 @@ func RefreshProgress(skills : Dictionary, quests : Dictionary, bestiary : Dictio
 #
 func CommandFeedback(feedback : String, _peerID : int):
 	if Launcher.GUI and Launcher.GUI.chatContainer:
-		Launcher.GUI.chatContainer.AddSystemText(GUICommons.ChatChannel.Local, feedback)
+		Launcher.GUI.chatContainer.AddLocalFeedback(feedback)
 
 func CommandModifier(effect : CellCommons.Modifier, value : float, _peerID : int):
 	if not Launcher.Player or not Launcher.Player.stat or not Launcher.Player.stat.modifiers:
