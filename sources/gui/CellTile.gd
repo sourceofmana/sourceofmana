@@ -267,8 +267,10 @@ func _gui_input(event):
 				UseCell()
 			elif event.pressed:
 				selected.emit(self)
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			UnassignData(cell)
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and draggable:
+			cell = null
+			count = 0
+			UpdateData()
 
 func _process(delta : float):
 	if cooldownTimer != -INF:
