@@ -96,7 +96,7 @@ func CameraLookAt(pos : Vector2, _peerID : int):
 
 func CameraReset(_peerID : int):
 	if Launcher.Camera:
-		Launcher.Camera.ResetCinematic()
+		Launcher.Camera.LookAt(Launcher.Player.position)
 
 func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration : ActorCommons.Alteration, skillID : int, hasFeedback : bool, _peerID : int):
 	var entity : Entity = Entities.Get(targetRID)
