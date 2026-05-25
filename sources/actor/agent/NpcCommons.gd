@@ -89,7 +89,7 @@ static func Express(npc : NpcAgent, pc : BaseAgent, text : String):
 
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
 	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
-		Network.ChatPlayer(npc.nick, chat, pc.peerID)
+		Network.ChatPlayer(str(GUICommons.ChatChannel.LOCAL), npc.nick, chat, pc.peerID)
 
 static func ContextText(pc : BaseAgent, author : String, text : String):
 	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
