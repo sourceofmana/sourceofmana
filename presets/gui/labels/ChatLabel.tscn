@@ -20,3 +20,4 @@ bbcode_enabled = true
 scroll_following = true
 autowrap_mode = 2
 context_menu_enabled = true
+threaded = true

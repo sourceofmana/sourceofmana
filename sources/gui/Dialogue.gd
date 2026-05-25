@@ -25,9 +25,10 @@ func Toggle(toggle : bool):
 
 func AddName(text : String):
 	if lastName != text:
+		var newName : bool = not lastName.is_empty()
 		lastName = text
 		var label : RichTextLabel = PlayerNameLabel.instantiate() if lastName == Launcher.Player.nick else NPCNameLabel.instantiate()
-		label.set_text("[color=#%s]%s[/color]" % [UICommons.LightTextColor.to_html(false), lastName])
+		label.set_text("%s[color=#%s]%s[/color]" % ["\n" if newName else "", UICommons.LightTextColor.to_html(false), lastName])
 		scrollable.textContainer.add_child.call_deferred(label)
 
 func AddDialogue(text : String):
@@ -40,7 +41,7 @@ func AddDialogue(text : String):
 
 func AddThink(text : String):
 	var label : RichTextLabel = Scrollable.contentLabel.instantiate()
-	label.set_text("[color=#%s]%s[/color]" % [UICommons.DarkTextColor.to_html(false), text])
+	label.set_text("[color=#%s]%s[/color]" % [UICommons.WarnTextColor.to_html(false), text])
 	label.set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER)
 	scrollable.textContainer.add_child.call_deferred(label)
 	TweenText(label)

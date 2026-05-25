@@ -13,3 +13,4 @@ fit_content = true
 autowrap_mode = 0
 shortcut_keys_enabled = false
 meta_underlined = false
+threaded = true
