@@ -187,6 +187,11 @@ func Think(mes : String):
 	if not IsPlayer(): return
 	steps.append({"text": mes, "think": true})
 
+func Narrate(mes : String):
+	assert(IsPlayer(), "Narrate() requires a player agent")
+	if not IsPlayer(): return
+	steps.append({"text": mes, "think": true, "author": "Narrator"})
+
 func Choice(mes : String, callable : Callable = Callback.Empty):
 	assert(IsPlayer(), "Choice() requires a player agent")
 	if not IsPlayer(): return
@@ -373,6 +378,8 @@ func ApplyStep():
 		while dialogueStep.has("action"):
 			dialogueStep["action"].call()
 			stepCount = steps.size()
+			if dialogueStep.has("choices"):
+				break
 			step += 1
 			if step >= stepCount:
 				break
@@ -382,10 +389,11 @@ func ApplyStep():
 			if not windowToggled:
 				ToggleWindow(true)
 
+			var author : String = dialogueStep.get("author", npc.nick)
 			if dialogueStep.get("think", false):
-				NpcCommons.ContextThink(own, npc.nick, dialogueStep["text"])
+				NpcCommons.ContextThink(own, author, dialogueStep["text"])
 			else:
-				NpcCommons.ContextText(own, npc.nick, dialogueStep["text"])
+				NpcCommons.ContextText(own, author, dialogueStep["text"])
 
 		if dialogueStep.has("choices"):
 			var choices : PackedStringArray = []

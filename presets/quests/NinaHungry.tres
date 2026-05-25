@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://cxrp5bnaq3nt"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 9
+name = "Nina's Snack"
+description = "Nina is hungry but too dedicated to leave her post. Find her a croissant from the market."
+giver = "Nina"
+giverLocation = "Tulimshar Gates"
+target = "Croissant x1"
+targetLocation = "Tulimshar Market"
+reward = "Cactus Potion x10, 100 GP"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

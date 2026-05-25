@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://ccv4yhuhxmjno"]
+
+[ext_resource type="Texture2D" uid="uid://t7imqiismhd5" path="res://data/graphics/items/usable/cactus-potion.png" id="1_ml7mk"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_8o32r"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_3lt1g"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_ckwuv"]
+
+[sub_resource type="Resource" id="Resource_cp1hx"]
+script = ExtResource("2_8o32r")
+_effect = 1
+_value = 150.0
+
+[sub_resource type="Resource" id="Resource_cp2hx"]
+script = ExtResource("3_3lt1g")
+_modifiers = Array[ExtResource("2_8o32r")]([SubResource("Resource_cp1hx")])
+
+[resource]
+script = ExtResource("4_ckwuv")
+id = 3878004993
+name = "Cactus Potion"
+description = "A potent healing potion brewed from cactus extract."
+icon = ExtResource("1_ml7mk")
+weight = 5.0
+stackable = true
+usable = true
+modifiers = SubResource("Resource_cp2hx")

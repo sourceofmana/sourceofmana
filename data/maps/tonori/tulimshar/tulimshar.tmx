@@ -1016,7 +1016,7 @@
   </object>
   <object id="57" name="Nina" type="Spawn" x="1601" y="2432">
    <properties>
-    <property name="player_script" value="generic/Greeting.gd"/>
+    <property name="player_script" value="tonori/tulimshar/Nina.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

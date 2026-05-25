@@ -1,9 +1,9 @@
 extends Control
 
-@onready var hpStat				= $StatContent/HP
-@onready var manaStat			= $StatContent/Mana
-@onready var staminaStat		= $StatContent/Stamina
-@onready var expStat			= $StatContent/Exp
+@onready var hpStat : Control			= $StatContent/HP
+@onready var manaStat : Control			= $StatContent/Mana
+@onready var staminaStat : Control		= $StatContent/Stamina
+@onready var expStat : Control			= $StatContent/Exp
 
 #
 func Refresh():

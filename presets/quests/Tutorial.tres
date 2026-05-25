@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://cqwp3bt5n6mx"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 7
+name = "Tutorial"
+description = "Get settled in Tulimshar with Elanore's help."
+giver = "Elanore"
+giverLocation = "Tulimshar Gates"
+target = ""
+targetLocation = ""
+reward = "Unknown"
+metadata/_custom_type_script = "uid://bqxdwogial88g"
