@@ -74,6 +74,39 @@ func ClearAll():
 	_clear(tertiaryButton)
 	_clear(cancelButton)
 
+#
+func TrapFocus():
+	var visibleButtons : Array[Button] = []
+	var visibleButtonCount : int = 0
+	for btn in [cancelButton, tertiaryButton, secondaryButton, primaryButton]:
+		if btn and btn.visible:
+			visibleButtons.append(btn)
+			visibleButtonCount += 1
+
+	if visibleButtonCount < 2:
+		return
+
+	for i in visibleButtonCount:
+		var prev : Button = visibleButtons[(i - 1 + visibleButtonCount) % visibleButtonCount]
+		var next : Button = visibleButtons[(i + 1) % visibleButtonCount]
+		visibleButtons[i].focus_next = visibleButtons[i].get_path_to(next)
+		visibleButtons[i].focus_previous = visibleButtons[i].get_path_to(prev)
+		visibleButtons[i].focus_neighbor_left = visibleButtons[i].get_path_to(prev)
+		visibleButtons[i].focus_neighbor_right = visibleButtons[i].get_path_to(next)
+		visibleButtons[i].focus_neighbor_top = visibleButtons[i].get_path_to(prev)
+		visibleButtons[i].focus_neighbor_bottom = visibleButtons[i].get_path_to(next)
+
+func ReleaseFocus():
+	for btn in [cancelButton, tertiaryButton, secondaryButton, primaryButton]:
+		if btn:
+			btn.focus_next = NodePath("")
+			btn.focus_previous = NodePath("")
+			btn.focus_neighbor_left = NodePath("")
+			btn.focus_neighbor_right = NodePath("")
+			btn.focus_neighbor_top = NodePath("")
+			btn.focus_neighbor_bottom = NodePath("")
+
+#
 func HandleInput(event : InputEvent):
 	if primaryButton and primaryButton.is_visible() and event.is_action("ui_context_validate"):
 		if Launcher.Action.TryPressed(event, "ui_context_validate", true):
