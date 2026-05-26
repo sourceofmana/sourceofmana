@@ -65,9 +65,9 @@ static func HighlightUI(pc : BaseAgent, target : UICommons.UITarget):
 	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
 		Network.HighlightUI(target, pc.peerID)
 
-static func ClearHighlightUI(pc : BaseAgent):
+static func OpenUI(pc : BaseAgent):
 	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
-		Network.ClearHighlightUI(pc.peerID)
+		Network.OpenUI(pc.peerID)
 
 # Camera
 static func CameraLookAt(pc : BaseAgent, pos : Vector2):

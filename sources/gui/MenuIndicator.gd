@@ -1,4 +1,5 @@
 extends Control
+class_name MenuIndicator
 
 #
 @onready var content : Control				= $MenuContent

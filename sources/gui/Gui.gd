@@ -3,7 +3,7 @@ extends ServiceBase
 @onready var background : TextureRect			= $Background
 
 # Overlay
-@onready var menu : Control						= $Overlay/VSections/Indicators/Menu
+@onready var menu : MenuIndicator				= $Overlay/VSections/Indicators/Menu
 @onready var stats : Control					= $Overlay/VSections/Indicators/Stat
 @onready var notificationLabel : Control		= $Overlay/VSections/Indicators/Info/Notification
 @onready var pickupPanel : Control				= $Overlay/VSections/Indicators/Info/PickUp
@@ -91,12 +91,12 @@ func ToggleFullscreen():
 	if settingsWindow:
 		settingsWindow.set_fullscreen(!settingsWindow.is_fullscreen())
 
-func DisplayActions(actions : PackedStringArray):
+func DisplayActions(actions : PackedStringArray, duration : float = -1.0):
 	infoContext.Clear()
 	for action in actions:
 		if DeviceManager.HasActionName(action):
 			infoContext.Push(ContextData.new(action))
-	infoContext.FadeIn()
+	infoContext.FadeIn(false, duration)
 
 func IsDialogueContextOpened() -> bool:
 	return dialogueContainer.is_visible()
@@ -248,20 +248,27 @@ func _notification(notif):
 		Node.NOTIFICATION_DRAG_END:
 			Launcher.Action.Enable(true)
 
-func ShowHighlight(target : UICommons.UITarget):
+func HighlightUI(target : UICommons.UITarget):
 	if highlight:
-		var node : Control = GetHighlightTarget(target)
+		var node : Control = GetUITarget(target)
 		if node:
-			if node is WindowPanel and not node.is_visible():
-				ToggleControl(node)
+			OpenUI(target)
 			highlight.Show(node)
+		else:
+			highlight.Clear()
 
-func ClearHighlight():
-	if highlight:
-		highlight.Clear()
+func OpenUI(target : UICommons.UITarget):
+		var node : Control = GetUITarget(target)
+		if node:
+			if not node.is_visible():
+				if node is WindowPanel:
+					ToggleControl(node)
+				elif node is MenuIndicator:
+					node._on_button_pressed()
 
-func GetHighlightTarget(target : UICommons.UITarget) -> Control:
+func GetUITarget(target : UICommons.UITarget) -> Control:
 	match target:
+		UICommons.UITarget.NONE:		return null
 		UICommons.UITarget.MENU:		return menu
 		UICommons.UITarget.STAT:		return stats
 		UICommons.UITarget.HEALTHBAR:	return stats.hpStat
@@ -276,7 +283,8 @@ func GetHighlightTarget(target : UICommons.UITarget) -> Control:
 		UICommons.UITarget.EMOTE:		return emoteWindow
 		UICommons.UITarget.SETTINGS:	return settingsWindow
 		UICommons.UITarget.ACTION_BAR:	return actionBoxes
-		_:                                   return null
+		_: push_error("Unhandled UITarget")
+	return null
 
 func _ready():
 	get_tree().set_auto_accept_quit(false)

@@ -84,11 +84,11 @@ func ContextChoice(texts : PackedStringArray, _peerID : int):
 
 func HighlightUI(target : int, _peerID : int):
 	if Launcher.GUI:
-		Launcher.GUI.ShowHighlight(target as UICommons.UITarget)
+		Launcher.GUI.HighlightUI(target as UICommons.UITarget)
 
-func ClearHighlightUI(_peerID : int):
+func OpenUI(target : int, _peerID : int):
 	if Launcher.GUI:
-		Launcher.GUI.ClearHighlight()
+		Launcher.GUI.OpenUI(target)
 
 func CameraLookAt(pos : Vector2, _peerID : int):
 	if Launcher.Camera:
@@ -294,7 +294,7 @@ func DropRemoved(dropID : int, _peerID : int):
 #
 func DisplayActions(actions : PackedStringArray, _peerID : int):
 	if Launcher.GUI:
-		Launcher.GUI.DisplayActions(actions)
+		Launcher.GUI.DisplayActions(actions, UICommons.DisplayActionLongDelaySec)
 
 func Untarget(_peerID : int):
 	if Launcher.Player:

@@ -1,29 +1,29 @@
 extends Control
 
 #
-@export var openSpeed : float	= 4.0
-@export var closeSpeed : float	= 1.5
+@export var openSpeed : float			= 4.0
+@export var closeSpeed : float			= 1.5
 
 @onready var clip : Control				= $ClipContainer
 @onready var panel : PanelContainer		= $ClipContainer/PanelContainer
 @onready var container : HBoxContainer	= $ClipContainer/PanelContainer/HBoxContainer
 @onready var timer : Timer				= $Timer
 
-var tween : Tween		= null
-var timestampsMs : Array	= []
-var openGen : int		= 0
+var tween : Tween						= null
+var timestampsSec : Array[float]		= []
+var openGen : int						= 0
 
 #
 func AddLast(cell : BaseCell, count : int):
 	if count > 0 and cell != null:
-		var wasEmpty : bool = timestampsMs.is_empty()
-		timestampsMs.push_back(Time.get_ticks_msec())
+		var wasEmpty : bool = timestampsSec.is_empty()
+		timestampsSec.push_back(Time.get_ticks_msec() / 1000.0)
 		var tile : CellTile = UICommons.CellTilePreset.instantiate()
 		tile.ready.connect(tile.AssignData.bind(cell, count))
 		container.add_child.call_deferred(tile)
 		AnimateOpen.call_deferred()
 		if wasEmpty:
-			timer.start(UICommons.DelayPickUpNotification / 1000.0)
+			timer.start(UICommons.PickUpNotificationDelaySec)
 
 func RemoveOldest():
 	var child : Control = container.get_child(0)
@@ -34,7 +34,7 @@ func RemoveAll():
 	for child in container.get_children():
 		if child:
 			container.remove_child(child)
-	timestampsMs.clear()
+	timestampsSec.clear()
 
 #
 func Animate(targetHalf : float, speed : float, callable : Callable = Callable()):
@@ -81,14 +81,14 @@ func AnimateClose():
 
 #
 func _on_timer_timeout():
-	if timestampsMs.size() > 1:
+	if timestampsSec.size() > 1:
 		RemoveOldest()
-		timestampsMs.pop_front()
-		var remaining : float = (timestampsMs[0] + UICommons.DelayPickUpNotification - Time.get_ticks_msec()) / 1000.0
+		timestampsSec.pop_front()
+		var remaining : float = (timestampsSec[0] + UICommons.PickUpNotificationDelaySec - Time.get_ticks_msec() / 1000.0) 
 		timer.start(maxf(remaining, 0.0))
 		AnimateOpen.call_deferred()
 	else:
-		timestampsMs.pop_front()
+		timestampsSec.pop_front()
 		AnimateClose()
 
 #

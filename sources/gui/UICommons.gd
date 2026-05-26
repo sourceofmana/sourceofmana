@@ -16,8 +16,9 @@ const ContextAction : PackedScene					= preload("res://presets/gui/contexts/Cont
 const CellTilePreset : PackedScene					= preload("res://presets/gui/CellTile.tscn")
 const CellSelectionPreset : PackedScene				= preload("res://presets/gui/CellSelection.tscn")
 
-const DelayPickUpNotification : float				= 5.0 * 1000.0
-
+const PickUpNotificationDelaySec : float			= 5.0
+const DisplayActionShortDelaySec : float			= 5.0
+const DisplayActionLongDelaySec : float				= 10.0
 const DialogueTextSpeed : float						= 0.02
 
 #
@@ -31,7 +32,8 @@ enum ButtonBox
 
 enum UITarget
 {
-	MENU = 0,
+	NONE = 0,
+	MENU,
 	STAT,
 	HEALTHBAR,
 	MANABAR,

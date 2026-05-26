@@ -256,8 +256,8 @@ func HighlightUI(target : int, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("HighlightUI", [target], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ClearHighlightUI(peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("ClearHighlightUI", [], peerID)
+func OpenUI(target : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("OpenUI", [target], peerID)
 
 # Camera
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)

@@ -2,7 +2,7 @@ extends PanelContainer
 class_name ContextMenu
 
 @export var fadeInDelay : float				= 1.0
-@export var displayDelay : float			= 5.0
+@export var displayDelay : float			= UICommons.DisplayActionShortDelaySec
 @export var fadeOutDelay : float			= 2.0
 @export var persistant : bool				= true
 
@@ -25,7 +25,7 @@ func KillTween():
 		fadeTween.kill()
 		fadeTween = null
 
-func StartFadeIn(canFadeOut : bool):
+func StartFadeIn(canFadeOut : bool, duration : float = -1.0):
 	KillTween()
 	var startAlpha : float = modulate.a
 	fadeTween = create_tween()
@@ -36,7 +36,7 @@ func StartFadeIn(canFadeOut : bool):
 	else:
 		modulate.a = 1.0
 	if canFadeOut:
-		fadeTween.tween_interval(displayDelay)
+		fadeTween.tween_interval(duration if duration > 0.0 else displayDelay)
 		AppendFadeOut(fadeTween)
 
 func AppendFadeOut(tw : Tween):
@@ -49,10 +49,10 @@ func AppendFadeOut(tw : Tween):
 func Push(data : ContextData):
 	buffer.push_back(data)
 
-func FadeIn(disableAction : bool = false):
+func FadeIn(disableAction : bool = false, duration : float = -1.0):
 	Show(disableAction)
 	FlushDataBuffer()
-	StartFadeIn(not persistant)
+	StartFadeIn(not persistant, duration)
 
 func FadeOut():
 	KillTween()

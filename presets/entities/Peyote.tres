@@ -14,7 +14,8 @@ _name = "Peyote"
 _spritePreset = "Peyote"
 _radius = 14
 _stats = {
-"level": 1
+"level": 1,
+"maxHealth": 15
 }
 _equipment = Array[ExtResource("1_dxecr")]([null, null, null, null, null, null, null, null])
 _behaviour = 9

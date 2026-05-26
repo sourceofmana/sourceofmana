@@ -127,6 +127,11 @@ func GetQuest(questID : int) -> int:
 	if not IsPlayer(): return ProgressCommons.UnknownProgress
 	return own.progress.GetQuest(questID)
 
+func GetBestiary(monsterID : int) -> int:
+	assert(IsPlayer(), "GetBestiary() requires a player agent")
+	if not IsPlayer(): return 0
+	return own.progress.GetBestiary(monsterID)
+
 func IsQuestStarted(questID : int) -> bool:
 	return GetQuest(questID) != ProgressCommons.UnknownProgress
 
@@ -137,11 +142,11 @@ func GetState(questID : int) -> Variant:
 	return ProgressCommons.QuestStates.get(questID)
 
 # Tutorial
-func Highlight(target : UICommons.UITarget):
+func HighlightUI(target : UICommons.UITarget):
 	Action(NpcCommons.HighlightUI.bind(own, target))
 
-func ClearHighlight():
-	Action(NpcCommons.ClearHighlightUI.bind(own))
+func OpenUI(target : UICommons.UITarget):
+	Action(NpcCommons.OpenUI.bind(own, target))
 
 # Display
 func Notification(text : String):
