@@ -110,5 +110,6 @@ static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : St
 static func _post_launch():
 	defaultSpawnLocation.map				= Launcher.World.GetMap(LauncherCommons.DefaultStartMapID)
 	defaultSpawnLocation.spawn_position		= LauncherCommons.DefaultStartPos
+	defaultSpawnLocation.spawn_offset		= LauncherCommons.DefaultStartOffset
 	defaultSpawnLocation.type				= "Player"
 	defaultSpawnLocation.id					= DB.PlayerHash

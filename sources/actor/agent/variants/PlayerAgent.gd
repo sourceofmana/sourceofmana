@@ -21,6 +21,9 @@ var lastCheckedPosition : Vector2		= Vector2.ZERO
 var visibilityTimer : Timer				= Timer.new()
 var visibilityHalfSize : Vector2		= Vector2(NetworkCommons.MaxVisibilityHalfWidth, NetworkCommons.MaxVisibilityHalfHeight)
 
+# Player-specific signals
+signal warp_confirmed
+
 #
 static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
 
@@ -46,7 +49,7 @@ static func GetSpawnFromData(charData : Dictionary) -> SpawnObject:
 
 static func GetRespawnFromData(charData : Dictionary) -> Destination:
 	var destination : Destination = GetDestinationFromData(charData, "respawn_map", "respawn_x", "respawn_y")
-	return destination if destination.mapID != DB.UnknownHash else Destination.new(WorldAgent.defaultSpawnLocation.map.id, WorldAgent.defaultSpawnLocation.spawn_position)
+	return destination if destination.mapID != DB.UnknownHash else Destination.new(WorldAgent.defaultSpawnLocation.map.id, LauncherCommons.GetRandomStartPos())
 
 static func GetExploreFromData(charData : Dictionary) -> Destination:
 	return GetDestinationFromData(charData, "explore_map", "explore_x", "explore_y")

@@ -74,6 +74,7 @@ func ClearWarpFlag(agent : PlayerAgent):
 	if agent and agent.is_inside_tree():
 		await agent.get_tree().physics_frame
 		agent.isWarping = false
+		agent.warp_confirmed.emit()
 
 func AgentCreated(agent : BaseAgent, mapRID : RID):
 	if agent and agent.agent:
@@ -92,7 +93,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 				agent.Morph(false, agent.stat.spirit)
 
 		Network.WarpPlayer(map.id, agent.position, agent.peerID)
-		ClearWarpFlag.call_deferred(agent)
+		ClearWarpFlag(agent)
 		agent.visibleAgents.clear()
 		var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 		if instance:

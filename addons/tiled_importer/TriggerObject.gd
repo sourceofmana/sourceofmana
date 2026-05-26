@@ -11,13 +11,20 @@ var playersInside : Dictionary[int, bool]	= {}
 func bodyEntered(body : CollisionObject2D):
 	if not linkedNpc or not linkedNpc.ownScript or body is not PlayerAgent:
 		return
-	if not body.is_inside_tree() or body.isWarping:
+	if not body.is_inside_tree():
 		return
 
 	var rid : int = body.get_rid().get_id()
 	if not playersInside.has(rid):
 		playersInside[rid] = true
 		Callback.OneShotCallback(body.tree_exiting, OnPlayerLeft, [rid])
+		if body.isWarping:
+			body.warp_confirmed.connect(_onWarpConfirmed.bind(body), ConnectFlags.CONNECT_ONE_SHOT)
+		else:
+			linkedNpc.ownScript.OnAreaEnter.call_deferred(body)
+
+func _onWarpConfirmed(body : PlayerAgent):
+	if linkedNpc and linkedNpc.ownScript and playersInside.has(body.get_rid().get_id()):
 		linkedNpc.ownScript.OnAreaEnter.call_deferred(body)
 
 func bodyExited(body : CollisionObject2D):

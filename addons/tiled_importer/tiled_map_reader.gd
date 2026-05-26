@@ -329,6 +329,8 @@ func _create_warp_spawn(warp : Dictionary) -> SpawnObject:
 		spawn.player_script = "generic/Warp.gd"
 	if warp.isPort:
 		spawn.own_script = "generic/PortGlobal.gd"
+	elif not warp.ownScript.is_empty():
+		spawn.own_script = warp.ownScript
 	else:
 		spawn.own_script = "generic/WarpGlobal.gd"
 	spawn.nick = warp.name
@@ -758,6 +760,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							"autoWarp": !isPort,
 							"isPort": isPort,
 							"sailingPos": Vector2.ZERO,
+							"ownScript": "",
 						}
 						if "properties" in object:
 							var dest_cellsize = cell_size
@@ -773,6 +776,8 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 								warpData.autoWarp = object.properties.auto_warp
 							if isPort and "sail_pos_x" in object.properties and "sail_pos_y" in object.properties:
 								warpData.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize
+							if "warp_script" in object.properties:
+								warpData.ownScript = object.properties.warp_script
 						if isPort:
 							port_pool.append(warpData)
 						else:

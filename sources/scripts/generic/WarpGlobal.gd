@@ -1,4 +1,5 @@
 extends NpcScript
+class_name WarpGlobal
 
 #
 var warpName : String = ""

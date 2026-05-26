@@ -900,6 +900,7 @@
     <property name="dest_map" value="Tulimshar Center"/>
     <property name="dest_pos_x" value="125"/>
     <property name="dest_pos_y" value="135"/>
+    <property name="warp_script" value="tonori/tulimshar/TutorialWarpGlobal.gd"/>
    </properties>
    <polygon points="99.7656,10.2397 259.391,10.2397 259.391,42.4215 99.7656,42.4215"/>
   </object>
@@ -957,6 +958,7 @@
     <property name="dest_map" value="Tulimshar Center"/>
     <property name="dest_pos_x" value="46"/>
     <property name="dest_pos_y" value="135"/>
+    <property name="warp_script" value="tonori/tulimshar/TutorialWarpGlobal.gd"/>
    </properties>
    <polygon points="119,10 311,10 311,42 119,42"/>
   </object>
@@ -985,6 +987,7 @@
     <property name="dest_map" value="Sandstorm"/>
     <property name="dest_pos_x" value="95"/>
     <property name="dest_pos_y" value="30"/>
+    <property name="warp_script" value="tonori/tulimshar/TutorialWarpGlobal.gd"/>
    </properties>
    <polygon points="140.147,10.2397 364.381,10.2397 364.381,42.4215 140.147,42.4215"/>
   </object>
@@ -1005,12 +1008,15 @@
     <property name="dest_map" value="Tulimshar Castle"/>
     <property name="dest_pos_x" value="56"/>
     <property name="dest_pos_y" value="68"/>
+    <property name="warp_script" value="tonori/tulimshar/TutorialWarpGlobal.gd"/>
    </properties>
    <polygon points="11,24 27,8 58,8 73,24 58,42 25,42"/>
   </object>
   <object id="56" name="Elanore" type="Spawn" x="2189" y="2486">
    <properties>
+    <property name="own_script" value="tonori/tulimshar/ElanoreGlobal.gd"/>
     <property name="player_script" value="tonori/tulimshar/Elanore.gd"/>
+    <property name="trigger_radius" type="float" value="140"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
