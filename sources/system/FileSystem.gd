@@ -102,7 +102,6 @@ static func LoadGDScript(fullPath : String, alloc : bool = true) -> Object:
 
 	if pathExists:
 		srcFile = FileAlloc(fullPath) if alloc else ResourceLoader.load(fullPath)
-		Util.PrintLog("Source", "Loading script: " + fullPath)
 
 	return srcFile
 
