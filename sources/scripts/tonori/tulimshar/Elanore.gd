@@ -65,7 +65,7 @@ func OnGiveStarterClothes():
 
 func OnExplainUI():
 	Mes("Before I let you go, allow me to walk you through a few things that will help keep you alive out there.")
-	HighlightUI(UICommons.UITarget.STAT)
+	HighlightUI(UICommons.UITarget.STATINDICATOR)
 	Narrate("These are your vital resources. Keep an eye on them at all times.")
 	HighlightUI(UICommons.UITarget.HEALTHBAR)
 	Narrate("Your health bar shows how much damage you can take before falling.")
@@ -73,7 +73,7 @@ func OnExplainUI():
 	Narrate("Your mana powers your skills, without it, many abilities become unavailable.")
 	HighlightUI(UICommons.UITarget.STAMINABAR)
 	Narrate("Stamina governs how long you can sprint and perform physical actions before tiring.")
-	HighlightUI(UICommons.UITarget.MENU)
+	HighlightUI(UICommons.UITarget.MENUINDICATOR)
 	Narrate("The menu gives you access to your inventory, skills, quests, settings and more. Use it to manage everything you carry and know.")
 	HighlightUI(UICommons.UITarget.ACTION_BAR)
 	Narrate("The action bar lets you slot skills and items for quick access. Drag what you need most onto it as in combat, every second counts.")

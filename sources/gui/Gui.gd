@@ -268,21 +268,22 @@ func OpenUI(target : UICommons.UITarget):
 
 func GetUITarget(target : UICommons.UITarget) -> Control:
 	match target:
-		UICommons.UITarget.NONE:		return null
-		UICommons.UITarget.MENU:		return menu
-		UICommons.UITarget.STAT:		return stats
-		UICommons.UITarget.HEALTHBAR:	return stats.hpStat
-		UICommons.UITarget.MANABAR:		return stats.manaStat
-		UICommons.UITarget.STAMINABAR:	return stats.staminaStat
-		UICommons.UITarget.INVENTORY:	return inventoryWindow
-		UICommons.UITarget.CHAT:		return chatWindow
-		UICommons.UITarget.SKILL:		return skillWindow
-		UICommons.UITarget.MINIMAP:		return minimapWindow
-		UICommons.UITarget.PROGRESS:	return progressWindow
-		UICommons.UITarget.SOCIAL:		return socialWindow
-		UICommons.UITarget.EMOTE:		return emoteWindow
-		UICommons.UITarget.SETTINGS:	return settingsWindow
-		UICommons.UITarget.ACTION_BAR:	return actionBoxes
+		UICommons.UITarget.NONE:			return null
+		UICommons.UITarget.MENUINDICATOR:	return menu
+		UICommons.UITarget.STATINDICATOR:	return stats
+		UICommons.UITarget.HEALTHBAR:		return stats.hpStat
+		UICommons.UITarget.MANABAR:			return stats.manaStat
+		UICommons.UITarget.STAMINABAR:		return stats.staminaStat
+		UICommons.UITarget.STAT:			return statWindow
+		UICommons.UITarget.INVENTORY:		return inventoryWindow
+		UICommons.UITarget.CHAT:			return chatWindow
+		UICommons.UITarget.SKILL:			return skillWindow
+		UICommons.UITarget.MINIMAP:			return minimapWindow
+		UICommons.UITarget.PROGRESS:		return progressWindow
+		UICommons.UITarget.SOCIAL:			return socialWindow
+		UICommons.UITarget.EMOTE:			return emoteWindow
+		UICommons.UITarget.SETTINGS:		return settingsWindow
+		UICommons.UITarget.ACTION_BAR:		return actionBoxes
 		_: push_error("Unhandled UITarget")
 	return null
 

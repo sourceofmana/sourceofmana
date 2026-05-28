@@ -1028,7 +1028,7 @@
   </object>
   <object id="60" name="Gilgames" type="Spawn" x="1660" y="2837">
    <properties>
-    <property name="player_script" value="generic/Greeting.gd"/>
+    <property name="player_script" value="tonori/tulimshar/Gilgames.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

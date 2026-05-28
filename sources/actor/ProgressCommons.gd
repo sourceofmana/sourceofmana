@@ -18,6 +18,7 @@ enum Quest
 	TUTORIAL,
 	ELANORE_POTION,
 	NINA_HUNGRY,
+	MINE_EXPLORATION,
 }
 
 # Quest enums
@@ -78,6 +79,7 @@ enum TUTORIAL
 	ELANORE_DONE,
 	KAEL_MET,
 	KAEL_DONE,
+	EKINU_DONE = ProgressCommons.CompletedProgress,
 }
 enum ELANORE_POTION
 {
@@ -85,6 +87,12 @@ enum ELANORE_POTION
 	STARTED,
 }
 enum NINA_HUNGRY
+{
+	INACTIVE = ProgressCommons.UnknownProgress,
+	STARTED,
+	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
+}
+enum MINE_EXPLORATION
 {
 	INACTIVE = ProgressCommons.UnknownProgress,
 	STARTED,
@@ -103,6 +111,7 @@ static var QuestStates : Dictionary[Quest, Variant] = {
 	Quest.TUTORIAL: TUTORIAL,
 	Quest.ELANORE_POTION: ELANORE_POTION,
 	Quest.NINA_HUNGRY: NINA_HUNGRY,
+	Quest.MINE_EXPLORATION: MINE_EXPLORATION,
 }
 
 static func GetQuestStateID(questID : int, stateName : String) -> int:
