@@ -138,6 +138,9 @@ func MainChoices():
 	Choice("What has been happening out in the desert?", OnDesertExplanation)
 	Choice("I have to leave.", Farewell)
 
+func Farewell():
+	Chat("Watch your back out there.")
+
 func OnFightTutorial():
 	Mes("Aim, shoot and block your ears as they do some nasty sounds when you hit them.")
 	DisplayActions(["gp_interact", "gp_target", "gp_sit"])

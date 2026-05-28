@@ -139,6 +139,12 @@ func OnExplainSelf():
 	Mes("But don't you worry about that right now. We can chat more later. Right now I am just out here giving a hand with potions and receiving the injured from outside the walls.")
 	OnMainChoice()
 
+func Farewell():
+	if randi() % 2:
+		Chat("Take care of yourself out there.")
+	else:
+		Chat("Stay safe.")
+
 # Tutorial conclusion
 func OnSendToKael():
 	Mes("But I should not keep you here all day. You are new to the city and will want to find your footing.")

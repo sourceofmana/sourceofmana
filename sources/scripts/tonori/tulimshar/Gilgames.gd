@@ -15,9 +15,9 @@ func OnTutorialResume():
 	Choice("How can I improve myself?", OnStat)
 	Choice("What happens if I'm lost?", OnMinimap)
 	Choice("How can I easily access everything I gathered?", OnShortcut)
-	Choice("All good!", OnCustomFarewell)
+	Choice("All good!", Farewell)
 
-func OnCustomFarewell():
+func Farewell():
 	Chat("Try not to get yourself killed.")
 
 # Explanations

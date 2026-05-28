@@ -122,6 +122,12 @@ func OnDislikeQueen():
 	Choice("We should get going before she gets angry then!", OnMainChoice)
 
 # Expedition started
+func Farewell():
+	if randi() % 2:
+		Chat("Stay sharp.")
+	else:
+		Chat("Come back in one piece.")
+
 func OnComplete():
 	var questState : int = GetQuest(ProgressCommons.Quest.MINE_EXPLORATION)
 	if questState == ProgressCommons.MINE_EXPLORATION.STARTED:
