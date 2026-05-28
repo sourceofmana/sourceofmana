@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="71">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="72">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -805,9 +805,9 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="13" name="Maggot" type="Spawn" x="2784" y="1052" width="384" height="416">
+  <object id="13" name="Maggot" type="Spawn" x="2784" y="1052" width="443" height="640">
    <properties>
-    <property name="count" value="5"/>
+    <property name="count" value="3"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -861,7 +861,7 @@
   </object>
   <object id="23" name="Maggot" type="Spawn" x="2561" y="1696" width="576" height="448">
    <properties>
-    <property name="count" value="2"/>
+    <property name="count" value="5"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1032,7 +1032,7 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="61" name="Peyote" type="Spawn" x="2813" y="1246" width="269" height="207">
+  <object id="61" name="Peyote" type="Spawn" x="2786" y="1209" width="317" height="244">
    <properties>
     <property name="count" value="5"/>
     <property name="type" value="Monster"/>
@@ -1076,6 +1076,12 @@
    <properties>
     <property name="player_script" value="generic/Well.gd"/>
     <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="71" name="Maggot" type="Spawn" x="2786" y="1209" width="319" height="245">
+   <properties>
+    <property name="count" value="5"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>
