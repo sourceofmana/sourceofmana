@@ -323,6 +323,12 @@ func HasSkill(skillID : int) -> bool:
 	var cell : SkillCell = DB.GetSkill(skillID)
 	return own.progress.HasSkill(cell) if cell else false
 
+func GetSkillLevel(skillID : int) -> int:
+	assert(IsPlayer(), "GetSkillLevel() requires a player agent")
+	if not IsPlayer(): return false
+	var cell : SkillCell = DB.GetSkill(skillID)
+	return own.progress.GetSkillLevel(cell) if cell else 0
+
 func TeachSkill(skillID : int, level : int = 1):
 	assert(IsPlayer(), "TeachSkill() requires a player agent")
 	if not IsPlayer(): return

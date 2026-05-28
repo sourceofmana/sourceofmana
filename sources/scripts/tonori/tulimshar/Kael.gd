@@ -7,12 +7,23 @@ const FIELD_POSITION : Vector2 = Vector2(2912, 1312)
 #
 func OnStart():
 	var questState : int = GetQuest(ProgressCommons.Quest.TUTORIAL)
-	if questState == ProgressCommons.TUTORIAL.KAEL_DONE:
-		OnComplete()
+	if questState < ProgressCommons.TUTORIAL.ELANORE_DONE:
+		OnSendToElanore()
+	if questState == ProgressCommons.TUTORIAL.ELANORE_DONE:
+		OnFirstMeeting()
 	elif questState == ProgressCommons.TUTORIAL.KAEL_MET:
 		OnCheckProgress()
-	else:
-		OnFirstMeeting()
+	elif questState == ProgressCommons.TUTORIAL.KAEL_DONE:
+		OnSendToEkinu()
+	elif questState == ProgressCommons.TUTORIAL.EKINU_DONE:
+		OnComplete()
+
+# Too early
+func OnSendToElanore():
+	Mes("You are already up?")
+	LookAtNpc("Elanore")
+	Mes("Be sure to talk to Elanore, she took care of you while you were passed out after we found you.")
+	ResetCamera()
 
 # Initial encounter
 func OnFirstMeeting():
@@ -28,9 +39,12 @@ func OnKaoreExplanation():
 	Mes("Back before the Age of Kaore, hundreds of years ago, some creatures of this world were not as... Strange as they are today.")
 	Mes("The Age of Kaore changed them. This type of maggot grew very large and very plentiful. Other creatures were changed in worse ways.")
 	Mes("They say that squirrels used to be as intelligent as people, but they simply lost all that over time.")
-	Mes("Anyway, enough chatting. I need you to get in this field and clean away this mess!")
-	Choice("Yes, I'll get to work!", OnFieldCleanUp)
-	Choice("What do you mean? What has been happening out in the desert?", OnDesertExplanation)
+	if GetQuest(ProgressCommons.Quest.TUTORIAL) >= ProgressCommons.TUTORIAL.KAEL_DONE:
+		MainChoices()
+	else:
+		Mes("Anyway, enough chatting. I need you to get in this field and clean away this mess!")
+		Choice("Yes, I'll get to work!", OnFieldCleanUp)
+		Choice("What do you mean? What has been happening out in the desert?", OnDesertExplanation)
 
 func OnWildFauna():
 	Mes("Regardless, they need to be culled.")
@@ -44,9 +58,12 @@ func OnDesertExplanation():
 	Mes("Kaore is affecting all sorts of creatures.")
 	Mes("It's this evil force that twists living things into... I don't know... Worse versions of themselves? I suppose. More aggressive.")
 	Mes("Until it takes a full hold on them, then they become sort of undead too. It's really a nasty curse.")
-	Mes("The mages over at the tower... The Manayir. They've issued the warning that Kaore is currently concentrating in dangerous patterns throughout Tonori.")
-	Choice("Alright alright, it's time to kill these things. Let's do it.", OnFieldCleanUp)
-	Choice("Who are the Manayir?", OnManayir)
+	if GetQuest(ProgressCommons.Quest.TUTORIAL) >= ProgressCommons.TUTORIAL.KAEL_DONE:
+		MainChoices()
+	else:
+		Mes("The mages over at the tower... The Manayir. They've issued the warning that Kaore is currently concentrating in dangerous patterns throughout Tonori.")
+		Choice("Alright alright, it's time to kill these things. Let's do it.", OnFieldCleanUp)
+		Choice("Who are the Manayir?", OnManayir)
 
 func OnManayir():
 	Mes("They're some ancient order that studies Mana and does who-knows-what-else with it, up in that tower to the west of the city.")
@@ -65,12 +82,12 @@ func OnAgeOfKaore():
 
 # Task assignment
 func OnFieldCleanUp():
-	DisplayActions(["gp_interact", "gp_target", "gp_sit"])
-	TeachSkill(DB.GetCellHash("Melee"))
-	Narrate("You have learned the Melee skill. Press Interact near an enemy to automatically target and attack it.")
-	Narrate("You can also use the Target action to cycle target one manually.")
-	Narrate("Each hit costs stamina. Run out and your attacks will have less effect.")
-	Narrate("Siting down helps stamina regeneration.")
+	var meleeSkillID : int = DB.GetCellHash("Melee")
+	if GetSkillLevel(meleeSkillID) == 0:
+		TeachSkill(meleeSkillID)
+		Narrate("You have learned the Melee skill.")
+
+	OnFightTutorial()
 	Mes("Start with the peyotes in that field just north from here.")
 	LookAtPosition(FIELD_POSITION)
 	Mes("They're kaore-infused cacti, harmless to us but useless for farming now.")
@@ -103,6 +120,28 @@ func OnTaskComplete():
 	SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.KAEL_DONE)
 	AddExp(50)
 
-func OnComplete():
+#
+func OnSendToEkinu():
 	Mes("Report back to Watchman Ekinu when you're ready.")
 	Mes("He'll know what to do next.")
+	MainChoices()
+
+#
+func OnComplete():
+	Mes("Glad to see you! As you can see, I'm still surrounded by these squirky white maggots.")
+	MainChoices()
+
+#
+func MainChoices():
+	Choice("Why are these maggots so monstrous?", OnKaoreExplanation)
+	Choice("How can I fight them?", OnFightTutorial)
+	Choice("What has been happening out in the desert?", OnDesertExplanation)
+	Choice("I have to leave.", Farewell)
+
+func OnFightTutorial():
+	Mes("Aim, shoot and block your ears as they do some nasty sounds when you hit them.")
+	DisplayActions(["gp_interact", "gp_target", "gp_sit"])
+	Narrate("Press Interact near an enemy to automatically target and attack it.")
+	Narrate("You can also use the Target action to cycle target manually.")
+	Narrate("Each hit costs stamina. Run out and your attacks will have less effect.")
+	Narrate("Siting down helps stamina regeneration.")
