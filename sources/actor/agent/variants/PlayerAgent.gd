@@ -275,6 +275,7 @@ func UpdateDeltas(delta : float):
 func AddScript(npc : NpcAgent):
 	if npc:
 		ownScript = npc.playerScriptPreset.new(npc, self) if npc.playerScriptPreset else NpcScript.new(npc, self)
+		ownScript.PostInit()
 
 func ClearScript():
 	if ownScript:

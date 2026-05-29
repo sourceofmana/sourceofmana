@@ -445,6 +445,9 @@ func _init(_npc : NpcAgent, _own : BaseAgent):
 	if _npc and _own:
 		own = _own
 		npc = _npc
+
+func PostInit():
+	if npc and own:
 		OnStart()
 		if npc != own:
 			npc.interacted.emit(own)

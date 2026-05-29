@@ -97,6 +97,7 @@ func _ready():
 		playerScriptPreset = FileSystem.LoadScript(playerScriptPath, false)
 	if not ownScriptPath.is_empty():
 		ownScript = FileSystem.LoadScript(ownScriptPath, false).new(self, self)
+		ownScript.PostInit()
 
 	if data:
 		isVisible = not data._spritePreset.is_empty()
