@@ -965,14 +965,14 @@
   <object id="42" name="Tulimshar Sbire" type="Spawn" x="2016" y="1497" width="296" height="193">
    <properties>
     <property name="nick" value="Shimris"/>
-    <property name="player_script" value="generic/Greeting.gd"/>
+    <property name="player_script" value="tonori/tulimshar/Shimris.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
   <object id="43" name="Tulimshar Desert Sbire" type="Spawn" x="1165" y="1494" width="291" height="216">
    <properties>
     <property name="nick" value="Aanshir"/>
-    <property name="player_script" value="generic/Greeting.gd"/>
+    <property name="player_script" value="tonori/tulimshar/Aanshir.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
@@ -1048,7 +1048,7 @@
   <object id="64" name="Tulimshar Desert Guard" type="Spawn" x="-64" y="80">
    <properties>
     <property name="nick" value="Maci"/>
-    <property name="player_script" value="generic/Greeting.gd"/>
+    <property name="player_script" value="tonori/tulimshar/Maci.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
