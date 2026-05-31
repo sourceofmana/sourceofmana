@@ -60,7 +60,11 @@ func AddSkill(cell : SkillCell, proba : float, level : int = 1):
 	if not cell:
 		return
 
-	probaSum -= skillProbas.get(cell.id, 0)
+	var currentProbability : float = GetSkillProba(cell)
+	if currentProbability == proba:
+		return
+
+	probaSum -= currentProbability
 	skills[cell.id] = level
 	skillProbas[cell.id] = proba
 	probaSum += proba

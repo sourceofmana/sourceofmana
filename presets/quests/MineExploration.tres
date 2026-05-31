@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://ccghs7gro26bi"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 10
+name = "Mine Exploration"
+description = "Scout the Sandstorm Mines and ensure the cave system is clear of major dangers before the miners move in."
+giver = "Ekinu"
+giverLocation = "Tulimshar"
+targetLocation = "Sandstorm Mines"
+reward = "Unknown"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://5d82kubgco"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_tcmrs"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_upok7"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_xwl2d"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_ysq0w"]
+
+[resource]
+script = ExtResource("2_upok7")
+_parent = ExtResource("2_xwl2d")
+_id = 737772331
+_name = "Soul Menhir"
+_spritePreset = "SoulMenhir"
+_stats = {
+"level": 1
+}
+_equipment = Array[ExtResource("1_tcmrs")]([null, null, null, null, null, null, null, null])

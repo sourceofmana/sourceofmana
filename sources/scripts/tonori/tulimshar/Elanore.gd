@@ -65,7 +65,7 @@ func OnGiveStarterClothes():
 
 func OnExplainUI():
 	Mes("Before I let you go, allow me to walk you through a few things that will help keep you alive out there.")
-	HighlightUI(UICommons.UITarget.STAT)
+	HighlightUI(UICommons.UITarget.STATINDICATOR)
 	Narrate("These are your vital resources. Keep an eye on them at all times.")
 	HighlightUI(UICommons.UITarget.HEALTHBAR)
 	Narrate("Your health bar shows how much damage you can take before dying.")
@@ -73,7 +73,7 @@ func OnExplainUI():
 	Narrate("Your mana powers your skills. Without it, many abilities become unavailable.")
 	HighlightUI(UICommons.UITarget.STAMINABAR)
 	Narrate("Stamina governs how long you can sprint and perform physical actions before tiring.")
-	HighlightUI(UICommons.UITarget.MENU)
+	HighlightUI(UICommons.UITarget.MENUINDICATOR)
 	Narrate("The menu gives you access to your inventory, skills, quests, settings and more. Use it to manage everything you carry and know.")
 	HighlightUI(UICommons.UITarget.ACTION_BAR)
 	Narrate("The action bar lets you slot skills and items for quick access. Drag what you need most onto it as, in combat, every second counts.")
@@ -138,6 +138,12 @@ func OnExplainSelf():
 	Mes("My name is Elanore. I am the Kahwe of this city and the land that surrounds it. Those outside of our order call us Druids. I represent the Kaumatua, an order devoted to the most ancient tradition in our world.")
 	Mes("But don't you worry about that right now. We can chat more later. Right now I am just out here giving a hand with potions and receiving the injured from outside the walls.")
 	OnMainChoice()
+
+func Farewell():
+	if randi() % 2:
+		Chat("Take care of yourself out there.")
+	else:
+		Chat("Stay safe.")
 
 # Tutorial conclusion
 func OnSendToKael():

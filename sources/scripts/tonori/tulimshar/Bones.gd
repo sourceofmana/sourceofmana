@@ -26,7 +26,7 @@ func ReceiveLetters():
 
 func GiveLetters():
 		Mes("What. He sent you here with these?")
-		Mes("<Councillor Bones looks through the letters, shifting them in his hands.>")
+		Think("Councillor Bones looks through the letters, shifting them in his hands.")
 		Mes("I know this handwriting.")
 		Mes("These are old. Back when the Queen had us stationed apart, before we even shared the same wall.")
 		Mes("Frost handled the people. I handled the stone. That was the deal.")
