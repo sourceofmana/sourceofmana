@@ -8,7 +8,6 @@ signal agent_healed(value : int)
 
 #
 var agent : NavigationAgent2D			= null
-var entityRadius : int					= 0
 
 var actionTimer : Timer					= null
 var cooldownTimers : Dictionary[int, bool]	= {}
@@ -163,7 +162,6 @@ func UpdateDeltas(delta : float):
 
 #
 func SetData():
-	entityRadius = data._radius
 	for skillCell : SkillCell in data._skills:
 		AddSkill(skillCell, data._skills[skillCell])
 

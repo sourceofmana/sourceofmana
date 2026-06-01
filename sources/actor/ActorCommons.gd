@@ -308,6 +308,7 @@ const SfxStateBus : StringName				= &"State SFX"
 # Interactive
 const interactionDisplayOffset : int		= 32
 const selectionRadius : int					= 24
+const targetRadius : int					= 12
 const emoteDelay : float					= 4.0
 const morphDelay : float					= 1.2
 const speechDelay : float					= 6.0
@@ -315,8 +316,23 @@ const speechDecreaseDelay : float			= 1.5
 const speechIncreaseThreshold : int			= 15
 const speechMaxWidth : int					= 256
 const speechExtraWidth : int				= 20
-const TargetMaxDistance : int				= 256 # ~8 Tile squared length
+const TargetMaxDistance : int				= 256 # 8 Tile length
 static var TargetMaxSquaredDistance : float	= TargetMaxDistance * TargetMaxDistance
+
+# Distance
+static func IsSameActor(actor : Actor, target : Actor) -> bool:
+	return actor == target
+
+static func GetSkillRange(actor : Actor, skill : SkillCell) -> int:
+	return actor.stat.current.attackRange + (skill.cellRange if skill else 0)
+
+static func GetDistanceSquared(actor : Actor, pos : Vector2) -> float:
+	return Vector2.ZERO.distance_squared_to((actor.position - pos) * SkillCommons.PerspectiveIncrease)
+
+static func IsEntityNear(entity : Actor, target : Actor, skillRange : int) -> bool:
+	var filteredRange : float = skillRange + entity.data._radius + target.data._radius
+	var distanceSquared : float = GetDistanceSquared(entity, target.position)
+	return distanceSquared <= filteredRange * filteredRange
 
 # Lifetime
 const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes

@@ -8,6 +8,7 @@ class_name EntityInteractive
 @onready var healthBar : TextureProgressBar	= $UnderBox/HealthBar
 @onready var nameLabel : Label				= $UnderBox/Name
 @onready var skillPreview : Control			= $SkillPreview
+@onready var clickShape : CollisionShape2D	= $ClickArea/ClickShape
 
 @onready var entity : Entity				= get_parent()
 
@@ -17,7 +18,30 @@ var visualOffset : int						= -1
 var hpFadeTween : Tween						= null
 var currentCastFx : GPUParticles2D			= null
 
-#
+# Custom mouse
+func _on_click_area_mouse_entered():
+	if not Launcher.Player:
+		return
+
+	match entity.type:
+		ActorCommons.Type.PLAYER:
+			if not ActorCommons.IsSameActor(Launcher.Player, entity):
+				# Implement player interactions
+				pass
+		ActorCommons.Type.NPC:
+			if ActorCommons.IsEntityNear(Launcher.Player, entity, ActorCommons.TargetMaxDistance):
+				DeviceManager.SetCursor(DeviceManager.CursorType.INTERACT)
+				Launcher.Player.SetHoveredEntity(entity)
+		ActorCommons.Type.MONSTER:
+			if ActorCommons.IsAlive(entity) and ActorCommons.IsEntityNear(Launcher.Player, entity, ActorCommons.GetSkillRange(Launcher.Player, DB.GetSkill("Melee".hash()))):
+				DeviceManager.SetCursor(DeviceManager.CursorType.ATTACK)
+				Launcher.Player.SetHoveredEntity(entity)
+
+func _on_click_area_mouse_exited():
+	if Launcher.Player.hoveredEntity == entity:
+		Launcher.Player.ClearHoveredEntity()
+
+# Displays
 func DisplaySelection(hue : float, alpha : float = 1.0):
 	if selectionFx == null:
 		selectionFx = ActorCommons.SelectionFx.instantiate()
@@ -236,7 +260,10 @@ func RefreshVisibleNodeOffset():
 		var offset : int = entity.visual.GetPlayerOffset()
 
 		visibleNode.position.y = -1 * (offset + ActorCommons.interactionDisplayOffset)
-		visualOffset = clampi(offset, 20, 256)
+		visualOffset = clampi(offset, 20, 256) # unhardcode this part
+		if clickShape:
+			clickShape.shape.height = offset * 1.1
+			clickShape.position.y = -offset / 2.0
 
 #
 func Init(data : EntityData):
@@ -255,3 +282,6 @@ func Init(data : EntityData):
 		if not entity.visual.spriteOffsetUpdate.is_connected(RefreshVisibleNodeOffset):
 			entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
 		RefreshVisibleNodeOffset()
+
+	if clickShape:
+		clickShape.shape.radius = max(data._radius * 1.1, ActorCommons.targetRadius)

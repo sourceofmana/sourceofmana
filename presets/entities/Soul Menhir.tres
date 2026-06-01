@@ -11,6 +11,7 @@ _parent = ExtResource("2_xwl2d")
 _id = 737772331
 _name = "Soul Menhir"
 _spritePreset = "SoulMenhir"
+_radius = 32
 _stats = {
 "level": 1
 }

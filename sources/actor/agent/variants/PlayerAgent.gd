@@ -207,7 +207,7 @@ func NotifyPosition():
 # Override
 func SetData():
 	super.SetData()
-	circleShape.radius = entityRadius
+	circleShape.radius = data._radius
 
 func _ready():
 	super._ready()

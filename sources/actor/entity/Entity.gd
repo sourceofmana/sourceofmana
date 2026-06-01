@@ -7,6 +7,7 @@ class_name Entity
 @onready var sfx : EntitySfx					= $Sfx
 
 var target : Entity						= null
+var hoveredEntity : Entity				= null
 
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
@@ -89,6 +90,9 @@ func ClearTarget():
 
 func Target(source : Vector2, interactable : bool = true, nextTarget : bool = false):
 	var newTarget : Entity = Entities.GetNextTarget(source, target if nextTarget and target != null else null, interactable)
+	SetTarget(newTarget, interactable)
+
+func SetTarget(newTarget : Entity, interactable : bool = true):
 	if newTarget != target:
 		ClearTarget()
 		target = newTarget
@@ -156,6 +160,14 @@ func LevelUp():
 	if sfx:
 		sfx.HandleAlteration(ActorCommons.Alteration.LVL_UP)
 
+# Hovered entity
+func SetHoveredEntity(entity : Entity):
+	hoveredEntity = entity
+
+func ClearHoveredEntity():
+	Launcher.Player.hoveredEntity = null
+	DeviceManager.ResetCursor()
+
 #
 func _physics_process(delta : float):
 	velocity = entityVelocity + entityPosOffset / delta
@@ -172,6 +184,9 @@ func _ready():
 	if Launcher.Player == self:
 		if not Launcher.Map.MapUnloaded.is_connected(ClearTarget):
 			Launcher.Map.MapUnloaded.connect(ClearTarget)
+		if not Launcher.Map.PlayerWarped.is_connected(ClearHoveredEntity):
+			Launcher.Map.PlayerWarped.connect(ClearHoveredEntity)
+
 	elif type == ActorCommons.Type.MONSTER:
 		if not stat.vital_stats_updated.is_connected(interactive.RefreshHP):
 			stat.vital_stats_updated.connect(interactive.RefreshHP)

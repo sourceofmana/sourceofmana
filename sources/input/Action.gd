@@ -97,8 +97,12 @@ func MoveTo(pos : Vector2):
 
 func _unhandled_input(event):
 	if event.is_action("gp_click_to") and supportMouse:
-		if FSM.IsGameState() and clickTimer:
-			if clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
+		if FSM.IsGameState() and clickTimer and Launcher.Player:
+			var hovered : Entity = Launcher.Player.hoveredEntity
+			if hovered != null and hovered != Launcher.Player and IsEnabled():
+				Launcher.Player.SetTarget(hovered)
+				Launcher.Player.JustInteract()
+			elif clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
 				MoveTo(Launcher.Camera.camera.get_global_mouse_position())
 	elif not HasConsumed() and Launcher.Camera:
 		if event is InputEventMagnifyGesture:
@@ -185,6 +189,7 @@ func _ready():
 	clickTimer.set_one_shot(true)
 	add_child.call_deferred(clickTimer)
 
+	get_viewport().physics_object_picking = true
 	DeviceManager.Init()
 
 func Destroy():

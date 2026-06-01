@@ -7,8 +7,8 @@ static func PushDrop(item : Item, agent : BaseAgent):
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 		if inst and inst.map and not inst.map.HasFlags(WorldMap.Flags.NO_DROP):
 			var dropPos : Vector2 = agent.position
-			dropPos.x += randf_range(-agent.entityRadius, agent.entityRadius)
-			dropPos.y += randf_range(-agent.entityRadius, agent.entityRadius)
+			dropPos.x += randf_range(-agent.data._radius, agent.data._radius)
+			dropPos.y += randf_range(-agent.data._radius, agent.data._radius)
 
 			var drop : Drop = Drop.new(item, dropPos)
 			inst.drops[drop.get_instance_id()] = drop

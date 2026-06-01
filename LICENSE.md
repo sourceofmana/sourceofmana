@@ -144,6 +144,8 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/gui/messagebox.png [Reid]
 ./graphics/gui/misc/loading.png [Reid]
 ./graphics/gui/misc/mouse.png [Crush]
+./graphics/gui/misc/mouse-attack.png [Hal9000] [Reid]
+./graphics/gui/misc/mouse-interact.png [Hal9000] [Reid]
 ./graphics/gui/mobile/background.png [Reid]
 ./graphics/gui/mobile/background_bitmask.png [Reid]
 ./graphics/gui/mobile/button.png [Reid]
