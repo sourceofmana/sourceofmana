@@ -13,8 +13,8 @@ func OnStatsUpdated(agentRID : int):
 		ConnectBoss(entity)
 	elif currentBossRID == entity.agentRID:
 		pass
-	elif Launcher.Player.target and agentRID == Launcher.Player.target.agentRID:
-		if currentBossRID != Launcher.Player.target.agentRID:
+	elif Entities.target and agentRID == Entities.target.agentRID:
+		if currentBossRID != Entities.target.agentRID:
 			DisconnectBoss(currentBossRID)
 			ConnectBoss(entity)
 	else:

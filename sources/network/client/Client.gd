@@ -296,10 +296,6 @@ func DisplayActions(actions : PackedStringArray, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.DisplayActions(actions, UICommons.DisplayActionLongDelaySec)
 
-func Untarget(_peerID : int):
-	if Launcher.Player:
-		Launcher.Player.ClearTarget()
-
 func PushNotification(notif : String, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.notificationLabel.AddNotification(notif)

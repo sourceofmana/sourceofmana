@@ -97,11 +97,10 @@ func MoveTo(pos : Vector2):
 
 func _unhandled_input(event):
 	if event.is_action("gp_click_to") and supportMouse:
-		if FSM.IsGameState() and clickTimer and Launcher.Player:
-			var hovered : Entity = Launcher.Player.hoveredEntity
-			if hovered != null and hovered != Launcher.Player and IsEnabled():
-				Launcher.Player.SetTarget(hovered)
-				Launcher.Player.JustInteract()
+		if IsEnabled() and FSM.IsGameState() and clickTimer and Launcher.Player:
+			if Entities.hovered and Entities.hoveredInRange:
+				Entities.SetTarget(Entities.hovered)
+				Entities.JustInteract()
 			elif clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
 				MoveTo(Launcher.Camera.camera.get_global_mouse_position())
 	elif not HasConsumed() and Launcher.Camera:
@@ -155,10 +154,10 @@ func _input(event : InputEvent):
 		elif TryJustPressed(event, "smile_16"):			Network.TriggerEmote(DB.GetCellHash("Surprised"))
 		elif TryJustPressed(event, "smile_17"):			Network.TriggerEmote(DB.GetCellHash("Confused"))
 		elif TryJustPressed(event, "gp_sit"):			Network.TriggerSit()
-		elif TryJustPressed(event, "gp_target"):		Launcher.Player.Target(Launcher.Player.position, true, true)
-		elif TryJustPressed(event, "gp_untarget"):		Launcher.Player.ClearTarget()
-		elif TryJustPressed(event, "gp_interact"):		Launcher.Player.JustInteract()
-		elif TryPressed(event, "gp_interact"):			Launcher.Player.Interact()
+		elif TryJustPressed(event, "gp_target"):		Entities.Target(Launcher.Player.position, true, true)
+		elif TryJustPressed(event, "gp_untarget"):		Entities.ClearTarget()
+		elif TryJustPressed(event, "gp_interact"):		Entities.JustInteract()
+		elif TryPressed(event, "gp_interact"):			Entities.Interact()
 		elif TryJustPressed(event, "gp_pickup"):		Launcher.Map.PickupNearestDrop()
 		elif TryJustPressed(event, "gp_morph"):			Network.TriggerSkill(DB.UnknownHash, DB.GetCellHash("Morph"))
 		elif TryJustPressed(event, "gp_run"):			Launcher.Player.Run(true)

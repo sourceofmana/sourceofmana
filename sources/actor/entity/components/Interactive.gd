@@ -26,20 +26,16 @@ func _on_click_area_mouse_entered():
 	match entity.type:
 		ActorCommons.Type.PLAYER:
 			if not ActorCommons.IsSameActor(Launcher.Player, entity):
-				# Implement player interactions
-				pass
+				Entities.SetHovered(entity)
 		ActorCommons.Type.NPC:
-			if ActorCommons.IsEntityNear(Launcher.Player, entity, ActorCommons.TargetMaxDistance):
-				DeviceManager.SetCursor(DeviceManager.CursorType.INTERACT)
-				Launcher.Player.SetHoveredEntity(entity)
+			Entities.SetHovered(entity)
 		ActorCommons.Type.MONSTER:
-			if ActorCommons.IsAlive(entity) and ActorCommons.IsEntityNear(Launcher.Player, entity, ActorCommons.GetSkillRange(Launcher.Player, DB.GetSkill("Melee".hash()))):
-				DeviceManager.SetCursor(DeviceManager.CursorType.ATTACK)
-				Launcher.Player.SetHoveredEntity(entity)
+			Entities.SetHovered(entity)
+	Entities.RefreshHovered()
 
 func _on_click_area_mouse_exited():
-	if Launcher.Player.hoveredEntity == entity:
-		Launcher.Player.ClearHoveredEntity()
+	if Entities.hovered == entity:
+		Entities.ClearHovered()
 
 # Displays
 func DisplaySelection(hue : float, alpha : float = 1.0):
@@ -206,7 +202,7 @@ func DisplayHP():
 		return
 
 	if Launcher.Player:
-		if Launcher.Player.target != entity:
+		if Entities.target != entity:
 			Callback.SelfDestructTimer(healthBar, ActorCommons.DisplayHPDelay, HideHP, [], "HideHP")
 		if entity.stat.level >= Launcher.Player.stat.level and ActorCommons.LevelDifferenceColor:
 			nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / ActorCommons.LevelDifferenceColor)

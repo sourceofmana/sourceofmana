@@ -6,9 +6,6 @@ class_name Entity
 @onready var visual : EntityVisual				= $Visual
 @onready var sfx : EntitySfx					= $Sfx
 
-var target : Entity						= null
-var hoveredEntity : Entity				= null
-
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
 var entityOrientation : Vector2			= Vector2(0, 1)
@@ -78,52 +75,6 @@ func SetLocalPlayer():
 	Network.RetrieveCharacterInformation()
 	FSM.EnterState(FSM.States.IN_GAME)
 
-func ClearTarget():
-	if target != null:
-		if target.interactive:
-			target.interactive.DisplayTarget(ActorCommons.Target.NONE)
-		if target.is_inside_tree():
-			Callback.SelfDestructTimer(target.interactive.healthBar, ActorCommons.DisplayHPDelay, target.interactive.HideHP, [], "HideHP")
-		else:
-			target.interactive.HideHP()
-		target = null
-
-func Target(source : Vector2, interactable : bool = true, nextTarget : bool = false):
-	var newTarget : Entity = Entities.GetNextTarget(source, target if nextTarget and target != null else null, interactable)
-	SetTarget(newTarget, interactable)
-
-func SetTarget(newTarget : Entity, interactable : bool = true):
-	if newTarget != target:
-		ClearTarget()
-		target = newTarget
-
-	if target:
-		if interactable and target.type == ActorCommons.Type.NPC:
-			target.interactive.DisplayTarget(ActorCommons.Target.ALLY)
-		elif target.type == ActorCommons.Type.MONSTER:
-			target.interactive.DisplayTarget(ActorCommons.Target.ENEMY)
-			target.interactive.DisplayHP()
-		Network.TriggerSelect(target.agentRID)
-
-func JustInteract():
-	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and not Util.IsReachableSquared(position, target.position, ActorCommons.TargetMaxSquaredDistance)):
-		Target(position, true)
-	if target and target.type == ActorCommons.Type.NPC:
-		if target.defaultState != ActorCommons.State.UNKNOWN and target.state != target.defaultState:
-			ClearTarget()
-	if target:
-		if target.type == ActorCommons.Type.NPC:
-			Network.TriggerInteract(target.agentRID)
-		else:
-			Interact()
-	elif stat.IsSailing():
-		interactive.DisplaySailContext()
-
-func Interact():
-	if target != null:
-		if target.type == ActorCommons.Type.MONSTER:
-			Cast(DB.GetCellHash(SkillCommons.SkillMeleeName))
-
 func Cast(skillID : int):
 	if Launcher.GUI.IsDialogueContextOpened():
 		return
@@ -139,10 +90,10 @@ func Cast(skillID : int):
 
 	var targetRID : int = 0
 	if skill.mode == Skill.TargetMode.SINGLE:
-		if not target or target.state == ActorCommons.State.DEATH or target.type != ActorCommons.Type.MONSTER:
-			Target(position, false)
-		if target and target.type == ActorCommons.Type.MONSTER:
-			targetRID = target.agentRID
+		if not Entities.target or Entities.target.state == ActorCommons.State.DEATH or Entities.target.type != ActorCommons.Type.MONSTER:
+			Entities.Target(position, false)
+		if Entities.target and Entities.target.type == ActorCommons.Type.MONSTER:
+			targetRID = Entities.target.agentRID
 
 	Network.TriggerSkill(targetRID, skillID)
 
@@ -160,16 +111,9 @@ func LevelUp():
 	if sfx:
 		sfx.HandleAlteration(ActorCommons.Alteration.LVL_UP)
 
-# Hovered entity
-func SetHoveredEntity(entity : Entity):
-	hoveredEntity = entity
-
-func ClearHoveredEntity():
-	Launcher.Player.hoveredEntity = null
-	DeviceManager.ResetCursor()
-
 #
 func _physics_process(delta : float):
+	var previousVelocity : Vector2 = velocity
 	velocity = entityVelocity + entityPosOffset / delta
 	if velocity != Vector2.ZERO:
 		var extraVelocity : Vector2 = velocity - entityVelocity
@@ -178,14 +122,17 @@ func _physics_process(delta : float):
 		if Launcher.Player == self:
 			Launcher.Map.PlayerMoved.emit()
 	else:
+		if Launcher.Player == self:
+			if not previousVelocity.is_zero_approx():
+				Entities.RefreshHovered()
 		set_physics_process(false)
 
 func _ready():
 	if Launcher.Player == self:
-		if not Launcher.Map.MapUnloaded.is_connected(ClearTarget):
-			Launcher.Map.MapUnloaded.connect(ClearTarget)
-		if not Launcher.Map.PlayerWarped.is_connected(ClearHoveredEntity):
-			Launcher.Map.PlayerWarped.connect(ClearHoveredEntity)
+		if not Launcher.Map.MapUnloaded.is_connected(Entities.ClearTarget):
+			Launcher.Map.MapUnloaded.connect(Entities.ClearTarget)
+		if not Launcher.Map.PlayerWarped.is_connected(Entities.ClearHovered):
+			Launcher.Map.PlayerWarped.connect(Entities.ClearHovered)
 
 	elif type == ActorCommons.Type.MONSTER:
 		if not stat.vital_stats_updated.is_connected(interactive.RefreshHP):

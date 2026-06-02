@@ -329,7 +329,7 @@ static func GetSkillRange(actor : Actor, skill : SkillCell) -> int:
 static func GetDistanceSquared(actor : Actor, pos : Vector2) -> float:
 	return Vector2.ZERO.distance_squared_to((actor.position - pos) * SkillCommons.PerspectiveIncrease)
 
-static func IsEntityNear(entity : Actor, target : Actor, skillRange : int) -> bool:
+static func IsActorNear(entity : Actor, target : Actor, skillRange : int) -> bool:
 	var filteredRange : float = skillRange + entity.data._radius + target.data._radius
 	var distanceSquared : float = GetDistanceSquared(entity, target.position)
 	return distanceSquared <= filteredRange * filteredRange
