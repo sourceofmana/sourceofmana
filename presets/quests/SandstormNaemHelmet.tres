@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://bxx30u5s006ke"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 12
+name = "A Miner's Helping Hand"
+description = "Naem, one of the workers in the Sandstorm Mines, offered you a spare mining helmet to keep you safe as you venture deeper."
+giver = "Naem"
+giverLocation = "Sandstorm Mines"
+target = "Miner Helmet x1"
+targetLocation = "Sandstorm Mines"
+reward = "Miner Helmet"
+metadata/_custom_type_script = "uid://bqxdwogial88g"
