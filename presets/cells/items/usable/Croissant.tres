@@ -22,9 +22,16 @@ _modifiers = Array[ExtResource("2_w5vmb")]([SubResource("Resource_y0bgm"), SubRe
 
 [resource]
 script = ExtResource("4_1ohq4")
+slot = -1
+textures = Array[Texture2D]([])
+customfield = ""
+spriteHframes = 0
+spriteVframes = 0
 id = 30320795
 name = "Croissant"
+description = ""
 icon = ExtResource("1_mucoc")
+type = 0
 weight = 5.0
 stackable = true
 usable = true

@@ -27,8 +27,15 @@ _modifiers = Array[ExtResource("4_8at4d")]([SubResource("Resource_s34tt"), SubRe
 
 [resource]
 script = ExtResource("7_tt4oe")
+category = 0
+state = 0
 cellRange = 64
+mode = 0
+repeat = false
 cooldownTime = 3.0
+castTime = 0.0
+castWalk = false
+skillTime = 0.0
 projectilePreset = ExtResource("4_p83gv")
 id = 123697108
 name = "Sonic Wave"
@@ -36,5 +43,6 @@ description = "Releases a blue sonic wave that deals damage forward."
 icon = ExtResource("1_lb5c4")
 type = 2
 weight = 0.0
+stackable = false
 usable = true
 modifiers = SubResource("Resource_uhivh")

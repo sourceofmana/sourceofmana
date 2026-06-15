@@ -28,8 +28,11 @@ _modifiers = Array[ExtResource("4_sacis")]([SubResource("Resource_p4hfi"), SubRe
 
 [resource]
 script = ExtResource("1_tou8y")
+category = 0
+state = 0
 cellRange = 40
 mode = 1
+repeat = false
 cooldownTime = 1.0
 castPreset = ExtResource("1_1m847")
 castTime = 2.0
@@ -42,5 +45,6 @@ description = "Unleash a mana-fueled attack, creating a focused circle of concen
 icon = ExtResource("1_lskrc")
 type = 2
 weight = 0.0
+stackable = false
 usable = true
 modifiers = SubResource("Resource_qpc65")

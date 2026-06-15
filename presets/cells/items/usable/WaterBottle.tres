@@ -19,10 +19,16 @@ metadata/_custom_type_script = "uid://btqmbqq2q7cm8"
 
 [resource]
 script = ExtResource("4_6ukje")
+slot = -1
+textures = Array[Texture2D]([])
+customfield = ""
+spriteHframes = 0
+spriteVframes = 0
 id = 3288439794
 name = "Water Bottle"
 description = "A simple bottle filled with clear water."
 icon = ExtResource("1_fl4k2")
+type = 0
 weight = 50.0
 stackable = true
 usable = true

@@ -16,10 +16,16 @@ _modifiers = Array[ExtResource("2_8o32r")]([SubResource("Resource_cp1hx")])
 
 [resource]
 script = ExtResource("4_ckwuv")
+slot = -1
+textures = Array[Texture2D]([])
+customfield = ""
+spriteHframes = 0
+spriteVframes = 0
 id = 3878004993
 name = "Cactus Potion"
 description = "A potent healing potion brewed from cactus extract."
 icon = ExtResource("1_ml7mk")
+type = 0
 weight = 5.0
 stackable = true
 usable = true
