@@ -58,8 +58,13 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 	if previousState != nextState:
 		if sfx:
 			sfx.HandleState(nextState)
-		if nextState == ActorCommons.State.DEATH:
-			entity_died.emit()
+
+		match nextState:
+			ActorCommons.State.DEATH:
+				entity_died.emit()
+			ActorCommons.State.IDLE:
+				if Launcher.Player == self:
+					Launcher.Map.PlayerHalted.emit()
 
 	set_physics_process(true)
 
@@ -124,7 +129,7 @@ func _physics_process(delta : float):
 	else:
 		if Launcher.Player == self:
 			if not previousVelocity.is_zero_approx():
-				Entities.RefreshHovered()
+				Launcher.Map.PlayerHalted.emit()
 		set_physics_process(false)
 
 func _ready():

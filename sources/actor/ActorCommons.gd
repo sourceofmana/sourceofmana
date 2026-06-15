@@ -317,6 +317,7 @@ const speechIncreaseThreshold : int			= 15
 const speechMaxWidth : int					= 256
 const speechExtraWidth : int				= 20
 const TargetMaxDistance : int				= 256 # 8 Tile length
+const TargetWalkToDistance : int			= 192 # 6 Tile length
 static var TargetMaxSquaredDistance : float	= TargetMaxDistance * TargetMaxDistance
 
 # Distance
@@ -331,8 +332,7 @@ static func GetDistanceSquared(actor : Actor, pos : Vector2) -> float:
 
 static func IsActorNear(entity : Actor, target : Actor, skillRange : int) -> bool:
 	var filteredRange : float = skillRange + entity.data._radius + target.data._radius
-	var distanceSquared : float = GetDistanceSquared(entity, target.position)
-	return distanceSquared <= filteredRange * filteredRange
+	return Util.IsReachableSquared(entity.position, target.position, filteredRange * filteredRange)
 
 # Lifetime
 const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes

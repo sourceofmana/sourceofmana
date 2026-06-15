@@ -11,11 +11,24 @@ _parent = ExtResource("2_vtp66")
 _id = 817801695
 _name = "DeepLevelCrack"
 _spritePreset = "DeepLevelCrack"
+_radius = 0
 _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_7sdca")]([null, null, null, null, null, null, null, null])
+_displayName = false
+_direction = -1
+_state = -1
 _behaviour = 9
+_skills = Dictionary[ExtResource("3_vtp66"), float]({})
+_drops = Dictionary[ExtResource("1_7sdca"), float]({})
+_spawns = Dictionary[ExtResource("3_dsnwk"), int]({})
+_questID = -1
+_questState = 0
+_questStateMax = 0
+_stateSFX = Dictionary[int, AudioStream]({})
+_alterationSFX = Dictionary[int, AudioStream]({})
+_isBoss = false
 
 [resource]
 script = ExtResource("3_dsnwk")
@@ -28,4 +41,16 @@ _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_7sdca")]([null, null, null, null, null, null, null, null])
+_displayName = false
+_direction = -1
+_state = -1
 _behaviour = 8
+_skills = Dictionary[ExtResource("3_vtp66"), float]({})
+_drops = Dictionary[ExtResource("1_7sdca"), float]({})
+_spawns = Dictionary[ExtResource("3_dsnwk"), int]({})
+_questID = -1
+_questState = 0
+_questStateMax = 0
+_stateSFX = Dictionary[int, AudioStream]({})
+_alterationSFX = Dictionary[int, AudioStream]({})
+_isBoss = false

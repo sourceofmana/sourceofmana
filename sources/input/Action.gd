@@ -97,11 +97,11 @@ func MoveTo(pos : Vector2):
 
 func _unhandled_input(event):
 	if event.is_action("gp_click_to") and supportMouse:
-		if IsEnabled() and FSM.IsGameState() and clickTimer and Launcher.Player:
-			if Entities.hovered and Entities.hoveredInRange:
-				Entities.SetTarget(Entities.hovered)
-				Entities.JustInteract()
-			elif clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
+		if IsEnabled() and FSM.IsGameState() and clickTimer and Launcher.Player and IsActionPressed("gp_click_to"):
+			if Entities.hovered:
+				Entities.InteractHovered(Entities.hovered)
+			elif clickTimer.is_stopped():
+				Entities.ClearDelayedHoveredCallback()
 				MoveTo(Launcher.Camera.camera.get_global_mouse_position())
 	elif not HasConsumed() and Launcher.Camera:
 		if event is InputEventMagnifyGesture:
@@ -119,6 +119,7 @@ func _physics_process(_deltaTime : float):
 	if Launcher.Player:
 		var move : Vector2 = GetMove()
 		if move != Vector2.ZERO:
+			Entities.ClearDelayedHoveredCallback()
 			if clickTimer.get_time_left() > 0:
 				clickTimer.stop()
 			if previousMove != move:

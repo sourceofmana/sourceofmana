@@ -5,6 +5,7 @@ signal MapUnloaded
 signal MapLoaded
 signal PlayerWarped
 signal PlayerMoved
+signal PlayerHalted
 
 #
 var pool								= FileSystem.LoadSource("map/MapPool.gd")

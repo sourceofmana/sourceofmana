@@ -5,7 +5,6 @@ class_name Entities
 static var entities : Dictionary[int, Entity]		= {}
 static var target : Entity							= null
 static var hovered : Entity							= null
-static var hoveredInRange : bool					= false
 
 # Entities access
 static func Get(agentRID : int) -> Entity:
@@ -59,7 +58,7 @@ static func SetTarget(newTarget : Entity, interactable : bool = true):
 		Network.TriggerSelect(target.agentRID)
 
 static func JustInteract():
-	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and not Util.IsReachableSquared(Launcher.Player.position, target.position, ActorCommons.TargetMaxSquaredDistance)):
+	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and not ActorCommons.IsActorNear(Launcher.Player, target, ActorCommons.TargetMaxDistance)):
 		Target(Launcher.Player.position, true)
 	if target and target.type == ActorCommons.Type.NPC:
 		if target.defaultState != ActorCommons.State.UNKNOWN and target.state != target.defaultState:
@@ -125,10 +124,14 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 # Hovered
 static func SetHovered(nextHovered : Entity):
 	hovered = nextHovered
+	RefreshHovered()
 
 static func ClearHovered():
 	hovered = null
 	DeviceManager.ResetCursor()
+
+static func ClearDelayedHoveredCallback():
+	Callback.RemoveMatchingCallback(Entities, Launcher.Map.PlayerHalted, InteractHovered)
 
 static func RefreshHovered():
 	if not hovered:
@@ -136,17 +139,42 @@ static func RefreshHovered():
 
 	match hovered.type:
 		ActorCommons.Type.PLAYER:
-			hoveredInRange = false
+			pass
 		ActorCommons.Type.NPC:
-			if ActorCommons.IsActorNear(Launcher.Player, hovered, ActorCommons.TargetMaxDistance):
-				DeviceManager.SetCursor(DeviceManager.CursorType.INTERACT)
-				hoveredInRange = true
-			else:
-				hoveredInRange = false
+			DeviceManager.SetCursor(DeviceManager.CursorType.INTERACT)
 		ActorCommons.Type.MONSTER:
-			var meleeSkill : SkillCell = DB.GetSkill(SkillCommons.SkillMeleeName.hash())
-			if Launcher.Player.progress.HasSkill(meleeSkill) and ActorCommons.IsAlive(hovered) and ActorCommons.IsActorNear(Launcher.Player, hovered, ActorCommons.GetSkillRange(Launcher.Player, meleeSkill)):
-				hoveredInRange = true
-				DeviceManager.SetCursor(DeviceManager.CursorType.ATTACK)
+			DeviceManager.SetCursor(DeviceManager.CursorType.ATTACK)
+
+static func InteractHovered(targetHovered : Entity):
+	if not targetHovered:
+		return
+
+	var moveToEntity : bool = false
+	var walkToDistance : int = 0
+	ClearDelayedHoveredCallback()
+
+	match targetHovered.type:
+		ActorCommons.Type.PLAYER:
+			pass
+		ActorCommons.Type.NPC:
+			if ActorCommons.IsActorNear(Launcher.Player, targetHovered, ActorCommons.TargetWalkToDistance):
+				Entities.SetTarget(targetHovered)
+				Entities.JustInteract()
 			else:
-				hoveredInRange = false
+				moveToEntity = true
+				walkToDistance = ActorCommons.TargetWalkToDistance
+		ActorCommons.Type.MONSTER:
+			var hoveredInRange : bool = ActorCommons.IsAlive(targetHovered) and ActorCommons.IsActorNear(Launcher.Player, targetHovered, Launcher.Player.stat.current.attackRange)
+			if hoveredInRange:
+				Entities.SetTarget(targetHovered)
+				Entities.JustInteract()
+			else:
+				moveToEntity = true
+				walkToDistance = Launcher.Player.stat.current.attackRange
+
+	if moveToEntity:
+		var playerPos : Vector2 = Launcher.Player.get_position()
+		var targetPos : Vector2 = targetHovered.get_position()
+		var targetPosition : Vector2 = playerPos + playerPos.direction_to(targetPos) * (playerPos.distance_to(targetPos) - walkToDistance)
+		Launcher.Action.MoveTo(targetPosition)
+		Launcher.Map.PlayerHalted.connect(InteractHovered.bind(targetHovered), ConnectFlags.CONNECT_ONE_SHOT)

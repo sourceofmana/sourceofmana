@@ -31,7 +31,6 @@ func _on_click_area_mouse_entered():
 			Entities.SetHovered(entity)
 		ActorCommons.Type.MONSTER:
 			Entities.SetHovered(entity)
-	Entities.RefreshHovered()
 
 func _on_click_area_mouse_exited():
 	if Entities.hovered == entity:

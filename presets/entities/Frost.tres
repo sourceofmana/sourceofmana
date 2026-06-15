@@ -19,7 +19,15 @@ slot = 0
 textures = Array[Texture2D]([ExtResource("7_shirt_m"), ExtResource("8_shirt_f"), ExtResource("7_shirt_m")])
 shader = ExtResource("9_salamander")
 customfield = "Salamander"
+spriteHframes = 0
+spriteVframes = 0
+id = -1
 name = "Leather Shirt"
+description = ""
+type = 0
+weight = 1.0
+stackable = false
+usable = false
 
 [sub_resource type="Resource" id="ghutra_sand"]
 script = ExtResource("1_item")
@@ -30,7 +38,13 @@ customfield = "Sand"
 animationOverrides = ExtResource("6_ghutra_anim")
 spriteHframes = 15
 spriteVframes = 2
+id = -1
 name = "Ghutra"
+description = ""
+type = 0
+weight = 1.0
+stackable = false
+usable = false
 
 [resource]
 script = ExtResource("2_entity")
@@ -38,6 +52,7 @@ _parent = ExtResource("3_parent")
 _id = 221388307
 _name = "Frost"
 _spritePreset = "Player"
+_radius = 0
 _stats = {
 "gender": "Male",
 "haircolor": "Light Violet",
@@ -47,4 +62,16 @@ _stats = {
 "skintone": "Dark"
 }
 _equipment = Array[ExtResource("1_item")]([SubResource("shirt_salamander"), ExtResource("10_legs"), ExtResource("11_feet"), null, SubResource("ghutra_sand"), null, null, null])
+_displayName = false
+_direction = -1
 _state = 2
+_behaviour = 2
+_skills = Dictionary[ExtResource("11_rqd8i"), float]({})
+_drops = Dictionary[ExtResource("1_item"), float]({})
+_spawns = Dictionary[ExtResource("2_entity"), int]({})
+_questID = -1
+_questState = 0
+_questStateMax = 0
+_stateSFX = Dictionary[int, AudioStream]({})
+_alterationSFX = Dictionary[int, AudioStream]({})
+_isBoss = false
