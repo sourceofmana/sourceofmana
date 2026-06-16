@@ -99,6 +99,7 @@ enum MINE_EXPLORATION
 	INACTIVE = ProgressCommons.UnknownProgress,
 	STARTED,
 	FIND_NICKOS,
+	STRANGER_SPOTTED,
 	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
 }
 enum SANDSTORM_NATHAN_WATER
