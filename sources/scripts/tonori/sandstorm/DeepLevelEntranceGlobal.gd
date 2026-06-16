@@ -6,4 +6,6 @@ var mapName : int = "Desert Deep Level".hash()
 
 #
 func OnAreaEnter(player : PlayerAgent):
-	NpcCommons.WarpInstance(player, mapName, mapPos)
+	if player and not player.ownScript:
+		if player.progress.GetQuest(ProgressCommons.Quest.MINE_EXPLORATION) >= ProgressCommons.MINE_EXPLORATION.STRANGER_SPOTTED:
+			NpcCommons.WarpInstance(player, mapName, mapPos)
