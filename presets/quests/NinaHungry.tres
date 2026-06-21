@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://cxrp5bnaq3nt"]
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://670qt3ghe1ua"]
 
 [ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
 
 [resource]
 script = ExtResource("1_25ln0")
-id = 9
+id = 8
 name = "Nina's Snack"
 description = "Nina is hungry but too dedicated to leave her post. Find her a croissant from the market."
 giver = "Nina"

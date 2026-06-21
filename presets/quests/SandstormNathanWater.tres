@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_25ln0")
-id = 11
+id = 10
 name = "A Drop of Relief"
 description = "Nathan is stationed outside the Sandstorm Mines and suffering under the blazing heat. He doesn't need water to drink, just a bottle to pour over himself."
 giver = "Nathan"

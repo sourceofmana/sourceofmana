@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_25ln0")
-id = 12
+id = 11
 name = "A Miner's Helping Hand"
 description = "Naem, one of the workers in the Sandstorm Mines, offered you a spare mining helmet to keep you safe as you venture deeper."
 giver = "Naem"

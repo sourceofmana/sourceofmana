@@ -195,7 +195,7 @@ func Think(mes : String):
 func Narrate(mes : String):
 	assert(IsPlayer(), "Narrate() requires a player agent")
 	if not IsPlayer(): return
-	steps.append({"text": mes, "think": true, "author": "Narrator"})
+	steps.append({"text": mes, "think": true, "author": ""})
 
 func Choice(mes : String, callable : Callable = Callback.Empty):
 	assert(IsPlayer(), "Choice() requires a player agent")

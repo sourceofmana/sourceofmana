@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_25ln0")
-id = 10
+id = 9
 name = "Mine Exploration"
 description = "Scout the Sandstorm Mines and ensure the cave system is clear of major dangers before the miners move in."
 giver = "Ekinu"

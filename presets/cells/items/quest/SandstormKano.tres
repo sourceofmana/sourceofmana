@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://dkano00001"]
+
+[ext_resource type="Texture2D" uid="uid://b384vif7vsh6i" path="res://data/graphics/items/quest/sandstorm-seed.png" id="1_jdgf4"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_mv1ba"]
+
+[resource]
+script = ExtResource("2_mv1ba")
+slot = 11
+name = "Sandstorm Kano"
+description = "A Mana Seed retrieved in a mine from Tonori's region directly from a livin Uru."
+icon = ExtResource("1_jdgf4")

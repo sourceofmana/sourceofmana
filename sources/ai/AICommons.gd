@@ -86,6 +86,7 @@ static func IsReachable(agent : AIAgent, target : BaseAgent) -> bool:
 
 static func IsStationary(agent : AIAgent) -> bool:
 	return (agent.data and agent.data._behaviour & AICommons.Behaviour.IMMOBILE) or \
+		(agent.aiBehaviour & AICommons.Behaviour.IMMOBILE) or \
 		(agent.spawnInfo and agent.spawnInfo.spawn_offset == Vector2i.ZERO and not agent.spawnInfo.is_global)
 
 static func CanWalk(agent: AIAgent):

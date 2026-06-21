@@ -24,7 +24,7 @@ func Toggle(toggle : bool):
 	Launcher.GUI.dialogueContainer.set_visible(toggle)
 
 func AddName(text : String):
-	if lastName != text:
+	if lastName != text and not text.is_empty():
 		var newName : bool = not lastName.is_empty()
 		lastName = text
 		var label : RichTextLabel = PlayerNameLabel.instantiate() if lastName == Launcher.Player.nick else NPCNameLabel.instantiate()
