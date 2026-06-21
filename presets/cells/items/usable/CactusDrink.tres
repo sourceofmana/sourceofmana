@@ -16,16 +16,10 @@ _modifiers = Array[ExtResource("2_8o32r")]([SubResource("Resource_y0bgm")])
 
 [resource]
 script = ExtResource("4_ckwuv")
-slot = -1
-textures = Array[Texture2D]([])
-customfield = ""
-spriteHframes = 0
-spriteVframes = 0
 id = 3877745440
 name = "Cactus Drink"
 description = "A refreshing cactus drink."
 icon = ExtResource("1_ml7mk")
-type = 0
 weight = 5.0
 stackable = true
 usable = true

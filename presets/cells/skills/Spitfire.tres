@@ -27,14 +27,10 @@ _modifiers = Array[ExtResource("2_kni4d")]([SubResource("Resource_s34tt"), SubRe
 
 [resource]
 script = ExtResource("5_hdkya")
-category = 0
 state = 3
 cellRange = 32
-mode = 0
 repeat = true
 cooldownTime = 1.0
-castTime = 0.0
-castWalk = false
 skillTime = 0.1
 projectilePreset = ExtResource("4_65neb")
 id = 3219153995
@@ -43,6 +39,5 @@ description = "Cast a fire spray"
 icon = ExtResource("1_ns67t")
 type = 2
 weight = 0.0
-stackable = false
 usable = true
 modifiers = SubResource("Resource_uhivh")

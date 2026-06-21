@@ -28,15 +28,10 @@ _modifiers = Array[ExtResource("4_wcuhp")]([SubResource("Resource_pfw64"), SubRe
 
 [resource]
 script = ExtResource("4_7n1yh")
-category = 0
-state = 0
-cellRange = 0
 mode = 2
-repeat = false
 cooldownTime = 5.0
 castPreset = ExtResource("1_hjeau")
 castTime = 2.0
-castWalk = false
 skillPreset = ExtResource("5_me0na")
 skillTime = 2.0
 id = 193463731
@@ -45,6 +40,5 @@ description = "Heal yourself with a burst of restorative energy."
 icon = ExtResource("3_uxkv0")
 type = 2
 weight = 0.0
-stackable = false
 usable = true
 modifiers = SubResource("Resource_1da6t")
