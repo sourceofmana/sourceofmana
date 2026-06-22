@@ -97,7 +97,7 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 
 static func CooledDown(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	agent.cooldownTimers[skill.id] = false
-	if skill.repeat and ActorCommons.IsAlive(target):
+	if skill.repeat and ActorCommons.IsAlive(target) and not SkillCommons.HasAnyActionInProgress(agent):
 		Skill.Cast(agent, target, skill)
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
@@ -118,7 +118,7 @@ static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng
 	Network.NotifyNeighbours(agent, "TargetAlteration", [agent.get_rid().get_id(), target.get_rid().get_id(), heal, ActorCommons.Alteration.HEAL, skill.id, true], true, true)
 
 static func Stopped(agent : BaseAgent):
-	if SkillCommons.HasActionInProgress(agent):
+	if SkillCommons.HasAnyActionInProgress(agent):
 		agent.SetSkillCastID(DB.UnknownHash)
 		Callback.ClearTimer(agent.actionTimer)
 		if agent is AIAgent:

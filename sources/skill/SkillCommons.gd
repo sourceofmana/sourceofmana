@@ -140,5 +140,5 @@ static func HasSkill(agent : BaseAgent, skill : SkillCell) -> bool:
 static func IsInstantAbility(skill : SkillCell) -> bool:
 	return skill.category == SkillCell.Category.ABILITY and not skill.modifiers.HasAny() and skill.castTime == 0.0 and skill.cooldownTime == 0.0
 
-static func HasActionInProgress(agent : BaseAgent) -> bool:
+static func HasAnyActionInProgress(agent : BaseAgent) -> bool:
 	return agent.currentSkillID != DB.UnknownHash or not agent.actionTimer.is_stopped()

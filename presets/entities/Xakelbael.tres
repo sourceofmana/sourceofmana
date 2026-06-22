@@ -10,6 +10,8 @@
 [ext_resource type="Resource" uid="uid://cot2eu3ix5rdm" path="res://presets/cells/skills/Flar.tres" id="8_flar"]
 [ext_resource type="Resource" uid="uid://dlftukimhm3l1" path="res://presets/cells/skills/SonicWave.tres" id="9_sonic"]
 [ext_resource type="Resource" uid="uid://bqg1nlmgehdkc" path="res://presets/cells/skills/Spitfire.tres" id="10_spit"]
+[ext_resource type="Resource" uid="uid://lcvqesy5llmf" path="res://presets/cells/skills/Melee.tres" id="11_0h5oo"]
+[ext_resource type="Resource" uid="uid://badqfdrvud80e" path="res://presets/cells/skills/Jump.tres" id="11_jump"]
 
 [resource]
 script = ExtResource("2_qwxl7")
@@ -29,7 +31,9 @@ _behaviour = 4
 _skills = Dictionary[ExtResource("7_skill"), float]({
 ExtResource("8_flar"): 0.3,
 ExtResource("9_sonic"): 0.3,
-ExtResource("10_spit"): 0.3
+ExtResource("10_spit"): 0.3,
+ExtResource("11_jump"): 0.2,
+ExtResource("11_0h5oo"): 0.0
 })
 _questStateMax = 255
 _isBoss = true

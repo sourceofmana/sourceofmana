@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://badqfdrvud80e"]
+
+[ext_resource type="PackedScene" uid="uid://cdx1086qhd4q2" path="res://presets/effects/particles/casts/Jump.tscn" id="1_pitqg"]
+[ext_resource type="Texture2D" uid="uid://bhl1s5aiwak2j" path="res://data/graphics/items/skill/jump.png" id="2_rquis"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_skill"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="3_b04gy"]
+[ext_resource type="Script" uid="uid://dw1wy5my2i8y6" path="res://sources/skill/abilities/JumpAbility.gd" id="3_jumpability"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="4_modifier"]
+[ext_resource type="PackedScene" uid="uid://b7pg4ja3fxjua" path="res://presets/effects/particles/Jump.tscn" id="6_rquis"]
+
+[sub_resource type="Resource" id="Resource_jump"]
+script = ExtResource("4_modifier")
+metadata/_custom_type_script = "uid://btqmbqq2q7cm8"
+
+[resource]
+script = ExtResource("2_skill")
+category = 2
+cellRange = 256
+mode = 2
+cooldownTime = 5.0
+castPreset = ExtResource("1_pitqg")
+castTime = 0.5
+skillPreset = ExtResource("6_rquis")
+skillTime = 1.5
+id = 2089264065
+name = "Jump"
+description = "Blink to a random nearby position."
+icon = ExtResource("2_rquis")
+type = 2
+weight = 0.0
+usable = true
+modifiers = SubResource("Resource_jump")
+cellScript = ExtResource("3_jumpability")

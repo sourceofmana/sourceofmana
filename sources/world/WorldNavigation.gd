@@ -57,6 +57,21 @@ static func GetRandomPositionAABB(inst : WorldInstance, pos : Vector2i, offset :
 		return GetRandomPosition(inst)
 	return Vector2i.ZERO
 
+static func GetRandomPositionRing(inst : WorldInstance, pos : Vector2i, minRadius : float, maxRadius : float) -> Vector2i:
+	assert(inst != null, "Could not create a random position for a non-initialized instance")
+	if inst != null:
+		for i in NetworkCommons.NavigationSpawnTry:
+			var angle : float = randf_range(0.0, TAU)
+			var radius : float = randf_range(minRadius, maxRadius)
+			var randPoint : Vector2i = Vector2i(int(cos(angle) * radius), int(sin(angle) * radius))
+			randPoint += pos
+
+			if NavigationServer2D.region_owns_point(inst.map.regionRID, randPoint):
+				return NavigationServer2D.region_get_closest_point(inst.map.regionRID, randPoint)
+
+		return GetRandomPosition(inst)
+	return Vector2i.ZERO
+
 static func GetSpawnPosition(inst : WorldInstance, spawn : SpawnObject) -> Vector2i:
 	var position : Vector2i = Vector2i.ZERO
 	if spawn.is_global:
