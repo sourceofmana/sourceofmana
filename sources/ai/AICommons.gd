@@ -22,6 +22,7 @@ enum Behaviour
 	LEADER		= 1 << 5,
 	SPAWNER		= 1 << 6,
 	STEAL		= 1 << 7,
+	FLEE		= 1 << 8,
 }
 
 static func GetBehaviourFlags(behaviours : PackedStringArray) -> Behaviour:
@@ -49,6 +50,8 @@ const MinWalkTimer : int			= 5
 const MaxWalkTimer : int			= 20
 const MinUnstuckTimer : int			= 2
 const MaxUnstuckTimer : int			= 10
+
+const FleeHpRatio : float			= 0.25
 
 const MinOffsetDistance : int		= 30
 const MaxOffsetDistance : int		= 200
@@ -183,6 +186,17 @@ static func ApplyFollowerBehaviour(agent : AIAgent) -> bool:
 
 static func ApplyImmobileBehaviour(_agent : AIAgent) -> bool:
 	return false # Nothing to handle here
+
+static func ApplyFleeBehaviour(agent : AIAgent) -> bool:
+	if agent == null or agent.agent == null:
+		return false
+
+	if agent.stat.health < FleeHpRatio * agent.stat.current.maxHealth:
+		var target : BaseAgent = agent.GetMostValuableAttacker()
+		if target:
+			AI.ToFlee(agent, target)
+			return true
+	return false
 
 static func ApplySpawnerBehaviour(agent : AIAgent) -> bool:
 	var nbSpawned : int = 0
