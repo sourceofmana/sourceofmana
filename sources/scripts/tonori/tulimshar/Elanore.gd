@@ -46,10 +46,10 @@ func OnFeelingWeak():
 
 func OnFeelingBetter():
 	Mes("What were you doing wandering in the desert? It's been dangerous lately, you shouldn't go out there alone.")
-	Choice("Mercenary soldier trying to gain local fame.", OnGiveStarterClothes)
-	Choice("Looking to start trades with natives of the region.", OnGiveStarterClothes)
-	Choice("Scholar seeking knowledge on Mana and magic.", OnGiveStarterClothes)
-	Choice("Sailor looking to explore new opportunities on and off land.", OnGiveStarterClothes)
+	Choice("I am a mercenary soldier trying to gain local fame.", OnGiveStarterClothes)
+	Choice("I am looking to start trades with natives of the region.", OnGiveStarterClothes)
+	Choice("I am a scholar seeking knowledge on Mana and magic.", OnGiveStarterClothes)
+	Choice("I am a sailor looking to explore new opportunities on and off land.", OnGiveStarterClothes)
 
 func OnGiveStarterClothes():
 	var cottonShirtID : int = DB.GetCellHash("Cotton Shirt")
@@ -68,15 +68,15 @@ func OnExplainUI():
 	HighlightUI(UICommons.UITarget.STATINDICATOR)
 	Narrate("These are your vital resources. Keep an eye on them at all times.")
 	HighlightUI(UICommons.UITarget.HEALTHBAR)
-	Narrate("Your health bar shows how much damage you can take before falling.")
+	Narrate("Your health bar shows how much damage you can take before dying.")
 	HighlightUI(UICommons.UITarget.MANABAR)
-	Narrate("Your mana powers your skills, without it, many abilities become unavailable.")
+	Narrate("Your mana powers your skills. Without it, many abilities become unavailable.")
 	HighlightUI(UICommons.UITarget.STAMINABAR)
 	Narrate("Stamina governs how long you can sprint and perform physical actions before tiring.")
 	HighlightUI(UICommons.UITarget.MENUINDICATOR)
 	Narrate("The menu gives you access to your inventory, skills, quests, settings and more. Use it to manage everything you carry and know.")
 	HighlightUI(UICommons.UITarget.ACTION_BAR)
-	Narrate("The action bar lets you slot skills and items for quick access. Drag what you need most onto it as in combat, every second counts.")
+	Narrate("The action bar lets you slot skills and items for quick access. Drag what you need most onto it as, in combat, every second counts.")
 	HighlightUI(UICommons.UITarget.INVENTORY)
 	Narrate("On the inventory window you can handle your items, equipment, potions and any collectibles you found.")
 	HighlightUI(UICommons.UITarget.NONE)
@@ -135,7 +135,7 @@ func OnExplainKaore():
 
 # Who are you
 func OnExplainSelf():
-	Mes("My name is Elanore. I am the Kahwe of this city and the land that surrounds it. Those outside of our faith call us Druids. I represent the Kaumatua, an order devoted to the most ancient tradition in our world.")
+	Mes("My name is Elanore. I am the Kahwe of this city and the land that surrounds it. Those outside of our order call us Druids. I represent the Kaumatua, an order devoted to the most ancient tradition in our world.")
 	Mes("But don't you worry about that right now. We can chat more later. Right now I am just out here giving a hand with potions and receiving the injured from outside the walls.")
 	OnMainChoice()
 

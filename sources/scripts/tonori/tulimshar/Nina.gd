@@ -44,16 +44,16 @@ func OnExplainOpposition():
 	Choice("Thank you for your time.", Farewell)
 
 func OnKahwePosition():
-	Mes("The Kahwe carry on the knowledge of times when Mana was a harmonious force of good in our world. We seek to restore the balance that was lost when the Hantu were destroyed.")
-	Choice("What are the Hantu?", OnExplainHantu)
+	Mes("The Kahwe carry on the knowledge of times when Mana was a harmonious force of good in our world. We seek to restore the balance that was lost when the Uru were destroyed.")
+	Choice("What are the uru?", OnExplainUru)
 	Choice("I have some other topics I wanted to discuss.", OnPlayerChoice)
 	Choice("Thank you for your time.", Farewell)
 
-func OnExplainHantu():
-	Mes("Hantu, also known as Mana Trees, used to be the heart of the world's lifeforce, acting as a natural conductor for Mana energy.")
+func OnExplainUru():
+	Mes("Uru, also known as Mana Trees, used to be the heart of the world's lifeforce, acting as a natural conductor for Mana energy.")
 	Mes("In ancient times, there were many, each serving as a stabilizing force, preventing Mana from decaying into Kaore.")
 	Mes("The Mana Trees were destroyed many years ago after a devastating war where the Savean Creed took hold among the ruling elites of Aemil.")
-	Mes("The decision was made to destroy the Hantu and attempt to create a world without Mana.")
+	Mes("The decision was made to destroy the Uru and attempt to create a world without Mana.")
 	Choice("Where do things stand now?", OnCurrentSituation)
 	Choice("I have some other topics I wanted to discuss.", OnPlayerChoice)
 	Choice("Thank you for your time.", Farewell)
