@@ -76,29 +76,14 @@ func OnMonsterKilled(mob : BaseAgent):
 
 func TriggerManaTree():
 	if player and ActorCommons.IsAlive(player) and not player.ownScript:
-		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(npc)
-		if inst:
-			for npcAgent : AIAgent in inst.npcs:
-				if npcAgent and npcAgent.nick == "Mana Tree":
-					player.AddScript(npcAgent)
-					if player.ownScript:
-						player.ownScript.ApplyStep()
-					break
+		TriggerNpc(player, "Mana Tree")
 
 func RunAway():
 	if player:
 		Callback.ClearOneShot(player.tree_exiting)
 		player = null
 
-	var map : WorldMap = WorldAgent.GetMapFromAgent(npc)
-	if map and not npc.agent:
-		npc.aiBehaviour = AICommons.Behaviour.NONE
-		npc.agent = FileSystem.LoadEntityComponent("navigations/NPAgent")
-		npc.agent.set_radius(npc.data._radius)
-		npc.agent.set_neighbor_distance(npc.data._radius * 2.0)
-		npc.agent.set_navigation_map(map.mapRID)
-		npc.add_child(npc.agent)
-		npc.RefreshWalkSpeed()
+	AddAIBehaviour(AICommons.Behaviour.NONE)
 
 	SetVisible(true)
 	SetState(ActorCommons.State.IDLE)
