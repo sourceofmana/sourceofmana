@@ -4,15 +4,15 @@ const QUEST_ID = ProgressCommons.Quest.MINE_EXPLORATION
 
 #
 func OnStart():
-	match GetQuest(QUEST_ID):
-		ProgressCommons.MINE_EXPLORATION.FIND_NICKOS:
-			OnMeetNickos()
-		ProgressCommons.MINE_EXPLORATION.STRANGER_SPOTTED:
-			OnRemindStranger()
-		ProgressCommons.MINE_EXPLORATION.REWARDS_WITHDREW:
-			OnComplete()
-		_:
-			Mes("Help.")
+	var state : ProgressCommons.MINE_EXPLORATION = GetQuest(QUEST_ID) as ProgressCommons.MINE_EXPLORATION
+	if state <= ProgressCommons.MINE_EXPLORATION.STARTED:
+		Mes("Help.")
+	elif state <= ProgressCommons.MINE_EXPLORATION.FIND_NICKOS:
+		OnMeetNickos()
+	elif state <= ProgressCommons.MINE_EXPLORATION.DEFEATED:
+		OnRemindStranger()
+	else:
+		OnComplete()
 
 func OnMeetNickos():
 	Mes("Who are you? Please, I need your help!")

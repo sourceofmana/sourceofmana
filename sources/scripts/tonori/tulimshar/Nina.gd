@@ -1,13 +1,21 @@
 extends NpcScript
 
+const DESERT_SEED_ID : int = ProgressCommons.Quest.DESERT_SEED
+
 #
 func OnStart():
-	var questState : int = GetQuest(ProgressCommons.Quest.NINA_HUNGRY)
-	if questState == ProgressCommons.NINA_HUNGRY.INACTIVE:
-		OnIntro()
+	var state : ProgressCommons.DESERT_SEED = GetQuest(DESERT_SEED_ID) as ProgressCommons.DESERT_SEED
+	if state == ProgressCommons.DESERT_SEED.SEEK_NINA and HasItem(DB.GetCellHash("Sandstorm Kano")):
+		OnDesertSeedIntro()
+	elif state == ProgressCommons.DESERT_SEED.SEEK_MANAYIR:
+		OnDesertSeedReminder()
 	else:
-		Mes("Hello again.")
-		OnPlayerChoice()
+		var questState : ProgressCommons.NINA_HUNGRY = GetQuest(ProgressCommons.Quest.NINA_HUNGRY) as ProgressCommons.NINA_HUNGRY
+		if questState == ProgressCommons.NINA_HUNGRY.INACTIVE:
+			OnIntro()
+		else:
+			Mes("Hello again.")
+			OnPlayerChoice()
 
 # Intro
 func OnIntro():
@@ -22,7 +30,7 @@ func OnPlayerChoice():
 		Choice("Is someone trying to stop you?", OnExplainOpposition)
 		Choice("Can you tell me more about Mana and Kaore?", OnExplainMana)
 		Choice("What is a Soul Menhir?", OnExplainMenhir)
-	Choice("I have to leave.", Farewell)
+	Choice("See you.", Farewell)
 
 # Opposition and faith
 func OnExplainOpposition():
@@ -135,3 +143,57 @@ func OnCroissantTurnIn():
 	AddItem(DB.GetCellHash("Cactus Potion"), 10)
 	AddGP(100)
 	Mes("Please, take these Cactus Potions and a bit of gold to cover what you spent.")
+
+# Desert Seed quest
+func OnDesertSeedIntro():
+	Mes("Oh.")
+	Mes("I felt it the moment you walked through the gate. What is it that you are carrying?")
+	Choice("Something I found deep in the Sandstorm Mines.", OnRevealKano)
+
+func OnRevealKano():
+	Mes("May I see it?")
+	Mes("...")
+	Mes("This is a Kano. A Mana Seed.")
+	Mes("I have only ever read about these. I never imagined I would see one in my lifetime.")
+	Mes("How did you come to find this?")
+	Choice("There is a Mana Tree at the bottom of the mines. It gave it to me.", OnRevealManaTree)
+
+func OnRevealManaTree():
+	Mes("A Mana Tree. Alive. In the Sandstorm Mines.")
+	Mes("I...")
+	Mes("I need a moment.")
+	Mes("I once felt something in that direction, a long time ago. I assumed it was a deep Zielite deposit. I had no idea.")
+	Mes("Were you able to communicate together? Did it tell you what to do with that Kano?")
+	Choice("It said to bring it to you and that you could be trusted.", OnNinaReacts)
+
+func OnNinaReacts():
+	Mes("Then I will not let it down.")
+	Mes("Manayir will need to know about this. They are an ancient order of druids who were once guardians of these trees.")
+	Mes("They built a castle into a small peninsula, all the way across the beach on west side of the sandstorm area.")
+	Mes("Find them. Show them the Kano and tell them what you have seen.")
+	Mes("Tell no one else. Not yet. The wrong person hearing about this could endanger everything.")
+	Mes("Before you go, take this.")
+	SetQuest(DESERT_SEED_ID, ProgressCommons.DESERT_SEED.SEEK_MANAYIR)
+	AddItem(DB.GetCellHash("Brass Zielite Amulet"))
+	Mes("It is a Zielite Amulet. The stone at its centre is a fragment of pure Zielite, the same mineral this Menhir is made of.")
+	Mes("When worn, it allows you to channel Mana, and to connect with Soul Menhirs.")
+	Choice("What does connecting to a Soul Menhir do?", OnExplainMenhirSync)
+
+func OnExplainMenhirSync():
+	Mes("When you touch a Soul Menhir while wearing a Zielite Amulet, the stone resonates with the Menhir's Zielite.")
+	Mes("This creates a bond between your soul and the Menhir. Should something happen to you, the Menhir acts as an anchor.")
+	Mes("Your soul returns here instead of being lost.")
+	Mes("It is how we Kahwe have always protected those under our care. I should have given you one sooner.")
+	Choice("[Touch the Soul Menhir]", OnTouchMenhir)
+
+func OnTouchMenhir():
+	Narrate("You place your hand on the Soul Menhir. The Zielite Amulet grows warm against your skin. A soft resonance passes through you, and for a moment the stone pulses with a faint light.")
+	Mes("Good. You are connected now.")
+	Mes("If you ever find another Soul Menhir, touch it. Each one you connect with strengthens the bond.")
+	Mes("Now go. The Manayir are waiting, even if they do not know it yet.")
+	OnPlayerChoice()
+
+func OnDesertSeedReminder():
+	Mes("Have you found the Manayir yet?")
+	Mes("They gather somewhere in the desert near the Sandstorm Mines. Ask around in that area, someone should be able to point you in the right direction.")
+	OnPlayerChoice()

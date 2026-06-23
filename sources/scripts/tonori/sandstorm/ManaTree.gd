@@ -5,7 +5,7 @@ const QUEST_ID : int = ProgressCommons.Quest.MINE_EXPLORATION
 #
 func OnStart():
 	match GetQuest(QUEST_ID):
-		ProgressCommons.MINE_EXPLORATION.REWARDS_WITHDREW:
+		ProgressCommons.MINE_EXPLORATION.REWARDS_WITHDREW, ProgressCommons.MINE_EXPLORATION.MANA_TREE_MET:
 			OnComplete()
 		ProgressCommons.MINE_EXPLORATION.DEFEATED:
 			OnPostFight()
@@ -67,7 +67,8 @@ func OnWhatNext():
 func OnTellNina():
 	Mes("Be careful. What you have discovered here today has been hidden for thousands of years.")
 	Mes("As chance has dictated, you are now a warden of a powerful Source of Mana.")
-	SetQuest(QUEST_ID, ProgressCommons.MINE_EXPLORATION.REWARDS_WITHDREW)
+	SetQuest(QUEST_ID, ProgressCommons.MINE_EXPLORATION.MANA_TREE_MET)
+	SetQuest(ProgressCommons.Quest.DESERT_SEED, ProgressCommons.DESERT_SEED.SEEK_NINA)
 
 func OnXakelbael():
 	Mes("He used to be one of the Manayir. His intentions are different now.")
