@@ -145,7 +145,7 @@ func _ready():
 		GUI = Scene.get_node("Canvas")
 		Audio = Scene.get_node("Audio")
 		startClient = true
-		startServer = not LauncherCommons.isWeb and OS.is_debug_build()
+		startServer = not LauncherCommons.isWeb and OS.is_debug_build() and not NetworkCommons.IsLocal
 	Conf.Init()
 
 	if not Root or not Scene:
