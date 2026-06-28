@@ -1076,26 +1076,31 @@
    </properties>
    <polygon points="-16,103 112,103 111.667,135 -16,135"/>
   </object>
-  <object id="8" name="Bicies" type="Spawn" x="2601" y="2869">
+  <object id="8" name="Manayir Druid" type="Spawn" x="2506" y="3381">
    <properties>
+    <property name="nick" value="Hommer"/>
+    <property name="player_script" value="tonori/manayir/Hommer.gd"/>
+    <property name="state" value="IDLE"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="9" name="Manayir Druid" type="Spawn" x="2275" y="3032">
+   <properties>
+    <property name="nick" value="Gonzo"/>
     <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="9" name="Bicies" type="Spawn" x="2275" y="3032">
+  <object id="10" name="Manayir Druid" type="Spawn" x="1367" y="3230">
    <properties>
+    <property name="nick" value="Medave"/>
     <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="10" name="Bicies" type="Spawn" x="1367" y="3230">
+  <object id="11" name="Manayir Druidess" type="Spawn" x="3623" y="3101">
    <properties>
-    <property name="player_script" value="generic/Greeting.gd"/>
-    <property name="type" value="Npc"/>
-   </properties>
-  </object>
-  <object id="11" name="Bicies" type="Spawn" x="3623" y="3101">
-   <properties>
+    <property name="nick" value="Corgit"/>
     <property name="player_script" value="generic/Greeting.gd"/>
     <property name="type" value="Npc"/>
    </properties>

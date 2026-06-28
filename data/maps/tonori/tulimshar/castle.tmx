@@ -683,7 +683,20 @@
   <object id="5" name="Red Queen" type="Spawn" x="1792" y="1003">
    <properties>
     <property name="count" value="1"/>
-    <property name="player_script" value="generic/Greeting.gd"/>
+    <property name="own_script" value="tonori/tulimshar/castle/RedQueenGlobal.gd"/>
+    <property name="player_script" value="tonori/tulimshar/castle/RedQueen.gd"/>
+    <property name="trigger_radius" type="float" value="512"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="8" name="Tulimshar Guard" type="Spawn" x="1710" y="1738">
+   <properties>
+    <property name="count" value="1"/>
+    <property name="nick" value="Guard"/>
+    <property name="own_script" value="generic/TriggerGlobal.gd"/>
+    <property name="player_script" value="tonori/tulimshar/castle/Guard.gd"/>
+    <property name="state" value="idle"/>
+    <property name="trigger_radius" type="float" value="160"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>

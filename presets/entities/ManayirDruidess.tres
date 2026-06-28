@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://cwvfjs0qqmsqx"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_dnhuj"]
+[ext_resource type="Resource" uid="uid://eoof30db2qry" path="res://presets/cells/items/chest/DruidRobe.tres" id="2_vc7vr"]
+[ext_resource type="Resource" uid="uid://bi4288d5a7kbn" path="res://presets/cells/items/legs/LeatherPants.tres" id="3_7yvxa"]
+[ext_resource type="Resource" uid="uid://bcc00vd45ls38" path="res://presets/cells/items/feet/DesertBoots.tres" id="4_yv4t4"]
+[ext_resource type="Resource" uid="uid://s626p30qb6py" path="res://presets/cells/items/head/DruidHood.tres" id="5_wl4i6"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="6_fx5fn"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="7_cqth5"]
+
+[resource]
+script = ExtResource("7_cqth5")
+_id = 608165177
+_name = "Manayir Druidess"
+_spritePreset = "Player"
+_radius = 20
+_stats = {
+"defense": 0,
+"gender": "Female",
+"level": 20,
+"race": "Raijin",
+"skintone": "Light"
+}
+_equipment = Array[ExtResource("1_dnhuj")]([ExtResource("2_vc7vr"), ExtResource("3_7yvxa"), ExtResource("4_yv4t4"), null, ExtResource("5_wl4i6"), null, null, null])
+_displayName = true
+_questStateMax = 255
