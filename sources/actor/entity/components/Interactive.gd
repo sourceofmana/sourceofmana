@@ -110,6 +110,7 @@ func DisplayMorph(callback : Callable, args : Array):
 func DisplayLevelUp():
 	var particle : GPUParticles2D = ActorCommons.LevelUpFx.instantiate()
 	if particle:
+		particle.finished.connect(Util.RemoveNode.bind(particle, self))
 		particle.emitting = true
 		add_child(particle)
 
