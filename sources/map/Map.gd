@@ -163,7 +163,7 @@ func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : V
 		if pendingWarp:
 			pendingWarp = false
 			isNewSpawn = entity.get_parent() != currentFringe
-			entity.SetData()
+			entity.SetData.call_deferred()
 			if isNewSpawn:
 				AddChild(entity)
 				PlayerWarped.emit.call_deferred()

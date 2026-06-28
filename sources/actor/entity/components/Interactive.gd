@@ -18,6 +18,16 @@ var visualOffset : int						= -1
 var hpFadeTween : Tween						= null
 var currentCastFx : GPUParticles2D			= null
 
+var speechYExtraOffset : float				= 0.0
+var speechOffsetTween : Tween				= null
+
+#
+func _ready():
+	set_process(false)
+
+func _process(_delta : float):
+	Entities.ScheduleSpeechRearrange()
+
 # Custom mouse
 func _on_click_area_mouse_entered():
 	if not Launcher.Player:
@@ -181,7 +191,7 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			if skill and skill.mode == Skill.TargetMode.SINGLE:
 				DisplayHP()
 
-#
+# Speech
 func DisplaySpeech(speech : String):
 	assert(speechContainer != null, "No speech container found, could not display speech bubble")
 	if speechContainer:
@@ -189,7 +199,42 @@ func DisplaySpeech(speech : String):
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
-		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, Util.RemoveNode, [speechLabel, speechContainer])
+		if not self in Entities.speechEntities:
+			Entities.speechEntities.append(self)
+			set_process(true)
+		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, OnSpeechLabelRemoved, [speechLabel])
+
+func OnSpeechLabelRemoved(speechLabel : RichTextLabel):
+	Util.RemoveNode(speechLabel, speechContainer)
+	if speechContainer.get_child_count() == 0:
+		Entities.speechEntities.erase(self)
+		set_process(false)
+		TweenSpeechOffset(0.0)
+
+# Speech offset
+func SetSpeechOffset(value : float):
+	speechYExtraOffset = value
+	RefreshVisibleNodeOffset()
+
+func RefreshVisibleNodeOffset():
+	if entity.visual:
+		var offset : int = entity.visual.GetPlayerOffset()
+
+		visibleNode.position.y = -(offset + ActorCommons.interactionDisplayOffset + speechYExtraOffset)
+		visualOffset = clampi(offset, ActorCommons.minVisualOffset, ActorCommons.MaxEntityRadiusSize)
+		if clickShape:
+			clickShape.shape.height = offset * 1.1
+			clickShape.position.y = -offset / 2.0
+
+func TweenSpeechOffset(target : float):
+	if is_equal_approx(speechYExtraOffset, target):
+		return
+
+	if speechOffsetTween:
+		speechOffsetTween.kill()
+	speechOffsetTween = create_tween()
+	speechOffsetTween.tween_method(SetSpeechOffset, speechYExtraOffset, target, ActorCommons.speechGroupTweenDuration)
+	speechOffsetTween.tween_callback(func(): speechOffsetTween = null)
 
 #
 func DisplayHP():
@@ -250,17 +295,6 @@ func DisplaySailContext():
 	Launcher.GUI.choiceContext.FadeIn(true)
 
 #
-func RefreshVisibleNodeOffset():
-	if entity.visual:
-		var offset : int = entity.visual.GetPlayerOffset()
-
-		visibleNode.position.y = -1 * (offset + ActorCommons.interactionDisplayOffset)
-		visualOffset = clampi(offset, 20, 256) # unhardcode this part
-		if clickShape:
-			clickShape.shape.height = offset * 1.1
-			clickShape.position.y = -offset / 2.0
-
-#
 func Init(data : EntityData):
 	displayName = entity.type == ActorCommons.Type.PLAYER or data._displayName
 
@@ -280,3 +314,8 @@ func Init(data : EntityData):
 
 	if clickShape:
 		clickShape.shape.radius = max(data._radius * 1.1, ActorCommons.targetRadius)
+
+func _exit_tree():
+	if self in Entities.speechEntities:
+		Entities.speechEntities.erase(self)
+		Entities.ScheduleSpeechRearrange()

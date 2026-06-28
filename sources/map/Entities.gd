@@ -6,6 +6,31 @@ static var entities : Dictionary[int, Entity]		= {}
 static var target : Entity							= null
 static var hovered : Entity							= null
 
+static var speechEntities : Array[EntityInteractive]= []
+static var speechRearrangePending : bool			= false
+
+# Speech grouping
+static func ScheduleSpeechRearrange():
+	if not speechRearrangePending:
+		speechRearrangePending = true
+		RearrangeSpeech.call_deferred()
+
+static func RearrangeSpeech():
+	speechRearrangePending = false
+	speechEntities.sort_custom(func(a, b): return a.entity.position.y > b.entity.position.y)
+
+	for currentIdx in range(speechEntities.size()):
+		var currentInteractive : EntityInteractive = speechEntities[currentIdx]
+		var stackHeight : float = 0.0
+		for neighbourIdx in currentIdx:
+			var neighbourInteractive = speechEntities[neighbourIdx]
+			if abs(currentInteractive.entity.position.x - neighbourInteractive.entity.position.x) <= ActorCommons.speechGroupXThreshold and \
+			abs(currentInteractive.entity.position.y - neighbourInteractive.entity.position.y) <= ActorCommons.speechGroupYThreshold:
+				var speechContainer : BoxContainer = neighbourInteractive.speechContainer
+				var containerHeight : float = speechContainer.size.y if speechContainer != null and speechContainer.size.y > 0 else 32.0
+				stackHeight = max(stackHeight, neighbourInteractive.speechYExtraOffset + containerHeight + ActorCommons.speechStackGap)
+		currentInteractive.TweenSpeechOffset(stackHeight)
+
 # Entities access
 static func Get(agentRID : int) -> Entity:
 	return entities.get(agentRID, null)

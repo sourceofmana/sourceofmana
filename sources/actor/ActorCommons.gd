@@ -307,6 +307,7 @@ const SfxStateBus : StringName				= &"State SFX"
 
 # Interactive
 const interactionDisplayOffset : int		= 32
+const minVisualOffset : int					= 20
 const selectionRadius : int					= 24
 const targetRadius : int					= 12
 const emoteDelay : float					= 4.0
@@ -316,6 +317,10 @@ const speechDecreaseDelay : float			= 1.5
 const speechIncreaseThreshold : int			= 15
 const speechMaxWidth : int					= 256
 const speechExtraWidth : int				= 20
+const speechGroupXThreshold : int			= 150
+const speechGroupYThreshold : int			= 60
+const speechStackGap : int					= 4
+const speechGroupTweenDuration : float		= 0.15
 const TargetMaxDistance : int				= 256 # 8 Tile length
 const TargetWalkToDistance : int			= 192 # 6 Tile length
 static var TargetMaxSquaredDistance : float	= TargetMaxDistance * TargetMaxDistance
