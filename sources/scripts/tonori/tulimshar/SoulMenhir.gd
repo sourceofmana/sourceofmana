@@ -11,4 +11,6 @@ func OnStart():
 		Choice("Leave it be.")
 
 func Touch():
-	Notification("You feel the mana power growing inside you!")
+	var globalScript : SoulMenhirGlobal = npc.ownScript
+	if globalScript:
+		globalScript.SaveRespawn(own)

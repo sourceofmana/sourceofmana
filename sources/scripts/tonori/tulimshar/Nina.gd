@@ -188,6 +188,7 @@ func OnExplainMenhirSync():
 
 func OnTouchMenhir():
 	Narrate("You place your hand on the Soul Menhir. The Zielite Amulet grows warm against your skin. A soft resonance passes through you, and for a moment the stone pulses with a faint light.")
+	Action(SaveRespawnSoulMenhir)
 	Mes("Good. You are connected now.")
 	Mes("If you ever find another Soul Menhir, touch it. Each one you connect with strengthens the bond.")
 	Mes("Now go. The Manayir are waiting, even if they do not know it yet.")
@@ -197,3 +198,10 @@ func OnDesertSeedReminder():
 	Mes("Have you found the Manayir yet?")
 	Mes("They gather somewhere in the desert near the Sandstorm Mines. Ask around in that area, someone should be able to point you in the right direction.")
 	OnPlayerChoice()
+
+func SaveRespawnSoulMenhir():
+	var soulmenhirAgent : NpcAgent = GetNamedGlobalNPC("Soul Menhir")
+	if soulmenhirAgent:
+		var globalScript : SoulMenhirGlobal = soulmenhirAgent.ownScript
+		if globalScript:
+			globalScript.SaveRespawn(own)

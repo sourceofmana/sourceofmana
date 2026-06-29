@@ -29,6 +29,14 @@ func GetGlobal(scriptFunc : String) -> Callable:
 	assert(false, "Could not retrieve this NPC global function: %s." % scriptFunc)
 	return Callable()
 
+func GetNamedGlobalNPC(npcName : String) -> NpcAgent:
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
+	if inst:
+		for neighbour in inst.npcs:
+			if neighbour and neighbour.nick == npcName:
+				return neighbour
+	return null
+
 func Trigger() -> bool:
 	if npc:
 		if npc.defaultState != ActorCommons.State.UNKNOWN or npc.SetState(ActorCommons.State.TRIGGER):
@@ -198,21 +206,17 @@ func LookAtPosition(pos : Vector2):
 func LookAtNpc(npcName : String):
 	assert(IsPlayer(), "LookAtNpc() requires a player agent")
 	if not IsPlayer(): return
-	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
-	if inst:
-		for npcAgent in inst.npcs:
-			if npcAgent and npcAgent.nick == npcName:
-				Action(NpcCommons.CameraLookAt.bind(own, npcAgent.get_position()))
+
+	var npcAgent : NpcAgent = GetNamedGlobalNPC(npcName)
+	if npcAgent:
+		Action(NpcCommons.CameraLookAt.bind(own, npcAgent.get_position()))
 
 func TriggerNpc(agent : PlayerAgent, npcName : String):
-	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(npc)
-	if inst:
-		for npcAgent in inst.npcs:
-			if npcAgent and npcAgent.nick == npcName:
-				agent.AddScript(npcAgent)
-				if agent.ownScript:
-					agent.ownScript.ApplyStep()
-				break
+	var npcAgent : NpcAgent = GetNamedGlobalNPC(npcName)
+	if npcAgent:
+		agent.AddScript(npcAgent)
+		if agent.ownScript:
+			agent.ownScript.ApplyStep()
 
 func ResetCamera():
 	assert(IsPlayer(), "ResetCamera() requires a player agent")
