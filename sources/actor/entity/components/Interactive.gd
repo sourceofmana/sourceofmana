@@ -64,8 +64,10 @@ func DisplaySelection(hue : float, alpha : float = 1.0):
 	if selectionFx:
 		var colorRamp : GradientTexture1D = selectionFx.process_material.get("color_ramp")
 		if colorRamp and colorRamp.gradient.colors.size() > 1:
-			colorRamp.gradient.colors[1].h = hue
-			colorRamp.gradient.colors[1].a = alpha
+			var colorGradient : Color = colorRamp.gradient.get_color(1)
+			colorGradient.h = hue
+			colorGradient.a = alpha
+			colorRamp.gradient.set_color(1, colorGradient)
 			selectionFx.process_material.set("color_ramp", colorRamp)
 
 func DisplayTarget(type : ActorCommons.Target):

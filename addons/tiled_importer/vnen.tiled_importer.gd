@@ -27,7 +27,7 @@ extends EditorPlugin
 var import_plugin = null
 var tileset_import_plugin = null
 
-func get_name():
+func get_name() -> StringName:
 	return "Tiled Map Importer"
 
 func _enter_tree():
