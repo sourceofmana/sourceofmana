@@ -23,4 +23,3 @@ _behaviour = 4
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("5_orgth")
 })
-_alterationSFX = null

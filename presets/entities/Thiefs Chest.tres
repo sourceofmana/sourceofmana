@@ -15,6 +15,7 @@ _radius = 26
 _stats = {
 "level": 1
 }
+_equipment = Array[ExtResource("1_wugrw")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("1_8noqe")
 _questID = 2
 _questState = 32

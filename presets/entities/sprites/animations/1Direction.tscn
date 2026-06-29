@@ -105,6 +105,8 @@ nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_gfwha")
 nodes/TimeScale/position = Vector2(660, 160)
 node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_start"]
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_so0lp"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_l0fi0"]
@@ -140,8 +142,6 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_182y7"]
 switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_start"]
 
 [sub_resource type="AnimationNodeStateMachine" id="22"]
 states/Attack/node = SubResource("AnimationNodeBlendTree_vioql")

@@ -9,13 +9,13 @@ custom_minimum_size = Vector2(180, 100)
 offset_right = 180.0
 offset_bottom = 100.0
 theme = ExtResource("1_theme")
-script = ExtResource("2_socgd")
 theme_type_variation = &"WindowPanel"
+script = ExtResource("2_socgd")
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=2100000001]
 layout_mode = 2
 
-[node name="TitleBar" parent="Layout" instance=ExtResource("tb_scene")]
+[node name="TitleBar" parent="Layout" unique_id=1448088015 instance=ExtResource("tb_scene")]
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 1

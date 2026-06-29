@@ -28,5 +28,3 @@ ExtResource("3_mrvkey"): 1.0
 _spawns = Dictionary[ExtResource("2_vkvo0"), int]({
 ExtResource("4_lilah"): 2
 })
-_stateSFX = null
-_alterationSFX = null

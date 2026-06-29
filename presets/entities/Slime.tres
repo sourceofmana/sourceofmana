@@ -17,6 +17,7 @@ _stats = {
 "level": 1,
 "walkSpeed": 40.0
 }
+_equipment = Array[ExtResource("2_mphar")]([null, null, null, null, null, null, null, null])
 _behaviour = 130
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("5_cqjuh"),

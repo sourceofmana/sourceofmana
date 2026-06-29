@@ -262,12 +262,12 @@ targetShortcut = &"ui_settings"
 
 [node name="MenuButton" type="Button" parent="Overlay/VSections/Indicators/Menu" unique_id=1162161113]
 custom_minimum_size = Vector2(62, 61)
-layout_direction = 3
 layout_mode = 0
 offset_right = 62.0
 offset_bottom = 61.0
 size_flags_horizontal = 10
 size_flags_vertical = 0
+layout_direction = 3
 theme_override_styles/normal = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_w48pk")
 theme_override_styles/hover = SubResource("StyleBoxTexture_hg7ie")
@@ -424,11 +424,11 @@ texture_pressed = ExtResource("31_udatq")
 
 [node name="Actions" type="TextureRect" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor" unique_id=1817315034]
 visible = false
-layout_direction = 3
 layout_mode = 0
 offset_right = 155.0
 offset_bottom = 155.0
 size_flags_horizontal = 10
+layout_direction = 3
 texture = ExtResource("18_lb78w")
 
 [node name="ButtonY" type="TouchScreenButton" parent="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions" unique_id=1107274505]

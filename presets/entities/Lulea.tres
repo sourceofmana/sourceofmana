@@ -20,5 +20,3 @@ _stats = {
 _equipment = Array[ExtResource("1_0n5d8")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
 _behaviour = 146
-_stateSFX = null
-_alterationSFX = null

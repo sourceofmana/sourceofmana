@@ -8,22 +8,9 @@
 script = ExtResource("2_mtree")
 _id = 2025440114
 _name = "Mana Tree"
-_spritePreset = ""
 _radius = 16
 _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_mtree")]([null, null, null, null, null, null, null, null])
-_displayName = false
-_direction = -1
-_state = -1
 _behaviour = 9
-_skills = Dictionary[ExtResource("3_mtree"), float]({})
-_drops = Dictionary[ExtResource("1_mtree"), float]({})
-_spawns = Dictionary[ExtResource("2_mtree"), int]({})
-_questID = -1
-_questState = 0
-_questStateMax = 0
-_stateSFX = Dictionary[int, AudioStream]({})
-_alterationSFX = Dictionary[int, AudioStream]({})
-_isBoss = false
