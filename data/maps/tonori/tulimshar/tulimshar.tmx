@@ -1087,6 +1087,7 @@
   <object id="72" name="Soul Menhir" type="Spawn" x="1568" y="2432">
    <properties>
     <property name="own_script" value="tonori/tulimshar/SoulMenhirGlobal.gd"/>
+    <property name="player_script" value="tonori/tulimshar/SoulMenhir.gd"/>
     <property name="trigger_radius" type="float" value="96"/>
     <property name="type" value="Npc"/>
    </properties>
