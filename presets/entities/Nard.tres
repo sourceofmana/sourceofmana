@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://cxnardcap0001"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_entity"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="3_parent"]
+[ext_resource type="Texture2D" uid="uid://b1lrvhhyouqdc" path="res://data/graphics/sprites/equipment/chest/tanktop-male.png" id="4_tanktop_m"]
+[ext_resource type="Texture2D" uid="uid://cgv3lsjs6yi3l" path="res://data/graphics/sprites/equipment/chest/tanktop-female.png" id="5_tanktop_f"]
+[ext_resource type="Material" uid="uid://ckqgd3iyjewcy" path="res://presets/palettes/equipment/cloth-salamander.tres" id="6_salamander"]
+[ext_resource type="Resource" uid="uid://bouv4idn0yg3i" path="res://presets/cells/items/legs/CloudPants.tres" id="7_legs"]
+[ext_resource type="Texture2D" uid="uid://cfjjosglguhk5" path="res://data/graphics/sprites/equipment/feet/boots-male.png" id="8_boots_m"]
+[ext_resource type="Texture2D" uid="uid://dlo5n0v1scwaf" path="res://data/graphics/sprites/equipment/feet/boots-female.png" id="9_boots_f"]
+[ext_resource type="Material" uid="uid://cpo1seggn3swm" path="res://presets/palettes/equipment/cloth-sand.tres" id="10_sand"]
+[ext_resource type="Resource" uid="uid://bti1n208j72va" path="res://presets/cells/items/hands/SilverBracelets.tres" id="11_hands"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="12_skill"]
+
+[sub_resource type="Resource" id="tanktop_salamander"]
+script = ExtResource("1_item")
+slot = 0
+textures = Array[Texture2D]([ExtResource("4_tanktop_m"), ExtResource("5_tanktop_f"), ExtResource("4_tanktop_m")])
+shader = ExtResource("6_salamander")
+customfield = "Salamander"
+name = "Tank Top"
+
+[sub_resource type="Resource" id="boots_sand"]
+script = ExtResource("1_item")
+slot = 2
+textures = Array[Texture2D]([ExtResource("8_boots_m"), ExtResource("9_boots_f"), ExtResource("8_boots_m")])
+shader = ExtResource("10_sand")
+customfield = "Sand"
+name = "Desert Boots"
+
+[resource]
+script = ExtResource("2_entity")
+_parent = ExtResource("3_parent")
+_id = 2089386186
+_name = "Nard"
+_spritePreset = "Player"
+_stats = {
+"gender": "Male",
+"haircolor": "Navy Blue",
+"hairstyle": "Mane",
+"level": 1,
+"race": "Human",
+"skintone": "Tanned"
+}
+_equipment = Array[ExtResource("1_item")]([SubResource("tanktop_salamander"), ExtResource("7_legs"), SubResource("boots_sand"), ExtResource("11_hands"), null, null, null, null])
