@@ -137,6 +137,7 @@ func EnterLoginMenu():
 	progressionTracker.set_visible(false)
 	bossTracker.set_visible(false)
 	menu.SetItemsVisible(false)
+	menu.Close()
 	stats.set_visible(false)
 	statWindow.set_visible(false)
 	dialogueContainer.set_visible(false)
