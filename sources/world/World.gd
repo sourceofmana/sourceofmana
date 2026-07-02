@@ -51,7 +51,7 @@ func Warp(agent : BaseAgent, newMap : WorldMap, newPos : Vector2i, direction : A
 		if not agent.isRelativeMode:
 			agent.SwitchInputMode(true)
 
-		agent.position = agent.exploreOrigin.pos if newMap.HasFlags(WorldMap.Flags.ONLY_SPIRIT) and newPos == Vector2i.ZERO else newPos
+		agent.position = newPos
 		if direction != ActorCommons.Direction.UNKNOWN:
 			agent.currentOrientation = ActorCommons.GetDirectionFromEnum(direction)
 
