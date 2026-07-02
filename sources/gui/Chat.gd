@@ -75,8 +75,11 @@ func SetNewLineEnabled(enable : bool):
 	if Launcher.Action and lineEdit:
 		if not LauncherCommons.isMobile:
 			lineEdit.set_visible(enable)
-		if enable:
-			lineEdit.grab_focus()
+			if enable:
+				lineEdit.grab_focus()
+		else:
+			if not enable:
+				lineEdit.release_focus()
 
 #
 func OnNewTextSubmitted(newText : String):
