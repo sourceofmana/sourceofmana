@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://dehx2k1mrcs3q"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_quest"]
+
+[resource]
+script = ExtResource("1_quest")
+id = 13
+name = "Found a Chest in the Outskirts"
+description = "Found a chest in the Tulimshar eastern outskirts."
+target = "Chest"
+targetLocation = "Tulimshar Eastern Hills"
+reward = "Desert Shield"
+metadata/_custom_type_script = "uid://bqxdwogial88g"
