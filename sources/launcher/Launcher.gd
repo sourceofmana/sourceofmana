@@ -123,7 +123,7 @@ func Quit():
 	Network.Destroy()
 	Root.remove_child(Scene)
 	Scene.free()
-	Network.free()
+	Network.queue_free()
 	get_tree().quit()
 
 #
