@@ -26,6 +26,7 @@ func RegisterCommands():
 	CommandManager.Register("quest", CommandQuest, ActorCommons.Permission.ADMIN, "quest <name> <state>" )
 	CommandManager.Register("bestiary", CommandBestiary, ActorCommons.Permission.ADMIN, "bestiary <name> <state>" )
 	CommandManager.Register("item", CommandItem, ActorCommons.Permission.GM, "item <name> <count> <custom>" )
+	CommandManager.Register("skill", CommandSkill, ActorCommons.Permission.GM, "skill <name> <level>" )
 	CommandManager.Register("killall", CommandKillAll, ActorCommons.Permission.ADMIN, "killall <filter>" )
 	CommandManager.Register("kill", CommandKill, ActorCommons.Permission.MODERATOR, "kill <nick>" )
 	CommandManager.Register("revive", CommandRevive, ActorCommons.Permission.MODERATOR, "revive <nick>" )
@@ -65,6 +66,7 @@ static func UnregisterCommands():
 	CommandManager.Unregister("quest")
 	CommandManager.Unregister("bestiary")
 	CommandManager.Unregister("item")
+	CommandManager.Unregister("skill")
 	CommandManager.Unregister("killall")
 	CommandManager.Unregister("kill")
 	CommandManager.Unregister("revive")
@@ -343,6 +345,22 @@ func CommandItem(caller : PlayerAgent, itemName : String, countStr : String = "1
 	elif count < 0:
 		return NpcCommons.RemoveItem(caller, itemID, -count, customField)
 	return false
+
+# Skills
+func CommandSkill(caller : PlayerAgent, skillName : String, levelStr : String = "1") -> bool:
+	if not caller or not caller.progress:
+		return false
+
+	var skillID : int = skillName.hash()
+	var cell : SkillCell = DB.SkillsDB.get(skillID, null)
+	if not cell:
+		return false
+
+	var level : int = levelStr.to_int()
+	caller.progress.RemoveSkill(cell)
+	if level > 0:
+		caller.progress.AddSkill(cell, 1.0, level)
+	return true
 
 # Death
 func CommandKillAll(caller : PlayerAgent, filter : String = "") -> bool:

@@ -16,6 +16,7 @@ class_name SpawnObject
 @export_category("Visual")
 @export var direction : ActorCommons.Direction	= ActorCommons.Direction.UNKNOWN
 @export var state : ActorCommons.State	= ActorCommons.State.UNKNOWN
+@export var behaviour : int				= -1
 @export var is_global : bool			= false
 @export var is_always_visible : bool	= false
 @export_category("Area")

@@ -2,6 +2,13 @@ extends RefCounted
 class_name Callback
 
 #
+static func RemoveMatchingCallback(object : Object, objectSignal : Signal, targetCallback : Callable):
+	for connection in objectSignal.get_connections():
+		var callback : Callable = connection["callable"]
+		if callback.get_object() == object and callback.get_method() == targetCallback.get_method():
+			objectSignal.disconnect(callback)
+
+#
 static func ClearCallbacks(objectSignal : Signal):
 	for connection in objectSignal.get_connections():
 		RemoveCallback(objectSignal, connection["callable"])

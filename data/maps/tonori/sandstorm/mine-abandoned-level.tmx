@@ -721,7 +721,7 @@
   </object>
   <object id="34" name="Nickos" type="Spawn" x="2860" y="1832">
    <properties>
-    <property name="own_script" value="generic/TriggerGlobal.gd"/>
+    <property name="own_script" value="tonori/sandstorm/NickosGlobal.gd"/>
     <property name="player_script" value="tonori/sandstorm/Nickos.gd"/>
     <property name="trigger_radius" type="float" value="80"/>
     <property name="type" value="Npc"/>

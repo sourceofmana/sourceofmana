@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://08v0t5i6hvef" path="res://presets/effects/particles/Emote.tscn" id="2_gghi1"]
 [ext_resource type="Script" uid="uid://cbedrk7hxvhfu" path="res://sources/actor/entity/components/InteractiveSkillPreview.gd" id="5_mia2y"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_click"]
+resource_local_to_scene = true
+
 [node name="Interactions" type="Node2D" unique_id=260754091]
 z_as_relative = false
 script = ExtResource("1_b3bk6")
@@ -76,3 +79,13 @@ layout_mode = 3
 anchors_preset = 0
 scale = Vector2(1, 0.7)
 script = ExtResource("5_mia2y")
+
+[node name="ClickArea" type="Area2D" parent="." unique_id=901234567]
+collision_layer = 2
+collision_mask = 0
+
+[node name="ClickShape" type="CollisionShape2D" parent="ClickArea" unique_id=901234568]
+shape = SubResource("CapsuleShape2D_click")
+
+[connection signal="mouse_entered" from="ClickArea" to="." method="_on_click_area_mouse_entered"]
+[connection signal="mouse_exited" from="ClickArea" to="." method="_on_click_area_mouse_exited"]

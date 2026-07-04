@@ -24,5 +24,3 @@ _behaviour = 164
 _drops = Dictionary[ExtResource("1_bmwd8"), float]({
 ExtResource("3_dorkey"): 1.0
 })
-_stateSFX = null
-_alterationSFX = null

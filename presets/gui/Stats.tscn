@@ -2,10 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_dhni5"]
 [ext_resource type="Script" uid="uid://cguhlue4ygu63" path="res://sources/gui/StatPanel.gd" id="2_v116i"]
-[ext_resource type="PackedScene" uid="uid://da8nt01w5gjsp" path="res://presets/gui/TitleBar.tscn" id="tb_scene"]
 [ext_resource type="Texture2D" uid="uid://lbbhr5w3jhrf" path="res://data/graphics/gui/stat/gender-female.png" id="3_4bqlt"]
 [ext_resource type="PackedScene" uid="uid://coppbcrkvraoh" path="res://presets/gui/ProgressBar.tscn" id="3_kjg3f"]
 [ext_resource type="Texture2D" uid="uid://3jqhykq3lnpt" path="res://data/graphics/gui/stat/spirit-hook.png" id="4_de8qp"]
+[ext_resource type="PackedScene" uid="uid://da8nt01w5gjsp" path="res://presets/gui/TitleBar.tscn" id="tb_scene"]
 
 [sub_resource type="Gradient" id="Gradient_brown"]
 colors = PackedColorArray(0.6, 0.407843, 0.019608, 1, 0.6, 0.407843, 0.019608, 1)
@@ -46,13 +46,13 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_force_pass_scroll_events = false
 theme = ExtResource("1_dhni5")
-script = ExtResource("2_v116i")
 theme_type_variation = &"WindowPanel"
+script = ExtResource("2_v116i")
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=2100000001]
 layout_mode = 2
 
-[node name="TitleBar" parent="Layout" instance=ExtResource("tb_scene")]
+[node name="TitleBar" parent="Layout" unique_id=2049452047 instance=ExtResource("tb_scene")]
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 1

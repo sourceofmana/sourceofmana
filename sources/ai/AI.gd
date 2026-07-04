@@ -61,6 +61,10 @@ static func HandleBehaviour(agent : AIAgent):
 	if not handled and agent.aiBehaviour & AICommons.Behaviour.IMMOBILE:
 		handled = AICommons.ApplyImmobileBehaviour(agent)
 
+	# Combat overrides
+	if not handled and agent.aiBehaviour & AICommons.Behaviour.FLEE:
+		handled = AICommons.ApplyFleeBehaviour(agent)
+
 	# Check if should attack, either one of those
 	if not handled and agent.aiBehaviour & AICommons.Behaviour.PACIFIST:
 		handled = AICommons.ApplyPacifistBehaviour(agent)

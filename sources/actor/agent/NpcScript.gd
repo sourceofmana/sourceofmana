@@ -29,6 +29,14 @@ func GetGlobal(scriptFunc : String) -> Callable:
 	assert(false, "Could not retrieve this NPC global function: %s." % scriptFunc)
 	return Callable()
 
+func GetNamedGlobalNPC(npcName : String) -> NpcAgent:
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
+	if inst:
+		for neighbour in inst.npcs:
+			if neighbour and neighbour.nick == npcName:
+				return neighbour
+	return null
+
 func Trigger() -> bool:
 	if npc:
 		if npc.defaultState != ActorCommons.State.UNKNOWN or npc.SetState(ActorCommons.State.TRIGGER):
@@ -93,6 +101,34 @@ func KillMonsters():
 
 func RemoveAgent(agent : BaseAgent):
 	WorldAgent.RemoveAgent(agent)
+
+# AI
+func AddAIBehaviour(behaviour : AICommons.Behaviour):
+	match behaviour:
+		AICommons.Behaviour.NONE:
+			var map : WorldMap = WorldAgent.GetMapFromAgent(npc)
+			if map and not npc.agent:
+				npc.aiBehaviour = AICommons.Behaviour.NONE
+				npc.agent = FileSystem.LoadEntityComponent("navigations/NPAgent")
+				npc.agent.set_radius(npc.data._radius)
+				npc.agent.set_neighbor_distance(npc.data._radius * 2.0)
+				npc.agent.set_navigation_map(map.mapRID)
+				npc.add_child(npc.agent)
+				npc.RefreshWalkSpeed()
+		_:
+			npc.aiBehaviour |= behaviour
+			AI.Refresh(npc)
+
+func RemoveAIBehaviour(behaviour : AICommons.Behaviour):
+	match behaviour:
+		AICommons.Behaviour.NONE:
+			if npc.agent:
+				npc.agent.queue_free()
+				npc.agent = null
+			npc.aiBehaviour = npc.data._behaviour
+		_:
+			npc.aiBehaviour &= ~behaviour
+			AI.Refresh(npc)
 
 # Players
 func AlivePlayerCount() -> int:
@@ -170,11 +206,17 @@ func LookAtPosition(pos : Vector2):
 func LookAtNpc(npcName : String):
 	assert(IsPlayer(), "LookAtNpc() requires a player agent")
 	if not IsPlayer(): return
-	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
-	if inst:
-		for npcAgent in inst.npcs:
-			if npcAgent and npcAgent.nick == npcName:
-				Action(NpcCommons.CameraLookAt.bind(own, npcAgent.get_position()))
+
+	var npcAgent : NpcAgent = GetNamedGlobalNPC(npcName)
+	if npcAgent:
+		Action(NpcCommons.CameraLookAt.bind(own, npcAgent.get_position()))
+
+func TriggerNpc(agent : PlayerAgent, npcName : String):
+	var npcAgent : NpcAgent = GetNamedGlobalNPC(npcName)
+	if npcAgent:
+		agent.AddScript(npcAgent)
+		if agent.ownScript:
+			agent.ownScript.ApplyStep()
 
 func ResetCamera():
 	assert(IsPlayer(), "ResetCamera() requires a player agent")
@@ -195,7 +237,7 @@ func Think(mes : String):
 func Narrate(mes : String):
 	assert(IsPlayer(), "Narrate() requires a player agent")
 	if not IsPlayer(): return
-	steps.append({"text": mes, "think": true, "author": "Narrator"})
+	steps.append({"text": mes, "think": true, "author": ""})
 
 func Choice(mes : String, callable : Callable = Callback.Empty):
 	assert(IsPlayer(), "Choice() requires a player agent")

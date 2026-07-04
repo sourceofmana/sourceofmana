@@ -110,6 +110,8 @@ func SetSkillCastID(skillID : int):
 
 func SetData():
 	aiBehaviour = data._behaviour
+	if spawnInfo and spawnInfo.behaviour >= 0:
+		aiBehaviour = spawnInfo.behaviour
 	for dropCell : ItemCell in data._drops:
 		AddItem(dropCell, data._drops[dropCell])
 	minWanderingSpeed = int(stat.current.walkSpeed / 4)

@@ -497,6 +497,9 @@ func _post_launch():
 	if not db.open_db():
 		assert(false, "Failed to open database: "+ db.error_message)
 	else:
+		if OS.is_debug_build():
+			Query("PRAGMA journal_mode=WAL;")
+			Query("PRAGMA busy_timeout=5000;")
 		if not Launcher.Debug:
 			backups = SQLBackups.new()
 

@@ -207,7 +207,7 @@ func NotifyPosition():
 # Override
 func SetData():
 	super.SetData()
-	circleShape.radius = entityRadius
+	circleShape.radius = data._radius
 
 func _ready():
 	super._ready()
@@ -274,6 +274,7 @@ func UpdateDeltas(delta : float):
 #
 func AddScript(npc : NpcAgent):
 	if npc:
+		SetRelativeMode(false, Vector2.ZERO)
 		ownScript = npc.playerScriptPreset.new(npc, self) if npc.playerScriptPreset else NpcScript.new(npc, self)
 		ownScript.PostInit()
 

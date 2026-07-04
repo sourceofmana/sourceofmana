@@ -232,13 +232,13 @@ func CharacterListing(peerID : int):
 # Navigation
 func SetClickPos(pos : Vector2, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player:
+	if player and not player.ownScript:
 		player.SetRelativeMode(false, Vector2.ZERO)
 		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player:
+	if player and not player.ownScript:
 		player.SetRelativeMode(true, direction.normalized())
 
 func ClearNavigation(peerID : int):

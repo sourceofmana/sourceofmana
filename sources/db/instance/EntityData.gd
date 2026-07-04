@@ -18,7 +18,7 @@ class_name EntityData
 @export var _direction : ActorCommons.Direction		= ActorCommons.Direction.UNKNOWN
 @export var _state : ActorCommons.State				= ActorCommons.State.UNKNOWN
 @export_category("Skills")
-@export_flags("Pacifist", "Neutral", "Aggressive", "Immobile", "Follower", "Leader", "Spawner", "Steal") var _behaviour : int = AICommons.Behaviour.NEUTRAL
+@export_flags("Pacifist", "Neutral", "Aggressive", "Immobile", "Follower", "Leader", "Spawner", "Steal", "Flee") var _behaviour : int = AICommons.Behaviour.NEUTRAL
 @export var _skills : Dictionary[SkillCell, float]	= {}
 @export_category("Drops")
 @export var _drops : Dictionary[ItemCell, float]	= {}

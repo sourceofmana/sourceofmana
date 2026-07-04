@@ -25,6 +25,4 @@ _spawns = Dictionary[ExtResource("2_7qgir"), int]({
 ExtResource("3_lilah"): 3,
 ExtResource("4_lulea"): 3
 })
-_stateSFX = null
-_alterationSFX = null
 _isBoss = true

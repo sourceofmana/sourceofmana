@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cvwarb01swm6c" path="res://addons/game_data_manager/EntityDropsView.tscn" id="9_30upx"]
 [ext_resource type="PackedScene" uid="uid://cggq3pttkiprw" path="res://addons/game_data_manager/EntitySkillsView.tscn" id="10_6gu2f"]
 [ext_resource type="PackedScene" uid="uid://bk52sj6vf8dqn" path="res://addons/game_data_manager/EntityMigrator.tscn" id="11_jryrp"]
+[ext_resource type="PackedScene" path="res://addons/game_data_manager/CombatSimulatorView.tscn" id="12_combat"]
 
 [node name="Manager-ui" type="Control" unique_id=1312609025]
 layout_mode = 3
@@ -103,3 +104,8 @@ metadata/_tab_index = 5
 visible = false
 layout_mode = 2
 metadata/_tab_index = 6
+
+[node name="Combat" parent="VBoxContainer/MainTabs" instance=ExtResource("12_combat")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3

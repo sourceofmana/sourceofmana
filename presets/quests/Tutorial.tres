@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_25ln0")
-id = 7
+id = 6
 name = "Tutorial"
 description = "Get settled in Tulimshar with Elanore's help."
 giver = "Elanore"

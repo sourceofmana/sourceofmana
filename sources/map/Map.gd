@@ -5,6 +5,7 @@ signal MapUnloaded
 signal MapLoaded
 signal PlayerWarped
 signal PlayerMoved
+signal PlayerHalted
 
 #
 var pool								= FileSystem.LoadSource("map/MapPool.gd")
@@ -162,7 +163,7 @@ func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : V
 		if pendingWarp:
 			pendingWarp = false
 			isNewSpawn = entity.get_parent() != currentFringe
-			entity.SetData()
+			entity.SetData.call_deferred()
 			if isNewSpawn:
 				AddChild(entity)
 				PlayerWarped.emit.call_deferred()
@@ -179,8 +180,8 @@ func UpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vecto
 func RemoveEntity(agentRID : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity:
-		if Launcher.Player and Launcher.Player.target == entity:
-			Launcher.Player.target = null
+		if Entities.target == entity:
+			Entities.target = null
 		RemoveChild(entity)
 		Entities.Erase(agentRID)
 

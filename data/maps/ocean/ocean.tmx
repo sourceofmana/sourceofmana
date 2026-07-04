@@ -798,17 +798,5 @@
    </properties>
    <polygon points="41.2025,60.7943 41.2025,29.1813 72.8964,29.1813 72.8964,60.7943"/>
   </object>
-  <object id="54" name="Ocean" type="Port" x="1452.8" y="1732.92">
-   <properties>
-    <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_cellsize" type="int" value="16"/>
-    <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="0"/>
-    <property name="dest_pos_y" type="int" value="0"/>
-    <property name="sail_pos_x" type="int" value="0"/>
-    <property name="sail_pos_y" type="int" value="0"/>
-   </properties>
-   <polygon points="83.2009,123.077 83.2009,59.0771 147.201,59.0771 147.201,123.077"/>
-  </object>
  </objectgroup>
 </map>

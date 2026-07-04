@@ -93,9 +93,28 @@ static var actionNames : Dictionary[String, String] = {
 }
 
 #
+enum CursorType {
+	DEFAULT = 0,
+	INTERACT,
+	ATTACK,
+}
+
+const CursorTextures : Array[Texture2D] = [
+	preload("res://data/graphics/gui/misc/mouse.png"),
+	preload("res://data/graphics/gui/misc/mouse-interact.png"),
+	preload("res://data/graphics/gui/misc/mouse-attack.png"),
+]
+
 static func Init():
 	if DeviceManager.HasDeviceSupport():
-		Input.set_custom_mouse_cursor(FileSystem.LoadGfx("gui/misc/mouse.png"))
+		Input.set_custom_mouse_cursor(CursorTextures[CursorType.DEFAULT])
+
+static func SetCursor(cursorType : CursorType):
+	if HasDeviceSupport():
+		Input.set_custom_mouse_cursor(CursorTextures[cursorType])
+
+static func ResetCursor():
+	SetCursor(CursorType.DEFAULT)
 
 static func GetActionInfo(action : String) -> Array:
 	var defaultValue : String = ""
