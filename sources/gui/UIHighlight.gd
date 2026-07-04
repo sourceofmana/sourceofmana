@@ -15,11 +15,11 @@ func Show(target : Control):
 	_target = target
 	_originalModulate = target.modulate
 
-	_tween = create_tween().set_loops()
+	_tween = Launcher.GUI.create_tween().set_loops()
 	_tween.tween_property(_target, "modulate", Color(2.0, 1.5, 1.5, 0.2), 0.5)
 	_tween.tween_property(_target, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.5)
 
-	_timer = get_tree().create_timer(MaxDuration)
+	_timer = Launcher.GUI.get_tree().create_timer(MaxDuration)
 	_timer.timeout.connect(Clear)
 
 func Clear():

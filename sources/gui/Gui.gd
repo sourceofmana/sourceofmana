@@ -49,7 +49,7 @@ extends ServiceBase
 @onready var HQ4xShader : TextureRect			= $Shaders/HQ4x
 
 # Highlight
-var highlight : UIHighlight						= null
+var highlight : UIHighlight						= UIHighlight.new()
 
 # State transition
 var progressTimer : Timer						= null
@@ -288,16 +288,12 @@ func GetUITarget(target : UICommons.UITarget) -> Control:
 		_: push_error("Unhandled UITarget")
 	return null
 
+#
 func _ready():
 	get_tree().set_auto_accept_quit(false)
 	get_tree().set_quit_on_go_back(false)
-
-	assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
-	CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
+	DisplayServer.pip_mode_set_auto_enter_on_background(true)
 	DB.WarmShaders()
-
-	highlight = UIHighlight.new()
-	add_child(highlight)
 
 func _on_ui_margin_resized():
 	if CRTShader and CRTShader.material:
