@@ -13,12 +13,15 @@ func OnStart():
 			OnPreFightIntro()
 
 func OnPreFightIntro():
+	Narrate("You notice a crack in the cave wall. A faint blue light seems to come from the other side.")
+	Narrate("It looks like you can squeeze through.")
 	Narrate("A calm voice fills your head.")
-	Mes("I don't feel the same dark presence that I felt with the first one who came through here. Please come forward, I will be needing someone's help for the first time in over 5000 years.")
+	Mes("I don't feel the same dark presence that I felt with the first one who came through here. Please come forward. 
+	Mes("For the first time in thousands of years, I will be needing someone's help.")
 
 func OnPostFight():
 	Mes("Thank you.")
-	Mes("I could have defended myself just as I defended you, but he would have left just as he did.")
+	Mes("I could have defended myself just as I defended you, but he would have left, as he just did.")
 	Mes("My location is known now and I need an ally against this new threat.")
 	Choice("Are you... A tree?", OnTree)
 
@@ -36,7 +39,7 @@ func OnTreeBranch():
 	Choice("What happened since that time?", OnWhatHappened)
 
 func OnHowSurvive():
-	Mes("Although I would like to see it, I do not need light to live.")
+	Mes("Although I would like to see it, I do not need the Sun's light to live.")
 	Mes("My roots extend deep into the earth and share in the source of life that empowers all of us: Mana.")
 	Mes("As long as I can connect to its flow, I am alive.")
 	Mes("Many years ago this world was full of Uru like me. Our roots were interconnected and Mana flowed more powerfully than it does now.")
