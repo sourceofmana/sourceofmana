@@ -43,6 +43,7 @@ func OnExplainWhatToDo():
 	Mes("Bring him back if he's alive. If he's dead, then you will probably die as well and we will know there's danger down there.")
 	Mes("How does that sound?")
 	Choice("Awful, but I'll do it.", OnStartQuest)
+	Choice("Okay... why did I agree to this...", OnStartQuest)
 
 func OnStartQuest():
 	Mes("Good. I wasn't going to give you a choice anyway.")
@@ -57,35 +58,36 @@ func OnRemindObjective():
 func OnWarnAboutMines():
 	Mes("You're still alive.")
 	Mes("I was starting to think you'd gotten lost too. What happened down there?")
-	Choice("The lower level is completely flooded.", OnLieFlooded)
-	Choice("Fire-breathing scorpions. Dozens of them.", OnLieScorpions)
-	Choice("I saw a goblin nest.", OnLieGoblins)
-	Choice("There was a Mana Tree.", OnLieManaTree)
+	Choice("The lower level is completely flooded. There is no chance of getting through.", OnLieFlooded)
+	Choice("There are fire-breathing scorpions everywhere. Hundreds! They might get angry if we disturb them.", OnLieScorpions)
+	Choice("There are goblin nests all over the lower tunnels. We could lose a lot of people clearing this place out.", OnLieGoblins)
+	Choice("There was a magical tree. It talked to me!", OnLieManaTree) 
 
 func OnLieFlooded():
-	Mes("Flooded.")
-	Mes("We haven't had rain in months. How does a cave flood?")
-	Mes("...Doesn't matter. Those tunnels were already unstable. I'll keep the crew out.")
+	Mes("Flooded?")
+	Mes("I wonder where the water came from.")
+	Mes("There is a well just outside of here, maybe there was underground water nearby.")
+	Mes("We should not mess with flooded caves. The tunnels could collapse and trap us all inside. I'll report back that the mine is too far gone.")
 	Action(OnAskAboutNickos)
 
 func OnLieScorpions():
-	Mes("Fire-breathing.")
-	Mes("I've seen scorpions down there big enough to swallow a man whole. I'll take your word for the rest.")
-	Mes("No one goes back down.")
+	Mes("Fire-breathing? I have never seen that before.")
+	Mes("I've seen scorpions down there big enough to swallow a man whole. I guess it wouldn't be so unthinkable for them to breathe fire.")
+	Mes("Maybe we should avoid this place. It doesn't seem like we'll find much of use anyway.")
 	Action(OnAskAboutNickos)
 
 func OnLieGoblins():
-	Mes("Goblins.")
-	Mes("In MY mine.")
-	Mes("Do you have any idea what it would cost to clear that out.")
-	Mes("No. No one goes down there. End of story.")
+	Mes("G...goblins? Are... are you sure?")
+	Mes("I'm... I'm not scared! If that's what you were wondering. I AM NOT SCARED OF GOBLINS!")
+	Mes("You know what? We should just leave this place. Yes, let's just go.")
+	Mes("It's way too dangerous down here. It's not worth the risk just to look for forgotten ores.")
 	Action(OnAskAboutNickos)
 
 func OnLieManaTree():
-	Mes("A Mana Tree. In a desert mine.")
-	Mes("What's next, you'll tell me the scorpions were breathing fire?")
-	Mes("I don't know what you found down there and I'm starting to think I don't want to.")
-	Mes("No one goes back down.")
+	Mes("A tree. A magical tree. A magical TALKING tree.")
+	Mes("What's next, you'll tell me the scorpions were breathing fire? Did a goblin sing you a song?")
+	Mes("You've lost your mind. Whatever happened down there made you stupid!")
+	Mes("Maybe this is one of those haunted caves. I'm starting to think we shouldn't go down at all.")
 	Action(OnAskAboutNickos)
 
 func OnAskAboutNickos():
@@ -94,8 +96,8 @@ func OnAskAboutNickos():
 	Choice("I found his remains.", OnNickosDead)
 
 func OnNickosAlive():
-	Mes("No surprise, I've seen him get scared by a fly or even his own shadow in the desert.")
-	Mes("He'd better not make a habit of wasting my time...")
+	Mes("No surprise, I've seen him get scared by at the sight of a maggot walking towards him.")
+	Mes("He'd better not waste my time up here and get back quickly, or I may just leave him.")
 	SetQuest(QUEST_ID, ProgressCommons.MINE_EXPLORATION.REWARDS_WITHDREW)
 	AddGP(1000)
 	OnFarewell()
@@ -105,8 +107,10 @@ func OnNickosDead():
 	Mes("Right.")
 	Mes("He knew the risks. Everyone who does this job knows that.")
 	Mes("...")
-	Mes("I'll send word to his family.")
+	Mes("We're not going to get his body. Don't even suggest it.")
+	Mes("If I lose anyone else I'll never be allowed to lead anyone outside the city walls again.")
 	Mes("His pay was his own to collect. Consider it yours for the report.")
+	Mes("At least now I'm sure we won't be going down there. First person I send died. Not a good sign. ")
 	SetQuest(QUEST_ID, ProgressCommons.MINE_EXPLORATION.REWARDS_WITHDREW)
 	AddGP(2000)
 	OnFarewell()
