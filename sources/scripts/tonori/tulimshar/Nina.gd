@@ -45,7 +45,7 @@ func OnExplainOpposition():
 
 func OnKahwePosition():
 	Mes("The Kahwe carry on the knowledge of times when Mana was a harmonious force of good in our world. We seek to restore the balance that was lost when the Uru were destroyed.")
-	Choice("What are the uru?", OnExplainUru)
+	Choice("What are the Uru?", OnExplainUru)
 	Choice("I have some other topics I wanted to discuss.", OnPlayerChoice)
 	Choice("Thank you for your time.", Farewell)
 
