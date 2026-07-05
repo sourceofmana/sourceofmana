@@ -18,7 +18,7 @@ func OnWillFindOut():
 	SetQuest(QUEST_ID, ProgressCommons.SANDSTORM_NAEM_HELMET.GIVEN)
 	AddItem(DB.GetCellHash("Miner Helmet"))
 	Mes("There's an artisan in Tulimshar who makes these from palm fibers and a cactus-derived resin. Strong stuff. The quenchiest.")
-	Choice("What?", OnNevermind)
+	Choice("The what?", OnNevermind)
 
 func OnNevermind():
 	Mes("Never mind. Good luck down there!")
