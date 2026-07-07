@@ -353,5 +353,12 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
+  <object id="4" name="Peter" type="Spawn" x="2272" y="1146">
+   <properties>
+    <property name="own_script" value="ship/PeterGlobal.gd"/>
+    <property name="player_script" value="ship/Peter.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -421,6 +421,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/npcs/nickos.png [Reid]
 ./graphics/sprites/npcs/nicolas.png [Yuuki]
 ./graphics/sprites/npcs/nina.png [Reid] [Freya]
+./graphics/sprites/npcs/peter.png [Reid]
 ./graphics/sprites/npcs/riskim.png [Kyokai] [Reid]
 ./graphics/sprites/npcs/ryan.png [Reid]
 ./graphics/sprites/npcs/sawyl.png [Modanung]

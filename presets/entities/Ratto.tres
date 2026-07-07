@@ -15,10 +15,10 @@ _spritePreset = "Ratto"
 _radius = 10
 _stats = {
 "level": 1,
-"walkSpeed": 90.0
+"walkSpeed": 150.0
 }
 _equipment = Array[ExtResource("1_jchlc")]([null, null, null, null, null, null, null, null])
-_behaviour = 130
+_behaviour = 386
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("6_fx47f"),
 4: ExtResource("5_v8lwk")
