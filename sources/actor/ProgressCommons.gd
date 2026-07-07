@@ -22,6 +22,7 @@ enum Quest
 	SANDSTORM_NAEM_HELMET,
 	DESERT_SEED,
 	TULIMSHAR_EASTERN_HILLS_CHEST,
+	SHIP_PETER_BOUNTY,
 }
 
 # Quest enums
@@ -122,6 +123,13 @@ enum TULIMSHAR_EASTERN_HILLS_CHEST
 	INACTIVE = ProgressCommons.UnknownProgress,
 	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
 }
+enum SHIP_PETER_BOUNTY
+{
+	INACTIVE = ProgressCommons.UnknownProgress,
+	WAVE_ONE_DONE = 1,
+	WAVE_TWO_DONE = 2,
+	ALL_DONE = ProgressCommons.CompletedProgress,
+}
 
 # Quest state lookup
 static var QuestStates : Dictionary[Quest, Variant] = {
@@ -139,6 +147,7 @@ static var QuestStates : Dictionary[Quest, Variant] = {
 	Quest.SANDSTORM_NAEM_HELMET: SANDSTORM_NAEM_HELMET,
 	Quest.DESERT_SEED: DESERT_SEED,
 	Quest.TULIMSHAR_EASTERN_HILLS_CHEST: TULIMSHAR_EASTERN_HILLS_CHEST,
+	Quest.SHIP_PETER_BOUNTY: SHIP_PETER_BOUNTY,
 }
 
 static func GetQuestStateID(questID : int, stateName : String) -> int:
