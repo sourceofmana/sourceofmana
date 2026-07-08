@@ -6,12 +6,13 @@
 [ext_resource type="AudioStream" uid="uid://dxx1kj71y6eqc" path="res://data/sounds/entities/croc/dodge.ogg" id="2_fdhrd"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_w81gt"]
 [ext_resource type="AudioStream" uid="uid://dq07saoqfahh2" path="res://data/sounds/entities/croc/attack.ogg" id="6_dvo0c"]
+[ext_resource type="PackedScene" uid="uid://dqdpqrng1ptvv" path="res://presets/entities/sprites/Croc.tscn" id="spr_Croc"]
 
 [resource]
 script = ExtResource("2_dil16")
 _id = 2089009292
 _name = "Croc"
-_spritePreset = "Croc"
+_spritePreset = ExtResource("spr_Croc")
 _radius = 10
 _stats = {
 "attack": 10,

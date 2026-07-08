@@ -7,12 +7,13 @@
 [ext_resource type="Resource" uid="uid://bqg1nlmgehdkc" path="res://presets/cells/skills/Spitfire.tres" id="4_spit"]
 [ext_resource type="Texture2D" uid="uid://b84mwc1b6hjdr" path="res://data/graphics/sprites/monsters/firegoblin.png" id="5_tex"]
 [ext_resource type="AudioStream" uid="uid://cdowss8b51os6" path="res://data/sounds/entities/fire-goblin/attack.ogg" id="7_x38au"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_juena")
 _id = 1836204198
 _name = "Fire Goblin"
-_spritePreset = "Generic4Directions"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
 "level": 1,

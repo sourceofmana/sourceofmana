@@ -7,12 +7,13 @@
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_umopc"]
 [ext_resource type="AudioStream" uid="uid://cy46l0s1gs7h" path="res://data/sounds/entities/snake/attack.ogg" id="6_gi6ty"]
 [ext_resource type="Resource" uid="uid://bsnk1sk1n001" path="res://presets/cells/items/common/SnakeSkin.tres" id="7_skskin"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_fj57b")
 _id = 2399925469
 _name = "Sand Snake"
-_spritePreset = "Generic4Directions"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
 "castAttackDelay": 0.5,

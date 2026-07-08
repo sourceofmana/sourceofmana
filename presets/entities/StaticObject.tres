@@ -4,13 +4,14 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_n4fnj"]
 [ext_resource type="Resource" uid="uid://dx6dcrwjjqbjj" path="res://presets/entities/Object.tres" id="2_yjqq5"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_yjqq5"]
+[ext_resource type="PackedScene" uid="uid://cnpafioewxbag" path="res://presets/entities/sprites/Static.tscn" id="spr_Static"]
 
 [resource]
 script = ExtResource("2_n4fnj")
 _parent = ExtResource("2_yjqq5")
 _id = 1629942628
 _name = "StaticObject"
-_spritePreset = "Static"
+_spritePreset = ExtResource("spr_Static")
 _stats = {
 "level": 1
 }

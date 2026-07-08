@@ -7,12 +7,13 @@
 [ext_resource type="AudioStream" uid="uid://d04q01coavuyb" path="res://data/sounds/alteration/dodge.ogg" id="2_ls3s4"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_sj8yg"]
 [ext_resource type="AudioStream" uid="uid://b85y4341su5v0" path="res://data/sounds/entities/piou/attack.ogg" id="3_sitss"]
+[ext_resource type="PackedScene" uid="uid://dxixywo1th1gv" path="res://presets/entities/sprites/Piou.tscn" id="spr_Piou"]
 
 [resource]
 script = ExtResource("2_1e7so")
 _id = 2089466690
 _name = "Piou"
-_spritePreset = "Piou"
+_spritePreset = ExtResource("spr_Piou")
 _radius = 8
 _stats = {
 "level": 1,

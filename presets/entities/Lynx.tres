@@ -5,12 +5,13 @@
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_skill"]
 [ext_resource type="Resource" uid="uid://dlftukimhm3l1" path="res://presets/cells/skills/SonicWave.tres" id="4_sonic"]
 [ext_resource type="AudioStream" uid="uid://616hxtutqvpp" path="res://data/sounds/entities/lynx/attack.ogg" id="5_tk77m"]
+[ext_resource type="PackedScene" uid="uid://cs3cgktwqe00i" path="res://presets/entities/sprites/Lynx.tscn" id="spr_Lynx"]
 
 [resource]
 script = ExtResource("2_4cr5i")
 _id = 2089340336
 _name = "Lynx"
-_spritePreset = "Lynx"
+_spritePreset = ExtResource("spr_Lynx")
 _radius = 24
 _stats = {
 "level": 10,

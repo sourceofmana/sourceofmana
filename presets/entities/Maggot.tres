@@ -6,12 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://t81s8gpayata" path="res://data/graphics/sprites/monsters/maggot.png" id="3_tex"]
 [ext_resource type="AudioStream" uid="uid://hxejvtfj74bd" path="res://data/sounds/entities/maggot/attack.ogg" id="5_mxmhf"]
 [ext_resource type="AudioStream" uid="uid://dnjxafax7stqw" path="res://data/sounds/entities/maggot/death.ogg" id="6_qtjwj"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_lo0gq")
 _id = 3264333316
 _name = "Maggot"
-_spritePreset = "Generic4Directions"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 10
 _stats = {
 "level": 1,

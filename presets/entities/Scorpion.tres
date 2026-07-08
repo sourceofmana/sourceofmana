@@ -6,12 +6,13 @@
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_0jes4"]
 [ext_resource type="Texture2D" uid="uid://cag81rrbxoyak" path="res://data/graphics/sprites/monsters/scorpion.png" id="3_tex"]
 [ext_resource type="AudioStream" uid="uid://djcpd4h0bmrb6" path="res://data/sounds/entities/scorpion/attack.ogg" id="6_ih0se"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_arwd3")
 _id = 3842739378
 _name = "Scorpion"
-_spritePreset = "Generic4Directions"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 18
 _stats = {
 "level": 1,

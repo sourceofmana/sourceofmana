@@ -4,13 +4,14 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_upok7"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_xwl2d"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_ysq0w"]
+[ext_resource type="PackedScene" uid="uid://c0ue1on2pu5gn" path="res://presets/entities/sprites/SoulMenhir.tscn" id="spr_SoulMenhir"]
 
 [resource]
 script = ExtResource("2_upok7")
 _parent = ExtResource("2_xwl2d")
 _id = 737772331
 _name = "Soul Menhir"
-_spritePreset = "SoulMenhir"
+_spritePreset = ExtResource("spr_SoulMenhir")
 _radius = 32
 _stats = {
 "level": 1

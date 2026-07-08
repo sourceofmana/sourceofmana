@@ -12,12 +12,13 @@
 [ext_resource type="Resource" uid="uid://bqg1nlmgehdkc" path="res://presets/cells/skills/Spitfire.tres" id="10_spit"]
 [ext_resource type="Resource" uid="uid://lcvqesy5llmf" path="res://presets/cells/skills/Melee.tres" id="11_0h5oo"]
 [ext_resource type="Resource" uid="uid://badqfdrvud80e" path="res://presets/cells/skills/Jump.tres" id="11_jump"]
+[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="spr_Player"]
 
 [resource]
 script = ExtResource("2_qwxl7")
 _id = 2715760142
 _name = "Xakelbael"
-_spritePreset = "Player"
+_spritePreset = ExtResource("spr_Player")
 _radius = 20
 _stats = {
 "defense": 0,

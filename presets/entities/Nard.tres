@@ -12,6 +12,7 @@
 [ext_resource type="Material" uid="uid://cpo1seggn3swm" path="res://presets/palettes/equipment/cloth-sand.tres" id="10_sand"]
 [ext_resource type="Resource" uid="uid://bti1n208j72va" path="res://presets/cells/items/hands/SilverBracelets.tres" id="11_hands"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="12_skill"]
+[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="spr_Player"]
 
 [sub_resource type="Resource" id="tanktop_salamander"]
 script = ExtResource("1_item")
@@ -34,7 +35,7 @@ script = ExtResource("2_entity")
 _parent = ExtResource("3_parent")
 _id = 2089386186
 _name = "Nard"
-_spritePreset = "Player"
+_spritePreset = ExtResource("spr_Player")
 _stats = {
 "gender": "Male",
 "haircolor": "Navy Blue",

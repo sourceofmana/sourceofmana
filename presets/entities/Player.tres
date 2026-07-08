@@ -3,12 +3,13 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_amg8s"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_c6ynp"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_gh5bu"]
+[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="spr_Player"]
 
 [resource]
 script = ExtResource("2_c6ynp")
 _id = 3394588274
 _name = "Player"
-_spritePreset = "Player"
+_spritePreset = ExtResource("spr_Player")
 _radius = 10
 _stats = {
 "level": 1,

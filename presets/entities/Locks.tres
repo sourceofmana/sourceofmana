@@ -4,13 +4,14 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_vsu2s"]
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_xd5ga"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_xd5ga"]
+[ext_resource type="PackedScene" uid="uid://bkrd2qnl2atsn" path="res://presets/entities/sprites/CaveLocks.tscn" id="spr_CaveLocks"]
 
 [resource]
 script = ExtResource("2_vsu2s")
 _parent = ExtResource("2_xd5ga")
 _id = 228382689
 _name = "Locks"
-_spritePreset = "CaveLocks"
+_spritePreset = ExtResource("spr_CaveLocks")
 _radius = 26
 _stats = {
 "level": 1

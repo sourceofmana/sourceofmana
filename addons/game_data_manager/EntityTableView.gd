@@ -5,7 +5,7 @@ extends ColumnTableView
 const COLUMNS : Array[Dictionary] = [
 	{ "name" : "Name", "property" : "_name", "type" : TYPE_STRING, "editable" : true, "width" : 150 },
 	{ "name" : "Parent", "property" : "_parent", "type" : TYPE_OBJECT, "editable" : false, "width" : 120 },
-	{ "name" : "Sprite", "property" : "_spritePreset", "type" : TYPE_STRING, "editable" : true, "width" : 120 },
+	{ "name" : "Sprite", "property" : "_spritePreset", "type" : TYPE_OBJECT, "editable" : false, "width" : 120 },
 	{ "name" : "Radius", "property" : "_radius", "type" : TYPE_INT, "editable" : true, "width" : 70 },
 	{ "name" : "Display Name", "property" : "_displayName", "type" : TYPE_BOOL, "editable" : true, "width" : 100 },
 	{ "name" : "Direction", "property" : "_direction", "type" : TYPE_INT, "editable" : true, "width" : 90, "is_enum" : true, "enum_name" : "Direction" },
@@ -112,6 +112,8 @@ func UpdateTreeItem(item : TreeItem, resource : Resource):
 			TYPE_OBJECT:
 				if value and value is EntityData:
 					item.set_text(i, value._name)
+				elif value and value is PackedScene:
+					item.set_text(i, value.resource_path.get_file().get_basename())
 				else:
 					item.set_text(i, "")
 				item.set_editable(i, col.editable)
