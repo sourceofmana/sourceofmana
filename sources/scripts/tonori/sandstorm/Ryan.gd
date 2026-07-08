@@ -59,8 +59,8 @@ func OnWarnAboutMines():
 	Mes("You're still alive.")
 	Mes("I was starting to think you'd gotten lost too. What happened down there?")
 	Choice("The lower level is completely flooded. There is no chance of getting through.", OnLieFlooded)
-	Choice("There are fire-breathing scorpions everywhere. Hundreds! They might get angry if we disturb them.", OnLieScorpions)
-	Choice("There are goblin nests all over the lower tunnels. We could lose a lot of people clearing this place out.", OnLieGoblins)
+	Choice("There are fire-breathing scorpions! Hundreds! They might get angry if we disturb them.", OnLieScorpions)
+	Choice("There are goblin nests everywhere! We could lose a lot of people clearing them out.", OnLieGoblins)
 	Choice("There was a magical tree. It talked to me!", OnLieManaTree) 
 
 func OnLieFlooded():
@@ -110,7 +110,7 @@ func OnNickosDead():
 	Mes("We're not going to get his body. Don't even suggest it.")
 	Mes("If I lose anyone else I'll never be allowed to lead anyone outside the city walls again.")
 	Mes("His pay was his own to collect. Consider it yours for the report.")
-	Mes("At least now I'm sure we won't be going down there. First person I send died. Not a good sign. ")
+	Mes("At least now I'm sure we won't be going down there. First person I send died. Not a good sign.")
 	SetQuest(QUEST_ID, ProgressCommons.MINE_EXPLORATION.REWARDS_WITHDREW)
 	AddGP(2000)
 	OnFarewell()
