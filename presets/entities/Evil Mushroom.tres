@@ -7,12 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://bwhie4ahfj4ov" path="res://data/graphics/sprites/monsters/mushroom-evil.png" id="3_tex"]
 [ext_resource type="AudioStream" uid="uid://bs1t88rvdbvko" path="res://data/sounds/entities/shroom/attack.ogg" id="6_ck8ut"]
 [ext_resource type="AudioStream" uid="uid://0iw7ebp5loly" path="res://data/sounds/entities/shroom/death.ogg" id="7_v3f7m"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_aovmb")
 _id = 2866154511
 _name = "Evil Mushroom"
-_spritePreset = "Generic4Directions"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
 "level": 1,

@@ -7,13 +7,14 @@
 [ext_resource type="Resource" uid="uid://dle132272116a" path="res://presets/entities/Lilah.tres" id="4_lilah"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_o7lnd"]
 [ext_resource type="Texture2D" uid="uid://b8f7qdmb4rksv" path="res://data/graphics/sprites/monsters/marvin.png" id="5_tex"]
+[ext_resource type="PackedScene" uid="uid://cesdnjj67k3c" path="res://presets/entities/sprites/Slime.tscn" id="spr_Slime"]
 
 [resource]
 script = ExtResource("2_vkvo0")
 _parent = ExtResource("4_jsxmo")
 _id = 3264744754
 _name = "Marvin"
-_spritePreset = "Slime"
+_spritePreset = ExtResource("spr_Slime")
 _radius = 10
 _stats = {
 "level": 5,

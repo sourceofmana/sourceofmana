@@ -3,12 +3,13 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_yqrvc"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_0k1gy"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_xb367"]
+[ext_resource type="PackedScene" uid="uid://bd7dn71v6molq" path="res://presets/entities/sprites/Ship.tscn" id="spr_Ship"]
 
 [resource]
 script = ExtResource("2_xb367")
 _id = 2089573209
 _name = "Ship"
-_spritePreset = "Ship"
+_spritePreset = ExtResource("spr_Ship")
 _radius = 16
 _stats = {
 "attack": 0.0,

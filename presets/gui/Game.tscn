@@ -275,7 +275,6 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
 theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
 
 [node name="Contexts" type="Control" parent="Overlay/VSections" unique_id=238552505]
-z_index = 10
 z_as_relative = false
 layout_mode = 2
 size_flags_vertical = 3
@@ -301,6 +300,7 @@ theme_type_variation = &"PanelSideLeft"
 persistant = false
 
 [node name="Dialogue" parent="Overlay/VSections/Contexts" unique_id=1202850709 instance=ExtResource("24_fqnq4")]
+z_index = 150
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -322,6 +322,7 @@ layout_mode = 1
 
 [node name="MessageBox" parent="Overlay/VSections/Contexts" unique_id=242717945 instance=ExtResource("25_tem4r")]
 visible = false
+z_index = 200
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

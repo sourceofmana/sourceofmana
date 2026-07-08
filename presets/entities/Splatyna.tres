@@ -6,13 +6,14 @@
 [ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="2_ty53i"]
 [ext_resource type="Resource" uid="uid://dle132272116a" path="res://presets/entities/Lilah.tres" id="3_lilah"]
 [ext_resource type="Resource" uid="uid://dcygfugnyiuaf" path="res://presets/entities/Lulea.tres" id="4_lulea"]
+[ext_resource type="PackedScene" uid="uid://5ccy1ei1s4x5" path="res://presets/entities/sprites/Splatyna.tscn" id="spr_Splatyna"]
 
 [resource]
 script = ExtResource("2_7qgir")
 _parent = ExtResource("2_ty53i")
 _id = 3314548081
 _name = "Splatyna"
-_spritePreset = "Splatyna"
+_spritePreset = ExtResource("spr_Splatyna")
 _radius = 26
 _stats = {
 "level": 10,

@@ -54,7 +54,7 @@ func LoadData(data : EntityData):
 
 	# Sprite Preset
 	if data._spritePreset:
-		preset = FileSystem.LoadEntitySprite(data._spritePreset)
+		preset = data._spritePreset.instantiate()
 		if preset:
 			add_child.call_deferred(preset)
 

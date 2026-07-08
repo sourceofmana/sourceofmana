@@ -6,12 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://4a35xrry6syh" path="res://data/graphics/sprites/monsters/lizandra.png" id="3_tex"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_yf6f8"]
 [ext_resource type="AudioStream" uid="uid://buwxbq3asvrx3" path="res://data/sounds/entities/pinkie/attack.ogg" id="6_ce1sj"]
+[ext_resource type="PackedScene" uid="uid://b04douroodym1" path="res://presets/entities/sprites/Lizzy.tscn" id="spr_Lizzy"]
 
 [resource]
 script = ExtResource("2_io5kx")
 _id = 1435506618
 _name = "Lizandra"
-_spritePreset = "Lizzy"
+_spritePreset = ExtResource("spr_Lizzy")
 _radius = 16
 _stats = {
 "level": 1,

@@ -10,13 +10,14 @@
 [ext_resource type="Resource" uid="uid://bj5p08ffbj617" path="res://presets/cells/items/weapon/BoneKnife.tres" id="7_0ewu5"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="8_nj4j6"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="9_rj4v6"]
+[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="spr_Player"]
 
 [resource]
 script = ExtResource("2_hegge")
 _parent = ExtResource("8_nj4j6")
 _id = 2550418766
 _name = "Gilgames"
-_spritePreset = "Player"
+_spritePreset = ExtResource("spr_Player")
 _stats = {
 "gender": "Male",
 "haircolor": "Golden Blonde",

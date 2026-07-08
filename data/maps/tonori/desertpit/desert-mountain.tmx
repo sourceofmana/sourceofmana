@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="149">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="150">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) 5t3v3 Reid"/>
@@ -1182,6 +1182,12 @@
    <properties>
     <property name="count" value="10"/>
     <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="149" name="Pachua" type="Spawn" x="960" y="3040">
+   <properties>
+    <property name="player_script" value="tonori/desertpit/Pachua.gd"/>
+    <property name="type" value="Npc"/>
    </properties>
   </object>
  </objectgroup>

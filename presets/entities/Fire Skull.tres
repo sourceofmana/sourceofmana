@@ -6,12 +6,13 @@
 [ext_resource type="Resource" uid="uid://cot2eu3ix5rdm" path="res://presets/cells/skills/Flar.tres" id="4_flar"]
 [ext_resource type="Texture2D" uid="uid://dwh7x3gvrmogx" path="res://data/graphics/sprites/monsters/skull-fire.png" id="5_tex"]
 [ext_resource type="AudioStream" uid="uid://dnru4y5xrg2ue" path="res://data/sounds/entities/fire-skull/attack.ogg" id="6_n0w5d"]
+[ext_resource type="PackedScene" uid="uid://cwpq2bf8h07xi" path="res://presets/entities/sprites/Skull.tscn" id="spr_Skull"]
 
 [resource]
 script = ExtResource("2_yfu84")
 _id = 4234567318
 _name = "Fire Skull"
-_spritePreset = "Skull"
+_spritePreset = ExtResource("spr_Skull")
 _radius = 12
 _stats = {
 "level": 10,

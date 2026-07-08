@@ -7,12 +7,13 @@
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_vs1yp"]
 [ext_resource type="AudioStream" uid="uid://bs1t88rvdbvko" path="res://data/sounds/entities/shroom/attack.ogg" id="6_548tf"]
 [ext_resource type="AudioStream" uid="uid://0iw7ebp5loly" path="res://data/sounds/entities/shroom/death.ogg" id="7_dsif2"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_l2mfi")
 _id = 2549154767
 _name = "Spiky Mushroom"
-_spritePreset = "Generic4Directions"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
 "level": 1,

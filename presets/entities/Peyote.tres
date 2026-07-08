@@ -6,12 +6,13 @@
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_1rtr2"]
 [ext_resource type="Resource" uid="uid://c2v50bj0vl45m" path="res://presets/cells/items/usable/CactusDrink.tres" id="3_cactus"]
 [ext_resource type="AudioStream" uid="uid://cgkf7oajmrx7s" path="res://data/sounds/entities/peyote/death.ogg" id="6_ubc3k"]
+[ext_resource type="PackedScene" uid="uid://5mvbowqywcl7" path="res://presets/entities/sprites/Peyote.tscn" id="spr_Peyote"]
 
 [resource]
 script = ExtResource("2_2r2rl")
 _id = 3387138907
 _name = "Peyote"
-_spritePreset = "Peyote"
+_spritePreset = ExtResource("spr_Peyote")
 _radius = 14
 _stats = {
 "level": 1,

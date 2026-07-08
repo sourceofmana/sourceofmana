@@ -146,9 +146,9 @@ func CreateEntityFromJson(json : Dictionary, parent : EntityData) -> EntityData:
 		entity._id = json.Name.hash()
 
 	if "SpritePreset" in json:
-		var value : String = json.SpritePreset
-		if not parent or parent._spritePreset != value:
-			entity._spritePreset = value
+		var scene : PackedScene = FileSystem.LoadEntitySprite(json.SpritePreset, false)
+		if not parent or parent._spritePreset != scene:
+			entity._spritePreset = scene
 
 	if "Radius" in json:
 		var value : int = clampi(str(json.Radius).to_int(), 0, 64)

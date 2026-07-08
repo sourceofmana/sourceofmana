@@ -5,12 +5,13 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_wu7ge"]
 [ext_resource type="AudioStream" uid="uid://cchod7sufq5er" path="res://data/sounds/entities/bat/attack.ogg" id="4_bka63"]
 [ext_resource type="AudioStream" uid="uid://did2kqv51vboy" path="res://data/sounds/entities/bat/death.ogg" id="5_p1o7w"]
+[ext_resource type="PackedScene" uid="uid://q0vjlx00rv0n" path="res://presets/entities/sprites/Bat.tscn" id="spr_Bat"]
 
 [resource]
 script = ExtResource("2_wu7ge")
 _id = 193452188
 _name = "Bat"
-_spritePreset = "Bat"
+_spritePreset = ExtResource("spr_Bat")
 _radius = 12
 _stats = {
 "attack": 5,

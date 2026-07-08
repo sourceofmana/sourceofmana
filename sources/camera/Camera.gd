@@ -47,17 +47,17 @@ func IsZooming(level : int) -> bool:
 	return zoomLevel == level
 
 func ZoomAt(level : int):
-	zoomLevel = clampi(level, 0, ActorCommons.CameraZoomLevels.size() - 1)
+	zoomLevel = clampi(level, ActorCommons.CameraZoomMin, ActorCommons.CameraZoomMax - 1)
 	UpdateZoom()
 
 func ZoomIn():
 	if not zoomTimer:
-		zoomLevel = clampi(zoomLevel + 1, 0, ActorCommons.CameraZoomLevels.size() - 1)
+		zoomLevel = clampi(zoomLevel + 1, ActorCommons.CameraZoomMin, ActorCommons.CameraZoomMax - 1)
 		UpdateZoom()
 
 func ZoomOut():
 	if not zoomTimer:
-		zoomLevel = clampi(zoomLevel - 1, 0, ActorCommons.CameraZoomLevels.size() - 1)
+		zoomLevel = clampi(zoomLevel - 1, ActorCommons.CameraZoomMin, ActorCommons.CameraZoomMax - 1)
 		UpdateZoom()
 
 func ZoomReset():
@@ -78,7 +78,7 @@ func UpdateZoom():
 	lastZoomLevel = zoomLevel
 	zoomTimer = Callback.SelfDestructTimer(camera, ActorCommons.CameraZoomDelay / 2.0, ZoomTimerCompleted, [], "ZoomTimer")
 
-	if zoomLevel < 0 or zoomLevel >= ActorCommons.CameraZoomLevels.size():
+	if zoomLevel < ActorCommons.CameraZoomMin or zoomLevel >= ActorCommons.CameraZoomMax:
 		assert(false, "Trying to set a wrong zoom level to our camera(s)")
 		return
 
@@ -94,7 +94,7 @@ func UpdateZoom():
 	SendViewportSize()
 
 func GetViewportHalfSize() -> Vector2:
-	if zoomLevel < 0 or zoomLevel >= ActorCommons.CameraZoomLevels.size():
+	if zoomLevel < ActorCommons.CameraZoomMin or zoomLevel >= ActorCommons.CameraZoomMax:
 		return Vector2(NetworkCommons.MaxVisibilityHalfWidth, NetworkCommons.MaxVisibilityHalfHeight)
 	var viewportSize : Vector2 = Vector2(DisplayServer.window_get_size())
 	var zoom : Vector2 = ActorCommons.CameraZoomLevels[zoomLevel]

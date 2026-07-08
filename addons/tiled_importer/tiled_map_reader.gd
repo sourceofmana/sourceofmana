@@ -322,7 +322,7 @@ func _build_warp_particles(warpNode : Node2D, parent : Node, points : Array):
 func _create_warp_spawn(warp : Dictionary) -> SpawnObject:
 	var spawn := SpawnObject.new()
 	spawn.id = WarpHash
-	spawn.type = "Npc"
+	spawn.type = ActorCommons.Type.NPC
 	spawn.spawn_position = Vector2i(warp.position)
 	spawn.respawn_delay = 0.0
 	if not warp.autoWarp:
@@ -622,7 +622,9 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 								if "count" in object.properties:
 									spawn_object.count = object.properties.count
 								if "type" in object.properties:
-									spawn_object.type = object.properties.type
+									var type_name : String = str(object.properties.type).to_upper()
+									if ActorCommons.Type.has(type_name):
+										spawn_object.type = ActorCommons.Type[type_name]
 								if "player_script" in object.properties:
 									spawn_object.player_script = object.properties.player_script
 								if "own_script" in object.properties:

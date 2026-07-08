@@ -6,13 +6,14 @@
 [ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="4_2xxsd"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_aoe72"]
 [ext_resource type="Texture2D" uid="uid://bwxulplws3lva" path="res://data/graphics/sprites/monsters/dorian.png" id="4_tex"]
+[ext_resource type="PackedScene" uid="uid://cesdnjj67k3c" path="res://presets/entities/sprites/Slime.tscn" id="spr_Slime"]
 
 [resource]
 script = ExtResource("2_eol0d")
 _parent = ExtResource("4_2xxsd")
 _id = 2929114690
 _name = "Dorian"
-_spritePreset = "Slime"
+_spritePreset = ExtResource("spr_Slime")
 _radius = 10
 _stats = {
 "level": 5,

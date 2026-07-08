@@ -209,6 +209,16 @@ func EnterGame():
 	shortcuts.set_visible(true)
 	menu.SetItemsVisible(true)
 
+func EnterPip():
+	Launcher.GUI.set_visible(false)
+	if Launcher.Camera:
+		Launcher.Camera.ZoomAt(0)
+
+func ExitPip():
+	Launcher.GUI.set_visible(true)
+	if Launcher.Camera:
+		Launcher.Camera.ZoomReset()
+
 #
 func _post_launch():
 	if not FSM.enter_login.is_connected(EnterLoginMenu):
@@ -248,6 +258,10 @@ func _notification(notif):
 			Launcher.Action.Enable(false)
 		Node.NOTIFICATION_DRAG_END:
 			Launcher.Action.Enable(true)
+		NOTIFICATION_APPLICATION_PIP_MODE_ENTERED:
+			EnterPip()
+		NOTIFICATION_APPLICATION_PIP_MODE_EXITED:
+			ExitPip()
 
 func HighlightUI(target : UICommons.UITarget):
 	if highlight:

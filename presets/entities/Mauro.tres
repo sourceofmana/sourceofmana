@@ -9,13 +9,14 @@
 [ext_resource type="Resource" uid="uid://f40w6s2w07wu" path="res://presets/cells/items/neck/BandanaScarf.tres" id="4_tl3bk"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="5_hhh52"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="8_hhh52"]
+[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="spr_Player"]
 
 [resource]
 script = ExtResource("2_23djo")
 _parent = ExtResource("5_hhh52")
 _id = 229085321
 _name = "Mauro"
-_spritePreset = "Player"
+_spritePreset = ExtResource("spr_Player")
 _stats = {
 "gender": "Male",
 "haircolor": "Twisted Teal",

@@ -50,7 +50,7 @@ func _process(_delta: float):
 					Network.callv(methodName, args + [peerID])
 			else:
 				Network.BulkCall.call(methodName, bulkedMethod, peerID)
-			bulkedMethod.clear()
+		peerBulks.clear()
 
 	if multiplayerAPI.has_multiplayer_peer():
 		multiplayerAPI.poll()

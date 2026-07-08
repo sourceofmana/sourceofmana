@@ -6,12 +6,13 @@
 [ext_resource type="AudioStream" uid="uid://c1ay0csy681us" path="res://data/sounds/entities/slime/attack.ogg" id="5_cqjuh"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="5_nwwuy"]
 [ext_resource type="AudioStream" uid="uid://duc3xk5l28f4k" path="res://data/sounds/entities/slime/death.ogg" id="6_fal55"]
+[ext_resource type="PackedScene" uid="uid://cesdnjj67k3c" path="res://presets/entities/sprites/Slime.tscn" id="spr_Slime"]
 
 [resource]
 script = ExtResource("5_nwwuy")
 _id = 236582911
 _name = "Slime"
-_spritePreset = "Slime"
+_spritePreset = ExtResource("spr_Slime")
 _radius = 10
 _stats = {
 "level": 1,

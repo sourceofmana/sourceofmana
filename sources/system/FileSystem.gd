@@ -167,7 +167,7 @@ static func LoadMaterial(path : String, instantiate : bool = false) -> Object:
 	return LoadResource(fullPath, instantiate)
 
 # Entity
-static func LoadEntitySprite(type : String, instantiate : bool = true) -> Node2D:
+static func LoadEntitySprite(type : String, instantiate : bool = false) -> PackedScene:
 	var fullPath : String = Path.EntitySprite + type + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 

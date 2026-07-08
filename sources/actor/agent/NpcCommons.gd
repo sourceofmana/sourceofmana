@@ -137,7 +137,7 @@ static func Spawn(caller : BaseAgent, mobID : int, count : int = 1, position : V
 		for i in count:
 			var spawnObject : SpawnObject = SpawnObject.new()
 			spawnObject.map					= inst.map
-			spawnObject.type				= "Monster"
+			spawnObject.type				= ActorCommons.Type.MONSTER
 			spawnObject.id					= mobID
 			spawnObject.count				= count
 			spawnObject.spawn_offset		= spawnRadius

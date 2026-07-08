@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://bouv4idn0yg3i" path="res://presets/cells/items/legs/CloudPants.tres" id="10_legs"]
 [ext_resource type="Resource" uid="uid://b1kgjqcht72fg" path="res://presets/cells/items/feet/LeatherBoots.tres" id="11_feet"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="11_rqd8i"]
+[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="spr_Player"]
 
 [sub_resource type="Resource" id="shirt_salamander"]
 script = ExtResource("1_item")
@@ -37,7 +38,7 @@ script = ExtResource("2_entity")
 _parent = ExtResource("3_parent")
 _id = 221388307
 _name = "Frost"
-_spritePreset = "Player"
+_spritePreset = ExtResource("spr_Player")
 _stats = {
 "gender": "Male",
 "haircolor": "Light Violet",

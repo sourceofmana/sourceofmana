@@ -6,7 +6,7 @@ class_name SpawnObject
 @export var count : int 				= 1
 @export var id : int					= DB.UnknownHash
 @export var nick : String				= ""
-@export var type : String				= ""
+@export var type : ActorCommons.Type	= ActorCommons.Type.UNKNOWN
 @export var player_script : String		= ""
 @export var own_script : String			= ""
 @export var spawn_position : Vector2i	= Vector2i.ZERO

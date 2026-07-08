@@ -6,12 +6,14 @@
 [ext_resource type="Material" uid="uid://ce5qgivfdfo" path="res://presets/palettes/monsters/mob-snake-sand.tres" id="4_mat"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_umopc"]
 [ext_resource type="AudioStream" uid="uid://cy46l0s1gs7h" path="res://data/sounds/entities/snake/attack.ogg" id="6_gi6ty"]
+[ext_resource type="Resource" uid="uid://bsnk1sk1n001" path="res://presets/cells/items/common/SnakeSkin.tres" id="7_skskin"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_fj57b")
 _id = 2399925469
 _name = "Sand Snake"
-_spritePreset = "Generic4Directions"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
 "castAttackDelay": 0.5,
@@ -22,6 +24,9 @@ _equipment = Array[ExtResource("1_uctx6")]([null, null, null, null, null, null, 
 _customTexture = ExtResource("3_tex")
 _customMaterial = ExtResource("4_mat")
 _behaviour = 4
+_drops = Dictionary[ExtResource("1_uctx6"), float]({
+ExtResource("7_skskin"): 0.05
+})
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("6_gi6ty")
 })
