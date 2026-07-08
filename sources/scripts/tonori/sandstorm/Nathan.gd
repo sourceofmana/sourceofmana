@@ -84,7 +84,7 @@ func OnDeliverWater():
 		RemoveItem(waterBottleHash)
 		SetQuest(QUEST_ID, ProgressCommons.SANDSTORM_NATHAN_WATER.REWARDS_WITHDREW)
 		Mes("Thank you, friend! It's good to have some relief, finally!")
-		Think("Nathan quickly pours all the water you have brought him all over himself.")
+		Think("Nathan quickly pours all the water you have brought to him all over himself.")
 		Think("You watch as the water you carefully carried all the way here runs down his body and soaks into the sand below.")
 		AddExp(50)
 		AddGP(100)

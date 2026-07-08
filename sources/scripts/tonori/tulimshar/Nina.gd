@@ -44,16 +44,16 @@ func OnExplainOpposition():
 	Choice("Thank you for your time.", Farewell)
 
 func OnKahwePosition():
-	Mes("The Kahwe carry on the knowledge of times when Mana was a harmonious force of good in our world. We seek to restore the balance that was lost when the Hantu were destroyed.")
-	Choice("What are the Hantu?", OnExplainHantu)
+	Mes("The Kahwe carry on the knowledge of times when Mana was a harmonious force of good in our world. We seek to restore the balance that was lost when the Uru were destroyed.")
+	Choice("What are the Uru?", OnExplainUru)
 	Choice("I have some other topics I wanted to discuss.", OnPlayerChoice)
 	Choice("Thank you for your time.", Farewell)
 
-func OnExplainHantu():
-	Mes("Hantu, also known as Mana Trees, used to be the heart of the world's lifeforce, acting as a natural conductor for Mana energy.")
+func OnExplainUru():
+	Mes("Uru, also known as Mana Trees, used to be the heart of the world's lifeforce, acting as a natural conductor for Mana energy.")
 	Mes("In ancient times, there were many, each serving as a stabilizing force, preventing Mana from decaying into Kaore.")
 	Mes("The Mana Trees were destroyed many years ago after a devastating war where the Savean Creed took hold among the ruling elites of Aemil.")
-	Mes("The decision was made to destroy the Hantu and attempt to create a world without Mana.")
+	Mes("The decision was made to destroy the Uru and attempt to create a world without Mana.")
 	Choice("Where do things stand now?", OnCurrentSituation)
 	Choice("I have some other topics I wanted to discuss.", OnPlayerChoice)
 	Choice("Thank you for your time.", Farewell)
@@ -146,32 +146,33 @@ func OnCroissantTurnIn():
 
 # Desert Seed quest
 func OnDesertSeedIntro():
-	Mes("Oh.")
-	Mes("I felt it the moment you walked through the gate. What is it that you are carrying?")
-	Choice("Something I found deep in the Sandstorm Mines.", OnRevealKano)
+	Mes("You're back!")
+	Mes("How was the expedition?")
+	Choice("You will not believe what happened. I found this...", OnRevealKano)
 
 func OnRevealKano():
 	Mes("May I see it?")
 	Mes("...")
-	Mes("This is a Kano. A Mana Seed.")
+	Mes("You're right. I can't believe this. This is a Kano. A Mana Seed!")
 	Mes("I have only ever read about these. I never imagined I would see one in my lifetime.")
 	Mes("How did you come to find this?")
 	Choice("There is a Mana Tree at the bottom of the mines. It gave it to me.", OnRevealManaTree)
 
 func OnRevealManaTree():
-	Mes("A Mana Tree. Alive. In the Sandstorm Mines.")
+	Mes("Excuse me?! Did you say a Mana Tree? Alive? In the Sandstorm Mines???")
 	Mes("I...")
 	Mes("I need a moment.")
 	Mes("I once felt something in that direction, a long time ago. I assumed it was a deep Zielite deposit. I had no idea.")
-	Mes("Were you able to communicate together? Did it tell you what to do with that Kano?")
+	Mes("Were you able to communicate with it? Did it tell you what to do with that Kano?")
 	Choice("It said to bring it to you and that you could be trusted.", OnNinaReacts)
 
 func OnNinaReacts():
-	Mes("Then I will not let it down.")
-	Mes("Manayir will need to know about this. They are an ancient order of druids who were once guardians of these trees.")
-	Mes("They built a castle into a small peninsula, all the way across the beach on west side of the sandstorm area.")
-	Mes("Find them. Show them the Kano and tell them what you have seen.")
-	Mes("Tell no one else. Not yet. The wrong person hearing about this could endanger everything.")
+	Mes("How does it know me? This is all... very hard to grasp.")
+	Mes("I'm glad it trusted me, but we will need to let the Manayir know about this. They are an ancient order of druids who were once guardians of these trees.")
+	Mes("They built a castle into a small peninsula, all the way across the beach on west side of the Tulimshar Valley, past the storm.")
+	Mes("Just head south past the city walls and then west.")
+	Mes("Find them and show them the Kano. Explain what you saw.")
+	Mes("Avoid telling anyone else about this for now. This is a very powerful item. Something that will surely attract the wrong attention.")
 	Mes("Before you go, take this.")
 	SetQuest(DESERT_SEED_ID, ProgressCommons.DESERT_SEED.SEEK_MANAYIR)
 	AddItem(DB.GetCellHash("Brass Zielite Amulet"))
@@ -187,16 +188,17 @@ func OnExplainMenhirSync():
 	Choice("[Touch the Soul Menhir]", OnTouchMenhir)
 
 func OnTouchMenhir():
-	Narrate("You place your hand on the Soul Menhir. The Zielite Amulet grows warm against your skin. A soft resonance passes through you, and for a moment the stone pulses with a faint light.")
+	Narrate("You place your hand on the Soul Menhir. The Zielite Amulet grows warm against your skin.")
+	Narrate("A strange sensasion passes through you. Like flowing water, but not wet. The stone briefly pulsates with a faint blue light.")
 	Action(SaveRespawnSoulMenhir)
 	Mes("Good. You are connected now.")
-	Mes("If you ever find another Soul Menhir, touch it. Each one you connect with strengthens the bond.")
-	Mes("Now go. The Manayir are waiting, even if they do not know it yet.")
+	Mes("If you ever find another Soul Menhir, touch it. You will become attuned to the last on you have touched.")
+	Mes("Now, you should make your way to the Manayir. We cannot wait around with a Kano in our hands.")
 	OnPlayerChoice()
 
 func OnDesertSeedReminder():
 	Mes("Have you found the Manayir yet?")
-	Mes("They gather somewhere in the desert near the Sandstorm Mines. Ask around in that area, someone should be able to point you in the right direction.")
+	Mes("You should head south, then west. Their tower is past the sandstorm, on a quiet peninsula. Ask around in that area, someone should be able to point you in the right direction.")
 	OnPlayerChoice()
 
 func SaveRespawnSoulMenhir():
