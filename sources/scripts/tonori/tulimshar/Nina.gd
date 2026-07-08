@@ -170,6 +170,7 @@ func OnNinaReacts():
 	Mes("How does it know me? This is all... very hard to grasp.")
 	Mes("I'm glad it trusted me, but we will need to let the Manayir know about this. They are an ancient order of druids who were once guardians of these trees.")
 	Mes("They built a castle into a small peninsula, all the way across the beach on west side of the Tulimshar Valley, past the storm.")
+	Mes("Just head south past the city walls and then west.")
 	Mes("Find them and show them the Kano. Explain what you saw.")
 	Mes("Avoid telling anyone else about this for now. This is a very powerful item. Something that will surely attract the wrong attention.")
 	Mes("Before you go, take this.")
