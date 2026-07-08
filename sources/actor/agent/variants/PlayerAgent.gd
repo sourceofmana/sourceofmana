@@ -42,7 +42,7 @@ static func GetSpawnFromData(charData : Dictionary) -> SpawnObject:
 		var spawnLocation : SpawnObject = SpawnObject.new()
 		spawnLocation.map				= Launcher.World.GetMap(destination.mapID)
 		spawnLocation.spawn_position	= destination.pos
-		spawnLocation.type				= "Player"
+		spawnLocation.type				= ActorCommons.Type.PLAYER
 		spawnLocation.id				= DB.PlayerHash
 		return spawnLocation
 	return WorldAgent.defaultSpawnLocation

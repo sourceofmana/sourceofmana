@@ -19,7 +19,7 @@ func OnAreaEnter(player : PlayerAgent):
 func SpawnXakelbael(inst : WorldInstance):
 	var spawn : SpawnObject = SpawnObject.new()
 	spawn.map				= inst.map
-	spawn.type				= "Npc"
+	spawn.type				= ActorCommons.Type.NPC
 	spawn.nick				= "Xakelbael"
 	spawn.id				= spawn.nick.hash()
 	spawn.spawn_position	= Vector2i(1331, 1478)

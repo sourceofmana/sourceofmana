@@ -57,7 +57,7 @@ func SpawnCells():
 
 	var spawn : SpawnObject = SpawnObject.new()
 	spawn.id = CELL_ID
-	spawn.type = "Npc"
+	spawn.type = ActorCommons.Type.NPC
 	spawn.state = ActorCommons.State.IDLE
 	spawn.is_persistant = false
 	spawn.map = map

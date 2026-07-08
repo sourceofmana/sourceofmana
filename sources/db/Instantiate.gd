@@ -20,7 +20,7 @@ static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = 
 
 	var actor : BaseAgent = null
 	match spawn.type:
-		"Npc":
+		ActorCommons.Type.NPC:
 			actor = NpcAgent.new(ActorCommons.Type.NPC, data, nick, true)
 			var npcDir : ActorCommons.Direction = spawn.direction if spawn.direction != ActorCommons.Direction.UNKNOWN else data._direction
 			if npcDir != ActorCommons.Direction.UNKNOWN:
@@ -30,16 +30,16 @@ static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = 
 			actor.spawnInfo = spawn
 			actor.playerScriptPath = spawn.player_script
 			actor.ownScriptPath = spawn.own_script
-		"Monster":
+		ActorCommons.Type.MONSTER:
 			actor = MonsterAgent.new(ActorCommons.Type.MONSTER, data, nick, true)
 			var mobDir : int = spawn.direction if spawn.direction != ActorCommons.Direction.UNKNOWN else data._direction
 			actor.currentOrientation = ActorCommons.GetDirectionFromEnum(mobDir as ActorCommons.Direction)
 			if spawn.state != ActorCommons.State.UNKNOWN:
 				actor.defaultState = spawn.state as ActorCommons.State
 			actor.spawnInfo = spawn
-		"Player":
+		ActorCommons.Type.PLAYER:
 			actor = PlayerAgent.new(ActorCommons.Type.PLAYER, data, nick, true)
-		_: assert(false, "Trying to create an agent with a wrong type: " + spawn.type)
+		_: assert(false, "Trying to create an agent with a wrong type: " + str(spawn.type))
 	return actor
 
 # Drop

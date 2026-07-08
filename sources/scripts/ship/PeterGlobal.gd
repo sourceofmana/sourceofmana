@@ -77,7 +77,7 @@ func SpawnMonstersForPlayer(playerRID : int):
 
 	run.spawnObj = SpawnObject.new()
 	run.spawnObj.map = holdMap
-	run.spawnObj.type = "Monster"
+	run.spawnObj.type = ActorCommons.Type.MONSTER
 	run.spawnObj.id = run.monsterID
 	run.spawnObj.is_global = true
 	run.spawnObj.is_persistant = false

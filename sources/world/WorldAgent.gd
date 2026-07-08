@@ -111,5 +111,5 @@ static func _post_launch():
 	defaultSpawnLocation.map				= Launcher.World.GetMap(LauncherCommons.DefaultStartMapID)
 	defaultSpawnLocation.spawn_position		= LauncherCommons.DefaultStartPos
 	defaultSpawnLocation.spawn_offset		= LauncherCommons.DefaultStartOffset
-	defaultSpawnLocation.type				= "Player"
+	defaultSpawnLocation.type				= ActorCommons.Type.PLAYER
 	defaultSpawnLocation.id					= DB.PlayerHash

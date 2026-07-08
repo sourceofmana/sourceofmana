@@ -4,6 +4,7 @@ class_name ActorCommons
 # Actor enums
 enum Type
 {
+	UNKNOWN = -1,
 	PLAYER = 0,
 	MONSTER,
 	NPC
