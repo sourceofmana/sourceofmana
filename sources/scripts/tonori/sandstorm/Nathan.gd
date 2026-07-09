@@ -4,18 +4,18 @@ const QUEST_ID = ProgressCommons.Quest.SANDSTORM_NATHAN_WATER
 
 #
 func OnStart():
-	Mes("Hi! I'm Watchman Nathan.")
-	Mes("I'm normally guarding the port of Tulimshar, but today I have the honour of GETTING ABSOLUTELY BAKED TO A CRISP OUT HERE.")
-	Mes("Sorry. My bad.")
-	Mes("The Sun is getting to me.")
-
-	var questState : ProgressCommons.SANDSTORM_NATHAN_WATER = GetQuest(QUEST_ID) as ProgressCommons.SANDSTORM_NATHAN_WATER
-	Choice("Is this the entrance to the Sandstorm Mines?", OnEntrance)
-	match questState:
+	match GetQuest(QUEST_ID):
+		ProgressCommons.SANDSTORM_NATHAN_WATER.INACTIVE:
+			Mes("Hi! I'm Watchman Nathan.")
+			Mes("I'm normally guarding the port of Tulimshar, but today I have the honour of GETTING ABSOLUTELY BAKED TO A CRISP OUT HERE.")
+			Mes("Sorry. My bad.")
+			Mes("The Sun is getting to me.")
+			Choice("Is this the entrance to the Sandstorm Mines?", OnEntrance)
 		ProgressCommons.SANDSTORM_NATHAN_WATER.STARTED:
+			Mes("Oh that's you! Sorry I didn't recognize you with all of this sand.")
 			Choice("About that bottle of water.", OnWaitingWater)
 		ProgressCommons.SANDSTORM_NATHAN_WATER.REWARDS_WITHDREW:
-			Choice("How are you feeling today?", OnComplete)
+			OnComplete()
 	Choice("Nethermind, I thought you were a sandman.", Farewell)
 
 func Farewell():
@@ -72,7 +72,6 @@ func AcceptQuest():
 	Choice("I'll try to find you that!", Farewell)
 
 func OnWaitingWater():
-	Mes("Oh that's you! Sorry I didn't recognize you with all of this sand.")
 	Mes("Did you manage to find a bottle of water?")
 	if HasItem(DB.GetCellHash("Water Bottle")):
 		Choice("I have it.", OnDeliverWater)
