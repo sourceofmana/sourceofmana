@@ -116,7 +116,7 @@ static func Create(result : Dictionary) -> EntityData:
 	if "Material" in result:
 		var paletteData : FileData = DB.GetPalette(DB.Palette.SKIN, DB.GetCellHash(result.Material))
 		if paletteData:
-			entity._customMaterial = FileSystem.LoadPalette(paletteData._path)
+			entity._customMaterial = paletteData._resource as Material
 
 	if "DisplayName" in result:
 		entity._displayName = result.DisplayName

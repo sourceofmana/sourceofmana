@@ -108,8 +108,8 @@ func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array
 		if not hasOverrideMaterial:
 			if entity.stat.skintone in raceData._skins:
 				var skinData : FileData = raceData._skins[entity.stat.skintone]
-				if skinData and not skinData._path.is_empty():
-					slotMaterial = FileSystem.LoadPalette(skinData._path)
+				if skinData and skinData._resource:
+					slotMaterial = skinData._resource as Material
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
@@ -149,15 +149,15 @@ func SetHair(applyOverrides : bool = true):
 		hairstyleData = DB.GetHairstyle(entity.stat.hairstyle) if entity.stat.hairstyle != DB.UnknownHash else null
 		var haircolorData : FileData = DB.GetPalette(DB.Palette.HAIR, entity.stat.haircolor) if entity.stat.haircolor != DB.UnknownHash else null
 		if hairstyleData != null and haircolorData != null:
-			slotTexture = FileSystem.LoadGfx(hairstyleData._path)
-			slotMaterial = FileSystem.LoadPalette(haircolorData._path)
+			slotTexture = hairstyleData.texture
+			slotMaterial = haircolorData._resource as Material
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
 
-	if hairstyleData and hairstyleData._spriteHframes > 0:
-		sprite.hframes = hairstyleData._spriteHframes
-		sprite.vframes = max(1, hairstyleData._spriteVframes)
+	if hairstyleData and hairstyleData.spriteHframes > 0:
+		sprite.hframes = hairstyleData.spriteHframes
+		sprite.vframes = max(1, hairstyleData.spriteVframes)
 	else:
 		sprite.hframes = defaultHframes[slot]
 		sprite.vframes = defaultVframes[slot]
@@ -344,8 +344,8 @@ func CollectAnimationOverrides() -> Array[AnimationLibrary]:
 
 	if entity.stat.hairstyle != DB.UnknownHash:
 		var hairstyleData : HairstyleData = DB.GetHairstyle(entity.stat.hairstyle)
-		if hairstyleData and hairstyleData._animationOverrides:
-			allOverrides.append(hairstyleData._animationOverrides)
+		if hairstyleData and hairstyleData.animationOverrides:
+			allOverrides.append(hairstyleData.animationOverrides)
 
 	return allOverrides
 

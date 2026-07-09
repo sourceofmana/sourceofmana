@@ -2,9 +2,7 @@ extends AIAgent
 class_name NpcAgent
 
 #
-var playerScriptPath : String				= ""
 var playerScriptPreset : GDScript			= null
-var ownScriptPath : String					= ""
 var ownScript : NpcScript					= null
 var triggerObject : TriggerObject			= null
 var interactionCount : int					= 0
@@ -92,10 +90,10 @@ func RemoveTrigger():
 
 #
 func _ready():
-	if not playerScriptPath.is_empty():
-		playerScriptPreset = FileSystem.LoadScript(playerScriptPath, false)
-	if not ownScriptPath.is_empty():
-		ownScript = FileSystem.LoadScript(ownScriptPath, false).new(self, self)
+	if spawnInfo and spawnInfo.player_script:
+		playerScriptPreset = spawnInfo.player_script
+	if spawnInfo and spawnInfo.own_script:
+		ownScript = spawnInfo.own_script.new(self, self)
 		ownScript.PostInit()
 
 	if data:

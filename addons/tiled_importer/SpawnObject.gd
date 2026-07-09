@@ -7,8 +7,8 @@ class_name SpawnObject
 @export var id : int					= DB.UnknownHash
 @export var nick : String				= ""
 @export var type : ActorCommons.Type	= ActorCommons.Type.UNKNOWN
-@export var player_script : String		= ""
-@export var own_script : String			= ""
+@export var player_script : GDScript	= null
+@export var own_script : GDScript		= null
 @export var spawn_position : Vector2i	= Vector2i.ZERO
 @export var spawn_offset : Vector2i		= Vector2i.ZERO
 @export var respawn_delay : float		= 30.0

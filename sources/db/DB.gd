@@ -1,7 +1,7 @@
 extends RefCounted
 class_name DB
 
-static var MapsDB : Dictionary[int, FileData]				= {}
+static var MapsDB : Dictionary[int, MapData]				= {}
 static var MusicDB : Dictionary[int, FileData]				= {}
 static var RacesDB : Dictionary[int, RaceData]				= {}
 static var HairstylesDB : Dictionary[int, HairstyleData]		= {}
@@ -27,10 +27,10 @@ enum Palette
 
 #
 static func ParseMapsDB():
-	for resourcePath in FileSystem.ParseExtension(Path.MapDataPst, Path.RscExt):
-		var map : MapServerData = FileSystem.LoadResource(resourcePath, false)
-		var genericPath = resourcePath.get_slice(Path.MapDataPst, 1).get_slice(Path.RscExt, 0)
-		var data : FileData = FileData.Create(map.name, genericPath)
+	for resourcePath in FileSystem.ParseResources(Path.MapDataPst):
+		var data : MapData = FileSystem.LoadResource(resourcePath, false)
+		data._id = SetCellHash(data._name)
+		assert(not MapsDB.has(data._id), "Duplicated cell in MapsDB")
 		MapsDB[data._id] = data
 
 static func ParseMusicDB():
@@ -38,7 +38,7 @@ static func ParseMusicDB():
 
 	if not result.is_empty():
 		for key in result:
-			var data : FileData = FileData.Create(key, result[key].Path)
+			var data : FileData = FileData.Create(key, FileSystem.LoadMusic(result[key].Path))
 			MusicDB[data._id] = data
 
 static func ParseRacesDB():
@@ -68,7 +68,7 @@ static func ParsePalettesDB():
 			for key in category:
 				var id = SetCellHash(key)
 				assert(id not in PalettesDB[categoryIdx], "Duplicated cell in PalettesDB")
-				PalettesDB[categoryIdx][id] = FileData.Create(key, category[key])
+				PalettesDB[categoryIdx][id] = FileData.Create(key, FileSystem.LoadPalette(category[key]))
 
 static func ParseEntitiesDB():
 	for resourcePath in FileSystem.ParseResources(Path.EntityPst):
@@ -154,7 +154,7 @@ static func GetItem(cellHash : int, customfield : String = "") -> ItemCell:
 			if paletteHash in PalettesDB[Palette.EQUIPMENT]:
 				var paletteData : FileData = DB.GetPalette(DB.Palette.EQUIPMENT, paletteHash)
 				if paletteData:
-					customCell.shader = FileSystem.LoadPalette(paletteData._path)
+					customCell.shader = paletteData._resource as Material
 		return customCell
 	else:
 		return cell

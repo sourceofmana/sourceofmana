@@ -80,19 +80,6 @@ static func LoadDB(path : String) -> Dictionary:
 
 	return result
 
-# Map
-static func LoadMap(fullPath : String) -> Object:
-	var mapInstance : Object	= null
-
-	var pathExists : bool		= ResourceExists(fullPath)
-
-	assert(pathExists, "Map file not found " + fullPath + " should be located at " + Path.MapRsc)
-	if pathExists:
-		mapInstance = ResourceInstanceOrLoad(fullPath)
-		Util.PrintLog("Map", "Loading resource: " + fullPath)
-
-	return mapInstance
-
 # Source
 static func LoadGDScript(fullPath : String, alloc : bool = true) -> Object:
 	var srcFile : Object		= null
@@ -111,8 +98,8 @@ static func LoadSource(path : String, nodeName : String = "", alloc : bool = tru
 		sourceObject.set_name(nodeName)
 	return sourceObject
 
-static func LoadScript(path : String, alloc : bool = false) -> Object:
-	return LoadGDScript(Path.ScriptSrc + path, alloc)
+static func LoadScript(path : String) -> GDScript:
+	return ResourceLoader.load(Path.ScriptSrc + path) as GDScript
 
 # Config
 static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
@@ -206,11 +193,6 @@ static func LoadPalette(path : String) -> Material:
 # Generic texture loading
 static func LoadGfx(path : String) -> Resource:
 	var fullPath : String = Path.GfxRsc + path
-	return LoadResource(fullPath, false)
-
-# Minimap
-static func LoadMinimap(path : String) -> Resource:
-	var fullPath : String = Path.MinimapRsc + path + Path.GfxExt
 	return LoadResource(fullPath, false)
 
 static func GetFiles(path : String) -> PackedStringArray:

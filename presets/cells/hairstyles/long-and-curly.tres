@@ -1,8 +1,9 @@
 [gd_resource type="Resource" script_class="HairstyleData" format=3 uid="uid://da4325upca0jq"]
 
 [ext_resource type="Script" uid="uid://cit7nvkotee4" path="res://sources/db/instance/HairstyleData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cw3m74bu3csr2" path="res://data/graphics/sprites/hairstyles/long-curly.png" id="tex_long-curly"]
 
 [resource]
 script = ExtResource("1_script")
 _name = "Long and Curly"
-_path = "sprites/hairstyles/long-curly.png"
+texture = ExtResource("tex_long-curly")

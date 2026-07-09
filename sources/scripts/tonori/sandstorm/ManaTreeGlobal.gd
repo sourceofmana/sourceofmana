@@ -28,8 +28,8 @@ func SpawnXakelbael(inst : WorldInstance):
 	spawn.state				= ActorCommons.State.IDLE
 	spawn.behaviour			= AICommons.Behaviour.IMMOBILE
 	spawn.trigger_radius	= 120.0
-	spawn.own_script		= "tonori/sandstorm/XakelbaelGlobal.gd"
-	spawn.player_script		= "tonori/sandstorm/Xakelbael.gd"
+	spawn.own_script		= FileSystem.LoadScript("tonori/sandstorm/XakelbaelGlobal.gd")
+	spawn.player_script		= FileSystem.LoadScript("tonori/sandstorm/Xakelbael.gd")
 	spawn.is_persistant		= false
 	spawn.respawn_delay		= 0.0
 	WorldAgent.CreateAgent(spawn, inst.id)

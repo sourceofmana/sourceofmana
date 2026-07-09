@@ -39,6 +39,7 @@ const EntityComponent : String			= EntityPst + "components/"
 const EntitySprite : String				= EntityPst + "sprites/"
 
 const MapLayerPst : String				= MapPst + "layers/"
+const MapServerPst : String				= MapPst + "server/"
 const MapDataPst : String				= MapPst + "data/"
 const MapNavPst : String				= MapPst + "navigations/"
 

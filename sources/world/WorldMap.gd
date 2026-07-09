@@ -54,7 +54,7 @@ func Destroy():
 		regionRID = RID()
 
 func LoadMapData():
-	var resource : Resource = Instantiate.LoadMapData(id)
+	var resource : MapServerData = Instantiate.LoadMapData(id)
 	if resource:
 		flags = resource.flags
 		for spawn in resource.spawns:

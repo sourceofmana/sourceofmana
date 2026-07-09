@@ -20,7 +20,7 @@ func Load(soundID : int):
 			assert(false, "Could not load music database id: %s" % soundID)
 			return
 
-		soundStream = FileSystem.LoadMusic(soundData._path)
+		soundStream = soundData._resource as AudioStreamOggVorbis
 		if not soundStream:
 			assert(false, "Could not load music: %s" % soundData._name)
 			return

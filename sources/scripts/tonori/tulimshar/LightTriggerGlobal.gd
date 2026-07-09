@@ -43,7 +43,7 @@ static func SpawnGuard(inst : WorldInstance) -> BaseAgent:
 	spawn.id = spawn.nick.hash()
 	spawn.spawn_position = Vector2i(2688, 1472) # tile (84, 46)
 	spawn.spawn_offset = Vector2i.DOWN
-	spawn.player_script = "tonori/tulimshar/PatrolGuardCaught.gd"
+	spawn.player_script = FileSystem.LoadScript("tonori/tulimshar/PatrolGuardCaught.gd")
 	return WorldAgent.CreateAgent(spawn, inst.id)
 
 static func OnGuardReady(player : PlayerAgent, guard : NpcAgent, playerRID : int):

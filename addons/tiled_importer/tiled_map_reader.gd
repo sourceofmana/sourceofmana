@@ -260,7 +260,7 @@ func fill_polygon_pool(tileset : TileSet, cell_pos : Vector2, gid : int):
 			source_data.add_obstruction_outline(filtered_polygon)
 
 # Reads a collision pool and create a navigation mesh
-func build_server() -> Resource:
+func build_server() -> MapServerData:
 	var root = MapServerData.new()
 	root.name = map_name
 	root.flags = map_flags
@@ -326,13 +326,13 @@ func _create_warp_spawn(warp : Dictionary) -> SpawnObject:
 	spawn.spawn_position = Vector2i(warp.position)
 	spawn.respawn_delay = 0.0
 	if not warp.autoWarp:
-		spawn.player_script = "generic/Warp.gd"
+		spawn.player_script = FileSystem.LoadScript("generic/Warp.gd")
 	if warp.isPort:
-		spawn.own_script = "generic/PortGlobal.gd"
+		spawn.own_script = FileSystem.LoadScript("generic/PortGlobal.gd")
 	elif not warp.ownScript.is_empty():
-		spawn.own_script = warp.ownScript
+		spawn.own_script = FileSystem.LoadScript(warp.ownScript)
 	else:
-		spawn.own_script = "generic/WarpGlobal.gd"
+		spawn.own_script = FileSystem.LoadScript("generic/WarpGlobal.gd")
 	spawn.nick = warp.name
 	spawn.trigger_polygon = PackedVector2Array(warp.polygon)
 	spawn.destination_map = warp.destinationID
@@ -626,9 +626,9 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 									if ActorCommons.Type.has(type_name):
 										spawn_object.type = ActorCommons.Type[type_name]
 								if "player_script" in object.properties:
-									spawn_object.player_script = object.properties.player_script
+									spawn_object.player_script = FileSystem.LoadScript(object.properties.player_script)
 								if "own_script" in object.properties:
-									spawn_object.own_script = object.properties.own_script
+									spawn_object.own_script = FileSystem.LoadScript(object.properties.own_script)
 								if "respawn_delay" in object.properties:
 									spawn_object.respawn_delay = object.properties.respawn_delay
 								if "nick" in object.properties:

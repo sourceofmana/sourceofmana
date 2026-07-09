@@ -28,8 +28,6 @@ static func CreateAgent(spawn : SpawnObject, data : EntityData, nick : String = 
 			if spawn.state != ActorCommons.State.UNKNOWN:
 				actor.defaultState = spawn.state as ActorCommons.State
 			actor.spawnInfo = spawn
-			actor.playerScriptPath = spawn.player_script
-			actor.ownScriptPath = spawn.own_script
 		ActorCommons.Type.MONSTER:
 			actor = MonsterAgent.new(ActorCommons.Type.MONSTER, data, nick, true)
 			var mobDir : int = spawn.direction if spawn.direction != ActorCommons.Direction.UNKNOWN else data._direction
@@ -52,16 +50,18 @@ static func CreateDrop(cell : BaseCell, pos : Vector2) -> Sprite2D:
 	return node
 
 # Map
-static func LoadMapData(mapID : int) -> Resource:
-	var mapData : FileData = DB.MapsDB.get(mapID, null)
-	return FileSystem.LoadMap(Path.MapDataPst + mapData._path + Path.RscExt) if mapData else null
+static func LoadMapData(mapID : int) -> MapServerData:
+	var mapData : MapData = DB.MapsDB.get(mapID, null)
+	return mapData.serverData if mapData else null
 
 static func LoadMapLayers(mapID : int) -> Node2D:
-	var mapData : FileData = DB.MapsDB.get(mapID, null)
-	var mapScene : Node2D = FileSystem.LoadMap(Path.MapLayerPst + mapData._path + Path.SceneExt) if mapData else null
+	var mapData : MapData = DB.MapsDB.get(mapID, null)
+	if not mapData or not mapData.layers:
+		return null
+	var mapScene : Node2D = mapData.layers.instantiate()
 	mapScene.set_name(mapData._name)
 	return mapScene
 
-static func LoadMapNavigation(mapID : int) -> Object:
-	var mapData : FileData = DB.MapsDB.get(mapID, null)
-	return FileSystem.LoadMap(Path.MapNavPst + mapData._path + Path.RscExt) if mapData else null
+static func LoadMapNavigation(mapID : int) -> NavigationPolygon:
+	var mapData : MapData = DB.MapsDB.get(mapID, null)
+	return mapData.navigation if mapData else null

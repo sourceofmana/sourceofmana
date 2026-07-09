@@ -3,9 +3,9 @@ class_name WorldNavigation
 
 # Instance init
 static func LoadData(map : WorldMap):
-	var obj : Object = Instantiate.LoadMapNavigation(map.id)
-	if obj:
-		map.navPoly = obj
+	var navPoly : NavigationPolygon = Instantiate.LoadMapNavigation(map.id)
+	if navPoly:
+		map.navPoly = navPoly
 
 static func CreateInstance(inst : WorldInstance):
 	if inst.map.navPoly:

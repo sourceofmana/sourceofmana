@@ -2,10 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cit7nvkotee4" path="res://sources/db/instance/HairstyleData.gd" id="1_script"]
 [ext_resource type="AnimationLibrary" uid="uid://db3rdpuvcwng" path="res://presets/animations/overrides/Ponytail.tres" id="2_overrides"]
+[ext_resource type="Texture2D" uid="uid://cewvemnn3grxj" path="res://data/graphics/sprites/hairstyles/ponytail.png" id="tex_ponytail"]
 
 [resource]
 script = ExtResource("1_script")
-_animationOverrides = ExtResource("2_overrides")
-_spriteHframes = 13
+animationOverrides = ExtResource("2_overrides")
+spriteHframes = 13
 _name = "Ponytail"
-_path = "sprites/hairstyles/ponytail.png"
+texture = ExtResource("tex_ponytail")

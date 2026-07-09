@@ -207,7 +207,7 @@ func CreateEntityFromJson(json : Dictionary, parent : EntityData) -> EntityData:
 		var paletteId : int = materialName.hash()
 		if DB.PalettesDB[DB.Palette.SKIN].has(paletteId):
 			var paletteData : FileData = DB.GetPalette(DB.Palette.SKIN, paletteId)
-			var material : Material = FileSystem.LoadPalette(paletteData._path)
+			var material : Material = paletteData._resource as Material
 			if material and (not parent or parent._customMaterial != material):
 				entity._customMaterial = material
 
