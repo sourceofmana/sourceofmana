@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://coc6xywsuunfm"]
+
+[ext_resource type="Script" uid="uid://c3b4e1k71k56k" path="res://addons/game_data_manager/CombatSimulatorView.gd" id="1_script"]
+
+[node name="CombatSimulatorView" type="Control" unique_id=1082823929]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_script")

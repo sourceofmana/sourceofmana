@@ -10,8 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://civh46udpdijv" path="res://addons/game_data_manager/EntityEquipmentView.tscn" id="8_3ljk4"]
 [ext_resource type="PackedScene" uid="uid://cvwarb01swm6c" path="res://addons/game_data_manager/EntityDropsView.tscn" id="9_30upx"]
 [ext_resource type="PackedScene" uid="uid://cggq3pttkiprw" path="res://addons/game_data_manager/EntitySkillsView.tscn" id="10_6gu2f"]
-[ext_resource type="PackedScene" uid="uid://bk52sj6vf8dqn" path="res://addons/game_data_manager/EntityMigrator.tscn" id="11_jryrp"]
-[ext_resource type="PackedScene" path="res://addons/game_data_manager/CombatSimulatorView.tscn" id="12_combat"]
+[ext_resource type="PackedScene" uid="uid://coc6xywsuunfm" path="res://addons/game_data_manager/CombatSimulatorView.tscn" id="12_combat"]
 
 [node name="Manager-ui" type="Control" unique_id=1312609025]
 layout_mode = 3
@@ -100,12 +99,7 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 5
 
-[node name="Migrator" parent="VBoxContainer/MainTabs/Entities" unique_id=275104421 instance=ExtResource("11_jryrp")]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 6
-
-[node name="Combat" parent="VBoxContainer/MainTabs" instance=ExtResource("12_combat")]
+[node name="Combat" parent="VBoxContainer/MainTabs" unique_id=1593632383 instance=ExtResource("12_combat")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
