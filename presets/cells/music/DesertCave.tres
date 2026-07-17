@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FileData" format=3 uid="uid://musicdesertcave1"]
+
+[ext_resource type="Script" uid="uid://db4wi3qfkte3f" path="res://sources/db/instance/FileData.gd" id="1_script"]
+[ext_resource type="AudioStream" uid="uid://beg15hwn3017w" path="res://data/music/NYC Sound Design & Dariunas - Cave.ogg" id="2_audio"]
+
+[resource]
+script = ExtResource("1_script")
+_name = "Desert Cave"
+_resource = ExtResource("2_audio")

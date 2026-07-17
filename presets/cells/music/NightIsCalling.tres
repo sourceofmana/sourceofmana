@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FileData" format=3 uid="uid://musicnightcall1"]
+
+[ext_resource type="Script" uid="uid://db4wi3qfkte3f" path="res://sources/db/instance/FileData.gd" id="1_script"]
+[ext_resource type="AudioStream" uid="uid://caqe0w2xvrcgt" path="res://data/music/Jose. S & Dakota. D - Night is calling.ogg" id="2_audio"]
+
+[resource]
+script = ExtResource("1_script")
+_name = "Night is calling"
+_resource = ExtResource("2_audio")

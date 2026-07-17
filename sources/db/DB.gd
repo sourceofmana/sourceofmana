@@ -34,12 +34,11 @@ static func ParseMapsDB():
 		MapsDB[data._id] = data
 
 static func ParseMusicDB():
-	var result = FileSystem.LoadDB("music.json")
-
-	if not result.is_empty():
-		for key in result:
-			var data : FileData = FileData.Create(key, FileSystem.LoadMusic(result[key].Path))
-			MusicDB[data._id] = data
+	for resourcePath in FileSystem.ParseResources(Path.MusicPst):
+		var data : FileData = FileSystem.LoadResource(resourcePath, false)
+		var id : int = SetCellHash(data._name)
+		assert(not MusicDB.has(id), "Duplicated cell in MusicDB")
+		MusicDB[id] = data
 
 static func ParseRacesDB():
 	for resourcePath in FileSystem.ParseResources(Path.RacesPst):

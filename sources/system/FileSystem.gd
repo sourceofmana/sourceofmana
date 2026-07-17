@@ -122,25 +122,6 @@ static func LoadResource(fullPath : String, instantiate : bool = true) -> Object
 
 	return rscInstance
 
-# Material``
-static func LoadMaterial(path : String, instantiate : bool = false) -> Object:
-	var fullPath : String = Path.MaterialPst + path + Path.RscExt
-	return LoadResource(fullPath, instantiate)
-
-# Music
-static func LoadMusic(path : String) -> Resource:
-	var fullPath : String = Path.MusicRsc + path
-	var musicFile : Resource			= null
-
-	var pathExists : bool		= ResourceExists(fullPath)
-	assert(pathExists, "Music file not found " + path + " should be located at " + fullPath)
-
-	if pathExists:
-		musicFile = ResourceLoader.load(fullPath)
-		Util.PrintLog("Music", "Loading file: " + fullPath)
-
-	return musicFile
-
 # Palette
 static func LoadPalette(path : String) -> Material:
 	var fullPath : String = Path.PalettesPst + path

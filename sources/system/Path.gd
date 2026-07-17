@@ -33,6 +33,7 @@ const MapPst : String					= Pst + "maps/"
 const EmotePst : String					= CellPst + "emotes/"
 const HairstylePst : String				= CellPst + "hairstyles/"
 const ItemPst : String					= CellPst + "items/"
+const MusicPst : String					= CellPst + "music/"
 const RacesPst : String					= CellPst + "races/"
 const SkillPst : String					= CellPst + "skills/"
 
