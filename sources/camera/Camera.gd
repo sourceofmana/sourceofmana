@@ -1,6 +1,8 @@
 extends ServiceBase
 class_name CameraService
 
+const CameraScene : PackedScene = preload(Path.EntityComponent + "Camera.tscn")
+
 #
 var camera : Camera2D			= null
 var remoteTransform : RemoteTransform2D = null
@@ -125,8 +127,7 @@ func _post_launch():
 			Launcher.Map.PlayerMoved.connect(OnPlayerMoved)
 
 	if Launcher.Scene:
-		var cameraPreset : PackedScene = FileSystem.LoadEntityComponent("Camera", false)
-		camera = cameraPreset.instantiate()
+		camera = CameraScene.instantiate()
 		camera.set_name("Camera")
 		if camera:
 			Launcher.Scene.add_child.call_deferred(camera)

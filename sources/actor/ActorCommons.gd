@@ -180,29 +180,29 @@ static func GetStateName(state : State) -> String:
 		return ""
 	return STATE_NAMES[state]
 
-static func IsAlive(agent : Actor) -> bool:
-	return agent and agent.state != State.DEATH and agent.stat.health > 0
+static func IsAlive(actor : Actor) -> bool:
+	return actor and actor.state != State.DEATH and actor.stat.health > 0
 
-static func IsAttacking(agent : Actor) -> bool:
-	return agent and agent.state == State.ATTACK
+static func IsAttacking(actor : Actor) -> bool:
+	return actor and actor.state == State.ATTACK
 
-static func IsSitting(agent : Actor) -> bool:
-	return agent and agent.state == State.SIT
+static func IsSitting(actor : Actor) -> bool:
+	return actor and actor.state == State.SIT
 
-static func IsWalking(agent : Actor) -> bool:
-	return agent and agent.state == State.WALK
+static func IsWalking(actor : Actor) -> bool:
+	return actor and actor.state == State.WALK
 
-static func IsRunning(agent : Actor) -> bool:
-	return IsWalking(agent) and agent.stat.isRunning
+static func IsRunning(actor : Actor) -> bool:
+	return IsWalking(actor) and actor.stat.isRunning
 
-static func IsTriggering(agent : Actor) -> bool:
-	return agent and agent.state == State.TRIGGER
+static func IsTriggering(actor : Actor) -> bool:
+	return actor and actor.state == State.TRIGGER
 
-static func IsHiddenFromMobs(agent : Actor) -> bool:
-	return agent and agent.stat and (agent.stat.isHidden or agent.stat.isInvisible)
+static func IsHiddenFromMobs(actor : Actor) -> bool:
+	return actor and actor.stat and (actor.stat.isHidden or actor.stat.isInvisible)
 
-static func IsInvisibleToPlayers(agent : Actor) -> bool:
-	return agent and agent.stat and agent.stat.isInvisible
+static func IsInvisibleToPlayers(actor : Actor) -> bool:
+	return actor and actor.stat and actor.stat.isInvisible
 
 #
 const slotChest : String					= "Chest"
@@ -252,6 +252,10 @@ static func GetSlotID(slot : String) -> Slot:
 		slotHair:					return Slot.HAIR
 		slotQuest:					return Slot.QUEST
 		_:							return Slot.BODY
+
+# Navigation
+const NPAgentScene : PackedScene			= preload(Path.EntityComponent + "navigations/NPAgent.tscn")
+const PlayerAgentScene : PackedScene		= preload(Path.EntityComponent + "navigations/PlayerAgent.tscn")
 
 # Visual
 const AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")

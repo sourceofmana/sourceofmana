@@ -109,7 +109,7 @@ func AddAIBehaviour(behaviour : AICommons.Behaviour):
 			var map : WorldMap = WorldAgent.GetMapFromAgent(npc)
 			if map and not npc.agent:
 				npc.aiBehaviour = AICommons.Behaviour.NONE
-				npc.agent = FileSystem.LoadEntityComponent("navigations/NPAgent")
+				npc.agent = ActorCommons.NPAgentScene.instantiate()
 				npc.agent.set_radius(npc.data._radius)
 				npc.agent.set_neighbor_distance(npc.data._radius * 2.0)
 				npc.agent.set_navigation_map(map.mapRID)

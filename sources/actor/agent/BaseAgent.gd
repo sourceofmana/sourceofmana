@@ -173,9 +173,9 @@ func SetData():
 	# Navigation
 	if self is AIAgent:
 		if not AICommons.IsStationary(self):
-			agent = FileSystem.LoadEntityComponent("navigations/NPAgent")
+			agent = ActorCommons.NPAgentScene.instantiate()
 	elif self is PlayerAgent:
-		agent = FileSystem.LoadEntityComponent("navigations/PlayerAgent")
+		agent = ActorCommons.PlayerAgentScene.instantiate()
 
 	if agent:
 		agent.set_radius(data._radius)

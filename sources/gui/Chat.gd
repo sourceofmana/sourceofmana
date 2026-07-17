@@ -1,6 +1,8 @@
 extends VBoxContainer
 class_name ChatContainer
 
+const ChatLabelScene : PackedScene = preload(Path.GuiPst + "labels/ChatLabel.tscn")
+
 @onready var tabContainer : TabContainer		= $ChatTabContainer
 @onready var lineEdit : LineEdit				= $NewText
 
@@ -52,7 +54,7 @@ func CreateChannel(channelName : String) -> GUICommons.ChatChannel:
 	if channelTabs.has(channelName):
 		return channelTabs[channelName] as GUICommons.ChatChannel
 
-	var newTab : Control = FileSystem.LoadGui("labels/ChatLabel")
+	var newTab : Control = ChatLabelScene.instantiate()
 	newTab.name = channelName
 
 	var channelIdx : GUICommons.ChatChannel = tabContainer.get_tab_count() as GUICommons.ChatChannel

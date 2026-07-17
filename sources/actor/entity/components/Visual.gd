@@ -1,6 +1,8 @@
 extends Node2D
 class_name EntityVisual
 
+const LightSourceScene : PackedScene = preload(Path.EffectsPst + "LightSource.tscn")
+
 #
 signal spriteOffsetUpdate
 signal state_changed(state : ActorCommons.State)
@@ -209,7 +211,7 @@ func SetEquipmentMetadata(slot : int, cell : ItemCell):
 		equipmentEffects[slot].queue_free()
 		equipmentEffects[slot] = null
 	if cell and cell.has_meta("light_radius"):
-		var light : LightSource = FileSystem.LoadEffect("LightSource")
+		var light : LightSource = LightSourceScene.instantiate()
 		if light:
 			light.radius = cell.get_meta("light_radius")
 			if cell.has_meta("light_color"):

@@ -122,24 +122,9 @@ static func LoadResource(fullPath : String, instantiate : bool = true) -> Object
 
 	return rscInstance
 
-# Effect
-static func LoadEffect(path : String, instantiate : bool = true) -> Node:
-	var fullPath : String = Path.EffectsPst + path + Path.SceneExt
-	return LoadResource(fullPath, instantiate)
-
 # Material``
 static func LoadMaterial(path : String, instantiate : bool = false) -> Object:
 	var fullPath : String = Path.MaterialPst + path + Path.RscExt
-	return LoadResource(fullPath, instantiate)
-
-# Entity
-static func LoadEntityComponent(type : String, instantiate : bool = true) -> Object:
-	var fullPath : String = Path.EntityComponent + type + Path.SceneExt
-	return LoadResource(fullPath, instantiate)
-
-# GUI
-static func LoadGui(path : String, instantiate : bool = true) -> Control:
-	var fullPath : String = Path.GuiPst + path + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
 # Music
