@@ -1,9 +1,16 @@
 [gd_scene format=3 uid="uid://duqpp1dik8h8h"]
 
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_2dmi0"]
 [ext_resource type="Script" uid="uid://btujsudusgp8p" path="res://sources/gui/character/Character.gd" id="2_aacye"]
 [ext_resource type="Script" uid="uid://b73huh7ahb6av" path="res://sources/gui/character/Attributes.gd" id="2_nrudd"]
 [ext_resource type="Script" uid="uid://cjsfs480co2wp" path="res://sources/gui/character/Stats.gd" id="3_v4km6"]
 [ext_resource type="Script" uid="uid://2qjjdmjumwox" path="res://sources/gui/character/Traits.gd" id="4_1wiqu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wilsl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j7vvq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qshgo"]
 
 [node name="Character" type="VBoxContainer" unique_id=211751759]
 anchors_preset = 15
@@ -11,40 +18,30 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_2dmi0")
 script = ExtResource("2_aacye")
 
 [node name="PlayerName" type="PanelContainer" parent="." unique_id=1706669971]
-custom_minimum_size = Vector2(260, 0)
+custom_minimum_size = Vector2(260, 20)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_type_variation = &"PanelLeaf"
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerName" unique_id=1720574612]
-layout_mode = 2
-theme_override_constants/margin_top = 8
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayerName/MarginContainer" unique_id=2045156924]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="PlayerName/MarginContainer/VBoxContainer" unique_id=272842183]
-layout_mode = 2
-text = "Name"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="PlayerName/MarginContainer/VBoxContainer" unique_id=213403999]
-layout_mode = 2
-
-[node name="Entry" type="LineEdit" parent="PlayerName/MarginContainer/VBoxContainer" unique_id=498853850]
-visible = false
-custom_minimum_size = Vector2(250, 32)
+[node name="Entry" type="LineEdit" parent="PlayerName" unique_id=498853850]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_wilsl")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_j7vvq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qshgo")
 placeholder_text = "Enter Character Name"
 alignment = 1
+max_length = 30
 expand_to_text_length = true
 context_menu_enabled = false
+emoji_menu_enabled = false
+select_all_on_focus = true
 
-[node name="Name" type="Label" parent="PlayerName/MarginContainer/VBoxContainer" unique_id=1879101140]
-custom_minimum_size = Vector2(0, 20)
+[node name="Name" type="Label" parent="PlayerName" unique_id=1879101140]
 layout_mode = 2
 size_flags_vertical = 1
 horizontal_alignment = 1
@@ -470,9 +467,9 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[connection signal="focus_entered" from="PlayerName/MarginContainer/VBoxContainer/Entry" to="." method="_on_text_focus_entered"]
-[connection signal="focus_exited" from="PlayerName/MarginContainer/VBoxContainer/Entry" to="." method="_on_text_focus_exited"]
-[connection signal="text_submitted" from="PlayerName/MarginContainer/VBoxContainer/Entry" to="." method="CreateCharacter" unbinds=1]
+[connection signal="focus_entered" from="PlayerName/Entry" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="PlayerName/Entry" to="." method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="PlayerName/Entry" to="." method="CreateCharacter" unbinds=1]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Strength/Minus" to="Display/Attributes" method="_on_strength_minus_button"]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Strength/Plus" to="Display/Attributes" method="_on_strength_plus_button"]
 [connection signal="pressed" from="Display/Attributes/Margin/VBox/Vitality/Minus" to="Display/Attributes" method="_on_vitality_minus_button"]

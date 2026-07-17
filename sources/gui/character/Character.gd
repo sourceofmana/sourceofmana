@@ -2,8 +2,8 @@ extends Control
 
 #
 @onready var characterName : PanelContainer				= $PlayerName
-@onready var characterNameLineEdit : LineEdit			= $PlayerName/MarginContainer/VBoxContainer/Entry
-@onready var characterNameDisplay : Label				= $PlayerName/MarginContainer/VBoxContainer/Name
+@onready var characterNameLineEdit : LineEdit			= $PlayerName/Entry
+@onready var characterNameDisplay : Label				= $PlayerName/Name
 
 @onready var display : HBoxContainer					= $Display
 @onready var traitsPanel : PanelContainer				= $Display/Traits

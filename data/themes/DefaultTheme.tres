@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://cwb3pymvkf25d" path="res://data/graphics/gui/panelsideright.png" id="15_a7lxq"]
 [ext_resource type="Texture2D" uid="uid://cjnbc8hwuhqhv" path="res://data/graphics/gui/smallbar.png" id="15_ovqsu"]
 [ext_resource type="Texture2D" uid="uid://cxsevv3wmkp27" path="res://data/graphics/gui/button/button_focus.png" id="16"]
+[ext_resource type="Texture2D" uid="uid://di2g4farnr2ej" path="res://data/graphics/gui/notification-leaf.png" id="18_h6yt3"]
 [ext_resource type="FontFile" uid="uid://shxh5secawoq" path="res://data/graphics/fonts/alagard-16.ttf" id="18_v607h"]
 [ext_resource type="FontFile" uid="uid://bxtecswl0imti" path="res://data/graphics/fonts/romulus-16.ttf" id="22_e68kl"]
 [ext_resource type="Texture2D" uid="uid://cm5pw0y8j157l" path="res://data/graphics/gui/window/window_bg.png" id="22_ovqsu"]
@@ -251,11 +252,11 @@ texture_margin_bottom = 14.0
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kckym"]
 content_margin_top = 10.0
 content_margin_bottom = 11.0
-texture = ExtResource("9_5par7")
-texture_margin_left = 61.0
-texture_margin_top = 14.0
-texture_margin_right = 61.0
-texture_margin_bottom = 14.0
+texture = ExtResource("18_h6yt3")
+texture_margin_left = 48.0
+texture_margin_top = 19.0
+texture_margin_right = 46.0
+texture_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f7umf"]
 content_margin_left = 5.0
@@ -268,6 +269,18 @@ texture_margin_top = 8.0
 texture_margin_right = 6.0
 texture_margin_bottom = 6.0
 region_rect = Rect2(0, 0, 13, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h6yt3"]
+load_path = "res://.godot/imported/notification-leaf.png-8db88d7f17afff8b8531d30ddb57d287.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_owdbf"]
+content_margin_top = 10.0
+content_margin_bottom = 11.0
+texture = SubResource("CompressedTexture2D_h6yt3")
+texture_margin_left = 48.0
+texture_margin_top = 19.0
+texture_margin_right = 46.0
+texture_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_psur8"]
 texture = ExtResource("14_ydunl")
@@ -551,6 +564,8 @@ NotificationBox/base_type = &"RichTextLabel"
 NotificationBox/colors/default_color = Color(0.933, 0.847, 0.631, 1)
 NotificationBox/styles/normal = SubResource("StyleBoxTexture_kckym")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_f7umf")
+PanelLeaf/base_type = &"PanelContainer"
+PanelLeaf/styles/panel = SubResource("StyleBoxTexture_owdbf")
 PanelSideLeft/base_type = &"PanelContainer"
 PanelSideLeft/styles/panel = SubResource("StyleBoxTexture_psur8")
 PanelSideRight/base_type = &"PanelContainer"

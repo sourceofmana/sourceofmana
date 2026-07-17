@@ -165,6 +165,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/gui/mobile/buttonY_pressed.png [Reid]
 ./graphics/gui/mobile/stick.png [Reid]
 ./graphics/gui/notification.png [Reid]
+./graphics/gui/notification-leaf.png [Reid]
 ./graphics/gui/panelsideleft.png [Reid]
 ./graphics/gui/panelsideright.png [Reid]
 ./graphics/gui/smallbar.png [Reid]
