@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_j5b2w"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_mwmo2"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_q6ago"]
-[ext_resource type="Material" uid="uid://ibrdndrkc4ca" path="res://presets/palettes/equipment/material-daim-dark.tres" id="5_xvynf"]
+[ext_resource type="Material" uid="uid://ibrdndrkc4ca" path="res://presets/palettes/shaders/equipment/material-daim-dark.tres" id="5_xvynf"]
 [ext_resource type="Texture2D" uid="uid://cfjjosglguhk5" path="res://data/graphics/sprites/equipment/feet/boots-male.png" id="6_mo6nh"]
 [ext_resource type="Texture2D" uid="uid://dlo5n0v1scwaf" path="res://data/graphics/sprites/equipment/feet/boots-female.png" id="7_c5om2"]
 

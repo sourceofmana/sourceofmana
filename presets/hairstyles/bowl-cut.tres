@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HairstyleData" format=3 uid="uid://cpou6vpj6s4pd"]
+
+[ext_resource type="Script" uid="uid://cit7nvkotee4" path="res://sources/db/instance/HairstyleData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://fp3d8fdkdcnu" path="res://data/graphics/sprites/hairstyles/bowl-cut.png" id="tex_bowl-cut"]
+
+[resource]
+script = ExtResource("1_script")
+texture = ExtResource("tex_bowl-cut")
+_name = "Bowl Cut"

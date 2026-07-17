@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="HairstyleData" format=3 uid="uid://bdig8mo1fmpig"]
-
-[ext_resource type="Script" uid="uid://cit7nvkotee4" path="res://sources/db/instance/HairstyleData.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://dyokhsp455d81" path="res://data/graphics/sprites/hairstyles/side-strand.png" id="tex_side-strand"]
-
-[resource]
-script = ExtResource("1_script")
-_name = "Side Strand"
-texture = ExtResource("tex_side-strand")

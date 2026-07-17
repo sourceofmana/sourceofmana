@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_uctx6"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_fj57b"]
 [ext_resource type="Texture2D" uid="uid://tp667v46h13l" path="res://data/graphics/sprites/monsters/snake.png" id="3_tex"]
-[ext_resource type="Material" uid="uid://ce5qgivfdfo" path="res://presets/palettes/monsters/mob-snake-sand.tres" id="4_mat"]
+[ext_resource type="Material" uid="uid://ce5qgivfdfo" path="res://presets/palettes/shaders/monsters/mob-snake-sand.tres" id="4_mat"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_umopc"]
 [ext_resource type="AudioStream" uid="uid://cy46l0s1gs7h" path="res://data/sounds/entities/snake/attack.ogg" id="6_gi6ty"]
 [ext_resource type="Resource" uid="uid://bsnk1sk1n001" path="res://presets/cells/items/common/SnakeSkin.tres" id="7_skskin"]

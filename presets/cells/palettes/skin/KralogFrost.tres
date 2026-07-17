@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="FileData" format=3 uid="uid://skinkralogfrost1"]
-
-[ext_resource type="Script" uid="uid://db4wi3qfkte3f" path="res://sources/db/instance/FileData.gd" id="1_script"]
-[ext_resource type="Material" uid="uid://cb38x5lpm842e" path="res://presets/palettes/races/kralog-skin-frost.tres" id="2_material"]
-
-[resource]
-script = ExtResource("1_script")
-_name = "Kralog Frost"
-_resource = ExtResource("2_material")

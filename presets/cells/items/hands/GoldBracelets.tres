@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_em2xu"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_ahmr6"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_rrowt"]
-[ext_resource type="Material" uid="uid://cwm7205ugcjpl" path="res://presets/palettes/equipment/material-gold.tres" id="5_mufop"]
+[ext_resource type="Material" uid="uid://cwm7205ugcjpl" path="res://presets/palettes/shaders/equipment/material-gold.tres" id="5_mufop"]
 [ext_resource type="Texture2D" uid="uid://cl7neyffqrj1q" path="res://data/graphics/sprites/equipment/hands/bracelets-male.png" id="6_ndp77"]
 [ext_resource type="Texture2D" uid="uid://co2jt5kjpoft5" path="res://data/graphics/sprites/equipment/hands/bracelets-female.png" id="7_kuohs"]
 
