@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name SQLService
 
 #
 var db : Object						= null

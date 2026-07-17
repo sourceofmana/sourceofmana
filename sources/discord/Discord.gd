@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name DiscordService
 
 # Discord bot instance
 var bot : DiscordBot			= null

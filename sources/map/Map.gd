@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name MapService
 
 #
 signal MapUnloaded
@@ -8,7 +9,7 @@ signal PlayerMoved
 signal PlayerHalted
 
 #
-var pool								= FileSystem.LoadSource("map/MapPool.gd")
+var pool : MapPool						= MapPool.new()
 var currentMapID : int					= DB.UnknownHash
 var currentMapNode : Node2D				= null
 var currentFringe : TileMapLayer		= null

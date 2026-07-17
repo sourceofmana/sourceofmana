@@ -1,4 +1,5 @@
 extends Node
+class_name MapPool
 
 #
 var pool : Dictionary[int, Node2D]		= {}

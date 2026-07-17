@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name CameraService
 
 #
 var camera : Camera2D			= null

@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name DebugService
 
 var correctPos : ColorRect					= null
 var wrongPos : ColorRect					= null

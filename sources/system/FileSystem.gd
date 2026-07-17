@@ -8,9 +8,6 @@ static func FileExists(path : String) -> bool:
 static func ResourceExists(path : String) -> bool:
 	return ResourceLoader.exists(path)
 
-static func FileAlloc(path : String) -> Object:
-	return ResourceLoader.load(path).new()
-
 static func CanInstantiateResource(res : Object) -> bool:
 	return res.has_method("can_instantiate") && res.can_instantiate()
 
@@ -80,24 +77,6 @@ static func LoadDB(path : String) -> Dictionary:
 
 	return result
 
-# Source
-static func LoadGDScript(fullPath : String, alloc : bool = true) -> Object:
-	var srcFile : Object		= null
-
-	var pathExists : bool		= ResourceExists(fullPath)
-	assert(pathExists, "GDScript file not found " + fullPath)
-
-	if pathExists:
-		srcFile = FileAlloc(fullPath) if alloc else ResourceLoader.load(fullPath)
-
-	return srcFile
-
-static func LoadSource(path : String, nodeName : String = "", alloc : bool = true) -> Object:
-	var sourceObject : Object = LoadGDScript(Path.Src + path, alloc)
-	if not nodeName.is_empty():
-		sourceObject.set_name(nodeName)
-	return sourceObject
-
 static func LoadScript(path : String) -> GDScript:
 	return ResourceLoader.load(Path.ScriptSrc + path) as GDScript
 
@@ -154,16 +133,8 @@ static func LoadMaterial(path : String, instantiate : bool = false) -> Object:
 	return LoadResource(fullPath, instantiate)
 
 # Entity
-static func LoadEntitySprite(type : String, instantiate : bool = false) -> PackedScene:
-	var fullPath : String = Path.EntitySprite + type + Path.SceneExt
-	return LoadResource(fullPath, instantiate)
-
 static func LoadEntityComponent(type : String, instantiate : bool = true) -> Object:
 	var fullPath : String = Path.EntityComponent + type + Path.SceneExt
-	return LoadResource(fullPath, instantiate)
-
-static func LoadEntityVariant(instantiate : bool = true) -> Entity:
-	var fullPath : String = Path.EntityPst + "Entity" + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
 # GUI
@@ -188,11 +159,6 @@ static func LoadMusic(path : String) -> Resource:
 # Palette
 static func LoadPalette(path : String) -> Material:
 	var fullPath : String = Path.PalettesPst + path
-	return LoadResource(fullPath, false)
-
-# Generic texture loading
-static func LoadGfx(path : String) -> Resource:
-	var fullPath : String = Path.GfxRsc + path
 	return LoadResource(fullPath, false)
 
 static func GetFiles(path : String) -> PackedStringArray:

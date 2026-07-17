@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name WorldService
 
 # Vars
 var areas : Dictionary[int, WorldMap]				= {}

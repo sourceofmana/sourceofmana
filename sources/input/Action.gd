@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name ActionService
 
 var disableCounter : int		= 0
 var isEnabled : bool			= true

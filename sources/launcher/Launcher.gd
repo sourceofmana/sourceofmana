@@ -43,19 +43,19 @@ func Mode(launchClient : bool = false, launchServer : bool = false) -> bool:
 
 func Client():
 	if OS.is_debug_build():
-		Debug		= FileSystem.LoadSource("debug/Debug.gd")
+		Debug		= DebugService.new()
 
 	# Load then low-prio services on which the order is not important
-	Action			= FileSystem.LoadSource("input/Action.gd", "Action")
-	Camera			= FileSystem.LoadSource("camera/Camera.gd")
-	Map				= FileSystem.LoadSource("map/Map.gd")
+	Action			= ActionService.new()
+	Camera			= CameraService.new()
+	Map				= MapService.new()
 
 	add_child.call_deferred(Action)
 
 func Server():
-	World			= FileSystem.LoadSource("world/World.gd", "World")
-	SQL				= FileSystem.LoadSource("sql/SQL.gd", "SQL")
-	Discord			= FileSystem.LoadSource("discord/Discord.gd", "Discord")
+	World			= WorldService.new()
+	SQL				= SQLService.new()
+	Discord			= DiscordService.new()
 	Email			= EmailService.new()
 
 	add_child.call_deferred(World)
