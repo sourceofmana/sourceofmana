@@ -346,7 +346,7 @@
   <object id="2" name="To Nard's Room" type="Warp" x="1056" y="896">
    <properties>
     <property name="dest_map" value="Ship Nard's Room"/>
-    <property name="dest_pos_x" type="int" value="21"/>
+    <property name="dest_pos_x" type="int" value="23"/>
     <property name="dest_pos_y" type="int" value="28"/>
    </properties>
    <polygon points="0,0 0,32 32,32 32,0"/>

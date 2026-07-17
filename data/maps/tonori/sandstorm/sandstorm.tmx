@@ -907,7 +907,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="5" name="Tulimshar Desert Guard" type="Spawn" x="1145" y="3629" width="510" height="202">
+  <object id="5" name="Tulimshar Desert Guard" type="Spawn" x="1473" y="3579">
    <properties>
     <property name="is_always_visible" type="bool" value="true"/>
     <property name="nick" value="Nathan"/>
