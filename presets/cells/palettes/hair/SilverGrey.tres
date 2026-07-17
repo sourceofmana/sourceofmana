@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FileData" format=3 uid="uid://hairsilvergrey01"]
+
+[ext_resource type="Script" uid="uid://db4wi3qfkte3f" path="res://sources/db/instance/FileData.gd" id="1_script"]
+[ext_resource type="Material" uid="uid://r27wbsnrsa7o" path="res://presets/palettes/haircolors/hair-silver-grey.tres" id="2_material"]
+
+[resource]
+script = ExtResource("1_script")
+_name = "Silver Grey"
+_resource = ExtResource("2_material")

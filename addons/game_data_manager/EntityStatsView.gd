@@ -92,7 +92,7 @@ func GetStatValue(stats : Variant, statStr : String) -> String:
 		match statStr:
 			"race":
 				var race : RaceData = DB.RacesDB.get(value)
-				return race._name if race else str(value)
+				return race.name if race else str(value)
 			"hairstyle":
 				var hairstyle : HairstyleData = DB.HairstylesDB.get(value)
 				return hairstyle._name if hairstyle else str(value)

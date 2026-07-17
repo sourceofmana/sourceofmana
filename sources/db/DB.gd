@@ -56,16 +56,13 @@ static func ParseHairstylesDB():
 
 static func ParsePalettesDB():
 	PalettesDB.resize(Palette.COUNT)
-	var result : Dictionary = FileSystem.LoadDB("palettes.json")
-
-	if not result.is_empty():
-		for categoryKey in result:
-			var category : Dictionary = result[categoryKey]
-			var categoryIdx : int = int(categoryKey)
-			for key in category:
-				var id = SetCellHash(key)
-				assert(id not in PalettesDB[categoryIdx], "Duplicated cell in PalettesDB")
-				PalettesDB[categoryIdx][id] = FileData.Create(key, FileSystem.LoadPalette(category[key]))
+	var categoryFolders : Array[String] = [Path.PaletteHairPst, Path.PaletteSkinPst, Path.PaletteEquipPst]
+	for categoryIdx in Palette.COUNT:
+		for resourcePath in FileSystem.ParseResources(categoryFolders[categoryIdx]):
+			var data : FileData = FileSystem.LoadResource(resourcePath, false)
+			var id : int = SetCellHash(data._name)
+			assert(not PalettesDB[categoryIdx].has(id), "Duplicated cell in PalettesDB")
+			PalettesDB[categoryIdx][id] = data
 
 static func ParseEntitiesDB():
 	for resourcePath in FileSystem.ParseResources(Path.EntityPst):

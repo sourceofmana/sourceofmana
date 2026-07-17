@@ -122,10 +122,15 @@ static func LoadResource(fullPath : String, instantiate : bool = true) -> Object
 
 	return rscInstance
 
-# Palette
-static func LoadPalette(path : String) -> Material:
-	var fullPath : String = Path.PalettesPst + path
-	return LoadResource(fullPath, false)
+# Effect
+static func LoadEffect(path : String, instantiate : bool = true) -> Node:
+	var fullPath : String = Path.EffectsPst + path + Path.SceneExt
+	return LoadResource(fullPath, instantiate)
+
+# Material
+static func LoadMaterial(path : String, instantiate : bool = false) -> Object:
+	var fullPath : String = Path.MaterialPst + path + Path.RscExt
+	return LoadResource(fullPath, instantiate)
 
 static func GetFiles(path : String) -> PackedStringArray:
 	return DirAccess.get_files_at(path)
