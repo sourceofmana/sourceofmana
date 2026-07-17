@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RaceData" format=3 uid="uid://b5raceukar0001"]
+
+[ext_resource type="Script" uid="uid://c5h1v4ldhkd51" path="res://sources/db/instance/RaceData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cnigutvcmmvis" path="res://data/graphics/sprites/players/player-male.png" id="2_bodymale"]
+[ext_resource type="Texture2D" uid="uid://curax0ksctrfe" path="res://data/graphics/sprites/players/player-female.png" id="3_bodyfem"]
+[ext_resource type="Texture2D" uid="uid://dnymj2muxrtx6" path="res://data/graphics/sprites/players/faces/ukar-male.png" id="4_facemale"]
+[ext_resource type="Texture2D" uid="uid://cspdtwb57a3y5" path="res://data/graphics/sprites/players/faces/ukar-female.png" id="5_facefem"]
+[ext_resource type="Material" uid="uid://dlcpp1owedhj3" path="res://presets/palettes/races/ukar-skin-nordic.tres" id="6_nordic"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Ukar"
+bodies = Array[Texture2D]([ExtResource("2_bodymale"), ExtResource("3_bodyfem"), ExtResource("2_bodymale")])
+faces = Array[Texture2D]([ExtResource("4_facemale"), ExtResource("5_facefem"), ExtResource("4_facemale")])
+skins = {"Nordic": ExtResource("6_nordic")}

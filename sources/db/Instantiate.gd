@@ -1,12 +1,14 @@
 extends Node
 class_name Instantiate
 
+const EntityScene : PackedScene = preload("res://presets/entities/Entity.tscn")
+
 # Entity
 static func CreateEntity(actorType : ActorCommons.Type, data : EntityData, nick : String = "", isManaged : bool = false) -> Entity:
 	if not data:
 		return null
 
-	var actor : Entity = FileSystem.LoadEntityVariant()
+	var actor : Entity = EntityScene.instantiate()
 	if actor:
 		actor._init(actorType, data, nick, isManaged)
 	return actor

@@ -41,14 +41,14 @@ func GetValues():
 	var haircolors : PackedInt64Array = DB.PalettesDB[DB.Palette.HAIR].keys()
 	var races : PackedInt64Array = DB.RacesDB.keys()
 	var race : RaceData = DB.GetRace(races[raceValue])
-	var skins : Dictionary[int, FileData] = race._skins if race else {}
-	var skinsKeys : PackedInt64Array = skins.keys()
+	var skins : Dictionary[String, Material] = race.skins if race else {}
+	var skinsKeys : Array = skins.keys()
 
 	return {
 		"hairstyle" = hairstyles[hairstyleValue],
 		"haircolor" = haircolors[haircolorValue],
 		"race" = races[raceValue],
-		"skintone" = skinsKeys[skintoneValue],
+		"skintone" = skinsKeys[skintoneValue].hash(),
 		"gender" = genderValue
 	}
 
@@ -100,7 +100,7 @@ func RefreshRace():
 	var races : PackedInt64Array = DB.RacesDB.keys()
 	if raceValue >= 0 and raceValue < raceCount:
 		var data : RaceData = DB.GetRace(races[raceValue])
-		raceLabel.set_text(data._name)
+		raceLabel.set_text(data.name)
 		RefreshSkintone()
 		bodyUpdate.emit()
 
@@ -117,13 +117,13 @@ func RefreshSkintone():
 	var races : PackedInt64Array = DB.RacesDB.keys()
 	if raceValue >= 0 and raceValue < raceCount:
 		var data : RaceData = DB.GetRace(races[raceValue])
-		var skins : Dictionary[int, FileData] = data._skins
-		var skinsKeys : PackedInt64Array = skins.keys()
-		skintoneCount = data._skins.size()
+		var skins : Dictionary[String, Material] = data.skins
+		var skinsKeys : PackedStringArray = skins.keys()
+		skintoneCount = data.skins.size()
 		if skintoneValue < 0 or skintoneValue >= skintoneCount:
 			skintoneValue = 0
 		if skintoneValue >= 0 and skintoneValue < skintoneCount:
-			skintoneLabel.set_text(skins[skinsKeys[skintoneValue]]._name)
+			skintoneLabel.set_text(skinsKeys[skintoneValue])
 			bodyUpdate.emit()
 
 func _on_skintone_prev_button():

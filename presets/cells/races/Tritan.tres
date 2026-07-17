@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RaceData" format=3 uid="uid://b4racetritan01"]
+
+[ext_resource type="Script" uid="uid://c5h1v4ldhkd51" path="res://sources/db/instance/RaceData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cnigutvcmmvis" path="res://data/graphics/sprites/players/player-male.png" id="2_bodymale"]
+[ext_resource type="Texture2D" uid="uid://curax0ksctrfe" path="res://data/graphics/sprites/players/player-female.png" id="3_bodyfem"]
+[ext_resource type="Texture2D" uid="uid://bppucckex1ll4" path="res://data/graphics/sprites/players/faces/tritan-male.png" id="4_facemale"]
+[ext_resource type="Texture2D" uid="uid://cavv2qxwra6r0" path="res://data/graphics/sprites/players/faces/tritan-female.png" id="5_facefem"]
+[ext_resource type="Material" uid="uid://bvvc3u5kaiyyy" path="res://presets/palettes/races/tritan-skin-ocean.tres" id="6_ocean"]
+[ext_resource type="Material" uid="uid://tn63vqfhhxu2" path="res://presets/palettes/races/tritan-skin-oranye.tres" id="7_oranye"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Tritan"
+bodies = Array[Texture2D]([ExtResource("2_bodymale"), ExtResource("3_bodyfem"), ExtResource("2_bodymale")])
+faces = Array[Texture2D]([ExtResource("4_facemale"), ExtResource("5_facefem"), ExtResource("4_facemale")])
+skins = {"Ocean": ExtResource("6_ocean"), "Oranye": ExtResource("7_oranye")}

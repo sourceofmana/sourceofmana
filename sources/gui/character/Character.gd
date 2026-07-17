@@ -256,10 +256,10 @@ func UpdateCharacterCreatorBody():
 	if isCharacterCreatorEnabled and charactersNode[ActorCommons.MaxCharacterCount]:
 		var races : PackedInt64Array = DB.RacesDB.keys()
 		var race : RaceData = DB.GetRace(races[traitsPanel.raceValue])
-		var skins : Dictionary[int, FileData] = race._skins if race else {}
-		var skinsKeys : PackedInt64Array = skins.keys()
+		var skins : Dictionary[String, Material] = race.skins if race else {}
+		var skinsKeys : PackedStringArray = skins.keys()
 		charactersNode[ActorCommons.MaxCharacterCount].stat.race = races[traitsPanel.raceValue]
-		charactersNode[ActorCommons.MaxCharacterCount].stat.skintone = skinsKeys[traitsPanel.skintoneValue]
+		charactersNode[ActorCommons.MaxCharacterCount].stat.skintone = skinsKeys[traitsPanel.skintoneValue].hash()
 		charactersNode[ActorCommons.MaxCharacterCount].stat.gender = traitsPanel.genderValue
 		if charactersNode[ActorCommons.MaxCharacterCount].visual:
 			charactersNode[ActorCommons.MaxCharacterCount].visual.SetBody()

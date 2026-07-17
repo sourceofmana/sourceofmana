@@ -42,13 +42,11 @@ static func ParseMusicDB():
 			MusicDB[data._id] = data
 
 static func ParseRacesDB():
-	var result = FileSystem.LoadDB("races.json")
-
-	if not result.is_empty():
-		for key in result:
-			var id = SetCellHash(key)
-			assert(id not in RacesDB, "Duplicated cell in RacesDB")
-			RacesDB[id] = RaceData.Create(key, result[key])
+	for resourcePath in FileSystem.ParseResources(Path.RacesPst):
+		var data : RaceData = FileSystem.LoadResource(resourcePath, false)
+		var id : int = SetCellHash(data.name)
+		assert(not RacesDB.has(id), "Duplicated cell in RacesDB")
+		RacesDB[id] = data
 
 static func ParseHairstylesDB():
 	for resourcePath in FileSystem.ParseResources(Path.HairstylePst):

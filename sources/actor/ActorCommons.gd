@@ -83,7 +83,7 @@ static func CheckTraits(traits : Dictionary) -> bool:
 	if "race" not in traits:
 		return false
 	var race : RaceData = DB.GetRace(traits["race"])
-	if not race or "skintone" not in traits or traits["skintone"] not in race._skins:
+	if not race or "skintone" not in traits or not race.HasSkin(traits["skintone"]):
 		return false
 	if "gender" not in traits:
 		return false

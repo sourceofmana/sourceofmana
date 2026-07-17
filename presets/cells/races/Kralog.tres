@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RaceData" format=3 uid="uid://b2racekralog01"]
+
+[ext_resource type="Script" uid="uid://c5h1v4ldhkd51" path="res://sources/db/instance/RaceData.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cnigutvcmmvis" path="res://data/graphics/sprites/players/player-male.png" id="2_bodymale"]
+[ext_resource type="Texture2D" uid="uid://curax0ksctrfe" path="res://data/graphics/sprites/players/player-female.png" id="3_bodyfem"]
+[ext_resource type="Texture2D" uid="uid://dnfa4p72gw16d" path="res://data/graphics/sprites/players/faces/kralog-male.png" id="4_facemale"]
+[ext_resource type="Texture2D" uid="uid://cndwyhkyxk3lo" path="res://data/graphics/sprites/players/faces/kralog-female.png" id="5_facefem"]
+[ext_resource type="Material" uid="uid://cb38x5lpm842e" path="res://presets/palettes/races/kralog-skin-frost.tres" id="6_frost"]
+[ext_resource type="Material" uid="uid://hjinmb8548wm" path="res://presets/palettes/races/kralog-skin-fire.tres" id="7_fire"]
+
+[resource]
+script = ExtResource("1_script")
+name = "Kralog"
+bodies = Array[Texture2D]([ExtResource("2_bodymale"), ExtResource("3_bodyfem"), ExtResource("2_bodymale")])
+faces = Array[Texture2D]([ExtResource("4_facemale"), ExtResource("5_facefem"), ExtResource("4_facemale")])
+skins = {"Frost": ExtResource("6_frost"), "Fire": ExtResource("7_fire")}

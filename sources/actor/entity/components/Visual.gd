@@ -83,7 +83,7 @@ func LoadData(data : EntityData):
 	ApplyAnimationOverrides()
 	ResetAnimationValue()
 
-func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array):
+func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array[Texture2D]):
 	var sprite : Sprite2D = preset.get_node_or_null(ActorCommons.GetSlotName(slot))
 	if not sprite:
 		return
@@ -104,12 +104,11 @@ func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array
 				hasOverrideMaterial = true
 
 		if not hasOverrideTexture:
-			slotTexture = FileSystem.LoadGfx(textures[entity.stat.gender])
+			slotTexture = textures[entity.stat.gender]
 		if not hasOverrideMaterial:
-			if entity.stat.skintone in raceData._skins:
-				var skinData : FileData = raceData._skins[entity.stat.skintone]
-				if skinData and skinData._resource:
-					slotMaterial = skinData._resource as Material
+			var skinMat : Material = raceData.GetSkinMaterial(entity.stat.skintone)
+			if skinMat:
+				slotMaterial = skinMat
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
@@ -121,14 +120,14 @@ func SetBody():
 	else:
 		var raceData : RaceData = DB.GetRace(entity.stat.race)
 		if raceData:
-			SetSkinSlot(ActorCommons.Slot.BODY, raceData, raceData._bodies)
+			SetSkinSlot(ActorCommons.Slot.BODY, raceData, raceData.bodies)
 
 func SetFace():
 	if entity.stat.race == DB.UnknownHash:
 		return
 	var raceData : RaceData = DB.GetRace(entity.stat.race)
 	if raceData:
-		SetSkinSlot(ActorCommons.Slot.FACE, raceData, raceData._faces)
+		SetSkinSlot(ActorCommons.Slot.FACE, raceData, raceData.faces)
 
 func SetHair(applyOverrides : bool = true):
 	var slotName : String = ActorCommons.GetSlotName(ActorCommons.Slot.HAIR)
