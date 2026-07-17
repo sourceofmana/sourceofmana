@@ -50,12 +50,16 @@ func TickWarmUp(tick : int):
 
 #
 func RemoveFromPlayerList(player : PlayerAgent):
+	var treeExitingCallback : Callable = RemoveFromPlayerList.bind(player)
+	if player.tree_exiting.is_connected(treeExitingCallback):
+		player.tree_exiting.disconnect(RemoveFromPlayerList.bind(player))
+	if player.agent_killed.is_connected(RemoveFromPlayerList):
+		player.agent_killed.disconnect(RemoveFromPlayerList)
 	playerList.erase(player)
 
 func ClearPlayerList():
 	for player in playerList:
-		Callback.ClearOneShot(player.tree_exiting)
-		Callback.ClearOneShot(player.agent_killed)
+		RemoveFromPlayerList(player)
 	playerList.clear()
 
 func StartFight():
@@ -64,9 +68,9 @@ func StartFight():
 	if ownInstance:
 		for player : PlayerAgent in ownInstance.players:
 			if ActorCommons.IsAlive(player):
+				player.tree_exiting.connect(RemoveFromPlayerList.bind(player), ConnectFlags.CONNECT_ONE_SHOT)
+				player.agent_killed.connect(RemoveFromPlayerList, ConnectFlags.CONNECT_ONE_SHOT)
 				playerList.append(player)
-				Callback.OneShotCallback(player.tree_exiting, RemoveFromPlayerList.bind(player))
-				Callback.OneShotCallback(player.agent_killed, RemoveFromPlayerList.bind(player))
 	originalPlayerCount = playerList.size()
 	waveTimer = AddTimer(npc, waveDelay, TimeoutWave)
 	NextWave()
