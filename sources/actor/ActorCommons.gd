@@ -364,7 +364,7 @@ const InventorySize : int					= 100
 const RunningStaminaCostPerSecond : int		= 5
 
 # Explore
-static var SailingDestination : Destination	= Destination.new("Ocean".hash(), Vector2(71 * 32, 55 * 32))
+static var SailingDestination : Destination	= Destination.new("Ocean".hash(), Vector2(71 * 32 + 16, 55 * 32 + 16))
 
 # Navigation
 const MaxEntityRadiusSize : int				= 256

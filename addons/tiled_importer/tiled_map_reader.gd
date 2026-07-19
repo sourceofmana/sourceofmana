@@ -775,11 +775,11 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 								if warpData.destinationID not in adjacent_map_ids:
 									adjacent_map_ids.append(warpData.destinationID)
 							if "dest_pos_x" in object.properties and "dest_pos_y" in object.properties:
-								warpData.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize
+								warpData.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize + Vector2.ONE * (dest_cellsize / 2.0)
 							if "auto_warp" in object.properties:
 								warpData.autoWarp = object.properties.auto_warp
 							if isPort and "sail_pos_x" in object.properties and "sail_pos_y" in object.properties:
-								warpData.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize
+								warpData.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize + Vector2.ONE * (dest_cellsize / 2.0)
 							if "warp_script" in object.properties:
 								warpData.ownScript = object.properties.warp_script
 							if "is_targetable" in object.properties:
