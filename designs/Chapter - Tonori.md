@@ -29,10 +29,10 @@ Omar & Kadiya (Sick girl quest)
 Vincent (Bestiary explanation)
 Ian (Guide)
 Soul Mehnir (Respawn point)
-Sandra (Saw a Mr pickles)
+Sandra (Saw a Mr Prickel)
 
 ### Enemies
-Small Cactus, Lvl.1 (static, dummy)
+Peyote, Lvl.1 (static, dummy)
 Maggot, Lvl.2 (neutral)
 Ratto, Lvl.3 (high walkspeed, high attack speed, low hp, low attack)
 

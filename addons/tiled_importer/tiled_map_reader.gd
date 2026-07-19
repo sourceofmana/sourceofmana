@@ -327,10 +327,10 @@ func _create_warp_spawn(warp : Dictionary) -> SpawnObject:
 	spawn.respawn_delay = 0.0
 	if not warp.autoWarp:
 		spawn.player_script = FileSystem.LoadScript("generic/Warp.gd")
-	if warp.isPort:
-		spawn.own_script = FileSystem.LoadScript("generic/PortGlobal.gd")
-	elif not warp.ownScript.is_empty():
+	if not warp.ownScript.is_empty():
 		spawn.own_script = FileSystem.LoadScript(warp.ownScript)
+	elif warp.isPort:
+		spawn.own_script = FileSystem.LoadScript("generic/PortGlobal.gd")
 	else:
 		spawn.own_script = FileSystem.LoadScript("generic/WarpGlobal.gd")
 	spawn.nick = warp.name
@@ -339,6 +339,7 @@ func _create_warp_spawn(warp : Dictionary) -> SpawnObject:
 	spawn.destination_pos = warp.destinationPos
 	spawn.auto_warp = warp.autoWarp
 	spawn.sailing_pos = warp.sailingPos
+	spawn.is_targetable = warp.isTargetable
 	spawn.is_global = spawn.spawn_position < Vector2i.LEFT
 	spawn.is_persistant = true
 	return spawn
@@ -763,6 +764,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							"isPort": isPort,
 							"sailingPos": Vector2.ZERO,
 							"ownScript": "",
+							"isTargetable": false,
 						}
 						if "properties" in object:
 							var dest_cellsize = cell_size
@@ -780,6 +782,8 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 								warpData.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize
 							if "warp_script" in object.properties:
 								warpData.ownScript = object.properties.warp_script
+							if "is_targetable" in object.properties:
+								warpData.isTargetable = object.properties.is_targetable
 						if isPort:
 							port_pool.append(warpData)
 						else:

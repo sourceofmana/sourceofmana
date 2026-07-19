@@ -19,6 +19,7 @@ class_name SpawnObject
 @export var behaviour : int				= -1
 @export var is_global : bool			= false
 @export var is_always_visible : bool	= false
+@export var is_targetable : bool		= false
 @export_category("Area")
 @export var trigger_radius : float		= 0.0
 @export var trigger_polygon : PackedVector2Array	= []

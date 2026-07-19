@@ -57,6 +57,7 @@ static func GetExploreFromData(charData : Dictionary) -> Destination:
 func SetCharacterInfo(charData : Dictionary, charID : int):
 	# Stats
 	stat.SetStats(charData)
+	stat.ResetAttributesIfOverBudget()
 	# Inventory
 	var inventoryData : Array[Dictionary] = Launcher.SQL.GetStorage(charID, 0)
 	inventory.ImportInventory(inventoryData)

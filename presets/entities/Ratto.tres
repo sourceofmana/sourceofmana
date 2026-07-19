@@ -15,7 +15,12 @@ _name = "Ratto"
 _spritePreset = ExtResource("spr_Ratto")
 _radius = 10
 _stats = {
-"level": 1,
+"attack": 12,
+"castAttackDelay": 0.35,
+"cooldownAttackDelay": 0.3,
+"defense": 2,
+"level": 3,
+"maxHealth": 39,
 "walkSpeed": 150.0
 }
 _equipment = Array[ExtResource("1_jchlc")]([null, null, null, null, null, null, null, null])

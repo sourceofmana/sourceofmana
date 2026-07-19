@@ -15,8 +15,12 @@ _name = "Snake"
 _spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
-"castAttackDelay": 0.5,
-"level": 1,
+"attack": 49,
+"castAttackDelay": 0.35,
+"cooldownAttackDelay": 0.35,
+"defense": 8,
+"level": 15,
+"maxHealth": 170,
 "walkSpeed": 170.0
 }
 _equipment = Array[ExtResource("1_q84qv")]([null, null, null, null, null, null, null, null])

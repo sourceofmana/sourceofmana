@@ -16,7 +16,12 @@ _name = "Fire Goblin"
 _spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
-"level": 1,
+"attack": 15,
+"defense": 20,
+"level": 3,
+"mattack": 30,
+"maxHealth": 75,
+"mdefense": 20,
 "walkSpeed": 80.0
 }
 _equipment = Array[ExtResource("1_82due")]([null, null, null, null, null, null, null, null])

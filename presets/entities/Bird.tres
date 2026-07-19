@@ -16,8 +16,12 @@ _name = "Bird"
 _spritePreset = ExtResource("spr_Bird")
 _radius = 20
 _stats = {
-"castAttackDelay": 0.1,
-"level": 1,
+"attack": 78,
+"castAttackDelay": 0.25,
+"cooldownAttackDelay": 0.3,
+"defense": 12,
+"level": 30,
+"maxHealth": 200,
 "walkSpeed": 200.0
 }
 _equipment = Array[ExtResource("1_w8ot5")]([null, null, null, null, null, null, null, null])

@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://iuxvqgqph18p" path="res://data/graphics/sprites/monsters/maggot-giant.png" id="3_tex"]
 [ext_resource type="AudioStream" uid="uid://hxejvtfj74bd" path="res://data/sounds/entities/maggot/attack.ogg" id="5_p8r1a"]
 [ext_resource type="AudioStream" uid="uid://dnjxafax7stqw" path="res://data/sounds/entities/maggot/death.ogg" id="6_p554w"]
+[ext_resource type="Resource" uid="uid://vd0l1vl1beon" path="res://presets/cells/items/common/MaggotSlime.tres" id="7_slime"]
 [ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
@@ -15,11 +16,19 @@ _name = "Giant Maggot"
 _spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 25
 _stats = {
-"level": 1,
-"walkSpeed": 80.0
+"attack": 54,
+"castAttackDelay": 1.1,
+"cooldownAttackDelay": 1.2,
+"defense": 12,
+"level": 15,
+"maxHealth": 370,
+"walkSpeed": 50.0
 }
 _equipment = Array[ExtResource("1_5l8kn")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
+_drops = Dictionary[ExtResource("1_5l8kn"), float]({
+ExtResource("7_slime"): 0.6
+})
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("5_p8r1a"),
 4: ExtResource("6_p554w")

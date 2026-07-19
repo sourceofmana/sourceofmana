@@ -15,8 +15,11 @@ _name = "Lizandra"
 _spritePreset = ExtResource("spr_Lizzy")
 _radius = 16
 _stats = {
-"level": 1,
-"walkSpeed": 80.0
+"attack": 75,
+"defense": 40,
+"level": 25,
+"maxHealth": 270,
+"walkSpeed": 70.0
 }
 _equipment = Array[ExtResource("1_40ubl")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")

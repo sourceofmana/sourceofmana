@@ -111,10 +111,6 @@ func BuildUI():
 	refreshBtn.pressed.connect(_on_refresh_pressed)
 	topbar.add_child(refreshBtn)
 
-	var titleLbl := Label.new()
-	titleLbl.text = "  Combat Simulator  —  max RNG, no skills, no stamina cost"
-	topbar.add_child(titleLbl)
-
 	var split := HSplitContainer.new()
 	split.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vbox.add_child(split)
@@ -190,13 +186,14 @@ func BuildPlayerPanel(parent : Node):
 		row.add_child(lbl)
 		var opt := OptionButton.new()
 		opt.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		opt.add_item("(none)", -1)
+		opt.add_item("(none)")
 		for item : ItemCell in itemsBySlot.get(slotIdx, []):
 			var icon : Texture2D = iconPreviewCache.get(item.resource_path, item.icon)
 			if icon:
-				opt.add_icon_item(icon, item.name, item.id)
+				opt.add_icon_item(icon, item.name)
 			else:
-				opt.add_item(item.name, item.id)
+				opt.add_item(item.name)
+			opt.set_item_metadata(opt.item_count - 1, item.id)
 		opt.item_selected.connect(_on_equip_changed)
 		equipDropdowns[slotIdx] = opt
 		row.add_child(opt)
@@ -251,6 +248,12 @@ func UpdateColumnTitles():
 		matrixTree.set_column_title(i, title)
 
 #
+func GetSelectedItem(opt : OptionButton) -> ItemCell:
+	var itemHash : Variant = opt.get_item_metadata(opt.selected)
+	if itemHash != null and itemsByHash.has(itemHash):
+		return itemsByHash[itemHash]
+	return null
+
 func BuildStatForPlayer() -> ActorStats:
 	var stat := ActorStats.new()
 	stat.level = int(levelSpin.value)
@@ -261,14 +264,11 @@ func BuildStatForPlayer() -> ActorStats:
 	stat.concentration = int((attributeSpins["concentration"]).value)
 
 	for slotIdx : int in equipDropdowns:
-		var opt : OptionButton = equipDropdowns[slotIdx]
-		var selectedId : int = opt.get_item_id(opt.selected)
-		if selectedId != -1 and itemsByHash.has(selectedId):
-			var item : ItemCell = itemsByHash[selectedId]
-			if item.modifiers:
-				for modifier : StatModifier in item.modifiers._modifiers:
-					if modifier and modifier._persistent:
-						stat.modifiers.Add(modifier)
+		var item : ItemCell = GetSelectedItem(equipDropdowns[slotIdx])
+		if item and item.modifiers:
+			for modifier : StatModifier in item.modifiers._modifiers:
+				if modifier and modifier._persistent:
+					stat.modifiers.Add(modifier)
 
 	stat.RefreshEntityStats()
 	return stat
@@ -343,15 +343,12 @@ func RefreshModifiers():
 	var aggregated : Dictionary = {}
 
 	for slotIdx : int in equipDropdowns:
-		var opt : OptionButton = equipDropdowns[slotIdx]
-		var selectedId : int = opt.get_item_id(opt.selected)
-		if selectedId != -1 and itemsByHash.has(selectedId):
-			var item : ItemCell = itemsByHash[selectedId]
-			if item.modifiers:
-				for modifier : StatModifier in item.modifiers._modifiers:
-					if modifier and modifier._persistent:
-						var eff : CellCommons.Modifier = modifier._effect
-						aggregated[eff] = float(aggregated.get(eff, 0.0)) + float(modifier._value)
+		var item : ItemCell = GetSelectedItem(equipDropdowns[slotIdx])
+		if item and item.modifiers:
+			for modifier : StatModifier in item.modifiers._modifiers:
+				if modifier and modifier._persistent:
+					var eff : CellCommons.Modifier = modifier._effect
+					aggregated[eff] = float(aggregated.get(eff, 0.0)) + float(modifier._value)
 
 	if aggregated.is_empty():
 		var lbl := Label.new()

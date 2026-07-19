@@ -15,7 +15,10 @@ _name = "Scorpion"
 _spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 18
 _stats = {
-"level": 1,
+"attack": 30,
+"defense": 0,
+"level": 5,
+"maxHealth": 200,
 "walkSpeed": 60.0
 }
 _equipment = Array[ExtResource("1_exyli")]([null, null, null, null, null, null, null, null])

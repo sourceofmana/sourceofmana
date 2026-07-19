@@ -15,9 +15,10 @@ _name = "Croc"
 _spritePreset = ExtResource("spr_Croc")
 _radius = 10
 _stats = {
-"attack": 10,
-"defense": 10,
-"level": 1,
+"attack": 45,
+"defense": 32,
+"level": 13,
+"maxHealth": 100,
 "walkSpeed": 80.0
 }
 _equipment = Array[ExtResource("1_s75xo")]([null, null, null, null, null, null, null, null])

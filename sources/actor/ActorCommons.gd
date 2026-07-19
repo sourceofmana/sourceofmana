@@ -90,7 +90,7 @@ static func CheckTraits(traits : Dictionary) -> bool:
 	return true
 
 static func CheckAttributes(attributes : Dictionary) -> bool:
-	return (attributes.get("strength", 0) + attributes.get("vitality", 0) + attributes.get("agility", 0) + attributes.get("endurance") + attributes.get("concentration")) <= Formula.GetMaxAttributePoints(1)
+	return (attributes.get("strength", 0) + attributes.get("vitality", 0) + attributes.get("agility", 0) + attributes.get("endurance", 0) + attributes.get("concentration", 0)) <= Formula.GetMaxAttributePoints(1)
 
 enum Target
 {
@@ -417,11 +417,11 @@ static var DefaultTraits : Dictionary = {
 	"spirit": "Piou".hash()
 }
 static var DefaultAttributes : Dictionary = {
-	"strength": 10,
-	"vitality": 3,
-	"agility": 0,
-	"endurance": 0,
-	"concentration": 0,
+	"strength": 4,
+	"vitality": 4,
+	"agility": 1,
+	"endurance": 1,
+	"concentration": 1,
 }
 static var DefaultStats : Dictionary = {
 	"level": 1,

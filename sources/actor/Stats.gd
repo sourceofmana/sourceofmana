@@ -92,8 +92,6 @@ func SetStats(stats : Dictionary):
 		if stats[statName] != null and statName in self:
 			self[statName] = stats[statName]
 
-	if actor.type == ActorCommons.Type.MONSTER:
-		FillRandomAttributes()
 	RefreshAttributes()
 
 #
@@ -121,22 +119,22 @@ func Init(actorNode : Actor, data : EntityData):
 
 	SetStats(stats)
 	SetEntityStats(stats)
+	if "health" not in stats:
+		health = current.maxHealth
+	if "mana" not in stats:
+		mana = current.maxMana
+	if "stamina" not in stats:
+		stamina = current.maxStamina
 	RefreshVitalStats()
 
-func FillRandomAttributes():
-	var maxPoints : int			= Formula.GetMaxAttributePoints(level)
-	var assignedPoints : int	= Formula.GetAssignedAttributePoints(self)
-	if maxPoints > assignedPoints:
-		const attributeNames = ["strength", "vitality", "agility", "endurance", "concentration"]
-		var attributes : Dictionary = {}
-		var pointToDispatch : int = maxPoints - assignedPoints
-		for att in attributeNames:
-			var points : int = randi_range(0, pointToDispatch)
-			pointToDispatch -= points
-			attributes[att] = self[att] + points
-			if pointToDispatch == 0:
-				break
-		SetStats(attributes)
+func ResetAttributesIfOverBudget():
+	if Formula.GetAssignedAttributePoints(self) > Formula.GetMaxAttributePoints(level):
+		strength = 0
+		vitality = 0
+		agility = 0
+		endurance = 0
+		concentration = 0
+		RefreshAttributes()
 
 func Morph(data : EntityData):
 	currentShape = data._id
