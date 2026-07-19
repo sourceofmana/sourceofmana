@@ -8,8 +8,10 @@
 script = ExtResource("2_wjckm")
 _id = 2089709631
 _name = "Warp"
+_radius = 16
 _stats = {
 "level": 1
 }
 _equipment = Array[ExtResource("1_xrw6j")]([null, null, null, null, null, null, null, null])
+_displayName = true
 _behaviour = 9

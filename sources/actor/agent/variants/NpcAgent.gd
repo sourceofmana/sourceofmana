@@ -97,9 +97,9 @@ func _ready():
 		ownScript.PostInit()
 
 	if data:
-		isVisible = data._spritePreset != null
+		isVisible = data._spritePreset != null or (spawnInfo != null and spawnInfo.is_targetable)
 
-	if spawnInfo and (spawnInfo.trigger_radius > 0.0 or not spawnInfo.trigger_polygon.is_empty()):
+	if spawnInfo and not spawnInfo.is_targetable and (spawnInfo.trigger_radius > 0.0 or not spawnInfo.trigger_polygon.is_empty()):
 		AddTrigger()
 
 	super._ready()

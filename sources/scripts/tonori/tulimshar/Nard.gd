@@ -16,7 +16,7 @@ func OnSailOffer():
 	Mes("We didn't have any plan, let's ride along!")
 	Mes("The ocean is the fastest road there is, once you know how to read her.")
 	Mes("I can get you just about anywhere the sea touches. Just say the word.")
-	Mes("Or if you're feeling bold, I'll let you take the helm while I catch some rest below deck.")
+	Mes("When you're ready to go, head to La Johanne and take the helm. Me and the crew will handle the sails.")
 	Mes("Been a while since I had a proper nap on calm waters.")
 	Choice("Where can you take me?", OnDestinations)
 	Choice("Let me think about it.", MainChoices)

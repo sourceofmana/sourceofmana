@@ -1,4 +1,5 @@
 extends NpcScript
+class_name PortGlobal
 
 #
 func OnAreaEnter(player : PlayerAgent):

@@ -1025,17 +1025,17 @@
    </properties>
    <polygon points="19.8333,10 51.8333,10 51.8333,42 19.8333,42"/>
   </object>
-  <object id="28" name="Sail" type="Port" x="2295" y="1891">
+  <object id="28" name="Helm" type="Warp" x="2261" y="1937">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="0"/>
-    <property name="dest_pos_y" type="int" value="0"/>
-    <property name="sail_pos_x" type="int" value="86"/>
-    <property name="sail_pos_y" type="int" value="208"/>
+    <property name="dest_pos_x" type="int" value="86"/>
+    <property name="dest_pos_y" type="int" value="208"/>
+    <property name="is_targetable" type="bool" value="true"/>
+    <property name="warp_script" value="generic/OverworldWarp.gd"/>
    </properties>
-   <polygon points="41.2025,60.7943 41.2025,29.1813 72.8964,29.1813 72.8964,60.7943"/>
+   <polygon points="0,0 48,0 48,32 0,32"/>
   </object>
   <object id="29" name="To Docker" type="Warp" x="1196" y="1960">
    <properties>
