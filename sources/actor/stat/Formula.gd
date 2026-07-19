@@ -137,8 +137,11 @@ static func GetWalkRatio(stat : ActorStats) -> float:
 	return ratio
 
 # Experience management
+static func GetInternalXpBonus(baseExp : int, level : int) -> float:
+	return baseExp * pow(level, 1.7)
+
 static func GetXpBonus(stat : ActorStats) -> float:
-	return stat.baseExp * pow(stat.level, 1.7)
+	return GetInternalXpBonus(stat.baseExp, stat.level)
 
 static func ApplyXp(agent : BaseAgent):
 	var bonus : float = Formula.GetXpBonus(agent.stat)

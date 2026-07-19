@@ -13,7 +13,6 @@ _id = 2089570059
 _name = "Sema"
 _stats = {
 "gender": "Female",
-"level": 1,
 "race": "Human",
 "skintone": "Medium"
 }

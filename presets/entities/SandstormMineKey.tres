@@ -13,8 +13,6 @@ _id = 3478975634
 _name = "SandstormMineKey"
 _spritePreset = ExtResource("spr_SandstormMineKey")
 _radius = 10
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_rxrwl")]([null, null, null, null, null, null, null, null])
 _questID = 4

@@ -13,7 +13,6 @@ _id = 2377595219
 _name = "WalkingNPC"
 _spritePreset = ExtResource("spr_Player")
 _stats = {
-"level": 1,
 "walkSpeed": 160.0
 }
 _equipment = Array[ExtResource("1_inbjp")]([null, null, null, null, null, null, null, null])

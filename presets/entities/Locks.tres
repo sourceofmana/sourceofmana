@@ -13,7 +13,5 @@ _id = 228382689
 _name = "Locks"
 _spritePreset = ExtResource("spr_CaveLocks")
 _radius = 26
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_oqfvs")]([null, null, null, null, null, null, null, null])

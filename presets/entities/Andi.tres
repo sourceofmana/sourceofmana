@@ -13,7 +13,6 @@ _id = 2088932705
 _name = "Andi"
 _stats = {
 "gender": "Male",
-"level": 1,
 "race": "Human",
 "skintone": "Medium"
 }

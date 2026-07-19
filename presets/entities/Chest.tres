@@ -15,9 +15,7 @@ _id = 217460284
 _name = "Chest"
 _spritePreset = ExtResource("spr_Chest")
 _radius = 26
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_n3wkw")]([null, null, null, null, null, null, null, null])
 _stateSFX = Dictionary[int, AudioStream]({
 5: ExtResource("5_chest_open"),

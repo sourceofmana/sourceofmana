@@ -13,7 +13,6 @@ _id = 219944129
 _name = "Ekinu"
 _stats = {
 "gender": "Male",
-"level": 1,
 "race": "Human",
 "skintone": "Tanned"
 }

@@ -13,7 +13,6 @@ _id = 3325600555
 _name = "Elanore"
 _stats = {
 "gender": "Female",
-"level": 1,
 "race": "Human",
 "skintone": "Tanned"
 }

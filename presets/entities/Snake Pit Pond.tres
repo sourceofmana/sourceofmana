@@ -11,9 +11,7 @@ _parent = ExtResource("2_5dpsi")
 _id = 1190851605
 _name = "Snake Pit Pond"
 _radius = 20
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_vqcj6")]([null, null, null, null, null, null, null, null])
 _behaviour = 9
 _questID = 3

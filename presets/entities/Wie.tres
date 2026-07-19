@@ -13,7 +13,6 @@ _id = 193475306
 _name = "Wie"
 _stats = {
 "gender": "Female",
-"level": 1,
 "race": "Raijin",
 "skintone": "Light"
 }

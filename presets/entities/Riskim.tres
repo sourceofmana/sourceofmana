@@ -13,7 +13,6 @@ _id = 3469933044
 _name = "Riskim"
 _stats = {
 "gender": "Male",
-"level": 1,
 "race": "Raijin",
 "skintone": "Light"
 }

@@ -11,9 +11,7 @@ script = ExtResource("3_dsnwk")
 _parent = ExtResource("2_vtp66")
 _id = 817801695
 _name = "DeepLevelCrack"
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_7sdca")]([null, null, null, null, null, null, null, null])
 _behaviour = 9
 
@@ -24,8 +22,6 @@ _id = 434267405
 _name = "SandstormMineCrack"
 _spritePreset = ExtResource("spr_SandstormMineCrack")
 _radius = 10
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_7sdca")]([null, null, null, null, null, null, null, null])
 _behaviour = 8

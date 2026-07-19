@@ -13,7 +13,5 @@ _id = 737772331
 _name = "Soul Menhir"
 _spritePreset = ExtResource("spr_SoulMenhir")
 _radius = 32
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_tcmrs")]([null, null, null, null, null, null, null, null])

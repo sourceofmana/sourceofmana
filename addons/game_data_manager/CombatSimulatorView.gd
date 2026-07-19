@@ -4,10 +4,16 @@ extends Control
 #
 const ATTRIBUTES : PackedStringArray = ["strength", "vitality", "agility", "endurance", "concentration"]
 const ATTR_LABELS : PackedStringArray = ["STR", "VIT", "AGI", "END", "CON"]
-const MATRIX_COLS : int = 12
-const COL_TITLES : PackedStringArray = ["Entity", "Lvl", "Atk", "Def", "MAtk", "MDef", "P→E Phy", "P→E Mag", "E→P Phy", "E→P Mag", "Ratio", "MRatio"]
-const COL_WIDTHS : PackedInt32Array = [130, 60, 50, 50, 55, 55, 75, 80, 75, 80, 65, 70]
-const COL_SORT_KEYS : PackedStringArray = ["name", "level", "atk", "def", "matk", "mdef", "p_phys", "p_mag", "e_phys", "e_mag", "ratio", "mratio"]
+const MATRIX_COLS : int = 18
+const COL_TITLES : PackedStringArray = ["Entity", "Lvl", "Atk", "Def", "MAtk", "MDef", "P→E Phy", "P→E Mag", "E→P Phy", "E→P Mag", "Ratio", "MRatio", "P Hits", "P TTK", "E Hits", "E TTK", "XP", "Kills/Lvl"]
+const COL_WIDTHS : PackedInt32Array = [130, 60, 50, 50, 55, 55, 75, 80, 75, 80, 65, 70, 55, 60, 55, 60, 60, 65]
+const COL_SORT_KEYS : PackedStringArray = ["name", "level", "atk", "def", "matk", "mdef", "p_phys", "p_mag", "e_phys", "e_mag", "ratio", "mratio", "p_hits", "p_ttk", "e_hits", "e_ttk", "xp", "kills"]
+
+#
+const PlayerHitsBandMin : int = 3
+const PlayerHitsBandMax : int = 8
+const EnemyHitsBandMin : int = 8
+const EnemyHitsBandMax : int = 40
 
 #
 var itemsBySlot : Dictionary[int, Array] = {}
@@ -388,12 +394,23 @@ func RefreshMatrix():
 
 	var rows : Array[Dictionary] = []
 	for entityData : EntityData in entities:
+		if entityData._stats.get("level", 0) <= 0:
+			continue
+
 		var entityLevel : int = entityLevels.get(entityData._id, int(entityData._stats.get("level", 1)))
 		var es : ActorStats = BuildStatForEntity(entityData, entityLevel)
 		var pPhys : int = max(1, ps.current.attack - es.current.defense)
 		var pMag : int = max(1, ps.current.mattack - es.current.mdefense)
 		var ePhys : int = max(1, es.current.attack - ps.current.defense)
 		var eMag : int = max(1, es.current.mattack - ps.current.mdefense)
+		var pHits : int = ceili(float(es.current.maxHealth) / float(pPhys))
+		var eHits : int = ceili(float(ps.current.maxHealth) / float(ePhys))
+		var pTTK : float = pHits * (ps.current.castAttackDelay + ps.current.cooldownAttackDelay)
+		var eTTK : float = eHits * (es.current.castAttackDelay + es.current.cooldownAttackDelay)
+		var xp : int = ceili(Formula.GetInternalXpBonus(int(entityData._stats.get("baseExp", 1)), entityLevel))
+		var neededXp : int = Experience.GetNeededExperienceForNextLevel(entityLevel)
+		var kills : int = ceili(float(neededXp) / float(xp)) if neededXp != Experience.MAX_LEVEL_REACHED and xp > 0 else -1
+
 		rows.append({
 			"entity": entityData,
 			"name": entityData._name,
@@ -408,6 +425,12 @@ func RefreshMatrix():
 			"e_mag": eMag,
 			"ratio": float(pPhys) / max(1.0, float(ePhys)),
 			"mratio": float(pMag) / max(1.0, float(eMag)),
+			"p_hits": pHits,
+			"p_ttk": pTTK,
+			"e_hits": eHits,
+			"e_ttk": eTTK,
+			"xp": xp,
+			"kills": kills,
 		})
 
 	rows.sort_custom(SortRows)
@@ -443,6 +466,19 @@ func RefreshMatrix():
 		treeItem.set_text(10, "%.2f×" % ratio)
 		treeItem.set_text(11, "%.2f×" % mratio)
 
+		var pHits : int = int(row["p_hits"])
+		var eHits : int = int(row["e_hits"])
+		var kills : int = int(row["kills"])
+		treeItem.set_text(12, str(pHits))
+		treeItem.set_text(13, "%.1fs" % float(row["p_ttk"]))
+		treeItem.set_text(14, str(eHits))
+		treeItem.set_text(15, "%.1fs" % float(row["e_ttk"]))
+		treeItem.set_text(16, str(int(row["xp"])))
+		treeItem.set_text(17, str(kills) if kills > 0 else "—")
+
+		treeItem.set_custom_color(12, green if pHits >= PlayerHitsBandMin and pHits <= PlayerHitsBandMax else red)
+		treeItem.set_custom_color(14, green if eHits >= EnemyHitsBandMin and eHits <= EnemyHitsBandMax else red)
+
 		if pPhys > ePhys:
 			treeItem.set_custom_color(6, green)
 			treeItem.set_custom_color(8, red)
@@ -474,7 +510,7 @@ func SortRows(a : Dictionary, b : Dictionary) -> bool:
 			var vb : String = String(b[key])
 			if va == vb: return false
 			return (va < vb) if sortAscending else (va > vb)
-		10, 11:
+		10, 11, 13, 15:
 			var va : float = float(a[key])
 			var vb : float = float(b[key])
 			if va == vb: return false

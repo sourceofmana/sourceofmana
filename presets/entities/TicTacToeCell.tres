@@ -15,9 +15,7 @@ _id = 1060916485
 _name = "TicTacToeCell"
 _spritePreset = ExtResource("spr_TicTacToeCell")
 _radius = 16
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_item")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("4_tex")
 _state = 0

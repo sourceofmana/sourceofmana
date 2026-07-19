@@ -13,7 +13,6 @@ _id = 236203253
 _name = "Sawyl"
 _stats = {
 "gender": "Female",
-"level": 1,
 "race": "Human",
 "skintone": "Medium"
 }

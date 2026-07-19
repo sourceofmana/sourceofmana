@@ -12,9 +12,7 @@ _parent = ExtResource("3_dyg1f")
 _id = 970294591
 _name = "Thiefs Chest"
 _radius = 26
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_wugrw")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("1_8noqe")
 _questID = 2

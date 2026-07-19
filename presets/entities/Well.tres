@@ -11,8 +11,6 @@ _parent = ExtResource("2_5dpsi")
 _id = 2089713785
 _name = "Well"
 _radius = 32
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_vqcj6")]([null, null, null, null, null, null, null, null])
 _behaviour = 9

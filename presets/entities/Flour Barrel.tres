@@ -11,9 +11,7 @@ script = ExtResource("2_shytn")
 _parent = ExtResource("2_3d05s")
 _id = 1902637957
 _name = "Flour Barrel"
-_stats = {
-"level": 1
-}
+_stats = {}
 _equipment = Array[ExtResource("1_oghli")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
 _questID = 1

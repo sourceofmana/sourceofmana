@@ -16,9 +16,7 @@ _name = "Manayir Druidess"
 _spritePreset = ExtResource("spr_Player")
 _radius = 20
 _stats = {
-"defense": 0,
 "gender": "Female",
-"level": 20,
 "race": "Raijin",
 "skintone": "Light"
 }
