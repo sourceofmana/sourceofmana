@@ -6,9 +6,13 @@ var aiBehaviour : int					= AICommons.Behaviour.NONE
 var aiState : AICommons.State			= AICommons.State.IDLE
 var aiTimer : Timer						= null
 var aiRefreshDelay : float				= randf_range(AICommons.MinRefreshDelay, AICommons.MaxRefreshDelay)
+var aiSkills : Dictionary[int, float]	= {}
+var aiProbaSum : float					= 0.0
+
 var attackers : Array[Dictionary]		= []
 var followers : Dictionary[int, Array]	= {}
 var leader : BaseAgent					= null
+
 var hasNodeGoal : bool					= false
 var nodeGoal : Node2D					= null
 var spawnInfo : SpawnObject				= null
@@ -108,10 +112,17 @@ func SetSkillCastID(skillID : int):
 	if skillID == DB.UnknownHash:
 		skillSelected = null
 
+func AddSkill(cell : SkillCell, proba : float):
+	if cell:
+		aiProbaSum += proba - aiSkills.get(cell.id, 0.0)
+		aiSkills[cell.id] = proba
+
 func SetData():
 	aiBehaviour = data._behaviour
 	if spawnInfo and spawnInfo.behaviour >= 0:
 		aiBehaviour = spawnInfo.behaviour
+	for skillCell : SkillCell in data._skills:
+		AddSkill(skillCell, data._skills[skillCell])
 	for dropCell : ItemCell in data._drops:
 		AddItem(dropCell, data._drops[dropCell])
 	minWanderingSpeed = int(stat.current.walkSpeed / 4)

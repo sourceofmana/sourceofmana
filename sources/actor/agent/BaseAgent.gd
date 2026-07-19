@@ -73,10 +73,6 @@ func SetSkillCastID(skillID : int):
 		if self is AIAgent:
 			set_physics_process(true)
 
-func AddSkill(cell : SkillCell, proba : float):
-	if cell:
-		progress.AddSkill(cell, proba)
-
 func AddItem(item : BaseCell, proba : float):
 	if item and inventory:
 		while proba > 0.0:
@@ -162,9 +158,6 @@ func UpdateDeltas(delta : float):
 
 #
 func SetData():
-	for skillCell : SkillCell in data._skills:
-		AddSkill(skillCell, data._skills[skillCell])
-
 	if defaultState == ActorCommons.State.UNKNOWN and data._state != ActorCommons.State.UNKNOWN:
 		defaultState = data._state
 	if defaultState != ActorCommons.State.UNKNOWN:

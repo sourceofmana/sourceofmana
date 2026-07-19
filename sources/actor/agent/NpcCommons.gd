@@ -203,7 +203,7 @@ static func TeachSkill(caller : BaseAgent, skillID : int, level : int = 1) -> bo
 	if caller is PlayerAgent and caller.progress:
 		var cell : SkillCell = DB.GetSkill(skillID)
 		if cell:
-			caller.progress.AddSkill(cell, 1.0, level)
+			caller.progress.AddSkill(cell, level)
 			return true
 	return false
 

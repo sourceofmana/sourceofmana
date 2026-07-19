@@ -359,7 +359,7 @@ func CommandSkill(caller : PlayerAgent, skillName : String, levelStr : String = 
 	var level : int = levelStr.to_int()
 	caller.progress.RemoveSkill(cell)
 	if level > 0:
-		caller.progress.AddSkill(cell, 1.0, level)
+		caller.progress.AddSkill(cell, level)
 	return true
 
 # Death

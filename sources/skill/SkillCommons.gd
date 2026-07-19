@@ -135,7 +135,11 @@ static func IsDelayed(skill : SkillCell) -> bool:
 	return skill.projectilePreset != null
 
 static func HasSkill(agent : BaseAgent, skill : SkillCell) -> bool:
-	return agent.progress and agent.progress.HasSkill(skill)
+	if agent.progress:
+		return agent.progress.HasSkill(skill)
+	if agent is AIAgent:
+		return skill != null and skill.id in agent.aiSkills
+	return false
 
 static func IsInstantAbility(skill : SkillCell) -> bool:
 	return skill.category == SkillCell.Category.ABILITY and not skill.modifiers.HasAny() and skill.castTime == 0.0 and skill.cooldownTime == 0.0

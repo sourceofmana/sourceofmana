@@ -338,7 +338,7 @@ func UpdateSkill(skillID : int, level : int, _peerID : int, notify : bool = true
 	if Launcher.Player:
 		var skill : SkillCell = DB.GetSkill(skillID)
 		if skill:
-			Launcher.Player.progress.AddSkill(skill, 1.0, level)
+			Launcher.Player.progress.AddSkill(skill, level)
 			if Launcher.GUI and Launcher.GUI.skillWindow:
 				Launcher.GUI.skillWindow.RefreshSkills()
 			if notify:

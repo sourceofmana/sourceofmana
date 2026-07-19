@@ -502,7 +502,3 @@ threads/thread_safe_bvh=true
 [tiled_importer]
 
 enable_json_format=false
-
-[xr]
-
-shaders/enabled=false

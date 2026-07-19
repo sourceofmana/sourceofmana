@@ -150,7 +150,7 @@ static func ApplyXp(agent : BaseAgent):
 			var damageRatio : float = agent.GetDamageRatio(entry.attacker)
 			var bonusScaled : int = int(bonus * damageRatio)
 			entry.attacker.stat.AddExperience(bonusScaled, false)
-			if damageRatio > 0.5:
+			if damageRatio > 0.5 and entry.attacker.progress:
 				entry.attacker.progress.AddBestiary(agent.data._id, 1)
 
 # Attribute points

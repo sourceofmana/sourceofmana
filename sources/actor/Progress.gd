@@ -4,14 +4,12 @@ class_name ActorProgress
 #
 var bestiary : Dictionary[int, int]			= {}
 var quests : Dictionary[int, int]			= {}
-var skillProbas : Dictionary[int, float]	= {}
 var skills : Dictionary[int, int]			= {}
 
 var actor : Actor							= null
 
 var questMutex : Mutex						= null
 var bestiaryMutex : Mutex					= null
-var probaSum : float						= 0.0
 
 # Quest progress
 func SetQuest(questID : int, state : int):
@@ -55,25 +53,18 @@ func HasSkill(cell : SkillCell, level : int = 1) -> bool:
 	assert(cell != null, "Provided skill cell is null")
 	return skills.get(cell.id, 0) >= level
 
-func AddSkill(cell : SkillCell, proba : float, level : int = 1):
+func AddSkill(cell : SkillCell, level : int):
 	assert(cell != null, "Provided skill cell is null")
 	if not cell:
 		return
 
-	var currentProbability : float = GetSkillProba(cell)
-	if currentProbability == proba:
+	if skills.get(cell.id, 0) == level:
 		return
 
-	probaSum -= currentProbability
 	skills[cell.id] = level
-	skillProbas[cell.id] = proba
-	probaSum += proba
 
 	if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
 		Network.UpdateSkill(cell.id, level, actor.peerID)
-
-func GetSkillProba(cell : SkillCell) -> float:
-	return skillProbas.get(cell.id, 0.0) if cell else 0.0
 
 func GetSkillLevel(cell : SkillCell) -> int:
 	return skills.get(cell.id, 0) if cell else 0
@@ -83,9 +74,7 @@ func RemoveSkill(cell : SkillCell):
 	if not cell:
 		return
 
-	probaSum -= skillProbas.get(cell.id, 0)
 	skills.erase(cell.id)
-	skillProbas.erase(cell.id)
 
 	if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
 		Network.UpdateSkill(cell.id, 0, actor.peerID)
@@ -95,7 +84,7 @@ func ImportProgress(charID : int):
 	for entry in Launcher.SQL.GetSkills(charID):
 		var skill : SkillCell = DB.GetSkill(entry.get("skill_id", DB.UnknownHash))
 		if skill:
-			AddSkill(skill, 1.0, entry.get("level", 1))
+			AddSkill(skill, entry.get("level", 1))
 	for entry in Launcher.SQL.GetQuests(charID):
 		SetQuest(entry.get("quest_id", DB.UnknownHash), entry.get("state", 0))
 	for entry in Launcher.SQL.GetBestiaries(charID):
