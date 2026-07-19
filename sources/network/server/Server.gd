@@ -277,8 +277,8 @@ func TriggerChat(channelName : String, text : String, peerID : int):
 			Network.NotifyNeighbours(player, "ChatPlayer", [str(GUICommons.ChatChannel.LOCAL), player.nick, text])
 		elif channelName == str(GUICommons.ChatChannel.GLOBAL):
 			Network.NotifyGlobal("ChatPlayer", [str(GUICommons.ChatChannel.GLOBAL), player.nick, text])
-#			if Launcher.Discord:
-#				Launcher.Discord.SendToDiscord(player.nick, text)
+			if Launcher.Discord:
+				Launcher.Discord.SendToDiscord(player.nick, text)
 		else:
 			var target : PlayerAgent = Launcher.World.GetGlobalPlayer(channelName)
 			if not target:
