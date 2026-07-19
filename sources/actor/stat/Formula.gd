@@ -2,7 +2,7 @@ extends RefCounted
 class_name Formula
 
 #
-const attributePointsBase : int					= 10
+const attributePointsBase : int					= 4
 const attributePointPerLevel : int				= 1
 const attributeLevelCap : int					= 50
 const coefAttackPerAttribute : float			= 3.0

@@ -417,8 +417,8 @@ static var DefaultTraits : Dictionary = {
 	"spirit": "Piou".hash()
 }
 static var DefaultAttributes : Dictionary = {
-	"strength": 4,
-	"vitality": 4,
+	"strength": 1,
+	"vitality": 1,
 	"agility": 1,
 	"endurance": 1,
 	"concentration": 1,
