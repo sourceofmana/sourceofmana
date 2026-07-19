@@ -72,12 +72,20 @@ static func GetRandomPositionRing(inst : WorldInstance, pos : Vector2i, minRadiu
 		return GetRandomPosition(inst)
 	return Vector2i.ZERO
 
+static func GetPolygonCenter(polygon : PackedVector2Array) -> Vector2:
+	var center : Vector2 = Vector2.ZERO
+	for point in polygon:
+		center += point
+	return center / polygon.size()
+
 static func GetSpawnPosition(inst : WorldInstance, spawn : SpawnObject) -> Vector2i:
 	var position : Vector2i = Vector2i.ZERO
 	if spawn.is_global:
 		position = WorldNavigation.GetRandomPosition(inst)
 	else:
-		if spawn.spawn_offset == Vector2i.ZERO:
+		if spawn.is_targetable and not spawn.trigger_polygon.is_empty():
+			position = spawn.spawn_position + Vector2i(GetPolygonCenter(spawn.trigger_polygon))
+		elif spawn.spawn_offset == Vector2i.ZERO:
 			position = spawn.spawn_position
 		else:
 			position = WorldNavigation.GetRandomPositionAABB(inst, spawn.spawn_position, spawn.spawn_offset)
