@@ -57,12 +57,14 @@ static var ProtocolVersion : int		= 0
 
 static func ComputeProtocolVersion(network : Node) -> int:
 	var rpcConfig : Dictionary = network.get_script().get_rpc_config()
-	var methods : Array = rpcConfig.keys()
+	var methods : Array = []
+	for method in rpcConfig.keys():
+		methods.append(str(method))
 	methods.sort()
 
 	var serialized : String = ""
 	for method in methods:
-		var config : Dictionary = rpcConfig[method]
+		var config : Dictionary = rpcConfig[StringName(method)]
 		var keys : Array = config.keys()
 		keys.sort()
 
