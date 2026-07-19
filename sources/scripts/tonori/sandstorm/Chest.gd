@@ -7,7 +7,7 @@ const questID : int = ProgressCommons.Quest.SANDSTORM_MINE_ABANDONED_TREASURE
 var chestMineKeyID : int = DB.GetCellHash("Chest Mine Key")
 
 # Reward items
-var shortSwordID : int = DB.GetCellHash("Short Sword")
+var shortSwordID : int = DB.GetCellHash("Piou Slayer")
 
 #
 func OnStart():
