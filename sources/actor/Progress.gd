@@ -18,6 +18,9 @@ func SetQuest(questID : int, state : int):
 	questMutex.unlock()
 
 	if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
+		var charID : int = Peers.GetCharacter(actor.peerID)
+		if charID != NetworkCommons.PeerUnknownID:
+			Launcher.SQL.SetQuest(charID, questID, state)
 		Network.UpdateQuest(questID, state, actor.peerID)
 
 func GetQuest(questID : int) -> int:
