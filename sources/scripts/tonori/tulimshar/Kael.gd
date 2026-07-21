@@ -80,11 +80,6 @@ func OnAgeOfKaore():
 
 # Task assignment
 func OnFieldCleanUp():
-	var meleeSkillID : int = DB.GetCellHash("Melee")
-	if GetSkillLevel(meleeSkillID) == 0:
-		TeachSkill(meleeSkillID)
-		Narrate("You have learned the Melee skill.")
-
 	OnFightTutorial()
 	Mes("Start with the peyotes in that field just north from here.")
 	LookAtPosition(FIELD_POSITION)

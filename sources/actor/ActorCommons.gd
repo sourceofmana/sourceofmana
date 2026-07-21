@@ -429,6 +429,7 @@ static var DefaultStats : Dictionary = {
 static var DefaultInventory : Array[Dictionary] = [
 ]
 static var DefaultSkills : Array[Dictionary] = [
+	{ "skill_id": SkillCommons.SkillMeleeName.hash(), "level": 1 },
 ]
 static var DefaultSfx : Dictionary[ActorCommons.Alteration, AudioStream] = {
 	Alteration.HIT:				preload("res://data/sounds/alteration/hit.ogg"),
