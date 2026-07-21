@@ -143,7 +143,7 @@ static func GetInternalXpBonus(baseExp : int, level : int) -> float:
 static func GetXpBonus(stat : ActorStats) -> float:
 	return GetInternalXpBonus(stat.baseExp, stat.level)
 
-static func ApplyXp(agent : BaseAgent):
+static func ApplyXp(agent : AIAgent):
 	var bonus : float = Formula.GetXpBonus(agent.stat)
 	for entry in agent.attackers:
 		if entry.attacker != null and not entry.attacker.is_queued_for_deletion():
@@ -152,6 +152,7 @@ static func ApplyXp(agent : BaseAgent):
 			entry.attacker.stat.AddExperience(bonusScaled, false)
 			if damageRatio > 0.5 and entry.attacker.progress:
 				entry.attacker.progress.AddBestiary(agent.data._id, 1)
+				entry.attacker.enemy_killed.emit(entry.attacker, agent.data._id)
 
 # Attribute points
 static func GetMaxAttributePoints(level : int) -> int:

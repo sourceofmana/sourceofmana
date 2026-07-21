@@ -1,7 +1,5 @@
 extends NpcScript
 
-const PEYOTE_REQUIRED : int = 5
-const MAGGOT_REQUIRED : int = 5
 const FIELD_POSITION : Vector2 = Vector2(2912, 1312)
 
 #
@@ -99,17 +97,21 @@ func OnFieldCleanUp():
 	HighlightUI(UICommons.UITarget.NONE)
 	Narrate("You can see the number of monsters you got rid within the Manapedia tab of the menu bar.")
 	SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.KAEL_MET)
+	npc.ownScript.TrackPlayer(own)
 
 # Progress check
 func OnCheckProgress():
-	var peyoteKills : int = GetBestiary("Peyote".hash())
-	var maggotKills : int = GetBestiary("Maggot".hash())
-	if peyoteKills >= PEYOTE_REQUIRED and maggotKills >= MAGGOT_REQUIRED:
+	var kaelGlobal : KaelGlobal = npc.ownScript as KaelGlobal
+	kaelGlobal.TrackPlayer(own)
+
+	var peyoteKills : int = kaelGlobal.GetKillCount(own, kaelGlobal.peyoteID)
+	var maggotKills : int = kaelGlobal.GetKillCount(own, kaelGlobal.maggotID)
+	if peyoteKills >= KaelGlobal.PEYOTE_REQUIRED and maggotKills >= KaelGlobal.MAGGOT_REQUIRED:
 		OnTaskComplete()
-	elif peyoteKills < PEYOTE_REQUIRED:
-		Mes("Not done yet. I still need you to clear out %d more peyote from the field." % (PEYOTE_REQUIRED - peyoteKills))
+	elif peyoteKills < KaelGlobal.PEYOTE_REQUIRED:
+		Mes("Not done yet. I still need you to clear out %d more peyote from the field." % (KaelGlobal.PEYOTE_REQUIRED - peyoteKills))
 	else:
-		Mes("Good work on the peyotes. Still need you to deal with %d more maggots though." % (MAGGOT_REQUIRED - maggotKills))
+		Mes("Good work on the peyotes. Still need you to deal with %d more maggots though." % (KaelGlobal.MAGGOT_REQUIRED - maggotKills))
 
 # Task completion
 func OnTaskComplete():
@@ -119,6 +121,8 @@ func OnTaskComplete():
 	Mes("We're going on a small expedition into the desert soon and you might be the right type of person to help us out.")
 	SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.KAEL_DONE)
 	AddExp(50)
+	npc.ownScript.UntrackPlayer(own)
+	ClearTracker()
 
 #
 func OnSendToEkinu():

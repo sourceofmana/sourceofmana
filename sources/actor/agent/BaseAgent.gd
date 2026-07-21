@@ -5,6 +5,8 @@ class_name BaseAgent
 signal agent_killed
 signal agent_damaged(value : int)
 signal agent_healed(value : int)
+signal enemy_killed(monsterID : int)
+signal target_selected(target : BaseAgent)
 
 #
 var agent : NavigationAgent2D			= null

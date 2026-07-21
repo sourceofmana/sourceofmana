@@ -1041,6 +1041,7 @@
   <object id="63" name="Kael" type="Spawn" x="2866" y="2102">
    <properties>
     <property name="is_always_visible" type="bool" value="true"/>
+    <property name="own_script" value="tonori/tulimshar/KaelGlobal.gd"/>
     <property name="player_script" value="tonori/tulimshar/Kael.gd"/>
     <property name="type" value="Npc"/>
    </properties>

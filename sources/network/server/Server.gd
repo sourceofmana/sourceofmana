@@ -324,6 +324,9 @@ func TriggerSelect(targetRID : int, peerID : int):
 	var target : BaseAgent = WorldAgent.GetAgent(targetRID)
 	if target:
 		Network.UpdatePublicStats(targetRID, target.stat.level, target.stat.health, target.stat.current.maxHealth, target.stat.hairstyle, target.stat.haircolor, target.stat.gender, target.stat.race, target.stat.skintone, target.stat.currentShape, peerID)
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player:
+		player.target_selected.emit(player, target)
 
 # Stats
 func SetAttributes(strength : int, vitality : int, agility : int, endurance : int, concentration : int, peerID : int):
