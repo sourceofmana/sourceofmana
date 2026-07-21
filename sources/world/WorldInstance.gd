@@ -9,18 +9,22 @@ var players : Array[BaseAgent]			= []
 var drops : Dictionary[int, Drop]		= {}
 var map : WorldMap						= null
 var timers : Node						= Node.new()
+
 #
 func _ready():
 	timers.set_name("Timers")
 	add_child.call_deferred(timers)
-	timers.tree_entered.connect(CheckIterationID)
 
-func CheckIterationID():
-	if NavigationServer2D.map_get_iteration_id(map.mapRID) and \
-		NavigationServer2D.region_get_iteration_id(map.regionRID):
+	var mapIterationID : int = NavigationServer2D.map_get_iteration_id(map.mapRID)
+	var regionIterationID : int = NavigationServer2D.region_get_iteration_id(map.regionRID)
+	timers.tree_entered.connect(CheckIterationID.bind(mapIterationID, regionIterationID))
+
+func CheckIterationID(mapIterationID : int, regionIterationID : int):
+	if NavigationServer2D.map_get_iteration_id(map.mapRID) != mapIterationID and \
+		NavigationServer2D.region_get_iteration_id(map.regionRID) != regionIterationID:
 		_map_loaded()
 	else:
-		Callback.SelfDestructTimer(timers, 0.1, CheckIterationID, [])
+		Callback.SelfDestructTimer(timers, 0.1, CheckIterationID, [mapIterationID, regionIterationID])
 
 func _map_loaded():
 	for spawn in map.spawns:
