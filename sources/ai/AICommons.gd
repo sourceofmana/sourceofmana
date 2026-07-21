@@ -115,7 +115,7 @@ static func ApplyPacifistBehaviour(agent : AIAgent) -> bool:
 	return false
 
 static func ApplyNeutralBehaviour(agent : AIAgent) -> bool:
-	if agent == null or agent.agent == null:
+	if agent == null:
 		return false
 
 	var target : BaseAgent = agent.GetNearbyMostValuableAttacker()
