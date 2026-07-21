@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="217" height="154" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="42">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="217" height="154" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="44">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1104,6 +1104,18 @@
    <properties>
     <property name="player_script" value="tonori/tulimshar/Nard.gd"/>
     <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="42" name="Peyote" type="Spawn" x="4359" y="2787" width="116" height="218">
+   <properties>
+    <property name="count" value="2"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="43" name="Peyote" type="Spawn" x="4148" y="3691" width="256" height="150">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>

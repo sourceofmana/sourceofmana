@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="177" height="168" tilewidth="32" tileheight="32" infinite="0" nextlayerid="23" nextobjectid="55">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="177" height="168" tilewidth="32" tileheight="32" infinite="0" nextlayerid="23" nextobjectid="57">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1202,6 +1202,18 @@
    <properties>
     <property name="player_script" value="generic/Well.gd"/>
     <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="55" name="Peyote" type="Spawn" x="3812" y="1638" width="116" height="218">
+   <properties>
+    <property name="count" value="1"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="56" name="Peyote" type="Spawn" x="3654" y="1120" width="116" height="218">
+   <properties>
+    <property name="count" value="2"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>
