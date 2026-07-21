@@ -115,7 +115,7 @@ func OnTaskComplete():
 	Mes("You should report back to Watchman Ekinu. Tell him I was happy with your work here.")
 	Mes("We're going on a small expedition into the desert soon and you might be the right type of person to help us out.")
 	SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.KAEL_DONE)
-	AddExp(50)
+	AddExp(20)
 	npc.ownScript.UntrackPlayer(own)
 	ClearTracker()
 

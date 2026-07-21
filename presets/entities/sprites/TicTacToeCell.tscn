@@ -153,6 +153,7 @@ _data = {
 [node name="TicTacToeCell" type="Node2D" unique_id=1423560780]
 
 [node name="Body" type="Sprite2D" parent="." unique_id=1855293554]
+z_index = -1
 offset = Vector2(0, -16)
 hframes = 3
 

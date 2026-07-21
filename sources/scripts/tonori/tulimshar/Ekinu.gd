@@ -59,7 +59,7 @@ func OnJobExplanation():
 		SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.EKINU_DONE)
 		AddItem(shortSwordID)
 		AddItem(desertGogglesID)
-		AddExp(50)
+		AddExp(20)
 
 		Mes("That should be enough to protect yourself")
 		Mes("But if you are in danger, remember to run away, there is no pride in being dead.")
