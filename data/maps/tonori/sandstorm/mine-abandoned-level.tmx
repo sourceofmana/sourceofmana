@@ -714,7 +714,9 @@
   </object>
   <object id="33" name="SandstormMineCrack" type="Spawn" x="2880" y="2442">
    <properties>
+    <property name="nick" value="???"/>
     <property name="own_script" value="tonori/sandstorm/DeepLevelEntranceGlobal.gd"/>
+    <property name="player_script" value="tonori/sandstorm/DeepLevelEntrance.gd"/>
     <property name="trigger_radius" type="float" value="16"/>
     <property name="type" value="Npc"/>
    </properties>

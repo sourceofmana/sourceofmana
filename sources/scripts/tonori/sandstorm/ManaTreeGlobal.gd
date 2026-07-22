@@ -12,9 +12,7 @@ func OnAreaEnter(player : PlayerAgent):
 
 	SpawnXakelbael(inst)
 	npc.RemoveTrigger()
-
-	if not player.ownScript:
-		npc.Interact(player)
+	NpcCommons.PushNotification(player, "You feel a warm energy surrounding and protecting you.")
 
 func SpawnXakelbael(inst : WorldInstance):
 	var spawn : SpawnObject = SpawnObject.new()

@@ -15,9 +15,12 @@ func _ready():
 	timers.set_name("Timers")
 	add_child.call_deferred(timers)
 
-	var mapIterationID : int = NavigationServer2D.map_get_iteration_id(map.mapRID)
-	var regionIterationID : int = NavigationServer2D.region_get_iteration_id(map.regionRID)
-	timers.tree_entered.connect(CheckIterationID.bind(mapIterationID, regionIterationID))
+	if map.instances.size() > 1:
+		timers.tree_entered.connect(_map_loaded)
+	else:
+		var mapIterationID : int = NavigationServer2D.map_get_iteration_id(map.mapRID)
+		var regionIterationID : int = NavigationServer2D.region_get_iteration_id(map.regionRID)
+		timers.tree_entered.connect(CheckIterationID.bind(mapIterationID, regionIterationID))
 
 func CheckIterationID(mapIterationID : int, regionIterationID : int):
 	if NavigationServer2D.map_get_iteration_id(map.mapRID) != mapIterationID and \
