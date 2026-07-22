@@ -4,15 +4,17 @@
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_b0nde"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_pyd2m"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_p12vs"]
+[ext_resource type="PackedScene" uid="uid://c76jtak0f0bv2" path="res://presets/entities/sprites/StaticQuestHighlight.tscn" id="spr_StaticQuestHighlight"]
 
 [resource]
 script = ExtResource("2_pyd2m")
 _parent = ExtResource("2_b0nde")
 _id = 3922677720
 _name = "Letter Stash"
+_spritePreset = ExtResource("spr_StaticQuestHighlight")
 _radius = 8
 _stats = {}
 _equipment = Array[ExtResource("1_mtoxs")]([null, null, null, null, null, null, null, null])
 _behaviour = 9
-_questID = 6
+_questID = 5
 _questState = 1

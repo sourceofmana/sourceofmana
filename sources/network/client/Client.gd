@@ -353,6 +353,7 @@ func UpdateBestiary(mobID : int, count : int, _peerID : int, _notify : bool = tr
 func UpdateQuest(questID : int, state : int, _peerID : int, notify : bool = true):
 	if Launcher.Player:
 		Launcher.Player.progress.SetQuest(questID, state)
+		Entities.RefreshQuestHighlights(questID)
 		if Launcher.GUI and Launcher.GUI.progressWindow:
 			Launcher.GUI.progressWindow.RefreshQuest(questID, state)
 		if notify:

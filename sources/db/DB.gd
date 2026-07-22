@@ -62,6 +62,7 @@ static func ParsePalettesDB():
 			var data : FileData = FileSystem.LoadResource(resourcePath, false)
 			var id : int = SetCellHash(data._name)
 			assert(not PalettesDB[categoryIdx].has(id), "Duplicated cell in PalettesDB")
+			data._id = id
 			PalettesDB[categoryIdx][id] = data
 
 static func ParseEntitiesDB():

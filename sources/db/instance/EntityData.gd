@@ -35,6 +35,13 @@ class_name EntityData
 
 const hashedStats : PackedStringArray				= ["race", "skintone", "hairstyle", "haircolor"]
 
+func IsQuestStateVisible(questState : int) -> bool:
+	if _questID == ProgressCommons.Quest.UNKNOWN:
+		return true
+	if _questStateMax != ProgressCommons.UnknownProgress:
+		return questState >= _questState and questState <= _questStateMax
+	return questState == _questState
+
 func _init():
 	_equipment.resize(ActorCommons.SlotEquipmentCount)
 

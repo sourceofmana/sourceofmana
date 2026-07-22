@@ -11,6 +11,7 @@ signal state_changed(state : ActorCommons.State)
 @onready var entity : Entity				= get_parent()
 
 var preset : Node2D							= null
+var questHighlight : Node2D					= null
 var animation : AnimationPlayer				= null
 var animationTree : AnimationTree			= null
 var sprites : Array[Sprite2D]				= []
@@ -49,6 +50,7 @@ func ResetData():
 		sprites[spriteID] = null
 	equipmentEffects.fill(null)
 	preset = null
+	questHighlight = null
 	originalAnimationLib = null
 
 func LoadData(data : EntityData):
@@ -82,8 +84,18 @@ func LoadData(data : EntityData):
 				elif slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_EQUIPMENT:
 					SetEquipment(slot, data, false)
 
+			questHighlight = preset.get_node_or_null("QuestHighlight")
+			RefreshQuestHighlight()
+
 	ApplyAnimationOverrides()
 	ResetAnimationValue()
+
+func RefreshQuestHighlight():
+	if not questHighlight:
+		return
+
+	var questState : int = Launcher.Player.progress.GetQuest(entity.data._questID) if Launcher.Player else ProgressCommons.UnknownProgress
+	questHighlight.visible = entity.data.IsQuestStateVisible(questState)
 
 func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array[Texture2D]):
 	var sprite : Sprite2D = preset.get_node_or_null(ActorCommons.GetSlotName(slot))

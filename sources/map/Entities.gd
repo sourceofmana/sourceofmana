@@ -54,6 +54,11 @@ static func Add(entity : Entity, agentRID : int):
 static func Erase(agentRID : int):
 	entities.erase(agentRID)
 
+static func RefreshQuestHighlights(questID : int):
+	for entity in entities.values():
+		if entity and entity.data and entity.data._questID == questID and entity.visual:
+			entity.visual.RefreshQuestHighlight()
+
 # Target
 static func ClearTarget():
 	if target != null:
@@ -124,12 +129,8 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 					# If the current quest state forbides the selection
 					if entityData._questID != ProgressCommons.Quest.UNKNOWN:
 						var questState : int = Launcher.Player.progress.GetQuest(entityData._questID) if Launcher.Player else ProgressCommons.UnknownProgress
-						if entityData._questStateMax != ProgressCommons.UnknownProgress:
-							if questState < entityData._questState or questState > entityData._questStateMax:
-								continue
-						else:
-							if questState != entityData._questState:
-								continue
+						if not entityData.IsQuestStateVisible(questState):
+							continue
 				# If too far away
 				var distance : float = source.distance_squared_to(entity.position)
 				if distance > ActorCommons.TargetMaxSquaredDistance:
