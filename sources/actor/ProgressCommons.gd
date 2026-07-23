@@ -21,6 +21,7 @@ class Quest:
 	static var DESERT_SEED : int = "Desert Seed".hash()
 	static var TULIMSHAR_EASTERN_HILLS_CHEST : int = "Found a Chest in the Outskirts".hash()
 	static var SHIP_PETER_BOUNTY : int = "Peter's Bounty".hash()
+	static var VETERAN_CAVE_EXPLORER : int = "Veteran Cave Explorer".hash()
 
 # Quest enums
 enum SPLATYNA_OFFERING
@@ -127,6 +128,12 @@ enum SHIP_PETER_BOUNTY
 	WAVE_TWO_DONE = 2,
 	ALL_DONE = ProgressCommons.CompletedProgress,
 }
+enum VETERAN_CAVE_EXPLORER
+{
+	INACTIVE = ProgressCommons.UnknownProgress,
+	UNCLAIMED,
+	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
+}
 
 # Quest state lookup
 static var QuestStates : Dictionary[int, Variant] = {
@@ -145,6 +152,7 @@ static var QuestStates : Dictionary[int, Variant] = {
 	Quest.DESERT_SEED: DESERT_SEED,
 	Quest.TULIMSHAR_EASTERN_HILLS_CHEST: TULIMSHAR_EASTERN_HILLS_CHEST,
 	Quest.SHIP_PETER_BOUNTY: SHIP_PETER_BOUNTY,
+	Quest.VETERAN_CAVE_EXPLORER: VETERAN_CAVE_EXPLORER,
 }
 
 static func GetQuestStateID(questID : int, stateName : String) -> int:
