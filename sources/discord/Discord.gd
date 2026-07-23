@@ -75,7 +75,7 @@ func _on_message_create(_bot : DiscordBot, message : Message, _channel : Diction
 			username = result.get_string("user")
 			content = result.get_string("msg")
 
-	Network.NotifyGlobal("ChatPlayer", [str(GUICommons.ChatChannel.LOCAL), username, content])
+	Network.NotifyGlobal("ChatPlayer", [str(GUICommons.ChatChannel.GLOBAL), username, content, -1])
 
 # Utils
 func SendToDiscord(playerName : String, messageText : String):

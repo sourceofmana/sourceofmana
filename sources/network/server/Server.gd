@@ -274,9 +274,9 @@ func TriggerChat(channelName : String, text : String, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player:
 		if channelName == str(GUICommons.ChatChannel.LOCAL):
-			Network.NotifyNeighbours(player, "ChatPlayer", [str(GUICommons.ChatChannel.LOCAL), player.nick, text])
+			Network.NotifyNeighbours(player, "ChatPlayer", [str(GUICommons.ChatChannel.LOCAL), player.nick, text, player.get_rid().get_id()])
 		elif channelName == str(GUICommons.ChatChannel.GLOBAL):
-			Network.NotifyGlobal("ChatPlayer", [str(GUICommons.ChatChannel.GLOBAL), player.nick, text])
+			Network.NotifyGlobal("ChatPlayer", [str(GUICommons.ChatChannel.GLOBAL), player.nick, text, player.get_rid().get_id()])
 			if Launcher.Discord:
 				Launcher.Discord.SendToDiscord(player.nick, text)
 		else:
@@ -284,8 +284,8 @@ func TriggerChat(channelName : String, text : String, peerID : int):
 			if not target:
 				Network.ChatSystem(channelName, "Player '%s' is no longer online" % channelName, peerID)
 			else:
-				Network.ChatPlayer(player.nick, player.nick, text, target.peerID)
-				Network.ChatPlayer(target.nick, player.nick, text, player.peerID)
+				Network.ChatPlayer(player.nick, player.nick, text, player.get_rid().get_id(), target.peerID)
+				Network.ChatPlayer(target.nick, player.nick, text, player.get_rid().get_id(), player.peerID)
 
 func TriggerChoice(choiceID : int, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)

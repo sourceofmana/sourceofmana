@@ -50,9 +50,9 @@ func ChatQuery(channelName : String, _peerID : int):
 		if channelIdx != GUICommons.ChatChannel.UNKNOWN:
 			Launcher.GUI.chatContainer.SetChannelIndex(channelIdx)
 
-func ChatPlayer(channelName : String, callerName : String, text : String, _peerID : int):
+func ChatPlayer(channelName : String, callerName : String, text : String, agentRID : int, _peerID : int):
 	if Launcher.GUI:
-		Launcher.GUI.chatContainer.AddPlayerChat(channelName, callerName, text)
+		Launcher.GUI.chatContainer.AddPlayerChat(channelName, callerName, text, agentRID)
 
 func ChatSystem(channelName : String, text : String, _peerID : int):
 	if Launcher.GUI:

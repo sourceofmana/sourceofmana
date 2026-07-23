@@ -536,8 +536,8 @@ func CommandWhisper(caller : PlayerAgent, channelName : String, text : String) -
 		Network.ChatSystem(channelName, "You cannot whisper to yourself", caller.peerID)
 		return true
 
-	Network.ChatPlayer(caller.nick, caller.nick, text, target.peerID)
-	Network.ChatPlayer(target.nick, caller.nick, text, caller.peerID)
+	Network.ChatPlayer(caller.nick, caller.nick, text, caller.get_rid().get_id(), target.peerID)
+	Network.ChatPlayer(target.nick, caller.nick, text, caller.get_rid().get_id(), caller.peerID)
 	return true
 
 func CommandQuery(caller : PlayerAgent, targetName : String) -> bool:

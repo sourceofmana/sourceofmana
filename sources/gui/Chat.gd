@@ -15,7 +15,7 @@ func AddLocalFeedback(text : String):
 	var channelIdx : GUICommons.ChatChannel = GUICommons.ChatChannel.LOCAL
 	AddLine(channelIdx, text + "\n", UICommons.TextColor)
 
-func AddPlayerChat(channelName : String, callerName : String, text : String):
+func AddPlayerChat(channelName : String, callerName : String, text : String, agentRID : int = -1):
 	var channelIdx : GUICommons.ChatChannel = GetChannelIndex(channelName)
 	if channelIdx == GUICommons.ChatChannel.UNKNOWN:
 		return
@@ -24,8 +24,8 @@ func AddPlayerChat(channelName : String, callerName : String, text : String):
 	AddLine(channelIdx, ": " + text + "\n", UICommons.LightTextColor)
 
 	if channelIdx == GUICommons.ChatChannel.LOCAL:
-		var entity : Entity = Entities.GetNamed(callerName)
-		if entity and entity.get_parent() and  entity.interactive:
+		var entity : Entity = Entities.Get(agentRID) if agentRID > 0 else Entities.GetNamed(callerName)
+		if entity and entity.get_parent() and entity.interactive:
 			entity.interactive.DisplaySpeech(text)
 
 func AddSystemChat(channelName : String, text : String):

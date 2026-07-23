@@ -202,8 +202,8 @@ func ChatQuery(channelName : String, peerID : int = NetworkCommons.PeerOfflineID
 	CallClient("ChatQuery", [channelName], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
-func ChatPlayer(channelName : String, callerName : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("ChatPlayer", [channelName, callerName, text], peerID)
+func ChatPlayer(channelName : String, callerName : String, text : String, agentRID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("ChatPlayer", [channelName, callerName, text, agentRID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func ChatSystem(channelName : String, text : String, peerID : int = NetworkCommons.PeerOfflineID):
