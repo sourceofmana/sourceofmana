@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_25ln0")
-id = 12
+id = 3532436717
 name = "Desert Seed"
 description = "Deep in the Sandstorm Mines, you discovered a living Mana Tree and recovered its Kano, a rare Mana Seed."
 giver = "Mana Tree"

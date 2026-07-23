@@ -127,7 +127,7 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 				var entityData : EntityData = DB.EntitiesDB.get(entity.stat.currentShape, null)
 				if entityData:
 					# If the current quest state forbides the selection
-					if entityData._questID != ProgressCommons.Quest.UNKNOWN:
+					if entityData._questID != DB.UnknownHash:
 						var questState : int = Launcher.Player.progress.GetQuest(entityData._questID) if Launcher.Player else ProgressCommons.UnknownProgress
 						if not entityData.IsQuestStateVisible(questState):
 							continue

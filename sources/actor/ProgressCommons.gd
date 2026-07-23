@@ -5,25 +5,22 @@ const UnknownProgress : int						= 0
 const CompletedProgress : int					= 255
 
 # Quest ID list
-enum Quest
-{
-	UNKNOWN = -1,
-	SPLATYNA_OFFERING,
-	GRAIN_IN_THE_SAND,
-	SNAKE_PIT_THIEF,
-	SNAKE_PIT_BITING_THIRST,
-	SANDSTORM_MINE_ABANDONED_TREASURE,
-	TULIMSHAR_OLD_FRIENDSHIP,
-	TUTORIAL,
-	ELANORE_POTION,
-	NINA_HUNGRY,
-	MINE_EXPLORATION,
-	SANDSTORM_NATHAN_WATER,
-	SANDSTORM_NAEM_HELMET,
-	DESERT_SEED,
-	TULIMSHAR_EASTERN_HILLS_CHEST,
-	SHIP_PETER_BOUNTY,
-}
+class Quest:
+	static var SPLATYNA_OFFERING : int = "Splatyna's Offering".hash()
+	static var GRAIN_IN_THE_SAND : int = "Grain in the desert".hash()
+	static var SNAKE_PIT_THIEF : int = "Snake Pit Thief".hash()
+	static var SNAKE_PIT_BITING_THIRST : int = "A Biting Thirst".hash()
+	static var SANDSTORM_MINE_ABANDONED_TREASURE : int = "Sandstorm Mine Abandoned Treasure".hash()
+	static var TULIMSHAR_OLD_FRIENDSHIP : int = "An Old Friendship".hash()
+	static var TUTORIAL : int = "Tutorial".hash()
+	static var ELANORE_POTION : int = "Elanore's Potions".hash()
+	static var NINA_HUNGRY : int = "Nina's Snack".hash()
+	static var MINE_EXPLORATION : int = "Mine Exploration".hash()
+	static var SANDSTORM_NATHAN_WATER : int = "A Drop of Relief".hash()
+	static var SANDSTORM_NAEM_HELMET : int = "A Miner's Helping Hand".hash()
+	static var DESERT_SEED : int = "Desert Seed".hash()
+	static var TULIMSHAR_EASTERN_HILLS_CHEST : int = "Found a Chest in the Outskirts".hash()
+	static var SHIP_PETER_BOUNTY : int = "Peter's Bounty".hash()
 
 # Quest enums
 enum SPLATYNA_OFFERING
@@ -132,7 +129,7 @@ enum SHIP_PETER_BOUNTY
 }
 
 # Quest state lookup
-static var QuestStates : Dictionary[Quest, Variant] = {
+static var QuestStates : Dictionary[int, Variant] = {
 	Quest.SPLATYNA_OFFERING: SPLATYNA_OFFERING,
 	Quest.GRAIN_IN_THE_SAND: GRAIN_IN_THE_SAND,
 	Quest.SNAKE_PIT_THIEF: SNAKE_PIT_THIEF,

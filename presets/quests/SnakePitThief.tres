@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_quest")
-id = 2
+id = 647884116
 name = "Snake Pit Thief"
 description = "Investigate a hidden bedroom deep within the Snake Pit, uncover the fate of a Tulimshar thief, solve his riddle, and recover the treasure he never reclaimed."
 giver = "Snake Pit Clue"

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_quest")
-id = 13
+id = 4235969129
 name = "Found a Chest in the Outskirts"
 description = "Found a chest in the Tulimshar eastern outskirts."
 target = "Chest"

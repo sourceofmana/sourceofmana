@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_25ln0")
-id = 14
+id = 2607006912
 name = "Peter's Bounty"
 description = "A sailor aboard the ship is offering bounty contracts to clear rattos from the ship's hold."
 giver = "Peter"

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_quest")
-id = 4
+id = 1083446768
 name = "Sandstorm Mine Abandoned Treasure"
 description = "A rusty key lies hidden in the depths of the abandoned mine
  Find it and use it to unlock the small chest nearby to claim what was left behind."

@@ -26,44 +26,19 @@ enum Palette
 }
 
 #
-static func ParseMapsDB():
-	for resourcePath in FileSystem.ParseResources(Path.MapDataPst):
-		var data : MapData = FileSystem.LoadResource(resourcePath, false)
-		data._id = SetCellHash(data._name)
-		assert(not MapsDB.has(data._id), "Duplicated cell in MapsDB")
-		MapsDB[data._id] = data
-
-static func ParseMusicDB():
-	for resourcePath in FileSystem.ParseResources(Path.MusicPst):
+static func ParseFileDB(db : Dictionary, path : String):
+	for resourcePath in FileSystem.ParseResources(path):
 		var data : FileData = FileSystem.LoadResource(resourcePath, false)
-		var id : int = SetCellHash(data._name)
-		assert(not MusicDB.has(id), "Duplicated cell in MusicDB")
-		MusicDB[id] = data
+		data._id = SetCellHash(data._name, data._id)
+		if data._id != UnknownHash:
+			db[data._id] = data
 
 static func ParseRacesDB():
 	for resourcePath in FileSystem.ParseResources(Path.RacesPst):
 		var data : RaceData = FileSystem.LoadResource(resourcePath, false)
 		var id : int = SetCellHash(data.name)
-		assert(not RacesDB.has(id), "Duplicated cell in RacesDB")
-		RacesDB[id] = data
-
-static func ParseHairstylesDB():
-	for resourcePath in FileSystem.ParseResources(Path.HairstylePst):
-		var data : HairstyleData = FileSystem.LoadResource(resourcePath, false)
-		data._id = SetCellHash(data._name)
-		assert(not HairstylesDB.has(data._id), "Duplicated cell in HairstylesDB")
-		HairstylesDB[data._id] = data
-
-static func ParsePalettesDB():
-	PalettesDB.resize(Palette.COUNT)
-	var categoryFolders : Array[String] = [Path.PaletteHairPst, Path.PaletteSkinPst, Path.PaletteEquipPst]
-	for categoryIdx in Palette.COUNT:
-		for resourcePath in FileSystem.ParseResources(categoryFolders[categoryIdx]):
-			var data : FileData = FileSystem.LoadResource(resourcePath, false)
-			var id : int = SetCellHash(data._name)
-			assert(not PalettesDB[categoryIdx].has(id), "Duplicated cell in PalettesDB")
-			data._id = id
-			PalettesDB[categoryIdx][id] = data
+		if id != UnknownHash:
+			RacesDB[id] = data
 
 static func ParseEntitiesDB():
 	for resourcePath in FileSystem.ParseResources(Path.EntityPst):
@@ -73,6 +48,8 @@ static func ParseEntitiesDB():
 			assert(entity._id == entity._name.hash(), "ID for entity %s is not set, add: %d" % [entity._name, entity._name.hash()])
 			if entity._parent:
 				entity = entity.GetMergedEntity()
+
+			entity._questID = entity._quest.id if entity._quest else UnknownHash
 
 			for statStr in EntityData.hashedStats:
 				if entity._stats.has(statStr):
@@ -87,47 +64,34 @@ static func ParseEntitiesDB():
 				assert(not EntitiesDB.has(entity._id), "Duplicated entity in EntitiesDB: " + entity._name)
 				EntitiesDB[entity._id] = entity
 
-static func ParseEmotesDB():
-	for resourcePath in FileSystem.ParseResources(Path.EmotePst):
+static func ParseCellDB(db : Dictionary, path : String):
+	for resourcePath in FileSystem.ParseResources(path):
 		var cell : BaseCell = FileSystem.LoadResource(resourcePath, false)
 		cell.id = SetCellHash(cell.name)
-		assert(not EmotesDB.has(cell.id), "Duplicated cell in EmotesDB")
-		EmotesDB[cell.id] = cell
-
-static func ParseItemsDB():
-	for resourcePath in FileSystem.ParseResources(Path.ItemPst):
-		var cell : ItemCell = FileSystem.LoadResource(resourcePath, false)
-		cell.id = DB.SetCellHash(cell.name)
-		assert(not ItemsDB.has(cell.id), "Duplicated cell in ItemsDB")
-		ItemsDB[cell.id] = cell
-
-static func ParseSkillsDB():
-	for resourcePath in FileSystem.ParseResources(Path.SkillPst):
-		var cell : SkillCell = FileSystem.LoadResource(resourcePath, false)
-		# Only instantiate packed scenes when running the game, not in the editor
-		if not Engine.is_editor_hint():
-			cell.Instantiate()
-		cell.id = SetCellHash(cell.name)
-		assert(SkillsDB.has(cell.id) == false, "Duplicated cell in SkillsDB for %d" % cell.id)
-		assert(cell.modifiers, "Modifiers not set for %s" % cell.name)
-		SkillsDB[cell.id] = cell
+		if cell.id != UnknownHash:
+			# Only instantiate packed scenes when running the game, not in the editor
+			if cell is SkillCell and not Engine.is_editor_hint():
+				cell.Instantiate()
+			db[cell.id] = cell
 
 static func ParseQuestsDB():
 	for resourcePath in FileSystem.ParseResources(Path.QuestPst):
 		var quest : QuestData = FileSystem.LoadResource(resourcePath, false)
-		assert(QuestsDB.has(quest.id) == false, "Duplicated quest in QuestsDB")
-		QuestsDB[quest.id] = quest
+		quest.id = SetCellHash(quest.name)
+		if quest.id != UnknownHash:
+			QuestsDB[quest.id] = quest
 
 #
 static func HasCellHash(cellname : StringName) -> bool:
 	return hashDB.has(cellname)
 
-static func SetCellHash(cellname : StringName) -> int:
-	var cellHash : int = UnknownHash
+static func SetCellHash(cellname : StringName, cellID : int = UnknownHash) -> int:
 	var hasHash : bool = HasCellHash(cellname)
-	assert(not hasHash, "Cell hash %d already exists for %s" % [cellHash, cellname])
+	var cellHash : int = UnknownHash
+	assert(not hasHash, "Cell hash already exists for %s" % cellname)
 	if not hasHash:
-		cellHash = cellname.hash()
+		var cellNameHash : int = cellname.hash()
+		cellHash = cellNameHash if cellID == UnknownHash else cellID
 		hashDB[cellname] = cellHash
 	return cellHash
 
@@ -205,13 +169,20 @@ static func WarmShaders():
 
 #
 static func Init():
-	ParseMapsDB()
-	ParseMusicDB()
-	ParsePalettesDB()
+	PalettesDB.resize(Palette.COUNT)
+	ParseFileDB(PalettesDB[Palette.HAIR], Path.PaletteHairPst)
+	ParseFileDB(PalettesDB[Palette.SKIN], Path.PaletteSkinPst)
+	ParseFileDB(PalettesDB[Palette.EQUIPMENT], Path.PaletteEquipPst)
+
 	ParseRacesDB()
-	ParseHairstylesDB()
-	ParseEmotesDB()
-	ParseItemsDB()
-	ParseSkillsDB()
-	ParseEntitiesDB()
+	ParseFileDB(HairstylesDB, Path.HairstylePst)
+
+	ParseFileDB(MapsDB, Path.MapDataPst)
+	ParseFileDB(MusicDB, Path.MusicPst)
+
+	ParseCellDB(EmotesDB, Path.EmotePst)
+	ParseCellDB(ItemsDB, Path.ItemPst)
+	ParseCellDB(SkillsDB, Path.SkillPst)
+
 	ParseQuestsDB()
+	ParseEntitiesDB()

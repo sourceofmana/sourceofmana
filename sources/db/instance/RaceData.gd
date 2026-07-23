@@ -1,11 +1,13 @@
 extends Resource
 class_name RaceData
 
+#
 @export var name : String						= "Unknown"
 @export var faces : Array[Texture2D]			= []
 @export var bodies : Array[Texture2D]			= []
 @export var skins : Dictionary[String, Material]	= {}
 
+#
 func GetSkinMaterial(skintone : int) -> Material:
 	for skinName in skins:
 		if skinName.hash() == skintone:

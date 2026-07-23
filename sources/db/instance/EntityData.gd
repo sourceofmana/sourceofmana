@@ -24,9 +24,10 @@ class_name EntityData
 @export var _drops : Dictionary[ItemCell, float]	= {}
 @export var _spawns : Dictionary[EntityData, int]	= {}
 @export_category("Quests")
-@export var _questID : int							= ProgressCommons.Quest.UNKNOWN
+@export var _quest : QuestData						= null
 @export var _questState : int						= ProgressCommons.UnknownProgress
 @export var _questStateMax : int					= ProgressCommons.UnknownProgress
+var _questID : int									= DB.UnknownHash
 @export_category("Audio")
 @export var _stateSFX : Dictionary[ActorCommons.State, AudioStream]	= {}
 @export var _alterationSFX : Dictionary[ActorCommons.Alteration, AudioStream]	= {}
@@ -36,7 +37,7 @@ class_name EntityData
 const hashedStats : PackedStringArray				= ["race", "skintone", "hairstyle", "haircolor"]
 
 func IsQuestStateVisible(questState : int) -> bool:
-	if _questID == ProgressCommons.Quest.UNKNOWN:
+	if _questID == DB.UnknownHash:
 		return true
 	if _questStateMax != ProgressCommons.UnknownProgress:
 		return questState >= _questState and questState <= _questStateMax
@@ -83,7 +84,8 @@ func GetMergedEntity() -> EntityData:
 		merged._drops = _drops.duplicate()
 
 	# Quest
-	merged._questID = _questID if _questID != ProgressCommons.Quest.UNKNOWN else merged._questID
+	merged._quest = _quest if _quest != null else merged._quest
+	merged._questID = merged._quest.id if merged._quest else DB.UnknownHash
 	merged._questState = _questState if _questState != ProgressCommons.UnknownProgress else merged._questState
 	merged._questStateMax = _questStateMax if _questStateMax != ProgressCommons.UnknownProgress else merged._questStateMax
 

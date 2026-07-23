@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_ydrke"]
 [ext_resource type="Resource" uid="uid://bnaqbs0np0lkj" path="res://presets/entities/Chest.tres" id="3_dyg1f"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_qiwmn"]
+[ext_resource type="Resource" uid="uid://c8e5pivwwoiy8" path="res://presets/quests/SnakePitThief.tres" id="quest"]
 
 [resource]
 script = ExtResource("2_ydrke")
@@ -15,5 +16,5 @@ _radius = 26
 _stats = {}
 _equipment = Array[ExtResource("1_wugrw")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("1_8noqe")
-_questID = 2
+_quest = ExtResource("quest")
 _questState = 32

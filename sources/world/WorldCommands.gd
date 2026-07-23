@@ -311,16 +311,14 @@ func CommandBroadcast(caller : PlayerAgent, text : String) -> bool:
 	return true
 
 # Progress
-func CommandQuest(caller : PlayerAgent, questStr : String, stateStr : String) -> bool:
-	if not caller or not caller.progress:
+func CommandQuest(caller : PlayerAgent, questName : String, stateStr : String) -> bool:
+	if not caller or not caller.progress or not DB.HasCellHash(questName):
 		return false
 
-	var questID : int = questStr.to_int()
+	var questID : int = DB.GetCellHash(questName)
 	var state : int = stateStr.to_int()
-	if questID in DB.QuestsDB:
-		NpcCommons.SetQuest(caller, questID, state)
-		return true
-	return false
+	NpcCommons.SetQuest(caller, questID, state)
+	return true
 
 func CommandBestiary(caller : PlayerAgent, monsterName : String, countStr : String) -> bool:
 	if not caller or not caller.progress:

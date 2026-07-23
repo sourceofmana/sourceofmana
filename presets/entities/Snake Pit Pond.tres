@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_5dpsi"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="3_1y5ap"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_5dpsi"]
+[ext_resource type="Resource" uid="uid://dw4saxmb2kqp1" path="res://presets/quests/SnakePitBitingThrist.tres" id="quest"]
 
 [resource]
 script = ExtResource("3_1y5ap")
@@ -14,6 +15,6 @@ _radius = 20
 _stats = {}
 _equipment = Array[ExtResource("1_vqcj6")]([null, null, null, null, null, null, null, null])
 _behaviour = 9
-_questID = 3
+_quest = ExtResource("quest")
 _questState = 1
 _questStateMax = 1

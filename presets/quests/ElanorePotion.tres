@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_25ln0")
-id = 7
+id = 3984490417
 name = "Elanore's Potions"
 description = "Elanore needs ingredients to brew healing potions. Bring her six Maggot Slimes, one Water and one Cactus Drink."
 giver = "Elanore"
