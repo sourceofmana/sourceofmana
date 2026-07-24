@@ -102,6 +102,33 @@ const ResetCodeSize : int				= 6
 # Tools
 const OnlineListPath : String			= ""
 
+enum Platform {
+	UNKNOWN = 0,
+	WINDOWS,
+	LINUX,
+	MACOS,
+	ANDROID,
+	IOS,
+	WEB,
+	FREEBSD,
+	NETBSD,
+	OPENBSD,
+	COUNT
+}
+
+static func GetPlatform() -> Platform:
+	match OS.get_name():
+		"Windows": return Platform.WINDOWS
+		"Linux": return Platform.LINUX
+		"macOS": return Platform.MACOS
+		"Android": return Platform.ANDROID
+		"iOS": return Platform.IOS
+		"Web": return Platform.WEB
+		"FreeBSD": return Platform.FREEBSD
+		"NetBSD": return Platform.NETBSD
+		"OpenBSD": return Platform.OPENBSD
+	return Platform.UNKNOWN
+
 enum AuthError {
 	ERR_OK = 0,
 	ERR_NO_PEER_DATA,

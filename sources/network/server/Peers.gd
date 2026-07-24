@@ -139,12 +139,14 @@ static func GetPermission(peerID : int) -> ActorCommons.Permission:
 	return peer.permission if peer else ActorCommons.Permission.NONE
 
 # Auth validation
-static func FinalizeLogin(peer : Peer, accountName : String, accountData : AccountData, rememberMe : bool = false) -> NetworkCommons.AuthError:
+static func FinalizeLogin(peer : Peer, accountName : String, accountData : AccountData, platform : int, rememberMe : bool) -> NetworkCommons.AuthError:
 	if IsBanned(accountData.accountID):
 		return NetworkCommons.AuthError.ERR_BANNED
 
 	peer.SetAccount(accountData)
-	Launcher.SQL.UpdateAccount(peer.accountID)
+	if platform < 0 or platform >= NetworkCommons.Platform.COUNT:
+		platform = NetworkCommons.Platform.UNKNOWN
+	Launcher.SQL.UpdateAccount(peer.accountID, platform)
 
 	if rememberMe:
 		IssueAuthToken(peer, accountName)

@@ -268,7 +268,7 @@ func FillFieldsFromToken():
 func Connect():
 	nameText = nameTextControl.get_text()
 	if not savedToken.is_empty():
-		if Network.LoginWithToken(savedAccountName, savedToken):
+		if Network.LoginWithToken(savedAccountName, savedToken, NetworkCommons.GetPlatform()):
 			nameText = savedAccountName
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
 			if Launcher.GUI.settingsWindow:
@@ -279,7 +279,7 @@ func Connect():
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
 	FillWarningLabel(authError)
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		if Network.LoginWithPassword(nameText, passwordText, rememberMeCheckBox.button_pressed):
+		if Network.LoginWithPassword(nameText, passwordText, rememberMeCheckBox.button_pressed, NetworkCommons.GetPlatform()):
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
 			if Launcher.GUI.settingsWindow:
 				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
@@ -298,7 +298,7 @@ func CreateAccount():
 		authError = NetworkCommons.CheckEmailInformation(emailText)
 
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		if Network.CreateAccount(nameText, passwordText, emailText, rememberMeCheckBox.button_pressed):
+		if Network.CreateAccount(nameText, passwordText, emailText, rememberMeCheckBox.button_pressed, NetworkCommons.GetPlatform()):
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
 	else:
 		FillWarningLabel(authError)

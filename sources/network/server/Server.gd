@@ -2,7 +2,7 @@ extends NetInterface
 class_name NetServer
 
 # Auth
-func CreateAccount(accountName : String, password : String, email : String, rememberMe : bool, peerID : int):
+func CreateAccount(accountName : String, password : String, email : String, rememberMe : bool, platform : int, peerID : int):
 	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if not peer:
@@ -18,10 +18,10 @@ func CreateAccount(accountName : String, password : String, email : String, reme
 				Network.accounts_list_update.emit()
 				var accountData : Peers.AccountData = Launcher.SQL.ValidateAuthPassword(accountName, password)
 				if accountData:
-					err = Peers.FinalizeLogin(peer, accountName, accountData, rememberMe)
+					err = Peers.FinalizeLogin(peer, accountName, accountData, platform, rememberMe)
 	Network.AuthError(err, peerID)
 
-func LoginWithPassword(accountName : String, password : String, rememberMe : bool, peerID : int):
+func LoginWithPassword(accountName : String, password : String, rememberMe : bool, platform : int, peerID : int):
 	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if not peer:
@@ -33,10 +33,10 @@ func LoginWithPassword(accountName : String, password : String, rememberMe : boo
 			if not accountData:
 				err = NetworkCommons.AuthError.ERR_AUTH
 			else:
-				err = Peers.FinalizeLogin(peer, accountName, accountData, rememberMe)
+				err = Peers.FinalizeLogin(peer, accountName, accountData, platform, rememberMe)
 	Network.AuthError(err, peerID)
 
-func LoginWithToken(accountName : String, token : String, peerID : int):
+func LoginWithToken(accountName : String, token : String, platform : int, peerID : int):
 	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if not peer:
@@ -52,7 +52,7 @@ func LoginWithToken(accountName : String, token : String, peerID : int):
 			if not accountData:
 				err = NetworkCommons.AuthError.ERR_TOKEN
 			else:
-				err = Peers.FinalizeLogin(peer, accountName, accountData)
+				err = Peers.FinalizeLogin(peer, accountName, accountData, platform, false)
 				Launcher.SQL.RefreshAuthToken(peer.accountID, ipAddress)
 	Network.AuthError(err, peerID)
 

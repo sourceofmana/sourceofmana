@@ -73,11 +73,13 @@ func ValidateAuthPassword(username : String, triedPassword : String) -> Peers.Ac
 				return Peers.AccountData.new(accountID, permission)
 	return null
 
-func UpdateAccount(accountID : int) -> bool:
+func UpdateAccount(accountID : int, platform : int = NetworkCommons.Platform.UNKNOWN) -> bool:
 	var newTimestamp : int = SQLCommons.Timestamp()
 	var data : Dictionary = {
-		"last_timestamp": newTimestamp
+		"last_timestamp": newTimestamp,
 	}
+	if platform != NetworkCommons.Platform.UNKNOWN:
+		data["platform"] = platform
 	return db.update_rows("account", "account_id = %d;" % accountID, data)
 
 # Characters
