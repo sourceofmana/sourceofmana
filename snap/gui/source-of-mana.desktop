@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Source of Mana
+Comment=Source of Mana is a classic 2D MMORPG inspired by the golden era of pixel art RPGs.
+Exec=source-of-mana
+Icon=${SNAP}/meta/gui/logo_seed.svg
+Terminal=false
+Type=Application
+Categories=Game;RolePlaying;
+Keywords=mmorpg;rpg;multiplayer;godot;
