@@ -161,18 +161,20 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files) 
 			DirAccess.make_dir_recursive_absolute(file_path.get_base_dir())
 		saveRet |= ResourceSaver.save(server_resource, file_path, ResourceSaver.FLAG_CHANGE_PATH)
 
-	# Map Data, direct resource references used by DB and game systems
+	# Map Data, store paths for heavy resources to avoid loading them at startup
 	var map_data : MapData = MapData.new()
 	map_data._name = mapReader.map_name
-	map_data.serverData = server_resource
-	map_data.layers = layers_scene
 
+	if server_resource:
+		map_data.serverData = ResourceLoader.load(Path.MapServerPst + file_map_hierarchy + Path.RscExt) as MapServerData
+	if layers_scene:
+		map_data.layersPath = Path.MapLayerPst + file_map_hierarchy + Path.SceneExt
 	if nav_region:
-		map_data.navigation = nav_region.navigation_polygon
+		map_data.navigation = ResourceLoader.load(Path.MapNavPst + file_map_hierarchy + Path.RscExt) as NavigationPolygon
 
 	var minimap_path : String = Path.MinimapRsc + file_map_hierarchy + Path.GfxExt
 	if ResourceLoader.exists(minimap_path):
-		map_data.minimap = ResourceLoader.load(minimap_path) as Texture2D
+		map_data.minimapPath = minimap_path
 
 	var map_data_file_path : String = Path.MapDataPst + file_map_hierarchy + Path.RscExt
 	if not DirAccess.dir_exists_absolute(map_data_file_path.get_base_dir()):

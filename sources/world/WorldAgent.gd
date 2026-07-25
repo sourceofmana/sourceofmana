@@ -86,6 +86,9 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 		RemoveAgent(agent)
 
 static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : String = "") -> BaseAgent:
+	if not spawn or not spawn.map:
+		return null
+
 	var agent : BaseAgent = null
 	var data : EntityData = DB.EntitiesDB.get(spawn.id, null)
 	if not data:

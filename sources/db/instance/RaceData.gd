@@ -19,3 +19,14 @@ func HasSkin(skintone : int) -> bool:
 		if skinName.hash() == skintone:
 			return true
 	return false
+
+func StripServer():
+	pass
+
+func StripClient():
+	faces = []
+	bodies = []
+	var strippedSkins : Dictionary[String, Material] = {}
+	for key in skins:
+		strippedSkins[key] = null
+	skins = strippedSkins

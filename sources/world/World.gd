@@ -139,10 +139,16 @@ func BackupPlayers():
 				Launcher.SQL.RefreshCharacter(player)
 
 func _post_launch():
+	if not DB.isInitialized:
+		if not Launcher.dbInitialized.is_connected(_init_world):
+			Launcher.dbInitialized.connect(_init_world, CONNECT_ONE_SHOT)
+		return
+	_init_world()
+
+func _init_world():
 	for mapID in DB.MapsDB:
 		areas[mapID] = WorldMap.Create(mapID)
 	WorldAgent._post_launch()
-
 	isInitialized = true
 
 func Destroy():

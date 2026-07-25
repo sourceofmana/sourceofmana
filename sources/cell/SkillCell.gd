@@ -26,13 +26,10 @@ enum Category
 @export var projectilePreset : PackedScene		= null
 
 #
-func Instantiate():
-	if castPreset:
-		castPreset.instantiate()
-	if skillPreset:
-		skillPreset.instantiate()
-	if projectilePreset:
-		projectilePreset.instantiate()
+func StripClient():
+	super.StripClient()
+	castPreset = null
+	skillPreset = null
 
 func Hover(hovering : bool):
 	super.Hover(hovering)

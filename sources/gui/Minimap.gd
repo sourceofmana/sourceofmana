@@ -17,10 +17,10 @@ func Warped():
 	if not mapData:
 		assert(false, "Could not retrieve the map ID from our map daabase")
 		return
-	if not mapData.minimap:
+	if mapData.minimapPath.is_empty():
 		assert(false, "Could not load the minimap resource")
 		return
-	var resource : Texture2D = mapData.minimap
+	var resource : Texture2D = ResourceLoader.load(mapData.minimapPath) as Texture2D
 	textureRect.set_texture(resource)
 	textureSize = textureRect.texture.get_size()
 	if textureSize != Vector2.ZERO:

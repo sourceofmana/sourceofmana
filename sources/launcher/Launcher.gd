@@ -23,6 +23,7 @@ var Player : Entity					= null
 
 # Signals
 signal launchModeUpdated
+signal dbInitialized
 
 #
 func Mode(launchClient : bool = false, launchServer : bool = false) -> bool:
@@ -37,6 +38,7 @@ func Mode(launchClient : bool = false, launchServer : bool = false) -> bool:
 	if launchServer:	Server()
 	Network.Mode(launchClient, launchServer)
 
+	DB.Init()
 	_post_launch()
 	launchModeUpdated.emit(launchClient, launchServer)
 	return true
@@ -152,7 +154,6 @@ func _ready():
 		printerr("Could not initialize source's base services")
 		Quit()
 
-	DB.Init()
 	Mode(startClient, startServer)
 	await Scene.ready
 

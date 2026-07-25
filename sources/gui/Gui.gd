@@ -171,6 +171,13 @@ func EnterCharMenu():
 		progressTimer.stop()
 		progressTimer = null
 
+	if not DB.isInitialized:
+		if not Launcher.dbInitialized.is_connected(_show_char_menu):
+			Launcher.dbInitialized.connect(_show_char_menu, CONNECT_ONE_SHOT)
+		return
+	_show_char_menu()
+
+func _show_char_menu():
 	loadingControl.set_visible(false)
 	background.set_visible(false)
 	loginPanel.set_visible(false)

@@ -1,10 +1,14 @@
 extends RefCounted
 class_name DB
 
+#
+static var isInitialized : bool								= false
+static var preloadPaths : PackedStringArray					= []
+
 static var MapsDB : Dictionary[int, MapData]				= {}
 static var MusicDB : Dictionary[int, FileData]				= {}
 static var RacesDB : Dictionary[int, RaceData]				= {}
-static var HairstylesDB : Dictionary[int, HairstyleData]		= {}
+static var HairstylesDB : Dictionary[int, HairstyleData]	= {}
 static var PalettesDB : Array[Dictionary]					= []
 static var EntitiesDB : Dictionary[int, EntityData]			= {}
 static var EmotesDB : Dictionary[int, BaseCell]				= {}
@@ -12,10 +16,10 @@ static var ItemsDB : Dictionary[int, ItemCell]				= {}
 static var SkillsDB : Dictionary[int, SkillCell]			= {}
 static var QuestsDB : Dictionary[int, QuestData]			= {}
 
-static var hashDB : Dictionary				= {}
-const UnknownHash : int						= -1
-static var PlayerHash : int					= "Player".hash()
-static var ShipHash : int					= "Ship".hash()
+static var hashDB : Dictionary								= {}
+const UnknownHash : int										= -1
+static var PlayerHash : int									= "Player".hash()
+static var ShipHash : int									= "Ship".hash()
 
 enum Palette
 {
@@ -69,9 +73,6 @@ static func ParseCellDB(db : Dictionary, path : String):
 		var cell : BaseCell = FileSystem.LoadResource(resourcePath, false)
 		cell.id = SetCellHash(cell.name)
 		if cell.id != UnknownHash:
-			# Only instantiate packed scenes when running the game, not in the editor
-			if cell is SkillCell and not Engine.is_editor_hint():
-				cell.Instantiate()
 			db[cell.id] = cell
 
 static func ParseQuestsDB():
@@ -168,8 +169,42 @@ static func WarmShaders():
 			node.queue_free()
 
 #
-static func Init():
+static func Preload():
+	preloadPaths.append_array(FileSystem.ParseResources(Path.PaletteHairPst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.PaletteSkinPst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.PaletteEquipPst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.RacesPst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.HairstylePst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.MapDataPst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.MusicPst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.EmotePst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.ItemPst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.SkillPst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.QuestPst))
+	preloadPaths.append_array(FileSystem.ParseResources(Path.EntityPst))
+
+	for path in preloadPaths:
+		ResourceLoader.load_threaded_request(path)
+
+	Launcher.get_tree().process_frame.connect(PreloadUpdate, CONNECT_ONE_SHOT)
+
+static func PreloadUpdate():
+	for path in preloadPaths:
+		if ResourceLoader.load_threaded_get_status(path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+			Launcher.get_tree().process_frame.connect(PreloadUpdate, CONNECT_ONE_SHOT)
+			return
+	preloadPaths = []
+	isInitialized = true
+	Load()
+
+static func Load():
+	Populate()
+	StripUnused()
+	Launcher.dbInitialized.emit()
+
+static func Populate():
 	PalettesDB.resize(Palette.COUNT)
+
 	ParseFileDB(PalettesDB[Palette.HAIR], Path.PaletteHairPst)
 	ParseFileDB(PalettesDB[Palette.SKIN], Path.PaletteSkinPst)
 	ParseFileDB(PalettesDB[Palette.EQUIPMENT], Path.PaletteEquipPst)
@@ -186,3 +221,49 @@ static func Init():
 
 	ParseQuestsDB()
 	ParseEntitiesDB()
+
+static func Clear():
+	MapsDB.clear()
+	MusicDB.clear()
+	RacesDB.clear()
+	HairstylesDB.clear()
+	for paletteDict in PalettesDB:
+		paletteDict.clear()
+	PalettesDB.clear()
+	EntitiesDB.clear()
+	EmotesDB.clear()
+	ItemsDB.clear()
+	SkillsDB.clear()
+	QuestsDB.clear()
+	hashDB.clear()
+
+static func Init():
+	if isInitialized:
+		Clear()
+		Load()
+	else:
+		Preload()
+
+static func StripDB(db : Dictionary, hasClient : bool, hasServer : bool):
+	for id in db:
+		var copy = db[id].duplicate()
+		if not hasClient:	copy.StripClient()
+		if not hasServer:	copy.StripServer()
+		db[id] = copy
+
+static func StripUnused():
+	var hasClient : bool = Network.Client != null
+	var hasServer : bool = Network.ENetServer != null or Network.WebSocketServer != null
+	if hasClient and hasServer:
+		return
+
+	StripDB(MapsDB, hasClient, hasServer)
+	StripDB(MusicDB, hasClient, hasServer)
+	StripDB(RacesDB, hasClient, hasServer)
+	StripDB(HairstylesDB, hasClient, hasServer)
+	for paletteDict in PalettesDB:
+		StripDB(paletteDict, hasClient, hasServer)
+	StripDB(EntitiesDB, hasClient, hasServer)
+	StripDB(EmotesDB, hasClient, hasServer)
+	StripDB(ItemsDB, hasClient, hasServer)
+	StripDB(SkillsDB, hasClient, hasServer)

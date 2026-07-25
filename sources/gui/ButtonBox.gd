@@ -132,7 +132,7 @@ func _ready():
 	ClearAll()
 
 func _unhandled_input(event : InputEvent):
-	if not visible or not Launcher.Action.IsEnabled():
+	if not visible or not Launcher.Action or not Launcher.Action.IsEnabled():
 		return
 
 	HandleInput(event)

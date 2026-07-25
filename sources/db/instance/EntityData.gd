@@ -100,3 +100,14 @@ func GetMergedEntity() -> EntityData:
 		merged._isBoss = true
 
 	return merged
+
+func StripClient():
+	_customTexture = null
+	_customMaterial = null
+	_stateSFX = {}
+	_alterationSFX = {}
+
+func StripServer():
+	_skills = {}
+	_drops = {}
+	_spawns = {}

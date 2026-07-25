@@ -6,6 +6,12 @@ class_name FileData
 @export var _resource : Resource	= null
 
 #
+func StripClient():
+	_resource = null
+
+func StripServer():
+	pass
+
 static func Create(key : String, resource : Resource) -> FileData:
 	var data : FileData = FileData.new()
 	data._id = key.hash()

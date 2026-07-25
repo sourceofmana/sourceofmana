@@ -11,6 +11,12 @@ class_name ItemCell
 @export var spriteVframes : int				= 0
 
 #
+func StripClient():
+	super.StripClient()
+	textures = []
+	shader = null
+	animationOverrides = null
+
 func Use():
 	if usable:
 		super.Use()

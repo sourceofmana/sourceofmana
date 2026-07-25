@@ -21,10 +21,10 @@ extends PanelContainer
 @onready var skintonePrev : Button			= $Margin/VBox/SkinTone/Previous
 @onready var skintoneNext : Button			= $Margin/VBox/SkinTone/Next
 
-@onready var hairstylesCount : int			= DB.HairstylesDB.size()
-@onready var haircolorsCount : int			= DB.PalettesDB[DB.Palette.HAIR].size()
-@onready var raceCount : int				= DB.RacesDB.size()
 var skintoneCount : int						= 0
+var hairstylesCount : int					= 0
+var haircolorsCount : int					= 0
+var raceCount : int							= 0
 
 var hairstyleValue : int					= 0
 var haircolorValue : int					= 0
@@ -136,6 +136,13 @@ func _on_skintone_next_button():
 
 #
 func Randomize():
+	if hairstylesCount == 0:
+		hairstylesCount = DB.HairstylesDB.size()
+	if haircolorsCount == 0:
+		haircolorsCount = DB.PalettesDB[DB.Palette.HAIR].size()
+	if raceCount == 0:
+		raceCount = DB.RacesDB.size()
+
 	hairstyleValue = randi() % hairstylesCount
 	RefreshHairstyle()
 	haircolorValue = randi() % haircolorsCount
@@ -146,7 +153,3 @@ func Randomize():
 	RefreshRace()
 	skintoneValue = randi() % skintoneCount
 	RefreshSkintone()
-
-#
-func _ready():
-	Randomize()

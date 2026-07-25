@@ -58,9 +58,12 @@ static func LoadMapData(mapID : int) -> MapServerData:
 
 static func LoadMapLayers(mapID : int) -> Node2D:
 	var mapData : MapData = DB.MapsDB.get(mapID, null)
-	if not mapData or not mapData.layers:
+	if not mapData or mapData.layersPath.is_empty():
 		return null
-	return mapData.layers.instantiate()
+	var layers : PackedScene = ResourceLoader.load(mapData.layersPath) as PackedScene
+	if not layers:
+		return null
+	return layers.instantiate()
 
 static func LoadMapNavigation(mapID : int) -> NavigationPolygon:
 	var mapData : MapData = DB.MapsDB.get(mapID, null)

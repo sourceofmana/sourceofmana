@@ -222,6 +222,7 @@ func EnableCharacterCreator(enable : bool):
 		if enable:
 			if Launcher.Camera.IsZooming(ActorCommons.CameraZoomDefault):
 				Launcher.Camera.ZoomAt(ActorCommons.CameraZoomDouble)
+			RandomizeCharacter()
 			AddCharacter(traitsPanel.GetValues(), {}, ActorCommons.MaxCharacterCount)
 		else:
 			if Launcher.Camera.IsZooming(ActorCommons.CameraZoomDouble):

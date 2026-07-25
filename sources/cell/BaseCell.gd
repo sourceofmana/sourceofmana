@@ -31,5 +31,11 @@ func Use():
 			_:
 				assert(false, "Cell type not recognized")
 
+func StripClient():
+	icon = null
+
+func StripServer():
+	pass
+
 func Hover(_hovering : bool):
 	pass

@@ -5,3 +5,10 @@ class_name HairstyleData
 @export var animationOverrides : AnimationLibrary	= null
 @export var spriteHframes : int						= 0
 @export var spriteVframes : int						= 0
+
+func StripServer():
+	pass
+
+func StripClient():
+	texture = null
+	animationOverrides = null
