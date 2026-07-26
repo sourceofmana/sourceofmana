@@ -15,19 +15,17 @@ func _ready():
 	timers.set_name("Timers")
 	add_child.call_deferred(timers)
 
-	if map.instances.size() > 1:
-		timers.tree_entered.connect(_map_loaded)
+	if map.navPoly and not map.navPoly.get_vertices().is_empty():
+		timers.tree_entered.connect(CheckNavReady)
 	else:
-		var mapIterationID : int = NavigationServer2D.map_get_iteration_id(map.mapRID)
-		var regionIterationID : int = NavigationServer2D.region_get_iteration_id(map.regionRID)
-		timers.tree_entered.connect(CheckIterationID.bind(mapIterationID, regionIterationID))
+		timers.tree_entered.connect(_map_loaded)
 
-func CheckIterationID(mapIterationID : int, regionIterationID : int):
-	if NavigationServer2D.map_get_iteration_id(map.mapRID) != mapIterationID and \
-		NavigationServer2D.region_get_iteration_id(map.regionRID) != regionIterationID:
+func CheckNavReady():
+	if NavigationServer2D.map_get_iteration_id(map.mapRID) > 0 \
+		and NavigationServer2D.region_owns_point(map.regionRID, map.navPoly.get_vertices()[0]):
 		_map_loaded()
 	else:
-		Callback.SelfDestructTimer(timers, 0.1, CheckIterationID, [mapIterationID, regionIterationID])
+		Callback.SelfDestructTimer(timers, 0.1, CheckNavReady)
 
 func _map_loaded():
 	for spawn in map.spawns:
