@@ -19,12 +19,10 @@ func TrackPlayer(player : PlayerAgent):
 		return
 
 	var rid : int = player.get_rid().get_id()
-	if trackedTargets.has(rid):
-		return
-
-	peyoteKills[rid] = 0
-	maggotKills[rid] = 0
-	trackedTargets[rid] = DB.UnknownHash
+	if not trackedTargets.has(rid):
+		peyoteKills[rid] = 0
+		maggotKills[rid] = 0
+		trackedTargets[rid] = DB.UnknownHash
 
 	if not player.enemy_killed.is_connected(OnEnemyKilled):
 		player.enemy_killed.connect(OnEnemyKilled)
