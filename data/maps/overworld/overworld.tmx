@@ -1812,53 +1812,38 @@
   </object>
   <object id="75" name="Hurnscald Port" type="Port" x="1374.5" y="2377.44">
    <properties>
-    <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="88"/>
-    <property name="dest_pos_y" type="int" value="151"/>
-    <property name="sail_pos_x" type="int" value="93"/>
-    <property name="sail_pos_y" type="int" value="151"/>
+    <property name="disembark_pos_x" type="int" value="88"/>
+    <property name="disembark_pos_y" type="int" value="151"/>
+    <property name="sailing_pos_x" type="int" value="93"/>
+    <property name="sailing_pos_y" type="int" value="151"/>
    </properties>
    <polygon points="58.5007,65.2324 58.5007,31.3116 103.501,31.3116 103.501,65.2324"/>
   </object>
   <object id="65" name="Artis Port" type="Port" x="4289.1" y="1595">
    <properties>
-    <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="270"/>
-    <property name="dest_pos_y" type="int" value="102"/>
-    <property name="sail_pos_x" type="int" value="275"/>
-    <property name="sail_pos_y" type="int" value="102"/>
-   </properties>
-   <polygon points="55.9006,60.7943 55.9006,29.1813 98.9006,29.1813 98.9006,60.7943"/>
-  </object>
-  <object id="66" name="Warp Artis" type="Warp" x="4271" y="1609">
-   <properties>
-    <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
     <property name="dest_map" value="Artis"/>
     <property name="dest_pos_x" type="int" value="197"/>
     <property name="dest_pos_y" type="int" value="104"/>
+    <property name="disembark_pos_x" type="int" value="270"/>
+    <property name="disembark_pos_y" type="int" value="102"/>
+    <property name="sailing_pos_x" type="int" value="275"/>
+    <property name="sailing_pos_y" type="int" value="102"/>
    </properties>
-   <polygon points="34.1796,41.2854 34.1796,19.817 60.4714,19.817 60.4714,41.2854"/>
+   <polygon points="55.9006,60.7943 55.9006,29.1813 98.9006,29.1813 98.9006,60.7943"/>
   </object>
   <object id="68" name="Drazil Port" type="Port" x="1742.4" y="2109.15">
    <properties>
-    <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="112"/>
-    <property name="dest_pos_y" type="int" value="133"/>
-    <property name="sail_pos_x" type="int" value="112"/>
-    <property name="sail_pos_y" type="int" value="138"/>
-   </properties>
-   <polygon points="41.6004,78.846 41.6004,37.846 73.6004,37.846 73.6004,78.846"/>
-  </object>
-  <object id="69" name="Warp Drazil" type="Warp" x="1751" y="2083">
-   <properties>
-    <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="32"/>
     <property name="dest_map" value="Drazil"/>
     <property name="dest_pos_x" type="int" value="83"/>
     <property name="dest_pos_y" type="int" value="109"/>
+    <property name="disembark_pos_x" type="int" value="112"/>
+    <property name="disembark_pos_y" type="int" value="133"/>
+    <property name="sailing_pos_x" type="int" value="112"/>
+    <property name="sailing_pos_y" type="int" value="138"/>
    </properties>
-   <polygon points="35.4796,45.1316 35.4796,21.6632 62.7714,21.6632 62.7714,45.1316"/>
+   <polygon points="41.6004,78.846 41.6004,37.846 73.6004,37.846 73.6004,78.846"/>
   </object>
   <object id="70" name="Snake Pit" type="Warp" x="1550.51" y="3498.56">
    <properties>
@@ -1922,11 +1907,14 @@
   </object>
   <object id="80" name="Tulimshar Port" type="Port" x="1326" y="3309.07">
    <properties>
-    <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="86"/>
-    <property name="dest_pos_y" type="int" value="213"/>
-    <property name="sail_pos_x" type="int" value="86"/>
-    <property name="sail_pos_y" type="int" value="207"/>
+    <property name="dest_cellsize" type="int" value="32"/>
+    <property name="dest_map" value="Tulimshar Bay"/>
+    <property name="dest_pos_x" type="int" value="62"/>
+    <property name="dest_pos_y" type="int" value="67"/>
+    <property name="disembark_pos_x" type="int" value="86"/>
+    <property name="disembark_pos_y" type="int" value="213"/>
+    <property name="sailing_pos_x" type="int" value="86"/>
+    <property name="sailing_pos_y" type="int" value="207"/>
    </properties>
    <polygon points="41.6004,72.7806 41.6004,34.9346 73.6004,34.9346 73.6004,72.7806"/>
   </object>

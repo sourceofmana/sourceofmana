@@ -320,24 +320,31 @@ func _build_warp_particles(warpNode : Node2D, parent : Node, points : Array):
 	particle.set_owner(parent)
 
 func _create_warp_spawn(warp : Dictionary) -> SpawnObject:
-	var spawn := SpawnObject.new()
+	var spawn : SpawnObject = SpawnObject.new()
 	spawn.id = WarpHash
 	spawn.type = ActorCommons.Type.NPC
 	spawn.spawn_position = Vector2i(warp.position)
 	spawn.respawn_delay = 0.0
+
 	if not warp.autoWarp:
-		spawn.player_script = FileSystem.LoadScript("generic/Warp.gd")
+		if warp.isPort:
+			spawn.player_script = FileSystem.LoadScript("generic/Port.gd")
+		else:
+			spawn.player_script = FileSystem.LoadScript("generic/Warp.gd")
+
 	if not warp.ownScript.is_empty():
 		spawn.own_script = FileSystem.LoadScript(warp.ownScript)
 	elif warp.isPort:
 		spawn.own_script = FileSystem.LoadScript("generic/PortGlobal.gd")
 	else:
 		spawn.own_script = FileSystem.LoadScript("generic/WarpGlobal.gd")
+
 	spawn.nick = warp.name
 	spawn.trigger_polygon = PackedVector2Array(warp.polygon)
 	spawn.destination_map = warp.destinationID
 	spawn.destination_pos = warp.destinationPos
 	spawn.auto_warp = warp.autoWarp
+	spawn.disembark_pos = warp.disembarkPos
 	spawn.sailing_pos = warp.sailingPos
 	spawn.is_targetable = warp.isTargetable
 	spawn.is_global = spawn.spawn_position < Vector2i.LEFT
@@ -762,6 +769,7 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 							"destinationPos": Vector2.ZERO,
 							"autoWarp": !isPort,
 							"isPort": isPort,
+							"disembarkPos": Vector2.ZERO,
 							"sailingPos": Vector2.ZERO,
 							"ownScript": "",
 							"isTargetable": false,
@@ -778,8 +786,10 @@ func make_layer(tmxLayer, parent, data, zindex) -> TileMapLayer:
 								warpData.destinationPos = Vector2(object.properties.dest_pos_x, object.properties.dest_pos_y) * dest_cellsize + Vector2.ONE * (dest_cellsize / 2.0)
 							if "auto_warp" in object.properties:
 								warpData.autoWarp = object.properties.auto_warp
-							if isPort and "sail_pos_x" in object.properties and "sail_pos_y" in object.properties:
-								warpData.sailingPos = Vector2(object.properties.sail_pos_x, object.properties.sail_pos_y) * dest_cellsize + Vector2.ONE * (dest_cellsize / 2.0)
+							if isPort and "disembark_pos_x" in object.properties and "disembark_pos_y" in object.properties:
+								warpData.disembarkPos = Vector2(object.properties.disembark_pos_x, object.properties.disembark_pos_y) * cell_size + Vector2.ONE * (cell_size / 2.0)
+							if isPort and "sailing_pos_x" in object.properties and "sailing_pos_y" in object.properties:
+								warpData.sailingPos = Vector2(object.properties.sailing_pos_x, object.properties.sailing_pos_y) * cell_size + Vector2.ONE * (cell_size / 2.0)
 							if "warp_script" in object.properties:
 								warpData.ownScript = object.properties.warp_script
 							if "is_targetable" in object.properties:

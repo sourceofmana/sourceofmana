@@ -28,6 +28,7 @@ class_name SpawnObject
 @export var destination_pos : Vector2	= Vector2.ZERO
 @export var auto_warp : bool			= true
 @export var sailing_pos : Vector2		= Vector2.ZERO
+@export var disembark_pos : Vector2		= Vector2.ZERO
 
 #
 var map : WorldMap						= null

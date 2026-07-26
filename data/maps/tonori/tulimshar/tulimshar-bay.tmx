@@ -1031,7 +1031,7 @@
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
     <property name="dest_pos_x" type="int" value="86"/>
-    <property name="dest_pos_y" type="int" value="208"/>
+    <property name="dest_pos_y" type="int" value="207"/>
     <property name="is_targetable" type="bool" value="true"/>
     <property name="warp_script" value="generic/OverworldWarp.gd"/>
    </properties>
