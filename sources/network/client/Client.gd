@@ -59,28 +59,36 @@ func ChatSystem(channelName : String, text : String, _peerID : int):
 		Launcher.GUI.chatContainer.AddSystemChat(channelName, text)
 
 func ToggleContext(enable : bool, _peerID : int):
-	Launcher.GUI.dialogueWindow.Toggle(enable)
+	if Launcher.Player:
+		Launcher.GUI.dialogueWindow.Toggle(enable)
 
 func ContextText(author : String, text : String, _peerID : int):
+	if not Launcher.Player:
+		return
 	if not author.is_empty():
 		Launcher.GUI.dialogueWindow.AddName(author)
 	Launcher.GUI.dialogueWindow.AddDialogue(text)
 	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
 
 func ContextThink(author : String, text : String, _peerID : int):
+	if not Launcher.Player:
+		return
 	if not author.is_empty():
 		Launcher.GUI.dialogueWindow.AddName(author)
 	Launcher.GUI.dialogueWindow.AddThink(text)
 	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
 
 func ContextContinue(_peerID : int):
-	Launcher.GUI.dialogueWindow.ToggleButton(true, "Next")
+	if Launcher.Player:
+		Launcher.GUI.dialogueWindow.ToggleButton(true, "Next")
 
 func ContextClose(_peerID : int):
-	Launcher.GUI.dialogueWindow.ToggleButton(true, "Close")
+	if Launcher.Player:
+		Launcher.GUI.dialogueWindow.ToggleButton(true, "Close")
 
 func ContextChoice(texts : PackedStringArray, _peerID : int):
-	Launcher.GUI.dialogueWindow.AddChoices(texts)
+	if Launcher.Player:
+		Launcher.GUI.dialogueWindow.AddChoices(texts)
 
 func HighlightUI(target : int, _peerID : int):
 	if Launcher.GUI:
@@ -297,7 +305,7 @@ func DisplayActions(actions : PackedStringArray, _peerID : int):
 		Launcher.GUI.DisplayActions(actions, UICommons.DisplayActionLongDelaySec)
 
 func PushNotification(notif : String, _peerID : int):
-	if Launcher.GUI:
+	if Launcher.Player and Launcher.GUI:
 		Launcher.GUI.notificationLabel.AddNotification(notif)
 
 func RefreshOnlineList(players : PackedStringArray, _peerID : int):

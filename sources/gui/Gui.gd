@@ -134,6 +134,7 @@ func EnterLoginMenu():
 		progressTimer = null
 
 	infoContext.set_visible(false)
+	choiceContext.Hide()
 	progressionTracker.set_visible(false)
 	bossTracker.set_visible(false)
 	menu.SetItemsVisible(false)
@@ -141,7 +142,8 @@ func EnterLoginMenu():
 	stats.set_visible(false)
 	statWindow.set_visible(false)
 	dialogueContainer.set_visible(false)
-	pickupPanel.set_visible(false)
+	pickupPanel.AnimateClose()
+	notificationLabel.ClearNotification()
 	loadingControl.set_visible(false)
 	actionBoxes.set_visible(false)
 	quitWindow.set_visible(false)

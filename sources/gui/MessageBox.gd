@@ -33,10 +33,3 @@ func Clear():
 func Call(callback : Callable):
 	Clear()
 	callback.call()
-
-#
-func _unhandled_input(event : InputEvent):
-	if not visible or Launcher.Action.IsEnabled():
-		return
-
-	buttonBox.HandleInput(event)
