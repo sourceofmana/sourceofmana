@@ -1,5 +1,8 @@
 extends NpcScript
 
+# Quest items
+var artisFlourSackID : int			= DB.GetCellHash("Artis Flour Sack")
+
 # Reward items
 var croissantID : int				= DB.GetCellHash("Croissant")
 var cactusSourCandyID : int			= DB.GetCellHash("Cactus Sour Candy")
@@ -99,14 +102,24 @@ func OnDecline():
 	Mes("No trouble. The ovens will wait, then.")
 
 func OnReward():
+	if not HasItem(artisFlourSackID):
+		Mes("Have you checked the docks? The flour sacks should be inside the barrel with the blue seal.")
+		return
+
+	if not HasItemsSpace([[artisFlourSackID, -1], [cactusSourCandyID, 5], [croissantID, 5]]):
+		Mes("You found them! But it looks like your bag is too full for me to give you anything in return.")
+		Mes("Free up some space and come back.")
+		return
+
+	RemoveItem(artisFlourSackID)
+	SetQuest(ProgressCommons.Quest.GRAIN_IN_THE_SAND, ProgressCommons.GRAIN_IN_THE_SAND.REWARDS_WITHDREW)
+
 	Mes("You found them! Wonderful.")
 	Mes("With this flour, Tulimshar will have fresh Sandstorm Bread by sundown.")
-
-	SetQuest(ProgressCommons.Quest.GRAIN_IN_THE_SAND, ProgressCommons.GRAIN_IN_THE_SAND.REWARDS_WITHDREW)
 
 	AddItem(cactusSourCandyID, 5)
 	AddItem(croissantID, 5)
 	AddKarma(1)
-	AddExp(20)
+	AddExp(30)
 
 	Mes("Here, take some of my best. Croissants and cactus candy. One is a family recipe and the other one I invented myself!")

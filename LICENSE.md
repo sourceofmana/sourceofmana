@@ -227,6 +227,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/items/neck/bandana-scarf.png [Reid]
 ./graphics/items/quest/envelope.png [Reid]
 ./graphics/items/quest/letter.png [Reid]
+./graphics/items/quest/sack.png [Micksha]
 ./graphics/items/quest/sandstorm-seed.png [Reid]
 ./graphics/items/quest/zieliteamulet-brass.png [Micksha]
 ./graphics/items/shield/leather-shield.png [Len]
