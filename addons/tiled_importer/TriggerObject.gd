@@ -18,7 +18,7 @@ func bodyEntered(body : CollisionObject2D):
 	if not playersInside.has(rid):
 		playersInside[rid] = true
 		Callback.OneShotCallback(body.tree_exiting, OnPlayerLeft, [rid])
-		if body.isWarping:
+		if body.isWarping and linkedNpc.ownScript is not WarpGlobal:
 			body.warp_confirmed.connect(_onWarpConfirmed.bind(body), ConnectFlags.CONNECT_ONE_SHOT)
 		else:
 			linkedNpc.ownScript.OnAreaEnter.call_deferred(body)
