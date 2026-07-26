@@ -505,5 +505,14 @@ func OnTrigger(): pass
 func OnAreaEnter(_player : PlayerAgent): pass
 func OnAreaExit(_player : PlayerAgent): pass
 func OnQuit():
-	if not IsPlayer():
+	if IsPlayer():
+		FlushRemainingActions()
+	else:
 		npc.SubInteraction()
+
+func FlushRemainingActions():
+	while step < steps.size():
+		var dialogueStep : Dictionary = steps[step]
+		if dialogueStep.has("action") and not dialogueStep.has("choices"):
+			dialogueStep["action"].call()
+		step += 1
