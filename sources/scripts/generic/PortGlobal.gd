@@ -3,7 +3,7 @@ class_name PortGlobal
 
 #
 func OnAreaEnter(player : PlayerAgent):
-	if player and not player.ownScript:
+	if player and not player.ownScript and not player.isWarping:
 		if npc.spawnInfo.auto_warp:
 			OnPortWarpConfirm(player)
 		else:

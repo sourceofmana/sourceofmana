@@ -6,7 +6,7 @@ var warpName : String = ""
 
 #
 func OnAreaEnter(player : PlayerAgent):
-	if player and not player.ownScript:
+	if player and not player.ownScript and not player.isWarping:
 		if npc.spawnInfo.auto_warp:
 			OnWarpConfirm(player)
 		else:
