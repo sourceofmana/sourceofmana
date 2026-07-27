@@ -9,6 +9,7 @@ var steps : Array[Dictionary]		= []
 var step : int						= 0
 var timerCount : int				= 0
 var isWaitingForChoice : bool		= false
+var isProcessing : bool				= false
 var windowToggled : bool			= false
 
 # NPC & own script liaison
@@ -418,11 +419,14 @@ func InteractChoice(choiceId : int):
 			isWaitingForChoice = false
 			step = 0
 			steps.clear()
+			isProcessing = true
 			choice["action"].call()
+			isProcessing = false
 
 		ApplyStep()
 
 func ApplyStep():
+	isProcessing = true
 	var stepCount : int = steps.size()
 	if isWaitingForChoice:
 		pass # Skip the current step if we are waiting for a player choice
@@ -463,6 +467,8 @@ func ApplyStep():
 				NpcCommons.ContextClose(own)
 	else:
 		ToggleWindow(false)
+
+	isProcessing = false
 
 	if IsDone():
 		Close()
@@ -511,8 +517,12 @@ func OnQuit():
 		npc.SubInteraction()
 
 func FlushRemainingActions():
+	if isProcessing:
+		return
+	isProcessing = true
 	while step < steps.size():
 		var dialogueStep : Dictionary = steps[step]
 		if dialogueStep.has("action") and not dialogueStep.has("choices"):
 			dialogueStep["action"].call()
 		step += 1
+	isProcessing = false
