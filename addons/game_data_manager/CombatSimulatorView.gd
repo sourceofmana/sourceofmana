@@ -4,10 +4,10 @@ extends Control
 #
 const ATTRIBUTES : PackedStringArray = ["strength", "vitality", "agility", "endurance", "concentration"]
 const ATTR_LABELS : PackedStringArray = ["STR", "VIT", "AGI", "END", "CON"]
-const MATRIX_COLS : int = 18
-const COL_TITLES : PackedStringArray = ["Entity", "Lvl", "Atk", "Def", "MAtk", "MDef", "P→E Phy", "P→E Mag", "E→P Phy", "E→P Mag", "Ratio", "MRatio", "P Hits", "P TTK", "E Hits", "E TTK", "XP", "Kills/Lvl"]
-const COL_WIDTHS : PackedInt32Array = [130, 60, 50, 50, 55, 55, 75, 80, 75, 80, 65, 70, 55, 60, 55, 60, 60, 65]
-const COL_SORT_KEYS : PackedStringArray = ["name", "level", "atk", "def", "matk", "mdef", "p_phys", "p_mag", "e_phys", "e_mag", "ratio", "mratio", "p_hits", "p_ttk", "e_hits", "e_ttk", "xp", "kills"]
+const MATRIX_COLS : int = 19
+const COL_TITLES : PackedStringArray = ["Entity", "Lvl", "Atk", "Def", "MAtk", "MDef", "P→E Phy", "P→E Mag", "E→P Phy", "E→P Mag", "Ratio", "MRatio", "P Hits", "P TTK", "E Hits", "E TTK", "XP", "KTL(P)", "KTL(E)"]
+const COL_WIDTHS : PackedInt32Array = [130, 60, 50, 50, 55, 55, 75, 80, 75, 80, 65, 70, 55, 60, 55, 60, 60, 65, 65]
+const COL_SORT_KEYS : PackedStringArray = ["name", "level", "atk", "def", "matk", "mdef", "p_phys", "p_mag", "e_phys", "e_mag", "ratio", "mratio", "p_hits", "p_ttk", "e_hits", "e_ttk", "xp", "kills_p", "kills_e"]
 
 #
 const PlayerHitsBandMin : int = 3
@@ -407,9 +407,11 @@ func RefreshMatrix():
 		var eHits : int = ceili(float(ps.current.maxHealth) / float(ePhys))
 		var pTTK : float = pHits * (ps.current.castAttackDelay + ps.current.cooldownAttackDelay)
 		var eTTK : float = eHits * (es.current.castAttackDelay + es.current.cooldownAttackDelay)
-		var xp : int = ceili(Formula.GetInternalXpBonus(int(entityData._stats.get("baseExp", 1)), entityLevel))
-		var neededXp : int = Experience.GetNeededExperienceForNextLevel(entityLevel)
-		var kills : int = ceili(float(neededXp) / float(xp)) if neededXp != Experience.MAX_LEVEL_REACHED and xp > 0 else -1
+		var xp : int = entityData._stats.get("baseExp", 1)
+		var neededXpPlayer : int = Experience.GetNeededExperienceForNextLevel(ps.level)
+		var neededXpEntity : int = Experience.GetNeededExperienceForNextLevel(entityLevel)
+		var killsP : int = ceili(float(neededXpPlayer) / float(xp)) if neededXpPlayer != Experience.MAX_LEVEL_REACHED and xp > 0 else -1
+		var killsE : int = ceili(float(neededXpEntity) / float(xp)) if neededXpEntity != Experience.MAX_LEVEL_REACHED and xp > 0 else -1
 
 		rows.append({
 			"entity": entityData,
@@ -430,7 +432,8 @@ func RefreshMatrix():
 			"e_hits": eHits,
 			"e_ttk": eTTK,
 			"xp": xp,
-			"kills": kills,
+			"kills_p": killsP,
+			"kills_e": killsE,
 		})
 
 	rows.sort_custom(SortRows)
@@ -468,13 +471,15 @@ func RefreshMatrix():
 
 		var pHits : int = int(row["p_hits"])
 		var eHits : int = int(row["e_hits"])
-		var kills : int = int(row["kills"])
+		var killsP : int = int(row["kills_p"])
+		var killsE : int = int(row["kills_e"])
 		treeItem.set_text(12, str(pHits))
 		treeItem.set_text(13, "%.1fs" % float(row["p_ttk"]))
 		treeItem.set_text(14, str(eHits))
 		treeItem.set_text(15, "%.1fs" % float(row["e_ttk"]))
 		treeItem.set_text(16, str(int(row["xp"])))
-		treeItem.set_text(17, str(kills) if kills > 0 else "—")
+		treeItem.set_text(17, str(killsP) if killsP > 0 else "—")
+		treeItem.set_text(18, str(killsE) if killsE > 0 else "—")
 
 		treeItem.set_custom_color(12, green if pHits >= PlayerHitsBandMin and pHits <= PlayerHitsBandMax else red)
 		treeItem.set_custom_color(14, green if eHits >= EnemyHitsBandMin and eHits <= EnemyHitsBandMax else red)

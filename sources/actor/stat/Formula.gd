@@ -137,14 +137,8 @@ static func GetWalkRatio(stat : ActorStats) -> float:
 	return ratio
 
 # Experience management
-static func GetInternalXpBonus(baseExp : int, level : int) -> float:
-	return baseExp * pow(level, 1.7)
-
-static func GetXpBonus(stat : ActorStats) -> float:
-	return GetInternalXpBonus(stat.baseExp, stat.level)
-
 static func ApplyXp(agent : AIAgent):
-	var bonus : float = Formula.GetXpBonus(agent.stat)
+	var bonus : float = agent.stat.baseExp
 	for entry in agent.attackers:
 		if entry.attacker != null and not entry.attacker.is_queued_for_deletion():
 			var damageRatio : float = agent.GetDamageRatio(entry.attacker)

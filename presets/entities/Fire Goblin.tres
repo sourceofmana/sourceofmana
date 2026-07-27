@@ -17,8 +17,9 @@ _spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
 "attack": 15,
+"baseExp": 15,
 "defense": 20,
-"level": 3,
+"level": 5,
 "mattack": 30,
 "maxHealth": 75,
 "mdefense": 20,

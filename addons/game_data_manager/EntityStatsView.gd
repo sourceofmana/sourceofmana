@@ -4,6 +4,7 @@ extends TableViewBase
 #
 const STAT_COLUMNS : Array[Dictionary] = [
 	{ "name" : "level", "type" : TYPE_INT },
+	{ "name" : "baseExp", "type" : TYPE_INT },
 	{ "name" : "race", "type" : TYPE_STRING },
 	{ "name" : "gender", "type" : TYPE_STRING },
 	{ "name" : "hairstyle", "type" : TYPE_STRING },
