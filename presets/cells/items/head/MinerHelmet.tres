@@ -1,16 +1,29 @@
 [gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://bbaa6ku1maggk"]
 
 [ext_resource type="Texture2D" uid="uid://cfopvv4nys78t" path="res://data/graphics/items/head/miner-helmet.png" id="1_icon"]
-[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_script"]
-[ext_resource type="Texture2D" uid="uid://hhxnm0bjacvp" path="res://data/graphics/sprites/equipment/head/miner-helmet.png" id="3_sprite"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_statmod"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_cellmod"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_script"]
+[ext_resource type="Texture2D" uid="uid://hhxnm0bjacvp" path="res://data/graphics/sprites/equipment/head/miner-helmet.png" id="5_sprite"]
+
+[sub_resource type="Resource" id="Resource_def"]
+script = ExtResource("2_statmod")
+_effect = 14
+_value = 3.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_mod"]
+script = ExtResource("3_cellmod")
+_modifiers = Array[ExtResource("2_statmod")]([SubResource("Resource_def")])
 
 [resource]
-script = ExtResource("2_script")
+script = ExtResource("4_script")
 slot = 4
-textures = Array[Texture2D]([ExtResource("3_sprite"), ExtResource("3_sprite"), ExtResource("3_sprite")])
+textures = Array[Texture2D]([ExtResource("5_sprite"), ExtResource("5_sprite"), ExtResource("5_sprite")])
 id = 0
 name = "Miner Helmet"
 icon = ExtResource("1_icon")
 weight = 300.0
+modifiers = SubResource("Resource_mod")
 metadata/light_radius = 96
 metadata/light_color = Color(1, 0.824, 0.553, 1)
