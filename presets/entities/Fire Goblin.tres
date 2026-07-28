@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://bqg1nlmgehdkc" path="res://presets/cells/skills/Spitfire.tres" id="4_spit"]
 [ext_resource type="Texture2D" uid="uid://b84mwc1b6hjdr" path="res://data/graphics/sprites/monsters/firegoblin.png" id="5_tex"]
 [ext_resource type="AudioStream" uid="uid://cdowss8b51os6" path="res://data/sounds/entities/fire-goblin/attack.ogg" id="7_x38au"]
+[ext_resource type="Resource" uid="uid://cwhbrq8s3oq7q" path="res://presets/cells/items/common/SulphurPowder.tres" id="8_sulphur"]
 [ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
@@ -29,6 +30,9 @@ _equipment = Array[ExtResource("1_82due")]([null, null, null, null, null, null, 
 _customTexture = ExtResource("5_tex")
 _skills = Dictionary[ExtResource("3_skill"), float]({
 ExtResource("4_spit"): 2.0
+})
+_drops = Dictionary[ExtResource("1_82due"), float]({
+ExtResource("8_sulphur"): 0.2
 })
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("7_x38au")

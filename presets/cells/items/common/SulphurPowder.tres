@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://cwhbrq8s3oq7q"]
+
+[ext_resource type="Texture2D" uid="uid://chohwstjqw5ow" path="res://data/graphics/items/common/powder.png" id="1_icon"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_script"]
+[ext_resource type="Material" uid="uid://c6ayx008x7axr" path="res://presets/palettes/shaders/equipment/cloth-used.tres" id="3_07ekf"]
+
+[resource]
+script = ExtResource("2_script")
+shader = ExtResource("3_07ekf")
+name = "Sulphur Powder"
+description = "A fine yellow powder with a pungent smell."
+icon = ExtResource("1_icon")
+stackable = true
