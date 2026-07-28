@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://dtoeo3xx4wyyp" path="res://presets/gui/StatIndicator.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://4y5ck1nvjs0k" path="res://data/press/splash/splashscreen.png" id="2_u1iab"]
 [ext_resource type="Script" uid="uid://bavy7riduk2ru" path="res://sources/gui/Gui.gd" id="3"]
-[ext_resource type="Script" uid="uid://v8uc3k2d1ge4" path="res://sources/gui/StatIndicator.gd" id="3_5uo3f"]
 [ext_resource type="PackedScene" uid="uid://dml4oic211pyo" path="res://presets/gui/WindowButton.tscn" id="3_sl5jl"]
 [ext_resource type="PackedScene" uid="uid://c2q5vtkxo04dp" path="res://presets/gui/ActionBox.tscn" id="4"]
 [ext_resource type="Shader" uid="uid://o15mlu64x2t6" path="res://sources/shaders/ControlMask.gdshader" id="4_60kv4"]
@@ -69,12 +68,6 @@ shader_parameter/progress = 0.0
 shader_parameter/inverted = true
 shader_parameter/edge_softness = 0.05
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hg7ie"]
-texture = ExtResource("4_ah7dm")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w48pk"]
-texture = ExtResource("5_fdh06")
-
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1218639774]
 script = ExtResource("3")
 
@@ -109,29 +102,8 @@ custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 alignment = 1
 
-[node name="Stat" type="Control" parent="Overlay/VSections/Indicators" unique_id=1156802164]
-visible = false
+[node name="Stat" parent="Overlay/VSections/Indicators" unique_id=79806359 instance=ExtResource("2")]
 layout_mode = 2
-size_flags_horizontal = 0
-mouse_filter = 1
-script = ExtResource("3_5uo3f")
-
-[node name="StatContent" parent="Overlay/VSections/Indicators/Stat" unique_id=79806359 instance=ExtResource("2")]
-layout_mode = 0
-offset_right = 273.0
-offset_bottom = 61.0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-mouse_filter = 2
-script = null
-
-[node name="StatButton" type="TextureButton" parent="Overlay/VSections/Indicators/Stat" unique_id=1134635495]
-custom_minimum_size = Vector2(62, 61)
-layout_mode = 0
-offset_right = 62.0
-offset_bottom = 61.0
-size_flags_horizontal = 10
-size_flags_vertical = 0
 
 [node name="Info" type="VBoxContainer" parent="Overlay/VSections/Indicators" unique_id=823456764]
 layout_mode = 2
@@ -160,17 +132,21 @@ visible = false
 layout_mode = 2
 
 [node name="Menu" type="Control" parent="Overlay/VSections/Indicators" unique_id=349554582]
+custom_minimum_size = Vector2(550, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-mouse_filter = 1
 script = ExtResource("6_npwx0")
+
+[node name="TouchButton" type="TouchScreenButton" parent="Overlay/VSections/Indicators/Menu" unique_id=1178387935]
+position = Vector2(486, 0)
+texture_normal = ExtResource("4_ah7dm")
+texture_pressed = ExtResource("5_fdh06")
 
 [node name="MenuContent" type="TextureRect" parent="Overlay/VSections/Indicators/Menu" unique_id=401767902]
 material = SubResource("ShaderMaterial_wjdwk")
 layout_mode = 0
-offset_left = -511.0
 offset_top = 13.0
-offset_right = -38.0
+offset_right = 512.0
 offset_bottom = 55.0
 grow_horizontal = 0
 grow_vertical = 2
@@ -180,7 +156,6 @@ texture = ExtResource("6_mf0sy")
 stretch_mode = 3
 
 [node name="HBoxItems" type="HBoxContainer" parent="Overlay/VSections/Indicators/Menu/MenuContent" unique_id=1930884178]
-visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -197,82 +172,75 @@ size_flags_vertical = 0
 alignment = 2
 
 [node name="Stat" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1852078003 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+visible = false
 layout_mode = 2
-icon = ExtResource("10_mq57a")
-flat = true
+texture = ExtResource("10_mq57a")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Stat")
 targetShortcut = &"ui_stat"
 
 [node name="Inventory" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1398346524 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+visible = false
 layout_mode = 2
-icon = ExtResource("5_ntnop")
-flat = true
-icon_alignment = 1
+texture = ExtResource("5_ntnop")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Inventory")
 targetShortcut = &"ui_inventory"
 
 [node name="Skill" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1054257533 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+visible = false
 layout_mode = 2
-icon = ExtResource("13_h6wc7")
-flat = true
+texture = ExtResource("13_h6wc7")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Skill")
 targetShortcut = &"ui_skill"
 
 [node name="Progress" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=39792699 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+visible = false
 layout_mode = 2
-icon = ExtResource("9_vtuwx")
-flat = true
+texture = ExtResource("9_vtuwx")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Progress")
 targetShortcut = &"ui_progress"
 
 [node name="Minimap" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=713811777 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+visible = false
 layout_mode = 2
-icon = ExtResource("7_cv35r")
-flat = true
+texture = ExtResource("7_cv35r")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Minimap")
 targetShortcut = &"ui_minimap"
 
 [node name="Chat" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1407037298 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+visible = false
 layout_mode = 2
-icon = ExtResource("6_2quic")
-flat = true
+texture = ExtResource("6_2quic")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Chat")
 targetShortcut = &"ui_chat"
 
 [node name="Emote" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=498199983 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+visible = false
 layout_mode = 2
-icon = ExtResource("8_ppxwt")
-flat = true
+texture = ExtResource("8_ppxwt")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Emote")
 targetShortcut = &"ui_emote"
 
 [node name="Social" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1520835010 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+visible = false
 layout_mode = 2
-icon = ExtResource("22_ubwl8")
-flat = true
+texture = ExtResource("22_ubwl8")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Social")
 targetShortcut = &"ui_social"
 
 [node name="Settings" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=55081747 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
+visible = false
 layout_mode = 2
-icon = ExtResource("11_17vy0")
-flat = true
+texture = ExtResource("11_17vy0")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Settings")
 targetShortcut = &"ui_settings"
 
-[node name="MenuButton" type="Button" parent="Overlay/VSections/Indicators/Menu" unique_id=1162161113]
+[node name="MenuButton" type="Control" parent="Overlay/VSections/Indicators/Menu" unique_id=1162161113]
 custom_minimum_size = Vector2(62, 61)
-layout_mode = 0
+anchors_preset = 0
 offset_right = 62.0
 offset_bottom = 61.0
 size_flags_horizontal = 10
 size_flags_vertical = 0
-layout_direction = 3
-theme_override_styles/normal = SubResource("StyleBoxTexture_hg7ie")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_w48pk")
-theme_override_styles/hover = SubResource("StyleBoxTexture_hg7ie")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_hg7ie")
-theme_override_styles/focus = SubResource("StyleBoxTexture_hg7ie")
 
 [node name="Contexts" type="Control" parent="Overlay/VSections" unique_id=238552505]
 z_as_relative = false
@@ -488,6 +456,7 @@ metadata/_edit_layout_mode = 1
 [node name="Inventory" parent="Windows/Floating" unique_id=1715311206 instance=ExtResource("35_j05ha")]
 visible = false
 show_behind_parent = false
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 0
 offset_left = 645.0
 offset_top = 153.0
@@ -510,7 +479,7 @@ saveOverlayState = true
 
 [node name="Emote" parent="Windows/Floating" unique_id=1332906157 instance=ExtResource("37_v7lrk")]
 visible = false
-custom_minimum_size = Vector2(38, 38)
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
 offset_left = 26.0
 offset_top = -24.0
@@ -545,6 +514,7 @@ allowAutomaticResize = true
 
 [node name="Social" parent="Windows/Floating" unique_id=809635501 instance=ExtResource("14_xidsc")]
 visible = false
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 0
 offset_left = 812.0
 offset_top = -23.0
@@ -553,6 +523,7 @@ offset_bottom = 138.0
 
 [node name="Settings" parent="Windows/Floating" unique_id=189263697 instance=ExtResource("16_gapih")]
 visible = false
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 1
 anchors_preset = 0
 anchor_right = 0.0
@@ -566,6 +537,7 @@ grow_vertical = 1
 
 [node name="Progress" parent="Windows/Floating" unique_id=1569988722 instance=ExtResource("54_112vu")]
 visible = false
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 0
 offset_left = 1027.0
 offset_top = 159.0
@@ -590,6 +562,7 @@ grow_vertical = 1
 
 [node name="Stat" parent="Windows/Floating" unique_id=1490220876 instance=ExtResource("35_d1kq3")]
 visible = false
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 0
 offset_left = 241.0
 offset_top = -20.0
@@ -608,8 +581,7 @@ offset_right = 39.0
 top_level = true
 
 [connection signal="resized" from="Overlay" to="." method="_on_ui_margin_resized"]
-[connection signal="pressed" from="Overlay/VSections/Indicators/Stat/StatButton" to="Overlay/VSections/Indicators/Stat" method="_on_button_pressed"]
-[connection signal="pressed" from="Overlay/VSections/Indicators/Menu/MenuButton" to="Overlay/VSections/Indicators/Menu" method="_on_button_pressed"]
+[connection signal="pressed" from="Overlay/VSections/Indicators/Menu/TouchButton" to="Overlay/VSections/Indicators/Menu" method="_on_button_pressed"]
 [connection signal="visibility_changed" from="Overlay/VSections/Contexts/Character" to="Overlay/VSections/Contexts/Character" method="_on_visibility_changed"]
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/LeftAnchor/ButtonLeft" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [9]]
 [connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/LeftAnchor/ButtonLeft" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [9]]

@@ -21,4 +21,7 @@ func RefreshEmotes():
 
 #
 func _ready():
-	RefreshEmotes()
+	if DB.isInitialized:
+		RefreshEmotes()
+	elif not Launcher.dbInitialized.is_connected(RefreshEmotes):
+		Launcher.dbInitialized.connect(RefreshEmotes, CONNECT_ONE_SHOT)
