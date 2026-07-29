@@ -109,7 +109,7 @@ func OnHelpWithPotions():
 	if GetQuest(ProgressCommons.Quest.TUTORIAL) < ProgressCommons.TUTORIAL.ELANORE_DONE:
 		OnSendToKael()
 	else:
-		OnMainChoice()
+		Action(OnMainChoice)
 
 func OnPotionQuestReminder():
 	Mes("I still need six Maggot Slimes, one Water and one Cactus Drink. Come back when you have them.")
@@ -123,7 +123,7 @@ func OnPotionQuestTurnIn():
 	RemoveItem(DB.GetCellHash("Cactus Drink"))
 	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.INACTIVE)
 	AddItem(DB.GetCellHash("Cactus Potion"))
-	OnMainChoice()
+	Action(OnMainChoice)
 
 # What is Kaore
 func OnExplainKaore():
