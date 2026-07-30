@@ -4,6 +4,7 @@ extends Control
 @onready var manaStat : Control			= $Mana
 @onready var staminaStat : Control		= $Stamina
 @onready var expStat : Control			= $Exp
+@onready var button : TouchScreenButton	= $TouchButton
 
 #
 func Refresh():
@@ -17,6 +18,13 @@ func Connect():
 	if Launcher.Player:
 		if not Launcher.Player.stat.vital_stats_updated.is_connected(Refresh):
 			Launcher.Player.stat.vital_stats_updated.connect(Refresh)
+
+func SetBarsVisible(isVisible : bool):
+	hpStat.set_visible(isVisible)
+	manaStat.set_visible(isVisible)
+	staminaStat.set_visible(isVisible)
+	expStat.set_visible(isVisible)
+	button.set_visible(isVisible)
 
 #
 func _post_launch():

@@ -139,7 +139,7 @@ func EnterLoginMenu():
 	bossTracker.set_visible(false)
 	menu.SetItemsVisible(false)
 	menu.Close()
-	stats.set_visible(false)
+	stats.SetBarsVisible(false)
 	statWindow.set_visible(false)
 	dialogueContainer.set_visible(false)
 	pickupPanel.AnimateClose()
@@ -212,7 +212,7 @@ func EnterGame():
 	Launcher.Camera.ResetCinematic()
 	DisplayActions(["gp_interact", "gp_target", "gp_untarget", "gp_pickup", "gp_sit"])
 
-	stats.set_visible(true)
+	stats.SetBarsVisible(true)
 	menu.set_visible(true)
 	actionBoxes.set_visible(true)
 	shortcuts.set_visible(true)

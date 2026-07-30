@@ -103,6 +103,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="Stat" parent="Overlay/VSections/Indicators" unique_id=79806359 instance=ExtResource("2")]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
 [node name="Info" type="VBoxContainer" parent="Overlay/VSections/Indicators" unique_id=823456764]
@@ -132,21 +133,21 @@ visible = false
 layout_mode = 2
 
 [node name="Menu" type="Control" parent="Overlay/VSections/Indicators" unique_id=349554582]
-custom_minimum_size = Vector2(550, 0)
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 script = ExtResource("6_npwx0")
 
 [node name="TouchButton" type="TouchScreenButton" parent="Overlay/VSections/Indicators/Menu" unique_id=1178387935]
-position = Vector2(486, 0)
 texture_normal = ExtResource("4_ah7dm")
 texture_pressed = ExtResource("5_fdh06")
 
 [node name="MenuContent" type="TextureRect" parent="Overlay/VSections/Indicators/Menu" unique_id=401767902]
 material = SubResource("ShaderMaterial_wjdwk")
 layout_mode = 0
+offset_left = -448.0
 offset_top = 13.0
-offset_right = 512.0
+offset_right = 64.0
 offset_bottom = 55.0
 grow_horizontal = 0
 grow_vertical = 2
@@ -233,14 +234,6 @@ layout_mode = 2
 texture = ExtResource("11_17vy0")
 targetWindow = NodePath("../../../../../../../Windows/Floating/Settings")
 targetShortcut = &"ui_settings"
-
-[node name="MenuButton" type="Control" parent="Overlay/VSections/Indicators/Menu" unique_id=1162161113]
-custom_minimum_size = Vector2(62, 61)
-anchors_preset = 0
-offset_right = 62.0
-offset_bottom = 61.0
-size_flags_horizontal = 10
-size_flags_vertical = 0
 
 [node name="Contexts" type="Control" parent="Overlay/VSections" unique_id=238552505]
 z_as_relative = false
