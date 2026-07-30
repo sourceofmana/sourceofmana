@@ -44,6 +44,33 @@ func Setup():
 		tree.set_column_custom_minimum_width(columnIdx, 90)
 		tree.set_column_expand_ratio(columnIdx, 1.0)
 
+func GetColumnNames() -> Array[String]:
+	var names : Array[String] = ["Entity"]
+	for col : Dictionary in STAT_COLUMNS:
+		names.push_back(col.name)
+	return names
+
+func GetSortValue(resource : Resource, column : int) -> Variant:
+	if column == 0:
+		return resource._name if resource.get("_name") else ""
+
+	var statIdx : int = column - 1
+	if statIdx < 0 or statIdx >= STAT_COLUMNS.size():
+		return ""
+
+	var statStr : String = STAT_COLUMNS[statIdx].name
+	var stats : Variant = resource.get("_stats")
+	var parent : Variant = resource.get("_parent")
+	var parentStats : Variant = null
+	if parent:
+		var mergedParent : Variant = parent.GetMergedEntity()
+		parentStats = mergedParent.get("_stats") if mergedParent else null
+
+	var statValue : String = GetStatValue(stats, statStr)
+	if statValue != "":
+		return statValue
+	return GetStatValue(parentStats, statStr) if parentStats else ""
+
 func UpdateTreeItem(item : TreeItem, resource : Resource):
 	item.set_text(0, resource._name if resource.get("_name") else "Unnamed")
 	item.set_editable(0, false)

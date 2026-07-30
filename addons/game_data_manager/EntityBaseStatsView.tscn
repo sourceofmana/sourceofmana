@@ -55,4 +55,5 @@ hide_root = true
 
 [connection signal="pressed" from="VBoxContainer/TopBar/RefreshButton" to="." method="_on_refresh_pressed"]
 [connection signal="text_changed" from="VBoxContainer/TopBar/SearchField" to="." method="_on_search_changed"]
+[connection signal="column_title_clicked" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_column_clicked"]
 [connection signal="item_edited" from="VBoxContainer/ScrollContainer/Tree" to="." method="_on_item_edited"]
