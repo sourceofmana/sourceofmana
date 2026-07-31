@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://b4fvy3s1ebo2x"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_f0h6j"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_mr4dg"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_w1pht"]
+[ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="3_xbbvo"]
+[ext_resource type="PackedScene" uid="uid://fnl0d3nmj8jez" path="res://presets/entities/sprites/SlimeSea.tscn" id="spr_SlimeSea"]
+
+[resource]
+script = ExtResource("2_mr4dg")
+_parent = ExtResource("3_xbbvo")
+_id = 1744780248
+_name = "Sea Slime"
+_spritePreset = ExtResource("spr_SlimeSea")
+_radius = 10
+_stats = {
+"level": 1,
+"walkSpeed": 40.0
+}
+_equipment = Array[ExtResource("1_f0h6j")]([null, null, null, null, null, null, null, null])
+_behaviour = 130
