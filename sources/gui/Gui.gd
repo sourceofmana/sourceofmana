@@ -258,8 +258,6 @@ func Destroy():
 
 func _notification(notif):
 	match notif:
-		Node.NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_WM_GO_BACK_REQUEST:
-			ToggleControl(quitWindow)
 		Node.NOTIFICATION_WM_MOUSE_EXIT:
 			if windows:
 				windows.ClearWindowsModifier()
@@ -313,7 +311,6 @@ func GetUITarget(target : UICommons.UITarget) -> Control:
 
 #
 func _ready():
-	get_tree().set_auto_accept_quit(false)
 	get_tree().set_quit_on_go_back(false)
 	DisplayServer.pip_mode_set_auto_enter_on_background(true)
 	DB.WarmShaders()
