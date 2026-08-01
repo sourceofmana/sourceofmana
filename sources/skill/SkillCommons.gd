@@ -3,6 +3,7 @@ class_name SkillCommons
 
 # Constants
 const SkillMeleeName : String			= "Melee"
+const SkillRunName : String				= "Run"
 const PerspectiveIncrease : Vector2		= Vector2(1.0, 1.42)
 
 # Actions
