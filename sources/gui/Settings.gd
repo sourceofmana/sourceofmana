@@ -281,8 +281,14 @@ func apply_sessionoverlay(overlay : Array):
 # Shortcut cells
 func init_shortcutcells(apply : bool):
 	if apply:
-		var cells : Array = GetVal("Session-ShortcutCells")
-		apply_shortcutcells(cells)
+		if not DB.isInitialized:
+			if not Launcher.dbInitialized.is_connected(load_shortcutcells):
+				Launcher.dbInitialized.connect(load_shortcutcells, CONNECT_ONE_SHOT)
+			return
+		load_shortcutcells()
+func load_shortcutcells():
+	var cells : Array = GetVal("Session-ShortcutCells")
+	apply_shortcutcells(cells)
 func save_shortcutcells():
 	var cells : Array = []
 	if Launcher.GUI:
