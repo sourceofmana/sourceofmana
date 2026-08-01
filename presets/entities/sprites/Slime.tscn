@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cesdnjj67k3c"]
 
-[ext_resource type="Texture2D" uid="uid://d3ncrbs57wejx" path="res://data/graphics/sprites/monsters/lulea.png" id="1_kcq17"]
+[ext_resource type="Texture2D" uid="uid://c1otpwl88opx3" path="res://data/graphics/sprites/monsters/slime.png" id="1_isuvu"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_gv6wv"]
 
 [sub_resource type="Animation" id="Animation_qks5j"]
@@ -335,7 +335,7 @@ _data = {
 [node name="Slime" type="Node2D" unique_id=198159022]
 
 [node name="Body" type="Sprite2D" parent="." unique_id=875838069]
-texture = ExtResource("1_kcq17")
+texture = ExtResource("1_isuvu")
 offset = Vector2(0, -12)
 hframes = 9
 vframes = 4
