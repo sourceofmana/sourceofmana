@@ -9,8 +9,8 @@
 
 [resource]
 script = ExtResource("2_ptnqc")
-_id = 228192615
-_name = "Lizzy"
+_id = 1435506622
+_name = "Lizandre"
 _spritePreset = ExtResource("spr_Lizzy")
 _radius = 16
 _stats = {

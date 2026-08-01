@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://e8740tx7wge6"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_gobl"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_gobl"]
+[ext_resource type="PackedScene" uid="uid://dxixywo1th1gv" path="res://presets/entities/sprites/Piou.tscn" id="3_gobl"]
+
+[resource]
+script = ExtResource("2_gobl")
+_id = 3045949408
+_name = "Goblin"
+_spritePreset = ExtResource("3_gobl")
+_radius = 8
+_stats = {
+"level": 1
+}
+_equipment = Array[ExtResource("1_gobl")]([null, null, null, null, null, null, null, null])
+_isBoss = true

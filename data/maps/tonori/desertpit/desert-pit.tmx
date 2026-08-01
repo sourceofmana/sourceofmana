@@ -1112,7 +1112,7 @@
 </data>
  </layer>
  <objectgroup id="5" name="Objects">
-  <object id="3" name="Lizzy" type="Spawn" x="-27" y="-18">
+  <object id="3" name="Lizandre" type="Spawn" x="-27" y="-18">
    <properties>
     <property name="count" value="5"/>
     <property name="type" value="Monster"/>
@@ -1148,7 +1148,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="24" name="Lizzy" type="Spawn" x="1024" y="1760" width="672" height="768">
+  <object id="24" name="Lizandre" type="Spawn" x="1024" y="1760" width="672" height="768">
    <properties>
     <property name="count" value="3"/>
     <property name="type" value="Monster"/>
@@ -1166,7 +1166,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="27" name="Lizzy" type="Spawn" x="1824" y="1568" width="3328" height="1568">
+  <object id="27" name="Lizandre" type="Spawn" x="1824" y="1568" width="3328" height="1568">
    <properties>
     <property name="count" value="20"/>
     <property name="type" value="Monster"/>

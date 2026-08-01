@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://c3m4n5p6q7r8s"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_band"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_band"]
+[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="3_band"]
+
+[resource]
+script = ExtResource("2_band")
+_id = 2834092087
+_name = "Bandit"
+_spritePreset = ExtResource("3_band")
+_radius = 10
+_stats = {
+"level": 1,
+"walkSpeed": 160.0
+}
+_equipment = Array[ExtResource("1_band")]([null, null, null, null, null, null, null, null])

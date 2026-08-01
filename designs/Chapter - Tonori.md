@@ -122,9 +122,9 @@ Pachua
 
 #### Enemies
 Scorpion, Lvl.5 (neutral, high hp, low defense)
-Lizzy Lvl.15 (neutral, slow walksped, high attack)
+Lizandre Lvl.15 (neutral, slow walksped, high attack)
 Desert Snake Lvl.20 (aggro, higher hp than snakes, slower),
-Lizandra Lvl.25 (aggro, higher defense than Lizzy)
+Lizandra Lvl.25 (aggro, higher defense than Lizandre)
 Desert Bird Lvl.30 (neutral, high walkspeed, high attack speed),
 
 

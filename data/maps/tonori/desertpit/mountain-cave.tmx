@@ -1100,7 +1100,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="57" name="Lizzy" type="Spawn" x="2504" y="3156" width="448" height="480">
+  <object id="57" name="Lizandre" type="Spawn" x="2504" y="3156" width="448" height="480">
    <properties>
     <property name="count" value="6"/>
     <property name="type" value="Monster"/>

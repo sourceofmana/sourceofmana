@@ -64,7 +64,6 @@ func OnJobExplanation():
 		Mes("That should be enough to protect yourself")
 		Mes("But if you are in danger, remember to run away, there is no pride in being dead.")
 
-		TeachSkill(DB.GetCellHash("Run"))
 		DisplayActions(["gp_run"])
 		Narrate("Hold Run to sprint and cover ground faster or flee a battle.")
 		Narrate("Sprinting drains stamina, so use it when you need it.")
