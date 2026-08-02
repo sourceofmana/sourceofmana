@@ -14,13 +14,16 @@ _name = "Lizandre"
 _spritePreset = ExtResource("spr_Lizzy")
 _radius = 16
 _stats = {
-"attack": 64,
-"defense": 10,
-"level": 15,
+"attack": 55,
+"baseExp": 25,
+"cooldownAttackDelay": 1.5,
+"defense": 8,
+"level": 12,
 "maxHealth": 220,
-"walkSpeed": 60.0
+"walkSpeed": 130.0
 }
 _equipment = Array[ExtResource("1_4npla")]([null, null, null, null, null, null, null, null])
+_behaviour = 18
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("5_kct1q")
 })

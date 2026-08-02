@@ -34,6 +34,7 @@ theme_type_variation = &"WindowTitleBar"
 [node name="Title" type="Label" parent="TitleBar" unique_id=1955664925]
 layout_mode = 2
 size_flags_horizontal = 6
+theme_override_colors/font_color = Color(1, 1, 0.8666667, 1)
 horizontal_alignment = 1
 
 [node name="HideButton" type="Button" parent="." unique_id=668064795]

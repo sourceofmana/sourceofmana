@@ -15,15 +15,16 @@ _name = "Lizandra"
 _spritePreset = ExtResource("spr_Lizzy")
 _radius = 16
 _stats = {
-"attack": 75,
-"defense": 40,
-"level": 25,
-"maxHealth": 270,
-"walkSpeed": 70.0
+"attack": 65,
+"baseExp": 40,
+"defense": 15,
+"level": 14,
+"maxHealth": 250,
+"walkSpeed": 130.0
 }
 _equipment = Array[ExtResource("1_40ubl")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
-_behaviour = 4
+_behaviour = 36
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("6_ce1sj")
 })

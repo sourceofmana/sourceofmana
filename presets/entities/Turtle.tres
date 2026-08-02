@@ -16,9 +16,14 @@ _name = "Turtle"
 _spritePreset = ExtResource("spr_Turtle")
 _radius = 10
 _stats = {
-"attack": 1,
-"defense": 10,
-"level": 1,
+"attack": 15,
+"baseExp": 15,
+"castAttackDelay": 1.0,
+"cooldownAttackDelay": 1.5,
+"defense": 35,
+"level": 10,
+"maxHealth": 250,
+"mdefense": 40,
 "walkSpeed": 30.0
 }
 _equipment = Array[ExtResource("1_t7tku")]([null, null, null, null, null, null, null, null])

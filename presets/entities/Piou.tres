@@ -16,10 +16,15 @@ _name = "Piou"
 _spritePreset = ExtResource("spr_Piou")
 _radius = 8
 _stats = {
+"attack": 5,
+"baseExp": 1,
+"defense": 1,
 "level": 1,
+"maxHealth": 30,
 "walkSpeed": 30.0
 }
 _equipment = Array[ExtResource("1_q3awk")]([null, null, null, null, null, null, null, null])
+_behaviour = 258
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("3_sitss"),
 4: ExtResource("2_dqrki")

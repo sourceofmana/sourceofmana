@@ -15,7 +15,7 @@ _name = "Scorpion"
 _spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 18
 _stats = {
-"attack": 30,
+"attack": 22,
 "baseExp": 10,
 "defense": 0,
 "level": 4,

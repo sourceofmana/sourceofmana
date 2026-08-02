@@ -16,15 +16,18 @@ _name = "Bird"
 _spritePreset = ExtResource("spr_Bird")
 _radius = 20
 _stats = {
-"attack": 78,
+"attack": 35,
+"baseExp": 110,
 "castAttackDelay": 0.25,
-"cooldownAttackDelay": 0.3,
-"defense": 12,
-"level": 30,
-"maxHealth": 200,
+"cooldownAttackDelay": 0.2,
+"defense": 15,
+"dodgeRate": 0.15,
+"level": 27,
+"maxHealth": 220,
 "walkSpeed": 200.0
 }
 _equipment = Array[ExtResource("1_w8ot5")]([null, null, null, null, null, null, null, null])
+_behaviour = 130
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("6_r840j"),
 4: ExtResource("7_foity")

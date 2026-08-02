@@ -25,7 +25,7 @@ offset_top = 5.0
 offset_right = 59.0
 offset_bottom = 57.0
 textureProgress = ExtResource("6_6rl1b")
-labelColor = Color(0.843137, 0.717647, 0.482353, 1)
+labelColor = Color(1, 1, 0.8666667, 1)
 labelUnit = "%"
 labelOffset = Vector2(0, -2)
 precisionDivider = 100
@@ -41,7 +41,7 @@ offset_top = 15.0
 offset_right = 273.0
 offset_bottom = 29.0
 textureProgress = ExtResource("6")
-labelColor = Color(1, 0.87451, 0.639216, 0.784314)
+labelColor = Color(1, 1, 0.87, 0.78431374)
 labelOffset = Vector2(0, -2)
 
 [node name="Mana" parent="." unique_id=1907297512 instance=ExtResource("2")]
@@ -51,7 +51,7 @@ offset_top = 32.0
 offset_right = 273.0
 offset_bottom = 46.0
 textureProgress = ExtResource("3")
-labelColor = Color(1, 0.87451, 0.639216, 0.784314)
+labelColor = Color(1, 1, 0.87058824, 0.78431374)
 labelOffset = Vector2(0, -4)
 
 [node name="Stamina" parent="." unique_id=1140652950 instance=ExtResource("2")]
@@ -61,7 +61,7 @@ offset_top = 49.0
 offset_right = 253.0
 offset_bottom = 57.0
 textureProgress = ExtResource("4")
-labelColor = Color(1, 0.87451, 0.639216, 0.784314)
+labelColor = Color(1, 1, 0.87058824, 0.78431374)
 labelOffset = Vector2(17, -3)
 
 [connection signal="pressed" from="TouchButton" to="." method="_on_button_pressed"]
