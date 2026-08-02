@@ -65,12 +65,12 @@ static func GetZoneTargets(instance : WorldInstance, zonePos : Vector2, skill : 
 
 	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
 		for neighbour in instance.mobs:
-			var filteredRange : float = skill.cellRange + neighbour.data._radius
+			var filteredRange : float = skill.skillRange + neighbour.data._radius
 			if ActorCommons.IsAlive(neighbour) and Util.IsReachableSquared(neighbour.position, zonePos, filteredRange * filteredRange):
 				targets.append(neighbour)
 	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
 		for neighbour in instance.players:
-			var filteredRange : float = skill.cellRange + neighbour.data._radius
+			var filteredRange : float = skill.skillRange + neighbour.data._radius
 			if ActorCommons.IsAlive(neighbour) and Util.IsReachableSquared(neighbour.position, zonePos, filteredRange * filteredRange):
 				targets.append(neighbour)
 

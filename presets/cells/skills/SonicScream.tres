@@ -27,7 +27,7 @@ _modifiers = Array[ExtResource("4_8at4d")]([SubResource("Resource_s34tt"), SubRe
 
 [resource]
 script = ExtResource("7_tt4oe")
-cellRange = 64
+skillRange = 64
 cooldownTime = 3.0
 projectilePreset = ExtResource("4_p83gv")
 id = 0

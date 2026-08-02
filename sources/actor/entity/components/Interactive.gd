@@ -119,7 +119,7 @@ func DisplayLevelUp():
 #
 func DisplaySkillRange(skill : SkillCell):
 	if skill:
-		skillPreview.Display(skill.cellRange + entity.stat.current.attackRange)
+		skillPreview.Display(skill.skillRange + entity.stat.current.attackRange)
 	else:
 		skillPreview.Hide()
 	skillPreview.queue_redraw()

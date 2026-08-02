@@ -6,7 +6,7 @@ const COLUMNS : Array[Dictionary] = [
 	{ "name" : "Name", "property" : "name", "type" : TYPE_STRING, "editable" : true, "width" : 150 },
 	{ "name" : "Category", "property" : "category", "type" : TYPE_INT, "editable" : true, "width" : 100, "is_enum" : true, "enum_name" : "Category" },
 	{ "name" : "State", "property" : "state", "type" : TYPE_INT, "editable" : true, "width" : 100, "is_enum" : true, "enum_name" : "State" },
-	{ "name" : "Range", "property" : "cellRange", "type" : TYPE_INT, "editable" : true, "width" : 80 },
+	{ "name" : "Range", "property" : "skillRange", "type" : TYPE_INT, "editable" : true, "width" : 80 },
 	{ "name" : "Mode", "property" : "mode", "type" : TYPE_INT, "editable" : true, "width" : 100, "is_enum" : true, "enum_name" : "Mode" },
 	{ "name" : "Repeat", "property" : "repeat", "type" : TYPE_BOOL, "editable" : true, "width" : 70 },
 	{ "name" : "Usable", "property" : "usable", "type" : TYPE_BOOL, "editable" : true, "width" : 70 },

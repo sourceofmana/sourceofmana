@@ -28,7 +28,7 @@ _modifiers = Array[ExtResource("4_sacis")]([SubResource("Resource_p4hfi"), SubRe
 
 [resource]
 script = ExtResource("1_tou8y")
-cellRange = 40
+skillRange = 40
 mode = 1
 cooldownTime = 1.0
 castPreset = ExtResource("1_1m847")

@@ -11,7 +11,7 @@ enum Category
 
 @export var category : Category					= Category.SPELL
 @export var state : ActorCommons.State			= ActorCommons.State.IDLE
-@export var cellRange : int						= 0
+@export var skillRange : int						= 0
 @export var mode : Skill.TargetMode				= Skill.TargetMode.SINGLE
 @export var repeat : bool						= false
 @export var cooldownTime : float				= 0.0
