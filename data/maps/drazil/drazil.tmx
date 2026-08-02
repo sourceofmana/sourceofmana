@@ -1048,47 +1048,47 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="10" name="Little Blub" type="Spawn" x="1344" y="2368" width="192" height="128">
+  <object id="10" name="Sea Slime" type="Spawn" x="1344" y="2368" width="192" height="128">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="11" name="Little Blub" type="Spawn" x="1728" y="1728" width="480" height="704">
+  <object id="11" name="Sea Slime" type="Spawn" x="1728" y="1728" width="480" height="704">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="12" name="Little Blub" type="Spawn" x="1664" y="672" width="704" height="320">
+  <object id="12" name="Sea Slime" type="Spawn" x="1664" y="672" width="704" height="320">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="14" name="Little Blub" type="Spawn" x="2656" y="960" width="160" height="256">
+  <object id="14" name="Sea Slime" type="Spawn" x="2656" y="960" width="160" height="256">
    <properties>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="15" name="Little Blub" type="Spawn" x="2272" y="1568" width="928" height="640">
+  <object id="15" name="Sea Slime" type="Spawn" x="2272" y="1568" width="928" height="640">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="16" name="Little Blub" type="Spawn" x="1248" y="1770" width="608" height="416">
+  <object id="16" name="Sea Slime" type="Spawn" x="1248" y="1770" width="608" height="416">
    <properties>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="17" name="Little Blub" type="Spawn" x="800" y="1376" width="224" height="384">
+  <object id="17" name="Sea Slime" type="Spawn" x="800" y="1376" width="224" height="384">
    <properties>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>

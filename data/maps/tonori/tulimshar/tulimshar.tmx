@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="75">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="75">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -817,9 +817,9 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="16" name="Maggot" type="Spawn" x="4437" y="2263" width="240" height="777">
+  <object id="16" name="Maggot" type="Spawn" x="4437" y="1421" width="550" height="1619">
    <properties>
-    <property name="count" value="5"/>
+    <property name="count" value="6"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -829,31 +829,13 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="18" name="Maggot" type="Spawn" x="2400" y="2336" width="320" height="352">
-   <properties>
-    <property name="count" value="2"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
-  <object id="19" name="Maggot" type="Spawn" x="3136" y="2880" width="800" height="160">
-   <properties>
-    <property name="count" value="2"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
-  <object id="20" name="Maggot" type="Spawn" x="4608" y="2080" width="416" height="768">
-   <properties>
-    <property name="count" value="2"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
   <object id="21" name="Maggot" type="Spawn" x="3909" y="1809" width="214" height="301">
    <properties>
-    <property name="count" value="7"/>
+    <property name="count" value="4"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="22" name="Maggot" type="Spawn" x="4638" y="1586" width="384" height="416">
+  <object id="22" name="Scorpion" type="Spawn" x="4846" y="1586" width="142" height="572">
    <properties>
     <property name="count" value="2"/>
     <property name="type" value="Monster"/>
@@ -1093,7 +1075,7 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="74" name="Peyote" type="Spawn" x="3876" y="1084" width="273" height="162">
+  <object id="74" name="Peyote" type="Spawn" x="3892" y="1108" width="243" height="122">
    <properties>
     <property name="count" value="5"/>
     <property name="type" value="Monster"/>

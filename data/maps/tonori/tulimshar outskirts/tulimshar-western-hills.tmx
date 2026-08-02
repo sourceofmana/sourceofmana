@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="130" height="193" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="25">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="130" height="193" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="30">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1274,6 +1274,36 @@
   <object id="24" name="Peyote" type="Spawn" x="-92" y="64">
    <properties>
     <property name="count" value="5"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="25" name="Turtle" type="Spawn" x="1384" y="2800" width="344" height="400">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="26" name="Turtle" type="Spawn" x="1762" y="2275" width="466" height="193">
+   <properties>
+    <property name="count" value="2"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="27" name="Scorpion" type="Spawn" x="2215" y="1602.65" width="460.939" height="1151.52">
+   <properties>
+    <property name="count" value="4"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="28" name="Croc" type="Spawn" x="2608.45" y="2083.02" width="384.667" height="468.758">
+   <properties>
+    <property name="count" value="4"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="29" name="Croc" type="Spawn" x="970.424" y="4554.55" width="468.242" height="633.333">
+   <properties>
+    <property name="count" value="4"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>

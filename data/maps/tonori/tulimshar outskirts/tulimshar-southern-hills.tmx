@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="150" height="186" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="22">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="150" height="186" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="26">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1180,9 +1180,27 @@
    </properties>
    <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
   </object>
-  <object id="21" name="Peyote" type="Spawn" x="-45" y="22">
+  <object id="22" name="Scorpion" type="Spawn" x="-98.0606" y="35.8791">
    <properties>
-    <property name="count" value="5"/>
+    <property name="count" value="8"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="23" name="Lizandra" type="Spawn" x="1952" y="1358" width="140" height="466">
+   <properties>
+    <property name="count" value="2"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="24" name="Lizandre" type="Spawn" x="1871.7" y="1831.61" width="326.97" height="461.939">
+   <properties>
+    <property name="count" value="7"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="25" name="Lizandre" type="Spawn" x="1008.79" y="4688.21" width="449.091" height="220.545">
+   <properties>
+    <property name="count" value="6"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
