@@ -145,12 +145,10 @@ texture_pressed = ExtResource("5_fdh06")
 [node name="MenuContent" type="TextureRect" parent="Overlay/VSections/Indicators/Menu" unique_id=401767902]
 material = SubResource("ShaderMaterial_wjdwk")
 layout_mode = 0
-offset_left = -448.0
+offset_left = -488.0
 offset_top = 13.0
-offset_right = 64.0
+offset_right = 24.0
 offset_bottom = 55.0
-grow_horizontal = 0
-grow_vertical = 2
 size_flags_horizontal = 10
 size_flags_vertical = 0
 texture = ExtResource("6_mf0sy")

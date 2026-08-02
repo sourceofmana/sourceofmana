@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_6g6rj"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_gobl"]
 [ext_resource type="AudioStream" uid="uid://cdowss8b51os6" path="res://data/sounds/entities/fire-goblin/attack.ogg" id="3_attack"]
-[ext_resource type="AudioStream" uid="uid://b40da1jxg2knf" path="res://data/sounds/entities/fire-goblin/dodge.ogg" id="4_dodge"]
 [ext_resource type="PackedScene" uid="uid://dxixywo1th1gv" path="res://presets/entities/sprites/Piou.tscn" id="3_gobl"]
+[ext_resource type="AudioStream" uid="uid://b40da1jxg2knf" path="res://data/sounds/entities/fire-goblin/dodge.ogg" id="4_dodge"]
 
 [resource]
 script = ExtResource("2_gobl")
