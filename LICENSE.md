@@ -664,6 +664,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./sounds/entities/shroom/attack.ogg [Cosmostrator]
 ./sounds/entities/shroom/death.ogg [Cosmostrator]
 ./sounds/entities/shroom/hit.ogg [Cosmostrator]
+./sounds/entities/skeleton/death.ogg [Reid]
 ./sounds/entities/slime/attack.ogg [Cosmostrator]
 ./sounds/entities/slime/death.ogg [Cosmostrator]
 ./sounds/entities/slime/hit.ogg [Ledmitz]

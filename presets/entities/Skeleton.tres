@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://y60ht1hksqqa" path="res://data/graphics/sprites/monsters/skeleton.png" id="4_skel"]
 [ext_resource type="Resource" uid="uid://cbw8ta1x6umf4" path="res://presets/cells/items/chest/LeatherShirt.tres" id="5_skel"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="6_0x0cs"]
+[ext_resource type="AudioStream" uid="uid://j0tl8tynrx4x" path="res://data/sounds/entities/skeleton/death.ogg" id="7_death"]
 [ext_resource type="Resource" uid="uid://bj5p08ffbj617" path="res://presets/cells/items/weapon/BoneKnife.tres" id="6_skel"]
 [ext_resource type="Resource" uid="uid://dc8nmuobdltej" path="res://presets/cells/items/shield/DesertShield.tres" id="7_skel"]
 
@@ -26,3 +27,6 @@ _stats = {
 _equipment = Array[ExtResource("1_skel")]([ExtResource("5_skel"), null, null, null, null, null, ExtResource("6_skel"), ExtResource("7_skel")])
 _customTexture = ExtResource("4_skel")
 _behaviour = 4
+_stateSFX = Dictionary[int, AudioStream]({
+4: ExtResource("7_death")
+})
