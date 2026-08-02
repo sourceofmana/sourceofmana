@@ -2,7 +2,7 @@
 
 ## Locations
 
-## Tulimshar - Level 1~10
+## Tulimshar - Level 1~3
 Tulimshar is an important geographical region and serves as a big trade city in the center place of trade routes from Argaes & Aurora continents.
 It is the main point of contact from the southern continent (Tonori) and connects with people from Argaes and Aurora.
 The city is alive only through their trading, they don't have much resources as the desert hit hard their crops and only some cactus fields remains within the city.
@@ -22,22 +22,23 @@ Soul Mehnir, inactive, Nina is watching over this soul mehnir for somebody to re
 Elanore (Healer)
 Ishi & Aidan (Begginer Helper)
 Inar & Neko (Market Merchants)
-Nina the mage (At the city entrance, next to the soul mehnir)
+Nina the druid (At the city entrance, next to the soul mehnir)
 Watchman Eriku (At the city entrance, next to the entrance gate)
 Red Queen of Tonori
 Omar & Kadiya (Sick girl quest)
-Vincent (Bestiary explanation)
-Ian (Guide)
+Kael (Bestiary explanation)
+Gilgames (Guide)
 Soul Mehnir (Respawn point)
 Sandra (Saw a Mr Prickel)
 
 ### Enemies
-Peyote, Lvl.1 (static, dummy)
-Maggot, Lvl.2 (neutral)
-Ratto, Lvl.3 (high walkspeed, high attack speed, low hp, low attack)
+Piou, Lvl.1 (flee)
+Maggot, Lvl.1 (flee)
+Peyote, Lvl.2 (immobile)
+Ratto, Lvl.5 (indoor only, flee)
 
 
-### Sandstorm Desert - Level 2~10
+### Sandstorm Desert - Level 3~10
 South of Tulimshar, a harsh desert environment that hides some remnent of the city's outer area that used to be focus on cattle and cultivating cactus fields and other resources. An old abandonned mine is present in the south of this map.
 Nowadays the desert has taken away this land.
 
@@ -51,10 +52,10 @@ Samuel (Nomad tribe)
 Elijah (Nomad tribe)
 
 #### Enemies
-Maggot, Lvl.2 (neutral)
-Fire Goblin, Lvl.3 (aggro, cast spitfire spell)
-Scorpion, Lvl.5 (neutral, high hp, low defense)
-Mister Prickel Lvl.10 (rare, aggro, high hp, high def, low attack)
+Maggot, Lvl.1 (flee)
+Peyote, Lvl.2 (immobile)
+Scorpion, Lvl.4 (neutral, high hp, low def)
+Fire Goblin, Lvl.8 (neutral, casts spitfire)
 
 
 ### Sandstorm Mines - Level 3~10
@@ -69,48 +70,37 @@ Nathan (Miner, located at the entrance of the mine)
 Naem (Miner, located at the end of the mine on the inner level)
 
 #### Enemies
-Maggot, Lvl.2 (neutral)
-Bat, Lvl.3 (aggro, low hp)
-Fire Goblin, Lvl.3 (aggro, cast spitfire spell)
-Scorpion, Lvl.5 (neutral, high hp, low defense)
-Ore slime, Lvl.5 (neutral, low hp, high defense)
+Maggot, Lvl.1 (flee)
+Bat, Lvl.3 (neutral, fast attacks, sonic wave)
+Scorpion, Lvl.4 (neutral, high hp, low def)
+Fire Goblin, Lvl.8 (neutral, casts spitfire)
 
 
-### Oasis Beach - Level 10~15
-Located west of Tulimshar, this area host the Manayir Tower alongside an oasis area.
+### Oasis Beach - Level 5~15
+Located west of Tulimshar, this area host the Manayir Tower alongside an oasis area. Includes the Manayir Beach and connects to Tulimshar Beach to the north.
 
 #### Inner locations
 Manayir Tower
 Beach house
 
 #### Enemies
-Maggot, Lvl.2 (neutral)
-Fire Goblin, Lvl.3 (aggro, cast spitfire spell)
-Scorpion, Lvl.5 (neutral, high hp, low defense)
-Sea slime, Lvl.10 (neutral, high defense, low attack)
-Croc, Lvl.13 (aggro, high defense, low hp)
-Large Maggot, Lvl.15 (neutral, high hp, low attackspeed, high attack)
+Peyote, Lvl.2 (immobile)
+Sea Slime, Lvl.6 (steal, tanky, slow)
+Turtle, Lvl.10 (neutral, high def, slow)
+Lizandre, Lvl.12 (follower of Lizandra)
+Croc, Lvl.15 (aggressive, high atk, tanky, slow)
 
 ### Manayir Tower - Level 10~15
 Learn basic mana knowledge and our first skills (Mana burst, Lum). The Manayir Academy studies magic and will give guidance to the player once a Mana Seed is found.
 
 #### NPCs
-Micksha
-Don
-Quich
-Turmfalke
-Jax
-Fate
-Dalka
-Gormo
-Doors
-Sal
-Sert
-Lore
-Matt
+Corgit
+Gonzo
+Hommer
+Medave
 
 
-### Desert Pit - Level 15~30
+### Desert Pit - Level 8~20
 Desertic area located east of Tulimshar and its sandstorm area, this area has been abandoned by the Tonori Kingdom. The home of the Hisatsinom tribes, the native people of Tonori who live a semi-nomadic life and trade with Tulimshar.
 
 #### Inner locations
@@ -121,32 +111,52 @@ Mountain Cave
 Pachua
 
 #### Enemies
-Scorpion, Lvl.5 (neutral, high hp, low defense)
-Lizandre Lvl.15 (neutral, slow walksped, high attack)
-Desert Snake Lvl.20 (aggro, higher hp than snakes, slower),
-Lizandra Lvl.25 (aggro, higher defense than Lizandre)
-Desert Bird Lvl.30 (neutral, high walkspeed, high attack speed),
+Peyote, Lvl.2 (immobile)
+Fire Goblin, Lvl.8 (neutral, casts spitfire)
+Lizandre, Lvl.12 (follower of Lizandra)
+Lizandra, Lvl.14 (aggressive, leader of Lizandre)
+Sand Snake, Lvl.19 (aggressive, high dodge, fast attacks)
 
 
 ### Snake Pit - Level 15~20
 Just before the Tonori Mountains in the east. It is infested with Snakes.
 
 #### Enemies
-Ore slime, Lvl.5 (neutral, low hp, high defense)
-Snake Lvl.15 (aggro, low hp, high walkspeed, high attackspeed),
+Snake, Lvl.17 (aggressive, low def, low hp, no dodge, no crit)
 
 
-### Tonori Mountains - Level 20~30
+### Tonori Mountains
 The mountains are characterised by a complex cave system and high ledges and cliffs.
 
 #### Enemies
-Bat, Lvl.3 (aggro, low hp)
-Ore slime, Lvl.5 (neutral, low hp, high defense)
-Desert Snake Lvl.20 (aggro, higher hp than snakes, slower)
-Lynx Lvl.30 (aggro, cast sonic waves)
+Peyote, Lvl.2 (immobile)
+Bat, Lvl.3 (neutral, in caves, fast attacks, sonic wave)
 
 
-### Poluwat Cave - Level 50
+### South Desert - Level 20~25
+Located further south of the Sandstorm Desert. A vast expanse of harsh desert terrain, largely unexplored by the Tonori Kingdom. Home to dangerous creatures and roaming bandits.
+
+#### Enemies
+Peyote, Lvl.2 (immobile)
+Fire Goblin, Lvl.8 (neutral, casts spitfire)
+Sand Snake, Lvl.19 (aggressive, high dodge, fast attacks)
+Skeleton, Lvl.20 (aggressive, in caves, high atk via equipment, high magic def)
+Lynx, Lvl.21 (aggressive, high magic atk, fast, high dodge, sonic wave)
+Goblin, Lvl.24 (high magic atk, tanky, slow)
+Bandit, Lvl.25 (steal, high dodge, high hp)
+
+
+### Plateau - Level 25~30
+A rocky elevated region east of the South Desert, offering a different terrain from the lowland deserts. Features cave systems and open clifftop areas.
+
+#### Enemies
+Peyote, Lvl.2 (immobile)
+Skeleton, Lvl.20 (aggressive, in caves, high atk via equipment, high magic def)
+Bandit, Lvl.25 (steal, high dodge, high hp)
+Bird, Lvl.27 (steal, fast attacks, fast, high dodge)
+
+
+### Poluwat Cave - Level ??
 Located at the end of the Tulimshar Mines dungeon. It's a cave with an open ceiling where the tree can survive the heat of the desert and find moisture.
 
 #### NPCs
