@@ -134,7 +134,6 @@ func _ready():
 	var startServer : bool = false
 
 	Root = get_tree().get_root()
-	get_tree().set_auto_accept_quit(false)
 
 	if "--server" in OS.get_cmdline_args():
 		Scene = FileSystem.LoadResource(Path.Pst + "Server" + Path.SceneExt)
@@ -170,14 +169,6 @@ func _post_launch():
 	if SQL and not SQL.isInitialized:			SQL._post_launch()
 	if Discord and not Discord.isInitialized:	Discord._post_launch()
 	if Audio:									Audio._post_launch()
-
-func _notification(what : int):
-	match what:
-		NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_WM_GO_BACK_REQUEST:
-			if GUI:
-				GUI.ToggleControl(GUI.quitWindow)
-			else:
-				Quit()
 
 func _quit():
 	Quit()
