@@ -78,7 +78,23 @@ static func ComputeProtocolVersion(network : Node) -> int:
 # Peer
 const UseENet : bool					= true
 const UseWebSocket : bool				= true
+const UseWebRTC : bool					= true
 const IsLocal : bool					= false
+
+# WebRTC signaling
+const IceServers : Array[Dictionary]	= [{ "urls": "stun:stun.l.google.com:19302" }]
+
+# One entry per EChannel above the default channel 0 triad, in EChannel order
+const RtcChannelsConfig : Array			= [
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+	MultiplayerPeer.TRANSFER_MODE_UNRELIABLE_ORDERED,
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+	MultiplayerPeer.TRANSFER_MODE_UNRELIABLE_ORDERED,
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+	MultiplayerPeer.TRANSFER_MODE_UNRELIABLE_ORDERED,
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+]
 
 const ServerKeyPath : String			= "user://server.key"
 const ServerCertPath : String			= "user://server.crt"

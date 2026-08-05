@@ -4,6 +4,8 @@ class_name Peers
 #
 static var DisconnectedAccount : AccountData = AccountData.new(NetworkCommons.PeerUnknownID, ActorCommons.Permission.NONE)
 
+enum TransportType { ENET, WEBSOCKET, WEBRTC }
+
 #
 class AccountData:
 	extends RefCounted
@@ -24,12 +26,15 @@ class Peer:
 	var agentRID : int								= NetworkCommons.PeerUnknownID
 	var permission : ActorCommons.Permission		= ActorCommons.Permission.NONE
 	var accountData : AccountData					= null
-	var usingWebSocket : bool						= false
+	var transport : Peers.TransportType				= Peers.TransportType.ENET
+	var ipAddress : String							= ""
+	var primaryConnected : bool						= false
+	var rtcConnected : bool							= false
 	var rpcDeltas : Dictionary[StringName, int]		= {}
 
-	func _init(id : int, useWebSocket : bool):
+	func _init(id : int, peerTransport : Peers.TransportType):
 		peerID = id
-		usingWebSocket = useWebSocket
+		transport = peerTransport
 
 	func SetAccount(data : AccountData):
 		if data and data.accountID != NetworkCommons.PeerUnknownID:
@@ -66,10 +71,15 @@ static func IsBanned(accountID : int) -> bool:
 	return false
 
 # Handling
-static func AddPeer(peerID : int, usingWebSocket : bool):
+static func AddPeer(peerID : int, transport : TransportType):
 	if peerID not in peers:
-		peers[peerID] = Peer.new(peerID, usingWebSocket)
+		peers[peerID] = Peer.new(peerID, transport)
 		Network.peer_update.emit()
+
+static func SetTransport(peerID : int, transport : TransportType):
+	var peer : Peers.Peer = GetPeer(peerID)
+	if peer:
+		peer.transport = transport
 
 static func RemovePeer(peerID : int):
 	var peer : Peers.Peer = GetPeer(peerID)
@@ -91,19 +101,42 @@ static func Footprint(peerID : int, methodName : StringName, actionDelta : int) 
 
 	return false
 
-static func IsUsingWebSocket(peerID : int) -> bool:
+static func GetTransport(peerID : int) -> TransportType:
 	var peer : Peers.Peer = GetPeer(peerID)
-	return peer.usingWebSocket if peer else false
+	return peer.transport if peer else TransportType.ENET
+
+static func GetTransportName(transport : TransportType) -> String:
+	match transport:
+		TransportType.WEBRTC:
+			return "WebRTC"
+		TransportType.WEBSOCKET:
+			return "WebSocket"
+		_:
+			return "ENet"
+
+static func IsUsingWebSocket(peerID : int) -> bool:
+	return GetTransport(peerID) == TransportType.WEBSOCKET
+
+static func IsUsingWebRTC(peerID : int) -> bool:
+	return GetTransport(peerID) == TransportType.WEBRTC
 
 static func GetAssociatedNetServer(peerID : int) -> NetServer:
 	if HasPeer(peerID):
-		return Network.WebSocketServer if IsUsingWebSocket(peerID) else Network.ENetServer
+		match GetTransport(peerID):
+			TransportType.WEBRTC:
+				return Network.WebRTCServer
+			TransportType.WEBSOCKET:
+				return Network.WebSocketServer
+			_:
+				return Network.ENetServer
 	return null
 
 static func GetPeerIP(peerID : int) -> String:
 	var peer : Peers.Peer = GetPeer(peerID)
 	if peer:
-		if peer.usingWebSocket and Network.WebSocketServer and not Network.WebSocketServer.isOffline:
+		if peer.transport == TransportType.WEBRTC:
+			return peer.ipAddress
+		if peer.transport == TransportType.WEBSOCKET and Network.WebSocketServer and not Network.WebSocketServer.isOffline:
 			var packetPeer : PacketPeer = Network.WebSocketServer.currentPeer.get_peer(peerID)
 			if packetPeer and packetPeer is WebSocketPeer:
 				return packetPeer.get_connected_host()
