@@ -60,6 +60,7 @@ class Peer:
 static var peers : Dictionary[int, Peer]			= {}
 static var accounts : Dictionary[int, int]			= {}
 static var bannedAccounts : Dictionary[int, int]	= {}
+static var bannedIPRanges : Dictionary[String, String]	= {}
 
 # Moderation
 static func IsBanned(accountID : int) -> bool:
@@ -68,6 +69,14 @@ static func IsBanned(accountID : int) -> bool:
 		if unbanTimestamp > int(Time.get_unix_time_from_system()):
 			return true
 		bannedAccounts.erase(accountID)
+	return false
+
+static func IsIPBanned(ip : String) -> bool:
+	if ip.is_empty():
+		return false
+	for ipRange in bannedIPRanges:
+		if NetworkCommons.IsIPInRange(ip, ipRange):
+			return true
 	return false
 
 # Handling
@@ -174,6 +183,9 @@ static func GetPermission(peerID : int) -> ActorCommons.Permission:
 # Auth validation
 static func FinalizeLogin(peer : Peer, accountName : String, accountData : AccountData, platform : int, rememberMe : bool) -> NetworkCommons.AuthError:
 	if IsBanned(accountData.accountID):
+		return NetworkCommons.AuthError.ERR_BANNED
+
+	if IsIPBanned(GetPeerIP(peer.peerID)):
 		return NetworkCommons.AuthError.ERR_BANNED
 
 	peer.SetAccount(accountData)

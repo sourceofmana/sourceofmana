@@ -200,6 +200,36 @@ static func CheckEmailInformation(emailText : String) -> AuthError:
 static func CheckResetCode(code : String) -> bool:
 	return code.length() == ResetCodeSize and code.is_valid_int()
 
+# IP ranges with wildcards support
+static func IsValidIPRange(ipRange : String) -> bool:
+	var chunks : PackedStringArray = ipRange.split(".")
+	if chunks.size() != 4:
+		return false
+
+	for chunk in chunks:
+		if chunk == "*":
+			continue
+		if not chunk.is_valid_int():
+			return false
+		var value : int = chunk.to_int()
+		if value < 0 or value > 255:
+			return false
+	return true
+
+static func IsIPInRange(ip : String, ipRange : String) -> bool:
+	if ip.is_empty():
+		return false
+
+	var ipOctets : PackedStringArray = ip.split(".")
+	var rangeOctets : PackedStringArray = ipRange.split(".")
+	if ipOctets.size() != 4 or rangeOctets.size() != 4:
+		return false
+
+	for chunk in 4:
+		if rangeOctets[chunk] != "*" and rangeOctets[chunk] != ipOctets[chunk]:
+			return false
+	return true
+
 # Character
 enum CharacterError {
 	ERR_OK = 0,
