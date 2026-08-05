@@ -1,0 +1,60 @@
+name: Report a bug
+description: Is it a maggot?
+
+body:
+  - type: textarea
+    id: description-of-bug
+    attributes:
+      label: Describe the bug
+      description: |
+        A short description of the bug you have encountered.
+        Add screenshots if they help describe the issue better.
+      placeholder: The monster "Piou" drops bottles of water.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: |
+        Steps to reproduce the encountered bug.
+      placeholder: |
+        1. Go south of Tulimshar.
+        2. Kill a Piou.
+        3. It drops a bottle of water.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: |
+        What you expected to happen and why.
+      placeholder: Birds are not supposed to drop bottles of water. Especially not if they are that small.
+    validations:
+      required: true
+
+  - type: textarea
+    id: versions-environment
+    attributes:
+      label: Version and environment
+      description: |
+        What version of Source of Mana are you using and on what kind of device?
+        If you are using an unreleased version, specify the commit you are on.
+      placeholder: |
+        - OS: Windows 11, macOS, Ubuntu, Linux Mint, Android 15
+        - Version: itch.io version 0.9.1 on Firefox 152
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Any other context that might be relevant.
+      placeholder: |
+        Related to issue #123
+    validations:
+      required: false

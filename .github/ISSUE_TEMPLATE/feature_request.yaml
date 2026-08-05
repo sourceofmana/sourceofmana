@@ -1,0 +1,64 @@
+name: Request a feature
+description: Please discuss bigger feature requests first.
+
+body:
+  - type: textarea
+    id: description-of-feature
+    attributes:
+      label: Is your feature request related to a problem? Describe it below.
+      description: A brief description of your proposed change.
+      placeholder: |
+        When I want to refill my water bottles at the well, I need to refill them manually, one by one.
+        I wish there was a prompt for "Fill all water bottles" so it is less tedious.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed solution
+      description: |
+        How you would implement the feature.
+      placeholder: |
+        The script should check for the amount of empty bottles in the users inventory.
+        If there is more than one, it should offer a dialogue to fill all in one go.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative solutions
+      description: Any other solutions that might be relevant to list.
+      placeholder: |
+        If instantly filling them all is too overpowered, maybe the dialogue could
+        loop though the empty bottles instead and while still automatically filling them
+        introduce a several second wait inbetween bottles?
+    validations:
+      required: false
+
+  - type: textarea
+    id: versions-environment
+    attributes:
+      label: Version and environment
+      description: |
+        If you are even slightly unsure whether or not the version might be relevant
+        to this feature request, still input it below. Added context never hurts.
+
+        What version of Source of Mana are you using and on what kind of device?
+        If you are using an unreleased version, specify the commit you are on.
+      placeholder: |
+        - OS: Windows 11, macOS, Ubuntu, Linux Mint, Android 15
+        - Version: itch.io version 0.9.1 on Firefox 152
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Any other context that might be relevant.
+      placeholder: |
+        Related to issue #123
+    validations:
+      required: false
