@@ -45,4 +45,4 @@ See our [art design repository](https://github.com/sourceofmana/artdesign).
 
 We use [Tiled](mapeditor.org) to make maps.
 
-The [designs/][/designs] directory contains lore information necessary for a consistent world.
+The [designs/](/designs) directory contains lore information necessary for a consistent world.
