@@ -1,7 +1,12 @@
 name: Request a feature
-description: Please [discuss](README.md#Contact) bigger feature requests first.
+description: Anything that is not a direct bug fix is a feature.
 
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Please [discuss](README.md#Contact) bigger feature requests first.
+
   - type: textarea
     id: description-of-feature
     attributes:
