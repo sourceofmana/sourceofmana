@@ -4,6 +4,7 @@ class_name WorldService
 # Vars
 var areas : Dictionary[int, WorldMap]				= {}
 var commands : WorldCommands						= WorldCommands.new()
+var canary : ShutdownCanary							= ShutdownCanary.new()
 
 # Getters
 func GetMap(mapID : int) -> WorldMap:
@@ -132,11 +133,11 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 
 # Generic
 func BackupPlayers():
-	for areaIdx in areas:
-		var area = areas[areaIdx]
-		for inst in area.instances.values():
-			for player in inst.players:
+	for area : WorldMap in areas.values():
+		for inst : WorldInstance in area.instances.values():
+			for player : PlayerAgent in inst.players:
 				Launcher.SQL.RefreshCharacter(player)
+
 
 func _post_launch():
 	if not DB.isInitialized:
@@ -149,6 +150,7 @@ func _init_world():
 	for mapID in DB.MapsDB:
 		areas[mapID] = WorldMap.Create(mapID)
 	WorldAgent._post_launch()
+	canary.Start()
 	isInitialized = true
 
 func Destroy():

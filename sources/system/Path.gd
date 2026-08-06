@@ -53,6 +53,7 @@ const ParticlePst : String				= EffectsPst + "particles/"
 
 # Local
 const Local : String					= "user://"
+const CanaryFile : String				= Local + "canary"
 
 # Extentions
 const GfxExt: String					= ".png"
