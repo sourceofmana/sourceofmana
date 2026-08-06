@@ -192,7 +192,9 @@ func ConnectCharacter(nickname : String, peerID : int):
 					peer.SetAgent(agent.get_rid().get_id())
 					agent.SetCharacterInfo(charInfo, peer.characterID)
 					Launcher.SQL.CharacterLogin(peer.characterID)
-					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, peerID])
+
+					var ip : String = Peers.GetPeerIP(peerID)
+					Util.PrintLog("Server", "Player connected: %s (%d) via %s from %s" % [nickname, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), ip if not ip.is_empty() else "unavailable"])
 					Network.online_player_connected.emit(nickname)
 
 	Network.CharacterError(err, peerID)
@@ -203,7 +205,9 @@ func DisconnectCharacter(peerID : int):
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player:
 			var playerName : String = player.nick
-			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [playerName, peerID])
+			var ip : String = Peers.GetPeerIP(peerID)
+			Util.PrintLog("Server", "Player disconnected: %s (%d) via %s from %s" % [playerName, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), ip if not ip.is_empty() else "unavailable"])
+
 			Launcher.SQL.RefreshCharacter(player)
 			WorldAgent.RemoveAgent(player)
 			peer.SetAgent(NetworkCommons.PeerUnknownID)
@@ -387,12 +391,21 @@ func TriggerCommand(command : String, peerID : int):
 
 # Peer handling
 func ConnectPeer(peerID : int):
-	Util.PrintInfo("Server", "Peer connected: %d with %s" % [peerID, "Websocket" if useWebSocket else "ENet"])
-	Peers.AddPeer(peerID, Peers.TransportType.WEBSOCKET if useWebSocket else Peers.TransportType.ENET)
+	var transportType : Peers.TransportType = Peers.TransportType.ENET
+	if isOffline:
+		transportType = Peers.TransportType.OFFLINE
+	elif useWebSocket:
+		transportType = Peers.TransportType.WEBSOCKET
+	Util.PrintInfo("Server", "Peer connected: %d with %s" % [peerID, Peers.GetTransportName(transportType)])
+
+	Peers.AddPeer(peerID, transportType)
+
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
-	if peer:
+	if peer and not isOffline:
 		peer.primaryConnected = true
+		peer.ipAddress = Peers.ResolvePeerIP(peerID)
 	bulks[peerID] = {}
+
 	if currentPeer and currentPeer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
 		var clientPeer : PacketPeer = currentPeer.get_peer(peerID)
 		if clientPeer and clientPeer is ENetPacketPeer:
@@ -441,7 +454,6 @@ func StartRtcUpgrade(peerID : int):
 	if not peer:
 		return
 
-	peer.ipAddress = Peers.GetPeerIP(peerID)
 	Network.RtcConfig(NetworkCommons.IceServers, peerID)
 	var connection : WebRTCPeerConnection = CreateRtcConnection(peerID)
 	connection.create_offer()

@@ -4,7 +4,7 @@ class_name Peers
 #
 static var DisconnectedAccount : AccountData = AccountData.new(NetworkCommons.PeerUnknownID, ActorCommons.Permission.NONE)
 
-enum TransportType { ENET, WEBSOCKET, WEBRTC }
+enum TransportType { OFFLINE, ENET, WEBSOCKET, WEBRTC }
 
 #
 class AccountData:
@@ -26,7 +26,7 @@ class Peer:
 	var agentRID : int								= NetworkCommons.PeerUnknownID
 	var permission : ActorCommons.Permission		= ActorCommons.Permission.NONE
 	var accountData : AccountData					= null
-	var transport : Peers.TransportType				= Peers.TransportType.ENET
+	var transport : Peers.TransportType				= Peers.TransportType.OFFLINE
 	var ipAddress : String							= ""
 	var primaryConnected : bool						= false
 	var rtcConnected : bool							= false
@@ -112,7 +112,7 @@ static func Footprint(peerID : int, methodName : StringName, actionDelta : int) 
 
 static func GetTransport(peerID : int) -> TransportType:
 	var peer : Peers.Peer = GetPeer(peerID)
-	return peer.transport if peer else TransportType.ENET
+	return peer.transport if peer else TransportType.OFFLINE
 
 static func GetTransportName(transport : TransportType) -> String:
 	match transport:
@@ -120,8 +120,10 @@ static func GetTransportName(transport : TransportType) -> String:
 			return "WebRTC"
 		TransportType.WEBSOCKET:
 			return "WebSocket"
-		_:
+		TransportType.ENET:
 			return "ENet"
+		_:
+			return "Offline"
 
 static func IsUsingWebSocket(peerID : int) -> bool:
 	return GetTransport(peerID) == TransportType.WEBSOCKET
@@ -142,19 +144,24 @@ static func GetAssociatedNetServer(peerID : int) -> NetServer:
 
 static func GetPeerIP(peerID : int) -> String:
 	var peer : Peers.Peer = GetPeer(peerID)
+	return peer.ipAddress if peer else ""
+
+static func ResolvePeerIP(peerID : int) -> String:
+	var peer : Peers.Peer = GetPeer(peerID)
 	if peer:
-		if peer.transport == TransportType.WEBRTC:
-			return peer.ipAddress
-		if peer.transport == TransportType.WEBSOCKET and Network.WebSocketServer and not Network.WebSocketServer.isOffline:
-			var packetPeer : PacketPeer = Network.WebSocketServer.currentPeer.get_peer(peerID)
-			if packetPeer and packetPeer is WebSocketPeer:
-				return packetPeer.get_connected_host()
-		elif Network.ENetServer and not Network.ENetServer.isOffline:
-			var packetPeer : PacketPeer = Network.ENetServer.currentPeer.get_peer(peerID)
-			if packetPeer and packetPeer is ENetPacketPeer:
-				return packetPeer.get_remote_address()
-		else:
-			return NetworkCommons.LocalServerAddress
+		match peer.transport:
+			TransportType.WEBSOCKET:
+				if Network.WebSocketServer and Network.WebSocketServer.currentPeer:
+					var packetPeer : PacketPeer = Network.WebSocketServer.currentPeer.get_peer(peerID)
+					if packetPeer and packetPeer is WebSocketPeer:
+						return packetPeer.get_connected_host()
+			TransportType.ENET:
+				if Network.ENetServer and Network.ENetServer.currentPeer:
+					var packetPeer : PacketPeer = Network.ENetServer.currentPeer.get_peer(peerID)
+					if packetPeer and packetPeer is ENetPacketPeer:
+						return packetPeer.get_remote_address()
+			TransportType.OFFLINE:
+				return NetworkCommons.LocalServerAddress
 	return ""
 
 # Info getters

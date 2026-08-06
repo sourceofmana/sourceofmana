@@ -408,7 +408,14 @@ func ConnectServer():
 		interfaceID = multiplayerAPI.get_unique_id()
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
-	Peers.AddPeer(NetworkCommons.PeerAuthorityID, Peers.TransportType.WEBSOCKET if useWebSocket else Peers.TransportType.ENET)
+
+	var transportType : Peers.TransportType = Peers.TransportType.ENET
+	if isOffline:
+		transportType = Peers.TransportType.OFFLINE
+	elif useWebSocket:
+		transportType = Peers.TransportType.WEBSOCKET
+	Peers.AddPeer(NetworkCommons.PeerAuthorityID, transportType)
+
 	if not isOffline and Network.WebRTCClient:
 		Network.RequestRtcUpgrade()
 
