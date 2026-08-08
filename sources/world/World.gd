@@ -116,7 +116,7 @@ func AgentWarped(map : WorldMap, agent : BaseAgent):
 			# Spawn self
 			Network.Bulk("FullUpdateEntity", [
 				agentRID, agent.velocity, agent.position, agent.currentOrientation,
-				agent.state, agent.currentSkillID, agent.stat.isRunning
+				agent.state, agent.currentSkillID, agent.stat.isRunning, NetworkCommons.FrameSeq()
 			], agent.peerID)
 
 			# Notify existing players about the new arrival
