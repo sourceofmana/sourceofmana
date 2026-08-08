@@ -415,6 +415,7 @@ func ConnectServer():
 	elif useWebSocket:
 		transportType = Peers.TransportType.WEBSOCKET
 	Peers.AddPeer(NetworkCommons.PeerAuthorityID, transportType)
+	Monitoring.SetTransport(transportType)
 
 	if not isOffline and Network.WebRTCClient:
 		Network.RequestRtcUpgrade()
@@ -531,6 +532,7 @@ func HandleRtcOffer(sdp : String):
 func _OnRtcConnectedToServer():
 	Network.webRTCActive = true
 	Network.RtcReady()
+	Monitoring.SetTransport(Peers.TransportType.WEBRTC)
 	Util.PrintLog("Client", "WebRTC transport connected")
 
 func _OnRtcServerDisconnected():

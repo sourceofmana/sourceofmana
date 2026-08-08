@@ -279,12 +279,29 @@ layout_mode = 2
 bbcode_enabled = true
 fit_content = true
 
-[node name="Credits" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=850000001]
+[node name="Privacy" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=860000010]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 metadata/_tab_index = 4
+
+[node name="PrivacyVBox" type="VBoxContainer" parent="Layout/Margin/TabBar/Privacy" unique_id=860000011]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="BugReports" type="CheckButton" parent="Layout/Margin/TabBar/Privacy/PrivacyVBox" unique_id=860000013]
+layout_mode = 2
+tooltip_text = "Sends anonymous crash and error reports to help fix bugs. No personal data is collected."
+text = "Bug Reports"
+
+[node name="Credits" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=850000001]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 5
 
 [node name="Margin" type="MarginContainer" parent="Layout/Margin/TabBar/Credits" unique_id=850000002]
 layout_mode = 2
@@ -314,3 +331,4 @@ alignment = 1
 [connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider" to="." method="set_audioalteration"]
 [connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider" to="." method="set_audiostate"]
 [connection signal="pressed" from="Layout/Margin/TabBar/Account/AccountVBox/ChangeButton" to="Layout/Margin/TabBar/Account" method="_on_change_button_pressed"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Privacy/PrivacyVBox/BugReports" to="." method="set_bugreports"]
