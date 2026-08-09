@@ -161,13 +161,14 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -404.0
+offset_left = -422.0
 offset_top = -18.0
-offset_right = -46.0
+offset_right = -48.0
 offset_bottom = 20.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_vertical = 0
+theme_override_constants/separation = 10
 alignment = 2
 
 [node name="Stat" parent="Overlay/VSections/Indicators/Menu/MenuContent/HBoxItems" unique_id=1852078003 node_paths=PackedStringArray("targetWindow") instance=ExtResource("3_sl5jl")]
