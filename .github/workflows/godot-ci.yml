@@ -39,6 +39,11 @@ jobs:
         with:
           lfs: true
 
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y libfontconfig1
+
       - name: Setup Godot templates
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -52,13 +57,13 @@ jobs:
       - name: Import assets
         run: |
           cd "$PROJECT_PATH"
-          godot --headless --editor --import --verbose --quit
+          godot --headless --editor --import --quit
 
       - name: Build ${{ matrix.name }}
         run: |
           mkdir -p "build/${{ matrix.name }}"
           cd "$PROJECT_PATH"
-          godot --headless --verbose --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
+          godot --headless --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
 
       - name: Upload Artifact - ${{ matrix.name }}
         uses: actions/upload-artifact@v4
