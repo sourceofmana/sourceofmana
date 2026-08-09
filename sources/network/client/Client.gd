@@ -415,6 +415,7 @@ func ConnectServer():
 	elif useWebSocket:
 		transportType = Peers.TransportType.WEBSOCKET
 	Peers.AddPeer(NetworkCommons.PeerAuthorityID, transportType)
+	Peers.SetTransport(NetworkCommons.PeerAuthorityID, transportType)
 	Monitoring.SetTransport(transportType)
 
 	if not isOffline and Network.WebRTCClient:
