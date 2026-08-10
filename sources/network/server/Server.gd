@@ -524,7 +524,7 @@ func _enter_tree():
 	if useWebSocket:
 		ret = currentPeer.create_server(serverPort, "*", tlsOptions)
 	else:
-		ret = currentPeer.create_server(serverPort)
+		ret = currentPeer.create_server(serverPort, NetworkCommons.MaxPlayerCount)
 		if ret == OK and tlsOptions:
 			ret = currentPeer.host.dtls_server_setup(tlsOptions)
 
