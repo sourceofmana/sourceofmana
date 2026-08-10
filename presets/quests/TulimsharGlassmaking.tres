@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://bglassquest1"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 2192634378
+name = "When the desert gives you sand..."
+description = "Eridu the glassmaker keeps his furnace burning but has run out of raw material. Gather salt, bones and sulphur powder from the desert and bring them back to his workshop."
+giver = "Eridu"
+giverLocation = "Tulimshar Center"
+target = "Salt x12, Bone x12, Sulphur Powder x12"
+targetLocation = "Tonori Desert"
+reward = "Bottle x3, 15 EXP"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

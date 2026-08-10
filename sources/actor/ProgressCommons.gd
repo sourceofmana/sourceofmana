@@ -20,6 +20,7 @@ class Quest:
 	static var SANDSTORM_NAEM_HELMET : int = "A Miner's Helping Hand".hash()
 	static var DESERT_SEED : int = "Desert Seed".hash()
 	static var TULIMSHAR_EASTERN_HILLS_CHEST : int = "Found a Chest in the Outskirts".hash()
+	static var TULIMSHAR_GLASSMAKING : int = "When the desert gives you sand...".hash()
 	static var SHIP_PETER_BOUNTY : int = "Peter's Bounty".hash()
 	static var VETERAN_CAVE_EXPLORER : int = "Veteran Cave Explorer".hash()
 
@@ -121,6 +122,12 @@ enum TULIMSHAR_EASTERN_HILLS_CHEST
 	INACTIVE = ProgressCommons.UnknownProgress,
 	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
 }
+enum TULIMSHAR_GLASSMAKING
+{
+	INACTIVE = ProgressCommons.UnknownProgress,
+	STARTED,
+	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
+}
 enum SHIP_PETER_BOUNTY
 {
 	INACTIVE = ProgressCommons.UnknownProgress,
@@ -151,6 +158,7 @@ static var QuestStates : Dictionary[int, Variant] = {
 	Quest.SANDSTORM_NAEM_HELMET: SANDSTORM_NAEM_HELMET,
 	Quest.DESERT_SEED: DESERT_SEED,
 	Quest.TULIMSHAR_EASTERN_HILLS_CHEST: TULIMSHAR_EASTERN_HILLS_CHEST,
+	Quest.TULIMSHAR_GLASSMAKING: TULIMSHAR_GLASSMAKING,
 	Quest.SHIP_PETER_BOUNTY: SHIP_PETER_BOUNTY,
 	Quest.VETERAN_CAVE_EXPLORER: VETERAN_CAVE_EXPLORER,
 }
