@@ -4,13 +4,12 @@ extends NpcScript
 const QUEST_ID : int				= ProgressCommons.Quest.TULIMSHAR_GLASSMAKING
 
 # Recipe
-# One set is one bottle. Sand is assumed on hand at the furnace already, so
-# a set only costs the three worked ingredients, in equal amounts.
+
 const SET_INGREDIENT : int			= 4
 const QUEST_SETS : int				= 3
 const QUEST_INGREDIENT : int			= SET_INGREDIENT * QUEST_SETS
 const QUEST_REWARD : int			= QUEST_SETS
-const QUEST_EXP : int				= 15
+const QUEST_EXP : int				= 100
 const TRADE_MAX : int				= 20
 
 # Quest items
