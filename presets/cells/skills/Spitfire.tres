@@ -28,7 +28,7 @@ _modifiers = Array[ExtResource("2_kni4d")]([SubResource("Resource_s34tt"), SubRe
 [resource]
 script = ExtResource("5_hdkya")
 state = 3
-cellRange = 32
+skillRange = 32
 repeat = true
 cooldownTime = 1.0
 skillTime = 0.1

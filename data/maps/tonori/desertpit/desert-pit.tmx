@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="233" height="179" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="64">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="233" height="179" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="68">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) 5t3v3 Reid"/>
@@ -1112,7 +1112,7 @@
 </data>
  </layer>
  <objectgroup id="5" name="Objects">
-  <object id="3" name="Lizzy" type="Spawn" x="-27" y="-18">
+  <object id="3" name="Lizandre" type="Spawn" x="-27" y="-18">
    <properties>
     <property name="count" value="5"/>
     <property name="type" value="Monster"/>
@@ -1136,7 +1136,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="22" name="Bird" type="Spawn" x="2240" y="992" width="2144" height="768">
+  <object id="22" name="Fire Goblin" type="Spawn" x="2240" y="992" width="2144" height="768">
    <properties>
     <property name="count" value="7"/>
     <property name="type" value="Monster"/>
@@ -1144,13 +1144,13 @@
   </object>
   <object id="23" name="Scorpion" type="Spawn" x="2208" y="3040" width="2752" height="1056">
    <properties>
-    <property name="count" value="8"/>
+    <property name="count" value="12"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="24" name="Lizzy" type="Spawn" x="1024" y="1760" width="672" height="768">
+  <object id="24" name="Lizandre" type="Spawn" x="1024" y="1760" width="672" height="768">
    <properties>
-    <property name="count" value="3"/>
+    <property name="count" value="4"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1166,9 +1166,9 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="27" name="Lizzy" type="Spawn" x="1824" y="1568" width="3328" height="1568">
+  <object id="27" name="Lizandre" type="Spawn" x="1824" y="1568" width="1564.36" height="1568">
    <properties>
-    <property name="count" value="20"/>
+    <property name="count" value="10"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1209,7 +1209,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="59" name="Desert Snake" type="Spawn" x="5857" y="4535" width="160" height="224">
+  <object id="59" name="Sand Snake" type="Spawn" x="5857" y="4535" width="160" height="224">
    <properties>
     <property name="count" value="1"/>
     <property name="type" value="Monster"/>
@@ -1229,6 +1229,18 @@
     <property name="player_script" value="tonori/desertpit/Mauro.gd"/>
     <property name="state" value="sit"/>
     <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="64" name="Fire Goblin" type="Spawn" x="2191.64" y="2391.76" width="1483.39" height="637.697">
+   <properties>
+    <property name="count" value="4"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="67" name="Lizandre" type="Spawn" x="3411.76" y="1549.33" width="1564.36" height="1568">
+   <properties>
+    <property name="count" value="10"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>

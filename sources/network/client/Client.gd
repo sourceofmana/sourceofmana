@@ -30,13 +30,13 @@ func RemoveEntity(agentRID : int, _peerID : int):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentRID)
 
-func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int, isRunning : bool, _peerID : int):
+func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int, isRunning : bool, seq : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.FullUpdateEntity(agentRID, velocity, position, orientation, state, skillCastID, isRunning)
+		Launcher.Map.FullUpdateEntity(agentRID, velocity, position, orientation, state, skillCastID, isRunning, seq)
 
-func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, _peerID : int):
+func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, seq : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(agentRID, velocity, position)
+		Launcher.Map.UpdateEntity(agentRID, velocity, position, seq)
 
 func Express(agentRID : int, text : String, _peerID : int):
 	if Launcher.GUI:
@@ -403,13 +403,29 @@ func CommandModifier(effect : CellCommons.Modifier, value : float, _peerID : int
 
 #
 func ConnectServer():
+	Network.clientConnected = true
 	if not isOffline:
 		interfaceID = multiplayerAPI.get_unique_id()
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
-	Peers.AddPeer(NetworkCommons.PeerAuthorityID, NetworkCommons.UseWebSocket and not NetworkCommons.UseENet)
+
+	var transportType : Peers.TransportType = Peers.TransportType.ENET
+	if isOffline:
+		transportType = Peers.TransportType.OFFLINE
+	elif useWebSocket:
+		transportType = Peers.TransportType.WEBSOCKET
+	Peers.AddPeer(NetworkCommons.PeerAuthorityID, transportType)
+	Peers.SetTransport(NetworkCommons.PeerAuthorityID, transportType)
+	Monitoring.SetTransport(transportType)
+
+	if not isOffline and Network.WebRTCClient:
+		Network.RequestRtcUpgrade()
 
 func DisconnectServer():
+	Network.clientConnected = false
+	if Network.webRTCActive:
+		Util.PrintLog("Client", "WebSocket dropped, continuing on WebRTC")
+		return
 	Launcher.Mode(true, true)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	Peers.RemovePeer(NetworkCommons.PeerOfflineID)
@@ -423,6 +439,9 @@ func _enter_tree():
 	if isOffline:
 		interfaceID = NetworkCommons.PeerOfflineID
 		ConnectServer.call_deferred()
+		return
+
+	if useWebRTC:
 		return
 
 	if not multiplayerAPI.connected_to_server.is_connected(ConnectServer):
@@ -471,6 +490,57 @@ func _OnServerAuthenticating(peerID: int):
 
 func _ValidateServerAuth(peerID: int, _data: PackedByteArray):
 	multiplayerAPI.complete_auth(peerID)
+
+# WebRTC signaling handlers (received over the WebSocket transport)
+func RtcConfig(iceServers : Array, _peerID : int):
+	if Network.WebRTCClient:
+		Network.WebRTCClient.SetRtcIceServers(iceServers)
+
+func RtcOffer(sdp : String, _peerID : int):
+	if Network.WebRTCClient:
+		Network.WebRTCClient.HandleRtcOffer(sdp)
+
+func RtcCandidateToClient(media : String, index : int, candidateName : String, _peerID : int):
+	if Network.WebRTCClient:
+		Network.WebRTCClient.AddRtcIceCandidate(NetworkCommons.PeerAuthorityID, media, index, candidateName)
+
+# WebRTC client transport
+func SetRtcIceServers(iceServers : Array):
+	var typed : Array[Dictionary] = []
+	for entry in iceServers:
+		if entry is Dictionary:
+			typed.append(entry)
+	if not typed.is_empty():
+		rtcIceServers = typed
+
+func HandleRtcOffer(sdp : String):
+	var connection : WebRTCPeerConnection = rtcConnections.get(NetworkCommons.PeerAuthorityID, null)
+	if not connection:
+		interfaceID = Network.Client.interfaceID
+		var err : Error = RtcMultiplayerPeer().create_client(interfaceID, NetworkCommons.RtcChannelsConfig)
+		if err != OK:
+			Util.PrintLog("Client", "WebRTC create_client failed (id=%d, err=%d), staying on WebSocket" % [interfaceID, err])
+			return
+
+		multiplayerAPI.multiplayer_peer = currentPeer
+		if not multiplayerAPI.connected_to_server.is_connected(_OnRtcConnectedToServer):
+			multiplayerAPI.connected_to_server.connect(_OnRtcConnectedToServer)
+		if not multiplayerAPI.server_disconnected.is_connected(_OnRtcServerDisconnected):
+			multiplayerAPI.server_disconnected.connect(_OnRtcServerDisconnected)
+		connection = CreateRtcConnection(NetworkCommons.PeerAuthorityID)
+	connection.set_remote_description("offer", sdp)
+
+func _OnRtcConnectedToServer():
+	Network.webRTCActive = true
+	Network.RtcReady()
+	Monitoring.SetTransport(Peers.TransportType.WEBRTC)
+	Util.PrintLog("Client", "WebRTC transport connected")
+
+func _OnRtcServerDisconnected():
+	Network.webRTCActive = false
+	RemoveRtcConnection(NetworkCommons.PeerAuthorityID)
+	if not Network.clientConnected:
+		DisconnectServer()
 
 func Destroy():
 	if multiplayerAPI.connected_to_server.is_connected(ConnectServer):

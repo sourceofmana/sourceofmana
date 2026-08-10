@@ -16,6 +16,7 @@ _spritePreset = ExtResource("spr_Peyote")
 _radius = 14
 _stats = {
 "attack": 15,
+"baseExp": 3,
 "cooldownAttackDelay": 3.0,
 "defense": 2,
 "level": 2,

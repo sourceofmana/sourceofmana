@@ -37,6 +37,23 @@ func Setup():
 		tree.set_column_custom_minimum_width(columnIdx, 100)
 		tree.set_column_expand_ratio(columnIdx, 0.8)
 
+func GetColumnNames() -> Array[String]:
+	var names : Array[String] = ["Entity"]
+	for col : Dictionary in EQUIPMENT_COLUMNS:
+		names.push_back(col.name)
+	return names
+
+func GetSortValue(resource : Resource, column : int) -> Variant:
+	if column == 0:
+		return resource._name if resource.get("_name") else ""
+
+	var slotIdx : int = column - 1
+	if slotIdx < 0 or slotIdx >= EQUIPMENT_COLUMNS.size():
+		return ""
+
+	var equipmentArray : Array = resource.get("_equipment")
+	return GetEquippedItemName(equipmentArray, EQUIPMENT_COLUMNS[slotIdx].value)
+
 func SetupEquipmentColumns():
 	EQUIPMENT_COLUMNS.clear()
 	for key in ActorCommons.Slot.keys():

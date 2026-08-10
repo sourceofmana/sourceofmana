@@ -15,7 +15,7 @@ metadata/_custom_type_script = "uid://btqmbqq2q7cm8"
 [resource]
 script = ExtResource("2_skill")
 category = 2
-cellRange = 256
+skillRange = 256
 mode = 2
 cooldownTime = 5.0
 castPreset = ExtResource("1_pitqg")

@@ -47,8 +47,8 @@ func OnExplainBounties():
 			Mes("I found a new nest, there are more of them down there now, and bolder too. Pay's better this time.")
 			Choice("I'll finish what I started.", AcceptBounty.bind(ProgressCommons.SHIP_PETER_BOUNTY.WAVE_TWO_DONE, "Ratto", 10))
 		ProgressCommons.SHIP_PETER_BOUNTY.WAVE_TWO_DONE:
-			Mes("Forget the rattos. We've got crocs down there now. Crocs, can you believe that?")
-			Choice("Crocs it is.", AcceptBounty.bind(ProgressCommons.SHIP_PETER_BOUNTY.ALL_DONE, "Croc", 10))
+			Mes("Forget the rattos. We've got bats down there now. Bats, can you believe that?")
+			Choice("Bats it is.", AcceptBounty.bind(ProgressCommons.SHIP_PETER_BOUNTY.ALL_DONE, "Bat", 10))
 
 	Choice("Not right now.", OnDecline)
 

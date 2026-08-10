@@ -177,12 +177,31 @@ static func ApplyStealBehaviour(agent : AIAgent) -> bool:
 
 static func ApplyFollowerBehaviour(agent : AIAgent) -> bool:
 	if not IsActionInProgress(agent):
-		if agent.leader != null:
-			if agent.leader.aiState == State.ATTACK and agent.aiState == State.IDLE:
-				AI.SetState(agent, State.WALK, true)
-				agent.SetNodeGoal(agent.leader, agent.leader.position)
-				return true
+		if not agent.leader:
+			RegisterToNearbyLeader(agent)
+		if agent.leader and agent.leader.aiState == State.ATTACK and agent.aiState == State.IDLE:
+			AI.SetState(agent, State.WALK, true)
+			agent.SetNodeGoal(agent.leader, agent.leader.position)
+			return true
 	return false
+
+static func RegisterToNearbyLeader(agent : AIAgent) -> void:
+	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+	if instance == null:
+		return
+
+	var nearest : AIAgent = null
+	var nearestDist : float = ReachDistanceSquared
+	for mob : AIAgent in instance.mobs:
+		if mob == agent or not (mob.aiBehaviour & Behaviour.LEADER) or not ActorCommons.IsAlive(mob):
+			continue
+		var dist : float = WorldNavigation.GetDistanceSquaredSafe(agent, mob.position)
+		if dist < nearestDist:
+			nearest = mob
+			nearestDist = dist
+
+	if nearest:
+		nearest.AddFollower(agent)
 
 static func ApplyImmobileBehaviour(_agent : AIAgent) -> bool:
 	return false # Nothing to handle here

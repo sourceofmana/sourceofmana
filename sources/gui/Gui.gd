@@ -139,11 +139,10 @@ func EnterLoginMenu():
 	bossTracker.set_visible(false)
 	menu.SetItemsVisible(false)
 	menu.Close()
-	stats.set_visible(false)
+	stats.SetBarsVisible(false)
 	statWindow.set_visible(false)
 	dialogueContainer.set_visible(false)
 	pickupPanel.AnimateClose()
-	notificationLabel.ClearNotification()
 	loadingControl.set_visible(false)
 	actionBoxes.set_visible(false)
 	quitWindow.set_visible(false)
@@ -212,11 +211,14 @@ func EnterGame():
 	Launcher.Camera.ResetCinematic()
 	DisplayActions(["gp_interact", "gp_target", "gp_untarget", "gp_pickup", "gp_sit"])
 
-	stats.set_visible(true)
+	stats.SetBarsVisible(true)
 	menu.set_visible(true)
 	actionBoxes.set_visible(true)
 	shortcuts.set_visible(true)
 	menu.SetItemsVisible(true)
+
+func ExitGame():
+	notificationLabel.ClearNotification()
 
 func EnterPip():
 	Launcher.GUI.set_visible(false)
@@ -240,6 +242,8 @@ func _post_launch():
 		FSM.enter_char_progress.connect(EnterCharProgress)
 	if not FSM.enter_game.is_connected(EnterGame):
 		FSM.enter_game.connect(EnterGame)
+	if not FSM.exit_game.is_connected(ExitGame):
+		FSM.exit_game.connect(ExitGame)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	if minimapWindow:
 		minimapWindow._post_launch()

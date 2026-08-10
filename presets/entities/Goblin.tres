@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://e8740tx7wge6"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_gobl"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_6g6rj"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_gobl"]
+[ext_resource type="AudioStream" uid="uid://cdowss8b51os6" path="res://data/sounds/entities/fire-goblin/attack.ogg" id="3_attack"]
+[ext_resource type="PackedScene" uid="uid://dxixywo1th1gv" path="res://presets/entities/sprites/Piou.tscn" id="3_gobl"]
+[ext_resource type="AudioStream" uid="uid://b40da1jxg2knf" path="res://data/sounds/entities/fire-goblin/dodge.ogg" id="4_dodge"]
+
+[resource]
+script = ExtResource("2_gobl")
+_id = 3045949408
+_name = "Goblin"
+_spritePreset = ExtResource("3_gobl")
+_radius = 8
+_stats = {
+"attack": 30,
+"baseExp": 100,
+"defense": 45,
+"level": 24,
+"mattack": 70,
+"maxHealth": 400,
+"mdefense": 5,
+"walkSpeed": 50.0
+}
+_equipment = Array[ExtResource("1_gobl")]([null, null, null, null, null, null, null, null])
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("3_attack")
+})
+_alterationSFX = Dictionary[int, AudioStream]({
+3: ExtResource("4_dodge")
+})

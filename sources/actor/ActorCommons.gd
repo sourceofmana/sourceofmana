@@ -335,7 +335,7 @@ static func IsSameActor(actor : Actor, target : Actor) -> bool:
 	return actor == target
 
 static func GetSkillRange(actor : Actor, skill : SkillCell) -> int:
-	return actor.stat.current.attackRange + (skill.cellRange if skill else 0)
+	return actor.stat.current.attackRange + (skill.skillRange if skill else 0)
 
 static func GetDistanceSquared(actor : Actor, pos : Vector2) -> float:
 	return Vector2.ZERO.distance_squared_to((actor.position - pos) * SkillCommons.PerspectiveIncrease)
@@ -430,6 +430,7 @@ static var DefaultInventory : Array[Dictionary] = [
 ]
 static var DefaultSkills : Array[Dictionary] = [
 	{ "skill_id": SkillCommons.SkillMeleeName.hash(), "level": 1 },
+	{ "skill_id": SkillCommons.SkillRunName.hash(), "level": 1 },
 ]
 static var DefaultSfx : Dictionary[ActorCommons.Alteration, AudioStream] = {
 	Alteration.HIT:				preload("res://data/sounds/alteration/hit.ogg"),

@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://dsb30whvwaho"]
+
+[ext_resource type="Texture2D" uid="uid://c0tdh748svcb3" path="res://data/graphics/effects/particles/leaf.png" id="1_7m44f"]
+
+[sub_resource type="Curve" id="Curve_0xjyr"]
+_limits = [-2.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0.247191), 0.0, -5.49787, 0, 0, Vector2(1, 0.11236), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1pr8x"]
+curve = SubResource("Curve_0xjyr")
+
+[sub_resource type="Curve" id="Curve_7m44f"]
+_data = [Vector2(0, 0.146068), 0.0, 0.986012, 0, 0, Vector2(0.52093, 1), 0.603933, 0.603933, 0, 0, Vector2(1, 0.606742), -1.50983, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0xjyr"]
+curve = SubResource("Curve_7m44f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mag5b"]
+lifetime_randomness = 0.2
+particle_flag_rotate_y = true
+emission_shape = 6
+emission_ring_axis = Vector3(1, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 72.0
+emission_ring_inner_radius = 70.0
+emission_ring_cone_angle = 90.0
+angle_min = -360.0
+angle_max = 1.07288e-05
+spread = 180.0
+angular_velocity_min = 360.0
+angular_velocity_max = 720.0
+orbit_velocity_min = -2.0
+orbit_velocity_max = 2.0
+orbit_velocity_curve = SubResource("CurveTexture_1pr8x")
+gravity = Vector3(0, 0, 0)
+scale_min = 0.6
+scale_curve = SubResource("CurveTexture_0xjyr")
+
+[node name="Leaf Blades Particles" type="GPUParticles2D" unique_id=1303829101]
+z_index = -1
+z_as_relative = false
+scale = Vector2(1, 0.7)
+emitting = false
+amount = 150
+texture = ExtResource("1_7m44f")
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.6
+randomness = 0.15
+process_material = SubResource("ParticleProcessMaterial_mag5b")

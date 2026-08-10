@@ -11,17 +11,25 @@ signal online_player_disconnected(playerName : String)
 
 #
 var Client							= null
+var WebRTCClient : NetClient		= null
 var ENetServer : NetServer			= null
 var WebSocketServer : NetServer		= null
+var WebRTCServer : NetServer		= null
+var webRTCActive : bool				= false
+var clientConnected : bool			= false
 
 enum EChannel
 {
 	CONNECT = 0,
 	ACTION,
 	MAP,
+	MAP_UNRELIABLE,
 	NAVIGATION,
+	NAVIGATION_UNRELIABLE,
 	ENTITY,
+	ENTITY_UNRELIABLE,
 	BULK,
+	COUNT
 }
 
 # Auth
@@ -107,6 +115,35 @@ func AddOnlinePlayer(playerName : String, peerID : int = NetworkCommons.PeerOffl
 func RemoveOnlinePlayer(playerName : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("RemoveOnlinePlayer", [playerName], peerID)
 
+# WebRTC signaling
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func RequestRtcUpgrade(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("RequestRtcUpgrade", [], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func RtcConfig(iceServers : Array, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RtcConfig", [iceServers], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func RtcOffer(sdp : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RtcOffer", [sdp], peerID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func RtcAnswer(sdp : String, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("RtcAnswer", [sdp], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.CONNECT)
+func RtcCandidateToClient(media : String, index : int, candidateName : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("RtcCandidateToClient", [media, index, candidateName], peerID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func RtcCandidateToServer(media : String, index : int, candidateName : String, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("RtcCandidateToServer", [media, index, candidateName], peerID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.CONNECT)
+func RtcReady(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("RtcReady", [], peerID)
+
 # Respawn
 @rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
 func TriggerRespawn(peerID : int = NetworkCommons.PeerAuthorityID):
@@ -145,12 +182,12 @@ func DisplayActions(actions : PackedStringArray, peerID : int = NetworkCommons.P
 	CallClient("DisplayActions", [actions], peerID)
 
 # Notification
-@rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.MAP)
+@rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.MAP_UNRELIABLE)
 func PushNotification(notif : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("PushNotification", [notif], peerID)
 
 # Navigation
-@rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.NAVIGATION)
+@rpc("any_peer", "call_remote", "unreliable_ordered", EChannel.NAVIGATION_UNRELIABLE)
 func SetClickPos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("SetClickPos", [pos], peerID)
 
@@ -158,13 +195,13 @@ func SetClickPos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
 func SetMovePos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("SetMovePos", [pos], peerID, NetworkCommons.DelayInstant)
 
-@rpc("authority", "call_remote", "unreliable_ordered", EChannel.ENTITY)
-func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("UpdateEntity", [agentRID, velocity, position], peerID)
+@rpc("authority", "call_remote", "unreliable_ordered", EChannel.ENTITY_UNRELIABLE)
+func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, seq : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdateEntity", [agentRID, velocity, position, seq], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("FullUpdateEntity", [agentRID, velocity, position, orientation, agentState, skillCastID, isRunning], peerID)
+func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool, seq : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("FullUpdateEntity", [agentRID, velocity, position, orientation, agentState, skillCastID, isRunning, seq], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
 func ClearNavigation(peerID : int = NetworkCommons.PeerAuthorityID):
@@ -410,7 +447,9 @@ func TriggerCommand(command : String, peerID : int = NetworkCommons.PeerAuthorit
 # Bulk RPC calls
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func BulkCall(methodName : StringName, bulkedArgs : Array, peerID : int = NetworkCommons.PeerOfflineID):
-	if WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
+	if WebRTCServer and not WebRTCServer.isOffline and Peers.IsUsingWebRTC(peerID):
+		WebRTCServer.multiplayerAPI.rpc(peerID, self, "BulkCall", [methodName, bulkedArgs])
+	elif WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
 		WebSocketServer.multiplayerAPI.rpc(peerID, self, "BulkCall", [methodName, bulkedArgs])
 	elif ENetServer and not ENetServer.isOffline:
 		ENetServer.multiplayerAPI.rpc(peerID, self, "BulkCall", [methodName, bulkedArgs])
@@ -419,9 +458,11 @@ func BulkCall(methodName : StringName, bulkedArgs : Array, peerID : int = Networ
 			Client.callv.call_deferred(methodName, args + [peerID])
 
 func Bulk(methodName : StringName, args : Array, peerID : int):
-	if Peers.IsUsingWebSocket(peerID):
+	if WebRTCServer and not WebRTCServer.isOffline and Peers.IsUsingWebRTC(peerID):
+		WebRTCServer.Bulk(methodName, args, peerID)
+	elif WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
 		WebSocketServer.Bulk(methodName, args, peerID)
-	else:
+	elif ENetServer:
 		ENetServer.Bulk(methodName, args, peerID)
 
 # Notify peers
@@ -446,7 +487,7 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 				if NetworkCommons.IsAlwaysVisible(agent) or NetworkCommons.IsVisible(player.position, agent.position, player.visibilityHalfSize):
 					if not player.visibleAgents.has(currentagentRID):
 						player.visibleAgents[currentagentRID] = true
-						Network.Bulk("FullUpdateEntity", [currentagentRID, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID, agent.stat.isRunning], player.peerID)
+						Network.Bulk("FullUpdateEntity", [currentagentRID, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID, agent.stat.isRunning, NetworkCommons.FrameSeq()], player.peerID)
 					if bulk:
 						Network.Bulk(callbackName, args, player.peerID)
 					else:
@@ -479,7 +520,12 @@ func CallServer(methodName : StringName, args : Array, peerID : int, actionDelta
 	if not Peers.Footprint(peerID, methodName, actionDelta):
 		return false
 	if Client and not Client.isOffline:
-		Client.multiplayerAPI.rpc(peerID, self, methodName, args + [Client.interfaceID])
+		if webRTCActive and WebRTCClient:
+			WebRTCClient.multiplayerAPI.rpc(NetworkCommons.PeerAuthorityID, self, methodName, args + [WebRTCClient.interfaceID])
+		else:
+			Client.multiplayerAPI.rpc(peerID, self, methodName, args + [Client.interfaceID])
+	elif Peers.IsUsingWebRTC(peerID):
+		WebRTCServer.callv.call_deferred(methodName, args + [peerID])
 	elif Peers.IsUsingWebSocket(peerID):
 		WebSocketServer.callv.call_deferred(methodName, args + [peerID])
 	else:
@@ -487,7 +533,9 @@ func CallServer(methodName : StringName, args : Array, peerID : int, actionDelta
 	return true
 
 func CallClient(methodName : StringName, args : Array, peerID : int):
-	if WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
+	if WebRTCServer and not WebRTCServer.isOffline and Peers.IsUsingWebRTC(peerID):
+		WebRTCServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
+	elif WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
 		WebSocketServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
 	elif ENetServer and not ENetServer.isOffline:
 		ENetServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
@@ -498,28 +546,41 @@ func CallClient(methodName : StringName, args : Array, peerID : int):
 func Mode(isClient : bool, isServer : bool):
 	var isOffline : bool = isClient and isServer
 	if isClient:
-		Client = NetClient.new(LauncherCommons.isWeb, isOffline, isOffline or NetworkCommons.IsLocal)
+		Client = NetClient.new(LauncherCommons.isWeb, false, isOffline, isOffline or NetworkCommons.IsLocal)
+		if LauncherCommons.isWeb and NetworkCommons.UseWebRTC and not isOffline:
+			WebRTCClient = NetClient.new(false, true, isOffline, isOffline or NetworkCommons.IsLocal)
 
 	if isServer:
 		if NetworkCommons.UseENet:
-			ENetServer = NetServer.new(false, isOffline, NetworkCommons.IsLocal)
+			ENetServer = NetServer.new(false, false, isOffline, NetworkCommons.IsLocal)
 		if NetworkCommons.UseWebSocket and not isOffline:
-			WebSocketServer = NetServer.new(true, isOffline, NetworkCommons.IsLocal)
+			WebSocketServer = NetServer.new(true, false, isOffline, NetworkCommons.IsLocal)
+		if NetworkCommons.UseWebRTC and not isOffline:
+			WebRTCServer = NetServer.new(false, true, isOffline, NetworkCommons.IsLocal)
 
 func _ready():
 	NetworkCommons.ProtocolVersion = NetworkCommons.ComputeProtocolVersion(self)
 
 func _init():
+	assert(NetworkCommons.RtcChannelsConfig.size() == EChannel.COUNT - 1, "Mismatch RTC channel config count! Expected %d" % [EChannel.COUNT - 1])
 	online_player_connected.connect(OnlineList.OnPlayerConnected)
 	online_player_disconnected.connect(OnlineList.OnPlayerDisconnected)
 
 func Destroy():
+	webRTCActive = false
+	clientConnected = false
 	if Client:
 		Client.Destroy()
 		Client = null
+	if WebRTCClient:
+		WebRTCClient.Destroy()
+		WebRTCClient = null
 	if ENetServer:
 		ENetServer.Destroy()
 		ENetServer = null
 	if WebSocketServer:
 		WebSocketServer.Destroy()
 		WebSocketServer = null
+	if WebRTCServer:
+		WebRTCServer.Destroy()
+		WebRTCServer = null

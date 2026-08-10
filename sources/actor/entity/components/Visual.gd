@@ -44,14 +44,25 @@ func LoadSpriteSlot(slot : ActorCommons.Slot, sprite : Sprite2D):
 				spriteOffsetUpdate.emit()
 
 func ResetData():
-	for child in get_children():
-		child.queue_free()
+	if preset:
+		preset.queue_free()
+	for effect in equipmentEffects:
+		if effect:
+			effect.queue_free()
 	for spriteID in sprites.size():
 		sprites[spriteID] = null
 	equipmentEffects.fill(null)
 	preset = null
 	questHighlight = null
 	originalAnimationLib = null
+
+func AddPreset(presetNode : Node2D):
+	if presetNode != preset:
+		if is_instance_valid(presetNode) and not presetNode.is_queued_for_deletion():
+			presetNode.queue_free()
+		return
+	if is_instance_valid(presetNode):
+		add_child(presetNode)
 
 func LoadData(data : EntityData):
 	ResetData()
@@ -60,7 +71,7 @@ func LoadData(data : EntityData):
 	if data._spritePreset:
 		preset = data._spritePreset.instantiate()
 		if preset:
-			add_child.call_deferred(preset)
+			AddPreset.call_deferred(preset)
 
 		# Animation
 		if preset and preset.has_node("Animation"):
@@ -218,6 +229,14 @@ func SetEquipment(slot : int, data : EntityData = null, applyOverrides : bool = 
 	if applyOverrides:
 		ApplyAnimationOverrides()
 
+func AddEquipmentEffect(slot : int, light : Node2D):
+	if slot < 0 or slot >= equipmentEffects.size() or equipmentEffects[slot] != light:
+		if is_instance_valid(light) and not light.is_queued_for_deletion():
+			light.queue_free()
+		return
+	if is_instance_valid(light):
+		add_child(light)
+
 func SetEquipmentMetadata(slot : int, cell : ItemCell):
 	if equipmentEffects[slot]:
 		equipmentEffects[slot].queue_free()
@@ -229,7 +248,7 @@ func SetEquipmentMetadata(slot : int, cell : ItemCell):
 			if cell.has_meta("light_color"):
 				light.color = cell.get_meta("light_color")
 			equipmentEffects[slot] = light
-			add_child.call_deferred(light)
+			AddEquipmentEffect.call_deferred(slot, light)
 
 func SetData(slot : int, data : EntityData):
 	var slotName : String = ActorCommons.GetSlotName(slot)

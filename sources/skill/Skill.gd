@@ -53,7 +53,7 @@ static func Process(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 					Casted(agent, target, skill)
 					return
 				if SkillCommons.IsInteractable(agent, target):
-					ThrowProjectile(agent, agent.position + agent.currentOrientation * Vector2(skill.cellRange, skill.cellRange), skill)
+					ThrowProjectile(agent, agent.position + agent.currentOrientation * Vector2(skill.skillRange, skill.skillRange), skill)
 			TargetMode.ZONE:
 				var handle : Callable = Skill.HandleZone.bind(agent, agent.get_position(), skill, SkillCommons.GetRNG(hasStamina))
 				if SkillCommons.IsDelayed(skill):

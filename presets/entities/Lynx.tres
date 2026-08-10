@@ -14,13 +14,16 @@ _name = "Lynx"
 _spritePreset = ExtResource("spr_Lynx")
 _radius = 24
 _stats = {
-"attack": 83,
-"defense": 21,
-"level": 30,
-"mattack": 98,
-"maxHealth": 320,
-"mdefense": 31,
-"walkSpeed": 140.0
+"attack": 40,
+"baseExp": 55,
+"cooldownAttackDelay": 1.5,
+"defense": 15,
+"dodgeRate": 0.12,
+"level": 21,
+"mattack": 60,
+"maxHealth": 250,
+"mdefense": 25,
+"walkSpeed": 160.0
 }
 _equipment = Array[ExtResource("1_dfoc1")]([null, null, null, null, null, null, null, null])
 _behaviour = 4

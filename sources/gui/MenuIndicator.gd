@@ -4,7 +4,6 @@ class_name MenuIndicator
 #
 @onready var content : Control				= $MenuContent
 @onready var items : Control				= $MenuContent/HBoxItems
-@onready var button : Button				= $MenuButton
 
 #
 const MENU_SPEED : float					= 1.1
@@ -34,7 +33,7 @@ func UpdateIconsVisibility(progress : float, thresholds : Array[float]):
 	var children : Array[Node] = items.get_children()
 	for i in children.size():
 		var child : Node = children[i]
-		if child is Button:
+		if child is WindowButton:
 			child.set_visible(progress >= thresholds[i])
 
 #

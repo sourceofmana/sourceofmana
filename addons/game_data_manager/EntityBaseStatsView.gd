@@ -53,6 +53,42 @@ func Setup():
 		tree.set_column_custom_minimum_width(columnIdx, 90)
 		tree.set_column_expand_ratio(columnIdx, 0.8)
 
+func GetColumnNames() -> Array[String]:
+	var names : Array[String] = ["Entity"]
+	for col : Dictionary in BASE_STAT_COLUMNS:
+		names.push_back(col.name)
+	return names
+
+func GetSortValue(resource : Resource, column : int) -> Variant:
+	if column == 0:
+		return resource._name if resource.get("_name") else ""
+
+	var statIdx : int = column - 1
+	if statIdx < 0 or statIdx >= BASE_STAT_COLUMNS.size():
+		return 0.0
+
+	var statStr : String = BASE_STAT_COLUMNS[statIdx].name
+	var statType : int = BASE_STAT_COLUMNS[statIdx].type
+	var stats : Variant = resource.get("_stats")
+	var parent : Variant = resource.get("_parent")
+	var parentStats : Variant = null
+	if parent:
+		var mergedParent : Variant = parent.GetMergedEntity()
+		parentStats = mergedParent.get("_stats") if mergedParent else null
+
+	var currentValue : Variant = GetStatValue(stats, statStr, statType)
+	if currentValue != 0 and currentValue != 0.0:
+		return float(currentValue)
+
+	if parentStats:
+		var parentValue : Variant = GetStatValue(parentStats, statStr, statType)
+		if parentValue != 0 and parentValue != 0.0:
+			return float(parentValue)
+
+	var defaultBaseStats : BaseStats = BaseStats.new()
+	var defaultValue : Variant = defaultBaseStats.get(statStr) if statStr in defaultBaseStats else (0 if statType == TYPE_INT else 0.0)
+	return float(defaultValue)
+
 func UpdateTreeItem(item : TreeItem, resource : Resource):
 	item.set_text(0, resource._name if resource.get("_name") else "Unnamed")
 	item.set_editable(0, false)

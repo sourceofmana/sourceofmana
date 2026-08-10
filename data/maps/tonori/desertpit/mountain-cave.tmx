@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="71">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="79">
  <properties>
   <property name="ambient" value="Lighting"/>
   <property name="ambientintensity" type="float" value="0.6"/>
@@ -958,7 +958,7 @@
   </object>
   <object id="33" name="Sand Snake" type="Spawn" x="3071" y="1381" width="360" height="335">
    <properties>
-    <property name="count" value="1"/>
+    <property name="count" value="2"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -968,7 +968,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="35" name="Sand Snake" type="Spawn" x="2304" y="2831" width="960" height="241">
+  <object id="35" name="Lizandre" type="Spawn" x="2304" y="2831" width="960" height="241">
    <properties>
     <property name="count" value="3"/>
     <property name="type" value="Monster"/>
@@ -994,17 +994,17 @@
   </object>
   <object id="39" name="Sand Snake" type="Spawn" x="1600" y="1840" width="944" height="904">
    <properties>
-    <property name="count" value="10"/>
+    <property name="count" value="7"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="40" name="Sand Snake" type="Spawn" x="1411" y="2879" width="812" height="944">
    <properties>
-    <property name="count" value="8"/>
+    <property name="count" value="6"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="41" name="Lynx" type="Spawn" x="2103" y="3837" width="440" height="125">
+  <object id="41" name="Lizandra" type="Spawn" x="2103" y="3837" width="440" height="125">
    <properties>
     <property name="count" value="3"/>
     <property name="type" value="Monster"/>
@@ -1046,21 +1046,21 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="48" name="Lizandra" type="Spawn" x="2194" y="2479" width="808" height="209">
+  <object id="48" name="Lizandre" type="Spawn" x="1778.85" y="2027.48" width="856.485" height="690.818">
    <properties>
-    <property name="max beings" value="3"/>
+    <property name="max beings" value="6"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="49" name="Lizandra" type="Spawn" x="3784" y="2152" width="248" height="608">
    <properties>
-    <property name="count" value="3"/>
+    <property name="count" value="2"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="50" name="Lizandras" type="Spawn" x="2991" y="2651" width="497" height="229">
+  <object id="50" name="Lizandra" type="Spawn" x="2991" y="2651" width="497" height="229">
    <properties>
-    <property name="count" value="4"/>
+    <property name="count" value="2"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1076,9 +1076,9 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="53" name="Lizandra" type="Spawn" x="768" y="2496" width="448" height="1148">
+  <object id="53" name="Lizandra" type="Spawn" x="768" y="3071.76" width="448" height="572.242">
    <properties>
-    <property name="count" value="3"/>
+    <property name="count" value="2"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1090,17 +1090,17 @@
   </object>
   <object id="55" name="Fire Goblin" type="Spawn" x="3360" y="3310" width="256" height="350">
    <properties>
-    <property name="count" value="1"/>
+    <property name="count" value="2"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="56" name="Fire Goblin" type="Spawn" x="3016" y="3416" width="320" height="320">
    <properties>
-    <property name="count" value="1"/>
+    <property name="count" value="2"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="57" name="Lizzy" type="Spawn" x="2504" y="3156" width="448" height="480">
+  <object id="57" name="Lizandre" type="Spawn" x="2504" y="3156" width="448" height="480">
    <properties>
     <property name="count" value="6"/>
     <property name="type" value="Monster"/>
@@ -1115,11 +1115,46 @@
    </properties>
    <polygon points="0,32 32,0 64,32 80,64 -16,64"/>
   </object>
-  <object id="70" name="Thiefs Chest" type="Spawn" x="3684" y="3269">
+  <object id="71" name="Lizandre" type="Spawn" x="791.152" y="2544.18" width="448" height="1148">
    <properties>
-    <property name="own_script" value="generic/ChestGlobal.gd"/>
-    <property name="player_script" value="tonori/desertpit/ThiefsChest.gd"/>
-    <property name="type" value="Npc"/>
+    <property name="count" value="6"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="72" name="Lizandra" type="Spawn" x="2259.64" y="2443.98" width="808" height="209">
+   <properties>
+    <property name="max beings" value="2"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="73" name="Lizandre" type="Spawn" x="1757.64" y="3685.58" width="490.788" height="216.727">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="74" name="Lizandre" type="Spawn" x="3628" y="2010" width="266" height="210">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="75" name="Bat" type="Spawn" x="3180" y="1044" width="630" height="170">
+   <properties>
+    <property name="count" value="7"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="77" name="Bat" type="Spawn" x="685" y="1368" width="588" height="872">
+   <properties>
+    <property name="count" value="6"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="78" name="Bat" type="Spawn" x="-74" y="44">
+   <properties>
+    <property name="count" value="20"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>

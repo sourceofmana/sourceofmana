@@ -3,8 +3,6 @@ class_name ColumnTableView
 extends TableViewBase
 
 #
-var sortColumn : int = 0
-var sortAscending : bool = true
 var enumPopup : PopupMenu = null
 var editingItem : TreeItem = null
 var editingColumn : int = -1
@@ -50,6 +48,9 @@ func HandleSpecialButton(_resource : Resource, _item : TreeItem, _column : int, 
 
 #
 func Setup():
+	sortColumn = 0
+	sortAscending = true
+
 	var cols : Array[Dictionary] = GetColumns()
 	tree.clear()
 	tree.columns = cols.size()

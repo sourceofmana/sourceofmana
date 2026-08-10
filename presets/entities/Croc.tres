@@ -15,13 +15,17 @@ _name = "Croc"
 _spritePreset = ExtResource("spr_Croc")
 _radius = 10
 _stats = {
-"attack": 45,
-"defense": 32,
-"level": 13,
-"maxHealth": 100,
-"walkSpeed": 80.0
+"attack": 75,
+"baseExp": 30,
+"castAttackDelay": 0.9,
+"cooldownAttackDelay": 1.2,
+"defense": 40,
+"level": 15,
+"maxHealth": 350,
+"walkSpeed": 50.0
 }
 _equipment = Array[ExtResource("1_s75xo")]([null, null, null, null, null, null, null, null])
+_behaviour = 4
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("6_dvo0c")
 })

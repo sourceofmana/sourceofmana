@@ -192,7 +192,9 @@ func ConnectCharacter(nickname : String, peerID : int):
 					peer.SetAgent(agent.get_rid().get_id())
 					agent.SetCharacterInfo(charInfo, peer.characterID)
 					Launcher.SQL.CharacterLogin(peer.characterID)
-					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, peerID])
+
+					var ip : String = Peers.GetPeerIP(peerID)
+					Util.PrintLog("Server", "Player connected: %s (%d) via %s from %s" % [nickname, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), ip if not ip.is_empty() else "unavailable"])
 					Network.online_player_connected.emit(nickname)
 
 	Network.CharacterError(err, peerID)
@@ -203,7 +205,9 @@ func DisconnectCharacter(peerID : int):
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player:
 			var playerName : String = player.nick
-			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [playerName, peerID])
+			var ip : String = Peers.GetPeerIP(peerID)
+			Util.PrintLog("Server", "Player disconnected: %s (%d) via %s from %s" % [playerName, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), ip if not ip.is_empty() else "unavailable"])
+
 			Launcher.SQL.RefreshCharacter(player)
 			WorldAgent.RemoveAgent(player)
 			peer.SetAgent(NetworkCommons.PeerUnknownID)
@@ -387,28 +391,113 @@ func TriggerCommand(command : String, peerID : int):
 
 # Peer handling
 func ConnectPeer(peerID : int):
-	Util.PrintInfo("Server", "Peer connected: %d with %s" % [peerID, "Websocket" if useWebSocket else "ENet"])
-	Peers.AddPeer(peerID, useWebSocket)
+	var transportType : Peers.TransportType = Peers.TransportType.ENET
+	if isOffline:
+		transportType = Peers.TransportType.OFFLINE
+	elif useWebSocket:
+		transportType = Peers.TransportType.WEBSOCKET
+	Util.PrintInfo("Server", "Peer connected: %d with %s" % [peerID, Peers.GetTransportName(transportType)])
+
+	Peers.AddPeer(peerID, transportType)
+
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if peer and not isOffline:
+		peer.primaryConnected = true
+		peer.ipAddress = Peers.ResolvePeerIP(peerID)
 	bulks[peerID] = {}
+
 	if currentPeer and currentPeer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
 		var clientPeer : PacketPeer = currentPeer.get_peer(peerID)
 		if clientPeer and clientPeer is ENetPacketPeer:
 			clientPeer.set_timeout(NetworkCommons.Timeout, NetworkCommons.TimeoutMin, NetworkCommons.TimeoutMax)
 
 func DisconnectPeer(peerID : int):
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer:
+		return
+	peer.primaryConnected = false
+	bulks.erase(peerID)
+	if peer.rtcConnected:
+		Util.PrintInfo("Server", "Primary transport dropped, peer stays on WebRTC: %d" % peerID)
+		return
+	FullyDisconnect(peerID)
+
+func FullyDisconnect(peerID : int):
 	Util.PrintInfo("Server", "Peer disconnected: %d" % peerID)
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if peer and peer.accountID != NetworkCommons.PeerUnknownID:
+		DisconnectAccount(peerID)
+	Peers.RemovePeer(peerID)
+
+# WebRTC upgrade
+func RequestRtcUpgrade(peerID : int):
+	if Network.WebRTCServer:
+		Network.WebRTCServer.StartRtcUpgrade(peerID)
+
+func RtcAnswer(sdp : String, peerID : int):
+	if Network.WebRTCServer:
+		Network.WebRTCServer.HandleRtcAnswer(peerID, sdp)
+
+func RtcCandidateToServer(media : String, index : int, candidateName : String, peerID : int):
+	if Network.WebRTCServer:
+		Network.WebRTCServer.AddRtcIceCandidate(peerID, media, index, candidateName)
+
+func RtcReady(peerID : int):
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if peer:
-		bulks.erase(peerID)
-		if peer.accountID != NetworkCommons.PeerUnknownID:
-			DisconnectAccount(peerID)
-		Peers.RemovePeer(peerID)
+		peer.rtcConnected = true
+	Peers.SetTransport(peerID, Peers.TransportType.WEBRTC)
+	Util.PrintInfo("Server", "Peer upgraded to WebRTC: %d" % peerID)
+
+func StartRtcUpgrade(peerID : int):
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer:
+		return
+
+	Network.RtcConfig(NetworkCommons.IceServers, peerID)
+	var connection : WebRTCPeerConnection = CreateRtcConnection(peerID)
+	connection.create_offer()
+
+func HandleRtcAnswer(peerID : int, sdp : String):
+	var connection : WebRTCPeerConnection = rtcConnections.get(peerID, null)
+	if connection:
+		connection.set_remote_description("answer", sdp)
+
+func _OnRtcPeerConnected(peerID : int):
+	bulks[peerID] = {}
+	Util.PrintInfo("Server", "WebRTC peer connected, awaiting ready: %d" % peerID)
+
+func _OnRtcPeerDisconnected(peerID : int):
+	bulks.erase(peerID)
+	RemoveRtcConnection(peerID)
+
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer:
+		return
+
+	peer.rtcConnected = false
+	if peer.primaryConnected:
+		Peers.SetTransport(peerID, Peers.TransportType.WEBSOCKET)
+		Util.PrintInfo("Server", "Peer WebRTC dropped, reverted to WebSocket: %d" % peerID)
+	else:
+		FullyDisconnect(peerID)
 
 #
 func _enter_tree():
 	if isOffline:
 		interfaceID = NetworkCommons.PeerAuthorityID
 		ConnectPeer(interfaceID)
+		return
+
+	if useWebRTC:
+		RtcMultiplayerPeer().create_server(NetworkCommons.RtcChannelsConfig)
+		if not multiplayerAPI.peer_connected.is_connected(_OnRtcPeerConnected):
+			multiplayerAPI.peer_connected.connect(_OnRtcPeerConnected)
+		if not multiplayerAPI.peer_disconnected.is_connected(_OnRtcPeerDisconnected):
+			multiplayerAPI.peer_disconnected.connect(_OnRtcPeerDisconnected)
+		multiplayerAPI.multiplayer_peer = currentPeer
+		interfaceID = multiplayerAPI.get_unique_id()
+		Util.PrintLog("Server", "WebRTC transport initialized")
 		return
 
 	if not multiplayerAPI.peer_connected.is_connected(ConnectPeer):
@@ -435,7 +524,7 @@ func _enter_tree():
 	if useWebSocket:
 		ret = currentPeer.create_server(serverPort, "*", tlsOptions)
 	else:
-		ret = currentPeer.create_server(serverPort)
+		ret = currentPeer.create_server(serverPort, NetworkCommons.MaxPlayerCount)
 		if ret == OK and tlsOptions:
 			ret = currentPeer.host.dtls_server_setup(tlsOptions)
 

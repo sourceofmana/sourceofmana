@@ -2,10 +2,10 @@
     "maps": [
         {
             "fileName": "manayir/manayir-beach.tmx",
-            "height": 4896,
+            "height": 5344,
             "width": 8352,
             "x": 608,
-            "y": 3296
+            "y": 2848
         },
         {
             "fileName": "desertpit/desert-pit.tmx",
@@ -82,7 +82,7 @@
             "height": 5440,
             "width": 4800,
             "x": -224,
-            "y": -608
+            "y": -1056
         }
     ],
     "onlyShowAdjacentMaps": false,

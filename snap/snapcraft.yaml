@@ -1,6 +1,6 @@
 name: source-of-mana
 base: core24
-version: '0.8'
+version: '0.0.9'
 summary: A 2D open-source MMORPG built with Godot
 description: |
   Source of Mana is an open source and libre 2D MMORPG inspired by the

@@ -15,16 +15,18 @@ _name = "Ratto"
 _spritePreset = ExtResource("spr_Ratto")
 _radius = 10
 _stats = {
-"attack": 12,
-"castAttackDelay": 0.35,
-"cooldownAttackDelay": 0.3,
+"attack": 10,
+"baseExp": 10,
+"castAttackDelay": 0.3,
+"cooldownAttackDelay": 0.25,
 "defense": 2,
-"level": 3,
-"maxHealth": 39,
+"dodgeRate": 0.08,
+"level": 5,
+"maxHealth": 85,
 "walkSpeed": 150.0
 }
 _equipment = Array[ExtResource("1_jchlc")]([null, null, null, null, null, null, null, null])
-_behaviour = 386
+_behaviour = 258
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("6_fx47f"),
 4: ExtResource("5_v8lwk")
