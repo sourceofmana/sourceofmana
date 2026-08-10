@@ -4,7 +4,7 @@ extends Node
 func Configure(options : SentryOptions):
 	options.godot_logger.event_mask = SentryOptions.MASK_ERROR | SentryOptions.MASK_WARNING | SentryOptions.MASK_SCRIPT | SentryOptions.MASK_SHADER
 	options.debug = false
-	options.attach_log = not OS.has_feature("web")
+	options.attach_log = false
 	options.before_send = BeforeSend
 
 func BeforeSend(event : SentryEvent) -> SentryEvent:
