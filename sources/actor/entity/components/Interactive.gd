@@ -299,7 +299,7 @@ func DisplaySailContext():
 
 #
 func Init(data : EntityData):
-	displayName = entity.type == ActorCommons.Type.PLAYER or data._displayName
+	displayName = (entity.type == ActorCommons.Type.PLAYER or data._displayName) and entity != Launcher.Player
 
 	if nameLabel:
 		nameLabel.set_text(entity.nick)
