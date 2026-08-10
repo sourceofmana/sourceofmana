@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update
-          apt-get install -y libfontconfig1
+          apt-get install -y libfontconfig1 unzip
 
       - name: Setup Godot templates
         run: |
@@ -53,6 +53,16 @@ jobs:
           echo "$DEBUG_KEYSTORE" | base64 -d > /root/debug.keystore
         env:
           DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
+
+      - name: Install Android build template
+        if: matrix.name == 'Android'
+        run: |
+          cd "$PROJECT_PATH"
+          BUILD_VERSION=$(godot --version | sed -E 's/\.(official|custom_build)\..*$//')
+          mkdir -p android/build
+          unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip -d android/build
+          echo "$BUILD_VERSION" > android/.build_version
+          echo "Installed Android build template version: $BUILD_VERSION"
 
       - name: Import assets
         run: |
