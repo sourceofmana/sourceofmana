@@ -81,10 +81,12 @@ We’re always looking for contributors of all kinds:
 - UI/UX designers
 - Writers and worldbuilders
 
+### Contact
+
 If you’re interested in helping, join our community and check out our open issues.
 
 - **Discord:** [Join here](https://discord.com/channels/581622549566193664/1013487216493854780)
-- **IRC:** `#sourceofmana` on [Libera.Chat](https://web.libera.chat/#sourceofmana)
+- **IRC:** `#sourceofmana` and `#sourceofmana-dev` on [Libera.Chat](https://web.libera.chat/#sourceofmana,#sourceofmana-dev)
 
 ## License
 
