@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name SQLService
 
 #
 var db : Object						= null
@@ -56,7 +57,7 @@ func RemoveAccount(accountID : int) -> bool:
 func HasAccount(username : String) -> bool:
 	return not QueryBindings("SELECT account_id FROM account WHERE username = ?;", [username]).is_empty()
 
-func Login(username : String, triedPassword : String) -> Peers.AccountData:
+func ValidateAuthPassword(username : String, triedPassword : String) -> Peers.AccountData:
 	var results : Array[Dictionary] = QueryBindings("SELECT account_id, password, password_salt, permission FROM account WHERE username = ?;", [username])
 	assert(results.size() <= 1, "Duplicated account row")
 	if not results.is_empty():
@@ -72,11 +73,13 @@ func Login(username : String, triedPassword : String) -> Peers.AccountData:
 				return Peers.AccountData.new(accountID, permission)
 	return null
 
-func UpdateAccount(accountID : int) -> bool:
+func UpdateAccount(accountID : int, platform : int = NetworkCommons.Platform.UNKNOWN) -> bool:
 	var newTimestamp : int = SQLCommons.Timestamp()
 	var data : Dictionary = {
-		"last_timestamp": newTimestamp
+		"last_timestamp": newTimestamp,
 	}
+	if platform != NetworkCommons.Platform.UNKNOWN:
+		data["platform"] = platform
 	return db.update_rows("account", "account_id = %d;" % accountID, data)
 
 # Characters
@@ -245,7 +248,7 @@ func UpdateStat(charID : int, stats : ActorStats) -> bool:
 
 # Inventory
 func GetItem(charID : int, itemID : int, customfield : String, storageType : int = 0) -> Dictionary:
-	var results : Array[Dictionary] = db.select_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = '%s'" % [itemID, charID, storageType, customfield], ["*"])
+	var results : Array[Dictionary] = QueryBindings("SELECT * FROM item WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [itemID, charID, storageType, customfield])
 	assert(results.size() <= 1, "Duplicated item %d on character %d with storage %d" % [itemID, charID, storageType])
 	return {} if results.is_empty() else results[0]
 
@@ -253,8 +256,7 @@ func AddItem(charID : int, itemID : int, customfield : String, itemCount : int =
 	var data : Dictionary = GetItem(charID, itemID, customfield, storageType)
 	# Increment item count
 	if not data.is_empty():
-		data["count"] += 1
-		return db.update_rows("item", "item_id = %d AND char_id = %d AND storage = %d AND customfield = '%s'" % [itemID, charID, storageType, customfield], data)
+		return ExecuteBindings("UPDATE item SET count = ? WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [data["count"] + 1, itemID, charID, storageType, customfield])
 
 	# Insert new item
 	data = {
@@ -268,15 +270,13 @@ func AddItem(charID : int, itemID : int, customfield : String, itemCount : int =
 
 func RemoveItem(charID : int, itemID : int, customfield : String, itemCount : int = 1, storageType : int = 0) -> bool:
 	var data : Dictionary = GetItem(charID, itemID, customfield, storageType)
-	var condition : String = "item_id = %d AND char_id = %d AND storage = %d AND customfield = '%s'" % [itemID, charID, storageType, customfield]
 	if not data.is_empty():
 		# Decrement item count
 		if data["count"] > itemCount:
-			data["count"] -= itemCount
-			return db.update_rows("item", condition, data)
+			return ExecuteBindings("UPDATE item SET count = ? WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [data["count"] - itemCount, itemID, charID, storageType, customfield])
 		# Remove item
 		elif data["count"] == itemCount:
-			return db.delete_rows("item", condition)
+			return ExecuteBindings("DELETE FROM item WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [itemID, charID, storageType, customfield])
 	return false
 
 func GetStorage(charID : int, storageType : int = 0) -> Array[Dictionary]:
@@ -365,6 +365,62 @@ func SetQuest(charID : int, questID : int, value : int) -> bool:
 func GetQuests(charID : int) -> Array[Dictionary]:
 	return db.select_rows("quest", "char_id = %d" % [charID], ["*"])
 
+# Auth Token
+func AddAuthToken(accountID : int, tokenHash : String, ipAddress : String) -> bool:
+	ExecuteBindings("DELETE FROM auth_token WHERE account_id = ? AND ip_address = ?;", [accountID, ipAddress])
+	var now : int = SQLCommons.Timestamp()
+	var data : Dictionary = {
+		"token_hash": tokenHash,
+		"account_id": accountID,
+		"ip_address": ipAddress,
+		"created_timestamp": now,
+		"expires_timestamp": now + NetworkCommons.TokenExpirySec,
+	}
+	return db.insert_row("auth_token", data)
+
+func ValidateAuthToken(accountID : int, tokenHash : String, ipAddress : String) -> Peers.AccountData:
+	var results : Array[Dictionary] = QueryBindings("SELECT auth_token.account_id, auth_token.expires_timestamp, account.permission FROM auth_token INNER JOIN account ON auth_token.account_id = account.account_id WHERE auth_token.account_id = ? AND auth_token.token_hash = ? AND auth_token.ip_address = ?;", [accountID, tokenHash, ipAddress])
+	if not results.is_empty():
+		if results[0].get("expires_timestamp", 0) <= SQLCommons.Timestamp():
+			RemoveAuthToken(accountID, tokenHash)
+			return null
+		var permission : Variant = results[0].get("permission", null)
+		if not permission:
+			permission = ActorCommons.Permission.NONE
+		return Peers.AccountData.new(accountID, permission)
+	return null
+
+func RefreshAuthToken(accountID : int, ipAddress : String) -> bool:
+	return ExecuteBindings("UPDATE auth_token SET expires_timestamp = ? WHERE account_id = ? AND ip_address = ?;", [SQLCommons.Timestamp() + NetworkCommons.TokenExpirySec, accountID, ipAddress])
+
+func RemoveAuthToken(accountID : int, tokenHash : String) -> bool:
+	return ExecuteBindings("DELETE FROM auth_token WHERE account_id = ? AND token_hash = ?;", [accountID, tokenHash])
+
+func CleanExpiredTokens():
+	db.delete_rows("auth_token", "expires_timestamp <= %d" % SQLCommons.Timestamp())
+
+func GetAccountEmail(accountID : int) -> String:
+	var results : Array[Dictionary] = QueryBindings("SELECT email FROM account WHERE account_id = ?;", [accountID])
+	if not results.is_empty():
+		var email : Variant = results[0].get("email", null)
+		if email is String:
+			return email
+	return ""
+
+func CheckAccountPassword(accountID : int, triedPassword : String) -> bool:
+	var results : Array[Dictionary] = QueryBindings("SELECT password, password_salt FROM account WHERE account_id = ?;", [accountID])
+	if results.is_empty():
+		return false
+	return Hasher.HashPassword(triedPassword, results[0]["password_salt"]) == results[0]["password"]
+
+func UpdateAccountPassword(accountID : int, newPassword : String) -> bool:
+	var salt : String = Hasher.GenerateSalt()
+	var hashedPassword : String = Hasher.HashPassword(newPassword, salt)
+	return ExecuteBindings("UPDATE account SET password = ?, password_salt = ? WHERE account_id = ?;", [hashedPassword, salt, accountID])
+
+func RemoveAllAuthTokens(accountID : int) -> bool:
+	return ExecuteBindings("DELETE FROM auth_token WHERE account_id = ?;", [accountID])
+
 # Ban
 func BanAccount(accountID : int, unbanTimestamp : int, reason : String = "") -> bool:
 	var results : Array[Dictionary] = db.select_rows("ban", "account_id = %d" % accountID, ["*"])
@@ -388,6 +444,33 @@ func LoadBans() -> Dictionary[int, int]:
 	for row in results:
 		bans[row["account_id"]] = row["unban_timestamp"]
 	return bans
+
+# IP Ban
+func BanIPRange(ipRange : String, reason : String = "") -> bool:
+	var results : Array[Dictionary] = QueryBindings("SELECT ip_range FROM ip_ban WHERE ip_range = ?;", [ipRange])
+	var data : Dictionary = {
+		"ip_range": ipRange,
+		"banned_timestamp": SQLCommons.Timestamp(),
+		"reason": reason,
+	}
+	if not results.is_empty():
+		return db.update_rows("ip_ban", "ip_range = '%s'" % ipRange, data)
+	return db.insert_row("ip_ban", data)
+
+func UnbanIPRange(ipRange : String) -> bool:
+	return ExecuteBindings("DELETE FROM ip_ban WHERE ip_range = ?;", [ipRange])
+
+func LoadIPBans() -> Dictionary[String, String]:
+	var bans : Dictionary[String, String] = {}
+	var results : Array[Dictionary] = Query("SELECT ip_range, reason FROM ip_ban;")
+	for row in results:
+		bans[row["ip_range"]] = row.get("reason", "")
+	return bans
+
+func GetIPBanList(filter : String = "") -> Array[Dictionary]:
+	if filter.is_empty():
+		return Query("SELECT ip_range, banned_timestamp, reason FROM ip_ban;")
+	return QueryBindings("SELECT ip_range, banned_timestamp, reason FROM ip_ban WHERE ip_range LIKE ?;", ["%" + filter + "%"])
 
 func GetAccountID(username : String) -> int:
 	var results : Array[Dictionary] = QueryBindings("SELECT account_id FROM account WHERE username = ?;", [username])
@@ -422,27 +505,35 @@ func QueryBindings(query : String, params : Array) -> Array[Dictionary]:
 	queryMutex.unlock()
 	return data
 
+func ExecuteBindings(query : String, params : Array) -> bool:
+	queryMutex.lock()
+	var ret : bool = db.query_with_bindings(query, params)
+	queryMutex.unlock()
+	return ret
+
 #
 func _post_launch():
 	var dbPath : String = SQLCommons.GetDBPath()
 	if not FileSystem.FileExists(dbPath) and not SQLCommons.CopyDatabase(dbPath):
 		return
 
-	if LauncherCommons.isWeb:
-		db = DummySQL.new()
-	else:
-		db = SQLite.new()
+	db = SQLite.new()
 	db.path = dbPath
-	db.verbosity_level = SQLite.VERBOSE if OS.is_debug_build() else SQLite.NORMAL
+	db.verbosity_level = SQLCommons.Verbosity
 
 	if not db.open_db():
 		assert(false, "Failed to open database: "+ db.error_message)
 	else:
-		if not Launcher.Debug:
+		if OS.is_debug_build() and not LauncherCommons.isWeb:
+			Query("PRAGMA journal_mode=WAL;")
+			Query("PRAGMA busy_timeout=5000;")
+		if not Launcher.Debug and not LauncherCommons.isWeb:
 			backups = SQLBackups.new()
 
 	ApplyMigrations()
 	Peers.bannedAccounts = LoadBans()
+	Peers.bannedIPRanges = LoadIPBans()
+	CleanExpiredTokens()
 
 	isInitialized = true
 
@@ -455,10 +546,12 @@ func Destroy():
 func Wipe():
 	db.delete_rows("account", "")
 	db.delete_rows("attribute", "")
+	db.delete_rows("auth_token", "")
 	db.delete_rows("ban", "")
 	db.delete_rows("bestiary", "")
 	db.delete_rows("character", "")
 	db.delete_rows("equipment", "")
+	db.delete_rows("ip_ban", "")
 	db.delete_rows("item", "")
 	db.delete_rows("quest", "")
 	db.delete_rows("skill", "")

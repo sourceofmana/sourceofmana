@@ -34,15 +34,26 @@ const EmotePst : String					= CellPst + "emotes/"
 const ItemPst : String					= CellPst + "items/"
 const SkillPst : String					= CellPst + "skills/"
 
+const HairstylePst : String				= Pst + "hairstyles/"
+const MusicPst : String					= Pst + "music/"
+const RacesPst : String					= Pst + "races/"
+const PaletteHairPst : String			= PalettesPst + "hair/"
+const PaletteSkinPst : String			= PalettesPst + "skin/"
+const PaletteEquipPst : String			= PalettesPst + "equip/"
+
 const EntityComponent : String			= EntityPst + "components/"
 const EntitySprite : String				= EntityPst + "sprites/"
 
 const MapLayerPst : String				= MapPst + "layers/"
+const MapServerPst : String				= MapPst + "server/"
 const MapDataPst : String				= MapPst + "data/"
 const MapNavPst : String				= MapPst + "navigations/"
 
+const ParticlePst : String				= EffectsPst + "particles/"
+
 # Local
 const Local : String					= "user://"
+const CanaryFile : String				= Local + "canary"
 
 # Extentions
 const GfxExt: String					= ".png"

@@ -3,16 +3,18 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_ywsbm"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_81f7p"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_658ie"]
+[ext_resource type="Texture2D" uid="uid://cutv2iuc5imk5" path="res://data/graphics/sprites/npcs/andi.png" id="3_tex"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_rmuxq"]
 
 [resource]
 script = ExtResource("2_81f7p")
 _parent = ExtResource("2_658ie")
 _id = 2088932705
 _name = "Andi"
-_equipment = Array[ExtResource("1_ywsbm")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/npcs/andi.png"
 _stats = {
-"level": 1
+"gender": "Male",
+"race": "Human",
+"skintone": "Medium"
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_ywsbm")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("3_tex")

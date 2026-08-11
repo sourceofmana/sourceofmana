@@ -4,15 +4,15 @@ class_name Entity
 #
 @onready var interactive : EntityInteractive	= $Interactive
 @onready var visual : EntityVisual				= $Visual
+@onready var sfx : EntitySfx					= $Sfx
 
-var target : Entity						= null
-
-var gender : ActorCommons.Gender		= ActorCommons.Gender.MALE
 var entityVelocity : Vector2			= Vector2.ZERO
 var entityPosOffset : Vector2			= Vector2.ZERO
 var entityOrientation : Vector2			= Vector2(0, 1)
 
-var agentRID : int						= -1
+var agentRID : int						= DB.UnknownHash
+var defaultState : ActorCommons.State	= ActorCommons.State.UNKNOWN
+var lastUpdateSeq : int					= -1
 
 signal entity_died
 
@@ -47,74 +47,39 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 			Launcher.Map.PlayerMoved.emit()
 
 	if isRunning != stat.isRunning:
-		if stat.isRunning:
-			pass
 		stat.isRunning = isRunning
 		stat.RefreshEntityStats()
 
 	if visual:
 		if visual.skillCastID != nextskillCastID:
 			visual.skillCastID = nextskillCastID
-			interactive.DisplayCast(self, nextskillCastID)
+			interactive.DisplayCast(nextskillCastID)
 		visual.Refresh()
 
-	if previousState != nextState and nextState == ActorCommons.State.DEATH:
-		entity_died.emit()
+	if previousState != nextState:
+		if sfx:
+			sfx.HandleState(nextState)
+
+		match nextState:
+			ActorCommons.State.DEATH:
+				entity_died.emit()
+			ActorCommons.State.IDLE:
+				if Launcher.Player == self:
+					Launcher.Map.PlayerHalted.emit()
 
 	set_physics_process(true)
 
 # Local player specific functions
 func SetLocalPlayer():
-	collision_layer |= 2
-
-	if Launcher.Camera and Launcher.Camera.mainCamera:
-		var remotePos : RemoteTransform2D = RemoteTransform2D.new()
-		add_child.call_deferred(remotePos)
-		remotePos.set_remote_node(Launcher.Camera.mainCamera.get_path())
-		Launcher.Camera.mainCamera.make_current()
+	if Launcher.Camera and Launcher.Camera.camera:
+		Launcher.Camera.remoteTransform = RemoteTransform2D.new()
+		add_child.call_deferred(Launcher.Camera.remoteTransform)
+		Launcher.Camera.remoteTransform.set_remote_node(Launcher.Camera.camera.get_path())
+		Launcher.Camera.camera.make_current()
 
 	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
 	Network.RetrieveCharacterInformation()
 	FSM.EnterState(FSM.States.IN_GAME)
-
-func ClearTarget():
-	if target != null:
-		if target.interactive:
-			target.interactive.DisplayTarget(ActorCommons.Target.NONE)
-		if target.is_inside_tree():
-			Callback.SelfDestructTimer(target.interactive.healthBar, ActorCommons.DisplayHPDelay, target.interactive.HideHP, [], "HideHP")
-		else:
-			target.interactive.HideHP()
-		target = null
-
-func Target(source : Vector2, interactable : bool = true, nextTarget : bool = false):
-	var newTarget = Entities.GetNextTarget(source, target if nextTarget and target != null else null, interactable)
-	if newTarget != target:
-		ClearTarget()
-		target = newTarget
-
-	if target:
-		if interactable and target.type == ActorCommons.Type.NPC:
-			target.interactive.DisplayTarget(ActorCommons.Target.ALLY)
-		elif target.type == ActorCommons.Type.MONSTER:
-			target.interactive.DisplayTarget(ActorCommons.Target.ENEMY)
-			target.interactive.DisplayHP()
-		Network.TriggerSelect(target.agentRID)
-
-func JustInteract():
-	if not ActorCommons.IsAlive(target) or (not Launcher.GUI.IsDialogueContextOpened() and Util.IsReachableSquared(position, target.position, ActorCommons.TargetMaxSquaredDistance)):
-		Target(position, true)
-	if target:
-		Interact()
-	elif stat.IsSailing():
-		interactive.DisplaySailContext()
-
-func Interact():
-	if target != null:
-		if target.type == ActorCommons.Type.NPC:
-			Network.TriggerInteract(target.agentRID)
-		elif target.type == ActorCommons.Type.MONSTER:
-			Cast(DB.GetCellHash(SkillCommons.SkillMeleeName))
 
 func Cast(skillID : int):
 	if Launcher.GUI.IsDialogueContextOpened():
@@ -131,12 +96,16 @@ func Cast(skillID : int):
 
 	var targetRID : int = 0
 	if skill.mode == Skill.TargetMode.SINGLE:
-		if not target or target.state == ActorCommons.State.DEATH or target.type != ActorCommons.Type.MONSTER:
-			Target(position, false)
-		if target and target.type == ActorCommons.Type.MONSTER:
-			targetRID = target.agentRID
+		if not Entities.target or Entities.target.state == ActorCommons.State.DEATH or Entities.target.type != ActorCommons.Type.MONSTER:
+			Entities.Target(position, false)
+		if Entities.target and Entities.target.type == ActorCommons.Type.MONSTER:
+			targetRID = Entities.target.agentRID
 
-	Network.TriggerCast(targetRID, skillID)
+	Network.TriggerSkill(targetRID, skillID)
+
+func Run(shouldRun : bool):
+	if shouldRun != stat.isRunning:
+		Network.TriggerSkill(DB.UnknownHash, DB.GetCellHash("Run"))
 
 func LevelUp():
 	if Launcher.Player == self:
@@ -145,11 +114,13 @@ func LevelUp():
 	stat.RefreshAttributes()
 	if interactive:
 		interactive.DisplayLevelUp.call_deferred()
+	if sfx:
+		sfx.HandleAlteration(ActorCommons.Alteration.LVL_UP)
 
 #
 func _physics_process(delta : float):
-	var totalVelocity : Vector2 = entityVelocity + entityPosOffset / delta
-	velocity = totalVelocity.limit_length(stat.current.walkSpeed)
+	var previousVelocity : Vector2 = velocity
+	velocity = entityVelocity + entityPosOffset / delta
 	if velocity != Vector2.ZERO:
 		var extraVelocity : Vector2 = velocity - entityVelocity
 		entityPosOffset -= extraVelocity * delta
@@ -157,15 +128,23 @@ func _physics_process(delta : float):
 		if Launcher.Player == self:
 			Launcher.Map.PlayerMoved.emit()
 	else:
+		if Launcher.Player == self:
+			if not previousVelocity.is_zero_approx():
+				Launcher.Map.PlayerHalted.emit()
 		set_physics_process(false)
 
 func _ready():
 	if Launcher.Player == self:
-		if not Launcher.Map.MapUnloaded.is_connected(ClearTarget):
-			Launcher.Map.MapUnloaded.connect(ClearTarget)
+		if not Launcher.Map.MapUnloaded.is_connected(Entities.ClearTarget):
+			Launcher.Map.MapUnloaded.connect(Entities.ClearTarget)
+		if not Launcher.Map.PlayerWarped.is_connected(Entities.ClearHovered):
+			Launcher.Map.PlayerWarped.connect(Entities.ClearHovered)
+
 	elif type == ActorCommons.Type.MONSTER:
 		if not stat.vital_stats_updated.is_connected(interactive.RefreshHP):
 			stat.vital_stats_updated.connect(interactive.RefreshHP)
+		if data._isBoss:
+			stat.vital_stats_updated.connect(Launcher.GUI.bossTracker.OnStatsUpdated.bind(agentRID))
 	else:
 		if stat.vital_stats_updated.is_connected(interactive.RefreshHP):
 			stat.vital_stats_updated.disconnect(interactive.RefreshHP)
@@ -175,3 +154,6 @@ func _ready():
 	var displayTargetNone : Callable = interactive.DisplayTarget.bind(ActorCommons.Target.NONE)
 	if not entity_died.is_connected(displayTargetNone):
 		entity_died.connect(displayTargetNone)
+
+	if sfx and not visual.state_changed.is_connected(sfx.HandleState):
+		visual.state_changed.connect(sfx.HandleState)

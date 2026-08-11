@@ -1,30 +1,38 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://c4sdajdiox2ke"]
 
-[ext_resource type="Script" uid="uid://db4wi3qfkte3f" path="res://sources/db/instance/FileData.gd" id="1_fj57b"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_uctx6"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_fj57b"]
-
-[sub_resource type="Resource" id="Resource_5d3f5"]
-script = ExtResource("1_fj57b")
-_id = 841469853
-_name = "Snake Sand"
-_path = "monsters/mob-snake-sand.tres"
+[ext_resource type="Texture2D" uid="uid://tp667v46h13l" path="res://data/graphics/sprites/monsters/snake.png" id="3_tex"]
+[ext_resource type="Material" uid="uid://ce5qgivfdfo" path="res://presets/palettes/shaders/monsters/mob-snake-sand.tres" id="4_mat"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_umopc"]
+[ext_resource type="AudioStream" uid="uid://cy46l0s1gs7h" path="res://data/sounds/entities/snake/attack.ogg" id="6_gi6ty"]
+[ext_resource type="Resource" uid="uid://bsnk1sk1n001" path="res://presets/cells/items/common/SnakeSkin.tres" id="7_skskin"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_fj57b")
 _id = 2399925469
 _name = "Sand Snake"
-_spritePreset = "Generic4Directions"
-_collision = "Medium"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
-"castAttackDelay": 0.5,
-"level": 1,
-"walkSpeed": 110.0
+"attack": 85,
+"baseExp": 60,
+"castAttackDelay": 0.35,
+"cooldownAttackDelay": 0.3,
+"defense": 5,
+"dodgeRate": 0.12,
+"level": 19,
+"maxHealth": 200,
+"walkSpeed": 120.0
 }
 _equipment = Array[ExtResource("1_uctx6")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/snake.png"
-_customMaterial = SubResource("Resource_5d3f5")
+_customTexture = ExtResource("3_tex")
+_customMaterial = ExtResource("4_mat")
 _behaviour = 4
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_drops = Dictionary[ExtResource("1_uctx6"), float]({
+ExtResource("7_skskin"): 0.05
+})
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_gi6ty")
+})

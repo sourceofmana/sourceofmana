@@ -22,6 +22,7 @@ enum Behaviour
 	LEADER		= 1 << 5,
 	SPAWNER		= 1 << 6,
 	STEAL		= 1 << 7,
+	FLEE		= 1 << 8,
 }
 
 static func GetBehaviourFlags(behaviours : PackedStringArray) -> Behaviour:
@@ -49,6 +50,8 @@ const MinWalkTimer : int			= 5
 const MaxWalkTimer : int			= 20
 const MinUnstuckTimer : int			= 2
 const MaxUnstuckTimer : int			= 10
+
+const FleeHpRatio : float			= 0.25
 
 const MinOffsetDistance : int		= 30
 const MaxOffsetDistance : int		= 200
@@ -82,16 +85,21 @@ static func IsAgentMoving(agent : AIAgent):
 	return agent.hasCurrentGoal
 
 static func IsReachable(agent : AIAgent, target : BaseAgent) -> bool:
-	return SkillCommons.IsInteractable(agent, target) and WorldNavigation.GetDistanceSquared(agent, target.position) < ReachDistanceSquared
+	return SkillCommons.IsInteractable(agent, target) and WorldNavigation.GetDistanceSquaredSafe(agent, target.position) < ReachDistanceSquared
+
+static func IsStationary(agent : AIAgent) -> bool:
+	return (agent.data and agent.data._behaviour & AICommons.Behaviour.IMMOBILE) or \
+		(agent.aiBehaviour & AICommons.Behaviour.IMMOBILE) or \
+		(agent.spawnInfo and agent.spawnInfo.spawn_offset == Vector2i.ZERO and not agent.spawnInfo.is_global)
 
 static func CanWalk(agent: AIAgent):
 	return agent.agent != null
 
 static func GetRandomSkill(agent : AIAgent) -> SkillCell:
-	if agent.progress.probaSum > 0.0:
-		var randProba : float = randf_range(0.0, agent.progress.probaSum)
-		for skill in agent.progress.skills:
-			randProba -= agent.progress.skillProbas[skill]
+	if agent.aiProbaSum > 0.0:
+		var randProba : float = randf_range(0.0, agent.aiProbaSum)
+		for skill : int in agent.aiSkills:
+			randProba -= agent.aiSkills[skill]
 			if randProba <= 0.0:
 				return DB.GetSkill(skill)
 	return null
@@ -107,7 +115,7 @@ static func ApplyPacifistBehaviour(agent : AIAgent) -> bool:
 	return false
 
 static func ApplyNeutralBehaviour(agent : AIAgent) -> bool:
-	if agent == null or agent.agent == null:
+	if agent == null:
 		return false
 
 	var target : BaseAgent = agent.GetNearbyMostValuableAttacker()
@@ -127,8 +135,10 @@ static func ApplyAggressiveBehaviour(agent : AIAgent) -> bool:
 	var nearestSquaredDist : float = ReachDistanceSquared
 	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 	for player in instance.players:
+		if ActorCommons.IsHiddenFromMobs(player):
+			continue
 		if SkillCommons.IsInteractable(agent, player):
-			var currentDist : float = WorldNavigation.GetDistanceSquared(agent, player.position)
+			var currentDist : float = WorldNavigation.GetDistanceSquaredSafe(agent, player.position)
 			if currentDist < nearestSquaredDist:
 				nearest = player
 				nearestSquaredDist = currentDist
@@ -150,7 +160,7 @@ static func ApplyStealBehaviour(agent : AIAgent) -> bool:
 			for dropIdx in instance.drops:
 				var drop : Drop = instance.drops[dropIdx]
 				if drop:
-					var dist : float = WorldNavigation.GetDistanceSquared(agent, drop.position)
+					var dist : float = WorldNavigation.GetDistanceSquaredSafe(agent, drop.position)
 					if dist < nearestDist and dist < ReachDistanceSquared:
 						nearest = drop
 						nearestDist = dist
@@ -167,36 +177,67 @@ static func ApplyStealBehaviour(agent : AIAgent) -> bool:
 
 static func ApplyFollowerBehaviour(agent : AIAgent) -> bool:
 	if not IsActionInProgress(agent):
-		if agent.leader != null:
-			if agent.leader.aiState == State.ATTACK and agent.aiState == State.IDLE:
-				AI.SetState(agent, State.WALK, true)
-				agent.SetNodeGoal(agent.leader, agent.leader.position)
-				return true
+		if not agent.leader:
+			RegisterToNearbyLeader(agent)
+		if agent.leader and agent.leader.aiState == State.ATTACK and agent.aiState == State.IDLE:
+			AI.SetState(agent, State.WALK, true)
+			agent.SetNodeGoal(agent.leader, agent.leader.position)
+			return true
 	return false
+
+static func RegisterToNearbyLeader(agent : AIAgent) -> void:
+	var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+	if instance == null:
+		return
+
+	var nearest : AIAgent = null
+	var nearestDist : float = ReachDistanceSquared
+	for mob : AIAgent in instance.mobs:
+		if mob == agent or not (mob.aiBehaviour & Behaviour.LEADER) or not ActorCommons.IsAlive(mob):
+			continue
+		var dist : float = WorldNavigation.GetDistanceSquaredSafe(agent, mob.position)
+		if dist < nearestDist:
+			nearest = mob
+			nearestDist = dist
+
+	if nearest:
+		nearest.AddFollower(agent)
 
 static func ApplyImmobileBehaviour(_agent : AIAgent) -> bool:
 	return false # Nothing to handle here
 
+static func ApplyFleeBehaviour(agent : AIAgent) -> bool:
+	if agent == null or agent.agent == null:
+		return false
+
+	if agent.stat.health < FleeHpRatio * agent.stat.current.maxHealth:
+		var target : BaseAgent = agent.GetMostValuableAttacker()
+		if target:
+			AI.ToFlee(agent, target)
+			return true
+	return false
+
 static func ApplySpawnerBehaviour(agent : AIAgent) -> bool:
 	var nbSpawned : int = 0
-	for spawn in agent.data._spawns:
-		var toSpawn : int = agent.data._spawns[spawn]
-		if spawn in agent.followers:
-			toSpawn -= agent.followers[spawn].size()
+	for spawnData : EntityData in agent.data._spawns:
+		var toSpawn : int = agent.data._spawns[spawnData]
+		var spawnID : int = spawnData._id
+		if spawnID in agent.followers:
+			toSpawn -= agent.followers[spawnID].size()
 		else:
-			agent.followers[spawn] = []
+			agent.followers[spawnID] = []
 		if toSpawn > 0:
 			var instance : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 			if instance:
 				for mob in instance.mobs:
-					if mob.leader == null and mob.aiBehaviour & Behaviour.FOLLOWER and mob.data._id == spawn and mob.spawnInfo.is_persistant == false:
+					if mob.leader == null and mob.aiBehaviour & Behaviour.FOLLOWER and mob.data._id == spawnID and mob.spawnInfo.is_persistant == false:
 						agent.AddFollower(mob)
 						toSpawn -= 1
 					if toSpawn == 0:
 						break
 
 		if toSpawn > 0:
-			var spawnedAgents : Array[MonsterAgent] = NpcCommons.Spawn(agent, spawn, toSpawn, agent.position, GeRandomtOffset())
+			var spawnedAgents : Array[MonsterAgent] = NpcCommons.Spawn(agent, spawnID, toSpawn, agent.position, GeRandomtOffset())
 			for spawnedAgent in spawnedAgents:
 				agent.AddFollower(spawnedAgent)
 			nbSpawned += spawnedAgents.size()

@@ -9,6 +9,7 @@ var steps : Array[Dictionary]		= []
 var step : int						= 0
 var timerCount : int				= 0
 var isWaitingForChoice : bool		= false
+var isProcessing : bool				= false
 var windowToggled : bool			= false
 
 # NPC & own script liaison
@@ -29,16 +30,38 @@ func GetGlobal(scriptFunc : String) -> Callable:
 	assert(false, "Could not retrieve this NPC global function: %s." % scriptFunc)
 	return Callable()
 
+func GetNamedGlobalNPC(npcName : String) -> NpcAgent:
+	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
+	if inst:
+		for neighbour in inst.npcs:
+			if neighbour and neighbour.nick == npcName:
+				return neighbour
+	return null
+
 func Trigger() -> bool:
-	if npc and npc.SetState(ActorCommons.State.TRIGGER):
-		CallGlobal("OnTrigger")
-		return true
-	else:
-		CallGlobal("OnQuit")
-		return false
+	if npc:
+		if npc.defaultState != ActorCommons.State.UNKNOWN or npc.SetState(ActorCommons.State.TRIGGER):
+			CallGlobal("OnTrigger")
+			return true
+	CallGlobal("OnQuit")
+	return false
 
 func IsTriggering() -> bool:
 	return ActorCommons.IsTriggering(npc)
+
+# Visibility
+func SetVisible(enable : bool):
+	if npc:
+		npc.isVisible = enable
+
+func IsVisible() -> bool:
+	return npc.isVisible if npc else false
+
+# State
+func SetState(newState : ActorCommons.State):
+	if npc:
+		npc.state = newState
+		npc.requireFullUpdate = true
 
 # Monster
 func Spawn(mobID : int, count : int = 1, position : Vector2 = Vector2.ZERO, spawnRadius : Vector2 = Vector2(64, 64)) -> Array[MonsterAgent]:
@@ -77,6 +100,37 @@ func KillMonsters():
 		for mob in inst.mobs:
 			mob.stat.SetHealth(-mob.stat.current.maxHealth)
 
+func RemoveAgent(agent : BaseAgent):
+	WorldAgent.RemoveAgent(agent)
+
+# AI
+func AddAIBehaviour(behaviour : AICommons.Behaviour):
+	match behaviour:
+		AICommons.Behaviour.NONE:
+			var map : WorldMap = WorldAgent.GetMapFromAgent(npc)
+			if map and not npc.agent:
+				npc.aiBehaviour = AICommons.Behaviour.NONE
+				npc.agent = ActorCommons.NPAgentScene.instantiate()
+				npc.agent.set_radius(npc.data._radius)
+				npc.agent.set_neighbor_distance(npc.data._radius * 2.0)
+				npc.agent.set_navigation_map(map.mapRID)
+				npc.add_child(npc.agent)
+				npc.RefreshWalkSpeed()
+		_:
+			npc.aiBehaviour |= behaviour
+			AI.Refresh(npc)
+
+func RemoveAIBehaviour(behaviour : AICommons.Behaviour):
+	match behaviour:
+		AICommons.Behaviour.NONE:
+			if npc.agent:
+				npc.agent.queue_free()
+				npc.agent = null
+			npc.aiBehaviour = npc.data._behaviour
+		_:
+			npc.aiBehaviour &= ~behaviour
+			AI.Refresh(npc)
+
 # Players
 func AlivePlayerCount() -> int:
 	var count : int = 0
@@ -89,18 +143,31 @@ func AlivePlayerCount() -> int:
 	return count
 
 # Warp
-func Warp(mapID : int, position : Vector2):
+func Warp(mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
+	assert(IsPlayer(), "Warp() requires a player agent")
 	if not IsPlayer(): return
-	Action(NpcCommons.Warp.bind(own, mapID, position))
+	Action(NpcCommons.Warp.bind(own, mapID, position, direction))
+
+func WarpInstance(mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
+	assert(IsPlayer(), "WarpInstance() requires a player agent")
+	if not IsPlayer(): return
+	Action(NpcCommons.WarpInstance.bind(own, mapID, position, direction))
 
 # Quest
 func SetQuest(questID : int, state : int):
+	assert(IsPlayer(), "SetQuest() requires a player agent")
 	if not IsPlayer(): return
 	Action(NpcCommons.SetQuest.bind(own, questID, state))
 
 func GetQuest(questID : int) -> int:
+	assert(IsPlayer(), "GetQuest() requires a player agent")
 	if not IsPlayer(): return ProgressCommons.UnknownProgress
 	return own.progress.GetQuest(questID)
+
+func GetBestiary(monsterID : int) -> int:
+	assert(IsPlayer(), "GetBestiary() requires a player agent")
+	if not IsPlayer(): return 0
+	return own.progress.GetBestiary(monsterID)
 
 func IsQuestStarted(questID : int) -> bool:
 	return GetQuest(questID) != ProgressCommons.UnknownProgress
@@ -111,17 +178,70 @@ func IsQuestCompleted(questID : int) -> bool:
 func GetState(questID : int) -> Variant:
 	return ProgressCommons.QuestStates.get(questID)
 
+# Tutorial
+func HighlightUI(target : UICommons.UITarget):
+	Action(NpcCommons.HighlightUI.bind(own, target))
+
+func OpenUI(target : UICommons.UITarget):
+	Action(NpcCommons.OpenUI.bind(own, target))
+
 # Display
 func Notification(text : String):
-	if not IsPlayer(): return
 	NpcCommons.PushNotification(own, text)
+
+func DisplayActions(actions : PackedStringArray):
+	NpcCommons.DisplayActions(own, actions)
+
+func DisplayTracker(label : String, value : int, maxValue : int, unit : String = ""):
+	NpcCommons.PushTracker(own, label, value, maxValue, unit)
+
+func ClearTracker():
+	NpcCommons.ClearTracker(own)
+
+# Camera
+func LookAtPosition(pos : Vector2):
+	assert(IsPlayer(), "LookAtPosition() requires a player agent")
+	if not IsPlayer(): return
+	Action(NpcCommons.CameraLookAt.bind(own, pos))
+
+func LookAtNpc(npcName : String):
+	assert(IsPlayer(), "LookAtNpc() requires a player agent")
+	if not IsPlayer(): return
+
+	var npcAgent : NpcAgent = GetNamedGlobalNPC(npcName)
+	if npcAgent:
+		Action(NpcCommons.CameraLookAt.bind(own, npcAgent.get_position()))
+
+func TriggerNpc(agent : PlayerAgent, npcName : String):
+	var npcAgent : NpcAgent = GetNamedGlobalNPC(npcName)
+	if npcAgent:
+		agent.AddScript(npcAgent)
+		if agent.ownScript:
+			agent.ownScript.ApplyStep()
+
+func ResetCamera():
+	assert(IsPlayer(), "ResetCamera() requires a player agent")
+	if not IsPlayer(): return
+	Action(NpcCommons.CameraReset.bind(own))
 
 # Dialogue
 func Mes(mes : String):
+	assert(IsPlayer(), "Mes() requires a player agent")
 	if not IsPlayer(): return
 	steps.append({"text": mes})
 
+func Think(mes : String):
+	assert(IsPlayer(), "Think() requires a player agent")
+	if not IsPlayer(): return
+	steps.append({"text": mes, "think": true})
+
+func Narrate(mes : String):
+	assert(IsPlayer(), "Narrate() requires a player agent")
+	if not IsPlayer(): return
+	steps.append({"text": mes, "think": true, "author": ""})
+
 func Choice(mes : String, callable : Callable = Callback.Empty):
+	assert(IsPlayer(), "Choice() requires a player agent")
 	if not IsPlayer(): return
 	if steps.is_empty():
 		steps.append({"choices": []})
@@ -133,18 +253,30 @@ func Choice(mes : String, callable : Callable = Callback.Empty):
 	dialogueStep["choices"].append({"text": mes, "action": callable})
 
 func Action(callable : Callable):
+	assert(IsPlayer(), "Action() requires a player agent")
 	if not IsPlayer(): return
 	steps.append({"action": callable})
 
+func Emote(emoteID : int):
+	NpcCommons.Emote(npc, emoteID)
+
+func Express(mes : String):
+	assert(IsPlayer(), "Express() requires a player agent")
+	if not IsPlayer(): return
+	NpcCommons.Express(npc, own, mes)
+
 func Chat(mes : String):
+	assert(IsPlayer(), "Chat() requires a player agent")
 	if not IsPlayer(): return
 	NpcCommons.Chat(npc, own, mes)
 
 func Greeting():
+	assert(IsPlayer(), "Greeting() requires a player agent")
 	if not IsPlayer(): return
 	NpcCommons.Chat(npc, own, NpcCommons.GetRandomGreeting(own.nick))
 
 func Farewell():
+	assert(IsPlayer(), "Farewell() requires a player agent")
 	if not IsPlayer(): return
 	NpcCommons.Chat(npc, own, NpcCommons.GetRandomFarewell(own.nick))
 
@@ -164,8 +296,11 @@ func AddTimer(caller : BaseAgent, delay : float, callback : Callable, timerName 
 func TimeOut(callback : Callable):
 	timerCount -= 1
 	Callback.TriggerCallback(callback)
-	if own and IsDone():
-		Close()
+	if own:
+		if IsDone():
+			Close()
+		else:
+			ApplyStep()
 
 func ClearTimer(timer : Timer):
 	if timer and not timer.is_stopped() and not timer.is_queued_for_deletion():
@@ -177,11 +312,13 @@ func ClearTimer(timer : Timer):
 
 # Inventory
 func HasItem(itemID : int, count : int = 1) -> bool:
+	assert(IsPlayer(), "HasItem() requires a player agent")
 	if not IsPlayer(): return false
 	var cell : ItemCell = DB.GetItem(itemID)
 	return own.inventory.HasItem(cell, count) if cell else false
 
 func HasItemsSpace(items : Array) -> bool:
+	assert(IsPlayer(), "HasItemsSpace() requires a player agent")
 	if not IsPlayer(): return false
 	var totalCount : int = 0
 	for item in items:
@@ -199,34 +336,70 @@ func HasItemsSpace(items : Array) -> bool:
 			return false
 
 		if cell:
-			totalCount += 1 if cell.stackable else itemCount
+			if cell.stackable and HasItem(cell.id):
+				var inventoryItem : Item = own.inventory.GetItem(cell)
+				if itemCount < 0 and inventoryItem.count == -itemCount:
+					totalCount -= 1
+			else:
+				totalCount += 1 if cell.stackable else itemCount
 	return HasSpace(totalCount)
 
 func HasSpace(itemCount : int) -> bool:
+	assert(IsPlayer(), "HasSpace() requires a player agent")
 	if not IsPlayer(): return false
 	return own.inventory.HasSpace(itemCount)
 
 func AddItem(itemID : int, count : int = 1, customfield : String = ""):
+	assert(IsPlayer(), "AddItem() requires a player agent")
 	if not IsPlayer(): return false
 	Action(NpcCommons.AddItem.bind(own, itemID, count, customfield))
 
 func RemoveItem(itemID : int, count : int = 1, customfield : String = ""):
+	assert(IsPlayer(), "RemoveItem() requires a player agent")
 	if not IsPlayer(): return false
 	Action(NpcCommons.RemoveItem.bind(own, itemID, count, customfield))
 
+# Skills
+func HasSkill(skillID : int) -> bool:
+	assert(IsPlayer(), "HasSkill() requires a player agent")
+	if not IsPlayer(): return false
+	var cell : SkillCell = DB.GetSkill(skillID)
+	return own.progress.HasSkill(cell) if cell else false
+
+func GetSkillLevel(skillID : int) -> int:
+	assert(IsPlayer(), "GetSkillLevel() requires a player agent")
+	if not IsPlayer(): return false
+	var cell : SkillCell = DB.GetSkill(skillID)
+	return own.progress.GetSkillLevel(cell) if cell else 0
+
+func TeachSkill(skillID : int, level : int = 1):
+	assert(IsPlayer(), "TeachSkill() requires a player agent")
+	if not IsPlayer(): return
+	Action(NpcCommons.TeachSkill.bind(own, skillID, level))
+
+# Modifier
+func AddModifier(effect : CellCommons.Modifier, value : Variant, agent : BaseAgent = null) -> StatModifier:
+	return NpcCommons.AddModifier(agent if agent else own, effect, value)
+
+func RemoveModifier(modifier : StatModifier, agent : BaseAgent = null):
+	NpcCommons.RemoveModifier(agent if agent else own, modifier)
+
 # Karma
 func AddKarma(value : int):
+	assert(IsPlayer(), "AddKarma() requires a player agent")
 	if not IsPlayer(): return
 	Action(NpcCommons.AddKarma.bind(own, value))
 
 # Money & Experience
 func AddExp(value : int):
+	assert(IsPlayer(), "AddExp() requires a player agent")
 	if not IsPlayer() or value <= 0: return
-	Action(own.stat.AddExperience.bind(value))
+	Action(NpcCommons.AddExp.bind(own, value))
 
 func AddGP(value : int):
+	assert(IsPlayer(), "AddGP() requires a player agent")
 	if not IsPlayer() or value <= 0: return
-	Action(own.stat.AddGP.bind(value))
+	Action(NpcCommons.AddGP.bind(own, value))
 
 # Interaction logic
 func ToggleWindow(toggle : bool):
@@ -246,11 +419,14 @@ func InteractChoice(choiceId : int):
 			isWaitingForChoice = false
 			step = 0
 			steps.clear()
+			isProcessing = true
 			choice["action"].call()
+			isProcessing = false
 
 		ApplyStep()
 
 func ApplyStep():
+	isProcessing = true
 	var stepCount : int = steps.size()
 	if isWaitingForChoice:
 		pass # Skip the current step if we are waiting for a player choice
@@ -258,22 +434,25 @@ func ApplyStep():
 		var dialogueStep : Dictionary = steps[step]
 		while dialogueStep.has("action"):
 			dialogueStep["action"].call()
-			if step + 1 < stepCount:
-				step += 1
-				dialogueStep = steps[step]
-			else:
+			stepCount = steps.size()
+			if dialogueStep.has("choices"):
 				break
+			step += 1
+			if step >= stepCount:
+				break
+			dialogueStep = steps[step]
 
 		if dialogueStep.has("text"):
 			if not windowToggled:
 				ToggleWindow(true)
 
-			NpcCommons.ContextText(own, npc.nick, dialogueStep["text"])
+			var author : String = dialogueStep.get("author", npc.nick)
+			if dialogueStep.get("think", false):
+				NpcCommons.ContextThink(own, author, dialogueStep["text"])
+			else:
+				NpcCommons.ContextText(own, author, dialogueStep["text"])
 
 		if dialogueStep.has("choices"):
-			if not windowToggled:
-				ToggleWindow(true)
-
 			var choices : PackedStringArray = []
 			for choice in dialogueStep["choices"]:
 				if choice.has("text"):
@@ -289,13 +468,15 @@ func ApplyStep():
 	else:
 		ToggleWindow(false)
 
+	isProcessing = false
+
 	if IsDone():
 		Close()
 
 func Close():
 	if IsPlayer():
 		ToggleWindow(false)
-	own.ClearScript()
+		own.ClearScript()
 
 func IsDone() -> bool:
 	return own != npc and step >= steps.size() and not IsWaiting()
@@ -312,8 +493,12 @@ func _init(_npc : NpcAgent, _own : BaseAgent):
 	if _npc and _own:
 		own = _own
 		npc = _npc
+
+func PostInit():
+	if npc and own:
 		OnStart()
 		if npc != own:
+			npc.interacted.emit(own)
 			npc.AddInteraction()
 			if own.data._direction == ActorCommons.Direction.UNKNOWN:
 				own.LookAt(npc)
@@ -323,6 +508,21 @@ func _init(_npc : NpcAgent, _own : BaseAgent):
 func OnStart(): pass
 func OnContinue(): pass
 func OnTrigger(): pass
+func OnAreaEnter(_player : PlayerAgent): pass
+func OnAreaExit(_player : PlayerAgent): pass
 func OnQuit():
-	if not IsPlayer():
+	if IsPlayer():
+		FlushRemainingActions()
+	else:
 		npc.SubInteraction()
+
+func FlushRemainingActions():
+	if isProcessing:
+		return
+	isProcessing = true
+	while step < steps.size():
+		var dialogueStep : Dictionary = steps[step]
+		if dialogueStep.has("action") and not dialogueStep.has("choices"):
+			dialogueStep["action"].call()
+		step += 1
+	isProcessing = false

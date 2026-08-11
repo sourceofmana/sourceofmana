@@ -1,20 +1,28 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://cmm7fmhtaqecr"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_ay1s3"]
+[ext_resource type="AudioStream" uid="uid://b88wq1kn3b3l0" path="res://data/sounds/entities/pinkie/dodge.ogg" id="1_ewugu"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_ya1ra"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_30u75"]
+[ext_resource type="Texture2D" uid="uid://bn68hjgisdd1q" path="res://data/graphics/sprites/monsters/pinkie.png" id="3_tex"]
+[ext_resource type="AudioStream" uid="uid://buwxbq3asvrx3" path="res://data/sounds/entities/pinkie/attack.ogg" id="6_so8qc"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_ya1ra")
 _id = 3391482565
 _name = "Pinkie"
-_spritePreset = "Generic4Directions"
-_collision = "Medium"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 12
-_equipment = Array[ExtResource("1_ay1s3")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/pinkie.png"
 _stats = {
 "level": 1,
 "walkSpeed": 80.0
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_ay1s3")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("3_tex")
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_so8qc")
+})
+_alterationSFX = Dictionary[int, AudioStream]({
+3: ExtResource("1_ewugu")
+})

@@ -1,20 +1,32 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://7bcrmgajbnpg"]
 
+[ext_resource type="AudioStream" uid="uid://xdcny3lbw5xv" path="res://data/sounds/entities/scorpion/hit.ogg" id="1_e1oaf"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_exyli"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_arwd3"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_0jes4"]
+[ext_resource type="Texture2D" uid="uid://cag81rrbxoyak" path="res://data/graphics/sprites/monsters/scorpion.png" id="3_tex"]
+[ext_resource type="AudioStream" uid="uid://djcpd4h0bmrb6" path="res://data/sounds/entities/scorpion/attack.ogg" id="6_ih0se"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_arwd3")
 _id = 3842739378
 _name = "Scorpion"
-_spritePreset = "Generic4Directions"
-_collision = "Medium"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 18
-_equipment = Array[ExtResource("1_exyli")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/scorpion.png"
 _stats = {
-"level": 1,
+"attack": 22,
+"baseExp": 10,
+"defense": 0,
+"level": 4,
+"maxHealth": 200,
 "walkSpeed": 60.0
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_exyli")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("3_tex")
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_ih0se")
+})
+_alterationSFX = Dictionary[int, AudioStream]({
+0: ExtResource("1_e1oaf")
+})

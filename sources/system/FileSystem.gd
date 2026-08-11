@@ -8,9 +8,6 @@ static func FileExists(path : String) -> bool:
 static func ResourceExists(path : String) -> bool:
 	return ResourceLoader.exists(path)
 
-static func FileAlloc(path : String) -> Object:
-	return ResourceLoader.load(path).new()
-
 static func CanInstantiateResource(res : Object) -> bool:
 	return res.has_method("can_instantiate") && res.can_instantiate()
 
@@ -80,40 +77,8 @@ static func LoadDB(path : String) -> Dictionary:
 
 	return result
 
-# Map
-static func LoadMap(fullPath : String) -> Object:
-	var mapInstance : Object	= null
-
-	var pathExists : bool		= ResourceExists(fullPath)
-
-	assert(pathExists, "Map file not found " + fullPath + " should be located at " + Path.MapRsc)
-	if pathExists:
-		mapInstance = ResourceInstanceOrLoad(fullPath)
-		Util.PrintLog("Map", "Loading resource: " + fullPath)
-
-	return mapInstance
-
-# Source
-static func LoadGDScript(fullPath : String, alloc : bool = true) -> Object:
-	var srcFile : Object		= null
-
-	var pathExists : bool		= ResourceExists(fullPath)
-	assert(pathExists, "GDScript file not found " + fullPath)
-
-	if pathExists:
-		srcFile = FileAlloc(fullPath) if alloc else ResourceLoader.load(fullPath)
-		Util.PrintLog("Source", "Loading script: " + fullPath)
-
-	return srcFile
-
-static func LoadSource(path : String, nodeName : String = "", alloc : bool = true) -> Object:
-	var sourceObject : Object = LoadGDScript(Path.Src + path, alloc)
-	if not nodeName.is_empty():
-		sourceObject.set_name(nodeName)
-	return sourceObject
-
-static func LoadScript(path : String, alloc : bool = false) -> Object:
-	return LoadGDScript(Path.ScriptSrc + path, alloc)
+static func LoadScript(path : String) -> GDScript:
+	return ResourceLoader.load(Path.ScriptSrc + path) as GDScript
 
 # Config
 static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
@@ -162,57 +127,10 @@ static func LoadEffect(path : String, instantiate : bool = true) -> Node:
 	var fullPath : String = Path.EffectsPst + path + Path.SceneExt
 	return LoadResource(fullPath, instantiate)
 
-# Material``
+# Material
 static func LoadMaterial(path : String, instantiate : bool = false) -> Object:
 	var fullPath : String = Path.MaterialPst + path + Path.RscExt
 	return LoadResource(fullPath, instantiate)
-
-# Entity
-static func LoadEntitySprite(type : String, instantiate : bool = true) -> Node2D:
-	var fullPath : String = Path.EntitySprite + type + Path.SceneExt
-	return LoadResource(fullPath, instantiate)
-
-static func LoadEntityComponent(type : String, instantiate : bool = true) -> Object:
-	var fullPath : String = Path.EntityComponent + type + Path.SceneExt
-	return LoadResource(fullPath, instantiate)
-
-static func LoadEntityVariant(instantiate : bool = true) -> Entity:
-	var fullPath : String = Path.EntityPst + "Entity" + Path.SceneExt
-	return LoadResource(fullPath, instantiate)
-
-# GUI
-static func LoadGui(path : String, instantiate : bool = true) -> Control:
-	var fullPath : String = Path.GuiPst + path + Path.SceneExt
-	return LoadResource(fullPath, instantiate)
-
-# Music
-static func LoadMusic(path : String) -> Resource:
-	var fullPath : String = Path.MusicRsc + path
-	var musicFile : Resource			= null
-
-	var pathExists : bool		= ResourceExists(fullPath)
-	assert(pathExists, "Music file not found " + path + " should be located at " + fullPath)
-
-	if pathExists:
-		musicFile = ResourceLoader.load(fullPath)
-		Util.PrintLog("Music", "Loading file: " + fullPath)
-
-	return musicFile
-
-# Palette
-static func LoadPalette(path : String) -> Material:
-	var fullPath : String = Path.PalettesPst + path
-	return LoadResource(fullPath, false)
-
-# Generic texture loading
-static func LoadGfx(path : String) -> Resource:
-	var fullPath : String = Path.GfxRsc + path
-	return LoadResource(fullPath, false)
-
-# Minimap
-static func LoadMinimap(path : String) -> Resource:
-	var fullPath : String = Path.MinimapRsc + path + Path.GfxExt
-	return LoadResource(fullPath, false)
 
 static func GetFiles(path : String) -> PackedStringArray:
 	return DirAccess.get_files_at(path)

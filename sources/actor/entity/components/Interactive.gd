@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 class_name EntityInteractive
 
 #
@@ -8,19 +8,48 @@ class_name EntityInteractive
 @onready var healthBar : TextureProgressBar	= $UnderBox/HealthBar
 @onready var nameLabel : Label				= $UnderBox/Name
 @onready var skillPreview : Control			= $SkillPreview
+@onready var clickShape : CollisionShape2D	= $ClickArea/ClickShape
 
 @onready var entity : Entity				= get_parent()
 
 var displayName : bool						= false
 var selectionFx : GPUParticles2D			= null
 var visualOffset : int						= -1
-var hpFadeTween : Tween					= null
+var hpFadeTween : Tween						= null
+var currentCastFx : GPUParticles2D			= null
+
+var speechYExtraOffset : float				= 0.0
+var speechOffsetTween : Tween				= null
 
 #
+func _ready():
+	set_process(false)
+
+func _process(_delta : float):
+	Entities.ScheduleSpeechRearrange()
+
+# Custom mouse
+func _on_click_area_mouse_entered():
+	if not Launcher.Player:
+		return
+
+	match entity.type:
+		ActorCommons.Type.PLAYER:
+			if not ActorCommons.IsSameActor(Launcher.Player, entity):
+				Entities.SetHovered(entity)
+		ActorCommons.Type.NPC:
+			Entities.SetHovered(entity)
+		ActorCommons.Type.MONSTER:
+			Entities.SetHovered(entity)
+
+func _on_click_area_mouse_exited():
+	if Entities.hovered == entity:
+		Entities.ClearHovered()
+
+# Displays
 func DisplaySelection(hue : float, alpha : float = 1.0):
 	if selectionFx == null:
 		selectionFx = ActorCommons.SelectionFx.instantiate()
-		selectionFx.finished.connect(remove_child.bind(selectionFx))
 		add_child(selectionFx)
 
 		if selectionFx and ActorCommons.interactionDisplayOffset > 0:
@@ -35,8 +64,10 @@ func DisplaySelection(hue : float, alpha : float = 1.0):
 	if selectionFx:
 		var colorRamp : GradientTexture1D = selectionFx.process_material.get("color_ramp")
 		if colorRamp and colorRamp.gradient.colors.size() > 1:
-			colorRamp.gradient.colors[1].h = hue
-			colorRamp.gradient.colors[1].a = alpha
+			var colorGradient : Color = colorRamp.gradient.get_color(1)
+			colorGradient.h = hue
+			colorGradient.a = alpha
+			colorRamp.gradient.set_color(1, colorGradient)
 			selectionFx.process_material.set("color_ramp", colorRamp)
 
 func DisplayTarget(type : ActorCommons.Target):
@@ -45,6 +76,7 @@ func DisplayTarget(type : ActorCommons.Target):
 			if selectionFx and selectionFx.emitting:
 				DisplaySelection(0.0, 0.0)
 				selectionFx.emitting = false
+				Callback.SelfDestructTimer(selectionFx, selectionFx.lifetime, Util.RemoveNode, [selectionFx, self])
 				selectionFx = null
 			if nameLabel and nameLabel.material:
 				nameLabel.material = null
@@ -80,30 +112,35 @@ func DisplayMorph(callback : Callable, args : Array):
 func DisplayLevelUp():
 	var particle : GPUParticles2D = ActorCommons.LevelUpFx.instantiate()
 	if particle:
+		particle.finished.connect(Util.RemoveNode.bind(particle, self))
 		particle.emitting = true
 		add_child(particle)
 
 #
 func DisplaySkillRange(skill : SkillCell):
 	if skill:
-		skillPreview.Display(skill.cellRange + entity.stat.current.attackRange)
+		skillPreview.Display(skill.skillRange + entity.stat.current.attackRange)
 	else:
 		skillPreview.Hide()
 	skillPreview.queue_redraw()
 
-func HideCast(castFx : GPUParticles2D):
-	castFx.emitting = false
+func StopCasting():
+	if currentCastFx:
+		currentCastFx.emitting = false
+		Callback.SelfDestructTimer(currentCastFx, currentCastFx.lifetime, Util.RemoveNode, [currentCastFx, self])
+		currentCastFx = null
 
-func DisplayCast(emitter : Entity, skillID : int):
+func DisplayCast(skillID : int):
 	if DB.SkillsDB.has(skillID):
 		var skill : SkillCell = DB.SkillsDB[skillID]
 		if skill.castPreset:
-			var castFx : GPUParticles2D = skill.castPreset.instantiate()
-			if castFx:
-				Callback.SelfDestructTimer(castFx, skill.castTime + emitter.stat.current.castAttackDelay, HideCast.bind(castFx))
-				castFx.finished.connect(Util.RemoveNode.bind(castFx, self))
-				castFx.emitting = true
-				add_child(castFx)
+			StopCasting()
+			currentCastFx = skill.castPreset.instantiate()
+			if currentCastFx:
+				currentCastFx.emitting = true
+				add_child(currentCastFx)
+	else:
+		StopCasting()
 
 func DisplaySkill(emitter : Entity, skillID : int, cooldown : float):
 	if DB.SkillsDB.has(skillID):
@@ -157,7 +194,7 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 			if skill and skill.mode == Skill.TargetMode.SINGLE:
 				DisplayHP()
 
-#
+# Speech
 func DisplaySpeech(speech : String):
 	assert(speechContainer != null, "No speech container found, could not display speech bubble")
 	if speechContainer:
@@ -165,7 +202,42 @@ func DisplaySpeech(speech : String):
 		speechLabel.set_text("[center]%s[/center]" % [speech])
 		speechLabel.set_visible_ratio(0)
 		speechContainer.add_child(speechLabel)
-		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, Util.RemoveNode, [speechLabel, speechContainer])
+		if not self in Entities.speechEntities:
+			Entities.speechEntities.append(self)
+			set_process(true)
+		Callback.SelfDestructTimer(speechLabel, ActorCommons.speechDelay, OnSpeechLabelRemoved, [speechLabel])
+
+func OnSpeechLabelRemoved(speechLabel : RichTextLabel):
+	Util.RemoveNode(speechLabel, speechContainer)
+	if speechContainer.get_child_count() == 0:
+		Entities.speechEntities.erase(self)
+		set_process(false)
+		TweenSpeechOffset(0.0)
+
+# Speech offset
+func SetSpeechOffset(value : float):
+	speechYExtraOffset = value
+	RefreshVisibleNodeOffset()
+
+func RefreshVisibleNodeOffset():
+	if entity.visual:
+		var offset : int = entity.visual.GetPlayerOffset()
+
+		visibleNode.position.y = -(offset + ActorCommons.interactionDisplayOffset + speechYExtraOffset)
+		visualOffset = clampi(offset, ActorCommons.minVisualOffset, ActorCommons.MaxEntityRadiusSize)
+		if clickShape:
+			clickShape.shape.height = offset * 1.1
+			clickShape.position.y = -offset / 2.0
+
+func TweenSpeechOffset(target : float):
+	if is_equal_approx(speechYExtraOffset, target):
+		return
+
+	if speechOffsetTween:
+		speechOffsetTween.kill()
+	speechOffsetTween = create_tween()
+	speechOffsetTween.tween_method(SetSpeechOffset, speechYExtraOffset, target, ActorCommons.speechGroupTweenDuration)
+	speechOffsetTween.tween_callback(func(): speechOffsetTween = null)
 
 #
 func DisplayHP():
@@ -177,7 +249,7 @@ func DisplayHP():
 		return
 
 	if Launcher.Player:
-		if Launcher.Player.target != entity:
+		if Entities.target != entity:
 			Callback.SelfDestructTimer(healthBar, ActorCommons.DisplayHPDelay, HideHP, [], "HideHP")
 		if entity.stat.level >= Launcher.Player.stat.level and ActorCommons.LevelDifferenceColor:
 			nameLabel.modulate = lerp(Color.WHITE, Color.RED, (entity.stat.level - Launcher.Player.stat.level) / ActorCommons.LevelDifferenceColor)
@@ -226,16 +298,8 @@ func DisplaySailContext():
 	Launcher.GUI.choiceContext.FadeIn(true)
 
 #
-func RefreshVisibleNodeOffset():
-	if entity.visual:
-		var offset : int = entity.visual.GetPlayerOffset()
-
-		visibleNode.position.y = -1 * (offset + ActorCommons.interactionDisplayOffset)
-		visualOffset = clampi(offset, 20, 256)
-
-#
 func Init(data : EntityData):
-	displayName = entity.type == ActorCommons.Type.PLAYER or data._displayName
+	displayName = (entity.type == ActorCommons.Type.PLAYER or data._displayName) and entity != Launcher.Player
 
 	if nameLabel:
 		nameLabel.set_text(entity.nick)
@@ -250,3 +314,11 @@ func Init(data : EntityData):
 		if not entity.visual.spriteOffsetUpdate.is_connected(RefreshVisibleNodeOffset):
 			entity.visual.spriteOffsetUpdate.connect(RefreshVisibleNodeOffset)
 		RefreshVisibleNodeOffset()
+
+	if clickShape:
+		clickShape.shape.radius = max(data._radius * 1.1, ActorCommons.targetRadius)
+
+func _exit_tree():
+	if self in Entities.speechEntities:
+		Entities.speechEntities.erase(self)
+		Entities.ScheduleSpeechRearrange()

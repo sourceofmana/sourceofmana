@@ -8,20 +8,18 @@
 [ext_resource type="Resource" uid="uid://cfkwntfdq7qa6" path="res://presets/cells/items/head/DesertHood.tres" id="5_lypa4"]
 [ext_resource type="Resource" uid="uid://dw678a4b7ps2w" path="res://presets/cells/items/weapon/Scimitar.tres" id="6_hc7ca"]
 [ext_resource type="Resource" uid="uid://b1fircprcri7h" path="res://presets/entities/WalkingNPC.tres" id="7_p87po"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="8_fods0"]
 
 [resource]
 script = ExtResource("2_raqmu")
 _parent = ExtResource("7_p87po")
 _id = 3905186616
 _name = "Tulimshar Desert Guard"
-_equipment = Array[ExtResource("1_xx4mx")]([ExtResource("2_b3jnp"), ExtResource("3_p87po"), ExtResource("4_fods0"), null, ExtResource("5_lypa4"), null, ExtResource("6_hc7ca"), null])
 _stats = {
 "gender": "Male",
 "haircolor": "Dark Brown",
 "hairstyle": "Center Parting",
-"level": 1,
 "race": "Human",
 "skintone": "Dark"
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_xx4mx")]([ExtResource("2_b3jnp"), ExtResource("3_p87po"), ExtResource("4_fods0"), null, ExtResource("5_lypa4"), null, ExtResource("6_hc7ca"), null])

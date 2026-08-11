@@ -7,7 +7,8 @@ enum Type
 	NONE = -1,
 	SETTINGS = 0,
 	USERSETTINGS,
-	DISCORD,
+	CREDENTIAL,
+	AUTH_TOKEN,
 	COUNT
 }
 
@@ -77,8 +78,9 @@ static func SaveType(fileName : String, type : Type):
 
 #
 static func Init():
-	confFiles.append(FileSystem.LoadConfig("settings"))
-	confFiles.append(FileSystem.LoadConfig("settings", true))
-	confFiles.append(FileSystem.LoadConfig("discord", true))
-
+	confFiles.resize(Type.COUNT)
+	confFiles[Type.SETTINGS] = FileSystem.LoadConfig("settings")
+	confFiles[Type.USERSETTINGS] = FileSystem.LoadConfig("settings", true)
+	confFiles[Type.CREDENTIAL] = FileSystem.LoadConfig("credential", true)
+	confFiles[Type.AUTH_TOKEN] = FileSystem.LoadConfig("auth_token", true)
 	assert(confFiles.size() == Type.COUNT, "Config files count mismatch")

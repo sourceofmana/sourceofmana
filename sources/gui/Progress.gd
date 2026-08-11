@@ -1,12 +1,12 @@
 extends WindowPanel
 
 # Control accessors
-@onready var activeQuestContainer : Container		= $Margin/TabBar/QuestLog/QuestScroll/QuestList/Active
-@onready var completedQuestContainer : Container	= $Margin/TabBar/QuestLog/QuestScroll/QuestList/Completed
-@onready var questSeparator : Separator				= $Margin/TabBar/QuestLog/QuestScroll/QuestList/HSeparator
-@onready var questDescription : RichTextLabel		= $Margin/TabBar/QuestLog/Description
-@onready var bestiaryContainer : Container			= $Margin/TabBar/Manapedia/BestiaryList/Monsters
-@onready var bestiaryLabel : RichTextLabel			= $Margin/TabBar/Manapedia/BestiaryList/BestiaryLabel
+@onready var activeQuestContainer : Container		= $Layout/Margin/TabBar/QuestLog/QuestScroll/QuestList/Active
+@onready var completedQuestContainer : Container	= $Layout/Margin/TabBar/QuestLog/QuestScroll/QuestList/Completed
+@onready var questSeparator : Separator				= $Layout/Margin/TabBar/QuestLog/QuestScroll/QuestList/HSeparator
+@onready var questDescription : RichTextLabel		= $Layout/Margin/TabBar/QuestLog/Description
+@onready var bestiaryContainer : Container			= $Layout/Margin/TabBar/Manapedia/BestiaryList/Monsters
+@onready var bestiaryLabel : RichTextLabel			= $Layout/Margin/TabBar/Manapedia/BestiaryList/BestiaryLabel
 
 
 # Quest variables

@@ -15,7 +15,7 @@ const actionCategories : Dictionary[StringName, Array] = {
 	"Interface": [
 		"ui_validate", "ui_close", "ui_stat", "ui_menu",
 		"ui_inventory", "ui_skill", "ui_chat", "ui_minimap",
-		"ui_emote", "ui_settings", "ui_progress", "ui_credits",
+		"ui_emote", "ui_settings", "ui_progress", "ui_social",
 	],
 	"Context": [
 		"ui_context_validate", "ui_context_cancel",

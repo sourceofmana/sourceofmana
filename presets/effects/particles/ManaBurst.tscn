@@ -1,52 +1,116 @@
 [gd_scene format=3 uid="uid://b48f227dxr4nh"]
 
-[ext_resource type="Texture2D" uid="uid://c0tdh748svcb3" path="res://data/graphics/effects/particles/leaf.png" id="1_7m44f"]
+[ext_resource type="Texture2D" uid="uid://cwlcajt78phca" path="res://data/graphics/effects/particles/orb.png" id="1_0xjyr"]
+[ext_resource type="Texture2D" uid="uid://c7ukm5paimxut" path="res://data/graphics/effects/particles/mana-ball.png" id="2_0xjyr"]
 
-[sub_resource type="Curve" id="Curve_0xjyr"]
-_limits = [-2.0, 2.0, 0.0, 1.0]
-_data = [Vector2(0, 0.247191), 0.0, -5.49787, 0, 0, Vector2(1, 0.11236), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="Gradient" id="Gradient_re0c8"]
+resource_local_to_scene = true
+offsets = PackedFloat32Array(0.464164, 0.552239)
+colors = PackedColorArray(1, 0.84705883, 0.6313726, 1, 0.2, 0.43529412, 1, 1)
 
-[sub_resource type="CurveTexture" id="CurveTexture_1pr8x"]
-curve = SubResource("Curve_0xjyr")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_neix0"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_re0c8")
+width = 2
 
-[sub_resource type="Curve" id="Curve_7m44f"]
-_data = [Vector2(0, 0.146068), 0.0, 0.986012, 0, 0, Vector2(0.52093, 1), 0.603933, 0.603933, 0, 0, Vector2(1, 0.606742), -1.50983, 0.0, 0, 0]
-point_count = 3
+[sub_resource type="Curve" id="Curve_1pr8x"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.2533693, -0.006536007), 0.0, 0.0, 0, 0, Vector2(0.8760108, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_0xjyr"]
-curve = SubResource("Curve_7m44f")
+curve = SubResource("Curve_1pr8x")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mag5b"]
+[sub_resource type="Curve" id="Curve_kddwk"]
+_data = [Vector2(0, 0.402404), 0.0, 0.0, 0, 0, Vector2(0.616725, 0.797737), 2.05226, 2.05226, 0, 0, Vector2(1, 0.632249), -3.78584, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tbltw"]
+curve = SubResource("Curve_kddwk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_41gbv"]
+resource_local_to_scene = true
 lifetime_randomness = 0.2
 particle_flag_rotate_y = true
+emission_shape_offset = Vector3(0, -5, 0)
+emission_shape_scale = Vector3(1.33, 0.66, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 0)
+emission_ring_height = 10.0
+emission_ring_radius = 16.0
+emission_ring_inner_radius = 24.0
+emission_ring_cone_angle = 90.0
+angle_min = -720.0
+angle_max = 720.0
+angular_velocity_min = 180.0
+angular_velocity_max = 360.0
+orbit_velocity_min = 2.0000002
+orbit_velocity_max = 2.0000002
+radial_velocity_min = 29.999977
+radial_velocity_max = 29.999977
+gravity = Vector3(0, -20, 0)
+radial_accel_min = 99.99999
+radial_accel_max = 99.99999
+radial_accel_curve = SubResource("CurveTexture_0xjyr")
+attractor_interaction_enabled = false
+scale_curve = SubResource("CurveTexture_tbltw")
+color_ramp = SubResource("GradientTexture1D_neix0")
+hue_variation_min = -0.1
+hue_variation_max = 0.1
+turbulence_noise_strength = 6.03
+
+[sub_resource type="Curve" id="Curve_f8c2v"]
+_limits = [-2.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1.727891), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_83dma"]
+curve = SubResource("Curve_f8c2v")
+
+[sub_resource type="Curve" id="Curve_302te"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.3342318, 0), 0.0, 0.0, 0, 0, Vector2(0.58221024, 1), -0.12018173, -0.12018173, 0, 0, Vector2(1, 0), -1.50983, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_c1x0v"]
+curve = SubResource("Curve_302te")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3st0b"]
+lifetime_randomness = 0.2
+particle_flag_align_y = true
+particle_flag_disable_z = true
 emission_shape = 6
 emission_ring_axis = Vector3(1, 0, 1)
-emission_ring_height = 1.0
-emission_ring_radius = 72.0
-emission_ring_inner_radius = 70.0
+emission_ring_height = 0.0
+emission_ring_radius = 24.0
+emission_ring_inner_radius = 16.0
 emission_ring_cone_angle = 90.0
-angle_min = -360.0
-angle_max = 1.07288e-05
-spread = 180.0
-angular_velocity_min = 360.0
-angular_velocity_max = 720.0
-orbit_velocity_min = -2.0
-orbit_velocity_max = 2.0
-orbit_velocity_curve = SubResource("CurveTexture_1pr8x")
+orbit_velocity_min = 0.2000001
+orbit_velocity_max = 0.5000001
+orbit_velocity_curve = SubResource("CurveTexture_83dma")
+radial_velocity_min = 9.999977
+radial_velocity_max = 19.999977
 gravity = Vector3(0, 0, 0)
 scale_min = 0.6
-scale_curve = SubResource("CurveTexture_0xjyr")
+scale_curve = SubResource("CurveTexture_c1x0v")
 
-[node name="Mana Burst Particles" type="GPUParticles2D" unique_id=1303829100]
+[node name="Mana Burst Particles" type="GPUParticles2D" unique_id=2056597341]
 z_index = -1
-z_as_relative = false
-scale = Vector2(1, 0.7)
 emitting = false
-amount = 150
-texture = ExtResource("1_7m44f")
+amount = 400
+texture = ExtResource("1_0xjyr")
 lifetime = 2.0
 one_shot = true
+preprocess = 0.3
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_41gbv")
+
+[node name="Energy Ball" type="GPUParticles2D" parent="." unique_id=1303829101]
+position = Vector2(0, -15.999998)
+scale = Vector2(1, 0.7)
+amount = 10
+texture = ExtResource("2_0xjyr")
+lifetime = 3.0
 explosiveness = 0.6
 randomness = 0.15
-process_material = SubResource("ParticleProcessMaterial_mag5b")
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_3st0b")

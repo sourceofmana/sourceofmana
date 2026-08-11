@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FileData" format=3 uid="uid://bq8umvtx3ng2s"]
+
+[ext_resource type="Script" uid="uid://db4wi3qfkte3f" path="res://sources/db/instance/FileData.gd" id="1_script"]
+[ext_resource type="Material" uid="uid://cpo1seggn3swm" path="res://presets/palettes/shaders/equipment/cloth-sand.tres" id="2_material"]
+
+[resource]
+script = ExtResource("1_script")
+_name = "Sand"
+_resource = ExtResource("2_material")

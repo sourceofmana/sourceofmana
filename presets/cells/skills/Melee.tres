@@ -21,6 +21,7 @@ _modifiers = Array[ExtResource("2_yjg4f")]([SubResource("Resource_ecwg5"), SubRe
 
 [resource]
 script = ExtResource("5_obt75")
+category = 1
 state = 3
 repeat = true
 id = 229218829

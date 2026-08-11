@@ -20,6 +20,8 @@ var spirit : int						= DB.UnknownHash
 var currentShape : int					= DB.UnknownHash
 var baseExp : int						= 1
 var isRunning : bool					= false
+var isHidden : bool						= false
+var isInvisible : bool					= false
 
 # Attributes
 var strength : int						= 0
@@ -73,6 +75,8 @@ func RefreshEntityStats():
 	current.cooldownAttackDelay = Formula.GetCooldownAttackDelay(self)
 	current.walkSpeed		= Formula.GetWalkSpeed(self)
 	current.weightCapacity	= Formula.GetWeightCapacity(self)
+	isHidden				= Formula.IsHidden(self)
+	isInvisible				= Formula.IsInvisible(self)
 	entity_stats_updated.emit()
 
 	RefreshVitalStats()
@@ -88,8 +92,6 @@ func SetStats(stats : Dictionary):
 		if stats[statName] != null and statName in self:
 			self[statName] = stats[statName]
 
-	if actor.type == ActorCommons.Type.MONSTER:
-		FillRandomAttributes()
 	RefreshAttributes()
 
 #
@@ -117,22 +119,22 @@ func Init(actorNode : Actor, data : EntityData):
 
 	SetStats(stats)
 	SetEntityStats(stats)
+	if "health" not in stats:
+		health = current.maxHealth
+	if "mana" not in stats:
+		mana = current.maxMana
+	if "stamina" not in stats:
+		stamina = current.maxStamina
 	RefreshVitalStats()
 
-func FillRandomAttributes():
-	var maxPoints : int			= Formula.GetMaxAttributePoints(level)
-	var assignedPoints : int	= Formula.GetAssignedAttributePoints(self)
-	if maxPoints > assignedPoints:
-		const attributeNames = ["strength", "vitality", "agility", "endurance", "concentration"]
-		var attributes : Dictionary = {}
-		var pointToDispatch : int = maxPoints - assignedPoints
-		for att in attributeNames:
-			var points : int = randi_range(0, pointToDispatch)
-			pointToDispatch -= points
-			attributes[att] = self[att] + points
-			if pointToDispatch == 0:
-				break
-		SetStats(attributes)
+func ResetAttributesIfOverBudget():
+	if Formula.GetAssignedAttributePoints(self) > Formula.GetMaxAttributePoints(level):
+		strength = 0
+		vitality = 0
+		agility = 0
+		endurance = 0
+		concentration = 0
+		RefreshAttributes()
 
 func Morph(data : EntityData):
 	currentShape = data._id
@@ -173,14 +175,12 @@ func ReduceAttribute(attribute : ActorCommons.Attribute):
 	RefreshAttributes()
 
 func SetAttributes(newStrength: int, newVitality: int, newAgility: int, newEndurance: int, newConcentration: int):
+	if newStrength < strength or newVitality < vitality or newAgility < agility \
+			or newEndurance < endurance or newConcentration < concentration:
+		return
+
 	var newAssignedAttributePoints: int = newStrength + newVitality + newAgility \
 			+ newEndurance + newConcentration
-	for attribute: ActorCommons.Attribute in ActorCommons.Attribute.values():
-		if newStrength < strength or newVitality < vitality or newAgility < agility \
-				or newEndurance < endurance or newConcentration < concentration:
-			assert(false, "Tried to lower attribute")
-			return
-
 	if Formula.GetMaxAttributePoints(level) - newAssignedAttributePoints >= 0:
 		strength = min(ActorCommons.MaxPointPerAttributes, newStrength)
 		vitality = min(ActorCommons.MaxPointPerAttributes, newVitality)
@@ -190,9 +190,10 @@ func SetAttributes(newStrength: int, newVitality: int, newAgility: int, newEndur
 		RefreshAttributes()
 
 func SetHealth(bonus : int):
+	var previousHealth : int = health
 	health = clampi(health + bonus, 0, current.maxHealth)
 	vital_stats_updated.emit()
-	if health <= 0:
+	if health <= 0 and previousHealth > 0:
 		actor.Killed()
 
 func SetMana(bonus : int):
@@ -203,7 +204,7 @@ func SetStamina(bonus : int):
 	stamina = clampi(stamina + bonus, 0, current.maxStamina)
 	vital_stats_updated.emit()
 
-func AddExperience(value : int):
+func AddExperience(value : int, hasFeedback : bool = true):
 	if not ActorCommons.IsAlive(actor) or value <= 0:
 		return
 	experience += value
@@ -215,12 +216,22 @@ func AddExperience(value : int):
 		experiencelNeeded = Experience.GetNeededExperienceForNextLevel(level)
 	vital_stats_updated.emit()
 	if actor is PlayerAgent:
-		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.EXP, DB.UnknownHash, actor.peerID)
+		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.EXP, DB.UnknownHash, hasFeedback, actor.peerID)
 
-func AddGP(value : int):
+func AddGP(value : int, hasFeedback : bool = true):
 	if not ActorCommons.IsAlive(actor) or value <= 0:
 		return
 	gp += value
 	vital_stats_updated.emit()
 	if actor is PlayerAgent:
-		Network.TargetAlteration(actor.peerID, actor.peerID, value, ActorCommons.Alteration.GP, DB.UnknownHash, actor.peerID)
+		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.GP, DB.UnknownHash, hasFeedback, actor.peerID)
+
+func SetHairstyle(newStyle : int):
+	if DB.HairstylesDB.has(newStyle):
+		hairstyle = newStyle
+		vital_stats_updated.emit()
+
+func SetHaircolor(newColor : int):
+	if DB.PalettesDB[DB.Palette.HAIR].has(newColor):
+		haircolor = newColor
+		vital_stats_updated.emit()

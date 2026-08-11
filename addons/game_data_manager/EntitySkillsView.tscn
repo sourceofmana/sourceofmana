@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cggq3pttkiprw"]
 
-[ext_resource type="Script" path="res://addons/game_data_manager/EntitySkillsView.gd" id="1"]
+[ext_resource type="Script" uid="uid://bgggx5h1rx3h8" path="res://addons/game_data_manager/EntitySkillsView.gd" id="1"]
 
-[node name="EntitySkillsView" type="Control"]
+[node name="EntitySkillsView" type="Control" unique_id=1531598706]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=673897227]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,60 +19,60 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopBar" type="HBoxContainer" parent="VBoxContainer"]
+[node name="TopBar" type="HBoxContainer" parent="VBoxContainer" unique_id=1508191978]
 layout_mode = 2
 
-[node name="RefreshButton" type="Button" parent="VBoxContainer/TopBar"]
+[node name="RefreshButton" type="Button" parent="VBoxContainer/TopBar" unique_id=1503242551]
 layout_mode = 2
 text = "Refresh"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TopBar"]
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TopBar" unique_id=732590099]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/TopBar"]
+[node name="Label" type="Label" parent="VBoxContainer/TopBar" unique_id=1037149963]
 layout_mode = 2
 text = "Search:"
 
-[node name="SearchField" type="LineEdit" parent="VBoxContainer/TopBar"]
+[node name="SearchField" type="LineEdit" parent="VBoxContainer/TopBar" unique_id=381385520]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Filter entities by name..."
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer" unique_id=340375434]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="EntityList" type="ItemList" parent="VBoxContainer/HSplitContainer"]
+[node name="EntityList" type="ItemList" parent="VBoxContainer/HSplitContainer" unique_id=1461407799]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-custom_minimum_size = Vector2(200, 0)
 
-[node name="SkillsPanel" type="PanelContainer" parent="VBoxContainer/HSplitContainer"]
+[node name="SkillsPanel" type="PanelContainer" parent="VBoxContainer/HSplitContainer" unique_id=935007512]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/SkillsPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/SkillsPanel" unique_id=126019409]
 layout_mode = 2
 
-[node name="TopBar" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer"]
+[node name="TopBar" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer" unique_id=2088703237]
 layout_mode = 2
 
-[node name="EntityLabel" type="Label" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer/TopBar"]
+[node name="EntityLabel" type="Label" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer/TopBar" unique_id=632261772]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Select an entity"
 horizontal_alignment = 1
 
-[node name="AddSkillButton" type="Button" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer/TopBar"]
+[node name="AddSkillButton" type="Button" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer/TopBar" unique_id=678586561]
 layout_mode = 2
 text = "Add Skill"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer" unique_id=1647749662]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SkillsContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer/ScrollContainer"]
+[node name="SkillsContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/SkillsPanel/VBoxContainer/ScrollContainer" unique_id=1252077832]
 layout_mode = 2
 size_flags_horizontal = 3
 

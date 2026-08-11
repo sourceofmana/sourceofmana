@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://u8eapvk20s88" path="res://sources/actor/entity/Entity.gd" id="1_h5sc8"]
 [ext_resource type="PackedScene" uid="uid://f2jxqr5e7i5e" path="res://presets/entities/components/Interactions.tscn" id="2_5gxse"]
 [ext_resource type="Script" uid="uid://c4lx7xeqbdpbw" path="res://sources/actor/entity/components/Visual.gd" id="4_d0h8p"]
+[ext_resource type="Script" uid="uid://bmg2purqkor5n" path="res://sources/actor/entity/components/Sfx.gd" id="5_sfxgd"]
 
 [node name="Entity" type="CharacterBody2D" unique_id=1751810393]
 collision_layer = 5
@@ -14,3 +15,6 @@ script = ExtResource("1_h5sc8")
 
 [node name="Visual" type="Node2D" parent="." unique_id=748043384]
 script = ExtResource("4_d0h8p")
+
+[node name="Sfx" type="Node2D" parent="." unique_id=402859806]
+script = ExtResource("5_sfxgd")

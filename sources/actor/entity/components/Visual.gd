@@ -1,27 +1,35 @@
 extends Node2D
 class_name EntityVisual
 
+const LightSourceScene : PackedScene = preload(Path.EffectsPst + "LightSource.tscn")
+
 #
 signal spriteOffsetUpdate
+signal state_changed(state : ActorCommons.State)
 
 #
 @onready var entity : Entity				= get_parent()
 
 var preset : Node2D							= null
-var collision : CollisionShape2D			= null
+var questHighlight : Node2D					= null
 var animation : AnimationPlayer				= null
 var animationTree : AnimationTree			= null
 var sprites : Array[Sprite2D]				= []
 
 var previousOrientation : Vector2			= Vector2.ZERO
 var previousState : ActorCommons.State		= ActorCommons.State.UNKNOWN
+var previousAnimState : ActorCommons.State	= ActorCommons.State.UNKNOWN
 
-var blendSpacePaths : Array[String]				= []
-var walkTimeScalePath : String					= ""
-var attackTimeScalePath : String				= ""
+var blendSpacePaths : Array[String]			= []
+var walkTimeScalePath : String				= ""
+var attackTimeScalePath : String			= ""
 
+var equipmentEffects : Array[Node2D]		= []
 var skillCastID : int						= DB.UnknownHash
 var attackAnimLength : float				= 1.0
+var originalAnimationLib : AnimationLibrary	= null
+var defaultHframes : Dictionary				= {}
+var defaultVframes : Dictionary				= {}
 
 #
 func LoadSpriteSlot(slot : ActorCommons.Slot, sprite : Sprite2D):
@@ -35,31 +43,35 @@ func LoadSpriteSlot(slot : ActorCommons.Slot, sprite : Sprite2D):
 			if slot == ActorCommons.Slot.BODY:
 				spriteOffsetUpdate.emit()
 
-
 func ResetData():
-	for child in get_children():
-		child.queue_free()
+	if preset:
+		preset.queue_free()
+	for effect in equipmentEffects:
+		if effect:
+			effect.queue_free()
 	for spriteID in sprites.size():
 		sprites[spriteID] = null
+	equipmentEffects.fill(null)
 	preset = null
-	if collision:
-		collision.queue_free()
-		collision = null
+	questHighlight = null
+	originalAnimationLib = null
+
+func AddPreset(presetNode : Node2D):
+	if presetNode != preset:
+		if is_instance_valid(presetNode) and not presetNode.is_queued_for_deletion():
+			presetNode.queue_free()
+		return
+	if is_instance_valid(presetNode):
+		add_child(presetNode)
 
 func LoadData(data : EntityData):
 	ResetData()
 
-	# Collision
-	if data._collision and entity.type == ActorCommons.Type.PLAYER:
-		collision = FileSystem.LoadEntityComponent("collisions/" + data._collision)
-		if collision:
-			entity.add_child.call_deferred(collision)
-
 	# Sprite Preset
 	if data._spritePreset:
-		preset = FileSystem.LoadEntitySprite(data._spritePreset)
+		preset = data._spritePreset.instantiate()
 		if preset:
-			add_child.call_deferred(preset)
+			AddPreset.call_deferred(preset)
 
 		# Animation
 		if preset and preset.has_node("Animation"):
@@ -79,13 +91,24 @@ func LoadData(data : EntityData):
 				elif slot == ActorCommons.Slot.FACE:
 					SetFace()
 				elif slot == ActorCommons.Slot.HAIR:
-					SetHair()
+					SetHair(false)
 				elif slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_EQUIPMENT:
-					SetEquipment(slot, data)
+					SetEquipment(slot, data, false)
 
+			questHighlight = preset.get_node_or_null("QuestHighlight")
+			RefreshQuestHighlight()
+
+	ApplyAnimationOverrides()
 	ResetAnimationValue()
 
-func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array):
+func RefreshQuestHighlight():
+	if not questHighlight:
+		return
+
+	var questState : int = Launcher.Player.progress.GetQuest(entity.data._questID) if Launcher.Player else ProgressCommons.UnknownProgress
+	questHighlight.visible = entity.data.IsQuestStateVisible(questState)
+
+func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array[Texture2D]):
 	var sprite : Sprite2D = preset.get_node_or_null(ActorCommons.GetSlotName(slot))
 	if not sprite:
 		return
@@ -99,19 +122,18 @@ func SetSkinSlot(slot : ActorCommons.Slot, raceData : RaceData, textures : Array
 
 		if entity.data and slot == ActorCommons.Slot.BODY:
 			if entity.data._customTexture:
-				slotTexture = FileSystem.LoadGfx(entity.data._customTexture)
+				slotTexture = entity.data._customTexture
 				hasOverrideTexture = true
 			if entity.data._customMaterial:
-				slotMaterial = FileSystem.LoadPalette(entity.data._customMaterial._path)
+				slotMaterial = entity.data._customMaterial
 				hasOverrideMaterial = true
 
 		if not hasOverrideTexture:
-			slotTexture = FileSystem.LoadGfx(textures[entity.stat.gender])
+			slotTexture = textures[entity.stat.gender]
 		if not hasOverrideMaterial:
-			if entity.stat.skintone in raceData._skins:
-				var skinData : FileData = raceData._skins[entity.stat.skintone]
-				if skinData and not skinData._path.is_empty():
-					slotMaterial = FileSystem.LoadPalette(skinData._path)
+			var skinMat : Material = raceData.GetSkinMaterial(entity.stat.skintone)
+			if skinMat:
+				slotMaterial = skinMat
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
@@ -123,54 +145,110 @@ func SetBody():
 	else:
 		var raceData : RaceData = DB.GetRace(entity.stat.race)
 		if raceData:
-			SetSkinSlot(ActorCommons.Slot.BODY, raceData, raceData._bodies)
+			SetSkinSlot(ActorCommons.Slot.BODY, raceData, raceData.bodies)
 
 func SetFace():
 	if entity.stat.race == DB.UnknownHash:
 		return
 	var raceData : RaceData = DB.GetRace(entity.stat.race)
 	if raceData:
-		SetSkinSlot(ActorCommons.Slot.FACE, raceData, raceData._faces)
+		SetSkinSlot(ActorCommons.Slot.FACE, raceData, raceData.faces)
 
-func SetHair():
+func SetHair(applyOverrides : bool = true):
 	var slotName : String = ActorCommons.GetSlotName(ActorCommons.Slot.HAIR)
 	var sprite : Sprite2D = preset.get_node_or_null(slotName)
 	if not sprite:
 		return
 
+	var slot : int = ActorCommons.Slot.HAIR
+	if slot not in defaultHframes:
+		defaultHframes[slot] = sprite.hframes
+		defaultVframes[slot] = sprite.vframes
+
 	var slotTexture : Texture2D = null
 	var slotMaterial : Material = null
+	var hairstyleData : HairstyleData = null
 
 	if not entity.stat.IsMorph():
-		var hairstyleData : FileData = DB.GetHairstyle(entity.stat.hairstyle) if entity.stat.hairstyle != DB.UnknownHash else null
+		hairstyleData = DB.GetHairstyle(entity.stat.hairstyle) if entity.stat.hairstyle != DB.UnknownHash else null
 		var haircolorData : FileData = DB.GetPalette(DB.Palette.HAIR, entity.stat.haircolor) if entity.stat.haircolor != DB.UnknownHash else null
 		if hairstyleData != null and haircolorData != null:
-			slotTexture = FileSystem.LoadGfx(hairstyleData._path)
-			slotMaterial = FileSystem.LoadPalette(haircolorData._path)
+			slotTexture = hairstyleData.texture
+			slotMaterial = haircolorData._resource as Material
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
 
-	LoadSpriteSlot(ActorCommons.Slot.HAIR, sprite)
+	if hairstyleData and hairstyleData.spriteHframes > 0:
+		sprite.hframes = hairstyleData.spriteHframes
+		sprite.vframes = max(1, hairstyleData.spriteVframes)
+	else:
+		sprite.hframes = defaultHframes[slot]
+		sprite.vframes = defaultVframes[slot]
 
-func SetEquipment(slot : int, data : EntityData = null):
+	LoadSpriteSlot(slot, sprite)
+	if applyOverrides:
+		ApplyAnimationOverrides()
+
+func SetEquipment(slot : int, data : EntityData = null, applyOverrides : bool = true):
 	var slotName : String = ActorCommons.GetSlotName(slot)
 	var sprite : Sprite2D = preset.get_node_or_null(slotName)
 	if not sprite:
 		return
 
+	if slot not in defaultHframes:
+		defaultHframes[slot] = sprite.hframes
+		defaultVframes[slot] = sprite.vframes
+
 	var slotTexture : Texture2D = null
 	var slotMaterial : Material = null
+	var cell : ItemCell = null
 
 	if not entity.stat.IsMorph():
-		var cell : ItemCell = entity.inventory.equipment[slot] if entity.inventory else (data._equipment[slot] if data else null)
+		if entity.inventory:
+			cell = entity.inventory.GetEquipmentCell(slot)
+		elif data:
+			cell = data._equipment[slot]
+
 		if cell != null:
 			slotTexture = cell.textures[entity.stat.gender]
 			slotMaterial = cell.shader
 
 	sprite.set_texture(slotTexture)
 	sprite.set_material(slotMaterial)
+
+	if cell and cell.spriteHframes > 0:
+		sprite.hframes = cell.spriteHframes
+		sprite.vframes = max(1, cell.spriteVframes)
+	else:
+		sprite.hframes = defaultHframes[slot]
+		sprite.vframes = defaultVframes[slot]
+
+	SetEquipmentMetadata(slot, cell)
 	LoadSpriteSlot(slot, sprite)
+	if applyOverrides:
+		ApplyAnimationOverrides()
+
+func AddEquipmentEffect(slot : int, light : Node2D):
+	if slot < 0 or slot >= equipmentEffects.size() or equipmentEffects[slot] != light:
+		if is_instance_valid(light) and not light.is_queued_for_deletion():
+			light.queue_free()
+		return
+	if is_instance_valid(light):
+		add_child(light)
+
+func SetEquipmentMetadata(slot : int, cell : ItemCell):
+	if equipmentEffects[slot]:
+		equipmentEffects[slot].queue_free()
+		equipmentEffects[slot] = null
+	if cell and cell.has_meta("light_radius"):
+		var light : LightSource = LightSourceScene.instantiate()
+		if light:
+			light.radius = cell.get_meta("light_radius")
+			if cell.has_meta("light_color"):
+				light.color = cell.get_meta("light_color")
+			equipmentEffects[slot] = light
+			AddEquipmentEffect.call_deferred(slot, light)
 
 func SetData(slot : int, data : EntityData):
 	var slotName : String = ActorCommons.GetSlotName(slot)
@@ -180,9 +258,9 @@ func SetData(slot : int, data : EntityData):
 
 	if data and slot == ActorCommons.Slot.BODY:
 		if data._customTexture:
-			sprite.set_texture(FileSystem.LoadGfx(data._customTexture))
+			sprite.set_texture(data._customTexture)
 		if data._customMaterial:
-			sprite.set_material(FileSystem.LoadPalette(data._customMaterial._path))
+			sprite.set_material(data._customMaterial)
 
 	LoadSpriteSlot(slot, sprite)
 
@@ -222,6 +300,15 @@ func UpdateScale():
 	if not attackTimeScalePath.is_empty() and entity.stat.current.castAttackDelay > 0:
 		animationTree[attackTimeScalePath] = attackAnimLength / entity.stat.current.castAttackDelay
 
+func OnAnimationStarted(animName : StringName):
+	for stateIdx in ActorCommons.State.COUNT:
+		if animName == ActorCommons.STATE_NAMES[stateIdx]:
+			var stateId : ActorCommons.State = stateIdx as ActorCommons.State
+			if stateId != previousAnimState:
+				previousAnimState = stateId
+				state_changed.emit(stateId)
+			return
+
 func ResetAnimationValue():
 	if not animationTree:
 		return
@@ -230,6 +317,9 @@ func ResetAnimationValue():
 	UpdateScale()
 	RefreshTree()
 	Refresh.call_deferred()
+
+	if not animationTree.animation_started.is_connected(OnAnimationStarted):
+		animationTree.animation_started.connect(OnAnimationStarted)
 
 func GetPlayerOffset() -> int:
 	var spriteOffset : int = ActorCommons.interactionDisplayOffset
@@ -243,7 +333,7 @@ func Init(data : EntityData):
 	LoadData(data)
 
 func RefreshTree(resetOnTeleport : bool = true):
-	if previousState >= 0:
+	if previousState > ActorCommons.State.UNKNOWN:
 		var blendPath : String = blendSpacePaths[previousState]
 		if not blendPath.is_empty():
 			animationTree[blendPath] = previousOrientation
@@ -272,9 +362,74 @@ func Refresh():
 		RefreshTree(differentState)
 
 #
+func CollectAnimationOverrides() -> Array[AnimationLibrary]:
+	var allOverrides : Array[AnimationLibrary] = []
+
+	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
+		var cell : ItemCell = null
+		if entity.inventory:
+			cell = entity.inventory.GetEquipmentCell(slot)
+		elif entity.data:
+			cell = entity.data._equipment[slot]
+		if cell and cell.animationOverrides:
+			allOverrides.append(cell.animationOverrides)
+
+	if entity.stat.hairstyle != DB.UnknownHash:
+		var hairstyleData : HairstyleData = DB.GetHairstyle(entity.stat.hairstyle)
+		if hairstyleData and hairstyleData.animationOverrides:
+			allOverrides.append(hairstyleData.animationOverrides)
+
+	return allOverrides
+
+func ApplyAnimationOverrides():
+	if not animation:
+		return
+
+	var allOverrides : Array[AnimationLibrary] = CollectAnimationOverrides()
+
+	if allOverrides.is_empty():
+		if originalAnimationLib:
+			animation.remove_animation_library("")
+			animation.add_animation_library("", originalAnimationLib)
+			originalAnimationLib = null
+	else:
+		if not originalAnimationLib:
+			originalAnimationLib = animation.get_animation_library("")
+
+		var lib : AnimationLibrary = originalAnimationLib.duplicate(true)
+
+		for overrideLib in allOverrides:
+			for animName in overrideLib.get_animation_list():
+				if not lib.has_animation(animName):
+					continue
+
+				var baseAnim : Animation = lib.get_animation(animName)
+				var overrideAnim : Animation = overrideLib.get_animation(animName)
+				for trackIdx in overrideAnim.get_track_count():
+					var trackPath : NodePath = overrideAnim.track_get_path(trackIdx)
+					var trackType : Animation.TrackType = overrideAnim.track_get_type(trackIdx)
+					var baseTrackIdx : int = baseAnim.find_track(trackPath, trackType)
+					if baseTrackIdx < 0:
+						continue
+
+					while baseAnim.track_get_key_count(baseTrackIdx) > 0:
+						baseAnim.track_remove_key(baseTrackIdx, 0)
+					for keyIdx in overrideAnim.track_get_key_count(trackIdx):
+						baseAnim.track_insert_key(
+							baseTrackIdx,
+							overrideAnim.track_get_key_time(trackIdx, keyIdx),
+							overrideAnim.track_get_key_value(trackIdx, keyIdx),
+							overrideAnim.track_get_key_transition(trackIdx, keyIdx)
+						)
+
+		animation.remove_animation_library("")
+		animation.add_animation_library("", lib)
+
+#
 func _notification(what : int):
 	if what == NOTIFICATION_ENTER_TREE and animationTree:
 		Refresh.call_deferred()
 
 func _init():
 	sprites.resize(ActorCommons.SlotEquipmentCount + ActorCommons.SlotModifierCount)
+	equipmentEffects.resize(ActorCommons.State.COUNT)

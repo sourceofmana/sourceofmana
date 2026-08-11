@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b04douroodym1"]
 
-[ext_resource type="Texture2D" uid="uid://dr3fmdn4jq8p8" path="res://data/graphics/sprites/monsters/lizzy.png" id="1_y8b8w"]
+[ext_resource type="Texture2D" uid="uid://dr3fmdn4jq8p8" path="res://data/graphics/sprites/monsters/lizandre.png" id="1_y8b8w"]
 [ext_resource type="PackedScene" uid="uid://bdy4jc6k38ksb" path="res://presets/entities/sprites/animations/4Directions.tscn" id="2_qg0f2"]
 
 [sub_resource type="Animation" id="Animation_qks5j"]

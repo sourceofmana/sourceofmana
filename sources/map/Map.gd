@@ -1,13 +1,15 @@
 extends ServiceBase
+class_name MapService
 
 #
 signal MapUnloaded
 signal MapLoaded
 signal PlayerWarped
 signal PlayerMoved
+signal PlayerHalted
 
 #
-var pool								= FileSystem.LoadSource("map/MapPool.gd")
+var pool : MapPool						= MapPool.new()
 var currentMapID : int					= DB.UnknownHash
 var currentMapNode : Node2D				= null
 var currentFringe : TileMapLayer		= null
@@ -59,11 +61,12 @@ func LoadMapNode(mapID : int):
 		MapLoaded.emit()
 
 # Entity cache
-func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String):
+func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, defaultState : ActorCommons.State):
 	var entry : EntityCacheEntry = EntityCacheEntry.new()
 	entry.actorType = actorType
 	entry.currentShape = currentShape
 	entry.nick = nick
+	entry.defaultState = defaultState
 	entityCache[agentRID] = entry
 
 func PreloadPlayer(agentRID : int, spirit : int, currentShape : int, nick : String, level : int, health : int, hairstyle : int, haircolor : int, gender : int, race : int, skintone : int, equipment : Dictionary):
@@ -96,6 +99,7 @@ func SpawnEntity(agentRID : int, entry : EntityCacheEntry) -> Entity:
 
 	var entity : Entity = Instantiate.CreateEntity(entry.actorType, entityData, entityData._name if entry.nick.is_empty() else entry.nick, isLocalPlayer)
 	entity.agentRID = agentRID
+	entity.defaultState = entry.defaultState
 	entity.stat.shape = shape
 	entity.stat.spirit = entry.spirit
 	entity.stat.currentShape = entry.currentShape
@@ -114,8 +118,11 @@ func SpawnEntity(agentRID : int, entry : EntityCacheEntry) -> Entity:
 	if isLocalPlayer:
 		Launcher.Player = entity
 		Launcher.Player.SetLocalPlayer()
+		Monitoring.SetPlayer(entry.nick)
 
 	AddChild(entity)
+	if entry.currentShape != shape:
+		entity.SetData.call_deferred()
 	Entities.Add(entity, agentRID)
 
 	if isLocalPlayer:
@@ -143,7 +150,10 @@ func AddChild(child : Node2D):
 		currentFringe.add_child.call_deferred(child)
 
 # Entities
-func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool):
+func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool, seq : int):
+	if not currentFringe:
+		return
+
 	var entity : Entity = Entities.Get(agentRID)
 	var isNewSpawn : bool = false
 	if entity == null:
@@ -151,27 +161,34 @@ func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : V
 		if entry:
 			entity = SpawnEntity(agentRID, entry)
 			isNewSpawn = true
-	elif entity == Launcher.Player and entity.get_parent() != currentFringe:
+	elif entity == Launcher.Player:
 		if pendingWarp:
 			pendingWarp = false
-			isNewSpawn = true
-			AddChild(entity)
-			PlayerWarped.emit()
+			isNewSpawn = entity.get_parent() != currentFringe
+			entity.SetData.call_deferred()
+			if isNewSpawn:
+				AddChild(entity)
+				PlayerWarped.emit.call_deferred()
 
 	if entity:
+		if NetworkCommons.IsSeqNewer(seq, entity.lastUpdateSeq):
+			entity.lastUpdateSeq = seq
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID, isNewSpawn, isRunning)
 
-func UpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2):
+func UpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, seq : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.visual:
+		if not NetworkCommons.IsSeqNewer(seq, entity.lastUpdateSeq):
+			return
+		entity.lastUpdateSeq = seq
 		var agentOrientation : Vector2 = entity.entityOrientation if agentVelocity.is_zero_approx() else agentVelocity.normalized()
 		entity.Update(agentVelocity, agentPosition, agentOrientation, entity.state, entity.visual.skillCastID, false, entity.stat.isRunning)
 
 func RemoveEntity(agentRID : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity:
-		if Launcher.Player and Launcher.Player.target == entity:
-			Launcher.Player.target = null
+		if Entities.target == entity:
+			Entities.target = null
 		RemoveChild(entity)
 		Entities.Erase(agentRID)
 

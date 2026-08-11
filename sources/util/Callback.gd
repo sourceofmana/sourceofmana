@@ -2,6 +2,13 @@ extends RefCounted
 class_name Callback
 
 #
+static func RemoveMatchingCallback(object : Object, objectSignal : Signal, targetCallback : Callable):
+	for connection in objectSignal.get_connections():
+		var callback : Callable = connection["callable"]
+		if callback.get_object() == object and callback.get_method() == targetCallback.get_method():
+			objectSignal.disconnect(callback)
+
+#
 static func ClearCallbacks(objectSignal : Signal):
 	for connection in objectSignal.get_connections():
 		RemoveCallback(objectSignal, connection["callable"])
@@ -10,9 +17,9 @@ static func RemoveCallback(objectSignal : Signal, callback : Callable):
 	if objectSignal.is_connected(callback):
 		objectSignal.disconnect(callback)
 
-static func AddCallback(objectSignal : Signal, callback : Callable, args : Array):
+static func AddCallback(objectSignal : Signal, callback : Callable, args : Array, flags : int = 0):
 	var bundledCallback : Callable = callback.bind(args) if callback == Callback.ShootCallback else callback.bindv(args)
-	objectSignal.connect(bundledCallback)
+	objectSignal.connect(bundledCallback, flags)
 
 static func PlugCallback(objectSignal : Signal, callback : Callable, args : Array = []):
 	RemoveCallback(objectSignal, callback)
@@ -25,7 +32,7 @@ static func ShootCallback(args : Array):
 static func TriggerCallback(callback : Callable, args : Array = []):
 	if callback and callback is Callable and not callback.is_null() and callback.is_valid():
 		for argId in args.size():
-			if not is_instance_valid(args[argId]) and typeof(args[argId]) == TYPE_NIL:
+			if typeof(args[argId]) == TYPE_OBJECT and not is_instance_valid(args[argId]):
 				args[argId] = null
 		callback.callv(args)
 

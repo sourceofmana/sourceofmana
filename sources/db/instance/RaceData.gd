@@ -1,28 +1,32 @@
-extends Node
+extends Resource
 class_name RaceData
 
-@export var _name : String				= "Unknown"
-@export var _faces : PackedStringArray			= []
-@export var _bodies : PackedStringArray			= []
-@export var _skins : Dictionary[int, FileData]	= {}
+#
+@export var name : String						= "Unknown"
+@export var faces : Array[Texture2D]			= []
+@export var bodies : Array[Texture2D]			= []
+@export var skins : Dictionary[String, Material]	= {}
 
-func _init():
-	_faces.resize(ActorCommons.Gender.COUNT)
-	_bodies.resize(ActorCommons.Gender.COUNT)
+#
+func GetSkinMaterial(skintone : int) -> Material:
+	for skinName in skins:
+		if skinName.hash() == skintone:
+			return skins[skinName]
+	return null
 
-static func Create(key : String, result : Dictionary) -> RaceData:
-	var data : RaceData = RaceData.new()
-	data._name = key
-	if "Bodies" in result and result.Bodies is Dictionary:
-		for gender in ActorCommons.Gender.COUNT:
-			data._bodies[gender] = result.Bodies.get(ActorCommons.GetGenderName(gender), "")
-	if "Faces" in result and result.Faces is Dictionary:
-		for gender in ActorCommons.Gender.COUNT:
-			data._faces[gender] = result.Faces.get(ActorCommons.GetGenderName(gender), "")
-	if "Skins" in result and result.Skins is Dictionary:
-		for skin in result.Skins.keys():
-			var skinId : int = DB.GetCellHash(skin) if DB.HasCellHash(skin) else DB.SetCellHash(skin)
-			var paletteId : int = DB.GetCellHash(result.Skins[skin])
-			data._skins[skinId] = DB.GetPalette(DB.Palette.SKIN, paletteId)
+func HasSkin(skintone : int) -> bool:
+	for skinName in skins:
+		if skinName.hash() == skintone:
+			return true
+	return false
 
-	return data
+func StripServer():
+	pass
+
+func StripClient():
+	faces = []
+	bodies = []
+	var strippedSkins : Dictionary[String, Material] = {}
+	for key in skins:
+		strippedSkins[key] = null
+	skins = strippedSkins

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c76jtak0f0bv2"]
+
+[ext_resource type="PackedScene" uid="uid://cnpafioewxbag" path="res://presets/entities/sprites/Static.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://df8r1aq3r2jbw" path="res://presets/entities/sprites/QuestHighlight.tscn" id="2_glow"]
+
+[node name="Chest" unique_id=472147459 instance=ExtResource("1_base")]
+
+[node name="QuestHighlight" parent="." index="2" unique_id=614235319 instance=ExtResource("2_glow")]
+position = Vector2(0, -10)

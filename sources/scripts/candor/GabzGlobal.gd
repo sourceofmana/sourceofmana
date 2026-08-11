@@ -12,46 +12,78 @@ const maxWave : int					= 10
 const spawnCenter : Vector2i		= Vector2i(54 * 32, 67 * 32)
 const spawnRadius : Vector2i		= Vector2i(200, 200)
 const startFightDelay : float		= 10.0
+const warmUpTickDelay : float		= 1.0
 
 # Local variables
 var waveTimer : Timer				= null
 var waveCount : int					= 0
 var originalPlayerCount : int		= 0
+var waveMaxMonsters : int			= 0
+var playerList : Array[PlayerAgent]	= []
+
 #
 func OnStart():
 	for mobID in DB.EntitiesDB:
 		var mob : EntityData = DB.EntitiesDB[mobID]
-		if !!(mob._behaviour & AICommons.Behaviour.AGGRESSIVE) and !(mob._behaviour & AICommons.Behaviour.IMMOBILE):
+		if !!(mob._behaviour & AICommons.Behaviour.AGGRESSIVE) and !(mob._behaviour & AICommons.Behaviour.IMMOBILE) and !mob._isBoss:
 			monstersPool.append(mob)
 
 func OnCancel():
 	ClearTimer(waveTimer)
+	ClearPlayerList()
 	Reset()
 	if IsTriggering():
 		Trigger()
+	ClearTracker()
 	KillMonsters()
-	var ownInstance : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
-	for player in ownInstance.players:
-		Callback.ClearOneShot(player.tree_exiting)
-		Callback.ClearOneShot(player.agent_killed)
 
 func OnTrigger():
 	AddTimer(npc, startFightDelay, StartFight)
+	TickWarmUp(0)
+
+func TickWarmUp(tick : int):
+	if not IsTriggering():
+		return
+	DisplayTracker("Warm Up", tick, int(startFightDelay), "s")
+	if tick < int(startFightDelay):
+		AddTimer(npc, warmUpTickDelay, TickWarmUp.bind(tick + 1), "WarmUpTimer")
 
 #
+func RemoveFromPlayerList(player : PlayerAgent):
+	var treeExitingCallback : Callable = RemoveFromPlayerList.bind(player)
+	if player.tree_exiting.is_connected(treeExitingCallback):
+		player.tree_exiting.disconnect(RemoveFromPlayerList.bind(player))
+	if player.agent_killed.is_connected(RemoveFromPlayerList):
+		player.agent_killed.disconnect(RemoveFromPlayerList)
+	playerList.erase(player)
+
+func ClearPlayerList():
+	for player in playerList:
+		RemoveFromPlayerList(player)
+	playerList.clear()
+
 func StartFight():
 	Reset()
-	originalPlayerCount = AlivePlayerCount()
+	var ownInstance : WorldInstance = WorldAgent.GetInstanceFromAgent(own)
+	if ownInstance:
+		for player : PlayerAgent in ownInstance.players:
+			if ActorCommons.IsAlive(player):
+				player.tree_exiting.connect(RemoveFromPlayerList.bind(player), ConnectFlags.CONNECT_ONE_SHOT)
+				player.agent_killed.connect(RemoveFromPlayerList, ConnectFlags.CONNECT_ONE_SHOT)
+				playerList.append(player)
+	originalPlayerCount = playerList.size()
 	waveTimer = AddTimer(npc, waveDelay, TimeoutWave)
 	NextWave()
 
 func NextWave():
 	waveCount += 1
-	Notification("Wave %d." % waveCount)
 	if waveCount > maxWave:
 		Reward()
 	else:
+		Notification("Wave %d." % waveCount)
 		SpawnMonsters()
+		waveMaxMonsters = AliveMonsterCount()
+		DisplayTracker("Monsters", 0, waveMaxMonsters)
 		waveTimer.start(waveDelay)
 		AddTimer(npc, checkDelay, CheckWave, "CheckTimer")
 
@@ -59,11 +91,15 @@ func Reset():
 	waveTimer = null
 	waveCount = 0
 	originalPlayerCount = 0
+	waveMaxMonsters = 0
 
 func Reward():
 	Notification("Congrats, you won")
-	AddExp(rewardExp)
-	AddGP(rewardGP)
+	ClearTracker()
+	for player : PlayerAgent in playerList:
+		NpcCommons.AddExp(player, rewardExp)
+		NpcCommons.AddGP(player, rewardGP)
+	ClearPlayerList()
 	Reset()
 	if IsTriggering():
 		Trigger()
@@ -90,10 +126,8 @@ func CheckWave():
 	else:
 		var mobCount : int = AliveMonsterCount()
 		if mobCount > 0:
-			if mobCount > 1:
-				Notification("%d kaore corrupted beings are still around." % mobCount)
-			else:
-				Notification("One kaore corrupted being left to kill.")
+			waveMaxMonsters = max(waveMaxMonsters, mobCount)
+			DisplayTracker("Monsters", waveMaxMonsters - mobCount, waveMaxMonsters)
 			AddTimer(npc, checkDelay, CheckWave, "CheckTimer")
 		else:
 			NextWave()

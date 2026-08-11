@@ -7,7 +7,11 @@ const SocialLink : String				= "https://discord.com/channels/581622549566193664/
 
 # Map
 static var DefaultStartMapID : int		= "Tulimshar".hash()
-const DefaultStartPos : Vector2			= Vector2(1824, 2208)
+const DefaultStartPos : Vector2i		= Vector2i(2176, 2560) # Tile (68, 80)
+const DefaultStartOffset : Vector2i		= Vector2i(64, 32)
+
+static func GetRandomStartPos() -> Vector2i:
+	return DefaultStartPos + Vector2i(randi_range(-DefaultStartOffset.x, DefaultStartOffset.x), randi_range(-DefaultStartOffset.y, DefaultStartOffset.y))
 
 # MapPool
 const EnableMapPool : bool				= false

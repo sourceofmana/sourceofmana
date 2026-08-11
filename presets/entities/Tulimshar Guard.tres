@@ -7,20 +7,18 @@
 [ext_resource type="Resource" uid="uid://b1kgjqcht72fg" path="res://presets/cells/items/feet/LeatherBoots.tres" id="4_cmdgh"]
 [ext_resource type="Resource" uid="uid://dw678a4b7ps2w" path="res://presets/cells/items/weapon/Scimitar.tres" id="5_fge4m"]
 [ext_resource type="Resource" uid="uid://b1fircprcri7h" path="res://presets/entities/WalkingNPC.tres" id="6_2ug6c"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="7_cmdgh"]
 
 [resource]
 script = ExtResource("2_b016p")
 _parent = ExtResource("6_2ug6c")
 _id = 3639315857
 _name = "Tulimshar Guard"
-_equipment = Array[ExtResource("1_rwjk6")]([ExtResource("2_f4e3t"), ExtResource("3_2ug6c"), ExtResource("4_cmdgh"), null, null, null, ExtResource("5_fge4m"), null])
 _stats = {
 "gender": "Female",
 "haircolor": "Light Violet",
 "hairstyle": "Imperial",
-"level": 1,
 "race": "Human",
 "skintone": "Dark"
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_rwjk6")]([ExtResource("2_f4e3t"), ExtResource("3_2ug6c"), ExtResource("4_cmdgh"), null, null, null, ExtResource("5_fge4m"), null])

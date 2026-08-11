@@ -1,22 +1,20 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://b0vpcakirhfx"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_yqrvc"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_0k1gy"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_xb367"]
+[ext_resource type="PackedScene" uid="uid://bd7dn71v6molq" path="res://presets/entities/sprites/Ship.tscn" id="spr_Ship"]
 
 [resource]
 script = ExtResource("2_xb367")
 _id = 2089573209
 _name = "Ship"
-_spritePreset = "Ship"
-_collision = "Medium"
+_spritePreset = ExtResource("spr_Ship")
 _radius = 16
-_equipment = Array[ExtResource("1_yqrvc")]([null, null, null, null, null, null, null, null])
-_behaviour = 0
 _stats = {
 "attack": 0.0,
 "defense": 0.0,
-"level": 1,
 "walkSpeed": 20.0
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_yqrvc")]([null, null, null, null, null, null, null, null])
+_behaviour = 0

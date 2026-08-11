@@ -1,20 +1,20 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://csg7jts46j2ng"]
 
+[ext_resource type="Texture2D" uid="uid://d073x7fif3tmr" path="res://data/graphics/sprites/npcs/chest-large.png" id="1_8noqe"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_wugrw"]
-[ext_resource type="Resource" uid="uid://dtsaakmisw7n5" path="res://presets/entities/StaticObject.tres" id="2_qiwmn"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_ydrke"]
+[ext_resource type="Resource" uid="uid://bnaqbs0np0lkj" path="res://presets/entities/Chest.tres" id="3_dyg1f"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_qiwmn"]
+[ext_resource type="Resource" uid="uid://c8e5pivwwoiy8" path="res://presets/quests/SnakePitThief.tres" id="quest"]
 
 [resource]
 script = ExtResource("2_ydrke")
-_parent = ExtResource("2_qiwmn")
+_parent = ExtResource("3_dyg1f")
 _id = 970294591
 _name = "Thiefs Chest"
-_spritePreset = "Chest"
-_collision = "Large"
 _radius = 26
+_stats = {}
 _equipment = Array[ExtResource("1_wugrw")]([null, null, null, null, null, null, null, null])
-_stats = {
-"level": 1
-}
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_customTexture = ExtResource("1_8noqe")
+_quest = ExtResource("quest")
+_questState = 32

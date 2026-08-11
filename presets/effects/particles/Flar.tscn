@@ -34,5 +34,4 @@ process_material = SubResource("ParticleProcessMaterial_l54cu")
 script = ExtResource("2_ggro7")
 
 [node name="LightSource" parent="." unique_id=18114294 instance=ExtResource("2_dg8t3")]
-position = Vector2(0, 0)
 radius = 96

@@ -1,4 +1,5 @@
 extends Node
+class_name MapPool
 
 #
 var pool : Dictionary[int, Node2D]		= {}
@@ -24,10 +25,8 @@ func FreeMap(mapID : int):
 #
 func RefreshPool():
 	var adjacentMaps : Array[int] = []
-	if Launcher.Map.currentMapNode.has_node("Object"):
-		for object in Launcher.Map.currentMapNode.get_node("Object").get_children():
-			if object is WarpObject:
-				adjacentMaps.append(object.destinationID)
+	if Launcher.Map.currentMapNode.has_meta("AdjacentMapIDs"):
+		adjacentMaps.assign(Launcher.Map.currentMapNode.get_meta("AdjacentMapIDs"))
 
 	for mapID in adjacentMaps:
 		if mapID not in pool:

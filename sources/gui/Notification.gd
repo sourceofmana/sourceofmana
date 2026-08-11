@@ -11,10 +11,19 @@ const HALF_WIDTH : float = 250.0
 var tween : Tween = null
 
 #
+func _get_minimum_size() -> Vector2:
+	if label == null:
+		return Vector2.ZERO
+	return Vector2(HALF_WIDTH * 2.0, label.get_minimum_size().y)
+
+#
 func AddNotification(notif : String, delay : float = 5.0):
-	ClearNotification()
 	if notif.length() > 0 and delay > 0.0:
+		if not timer.is_stopped():
+			timer.stop()
+		show()
 		label.text = "[center]%s[/center]" % notif
+		update_minimum_size()
 		timer.start(delay)
 		Animate(1.0, openSpeed)
 
@@ -37,6 +46,8 @@ func Animate(target : float, speed : float) -> void:
 			clip.offset_right = v,
 		current_half, target_half, duration
 	)
+	if target == 0.0:
+		tween.tween_callback(hide)
 
 #
 func _on_timer_timeout():

@@ -1,9 +1,9 @@
 extends Control
+class_name MenuIndicator
 
 #
 @onready var content : Control				= $MenuContent
 @onready var items : Control				= $MenuContent/HBoxItems
-@onready var button : Button				= $MenuButton
 
 #
 const MENU_SPEED : float					= 1.1
@@ -33,25 +33,54 @@ func UpdateIconsVisibility(progress : float, thresholds : Array[float]):
 	var children : Array[Node] = items.get_children()
 	for i in children.size():
 		var child : Node = children[i]
-		if child is Button:
+		if child is WindowButton:
 			child.set_visible(progress >= thresholds[i])
 
 #
-func _on_button_pressed():
-	is_opening = !is_opening
+func Close():
+	if not is_opening:
+		return
+	is_opening = false
 
 	if tween:
 		tween.kill()
 
 	var progress : float = content.material.get_shader_parameter("progress")
-	var target : float = 1.0 if is_opening else 0.0
-	var duration : float = absf(target - progress) / MENU_SPEED
+	var duration : float = progress / MENU_SPEED
 	var thresholds : Array[float] = SetupThresholds()
 
+	tween = create_tween()
+	tween.tween_method(
+		func(v : float):
+			content.material.set_shader_parameter("progress", v)
+			UpdateIconsVisibility(v, thresholds),
+		progress, 0.0, duration
+	)
+	tween.tween_callback(func():
+		items.set_visible(false)
+	)
+
+func _on_button_pressed():
+	if not FSM.IsGameState():
+		Launcher.GUI.ToggleControl(Launcher.GUI.settingsWindow)
+		return
+
 	if is_opening:
-		for icon in items.get_children():
-			icon.set_visible(false)
-		items.set_visible(true)
+		Close()
+		return
+
+	is_opening = true
+
+	if tween:
+		tween.kill()
+
+	var progress : float = content.material.get_shader_parameter("progress")
+	var duration : float = absf(1.0 - progress) / MENU_SPEED
+	var thresholds : Array[float] = SetupThresholds()
+
+	for icon in items.get_children():
+		icon.set_visible(false)
+	items.set_visible(true)
 
 	UpdateIconsVisibility(progress, thresholds)
 
@@ -60,13 +89,8 @@ func _on_button_pressed():
 		func(v : float):
 			content.material.set_shader_parameter("progress", v)
 			UpdateIconsVisibility(v, thresholds),
-		progress, target, duration
+		progress, 1.0, duration
 	)
-	if not is_opening:
-		tween.tween_callback(func():
-			items.set_visible(false)
-			SetItemsVisible(false)
-		)
 
 #
 func _ready():

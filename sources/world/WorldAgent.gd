@@ -52,7 +52,10 @@ static func PopAgent(agent : BaseAgent):
 				inst.players.erase(agent)
 				agent.visibleAgents.clear()
 				if inst.players.is_empty():
-					inst.QueryProcessMode()
+					if inst.id != 0 and inst.map:
+						inst.map.DestroyInstance.call_deferred(inst.id)
+					else:
+						inst.QueryProcessMode()
 				else:
 					var agentRID : int = agent.get_rid().get_id()
 					for neighbour in inst.players:
@@ -67,7 +70,7 @@ static func PopAgent(agent : BaseAgent):
 
 static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 	assert(agent != null, "Agent is null, can't push it")
-	assert(inst != null, "Instance is null, can't push the agent in it")		
+	assert(inst != null, "Instance is null, can't push the agent in it")
 	if agent and inst:
 		agent.set_physics_process(true)
 		if agent is PlayerAgent:
@@ -83,16 +86,20 @@ static func PushAgent(agent : BaseAgent, inst : WorldInstance):
 		RemoveAgent(agent)
 
 static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : String = "") -> BaseAgent:
+	if not spawn or not spawn.map:
+		return null
+
 	var agent : BaseAgent = null
 	var data : EntityData = DB.EntitiesDB.get(spawn.id, null)
 	if not data:
 		return null
 
-	# Fallback to the spawn_position if the spawn area is less or equal to one pixel squared
-	var position : Vector2 = spawn.spawn_position
-	if spawn.spawn_offset.length_squared() > 2.0:
-		position = WorldNavigation.GetSpawnPosition(spawn.map, spawn)
-	if Vector2i(position) == Vector2i.ZERO:
+	var inst : WorldInstance = spawn.map.instances.get(instanceID, null)
+	if not inst:
+		return null
+
+	var position : Vector2i = WorldNavigation.GetSpawnPosition(inst, spawn)
+	if position == Vector2i.ZERO:
 		return null
 
 	agent = Instantiate.CreateAgent(spawn, data, spawn.nick if nickname.length() == 0 else nickname)
@@ -100,11 +107,12 @@ static func CreateAgent(spawn : SpawnObject, instanceID : int = 0, nickname : St
 		return null
 
 	AddAgent(agent)
-	Launcher.World.Warp(agent, spawn.map, position, instanceID)
+	Launcher.World.Warp(agent, spawn.map, position, ActorCommons.Direction.UNKNOWN, instanceID)
 	return agent
 
 static func _post_launch():
 	defaultSpawnLocation.map				= Launcher.World.GetMap(LauncherCommons.DefaultStartMapID)
 	defaultSpawnLocation.spawn_position		= LauncherCommons.DefaultStartPos
-	defaultSpawnLocation.type				= "Player"
+	defaultSpawnLocation.spawn_offset		= LauncherCommons.DefaultStartOffset
+	defaultSpawnLocation.type				= ActorCommons.Type.PLAYER
 	defaultSpawnLocation.id					= DB.PlayerHash

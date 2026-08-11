@@ -2,19 +2,40 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_5l8kn"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_gol0b"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_l1oii"]
+[ext_resource type="Texture2D" uid="uid://iuxvqgqph18p" path="res://data/graphics/sprites/monsters/maggot-giant.png" id="3_tex"]
+[ext_resource type="AudioStream" uid="uid://hxejvtfj74bd" path="res://data/sounds/entities/maggot/attack.ogg" id="5_p8r1a"]
+[ext_resource type="Resource" uid="uid://dk7g8mcw6vlsf" path="res://presets/entities/Maggot.tres" id="6_krnjv"]
+[ext_resource type="AudioStream" uid="uid://dnjxafax7stqw" path="res://data/sounds/entities/maggot/death.ogg" id="6_p554w"]
+[ext_resource type="Resource" uid="uid://vd0l1vl1beon" path="res://presets/cells/items/common/MaggotSlime.tres" id="7_slime"]
+[ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
 script = ExtResource("2_gol0b")
 _id = 2624609623
 _name = "Giant Maggot"
-_spritePreset = "Generic4Directions"
-_collision = "Large"
+_spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 25
-_equipment = Array[ExtResource("1_5l8kn")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/maggot-giant.png"
 _stats = {
-"level": 1,
-"walkSpeed": 80.0
+"attack": 54,
+"baseExp": 35,
+"castAttackDelay": 1.1,
+"cooldownAttackDelay": 1.2,
+"defense": 20,
+"level": 15,
+"maxHealth": 370,
+"walkSpeed": 50.0
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_5l8kn")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("3_tex")
+_behaviour = 98
+_drops = Dictionary[ExtResource("1_5l8kn"), float]({
+ExtResource("7_slime"): 0.6
+})
+_spawns = Dictionary[ExtResource("2_gol0b"), int]({
+ExtResource("6_krnjv"): 4
+})
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("5_p8r1a"),
+4: ExtResource("6_p554w")
+})

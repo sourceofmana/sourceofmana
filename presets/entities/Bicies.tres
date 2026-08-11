@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_sc3qd"]
 [ext_resource type="Resource" uid="uid://c848176yw5pfc" path="res://presets/cells/items/legs/Trousers.tres" id="3_7hws1"]
 [ext_resource type="Resource" uid="uid://b1fircprcri7h" path="res://presets/entities/WalkingNPC.tres" id="4_7hws1"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="5_8cgpc"]
 
 [resource]
 script = ExtResource("2_sc3qd")
@@ -15,10 +16,7 @@ _stats = {
 "gender": "Male",
 "haircolor": "Dark Brown",
 "hairstyle": "Center Parting",
-"level": 1,
 "race": "Human",
 "skintone": "Dark"
 }
 _equipment = Array[ExtResource("1_hd3nl")]([ExtResource("2_8x1jr"), ExtResource("3_7hws1"), null, null, null, null, null, null])
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()

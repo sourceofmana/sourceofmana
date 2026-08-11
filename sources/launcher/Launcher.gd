@@ -16,12 +16,14 @@ var Map : ServiceBase				= null
 var World : ServiceBase				= null
 var SQL : ServiceBase				= null
 var Discord : ServiceBase			= null
+var Email : EmailService			= null
 
 # Accessors
 var Player : Entity					= null
 
 # Signals
 signal launchModeUpdated
+signal dbInitialized
 
 #
 func Mode(launchClient : bool = false, launchServer : bool = false) -> bool:
@@ -36,29 +38,32 @@ func Mode(launchClient : bool = false, launchServer : bool = false) -> bool:
 	if launchServer:	Server()
 	Network.Mode(launchClient, launchServer)
 
+	DB.Init()
 	_post_launch()
 	launchModeUpdated.emit(launchClient, launchServer)
 	return true
 
 func Client():
 	if OS.is_debug_build():
-		Debug		= FileSystem.LoadSource("debug/Debug.gd")
+		Debug		= DebugService.new()
 
 	# Load then low-prio services on which the order is not important
-	Action			= FileSystem.LoadSource("input/Action.gd", "Action")
-	Camera			= FileSystem.LoadSource("camera/Camera.gd")
-	Map				= FileSystem.LoadSource("map/Map.gd")
+	Action			= ActionService.new()
+	Camera			= CameraService.new()
+	Map				= MapService.new()
 
 	add_child.call_deferred(Action)
 
 func Server():
-	World			= FileSystem.LoadSource("world/World.gd", "World")
-	SQL				= FileSystem.LoadSource("sql/SQL.gd", "SQL")
-	Discord			= FileSystem.LoadSource("discord/Discord.gd", "Discord")
+	World			= WorldService.new()
+	SQL				= SQLService.new()
+	Discord			= DiscordService.new()
+	Email			= EmailService.new()
 
 	add_child.call_deferred(World)
 	add_child.call_deferred(SQL)
 	add_child.call_deferred(Discord)
+	add_child.call_deferred(Email)
 
 func Reset(clientStarted : bool, serverStarted : bool):
 	if not clientStarted:
@@ -111,13 +116,16 @@ func Reset(clientStarted : bool, serverStarted : bool):
 			Discord.Destroy()
 			Discord.queue_free()
 			Discord = null
+		if Email:
+			Email.queue_free()
+			Email = null
 
 func Quit():
 	Reset(false, false)
 	Network.Destroy()
 	Root.remove_child(Scene)
 	Scene.free()
-	Network.free()
+	Network.queue_free()
 	get_tree().quit()
 
 #
@@ -139,14 +147,13 @@ func _ready():
 		GUI = Scene.get_node("Canvas")
 		Audio = Scene.get_node("Audio")
 		startClient = true
-		startServer = not LauncherCommons.isWeb and OS.is_debug_build()
+		startServer = not LauncherCommons.isWeb and OS.is_debug_build() and not NetworkCommons.IsLocal
 	Conf.Init()
 
 	if not Root or not Scene:
 		printerr("Could not initialize source's base services")
 		Quit()
 
-	DB.Init()
 	Mode(startClient, startServer)
 	await Scene.ready
 

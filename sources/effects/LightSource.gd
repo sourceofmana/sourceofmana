@@ -13,11 +13,13 @@ var currentRadius : int = 128
 
 #
 func _ready():
-	add_to_group("lights")
 	if Effects.lightLayer:
 		radius = int(radius * (1 - Effects.lightLayer.intensity) * (2.5 + Effects.lightLayer.intensity))
-		Effects.lightLayer.RegisterLight(self)
 	currentRadius = int(radius * rescale)
+
+func _enter_tree():
+	if Effects.lightLayer:
+		Effects.lightLayer.RegisterLight(self)
 
 func _exit_tree():
 	if Effects.lightLayer:

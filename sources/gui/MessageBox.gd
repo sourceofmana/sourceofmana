@@ -18,22 +18,18 @@ func Display(text : String, primary = null, primaryText : String = "", cancel = 
 	if secondary and secondary is Callable:		buttonBox.Bind(UICommons.ButtonBox.SECONDARY, secondaryText, Call.bind(secondary))
 	if tertiary and tertiary is Callable:		buttonBox.Bind(UICommons.ButtonBox.TERTIARY, tertiaryText, Call.bind(tertiary))
 	set_visible(true)
+	buttonBox.TrapFocus()
+	buttonBox.Focus.call_deferred(UICommons.ButtonBox.PRIMARY)
 
 func Clear():
 	if  wasActionEnabled:
 		Launcher.Action.Enable(true)
 
 	set_visible(false)
+	buttonBox.ReleaseFocus()
 	buttonBox.ClearAll()
 	label.set_text("")
 
 func Call(callback : Callable):
 	Clear()
 	callback.call()
-
-#
-func _unhandled_input(event : InputEvent):
-	if not visible or Launcher.Action.IsEnabled():
-		return
-
-	buttonBox.HandleInput(event)

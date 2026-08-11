@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cjgijbfxixe67"]
 
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_yu4hf"]
 [ext_resource type="Script" uid="uid://bfuwxwu1j6l6d" path="res://sources/gui/Login.gd" id="2_2pjk7"]
 [ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="3_6esv8"]
 [ext_resource type="JSON" path="res://data/db/agreement.json" id="3_kh3en"]
@@ -16,6 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("1_yu4hf")
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -101,6 +103,33 @@ caret_blink = true
 caret_blink_interval = 0.5
 secret = true
 
+[node name="ConfirmPassword" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=1781570789]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword" unique_id=2061717808]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Confirm Password"
+vertical_alignment = 1
+
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword" unique_id=5731306]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container" unique_id=2107626192]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 1
+max_length = 255
+clear_button_enabled = true
+select_all_on_focus = true
+caret_blink = true
+caret_blink_interval = 0.5
+secret = true
+
 [node name="Email" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=768420053]
 layout_mode = 2
 
@@ -128,9 +157,43 @@ select_all_on_focus = true
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="OnlineIndicator" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=608763401]
+[node name="Code" type="VBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=1048370893]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code" unique_id=1389644927]
 layout_mode = 2
 size_flags_vertical = 0
+text = "Reset Code"
+vertical_alignment = 1
+
+[node name="Container" type="PanelContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code" unique_id=298921391]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container" unique_id=136911564]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 1
+placeholder_text = "000000"
+max_length = 6
+clear_button_enabled = true
+caret_blink = true
+caret_blink_interval = 0.5
+
+[node name="IndicatorRow" type="HBoxContainer" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer" unique_id=1665552271]
+layout_mode = 2
+
+[node name="RememberMe" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow" unique_id=608763400]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Remember me"
+
+[node name="OnlineIndicator" type="CheckBox" parent="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow" unique_id=608763401]
+layout_mode = 2
+size_flags_horizontal = 10
 theme_type_variation = &"PearlBox"
 disabled = true
 
@@ -166,7 +229,15 @@ size_flags_horizontal = 3
 [connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text" to="." method="_on_text_submitted"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_focus_exited"]
+[connection signal="text_changed" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_password_text_changed"]
 [connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text" to="." method="_on_text_submitted"]
+[connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text" to="." method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text" to="." method="_on_text_submitted"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_focus_exited"]
 [connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text" to="." method="_on_text_submitted"]
+[connection signal="focus_entered" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text" to="." method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text" to="." method="_on_text_submitted"]
+[connection signal="toggled" from="HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/RememberMe" to="." method="_on_remember_me_toggled"]

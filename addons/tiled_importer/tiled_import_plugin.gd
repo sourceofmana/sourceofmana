@@ -26,36 +26,37 @@ extends EditorImportPlugin
 
 enum { PRESET_DEFAULT, PRESET_PIXEL_ART }
 
-func _get_importer_name():
+func _get_importer_name() -> String:
 	return "vnen.tiled_importer"
 
-func _get_visible_name():
+func _get_visible_name() -> String:
 	return "Scene from Tiled"
 
-func _get_recognized_extensions():
+func _get_recognized_extensions() -> PackedStringArray:
 	return ["tmx"]
 
-func _get_save_extension():
+func _get_save_extension() -> String:
 	return "scn"
 
-func _get_priority():
-	return 1
+func _get_priority() -> float:
+	return 1.0
 
-func _get_import_order():
+func _get_import_order() -> int:
 	return 100
 
-func _get_resource_type():
+func _get_resource_type() -> String:
 	return "PackedScene"
 
-func _get_preset_count():
+func _get_preset_count() -> int:
 	return 2
 
-func _get_preset_name(preset):
+func _get_preset_name(preset) -> String:
 	match preset:
 		PRESET_DEFAULT: return "Default"
 		PRESET_PIXEL_ART: return "Pixel Art"
+	return ""
 
-func _get_import_options(path, preset):
+func _get_import_options(path, preset) -> Array[Dictionary]:
 	return [
 		{
 			"name": "custom_properties",
@@ -96,17 +97,17 @@ func _get_import_options(path, preset):
 		}
 	]
 
-func _get_option_visibility(path, option, options):
+func _get_option_visibility(path, option, options) -> bool:
 	return true
 
-func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
+func _import(source_file, save_path, options, r_platform_variants, r_gen_files) -> Error:
 	# Offset is only optional for importing TileSets
 	options.apply_offset = true
-	var saveRet = OK
+	var saveRet : Error = OK
 	var mapReader = TiledMapReader.new()
 
 	var client_scene : Node2D = mapReader.build_client(source_file, options)
-	var server_resource : Resource = mapReader.build_server()
+	var server_resource : MapServerData = mapReader.build_server()
 	var nav_region : NavigationRegion2D = mapReader.build_navigation(options)
 
 	# Import file when opening the .tmx file
@@ -121,9 +122,9 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 			global_scene.add_child(dup_nav_region)
 			dup_nav_region.set_owner(global_scene)
 
-		var packed_scene = PackedScene.new()
+		var packed_scene : PackedScene = PackedScene.new()
 		packed_scene.pack(global_scene)
-		saveRet &= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()])
+		saveRet |= ResourceSaver.save(packed_scene, "%s.%s" % [save_path, _get_save_extension()])
 
 	var file_map_hierarchy : String = source_file.get_slice(Path.MapRsc, 1).get_base_dir() + "/" + mapReader.map_name
 
@@ -132,9 +133,10 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 		var file_path : String = Path.MapNavPst + file_map_hierarchy + Path.RscExt
 		if not DirAccess.open(file_path):
 			FileSystem.CreateRecursiveDirectory(file_path.get_base_dir())
-		saveRet &= ResourceSaver.save(nav_region.navigation_polygon, file_path)
+		saveRet |= ResourceSaver.save(nav_region.navigation_polygon, file_path, ResourceSaver.FLAG_CHANGE_PATH)
 
 	# Client Data import (TileMap and warp locations)
+	var layers_scene : PackedScene = null
 	if client_scene:
 		# Hide unused data from the client
 		for child in client_scene.get_children():
@@ -144,20 +146,41 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 				child.set_navigation_enabled(false)
 				if child.get_name() == "Collision":
 					client_scene.remove_child(child)
-		var packed_scene = PackedScene.new()
-		packed_scene.pack(client_scene)
+		layers_scene = PackedScene.new()
+		layers_scene.pack(client_scene)
 
 		var file_path : String = Path.MapLayerPst + file_map_hierarchy + Path.SceneExt
 		if not DirAccess.open(file_path):
 			DirAccess.make_dir_recursive_absolute(file_path.get_base_dir())
-		saveRet &= ResourceSaver.save(packed_scene, file_path)
+		saveRet |= ResourceSaver.save(layers_scene, file_path, ResourceSaver.FLAG_CHANGE_PATH)
 
 	# Server Data import (Spawn and warp locations)
 	if server_resource:
-		var file_path : String = Path.MapDataPst + file_map_hierarchy + Path.RscExt
+		var file_path : String = Path.MapServerPst + file_map_hierarchy + Path.RscExt
 		if not DirAccess.open(file_path):
 			DirAccess.make_dir_recursive_absolute(file_path.get_base_dir())
-		saveRet &= ResourceSaver.save(server_resource, file_path)
+		saveRet |= ResourceSaver.save(server_resource, file_path, ResourceSaver.FLAG_CHANGE_PATH)
+
+	# Map Data, store paths for heavy resources to avoid loading them at startup
+	var map_data : MapData = MapData.new()
+	map_data._name = mapReader.map_name
+
+	if server_resource:
+		map_data.serverData = ResourceLoader.load(Path.MapServerPst + file_map_hierarchy + Path.RscExt) as MapServerData
+	if layers_scene:
+		map_data.layersPath = Path.MapLayerPst + file_map_hierarchy + Path.SceneExt
+	if nav_region:
+		map_data.navigation = ResourceLoader.load(Path.MapNavPst + file_map_hierarchy + Path.RscExt) as NavigationPolygon
+
+	var minimap_path : String = Path.MinimapRsc + file_map_hierarchy + Path.GfxExt
+	if ResourceLoader.exists(minimap_path):
+		map_data.minimapPath = minimap_path
+
+	var map_data_file_path : String = Path.MapDataPst + file_map_hierarchy + Path.RscExt
+	if not DirAccess.dir_exists_absolute(map_data_file_path.get_base_dir()):
+		DirAccess.make_dir_recursive_absolute(map_data_file_path.get_base_dir())
+
+	saveRet |= ResourceSaver.save(map_data, map_data_file_path)
 
 	Util.PrintLog("Tiled", "Importing resource: " + source_file)
 

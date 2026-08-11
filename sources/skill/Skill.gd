@@ -23,14 +23,18 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	if map and map.HasFlags(WorldMap.Flags.NO_SPELL):
 		return
 
+	if SkillCommons.IsInstantAbility(skill):
+		CastAbility(agent, skill)
+		return
+
 	if SkillCommons.TryConsume(agent, CellCommons.Modifier.Mana, skill):
 		Stopped(agent)
 		agent.SetSkillCastID(skill.id)
-		Callback.StartTimer(agent.actionTimer, skill.castTime + agent.stat.current.castAttackDelay, Skill.Attack.bind(agent, target, skill), true)
+		Callback.StartTimer(agent.actionTimer, skill.castTime + agent.stat.current.castAttackDelay, Skill.Process.bind(agent, target, skill), true)
 		if skill.mode == TargetMode.SINGLE:
 			agent.LookAt(target)
 
-static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
+static func Process(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	if ActorCommons.IsAlive(agent) and SkillCommons.IsCasting(agent) and SkillCommons.HasSkill(agent, skill):
 		var hasStamina : bool = SkillCommons.TryConsume(agent, CellCommons.Modifier.Stamina, skill)
 
@@ -49,7 +53,7 @@ static func Attack(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 					Casted(agent, target, skill)
 					return
 				if SkillCommons.IsInteractable(agent, target):
-					ThrowProjectile(agent, agent.position + agent.currentOrientation * Vector2(skill.cellRange, skill.cellRange), skill)
+					ThrowProjectile(agent, agent.position + agent.currentOrientation * Vector2(skill.skillRange, skill.skillRange), skill)
 			TargetMode.ZONE:
 				var handle : Callable = Skill.HandleZone.bind(agent, agent.get_position(), skill, SkillCommons.GetRNG(hasStamina))
 				if SkillCommons.IsDelayed(skill):
@@ -75,10 +79,13 @@ static func HandleZone(agent : BaseAgent, zonePos : Vector2, skill : SkillCell, 
 		Handle(agent, target, skill, scaledRNG)
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
-	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
-		Damaged(agent, target, skill, rng)
-	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
-		Healed(agent, target, skill, rng)
+	if skill.category == SkillCell.Category.ABILITY:
+		CastAbility(agent, skill)
+	else:
+		if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
+			Damaged(agent, target, skill, rng)
+		if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
+			Healed(agent, target, skill, rng)
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
@@ -86,11 +93,11 @@ static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	agent.SetSkillCastID(DB.UnknownHash)
 	var timeLeft : float = SkillCommons.GetCooldown(agent, skill)
 	Callback.SelfDestructTimer(agent, timeLeft, CooledDown, [agent, target, skill], skill.name + " CoolDown")
-	Network.NotifyNeighbours(target, "Casted", [skill.id, timeLeft])
+	Network.NotifyNeighbours(agent, "Casted", [agent.get_rid().get_id(), skill.id, timeLeft])
 
 static func CooledDown(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	agent.cooldownTimers[skill.id] = false
-	if skill.repeat and ActorCommons.IsAlive(target):
+	if skill.repeat and ActorCommons.IsAlive(target) and not SkillCommons.HasAnyActionInProgress(agent):
 		Skill.Cast(agent, target, skill)
 
 static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
@@ -101,15 +108,17 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rn
 	# Re-calculate the clamp as AI.Refresh may have triggered the health regen
 	info.value = clampi(info.value, 0, target.stat.health)
 	target.stat.SetHealth(-info.value)
-	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), info.value, info.type, skill.id], true, true)
+	target.agent_damaged.emit(target, info.value)
+	Network.NotifyNeighbours(agent, "TargetAlteration", [agent.get_rid().get_id(), target.get_rid().get_id(), info.value, info.type, skill.id, true], true, true)
 
 static func Healed(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	var heal : int = SkillCommons.GetHeal(agent, target, skill, rng)
 	target.stat.SetHealth(heal)
-	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), heal, ActorCommons.Alteration.HEAL, skill.id], true, true)
+	target.agent_healed.emit(target, heal)
+	Network.NotifyNeighbours(agent, "TargetAlteration", [agent.get_rid().get_id(), target.get_rid().get_id(), heal, ActorCommons.Alteration.HEAL, skill.id, true], true, true)
 
 static func Stopped(agent : BaseAgent):
-	if SkillCommons.HasActionInProgress(agent):
+	if SkillCommons.HasAnyActionInProgress(agent):
 		agent.SetSkillCastID(DB.UnknownHash)
 		Callback.ClearTimer(agent.actionTimer)
 		if agent is AIAgent:
@@ -118,8 +127,16 @@ static func Stopped(agent : BaseAgent):
 static func Missed(agent : BaseAgent, target : BaseAgent):
 	if target == null:
 		return
-	Network.NotifyNeighbours(agent, "TargetAlteration", [target.get_rid().get_id(), 0, ActorCommons.Alteration.MISS, DB.UnknownHash], true, true)
+	Network.NotifyNeighbours(agent, "TargetAlteration", [agent.get_rid().get_id(), target.get_rid().get_id(), 0, ActorCommons.Alteration.MISS, DB.UnknownHash, true], true, true)
 	Stopped(agent)
 
 static func ThrowProjectile(agent : BaseAgent, targetPos : Vector2, skill : SkillCell):
-	Network.NotifyNeighbours(agent, "ThrowProjectile", [targetPos, skill.id])
+	Network.NotifyNeighbours(agent, "ThrowProjectile", [agent.get_rid().get_id(), targetPos, skill.id])
+
+static func CastAbility(agent : BaseAgent, skill : SkillCell):
+	if not skill.cellScript:
+		return
+
+	var ability : CellScript = skill.cellScript.new()
+	if ability:
+		ability.Execute(agent)

@@ -11,6 +11,7 @@ class_name BaseCell
 @export var stackable : bool					= false
 @export var usable : bool						= false
 @export var modifiers : CellModifier			= null
+@export var cellScript : Script					= null
 
 signal used
 
@@ -29,6 +30,12 @@ func Use():
 				Launcher.Player.Cast(id)
 			_:
 				assert(false, "Cell type not recognized")
+
+func StripClient():
+	icon = null
+
+func StripServer():
+	pass
 
 func Hover(_hovering : bool):
 	pass

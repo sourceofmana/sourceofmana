@@ -8,23 +8,22 @@
 [ext_resource type="Resource" uid="uid://cm42xtw8qw7i2" path="res://presets/cells/items/hands/GoldBracelets.tres" id="5_0cngs"]
 [ext_resource type="Resource" uid="uid://dixbmdwj253ee" path="res://presets/cells/items/head/TonoriCrown.tres" id="6_nym5j"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="7_ym3au"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="8_5kpg1"]
+[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="spr_Player"]
 
 [resource]
 script = ExtResource("2_iue6w")
 _parent = ExtResource("7_ym3au")
 _id = 3662818686
 _name = "Red Queen"
-_spritePreset = "Player"
-_equipment = Array[ExtResource("1_dgo6c")]([ExtResource("2_u2vba"), ExtResource("3_ym3au"), ExtResource("4_5kpg1"), ExtResource("5_0cngs"), ExtResource("6_nym5j"), null, null, null])
-_direction = 0
-_state = 2
+_spritePreset = ExtResource("spr_Player")
 _stats = {
 "gender": "Female",
 "haircolor": "Pure Platinum",
 "hairstyle": "Long and Curly",
-"level": 1,
 "race": "Kralog",
 "skintone": "Fire"
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_dgo6c")]([ExtResource("2_u2vba"), ExtResource("3_ym3au"), ExtResource("4_5kpg1"), ExtResource("5_0cngs"), ExtResource("6_nym5j"), null, null, null])
+_direction = 0
+_state = 2

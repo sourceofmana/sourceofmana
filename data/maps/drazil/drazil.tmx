@@ -1016,7 +1016,6 @@
   </object>
   <object id="5" name="Turtle" type="Spawn" x="2157" y="2654" width="320" height="800">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="3e+05"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1049,79 +1048,72 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="10" name="Little Blub" type="Spawn" x="1344" y="2368" width="192" height="128">
+  <object id="10" name="Sea Slime" type="Spawn" x="1344" y="2368" width="192" height="128">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="11" name="Little Blub" type="Spawn" x="1728" y="1728" width="480" height="704">
+  <object id="11" name="Sea Slime" type="Spawn" x="1728" y="1728" width="480" height="704">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="12" name="Little Blub" type="Spawn" x="1664" y="672" width="704" height="320">
+  <object id="12" name="Sea Slime" type="Spawn" x="1664" y="672" width="704" height="320">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="14" name="Little Blub" type="Spawn" x="2656" y="960" width="160" height="256">
+  <object id="14" name="Sea Slime" type="Spawn" x="2656" y="960" width="160" height="256">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="15" name="Little Blub" type="Spawn" x="2272" y="1568" width="928" height="640">
+  <object id="15" name="Sea Slime" type="Spawn" x="2272" y="1568" width="928" height="640">
    <properties>
     <property name="count" type="int" value="2"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="16" name="Little Blub" type="Spawn" x="1248" y="1770" width="608" height="416">
+  <object id="16" name="Sea Slime" type="Spawn" x="1248" y="1770" width="608" height="416">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="17" name="Little Blub" type="Spawn" x="800" y="1376" width="224" height="384">
+  <object id="17" name="Sea Slime" type="Spawn" x="800" y="1376" width="224" height="384">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="120000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="18" name="Plushroom Field" type="Spawn" x="1120" y="1568" width="64" height="96">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="150000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="19" name="Plushroom Field" type="Spawn" x="1728" y="3648" width="64" height="96">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="150000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="20" name="Plushroom Field" type="Spawn" x="1888" y="2496" width="320" height="192">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="150000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="21" name="Plushroom Field" type="Spawn" x="1728" y="1984" width="64" height="192">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="150000"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1135,7 +1127,6 @@
   </object>
   <object id="23" name="Plushroom Field" type="Spawn" x="2240" y="1952" width="128" height="96">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="150000"/>
     <property name="type" value="Monster"/>
    </properties>
@@ -1149,33 +1140,29 @@
   </object>
   <object id="25" name="Croc" type="Spawn" x="1696" y="896" width="672" height="224">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="3e+05"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="26" name="Croc" type="Spawn" x="2400" y="2146" width="128" height="96">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="3e+05"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="27" name="Croc" type="Spawn" x="1562" y="2298" width="320" height="1120">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="3e+05"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="28" name="Croc" type="Spawn" x="2157" y="2334" width="320" height="320">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="3e+05"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="31" name="Piou" type="Spawn" x="0" y="0">
+  <object id="31" name="Piou" type="Spawn" x="-24" y="16">
    <properties>
     <property name="count" type="int" value="4"/>
     <property name="respawn_delay" type="float" value="15000"/>
@@ -1184,83 +1171,73 @@
   </object>
   <object id="33" name="Crocotree" type="Spawn" x="2496" y="3680">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="35" name="Crocotree" type="Spawn" x="1824" y="3328">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="36" name="Crocotree" type="Spawn" x="1473" y="3492">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="37" name="Crocotree" type="Spawn" x="2157" y="2974">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="38" name="Crocotree" type="Spawn" x="1696" y="2464">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="39" name="Crocotree" type="Spawn" x="2048" y="2016">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="40" name="Crocotree" type="Spawn" x="992" y="2208">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="41" name="Crocotree" type="Spawn" x="1250" y="3591">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="42" name="Crocotree" type="Spawn" x="2240" y="1056">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="43" name="Crocotree" type="Spawn" x="2688" y="2112">
    <properties>
-    <property name="count" type="int" value="1"/>
     <property name="respawn_delay" type="float" value="240000"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="48" name="Sail" type="Port" x="2572.97" y="3379.64">
+  <object id="48" name="Sail" type="Warp" x="2572.97" y="3379.64">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_cellsize" type="int" value="16"/>
     <property name="dest_map" value="Overworld"/>
-    <property name="dest_pos_x" type="int" value="0"/>
-    <property name="dest_pos_y" type="int" value="0"/>
-    <property name="sail_pos_x" type="int" value="112"/>
-    <property name="sail_pos_y" type="int" value="137"/>
+    <property name="dest_pos_x" type="int" value="112"/>
+    <property name="dest_pos_y" type="int" value="137"/>
+    <property name="is_targetable" type="bool" value="true"/>
+    <property name="warp_script" value="generic/OverworldWarp.gd"/>
    </properties>
    <polygon points="83.034,92.3638 83.034,44.3347 146.906,44.3347 146.906,92.3638"/>
   </object>

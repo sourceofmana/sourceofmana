@@ -1,4 +1,5 @@
 extends ServiceBase
+class_name ActionService
 
 var disableCounter : int		= 0
 var isEnabled : bool			= true
@@ -13,8 +14,6 @@ signal deviceChanged
 
 #
 func Enable(enable : bool):
-	if enable:
-		pass
 	disableCounter = clampi(disableCounter + (1 if enable else -1), -256, 0)
 	isEnabled = disableCounter == 0
 
@@ -99,9 +98,12 @@ func MoveTo(pos : Vector2):
 
 func _unhandled_input(event):
 	if event.is_action("gp_click_to") and supportMouse:
-		if FSM.IsGameState() and clickTimer:
-			if clickTimer.is_stopped() and IsActionPressed("gp_click_to"):
-				MoveTo(Launcher.Camera.mainCamera.get_global_mouse_position())
+		if IsEnabled() and FSM.IsGameState() and clickTimer and Launcher.Player and IsActionPressed("gp_click_to"):
+			if Entities.hovered:
+				Entities.InteractHovered(Entities.hovered)
+			elif clickTimer.is_stopped():
+				Entities.ClearDelayedHoveredCallback()
+				MoveTo(Launcher.Camera.camera.get_global_mouse_position())
 	elif not HasConsumed() and Launcher.Camera:
 		if event is InputEventMagnifyGesture:
 			if event.factor > 1.0:
@@ -118,6 +120,7 @@ func _physics_process(_deltaTime : float):
 	if Launcher.Player:
 		var move : Vector2 = GetMove()
 		if move != Vector2.ZERO:
+			Entities.ClearDelayedHoveredCallback()
 			if clickTimer.get_time_left() > 0:
 				clickTimer.stop()
 			if previousMove != move:
@@ -153,14 +156,14 @@ func _input(event : InputEvent):
 		elif TryJustPressed(event, "smile_16"):			Network.TriggerEmote(DB.GetCellHash("Surprised"))
 		elif TryJustPressed(event, "smile_17"):			Network.TriggerEmote(DB.GetCellHash("Confused"))
 		elif TryJustPressed(event, "gp_sit"):			Network.TriggerSit()
-		elif TryJustPressed(event, "gp_target"):		Launcher.Player.Target(Launcher.Player.position, true, true)
-		elif TryJustPressed(event, "gp_untarget"):		Launcher.Player.ClearTarget()
-		elif TryJustPressed(event, "gp_interact"):		Launcher.Player.JustInteract()
-		elif TryPressed(event, "gp_interact"):			Launcher.Player.Interact()
+		elif TryJustPressed(event, "gp_target"):		Entities.Target(Launcher.Player.position, true, true)
+		elif TryJustPressed(event, "gp_untarget"):		Entities.ClearTarget()
+		elif TryJustPressed(event, "gp_interact"):		Entities.JustInteract()
+		elif TryPressed(event, "gp_interact"):			Entities.Interact()
 		elif TryJustPressed(event, "gp_pickup"):		Launcher.Map.PickupNearestDrop()
-		elif TryJustPressed(event, "gp_morph"):			Network.TriggerMorph()
-		elif TryJustPressed(event, "gp_run"):			Network.TriggerRun(true)
-		elif TryJustReleased(event, "gp_run"):			Network.TriggerRun(false)
+		elif TryJustPressed(event, "gp_morph"):			Network.TriggerSkill(DB.UnknownHash, DB.GetCellHash("Morph"))
+		elif TryJustPressed(event, "gp_run"):			Launcher.Player.Run(true)
+		elif TryJustReleased(event, "gp_run"):			Launcher.Player.Run(false)
 	if not HasConsumed() and Launcher.GUI:
 		if TryJustPressed(event, "ui_close"):			Launcher.GUI.CloseWindow()
 		elif TryJustPressed(event, "ui_close", true):	Launcher.GUI.CloseCurrent()
@@ -173,6 +176,7 @@ func _input(event : InputEvent):
 			elif TryJustPressed(event, "ui_skill"):			Launcher.GUI.ToggleControl(Launcher.GUI.skillWindow)
 			elif TryJustPressed(event, "ui_settings"):		Launcher.GUI.ToggleControl(Launcher.GUI.settingsWindow)
 			elif TryJustPressed(event, "ui_stat"):			Launcher.GUI.ToggleControl(Launcher.GUI.statWindow)
+			elif TryJustPressed(event, "ui_social"):		Launcher.GUI.ToggleControl(Launcher.GUI.socialWindow)
 			elif TryJustPressed(event, "ui_validate"):		Launcher.GUI.ToggleChatNewLine()
 			elif TryJustPressed(event, "ui_screenshot"):	FileSystem.SaveScreenshot()
 			elif TryJustPressed(event, "ui_fullscreen"):	Launcher.GUI.ToggleFullscreen()
@@ -186,6 +190,7 @@ func _ready():
 	clickTimer.set_one_shot(true)
 	add_child.call_deferred(clickTimer)
 
+	get_viewport().physics_object_picking = true
 	DeviceManager.Init()
 
 func Destroy():

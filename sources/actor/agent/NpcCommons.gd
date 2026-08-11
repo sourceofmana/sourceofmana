@@ -29,23 +29,75 @@ static var Farewells : PackedStringArray = [
 ]
 
 # Display
-static func PushNotification(pc : BaseAgent, text : String):
-	if pc:
-		if pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
-			Network.PushNotification(text, pc.peerID)
-		elif pc is NpcAgent:
-			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(pc)
+static func DisplayActions(agent : BaseAgent, actions : PackedStringArray):
+	if agent and agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
+		Network.DisplayActions(actions, agent.peerID)
+
+static func PushNotification(agent : BaseAgent, text : String):
+	if agent:
+		if agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
+			Network.PushNotification(text, agent.peerID)
+		elif agent is NpcAgent:
+			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
 			if inst:
 				Network.NotifyInstance(inst, "PushNotification", [text])
 
+static func PushTracker(agent : BaseAgent, label : String, value : int, maxValue : int, unit : String = ""):
+	if agent:
+		if agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
+			Network.DisplayProgressionTracker(label, value, maxValue, unit, agent.peerID)
+		elif agent is NpcAgent:
+			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+			if inst:
+				Network.NotifyInstance(inst, "DisplayProgressionTracker", [label, value, maxValue, unit])
+
+static func ClearTracker(agent : BaseAgent):
+	if agent:
+		if agent is PlayerAgent and agent.peerID != NetworkCommons.PeerUnknownID:
+			Network.ClearProgressionTracker(agent.peerID)
+		elif agent is NpcAgent:
+			var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(agent)
+			if inst:
+				Network.NotifyInstance(inst, "ClearProgressionTracker", [])
+
+# Tutorial
+static func HighlightUI(pc : BaseAgent, target : UICommons.UITarget):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.HighlightUI(target, pc.peerID)
+
+static func OpenUI(pc : BaseAgent):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.OpenUI(pc.peerID)
+
+# Camera
+static func CameraLookAt(pc : BaseAgent, pos : Vector2):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.CameraLookAt(pos, pc.peerID)
+
+static func CameraReset(pc : BaseAgent):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.CameraReset(pc.peerID)
+
 # Context sent to client
+static func Emote(npc : NpcAgent, emoteID : int):
+	if npc:
+		Network.NotifyNeighbours(npc, "Emote", [npc.get_rid().get_id(), emoteID])
+
+static func Express(npc : NpcAgent, pc : BaseAgent, text : String):
+	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.Express(npc.get_rid().get_id(), text, pc.peerID)
+
 static func Chat(npc : NpcAgent, pc : BaseAgent, chat : String):
 	if npc and pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
-		Network.ChatAgent(npc.get_rid().get_id(), chat, pc.peerID)
+		Network.ChatPlayer(str(GUICommons.ChatChannel.LOCAL), npc.nick, chat, npc.get_rid().get_id(), pc.peerID)
 
 static func ContextText(pc : BaseAgent, author : String, text : String):
 	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
 		Network.ContextText(author, text, pc.peerID)
+
+static func ContextThink(pc : BaseAgent, author : String, text : String):
+	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
+		Network.ContextThink(author, text, pc.peerID)
 
 static func ContextChoices(pc : BaseAgent, texts : PackedStringArray):
 	if pc and pc is PlayerAgent and pc.peerID != NetworkCommons.PeerUnknownID:
@@ -85,21 +137,31 @@ static func Spawn(caller : BaseAgent, mobID : int, count : int = 1, position : V
 		for i in count:
 			var spawnObject : SpawnObject = SpawnObject.new()
 			spawnObject.map					= inst.map
-			spawnObject.type				= "Monster"
+			spawnObject.type				= ActorCommons.Type.MONSTER
 			spawnObject.id					= mobID
 			spawnObject.count				= count
+			spawnObject.spawn_offset		= spawnRadius
 			if position == Vector2.ZERO:
-				spawnObject.spawn_position	= WorldNavigation.GetRandomPosition(inst.map)
+				spawnObject.spawn_position	= WorldNavigation.GetRandomPosition(inst)
 			else:
-				spawnObject.spawn_position	= WorldNavigation.GetRandomPositionAABB(inst.map, position, spawnRadius)
+				spawnObject.spawn_position	= WorldNavigation.GetRandomPositionAABB(inst, position, spawnRadius)
 			agents.push_back(WorldAgent.CreateAgent(spawnObject, inst.id))
 	return agents
 
-static func Warp(caller : BaseAgent, mapID : int, position : Vector2):
+static func Warp(caller : BaseAgent, mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
 	if caller is PlayerAgent:
 		var map : WorldMap = Launcher.World.GetMap(mapID)
 		if map:
-			Launcher.World.Warp(caller, map, position)
+			Launcher.World.Warp(caller, map, position, direction, 0)
+
+static func WarpInstance(caller : BaseAgent, mapID : int, position : Vector2, direction : ActorCommons.Direction = ActorCommons.Direction.UNKNOWN):
+	if caller is PlayerAgent:
+		var map : WorldMap = Launcher.World.GetMap(mapID)
+		if map:
+			var instanceID : int = caller.get_rid().get_id()
+			if not map.instances.has(instanceID):
+				map.CreateInstance(instanceID)
+			Launcher.World.Warp(caller, map, position, direction, instanceID)
 
 # Progress
 static func SetQuest(caller : BaseAgent, questID : int, state : int):
@@ -132,11 +194,44 @@ static func RemoveItem(caller : BaseAgent, itemID : int, count : int = 1, custom
 	if caller is PlayerAgent and caller.inventory:
 		var cell : ItemCell = DB.GetItem(itemID, customfield)
 		if cell:
-			return caller.inventory.RemoveItem(cell, count)
+			var itemIndex : int = caller.inventory.FindItemIndex(cell)
+			return caller.inventory.RemoveItem(cell, count, itemIndex)
 	return false
+
+# Skills
+static func TeachSkill(caller : BaseAgent, skillID : int, level : int = 1) -> bool:
+	if caller is PlayerAgent and caller.progress:
+		var cell : SkillCell = DB.GetSkill(skillID)
+		if cell:
+			caller.progress.AddSkill(cell, level)
+			return true
+	return false
+
+# Modifier
+static func AddModifier(agent : BaseAgent, effect : CellCommons.Modifier, value : Variant) -> StatModifier:
+	var modifier : StatModifier = StatModifier.new()
+	modifier._effect = effect
+	modifier._value = value
+	modifier._persistent = true
+	agent.stat.modifiers.Add(modifier)
+	agent.stat.RefreshEntityStats()
+	return modifier
+
+static func RemoveModifier(agent : BaseAgent, modifier : StatModifier):
+	agent.stat.modifiers.Remove(modifier)
+	agent.stat.RefreshEntityStats()
 
 # Karma
 static func AddKarma(caller : BaseAgent, points : int) -> bool:
 	if caller is PlayerAgent and caller.stat:
 		caller.stat.karma += points
 	return false
+
+# Gain
+static func AddExp(caller : BaseAgent, value : int):
+	if caller is PlayerAgent and caller.stat and value > 0:
+		caller.stat.AddExperience(value)
+
+static func AddGP(caller : BaseAgent, value : int):
+	if caller is PlayerAgent and caller.stat and value > 0:
+		caller.stat.AddGP(value)

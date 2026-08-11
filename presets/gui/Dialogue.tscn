@@ -29,6 +29,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="Dialogue" type="PanelContainer" parent="BottomVbox" unique_id=1889534427]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3

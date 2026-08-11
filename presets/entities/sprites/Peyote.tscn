@@ -2,11 +2,39 @@
 
 [ext_resource type="Texture2D" uid="uid://blyhvichuk1fc" path="res://data/graphics/sprites/monsters/peyote.png" id="1_ad0n8"]
 [ext_resource type="PackedScene" uid="uid://btojurpsnh3pq" path="res://presets/entities/sprites/animations/1Direction.tscn" id="2_3qkpp"]
+[ext_resource type="Texture2D" uid="uid://b0qa2td7svga7" path="res://data/graphics/effects/particles/smoke.png" id="2_h6gye"]
+
+[sub_resource type="Gradient" id="Gradient_n5qwh"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.3, 0.6)
+colors = PackedColorArray(0.5254902, 0.654902, 0.41568628, 1, 0.6666667, 0.7372549, 0.37254903, 1, 0.9254902, 0.90588236, 0.48235294, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jk7ca"]
+gradient = SubResource("Gradient_n5qwh")
+
+[sub_resource type="Curve" id="Curve_clfq1"]
+_data = [Vector2(0, 0), 0.0, 2.618645, 0, 0, Vector2(1, 0.016949177), -3.3017673, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_v7y8o"]
+curve = SubResource("Curve_clfq1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j3q4g"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(10, 5, 0)
+direction = Vector3(0, -1, 0)
+spread = 180.0
+flatness = 1.0
+initial_velocity_max = 8.0
+gravity = Vector3(1, -50, 0)
+linear_accel_min = 1.0
+linear_accel_max = 1.0
+scale_curve = SubResource("CurveTexture_v7y8o")
+color_ramp = SubResource("GradientTexture1D_jk7ca")
 
 [sub_resource type="Animation" id="Animation_38rnv"]
 resource_name = "Attack"
-length = 0.5
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -14,10 +42,36 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"times": PackedFloat32Array(0, 0.1, 0.26666668, 0.56666666, 0.73333335),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.26666668, 0.6666667, 0.73333335),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, -15), Vector2(0, -3), Vector2(0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Gas")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.33333334),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_kbkln"]
@@ -105,6 +159,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0, -4)]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Gas")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"set_emitting"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_5moda"]
 resource_name = "Sit"
@@ -180,6 +248,18 @@ _data = {
 }
 
 [node name="Peyote" type="Node2D" unique_id=736036800]
+
+[node name="Gas" type="GPUParticles2D" parent="." unique_id=66424386]
+emitting = false
+amount = 25
+texture = ExtResource("2_h6gye")
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.27
+randomness = 1.0
+fixed_fps = 0
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_j3q4g")
 
 [node name="Body" type="Sprite2D" parent="." unique_id=1965116628]
 position = Vector2(0, -4)

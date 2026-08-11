@@ -2,8 +2,16 @@
 extends BaseCell
 class_name SkillCell
 
+enum Category
+{
+	SPELL    = 0,
+	PHYSICAL = 1,
+	ABILITY  = 2,
+}
+
+@export var category : Category					= Category.SPELL
 @export var state : ActorCommons.State			= ActorCommons.State.IDLE
-@export var cellRange : int						= 0
+@export var skillRange : int						= 0
 @export var mode : Skill.TargetMode				= Skill.TargetMode.SINGLE
 @export var repeat : bool						= false
 @export var cooldownTime : float				= 0.0
@@ -18,13 +26,10 @@ class_name SkillCell
 @export var projectilePreset : PackedScene		= null
 
 #
-func Instantiate():
-	if castPreset:
-		castPreset.instantiate()
-	if skillPreset:
-		skillPreset.instantiate()
-	if projectilePreset:
-		projectilePreset.instantiate()
+func StripClient():
+	super.StripClient()
+	castPreset = null
+	skillPreset = null
 
 func Hover(hovering : bool):
 	super.Hover(hovering)

@@ -1,24 +1,29 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://2di8lml30hxj"]
 
+[ext_resource type="Material" uid="uid://da0w6rtd5daha" path="res://presets/palettes/shaders/monsters/mob-slime-salt.tres" id="1_64eg5"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_n178d"]
+[ext_resource type="Texture2D" uid="uid://c1otpwl88opx3" path="res://data/graphics/sprites/monsters/slime.png" id="2_7ro6h"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_iqu4k"]
+[ext_resource type="Resource" uid="uid://1guycf8ymnqp" path="res://presets/cells/items/usable/Apple.tres" id="3_apple"]
+[ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="4_77cdu"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_frf6u"]
+[ext_resource type="PackedScene" uid="uid://cesdnjj67k3c" path="res://presets/entities/sprites/Slime.tscn" id="spr_Slime"]
 
 [resource]
 script = ExtResource("2_iqu4k")
+_parent = ExtResource("4_77cdu")
 _id = 2250973363
 _name = "Salt Slime"
-_spritePreset = "Slime"
-_collision = "Medium"
+_spritePreset = ExtResource("spr_Slime")
 _radius = 10
-_equipment = Array[ExtResource("1_n178d")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/slime-salt.png"
-_behaviour = 130
 _stats = {
 "level": 1,
 "walkSpeed": 40.0
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array(215387671)
-_dropsProba = Dictionary[int, float]({
-215387671: 0.7
+_equipment = Array[ExtResource("1_n178d")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("2_7ro6h")
+_customMaterial = ExtResource("1_64eg5")
+_behaviour = 130
+_drops = Dictionary[ExtResource("1_n178d"), float]({
+ExtResource("3_apple"): 0.7
 })

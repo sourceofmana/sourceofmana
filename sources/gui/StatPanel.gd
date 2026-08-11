@@ -1,54 +1,54 @@
 extends WindowPanel
 
-@onready var lName : Label						= $Scroll/Margin/Layout/Stats/Information/Name
-@onready var tGender : TextureRect				= $Scroll/Margin/Layout/Stats/Information/Gender
-@onready var lLevel : Label						= $Scroll/Margin/Layout/Stats/Information/Level
-@onready var lSpirit : Label					= $Scroll/Margin/Layout/Stats/Information/Spirit
+@onready var lName : Label						= $Layout/Scroll/Margin/Layout/Stats/Information/Name
+@onready var tGender : TextureRect				= $Layout/Scroll/Margin/Layout/Stats/Information/Gender
+@onready var lLevel : Label						= $Layout/Scroll/Margin/Layout/Stats/Information/Level
+@onready var lSpirit : Label					= $Layout/Scroll/Margin/Layout/Stats/Information/Spirit
 
-@onready var pExperience : Control				= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox/ProgressBar
-@onready var pHealth : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox/ProgressBar
-@onready var pMana : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox/ProgressBar
-@onready var pStamina : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox/ProgressBar
-@onready var pWeight : Control					= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox/ProgressBar
-@onready var lGP : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/GPBox/Value
+@onready var pExperience : Control				= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ExperienceBox/ProgressBar
+@onready var pHealth : Control					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/HealthBox/ProgressBar
+@onready var pMana : Control					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/ManaBox/ProgressBar
+@onready var pStamina : Control					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/StaminaBox/ProgressBar
+@onready var pWeight : Control					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/WeightBox/ProgressBar
+@onready var lGP : Label						= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/ActiveStatsBox/GPBox/Value
 
-@onready var lStrength : Label					= $Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Current
-@onready var lVitality : Label					= $Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Current
-@onready var lAgility : Label					= $Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Current
-@onready var lEndurance : Label					= $Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Current
-@onready var lConcentration : Label				= $Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Current
-@onready var lStrengthToAdd : Label				= $Scroll/Margin/Layout/Stats/StatBox/StrengthBox/ToAdd
-@onready var lVitalityToAdd : Label				= $Scroll/Margin/Layout/Stats/StatBox/VitalityBox/ToAdd
-@onready var lAgilityToAdd : Label				= $Scroll/Margin/Layout/Stats/StatBox/AgilityBox/ToAdd
-@onready var lEnduranceToAdd : Label			= $Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/ToAdd
-@onready var lConcentrationToAdd : Label		= $Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/ToAdd
-@onready var lAvailablePoints : Label			= $Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/Value
+@onready var lStrength : Label					= $Layout/Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Current
+@onready var lVitality : Label					= $Layout/Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Current
+@onready var lAgility : Label					= $Layout/Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Current
+@onready var lEndurance : Label					= $Layout/Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Current
+@onready var lConcentration : Label				= $Layout/Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Current
+@onready var lStrengthToAdd : Label				= $Layout/Scroll/Margin/Layout/Stats/StatBox/StrengthBox/ToAdd
+@onready var lVitalityToAdd : Label				= $Layout/Scroll/Margin/Layout/Stats/StatBox/VitalityBox/ToAdd
+@onready var lAgilityToAdd : Label				= $Layout/Scroll/Margin/Layout/Stats/StatBox/AgilityBox/ToAdd
+@onready var lEnduranceToAdd : Label			= $Layout/Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/ToAdd
+@onready var lConcentrationToAdd : Label		= $Layout/Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/ToAdd
+@onready var lAvailablePoints : Label			= $Layout/Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/Value
 
-@onready var bSave : Button						= $Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/SaveButton
-@onready var bReset : Button					= $Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/ResetButton
+@onready var bSave : Button						= $Layout/Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/SaveButton
+@onready var bReset : Button					= $Layout/Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox/ResetButton
 
-@onready var bStrengthPlus : Button				= $Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Button
-@onready var bVitalityPlus : Button				= $Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Button
-@onready var bAgilityPlus : Button				= $Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Button
-@onready var bEndurancePlus : Button			= $Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Button
-@onready var bConcentrationPlus : Button		= $Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Button
+@onready var bStrengthPlus : Button				= $Layout/Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Button
+@onready var bVitalityPlus : Button				= $Layout/Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Button
+@onready var bAgilityPlus : Button				= $Layout/Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Button
+@onready var bEndurancePlus : Button			= $Layout/Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Button
+@onready var bConcentrationPlus : Button		= $Layout/Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Button
 
-@onready var bStrengthMinus : Button			= $Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Minus
-@onready var bVitalityMinus : Button			= $Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Minus
-@onready var bAgilityMinus : Button				= $Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Minus
-@onready var bEnduranceMinus : Button			= $Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Minus
-@onready var bConcentrationMinus : Button		= $Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Minus
+@onready var bStrengthMinus : Button			= $Layout/Scroll/Margin/Layout/Stats/StatBox/StrengthBox/Minus
+@onready var bVitalityMinus : Button			= $Layout/Scroll/Margin/Layout/Stats/StatBox/VitalityBox/Minus
+@onready var bAgilityMinus : Button				= $Layout/Scroll/Margin/Layout/Stats/StatBox/AgilityBox/Minus
+@onready var bEnduranceMinus : Button			= $Layout/Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Minus
+@onready var bConcentrationMinus : Button		= $Layout/Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Minus
 
-@onready var lAtk : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox/Value
-@onready var lDef : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox/Value
-@onready var lMAtk : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox/Value
-@onready var lMDef : Label						= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox/Value
-@onready var lAtkRange : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox/Value
-@onready var lCastDelay : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox/Value
-@onready var lCooldownDelay : Label				= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox/Value
-@onready var lCritRate : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox/Value
-@onready var lDodgeRate : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox/Value
-@onready var lWalkSpeed : Label					= $Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox/Value
+@onready var lAtk : Label						= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox/Value
+@onready var lDef : Label						= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox/Value
+@onready var lMAtk : Label						= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox/Value
+@onready var lMDef : Label						= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox/Value
+@onready var lAtkRange : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox/Value
+@onready var lCastDelay : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox/Value
+@onready var lCooldownDelay : Label				= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox/Value
+@onready var lCritRate : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox/Value
+@onready var lDodgeRate : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox/Value
+@onready var lWalkSpeed : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox/Value
 
 var panelStats: ActorStats = ActorStats.new()
 signal panel_stats_reset
@@ -120,28 +120,8 @@ func SubmitAttributeUpdate():
 	ResetIncreased()
 
 #
-func Init(entity : Entity):
-	Util.DuplicateObject(entity.stat, panelStats)
-	panelStats.RefreshAttributes()
-	RefreshSaveAndResetButtons()
-
-	Callback.PlugCallback(self.panel_stats_updated, RefreshVitalStats.bind(entity))
-	Callback.PlugCallback(self.panel_stats_updated, RefreshAttributes.bind(entity))
-	Callback.PlugCallback(self.panel_stats_updated, RefreshEntityStats.bind(entity))
-	Callback.PlugCallback(self.panel_stats_updated, RefreshSaveAndResetButtons)
-	
-	Callback.PlugCallback(entity.stat.vital_stats_updated, RefreshPanelStats.bind(entity))
-	Callback.PlugCallback(entity.stat.attributes_updated, RefreshPanelStats.bind(entity))
-	Callback.PlugCallback(entity.stat.entity_stats_updated, RefreshPanelStats.bind(entity))
-	
-	Callback.PlugCallback(self.panel_stats_reset, RefreshPanelStats.bind(entity))
-
-	RefreshVitalStats(entity)
-	RefreshAttributes(entity)
-	RefreshEntityStats(entity)
-
-func RefreshPanelStats(entity : Entity):
-	Util.DuplicateObject(entity.stat, panelStats)
+func RefreshPanelStats():
+	Util.DuplicateObject(Launcher.Player.stat, panelStats)
 	panelStats.strength += strengthIncreased
 	panelStats.agility += agilityIncreased
 	panelStats.vitality += vitalityIncreased
@@ -150,9 +130,9 @@ func RefreshPanelStats(entity : Entity):
 
 	panelStats.RefreshAttributes()
 	
-	RefreshVitalStats(entity)
-	RefreshAttributes(entity)
-	RefreshEntityStats(entity)
+	RefreshVitalStats()
+	RefreshAttributes()
+	RefreshEntityStats()
 
 func ResetIncreased():
 	strengthIncreased = 0
@@ -160,15 +140,15 @@ func ResetIncreased():
 	agilityIncreased = 0
 	enduranceIncreased = 0
 	concentrationIncreased = 0
-	self.panel_stats_updated.emit()
+	panel_stats_updated.emit()
 
 func ResetPanel():
 	ResetIncreased()
-	self.panel_stats_reset.emit()
+	panel_stats_reset.emit()
 
-func RefreshGender(entity : Entity):
+func RefreshGender():
 	var texture : Texture2D = null
-	match entity.gender:
+	match Launcher.Player.stat.gender:
 		ActorCommons.Gender.MALE:
 			texture = ActorCommons.GenderMaleTexture
 		ActorCommons.Gender.FEMALE:
@@ -177,12 +157,12 @@ func RefreshGender(entity : Entity):
 			texture = ActorCommons.GenderNonBinaryTexture
 	tGender.set_texture(texture)
 
-func RefreshVitalStats(entity : Entity):
-	if not entity:
+func RefreshVitalStats():
+	if not Launcher.Player:
 		pass
 
-	RefreshGender(entity)
-	lName.set_text(entity.nick)
+	RefreshGender()
+	lName.set_text(Launcher.Player.nick)
 	lLevel.set_text("Lv. %d" % panelStats.level)
 	var spiritData : EntityData = DB.EntitiesDB.get(panelStats.spirit, null)
 	if spiritData:
@@ -195,15 +175,15 @@ func RefreshVitalStats(entity : Entity):
 	pWeight.SetStat(panelStats.weight, panelStats.current.weightCapacity)
 	lGP.set_text("%s GP" % Util.GetFormatedText(str(panelStats.gp)))
 
-func RefreshAttributes(entity : Entity):
-	if not entity:
+func RefreshAttributes():
+	if not Launcher.Player:
 		pass
 
-	lStrength.set_text(str(entity.stat.strength))
-	lVitality.set_text(str(entity.stat.vitality))
-	lAgility.set_text(str(entity.stat.agility))
-	lEndurance.set_text(str(entity.stat.endurance))
-	lConcentration.set_text(str(entity.stat.concentration))
+	lStrength.set_text(str(Launcher.Player.stat.strength))
+	lVitality.set_text(str(Launcher.Player.stat.vitality))
+	lAgility.set_text(str(Launcher.Player.stat.agility))
+	lEndurance.set_text(str(Launcher.Player.stat.endurance))
+	lConcentration.set_text(str(Launcher.Player.stat.concentration))
 	
 	lStrengthToAdd.set_text(GetAttributePointsToAddStr(strengthIncreased))
 	lVitalityToAdd.set_text(GetAttributePointsToAddStr(vitalityIncreased))
@@ -242,8 +222,8 @@ func GetAttributePointsToAddStr(attributePointsToAdd : int) -> String:
 	else:
 		return "+" + str(attributePointsToAdd)
 
-func RefreshEntityStats(entity : Entity):
-	if not entity:
+func RefreshEntityStats():
+	if not Launcher.Player:
 		pass
 
 	lAtk.set_text(str(panelStats.current.attack))
@@ -260,3 +240,37 @@ func RefreshEntityStats(entity : Entity):
 #
 func GetPercentString(current : float, base : float) -> String:
 	return "%d%%" % (int(current / base * 100.0) if base > 0 else 100)
+
+#
+func Connect():
+	if not Launcher.Player:
+		return
+
+	Util.DuplicateObject(Launcher.Player.stat, panelStats)
+	panelStats.RefreshAttributes()
+	panelStats.RefreshEntityStats()
+	RefreshSaveAndResetButtons()
+
+	Callback.PlugCallback(panel_stats_updated, RefreshVitalStats)
+	Callback.PlugCallback(panel_stats_updated, RefreshAttributes)
+	Callback.PlugCallback(panel_stats_updated, RefreshEntityStats)
+	Callback.PlugCallback(panel_stats_updated, RefreshSaveAndResetButtons)
+
+	Callback.PlugCallback(Launcher.Player.stat.vital_stats_updated, RefreshPanelStats)
+	Callback.PlugCallback(Launcher.Player.stat.attributes_updated, RefreshPanelStats)
+	Callback.PlugCallback(Launcher.Player.stat.entity_stats_updated, RefreshPanelStats)
+
+	Callback.PlugCallback(panel_stats_reset, RefreshPanelStats)
+
+	RefreshVitalStats()
+	RefreshAttributes()
+	RefreshEntityStats()
+
+#
+func _post_launch():
+	if Launcher.Map:
+		if not Launcher.Map.PlayerWarped.is_connected(Connect):
+			Launcher.Map.PlayerWarped.connect(Connect)
+
+func _ready():
+	_post_launch()

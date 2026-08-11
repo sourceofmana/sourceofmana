@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://bl184vn62klkn"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_xrw6j"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_n81mf"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_wjckm"]
+
+[resource]
+script = ExtResource("2_wjckm")
+_id = 2089709631
+_name = "Warp"
+_radius = 16
+_stats = {}
+_equipment = Array[ExtResource("1_xrw6j")]([null, null, null, null, null, null, null, null])
+_displayName = true
+_behaviour = 9

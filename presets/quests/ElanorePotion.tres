@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://cw7jy8m4063j2"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 3984490417
+name = "Elanore's Potions"
+description = "Elanore needs ingredients to brew healing potions. Bring her six Maggot Slimes, one Water and one Pitaya."
+giver = "Elanore"
+giverLocation = "Tulimshar Gates"
+target = "Maggot Slime x6, Water x1, Pitaya x1"
+targetLocation = "Tulimshar region"
+reward = "Cactus Potion"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

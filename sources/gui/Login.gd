@@ -4,15 +4,30 @@ extends Control
 @onready var nameControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name
 @onready var nameTextControl : LineEdit		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text
 @onready var passwordControl : Control		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password
+@onready var passwordLabel : Label			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Label
 @onready var passwordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text
+@onready var confirmPasswordControl : Control	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword
+@onready var confirmPasswordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text
 @onready var emailControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email
 @onready var emailTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text
-@onready var onlineIndicator : CheckBox		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/OnlineIndicator
+@onready var resetCodeControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code
+@onready var resetCodeTextControl : LineEdit		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text
+@onready var indicatorRow : HBoxContainer	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow
+@onready var rememberMeCheckBox : CheckBox	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/RememberMe
+@onready var onlineIndicator : CheckBox		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/OnlineIndicator
+@onready var panel : PanelContainer			= $HBoxContainer/Panel
+@onready var separator : HSeparator			= $HBoxContainer/Panel/Margin/VBoxContainer/HSeparator2
 @onready var news : Scrollable				= $HBoxContainer/Panel/Margin/VBoxContainer/News
 @onready var agreement : Scrollable			= $HBoxContainer/Panel/Margin/VBoxContainer/Agreement
 
+enum RecoveryState { NONE, REQUEST_EMAIL, ENTER_CODE }
+
+var nameText : String						= ""
+var savedToken : String						= ""
+var savedAccountName : String				= ""
+var fillingFields : bool					= false
 var isAccountCreatorEnabled : bool			= false
-var nameText : String = ""
+var recoveryState : RecoveryState			= RecoveryState.NONE
 
 #
 func FillWarningLabel(err : NetworkCommons.AuthError):
@@ -22,14 +37,21 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 			EnableAccountCreator(false)
 		else:
 			EnableAccountCreator(true)
+	elif recoveryState != RecoveryState.NONE:
+		FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	else:
 		if err != NetworkCommons.AuthError.ERR_OK:
 			FSM.EnterState(FSM.States.LOGIN_SCREEN)
 
+	var isWarn : bool = true
 	var warn : String = ""
 	match err:
 		NetworkCommons.AuthError.ERR_OK:
 			warn = ""
+		NetworkCommons.AuthError.ERR_TOKEN:
+			warn = "Invalid token, enter your password"
+			passwordTextControl.clear()
+			ClearSavedToken()
 		NetworkCommons.AuthError.ERR_DUPLICATE_CONNECTION:
 			warn = "Another connection happened with the same login."
 		NetworkCommons.AuthError.ERR_AUTH:
@@ -50,32 +72,121 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 		NetworkCommons.AuthError.ERR_NAME_SIZE:
 			warn = "Name length should be inbetween %d and %d character long." % [NetworkCommons.PlayerNameMinSize, NetworkCommons.PlayerNameMaxSize]
 			nameTextControl.grab_focus()
+		NetworkCommons.AuthError.ERR_PASSWORD_MISMATCH:
+			warn = "Passwords do not match."
+			confirmPasswordTextControl.grab_focus()
 		NetworkCommons.AuthError.ERR_EMAIL_VALID:
 			warn = "Email is incorrect, please us a normal email format."
 			emailTextControl.grab_focus()
+		NetworkCommons.AuthError.ERR_RESET_UNAVAILABLE:
+			warn = "Password reset is not available on this server."
+			SetRecoveryState(RecoveryState.NONE)
+		NetworkCommons.AuthError.ERR_RESET_EMAIL_SENT:
+			warn = "If this email is registered, a reset code has been sent. Check your inbox."
+			isWarn = false
+			SetRecoveryState(RecoveryState.ENTER_CODE)
+		NetworkCommons.AuthError.ERR_RESET_INVALID_CODE:
+			warn = "Invalid or expired reset code."
+			resetCodeTextControl.grab_focus()
+		NetworkCommons.AuthError.ERR_RESET_PASSWORD_UPDATED:
+			warn = "Password updated successfully. You can now log in."
+			isWarn = false
+			SetRecoveryState(RecoveryState.NONE)
 		_:
 			warn = "Could not connect to the server (Error %d).\nPlease contact us via our [url=%s][color=#%s]Discord server[/color][/url].\nMeanwhile be sure to test the offline mode!" % [err, LauncherCommons.SocialLink, UICommons.DarkTextColor]
 
+	var textColor : Color = UICommons.WarnTextColor if isWarn else UICommons.TextColor
+
 	if not warn.is_empty():
-		warn = "[color=#%s]%s[/color]" % [UICommons.WarnTextColor.to_html(false), warn]
+		warn = "[color=#%s]%s[/color]" % [textColor.to_html(false), warn]
 	Launcher.GUI.notificationLabel.AddNotification(warn)
 
+func SetRecoveryState(state : RecoveryState):
+	recoveryState = state
+	isAccountCreatorEnabled = false
+
+	match recoveryState:
+		RecoveryState.NONE:
+			nameControl.set_visible(true)
+			passwordControl.set_visible(true)
+			passwordLabel.text = "Password"
+			passwordTextControl.secret = true
+			confirmPasswordControl.set_visible(false)
+			emailControl.set_visible(false)
+			resetCodeControl.set_visible(false)
+			indicatorRow.set_visible(true)
+			separator.set_visible(true)
+			news.set_visible(true)
+			agreement.set_visible(false)
+			SetPanelExpand(true)
+			passwordTextControl.clear()
+			confirmPasswordTextControl.clear()
+			resetCodeTextControl.clear()
+		RecoveryState.REQUEST_EMAIL:
+			nameControl.set_visible(true)
+			passwordControl.set_visible(false)
+			confirmPasswordControl.set_visible(false)
+			emailControl.set_visible(false)
+			resetCodeControl.set_visible(false)
+			indicatorRow.set_visible(false)
+			separator.set_visible(false)
+			news.set_visible(false)
+			agreement.set_visible(false)
+			SetPanelExpand(false)
+			nameTextControl.grab_focus()
+		RecoveryState.ENTER_CODE:
+			nameControl.set_visible(false)
+			passwordControl.set_visible(true)
+			passwordLabel.text = "New Password"
+			passwordTextControl.secret = true
+			passwordTextControl.clear()
+			confirmPasswordControl.set_visible(true)
+			confirmPasswordTextControl.clear()
+			emailControl.set_visible(false)
+			resetCodeControl.set_visible(true)
+			indicatorRow.set_visible(false)
+			separator.set_visible(false)
+			news.set_visible(false)
+			agreement.set_visible(false)
+			SetPanelExpand(false)
+			resetCodeTextControl.grab_focus()
+	EnableButtons(true)
+
 func EnableAccountCreator(enable : bool):
+	recoveryState = RecoveryState.NONE
 	isAccountCreatorEnabled = enable
 
+	confirmPasswordControl.set_visible(isAccountCreatorEnabled)
 	emailControl.set_visible(isAccountCreatorEnabled)
 	agreement.set_visible(isAccountCreatorEnabled)
+	resetCodeControl.set_visible(false)
 
-	onlineIndicator.set_visible(not isAccountCreatorEnabled)
+	nameControl.set_visible(true)
+	passwordControl.set_visible(true)
+	passwordLabel.text = "Password"
+	passwordTextControl.secret = true
+	indicatorRow.set_visible(not isAccountCreatorEnabled)
+	separator.set_visible(true)
 	news.set_visible(not isAccountCreatorEnabled)
+	SetPanelExpand(true)
+	if not isAccountCreatorEnabled:
+		confirmPasswordTextControl.clear()
 	EnableButtons(true)
 	RefreshFocusNodes(enable)
+
+func SetPanelExpand(expand : bool):
+	if expand:
+		panel.size_flags_vertical = Control.SIZE_FILL
+	else:
+		panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
 #
 func RefreshFocusNodes(accountCreatorEnabled : bool):
 	if accountCreatorEnabled:
 		nameTextControl.set_focus_previous(emailTextControl.get_path())
-		passwordTextControl.set_focus_next(emailTextControl.get_path())
+		passwordTextControl.set_focus_next(confirmPasswordTextControl.get_path())
+		confirmPasswordTextControl.set_focus_next(emailTextControl.get_path())
+		confirmPasswordTextControl.set_focus_previous(passwordTextControl.get_path())
 	else:
 		nameTextControl.set_focus_previous(passwordTextControl.get_path())
 		passwordTextControl.set_focus_next(nameTextControl.get_path())
@@ -85,8 +196,7 @@ func RefreshOnlineMode():
 
 func OnlineMode(_clientStarted : bool, serverStarted : bool):
 	if onlineIndicator:
-		if not LauncherCommons.isWeb:
-			Launcher.GUI.buttonBoxes.Rename(UICommons.ButtonBox.TERTIARY, "Switch Online" if serverStarted else "Switch Offline")
+		Launcher.GUI.buttonBoxes.Rename(UICommons.ButtonBox.TERTIARY, "Switch Online" if serverStarted else "Switch Offline")
 		onlineIndicator.text = "Playing Offline" if serverStarted else "Playing Online"
 		if onlineIndicator.button_pressed != not serverStarted:
 			onlineIndicator.button_pressed = not serverStarted
@@ -95,16 +205,20 @@ func EnableButtons(state : bool):
 	if Launcher.GUI and Launcher.GUI.buttonBoxes:
 		Launcher.GUI.buttonBoxes.ClearAll()
 		if state:
-			if isAccountCreatorEnabled:
+			if recoveryState == RecoveryState.REQUEST_EMAIL:
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Send Code", RequestReset)
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", SetRecoveryState.bind(RecoveryState.NONE))
+			elif recoveryState == RecoveryState.ENTER_CODE:
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Reset Password", ConfirmReset)
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", SetRecoveryState.bind(RecoveryState.NONE))
+			elif isAccountCreatorEnabled:
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Create", CreateAccount)
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", EnableAccountCreator.bind(false))
 			else:
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Connect", Connect)
-				if LauncherCommons.isWeb:
-					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Refresh Connection", SwitchOnlineMode.bind(false))
-				else:
-					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Create Account", EnableAccountCreator.bind(true))
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Forgot Password", SetRecoveryState.bind(RecoveryState.REQUEST_EMAIL))
 				RefreshOnlineMode()
 		else:
 			onlineIndicator.text = "Connecting..."
@@ -113,14 +227,55 @@ func RefreshOnce():
 	EnableAccountCreator(isAccountCreatorEnabled)
 	_on_visibility_changed()
 
+# Token persistence
+func SaveToken(accountName : String, token : String):
+	if not rememberMeCheckBox.button_pressed:
+		return
+	Conf.SetValue("auth", "account_name", Conf.Type.AUTH_TOKEN, accountName)
+	Conf.SetValue("auth", "token", Conf.Type.AUTH_TOKEN, token)
+	Conf.SaveType("auth_token", Conf.Type.AUTH_TOKEN)
+
+func LoadSavedToken() -> bool:
+	savedAccountName = Conf.GetString("auth", "account_name", Conf.Type.AUTH_TOKEN)
+	savedToken = Conf.GetString("auth", "token", Conf.Type.AUTH_TOKEN)
+	if savedAccountName.is_empty() or savedToken.is_empty():
+		return false
+	nameText = savedAccountName
+	return true
+
+func ClearSavedToken():
+	passwordTextControl.clear()
+	savedToken = ""
+	savedAccountName = ""
+	Conf.confFiles[Conf.Type.AUTH_TOKEN].clear()
+	Conf.cache.clear()
+	DirAccess.remove_absolute(Path.Local + "auth_token" + Path.ConfExt)
+
+func FillFieldsFromToken():
+	if savedToken.is_empty():
+		return
+
+	fillingFields = true
+	nameTextControl.set_text(nameText)
+	passwordTextControl.set_text("tokentokentoken")
+	fillingFields = false
+
 #
 func Connect():
 	nameText = nameTextControl.get_text()
+	if not savedToken.is_empty():
+		if Network.LoginWithToken(savedAccountName, savedToken, NetworkCommons.GetPlatform()):
+			nameText = savedAccountName
+			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
+			if Launcher.GUI.settingsWindow:
+				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
+		savedToken = ""
+		return
 	var passwordText : String = passwordTextControl.get_text()
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
 	FillWarningLabel(authError)
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		if Network.ConnectAccount(nameText, passwordText):
+		if Network.LoginWithPassword(nameText, passwordText, rememberMeCheckBox.button_pressed, NetworkCommons.GetPlatform()):
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
 			if Launcher.GUI.settingsWindow:
 				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
@@ -128,20 +283,53 @@ func Connect():
 func CreateAccount():
 	nameText = nameTextControl.get_text()
 	var passwordText : String = passwordTextControl.get_text()
+	var confirmText : String = confirmPasswordTextControl.get_text()
 	var emailText : String = emailTextControl.get_text()
 
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
 	if authError == NetworkCommons.AuthError.ERR_OK:
+		if passwordText != confirmText:
+			authError = NetworkCommons.AuthError.ERR_PASSWORD_MISMATCH
+	if authError == NetworkCommons.AuthError.ERR_OK:
 		authError = NetworkCommons.CheckEmailInformation(emailText)
 
 	if authError == NetworkCommons.AuthError.ERR_OK:
-		if Network.CreateAccount(nameText, passwordText, emailText):
+		if Network.CreateAccount(nameText, passwordText, emailText, rememberMeCheckBox.button_pressed, NetworkCommons.GetPlatform()):
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
 	else:
 		FillWarningLabel(authError)
 
+func RequestReset():
+	nameText = nameTextControl.get_text()
+	if nameText.is_empty():
+		nameTextControl.grab_focus()
+		return
+	Network.RequestPasswordReset(nameText)
+
+func ConfirmReset():
+	var codeText : String = resetCodeTextControl.get_text()
+	var newPassword : String = passwordTextControl.get_text()
+	var confirmText : String = confirmPasswordTextControl.get_text()
+
+	if not NetworkCommons.CheckResetCode(codeText):
+		FillWarningLabel(NetworkCommons.AuthError.ERR_RESET_INVALID_CODE)
+		return
+
+	var passwordErr : NetworkCommons.AuthError = NetworkCommons.CheckPasswordInformation(newPassword)
+	if passwordErr != NetworkCommons.AuthError.ERR_OK:
+		FillWarningLabel(passwordErr)
+		return
+
+	if newPassword != confirmText:
+		FillWarningLabel(NetworkCommons.AuthError.ERR_PASSWORD_MISMATCH)
+		return
+
+	Network.ConfirmPasswordReset(nameText, codeText, newPassword)
+
 func Close():
-	if isAccountCreatorEnabled:
+	if recoveryState != RecoveryState.NONE:
+		SetRecoveryState(RecoveryState.NONE)
+	elif isAccountCreatorEnabled:
 		EnableAccountCreator(false)
 	else:
 		Launcher.GUI.ToggleControl(Launcher.GUI.quitWindow)
@@ -161,6 +349,8 @@ func _on_text_submitted(_newText):
 #
 func _on_visibility_changed():
 	if visible:
+		LoadSavedToken()
+		FillFieldsFromToken()
 		if nameTextControl and nameTextControl.is_visible() and nameTextControl.get_text().length() == 0:
 			nameTextControl.grab_focus()
 		elif passwordTextControl and passwordTextControl.is_visible() and passwordTextControl.get_text().length() == 0:
@@ -172,5 +362,15 @@ func SwitchOnlineMode(toggled : bool):
 	if Launcher.Mode(true, toggled):
 		EnableButtons(false)
 
+func _on_password_text_changed(_newText : String):
+	if not fillingFields:
+		savedToken = ""
+
+func _on_remember_me_toggled(toggled_on : bool):
+	if not toggled_on:
+		ClearSavedToken()
+
 func _ready():
 	Launcher.launchModeUpdated.connect(OnlineMode)
+	if LoadSavedToken():
+		rememberMeCheckBox.button_pressed = true

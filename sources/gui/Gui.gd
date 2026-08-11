@@ -3,10 +3,12 @@ extends ServiceBase
 @onready var background : TextureRect			= $Background
 
 # Overlay
-@onready var menu : Control						= $Overlay/VSections/Indicators/Menu
+@onready var menu : MenuIndicator				= $Overlay/VSections/Indicators/Menu
 @onready var stats : Control					= $Overlay/VSections/Indicators/Stat
 @onready var notificationLabel : Control		= $Overlay/VSections/Indicators/Info/Notification
 @onready var pickupPanel : Control				= $Overlay/VSections/Indicators/Info/PickUp
+@onready var progressionTracker : Control		= $Overlay/VSections/Indicators/Info/ProgressionTracker
+@onready var bossTracker : Control				= $Overlay/VSections/Indicators/Info/BossTracker
 
 # Contexts
 @onready var loadingControl : Control			= $Overlay/VSections/Contexts/Loading
@@ -36,13 +38,18 @@ extends ServiceBase
 @onready var quitWindow : WindowPanel			= $Windows/Floating/Quit
 @onready var respawnWindow : WindowPanel		= $Windows/Floating/Respawn
 @onready var statWindow : WindowPanel			= $Windows/Floating/Stat
+@onready var socialWindow : WindowPanel			= $Windows/Floating/Social
 
 @onready var chatContainer : ChatContainer		= $Windows/Floating/Chat/Margin/VBoxContainer
-@onready var emoteContainer : Container			= $Windows/Floating/Emote/ItemContainer/Grid
+@onready var emoteContainer : Container			= $Windows/Floating/Emote/Layout/ItemContainer/Grid
 
 # Shaders
+@onready var shaders : CanvasLayer				= $Shaders
 @onready var CRTShader : TextureRect			= $Shaders/CRT
 @onready var HQ4xShader : TextureRect			= $Shaders/HQ4x
+
+# Highlight
+var highlight : UIHighlight						= UIHighlight.new()
 
 # State transition
 var progressTimer : Timer						= null
@@ -84,12 +91,12 @@ func ToggleFullscreen():
 	if settingsWindow:
 		settingsWindow.set_fullscreen(!settingsWindow.is_fullscreen())
 
-func DisplayInfoContext(actions : PackedStringArray):
+func DisplayActions(actions : PackedStringArray, duration : float = -1.0):
 	infoContext.Clear()
 	for action in actions:
 		if DeviceManager.HasActionName(action):
 			infoContext.Push(ContextData.new(action))
-	infoContext.FadeIn()
+	infoContext.FadeIn(false, duration)
 
 func IsDialogueContextOpened() -> bool:
 	return dialogueContainer.is_visible()
@@ -127,13 +134,16 @@ func EnterLoginMenu():
 		progressTimer = null
 
 	infoContext.set_visible(false)
+	choiceContext.Hide()
+	progressionTracker.set_visible(false)
+	bossTracker.set_visible(false)
 	menu.SetItemsVisible(false)
-	stats.set_visible(false)
+	menu.Close()
+	stats.SetBarsVisible(false)
 	statWindow.set_visible(false)
 	dialogueContainer.set_visible(false)
-	pickupPanel.set_visible(false)
+	pickupPanel.AnimateClose()
 	loadingControl.set_visible(false)
-	menu.set_visible(false)
 	actionBoxes.set_visible(false)
 	quitWindow.set_visible(false)
 	respawnWindow.EnableControl(false)
@@ -162,6 +172,13 @@ func EnterCharMenu():
 		progressTimer.stop()
 		progressTimer = null
 
+	if not DB.isInitialized:
+		if not Launcher.dbInitialized.is_connected(_show_char_menu):
+			Launcher.dbInitialized.connect(_show_char_menu, CONNECT_ONE_SHOT)
+		return
+	_show_char_menu()
+
+func _show_char_menu():
 	loadingControl.set_visible(false)
 	background.set_visible(false)
 	loginPanel.set_visible(false)
@@ -187,18 +204,31 @@ func EnterGame():
 		progressTimer = null
 	loadingControl.set_visible(false)
 	background.set_visible(false)
+	loginPanel.set_visible(false)
+	characterPanel.set_visible(false)
+	buttonBoxes.set_visible(false)
 
-	Launcher.Camera.DisableSceneCamera()
-	DisplayInfoContext(["gp_interact", "gp_untarget", "gp_morph", "gp_sit", "gp_target", "gp_pickup"])
+	Launcher.Camera.ResetCinematic()
+	DisplayActions(["gp_interact", "gp_target", "gp_untarget", "gp_pickup", "gp_sit"])
 
-	stats.set_visible(true)
+	stats.SetBarsVisible(true)
 	menu.set_visible(true)
 	actionBoxes.set_visible(true)
 	shortcuts.set_visible(true)
-
 	menu.SetItemsVisible(true)
-	stats.Init()
-	statWindow.Init(Launcher.Player)
+
+func ExitGame():
+	notificationLabel.ClearNotification()
+
+func EnterPip():
+	Launcher.GUI.set_visible(false)
+	if Launcher.Camera:
+		Launcher.Camera.ZoomAt(0)
+
+func ExitPip():
+	Launcher.GUI.set_visible(true)
+	if Launcher.Camera:
+		Launcher.Camera.ZoomReset()
 
 #
 func _post_launch():
@@ -212,9 +242,17 @@ func _post_launch():
 		FSM.enter_char_progress.connect(EnterCharProgress)
 	if not FSM.enter_game.is_connected(EnterGame):
 		FSM.enter_game.connect(EnterGame)
+	if not FSM.exit_game.is_connected(ExitGame):
+		FSM.exit_game.connect(ExitGame)
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)
 	if minimapWindow:
 		minimapWindow._post_launch()
+	if stats:
+		stats._post_launch()
+	if statWindow:
+		statWindow._post_launch()
+	if inventoryWindow:
+		inventoryWindow._post_launch()
 	isInitialized = true
 
 func Destroy():
@@ -233,13 +271,56 @@ func _notification(notif):
 			Launcher.Action.Enable(false)
 		Node.NOTIFICATION_DRAG_END:
 			Launcher.Action.Enable(true)
+		NOTIFICATION_APPLICATION_PIP_MODE_ENTERED:
+			EnterPip()
+		NOTIFICATION_APPLICATION_PIP_MODE_EXITED:
+			ExitPip()
 
+func HighlightUI(target : UICommons.UITarget):
+	if highlight:
+		var node : Control = GetUITarget(target)
+		if node:
+			OpenUI(target)
+			highlight.Show(node)
+		else:
+			highlight.Clear()
+
+func OpenUI(target : UICommons.UITarget):
+		var node : Control = GetUITarget(target)
+		if node:
+			if not node.is_visible():
+				if node is WindowPanel:
+					ToggleControl(node)
+				elif node is MenuIndicator:
+					node._on_button_pressed()
+
+func GetUITarget(target : UICommons.UITarget) -> Control:
+	match target:
+		UICommons.UITarget.NONE:			return null
+		UICommons.UITarget.MENUINDICATOR:	return menu
+		UICommons.UITarget.STATINDICATOR:	return stats
+		UICommons.UITarget.HEALTHBAR:		return stats.hpStat
+		UICommons.UITarget.MANABAR:			return stats.manaStat
+		UICommons.UITarget.STAMINABAR:		return stats.staminaStat
+		UICommons.UITarget.STAT:			return statWindow
+		UICommons.UITarget.INVENTORY:		return inventoryWindow
+		UICommons.UITarget.CHAT:			return chatWindow
+		UICommons.UITarget.SKILL:			return skillWindow
+		UICommons.UITarget.MINIMAP:			return minimapWindow
+		UICommons.UITarget.PROGRESS:		return progressWindow
+		UICommons.UITarget.SOCIAL:			return socialWindow
+		UICommons.UITarget.EMOTE:			return emoteWindow
+		UICommons.UITarget.SETTINGS:		return settingsWindow
+		UICommons.UITarget.ACTION_BAR:		return actionBoxes
+		_: push_error("Unhandled UITarget")
+	return null
+
+#
 func _ready():
 	get_tree().set_auto_accept_quit(false)
 	get_tree().set_quit_on_go_back(false)
-
-	assert(CRTShader.material != null, "CRT Shader can't load as its texture material is missing")
-	CRTShader.material.set_shader_parameter("resolution", get_viewport().size / 2)
+	DisplayServer.pip_mode_set_auto_enter_on_background(true)
+	DB.WarmShaders()
 
 func _on_ui_margin_resized():
 	if CRTShader and CRTShader.material:

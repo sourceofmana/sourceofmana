@@ -56,6 +56,7 @@ var deathMessages: PackedStringArray = [
 	"Today is a good day to die.", # Klingons.
 	"Any last words? Oops, too late!", 
 	"Confusion will be my epitaph.", # King Crimson reference.
+	"There is no glory in suffering.",
 
 	# TMW2 custom dead messages
 

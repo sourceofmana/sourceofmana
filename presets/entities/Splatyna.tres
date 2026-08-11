@@ -2,24 +2,28 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_qoprb"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_7qgir"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_raowf"]
+[ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="2_ty53i"]
+[ext_resource type="Resource" uid="uid://dle132272116a" path="res://presets/entities/Lilah.tres" id="3_lilah"]
+[ext_resource type="Resource" uid="uid://dcygfugnyiuaf" path="res://presets/entities/Lulea.tres" id="4_lulea"]
+[ext_resource type="PackedScene" uid="uid://5ccy1ei1s4x5" path="res://presets/entities/sprites/Splatyna.tscn" id="spr_Splatyna"]
 
 [resource]
 script = ExtResource("2_7qgir")
+_parent = ExtResource("2_ty53i")
 _id = 3314548081
 _name = "Splatyna"
-_spritePreset = "Splatyna"
-_collision = "Large"
+_spritePreset = ExtResource("spr_Splatyna")
 _radius = 26
-_equipment = Array[ExtResource("1_qoprb")]([null, null, null, null, null, null, null, null])
-_displayName = true
-_behaviour = 100
 _stats = {
 "level": 10,
 "walkSpeed": 50.0
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
-_spawns = Dictionary[int, int]({
-228176527: 3,
-228607896: 3
+_equipment = Array[ExtResource("1_qoprb")]([null, null, null, null, null, null, null, null])
+_displayName = true
+_behaviour = 100
+_spawns = Dictionary[ExtResource("2_7qgir"), int]({
+ExtResource("3_lilah"): 3,
+ExtResource("4_lulea"): 3
 })
+_isBoss = true

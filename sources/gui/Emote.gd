@@ -1,6 +1,6 @@
 extends WindowPanel
 
-@onready var grid : GridContainer		= $ItemContainer/Grid
+@onready var grid : GridContainer		= $Layout/ItemContainer/Grid
 
 #
 func RefreshEmotes():
@@ -21,4 +21,7 @@ func RefreshEmotes():
 
 #
 func _ready():
-	RefreshEmotes()
+	if DB.isInitialized:
+		RefreshEmotes()
+	elif not Launcher.dbInitialized.is_connected(RefreshEmotes):
+		Launcher.dbInitialized.connect(RefreshEmotes, CONNECT_ONE_SHOT)

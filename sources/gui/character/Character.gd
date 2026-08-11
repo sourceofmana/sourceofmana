@@ -2,8 +2,8 @@ extends Control
 
 #
 @onready var characterName : PanelContainer				= $PlayerName
-@onready var characterNameLineEdit : LineEdit			= $PlayerName/MarginContainer/VBoxContainer/Entry
-@onready var characterNameDisplay : Label				= $PlayerName/MarginContainer/VBoxContainer/Name
+@onready var characterNameLineEdit : LineEdit			= $PlayerName/Entry
+@onready var characterNameDisplay : Label				= $PlayerName/Name
 
 @onready var display : HBoxContainer					= $Display
 @onready var traitsPanel : PanelContainer				= $Display/Traits
@@ -89,7 +89,7 @@ func AddCharacter(info : Dictionary, equipment : Dictionary, slotID : int = Acto
 		assert(false, "No free available placement")
 		return
 
-	var entityData : EntityData = DB.EntitiesDB.get(DB.PlayerHash, null)
+	var entityData : EntityData = DB.EntitiesDB.get("Player".hash(), null)
 	if not entityData:
 		assert(false, "Could not retrieve the default entity database entry")
 		return
@@ -194,7 +194,7 @@ func UpdateSelectedCharacter(info : Dictionary, slotID : int):
 		EnableCharacterSelectionFx(true, slotID)
 
 	if FSM.IsCharacterState():
-		Launcher.Camera.EnableSceneCamera(ActorCommons.CharacterScreenLocations[GetDefaultSlot(slotID)])
+		Launcher.Camera.LookAt(ActorCommons.CharacterScreenLocations[GetDefaultSlot(slotID)])
 
 	currentCharacterID = slotID
 
@@ -222,6 +222,7 @@ func EnableCharacterCreator(enable : bool):
 		if enable:
 			if Launcher.Camera.IsZooming(ActorCommons.CameraZoomDefault):
 				Launcher.Camera.ZoomAt(ActorCommons.CameraZoomDouble)
+			RandomizeCharacter()
 			AddCharacter(traitsPanel.GetValues(), {}, ActorCommons.MaxCharacterCount)
 		else:
 			if Launcher.Camera.IsZooming(ActorCommons.CameraZoomDouble):
@@ -256,10 +257,10 @@ func UpdateCharacterCreatorBody():
 	if isCharacterCreatorEnabled and charactersNode[ActorCommons.MaxCharacterCount]:
 		var races : PackedInt64Array = DB.RacesDB.keys()
 		var race : RaceData = DB.GetRace(races[traitsPanel.raceValue])
-		var skins : Dictionary[int, FileData] = race._skins if race else {}
-		var skinsKeys : PackedInt64Array = skins.keys()
+		var skins : Dictionary[String, Material] = race.skins if race else {}
+		var skinsKeys : PackedStringArray = skins.keys()
 		charactersNode[ActorCommons.MaxCharacterCount].stat.race = races[traitsPanel.raceValue]
-		charactersNode[ActorCommons.MaxCharacterCount].stat.skintone = skinsKeys[traitsPanel.skintoneValue]
+		charactersNode[ActorCommons.MaxCharacterCount].stat.skintone = skinsKeys[traitsPanel.skintoneValue].hash()
 		charactersNode[ActorCommons.MaxCharacterCount].stat.gender = traitsPanel.genderValue
 		if charactersNode[ActorCommons.MaxCharacterCount].visual:
 			charactersNode[ActorCommons.MaxCharacterCount].visual.SetBody()
@@ -320,9 +321,18 @@ func _ready():
 
 func _physics_process(_delta: float):
 	if currentCharacterID != ActorCommons.InvalidCharacterSlot:
-		var move : Vector2 = Launcher.Action.GetMove()
-		if move != Vector2.ZERO:
-			charactersNode[currentCharacterID].entityOrientation = move
+		var entity : Entity = charactersNode[currentCharacterID]
+		if entity:
+			var needsRefresh : bool = false
+			var move : Vector2 = Launcher.Action.GetMove()
+			if move != Vector2.ZERO:
+				entity.entityOrientation = move
+				needsRefresh = true
+			if Launcher.Action.IsActionJustPressed("gp_sit"):
+				entity.state = ActorCommons.State.IDLE if entity.state == ActorCommons.State.SIT else ActorCommons.State.SIT
+				needsRefresh = true
+			if needsRefresh and entity.visual:
+				entity.visual.Refresh()
 
 func _on_visibility_changed():
 	if not visible:

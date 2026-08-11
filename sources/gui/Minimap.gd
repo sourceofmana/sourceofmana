@@ -13,14 +13,14 @@ func Warped():
 	if Launcher.Map.currentMapID == DB.UnknownHash:
 		assert(false, "Could not fetch the active map name")
 		return
-	var mapData : FileData = DB.MapsDB.get(Launcher.Map.currentMapID, null)
+	var mapData : MapData = DB.MapsDB.get(Launcher.Map.currentMapID, null)
 	if not mapData:
 		assert(false, "Could not retrieve the map ID from our map daabase")
 		return
-	var resource : Texture2D = FileSystem.LoadMinimap(mapData._path)
-	if not resource:
+	if mapData.minimapPath.is_empty():
 		assert(false, "Could not load the minimap resource")
 		return
+	var resource : Texture2D = ResourceLoader.load(mapData.minimapPath) as Texture2D
 	textureRect.set_texture(resource)
 	textureSize = textureRect.texture.get_size()
 	if textureSize != Vector2.ZERO:

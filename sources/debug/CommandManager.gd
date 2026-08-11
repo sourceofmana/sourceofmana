@@ -30,13 +30,13 @@ static func Handle(caller : PlayerAgent, commandStr : String):
 		Network.CommandFeedback("Command '%s' is not registered" % commandName, caller.peerID)
 	elif not OS.is_debug_build() and command._permission > playerPermission:
 		Network.CommandFeedback("Command '%s' could not be called due to unmet permissions" % commandName, caller.peerID)
-	else:
-		if not args.is_empty() and args[0] == "?":
-			Network.CommandFeedback("Command usage: %s" % command._description, caller.peerID)
-		elif not command.Call(caller, args):
-			Network.CommandFeedback("Command '%s' could not be called due to incorrect arguments" % commandName, caller.peerID)
-		else:
-			Network.CommandFeedback("Command '%s' sent" % commandName, caller.peerID)
+	elif not args.is_empty() and args[0] == "?":
+		Network.CommandFeedback("Command usage: %s" % command._description, caller.peerID)
+	elif not command.Call(caller, args):
+		Network.CommandFeedback("Command '%s' could not be called due to incorrect arguments" % commandName, caller.peerID)
+	# Command succeeded
+	elif command._permission > ActorCommons.Permission.NONE:
+		Util.PrintLog("Command", "%s (%d) used: %s" % [caller.nick, caller.peerID, commandStr])
 
 # Utils
 static func Parse(command : String) -> Array:

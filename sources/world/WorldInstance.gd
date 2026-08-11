@@ -14,25 +14,18 @@ var timers : Node						= Node.new()
 func _ready():
 	timers.set_name("Timers")
 	add_child.call_deferred(timers)
-	timers.tree_entered.connect(CheckIterationID)
 
-
-func CheckIterationID():
-	var iterationDone : bool = true
-	var mapRID : RID = get_world_2d().get_navigation_map()
-	if not NavigationServer2D.map_get_iteration_id(mapRID):
-		iterationDone = false
+	if map.navPoly and not map.navPoly.get_vertices().is_empty():
+		timers.tree_entered.connect(CheckNavReady)
 	else:
-		for regionRID in NavigationServer2D.map_get_regions(mapRID):
-			if not NavigationServer2D.region_get_iteration_id(regionRID):
-				iterationDone = false
-				break
+		timers.tree_entered.connect(_map_loaded)
 
-	if not iterationDone:
-		# Wait 0.5s if the navigation server is busy instancing other regions in other threads
-		Callback.SelfDestructTimer(timers, 0.5, CheckIterationID, [])
-	else:
+func CheckNavReady():
+	if NavigationServer2D.map_get_iteration_id(map.mapRID) > 0 \
+		and NavigationServer2D.region_owns_point(map.regionRID, map.navPoly.get_vertices()[0]):
 		_map_loaded()
+	else:
+		Callback.SelfDestructTimer(timers, 0.1, CheckNavReady)
 
 func _map_loaded():
 	for spawn in map.spawns:
@@ -52,19 +45,20 @@ static func Create(_map : WorldMap, instanceID : int = 0) -> WorldInstance:
 	inst.map = _map
 	inst.name = _map.name + "_" + str(instanceID)
 
-	WorldNavigation.CreateInstance(_map, inst.get_world_2d().get_navigation_map())
+	WorldNavigation.CreateInstance(inst)
 	Launcher.Root.add_child.call_deferred(inst)
 
 	return inst
 
 func Destroy():
-	for player in players:
-		WorldAgent.RemoveAgent(player)
-	for mob in mobs:
-		WorldAgent.RemoveAgent(mob)
-	for npc in npcs:
-		WorldAgent.RemoveAgent(npc)
+	for i in range(players.size() - 1, -1, -1):
+		WorldAgent.RemoveAgent(players[i])
+	for i in range(mobs.size() - 1, -1, -1):
+		WorldAgent.RemoveAgent(mobs[i])
+	for i in range(npcs.size() - 1, -1, -1):
+		WorldAgent.RemoveAgent(npcs[i])
 	Launcher.Root.remove_child(self)
+	queue_free()
 
 #
 func QueryProcessMode(delaySec : float = ActorCommons.MapProcessingToggleDelay):

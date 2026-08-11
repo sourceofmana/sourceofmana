@@ -2,7 +2,7 @@ name: "godot-ci export"
 on: push
 
 env:
-  GODOT_VERSION: 4.6
+  GODOT_VERSION: 4.7
   EXPORT_NAME: "Source of Mana"
   PROJECT_PATH: "."
 
@@ -30,7 +30,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.6
+      image: barichello/godot-ci:4.7
     name: Export ${{ matrix.name }}
 
     steps:
@@ -38,6 +38,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y libfontconfig1 unzip
 
       - name: Setup Godot templates
         run: |
@@ -49,19 +54,53 @@ jobs:
         env:
           DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
 
+      - name: Install Android build template
+        if: matrix.name == 'Android'
+        run: |
+          cd "$PROJECT_PATH"
+          BUILD_VERSION=$(godot --version | sed -E 's/\.(official|custom_build)\..*$//')
+          mkdir -p android/build
+          unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip -d android/build
+          echo "$BUILD_VERSION" > android/.build_version
+          echo "Installed Android build template version: $BUILD_VERSION"
+
       - name: Import assets
         run: |
           cd "$PROJECT_PATH"
-          godot --headless --editor --import --verbose --quit
+          godot --headless --editor --import --quit
 
       - name: Build ${{ matrix.name }}
         run: |
           mkdir -p "build/${{ matrix.name }}"
           cd "$PROJECT_PATH"
-          godot --headless --verbose --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
+          godot --headless --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
 
       - name: Upload Artifact - ${{ matrix.name }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.name }}
           path: build/${{ matrix.name }}
+
+  snap:
+    runs-on: ubuntu-latest
+    needs: builds
+    name: Pack Snap
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Linux build
+        uses: actions/download-artifact@v4
+        with:
+          name: Linux
+          path: .
+
+      - name: Build snap
+        uses: snapcore/action-build@v1
+        id: build
+
+      - name: Upload Snap
+        uses: actions/upload-artifact@v4
+        with:
+          name: Snap
+          path: ${{ steps.build.outputs.snap }}

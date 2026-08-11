@@ -3,10 +3,13 @@ class_name BaseAgent
 
 #
 signal agent_killed
+signal agent_damaged(value : int)
+signal agent_healed(value : int)
+signal enemy_killed(monsterID : int)
+signal target_selected(target : BaseAgent)
 
 #
 var agent : NavigationAgent2D			= null
-var entityRadius : int					= 0
 
 var actionTimer : Timer					= null
 var cooldownTimers : Dictionary[int, bool]	= {}
@@ -21,6 +24,7 @@ var currentVelocity : Vector2			= Vector2.ZERO
 var currentInput : Vector2				= Vector2.ZERO
 var currentWalkSpeed : Vector2			= Vector2.ZERO
 var currentSkillID : int				= DB.UnknownHash
+var defaultState : ActorCommons.State	= ActorCommons.State.UNKNOWN
 var requireFullUpdate : bool			= false
 var requireUpdate : bool				= false
 
@@ -71,10 +75,6 @@ func SetSkillCastID(skillID : int):
 		if self is AIAgent:
 			set_physics_process(true)
 
-func AddSkill(cell : SkillCell, proba : float):
-	if cell:
-		progress.AddSkill(cell, proba)
-
 func AddItem(item : BaseCell, proba : float):
 	if item and inventory:
 		while proba > 0.0:
@@ -99,7 +99,7 @@ func WalkToward(pos : Vector2):
 	if self is AIAgent:
 		set_physics_process(true)
 
-	if SkillCommons.CanCast(self):
+	if SkillCommons.IsStaticCasting(self):
 		Skill.Stopped(self)
 
 	hasCurrentGoal = true
@@ -160,19 +160,19 @@ func UpdateDeltas(delta : float):
 
 #
 func SetData():
-	entityRadius = data._radius
-	for skillID in data._skillSet:
-		AddSkill(DB.SkillsDB[skillID], data._skillProba[skillID])
-
-	if data._state != ActorCommons.State.UNKNOWN:
-		SetState(data._state)
+	if defaultState == ActorCommons.State.UNKNOWN and data._state != ActorCommons.State.UNKNOWN:
+		defaultState = data._state
+	if defaultState != ActorCommons.State.UNKNOWN:
+		SetState(defaultState)
 
 	# Navigation
-	if !(data._behaviour & AICommons.Behaviour.IMMOBILE):
-		if self is PlayerAgent:
-			agent = FileSystem.LoadEntityComponent("navigations/PlayerAgent")
-		else:
-			agent = FileSystem.LoadEntityComponent("navigations/NPAgent")
+	if self is AIAgent:
+		if not AICommons.IsStationary(self):
+			agent = ActorCommons.NPAgentScene.instantiate()
+	elif self is PlayerAgent:
+		agent = ActorCommons.PlayerAgentScene.instantiate()
+
+	if agent:
 		agent.set_radius(data._radius)
 		agent.set_neighbor_distance(data._radius * 2.0)
 		agent.set_avoidance_priority(clampf(data._radius / float(ActorCommons.MaxEntityRadiusSize), 0.0, 1.0))
@@ -183,7 +183,7 @@ func RefreshWalkSpeed():
 	var speed : float = Formula.GetWalkSpeed(stat)
 	if agent:
 		agent.set_max_speed(speed)
-	currentWalkSpeed = Vector2(speed, speed)
+		currentWalkSpeed = Vector2(speed, speed)
 
 #
 func Damage(_caller : BaseAgent):
@@ -202,6 +202,7 @@ func GetNextPortShapeID() -> int:
 func Killed():
 	agent_killed.emit(self)
 	SetSkillCastID(DB.UnknownHash)
+	SetState(ActorCommons.State.DEATH)
 
 func Kill():
 	stat.SetHealth(-stat.current.maxHealth)
@@ -230,21 +231,25 @@ func _physics_process(_delta : float):
 	else:
 		_velocity_computed(currentInput * currentWalkSpeed)
 
+	NotifyPosition()
+
+func NotifyPosition():
 	if requireFullUpdate:
 		requireFullUpdate = false
 		requireUpdate = false
-		Network.NotifyNeighbours(self, "FullUpdateEntity", [velocity, position, currentOrientation, state, currentSkillID, stat.isRunning], true, true)
+		Network.NotifyNeighbours(self, "FullUpdateEntity", [get_rid().get_id(), velocity, position, currentOrientation, state, currentSkillID, stat.isRunning, NetworkCommons.FrameSeq()], true, true)
 	elif requireUpdate:
 		requireUpdate = false
-		Network.NotifyNeighbours(self, "UpdateEntity", [velocity, position], true, true)
+		Network.NotifyNeighbours(self, "UpdateEntity", [get_rid().get_id(), velocity, position, NetworkCommons.FrameSeq()], true, true)
 
 func _velocity_computed(safeVelocity : Vector2i):
 	if stat.health <= 0:
 		SetState(ActorCommons.State.DEATH)
-	elif SkillCommons.CanCast(self):
+	elif SkillCommons.IsStaticCasting(self):
 		SetState(DB.SkillsDB[currentSkillID].state)
 	elif safeVelocity == Vector2i.ZERO:
-		SetState(ActorCommons.State.IDLE)
+		if defaultState == ActorCommons.State.UNKNOWN:
+			SetState(ActorCommons.State.IDLE)
 	else:
 		SetState(ActorCommons.State.WALK)
 

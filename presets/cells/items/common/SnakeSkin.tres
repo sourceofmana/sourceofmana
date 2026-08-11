@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://bsnk1sk1n001"]
+
+[ext_resource type="Texture2D" uid="uid://dna3fwfrhp4od" path="res://data/graphics/items/common/snakeskin.png" id="1_skskin"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_skskin"]
+
+[resource]
+script = ExtResource("2_skskin")
+id = 841480588
+name = "Snake Skin"
+description = "A cured hide from a desert snake."
+icon = ExtResource("1_skskin")
+weight = 2.0
+stackable = true

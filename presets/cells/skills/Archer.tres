@@ -23,8 +23,9 @@ _modifiers = Array[ExtResource("2_cmomi")]([SubResource("Resource_klyse"), SubRe
 
 [resource]
 script = ExtResource("5_dspib")
+category = 1
 state = 3
-cellRange = 100
+skillRange = 100
 repeat = true
 projectilePreset = ExtResource("4_xq8n7")
 id = 2814726266

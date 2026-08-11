@@ -1,21 +1,36 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://c8nytjc6kurih"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_npq0n"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_bka63"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_wu7ge"]
+[ext_resource type="Resource" uid="uid://qc8rsv767i7m" path="res://presets/cells/skills/SonicScream.tres" id="3_cmusj"]
+[ext_resource type="AudioStream" uid="uid://cchod7sufq5er" path="res://data/sounds/entities/bat/attack.ogg" id="4_bka63"]
+[ext_resource type="AudioStream" uid="uid://did2kqv51vboy" path="res://data/sounds/entities/bat/death.ogg" id="5_p1o7w"]
+[ext_resource type="PackedScene" uid="uid://q0vjlx00rv0n" path="res://presets/entities/sprites/Bat.tscn" id="spr_Bat"]
 
 [resource]
 script = ExtResource("2_wu7ge")
 _id = 193452188
 _name = "Bat"
-_spritePreset = "Bat"
-_collision = "Medium"
+_spritePreset = ExtResource("spr_Bat")
 _radius = 12
-_equipment = Array[ExtResource("1_npq0n")]([null, null, null, null, null, null, null, null])
 _stats = {
-"attack": 5,
-"defense": 5,
-"level": 1,
-"walkSpeed": 100.0
+"attack": 10,
+"baseExp": 6,
+"castAttackDelay": 0.4,
+"cooldownAttackDelay": 0.3,
+"defense": 2,
+"dodgeRate": 0.1,
+"level": 3,
+"mattack": 8,
+"maxHealth": 90,
+"walkSpeed": 120.0
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_npq0n")]([null, null, null, null, null, null, null, null])
+_skills = Dictionary[ExtResource("2_bka63"), float]({
+ExtResource("3_cmusj"): 1.0
+})
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("4_bka63"),
+4: ExtResource("5_p1o7w")
+})

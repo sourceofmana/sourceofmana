@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://cpeterships01"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_nshyd"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_h0mfk"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="2_parent"]
+[ext_resource type="Texture2D" uid="uid://d208cr5snw7e1" path="res://data/graphics/sprites/npcs/peter.png" id="3_tex"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_skill"]
+
+[resource]
+script = ExtResource("2_h0mfk")
+_parent = ExtResource("2_parent")
+_id = 232785317
+_name = "Peter"
+_stats = {
+"gender": "Male",
+"race": "Human",
+"skintone": "Dark"
+}
+_equipment = Array[ExtResource("1_nshyd")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("3_tex")

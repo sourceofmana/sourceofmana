@@ -1,21 +1,37 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://cxxqd4v8rgvai"]
 
+[ext_resource type="AudioStream" uid="uid://bbidj13nujoaq" path="res://data/sounds/entities/turtle/hit.ogg" id="1_isy23"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_t7tku"]
+[ext_resource type="AudioStream" uid="uid://dbsh5v35cpyfg" path="res://data/sounds/entities/turtle/dodge.ogg" id="2_cl462"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_dqej7"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_i0lnl"]
+[ext_resource type="AudioStream" uid="uid://bcy66oty8otfw" path="res://data/sounds/entities/turtle/attack.ogg" id="6_veml0"]
+[ext_resource type="AudioStream" uid="uid://bwlj4atqbps40" path="res://data/sounds/entities/turtle/death.ogg" id="7_qx8wk"]
+[ext_resource type="PackedScene" uid="uid://byvgi6883q6ux" path="res://presets/entities/sprites/Turtle.tscn" id="spr_Turtle"]
 
 [resource]
 script = ExtResource("2_dqej7")
 _id = 3562408837
 _name = "Turtle"
-_spritePreset = "Turtle"
-_collision = "Medium"
+_spritePreset = ExtResource("spr_Turtle")
 _radius = 10
-_equipment = Array[ExtResource("1_t7tku")]([null, null, null, null, null, null, null, null])
 _stats = {
-"attack": 1,
-"defense": 10,
-"level": 1,
+"attack": 15,
+"baseExp": 15,
+"castAttackDelay": 1.0,
+"cooldownAttackDelay": 1.5,
+"defense": 35,
+"level": 10,
+"maxHealth": 250,
+"mdefense": 40,
 "walkSpeed": 30.0
 }
-_skillSet = PackedInt64Array()
-_drops = PackedInt64Array()
+_equipment = Array[ExtResource("1_t7tku")]([null, null, null, null, null, null, null, null])
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_veml0"),
+4: ExtResource("7_qx8wk")
+})
+_alterationSFX = Dictionary[int, AudioStream]({
+0: ExtResource("1_isy23"),
+3: ExtResource("2_cl462")
+})

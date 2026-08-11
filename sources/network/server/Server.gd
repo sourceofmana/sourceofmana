@@ -2,7 +2,7 @@ extends NetInterface
 class_name NetServer
 
 # Auth
-func CreateAccount(accountName : String, password : String, email : String, peerID : int):
+func CreateAccount(accountName : String, password : String, email : String, rememberMe : bool, platform : int, peerID : int):
 	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if not peer:
@@ -16,10 +16,12 @@ func CreateAccount(accountName : String, password : String, email : String, peer
 				err = NetworkCommons.AuthError.ERR_NAME_AVAILABLE
 			else:
 				Network.accounts_list_update.emit()
-				peer.SetAccount(Launcher.SQL.Login(accountName, password))
+				var accountData : Peers.AccountData = Launcher.SQL.ValidateAuthPassword(accountName, password)
+				if accountData:
+					err = Peers.FinalizeLogin(peer, accountName, accountData, platform, rememberMe)
 	Network.AuthError(err, peerID)
 
-func ConnectAccount(accountName : String, password : String, peerID : int):
+func LoginWithPassword(accountName : String, password : String, rememberMe : bool, platform : int, peerID : int):
 	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if not peer:
@@ -27,15 +29,84 @@ func ConnectAccount(accountName : String, password : String, peerID : int):
 	else:
 		err = NetworkCommons.CheckAuthInformation(accountName, password)
 		if err == NetworkCommons.AuthError.ERR_OK:
-			peer.SetAccount(Launcher.SQL.Login(accountName, password))
-			if peer.accountID == NetworkCommons.PeerUnknownID:
+			var accountData : Peers.AccountData = Launcher.SQL.ValidateAuthPassword(accountName, password)
+			if not accountData:
 				err = NetworkCommons.AuthError.ERR_AUTH
-			elif Peers.IsBanned(peer.accountID):
-				peer.SetAccount(Peers.DisconnectedAccount)
-				err = NetworkCommons.AuthError.ERR_BANNED
 			else:
-				Launcher.SQL.UpdateAccount(peer.accountID)
+				err = Peers.FinalizeLogin(peer, accountName, accountData, platform, rememberMe)
 	Network.AuthError(err, peerID)
+
+func LoginWithToken(accountName : String, token : String, platform : int, peerID : int):
+	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_OK
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer:
+		err = NetworkCommons.AuthError.ERR_NO_PEER_DATA
+	else:
+		var accountID : int = Launcher.SQL.GetAccountID(accountName)
+		if accountID == NetworkCommons.PeerUnknownID:
+			err = NetworkCommons.AuthError.ERR_TOKEN
+		else:
+			var ipAddress : String = Peers.GetPeerIP(peerID)
+			var tokenHash : String = Hasher.HashPassword(token)
+			var accountData : Peers.AccountData = Launcher.SQL.ValidateAuthToken(accountID, tokenHash, ipAddress)
+			if not accountData:
+				err = NetworkCommons.AuthError.ERR_TOKEN
+			else:
+				err = Peers.FinalizeLogin(peer, accountName, accountData, platform, false)
+				Launcher.SQL.RefreshAuthToken(peer.accountID, ipAddress)
+	Network.AuthError(err, peerID)
+
+func RequestPasswordReset(accountName : String, peerID : int):
+	if not Launcher.Email or not Launcher.Email.IsConfigured():
+		Network.AuthError(NetworkCommons.AuthError.ERR_RESET_UNAVAILABLE, peerID)
+		return
+
+	var accountID : int = Launcher.SQL.GetAccountID(accountName)
+	if accountID != NetworkCommons.PeerUnknownID:
+		if not Launcher.Email.HasRecentReset(accountID):
+			var email : String = Launcher.SQL.GetAccountEmail(accountID)
+			if not email.is_empty():
+				var code : String = Hasher.GenerateResetCode()
+				var codeHash : String = Hasher.HashPassword(code)
+				Launcher.Email.CreateReset(accountID, codeHash)
+				Launcher.Email.SendPasswordResetEmail(email, code)
+
+	Network.AuthError(NetworkCommons.AuthError.ERR_RESET_EMAIL_SENT, peerID)
+
+func ConfirmPasswordReset(accountName : String, code : String, newPassword : String, peerID : int):
+	var err : NetworkCommons.AuthError = NetworkCommons.AuthError.ERR_RESET_INVALID_CODE
+
+	var passwordErr : NetworkCommons.AuthError = NetworkCommons.CheckPasswordInformation(newPassword)
+	if passwordErr == NetworkCommons.AuthError.ERR_OK and NetworkCommons.CheckResetCode(code):
+		var accountID : int = Launcher.SQL.GetAccountID(accountName)
+		if accountID != NetworkCommons.PeerUnknownID:
+			var codeHash : String = Hasher.HashPassword(code)
+			if Launcher.Email.ValidateReset(accountID, codeHash):
+				Launcher.SQL.UpdateAccountPassword(accountID, newPassword)
+				Launcher.Email.RemoveReset(accountID)
+				Launcher.SQL.RemoveAllAuthTokens(accountID)
+				err = NetworkCommons.AuthError.ERR_RESET_PASSWORD_UPDATED
+
+	Network.AuthError(err, peerID)
+
+func ChangePassword(currentPassword : String, newPassword : String, peerID : int):
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer or peer.accountID == NetworkCommons.PeerUnknownID:
+		Network.AuthError(NetworkCommons.AuthError.ERR_NO_PEER_DATA, peerID)
+		return
+
+	var passwordErr : NetworkCommons.AuthError = NetworkCommons.CheckPasswordInformation(newPassword)
+	if passwordErr != NetworkCommons.AuthError.ERR_OK:
+		Network.AuthError(NetworkCommons.AuthError.ERR_PASSWORD_CHANGE_WRONG, peerID)
+		return
+
+	if not Launcher.SQL.CheckAccountPassword(peer.accountID, currentPassword):
+		Network.AuthError(NetworkCommons.AuthError.ERR_PASSWORD_CHANGE_WRONG, peerID)
+		return
+
+	Launcher.SQL.UpdateAccountPassword(peer.accountID, newPassword)
+	Launcher.SQL.RemoveAllAuthTokens(peer.accountID)
+	Network.AuthError(NetworkCommons.AuthError.ERR_PASSWORD_CHANGE_OK, peerID)
 
 func DisconnectAccount(peerID : int):
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
@@ -97,7 +168,6 @@ func DeleteCharacter(charName : String, peerID : int):
 	Network.CharacterError(err, peerID)
 	return err
 
-
 func ConnectCharacter(nickname : String, peerID : int):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
@@ -122,7 +192,10 @@ func ConnectCharacter(nickname : String, peerID : int):
 					peer.SetAgent(agent.get_rid().get_id())
 					agent.SetCharacterInfo(charInfo, peer.characterID)
 					Launcher.SQL.CharacterLogin(peer.characterID)
-					Util.PrintLog("Server", "Player connected: %s (%d)" % [nickname, peerID])
+
+					var ip : String = Peers.GetPeerIP(peerID)
+					Util.PrintLog("Server", "Player connected: %s (%d) via %s from %s" % [nickname, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), ip if not ip.is_empty() else "unavailable"])
+					Network.online_player_connected.emit(nickname)
 
 	Network.CharacterError(err, peerID)
 
@@ -131,11 +204,18 @@ func DisconnectCharacter(peerID : int):
 	if peer:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player:
-			Util.PrintLog("Server", "Player disconnected: %s (%d)" % [player.nick, peerID])
+			var playerName : String = player.nick
+			var ip : String = Peers.GetPeerIP(peerID)
+			Util.PrintLog("Server", "Player disconnected: %s (%d) via %s from %s" % [playerName, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), ip if not ip.is_empty() else "unavailable"])
+
 			Launcher.SQL.RefreshCharacter(player)
 			WorldAgent.RemoveAgent(player)
 			peer.SetAgent(NetworkCommons.PeerUnknownID)
+			Network.online_player_disconnected.emit(playerName)
 		peer.SetCharacter(NetworkCommons.PeerUnknownID)
+
+func RequestOnlineList(peerID : int):
+	Network.RefreshOnlineList(OnlineList.GetPlayerNames(), peerID)
 
 func CharacterListing(peerID : int):
 	var err : NetworkCommons.CharacterError = NetworkCommons.CharacterError.ERR_OK
@@ -156,13 +236,13 @@ func CharacterListing(peerID : int):
 # Navigation
 func SetClickPos(pos : Vector2, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player:
+	if player and not player.ownScript:
 		player.SetRelativeMode(false, Vector2.ZERO)
 		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player:
+	if player and not player.ownScript:
 		player.SetRelativeMode(true, direction.normalized())
 
 func ClearNavigation(peerID : int):
@@ -179,26 +259,10 @@ func SetViewportSize(halfWidth : float, halfHeight : float, peerID : int):
 		)
 
 # Triggers
-func TriggerWarp(peerID : int):
-	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player and player.ownScript == null:
-		var warp : WarpObject = Launcher.World.CanWarp(player)
-		if warp:
-			var nextMap : WorldMap = Launcher.World.GetMap(warp.destinationID)
-			if nextMap:
-				Launcher.World.Warp(player, nextMap, warp.getDestinationPos(player))
-				if warp is PortObject:
-					player.Morph(false, player.GetNextPortShapeID())
-
 func TriggerSit(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player:
 		player.SetState(ActorCommons.State.SIT)
-
-func TriggerRun(enable : bool, peerID : int):
-	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player:
-		player.SetRunning(enable)
 
 func TriggerRespawn(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
@@ -206,20 +270,26 @@ func TriggerRespawn(peerID : int):
 		player.Respawn()
 
 func TriggerEmote(emoteID : int, peerID : int):
-	Network.NotifyNeighbours(Peers.GetAgent(peerID), "EmotePlayer", [emoteID])
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player is PlayerAgent:
+		Network.NotifyNeighbours(player, "Emote", [player.get_rid().get_id(), emoteID])
 
-func TriggerChat(text : String, channelID : GUICommons.ChatChannel, peerID : int):
+func TriggerChat(channelName : String, text : String, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player:
-		match channelID:
-			GUICommons.ChatChannel.Local:
-				Network.NotifyNeighbours(player, "ChatAgent", [text])
-			GUICommons.ChatChannel.Global:
-				Network.NotifyGlobal("ChatGlobal", [player.nick, text])
-				if Launcher.Discord:
-					Launcher.Discord.SendToDiscord(player.nick, text)
-			_:
-				assert(false, "Unsupported chat channel ID (%s)" % channelID)
+		if channelName == str(GUICommons.ChatChannel.LOCAL):
+			Network.NotifyNeighbours(player, "ChatPlayer", [str(GUICommons.ChatChannel.LOCAL), player.nick, text, player.get_rid().get_id()])
+		elif channelName == str(GUICommons.ChatChannel.GLOBAL):
+			Network.NotifyGlobal("ChatPlayer", [str(GUICommons.ChatChannel.GLOBAL), player.nick, text, player.get_rid().get_id()])
+			if Launcher.Discord:
+				Launcher.Discord.SendToDiscord(player.nick, text)
+		else:
+			var target : PlayerAgent = Launcher.World.GetGlobalPlayer(channelName)
+			if not target:
+				Network.ChatSystem(channelName, "Player '%s' is no longer online" % channelName, peerID)
+			else:
+				Network.ChatPlayer(player.nick, player.nick, text, player.get_rid().get_id(), target.peerID)
+				Network.ChatPlayer(target.nick, player.nick, text, player.get_rid().get_id(), player.peerID)
 
 func TriggerChoice(choiceID : int, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
@@ -248,30 +318,22 @@ func TriggerExplore(peerID : int):
 	if player is PlayerAgent:
 		player.Explore()
 
-func TriggerCast(targetRID : int, skillID : int, peerID : int):
+func TriggerSkill(targetRID : int, skillID : int, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player and DB.SkillsDB.has(skillID):
 		var target : BaseAgent = WorldAgent.GetAgent(targetRID)
 		Skill.Cast(player, target, DB.SkillsDB[skillID])
 
-func TriggerMorph(peerID : int):
-	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if not player:
-		return
-	if player.stat.spirit == DB.UnknownHash:
-		return
-	var map : Object = WorldAgent.GetMapFromAgent(player)
-	if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
-		return
-	player.Morph(true)
-
 func TriggerSelect(targetRID : int, peerID : int):
 	var target : BaseAgent = WorldAgent.GetAgent(targetRID)
 	if target:
-		Network.UpdatePublicStats(targetRID, target.stat.level, target.stat.health, target.stat.hairstyle, target.stat.haircolor, target.stat.gender, target.stat.race, target.stat.skintone, target.stat.currentShape, peerID)
+		Network.UpdatePublicStats(targetRID, target.stat.level, target.stat.health, target.stat.current.maxHealth, target.stat.hairstyle, target.stat.haircolor, target.stat.gender, target.stat.race, target.stat.skintone, target.stat.currentShape, peerID)
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player:
+		player.target_selected.emit(player, target)
 
 # Stats
-func SetAttributes(strength, vitality, agility, endurance, concentration, peerID : int):
+func SetAttributes(strength : int, vitality : int, agility : int, endurance : int, concentration : int, peerID : int):
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if peer and peer.characterID != NetworkCommons.PeerUnknownID and player and player.stat:
@@ -286,19 +348,19 @@ func UseItem(itemID : int, peerID : int):
 		if player and ActorCommons.IsAlive(player) and player.inventory:
 			player.inventory.UseItem(cell)
 
-func DropItem(itemID : int, customfield : StringName, itemCount : int, peerID : int):
+func DropItem(itemID : int, customfield : StringName, itemCount : int, itemIndex : int, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
-			player.inventory.DropItem(cell, itemCount)
+			player.inventory.DropItem(cell, itemCount, itemIndex)
 
-func EquipItem(itemID : int, customfield : StringName, peerID : int):
+func EquipItem(itemID : int, customfield : StringName, itemIndex : int, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell and cell.slot != ActorCommons.Slot.NONE:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
-			player.inventory.EquipItem(cell)
+			player.inventory.EquipItem(cell, itemIndex)
 
 func UnequipItem(itemID : int, customfield : StringName, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
@@ -314,12 +376,12 @@ func PickupDrop(dropID : int, peerID : int):
 
 func RetrieveCharacterInformation(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player and player.progress:
-		Network.RefreshProgress(player.progress.skills, player.progress.quests, player.progress.bestiary, peerID)
-	if player and player.inventory:
-		Network.RefreshInventory(player.inventory.ExportInventory(), peerID)
-	if player and player.stat:
-		Network.UpdateAttributes(player.stat.strength, player.stat.vitality, player.stat.agility, player.stat.endurance, player.stat.concentration, peerID)
+	if player:
+		player.RequestStatsUpdate()
+		if player.progress:
+			Network.RefreshProgress(player.progress.skills, player.progress.quests, player.progress.bestiary, peerID)
+		if player.inventory:
+			Network.RefreshInventory(player.inventory.ExportInventory(), peerID)
 
 # Commands
 func TriggerCommand(command : String, peerID : int):
@@ -329,28 +391,113 @@ func TriggerCommand(command : String, peerID : int):
 
 # Peer handling
 func ConnectPeer(peerID : int):
-	Util.PrintInfo("Server", "Peer connected: %d with %s" % [peerID, "Websocket" if useWebSocket else "ENet"])
-	Peers.AddPeer(peerID, useWebSocket)
+	var transportType : Peers.TransportType = Peers.TransportType.ENET
+	if isOffline:
+		transportType = Peers.TransportType.OFFLINE
+	elif useWebSocket:
+		transportType = Peers.TransportType.WEBSOCKET
+	Util.PrintInfo("Server", "Peer connected: %d with %s" % [peerID, Peers.GetTransportName(transportType)])
+
+	Peers.AddPeer(peerID, transportType)
+
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if peer and not isOffline:
+		peer.primaryConnected = true
+		peer.ipAddress = Peers.ResolvePeerIP(peerID)
 	bulks[peerID] = {}
+
 	if currentPeer and currentPeer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
 		var clientPeer : PacketPeer = currentPeer.get_peer(peerID)
 		if clientPeer and clientPeer is ENetPacketPeer:
 			clientPeer.set_timeout(NetworkCommons.Timeout, NetworkCommons.TimeoutMin, NetworkCommons.TimeoutMax)
 
 func DisconnectPeer(peerID : int):
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer:
+		return
+	peer.primaryConnected = false
+	bulks.erase(peerID)
+	if peer.rtcConnected:
+		Util.PrintInfo("Server", "Primary transport dropped, peer stays on WebRTC: %d" % peerID)
+		return
+	FullyDisconnect(peerID)
+
+func FullyDisconnect(peerID : int):
 	Util.PrintInfo("Server", "Peer disconnected: %d" % peerID)
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if peer and peer.accountID != NetworkCommons.PeerUnknownID:
+		DisconnectAccount(peerID)
+	Peers.RemovePeer(peerID)
+
+# WebRTC upgrade
+func RequestRtcUpgrade(peerID : int):
+	if Network.WebRTCServer:
+		Network.WebRTCServer.StartRtcUpgrade(peerID)
+
+func RtcAnswer(sdp : String, peerID : int):
+	if Network.WebRTCServer:
+		Network.WebRTCServer.HandleRtcAnswer(peerID, sdp)
+
+func RtcCandidateToServer(media : String, index : int, candidateName : String, peerID : int):
+	if Network.WebRTCServer:
+		Network.WebRTCServer.AddRtcIceCandidate(peerID, media, index, candidateName)
+
+func RtcReady(peerID : int):
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if peer:
-		bulks.erase(peerID)
-		if peer.accountID != NetworkCommons.PeerUnknownID:
-			DisconnectAccount(peerID)
-		Peers.RemovePeer(peerID)
+		peer.rtcConnected = true
+	Peers.SetTransport(peerID, Peers.TransportType.WEBRTC)
+	Util.PrintInfo("Server", "Peer upgraded to WebRTC: %d" % peerID)
+
+func StartRtcUpgrade(peerID : int):
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer:
+		return
+
+	Network.RtcConfig(NetworkCommons.IceServers, peerID)
+	var connection : WebRTCPeerConnection = CreateRtcConnection(peerID)
+	connection.create_offer()
+
+func HandleRtcAnswer(peerID : int, sdp : String):
+	var connection : WebRTCPeerConnection = rtcConnections.get(peerID, null)
+	if connection:
+		connection.set_remote_description("answer", sdp)
+
+func _OnRtcPeerConnected(peerID : int):
+	bulks[peerID] = {}
+	Util.PrintInfo("Server", "WebRTC peer connected, awaiting ready: %d" % peerID)
+
+func _OnRtcPeerDisconnected(peerID : int):
+	bulks.erase(peerID)
+	RemoveRtcConnection(peerID)
+
+	var peer : Peers.Peer = Peers.GetPeer(peerID)
+	if not peer:
+		return
+
+	peer.rtcConnected = false
+	if peer.primaryConnected:
+		Peers.SetTransport(peerID, Peers.TransportType.WEBSOCKET)
+		Util.PrintInfo("Server", "Peer WebRTC dropped, reverted to WebSocket: %d" % peerID)
+	else:
+		FullyDisconnect(peerID)
 
 #
 func _enter_tree():
 	if isOffline:
 		interfaceID = NetworkCommons.PeerAuthorityID
 		ConnectPeer(interfaceID)
+		return
+
+	if useWebRTC:
+		RtcMultiplayerPeer().create_server(NetworkCommons.RtcChannelsConfig)
+		if not multiplayerAPI.peer_connected.is_connected(_OnRtcPeerConnected):
+			multiplayerAPI.peer_connected.connect(_OnRtcPeerConnected)
+		if not multiplayerAPI.peer_disconnected.is_connected(_OnRtcPeerDisconnected):
+			multiplayerAPI.peer_disconnected.connect(_OnRtcPeerDisconnected)
+		multiplayerAPI.multiplayer_peer = currentPeer
+		interfaceID = multiplayerAPI.get_unique_id()
+		Util.PrintLog("Server", "WebRTC transport initialized")
 		return
 
 	if not multiplayerAPI.peer_connected.is_connected(ConnectPeer):
@@ -370,11 +517,14 @@ func _enter_tree():
 		serverCert.load(NetworkCommons.ServerCertPath)
 		tlsOptions = TLSOptions.server(serverKey, serverCert)
 
+	multiplayerAPI.auth_callback = _ValidateAuth
+	multiplayerAPI.auth_timeout = NetworkCommons.LoginAttemptTimeout
+
 	var ret : Error = FAILED
 	if useWebSocket:
 		ret = currentPeer.create_server(serverPort, "*", tlsOptions)
 	else:
-		ret = currentPeer.create_server(serverPort)
+		ret = currentPeer.create_server(serverPort, NetworkCommons.MaxPlayerCount)
 		if ret == OK and tlsOptions:
 			ret = currentPeer.host.dtls_server_setup(tlsOptions)
 
@@ -389,6 +539,13 @@ func _enter_tree():
 			"Local" if isLocal else "Public",
 			"Testing" if LauncherCommons.IsTesting else "Release"
 		])
+
+func _ValidateAuth(peerID: int, data: PackedByteArray):
+	if data.size() >= 8 and data.decode_s64(0) == NetworkCommons.ProtocolVersion:
+		multiplayerAPI.send_auth(peerID, PackedByteArray([1]))
+		multiplayerAPI.complete_auth(peerID)
+	else:
+		currentPeer.disconnect_peer(peerID)
 
 func Destroy():
 	if multiplayerAPI.peer_connected.is_connected(ConnectPeer):

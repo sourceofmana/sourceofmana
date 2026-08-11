@@ -36,7 +36,7 @@ She expresses a desire for a sugary treat. You may go to the bakery to get her a
 
 - Watchman Ekiru: Ekiru warns you against going into the desert as unprepared as you were the first time around. He tells you about the troubles the local cactus farmers are having with oversized maggots and suggests that you could get some training by helping the town guard there.
 
-In the cactus fields, Watchman Kyle provides a combat tutorial and a quest to kill maggots. {exp} You are sent back to Watchman Ekiru. You can trade 20x [Maggot Slime] with Elanore in exchange for a health potion {repeatable}.
+In the cactus fields, Watchman Kael provides a combat tutorial and a quest to kill maggots. {exp} You are sent back to Watchman Ekiru. You can trade 20x [Maggot Slime] with Elanore in exchange for a health potion {repeatable}.
 
 Watchman Eriku is impressed with your work and decides to recommend you for the upcoming expedition to the Old Tulimshar Mines, located outside the city walls and deeper into the desert. You are directed into the guard's barracks where you meet Vigilant Miro, the high ranking officer who will lead the expedition. You are given a basic set of armour and a rusty axe. {Worn Armour set, Rusty Axe}
 

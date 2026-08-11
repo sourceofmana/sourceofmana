@@ -163,7 +163,10 @@ func GenerateIconPreviews():
 			await CreateMaterialPreview(icon, shader, cacheKey)
 
 func CreateMaterialPreview(texture : Texture2D, material : Material, cacheKey : String) -> ImageTexture:
-	if not texture or not material:
+	if not Engine.is_editor_hint() or not texture or not material:
+		return null
+
+	if DisplayServer.get_name() == "headless":
 		return null
 
 	if iconPreviewCache.has(cacheKey):

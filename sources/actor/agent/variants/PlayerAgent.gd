@@ -4,19 +4,25 @@ class_name PlayerAgent
 # Player-specific variables
 var peerID : int						= NetworkCommons.PeerUnknownID
 var lastStat : ActorStats				= ActorStats.new()
+var triggerShape : CollisionShape2D		= CollisionShape2D.new()
+var circleShape : CircleShape2D			= CircleShape2D.new()
 var respawnDestination : Destination	= null
 var exploreOrigin : Destination			= null
 var ownScript : NpcScript				= null
+var isWarping : bool					= false
 
 # Regen
-var regenTimer : Timer					= null
+var regenTimer : Timer					= Timer.new()
 var statsUpdatePending : bool			= false
 
 # Visible surrounding actors
 var visibleAgents : Dictionary[int, bool]= {}
 var lastCheckedPosition : Vector2		= Vector2.ZERO
-var visibilityTimer : float				= 0.0
+var visibilityTimer : Timer				= Timer.new()
 var visibilityHalfSize : Vector2		= Vector2(NetworkCommons.MaxVisibilityHalfWidth, NetworkCommons.MaxVisibilityHalfHeight)
+
+# Player-specific signals
+signal warp_confirmed
 
 #
 static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.PLAYER
@@ -36,14 +42,14 @@ static func GetSpawnFromData(charData : Dictionary) -> SpawnObject:
 		var spawnLocation : SpawnObject = SpawnObject.new()
 		spawnLocation.map				= Launcher.World.GetMap(destination.mapID)
 		spawnLocation.spawn_position	= destination.pos
-		spawnLocation.type				= "Player"
+		spawnLocation.type				= ActorCommons.Type.PLAYER
 		spawnLocation.id				= DB.PlayerHash
 		return spawnLocation
 	return WorldAgent.defaultSpawnLocation
 
 static func GetRespawnFromData(charData : Dictionary) -> Destination:
 	var destination : Destination = GetDestinationFromData(charData, "respawn_map", "respawn_x", "respawn_y")
-	return destination if destination.mapID != DB.UnknownHash else Destination.new(WorldAgent.defaultSpawnLocation.map.id, WorldAgent.defaultSpawnLocation.spawn_position)
+	return destination if destination.mapID != DB.UnknownHash else Destination.new(WorldAgent.defaultSpawnLocation.map.id, LauncherCommons.GetRandomStartPos())
 
 static func GetExploreFromData(charData : Dictionary) -> Destination:
 	return GetDestinationFromData(charData, "explore_map", "explore_x", "explore_y")
@@ -51,6 +57,7 @@ static func GetExploreFromData(charData : Dictionary) -> Destination:
 func SetCharacterInfo(charData : Dictionary, charID : int):
 	# Stats
 	stat.SetStats(charData)
+	stat.ResetAttributesIfOverBudget()
 	# Inventory
 	var inventoryData : Array[Dictionary] = Launcher.SQL.GetStorage(charID, 0)
 	inventory.ImportInventory(inventoryData)
@@ -79,9 +86,9 @@ func UpdateLastStats():
 	lastStat.currentShape != stat.currentShape:
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(self)
 		if inst:
-			Network.NotifyInstance(inst, "UpdatePublicStats", [get_rid().get_id(), stat.level, stat.health, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
+			Network.NotifyInstance(inst, "UpdatePublicStats", [get_rid().get_id(), stat.level, stat.health, stat.current.maxHealth, stat.hairstyle, stat.haircolor, stat.gender, stat.race, stat.skintone, stat.currentShape])
 		if lastStat.level != 0 and lastStat.level < stat.level:
-			Network.NotifyNeighbours(self, "LevelUp", [])
+			Network.NotifyNeighbours(self, "LevelUp", [get_rid().get_id()])
 		lastStat.level				= stat.level
 		lastStat.health				= stat.health
 		lastStat.hairstyle			= stat.hairstyle
@@ -150,19 +157,19 @@ func OnRegenTick():
 func RequestStatsUpdate():
 	if not statsUpdatePending:
 		statsUpdatePending = true
-		call_deferred("FlushStatsUpdate")
+		FlushStatsUpdate.call_deferred()
 
 func FlushStatsUpdate():
 	statsUpdatePending = false
 	UpdateLastStats()
 
 func CheckVisibility(neighbour : BaseAgent):
-	if not neighbour:
+	if not neighbour or ActorCommons.IsInvisibleToPlayers(neighbour):
 		return
-	if NetworkCommons.IsVisible(position, neighbour.position, visibilityHalfSize):
+	if NetworkCommons.IsAlwaysVisible(neighbour) or NetworkCommons.IsVisible(position, neighbour.position, visibilityHalfSize):
 		var agentRID : int = neighbour.get_rid().get_id()
 		if not visibleAgents.has(agentRID):
-			Network.Bulk("FullUpdateEntity", [agentRID, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, neighbour.stat.isRunning], peerID)
+			Network.Bulk("FullUpdateEntity", [agentRID, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, neighbour.stat.isRunning, NetworkCommons.FrameSeq()], peerID)
 		visibleAgents[agentRID] = true
 
 func UpdateVisibility():
@@ -181,7 +188,8 @@ func UpdateVisibility():
 		if neighbour != self:
 			CheckVisibility(neighbour)
 	for neighbour in inst.npcs:
-		CheckVisibility(neighbour)
+		if neighbour and neighbour.isVisible:
+			CheckVisibility(neighbour)
 	for neighbour in inst.mobs:
 		CheckVisibility(neighbour)
 
@@ -191,24 +199,39 @@ func UpdateVisibility():
 			Network.Bulk("RemoveEntity", [agentRID], peerID)
 			visibleAgents.erase(agentRID)
 
-func _physics_process(delta : float):
-	super._physics_process(delta)
-	visibilityTimer += delta
-	if visibilityTimer >= ActorCommons.VisibilityCheckTimeInternal or position.distance_squared_to(lastCheckedPosition) >= ActorCommons.VisibilityCheckDistSqrd:
+func NotifyPosition():
+	super.NotifyPosition()
+	if position.distance_squared_to(lastCheckedPosition) >= ActorCommons.VisibilityCheckDistSqrd:
 		lastCheckedPosition = position
-		visibilityTimer = 0.0
 		UpdateVisibility()
+
+# Override
+func SetData():
+	super.SetData()
+	circleShape.radius = data._radius
 
 func _ready():
 	super._ready()
 
-	regenTimer = Timer.new()
+	collision_mask = 0
+	triggerShape.set_name("TriggerShape")
+	circleShape.radius = 1.0
+	triggerShape.shape = circleShape
+	add_child.call_deferred(triggerShape)
+
 	regenTimer.set_name("RegenTimer")
 	regenTimer.set_one_shot(false)
 	regenTimer.set_wait_time(ActorCommons.RegenTickInterval)
 	regenTimer.autostart = true
 	regenTimer.timeout.connect(OnRegenTick)
 	add_child.call_deferred(regenTimer)
+
+	visibilityTimer.set_name("VisibilityTimer")
+	visibilityTimer.set_one_shot(false)
+	visibilityTimer.set_wait_time(ActorCommons.VisibilityCheckTimeInternal)
+	visibilityTimer.autostart = true
+	visibilityTimer.timeout.connect(UpdateVisibility)
+	add_child.call_deferred(visibilityTimer)
 
 	stat.entity_stats_updated.connect(RequestStatsUpdate)
 	stat.vital_stats_updated.connect(RequestStatsUpdate)
@@ -234,12 +257,13 @@ func Explore():
 func WarpTo(dest : Destination):
 	var nextMap : WorldMap = Launcher.World.GetMap(dest.mapID)
 	if nextMap:
-		Launcher.World.Warp(self, nextMap, dest.pos, dest.instance)
+		Launcher.World.Warp(self, nextMap, dest.pos, ActorCommons.Direction.UNKNOWN, dest.instance)
 
 func Killed():
 	super.Killed()
 	if ownScript:
 		ClearScript()
+		NpcCommons.ToggleContext(self, false)
 
 func UpdateDeltas(delta : float):
 	if ActorCommons.IsRunning(self):
@@ -250,8 +274,10 @@ func UpdateDeltas(delta : float):
 
 #
 func AddScript(npc : NpcAgent):
-	if npc and npc.playerScriptPreset:
-		ownScript = npc.playerScriptPreset.new(npc, self)
+	if npc:
+		SetRelativeMode(false, Vector2.ZERO)
+		ownScript = npc.playerScriptPreset.new(npc, self) if npc.playerScriptPreset else NpcScript.new(npc, self)
+		ownScript.PostInit()
 
 func ClearScript():
 	if ownScript:

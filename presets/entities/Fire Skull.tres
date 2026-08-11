@@ -2,23 +2,28 @@
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_akvej"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_yfu84"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_skill"]
+[ext_resource type="Resource" uid="uid://cot2eu3ix5rdm" path="res://presets/cells/skills/Flar.tres" id="4_flar"]
+[ext_resource type="Texture2D" uid="uid://dwh7x3gvrmogx" path="res://data/graphics/sprites/monsters/skull-fire.png" id="5_tex"]
+[ext_resource type="AudioStream" uid="uid://dnru4y5xrg2ue" path="res://data/sounds/entities/fire-skull/attack.ogg" id="6_n0w5d"]
+[ext_resource type="PackedScene" uid="uid://cwpq2bf8h07xi" path="res://presets/entities/sprites/Skull.tscn" id="spr_Skull"]
 
 [resource]
 script = ExtResource("2_yfu84")
 _id = 4234567318
 _name = "Fire Skull"
-_spritePreset = "Skull"
-_collision = "Medium"
+_spritePreset = ExtResource("spr_Skull")
 _radius = 12
-_equipment = Array[ExtResource("1_akvej")]([null, null, null, null, null, null, null, null])
-_customTexture = "sprites/monsters/skull-fire.png"
-_behaviour = 4
 _stats = {
 "level": 10,
 "walkSpeed": 50.0
 }
-_skillSet = PackedInt64Array(2089110122)
-_skillProba = Dictionary[int, float]({
-2089110122: 1.0
+_equipment = Array[ExtResource("1_akvej")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("5_tex")
+_behaviour = 4
+_skills = Dictionary[ExtResource("3_skill"), float]({
+ExtResource("4_flar"): 1.0
 })
-_drops = PackedInt64Array()
+_stateSFX = Dictionary[int, AudioStream]({
+3: ExtResource("6_n0w5d")
+})

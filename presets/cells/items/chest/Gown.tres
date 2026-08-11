@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cwyvspervas6b" path="res://data/graphics/items/chest/gown.png" id="1_cdryd"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_kckh3"]
-[ext_resource type="Material" uid="uid://bp6f0bq5m3hmr" path="res://presets/palettes/equipment/cloth-crimson.tres" id="3_kckh3"]
+[ext_resource type="Material" uid="uid://bp6f0bq5m3hmr" path="res://presets/palettes/shaders/equipment/cloth-crimson.tres" id="3_kckh3"]
 [ext_resource type="Texture2D" uid="uid://btfq82btgojns" path="res://data/graphics/sprites/equipment/chest/gown-male.png" id="4_4mv6x"]
 [ext_resource type="Texture2D" uid="uid://da3x8iaaaxxda" path="res://data/graphics/sprites/equipment/chest/gown-female.png" id="5_lr6ih"]
 

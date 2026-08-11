@@ -4,6 +4,7 @@ class_name ActorCommons
 # Actor enums
 enum Type
 {
+	UNKNOWN = -1,
 	PLAYER = 0,
 	MONSTER,
 	NPC
@@ -82,14 +83,14 @@ static func CheckTraits(traits : Dictionary) -> bool:
 	if "race" not in traits:
 		return false
 	var race : RaceData = DB.GetRace(traits["race"])
-	if not race or "skintone" not in traits or traits["skintone"] not in race._skins:
+	if not race or "skintone" not in traits or not race.HasSkin(traits["skintone"]):
 		return false
 	if "gender" not in traits:
 		return false
 	return true
 
 static func CheckAttributes(attributes : Dictionary) -> bool:
-	return (attributes.get("strength", 0) + attributes.get("vitality", 0) + attributes.get("agility", 0) + attributes.get("endurance") + attributes.get("concentration")) <= Formula.GetMaxAttributePoints(1)
+	return (attributes.get("strength", 0) + attributes.get("vitality", 0) + attributes.get("agility", 0) + attributes.get("endurance", 0) + attributes.get("concentration", 0)) <= Formula.GetMaxAttributePoints(1)
 
 enum Target
 {
@@ -175,25 +176,33 @@ const STATE_NAMES : PackedStringArray = [
 ]
 
 static func GetStateName(state : State) -> String:
+	if state <= State.UNKNOWN or state >= State.COUNT:
+		return ""
 	return STATE_NAMES[state]
 
-static func IsAlive(agent : Actor) -> bool:
-	return agent and agent.state != State.DEATH
+static func IsAlive(actor : Actor) -> bool:
+	return actor and actor.state != State.DEATH and actor.stat.health > 0
 
-static func IsAttacking(agent : Actor) -> bool:
-	return agent and agent.state == State.ATTACK
+static func IsAttacking(actor : Actor) -> bool:
+	return actor and actor.state == State.ATTACK
 
-static func IsSitting(agent : Actor) -> bool:
-	return agent and agent.state == State.SIT
+static func IsSitting(actor : Actor) -> bool:
+	return actor and actor.state == State.SIT
 
-static func IsWalking(agent : Actor) -> bool:
-	return agent and agent.state == State.WALK
+static func IsWalking(actor : Actor) -> bool:
+	return actor and actor.state == State.WALK
 
-static func IsRunning(agent : Actor) -> bool:
-	return IsWalking(agent) and agent.stat.isRunning
+static func IsRunning(actor : Actor) -> bool:
+	return IsWalking(actor) and actor.stat.isRunning
 
-static func IsTriggering(agent : Actor) -> bool:
-	return agent and agent.state == State.TRIGGER
+static func IsTriggering(actor : Actor) -> bool:
+	return actor and actor.state == State.TRIGGER
+
+static func IsHiddenFromMobs(actor : Actor) -> bool:
+	return actor and actor.stat and (actor.stat.isHidden or actor.stat.isInvisible)
+
+static func IsInvisibleToPlayers(actor : Actor) -> bool:
+	return actor and actor.stat and actor.stat.isInvisible
 
 #
 const slotChest : String					= "Chest"
@@ -244,6 +253,10 @@ static func GetSlotID(slot : String) -> Slot:
 		slotQuest:					return Slot.QUEST
 		_:							return Slot.BODY
 
+# Navigation
+const NPAgentScene : PackedScene			= preload(Path.EntityComponent + "navigations/NPAgent.tscn")
+const PlayerAgentScene : PackedScene		= preload(Path.EntityComponent + "navigations/PlayerAgent.tscn")
+
 # Visual
 const AllyTarget : Resource 				= preload("res://presets/entities/components/targets/Ally.tres")
 const EnemyTarget : Resource				= preload("res://presets/entities/components/targets/Enemy.tres")
@@ -265,6 +278,7 @@ static var PlayerEntityID : int				= "Player".hash()
 # Skill
 enum Alteration
 {
+	UNKNOWN = -1,
 	HIT = 0,
 	CRIT,
 	MISS,
@@ -272,6 +286,10 @@ enum Alteration
 	HEAL,
 	EXP,
 	GP,
+	LVL_UP,
+	SKILL_UP,
+	QUEST_COMPLETE,
+	QUEST_UPDATE
 }
 
 # Colors
@@ -287,9 +305,16 @@ const LevelDifferenceColor : float			= 5.0
 const NPCTextColor : Color					= Color.LIGHT_BLUE
 const MonsterTextColor : Color				= Color.DARK_SALMON
 
+# Sfx
+const SfxMaxDistance : float				= 500.0
+const SfxAlterationBus : StringName			= &"Alteration SFX"
+const SfxStateBus : StringName				= &"State SFX"
+
 # Interactive
 const interactionDisplayOffset : int		= 32
+const minVisualOffset : int					= 20
 const selectionRadius : int					= 24
+const targetRadius : int					= 12
 const emoteDelay : float					= 4.0
 const morphDelay : float					= 1.2
 const speechDelay : float					= 6.0
@@ -297,8 +322,27 @@ const speechDecreaseDelay : float			= 1.5
 const speechIncreaseThreshold : int			= 15
 const speechMaxWidth : int					= 256
 const speechExtraWidth : int				= 20
-const TargetMaxDistance : int				= 256 # ~8 Tile squared length
+const speechGroupXThreshold : int			= 150
+const speechGroupYThreshold : int			= 60
+const speechStackGap : int					= 4
+const speechGroupTweenDuration : float		= 0.15
+const TargetMaxDistance : int				= 256 # 8 Tile length
+const TargetWalkToDistance : int			= 192 # 6 Tile length
 static var TargetMaxSquaredDistance : float	= TargetMaxDistance * TargetMaxDistance
+
+# Distance
+static func IsSameActor(actor : Actor, target : Actor) -> bool:
+	return actor == target
+
+static func GetSkillRange(actor : Actor, skill : SkillCell) -> int:
+	return actor.stat.current.attackRange + (skill.skillRange if skill else 0)
+
+static func GetDistanceSquared(actor : Actor, pos : Vector2) -> float:
+	return Vector2.ZERO.distance_squared_to((actor.position - pos) * SkillCommons.PerspectiveIncrease)
+
+static func IsActorNear(entity : Actor, target : Actor, skillRange : int) -> bool:
+	var filteredRange : float = skillRange + entity.data._radius + target.data._radius
+	return Util.IsReachableSquared(entity.position, target.position, filteredRange * filteredRange)
 
 # Lifetime
 const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
@@ -317,15 +361,10 @@ const PickupSquaredDistance : float			= 48 * 48 # 1.5 Tile squared length
 const MaxStatValue : int					= 1 << 32
 const MaxPointPerAttributes : int			= 20
 const InventorySize : int					= 100
-const RunningStaminaCostPerSecond : int		= 10
-
-static func IsEquipped(cell : BaseCell) -> bool:
-	return cell and cell is ItemCell and \
-	cell.slot >= ActorCommons.Slot.FIRST_EQUIPMENT and cell.slot < ActorCommons.Slot.LAST_EQUIPMENT and \
-	CellCommons.IsSameCell(cell, Launcher.Player.inventory.equipment[cell.slot])
+const RunningStaminaCostPerSecond : int		= 5
 
 # Explore
-static var SailingDestination : Destination	= Destination.new(DB.OceanHash, Vector2(71 * 32, 55 * 32))
+static var SailingDestination : Destination	= Destination.new("Ocean".hash(), Vector2(71 * 32 + 16, 55 * 32 + 16))
 
 # Navigation
 const MaxEntityRadiusSize : int				= 256
@@ -347,9 +386,11 @@ const CameraZoomLevels : PackedVector2Array	= [
 	Vector2(2.0, 2.0),
 	Vector2(3.0, 3.0),
 ]
+const CameraZoomMin : int					= 0
 const CameraZoomDefault : int				= 3
 const CameraZoomDouble : int				= 6
 const CameraZoomTriple : int				= 7
+static var CameraZoomMax : int				= CameraZoomLevels.size()
 const CameraZoomDelay : float				= 0.4
 
 # Character
@@ -372,64 +413,34 @@ const CharacterScreenLocations : PackedVector2Array = [
 
 # New player
 static var DefaultTraits : Dictionary = {
-	"shape": DB.PlayerHash,
+	"shape": "Player".hash(),
 	"spirit": "Piou".hash()
 }
 static var DefaultAttributes : Dictionary = {
-	"strength": 10,
-	"vitality": 3,
-	"agility": 0,
-	"endurance": 0,
-	"concentration": 0,
+	"strength": 1,
+	"vitality": 1,
+	"agility": 1,
+	"endurance": 1,
+	"concentration": 1,
 }
 static var DefaultStats : Dictionary = {
 	"level": 1,
 }
 static var DefaultInventory : Array[Dictionary] = [
-	{ "item_id": "Apple".hash(), "count": 5, "customfield": "" },
-	{ "item_id": "Trousers".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "V-Neck Tee".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Scimitar".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Bone Knife".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Cleaver".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Gladius".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Piou Slayer".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Rock Knife".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Short Sword".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Raw Wood Shield".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Leather Shield".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Bandana Scarf".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Leather Pants".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Cloud Pants".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Funky Hat".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Desert Hood".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Leather Gloves".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Leather Armbands".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Leather Boots".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Desert Boots".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Tank Top".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Crop Top".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Leather Shirt".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Cotton Shirt".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Letter".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Jean Chaps".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Shorts".hash(), "count": 1, "customfield": "Cerulean" },
-	{ "item_id": "Desert Jacket".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Desert Armor".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Ghutra".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Desert Goggles".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Gown".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Gold Bracelets".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Silver Bracelets".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Daim Boots".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Desert Armbands".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Desert Shield".hash(), "count": 1, "customfield": "" },
-	{ "item_id": "Tonori Crown".hash(), "count": 1, "customfield": "" },
 ]
 static var DefaultSkills : Array[Dictionary] = [
-	{ "skill_id": "Melee".hash(), "level": 1 },
-	{ "skill_id": "Flar".hash(), "level": 1 },
-	{ "skill_id": "Lum".hash(), "level": 1 },
-	{ "skill_id": "Inma".hash(), "level": 1 },
-	{ "skill_id": "Mana Burst".hash(), "level": 1 },
+	{ "skill_id": SkillCommons.SkillMeleeName.hash(), "level": 1 },
+	{ "skill_id": SkillCommons.SkillRunName.hash(), "level": 1 },
 ]
+static var DefaultSfx : Dictionary[ActorCommons.Alteration, AudioStream] = {
+	Alteration.HIT:				preload("res://data/sounds/alteration/hit.ogg"),
+	Alteration.CRIT:			preload("res://data/sounds/alteration/crit.ogg"),
+	Alteration.DODGE:			preload("res://data/sounds/alteration/dodge.ogg"),
+	Alteration.HEAL:			preload("res://data/sounds/alteration/heal.ogg"),
+	Alteration.EXP:				preload("res://data/sounds/alteration/exp.ogg"),
+	Alteration.GP:				preload("res://data/sounds/alteration/gp.ogg"),
+	Alteration.LVL_UP:			preload("res://data/sounds/alteration/levelup.ogg"),
+	Alteration.SKILL_UP:		preload("res://data/sounds/alteration/skillup.ogg"),
+	Alteration.QUEST_COMPLETE:	preload("res://data/sounds/alteration/quest-done.ogg"),
+	Alteration.QUEST_UPDATE:	preload("res://data/sounds/alteration/quest-update.ogg"),
+}
