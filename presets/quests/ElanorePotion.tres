@@ -6,10 +6,10 @@
 script = ExtResource("1_25ln0")
 id = 3984490417
 name = "Elanore's Potions"
-description = "Elanore needs ingredients to brew healing potions. Bring her six Maggot Slimes, one Water and one Cactus Drink."
+description = "Elanore needs ingredients to brew healing potions. Bring her six Maggot Slimes, one Water and one Pitaya."
 giver = "Elanore"
 giverLocation = "Tulimshar Gates"
-target = "Maggot Slime x6, Water x1, Cactus Drink x1"
+target = "Maggot Slime x6, Water x1, Pitaya x1"
 targetLocation = "Tulimshar region"
 reward = "Cactus Potion"
 metadata/_custom_type_script = "uid://bqxdwogial88g"

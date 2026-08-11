@@ -256,6 +256,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/items/usable/cactus-potion.png [Reid]
 ./graphics/items/usable/cactus-sour-candy.png [Enchilado]
 ./graphics/items/usable/croissant.png [Enchilado]
+./graphics/items/usable/pitaya.png [Enchilado] [Reid]
 ./graphics/items/weapon/boneknife.png [Enchilado]
 ./graphics/items/weapon/cleaver.png [Micksha]
 ./graphics/items/weapon/gladius.png [Reid]
