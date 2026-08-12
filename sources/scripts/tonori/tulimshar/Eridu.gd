@@ -94,7 +94,7 @@ func OnKeepLooking():
 	Mes("Take your time. The furnace is not going anywhere and neither am I.")
 
 func OnComplete():
-	Mes("Back in my smoke again? Good.")
+	Mes("Back for some glass? Good to see you.")
 	CompleteChoice()
 
 func CompleteChoice(previousChoice : int = -1):
@@ -146,7 +146,7 @@ func OnDecline():
 
 # Repeatable exchange
 func OnTradeReminder():
-	Mes("It takes %d of each of those ingredients for one bottle. Twice that and you get two. The arithmetic is not difficult." % SET_INGREDIENT)
+	Mes("It takes %d of each of those ingredients for one bottle. Twice that and you get two. It's simple, really." % SET_INGREDIENT)
 	CompleteChoice(0)
 
 func OnTrade():
