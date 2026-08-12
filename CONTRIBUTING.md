@@ -1,48 +1,75 @@
 # Contributing to Source of Mana
 
+Thanks for wanting to help. Come [chat with us](README.md#community--contribution) before starting anything bigger than a trivial fix, so your work fits the plan and doesn't go to waste.
+
+## Licensing
+
+Code is MIT, art and design are CC BY-SA 4.0. See [LICENSE.md](LICENSE.md) for the details and per-file credits.
+
+## Authorship
+
+When you open a PR, you are the author. You own the work and take full responsibility for it. If we find it was taken from someone else without respecting their license or credit, the PR is removed. This holds whether the work was made with AI or not.
+
 ## Code
 
-> [!IMPORTANT]
-> Please [chat](README.md#Contact) with us before working on anything more than a simple and trivial bugfix.
-> This is to ensure your work will actually be merged and that you will not be wasting your time.
+### Setup
 
-### Setting up your environment
+Install [Godot](https://godotengine.org/) (see the [README](README.md#about-the-project) for the version we use), clone the repo, and open it. That's it.
 
-We are using [Godot](https://godotengine.org/). We strive to use the latest version if possible.
-Look at [project.godot](project.godot), the value `config/features` will reveal which version we are currently using.
+Use whatever editor you like (Rider, VS Code, Vim...), but the result has to work in the Godot editor.
 
-### Formatting and style
+### Style
 
-See Godot's [GDScript style guide](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html).
+Follow Godot's [GDScript style guide](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html) and use [static typing](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/static_typing.html).
 
-Use [static typing](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/static_typing.html).
+Two things we care about:
+- **Names have meaning.** No `i`, no cryptic shorthand. Give loop indexes and everything else a real name.
+- **Comment only when it's useful.** Don't narrate the code. Doc comments are required on API-level functions in `ServiceBase` files and on generic NPC functions.
 
-You are expected to add [documentation comments](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_documentation_comments.html)
-wherever necessary.
+## Assets
 
-For example, a function called `LogMessageToChat` is already mostly self-explanatory but especially the function parameters still benefit from such documentation comments.
-A very short introduction to the function will also never hurt, as it helps to clarify the intended purpose of the function.
+Ready-to-use assets, source files, and works in progress live in the [art design repository](https://github.com/sourceofmana/artdesign).
 
-```gdscript
-## Adds a message to the chat window.
-## Uses [param message] for the message and [param category] as the category the message will be displayed in.
-## See [enum Message.categories] for all possible categories.
-func LogMessageToChat(message: String, category: String) -> void:
-    pass
+Tools we use:
+- **Tiled**, our level editor: maps, NPCs, scripts, effects, collisions.
+- **GIMP 3**, opens our layered `.xcf` source files.
+- **Aseprite**, our pixel art editor.
+- **Miro**, design, mechanics, lore, and story boards when planning a new chapter.
 
-```
+> We do not welcome AI-generated assets. Our game is hand-crafted: every pixel and tile is placed with a meaning. We'd rather respect our past and future artists than lean on generated assets.
 
-Take some inspiration from the [Zen of Python](https://peps.python.org/pep-0020/).
+## Game data
 
-## Art
+Use Godot's Game Data tab to view, add, and edit entries (items, skills, NPCs, and more). How-to guides will live in `docs/` (work in progress).
 
-> [!CAUTION]
-> We do not welcome AI "art".
+## Worldbuilding
 
-See our [art design repository](https://github.com/sourceofmana/artdesign).
+The [designs/](designs) directory holds the lore. Read it before adding story or dialogue so the world stays consistent, and match its tone.
 
-## Game content
+## Bug reports
 
-We use [Tiled](mapeditor.org) to make maps.
+Search existing issues first. If it's new, open one with clear steps to reproduce.
 
-The [designs/](/designs) directory contains lore information necessary for a consistent world.
+## Roadmap
+
+We work in chapters, each one within its own milestone.
+- **Milestone issues** are the focus for the next release.
+- **Backlog issues** are open for anyone, not urgent. Look for `good first issue` and `help wanted`.
+
+## Proposing a change
+
+Talk to us on Discord or comment on an existing issue before you start anything. Your time is worth a lot, so let's make sure it goes where it's most useful. Even a small fix might have a better solution, and a change that doesn't fit the roadmap can be turned down no matter how good it is.
+
+## Scope
+
+We're a classic fantasy MMORPG with a 2D pixel art style. No guns, no lightsabers, nothing that goes against our [design direction](designs) as they are meant to define what belongs in the world.
+
+## Testing
+
+Play through your change in the Godot editor before opening a PR. If it touches anything network related, test it in multiplayer too. Watch for errors, failed asserts, and warnings, and clear them before sending.
+
+## Pull requests
+
+- Keep it focused: one topic per PR.
+- Say what it does and why.
+- No new assert or warnings, the project treats them as errors.
