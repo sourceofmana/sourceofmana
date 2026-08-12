@@ -78,8 +78,8 @@ func OnZuni():
 	Mes("They have lived in the Tonori desert for a very long time. In fact, they still tell stories of this land before it was even a desert.")
 	Mes("They've always traded with Tulimshar and are mostly friendly towards us, but only as long as we don't send our soldiers too far outside our walls.")
 	Mes("Whenever that has happened in the past they've fought us back until we gave up. I respect that about them, they have clear boundaries and will defend their homeland.")
-	Choice("Bah! They seem like uncivilised nomads to me.", OnZuniDismissal)
 	Choice("It would be interesting to meet them!", OnZuniMarket)
+	Choice("Bah! They seem like uncivilised nomads to me.", OnZuniDismissal)
 
 func OnZuniDismissal():
 	Mes("Right...")
