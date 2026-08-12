@@ -34,11 +34,11 @@ func OnCheckNickos():
 	Mes("I will be. I need to catch my breath.")
 	Mes("Do you have anything on you that could help?")
 	var cactusPotionID : int = DB.GetCellHash("Cactus Potion")
-	var cactusDrinkID : int = DB.GetCellHash("Cactus Drink")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
 	if HasItem(cactusPotionID):
 		Choice("Yes. Try this. [x1 Cactus Potion]", OnCactusPotion)
-	if HasItem(cactusDrinkID):
-		Choice("Yes. Try this. [x1 Cactus Drink]", OnCactusDrink)
+	if HasItem(pitayaID):
+		Choice("Yes. Try this. [x1 Pitaya]", OnPitaya)
 	Choice("No, I'm sorry. I have nothing.", OnNothingOnMe)
 
 func OnCactusPotion():
@@ -49,8 +49,8 @@ func OnCactusPotion():
 	else:
 		Action(OnNothingOnMe)
 
-func OnCactusDrink():
-	var id : int = DB.GetCellHash("Cactus Drink")
+func OnPitaya():
+	var id : int = DB.GetCellHash("Pitaya")
 	if HasItem(id):
 		RemoveItem(id)
 		Action(OnUsedItem)

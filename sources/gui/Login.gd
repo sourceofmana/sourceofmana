@@ -196,8 +196,7 @@ func RefreshOnlineMode():
 
 func OnlineMode(_clientStarted : bool, serverStarted : bool):
 	if onlineIndicator:
-		if not LauncherCommons.isWeb:
-			Launcher.GUI.buttonBoxes.Rename(UICommons.ButtonBox.TERTIARY, "Switch Online" if serverStarted else "Switch Offline")
+		Launcher.GUI.buttonBoxes.Rename(UICommons.ButtonBox.TERTIARY, "Switch Online" if serverStarted else "Switch Offline")
 		onlineIndicator.text = "Playing Offline" if serverStarted else "Playing Online"
 		if onlineIndicator.button_pressed != not serverStarted:
 			onlineIndicator.button_pressed = not serverStarted
@@ -217,10 +216,7 @@ func EnableButtons(state : bool):
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", EnableAccountCreator.bind(false))
 			else:
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Connect", Connect)
-				if LauncherCommons.isWeb:
-					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Refresh Connection", SwitchOnlineMode.bind(false))
-				else:
-					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
+				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Create Account", EnableAccountCreator.bind(true))
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Forgot Password", SetRecoveryState.bind(RecoveryState.REQUEST_EMAIL))
 				RefreshOnlineMode()

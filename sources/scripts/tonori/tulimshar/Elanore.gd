@@ -37,11 +37,11 @@ func OnFeelingChoice():
 	Choice("I am still feeling a bit weak...", OnFeelingWeak)
 
 func OnFeelingWeak():
-	var cactusDrinkID : int = DB.GetCellHash("Cactus Drink")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
 
 	Mes("Oh... Okay. Here, take one of these. Beyond that, you're going to need to take some time, darling.")
 	SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.POTION_GIVEN)
-	AddItem(cactusDrinkID)
+	AddItem(pitayaID)
 	OnFeelingBetter()
 
 func OnFeelingBetter():
@@ -85,7 +85,7 @@ func OnExplainUI():
 
 # Main choice loop
 func HasAllIngredients() -> bool:
-	return HasItem(DB.GetCellHash("Maggot Slime"), 6) and HasItem(DB.GetCellHash("Water Bottle")) and HasItem(DB.GetCellHash("Cactus Drink"))
+	return HasItem(DB.GetCellHash("Maggot Slime"), 6) and HasItem(DB.GetCellHash("Water Bottle")) and HasItem(DB.GetCellHash("Pitaya"))
 
 func OnMainChoice():
 	var sideQuestState : int = GetQuest(ProgressCommons.Quest.ELANORE_POTION)
@@ -104,7 +104,7 @@ func OnMainChoice():
 func OnHelpWithPotions():
 	Mes("Yes! I make lots of Healing Potions for our guards and the people of this city. They're quick remedies for most ailments and really help keep our people safer.")
 	Mes("Healing Potions require knowledge to make and also some key ingredients. Maybe you could get back on your feet by helping me gather some of these ingredients?")
-	Mes("I need six Maggot Slimes, one Water and one Cactus Drink. Bring those to me and I will make you a Cactus Potion in return.")
+	Mes("I need six Maggot Slimes, one Water and one Pitaya. Bring those to me and I will make you a Cactus Potion in return.")
 	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.STARTED)
 	if GetQuest(ProgressCommons.Quest.TUTORIAL) < ProgressCommons.TUTORIAL.ELANORE_DONE:
 		OnSendToKael()
@@ -112,7 +112,7 @@ func OnHelpWithPotions():
 		Action(OnMainChoice)
 
 func OnPotionQuestReminder():
-	Mes("I still need six Maggot Slimes, one Water and one Cactus Drink. Come back when you have them.")
+	Mes("I still need six Maggot Slimes, one Water and one Pitaya. Come back when you have them.")
 	OnMainChoice()
 
 func OnPotionQuestTurnIn():
@@ -120,7 +120,7 @@ func OnPotionQuestTurnIn():
 	Mes("Helping the people out here is much better than being stuck in some tower or palace. More of the leaders of this city should think about that.")
 	RemoveItem(DB.GetCellHash("Maggot Slime"), 6)
 	RemoveItem(DB.GetCellHash("Water Bottle"))
-	RemoveItem(DB.GetCellHash("Cactus Drink"))
+	RemoveItem(DB.GetCellHash("Pitaya"))
 	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.INACTIVE)
 	AddItem(DB.GetCellHash("Cactus Potion"))
 	Action(OnMainChoice)

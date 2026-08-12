@@ -118,6 +118,7 @@ func SpawnEntity(agentRID : int, entry : EntityCacheEntry) -> Entity:
 	if isLocalPlayer:
 		Launcher.Player = entity
 		Launcher.Player.SetLocalPlayer()
+		Monitoring.SetPlayer(entry.nick)
 
 	AddChild(entity)
 	if entry.currentShape != shape:
@@ -149,7 +150,7 @@ func AddChild(child : Node2D):
 		currentFringe.add_child.call_deferred(child)
 
 # Entities
-func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool):
+func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool, seq : int):
 	if not currentFringe:
 		return
 
@@ -170,11 +171,16 @@ func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : V
 				PlayerWarped.emit.call_deferred()
 
 	if entity:
+		if NetworkCommons.IsSeqNewer(seq, entity.lastUpdateSeq):
+			entity.lastUpdateSeq = seq
 		entity.Update(agentVelocity, agentPosition, agentOrientation, agentState, skillCastID, isNewSpawn, isRunning)
 
-func UpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2):
+func UpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, seq : int):
 	var entity : Entity = Entities.Get(agentRID)
 	if entity and entity.visual:
+		if not NetworkCommons.IsSeqNewer(seq, entity.lastUpdateSeq):
+			return
+		entity.lastUpdateSeq = seq
 		var agentOrientation : Vector2 = entity.entityOrientation if agentVelocity.is_zero_approx() else agentVelocity.normalized()
 		entity.Update(agentVelocity, agentPosition, agentOrientation, entity.state, entity.visual.skillCastID, false, entity.stat.isRunning)
 

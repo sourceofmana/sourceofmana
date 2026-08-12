@@ -30,13 +30,13 @@ func RemoveEntity(agentRID : int, _peerID : int):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentRID)
 
-func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int, isRunning : bool, _peerID : int):
+func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int, isRunning : bool, seq : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.FullUpdateEntity(agentRID, velocity, position, orientation, state, skillCastID, isRunning)
+		Launcher.Map.FullUpdateEntity(agentRID, velocity, position, orientation, state, skillCastID, isRunning, seq)
 
-func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, _peerID : int):
+func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, seq : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(agentRID, velocity, position)
+		Launcher.Map.UpdateEntity(agentRID, velocity, position, seq)
 
 func Express(agentRID : int, text : String, _peerID : int):
 	if Launcher.GUI:
@@ -408,7 +408,16 @@ func ConnectServer():
 		interfaceID = multiplayerAPI.get_unique_id()
 	if Launcher.GUI and Launcher.GUI.loginPanel:
 		Launcher.GUI.loginPanel.EnableButtons.call_deferred(true)
-	Peers.AddPeer(NetworkCommons.PeerAuthorityID, Peers.TransportType.WEBSOCKET if useWebSocket else Peers.TransportType.ENET)
+
+	var transportType : Peers.TransportType = Peers.TransportType.ENET
+	if isOffline:
+		transportType = Peers.TransportType.OFFLINE
+	elif useWebSocket:
+		transportType = Peers.TransportType.WEBSOCKET
+	Peers.AddPeer(NetworkCommons.PeerAuthorityID, transportType)
+	Peers.SetTransport(NetworkCommons.PeerAuthorityID, transportType)
+	Monitoring.SetTransport(transportType)
+
 	if not isOffline and Network.WebRTCClient:
 		Network.RequestRtcUpgrade()
 
@@ -524,6 +533,7 @@ func HandleRtcOffer(sdp : String):
 func _OnRtcConnectedToServer():
 	Network.webRTCActive = true
 	Network.RtcReady()
+	Monitoring.SetTransport(Peers.TransportType.WEBRTC)
 	Util.PrintLog("Client", "WebRTC transport connected")
 
 func _OnRtcServerDisconnected():

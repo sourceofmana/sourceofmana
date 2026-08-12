@@ -8,7 +8,7 @@
 [sub_resource type="Resource" id="Resource_y0bgm"]
 script = ExtResource("2_w5vmb")
 _effect = 2
-_value = 50.0
+_value = 20.0
 
 [sub_resource type="Resource" id="Resource_ivqp6"]
 script = ExtResource("2_w5vmb")

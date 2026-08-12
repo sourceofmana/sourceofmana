@@ -517,20 +517,17 @@ func _post_launch():
 	if not FileSystem.FileExists(dbPath) and not SQLCommons.CopyDatabase(dbPath):
 		return
 
-	if LauncherCommons.isWeb:
-		db = DummySQL.new()
-	else:
-		db = SQLite.new()
+	db = SQLite.new()
 	db.path = dbPath
-	db.verbosity_level = SQLite.VERBOSE if OS.is_debug_build() else SQLite.NORMAL
+	db.verbosity_level = SQLCommons.Verbosity
 
 	if not db.open_db():
 		assert(false, "Failed to open database: "+ db.error_message)
 	else:
-		if OS.is_debug_build():
+		if OS.is_debug_build() and not LauncherCommons.isWeb:
 			Query("PRAGMA journal_mode=WAL;")
 			Query("PRAGMA busy_timeout=5000;")
-		if not Launcher.Debug:
+		if not Launcher.Debug and not LauncherCommons.isWeb:
 			backups = SQLBackups.new()
 
 	ApplyMigrations()

@@ -9,7 +9,7 @@
 [sub_resource type="Resource" id="Resource_cp1hx"]
 script = ExtResource("2_8o32r")
 _effect = 1
-_value = 150.0
+_value = 100.0
 
 [sub_resource type="Resource" id="Resource_cp2hx"]
 script = ExtResource("3_3lt1g")

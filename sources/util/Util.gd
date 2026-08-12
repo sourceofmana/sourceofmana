@@ -5,9 +5,9 @@ class_name Util
 static func PrintLog(logGroup : String, logString : String):
 	print("[%d.%03d][%s] %s" % [Time.get_ticks_msec() / 1000.0, Time.get_ticks_msec() % 1000, logGroup, logString])
 
-static func PrintInfo(_logGroup : String, _logString : String):
-#	print("[%d.%03d][%s] %s" % [Time.get_ticks_msec() / 1000.0, Time.get_ticks_msec() % 1000, logGroup, logString])
-	pass
+static func PrintInfo(logGroup : String, logString : String):
+	if Launcher.Debug:
+		print("[%d.%03d][%s] %s" % [Time.get_ticks_msec() / 1000.0, Time.get_ticks_msec() % 1000, logGroup, logString])
 
 # Object/Node management
 static func DuplicateObject(from : Object, to : Object):

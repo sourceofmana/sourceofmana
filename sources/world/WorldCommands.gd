@@ -304,14 +304,8 @@ func CommandLocalBroadcast(caller : PlayerAgent, text : String) -> bool:
 		return true
 	return false
 
-func CommandBroadcast(caller : PlayerAgent, text : String) -> bool:
-	if not caller:
-		return false
-
-	for areaIdx in Launcher.World.areas:
-		var area = Launcher.World.areas[areaIdx]
-		for inst in area.instances.values():
-			Network.NotifyGlobal("PushNotification", [text])
+func CommandBroadcast(_caller : PlayerAgent, text : String) -> bool:
+	Network.NotifyGlobal("PushNotification", [text])
 	return true
 
 # Progress
