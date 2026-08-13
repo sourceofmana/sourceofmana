@@ -351,7 +351,7 @@ func apply_localserver(_enable : bool):
 	if isLocal != NetworkCommons.IsLocal:
 		NetworkCommons.IsLocal = isLocal
 		if NetworkCommons.IsLocal:
-			Launcher.Mode.call_deferred(true, false)
+			Launcher.Mode(true, false)
 
 # Input Bindings
 func init_inputbindings(apply : bool):
