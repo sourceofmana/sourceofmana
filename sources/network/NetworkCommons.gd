@@ -91,7 +91,7 @@ static func ComputeProtocolVersion(network : Node) -> int:
 const UseENet : bool					= true
 const UseWebSocket : bool				= true
 const UseWebRTC : bool					= true
-const IsLocal : bool					= false
+static var IsLocal : bool				= false
 
 # WebRTC signaling
 const IceServers : Array[Dictionary]	= [{ "urls": "stun:stun.l.google.com:19302" }]

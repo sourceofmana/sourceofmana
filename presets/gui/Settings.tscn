@@ -310,6 +310,11 @@ layout_mode = 2
 tooltip_text = "Sends anonymous crash and error reports to help fix bugs. No personal data is collected."
 text = "Bug Reports"
 
+[node name="LocalServer" type="CheckButton" parent="Layout/Margin/TabBar/Privacy/PrivacyVBox" unique_id=860000014]
+layout_mode = 2
+tooltip_text = "Connects to a dedicated server running on this machine (127.0.0.1) instead of the public server."
+text = "★ Local Server"
+
 [node name="Credits" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=850000001]
 visible = false
 layout_mode = 2
@@ -346,3 +351,4 @@ alignment = 1
 [connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider" to="." method="set_audiostate"]
 [connection signal="pressed" from="Layout/Margin/TabBar/Account/AccountVBox/ChangeButton" to="Layout/Margin/TabBar/Account" method="_on_change_button_pressed"]
 [connection signal="toggled" from="Layout/Margin/TabBar/Privacy/PrivacyVBox/BugReports" to="." method="set_bugreports"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Privacy/PrivacyVBox/LocalServer" to="." method="set_localserver"]
