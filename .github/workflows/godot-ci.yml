@@ -1,7 +1,7 @@
 name: "godot-ci export"
 on:
   push:
-    tags-ignore:
+    branches:
       - '**'
 
 env:
