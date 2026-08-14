@@ -29,16 +29,12 @@ static func IsVisible(fromPos : Vector2, toPos : Vector2, halfSize : Vector2) ->
 const BulkMinSize : int					= 3
 
 # Frame sequencing
-const SeqMask : int						= 0xFF
-const SeqHalf : int						= 0x80
+static func FrameID() -> int:
+	return Engine.get_physics_frames()
 
-static func FrameSeq() -> int:
-	return Engine.get_physics_frames() & SeqMask
-
-static func IsSeqNewer(seq : int, last : int) -> bool:
-	# Use a rolling byte to keep track of the last received server frame.
-	# Used to drop old rpc calls in the client on different network channels.
-	return last < 0 or (((seq - last) & SeqMask) > 0 and ((seq - last) & SeqMask) < SeqHalf)
+static func IsFrameNewer(frameID : int, lastFrameID : int) -> bool:
+	# Track the last received server frame to drop old rpc calls in the client on different network channels
+	return lastFrameID < 0 or frameID > lastFrameID
 
 # Navigation
 const NavigationSpawnTry : int			= 10
