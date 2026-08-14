@@ -1,6 +1,6 @@
 name: source-of-mana
 base: core24
-version: '0.0.9'
+adopt-info: game
 summary: A 2D open-source MMORPG built with Godot
 description: |
   Source of Mana is an open source and libre 2D MMORPG inspired by the
@@ -9,7 +9,7 @@ description: |
   the offline mode.
 license: MIT AND CC-BY-SA-4.0
 icon: data/press/logo/logo_seed.svg
-grade: devel
+grade: stable
 confinement: strict
 
 platforms:
@@ -40,10 +40,11 @@ parts:
     plugin: dump
     source: .
     override-build: |
+      craftctl set-version "$(grep -oP 'config/version="\K[^"]+' "$SNAPCRAFT_PROJECT_DIR/project.godot")"
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/source-of-mana
       cp "$SNAPCRAFT_PROJECT_DIR/Source of Mana.x86_64" $SNAPCRAFT_PART_INSTALL/usr/share/source-of-mana/source-of-mana.x86_64
       chmod 755 $SNAPCRAFT_PART_INSTALL/usr/share/source-of-mana/source-of-mana.x86_64
-      cp "$SNAPCRAFT_PROJECT_DIR/libgdsqlite.linux.template_debug.x86_64.so" $SNAPCRAFT_PART_INSTALL/usr/share/source-of-mana/
+      cp "$SNAPCRAFT_PROJECT_DIR"/*.so $SNAPCRAFT_PART_INSTALL/usr/share/source-of-mana/
       mkdir -p $SNAPCRAFT_PART_INSTALL/meta/gui
       cp "$SNAPCRAFT_PROJECT_DIR/snap/gui/source-of-mana.desktop" $SNAPCRAFT_PART_INSTALL/meta/gui/
       cp "$SNAPCRAFT_PROJECT_DIR/data/press/logo/logo_seed.svg" $SNAPCRAFT_PART_INSTALL/meta/gui/

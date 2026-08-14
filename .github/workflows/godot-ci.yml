@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           lfs: true
 
@@ -79,7 +79,7 @@ jobs:
           godot --headless --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
 
       - name: Upload Artifact - ${{ matrix.name }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.name }}
           path: build/${{ matrix.name }}
@@ -87,13 +87,15 @@ jobs:
   snap:
     runs-on: ubuntu-latest
     needs: builds
-    name: Pack Snap
+    name: Pack and Publish Snap
+    env:
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download Linux build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: Linux
           path: .
@@ -103,7 +105,39 @@ jobs:
         id: build
 
       - name: Upload Snap
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Snap
           path: ${{ steps.build.outputs.snap }}
+
+      - name: Publish snap
+        if: github.ref == 'refs/heads/master' && env.SNAPCRAFT_STORE_CREDENTIALS != ''
+        uses: snapcore/action-publish@v1
+        with:
+          snap: ${{ steps.build.outputs.snap }}
+          release: edge
+
+  package:
+    runs-on: ubuntu-latest
+    needs: builds
+    name: Package builds
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: dist
+
+      - name: Package builds
+        uses: ./.github/actions/package-builds
+        with:
+          source-dir: dist
+          output-dir: assets
+
+      - name: Upload packaged builds
+        uses: actions/upload-artifact@v5
+        with:
+          name: Packaged builds
+          path: assets/*
