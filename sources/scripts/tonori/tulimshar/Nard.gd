@@ -4,7 +4,7 @@ extends NpcScript
 func OnStart():
 	Mes("Welcome aboard, or close enough.")
 	Mes("I'm the captain of La Johanne, the vessel docked right behind me.")
-	Mes("We are currently enjoying a well earned break far from cold weathers as we've spent the last few weeks up in the north in the Kazei region.")
+	Mes("We are currently enjoying a well earned break far from cold weathers, as we've spent the last few weeks up north in the Kaizei region.")
 	MainChoices()
 
 func MainChoices():
@@ -13,44 +13,43 @@ func MainChoices():
 	Choice("Safe travels, Captain.", Farewell)
 
 func OnSailOffer():
-	Mes("We didn't have any plan, let's ride along!")
-	Mes("The ocean is the fastest road there is, once you know how to read her.")
-	Mes("I can get you just about anywhere the sea touches. Just say the word.")
-	Mes("When you're ready to go, head to La Johanne and take the helm. Me and the crew will handle the sails.")
-	Mes("Been a while since I had a proper nap on calm waters.")
+	Mes("We are sailing towards Candor soon, but in the meantime we can go for a short trip wherever you want.")
+	Mes("Our ship is sturdy and fast. We've travelled almost every shore on Aemil. Even as far as Thermin one time!")
+	Mes("When you're ready to go, head to La Johanne's helm. There we can discuss where exactly you want to go.")
+	Mes("It's been a while since I've ferried someone out to sea. We usually handle cargo, not people.")
 	Choice("Where can you take me?", OnDestinations)
 	Choice("Let me think about it.", MainChoices)
 
 func OnDestinations():
-	Mes("Candor to the north, the Manayir coast west from here, or all the way to Artis on the north-east... You name it, I've docked everywhere.")
-	Mes("Used to run supply routes all across Aemil before I found my crew.")
-	Mes("Now we go where the wind takes us, more or less.")
+	Mes("Candor to the north, the Manayir coast west from here, or all the way to Artis on the north-east.")
+	Mes("For any other destination we'd need to prepare for a little longer.")
+	Mes("I wouldn't want to be paying Esperia's harbour fees without good reason! Or Hurnscald for that matter.")
 	MainChoices()
 
 func OnAbout():
-	Mes("Ha. Where to start.")
-	Mes("Grew up landlocked in Artis, if you can believe it. I stayed there half my life, learning, crafting and even at some point teaching!")
-	Mes("I liked it well enough. Building things, explaining how they worked.")
-	Mes("But one morning I woke up and I just knew. The sea was calling and I'd been ignoring it long enough.")
-	Mes("Packed up. Walked to the docks. Found a crew in need of a cadet and later turned a captain under the very same deck.")
-	Mes("Been out here ever since. No regrets.")
-	Choice("Don't you miss your old life?", OnMissOldLife)
-	Choice("How did you find your crew?", OnCrew)
+	Mes("I started out as carpenter in the port of Artis. I didn't have much at the time, but I was good at my job.")
+	Mes("I even taught some students at one point.")
+	Mes("Eventually I made enough to buy my own ship. It was almost a wreck, but I worked on it day and night until it was ready to sail again.")
+	Mes("I got some friends together: Gado, Julia and my old pal Magic Arpan. We had all worked together before at the port.")
+	Mes("We named our ship La Johanne. After its previous captain. I know you're not supposed to rename a ship, but I did almost rebuild it after all.")
+	Mes("Now we make our living going from coast to coast, ferrying goods back and forth. For a fair price too, I'd say.")
+	Choice("Do you miss Artis?", OnMissOldLife)
+	Choice("Tell me about your crew.", OnCrew)
 	Choice("Back to it.", MainChoices)
 
 func OnMissOldLife():
-	Mes("Sometimes I miss the daily routine, waking up, greeting the same old couple that used to live nearby, the smell of grass on my way to work.")
-	Mes("But the sea has its own kind of routine that is unmatched and your crew act as your neighbour and family.")
-	Mes("And teaching, well... Every new sailor who comes aboard learns from somewhere. Might as well be me.")
+	Mes("The greatest city in the world, if you ask me. The atmosphere, the people, the wine...")
+	Mes("I do miss it, but we get to go back often, even if it's not for long. Lots of goods come in and out of Artis.")
+	Mes("I miss my students though. Maybe one day I'll go back to teaching. Who knows?")
 	MainChoices()
 
 func OnCrew():
-	Mes("One by one, mostly. A dockworker who wanted more than the docks. A cook who'd never left port in his life.")
-	Mes("A navigator who knew the stars but had never actually sailed by them.")
-	Mes("There's something about this life. It draws people who are looking for something they couldn't name until they found it.")
-	Mes("I recognized it in all of them. Same thing I felt that day I enroled.")
-	Mes("We've been together long enough now that I can't imagine the ship any other way.")
+	Mes("I had known some of them for a long time. Gado was my first mate for a time.  Julia was my cook.")
+	Mes("Problem was, Gado likes to argue and he's a great cook. Julia likes her peace... and she's terrible in the kitchen! So, I swapped them around.")
+	Mes("Magic Arpan... how could I not have him on board? We've been good friends for years. He's a charming guy. Literally, he can charm you with magic!")
+	Mes("All the others I picked up over time. People whose attitude I like. Everyone on board is with me for a reason.")
+	Mes("They're all useful and important... except maybe for Silvio. He's just here to drink and flirt with Julia, that old drunk!")
 	MainChoices()
 
 func Farewell():
-	Chat("Fair winds to you. Come find me when you're ready to sail.")
+	Chat("Goodbye for now! Come back whenever you want to talk. I like good company.")
