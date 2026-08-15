@@ -4,6 +4,13 @@ class_name MonsterAgent
 #
 static func GetActorType() -> ActorCommons.Type: return ActorCommons.Type.MONSTER
 
+func IsDropCell(cell : ItemCell) -> bool:
+	if cell:
+		for dropCell in data._drops:
+			if dropCell and dropCell.id == cell.id and dropCell.customfield == cell.customfield:
+				return true
+	return false
+
 func Killed():
 	super.Killed()
 	Formula.ApplyXp(self)
@@ -13,7 +20,7 @@ func Killed():
 		var item : Item = inventory.items[idx]
 		if item:
 			var cell : ItemCell = DB.GetItem(item.cellID, item.cellCustomfield)
-			if cell and cell in data._drops:
+			if IsDropCell(cell):
 				inventory.DropItem(cell, item.count, idx)
 
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(self)
