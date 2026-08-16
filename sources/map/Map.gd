@@ -144,10 +144,17 @@ func RemoveChild(child : Node2D):
 		if child != Launcher.Player:
 			child.queue_free()
 
+func _add_child_safe(child : Node2D, target : Node2D):
+	if child and target and child.get_parent() != target:
+		if child.get_parent() != null:
+			child.reparent(target)
+		else:
+			target.add_child(child)
+
 func AddChild(child : Node2D):
 	assert(currentFringe != null, "Current fringe layer not found, could not add a new child")
 	if currentFringe:
-		currentFringe.add_child.call_deferred(child)
+		_add_child_safe.call_deferred(child, currentFringe)
 
 # Entities
 func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool, frameID : int):
