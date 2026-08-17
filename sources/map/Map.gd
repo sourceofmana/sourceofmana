@@ -119,6 +119,7 @@ func SpawnEntity(agentRID : int, entry : EntityCacheEntry) -> Entity:
 		Launcher.Player = entity
 		Launcher.Player.SetLocalPlayer()
 		Monitoring.SetPlayer(entry.nick)
+		pendingWarp = false
 
 	AddChild(entity)
 	if entry.currentShape != shape:
