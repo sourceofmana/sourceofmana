@@ -253,9 +253,9 @@ texture_margin_bottom = 14.0
 content_margin_top = 10.0
 content_margin_bottom = 11.0
 texture = ExtResource("18_h6yt3")
-texture_margin_left = 48.0
+texture_margin_left = 49.0
 texture_margin_top = 19.0
-texture_margin_right = 46.0
+texture_margin_right = 44.0
 texture_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f7umf"]
@@ -277,9 +277,9 @@ load_path = "res://.godot/imported/notification-leaf.png-8db88d7f17afff8b8531d30
 content_margin_top = 10.0
 content_margin_bottom = 11.0
 texture = SubResource("CompressedTexture2D_h6yt3")
-texture_margin_left = 48.0
+texture_margin_left = 49.0
 texture_margin_top = 19.0
-texture_margin_right = 46.0
+texture_margin_right = 44.0
 texture_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_psur8"]
