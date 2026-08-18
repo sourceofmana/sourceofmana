@@ -6,8 +6,8 @@ The high concentration of Kaore grows ever stronger as it feeds on the death and
 
 ## Second Age of Mana (4E1–Present)
 
-As Mana slowly returns to Aemil, its ability to fill the world as it once did is impaired. The Hakuturi no longer connect the world, and Kaore threatens to return as the leading force of magic.
+As Mana slowly returns to Aemil, its ability to fill the world as it once did is impaired. The Uru no longer connect the world, and Kaore threatens to return as the leading force of magic.
 
-### The Hakuturi Speak Again (4E27)
+### The Uru Speak Again (4E27)
 
-Our journey starts here, Hakuturi has spoken to you and your decision will shape the future of Aemil.
+Our journey starts here, Uru has spoken to you and your decision will shape the future of Aemil.

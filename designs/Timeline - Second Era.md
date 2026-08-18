@@ -34,7 +34,7 @@ The vast grasslands of Tonori are inhabited by the nomadic Zuni tribes, the earl
 
 The cold north is sparsely populated by Human and Ukar alike, who live in small nomadic tribes known as Barbarians. The expansionist King Victorio VII launches an expedition and finds an elevated plateau, near the mountain passes that lead into Kaizei but also close enough to the Aemilian Sea. Here he founds the City of Nivalis—a refuge from the cold and a centre of trade for the whole region.
 
-### Birth of the Kralogs (c. 2E1500)
+### Birth of the Kralogs (2E1500?)
 
 The Ukar begin to notice that the mountains they inhabit do not cover as much land as the areas where the Humans live. A group of adventurous Ukar set forth in the early decades of the Ancean Era to find new lands to settle. They navigate the cold seas of the north and land on a volcanic island, which they name the Land of Fire.
 
@@ -76,7 +76,7 @@ Alone in the Republic, the rulers of Keshlam and Mangarron eventually proclaim i
 
 ### The Great Quake (2E1996)
 
-The Manayir, a chaste of Sorcerers that rule Tulimshar at this time, attempt to find what they believe to be the inner source of Mana inside the world of Aemil. They devise powerful magic constructs powered with Mana Crystals to dig deep into the earth.
+The Manayir, a chaste of Sorcerers that rule Tulimshar at this time attempt to find what they believe to be the inner source of Mana inside the world of Aemil. They devise powerful magic constructs powered with Mana Crystals to dig deep into the earth.
 
 At an unknown depth, something is triggered. Two-thirds of the vast ocean previously dividing the continents of Ancea and Aurora sink inward into the core of the world. Much of the Tritan civilisation is instantly extinguished, with the exception of those on the Oranye Isles and a few sheltered bays.
 
@@ -90,11 +90,11 @@ Adventurers, as well as refugees from the revolutionary war, are given ships and
 
 ### Discovery of Ker Ys (2E1999)
 
-The City of Ker Ys has existed since the Hantu Era and continues to be the largest underwater city on Aemil. Nested in the low-lying Oranye Isles, it stands mostly submerged and densely populated.
+The City of Ker Ys has existed since the Mana Era and continues to be the largest underwater city on Aemil. Nested in the low-lying Oranye Isles, it stands mostly submerged and densely populated.
 
 Following the Great Quake, the vast landscape of Tritan settlements in the far sea is largely lost, and the Oranye Isles stand as the main Tritan homeland. Once far in the middle of the Ocean, the Isles move closer to other lands as the continents shift, and Ker Ys begins to receive its first visitors.
 
-## The Manayir Order (2E208)
+## The Manayir Order (2E2008)
 
 After having ruled Tulimshar throughout the Republic period, the Manayir are exiled from the city, having been blamed for the events leading to the Great Quake. They take refuge nearby and build a fortified tower, becoming isolated from the outside world and only interacting with those interested in furthering their study of magic.
 
