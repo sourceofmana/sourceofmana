@@ -5,6 +5,8 @@ extends Control
 #
 var resources : Array[Resource] = []
 var filteredResources : Array[Resource] = []
+var sortColumn : int = -1
+var sortAscending : bool = true
 
 #
 @onready var tree : Tree = $VBoxContainer/ScrollContainer/Tree
@@ -42,6 +44,14 @@ func Setup():
 func UpdateTreeItem(_item : TreeItem, _resource : Resource):
 	pass
 
+# Override to return the sortable value for a resource at a given column index
+func GetSortValue(_resource : Resource, _column : int) -> Variant:
+	return null
+
+# Override to return the unadorned title for each column, used to rebuild titles with sort arrows
+func GetColumnNames() -> Array[String]:
+	return []
+
 #
 func LoadResources():
 	resources.clear()
@@ -55,6 +65,7 @@ func LoadResources():
 
 func RefreshTable():
 	ApplyFilter()
+	ApplySort()
 	PopulateTree()
 
 func ApplyFilter():
@@ -66,6 +77,47 @@ func ApplyFilter():
 		for resource in resources:
 			if GetResourceName(resource).to_lower().contains(query):
 				filteredResources.push_back(resource)
+
+func ApplySort():
+	if sortColumn < 0:
+		return
+
+	filteredResources.sort_custom(func(a : Resource, b : Resource) -> bool:
+		return CompareSortValues(GetSortValue(a, sortColumn), GetSortValue(b, sortColumn))
+	)
+
+func CompareSortValues(valA : Variant, valB : Variant) -> bool:
+	var numA : Variant = ToComparableFloat(valA)
+	var numB : Variant = ToComparableFloat(valB)
+	if numA != null and numB != null:
+		return numA < numB if sortAscending else numA > numB
+
+	var strA : String = str(valA).to_lower()
+	var strB : String = str(valB).to_lower()
+	return strA < strB if sortAscending else strA > strB
+
+func ToComparableFloat(value : Variant) -> Variant:
+	if value is int or value is float:
+		return float(value)
+	if value is String and value.is_valid_float():
+		return value.to_float()
+	return null
+
+func UpdateColumnTitles():
+	var names : Array[String] = GetColumnNames()
+	var arrow : String = " ▼" if not sortAscending else " ▲"
+	for i in names.size():
+		tree.set_column_title(i, names[i] + (arrow if i == sortColumn else ""))
+
+func _on_column_clicked(column : int, _mouseButtonIdx : int):
+	if sortColumn == column:
+		sortAscending = not sortAscending
+	else:
+		sortColumn = column
+		sortAscending = true
+
+	UpdateColumnTitles()
+	RefreshTable()
 
 func PopulateTree():
 	tree.clear()

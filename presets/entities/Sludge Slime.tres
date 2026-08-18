@@ -1,8 +1,9 @@
 [gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://0ellynuhm24c"]
 
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_f0h6j"]
+[ext_resource type="Material" uid="uid://cdda02acfca4n" path="res://presets/palettes/shaders/monsters/mob-slime-sludge.tres" id="1_material"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_mr4dg"]
-[ext_resource type="Texture2D" uid="uid://dnrysjgetstj4" path="res://data/graphics/sprites/monsters/slime-sludge.png" id="3_tex"]
+[ext_resource type="Texture2D" uid="uid://c1otpwl88opx3" path="res://data/graphics/sprites/monsters/slime.png" id="2_tex"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_w1pht"]
 [ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="3_xbbvo"]
 [ext_resource type="PackedScene" uid="uid://cc7dl0ctjviwq" path="res://presets/entities/sprites/SlimeSludge.tscn" id="spr_SlimeSludge"]
@@ -19,5 +20,6 @@ _stats = {
 "walkSpeed": 50.0
 }
 _equipment = Array[ExtResource("1_f0h6j")]([null, null, null, null, null, null, null, null])
-_customTexture = ExtResource("3_tex")
+_customTexture = ExtResource("2_tex")
+_customMaterial = ExtResource("1_material")
 _behaviour = 130

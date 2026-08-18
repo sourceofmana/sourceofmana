@@ -43,7 +43,7 @@ func OnDeliverWater():
 	Mes("You made it! And with the water!")
 	Mes("Here, take this. It's all I have left.")
 	SetQuest(WaterPondGlobal.QUEST_ID, ProgressCommons.SNAKE_PIT_BITING_THIRST.REWARDS_WITHDREW)
-	AddItem(DB.GetCellHash("Cactus Drink"), 10)
+	AddItem(DB.GetCellHash("Pitaya"), 10)
 	AddExp(50)
 	AddGP(1000)
 	AddKarma(1)

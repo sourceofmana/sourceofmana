@@ -17,6 +17,7 @@ _spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 10
 _stats = {
 "attack": 10,
+"baseExp": 1,
 "defense": 1,
 "level": 1,
 "maxHealth": 50,
@@ -26,7 +27,7 @@ _equipment = Array[ExtResource("1_bbb2k")]([null, null, null, null, null, null, 
 _customTexture = ExtResource("3_tex")
 _behaviour = 258
 _drops = Dictionary[ExtResource("1_bbb2k"), float]({
-ExtResource("7_slime"): 0.2
+ExtResource("7_slime"): 0.6
 })
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("5_mxmhf"),

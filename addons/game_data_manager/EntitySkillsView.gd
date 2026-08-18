@@ -171,8 +171,8 @@ func _on_add_skill_pressed():
 
 	var skills : Dictionary = selectedEntity.get("_skills")
 	if not skills:
-		skills = {}
-		selectedEntity.set("_skills", skills)
+		selectedEntity.set("_skills", {})
+		skills = selectedEntity.get("_skills")
 
 	var emptyCell : SkillCell = SkillCell.new()
 	skills[emptyCell] = 1.0

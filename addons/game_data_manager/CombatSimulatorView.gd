@@ -4,10 +4,10 @@ extends Control
 #
 const ATTRIBUTES : PackedStringArray = ["strength", "vitality", "agility", "endurance", "concentration"]
 const ATTR_LABELS : PackedStringArray = ["STR", "VIT", "AGI", "END", "CON"]
-const MATRIX_COLS : int = 18
-const COL_TITLES : PackedStringArray = ["Entity", "Lvl", "Atk", "Def", "MAtk", "MDef", "P→E Phy", "P→E Mag", "E→P Phy", "E→P Mag", "Ratio", "MRatio", "P Hits", "P TTK", "E Hits", "E TTK", "XP", "Kills/Lvl"]
-const COL_WIDTHS : PackedInt32Array = [130, 60, 50, 50, 55, 55, 75, 80, 75, 80, 65, 70, 55, 60, 55, 60, 60, 65]
-const COL_SORT_KEYS : PackedStringArray = ["name", "level", "atk", "def", "matk", "mdef", "p_phys", "p_mag", "e_phys", "e_mag", "ratio", "mratio", "p_hits", "p_ttk", "e_hits", "e_ttk", "xp", "kills"]
+const MATRIX_COLS : int = 19
+const COL_TITLES : PackedStringArray = ["Entity", "Lvl", "XP", "Atk", "Def", "MAtk", "MDef", "P→E Phy", "P→E Mag", "E→P Phy", "E→P Mag", "Ratio", "MRatio", "P Hits", "P TTK", "E Hits", "E TTK", "KTL(P)", "KTL(E)"]
+const COL_WIDTHS : PackedInt32Array = [130, 60, 60, 50, 50, 55, 55, 75, 80, 75, 80, 65, 70, 55, 60, 55, 60, 65, 65]
+const COL_SORT_KEYS : PackedStringArray = ["name", "level", "xp", "atk", "def", "matk", "mdef", "p_phys", "p_mag", "e_phys", "e_mag", "ratio", "mratio", "p_hits", "p_ttk", "e_hits", "e_ttk", "kills_p", "kills_e"]
 
 #
 const PlayerHitsBandMin : int = 3
@@ -29,6 +29,7 @@ var equipDropdowns : Dictionary[int, OptionButton] = {}
 var modifiersContainer : VBoxContainer = null
 var matrixTree : Tree = null
 var entityLevels : Dictionary[int, int] = {}
+var originalResources : Dictionary[int, EntityData] = {}
 var sortColumn : int = 0
 var sortAscending : bool = true
 
@@ -44,6 +45,7 @@ func LoadResources():
 	itemsByHash.clear()
 	entities.clear()
 	iconPreviewCache.clear()
+	originalResources.clear()
 
 	if DirAccess.dir_exists_absolute(Path.ItemPst):
 		for resourcePath in FileSystem.ParseResources(Path.ItemPst):
@@ -67,6 +69,7 @@ func LoadResources():
 				var entity : EntityData = res.GetMergedEntity()
 				if entity._name != "":
 					entities.push_back(entity)
+					originalResources[entity._id] = res
 
 	entities.sort_custom(SortEntitiesByName)
 
@@ -77,6 +80,8 @@ func GenerateIconPreviews():
 
 func CreateMaterialPreview(texture : Texture2D, material : Material, cacheKey : String) -> ImageTexture:
 	if not Engine.is_editor_hint() or not texture or not material:
+		return null
+	if DisplayServer.get_name() == "headless":
 		return null
 	if iconPreviewCache.has(cacheKey):
 		return iconPreviewCache[cacheKey]
@@ -385,11 +390,12 @@ func RefreshMatrix():
 		playerRow.set_custom_color(c, playerColor)
 	playerRow.set_text(0, "PLAYER")
 	playerRow.set_text(1, str(ps.level))
-	playerRow.set_text(2, str(ps.current.attack))
-	playerRow.set_text(3, str(ps.current.defense))
-	playerRow.set_text(4, str(ps.current.mattack))
-	playerRow.set_text(5, str(ps.current.mdefense))
-	for c : int in range(6, MATRIX_COLS):
+	playerRow.set_text(2, "—")
+	playerRow.set_text(3, str(ps.current.attack))
+	playerRow.set_text(4, str(ps.current.defense))
+	playerRow.set_text(5, str(ps.current.mattack))
+	playerRow.set_text(6, str(ps.current.mdefense))
+	for c : int in range(7, MATRIX_COLS):
 		playerRow.set_text(c, "—")
 
 	var rows : Array[Dictionary] = []
@@ -407,9 +413,11 @@ func RefreshMatrix():
 		var eHits : int = ceili(float(ps.current.maxHealth) / float(ePhys))
 		var pTTK : float = pHits * (ps.current.castAttackDelay + ps.current.cooldownAttackDelay)
 		var eTTK : float = eHits * (es.current.castAttackDelay + es.current.cooldownAttackDelay)
-		var xp : int = ceili(Formula.GetInternalXpBonus(int(entityData._stats.get("baseExp", 1)), entityLevel))
-		var neededXp : int = Experience.GetNeededExperienceForNextLevel(entityLevel)
-		var kills : int = ceili(float(neededXp) / float(xp)) if neededXp != Experience.MAX_LEVEL_REACHED and xp > 0 else -1
+		var xp : int = entityData._stats.get("baseExp", 1)
+		var neededXpPlayer : int = Experience.GetNeededExperienceForNextLevel(ps.level)
+		var neededXpEntity : int = Experience.GetNeededExperienceForNextLevel(entityLevel)
+		var killsP : int = ceili(float(neededXpPlayer) / float(xp)) if neededXpPlayer != Experience.MAX_LEVEL_REACHED and xp > 0 else -1
+		var killsE : int = ceili(float(neededXpEntity) / float(xp)) if neededXpEntity != Experience.MAX_LEVEL_REACHED and xp > 0 else -1
 
 		rows.append({
 			"entity": entityData,
@@ -430,7 +438,8 @@ func RefreshMatrix():
 			"e_hits": eHits,
 			"e_ttk": eTTK,
 			"xp": xp,
-			"kills": kills,
+			"kills_p": killsP,
+			"kills_e": killsE,
 		})
 
 	rows.sort_custom(SortRows)
@@ -455,46 +464,51 @@ func RefreshMatrix():
 		treeItem.set_range_config(1, 1.0, 135.0, 1.0)
 		treeItem.set_range(1, float(entityLevel))
 		treeItem.set_editable(1, true)
-		treeItem.set_text(2, str(int(row["atk"])))
-		treeItem.set_text(3, str(int(row["def"])))
-		treeItem.set_text(4, str(int(row["matk"])))
-		treeItem.set_text(5, str(int(row["mdef"])))
-		treeItem.set_text(6, str(pPhys))
-		treeItem.set_text(7, str(pMag))
-		treeItem.set_text(8, str(ePhys))
-		treeItem.set_text(9, str(eMag))
-		treeItem.set_text(10, "%.2f×" % ratio)
-		treeItem.set_text(11, "%.2f×" % mratio)
+		treeItem.set_cell_mode(2, TreeItem.CELL_MODE_RANGE)
+		treeItem.set_range_config(2, 0.0, 999999.0, 1.0)
+		treeItem.set_range(2, float(int(row["xp"])))
+		treeItem.set_editable(2, true)
+		treeItem.set_text(3, str(int(row["atk"])))
+		treeItem.set_text(4, str(int(row["def"])))
+		treeItem.set_text(5, str(int(row["matk"])))
+		treeItem.set_text(6, str(int(row["mdef"])))
+		treeItem.set_text(7, str(pPhys))
+		treeItem.set_text(8, str(pMag))
+		treeItem.set_text(9, str(ePhys))
+		treeItem.set_text(10, str(eMag))
+		treeItem.set_text(11, "%.2f×" % ratio)
+		treeItem.set_text(12, "%.2f×" % mratio)
 
 		var pHits : int = int(row["p_hits"])
 		var eHits : int = int(row["e_hits"])
-		var kills : int = int(row["kills"])
-		treeItem.set_text(12, str(pHits))
-		treeItem.set_text(13, "%.1fs" % float(row["p_ttk"]))
-		treeItem.set_text(14, str(eHits))
-		treeItem.set_text(15, "%.1fs" % float(row["e_ttk"]))
-		treeItem.set_text(16, str(int(row["xp"])))
-		treeItem.set_text(17, str(kills) if kills > 0 else "—")
+		var killsP : int = int(row["kills_p"])
+		var killsE : int = int(row["kills_e"])
+		treeItem.set_text(13, str(pHits))
+		treeItem.set_text(14, "%.1fs" % float(row["p_ttk"]))
+		treeItem.set_text(15, str(eHits))
+		treeItem.set_text(16, "%.1fs" % float(row["e_ttk"]))
+		treeItem.set_text(17, str(killsP) if killsP > 0 else "—")
+		treeItem.set_text(18, str(killsE) if killsE > 0 else "—")
 
-		treeItem.set_custom_color(12, green if pHits >= PlayerHitsBandMin and pHits <= PlayerHitsBandMax else red)
-		treeItem.set_custom_color(14, green if eHits >= EnemyHitsBandMin and eHits <= EnemyHitsBandMax else red)
+		treeItem.set_custom_color(13, green if pHits >= PlayerHitsBandMin and pHits <= PlayerHitsBandMax else red)
+		treeItem.set_custom_color(15, green if eHits >= EnemyHitsBandMin and eHits <= EnemyHitsBandMax else red)
 
 		if pPhys > ePhys:
-			treeItem.set_custom_color(6, green)
-			treeItem.set_custom_color(8, red)
-		elif pPhys < ePhys:
-			treeItem.set_custom_color(6, red)
-			treeItem.set_custom_color(8, green)
-
-		if pMag > eMag:
 			treeItem.set_custom_color(7, green)
 			treeItem.set_custom_color(9, red)
-		elif pMag < eMag:
+		elif pPhys < ePhys:
 			treeItem.set_custom_color(7, red)
 			treeItem.set_custom_color(9, green)
 
-		treeItem.set_custom_color(10, green if ratio > 1.0 else (red if ratio < 1.0 else Color.WHITE))
-		treeItem.set_custom_color(11, green if mratio > 1.0 else (red if mratio < 1.0 else Color.WHITE))
+		if pMag > eMag:
+			treeItem.set_custom_color(8, green)
+			treeItem.set_custom_color(10, red)
+		elif pMag < eMag:
+			treeItem.set_custom_color(8, red)
+			treeItem.set_custom_color(10, green)
+
+		treeItem.set_custom_color(11, green if ratio > 1.0 else (red if ratio < 1.0 else Color.WHITE))
+		treeItem.set_custom_color(12, green if mratio > 1.0 else (red if mratio < 1.0 else Color.WHITE))
 
 func SortItemsByName(a : ItemCell, b : ItemCell) -> bool:
 	return a.name < b.name
@@ -510,7 +524,7 @@ func SortRows(a : Dictionary, b : Dictionary) -> bool:
 			var vb : String = String(b[key])
 			if va == vb: return false
 			return (va < vb) if sortAscending else (va > vb)
-		10, 11, 13, 15:
+		11, 12, 14, 16:
 			var va : float = float(a[key])
 			var vb : float = float(b[key])
 			if va == vb: return false
@@ -547,15 +561,34 @@ func _on_column_title_clicked(column : int, _button : int):
 
 func _on_matrix_item_edited():
 	var item : TreeItem = matrixTree.get_edited()
-	if not item or matrixTree.get_edited_column() != 1:
+	var column : int = matrixTree.get_edited_column()
+	if not item or (column != 1 and column != 2):
 		return
 
 	var entityData : EntityData = item.get_metadata(0)
 	if not entityData:
 		return
 
-	entityLevels[entityData._id] = int(item.get_range(1))
+	if column == 1:
+		var newLevel : int = int(item.get_range(1))
+		entityLevels[entityData._id] = newLevel
+		SaveEntityStat(entityData, "level", newLevel)
+	elif column == 2:
+		SaveEntityStat(entityData, "baseExp", int(item.get_range(2)))
+
 	RefreshMatrix()
+
+func SaveEntityStat(entityData : EntityData, statName : String, value : int):
+	var original : EntityData = originalResources.get(entityData._id)
+	if not original:
+		return
+	var stats : Variant = original.get("_stats")
+	if not stats:
+		stats = {}
+		original.set("_stats", stats)
+	stats[statName] = value
+	entityData._stats[statName] = value
+	GameDataUtil.SaveResource(original)
 
 func _on_refresh_pressed():
 	for child : Node in get_children():
@@ -567,6 +600,7 @@ func _on_refresh_pressed():
 	equipDropdowns.clear()
 	modifiersContainer = null
 	matrixTree = null
+	entityLevels.clear()
 
 	LoadResources()
 	await GenerateIconPreviews()

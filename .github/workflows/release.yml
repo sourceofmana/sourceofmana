@@ -1,0 +1,175 @@
+name: "release"
+
+on:
+  workflow_dispatch:
+    inputs:
+      prerelease:
+        description: "Mark as pre-release"
+        type: boolean
+        default: false
+
+env:
+  GODOT_VERSION: 4.7.1
+  PROJECT_PATH: "."
+
+permissions:
+  contents: write
+
+jobs:
+  builds:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - name: Linux
+          export_template: "Linux/X11"
+          outname: "Source of Mana"
+          ext: "x86_64"
+        - name: Linux (Headless Server)
+          export_template: "Linux/X11 Headless Server"
+          outname: "Source of Mana Server"
+          ext: "x86_64"
+        - name: Windows
+          export_template: "Windows Desktop"
+          outname: "Source of Mana"
+          ext: "exe"
+        - name: macOS
+          export_template: "macOS"
+          outname: "Source of Mana"
+          ext: "zip"
+        - name: Android
+          export_template: "Android"
+          outname: "Source of Mana"
+          ext: "apk"
+
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.7.1
+    name: Export ${{ matrix.name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          lfs: true
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y libfontconfig1 unzip
+
+      - name: Setup Godot templates
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          cp -r /root/.config/godot ~/.config/godot
+          cp -r /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          echo "$DEBUG_KEYSTORE" | base64 -d > /root/debug.keystore
+        env:
+          DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
+
+      - name: Enable production feature
+        run: |
+          cd "$PROJECT_PATH"
+          sed -E -i 's/custom_features="([^"]*)"/custom_features="\1,production"/; s/custom_features=",/custom_features="/' export_presets.cfg
+
+      - name: Install Android build template
+        if: matrix.name == 'Android'
+        run: |
+          cd "$PROJECT_PATH"
+          BUILD_VERSION=$(godot --version | sed -E 's/\.(official|custom_build)\..*$//')
+          mkdir -p android/build
+          unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip -d android/build
+          echo "$BUILD_VERSION" > android/.build_version
+          echo "Installed Android build template version: $BUILD_VERSION"
+
+      - name: Import assets
+        run: |
+          cd "$PROJECT_PATH"
+          godot --headless --editor --import --quit
+
+      - name: Build ${{ matrix.name }}
+        run: |
+          mkdir -p "build/${{ matrix.name }}"
+          cd "$PROJECT_PATH"
+          godot --headless --export-release "${{ matrix.export_template }}" "build/${{ matrix.name }}/${{ matrix.outname }}.${{ matrix.ext }}"
+        env:
+          GODOT_ANDROID_KEYSTORE_RELEASE_PATH: /root/debug.keystore
+          GODOT_ANDROID_KEYSTORE_RELEASE_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: android
+
+      - name: Upload Artifact - ${{ matrix.name }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ matrix.name }}
+          path: build/${{ matrix.name }}
+
+  snap:
+    runs-on: ubuntu-latest
+    needs: builds
+    name: Pack and Publish Snap
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Download Linux build
+        uses: actions/download-artifact@v5
+        with:
+          name: Linux
+          path: .
+
+      - name: Build snap
+        uses: snapcore/action-build@v1
+        id: build
+
+      - name: Publish snap
+        uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        with:
+          snap: ${{ steps.build.outputs.snap }}
+          release: candidate
+
+  release:
+    runs-on: ubuntu-latest
+    needs: builds
+    name: Tag and Release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Read version from project.godot
+        id: ver
+        run: echo "version=$(grep -oP 'config/version=\"\K[^\"]+' project.godot)" >> "$GITHUB_OUTPUT"
+
+      - name: Fail if tag already exists
+        run: |
+          if git ls-remote --exit-code --tags origin "v${{ steps.ver.outputs.version }}"; then
+            echo "Tag v${{ steps.ver.outputs.version }} already exists - bump config/version in project.godot first." && exit 1
+          fi
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: dist
+
+      - name: Package release assets
+        uses: ./.github/actions/package-builds
+        with:
+          source-dir: dist
+          output-dir: assets
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ steps.ver.outputs.version }}"
+          target_commitish: ${{ github.sha }}
+          name: "Source of Mana v${{ steps.ver.outputs.version }}"
+          prerelease: ${{ inputs.prerelease }}
+          draft: true
+          files: assets/*

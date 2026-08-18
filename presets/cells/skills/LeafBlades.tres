@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://dleafblea3x2q"]
+
+[ext_resource type="PackedScene" uid="uid://df4mobhwouf0u" path="res://presets/effects/particles/casts/LeafBlades.tscn" id="1_1m847"]
+[ext_resource type="Texture2D" uid="uid://d2wgklibxn34u" path="res://data/graphics/items/skill/leaf-blades.png" id="1_lskrc"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="1_tou8y"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="4_amp31"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="4_sacis"]
+[ext_resource type="PackedScene" uid="uid://dsb30whvwaho" path="res://presets/effects/particles/LeafBlades.tscn" id="5_703aq"]
+
+[sub_resource type="Resource" id="Resource_p4hfi"]
+script = ExtResource("4_sacis")
+_effect = 7
+_value = 30
+
+[sub_resource type="Resource" id="Resource_yvouw"]
+script = ExtResource("4_sacis")
+_effect = 2
+_value = -10
+
+[sub_resource type="Resource" id="Resource_dr472"]
+script = ExtResource("4_sacis")
+_effect = 3
+_value = -5
+
+[sub_resource type="Resource" id="Resource_qpc65"]
+script = ExtResource("4_amp31")
+_modifiers = Array[ExtResource("4_sacis")]([SubResource("Resource_p4hfi"), SubResource("Resource_yvouw"), SubResource("Resource_dr472")])
+
+[resource]
+script = ExtResource("1_tou8y")
+skillRange = 40
+mode = 1
+cooldownTime = 1.0
+castPreset = ExtResource("1_1m847")
+castTime = 2.0
+castWalk = true
+skillTime = 2.0
+projectilePreset = ExtResource("5_703aq")
+id = 0
+name = "Leaf Blades"
+description = "Unleash a mana-fueled attack, creating a focused circle of concentrated mana around you."
+icon = ExtResource("1_lskrc")
+type = 2
+weight = 0.0
+usable = true
+modifiers = SubResource("Resource_qpc65")

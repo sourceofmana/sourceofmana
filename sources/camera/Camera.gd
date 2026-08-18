@@ -68,8 +68,14 @@ func ZoomReset():
 		zoomLevel = ActorCommons.CameraZoomDefault
 		UpdateZoom()
 
+func SetPixelSnap(enabled : bool):
+	var viewport : Viewport = camera.get_viewport() if camera else null
+	if viewport:
+		viewport.set_snap_2d_transforms_to_pixel(enabled)
+
 func ZoomTweenCompleted():
 	zoomTween = null
+	SetPixelSnap(zoomLevel == ActorCommons.CameraZoomDefault)
 
 func ZoomTimerCompleted():
 	zoomTimer = null
@@ -79,6 +85,8 @@ func UpdateZoom():
 		return
 
 	lastZoomLevel = zoomLevel
+	if zoomLevel != ActorCommons.CameraZoomDefault:
+		SetPixelSnap(false)
 	zoomTimer = Callback.SelfDestructTimer(camera, ActorCommons.CameraZoomDelay / 2.0, ZoomTimerCompleted, [], "ZoomTimer")
 
 	if zoomLevel < ActorCommons.CameraZoomMin or zoomLevel >= ActorCommons.CameraZoomMax:

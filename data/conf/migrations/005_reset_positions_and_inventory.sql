@@ -19,6 +19,10 @@ UPDATE equipment SET
 	accessory1 = -1, accessory1Custom = '',
 	accessory2 = -1, accessory2Custom = '';
 
-DELETE FROM skill WHERE skill_id != 229218829;
+DELETE FROM skill WHERE skill_id NOT IN (229218829, 193470266);
+
+INSERT INTO skill (char_id, skill_id, level)
+	SELECT char_id, 193470266, 1 FROM character
+	WHERE char_id NOT IN (SELECT char_id FROM skill WHERE skill_id = 193470266);
 
 DELETE FROM item;

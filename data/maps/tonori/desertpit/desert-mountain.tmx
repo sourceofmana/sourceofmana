@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="150">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="152">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) 5t3v3 Reid"/>
@@ -1112,69 +1112,69 @@
    </properties>
    <polygon points="0,-57 0,55 15,55 47,24 47,-10"/>
   </object>
-  <object id="137" name="Desert Snake" type="Spawn" x="1366" y="832" width="848" height="768">
+  <object id="137" name="Sand Snake" type="Spawn" x="1366" y="832" width="848" height="768">
    <properties>
     <property name="count" value="3"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="138" name="Desert Snake" type="Spawn" x="2310" y="640" width="1088" height="448">
-   <properties>
-    <property name="count" value="5"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
-  <object id="139" name="Desert Snake" type="Spawn" x="3398" y="736" width="736" height="1312">
-   <properties>
-    <property name="count" value="8"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
-  <object id="140" name="Desert Snake" type="Spawn" x="3577" y="1615" width="224" height="128">
-   <properties>
-    <property name="count" value="3"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
-  <object id="141" name="Desert Snake" type="Spawn" x="2214" y="1344" width="1184" height="384">
-   <properties>
-    <property name="count" value="3"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
-  <object id="142" name="Desert Snake" type="Spawn" x="2950" y="2048" width="832" height="504">
-   <properties>
-    <property name="count" value="3"/>
-    <property name="type" value="Monster"/>
-   </properties>
-  </object>
-  <object id="143" name="Desert Snake" type="Spawn" x="2178" y="3040" width="484" height="736">
+  <object id="138" name="Fire Goblin" type="Spawn" x="2310" y="640" width="612.242" height="448">
    <properties>
     <property name="count" value="4"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="144" name="Desert Snake" type="Spawn" x="2662" y="2656" width="1184" height="960">
+  <object id="139" name="Sand Snake" type="Spawn" x="3398" y="736" width="736" height="1312">
    <properties>
     <property name="count" value="8"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="145" name="Desert Snake" type="Spawn" x="1286" y="1600" width="1600" height="992">
+  <object id="140" name="Fire Goblin" type="Spawn" x="3716.39" y="1608.94" width="375.515" height="179.515">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="141" name="Sand Snake" type="Spawn" x="2214" y="1344" width="1184" height="384">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="142" name="Sand Snake" type="Spawn" x="2950" y="2048" width="832" height="504">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="143" name="Sand Snake" type="Spawn" x="2178" y="3040" width="484" height="736">
+   <properties>
+    <property name="count" value="4"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="144" name="Sand Snake" type="Spawn" x="2662" y="2656" width="1184" height="960">
    <properties>
     <property name="count" value="8"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="146" name="Desert Snake" type="Spawn" x="2406" y="3648" width="1248" height="448">
+  <object id="145" name="Sand Snake" type="Spawn" x="1286" y="1600" width="1600" height="992">
+   <properties>
+    <property name="count" value="8"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="146" name="Lizandre" type="Spawn" x="2406" y="3648" width="1248" height="448">
    <properties>
     <property name="count" value="5"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="147" name="Desert Snake" type="Spawn" x="1254" y="3744" width="960" height="256">
+  <object id="147" name="Lizandra" type="Spawn" x="1254" y="3744" width="960" height="256">
    <properties>
-    <property name="count" value="4"/>
+    <property name="count" value="3"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1188,6 +1188,18 @@
    <properties>
     <property name="player_script" value="tonori/desertpit/Pachua.gd"/>
     <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="150" name="Lizandre" type="Spawn" x="2787.82" y="603.273" width="612.242" height="448">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="151" name="Peyote" type="Spawn" x="656" y="2736.12" width="712.242" height="1015.64">
+   <properties>
+    <property name="count" value="8"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>

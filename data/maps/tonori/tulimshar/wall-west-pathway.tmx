@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="173" height="120" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="31">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="173" height="120" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="32">
  <properties>
   <property name="ambient" value="Lighting"/>
   <property name="ambientintensity" type="float" value="0.3"/>
@@ -788,9 +788,9 @@
    </properties>
    <polygon points="24,36 24,4 56,-28 56,68"/>
   </object>
-  <object id="18" name="Bones" type="Spawn" x="1562" y="2367">
+  <object id="18" name="Ben" type="Spawn" x="1562" y="2367">
    <properties>
-    <property name="player_script" value="tonori/tulimshar/Bones.gd"/>
+    <property name="player_script" value="tonori/tulimshar/Ben.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
@@ -876,6 +876,12 @@
     <property name="own_script" value="tonori/tulimshar/LightTriggerGlobal.gd"/>
     <property name="trigger_radius" type="float" value="128"/>
     <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="31" name="Ratto" type="Spawn" x="-38.8227" y="18.9942">
+   <properties>
+    <property name="count" value="5"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>

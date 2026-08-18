@@ -22,7 +22,7 @@ func OnAreaEnter(_player : PlayerAgent):
 func OnPlayerLeft():
 	RemovePlayerModifier()
 	if monster:
-		RemoveAgent(monster)
+		WorldAgent.RemoveAgent.call_deferred(monster)
 		monster = null
 	SetVisible(true)
 	if player:

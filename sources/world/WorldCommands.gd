@@ -20,7 +20,7 @@ func RegisterCommands():
 	CommandManager.Register("health", CommandSpecificStat.bind("health"), ActorCommons.Permission.MODERATOR, "health <value>" )
 	CommandManager.Register("mana", CommandSpecificStat.bind("mana"), ActorCommons.Permission.MODERATOR, "mana <value>" )
 	CommandManager.Register("stamina", CommandSpecificStat.bind("stamina"), ActorCommons.Permission.MODERATOR, "stamina <value>" )
-	CommandManager.Register("speed", CommandSpecificModifier.bind("WalkSpeed"), ActorCommons.Permission.ADMIN, "speed <value>" )
+	CommandManager.Register("speed", CommandSpecificModifier.bind("WalkSpeed"), ActorCommons.Permission.GM, "speed <value>" )
 	CommandManager.Register("localbroadcast", CommandLocalBroadcast, ActorCommons.Permission.MODERATOR, "localbroadcast <text>" )
 	CommandManager.Register("broadcast", CommandBroadcast, ActorCommons.Permission.MODERATOR, "broadcast <text>" )
 	CommandManager.Register("quest", CommandQuest, ActorCommons.Permission.ADMIN, "quest <name> <state>" )
@@ -31,12 +31,14 @@ func RegisterCommands():
 	CommandManager.Register("kill", CommandKill, ActorCommons.Permission.MODERATOR, "kill <nick>" )
 	CommandManager.Register("revive", CommandRevive, ActorCommons.Permission.MODERATOR, "revive <nick>" )
 	CommandManager.Register("permission", CommandPermission, ActorCommons.Permission.ADMIN, "permission <player_name> <level>, with level: None=0, Moderator=1, GM=2, Admin=3" )
-	CommandManager.Register("privilege", CommandPermission, ActorCommons.Permission.ADMIN, "privilege <player_name> <level>, with level: None=0, Moderator=1, GM=2, Admin=3" )
 	CommandManager.Register("ipcheck", CommandIpCheck, ActorCommons.Permission.MODERATOR, "ipcheck <player_name>" )
 	CommandManager.Register("kick", CommandKick, ActorCommons.Permission.MODERATOR, "kick <player_name>" )
 	CommandManager.Register("ban", CommandBan, ActorCommons.Permission.GM, "ban <player_name> <time> <reason>" )
 	CommandManager.Register("unban", CommandUnban, ActorCommons.Permission.GM, "unban <player_name>" )
 	CommandManager.Register("banlist", CommandBanList, ActorCommons.Permission.MODERATOR, "banlist <filter>" )
+	CommandManager.Register("ipban", CommandIpBan, ActorCommons.Permission.ADMIN, "ipban <ip> <reason>, use * as an octet wildcard (e.g. 192.168.*.*), never expires, remove it with ipunban" )
+	CommandManager.Register("ipunban", CommandIpUnban, ActorCommons.Permission.ADMIN, "ipunban <ip>" )
+	CommandManager.Register("ipbanlist", CommandIpBanList, ActorCommons.Permission.MODERATOR, "ipbanlist <filter>" )
 	CommandManager.Register("whisper", CommandWhisper, ActorCommons.Permission.NONE, "whisper <player> <message>" )
 	CommandManager.Register("w", CommandWhisper, ActorCommons.Permission.NONE, "w <player> <message>" )
 	CommandManager.Register("query", CommandQuery, ActorCommons.Permission.NONE, "query <player>" )
@@ -71,12 +73,14 @@ static func UnregisterCommands():
 	CommandManager.Unregister("kill")
 	CommandManager.Unregister("revive")
 	CommandManager.Unregister("permission")
-	CommandManager.Unregister("privilege")
 	CommandManager.Unregister("ipcheck")
 	CommandManager.Unregister("kick")
 	CommandManager.Unregister("ban")
 	CommandManager.Unregister("unban")
 	CommandManager.Unregister("banlist")
+	CommandManager.Unregister("ipban")
+	CommandManager.Unregister("ipunban")
+	CommandManager.Unregister("ipbanlist")
 	CommandManager.Unregister("whisper")
 	CommandManager.Unregister("w")
 	CommandManager.Unregister("query")
@@ -300,14 +304,8 @@ func CommandLocalBroadcast(caller : PlayerAgent, text : String) -> bool:
 		return true
 	return false
 
-func CommandBroadcast(caller : PlayerAgent, text : String) -> bool:
-	if not caller:
-		return false
-
-	for areaIdx in Launcher.World.areas:
-		var area = Launcher.World.areas[areaIdx]
-		for inst in area.instances.values():
-			Network.NotifyGlobal("PushNotification", [text])
+func CommandBroadcast(_caller : PlayerAgent, text : String) -> bool:
+	Network.NotifyGlobal("PushNotification", [text])
 	return true
 
 # Progress
@@ -520,6 +518,66 @@ func CommandBanList(caller : PlayerAgent, filter : String = "") -> bool:
 			Network.CommandFeedback("%s: %s remaining" % [username, Util.FormatDuration(remaining)], caller.peerID)
 		else:
 			Network.CommandFeedback("%s: %s remaining (%s)" % [username, Util.FormatDuration(remaining), banReason], caller.peerID)
+	return true
+
+func CommandIpBan(caller : PlayerAgent, ipRange : String, reason : String = "") -> bool:
+	if not caller:
+		return false
+
+	if not NetworkCommons.IsValidIPRange(ipRange):
+		Network.CommandFeedback("Invalid IP, expected 4 octets with * as wildcard (e.g. 192.168.*.*)", caller.peerID)
+		return false
+
+	if not Launcher.SQL.BanIPRange(ipRange, reason):
+		Network.CommandFeedback("IP ban registration failed", caller.peerID)
+		return false
+
+	Peers.bannedIPRanges[ipRange] = reason
+
+	# Disconnect any online peer whose IP falls within the banned range
+	var bannedPeers : Array[int] = []
+	for peerID in Peers.peers:
+		if peerID != caller.peerID and NetworkCommons.IsIPInRange(Peers.GetPeerIP(peerID), ipRange):
+			bannedPeers.append(peerID)
+
+	for peerID in bannedPeers:
+		var server : NetServer = Peers.GetAssociatedNetServer(peerID)
+		if server and server.multiplayerAPI:
+			server.multiplayerAPI.disconnect_peer(peerID)
+			server.DisconnectPeer(peerID)
+
+	Network.CommandFeedback("IP range '%s' banned" % ipRange, caller.peerID)
+	return true
+
+func CommandIpUnban(caller : PlayerAgent, ipRange : String) -> bool:
+	if not caller:
+		return false
+
+	if not Peers.bannedIPRanges.has(ipRange):
+		Network.CommandFeedback("IP range '%s' is not banned" % ipRange, caller.peerID)
+		return false
+
+	Launcher.SQL.UnbanIPRange(ipRange)
+	Peers.bannedIPRanges.erase(ipRange)
+	Network.CommandFeedback("IP range '%s' unbanned" % ipRange, caller.peerID)
+	return true
+
+func CommandIpBanList(caller : PlayerAgent, filter : String = "") -> bool:
+	if not caller:
+		return false
+
+	var results : Array[Dictionary] = Launcher.SQL.GetIPBanList(filter)
+	if results.is_empty():
+		Network.CommandFeedback("No IP bans found", caller.peerID)
+		return true
+
+	for row in results:
+		var ipRange : String = row.get("ip_range", "unknown")
+		var banReason : String = row.get("reason", "")
+		if banReason.is_empty():
+			Network.CommandFeedback("%s" % ipRange, caller.peerID)
+		else:
+			Network.CommandFeedback("%s (%s)" % [ipRange, banReason], caller.peerID)
 	return true
 
 # Private messages

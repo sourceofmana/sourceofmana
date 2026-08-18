@@ -27,6 +27,8 @@ const creditsJson : JSON						= preload("res://data/db/credits.json")
 	"Session-ShortcutCells": [init_shortcutcells, set_shortcutcells, apply_shortcutcells, null],
 	"Input-Bindings": [init_inputbindings, null, null, null],
 	"Account-PasswordChange": [null, set_account_password, null, $Layout/Margin/TabBar/Account],
+	"Privacy-BugReports": [init_bugreports, set_bugreports, apply_bugreports, $Layout/Margin/TabBar/Privacy/PrivacyVBox/BugReports],
+	"Network-Local": [init_localserver, set_localserver, apply_localserver, $Layout/Margin/TabBar/Privacy/PrivacyVBox/LocalServer],
 }
 
 enum CATEGORY { RENDER, SOUND, INPUT, COUNT }
@@ -281,8 +283,14 @@ func apply_sessionoverlay(overlay : Array):
 # Shortcut cells
 func init_shortcutcells(apply : bool):
 	if apply:
-		var cells : Array = GetVal("Session-ShortcutCells")
-		apply_shortcutcells(cells)
+		if not DB.isInitialized:
+			if not Launcher.dbInitialized.is_connected(load_shortcutcells):
+				Launcher.dbInitialized.connect(load_shortcutcells, CONNECT_ONE_SHOT)
+			return
+		load_shortcutcells()
+func load_shortcutcells():
+	var cells : Array = GetVal("Session-ShortcutCells")
+	apply_shortcutcells(cells)
 func save_shortcutcells():
 	var cells : Array = []
 	if Launcher.GUI:
@@ -317,6 +325,34 @@ func apply_shortcutcells(cells : Array):
 						cells.erase(cellInfo)
 						break
 
+# Bug Reports
+func init_bugreports(apply : bool):
+	var enable : bool = GetVal("Privacy-BugReports")
+	renderAccessors["Privacy-BugReports"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
+	if apply:
+		apply_bugreports(enable)
+func set_bugreports(enable : bool):
+	SetVal("Privacy-BugReports", enable)
+	apply_bugreports(enable)
+func apply_bugreports(_enable : bool):
+	pass
+
+# Local Server
+func init_localserver(apply : bool):
+	var enable : bool = GetVal("Network-Local")
+	renderAccessors["Network-Local"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
+	if apply:
+		apply_localserver(enable)
+func set_localserver(enable : bool):
+	SetVal("Network-Local", enable)
+	apply_localserver(enable)
+func apply_localserver(_enable : bool):
+	var isLocal : bool = OS.is_debug_build() and GetVal("Network-Local")
+	if isLocal != NetworkCommons.IsLocal:
+		NetworkCommons.IsLocal = isLocal
+		if NetworkCommons.IsLocal:
+			Launcher.Mode(true, false)
+
 # Input Bindings
 func init_inputbindings(apply : bool):
 	if apply:
@@ -345,6 +381,8 @@ func _ready():
 	if LauncherCommons.isMobile or LauncherCommons.isWeb:
 		renderAccessors["Render-WindowSize"][ACC_TYPE.LABEL].get_parent().set_visible(false)
 		renderAccessors["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
+
+	renderAccessors["Network-Local"][ACC_TYPE.LABEL].set_visible(OS.is_debug_build())
 
 # Conf accessors
 func RefreshSettings(apply : bool):

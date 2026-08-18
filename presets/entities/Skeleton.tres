@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://d8c20su62gc6"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_skel"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_skel"]
+[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="3_skel"]
+[ext_resource type="Texture2D" uid="uid://y60ht1hksqqa" path="res://data/graphics/sprites/monsters/skeleton.png" id="4_skel"]
+[ext_resource type="Resource" uid="uid://cbw8ta1x6umf4" path="res://presets/cells/items/chest/LeatherShirt.tres" id="5_skel"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="6_0x0cs"]
+[ext_resource type="Resource" uid="uid://bj5p08ffbj617" path="res://presets/cells/items/weapon/BoneKnife.tres" id="6_skel"]
+[ext_resource type="AudioStream" uid="uid://j0tl8tynrx4x" path="res://data/sounds/entities/skeleton/death.ogg" id="7_death"]
+[ext_resource type="Resource" uid="uid://dc8nmuobdltej" path="res://presets/cells/items/shield/DesertShield.tres" id="7_skel"]
+
+[resource]
+script = ExtResource("2_skel")
+_id = 890728458
+_name = "Skeleton"
+_spritePreset = ExtResource("3_skel")
+_radius = 10
+_stats = {
+"baseExp": 45,
+"defense": 0,
+"level": 20,
+"maxHealth": 300,
+"mdefense": 35,
+"walkSpeed": 100.0
+}
+_equipment = Array[ExtResource("1_skel")]([ExtResource("5_skel"), null, null, null, null, null, ExtResource("6_skel"), ExtResource("7_skel")])
+_customTexture = ExtResource("4_skel")
+_behaviour = 4
+_stateSFX = Dictionary[int, AudioStream]({
+4: ExtResource("7_death")
+})

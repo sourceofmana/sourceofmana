@@ -28,6 +28,14 @@ static func IsVisible(fromPos : Vector2, toPos : Vector2, halfSize : Vector2) ->
 # Bulk
 const BulkMinSize : int					= 3
 
+# Frame sequencing
+static func FrameID() -> int:
+	return Engine.get_physics_frames()
+
+static func IsFrameNewer(frameID : int, lastFrameID : int) -> bool:
+	# Track the last received server frame to drop old rpc calls in the client on different network channels
+	return lastFrameID < 0 or frameID > lastFrameID
+
 # Navigation
 const NavigationSpawnTry : int			= 10
 
@@ -78,7 +86,23 @@ static func ComputeProtocolVersion(network : Node) -> int:
 # Peer
 const UseENet : bool					= true
 const UseWebSocket : bool				= true
-const IsLocal : bool					= false
+const UseWebRTC : bool					= true
+static var IsLocal : bool				= false
+
+# WebRTC signaling
+const IceServers : Array[Dictionary]	= [{ "urls": "stun:stun.l.google.com:19302" }]
+
+# One entry per EChannel above the default channel 0 triad, in EChannel order
+const RtcChannelsConfig : Array			= [
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+	MultiplayerPeer.TRANSFER_MODE_UNRELIABLE_ORDERED,
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+	MultiplayerPeer.TRANSFER_MODE_UNRELIABLE_ORDERED,
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+	MultiplayerPeer.TRANSFER_MODE_UNRELIABLE_ORDERED,
+	MultiplayerPeer.TRANSFER_MODE_RELIABLE,
+]
 
 const ServerKeyPath : String			= "user://server.key"
 const ServerCertPath : String			= "user://server.crt"
@@ -183,6 +207,36 @@ static func CheckEmailInformation(emailText : String) -> AuthError:
 
 static func CheckResetCode(code : String) -> bool:
 	return code.length() == ResetCodeSize and code.is_valid_int()
+
+# IP ranges with wildcards support
+static func IsValidIPRange(ipRange : String) -> bool:
+	var chunks : PackedStringArray = ipRange.split(".")
+	if chunks.size() != 4:
+		return false
+
+	for chunk in chunks:
+		if chunk == "*":
+			continue
+		if not chunk.is_valid_int():
+			return false
+		var value : int = chunk.to_int()
+		if value < 0 or value > 255:
+			return false
+	return true
+
+static func IsIPInRange(ip : String, ipRange : String) -> bool:
+	if ip.is_empty():
+		return false
+
+	var ipOctets : PackedStringArray = ip.split(".")
+	var rangeOctets : PackedStringArray = ipRange.split(".")
+	if ipOctets.size() != 4 or rangeOctets.size() != 4:
+		return false
+
+	for chunk in 4:
+		if rangeOctets[chunk] != "*" and rangeOctets[chunk] != ipOctets[chunk]:
+			return false
+	return true
 
 # Character
 enum CharacterError {

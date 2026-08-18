@@ -37,15 +37,13 @@ func _on_info_update():
 	infoLabel.add_text("Navigation Edge Connection Count: %d\n" % int(Performance.get_monitor(Performance.NAVIGATION_EDGE_CONNECTION_COUNT)))
 	infoLabel.add_text("Navigation Edge Free Count: %d\n" % int(Performance.get_monitor(Performance.NAVIGATION_EDGE_FREE_COUNT)))
 
-func _on_peer_connection_update(nickname : String = ""):
+func _on_peer_connection_update(_nickname : String = ""):
 	peersLabel.text = ""
 	for peerID in Peers.peers:
 		var peer : Peers.Peer = Peers.GetPeer(peerID)
-		var playerNickname : String = nickname
-		if playerNickname.is_empty():
-			var player : PlayerAgent = Peers.GetAgent(peerID)
-			playerNickname = player.nick if player else "-1"
-		peersLabel.add_text("RPC: %d\t\tAccount: %d\t\tCharacter: %d\t\tAgent: %s [%d]\t\tMode: %s\n" % [peerID, peer.accountID, peer.characterID, playerNickname, peer.agentRID, "WebSocket" if peer.usingWebSocket else "ENet"])
+		var player : PlayerAgent = Peers.GetAgent(peerID)
+		var playerNickname : String = player.nick if player else "-1"
+		peersLabel.add_text("RPC: %d\t\tAccount: %d\t\tCharacter: %d\t\tAgent: %s [%d]\t\tMode: %s\n" % [peerID, peer.accountID, peer.characterID, playerNickname, peer.agentRID, Peers.GetTransportName(peer.transport)])
 
 #
 func _ready():

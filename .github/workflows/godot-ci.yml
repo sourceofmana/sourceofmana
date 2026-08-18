@@ -1,8 +1,11 @@
 name: "godot-ci export"
-on: push
+on:
+  push:
+    branches:
+      - '**'
 
 env:
-  GODOT_VERSION: 4.7
+  GODOT_VERSION: 4.7.1
   EXPORT_NAME: "Source of Mana"
   PROJECT_PATH: "."
 
@@ -30,14 +33,19 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.7
+      image: barichello/godot-ci:4.7.1
     name: Export ${{ matrix.name }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           lfs: true
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y libfontconfig1 unzip
 
       - name: Setup Godot templates
         run: |
@@ -49,19 +57,29 @@ jobs:
         env:
           DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
 
+      - name: Install Android build template
+        if: matrix.name == 'Android'
+        run: |
+          cd "$PROJECT_PATH"
+          BUILD_VERSION=$(godot --version | sed -E 's/\.(official|custom_build)\..*$//')
+          mkdir -p android/build
+          unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip -d android/build
+          echo "$BUILD_VERSION" > android/.build_version
+          echo "Installed Android build template version: $BUILD_VERSION"
+
       - name: Import assets
         run: |
           cd "$PROJECT_PATH"
-          godot --headless --editor --import --verbose --quit
+          godot --headless --editor --import --quit
 
       - name: Build ${{ matrix.name }}
         run: |
           mkdir -p "build/${{ matrix.name }}"
           cd "$PROJECT_PATH"
-          godot --headless --verbose --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
+          godot --headless --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
 
       - name: Upload Artifact - ${{ matrix.name }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.name }}
           path: build/${{ matrix.name }}
@@ -69,13 +87,15 @@ jobs:
   snap:
     runs-on: ubuntu-latest
     needs: builds
-    name: Pack Snap
+    name: Pack and Publish Snap
+    env:
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download Linux build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: Linux
           path: .
@@ -85,7 +105,14 @@ jobs:
         id: build
 
       - name: Upload Snap
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Snap
           path: ${{ steps.build.outputs.snap }}
+
+      - name: Publish snap
+        if: github.ref == 'refs/heads/master' && env.SNAPCRAFT_STORE_CREDENTIALS != ''
+        uses: snapcore/action-publish@v1
+        with:
+          snap: ${{ steps.build.outputs.snap }}
+          release: edge

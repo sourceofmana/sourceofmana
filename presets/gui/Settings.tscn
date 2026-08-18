@@ -84,6 +84,7 @@ text = "Visual"
 
 [node name="Fullscreen" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=334337584]
 layout_mode = 2
+tooltip_text = "Makes the game fill your whole screen."
 text = "Fullscreen Mode"
 
 [node name="WindowResolution" type="HBoxContainer" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1027751738]
@@ -98,6 +99,7 @@ text = " Window Resolution"
 [node name="Option" type="OptionButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution" unique_id=745099495]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Sets the size of the game window."
 
 [node name="Scaling" type="HBoxContainer" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1909061268]
 layout_mode = 2
@@ -111,6 +113,7 @@ text = " Scaling"
 [node name="Option" type="OptionButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling" unique_id=815910694]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Zooms the whole game view by one, two or three times."
 selected = 0
 item_count = 3
 popup/item_0/text = "x1"
@@ -122,6 +125,7 @@ popup/item_2/id = 2
 
 [node name="ActionOverlay" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=1637200902]
 layout_mode = 2
+tooltip_text = "Shows touch buttons on screen for movement and actions."
 text = "Action Overlay"
 
 [node name="HSeparator2" type="HSeparator" parent="Layout/Margin/TabBar/Render/RenderVBox" unique_id=186324792]
@@ -136,14 +140,17 @@ text = "Effect"
 
 [node name="Lighting" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=392747916]
 layout_mode = 2
+tooltip_text = "Turns on dynamic lights and shadows."
 text = "Lighting"
 
 [node name="HQx4" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=787563390]
 layout_mode = 2
+tooltip_text = "Smooths the image when the view is scaled up."
 text = "High Quality Scale"
 
 [node name="CRT" type="CheckButton" parent="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=307353882]
 layout_mode = 2
+tooltip_text = "Adds an old television screen look."
 text = "Cathode Ray Tube"
 
 [node name="Label" type="Label" parent="Layout/Margin/TabBar/Render/RenderVBox" unique_id=1915786938]
@@ -170,6 +177,7 @@ text = "Global Volume"
 [node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume" unique_id=1319659749]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Sets the volume of every sound in the game at once."
 max_value = 1.0
 step = 0.1
 tick_count = 10
@@ -187,6 +195,7 @@ text = "Alteration SFX Volume"
 [node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume" unique_id=201837467]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Sets the volume of combat and reward sounds like hits, heals and level ups."
 max_value = 1.0
 step = 0.1
 tick_count = 10
@@ -204,6 +213,7 @@ text = "State SFX Volume"
 [node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume" unique_id=201837470]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Sets the volume of sounds tied to what characters are doing."
 max_value = 1.0
 step = 0.1
 tick_count = 10
@@ -242,6 +252,7 @@ text = " Current Password"
 [node name="Text" type="LineEdit" parent="Layout/Margin/TabBar/Account/AccountVBox/CurrentPassword" unique_id=895317565]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Type your current password so we know it is really you."
 secret = true
 
 [node name="NewPassword" type="HBoxContainer" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=1828967856]
@@ -255,6 +266,7 @@ text = " New Password"
 [node name="Text" type="LineEdit" parent="Layout/Margin/TabBar/Account/AccountVBox/NewPassword" unique_id=628449545]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Type the new password you want to use from now on."
 secret = true
 
 [node name="ConfirmPassword" type="HBoxContainer" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=1523694092]
@@ -268,10 +280,12 @@ text = " Confirm Password"
 [node name="Text" type="LineEdit" parent="Layout/Margin/TabBar/Account/AccountVBox/ConfirmPassword" unique_id=986277347]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Type your new password again so it can be checked for typos."
 secret = true
 
 [node name="ChangeButton" type="Button" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=1463781895]
 layout_mode = 2
+tooltip_text = "Saves your new password."
 text = "Change Password"
 
 [node name="StatusLabel" type="RichTextLabel" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=1960191140]
@@ -279,12 +293,34 @@ layout_mode = 2
 bbcode_enabled = true
 fit_content = true
 
-[node name="Credits" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=850000001]
+[node name="Privacy" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=860000010]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 metadata/_tab_index = 4
+
+[node name="PrivacyVBox" type="VBoxContainer" parent="Layout/Margin/TabBar/Privacy" unique_id=860000011]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="BugReports" type="CheckButton" parent="Layout/Margin/TabBar/Privacy/PrivacyVBox" unique_id=860000013]
+layout_mode = 2
+tooltip_text = "Sends anonymous crash and error reports to help fix bugs. No personal data is collected."
+text = "Bug Reports"
+
+[node name="LocalServer" type="CheckButton" parent="Layout/Margin/TabBar/Privacy/PrivacyVBox" unique_id=860000014]
+layout_mode = 2
+tooltip_text = "Connects to a dedicated server running on this machine (127.0.0.1) instead of the public server."
+text = "★ Local Server"
+
+[node name="Credits" type="ScrollContainer" parent="Layout/Margin/TabBar" unique_id=850000001]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 5
 
 [node name="Margin" type="MarginContainer" parent="Layout/Margin/TabBar/Credits" unique_id=850000002]
 layout_mode = 2
@@ -314,3 +350,5 @@ alignment = 1
 [connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider" to="." method="set_audioalteration"]
 [connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider" to="." method="set_audiostate"]
 [connection signal="pressed" from="Layout/Margin/TabBar/Account/AccountVBox/ChangeButton" to="Layout/Margin/TabBar/Account" method="_on_change_button_pressed"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Privacy/PrivacyVBox/BugReports" to="." method="set_bugreports"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Privacy/PrivacyVBox/LocalServer" to="." method="set_localserver"]

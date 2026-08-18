@@ -445,6 +445,33 @@ func LoadBans() -> Dictionary[int, int]:
 		bans[row["account_id"]] = row["unban_timestamp"]
 	return bans
 
+# IP Ban
+func BanIPRange(ipRange : String, reason : String = "") -> bool:
+	var results : Array[Dictionary] = QueryBindings("SELECT ip_range FROM ip_ban WHERE ip_range = ?;", [ipRange])
+	var data : Dictionary = {
+		"ip_range": ipRange,
+		"banned_timestamp": SQLCommons.Timestamp(),
+		"reason": reason,
+	}
+	if not results.is_empty():
+		return db.update_rows("ip_ban", "ip_range = '%s'" % ipRange, data)
+	return db.insert_row("ip_ban", data)
+
+func UnbanIPRange(ipRange : String) -> bool:
+	return ExecuteBindings("DELETE FROM ip_ban WHERE ip_range = ?;", [ipRange])
+
+func LoadIPBans() -> Dictionary[String, String]:
+	var bans : Dictionary[String, String] = {}
+	var results : Array[Dictionary] = Query("SELECT ip_range, reason FROM ip_ban;")
+	for row in results:
+		bans[row["ip_range"]] = row.get("reason", "")
+	return bans
+
+func GetIPBanList(filter : String = "") -> Array[Dictionary]:
+	if filter.is_empty():
+		return Query("SELECT ip_range, banned_timestamp, reason FROM ip_ban;")
+	return QueryBindings("SELECT ip_range, banned_timestamp, reason FROM ip_ban WHERE ip_range LIKE ?;", ["%" + filter + "%"])
+
 func GetAccountID(username : String) -> int:
 	var results : Array[Dictionary] = QueryBindings("SELECT account_id FROM account WHERE username = ?;", [username])
 	if not results.is_empty():
@@ -490,24 +517,22 @@ func _post_launch():
 	if not FileSystem.FileExists(dbPath) and not SQLCommons.CopyDatabase(dbPath):
 		return
 
-	if LauncherCommons.isWeb:
-		db = DummySQL.new()
-	else:
-		db = SQLite.new()
+	db = SQLite.new()
 	db.path = dbPath
-	db.verbosity_level = SQLite.VERBOSE if OS.is_debug_build() else SQLite.NORMAL
+	db.verbosity_level = SQLCommons.Verbosity
 
 	if not db.open_db():
 		assert(false, "Failed to open database: "+ db.error_message)
 	else:
-		if OS.is_debug_build():
+		if OS.is_debug_build() and not LauncherCommons.isWeb:
 			Query("PRAGMA journal_mode=WAL;")
 			Query("PRAGMA busy_timeout=5000;")
-		if not Launcher.Debug:
+		if not Launcher.Debug and not LauncherCommons.isWeb:
 			backups = SQLBackups.new()
 
 	ApplyMigrations()
 	Peers.bannedAccounts = LoadBans()
+	Peers.bannedIPRanges = LoadIPBans()
 	CleanExpiredTokens()
 
 	isInitialized = true
@@ -526,6 +551,7 @@ func Wipe():
 	db.delete_rows("bestiary", "")
 	db.delete_rows("character", "")
 	db.delete_rows("equipment", "")
+	db.delete_rows("ip_ban", "")
 	db.delete_rows("item", "")
 	db.delete_rows("quest", "")
 	db.delete_rows("skill", "")

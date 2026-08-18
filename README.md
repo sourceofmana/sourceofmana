@@ -11,8 +11,8 @@ The game is still in early development but already offers a playable solo and mu
 **Engine:** Godot 4 (client and server)
 
 **Design Tools:**
-- Game editor: The latest [Godot](https://godotengine.org/) version available, currently 4.7
-- Level editor: The latest [Tiled](https://www.mapeditor.org/) version available, currently 1.11.2
+- Game editor: [Godot 4.7.1](https://godotengine.org/)
+- Level editor: [Tiled 1.11.2](https://www.mapeditor.org/)
 
 **Organization:** [Manasource](https://manasource.org)
 
@@ -40,9 +40,11 @@ The game is still in early development but already offers a playable solo and mu
 
 ### General Movement
 - **Move:** `WASD`
+- **Click to Move / Interact:** Left Mouse Button
 - **Interact:** `Ctrl`
 - **Target:** `E`
-- **Untarget:** `Shift`
+- **Untarget:** `R`
+- **Run (Hold):** `Shift`
 - **Pickup Items:** `Q`
 - **Morph / Transformation:** `M`
 - **Sit:** `C`
@@ -53,19 +55,20 @@ The game is still in early development but already offers a playable solo and mu
 - **Screenshot:** `P`
 
 ### UI Shortcuts (Keyboard Only)
-- **Open Stats:** `F1`
-- **Menu Bar:** `F2`
+- **Menu Bar:** `F1`
+- **Open Stats:** `F2`
 - **Inventory:** `F3`
 - **Skills:** `F4`
 - **Quest Progress:** `F5`
 - **Minimap:** `F6`
 - **Chat:** `F7`
-- **Credits:** `F8`
+- **Social:** `F8`
 - **Settings:** `F9`
+- **Toggle Fullscreen:** `F11`
 - **Emotes:** `F12`
 
 ### Contextual Actions
-- **Validate:** `Enter`
+- **Confirm / Open Chat:** `Enter`
 - **Cancel / Close:** `Esc`
 - **Context Options:** `1`, `2`, `3`, `4`
 
@@ -78,10 +81,12 @@ We’re always looking for contributors of all kinds:
 - UI/UX designers
 - Writers and worldbuilders
 
+### Contact
+
 If you’re interested in helping, join our community and check out our open issues.
 
 - **Discord:** [Join here](https://discord.com/channels/581622549566193664/1013487216493854780)
-- **IRC:** `#sourceofmana` on [Libera.Chat](https://web.libera.chat/#sourceofmana)
+- **IRC:** `#sourceofmana` and `#sourceofmana-dev` on [Libera.Chat](https://web.libera.chat/#sourceofmana,#sourceofmana-dev)
 
 ## License
 

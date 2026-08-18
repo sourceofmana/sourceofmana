@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://qc8rsv767i7m"]
+
+[ext_resource type="Texture2D" uid="uid://xd0g1fspfiex" path="res://data/graphics/items/skill/sonic-scream.png" id="1_lb5c4"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="4_8at4d"]
+[ext_resource type="PackedScene" uid="uid://bd4inmmlv7qqd" path="res://presets/effects/particles/SonicScream.tscn" id="4_p83gv"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="5_4deav"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="7_tt4oe"]
+
+[sub_resource type="Resource" id="Resource_s34tt"]
+script = ExtResource("4_8at4d")
+_effect = 7
+_value = 10
+
+[sub_resource type="Resource" id="Resource_7m8ix"]
+script = ExtResource("4_8at4d")
+_effect = 2
+_value = -2
+
+[sub_resource type="Resource" id="Resource_klyse"]
+script = ExtResource("4_8at4d")
+_effect = 3
+_value = -2
+
+[sub_resource type="Resource" id="Resource_uhivh"]
+script = ExtResource("5_4deav")
+_modifiers = Array[ExtResource("4_8at4d")]([SubResource("Resource_s34tt"), SubResource("Resource_7m8ix"), SubResource("Resource_klyse")])
+
+[resource]
+script = ExtResource("7_tt4oe")
+skillRange = 64
+cooldownTime = 3.0
+projectilePreset = ExtResource("4_p83gv")
+id = 0
+name = "Sonic Scream"
+description = "Releases a blue sonic wave that deals damage forward."
+icon = ExtResource("1_lb5c4")
+type = 2
+weight = 0.0
+usable = true
+modifiers = SubResource("Resource_uhivh")

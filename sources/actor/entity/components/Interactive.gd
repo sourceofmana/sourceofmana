@@ -119,7 +119,7 @@ func DisplayLevelUp():
 #
 func DisplaySkillRange(skill : SkillCell):
 	if skill:
-		skillPreview.Display(skill.cellRange + entity.stat.current.attackRange)
+		skillPreview.Display(skill.skillRange + entity.stat.current.attackRange)
 	else:
 		skillPreview.Hide()
 	skillPreview.queue_redraw()
@@ -299,7 +299,7 @@ func DisplaySailContext():
 
 #
 func Init(data : EntityData):
-	displayName = entity.type == ActorCommons.Type.PLAYER or data._displayName
+	displayName = (entity.type == ActorCommons.Type.PLAYER or data._displayName) and entity != Launcher.Player
 
 	if nameLabel:
 		nameLabel.set_text(entity.nick)

@@ -22,6 +22,8 @@ const BackupLimits : Dictionary[BackupFrequency, int] = {
 	BackupFrequency.MONTHLY: 12
 }
 
+const Verbosity : SQLite.VerbosityLevel	= SQLite.NORMAL
+
 # Utils
 static func HasValue(data : Dictionary, key : String) -> bool:
 	return data[key] != null if data.has(key) else false

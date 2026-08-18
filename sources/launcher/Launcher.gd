@@ -135,6 +135,8 @@ func _ready():
 
 	Root = get_tree().get_root()
 
+	Conf.Init()
+
 	if "--server" in OS.get_cmdline_args():
 		Scene = FileSystem.LoadResource(Path.Pst + "Server" + Path.SceneExt)
 		Root.add_child.call_deferred(Scene)
@@ -148,7 +150,6 @@ func _ready():
 		Audio = Scene.get_node("Audio")
 		startClient = true
 		startServer = not LauncherCommons.isWeb and OS.is_debug_build() and not NetworkCommons.IsLocal
-	Conf.Init()
 
 	if not Root or not Scene:
 		printerr("Could not initialize source's base services")

@@ -16,13 +16,15 @@ _name = "Sand Snake"
 _spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
-"attack": 57,
-"castAttackDelay": 0.5,
-"cooldownAttackDelay": 0.5,
-"defense": 12,
-"level": 20,
-"maxHealth": 220,
-"walkSpeed": 110.0
+"attack": 85,
+"baseExp": 60,
+"castAttackDelay": 0.35,
+"cooldownAttackDelay": 0.3,
+"defense": 5,
+"dodgeRate": 0.12,
+"level": 19,
+"maxHealth": 200,
+"walkSpeed": 120.0
 }
 _equipment = Array[ExtResource("1_uctx6")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")

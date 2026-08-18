@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="150" height="170" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="17">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="150" height="170" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="22">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1122,6 +1122,36 @@
     <property name="dest_pos_y" value="106"/>
    </properties>
    <polygon points="20,56 52,56 67,72 52,90 19,90 5,72"/>
+  </object>
+  <object id="17" name="Sea Slime" type="Spawn" x="2362.79" y="1103.67" width="566.423" height="868.667">
+   <properties>
+    <property name="count" value="4"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="18" name="Sea Slime" type="Spawn" x="1826.79" y="1825.67" width="416.423" height="634.667">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="19" name="Piou" type="Spawn" x="-101.787" y="64.3635">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="20" name="Turtle" type="Spawn" x="1466.79" y="3567.67" width="496.423" height="498.667">
+   <properties>
+    <property name="count" value="4"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="21" name="Sea Slime" type="Spawn" x="2203.79" y="4100.67" width="496.423" height="448.667">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

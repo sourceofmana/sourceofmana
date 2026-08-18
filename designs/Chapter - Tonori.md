@@ -2,116 +2,105 @@
 
 ## Locations
 
-## Tulimshar - Level 1~10
-Tulimshar is an important geographical region and serves as a big trade city in the center place of trade routes from Argaes & Aurora continents.
-It is the main point of contact from the southern continent (Tonori) and connects with people from Argaes and Aurora.
-The city is alive only through their trading, they don't have much resources as the desert hit hard their crops and only some cactus fields remains within the city.
-All their previous cactus fields and crops in the south, outside the city, are lost in the desert. This lack of resources created a schism in the city and saw the rise of the red queen.
-Red queen is the main political figure from this city that switched the city economics from their harvests into a trading city.
-She is also the main antagonist of this region as she keep most of the city wealth for herself, the city remain in an acceptable state but is vowed to crumble with sand storm hitting by the south and natural erosion cause by the ocean on the north.
+## Tulimshar - Level 3~10
+Tulimshar is an important geographical region and serves as a big trade city in the centre place of trade routes from Argaes & Aurora continents.
+It is the main trading port in the southern continent (Tonori) and is connected by sea to other regions, including Argaes and Aurora.
+The city is alive only through trading, it doesn’t have many other resources as the desert environment limits its opportunities. Cactus is farmed as a staple food.
+
+The Red Queen is the main political figure of the city. She is widely disliked by her own people and considered a selfish ruler who is not concerned with the wellbeing of her kingdom.
+She is also the main antagonist of this region as she keeps most of the city's wealth to herself. The city remains in an acceptable state, but the sandstorm battering the southern city walls and the rise in unusually aggressive creatures threaten to tip the balance against Tulimshar's interest.
 
 ### Inner locations
+The Glowing Stone Inn, the first building past the southern gate and near the Soul Menhir. It is where travellers from around Tonori gather to rest and talk.
 City hall, learn how to create a party.
 Market, trade some common items and buy some local equipment made for your exploration in Tonori's desert.
 Port, assemble your crew and sail on the ocean to explore new regions.
-Training Ground, explain how to fight monsters.
-Red queen mansion, main quest line place.
-Soul Mehnir, inactive, Nina is watching over this soul mehnir for somebody to re-active it.
+Training Ground, where we can learn more on how to fight monsters.
+Red Palace, home of the Red Queen and her Royal Court.
+Soul Menhir, the only source of magic allowed within the city. It is used by local druids to heal the injured.
 
 ### NPCs
 Elanore (Healer)
 Ishi & Aidan (Begginer Helper)
 Inar & Neko (Market Merchants)
-Nina the mage (At the city entrance, next to the soul mehnir)
+Nina the druid (At the city entrance, next to the soul mehnir)
 Watchman Eriku (At the city entrance, next to the entrance gate)
 Red Queen of Tonori
 Omar & Kadiya (Sick girl quest)
-Vincent (Bestiary explanation)
-Ian (Guide)
+Kael (Bestiary explanation)
+Gilgames (Guide)
 Soul Mehnir (Respawn point)
 Sandra (Saw a Mr Prickel)
 
 ### Enemies
-Peyote, Lvl.1 (static, dummy)
-Maggot, Lvl.2 (neutral)
-Ratto, Lvl.3 (high walkspeed, high attack speed, low hp, low attack)
+Piou, Lvl.1 (flee)
+Maggot, Lvl.1 (flee)
+Peyote, Lvl.2 (immobile)
+Ratto, Lvl.5 (indoor only, flee)
 
 
-### Sandstorm Desert - Level 2~10
-South of Tulimshar, a harsh desert environment that hides some remnent of the city's outer area that used to be focus on cattle and cultivating cactus fields and other resources. An old abandonned mine is present in the south of this map.
-Nowadays the desert has taken away this land.
+### Tulimshar Valley - Level 3~10
+South of Tulimshar, a harsh desert environment engulfed by a raging sandstorm. The remnants of cactus fields and ruined buildings are scattered throughout, as the recent arrival of the storm has forced people to abandon the area.
 
 #### Inner locations
-Sandstorm Mines
 
 #### NPCs
-Nickos (Miner)
+Nathan
+Ryan
+
+Nickos (Miner, second level of the Sandstorm Mines)
 Dausen (Miner Guard, next to Tulimshar's gate)
-Samuel (Nomad tribe)
-Elijah (Nomad tribe)
+Sawyl (Nomad tribe)
+Elias (Nomad tribe)
 
 #### Enemies
-Maggot, Lvl.2 (neutral)
-Fire Goblin, Lvl.3 (aggro, cast spitfire spell)
-Scorpion, Lvl.5 (neutral, high hp, low defense)
-Mister Prickel Lvl.10 (rare, aggro, high hp, high def, low attack)
+Maggot, Lvl.1 (flee)
+Peyote, Lvl.2 (immobile)
+Scorpion, Lvl.4 (neutral, high hp, low def)
+Fire Goblin, Lvl.8 (neutral, casts spitfire)
 
 
 ### Sandstorm Mines - Level 3~10
-Once used to extract ores and minerals, now abandoned for many years. You're sent to explore this area.
-It is meant to hide the Mana Tree on an hidden level inaccessible from the player on their first playthrough in this place.
+A semi-natural cave system that was used to mine iron ore before its resources ran out. It is now abandoned. You're sent to explore this area. 
+The Mana Tree is hidden in a secret chamber in the second level of this area.
 
 #### Inner locations
 Poluwat Cave (inaccessible) 
+Where the Mana Tree resides. The player and Xakelbael learn of this location at the end of the prologue. No one else knows about it.
 
 #### NPCs
 Nathan (Miner, located at the entrance of the mine)
 Naem (Miner, located at the end of the mine on the inner level)
+Sema (Miner)
+Ryan (Lead guard in the mine)
 
 #### Enemies
-Maggot, Lvl.2 (neutral)
-Bat, Lvl.3 (aggro, low hp)
-Fire Goblin, Lvl.3 (aggro, cast spitfire spell)
-Scorpion, Lvl.5 (neutral, high hp, low defense)
-Ore slime, Lvl.5 (neutral, low hp, high defense)
+Maggot, Lvl.1 (flee)
+Bat, Lvl.3 (neutral, fast attacks, sonic wave)
+Scorpion, Lvl.4 (neutral, high hp, low def)
+Fire Goblin, Lvl.8 (neutral, casts spitfire)
 
-
-### Oasis Beach - Level 10~15
-Located west of Tulimshar, this area host the Manayir Tower alongside an oasis area.
-
-#### Inner locations
-Manayir Tower
-Beach house
+### Manayir Beach - Level 5~15
+Located west of Tulimshar, this area leads to Manayir island and acts as an oasis where the Tonori Desert is more hospitable, with palm trees and other vegetation thriving along this coast. Connects to Tulimshar Beach to the north.
 
 #### Enemies
-Maggot, Lvl.2 (neutral)
-Fire Goblin, Lvl.3 (aggro, cast spitfire spell)
-Scorpion, Lvl.5 (neutral, high hp, low defense)
-Sea slime, Lvl.10 (neutral, high defense, low attack)
-Croc, Lvl.13 (aggro, high defense, low hp)
-Large Maggot, Lvl.15 (neutral, high hp, low attackspeed, high attack)
+Peyote, Lvl.2 (immobile)
+Sea Slime, Lvl.6 (steal, tanky, slow)
+Turtle, Lvl.10 (neutral, high def, slow)
+Lizandre, Lvl.12 (follower of Lizandra)
+Croc, Lvl.15 (aggressive, high atk, tanky, slow)
 
-### Manayir Tower - Level 10~15
-Learn basic mana knowledge and our first skills (Mana burst, Lum). The Manayir Academy studies magic and will give guidance to the player once a Mana Seed is found.
+### Manayir Island - Level 10~15
+The home of the Manayir, an order of sages dedicated to the study of Mana. Unlike Druids, they do not interact much with the outside world. You can be welcomed here by offering your help and proving useful to their cause. You can learn basic Mana knowledge and the first magic skills once a Mana Seed is found.
 
 #### NPCs
-Micksha
-Don
-Quich
-Turmfalke
-Jax
-Fate
-Dalka
-Gormo
-Doors
-Sal
-Sert
-Lore
-Matt
+Corgit
+Gonzo
+Hommer
+Medave
 
-
-### Desert Pit - Level 15~30
-Desertic area located east of Tulimshar and its sandstorm area, this area has been abandoned by the Tonori Kingdom. The home of the Hisatsinom tribes, the native people of Tonori who live a semi-nomadic life and trade with Tulimshar.
+### Sonbral Mountains - Level 8~20
+Desert area located east of Tulimshar and its valley. This area is not directly controlled by the Kingdom of Tonori. It is one of the homes of the Zuni tribes, the native people of Tonori who live a semi-nomadic life and trade with Tulimshar.
 
 #### Inner locations
 Snake Pit
@@ -121,33 +110,48 @@ Mountain Cave
 Pachua
 
 #### Enemies
-Scorpion, Lvl.5 (neutral, high hp, low defense)
-Lizzy Lvl.15 (neutral, slow walksped, high attack)
-Desert Snake Lvl.20 (aggro, higher hp than snakes, slower),
-Lizandra Lvl.25 (aggro, higher defense than Lizzy)
-Desert Bird Lvl.30 (neutral, high walkspeed, high attack speed),
+Peyote, Lvl.2 (immobile)
+Fire Goblin, Lvl.8 (neutral, casts spitfire)
+Lizandre, Lvl.12 (follower of Lizandra)
+Lizandra, Lvl.14 (aggressive, leader of Lizandre)
+Sand Snake, Lvl.19 (aggressive, high dodge, fast attacks)
 
 
 ### Snake Pit - Level 15~20
 Just before the Tonori Mountains in the east. It is infested with Snakes.
 
 #### Enemies
-Ore slime, Lvl.5 (neutral, low hp, high defense)
-Snake Lvl.15 (aggro, low hp, high walkspeed, high attackspeed),
+Snake, Lvl.17 (aggressive, low def, low hp, no dodge, no crit)
+
+### Sonbral - Level 20~25
+A Zuni village build partially inside the natural caves of the Sonbral Mountains. Part of the Zuni confederation, it is their main trading hub that regularly exchanges goods with Tulimshar.
 
 
-### Tonori Mountains - Level 20~30
-The mountains are characterised by a complex cave system and high ledges and cliffs.
+### South Desert - Level 20~25
+Located further south of the Sandstorm Desert. A vast expanse of harsh desert terrain, largely unexplored and undeveloped. Home to dangerous creatures and roaming bandits.
 
 #### Enemies
-Bat, Lvl.3 (aggro, low hp)
-Ore slime, Lvl.5 (neutral, low hp, high defense)
-Desert Snake Lvl.20 (aggro, higher hp than snakes, slower)
-Lynx Lvl.30 (aggro, cast sonic waves)
+Peyote, Lvl.2 (immobile)
+Fire Goblin, Lvl.8 (neutral, casts spitfire)
+Sand Snake, Lvl.19 (aggressive, high dodge, fast attacks)
+Skeleton, Lvl.20 (aggressive, in caves, high atk via equipment, high magic def)
+Lynx, Lvl.21 (aggressive, high magic atk, fast, high dodge, sonic wave)
+Goblin, Lvl.24 (high magic atk, tanky, slow)
+Bandit, Lvl.25 (steal, high dodge, high hp)
 
 
-### Poluwat Cave - Level 50
+### Sonbral Plateau - Level 25~30
+A rocky elevated region east of the South Desert, offering a different terrain from the lowland deserts. Features cave systems and open clifftop areas.
+
+#### Enemies
+Peyote, Lvl.2 (immobile)
+Skeleton, Lvl.20 (aggressive, in caves, high atk via equipment, high magic def)
+Bandit, Lvl.25 (steal, high dodge, high hp)
+Bird, Lvl.27 (steal, fast attacks, fast, high dodge)
+
+
+### Poluwat Cave - Level ??
 Located at the end of the Tulimshar Mines dungeon. It's a cave with an open ceiling where the tree can survive the heat of the desert and find moisture.
 
 #### NPCs
-Hakuturi of Poluwat (Last Mana Tree)
+Uru of Poluwat (Last Mana Tree)

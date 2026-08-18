@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="22">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="23">
  <properties>
   <property name="ambient" value="Lighting"/>
   <property name="ambientintensity" type="float" value="0.6"/>
@@ -795,6 +795,12 @@
    <properties>
     <property name="player_script" value="tonori/sandstorm/Sema.gd"/>
     <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="22" name="Bat" type="Spawn" x="-72.7273" y="24.2424">
+   <properties>
+    <property name="count" value="20"/>
+    <property name="type" value="Monster"/>
    </properties>
   </object>
  </objectgroup>
