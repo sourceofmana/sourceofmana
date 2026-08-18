@@ -24,6 +24,8 @@ func SetTransport(transport : Peers.TransportType):
 
 #
 func _enter_tree() -> void:
+	if not OS.has_feature("sentry"):
+		return
 	SentrySDK.init(Configure)
 	if SentrySDK.is_enabled():
 		SentrySDK.set_tag("platform", OS.get_name())

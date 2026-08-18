@@ -28,6 +28,7 @@ const creditsJson : JSON						= preload("res://data/db/credits.json")
 	"Input-Bindings": [init_inputbindings, null, null, null],
 	"Account-PasswordChange": [null, set_account_password, null, $Layout/Margin/TabBar/Account],
 	"Privacy-BugReports": [init_bugreports, set_bugreports, apply_bugreports, $Layout/Margin/TabBar/Privacy/PrivacyVBox/BugReports],
+	"Network-Local": [init_localserver, set_localserver, apply_localserver, $Layout/Margin/TabBar/Privacy/PrivacyVBox/LocalServer],
 }
 
 enum CATEGORY { RENDER, SOUND, INPUT, COUNT }
@@ -336,6 +337,22 @@ func set_bugreports(enable : bool):
 func apply_bugreports(_enable : bool):
 	pass
 
+# Local Server
+func init_localserver(apply : bool):
+	var enable : bool = GetVal("Network-Local")
+	renderAccessors["Network-Local"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
+	if apply:
+		apply_localserver(enable)
+func set_localserver(enable : bool):
+	SetVal("Network-Local", enable)
+	apply_localserver(enable)
+func apply_localserver(_enable : bool):
+	var isLocal : bool = OS.is_debug_build() and GetVal("Network-Local")
+	if isLocal != NetworkCommons.IsLocal:
+		NetworkCommons.IsLocal = isLocal
+		if NetworkCommons.IsLocal:
+			Launcher.Mode(true, false)
+
 # Input Bindings
 func init_inputbindings(apply : bool):
 	if apply:
@@ -364,6 +381,8 @@ func _ready():
 	if LauncherCommons.isMobile or LauncherCommons.isWeb:
 		renderAccessors["Render-WindowSize"][ACC_TYPE.LABEL].get_parent().set_visible(false)
 		renderAccessors["Render-Fullscreen"][ACC_TYPE.LABEL].set_visible(false)
+
+	renderAccessors["Network-Local"][ACC_TYPE.LABEL].set_visible(OS.is_debug_build())
 
 # Conf accessors
 func RefreshSettings(apply : bool):

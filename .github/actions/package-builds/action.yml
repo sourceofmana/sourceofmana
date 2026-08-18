@@ -1,0 +1,31 @@
+name: "Package builds"
+description: "Archive per-platform Godot build exports into zipped archives."
+
+inputs:
+  source-dir:
+    description: "Directory holding one subfolder per platform artifact."
+    required: true
+  output-dir:
+    description: "Directory packaged archives are written into."
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        SRC="${{ inputs.source-dir }}"
+        mkdir -p "${{ inputs.output-dir }}"
+        OUT="$(cd "${{ inputs.output-dir }}" && pwd)"
+
+        mv "$SRC/Linux" "$SRC/Source of Mana - Linux"
+        tar -czf "$OUT/Source of Mana - Linux.tar.gz" -C "$SRC" "Source of Mana - Linux"
+
+        mv "$SRC/Linux (Headless Server)" "$SRC/Source of Mana - Linux Server"
+        tar -czf "$OUT/Source of Mana - Linux Server.tar.gz" -C "$SRC" "Source of Mana - Linux Server"
+
+        mv "$SRC/Windows" "$SRC/Source of Mana - Windows"
+        ( cd "$SRC" && zip -r "$OUT/Source of Mana - Windows.zip" "Source of Mana - Windows" )
+
+        cp "$SRC"/macOS/*.zip "$OUT/Source of Mana - macOS.zip"
+        cp "$SRC"/Android/*.apk "$OUT/Source of Mana - Android.apk"

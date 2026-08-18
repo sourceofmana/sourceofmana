@@ -237,9 +237,14 @@ static func Clear():
 	QuestsDB.clear()
 	hashDB.clear()
 
+	preloadPaths.clear()
+	if Launcher.get_tree().process_frame.is_connected(PreloadUpdate):
+		Launcher.get_tree().process_frame.disconnect(PreloadUpdate)
+	isInitialized = false
+
 static func Init():
+	Clear()
 	if isInitialized:
-		Clear()
 		Load()
 	else:
 		Preload()

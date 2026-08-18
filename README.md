@@ -11,7 +11,7 @@ The game is still in early development but already offers a playable solo and mu
 **Engine:** Godot 4 (client and server)
 
 **Design Tools:**
-- Game editor: [Godot 4.7](https://godotengine.org/)
+- Game editor: [Godot 4.7.1](https://godotengine.org/)
 - Level editor: [Tiled 1.11.2](https://www.mapeditor.org/)
 
 **Organization:** [Manasource](https://manasource.org)
@@ -81,10 +81,12 @@ We’re always looking for contributors of all kinds:
 - UI/UX designers
 - Writers and worldbuilders
 
+### Contact
+
 If you’re interested in helping, join our community and check out our open issues.
 
 - **Discord:** [Join here](https://discord.com/channels/581622549566193664/1013487216493854780)
-- **IRC:** `#sourceofmana` on [Libera.Chat](https://web.libera.chat/#sourceofmana)
+- **IRC:** `#sourceofmana` and `#sourceofmana-dev` on [Libera.Chat](https://web.libera.chat/#sourceofmana,#sourceofmana-dev)
 
 ## License
 

@@ -12,7 +12,7 @@ var entityOrientation : Vector2			= Vector2(0, 1)
 
 var agentRID : int						= DB.UnknownHash
 var defaultState : ActorCommons.State	= ActorCommons.State.UNKNOWN
-var lastUpdateSeq : int					= -1
+var lastUpdateFrameID : int				= -1
 
 signal entity_died
 

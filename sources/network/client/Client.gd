@@ -30,13 +30,13 @@ func RemoveEntity(agentRID : int, _peerID : int):
 	if Launcher.Map:
 		Launcher.Map.RemoveEntity(agentRID)
 
-func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int, isRunning : bool, seq : int, _peerID : int):
+func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, state : ActorCommons.State, skillCastID : int, isRunning : bool, frameID : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.FullUpdateEntity(agentRID, velocity, position, orientation, state, skillCastID, isRunning, seq)
+		Launcher.Map.FullUpdateEntity(agentRID, velocity, position, orientation, state, skillCastID, isRunning, frameID)
 
-func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, seq : int, _peerID : int):
+func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, frameID : int, _peerID : int):
 	if Launcher.Map:
-		Launcher.Map.UpdateEntity(agentRID, velocity, position, seq)
+		Launcher.Map.UpdateEntity(agentRID, velocity, position, frameID)
 
 func Express(agentRID : int, text : String, _peerID : int):
 	if Launcher.GUI:

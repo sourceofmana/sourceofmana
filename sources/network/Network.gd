@@ -196,12 +196,12 @@ func SetMovePos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("SetMovePos", [pos], peerID, NetworkCommons.DelayInstant)
 
 @rpc("authority", "call_remote", "unreliable_ordered", EChannel.ENTITY_UNRELIABLE)
-func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, seq : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("UpdateEntity", [agentRID, velocity, position, seq], peerID)
+func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, frameID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdateEntity", [agentRID, velocity, position, frameID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool, seq : int, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("FullUpdateEntity", [agentRID, velocity, position, orientation, agentState, skillCastID, isRunning, seq], peerID)
+func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, orientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool, frameID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("FullUpdateEntity", [agentRID, velocity, position, orientation, agentState, skillCastID, isRunning, frameID], peerID)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
 func ClearNavigation(peerID : int = NetworkCommons.PeerAuthorityID):
@@ -487,7 +487,7 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 				if NetworkCommons.IsAlwaysVisible(agent) or NetworkCommons.IsVisible(player.position, agent.position, player.visibilityHalfSize):
 					if not player.visibleAgents.has(currentagentRID):
 						player.visibleAgents[currentagentRID] = true
-						Network.Bulk("FullUpdateEntity", [currentagentRID, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID, agent.stat.isRunning, NetworkCommons.FrameSeq()], player.peerID)
+						Network.Bulk("FullUpdateEntity", [currentagentRID, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID, agent.stat.isRunning, NetworkCommons.FrameID()], player.peerID)
 					if bulk:
 						Network.Bulk(callbackName, args, player.peerID)
 					else:

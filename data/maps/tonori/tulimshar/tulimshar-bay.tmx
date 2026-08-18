@@ -1037,7 +1037,7 @@
    </properties>
    <polygon points="0,0 48,0 48,32 0,32"/>
   </object>
-  <object id="29" name="To Docker" type="Warp-dsabled" x="1196" y="1960">
+  <object id="29" name="To Docker" type="Warp" x="1196" y="1960">
    <properties>
     <property name="auto_warp" type="bool" value="false"/>
     <property name="dest_map" value="Tulimshar Western Hills"/>
