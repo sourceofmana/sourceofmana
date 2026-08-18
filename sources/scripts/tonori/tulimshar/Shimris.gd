@@ -20,8 +20,9 @@ func OnPort():
 	OnMainChoice()
 
 func OnEast():
-	Mes("Long stretch of beach to the east. If you like sand, you'll love it.")
-	Mes("You can even walk toward the Manayir tower if you continue a little further this road.")
-	Mes("Further northeast there's a large lighthouse. It overlooks the whole ocean from up there.")
+	Mes("Long stretch of beach to the east. If you like sand, you'll love it. Not everyone likes sand though...")
+	Mes("Northeast of here there's a large lighthouse. It overlooks the whole ocean from up there.")
 	Mes("Hard to miss, useful landmark.")
+	Mes("If you keep going east you will find Manayir Island, just further along the beach.")
+
 	OnMainChoice()
