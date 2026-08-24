@@ -32,7 +32,7 @@ func QuestionsCave():
 
 func ExplainWaves():
 	Mes("The board where we are standing is a catalyst that uses the energy of this cave to summon all sorts of creatures.")
-	Mes("They will come in progressive waves and try to wear you down.)
+	Mes("They will come in progressive waves and try to wear you down.")
 	Mes("If you survive enough waves, the summoning will stop and you will have conquered the Heart of Candor.")
 
 
