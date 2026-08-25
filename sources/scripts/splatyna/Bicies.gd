@@ -8,8 +8,8 @@ func OnStart():
 		_: OnFinish()
 
 func Inactive():
-	Mes("Praise Splatyna, the mighty slime goddess!")
-	Mes("You, traveler! Do you come to offer gold to our great lady?")
+	Mes("Praise Splatyna, the mighty Slime Queen!")
+	Mes("You, there! Do you come to offer gold to our viscous lady?")
 	InfoChoice()
 
 func InfoChoice(previousText : int = -1):
@@ -27,8 +27,9 @@ func InfoChoice(previousText : int = -1):
 		Choice("What is this place?", OnAskAboutPlace)
 
 func OnRecap():
-	Mes("You still haven’t offered the gold to Splatyna?")
-	Mes("Go into her cave, find her followers, and give her the gold! The three loyal ones hold the keys, remember that!")
+	Mes("You still haven’t offered any riches to Splatyna?")
+	Mes("Go into her cave, find her followers, and give her the gold!")
+	Mes("The three loyal ones hold the keys, remember that!")
 	InfoChoice(0)
 
 func OnFinish():
@@ -36,26 +37,26 @@ func OnFinish():
 	Mes("Did something happen to Splatyna?! What have you done?")
 
 	Choice("Nothing! Everything’s fine...", OnDeny)
-	Choice("She’s... Gone.", OnAdmit)
+	Choice("She’s... gone.", OnAdmit)
 
 func OnDeny():
-	Mes("Good, good! As long as Splatyna still watches over us.")
+	Mes("Good, good! I will be here making sure the Queen is happy.")
 
 func OnAdmit():
 	Mes("Gone?! No, no! You’re lying! Splatyna can’t die!")
-	Mes("Just... Go, before I lose my mind!")
+	Mes("Just... go, before I lose my mind!")
 
 func OnAskAboutSplatyna():
-	Mes("Oh, Splatyna... She's not like the other slimes, no no. She's powerful! She's been blessed by Kaore!")
-	Mes("She doesn't need food or water like the rest of us. Kaore keeps her alive! She’s stronger and wiser than us poor souls!")
-	Mes("And the gold! Yes, she loves it. She says it keeps her safe, makes her strong! We give her gold, and she protects us, keeps the decay away!")
-	Mes("But don't anger her, no! She can make you crazy with just a look! Her magic... It's powerful, twisted by Kaore. She's... perfect.")
+	Mes("Splatyna is not like the other slimes. She's powerful! She's been blessed by Kaore!")
+	Mes("She was once a great queen. Her soul was banished and found its way here. Now she can be a great queen again!")
+	Mes("My queen loves gold. It makes her new form so pretty! She likes it better that way.")
+	Mes("We must give her the gold she demands. If we anger her, she will consume us all!")
 	InfoChoice(2)
 
 func OnAskAboutPlace():
-	Mes("This is Splatyna's sacred cave! Only those who respect her can enter, yes, yes!")
-	Mes("The slimes here, they're not normal. They're loyal to Splatyna, her closest followers. They guard her treasures, her power!")
-	Mes("Three of them are special, real loyal ones. They have the keys to her chamber, but they won't just hand them over, no no! You'll have to earn them!")
+	Mes("This is Splatyna's Golden Kingdom! It was once just a cave, but my queen now rules here.")
+	Mes("The slimes here are loyal to Splatyna. They guard her and her immense treasures.")
+	Mes("Three of them are special, real loyal ones. They have the keys to her chamber, but they won't just hand them over. You'll have to earn them!")
 	Mes("But don't worry. If you bring enough gold, maybe Splatyna will let you through...")
 	InfoChoice(3)
 
