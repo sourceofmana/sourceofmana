@@ -112,6 +112,7 @@ func CompleteChoice(previousChoice : int = -1):
 # Optional dialogue
 func OnAskRecipe():
 	Mes("Sand is the glass. We melt it and then we cool down the resulting liquid.")
+	Mes("I have plenty of that, as you can see.")
 	Mes("We use salt to bring down the melting temperature, so that it's not too hot for our clay pots. ")
 	Mes("Then, we add calcium. That's the bones, crushed into a powder. This is essential so that the glass does not melt when in contact with water.")
 	Mes("Finally, sulphur clears the bubbles and takes the green out.")
@@ -146,7 +147,7 @@ func OnDecline():
 
 # Repeatable exchange
 func OnTradeReminder():
-	Mes("It takes %d of each of those ingredients for one bottle. Twice that and you get two. It's simple, really." % SET_INGREDIENT)
+	Mes("It takes %d Salt, %d Bone and %d Sulphur Powder for one bottle. Twice that and you get two. It's simple, really." % [SET_INGREDIENT, SET_INGREDIENT, SET_INGREDIENT])
 	CompleteChoice(0)
 
 func OnTrade():

@@ -1172,7 +1172,7 @@
     <property name="type" value="Npc"/>
    </properties>
   </object>
-  <object id="61" name="Eridu" type="Spawn" x="2921" y="3124">
+  <object id="61" name="Eridu" type="Spawn" x="3616" y="3680">
    <properties>
     <property name="player_script" value="tonori/tulimshar/Eridu.gd"/>
     <property name="type" value="Npc"/>
