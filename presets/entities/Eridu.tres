@@ -3,59 +3,20 @@
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_item"]
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_entity"]
 [ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="3_parent"]
-[ext_resource type="Resource" uid="uid://cbw8ta1x6umf4" path="res://presets/cells/items/chest/LeatherShirt.tres" id="4_chest"]
-[ext_resource type="Resource" uid="uid://b1kgjqcht72fg" path="res://presets/cells/items/feet/LeatherBoots.tres" id="6_feet"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="9_skill"]
-[ext_resource type="PackedScene" uid="uid://clvy3m3dxh517" path="res://presets/entities/sprites/Player.tscn" id="spr_Player"]
-[ext_resource type="Texture2D" uid="uid://dnpxtiulacy0c" path="res://data/graphics/sprites/equipment/head/ghutra.png" id="10_ghutra_tex"]
-[ext_resource type="Material" uid="uid://cseqywfy5hlg" path="res://presets/palettes/shaders/equipment/cloth-cerulean.tres" id="11_cerulean"]
-[ext_resource type="AnimationLibrary" uid="uid://dp0m76ygh75g3" path="res://presets/animations/overrides/Ghutra.tres" id="12_ghutra_anim"]
-[ext_resource type="Texture2D" uid="uid://bhxoexihf3en3" path="res://data/graphics/sprites/equipment/hands/armbands-male.png" id="13_armbands_m"]
-[ext_resource type="Texture2D" uid="uid://ilwwnugqpvaa" path="res://data/graphics/sprites/equipment/hands/armbands-female.png" id="14_armbands_f"]
-[ext_resource type="Material" uid="uid://c6ayx008x7axr" path="res://presets/palettes/shaders/equipment/cloth-used.tres" id="15_used"]
-[ext_resource type="Texture2D" uid="uid://das8r2duvhn7q" path="res://data/graphics/sprites/equipment/legs/pants-male.png" id="16_pants_m"]
-[ext_resource type="Texture2D" uid="uid://dd8fdtif3qds6" path="res://data/graphics/sprites/equipment/legs/pants-female.png" id="17_pants_f"]
-[ext_resource type="Material" uid="uid://cnpqh4qibn8q8" path="res://presets/palettes/shaders/equipment/cloth-sage.tres" id="18_sage"]
-[ext_resource type="Resource" uid="uid://texna72jkcbr" path="res://presets/cells/items/weapon/PiouSlayer.tres" id="19_weapon"]
-
-[sub_resource type="Resource" id="ghutra_cerulean"]
-script = ExtResource("1_item")
-slot = 4
-textures = Array[Texture2D]([ExtResource("10_ghutra_tex"), ExtResource("10_ghutra_tex"), ExtResource("10_ghutra_tex")])
-shader = ExtResource("11_cerulean")
-customfield = "Cerulean"
-animationOverrides = ExtResource("12_ghutra_anim")
-spriteHframes = 15
-spriteVframes = 2
-name = "Ghutra"
-
-[sub_resource type="Resource" id="armbands_used"]
-script = ExtResource("1_item")
-slot = 3
-textures = Array[Texture2D]([ExtResource("13_armbands_m"), ExtResource("14_armbands_f"), ExtResource("13_armbands_m")])
-shader = ExtResource("15_used")
-customfield = "Used"
-name = "Leather Armbands"
-
-[sub_resource type="Resource" id="pants_silver"]
-script = ExtResource("1_item")
-slot = 1
-textures = Array[Texture2D]([ExtResource("16_pants_m"), ExtResource("17_pants_f"), ExtResource("16_pants_m")])
-shader = ExtResource("18_sage")
-customfield = "Sage"
-name = "Leather Pants"
+[ext_resource type="Texture2D" uid="uid://c5pwh2yb25563" path="res://data/graphics/sprites/npcs/eridu.png" id="20_tex"]
+[ext_resource type="Material" uid="uid://cnpqh4qibn8q8" path="res://presets/palettes/shaders/equipment/cloth-sage.tres" id="21_sage"]
 
 [resource]
 script = ExtResource("2_entity")
 _parent = ExtResource("3_parent")
 _id = 220195358
 _name = "Eridu"
-_spritePreset = ExtResource("spr_Player")
 _stats = {
 "gender": "Male",
-"haircolor": "Silver Grey",
-"hairstyle": "Combed Back",
 "race": "Kralog",
 "skintone": "Fire"
 }
-_equipment = Array[ExtResource("1_item")]([ExtResource("4_chest"), SubResource("pants_silver"), ExtResource("6_feet"), SubResource("armbands_used"), SubResource("ghutra_cerulean"), null, ExtResource("19_weapon"), null])
+_equipment = Array[ExtResource("1_item")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("20_tex")
+_customMaterial = ExtResource("21_sage")
