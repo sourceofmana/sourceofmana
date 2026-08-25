@@ -106,8 +106,7 @@ func CompleteChoice(previousChoice : int = -1):
 		Choice("Why those three ingredients?", OnAskRecipe)
 	if previousChoice != 2:
 		Choice("Where would I find them?", OnAskWhere)
-	if previousChoice != -1:
-		Choice("Keep well, Eridu.", OnFarewell)
+	Choice("Keep well, Eridu.", OnFarewell)
 
 # Optional dialogue
 func OnAskRecipe():
@@ -133,7 +132,7 @@ func OnAskWhere():
 		QuestChoice(2)
 
 func OnFarewell():
-	Mes("Mind the heat on your way out.")
+	Chat("Watch out for broken glass.")
 
 # Transitions to next states
 func OnAccept():
