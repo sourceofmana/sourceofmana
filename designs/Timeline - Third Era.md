@@ -2,15 +2,15 @@
 
 ## Founding of Esperia (3E1)
 
-The Fleet of Aurora travels through the Oranye Isles and continues eastward. It reaches the coast of Aurora as it encounters a small Tritan swamp village built on reeds. The few inhabitants are welcoming to the explorers and explain how the swamp is safer, as the dangerous beasts of Aurora stay away from it. Together the two groups build over the existing settlement and create a town on the water that dominates the surrounding landscape. They have great hopes for their new city and name it Esperia.
+Following the Great Quake, the Fleet of Aurora and other hopeful adventurers establish the settlement of Esperia on the continent of Aurora. They quickly discover that the land is very rich and offers great opportunities and the city becomes the largest city in the world in less than a hundred years from its founding.
 
 ## Age of the City-States (3E1-3E267)
 
 Aemil finds itself divided into independent city-states, each choosing its own destiny. The cities remain tied by strong trading connections, all being dependant on each other's goods. This arrangement leads to a period of peace and prosperity as optimisation of trade becomes much more important than wars and other conflicts.
 
-### Founding of Artis (3E59)
+### Founding of Artis (3E24)
 
-Esperia opens up a period of exploration and discovery of Aurora. The large wild continent creates new trade opportunities and a major trading hub develops north of Esperia, eventually becoming the city of Artis. The city specialises in shipping goods across the ocean. It generates great wealth which is invested back into the city, which becomes known for its striking architecture and the high living standards of its population.
+A group of Esperians disagree with the city's government which is heavily influenced by Ancean rulers. They leave Esperia and form the Fleet of Heredia a city of ships that sails north in search of a new home. The Fleet of Heredia establishes its control over every coast in northern Aurora and establishes the city of Artis, which eventually grows into a major trading city. The land between Gizor and Kolev becomes the new Heredia region. Artis makes its wealth exporting its goods across the ocean and invests back into the city, which becomes known for its striking architecture and the high living standards of its population.
 
 ## Age of Piracy (3E267-3E294)
 
@@ -22,7 +22,7 @@ Pirates thrive on a rocky island northwest of Artis full of sheltered coves. The
 
 ## Second Mana Storm (3E289-3E301)
 
-Some written records remain of the Mana Storm 3517 years before, but it is considered myth by many. This changes when the Mana Storm reoccurs. The Second Mana Storm begins suddenly and deeply alters the minds of all living creatures. People report seeing numbers instead of colours, tasting music and talking to animals. These seem to be real effects rather than madness, as magic users tap into this altering Mana flow and find themselves much more powerful.
+Some written records remain of the Mana Storm 919 years before, but it is considered myth by many. This changes when the Mana Storm reoccurs. The Second Mana Storm begins suddenly and deeply alters the minds of all living creatures. People report seeing numbers instead of colours, tasting music and talking to animals. These seem to be real effects rather than madness, as magic users tap into this altering Mana flow and find themselves much more powerful.
 
 ## Mana War (3E297-3E333)
 
@@ -56,14 +56,22 @@ Previously a minor force on Aemil, Kaore usually only forms when Mana stagnates 
 
 Keshlam is already impoverished since the fall of the Platinum Kingdom in the Second Era. Most of its population lives in the ruined buildings built during the city's better days. Living conditions become unsustainable during the Mana War and the city falls to several direct attacks by factions trying to take control of it. Following the Kaore Storm, Keshlam is abandoned by all its remaining inhabitants who migrate away, settling in the hills of southest Argaes.
 
-### Founding of Glaiveald (3E340)
+### The Gizor Empire (3E336)
+
+A prominent trader, Ophieum Barkal, establishes the Gizor Empire by taking advantage of the devastation of the Mana War and establishing absolute control over Esperia. The Gizor Empire undertakes a series of conquest campaigns that result in the union of the Gizor, Heredia and Kolev regions under the Imperial Gizeth banners. 
+
+### Founding of Glaiveald (3E342)
 
 The refugees of Keshlam move eastward within Argaes and settle in the forested southeastern side of the region. They are soon joined by refugees from other parts of Aemil, devastated by the many years of conflicts. The town of Glaiveald is founded
 
-### Federation of the Zuni
+### Kingdom of Tonori (3E480)
 
-[unfinished]
+The Kingdom of Tonori is reconstituted from the city of Tulimshar. It extends its control over the central region of Tonori and threatens to subjugate the Zuni inhabitants who have always lived outside of Tulimshar's influence.
 
-### Legion
+### Zuni Confederation (3E572)
 
-[unfinished]
+The many tribes of Tonori unite under the Zuni Confederation, forming a united front against the Kingdom of Tonori.
+ 
+### Legion of Heredia (3E793)
+
+The Legion of Heredia, once the powerful army of the Fleet of Heredia, takes over the city of Artis and forms a military government opposed to Mana, Kaore and the use of magic. They promise that the Age of Kaore would end if all magic was forbidden.
