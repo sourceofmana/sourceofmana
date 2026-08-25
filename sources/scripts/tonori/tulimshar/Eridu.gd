@@ -97,6 +97,10 @@ func OnComplete():
 	Mes("Back for some glass? Good to see you.")
 	CompleteChoice()
 
+func OnCompleteContinue():
+	Mes("Need anything else?")
+	CompleteChoice()
+
 func CompleteChoice(previousChoice : int = -1):
 	if GetTradeCount() > 0:
 		Choice("I brought more material.", OnTrade)
@@ -159,7 +163,7 @@ func OnTrade():
 	Choice("Just the one bottle.", OnExchange.bind(1))
 	if tradeCount > 1:
 		Choice("All of it, %d bottles." % tradeCount, OnExchange.bind(tradeCount))
-	Choice("On second thought, I'll hold on to it.", OnComplete)
+	Choice("On second thought, I'll hold on to it.", OnCompleteContinue)
 
 func OnExchange(bottleCount : int):
 	if bottleCount <= 0 or not HasSets(bottleCount):
@@ -168,7 +172,7 @@ func OnExchange(bottleCount : int):
 
 	if not HasRoomFor(bottleCount, bottleCount):
 		Mes("Your bag is fit to burst. How are you going to put glass in there? Go empty some stuff out!")
-		Action(OnComplete)
+		Action(OnCompleteContinue)
 		return
 
 	TakeMaterials(bottleCount)
@@ -179,4 +183,4 @@ func OnExchange(bottleCount : int):
 	else:
 		Mes("One bottle. Don't go and break it now!")
 
-	Action(OnComplete)
+	Action(OnCompleteContinue)
