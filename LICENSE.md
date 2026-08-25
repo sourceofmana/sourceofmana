@@ -203,6 +203,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/items/chest/tanktop.png [VxD] [Reid]
 ./graphics/items/chest/druidrobe.png [Varuna] [Reid]
 ./graphics/items/chest/vnecktee.png [VxD] [Reid]
+./graphics/items/commons/bone.png [Yosuhara] [Enchilado]
 ./graphics/items/commons/bottle-empty.png [Fother] [Reid]
 ./graphics/items/commons/maggotslime.png [Enchilado]
 ./graphics/items/commons/powder.png [Enchilado]
