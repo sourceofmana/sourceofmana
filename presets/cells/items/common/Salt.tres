@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://c8n3qk1lwv2ht"]
+
+[ext_resource type="Texture2D" uid="uid://chohwstjqw5ow" path="res://data/graphics/items/common/powder.png" id="1_icon"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_script"]
+[ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/shaders/equipment/cloth-natural.tres" id="3_palette"]
+
+[resource]
+script = ExtResource("2_script")
+shader = ExtResource("3_palette")
+name = "Salt"
+description = "Coarse white crystals, dried from salt water or harvested from slimes."
+icon = ExtResource("1_icon")
+stackable = true
