@@ -1,8 +1,10 @@
 # Fourth Era: Present
 
-## Kaore Storm (4E1)
+## The Great Stillness (4E1)
 
-The high concentration of Kaore grows ever stronger as it feeds on the death and destruction that it creates. Eventually, it can no longer grow due to the strong Mana presence on Aemil, and it implodes, causing an event known as the Kaore Storm. It lasts only a few days (unlike Mana Storms, which last some years) and causes every living creature to fall into a deep sleep. During this time, most people are unharmed. Once the storm is over, there seems to be no detectable presence of Kaore anywhere. Mana is also entirely absent.
+After more than five centuries as the leading force on Aemil, Kaore runs out of what sustains it. So little life remains that there is little left to decay, and Mana has grown too faint to feed the cycle any further. Unable to grow and unable to hold its concentration, Kaore collapses inward over the course of a few days. Every living creature falls into a deep sleep while it happens and most wake unharmed, but they wake to a changed world: there is no detectable presence of Kaore anywhere, and Mana is entirely absent as well.
+
+This abrupt end to the Age of Kaore leaves the two energies rebalanced at nothing at all, for the first and only time in the history of Aemil.
 
 ## Second Age of Mana (4E1–Present)
 

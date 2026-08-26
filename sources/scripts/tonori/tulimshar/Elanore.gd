@@ -135,7 +135,7 @@ func OnExplainKaore():
 
 # Who are you
 func OnExplainSelf():
-	Mes("My name is Elanore. I am the Kahwe of this city and the land that surrounds it. Those outside of our order call us Druids. I represent the Kaumatua, an order devoted to the most ancient tradition in our world.")
+	Mes("My name is Elanore. I am the Makutu of this city and the land that surrounds it. Those outside of our order call us Druids. I represent the Makutu Hui, an order devoted to the most ancient tradition in our world.")
 	Mes("But don't you worry about that right now. We can chat more later. Right now I am just out here giving a hand with potions and receiving the injured from outside the walls.")
 	OnMainChoice()
 

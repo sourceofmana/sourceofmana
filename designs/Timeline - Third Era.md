@@ -18,7 +18,7 @@ As wealth accumulates and the city-states become less used to conflict, groups o
 
 ### The Corsair Marque (3E269)
 
-Pirates thrive on a rocky island northwest of Artis full of sheltered coves. The island becomes a refuge for several pirate groups that regularly attack Artis' shipping routes and sometimes even extend south into Esperia's. A famous pirate named Reid the Red unites all the crews of the island and founds the Corsair Marque, a syndicate of all the pirate crews of what becomes known as Red Corsair Island. The Corsair Marque dominates world trade for over 200 years.
+Pirates thrive on a rocky island northwest of Artis full of sheltered coves. The island becomes a refuge for several pirate groups that regularly attack Artis' shipping routes and sometimes even extend south into Esperia's. A famous pirate named Reid the Red unites all the crews of the island and founds the Corsair Marque, a syndicate of all the pirate crews of what becomes known as Red Corsair Isle. The Corsair Marque dominates world trade for over 200 years.
 
 ## Second Mana Storm (3E289-3E301)
 
@@ -30,15 +30,15 @@ In the last years of the Second Mana Storm the chaos brought about by its intens
 
 The war ends up decimating Aemil's population.
 
-### Birth of the Savean Creed (3E299)
+### Birth of the Aukati (3E299)
 
-The years of struggle weigh heavily on the collecive psyche of the inhabitants of Aemil. Many turn against the use of magic, seeing Mana as the cause of the war and most of their problems. They begin to worship a god named Savea, who they believe created Aemil. Savea's nemesis Varuna is said to have poisoned Aemil with Mana to corrupt its design. The Savean faithful quickly grow in numbers. They begin cutting down or burning the Uru, seeing them as creatures of Varuna and insulting to Savea. This practice becomes commonplace and by the end of the Mana War very few Uru remain on Aemil.
+The years of struggle weigh heavily on the collecive psyche of the inhabitants of Aemil. Many turn against the use of magic, seeing Mana as the cause of the war and most of their problems. They begin to worship a god named Savea, who they believe created Aemil. Mana is said to be a curse upon Savea's perfect creation, a corruption of its design. The Aukati faithful quickly grow in numbers. They begin cutting down or burning the Uru, seeing them as vessels of that corruption and an insult to Savea. This practice becomes commonplace and by the end of the Mana War very few Uru remain on Aemil.
 
 ### Kaore Storm (3E333-3E334)
 
 The balance of Mana is so upset by the killing of the Uru and the deaths from the war itself that it becomes unsustainable.
 
-Kaore becomes more and more concentrated with little new Mana generating anymore. The first Kaore Storm begins. Instead of enhancing living beings like a Mana Storm, this one leaves them weak and sick. It only lasts for about a year, but in that time it reduces Aemil's population by almost half. It produces mutations in some creatures, but others seem to be less susceptible to this.
+Kaore becomes more and more concentrated with little new Mana generating anymore. The Kaore Storm begins. Instead of enhancing living beings like a Mana Storm, this one leaves them weak and sick. It only lasts for about a year, but in that time it reduces Aemil's population by almost half. It produces mutations in some creatures, but others seem to be less susceptible to this.
 
 The storm ends abruptly one day, leaving a balance with more Kaore than Mana for the first time in history.
 

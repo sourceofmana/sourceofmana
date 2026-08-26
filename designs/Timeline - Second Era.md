@@ -88,11 +88,11 @@ Navigators find new lands to the East. The faraway lands of the Oranye Isles and
 
 Adventurers, as well as refugees from the revolutionary war, are given ships and organised by the City-States into expedition parties and sent to explore the untamed lands across the Aemilian Sea. The Fleet of Aurora is the largest expedition and becomes the most well-known.
 
-### Discovery of Ker Ys (2E1999)
+### Discovery of Kyr Ys (2E1999)
 
-The City of Ker Ys has existed since the Mana Era and continues to be the largest underwater city on Aemil. Nested in the low-lying Oranye Isles, it stands mostly submerged and densely populated.
+The City of Kyr Ys has existed since the Mana Era and continues to be the largest underwater city on Aemil. Nested in the low-lying Oranye Isles, it stands mostly submerged and densely populated.
 
-Following the Great Quake, the vast landscape of Tritan settlements in the far sea is largely lost, and the Oranye Isles stand as the main Tritan homeland. Once far in the middle of the Ocean, the Isles move closer to other lands as the continents shift, and Ker Ys begins to receive its first visitors.
+Following the Great Quake, the vast landscape of Tritan settlements in the far sea is largely lost, and the Oranye Isles stand as the main Tritan homeland. Once far in the middle of the Ocean, the Isles move closer to other lands as the continents shift, and Kyr Ys begins to receive its first visitors.
 
 ## The Manayir Order (2E2008)
 

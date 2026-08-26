@@ -1,4 +1,4 @@
-# First Era: Hakuturi Era, 7000 years span
+# First Era: Mana Era, 7000 years span
 
 ## The Source (1E0)
 
@@ -12,7 +12,7 @@ Extremely high concentrations of Mana exposed to the dense chaos of other elemen
 
 The first form of life arrives from the Ether: a blue seed gently travelling along trails of Mana to reach its final destination. Landing on Aemil, it begins the cycle of life as it has begun many times before. 
 
-The seed sprouts into the first Uru - a Mana Tree, which presides over the growth of new forms of life and spreads itself too, so that its roots may surround the whole world. One tree grows into many and the Hantu become separate individuals, but connected through their roots in one great mind.
+The seed sprouts into the first Uru - a Mana Tree, which presides over the growth of new forms of life and spreads itself too, so that its roots may surround the whole world. One tree grows into many and the Uru become separate individuals, but connected through their roots in one great mind.
 
 ### Birth of the Hakuturi (1E1000)
 
@@ -26,9 +26,9 @@ The Hakuturi harness Mana energy and master all forms of magic. They build a vas
 
 As the Hakuturi dwell among the trees, young tadpoles in a deep trench of the Tritan Ocean are beginning to grow into exceptionally intelligent creatures. Being uncommonly responsive to Mana's influence, they evolve quickly. Within a few generations they form villages and develop a unique language. The first Tritans are born.
 
-## Age of Ker Ys (1E5703-1E5800)
+## Age of Kyr Ys (1E5703-1E5800)
 
-All waters become the domain of the Tritans. As the Hakuturi lead slow, largely peaceful lives on land, the Tritans live in fast-paced warrior societies. Great Tritan kingdoms are formed. The city of Ker Ys is the centre of power where all Tritan kings meet as equals. It is the largest and richest city on Aemil.
+All waters become the domain of the Tritans. As the Hakuturi lead slow, largely peaceful lives on land, the Tritans live in fast-paced warrior societies. Great Tritan kingdoms are formed. The city of Kyr Ys is the centre of power where all Tritan kings meet as equals. It is the largest and richest city on Aemil.
 
 Tritans master the art (and science) of magic and use it to their advantage. They begin to wage wars on the Hakuturi, pushing them away from coastal areas. The Hakuturi however are formidable foes and hold most of their ground, stalling the war for over 600 years.
 

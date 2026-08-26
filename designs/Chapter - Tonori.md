@@ -118,7 +118,7 @@ Sand Snake, Lvl.19 (aggressive, high dodge, fast attacks)
 
 
 ### Snake Pit - Level 15~20
-Just before the Tonori Mountains in the east. It is infested with Snakes.
+Just before the Sonbral Mountains in the east. It is infested with Snakes.
 
 #### Enemies
 Snake, Lvl.17 (aggressive, low def, low hp, no dodge, no crit)
