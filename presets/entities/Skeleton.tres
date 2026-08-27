@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://bj5p08ffbj617" path="res://presets/cells/items/weapon/BoneKnife.tres" id="6_skel"]
 [ext_resource type="AudioStream" uid="uid://j0tl8tynrx4x" path="res://data/sounds/entities/skeleton/death.ogg" id="7_death"]
 [ext_resource type="Resource" uid="uid://dc8nmuobdltej" path="res://presets/cells/items/shield/DesertShield.tres" id="7_skel"]
+[ext_resource type="Resource" uid="uid://dqx7m2b9f4wjs" path="res://presets/cells/items/common/Bone.tres" id="8_bone"]
 
 [resource]
 script = ExtResource("2_skel")
@@ -29,4 +30,7 @@ _customTexture = ExtResource("4_skel")
 _behaviour = 4
 _stateSFX = Dictionary[int, AudioStream]({
 4: ExtResource("7_death")
+})
+_drops = Dictionary[ExtResource("1_skel"), float]({
+ExtResource("8_bone"): 0.33
 })

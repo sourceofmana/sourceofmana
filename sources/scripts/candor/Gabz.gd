@@ -10,30 +10,31 @@ func OnStart():
 	if IsTriggering():
 		Chat("Focus on your mission!")
 	else:
-		Mes("Ah, another challenger! This cave is a proving ground, where the waves of corrupted creatures test your endurance. Think you're ready for what's inside?")
+		Mes("Welcome to the Heart of Candor, where Mana comes to die!")
 		QuestionStart()
 
 func QuestionStart():
-	Choice("I'm ready. Bring on the waves.", StartFight)
-	Choice("I need to go. This feels wrong.", Farewell)
-	Choice("What's this place? It feels strange.", ExplainCave)
-	Choice("Waves of monsters? Why are they coming?", ExplainWaves)
+	Choice("Let's get this started, Gabz.", StartFight)
+	Choice("I changed my mind, I need to go.", Farewell)
+	Choice("What is this place?", ExplainCave)
+	Choice("Do you know where these waves of monsters come from?", ExplainWaves)
 
 func ExplainCave():
-	Mes("Ah, this cave? It's... Alive, in a way. You feel it too, don't you?")
-	Mes("It breathes Kaore, the corrupted Mana. Everything here was once... More alive. But now it's just hungry, like me.")
+	Mes("This is the Heart of Candor. It is a cave system that has always contained high concentrations of Kaore.")
+	Mes("As Mana flows across Aemil, some of the energy decays and settles in particular areas.")
+	Mes("This is one of those areas. A place where Mana stops flowing and becomes Kaore.")
 	QuestionsCave()
 
 func QuestionsCave():
 	Choice("No more questions.", QuestionStart)
 	Choice("Who are you? You seem off.", ExplainNpc)
-	Choice("What exactly happened to you?", ExplainNpcCorruption)
 	Choice("Why is the cave like this?", ExplainCaveOrigin)
 
 func ExplainWaves():
-	Mes("Waves... Yes, waves of those lost to Kaore. They are drawn here, hungry for more of the decaying Mana.")
-	Mes("You will fight them, over and over. But beware... With each wave, the cave itself grows more restless. You might not make it to the end.")
-	QuestionsWaves()
+	Mes("The board where we are standing is a catalyst that uses the energy of this cave to summon all sorts of creatures.")
+	Mes("They will come in progressive waves and try to wear you down.")
+	Mes("If you survive enough waves, the summoning will stop and you will have conquered the Heart of Candor.")
+
 
 func QuestionsWaves():
 	Choice("No more questions.", QuestionStart)
@@ -42,39 +43,32 @@ func QuestionsWaves():
 	Choice("Why does Kaore make things this way?", ExplainKaore)
 
 func ExplainNpc():
-	Mes("Me? Oh, just a fellow survivor... Or maybe a guide? I can't tell anymore.")
-	Mes("I've spent too long near the Kaore. It's in my blood, in my thoughts... But it's okay. I think?")
-	Mes("But never mind me. You're here to fight, aren't you?")
-	QuestionsCave()
-
-func ExplainNpcCorruption():
-	Mes("Oh, it started small... Whispers in the back of my mind, a strange craving for... Something.")
-	Mes("But now? I don't remember what I was before. Maybe it's better this way.")
-	Mes("You don't want this. But here we are.")
+	Mes("I never thought about that... I don't know! I have always been here, I think?")
+	Think("Gabz looks at you slightly confused.")
+	Mes("I am Gabz.")
 	QuestionsCave()
 
 func ExplainCaveOrigin():
-	Mes("This cave was once a Mana wellspring, a place of life and power.")
-	Mes("But after the Aethyra War, the Mana decayed into Kaore. Now it’s nothing more than a trap for those who wander too close.")
-	Mes("But don't worry. You'll either win... Or join the rest of us.")
+	Mes("No one really knows. Some say its tunnels lead down to the core of Aemil and that it's all filled with Kaore.")
+	Mes("Others think that something about the rock attracts Kaore from all directions.")
+	Mes("I don't ask myself too many questions.")
 	QuestionsCave()
 
 func ExplainFailure():
-	Mes("Even if you fall in battle, you need not fear. The Zielite Amulet you carry is more powerful than you may know.")
-	Mes("When you perish, your Zielite Amulet will pull your soul to the nearest Soul Menhir. It’s the only reason I allow people like you to risk their lives here.")
+	Mes("Luckily for you, I hold the power of life and death in this place!")
+	Mes("When you perish in this cave, I will use your Zielite Amulet to have your living essence restored at a Soul Menhir.")
+	Mes("If I didn't save you, I'd quickly run out of pawns to play with.")
 	QuestionsWaves()
 
 func ExplainCorruption():
-	Mes("Ah, the corruption... Kaore, it's what Mana becomes when it’s left to decay.")
-	Mes("Mana flows through all living things. When it's pure, it nurtures life. But here... It's been stagnant for far too long.")
-	Mes("Once the Mana Trees was lost, the balance was broken. Now Kaore festers in places like this.")
-	Mes("It seeps into everything: creatures, the land, even people. And once you're touched by it, there's no going back.")
+	Mes("A high concentration of Mana could perhaps change the balance of energies.")
+	Mes("But I am here to keep the Kaore at bay, so why not let me enjoy it?")
 	QuestionsWaves()
 	
 func ExplainKaore():
-	Mes("Kaore... It's the decayed Mana. It festers where life was once vibrant. Here, in this cave, it thrives.")
-	Mes("It changes things... Makes them hostile, makes them... Desperate.")
-	Mes("You'll feel it too if you stay long enough.")
+	Mes("Kaore can turn creatures hostile and, over time, undead.")
+	Mes("It powers them to act against living creatures and their connection to Mana.")
+	Mes("You might feel it too if you stay here too long.")
 	QuestionsWaves()
 
 func StartFight():

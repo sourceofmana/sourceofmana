@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://bglasseridu1"]
+
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="1_item"]
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_entity"]
+[ext_resource type="Resource" uid="uid://2kdlrccxo1mp" path="res://presets/entities/StaticNPC.tres" id="3_parent"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="9_skill"]
+[ext_resource type="Texture2D" uid="uid://c5pwh2yb25563" path="res://data/graphics/sprites/npcs/eridu.png" id="20_tex"]
+[ext_resource type="Material" uid="uid://cnpqh4qibn8q8" path="res://presets/palettes/shaders/equipment/cloth-sage.tres" id="21_sage"]
+
+[resource]
+script = ExtResource("2_entity")
+_parent = ExtResource("3_parent")
+_id = 220195358
+_name = "Eridu"
+_stats = {
+"gender": "Male",
+"race": "Kralog",
+"skintone": "Fire"
+}
+_equipment = Array[ExtResource("1_item")]([null, null, null, null, null, null, null, null])
+_customTexture = ExtResource("20_tex")
+_customMaterial = ExtResource("21_sage")

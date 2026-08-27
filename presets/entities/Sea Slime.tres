@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_w1pht"]
 [ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="3_xbbvo"]
 [ext_resource type="PackedScene" uid="uid://br64r1qdy1nm8" path="res://presets/entities/sprites/SlimeSea.tscn" id="spr_SlimeSea"]
+[ext_resource type="Resource" uid="uid://c8n3qk1lwv2ht" path="res://presets/cells/items/common/Salt.tres" id="4_salt"]
 
 [resource]
 script = ExtResource("2_mr4dg")
@@ -26,3 +27,6 @@ _stats = {
 }
 _equipment = Array[ExtResource("1_f0h6j")]([null, null, null, null, null, null, null, null])
 _behaviour = 130
+_drops = Dictionary[ExtResource("1_f0h6j"), float]({
+ExtResource("4_salt"): 0.33
+})
