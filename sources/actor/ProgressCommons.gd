@@ -24,6 +24,8 @@ class Quest:
 	static var SHIP_PETER_BOUNTY : int = "Peter's Bounty".hash()
 	static var VETERAN_CAVE_EXPLORER : int = "Veteran Cave Explorer".hash()
 	static var VINCENT_BUGLEG : int = "Vincent's Bug Legs".hash()
+	static var ANWAR_FIELD : int = "Anwar's Field".hash()
+	static var ANWAR_PESTICIDE : int = "Anwar's Pesticide".hash()
 
 # Quest enums
 enum SPLATYNA_OFFERING
@@ -148,6 +150,19 @@ enum VINCENT_BUGLEG
 	STARTED,
 	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
 }
+enum ANWAR_FIELD
+{
+	INACTIVE = ProgressCommons.UnknownProgress,
+	STARTED,
+	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
+}
+enum ANWAR_PESTICIDE
+{
+	INACTIVE = ProgressCommons.UnknownProgress,
+	SENT_TO_ELANORE,
+	ELANORE_EXPLAINED,
+	REWARDS_WITHDREW = ProgressCommons.CompletedProgress,
+}
 
 # Quest state lookup
 static var QuestStates : Dictionary[int, Variant] = {
@@ -169,6 +184,8 @@ static var QuestStates : Dictionary[int, Variant] = {
 	Quest.SHIP_PETER_BOUNTY: SHIP_PETER_BOUNTY,
 	Quest.VETERAN_CAVE_EXPLORER: VETERAN_CAVE_EXPLORER,
 	Quest.VINCENT_BUGLEG: VINCENT_BUGLEG,
+	Quest.ANWAR_FIELD: ANWAR_FIELD,
+	Quest.ANWAR_PESTICIDE: ANWAR_PESTICIDE,
 }
 
 static func GetQuestStateID(questID : int, stateName : String) -> int:

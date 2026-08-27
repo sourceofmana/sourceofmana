@@ -1,5 +1,8 @@
 extends NpcScript
 
+# Cactus potion brewing
+const BREW_MAX : int				= 20
+
 #
 func OnStart():
 	var questState : int = GetQuest(ProgressCommons.Quest.TUTORIAL)
@@ -95,6 +98,11 @@ func OnMainChoice():
 		Choice("About those ingredients...", OnPotionQuestReminder)
 	else:
 		Choice("Can I help you with anything?", OnHelpWithPotions)
+	var cactusQuestState : int = GetQuest(ProgressCommons.Quest.ANWAR_PESTICIDE)
+	if cactusQuestState == ProgressCommons.ANWAR_PESTICIDE.SENT_TO_ELANORE:
+		Choice("Anwar sent me about his cactus.", OnExplainCactusPotion)
+	elif cactusQuestState >= ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED:
+		Choice("Could you brew a Cactus Potion?", OnBrewCactusPotion)
 	Choice("What is Kaore?", OnExplainKaore)
 	Choice("Who are you?", OnExplainSelf)
 	if GetQuest(ProgressCommons.Quest.TUTORIAL) >= ProgressCommons.TUTORIAL.ELANORE_DONE:
@@ -124,6 +132,68 @@ func OnPotionQuestTurnIn():
 	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.INACTIVE)
 	AddItem(DB.GetCellHash("Cactus Potion"))
 	Action(OnMainChoice)
+
+# Anwar's cactus potion
+func OnMainChoiceContinue():
+	Mes("Is there anything else?")
+	OnMainChoice()
+
+func GetBrewCount() -> int:
+	var cactusDrinkID : int = DB.GetCellHash("Cactus Drink")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
+	var brewCount : int = 0
+	while brewCount < BREW_MAX and HasItem(cactusDrinkID, brewCount + 1) and HasItem(pitayaID, brewCount + 1):
+		brewCount += 1
+	return brewCount
+
+func OnExplainCactusPotion():
+	Mes("Ah, yes. I've been thinking about the farmers' recent problems. I think I have something that can help.")
+	Mes("His cactus drink can provide a good base for the potion I can make. I will infuse it with Mana to create a Cactus Potion.")
+	Mes("It has many beneficial properties and I think it could even improve his fertiliser. If he works it into his mix the cactus could be more resilient against the Kaore corruption.")
+	Mes("Bring me a Cactus Drink and a Pitaya and I will brew a Cactus Potion for you, any time you need it.")
+	SetQuest(ProgressCommons.Quest.ANWAR_PESTICIDE, ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED)
+	Action(OnMainChoice)
+
+func OnBrewCactusPotion():
+	var brewCount : int = GetBrewCount()
+	if brewCount <= 0:
+		OnBrewReminder()
+		return
+
+	Mes("Let me see what you have brought.")
+	Choice("Just the one.", OnBrew.bind(1))
+	if brewCount > 1:
+		Choice("All of them, %d potions." % brewCount, OnBrew.bind(brewCount))
+	Choice("On second thought, I will keep them.", OnMainChoiceContinue)
+
+func OnBrewReminder():
+	Mes("One Cactus Drink and one Pitaya for each potion. Bring both and I will brew as many as you like.")
+	Action(OnMainChoice)
+
+func OnBrew(potionCount : int):
+	var cactusDrinkID : int = DB.GetCellHash("Cactus Drink")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
+	var cactusPotionID : int = DB.GetCellHash("Cactus Potion")
+
+	if potionCount <= 0 or not HasItem(cactusDrinkID, potionCount) or not HasItem(pitayaID, potionCount):
+		OnBrewReminder()
+		return
+
+	if not HasItemsSpace([[cactusDrinkID, -potionCount], [pitayaID, -potionCount], [cactusPotionID, potionCount]]):
+		Mes("You are carrying far too much, darling. Set something down first.")
+		Action(OnMainChoiceContinue)
+		return
+
+	RemoveItem(cactusDrinkID, potionCount)
+	RemoveItem(pitayaID, potionCount)
+	AddItem(cactusPotionID, potionCount)
+
+	if potionCount > 1:
+		Mes("There. %d potions, and Anwar only needs the one for each batch." % potionCount)
+	else:
+		Mes("There. One Cactus Potion, ready for his field.")
+
+	Action(OnMainChoiceContinue)
 
 # What is Kaore
 func OnExplainKaore():

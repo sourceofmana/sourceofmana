@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="76">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="186" height="125" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="77">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1021,6 +1021,14 @@
    <properties>
     <property name="direction" value="Down"/>
     <property name="player_script" value="tonori/tulimshar/Vincent.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="76" name="Anwar" type="Spawn" x="4512" y="2656">
+   <properties>
+    <property name="direction" value="Down"/>
+    <property name="own_script" value="tonori/tulimshar/AnwarGlobal.gd"/>
+    <property name="player_script" value="tonori/tulimshar/Anwar.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
