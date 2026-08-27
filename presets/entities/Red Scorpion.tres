@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://b8m4x3hqfj1o2"]
+
+[ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="1_r3ds"]
+[ext_resource type="Material" uid="uid://dqxk2n8v5r3wp" path="res://presets/palettes/shaders/monsters/mob-scorpion-red.tres" id="2_mat"]
+[ext_resource type="Resource" uid="uid://7bcrmgajbnpg" path="res://presets/entities/Scorpion.tres" id="3_prnt"]
+
+[resource]
+script = ExtResource("1_r3ds")
+_parent = ExtResource("3_prnt")
+_id = 825312237
+_name = "Red Scorpion"
+_stats = {
+"attack": 75,
+"baseExp": 30,
+"defense": 10,
+"level": 15,
+"mdefense": 10,
+"maxHealth": 500
+}
+_customMaterial = ExtResource("2_mat")
+_behaviour = 4

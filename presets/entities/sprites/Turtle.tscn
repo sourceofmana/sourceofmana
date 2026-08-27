@@ -15,7 +15,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.28),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 0, 2, 0, 1]
@@ -27,10 +27,10 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.36),
+"times": PackedFloat32Array(0, 0.18, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -10), Vector2(0, 0), Vector2(0, -10)]
+"values": [Vector2(0, -10), Vector2(0, -2), Vector2(0, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_apvk4"]
@@ -45,7 +45,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.28),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [12, 13, 12, 14, 12, 13]
@@ -57,10 +57,10 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.36),
+"times": PackedFloat32Array(0, 0.18, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -10), Vector2(-10, -10), Vector2(0, -10)]
+"values": [Vector2(0, -10), Vector2(-8, -10), Vector2(0, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_5pqa5"]
@@ -75,7 +75,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.28),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [20, 21, 20, 22, 20, 21]
@@ -87,10 +87,10 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.36),
+"times": PackedFloat32Array(0, 0.18, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -10), Vector2(-10, 0), Vector2(0, -10)]
+"values": [Vector2(0, -10), Vector2(-8, -2), Vector2(0, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_moiok"]
@@ -105,7 +105,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.28),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [24, 25, 24, 26, 24, 25]
@@ -117,10 +117,10 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.36),
+"times": PackedFloat32Array(0, 0.18, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -10), Vector2(-10, -20), Vector2(0, -10)]
+"values": [Vector2(0, -10), Vector2(-8, -18), Vector2(0, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_hrf5s"]
@@ -135,7 +135,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.28),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [8, 9, 8, 10, 8, 9]
@@ -147,10 +147,10 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.36),
+"times": PackedFloat32Array(0, 0.18, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -10), Vector2(10, -10), Vector2(0, -10)]
+"values": [Vector2(0, -10), Vector2(8, -10), Vector2(0, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_15ivg"]
@@ -165,7 +165,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.28),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [16, 17, 16, 18, 16, 17]
@@ -177,10 +177,10 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.36),
+"times": PackedFloat32Array(0, 0.18, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -10), Vector2(10, 0), Vector2(0, -10)]
+"values": [Vector2(0, -10), Vector2(8, -2), Vector2(0, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_t5bdr"]
@@ -195,7 +195,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.28),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [28, 29, 28, 30, 28, 29]
@@ -207,10 +207,10 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.36),
+"times": PackedFloat32Array(0, 0.18, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -10), Vector2(10, -20), Vector2(0, -10)]
+"values": [Vector2(0, -10), Vector2(8, -18), Vector2(0, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_t4ydb"]
@@ -225,7 +225,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.28),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [4, 5, 4, 6, 4, 5]
@@ -237,10 +237,10 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.36),
+"times": PackedFloat32Array(0, 0.18, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -10), Vector2(0, -20), Vector2(0, -10)]
+"values": [Vector2(0, -10), Vector2(0, -18), Vector2(0, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_ha1pu"]
@@ -260,7 +260,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="6"]
 resource_name = "IdleDown"
-length = 4.0
+length = 4.36
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -269,7 +269,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [1, 0, 2, 0]
@@ -277,7 +277,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="7"]
 resource_name = "IdleLeft"
-length = 4.0
+length = 4.36
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -286,7 +286,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [13, 12, 14, 12]
@@ -294,7 +294,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_mwr7m"]
 resource_name = "IdleLeftDown"
-length = 4.0
+length = 4.36
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -303,7 +303,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [21, 20, 22, 20]
@@ -311,7 +311,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_at3cs"]
 resource_name = "IdleLeftUp"
-length = 4.0
+length = 4.36
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -320,7 +320,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [25, 24, 26, 24]
@@ -328,7 +328,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="8"]
 resource_name = "IdleRight"
-length = 4.0
+length = 4.36
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -337,7 +337,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [9, 8, 10, 8]
@@ -345,7 +345,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_p8ppf"]
 resource_name = "IdleRightDown"
-length = 4.0
+length = 4.36
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -354,7 +354,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [17, 16, 18, 16]
@@ -362,7 +362,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_f2oie"]
 resource_name = "IdleRightUp"
-length = 4.0
+length = 4.36
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -371,7 +371,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [31, 30, 32, 30]
@@ -379,7 +379,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="9"]
 resource_name = "IdleUp"
-length = 4.0
+length = 4.36
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -388,7 +388,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [5, 4, 6, 4]
@@ -483,7 +483,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="3"]
 resource_name = "WalkDown"
-length = 0.4
+length = 0.48
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -492,7 +492,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [1, 0, 2, 0]
@@ -500,7 +500,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="4"]
 resource_name = "WalkLeft"
-length = 0.4
+length = 0.48
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -509,7 +509,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [13, 12, 14, 12]
@@ -517,7 +517,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_qxbf6"]
 resource_name = "WalkLeftDown"
-length = 0.4
+length = 0.48
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -526,7 +526,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [21, 20, 22, 20]
@@ -534,7 +534,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_hbss6"]
 resource_name = "WalkLeftUp"
-length = 0.4
+length = 0.48
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -543,7 +543,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [25, 24, 26, 24]
@@ -551,7 +551,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="2"]
 resource_name = "WalkRight"
-length = 0.4
+length = 0.48
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -560,7 +560,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [9, 8, 10, 8]
@@ -568,7 +568,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_8r4fl"]
 resource_name = "WalkRightDown"
-length = 0.4
+length = 0.48
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -577,7 +577,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [17, 16, 18, 16]
@@ -585,7 +585,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_7c5fd"]
 resource_name = "WalkRightUp"
-length = 0.4
+length = 0.48
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -594,7 +594,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [29, 28, 30, 28]
@@ -602,7 +602,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="5"]
 resource_name = "WalkUp"
-length = 0.4
+length = 0.48
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -611,7 +611,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [5, 4, 6, 4]

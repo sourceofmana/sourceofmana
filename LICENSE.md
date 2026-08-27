@@ -408,7 +408,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/monsters/pinkie.png [Crush] [FrosTr]
 ./graphics/sprites/monsters/piou.png [FotherJ, Reid]
 ./graphics/sprites/monsters/ratto.png [Coolkid782]
-./graphics/sprites/monsters/scorpion.png [Neorice]
+./graphics/sprites/monsters/scorpion.png [Neorice] [Reid]
 ./graphics/sprites/monsters/skeleton.png [FotherJ]
 ./graphics/sprites/monsters/skull-fire.png [Neorice] [Reid]
 ./graphics/sprites/monsters/slime.png [Neorice]
