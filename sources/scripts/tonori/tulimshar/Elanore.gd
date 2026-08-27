@@ -103,10 +103,14 @@ func OnMainChoice():
 		Choice("Anwar sent me about his cactus.", OnExplainCactusPotion)
 	elif cactusQuestState >= ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED:
 		Choice("Could you brew a Cactus Potion?", OnBrewCactusPotion)
+	Choice("I'd like to ask you something.", OnAskChoice)
+	Choice("Thank you again but I have to leave", Farewell)
+
+func OnAskChoice():
+	Mes("What would you like to know?")
 	Choice("What is Kaore?", OnExplainKaore)
 	Choice("Who are you?", OnExplainSelf)
-	if GetQuest(ProgressCommons.Quest.TUTORIAL) >= ProgressCommons.TUTORIAL.ELANORE_DONE:
-		Choice("Thank you again but I have to leave", Farewell)
+	Choice("Never mind.", OnMainChoiceContinue)
 
 # Help with potions
 func OnHelpWithPotions():
@@ -201,13 +205,13 @@ func OnExplainKaore():
 	LookAtNpc("Nina")
 	Mes("If you want to know more, you'd better ask my apprentice, Nina. She is currently overseeing the city's Soul Menhir. You can learn a lot more from her.")
 	ResetCamera()
-	OnMainChoice()
+	OnAskChoice()
 
 # Who are you
 func OnExplainSelf():
 	Mes("My name is Elanore. I am the Kahwe of this city and the land that surrounds it. Those outside of our order call us Druids. I represent the Kaumatua, an order devoted to the most ancient tradition in our world.")
 	Mes("But don't you worry about that right now. We can chat more later. Right now I am just out here giving a hand with potions and receiving the injured from outside the walls.")
-	OnMainChoice()
+	OnAskChoice()
 
 func Farewell():
 	if randi() % 2:
