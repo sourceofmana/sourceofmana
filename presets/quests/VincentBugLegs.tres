@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://dn4kv7wq2xr8m"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 1574092319
+name = "Vincent's Bug Legs"
+description = "Vincent is building a clay scorpion figurine and wants real insect legs for it."
+giver = "Vincent"
+giverLocation = "Tulimshar"
+target = "Bug Leg x8"
+targetLocation = "Tulimshar"
+reward = "Cactus Sour Candy x1, Bottle x1, 25 EXP"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

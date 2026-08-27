@@ -205,6 +205,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/items/chest/vnecktee.png [VxD] [Reid]
 ./graphics/items/commons/bone.png [Yosuhara] [Enchilado]
 ./graphics/items/commons/bottle-empty.png [Fother] [Reid]
+./graphics/items/commons/bugleg.png [Enchilado]
 ./graphics/items/commons/maggotslime.png [Enchilado]
 ./graphics/items/commons/powder.png [Enchilado]
 ./graphics/items/commons/snakeskin.png [Black Don]
