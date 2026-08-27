@@ -74,6 +74,15 @@ jobs:
           cd "$PROJECT_PATH"
           sed -E -i 's/custom_features="([^"]*)"/custom_features="\1,production"/; s/custom_features=",/custom_features="/' export_presets.cfg
 
+      - name: Configure Sentry
+        if: ${{ secrets.SECRET_SENTRY_DSN != '' }}
+        run: |
+          cd "$PROJECT_PATH"
+          sed -E -i 's/custom_features="([^"]*)"/custom_features="\1,sentry"/; s/custom_features=",/custom_features="/' export_presets.cfg
+          sed -i "s|options/dsn=\"[^\"]*\"|options/dsn=\"$SENTRY_DSN\"|" project.godot
+        env:
+          SENTRY_DSN: ${{ secrets.SECRET_SENTRY_DSN }}
+
       - name: Install Android build template
         if: matrix.name == 'Android'
         run: |
