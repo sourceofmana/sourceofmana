@@ -28,7 +28,7 @@ _equipment = Array[ExtResource("1_exyli")]([null, null, null, null, null, null, 
 _customTexture = ExtResource("3_tex")
 _customMaterial = ExtResource("4_mat")
 _drops = Dictionary[ExtResource("1_exyli"), float]({
-ExtResource("7_bugleg"): 0.24
+ExtResource("7_bugleg"): 0.40
 })
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("6_ih0se")

@@ -32,7 +32,7 @@ _customTexture = ExtResource("3_tex")
 _behaviour = 98
 _drops = Dictionary[ExtResource("1_5l8kn"), float]({
 ExtResource("7_slime"): 0.6,
-ExtResource("8_bugleg"): 0.12
+ExtResource("8_bugleg"): 0.24
 })
 _spawns = Dictionary[ExtResource("2_gol0b"), int]({
 ExtResource("6_krnjv"): 4

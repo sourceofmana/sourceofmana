@@ -29,7 +29,7 @@ _customTexture = ExtResource("3_tex")
 _behaviour = 258
 _drops = Dictionary[ExtResource("1_bbb2k"), float]({
 ExtResource("7_slime"): 0.6,
-ExtResource("8_bugleg"): 0.06
+ExtResource("8_bugleg"): 0.24
 })
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("5_mxmhf"),
