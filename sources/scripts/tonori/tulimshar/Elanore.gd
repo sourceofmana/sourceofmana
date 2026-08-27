@@ -3,6 +3,10 @@ extends NpcScript
 # Cactus potion brewing
 const BREW_MAX : int				= 20
 
+# Elanore's healing potions
+const POTION_SLIME : int			= 6
+const POTION_MAX : int				= 20
+
 #
 func OnStart():
 	var questState : int = GetQuest(ProgressCommons.Quest.TUTORIAL)
@@ -87,12 +91,18 @@ func OnExplainUI():
 	Action(OnMainChoice)
 
 # Main choice loop
-func HasAllIngredients() -> bool:
-	return HasItem(DB.GetCellHash("Maggot Slime"), 6) and HasItem(DB.GetCellHash("Water Bottle")) and HasItem(DB.GetCellHash("Pitaya"))
+func GetPotionCount() -> int:
+	var maggotSlimeID : int = DB.GetCellHash("Maggot Slime")
+	var waterBottleID : int = DB.GetCellHash("Water Bottle")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
+	var potionCount : int = 0
+	while potionCount < POTION_MAX and HasItem(maggotSlimeID, (potionCount + 1) * POTION_SLIME) and HasItem(waterBottleID, potionCount + 1) and HasItem(pitayaID, potionCount + 1):
+		potionCount += 1
+	return potionCount
 
 func OnMainChoice():
 	var sideQuestState : int = GetQuest(ProgressCommons.Quest.ELANORE_POTION)
-	if sideQuestState == ProgressCommons.ELANORE_POTION.STARTED and HasAllIngredients():
+	if sideQuestState == ProgressCommons.ELANORE_POTION.STARTED and GetPotionCount() > 0:
 		Choice("I have your ingredients.", OnPotionQuestTurnIn)
 	elif sideQuestState == ProgressCommons.ELANORE_POTION.STARTED:
 		Choice("About those ingredients...", OnPotionQuestReminder)
@@ -128,14 +138,44 @@ func OnPotionQuestReminder():
 	OnMainChoice()
 
 func OnPotionQuestTurnIn():
-	Mes("Thank you for your help. I'll get to work on making new healing potions right away!")
+	var potionCount : int = GetPotionCount()
+	if potionCount <= 0:
+		OnPotionQuestReminder()
+		return
+
+	Mes("Let me see what you have brought.")
+	Choice("Just the one.", OnPotionExchange.bind(1))
+	if potionCount > 1:
+		Choice("All of them, %d potions." % potionCount, OnPotionExchange.bind(potionCount))
+	Choice("On second thought, I will keep them.", OnMainChoiceContinue)
+
+func OnPotionExchange(potionCount : int):
+	var maggotSlimeID : int = DB.GetCellHash("Maggot Slime")
+	var waterBottleID : int = DB.GetCellHash("Water Bottle")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
+	var tinyHealingPotionID : int = DB.GetCellHash("Tiny Healing Potion")
+
+	if potionCount <= 0 or not HasItem(maggotSlimeID, potionCount * POTION_SLIME) or not HasItem(waterBottleID, potionCount) or not HasItem(pitayaID, potionCount):
+		OnPotionQuestReminder()
+		return
+
+	if not HasItemsSpace([[maggotSlimeID, -potionCount * POTION_SLIME], [waterBottleID, -potionCount], [pitayaID, -potionCount], [tinyHealingPotionID, potionCount]]):
+		Mes("You are carrying far too much, darling. Set something down first.")
+		Action(OnMainChoiceContinue)
+		return
+
+	RemoveItem(maggotSlimeID, potionCount * POTION_SLIME)
+	RemoveItem(waterBottleID, potionCount)
+	RemoveItem(pitayaID, potionCount)
+
+	if potionCount > 1:
+		Mes("Thank you for your help. That's %d Tiny Healing Potions I can pass along right away!" % potionCount)
+	else:
+		Mes("Thank you for your help. I'll get to work on your Tiny Healing Potion right away!")
 	Mes("Helping the people out here is much better than being stuck in some tower or palace. More of the leaders of this city should think about that.")
-	RemoveItem(DB.GetCellHash("Maggot Slime"), 6)
-	RemoveItem(DB.GetCellHash("Water Bottle"))
-	RemoveItem(DB.GetCellHash("Pitaya"))
-	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.INACTIVE)
-	AddItem(DB.GetCellHash("Tiny Healing Potion"))
-	Action(OnMainChoice)
+
+	AddItem(tinyHealingPotionID, potionCount)
+	Action(OnMainChoiceContinue)
 
 # Anwar's cactus potion
 func OnMainChoiceContinue():
