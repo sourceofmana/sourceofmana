@@ -116,7 +116,7 @@ func OnAskChoice():
 func OnHelpWithPotions():
 	Mes("Yes! I make lots of Healing Potions for our guards and the people of this city. They're quick remedies for most ailments and really help keep our people safer.")
 	Mes("Healing Potions require knowledge to make and also some key ingredients. Maybe you could get back on your feet by helping me gather some of these ingredients?")
-	Mes("I need six Maggot Slimes, one Water and one Pitaya. Bring those to me and I will make you a Cactus Potion in return.")
+	Mes("I need six Maggot Slimes, one Water and one Pitaya. Bring those to me and I will make you a Tiny Healing Potion in return.")
 	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.STARTED)
 	if GetQuest(ProgressCommons.Quest.TUTORIAL) < ProgressCommons.TUTORIAL.ELANORE_DONE:
 		OnSendToKael()
@@ -134,7 +134,7 @@ func OnPotionQuestTurnIn():
 	RemoveItem(DB.GetCellHash("Water Bottle"))
 	RemoveItem(DB.GetCellHash("Pitaya"))
 	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.INACTIVE)
-	AddItem(DB.GetCellHash("Cactus Potion"))
+	AddItem(DB.GetCellHash("Tiny Healing Potion"))
 	Action(OnMainChoice)
 
 # Anwar's cactus potion
