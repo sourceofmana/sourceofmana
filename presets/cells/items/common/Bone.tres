@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://dqx7m2b9f4wjs"]
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://dqx7m2caf4wjs"]
 
 [ext_resource type="Texture2D" path="res://data/graphics/items/common/bone.png" id="1_icon"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_script"]
