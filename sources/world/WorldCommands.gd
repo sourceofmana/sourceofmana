@@ -265,6 +265,23 @@ func CommandSpecificModifier(caller : PlayerAgent, valueStr : String, entry : St
 	return true
 
 # Stats
+const EntityHashedStats : PackedStringArray	= ["spirit", "shape", "currentShape"]
+
+func ApplyStat(stats : ActorStats, entry : String, valueStr : String) -> bool:
+	if entry in EntityHashedStats:
+		var entityID : int = valueStr.hash()
+		if not DB.EntitiesDB.has(entityID):
+			return false
+		stats[entry] = entityID
+	else:
+		match typeof(stats[entry]):
+			TYPE_INT:	stats[entry] += valueStr.to_int()
+			TYPE_FLOAT:	stats[entry] += valueStr.to_float()
+			_:			return false
+
+	stats.RefreshAttributes()
+	return true
+
 func CommandStat(caller : PlayerAgent, entry : String, valueStr : String) -> bool:
 	return CommandSpecificStat(caller, valueStr, entry)
 
@@ -272,9 +289,7 @@ func CommandSpecificStat(caller : PlayerAgent, valueStr : String, entry : String
 	if not caller or not caller.stat or entry not in caller.stat:
 		return false
 
-	caller.stat[entry] += valueStr.to_float()
-	caller.stat.RefreshAttributes()
-	return true
+	return ApplyStat(caller.stat, entry, valueStr)
 
 func CommandSetStat(caller : PlayerAgent, nickname : String, entry : String, valueStr : String) -> bool:
 	if not caller:
@@ -289,8 +304,9 @@ func CommandSetStat(caller : PlayerAgent, nickname : String, entry : String, val
 		Network.CommandFeedback("Stat '%s' not found" % entry, caller.peerID)
 		return false
 
-	target.stat[entry] += valueStr.to_float()
-	target.stat.RefreshAttributes()
+	if not ApplyStat(target.stat, entry, valueStr):
+		Network.CommandFeedback("Invalid value '%s' for stat '%s'" % [valueStr, entry], caller.peerID)
+		return false
 	return true
 
 # Broadcast
