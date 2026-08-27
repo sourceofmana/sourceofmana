@@ -53,7 +53,13 @@ jobs:
           mkdir -v -p ~/.config/
           cp -r /root/.config/godot ~/.config/godot
           cp -r /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          echo "$DEBUG_KEYSTORE" | base64 -d > /root/debug.keystore
+          if [ -n "$DEBUG_KEYSTORE" ]; then
+            echo "$DEBUG_KEYSTORE" | base64 -d > /root/debug.keystore
+          else
+            keytool -genkeypair -v -keystore /root/debug.keystore -alias androiddebugkey \
+              -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android \
+              -dname "CN=Android Debug,O=Android,C=US" -storetype pkcs12
+          fi
         env:
           DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
 
@@ -78,7 +84,21 @@ jobs:
           cd "$PROJECT_PATH"
           godot --headless --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
 
+      - name: Package ${{ matrix.name }}
+        if: startsWith(matrix.name, 'Linux')
+        run: |
+          chmod +x "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
+          tar -czvf "build/${{ matrix.name }}.tar.gz" -C "build/${{ matrix.name }}" .
+
+      - name: Upload Artifact - ${{ matrix.name }} (Linux)
+        if: startsWith(matrix.name, 'Linux')
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ matrix.name }}
+          path: build/${{ matrix.name }}.tar.gz
+
       - name: Upload Artifact - ${{ matrix.name }}
+        if: ${{ !startsWith(matrix.name, 'Linux') }}
         uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.name }}
@@ -99,6 +119,9 @@ jobs:
         with:
           name: Linux
           path: .
+
+      - name: Extract Linux build
+        run: tar -xzvf Linux.tar.gz
 
       - name: Build snap
         uses: snapcore/action-build@v1
