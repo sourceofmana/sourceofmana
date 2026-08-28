@@ -126,7 +126,7 @@ func OnAskChoice():
 func OnHelpWithPotions():
 	Mes("Yes! I make lots of Healing Potions for our guards and the people of this city. They're quick remedies for most ailments and really help keep our people safer.")
 	Mes("Healing Potions require knowledge to make and also some key ingredients. Maybe you could get back on your feet by helping me gather some of these ingredients?")
-	Mes("I need six Maggot Slimes, one Water and one Pitaya. Bring those to me and I will make you a Tiny Healing Potion in return.")
+	Mes("I need six Maggot Slimes, one Water and one Pitaya. Bring those to me and I will make you a Cactus Potion in return.")
 	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.STARTED)
 	if GetQuest(ProgressCommons.Quest.TUTORIAL) < ProgressCommons.TUTORIAL.ELANORE_DONE:
 		OnSendToKael()
@@ -153,13 +153,13 @@ func OnPotionExchange(potionCount : int):
 	var maggotSlimeID : int = DB.GetCellHash("Maggot Slime")
 	var waterBottleID : int = DB.GetCellHash("Water Bottle")
 	var pitayaID : int = DB.GetCellHash("Pitaya")
-	var tinyHealingPotionID : int = DB.GetCellHash("Tiny Healing Potion")
+	var cactusPotionID : int = DB.GetCellHash("Cactus Potion")
 
 	if potionCount <= 0 or not HasItem(maggotSlimeID, potionCount * POTION_SLIME) or not HasItem(waterBottleID, potionCount) or not HasItem(pitayaID, potionCount):
 		OnPotionQuestReminder()
 		return
 
-	if not HasItemsSpace([[maggotSlimeID, -potionCount * POTION_SLIME], [waterBottleID, -potionCount], [pitayaID, -potionCount], [tinyHealingPotionID, potionCount]]):
+	if not HasItemsSpace([[maggotSlimeID, -potionCount * POTION_SLIME], [waterBottleID, -potionCount], [pitayaID, -potionCount], [cactusPotionID, potionCount]]):
 		Mes("You are carrying far too much, darling. Set something down first.")
 		Action(OnMainChoiceContinue)
 		return
@@ -169,12 +169,12 @@ func OnPotionExchange(potionCount : int):
 	RemoveItem(pitayaID, potionCount)
 
 	if potionCount > 1:
-		Mes("Thank you for your help. That's %d Tiny Healing Potions I can pass along right away!" % potionCount)
+		Mes("Thank you for your help. That's %d Cactus Potions I can pass along right away!" % potionCount)
 	else:
-		Mes("Thank you for your help. I'll get to work on your Tiny Healing Potion right away!")
+		Mes("Thank you for your help. I'll get to work on your Cactus Potion right away!")
 	Mes("Helping the people out here is much better than being stuck in some tower or palace. More of the leaders of this city should think about that.")
 
-	AddItem(tinyHealingPotionID, potionCount)
+	AddItem(cactusPotionID, potionCount)
 	Action(OnMainChoiceContinue)
 
 # Anwar's cactus potion
