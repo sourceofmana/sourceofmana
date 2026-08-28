@@ -1,8 +1,5 @@
 extends NpcScript
 
-# Cactus potion brewing
-const BREW_MAX : int				= 20
-
 # Elanore's healing potions
 const POTION_SLIME : int			= 6
 const POTION_MAX : int				= 20
@@ -108,11 +105,11 @@ func OnMainChoice():
 		Choice("About those ingredients...", OnPotionQuestReminder)
 	else:
 		Choice("Can I help you with anything?", OnHelpWithPotions)
-	var cactusQuestState : int = GetQuest(ProgressCommons.Quest.ANWAR_PESTICIDE)
-	if cactusQuestState == ProgressCommons.ANWAR_PESTICIDE.SENT_TO_ELANORE:
-		Choice("Anwar sent me about his cactus.", OnExplainCactusPotion)
-	elif cactusQuestState >= ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED:
-		Choice("Could you brew a Cactus Potion?", OnBrewCactusPotion)
+	var pesticideQuestState : int = GetQuest(ProgressCommons.Quest.ANWAR_PESTICIDE)
+	if pesticideQuestState == ProgressCommons.ANWAR_PESTICIDE.SENT_TO_ELANORE:
+		Choice("Anwar sent me about his cactus.", OnExplainFertiliserPotion)
+	elif pesticideQuestState >= ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED:
+		Choice("Could you make a Fertiliser Potion?", OnMakeFertiliserPotion)
 	Choice("I'd like to ask you something.", OnAskChoice)
 	Choice("Thank you again but I have to leave", Farewell)
 
@@ -177,66 +174,37 @@ func OnPotionExchange(potionCount : int):
 	AddItem(cactusPotionID, potionCount)
 	Action(OnMainChoiceContinue)
 
-# Anwar's cactus potion
+# Anwar's fertiliser potion
 func OnMainChoiceContinue():
 	Mes("Is there anything else?")
 	OnMainChoice()
 
-func GetBrewCount() -> int:
-	var cactusDrinkID : int = DB.GetCellHash("Cactus Drink")
-	var pitayaID : int = DB.GetCellHash("Pitaya")
-	var brewCount : int = 0
-	while brewCount < BREW_MAX and HasItem(cactusDrinkID, brewCount + 1) and HasItem(pitayaID, brewCount + 1):
-		brewCount += 1
-	return brewCount
-
-func OnExplainCactusPotion():
+func OnExplainFertiliserPotion():
 	Mes("Ah, yes. I've been thinking about the farmers' recent problems. I think I have something that can help.")
-	Mes("His cactus drink can provide a good base for the potion I can make. I will infuse it with Mana to create a Cactus Potion.")
-	Mes("It has many beneficial properties and I think it could even improve his fertiliser. If he works it into his mix the cactus could be more resilient against the Kaore corruption.")
-	Mes("Bring me a Cactus Drink and a Pitaya and I will brew a Cactus Potion for you, any time you need it.")
+	Mes("His cactus drink can provide a good base. I will infuse it with Mana to make a Fertiliser Potion that should ward off the Kaore.")
+	Mes("Bring me a Cactus Drink and a Pitaya any time and I will have one ready for his field.")
 	SetQuest(ProgressCommons.Quest.ANWAR_PESTICIDE, ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED)
 	Action(OnMainChoice)
 
-func OnBrewCactusPotion():
-	var brewCount : int = GetBrewCount()
-	if brewCount <= 0:
-		OnBrewReminder()
-		return
-
-	Mes("Let me see what you have brought.")
-	Choice("Just the one.", OnBrew.bind(1))
-	if brewCount > 1:
-		Choice("All of them, %d potions." % brewCount, OnBrew.bind(brewCount))
-	Choice("On second thought, I will keep them.", OnMainChoiceContinue)
-
-func OnBrewReminder():
-	Mes("One Cactus Drink and one Pitaya for each potion. Bring both and I will brew as many as you like.")
-	Action(OnMainChoice)
-
-func OnBrew(potionCount : int):
+func OnMakeFertiliserPotion():
 	var cactusDrinkID : int = DB.GetCellHash("Cactus Drink")
 	var pitayaID : int = DB.GetCellHash("Pitaya")
-	var cactusPotionID : int = DB.GetCellHash("Cactus Potion")
+	var fertiliserPotionID : int = DB.GetCellHash("Fertiliser Potion")
 
-	if potionCount <= 0 or not HasItem(cactusDrinkID, potionCount) or not HasItem(pitayaID, potionCount):
-		OnBrewReminder()
+	if not HasItem(cactusDrinkID) or not HasItem(pitayaID):
+		Mes("One Cactus Drink and one Pitaya, and I will have a Fertiliser Potion ready for you.")
+		Action(OnMainChoice)
 		return
 
-	if not HasItemsSpace([[cactusDrinkID, -potionCount], [pitayaID, -potionCount], [cactusPotionID, potionCount]]):
+	if not HasItemsSpace([[cactusDrinkID, -1], [pitayaID, -1], [fertiliserPotionID, 1]]):
 		Mes("You are carrying far too much, darling. Set something down first.")
 		Action(OnMainChoiceContinue)
 		return
 
-	RemoveItem(cactusDrinkID, potionCount)
-	RemoveItem(pitayaID, potionCount)
-	AddItem(cactusPotionID, potionCount)
-
-	if potionCount > 1:
-		Mes("There. %d potions, and Anwar only needs the one for each batch." % potionCount)
-	else:
-		Mes("There. One Cactus Potion, ready for his field.")
-
+	RemoveItem(cactusDrinkID, 1)
+	RemoveItem(pitayaID, 1)
+	AddItem(fertiliserPotionID, 1)
+	Mes("There you go. One Fertiliser Potion, fresh for Anwar's field.")
 	Action(OnMainChoiceContinue)
 
 # What is Kaore

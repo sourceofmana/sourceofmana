@@ -16,13 +16,12 @@ const QUEST_DRINKS : int			= 6
 const QUEST_PITAYAS : int			= 6
 const QUEST_EXP : int				= 150
 const PESTICIDE_EXP : int			= 100
-const REPEAT_EXP : int				= QUEST_EXP + PESTICIDE_EXP
 
 # Quest items
 var bugLegID : int					= DB.GetCellHash("Bug Leg")
 var maggotSlimeID : int				= DB.GetCellHash("Maggot Slime")
 var stingerID : int					= DB.GetCellHash("Scorpion Stinger")
-var cactusPotionID : int			= DB.GetCellHash("Cactus Potion")
+var fertiliserPotionID : int		= DB.GetCellHash("Fertiliser Potion")
 
 # Reward items
 var cactusDrinkID : int				= DB.GetCellHash("Cactus Drink")
@@ -44,27 +43,19 @@ func OnStart():
 			OnComplete()
 
 # Helpers
-func NeedsPotion() -> bool:
-	return GetQuest(PESTICIDE_ID) == ProgressCommons.ANWAR_PESTICIDE.REWARDS_WITHDREW
-
 func HasQuestParts() -> bool:
 	return HasItem(bugLegID, QUEST_BUGLEGS) and HasItem(maggotSlimeID, QUEST_SLIMES) and HasItem(stingerID, QUEST_STINGERS)
 
 func HasDelivery() -> bool:
-	return HasQuestParts() and (not NeedsPotion() or HasItem(cactusPotionID, QUEST_POTIONS))
+	return HasQuestParts()
 
 func HasRoomForRewards() -> bool:
-	var items : Array = [[bugLegID, -QUEST_BUGLEGS], [maggotSlimeID, -QUEST_SLIMES], [stingerID, -QUEST_STINGERS], [cactusDrinkID, QUEST_DRINKS], [pitayaID, QUEST_PITAYAS]]
-	if NeedsPotion():
-		items.append([cactusPotionID, -QUEST_POTIONS])
-	return HasItemsSpace(items)
+	return HasItemsSpace([[bugLegID, -QUEST_BUGLEGS], [maggotSlimeID, -QUEST_SLIMES], [stingerID, -QUEST_STINGERS], [cactusDrinkID, QUEST_DRINKS], [pitayaID, QUEST_PITAYAS]])
 
 func CanDeliverToday() -> bool:
 	return npc.ownScript == null or npc.ownScript.CanTurnInDaily(own.get_rid().get_id())
 
 func GetRequirementText() -> String:
-	if NeedsPotion():
-		return "%d Bug Legs, %d Maggot Slimes, %d Scorpion Stingers and a Cactus Potion" % [QUEST_BUGLEGS, QUEST_SLIMES, QUEST_STINGERS]
 	return "%d Bug Legs, %d Maggot Slimes and %d Scorpion Stingers" % [QUEST_BUGLEGS, QUEST_SLIMES, QUEST_STINGERS]
 
 # Quest states
@@ -119,34 +110,26 @@ func CompleteChoice():
 			Choice("How are your fields dealing with the Peyote?", OnPesticideOffer)
 		ProgressCommons.ANWAR_PESTICIDE.SENT_TO_ELANORE:
 			Choice("About Elanore...", OnPesticideReminder)
-		ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED:
-			if HasItem(cactusPotionID, QUEST_POTIONS):
+		ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED, ProgressCommons.ANWAR_PESTICIDE.REWARDS_WITHDREW:
+			if HasItem(fertiliserPotionID, QUEST_POTIONS):
 				Choice("Elanore made this for your field.", OnPesticideTurnIn)
-			else:
-				Choice("About Elanore's potion...", OnPesticideReminder)
 
 	Choice("Good harvest, Anwar.", OnFarewell)
 
 # Deliveries
 func OnTurnIn():
-	var withPotion : bool = NeedsPotion()
-
 	Mes("That is everything. Enough fertiliser for my rows and a few of my neighbours' as well.")
 
 	RemoveItem(bugLegID, QUEST_BUGLEGS)
 	RemoveItem(maggotSlimeID, QUEST_SLIMES)
 	RemoveItem(stingerID, QUEST_STINGERS)
 
-	if withPotion:
-		RemoveItem(cactusPotionID, QUEST_POTIONS)
-		Mes("And the potion goes straight into the barrel. That should keep the Kaore out of the crop for another season.")
-
 	SetQuest(QUEST_ID, ProgressCommons.ANWAR_FIELD.REWARDS_WITHDREW)
 
 	Mes("Take some of the harvest for your trouble.")
 	AddItem(cactusDrinkID, QUEST_DRINKS)
 	AddItem(pitayaID, QUEST_PITAYAS)
-	AddExp(REPEAT_EXP if withPotion else QUEST_EXP)
+	AddExp(QUEST_EXP)
 
 	if npc.ownScript:
 		Action(npc.ownScript.StartCooldown.bind(own.get_rid().get_id()))
@@ -189,16 +172,22 @@ func OnPesticideReminder():
 	Action(OnCompleteContinue)
 
 func OnPesticideTurnIn():
-	if not HasItem(cactusPotionID, QUEST_POTIONS):
+	if not HasItem(fertiliserPotionID, QUEST_POTIONS):
 		OnPesticideReminder()
 		return
 
-	Mes("Ah, the Mana infused into this potion will ward off Kaore. I knew Elanore would have the solution. Let me work it into the fertiliser.")
-	RemoveItem(cactusPotionID, QUEST_POTIONS)
-	SetQuest(PESTICIDE_ID, ProgressCommons.ANWAR_PESTICIDE.REWARDS_WITHDREW)
+	var isFirst : bool = GetQuest(PESTICIDE_ID) == ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED
+
+	RemoveItem(fertiliserPotionID, QUEST_POTIONS)
 	AddExp(PESTICIDE_EXP)
 
-	Mes("The soil already looks better. I'll put one of these in every batch of fertiliser now, so bring a Cactus Potion along with the insect parts if you want to help me again.")
+	if isFirst:
+		Mes("Ah, the Mana infused into this potion will ward off Kaore. I knew Elanore would have the solution. Let me work it into the fertiliser.")
+		SetQuest(PESTICIDE_ID, ProgressCommons.ANWAR_PESTICIDE.REWARDS_WITHDREW)
+		Mes("The soil already looks better. Bring me another any time Elanore has one ready, and I will always find room for it.")
+	else:
+		Mes("Another Fertiliser Potion? The soil will love it. Thank you.")
+
 	Action(OnCompleteContinue)
 
 # Transitions to next states
