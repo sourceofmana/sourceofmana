@@ -420,6 +420,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/sprites/npcs/cave-locks.png [Reid]
 ./graphics/sprites/npcs/chest-large.png [Reid]
 ./graphics/sprites/npcs/chest-small.png [Reid]
+./graphics/sprites/npcs/dolly.png [Reid]
 ./graphics/sprites/npcs/ekinu.png [Reid]
 ./graphics/sprites/npcs/elanore.png [Reid]
 ./graphics/sprites/npcs/elias.png [Modanung]
