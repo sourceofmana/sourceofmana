@@ -1295,7 +1295,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="28" name="Croc" type="Spawn" x="2608.45" y="2083.02" width="384.667" height="468.758">
+  <object id="28" name="Red Scorpion" type="Spawn" x="2608.45" y="2083.02" width="384.667" height="468.758">
    <properties>
     <property name="count" value="4"/>
     <property name="type" value="Monster"/>

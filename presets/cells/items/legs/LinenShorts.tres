@@ -2,9 +2,21 @@
 
 [ext_resource type="Texture2D" uid="uid://06bgh7ndvw40" path="res://data/graphics/items/legs/shorts.png" id="1_r35o7"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="2_glyxe"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_statmod"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_cellmod"]
 [ext_resource type="Material" uid="uid://bxql3lr2d6qvl" path="res://presets/palettes/shaders/equipment/cloth-natural.tres" id="3_egntb"]
 [ext_resource type="Texture2D" uid="uid://7dnljcj3wldb" path="res://data/graphics/sprites/equipment/legs/shorts-male.png" id="4_pjs4f"]
 [ext_resource type="Texture2D" uid="uid://bq8ruol5u0o7l" path="res://data/graphics/sprites/equipment/legs/shorts-female.png" id="5_6mndq"]
+
+[sub_resource type="Resource" id="Resource_def"]
+script = ExtResource("2_statmod")
+_effect = 14
+_value = 1.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_mods"]
+script = ExtResource("3_cellmod")
+_modifiers = Array[ExtResource("2_statmod")]([SubResource("Resource_def")])
 
 [resource]
 script = ExtResource("2_glyxe")
@@ -15,3 +27,4 @@ id = 3507746760
 name = "Shorts"
 icon = ExtResource("1_r35o7")
 weight = 300.0
+modifiers = SubResource("Resource_mods")

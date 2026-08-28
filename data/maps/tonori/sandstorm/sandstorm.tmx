@@ -1057,7 +1057,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="49" name="Giant Maggot" type="Spawn" x="4500" y="2353" width="266" height="209">
+  <object id="49" name="Red Scorpion" type="Spawn" x="4500" y="2353" width="266" height="209">
    <properties>
     <property name="count" value="1"/>
     <property name="type" value="Monster"/>

@@ -15,10 +15,10 @@ _name = "Snake"
 _spritePreset = ExtResource("spr_Generic4Directions")
 _radius = 16
 _stats = {
-"attack": 80,
+"attack": 40,
 "baseExp": 40,
-"castAttackDelay": 0.45,
-"cooldownAttackDelay": 0.4,
+"castAttackDelay": 0.1,
+"cooldownAttackDelay": 0.6,
 "critRate": 0.0,
 "defense": 5,
 "dodgeRate": 0.0,

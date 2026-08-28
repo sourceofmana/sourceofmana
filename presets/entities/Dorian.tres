@@ -16,6 +16,7 @@ _name = "Dorian"
 _spritePreset = ExtResource("spr_Slime")
 _radius = 10
 _stats = {
+"baseExp": 10,
 "level": 5,
 "walkSpeed": 40.0
 }

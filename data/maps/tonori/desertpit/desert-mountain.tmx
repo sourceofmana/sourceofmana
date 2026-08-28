@@ -1118,7 +1118,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="138" name="Fire Goblin" type="Spawn" x="2310" y="640" width="612.242" height="448">
+  <object id="138" name="Red Scorpion" type="Spawn" x="2310" y="640" width="612.242" height="448">
    <properties>
     <property name="count" value="4"/>
     <property name="type" value="Monster"/>

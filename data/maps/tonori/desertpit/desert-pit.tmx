@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="233" height="179" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="68">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="233" height="179" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="71">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) 5t3v3 Reid"/>
@@ -1156,7 +1156,7 @@
   </object>
   <object id="25" name="Lizandra" type="Spawn" x="4128" y="2976" width="128" height="96">
    <properties>
-    <property name="count" value="2"/>
+    <property name="count" value="1"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1240,6 +1240,24 @@
   <object id="67" name="Lizandre" type="Spawn" x="3411.76" y="1549.33" width="1564.36" height="1568">
    <properties>
     <property name="count" value="10"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="68" name="Giant Maggot" type="Spawn" x="3227.61" y="1025.8" width="266" height="209">
+   <properties>
+    <property name="count" value="1"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="69" name="Red Scorpion" type="Spawn" x="2742.76" y="2610.65" width="893.273" height="305.97">
+   <properties>
+    <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="70" name="Lizandra" type="Spawn" x="1878.42" y="2227.76" width="128" height="96">
+   <properties>
+    <property name="count" value="1"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>

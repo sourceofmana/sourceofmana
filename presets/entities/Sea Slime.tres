@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://mtjk83jdl176" path="res://sources/db/instance/EntityData.gd" id="2_mr4dg"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_w1pht"]
 [ext_resource type="Resource" uid="uid://coqp0ev4seayx" path="res://presets/entities/Slime.tres" id="3_xbbvo"]
-[ext_resource type="PackedScene" uid="uid://br64r1qdy1nm8" path="res://presets/entities/sprites/SlimeSea.tscn" id="spr_SlimeSea"]
 [ext_resource type="Resource" uid="uid://c8n3qk1lwv2ht" path="res://presets/cells/items/common/Salt.tres" id="4_salt"]
+[ext_resource type="PackedScene" uid="uid://br64r1qdy1nm8" path="res://presets/entities/sprites/SlimeSea.tscn" id="spr_SlimeSea"]
 
 [resource]
 script = ExtResource("2_mr4dg")

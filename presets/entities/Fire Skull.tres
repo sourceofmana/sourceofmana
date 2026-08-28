@@ -15,6 +15,7 @@ _name = "Fire Skull"
 _spritePreset = ExtResource("spr_Skull")
 _radius = 12
 _stats = {
+"baseExp": 20,
 "level": 10,
 "walkSpeed": 50.0
 }

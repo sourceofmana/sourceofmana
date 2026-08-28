@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="123" height="194" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="26">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="123" height="194" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="27">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1230,7 +1230,7 @@
   </object>
   <object id="20" name="Scorpion" type="Spawn" x="-56" y="80">
    <properties>
-    <property name="count" value="8"/>
+    <property name="count" value="10"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1261,6 +1261,12 @@
   <object id="25" name="Lizandre" type="Spawn" x="1210.55" y="3310.42" width="191.03" height="257.939">
    <properties>
     <property name="count" value="3"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="26" name="Red Scorpion" type="Spawn" x="1156" y="3731.64" width="348.606" height="306.424">
+   <properties>
+    <property name="count" value="2"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>

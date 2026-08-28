@@ -16,6 +16,7 @@ _name = "Splatyna"
 _spritePreset = ExtResource("spr_Splatyna")
 _radius = 26
 _stats = {
+"baseExp": 20,
 "level": 10,
 "walkSpeed": 50.0
 }

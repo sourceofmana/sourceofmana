@@ -21,7 +21,7 @@ _stats = {
 "baseExp": 15,
 "defense": 20,
 "level": 8,
-"mattack": 30,
+"mattack": 15,
 "maxHealth": 75,
 "mdefense": 20,
 "walkSpeed": 80.0

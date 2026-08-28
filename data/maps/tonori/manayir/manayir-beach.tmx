@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="261" height="167" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="30">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="261" height="167" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="32">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1095,9 +1095,9 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="9" name="Croc" type="Spawn" x="2381.39" y="2015.91" width="953.212" height="841.636">
+  <object id="9" name="Red Scorpion" type="Spawn" x="2381.39" y="2015.91" width="953.212" height="841.636">
    <properties>
-    <property name="count" value="8"/>
+    <property name="count" value="4"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1143,7 +1143,7 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="17" name="Croc" type="Spawn" x="3230.97" y="3898.88" width="547.15" height="923.455">
+  <object id="17" name="Red Scorpion" type="Spawn" x="3230.97" y="3898.88" width="547.15" height="923.455">
    <properties>
     <property name="count" value="5"/>
     <property name="type" value="Monster"/>
@@ -1185,9 +1185,9 @@
     <property name="type" value="Monster"/>
    </properties>
   </object>
-  <object id="24" name="Croc" type="Spawn" x="4800.5" y="2262" width="1031" height="452">
+  <object id="24" name="Red Scorpion" type="Spawn" x="5100.5" y="2349.88" width="1031" height="452">
    <properties>
-    <property name="count" value="4"/>
+    <property name="count" value="2"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
@@ -1218,6 +1218,18 @@
   <object id="29" name="Lizandre" type="Spawn" x="4914.32" y="4437.03" width="628.333" height="419.273">
    <properties>
     <property name="count" value="5"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="30" name="Croc" type="Spawn" x="4051.17" y="2304.3" width="1324.94" height="585.333">
+   <properties>
+    <property name="count" value="4"/>
+    <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="31" name="Croc" type="Spawn" x="3449.65" y="2580.06" width="1549.18" height="361.091">
+   <properties>
+    <property name="count" value="4"/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
