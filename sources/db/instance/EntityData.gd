@@ -27,7 +27,7 @@ class_name EntityData
 @export var _quest : QuestData						= null
 @export var _questState : int						= ProgressCommons.UnknownProgress
 @export var _questStateMax : int					= ProgressCommons.UnknownProgress
-var _questID : int									= DB.UnknownHash
+@export var _questID : int							= DB.UnknownHash
 @export_category("Audio")
 @export var _stateSFX : Dictionary[ActorCommons.State, AudioStream]	= {}
 @export var _alterationSFX : Dictionary[ActorCommons.Alteration, AudioStream]	= {}
