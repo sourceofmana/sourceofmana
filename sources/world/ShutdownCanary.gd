@@ -31,11 +31,15 @@ func CheckCanary() -> void:
 		for server in [Network.ENetServer, Network.WebSocketServer, Network.WebRTCServer]:
 			if server and server.currentPeer:
 				server.currentPeer.refuse_new_connections = true
-		shuttingDownStep = 0
-		timer.timeout.disconnect(CheckCanary)
-		timer.one_shot = true
-		timer.timeout.connect(OnShutdownStep)
-		ShutdownStep()
+
+		if Peers.peers.is_empty():
+			Launcher.Quit()
+		else:
+			shuttingDownStep = 0
+			timer.timeout.disconnect(CheckCanary)
+			timer.one_shot = true
+			timer.timeout.connect(OnShutdownStep)
+			ShutdownStep()
 
 func ShutdownStep() -> void:
 	Launcher.World.commands.CommandBroadcast(null, shutdownMessages[shuttingDownStep])
