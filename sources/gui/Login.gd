@@ -10,8 +10,8 @@ extends Control
 @onready var confirmPasswordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text
 @onready var emailControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email
 @onready var emailTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text
-@onready var resetCodeControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code
-@onready var resetCodeTextControl : LineEdit		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text
+@onready var resetCodeControl : Control		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code
+@onready var resetCodeTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text
 @onready var indicatorRow : HBoxContainer	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow
 @onready var rememberMeCheckBox : CheckBox	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/RememberMe
 @onready var onlineIndicator : CheckBox		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/OnlineIndicator
@@ -28,6 +28,7 @@ var savedAccountName : String				= ""
 var fillingFields : bool					= false
 var isAccountCreatorEnabled : bool			= false
 var recoveryState : RecoveryState			= RecoveryState.NONE
+var pendingFocusControl : Control			= null
 
 #
 func FillWarningLabel(err : NetworkCommons.AuthError):
@@ -52,32 +53,33 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 			warn = "Invalid token, enter your password"
 			passwordTextControl.clear()
 			ClearSavedToken()
+			RequestFocus(passwordTextControl)
 		NetworkCommons.AuthError.ERR_DUPLICATE_CONNECTION:
 			warn = "Another connection happened with the same login."
 		NetworkCommons.AuthError.ERR_AUTH:
 			warn = "Invalid account name or password."
-			passwordTextControl.grab_focus()
+			RequestFocus(passwordTextControl)
 		NetworkCommons.AuthError.ERR_PASSWORD_VALID:
 			warn = "Password should only include alpha-numeric characters and symbols."
-			passwordTextControl.grab_focus()
+			RequestFocus(passwordTextControl)
 		NetworkCommons.AuthError.ERR_PASSWORD_SIZE:
 			warn = "Password length should be inbetween %d and %d character long." % [NetworkCommons.PasswordMinSize, NetworkCommons.PasswordMaxSize]
-			passwordTextControl.grab_focus()
+			RequestFocus(passwordTextControl)
 		NetworkCommons.AuthError.ERR_NAME_AVAILABLE:
 			warn = "Account name not available."
-			nameTextControl.grab_focus()
+			RequestFocus(nameTextControl)
 		NetworkCommons.AuthError.ERR_NAME_VALID:
 			warn = "Name should should only include alpha-numeric characters and symbols."
-			nameTextControl.grab_focus()
+			RequestFocus(nameTextControl)
 		NetworkCommons.AuthError.ERR_NAME_SIZE:
 			warn = "Name length should be inbetween %d and %d character long." % [NetworkCommons.PlayerNameMinSize, NetworkCommons.PlayerNameMaxSize]
-			nameTextControl.grab_focus()
+			RequestFocus(nameTextControl)
 		NetworkCommons.AuthError.ERR_PASSWORD_MISMATCH:
 			warn = "Passwords do not match."
-			confirmPasswordTextControl.grab_focus()
+			RequestFocus(confirmPasswordTextControl)
 		NetworkCommons.AuthError.ERR_EMAIL_VALID:
 			warn = "Email is incorrect, please us a normal email format."
-			emailTextControl.grab_focus()
+			RequestFocus(emailTextControl)
 		NetworkCommons.AuthError.ERR_RESET_UNAVAILABLE:
 			warn = "Password reset is not available on this server."
 			SetRecoveryState(RecoveryState.NONE)
@@ -87,7 +89,7 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 			SetRecoveryState(RecoveryState.ENTER_CODE)
 		NetworkCommons.AuthError.ERR_RESET_INVALID_CODE:
 			warn = "Invalid or expired reset code."
-			resetCodeTextControl.grab_focus()
+			RequestFocus(resetCodeTextControl)
 		NetworkCommons.AuthError.ERR_RESET_PASSWORD_UPDATED:
 			warn = "Password updated successfully. You can now log in."
 			isWarn = false
@@ -100,6 +102,17 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 	if not warn.is_empty():
 		warn = "[color=#%s]%s[/color]" % [textColor.to_html(false), warn]
 	Launcher.GUI.notificationLabel.AddNotification(warn)
+
+func RequestFocus(control : Control):
+	pendingFocusControl = control
+	if control.is_visible_in_tree():
+		ApplyFocus.call_deferred()
+
+func ApplyFocus():
+	if pendingFocusControl:
+		pendingFocusControl.release_focus()
+		pendingFocusControl.grab_focus()
+		pendingFocusControl = null
 
 func SetRecoveryState(state : RecoveryState):
 	recoveryState = state
@@ -351,7 +364,9 @@ func _on_visibility_changed():
 	if visible:
 		LoadSavedToken()
 		FillFieldsFromToken()
-		if nameTextControl and nameTextControl.is_visible() and nameTextControl.get_text().length() == 0:
+		if pendingFocusControl and pendingFocusControl.is_visible_in_tree():
+			ApplyFocus.call_deferred()
+		elif nameTextControl and nameTextControl.is_visible() and nameTextControl.get_text().length() == 0:
 			nameTextControl.grab_focus()
 		elif passwordTextControl and passwordTextControl.is_visible() and passwordTextControl.get_text().length() == 0:
 			passwordTextControl.grab_focus()
