@@ -9,6 +9,7 @@ var previousMove : Vector2		= Vector2.ZERO
 const stickDeadzone : float		= 0.2
 
 var consumed : Array[String]	= []
+var incrementalPressedTouchCount : int	= 0
 
 signal deviceChanged
 
@@ -104,8 +105,10 @@ func _unhandled_input(event):
 			elif clickTimer.is_stopped():
 				Entities.ClearDelayedHoveredCallback()
 				MoveTo(Launcher.Camera.camera.get_global_mouse_position())
+	elif event is InputEventScreenTouch:
+		incrementalPressedTouchCount = incrementalPressedTouchCount + 1 if event.pressed else 0
 	elif not HasConsumed() and Launcher.Camera:
-		if event is InputEventMagnifyGesture:
+		if event is InputEventMagnifyGesture and (not DisplayServer.is_touchscreen_available() or incrementalPressedTouchCount == 2):
 			if event.factor > 1.0:
 				ConsumeAction("gp_zoom_in", true)
 				Launcher.Camera.ZoomIn()
