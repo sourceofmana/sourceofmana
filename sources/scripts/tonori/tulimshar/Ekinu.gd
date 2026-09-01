@@ -38,6 +38,7 @@ func OnExpedition():
 	Mes("We do need one more fighter and I was worried about taking too many guards away from their posts here in the city.")
 	Mes("You're going to be heading South, towards the Sandstorm Mines.")
 	Mes("They're called that for a reason, you know? That area of the desert is prone to strong winds and the swirling sands tend to make it difficult to get to.")
+	Mes"(This particular storm is different though. It's unusually intense, hot and long-lasting. I wonder if something out there is causing it...")
 	Choice("Why are you heading that way?", OnWhyExpedition)
 	Choice("What should I do?", OnJobExplanation)
 
