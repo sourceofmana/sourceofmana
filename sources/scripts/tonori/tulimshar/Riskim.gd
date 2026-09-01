@@ -122,4 +122,4 @@ func OnReward():
 	AddKarma(1)
 	AddExp(30)
 
-	Mes("Here, take some of my best. Croissants and cactus candy. One is a family recipe and the other one I invented myself!")
+	Mes("Here, take some of my best. Croissants and cactus candy. One is a family recipe and the other one is a specialty of Tulimshar!")
