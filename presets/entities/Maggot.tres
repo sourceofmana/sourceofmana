@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://hxejvtfj74bd" path="res://data/sounds/entities/maggot/attack.ogg" id="5_mxmhf"]
 [ext_resource type="AudioStream" uid="uid://dnjxafax7stqw" path="res://data/sounds/entities/maggot/death.ogg" id="6_qtjwj"]
 [ext_resource type="Resource" uid="uid://vd0l1vl1beon" path="res://presets/cells/items/common/MaggotSlime.tres" id="7_slime"]
+[ext_resource type="Resource" uid="uid://bb8glq2xn4rtp" path="res://presets/cells/items/common/BugLeg.tres" id="8_bugleg"]
 [ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
@@ -27,7 +28,8 @@ _equipment = Array[ExtResource("1_bbb2k")]([null, null, null, null, null, null, 
 _customTexture = ExtResource("3_tex")
 _behaviour = 258
 _drops = Dictionary[ExtResource("1_bbb2k"), float]({
-ExtResource("7_slime"): 0.6
+ExtResource("7_slime"): 0.6,
+ExtResource("8_bugleg"): 0.24
 })
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("5_mxmhf"),

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://b4nw4rf1eld1"]
+
+[ext_resource type="Script" uid="uid://bqxdwogial88g" path="res://sources/db/instance/QuestData.gd" id="1_25ln0"]
+
+[resource]
+script = ExtResource("1_25ln0")
+id = 3832954844
+name = "Anwar's Field"
+description = "Anwar farms cactus outside Tulimshar and wants to improve his fertiliser. He takes one delivery of insect parts a day, and shares the harvest in return."
+giver = "Anwar"
+giverLocation = "Tulimshar"
+target = "Bug Leg x24, Maggot Slime x12, Scorpion Stinger x6"
+targetLocation = "Tulimshar"
+reward = "Cactus Drink x6, Pitaya x6, 150 EXP"
+metadata/_custom_type_script = "uid://bqxdwogial88g"

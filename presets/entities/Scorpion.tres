@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cag81rrbxoyak" path="res://data/graphics/sprites/monsters/scorpion.png" id="3_tex"]
 [ext_resource type="Material" uid="uid://cqxvhb3g8m6yj" path="res://presets/palettes/shaders/monsters/mob-scorpion-sand.tres" id="4_mat"]
 [ext_resource type="AudioStream" uid="uid://djcpd4h0bmrb6" path="res://data/sounds/entities/scorpion/attack.ogg" id="6_ih0se"]
+[ext_resource type="Resource" uid="uid://bb8glq2xn4rtp" path="res://presets/cells/items/common/BugLeg.tres" id="7_bugleg"]
+[ext_resource type="Resource" uid="uid://cs7t1ng3rscrp" path="res://presets/cells/items/common/ScorpionStinger.tres" id="8_stinger"]
 [ext_resource type="PackedScene" uid="uid://e6bjjb4n155h" path="res://presets/entities/sprites/Generic4Directions.tscn" id="spr_Generic4Directions"]
 
 [resource]
@@ -26,6 +28,10 @@ _stats = {
 _equipment = Array[ExtResource("1_exyli")]([null, null, null, null, null, null, null, null])
 _customTexture = ExtResource("3_tex")
 _customMaterial = ExtResource("4_mat")
+_drops = Dictionary[ExtResource("1_exyli"), float]({
+ExtResource("7_bugleg"): 0.40,
+ExtResource("8_stinger"): 0.35
+})
 _stateSFX = Dictionary[int, AudioStream]({
 3: ExtResource("6_ih0se")
 })

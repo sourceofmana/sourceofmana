@@ -1,5 +1,9 @@
 extends NpcScript
 
+# Elanore's healing potions
+const POTION_SLIME : int			= 6
+const POTION_MAX : int				= 20
+
 #
 func OnStart():
 	var questState : int = GetQuest(ProgressCommons.Quest.TUTORIAL)
@@ -84,21 +88,36 @@ func OnExplainUI():
 	Action(OnMainChoice)
 
 # Main choice loop
-func HasAllIngredients() -> bool:
-	return HasItem(DB.GetCellHash("Maggot Slime"), 6) and HasItem(DB.GetCellHash("Water Bottle")) and HasItem(DB.GetCellHash("Pitaya"))
+func GetPotionCount() -> int:
+	var maggotSlimeID : int = DB.GetCellHash("Maggot Slime")
+	var waterBottleID : int = DB.GetCellHash("Water Bottle")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
+	var potionCount : int = 0
+	while potionCount < POTION_MAX and HasItem(maggotSlimeID, (potionCount + 1) * POTION_SLIME) and HasItem(waterBottleID, potionCount + 1) and HasItem(pitayaID, potionCount + 1):
+		potionCount += 1
+	return potionCount
 
 func OnMainChoice():
 	var sideQuestState : int = GetQuest(ProgressCommons.Quest.ELANORE_POTION)
-	if sideQuestState == ProgressCommons.ELANORE_POTION.STARTED and HasAllIngredients():
+	if sideQuestState == ProgressCommons.ELANORE_POTION.STARTED and GetPotionCount() > 0:
 		Choice("I have your ingredients.", OnPotionQuestTurnIn)
 	elif sideQuestState == ProgressCommons.ELANORE_POTION.STARTED:
 		Choice("About those ingredients...", OnPotionQuestReminder)
 	else:
 		Choice("Can I help you with anything?", OnHelpWithPotions)
+	var pesticideQuestState : int = GetQuest(ProgressCommons.Quest.ANWAR_PESTICIDE)
+	if pesticideQuestState == ProgressCommons.ANWAR_PESTICIDE.SENT_TO_ELANORE:
+		Choice("Anwar sent me about his cactus.", OnExplainFertiliserPotion)
+	elif pesticideQuestState >= ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED:
+		Choice("Could you make a Fertiliser Potion?", OnMakeFertiliserPotion)
+	Choice("I'd like to ask you something.", OnAskChoice)
+	Choice("Thank you again but I have to leave", Farewell)
+
+func OnAskChoice():
+	Mes("What would you like to know?")
 	Choice("What is Kaore?", OnExplainKaore)
 	Choice("Who are you?", OnExplainSelf)
-	if GetQuest(ProgressCommons.Quest.TUTORIAL) >= ProgressCommons.TUTORIAL.ELANORE_DONE:
-		Choice("Thank you again but I have to leave", Farewell)
+	Choice("Never mind.", OnMainChoiceContinue)
 
 # Help with potions
 func OnHelpWithPotions():
@@ -116,14 +135,77 @@ func OnPotionQuestReminder():
 	OnMainChoice()
 
 func OnPotionQuestTurnIn():
-	Mes("Thank you for your help. I'll get to work on making new healing potions right away!")
+	var potionCount : int = GetPotionCount()
+	if potionCount <= 0:
+		OnPotionQuestReminder()
+		return
+
+	Mes("Let me see what you have brought.")
+	Choice("Just the one.", OnPotionExchange.bind(1))
+	if potionCount > 1:
+		Choice("All of them, %d potions." % potionCount, OnPotionExchange.bind(potionCount))
+	Choice("On second thought, I will keep them.", OnMainChoiceContinue)
+
+func OnPotionExchange(potionCount : int):
+	var maggotSlimeID : int = DB.GetCellHash("Maggot Slime")
+	var waterBottleID : int = DB.GetCellHash("Water Bottle")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
+	var cactusPotionID : int = DB.GetCellHash("Cactus Potion")
+
+	if potionCount <= 0 or not HasItem(maggotSlimeID, potionCount * POTION_SLIME) or not HasItem(waterBottleID, potionCount) or not HasItem(pitayaID, potionCount):
+		OnPotionQuestReminder()
+		return
+
+	if not HasItemsSpace([[maggotSlimeID, -potionCount * POTION_SLIME], [waterBottleID, -potionCount], [pitayaID, -potionCount], [cactusPotionID, potionCount]]):
+		Mes("You are carrying far too much, darling. Set something down first.")
+		Action(OnMainChoiceContinue)
+		return
+
+	RemoveItem(maggotSlimeID, potionCount * POTION_SLIME)
+	RemoveItem(waterBottleID, potionCount)
+	RemoveItem(pitayaID, potionCount)
+
+	if potionCount > 1:
+		Mes("Thank you for your help. That's %d Cactus Potions I can pass along right away!" % potionCount)
+	else:
+		Mes("Thank you for your help. I'll get to work on your Cactus Potion right away!")
 	Mes("Helping the people out here is much better than being stuck in some tower or palace. More of the leaders of this city should think about that.")
-	RemoveItem(DB.GetCellHash("Maggot Slime"), 6)
-	RemoveItem(DB.GetCellHash("Water Bottle"))
-	RemoveItem(DB.GetCellHash("Pitaya"))
-	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.INACTIVE)
-	AddItem(DB.GetCellHash("Cactus Potion"))
+
+	AddItem(cactusPotionID, potionCount)
+	Action(OnMainChoiceContinue)
+
+# Anwar's fertiliser potion
+func OnMainChoiceContinue():
+	Mes("Is there anything else?")
+	OnMainChoice()
+
+func OnExplainFertiliserPotion():
+	Mes("Ah, yes. I've been thinking about the farmers' recent problems. I think I have something that can help.")
+	Mes("His cactus drink can provide a good base. I will infuse it with Mana to make a Fertiliser Potion that should ward off the Kaore.")
+	Mes("Bring me a Cactus Drink and a Pitaya any time and I will have one ready for his field.")
+	SetQuest(ProgressCommons.Quest.ANWAR_PESTICIDE, ProgressCommons.ANWAR_PESTICIDE.ELANORE_EXPLAINED)
 	Action(OnMainChoice)
+
+func OnMakeFertiliserPotion():
+	var cactusDrinkID : int = DB.GetCellHash("Cactus Drink")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
+	var fertiliserPotionID : int = DB.GetCellHash("Fertiliser Potion")
+
+	if not HasItem(cactusDrinkID) or not HasItem(pitayaID):
+		Mes("One Cactus Drink and one Pitaya, and I will have a Fertiliser Potion ready for you.")
+		Action(OnMainChoice)
+		return
+
+	if not HasItemsSpace([[cactusDrinkID, -1], [pitayaID, -1], [fertiliserPotionID, 1]]):
+		Mes("You are carrying far too much, darling. Set something down first.")
+		Action(OnMainChoiceContinue)
+		return
+
+	RemoveItem(cactusDrinkID, 1)
+	RemoveItem(pitayaID, 1)
+	AddItem(fertiliserPotionID, 1)
+	Mes("There you go. One Fertiliser Potion, fresh for Anwar's field.")
+	Action(OnMainChoiceContinue)
 
 # What is Kaore
 func OnExplainKaore():
@@ -131,13 +213,13 @@ func OnExplainKaore():
 	LookAtNpc("Nina")
 	Mes("If you want to know more, you'd better ask my apprentice, Nina. She is currently overseeing the city's Soul Menhir. You can learn a lot more from her.")
 	ResetCamera()
-	OnMainChoice()
+	OnAskChoice()
 
 # Who are you
 func OnExplainSelf():
 	Mes("My name is Elanore. I am the Kahwe of this city and the land that surrounds it. Those outside of our order call us Druids. I represent the Kaumatua, an order devoted to the most ancient tradition in our world.")
 	Mes("But don't you worry about that right now. We can chat more later. Right now I am just out here giving a hand with potions and receiving the injured from outside the walls.")
-	OnMainChoice()
+	OnAskChoice()
 
 func Farewell():
 	if randi() % 2:
