@@ -16,7 +16,7 @@ func OnStart():
 			Choice("About that bottle of water.", OnWaitingWater)
 		ProgressCommons.SANDSTORM_NATHAN_WATER.REWARDS_WITHDREW:
 			OnComplete()
-	Choice("Nethermind, I thought you were a sandman.", Farewell)
+	Choice("Nevermind, I thought you were a sandman.", Farewell)
 
 func Farewell():
 	Express("I got sand everywhere... EVERYWHERE.")
@@ -50,6 +50,7 @@ func OnNiceDay():
 # Water quest
 func OnJobEasier():
 	Mes("Well, since you're asking... I could use some extra water!")
+	Mes("There's a well here, but it's been dry for a long time.")
 	Mes("I'm going to be honest with you. It's not even for drinking. I have that with me.")
 	Mes("I just want to pour it on my face so I feel less cooked by this heat.")
 	Mes("Is that a silly request?")
