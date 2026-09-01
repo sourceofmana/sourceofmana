@@ -34,17 +34,18 @@ func OnPlayerChoice():
 
 # Opposition and faith
 func OnExplainOpposition():
-	Mes("Not exactly. Kahwes, or Druids, have always been allowed in Tulimshar. If anything because without us the city would not survive the worst droughts and other perils of Tonori's climate.")
-	Mes("The Kingdom however officially follows the Savean Creed. They believe, like half of the people around you, that Mana is also a corrupting force just like Kaore and that both should be avoided unless strictly necessary.")
-	Mes("Our Menhir still stands because it makes people's lives easier. Even those who have opposing beliefs cannot deny the benefit of Mana use. They will oppose it publicly, but when a personal need arises, they will seek Kahwes like myself to heal a loved one or bring some needed rain.")
-	Mes("I just wish that more people embraced the ancient traditions more openly. The Savean beliefs have brought much trouble to our world. Now they have even spawned these new cultists, the Varunian, who essentially worship Kaore.")
+	Mes("Not exactly. Makutu, or Druids, have always been allowed in Tulimshar. If anything because without us the city would not survive the worst droughts and other perils of Tonori's climate.")
+	Mes("The Kingdom however officially follows the Aukati. They believe, like half of the people around you, that Mana is also a corrupting force just like Kaore and that both should be avoided unless strictly necessary.")
+	Mes("Our Menhir still stands because it makes people's lives easier. Even those who have opposing beliefs cannot deny the benefit of Mana use. They will oppose it publicly, but when a personal need arises, they will seek Makutu like myself to heal a loved one or bring some needed rain.")
+	Mes("I just wish that more people embraced the ancient traditions more openly. The Aukati beliefs have brought much trouble to our world.")
+	Mes("And they are not the worst of it. Some of our own broke away and turned the other way entirely. The Kahui, they call themselves. They hold that Kaore is what all Mana is meant to become, and they would gladly help it along.")
 	Mes("None of this is how the relationship with Mana has been for most of Aemil's existence.")
-	Choice("What is your people's position?", OnKahwePosition)
+	Choice("What is your people's position?", OnMakutuPosition)
 	Choice("I have some other topics I wanted to discuss.", OnPlayerChoice)
 	Choice("Thank you for your time.", Farewell)
 
-func OnKahwePosition():
-	Mes("The Kahwe carry on the knowledge of times when Mana was a harmonious force of good in our world. We seek to restore the balance that was lost when the Uru were destroyed.")
+func OnMakutuPosition():
+	Mes("The Makutu carry on the knowledge of times when Mana was a harmonious force of good in our world. We seek to restore the balance that was lost when the Uru were destroyed.")
 	Choice("What are the Uru?", OnExplainUru)
 	Choice("I have some other topics I wanted to discuss.", OnPlayerChoice)
 	Choice("Thank you for your time.", Farewell)
@@ -52,7 +53,7 @@ func OnKahwePosition():
 func OnExplainUru():
 	Mes("Uru, also known as Mana Trees, used to be the heart of the world's lifeforce, acting as a natural conductor for Mana energy.")
 	Mes("In ancient times, there were many, each serving as a stabilizing force, preventing Mana from decaying into Kaore.")
-	Mes("The Mana Trees were destroyed many years ago after a devastating war where the Savean Creed took hold among the ruling elites of Aemil.")
+	Mes("The Mana Trees were destroyed many years ago after a devastating war where the Aukati took hold among the ruling elites of Aemil.")
 	Mes("The decision was made to destroy the Uru and attempt to create a world without Mana.")
 	Choice("Where do things stand now?", OnCurrentSituation)
 	Choice("I have some other topics I wanted to discuss.", OnPlayerChoice)
@@ -102,16 +103,16 @@ func OnExplainMana():
 
 # Soul Menhir and Zielite
 func OnExplainMenhir():
-	Mes("Soul Menhirs are ancient monoliths carved from massive blocks of Zielite, once erected by the Kahwe, known as druids around here, to channel and radiate Mana.")
+	Mes("Soul Menhirs are ancient monoliths carved from massive blocks of Zielite, once erected by the Makutu, known as druids around here, to channel and radiate Mana.")
 	Mes("When active, they generate a protective aura, repelling Kaore-infected creatures and stabilizing the land.")
-	Mes("With the help of a Kahwe, a Soul Menhir can be used to heal those who are injured and even to prevent death in some cases, giving people multiple chances at life.")
+	Mes("With the help of a Makutu, a Soul Menhir can be used to heal those who are injured and even to prevent death in some cases, giving people multiple chances at life.")
 	Choice("What do you know about Zielite?", OnExplainZielite)
 	Choice("I have some other topics I wanted to discuss.", OnPlayerChoice)
 	Choice("Thank you for your time.", Farewell)
 
 func OnExplainZielite():
 	Mes("Zielite is a rare mineral with a natural affinity for Mana. It can absorb, store, and emit Mana energy, making it invaluable for both magic and protection.")
-	Mes("Though once abundant, Zielite has become scarce due to the purge that took place when the Savean Creed turned society against the use of Mana.")
+	Mes("Though once abundant, Zielite has become scarce due to the purge that took place when the Aukati turned society against the use of Mana.")
 	Mes("Zielite craftsmanship still exists in hidden talismans, forgotten ruins, and the few remaining Soul Menhirs that continue to stand as bastions against Kaore.")
 	OnPlayerChoice()
 
@@ -184,7 +185,7 @@ func OnExplainMenhirSync():
 	Mes("When you touch a Soul Menhir while wearing a Zielite Amulet, the stone resonates with the Menhir's Zielite.")
 	Mes("This creates a bond between your soul and the Menhir. Should something happen to you, the Menhir acts as an anchor.")
 	Mes("Your soul returns here instead of being lost.")
-	Mes("It is how we Kahwe have always protected those under our care. I should have given you one sooner.")
+	Mes("It is how we Makutu have always protected those under our care. I should have given you one sooner.")
 	Choice("[Touch the Soul Menhir]", OnTouchMenhir)
 
 func OnTouchMenhir():
