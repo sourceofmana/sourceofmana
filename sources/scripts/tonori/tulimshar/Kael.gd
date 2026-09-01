@@ -112,7 +112,7 @@ func OnCheckProgress():
 func OnTaskComplete():
 	Mes("Impressive work!")
 	Mes("You took care of that very quickly and way better than I expected.")
-	Mes("You should report back to Watchman Ekinu. Tell him I was happy with your work here.")
+	Mes("You should report to Watchman Ekinu, near the gate where you met Elanore. Tell him I was happy with your work here.")
 	Mes("We're going on a small expedition into the desert soon and you might be the right type of person to help us out.")
 	SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.KAEL_DONE)
 	AddExp(20)
