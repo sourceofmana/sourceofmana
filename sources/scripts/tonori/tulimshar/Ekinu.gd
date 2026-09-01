@@ -90,7 +90,7 @@ func OnMainChoice():
 
 # Attack and flee
 func OnStrangerDanger():
-	Mes("First things first, strikes first.")
+	Mes("Strike first.")
 	Mes("If your opponent is no match, run for your life. There is no pride in being dead.")
 	DisplayActions(["gp_target"])
 	DisplayActions(["gp_interact"])
