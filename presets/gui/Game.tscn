@@ -554,12 +554,12 @@ grow_vertical = 1
 
 [node name="Stat" parent="Windows/Floating" unique_id=1490220876 instance=ExtResource("35_d1kq3")]
 visible = false
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(380, 315)
 layout_mode = 0
 offset_left = 241.0
 offset_top = -20.0
-offset_right = 637.0
-offset_bottom = 467.0
+offset_right = 641.0
+offset_bottom = 455.0
 saveOverlayState = true
 
 [node name="Shaders" type="CanvasLayer" parent="." unique_id=1012789573]

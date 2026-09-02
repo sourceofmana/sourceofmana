@@ -126,9 +126,9 @@ func MakeModifierBBCode(effect : CellCommons.Modifier, value : Variant) -> Strin
 	var rawValue : String = CellCommons.FormatModifierValue(effect, value)
 	var val : float = float(value)
 	var arrow : String = " ↑" if val > 0.0 else (" ↓" if val < 0.0 else "")
-	var arrowColor : String = "#" + UICommons.ModifierPositiveColor.to_html(false) if val > 0.0 else ("#" + UICommons.ModifierNegativeColor.to_html(false) if val < 0.0 else "")
-	if arrowColor.is_empty():
+	if val == 0.0:
 		return "[color=%s]%s[/color]" % [lightColor, rawValue]
+	var arrowColor : String = "#" + CellCommons.GetModifierColor(effect, value).to_html(false)
 	return "[color=%s]%s[/color][color=%s]%s[/color]" % [lightColor, rawValue, arrowColor, arrow]
 
 func GetEquipmentModifierTotals() -> Dictionary:
@@ -147,11 +147,12 @@ func RefreshModifiers(count : int = 0):
 	if not Launcher.Player or not Launcher.Player.inventory:
 		return
 	var totals : Dictionary = GetEquipmentModifierTotals()
-	var bbcode : String = ""
-	var lightColor : String = "#" + UICommons.LightTextColor.to_html(false)
+	var textColor : String = "#" + UICommons.TextColor.to_html(false)
+	var bbcode : String = "[table=2]"
 	for effect in totals:
-		bbcode += "[color=%s]%s[/color]: %s\n" % [lightColor, CellCommons.GetModifierDisplayName(effect), MakeModifierBBCode(effect, totals[effect])]
-	modifiersText.text = bbcode.strip_edges()
+		bbcode += "[cell][color=%s]%s[/color][/cell][cell][right]%s[/right][/cell]" % [textColor, CellCommons.GetModifierDisplayName(effect), MakeModifierBBCode(effect, totals[effect])]
+	bbcode += "[/table]"
+	modifiersText.text = bbcode
 	RefreshCapacity(count)
 
 func RefreshCapacity(_count : int = 0):

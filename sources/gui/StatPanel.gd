@@ -39,16 +39,16 @@ extends WindowPanel
 @onready var bEnduranceMinus : Button			= $Layout/Scroll/Margin/Layout/Stats/StatBox/EnduranceBox/Minus
 @onready var bConcentrationMinus : Button		= $Layout/Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox/Minus
 
-@onready var lAtk : Label						= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox/Value
-@onready var lDef : Label						= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox/Value
-@onready var lMAtk : Label						= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox/Value
-@onready var lMDef : Label						= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox/Value
-@onready var lAtkRange : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox/Value
-@onready var lCastDelay : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox/Value
-@onready var lCooldownDelay : Label				= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox/Value
-@onready var lCritRate : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox/Value
-@onready var lDodgeRate : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox/Value
-@onready var lWalkSpeed : Label					= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox/Value
+@onready var lAtk : RichTextLabel				= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkBox/Value
+@onready var lDef : RichTextLabel				= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DefBox/Value
+@onready var lMAtk : RichTextLabel				= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MAtkBox/Value
+@onready var lMDef : RichTextLabel				= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/MDefBox/Value
+@onready var lAtkRange : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AtkRangeBox/Value
+@onready var lCastDelay : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CastDelayBox/Value
+@onready var lCooldownDelay : RichTextLabel		= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox/Value
+@onready var lCritRate : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox/Value
+@onready var lDodgeRate : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox/Value
+@onready var lWalkSpeed : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox/Value
 
 var panelStats: ActorStats = ActorStats.new()
 signal panel_stats_reset
@@ -226,20 +226,30 @@ func RefreshEntityStats():
 	if not Launcher.Player:
 		pass
 
-	lAtk.set_text(str(panelStats.current.attack))
-	lDef.set_text(str(panelStats.current.defense))
-	lMAtk.set_text(str(panelStats.current.mattack))
-	lMDef.set_text(str(panelStats.current.mdefense))
-	lAtkRange.set_text(str(panelStats.current.attackRange))
-	lCastDelay.set_text("%0.2fs" % panelStats.current.castAttackDelay)
-	lCooldownDelay.set_text("%0.2fs" % panelStats.current.cooldownAttackDelay)
-	lCritRate.set_text("%.d%%" % (panelStats.current.critRate * 100.0))
-	lDodgeRate.set_text("%.d%%" % (panelStats.current.dodgeRate * 100.0))
-	lWalkSpeed.set_text(GetPercentString(panelStats.current.walkSpeed, panelStats.morphStat.walkSpeed))
+	var liveCurrent : BaseStats = Launcher.Player.stat.current
+	var liveMorph : BaseStats = Launcher.Player.stat.morphStat
+
+	lAtk.set_text(GetStatBBCode(str(panelStats.current.attack), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.Attack, panelStats.current.attack - liveCurrent.attack)))
+	lDef.set_text(GetStatBBCode(str(panelStats.current.defense), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.Defense, panelStats.current.defense - liveCurrent.defense)))
+	lMAtk.set_text(GetStatBBCode(str(panelStats.current.mattack), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.MAttack, panelStats.current.mattack - liveCurrent.mattack)))
+	lMDef.set_text(GetStatBBCode(str(panelStats.current.mdefense), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.MDefense, panelStats.current.mdefense - liveCurrent.mdefense)))
+	lAtkRange.set_text(GetStatBBCode(str(panelStats.current.attackRange), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.AttackRange, panelStats.current.attackRange - liveCurrent.attackRange)))
+	lCastDelay.set_text(GetStatBBCode("%0.2fs" % panelStats.current.castAttackDelay, CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.CastDelay, panelStats.current.castAttackDelay - liveCurrent.castAttackDelay)))
+	lCooldownDelay.set_text(GetStatBBCode("%0.2fs" % panelStats.current.cooldownAttackDelay, CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.CooldownDelay, panelStats.current.cooldownAttackDelay - liveCurrent.cooldownAttackDelay)))
+	lCritRate.set_text(GetStatBBCode("%.2f%%" % (panelStats.current.critRate * 100.0), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.CritRate, panelStats.current.critRate - liveCurrent.critRate)))
+	lDodgeRate.set_text(GetStatBBCode("%.2f%%" % (panelStats.current.dodgeRate * 100.0), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.DodgeRate, panelStats.current.dodgeRate - liveCurrent.dodgeRate)))
+
+	var newWalkPercent : float = GetPercent(panelStats.current.walkSpeed, panelStats.morphStat.walkSpeed)
+	var liveWalkPercent : float = GetPercent(liveCurrent.walkSpeed, liveMorph.walkSpeed)
+	lWalkSpeed.set_text(GetStatBBCode("%.2f%%" % newWalkPercent, CellCommons.GetPercentDiffBBCode(newWalkPercent - liveWalkPercent)))
 
 #
-func GetPercentString(current : float, base : float) -> String:
-	return "%d%%" % (int(current / base * 100.0) if base > 0 else 100)
+func GetStatBBCode(valueText : String, diffBBCode : String) -> String:
+	var baseColor : String = "#" + UICommons.LightTextColor.to_html(false)
+	return "[right][color=%s]%s[/color]%s[/right]" % [baseColor, valueText, diffBBCode]
+
+func GetPercent(current : float, base : float) -> float:
+	return current / base * 100.0 if base > 0 else 100.0
 
 #
 func Connect():

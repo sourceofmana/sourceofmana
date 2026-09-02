@@ -19,6 +19,10 @@ static func DuplicateObject(from : Object, to : Object):
 				to.set(name, value.duplicate(true))
 			elif value is Resource:
 				to.set(name, value.duplicate(true))
+			elif value is RefCounted and value.get_script() != null:
+				var duplicatedValue : RefCounted = value.get_script().new()
+				DuplicateObject(value, duplicatedValue)
+				to.set(name, duplicatedValue)
 			else:
 				to.set(name, value)
 
@@ -62,31 +66,20 @@ static func FadeInOutRatio(value : float, maxValue : float, fadeIn : float, fade
 
 # Text
 static func GetFormatedText(value : String, numberAfterComma : int = 0) -> String:
-	var commaLocation : int = value.find(".")
-	var charCounter : int = 0
+	var parts : PackedStringArray = value.split(".", true, 1)
+	var integerPart : String = AddThousandsSeparators(parts[0])
+	var decimalPart : String = parts[1] if parts.size() > 1 else ""
 
-	if commaLocation > 0:
-		charCounter = commaLocation - 3
-	else:
-		charCounter = value.length() - 3
+	decimalPart = decimalPart.rpad(numberAfterComma, "0") if numberAfterComma > 0 else decimalPart.rstrip("0")
 
+	return integerPart + ("." + decimalPart if not decimalPart.is_empty() else "")
+
+static func AddThousandsSeparators(integerPart : String) -> String:
+	var charCounter : int = integerPart.length() - 3
 	while charCounter > 0:
-		value = value.insert(charCounter, ",")
-		charCounter = charCounter - 3
-
-	commaLocation = value.find(".")
-	if commaLocation == -1:
-		commaLocation = value.length()
-		if numberAfterComma > 0:
-			value += "."
-
-	if numberAfterComma > 0:
-		for i in range(value.length() - 1, commaLocation + numberAfterComma):
-			value += "0"
-	else:
-		value = value.substr(0, commaLocation)
-
-	return value
+		integerPart = integerPart.insert(charCounter, ",")
+		charCounter -= 3
+	return integerPart
 
 # Dictionary
 static func DicCheckOrAdd(dic : Dictionary[Variant, Variant], key : Variant, value : Variant):

@@ -22,23 +22,13 @@ const modulateDisable : float			= 0.5
 signal selected
 
 # Private
-func GetDiffFormat(effect : CellCommons.Modifier, diff : Variant) -> String:
-	var diffStr : String = ""
-	if float(diff) > 0.0:
-		var diffColor : String = "#" + UICommons.ModifierPositiveColor.to_html(false)
-		diffStr = " [color=%s](%s %s)[/color]" % [diffColor, CellCommons.FormatModifierValue(effect, diff), "↑"]
-	elif float(diff) < 0.0:
-		var diffColor : String = "#" + UICommons.ModifierNegativeColor.to_html(false)
-		diffStr = " [color=%s](%s %s)[/color]" % [diffColor, CellCommons.FormatModifierValue(effect, diff), "↓"]
-	return diffStr
-
 func GetTooltipModifierLine(modifier : StatModifier, currentEquipped : ItemCell, lightColor : String) -> String:
 	var modStr : String = "\n%s: [color=%s]%s[/color]" % [CellCommons.GetModifierDisplayName(modifier._effect), lightColor, CellCommons.FormatModifierValue(modifier._effect, modifier._value)]
 	if IsInEquipmentSlot() and not CellCommons.IsSameCell(cell, currentEquipped):
 		var currentVal : Variant = 0
 		if currentEquipped and currentEquipped.modifiers:
 			currentVal = currentEquipped.modifiers.Get(modifier._effect, true)
-		modStr += GetDiffFormat(modifier._effect, modifier._value - currentVal)
+		modStr += CellCommons.GetModifierDiffBBCode(modifier._effect, modifier._value - currentVal)
 	return modStr
 
 func GetTooltipMissingModifiers(currentEquipped : ItemCell, lightColor : String) -> String:
@@ -48,7 +38,7 @@ func GetTooltipMissingModifiers(currentEquipped : ItemCell, lightColor : String)
 	for modifier in currentEquipped.modifiers._modifiers:
 		if modifier and modifier._persistent:
 			if not cell.modifiers or cell.modifiers.Get(modifier._effect, true) == 0:
-				bbcode += "\n%s: [color=%s]0[/color]%s" % [CellCommons.GetModifierDisplayName(modifier._effect), lightColor, GetDiffFormat(modifier._effect, -modifier._value)]
+				bbcode += "\n%s: [color=%s]0[/color]%s" % [CellCommons.GetModifierDisplayName(modifier._effect), lightColor, CellCommons.GetModifierDiffBBCode(modifier._effect, -modifier._value)]
 	return bbcode
 
 func IsInEquipmentSlot() -> bool:
@@ -81,12 +71,13 @@ func GetTooltipWeight() -> String:
 
 func GetTooltipHeader() -> String:
 	var bbcode : String = cell.name
+	var lightColor : String = "#" + UICommons.LightTextColor.to_html(false)
 	if cell is ItemCell and not cell.customfield.is_empty():
 		bbcode += " (%s)" % cell.customfield
 	if cell.description:
-		bbcode += "\n%s" % cell.description
+		bbcode += "\n[color=%s]%s[/color]" % [lightColor, cell.description]
 	if cell is SkillCell and Launcher.Player and Launcher.Player.progress:
-		bbcode += "\nLevel: %d" % Launcher.Player.progress.GetSkillLevel(cell)
+		bbcode += "\nLevel: [color=%s]%d[/color]" % [lightColor, Launcher.Player.progress.GetSkillLevel(cell)]
 	return bbcode
 
 func SetToolTip():

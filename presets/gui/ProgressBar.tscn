@@ -17,7 +17,7 @@ offset_bottom = 10.0
 size_flags_horizontal = 3
 script = ExtResource("1")
 textureProgress = SubResource("GradientTexture1D_default")
-labelColor = Color(0.6, 0.407843, 0.0196078, 1)
+labelColor = Color(1, 1, 0.8666667, 1)
 fillDuration = 1.0
 initDuration = 3.0
 
