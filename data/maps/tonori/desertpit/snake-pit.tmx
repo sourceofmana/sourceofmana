@@ -618,7 +618,7 @@
 </data>
  </layer>
  <objectgroup id="5" name="Objects">
-  <object id="3" name="Snake" type="Spawn" x="-29" y="11" width="14" height="13">
+  <object id="3" name="Snake" type="Spawn" x="-29" y="11">
    <properties>
     <property name="count" value="150"/>
     <property name="type" value="Monster"/>

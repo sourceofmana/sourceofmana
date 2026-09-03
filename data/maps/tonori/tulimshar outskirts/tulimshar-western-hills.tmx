@@ -1217,39 +1217,35 @@
 </data>
  </layer>
  <objectgroup id="6" name="Objects">
-  <object id="18" name="To Western Caves" type="Warp" x="1436" y="4072">
+  <object id="18" name="To Tulimshar Western Cave" type="Warp" x="1436" y="4072">
    <properties>
-    <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_map" value="Tulimshar Western Hills"/>
-    <property name="dest_pos_x" value="69"/>
-    <property name="dest_pos_y" value="121"/>
-   </properties>
-   <polygon points="20,56 52,56 67,72 5,72"/>
-  </object>
-  <object id="19" name="To Western Caves" type="Warp" x="2174" y="3784">
-   <properties>
-    <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_map" value="Tulimshar Western Hills"/>
+    <property name="dest_map" value="Tulimshar Western Cave"/>
     <property name="dest_pos_x" value="46"/>
-    <property name="dest_pos_y" value="130"/>
+    <property name="dest_pos_y" value="46"/>
    </properties>
    <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
-  <object id="20" name="To Western Caves" type="Warp" x="2524" y="4840">
+  <object id="19" name="To Tulimshar Western Cave" type="Warp" x="2174" y="3784">
    <properties>
-    <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_map" value="Tulimshar Western Hills"/>
-    <property name="dest_pos_x" value="69"/>
-    <property name="dest_pos_y" value="121"/>
+    <property name="dest_map" value="Tulimshar Western Cave"/>
+    <property name="dest_pos_x" value="68"/>
+    <property name="dest_pos_y" value="37"/>
    </properties>
    <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
-  <object id="21" name="To Western Caves" type="Warp" x="1532" y="5032">
+  <object id="20" name="To Tulimshar Western Cave" type="Warp" x="2524" y="4840">
    <properties>
-    <property name="auto_warp" type="bool" value="false"/>
-    <property name="dest_map" value="Tulimshar Beach"/>
-    <property name="dest_pos_x" value="86"/>
-    <property name="dest_pos_y" value="32"/>
+    <property name="dest_map" value="Tulimshar Western Cave"/>
+    <property name="dest_pos_x" value="79"/>
+    <property name="dest_pos_y" value="68"/>
+   </properties>
+   <polygon points="20,56 52,56 67,72 5,72"/>
+  </object>
+  <object id="21" name="To Tulimshar Western Cave" type="Warp" x="1532" y="5032">
+   <properties>
+    <property name="dest_map" value="Tulimshar Western Cave"/>
+    <property name="dest_pos_x" value="49"/>
+    <property name="dest_pos_y" value="72"/>
    </properties>
    <polygon points="20,56 52,56 67,72 5,72"/>
   </object>
@@ -1273,37 +1269,61 @@
   </object>
   <object id="24" name="Peyote" type="Spawn" x="-92" y="64">
    <properties>
+    <property name="auto_warp" type="" value=""/>
     <property name="count" value="5"/>
+    <property name="dest_map" type="" value=""/>
+    <property name="dest_pos_x" type="" value=""/>
+    <property name="dest_pos_y" type="" value=""/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="25" name="Turtle" type="Spawn" x="1384" y="2800" width="344" height="400">
    <properties>
+    <property name="auto_warp" type="" value=""/>
     <property name="count" value="3"/>
+    <property name="dest_map" type="" value=""/>
+    <property name="dest_pos_x" type="" value=""/>
+    <property name="dest_pos_y" type="" value=""/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="26" name="Turtle" type="Spawn" x="1762" y="2275" width="466" height="193">
    <properties>
+    <property name="auto_warp" type="" value=""/>
     <property name="count" value="2"/>
+    <property name="dest_map" type="" value=""/>
+    <property name="dest_pos_x" type="" value=""/>
+    <property name="dest_pos_y" type="" value=""/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="27" name="Scorpion" type="Spawn" x="2215" y="1602.65" width="460.939" height="1151.52">
    <properties>
+    <property name="auto_warp" type="" value=""/>
     <property name="count" value="4"/>
+    <property name="dest_map" type="" value=""/>
+    <property name="dest_pos_x" type="" value=""/>
+    <property name="dest_pos_y" type="" value=""/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="28" name="Red Scorpion" type="Spawn" x="2608.45" y="2083.02" width="384.667" height="468.758">
    <properties>
+    <property name="auto_warp" type="" value=""/>
     <property name="count" value="4"/>
+    <property name="dest_map" type="" value=""/>
+    <property name="dest_pos_x" type="" value=""/>
+    <property name="dest_pos_y" type="" value=""/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
   <object id="29" name="Croc" type="Spawn" x="970.424" y="4554.55" width="468.242" height="633.333">
    <properties>
+    <property name="auto_warp" type="" value=""/>
     <property name="count" value="4"/>
+    <property name="dest_map" type="" value=""/>
+    <property name="dest_pos_x" type="" value=""/>
+    <property name="dest_pos_y" type="" value=""/>
     <property name="type" value="Monster"/>
    </properties>
   </object>
