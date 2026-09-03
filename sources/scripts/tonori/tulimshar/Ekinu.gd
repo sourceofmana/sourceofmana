@@ -28,17 +28,31 @@ func OnSendToKael():
 	ResetCamera()
 	Mes("If you want to be useful and repay the debt you owe us you should help Kael clear out some maggots.")
 
+# Skip Tutorial
+func OnSkipTutorial():
+	Mes("Where do you think you are going?")
+	Choice("I lost myself.", OnStart)
+	Choice("I would like to leave this place.", OnForceHelpWithExpedition)
+
+func OnForceHelpWithExpedition():
+	Mes("Mmh... I see.")
+	Mes("To repay your debt toward the city and if you really want to leave this place I will enlist you to an expedition outside the city.")
+	OnExpedition()
+
 # Kael's report
 func OnKaelReport():
 	Mes("Did you take care of those maggots?")
-	Choice("Yes, Kael said I did well. He thinks I could help with your expedition.", OnExpedition)
+	Choice("Yes, Kael said I did well. He thinks I could help with your expedition.", OnHelpWithExpedition)
+
+func OnHelpWithExpedition():
+	Mes("Mmh... He's right.")
+	OnExpedition()
 
 func OnExpedition():
-	Mes("Mmh... He's right.")
 	Mes("We do need one more fighter and I was worried about taking too many guards away from their posts here in the city.")
 	Mes("You're going to be heading South, towards the Sandstorm Mines.")
 	Mes("They're called that for a reason, you know? That area of the desert is prone to strong winds and the swirling sands tend to make it difficult to get to.")
-	Mes"(This particular storm is different though. It's unusually intense, hot and long-lasting. I wonder if something out there is causing it...")
+	Mes("This particular storm is different though. It's unusually intense, hot and long-lasting. I wonder if something out there is causing it...")
 	Choice("Why are you heading that way?", OnWhyExpedition)
 	Choice("What should I do?", OnJobExplanation)
 
