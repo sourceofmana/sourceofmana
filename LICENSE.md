@@ -189,6 +189,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/gui/tab/tab_close.png [Reid]
 ./graphics/gui/tab/tab_disabled.png [Reid]
 ./graphics/gui/tab/tab_fg.png [Reid]
+./graphics/gui/tab/tab_warn.png [Reid]
 ./graphics/gui/window/close.png [Reid]
 ./graphics/gui/window/titlebar_bg.png [Reid]
 ./graphics/gui/window/window_bg.png [Reid]

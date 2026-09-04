@@ -289,7 +289,8 @@ enum Alteration
 	LVL_UP,
 	SKILL_UP,
 	QUEST_COMPLETE,
-	QUEST_UPDATE
+	QUEST_UPDATE,
+	WHISPER
 }
 
 # Colors
@@ -443,4 +444,5 @@ static var DefaultSfx : Dictionary[ActorCommons.Alteration, AudioStream] = {
 	Alteration.SKILL_UP:		preload("res://data/sounds/alteration/skillup.ogg"),
 	Alteration.QUEST_COMPLETE:	preload("res://data/sounds/alteration/quest-done.ogg"),
 	Alteration.QUEST_UPDATE:	preload("res://data/sounds/alteration/quest-update.ogg"),
+	Alteration.WHISPER:			preload("res://data/sounds/alteration/quest-update.ogg"),
 }

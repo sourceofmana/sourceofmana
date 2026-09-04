@@ -2,6 +2,7 @@ extends VBoxContainer
 class_name ChatContainer
 
 const ChatLabelScene : PackedScene = preload(Path.GuiPst + "labels/ChatLabel.tscn")
+const WhisperUnreadIcon : Texture2D = preload("res://data/graphics/gui/tab/tab_warn.png")
 
 @onready var tabContainer : TabContainer		= $ChatTabContainer
 @onready var lineEdit : LineEdit				= $NewText
@@ -27,7 +28,20 @@ func AddPlayerChat(channelName : String, callerName : String, text : String, age
 		var entity : Entity = Entities.Get(agentRID) if agentRID > 0 else Entities.GetNamed(callerName)
 		if entity and entity.get_parent() and entity.interactive:
 			entity.interactive.DisplaySpeech(text)
+	elif channelIdx >= GUICommons.ChatChannel.DEFAULT_CHANNEL_COUNT:
+		var localNick : String = Launcher.Player.nick if Launcher.Player else ""
+		if callerName != localNick:
+			NotifyWhisper(channelIdx)
 
+#
+func NotifyWhisper(channelIdx : int):
+	if Launcher.Player and Launcher.Player.sfx:
+		Launcher.Player.sfx.HandleAlteration(ActorCommons.Alteration.WHISPER)
+
+	if tabContainer and tabContainer.current_tab != channelIdx:
+		tabContainer.get_tab_bar().set_tab_icon(channelIdx, WhisperUnreadIcon)
+
+#
 func AddSystemChat(channelName : String, text : String):
 	var channelIdx : GUICommons.ChatChannel = GetChannelIndex(channelName)
 	if channelIdx == GUICommons.ChatChannel.UNKNOWN:
@@ -129,6 +143,8 @@ func OnTabChanged(channelIdx : int):
 	else:
 		tabBar.tab_close_display_policy = TabBar.CLOSE_BUTTON_SHOW_ACTIVE_ONLY
 		tabBar.drag_to_rearrange_enabled = true
+
+	tabBar.set_tab_icon(channelIdx, null)
 
 #
 func _ready():
