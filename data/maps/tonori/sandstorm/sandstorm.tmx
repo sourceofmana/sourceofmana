@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="187" height="143" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="51">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="187" height="143" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="53">
  <properties>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
   <property name="music" value="Faith"/>
@@ -1065,6 +1065,18 @@
   </object>
   <object id="50" x="4060" y="1944">
    <ellipse/>
+  </object>
+  <object id="51" name="Well" type="Spawn" x="1376" y="3664">
+   <properties>
+    <property name="player_script" value="generic/DryWell.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="52" name="Well" type="Spawn" x="3328" y="2416">
+   <properties>
+    <property name="player_script" value="generic/DryWell.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

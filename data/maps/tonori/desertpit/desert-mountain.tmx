@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="152">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="153">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) 5t3v3 Reid"/>
@@ -1200,6 +1200,12 @@
    <properties>
     <property name="count" value="8"/>
     <property name="type" value="Monster"/>
+   </properties>
+  </object>
+  <object id="152" name="Well" type="Spawn" x="864" y="3088">
+   <properties>
+    <property name="player_script" value="generic/Well.gd"/>
+    <property name="type" value="Npc"/>
    </properties>
   </object>
  </objectgroup>
