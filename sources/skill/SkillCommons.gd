@@ -38,19 +38,15 @@ static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillCell, 
 		skillValue = skill.modifiers.Get(CellCommons.Modifier.Attack)
 		info.value = max(1, agent.stat.current.attack + skillValue - target.stat.current.defense)
 
-	var critMaster : bool = agent.stat.current.critRate > target.stat.current.dodgeRate
-	if critMaster and rng > 1.0 - agent.stat.current.critRate:
-		info.type = ActorCommons.Alteration.CRIT
-		info.value *= 2
-	elif not critMaster and rng > 1.0 - target.stat.current.dodgeRate:
+	if randf() < Formula.GetEvadeRate(agent.stat, target.stat):
 		info.type = ActorCommons.Alteration.DODGE
 		info.value = 0
+	elif randf() < agent.stat.current.critRate:
+		info.type = ActorCommons.Alteration.CRIT
+		info.value *= 2
 	else:
 		info.type = ActorCommons.Alteration.HIT
 		info.value = ceili(info.value * rng)
-
-	if info.value <= 0:
-		info.type = ActorCommons.Alteration.DODGE
 
 	return info
 

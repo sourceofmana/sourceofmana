@@ -18,7 +18,7 @@ _stats = {
 "baseExp": 55,
 "cooldownAttackDelay": 1.5,
 "defense": 15,
-"dodgeRate": 0.12,
+"dodgeRate": 0.22,
 "level": 21,
 "mattack": 60,
 "maxHealth": 250,

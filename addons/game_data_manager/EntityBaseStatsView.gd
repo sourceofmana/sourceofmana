@@ -11,6 +11,7 @@ const BASE_STAT_COLUMNS : Array[Dictionary] = [
 	{ "name" : "attackRange", "type" : TYPE_INT },
 	{ "name" : "critRate", "type" : TYPE_FLOAT },
 	{ "name" : "dodgeRate", "type" : TYPE_FLOAT },
+	{ "name" : "accuracy", "type" : TYPE_FLOAT },
 	{ "name" : "castAttackDelay", "type" : TYPE_FLOAT },
 	{ "name" : "cooldownAttackDelay", "type" : TYPE_FLOAT },
 	{ "name" : "maxHealth", "type" : TYPE_INT },
@@ -76,14 +77,11 @@ func GetSortValue(resource : Resource, column : int) -> Variant:
 		var mergedParent : Variant = parent.GetMergedEntity()
 		parentStats = mergedParent.get("_stats") if mergedParent else null
 
-	var currentValue : Variant = GetStatValue(stats, statStr, statType)
-	if currentValue != 0 and currentValue != 0.0:
-		return float(currentValue)
+	if stats and stats.has(statStr):
+		return float(GetStatValue(stats, statStr, statType))
 
-	if parentStats:
-		var parentValue : Variant = GetStatValue(parentStats, statStr, statType)
-		if parentValue != 0 and parentValue != 0.0:
-			return float(parentValue)
+	if parentStats and parentStats.has(statStr):
+		return float(GetStatValue(parentStats, statStr, statType))
 
 	var defaultBaseStats : BaseStats = BaseStats.new()
 	var defaultValue : Variant = defaultBaseStats.get(statStr) if statStr in defaultBaseStats else (0 if statType == TYPE_INT else 0.0)
@@ -108,36 +106,21 @@ func UpdateTreeItem(item : TreeItem, resource : Resource):
 		var statStr : String = BASE_STAT_COLUMNS[i].name
 		var statType : int = BASE_STAT_COLUMNS[i].type
 
-		var hasValue : bool = stats and stats.has(statStr)
-		var currentValue : Variant = GetStatValue(stats, statStr, statType)
 		var parentValue : Variant = GetStatValue(parentStats, statStr, statType) if parentStats else (0 if statType == TYPE_INT else 0.0)
-		var defaultValue : Variant = defaultBaseStats.get(statStr) if statStr in defaultBaseStats else (0 if statType == TYPE_INT else 0.0)
 
 		var displayValue : Variant
-		var isInherited : bool = false
-		var isDefault : bool = false
+		var isOwned : bool = false
 
-		if hasValue and currentValue != 0:
-			displayValue = currentValue
-			isInherited = (parent != null and currentValue == parentValue)
-		elif parent != null and parentValue != 0:
+		if stats and stats.has(statStr):
+			displayValue = GetStatValue(stats, statStr, statType)
+			isOwned = parent == null or displayValue != parentValue
+		elif parentStats and parentStats.has(statStr):
 			displayValue = parentValue
-			isInherited = true
-		elif defaultValue != 0:
-			displayValue = defaultValue
-			isDefault = true
 		else:
-			displayValue = 0 if statType == TYPE_INT else 0.0
+			displayValue = defaultBaseStats.get(statStr) if statStr in defaultBaseStats else (0 if statType == TYPE_INT else 0.0)
 
-		if isInherited or isDefault:
-			item.set_custom_color(colIdx, Color.LIGHT_SLATE_GRAY)
-		else:
-			item.set_custom_color(colIdx, Color.WHITE)
-
-		if statType == TYPE_FLOAT:
-			item.set_text(colIdx, "%.2f" % displayValue if displayValue != 0 else "")
-		else:
-			item.set_text(colIdx, str(displayValue) if displayValue != 0 else "")
+		item.set_custom_color(colIdx, Color.WHITE if isOwned else Color.LIGHT_SLATE_GRAY)
+		item.set_text(colIdx, "%.2f" % displayValue if statType == TYPE_FLOAT else str(displayValue))
 		item.set_editable(colIdx, true)
 
 func GetStatValue(stats : Variant, statName : String, statType : int) -> Variant:
@@ -162,22 +145,15 @@ func _on_item_edited():
 	var statType : int = BASE_STAT_COLUMNS[statIdx].type
 	var valueStr : String = item.get_text(column).strip_edges()
 
-	var value : Variant
-	if statType == TYPE_FLOAT:
-		value = valueStr.to_float() if not valueStr.is_empty() else 0.0
-	else:
-		value = valueStr.to_int() if not valueStr.is_empty() else 0
-
 	var stats : Dictionary = resource.get("_stats")
 	if not stats:
 		stats = {}
 		resource.set("_stats", stats)
 
-	stats[statName] = value
-
-	if statType == TYPE_FLOAT:
-		item.set_text(column, "%.2f" % value if value != 0 else "")
+	if valueStr.is_empty():
+		stats.erase(statName)
 	else:
-		item.set_text(column, str(value) if value != 0 else "")
+		stats[statName] = valueStr.to_float() if statType == TYPE_FLOAT else valueStr.to_int()
 
+	UpdateTreeItem(item, resource)
 	GameDataUtil.SaveResource(resource)

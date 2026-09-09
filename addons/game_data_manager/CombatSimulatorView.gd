@@ -302,6 +302,7 @@ func BuildStatForEntity(entityData : EntityData, customLevel : int) -> ActorStat
 	stat.morphStat.maxHealth = int(stats.get("maxHealth", stat.morphStat.maxHealth))
 	stat.morphStat.critRate = float(stats.get("critRate", stat.morphStat.critRate))
 	stat.morphStat.dodgeRate = float(stats.get("dodgeRate", stat.morphStat.dodgeRate))
+	stat.morphStat.accuracy = float(stats.get("accuracy", stat.morphStat.accuracy))
 	stat.morphStat.attackRange = int(stats.get("attackRange", stat.morphStat.attackRange))
 
 	for item : ItemCell in entityData._equipment:

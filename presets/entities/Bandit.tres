@@ -15,7 +15,7 @@ _stats = {
 "attack": 55,
 "baseExp": 80,
 "defense": 10,
-"dodgeRate": 0.15,
+"dodgeRate": 0.28,
 "level": 25,
 "maxHealth": 380,
 "mdefense": 5,

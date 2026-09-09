@@ -71,6 +71,7 @@ func RefreshEntityStats():
 	current.mdefense		= Formula.GetMDefense(self)
 	current.critRate		= Formula.GetCritRate(self)
 	current.dodgeRate		= Formula.GetDodgeRate(self)
+	current.accuracy		= Formula.GetAccuracy(self)
 	current.castAttackDelay	= Formula.GetCastAttackDelay(self)
 	current.cooldownAttackDelay = Formula.GetCooldownAttackDelay(self)
 	current.walkSpeed		= Formula.GetWalkSpeed(self)

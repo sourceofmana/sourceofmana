@@ -12,6 +12,7 @@ var mdefense : int						= 5
 var attackRange : int					= 32
 var critRate : float					= 0.01
 var dodgeRate : float					= 0.01
+var accuracy : float					= 0.0
 var castAttackDelay : float				= 0.7
 var cooldownAttackDelay : float			= 0.5
 

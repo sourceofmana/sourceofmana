@@ -21,7 +21,7 @@ _stats = {
 "castAttackDelay": 0.35,
 "cooldownAttackDelay": 0.3,
 "defense": 5,
-"dodgeRate": 0.12,
+"dodgeRate": 0.22,
 "level": 19,
 "maxHealth": 200,
 "walkSpeed": 120.0

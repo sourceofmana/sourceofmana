@@ -48,6 +48,7 @@ extends WindowPanel
 @onready var lCooldownDelay : RichTextLabel		= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CooldownDelayBox/Value
 @onready var lCritRate : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/CritRateBox/Value
 @onready var lDodgeRate : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox/Value
+@onready var lAccuracy : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AccuracyBox/Value
 @onready var lWalkSpeed : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox/Value
 
 var panelStats: ActorStats = ActorStats.new()
@@ -238,6 +239,7 @@ func RefreshEntityStats():
 	lCooldownDelay.set_text(GetStatBBCode("%0.2fs" % panelStats.current.cooldownAttackDelay, CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.CooldownDelay, panelStats.current.cooldownAttackDelay - liveCurrent.cooldownAttackDelay)))
 	lCritRate.set_text(GetStatBBCode("%.2f%%" % (panelStats.current.critRate * 100.0), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.CritRate, panelStats.current.critRate - liveCurrent.critRate)))
 	lDodgeRate.set_text(GetStatBBCode("%.2f%%" % (panelStats.current.dodgeRate * 100.0), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.DodgeRate, panelStats.current.dodgeRate - liveCurrent.dodgeRate)))
+	lAccuracy.set_text(GetStatBBCode("%.2f%%" % (panelStats.current.accuracy * 100.0), CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.Accuracy, panelStats.current.accuracy - liveCurrent.accuracy)))
 
 	var newWalkPercent : float = GetPercent(panelStats.current.walkSpeed, panelStats.morphStat.walkSpeed)
 	var liveWalkPercent : float = GetPercent(liveCurrent.walkSpeed, liveMorph.walkSpeed)

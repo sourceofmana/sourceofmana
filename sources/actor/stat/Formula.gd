@@ -24,6 +24,7 @@ const coefRegenStamina : float					= 10.0
 const coefRegenHealth : float					= 1.0
 const weightSnap : float						= 0.001
 const runningSpeedIncrease : float				= 50
+const minEvadeRate : float						= 0.01
 
 # Base formulas functions
 static func F(val) -> int:
@@ -55,7 +56,9 @@ static func GetRegenMana(stat : ActorStats) -> int:
 	return 1 + FHalf(stat.concentration) + FPercent(GetMaxMana(stat) * coefRegenMana) + stat.modifiers.Get(CellCommons.Modifier.RegenMana, true)
 
 static func GetCritRate(stat : ActorStats) -> float:
-	return stat.morphStat.critRate + stat.concentration * coefRatePerAttribute + stat.level * coefRatePerLevel + stat.modifiers.Get(CellCommons.Modifier.CritRate, true)
+	if stat.morphStat.critRate <= 0.0:
+		return clampf(float(stat.modifiers.Get(CellCommons.Modifier.CritRate, true)), 0.0, 1.0)
+	return clampf(stat.morphStat.critRate + stat.concentration * coefRatePerAttribute + stat.level * coefRatePerLevel + float(stat.modifiers.Get(CellCommons.Modifier.CritRate, true)), 0.0, 1.0)
 
 static func GetMAttack(stat : ActorStats) -> int:
 	return stat.morphStat.mattack + F(stat.concentration * coefAttackPerAttribute) + F(stat.level * coefAttackPerLevel) + stat.modifiers.Get(CellCommons.Modifier.MAttack, true)
@@ -88,7 +91,17 @@ static func GetCastAttackDelay(stat : ActorStats) -> float:
 	return maxf(0.001, stat.morphStat.castAttackDelay - stat.agility * coefDelayPerAttribute - stat.level * coefDelayPerLevel) + stat.modifiers.Get(CellCommons.Modifier.CastDelay, true)
 
 static func GetDodgeRate(stat : ActorStats) -> float:
-	return stat.morphStat.dodgeRate + stat.agility * coefRatePerAttribute + stat.level * coefRatePerLevel + stat.modifiers.Get(CellCommons.Modifier.DodgeRate, true)
+	if stat.morphStat.dodgeRate <= 0.0:
+		return clampf(float(stat.modifiers.Get(CellCommons.Modifier.DodgeRate, true)), 0.0, 1.0)
+	return clampf(stat.morphStat.dodgeRate + stat.agility * coefRatePerAttribute + stat.level * coefRatePerLevel + float(stat.modifiers.Get(CellCommons.Modifier.DodgeRate, true)), 0.0, 1.0)
+
+static func GetAccuracy(stat : ActorStats) -> float:
+	return clampf(stat.morphStat.accuracy + stat.agility * coefRatePerAttribute + stat.level * coefRatePerLevel + float(stat.modifiers.Get(CellCommons.Modifier.Accuracy, true)), 0.0, 1.0)
+
+static func GetEvadeRate(attacker : ActorStats, defender : ActorStats) -> float:
+	if defender.current.dodgeRate <= 0.0:
+		return 0.0
+	return clampf(defender.current.dodgeRate - attacker.current.accuracy, minEvadeRate, 1.0)
 
 static func GetAttackRange(stat : ActorStats) -> int:
 	return stat.morphStat.attackRange + FFifth(stat.agility) + stat.modifiers.Get(CellCommons.Modifier.AttackRange, true)

@@ -56,6 +56,7 @@ enum Modifier {
 	Attack,
 	Hide,
 	Invisible,
+	Accuracy,
 	Count
 }
 
@@ -74,6 +75,7 @@ static func GetModifierDisplayName(effect : Modifier) -> String:
 		Modifier.AttackRange:	return "Atk Range"
 		Modifier.CritRate:		return "Crit Rate"
 		Modifier.DodgeRate:		return "Dodge Rate"
+		Modifier.Accuracy:		return "Accuracy"
 		Modifier.CastDelay:		return "Cast Delay"
 		Modifier.CooldownDelay:	return "Cooldown"
 		Modifier.RegenHealth:	return "HP Regen"
@@ -111,7 +113,7 @@ static func GetPercentDiffBBCode(diffPercent : float, inverse : bool = false) ->
 
 static func FormatModifierValue(effect : Modifier, value : Variant) -> String:
 	match effect:
-		Modifier.CritRate, Modifier.DodgeRate:
+		Modifier.CritRate, Modifier.DodgeRate, Modifier.Accuracy:
 			var floatVal : float = float(value) * 100.0
 			return ("+" if floatVal >= 0.0 else "") + ("%.2f" % floatVal) + "%"
 		Modifier.CastDelay, Modifier.CooldownDelay:
