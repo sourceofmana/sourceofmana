@@ -1,0 +1,61 @@
+[gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://cbetsancskil1"]
+
+[ext_resource type="PackedScene" uid="uid://cbetsanccast1" path="res://presets/effects/particles/casts/Betsanc.tscn" id="1_betsanccast"]
+[ext_resource type="Texture2D" uid="uid://bndieinr0kcie" path="res://data/graphics/items/skill/spell.png" id="2_betsancicon"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="3_betsanc"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="4_betsancmod"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="5_betsancmods"]
+[ext_resource type="PackedScene" uid="uid://cbetsancfx11a" path="res://presets/effects/particles/Betsanc.tscn" id="6_betsancfx"]
+[ext_resource type="Script" uid="uid://bbuffability1" path="res://sources/skill/abilities/BuffAbility.gd" id="7_betsancability"]
+
+[sub_resource type="Resource" id="Resource_betsancmana"]
+script = ExtResource("4_betsancmod")
+_effect = 2
+_value = -20.0
+
+[sub_resource type="Resource" id="Resource_betsancstamina"]
+script = ExtResource("4_betsancmod")
+_effect = 3
+_value = -20
+
+[sub_resource type="Resource" id="Resource_betsancdefense"]
+script = ExtResource("4_betsancmod")
+_effect = 14
+_value = 50.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_betsancmdefense"]
+script = ExtResource("4_betsancmod")
+_effect = 8
+_value = 50.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_betsancdodge"]
+script = ExtResource("4_betsancmod")
+_effect = 16
+_value = 0.08
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_betsancmods"]
+script = ExtResource("5_betsancmods")
+_modifiers = Array[ExtResource("4_betsancmod")]([SubResource("Resource_betsancmana"), SubResource("Resource_betsancstamina"), SubResource("Resource_betsancdefense"), SubResource("Resource_betsancmdefense"), SubResource("Resource_betsancdodge")])
+
+[resource]
+script = ExtResource("3_betsanc")
+category = 2
+mode = 2
+cooldownTime = 30.0
+castPreset = ExtResource("1_betsanccast")
+castTime = 5.0
+skillPreset = ExtResource("6_betsancfx")
+skillTime = 2.0
+buffTime = 120.0
+id = 0
+name = "Betsanc"
+description = "Feel the mana warping your and raising your defense and evasion for 2 minutes."
+icon = ExtResource("2_betsancicon")
+type = 2
+weight = 0.0
+usable = true
+modifiers = SubResource("Resource_betsancmods")
+cellScript = ExtResource("7_betsancability")
