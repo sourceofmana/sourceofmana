@@ -200,6 +200,7 @@ func GetNextPortShapeID() -> int:
 
 # Death
 func Killed():
+	stat.buffs.ClearAll()
 	agent_killed.emit(self)
 	SetSkillCastID(DB.UnknownHash)
 	SetState(ActorCommons.State.DEATH)

@@ -191,6 +191,7 @@ func ConnectCharacter(nickname : String, peerID : int):
 					agent.peerID = peerID
 					peer.SetAgent(agent.get_rid().get_id())
 					agent.SetCharacterInfo(charInfo, peer.characterID)
+					agent.stat.buffs.Restore(peer.characterID)
 					Launcher.SQL.CharacterLogin(peer.characterID)
 
 					var ip : String = Peers.GetPeerIP(peerID)
@@ -209,6 +210,7 @@ func DisconnectCharacter(peerID : int):
 			Util.PrintLog("Server", "Player disconnected: %s (%d) via %s from %s" % [playerName, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), ip if not ip.is_empty() else "unavailable"])
 
 			Launcher.SQL.RefreshCharacter(player)
+			player.stat.buffs.Store(peer.characterID)
 			WorldAgent.RemoveAgent(player)
 			peer.SetAgent(NetworkCommons.PeerUnknownID)
 			Network.online_player_disconnected.emit(playerName)
@@ -378,6 +380,7 @@ func RetrieveCharacterInformation(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player:
 		player.RequestStatsUpdate()
+		player.stat.buffs.NotifyAll()
 		if player.progress:
 			Network.RefreshProgress(player.progress.skills, player.progress.quests, player.progress.bestiary, peerID)
 		if player.inventory:

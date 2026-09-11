@@ -1,7 +1,7 @@
 extends CellScript
 
 #
-func Execute(agent : BaseAgent):
+func Execute(agent : BaseAgent, _cell : BaseCell):
 	if agent.stat.spirit == DB.UnknownHash or agent is not PlayerAgent:
 		return
 

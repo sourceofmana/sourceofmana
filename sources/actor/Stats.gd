@@ -36,6 +36,7 @@ var morphStat : BaseStats				= BaseStats.new()
 var current : BaseStats					= BaseStats.new()
 var actor : Actor						= null
 var modifiers : CellModifier			= CellModifier.new()
+var buffs : BuffModifier				= BuffModifier.new()
 
 # Regen deltas
 var deltaHealth : float					= 0.0
@@ -113,6 +114,7 @@ func SetMorphStats(newStats : Dictionary):
 func Init(actorNode : Actor, data : EntityData):
 	assert(actorNode != null, "Caller actor node should never be null")
 	actor = actorNode
+	buffs.actor = actorNode
 
 	var stats : Dictionary = data._stats
 	shape	= data._id

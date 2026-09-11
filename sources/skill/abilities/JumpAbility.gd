@@ -7,7 +7,7 @@ const JUMP_OUTER_RADIUS : float = 256
 const JUMP_DELAY : float = 1.5
 
 #
-func Execute(agent : BaseAgent):
+func Execute(agent : BaseAgent, _cell : BaseCell):
 	Callback.StartTimer(agent.actionTimer, JUMP_DELAY, JumpAbility.PerformJump.bind(agent), true)
 
 static func PerformJump(agent : BaseAgent):

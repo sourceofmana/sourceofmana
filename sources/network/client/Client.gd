@@ -352,6 +352,13 @@ func UpdateSkill(skillID : int, level : int, _peerID : int, notify : bool = true
 			if notify:
 				Launcher.Player.sfx.HandleAlteration(ActorCommons.Alteration.SKILL_UP)
 
+func UpdateBuff(effect : CellCommons.Modifier, value : Variant, duration : float, _peerID : int):
+	if Launcher.Player:
+		if duration != 0.0:
+			Launcher.Player.stat.buffs.Apply(effect, value, duration, false)
+		else:
+			Launcher.Player.stat.buffs.Clear(effect)
+
 func UpdateBestiary(mobID : int, count : int, _peerID : int, _notify : bool = true):
 	if Launcher.Player:
 		Launcher.Player.progress.AddBestiary(mobID, count)

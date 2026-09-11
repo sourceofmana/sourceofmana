@@ -416,6 +416,10 @@ func UpdateSkill(skillID : int, level : int, peerID : int = NetworkCommons.PeerO
 	CallClient("UpdateSkill", [skillID, level], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func UpdateBuff(effect : CellCommons.Modifier, value : Variant, duration : float, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdateBuff", [effect, value, duration], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func UpdateBestiary(mobID : int, count : int, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("UpdateBestiary", [mobID, count], peerID)
 

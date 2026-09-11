@@ -132,7 +132,7 @@ func UseItem(cell : ItemCell):
 		if cell.cellScript:
 			var script : CellScript = cell.cellScript.new()
 			if script:
-				script.Execute(actor)
+				script.Execute(actor, cell)
 
 func DropItem(cell : ItemCell, count : int, itemIndex : int):
 	var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(actor)

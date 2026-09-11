@@ -139,4 +139,4 @@ static func CastAbility(agent : BaseAgent, skill : SkillCell):
 
 	var ability : CellScript = skill.cellScript.new()
 	if ability:
-		ability.Execute(agent)
+		ability.Execute(agent, skill)
