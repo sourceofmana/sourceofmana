@@ -88,6 +88,9 @@ static func GetModifierDisplayName(effect : Modifier) -> String:
 static func IsInverseModifier(effect : Modifier) -> bool:
 	return effect == Modifier.CastDelay or effect == Modifier.CooldownDelay
 
+static func IsResourceModifier(effect : Modifier) -> bool:
+	return effect == Modifier.Health or effect == Modifier.Mana or effect == Modifier.Stamina
+
 static func GetModifierColor(effect : Modifier, value : Variant) -> Color:
 	var val : float = -float(value) if IsInverseModifier(effect) else float(value)
 	if val > 0.0:

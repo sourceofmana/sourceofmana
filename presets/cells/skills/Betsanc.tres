@@ -42,7 +42,6 @@ _modifiers = Array[ExtResource("4_betsancmod")]([SubResource("Resource_betsancma
 
 [resource]
 script = ExtResource("3_betsanc")
-category = 2
 mode = 2
 cooldownTime = 30.0
 castPreset = ExtResource("1_betsanccast")

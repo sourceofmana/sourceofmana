@@ -46,7 +46,7 @@ hue_variation_min = -0.100000024
 hue_variation_max = 0.09999997
 turbulence_noise_strength = 6.03
 
-[node name="Jump" type="GPUParticles2D" unique_id=2056597341]
+[node name="Betsanc" type="GPUParticles2D" unique_id=2056597341]
 z_index = -1
 z_as_relative = false
 amount = 800

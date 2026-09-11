@@ -63,6 +63,40 @@ func GetTooltipModifiers(currentEquipped : ItemCell) -> String:
 	bbcode += GetTooltipMissingModifiers(currentEquipped, lightColor)
 	return bbcode
 
+func IsSkillCost(modifier : StatModifier) -> bool:
+	return not modifier._persistent and CellCommons.IsResourceModifier(modifier._effect) and float(modifier._value) < 0.0
+
+func GetTooltipSkillModifierLine(modifier : StatModifier, lightColor : String) -> String:
+	var value : String = CellCommons.FormatModifierValue(modifier._effect, modifier._value)
+	if IsSkillCost(modifier):
+		value = CellCommons.FormatModifierValue(modifier._effect, -float(modifier._value)).trim_prefix("+")
+	return "\n  %s: [color=%s]%s[/color]" % [CellCommons.GetModifierDisplayName(modifier._effect), lightColor, value]
+
+func GetTooltipSection(header : String, lines : String) -> String:
+	return "" if lines.is_empty() else "\n" + header + lines
+
+func GetTooltipSkillModifiers() -> String:
+	if not (cell is SkillCell and cell.modifiers):
+		return ""
+
+	var lightColor : String = "#" + UICommons.LightTextColor.to_html(false)
+	var effects : String = ""
+	var buffs : String = ""
+	var costs : String = ""
+	for modifier in cell.modifiers._modifiers:
+		if modifier:
+			var line : String = GetTooltipSkillModifierLine(modifier, lightColor)
+			if modifier._persistent:
+				buffs += line
+			elif IsSkillCost(modifier):
+				costs += line
+			else:
+				effects += line
+
+	var buffHeader : String = "Buff (%s)" % Util.FormatDuration(int(cell.buffTime)) if cell.buffTime > 0.0 else "Buff"
+	var bbcode : String = GetTooltipSection("Effect", effects) + GetTooltipSection(buffHeader, buffs) + GetTooltipSection("Cost", costs)
+	return "" if bbcode.is_empty() else "\n" + bbcode
+
 func GetTooltipWeight() -> String:
 	if cell.weight == 0:
 		return ""
@@ -87,6 +121,7 @@ func SetToolTip():
 	var currentEquipped : ItemCell = GetCurrentEquipped()
 	var bbcode : String = GetTooltipHeader()
 	bbcode += GetTooltipModifiers(currentEquipped)
+	bbcode += GetTooltipSkillModifiers()
 	bbcode += GetTooltipWeight()
 	set_tooltip_text(bbcode)
 
