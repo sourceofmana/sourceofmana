@@ -132,7 +132,8 @@ func NotifyAgent(peerID : int):
 func Display(effect : CellCommons.Modifier):
 	var enabled : bool = buffs.has(effect)
 	if actor is Entity:
-		actor.DisplayBuff(effect, GetSkillID(effect), enabled)
+		if actor.interactive:
+			actor.interactive.DisplayBuff(effect, GetSkillID(effect), enabled)
 	elif actor is BaseAgent:
 		Network.NotifyNeighbours(actor, "EntityBuff", [actor.get_rid().get_id(), effect, GetSkillID(effect), enabled], false)
 
