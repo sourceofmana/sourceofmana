@@ -1,12 +1,12 @@
 extends CellScript
 
 #
-func Execute(agent : BaseAgent, _cell : BaseCell):
-	if agent.stat.spirit == DB.UnknownHash or agent is not PlayerAgent:
+func Execute(target : BaseAgent, _cell : BaseCell):
+	if target.stat.spirit == DB.UnknownHash or target is not PlayerAgent:
 		return
 
-	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
+	var map : WorldMap = WorldAgent.GetMapFromAgent(target)
 	if map and map.HasFlags(WorldMap.Flags.ONLY_SPIRIT):
 		return
 
-	agent.Morph(true)
+	target.Morph(true)

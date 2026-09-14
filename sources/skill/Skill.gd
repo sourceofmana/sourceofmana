@@ -80,12 +80,12 @@ static func HandleZone(agent : BaseAgent, zonePos : Vector2, skill : SkillCell, 
 
 static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float):
 	if skill.category == SkillCell.Category.ABILITY:
-		CastAbility(agent, skill)
-	else:
-		if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
-			Damaged(agent, target, skill, rng)
-		if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
-			Healed(agent, target, skill, rng)
+		CastAbility(target, skill)
+
+	if skill.modifiers.Get(CellCommons.Modifier.Attack) != 0 or skill.modifiers.Get(CellCommons.Modifier.MAttack) != 0:
+		Damaged(agent, target, skill, rng)
+	if skill.modifiers.Get(CellCommons.Modifier.Health) != 0:
+		Healed(agent, target, skill, rng)
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
@@ -133,10 +133,10 @@ static func Missed(agent : BaseAgent, target : BaseAgent):
 static func ThrowProjectile(agent : BaseAgent, targetPos : Vector2, skill : SkillCell):
 	Network.NotifyNeighbours(agent, "ThrowProjectile", [agent.get_rid().get_id(), targetPos, skill.id])
 
-static func CastAbility(agent : BaseAgent, skill : SkillCell):
+static func CastAbility(target : BaseAgent, skill : SkillCell):
 	if not skill.cellScript:
 		return
 
 	var ability : CellScript = skill.cellScript.new()
 	if ability:
-		ability.Execute(agent, skill)
+		ability.Execute(target, skill)

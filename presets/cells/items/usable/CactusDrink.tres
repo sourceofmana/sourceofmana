@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_8o32r"]
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_3lt1g"]
 [ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_ckwuv"]
+[ext_resource type="Script" uid="uid://cantidotescr1" path="res://sources/cell/scripts/AntidoteScript.gd" id="5_antidote"]
 
 [sub_resource type="Resource" id="Resource_y0bgm"]
 script = ExtResource("2_8o32r")
@@ -24,3 +25,4 @@ weight = 5.0
 stackable = true
 usable = true
 modifiers = SubResource("Resource_2kgew")
+cellScript = ExtResource("5_antidote")

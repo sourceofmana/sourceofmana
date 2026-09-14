@@ -52,8 +52,14 @@ static func FHalf(val) -> int:
 static func GetMaxMana(stat : ActorStats) -> int:
 	return stat.morphStat.maxMana + F(stat.concentration * coefManaPerAttribute + stat.level * coefManaPerLevel) + stat.modifiers.Get(CellCommons.Modifier.MaxMana, true)
 
+static func GetRegen(stat : ActorStats, effect : CellCommons.Modifier, natural : int) -> int:
+	var value : float = stat.buffs.GetValue(effect)
+	if value < 0.0:
+		return F(value)
+	return natural + stat.modifiers.Get(effect, true)
+
 static func GetRegenMana(stat : ActorStats) -> int:
-	return 1 + FHalf(stat.concentration) + FPercent(GetMaxMana(stat) * coefRegenMana) + stat.modifiers.Get(CellCommons.Modifier.RegenMana, true)
+	return GetRegen(stat, CellCommons.Modifier.RegenMana, 1 + FHalf(stat.concentration) + FPercent(GetMaxMana(stat) * coefRegenMana))
 
 static func GetCritRate(stat : ActorStats) -> float:
 	if stat.morphStat.critRate <= 0.0:
@@ -71,7 +77,7 @@ static func GetMaxStamina(stat : ActorStats) -> int:
 	return stat.morphStat.maxStamina + F(stat.endurance * coefStaminaPerAttribute + stat.level * coefStaminaPerLevel) + stat.modifiers.Get(CellCommons.Modifier.MaxStamina, true)
 
 static func GetRegenStamina(stat : ActorStats) -> int:
-	return stat.endurance * 2 + FFifth(stat.level) + FPercent(GetMaxStamina(stat) * coefRegenStamina) + stat.modifiers.Get(CellCommons.Modifier.RegenStamina, true)
+	return GetRegen(stat, CellCommons.Modifier.RegenStamina, stat.endurance * 2 + FFifth(stat.level) + FPercent(GetMaxStamina(stat) * coefRegenStamina))
 
 static func GetCooldownAttackDelay(stat : ActorStats) -> float:
 	return maxf(0.001, stat.morphStat.cooldownAttackDelay - stat.endurance * coefDelayPerAttribute - stat.level * coefDelayPerLevel) + stat.modifiers.Get(CellCommons.Modifier.CooldownDelay, true)
@@ -81,7 +87,7 @@ static func GetMaxHealth(stat : ActorStats) -> int:
 	return stat.morphStat.maxHealth + F(stat.vitality * coefHealthPerAttribute + stat.level * coefHealthPerLevel) + stat.modifiers.Get(CellCommons.Modifier.MaxHealth, true)
 
 static func GetRegenHealth(stat : ActorStats) -> int:
-	return 1 + FHalf(stat.vitality) + FPercent(GetMaxHealth(stat) * coefRegenHealth) + stat.modifiers.Get(CellCommons.Modifier.RegenHealth, true)
+	return GetRegen(stat, CellCommons.Modifier.RegenHealth, 1 + FHalf(stat.vitality) + FPercent(GetMaxHealth(stat) * coefRegenHealth))
 
 static func GetDefense(stat : ActorStats) -> int:
 	return stat.morphStat.defense + F(stat.vitality * coefDefensePerAttribute) + F(stat.level * coefDefensePerLevel) + stat.modifiers.Get(CellCommons.Modifier.Defense, true)

@@ -335,6 +335,18 @@ static var TargetMaxSquaredDistance : float	= TargetMaxDistance * TargetMaxDista
 static func IsSameActor(actor : Actor, target : Actor) -> bool:
 	return actor == target
 
+static func GetRecovery(actor : Actor) -> Recovery:
+	if IsAttacking(actor) or IsRunning(actor):
+		return Recovery.NONE
+	if IsWalking(actor):
+		return Recovery.POOR
+	if IsSitting(actor):
+		return Recovery.GOOD
+	return Recovery.NORMAL
+
+static func GetRecoveryRatio(recovery : Recovery, regen : int) -> float:
+	return RecoveryMalusRatio[recovery] if regen < 0 else RecoveryBonusRatio[recovery]
+
 static func GetSkillRange(actor : Actor, skill : SkillCell) -> int:
 	return actor.stat.current.attackRange + (skill.skillRange if skill else 0)
 
@@ -349,6 +361,17 @@ static func IsActorNear(entity : Actor, target : Actor, skillRange : int) -> boo
 const AttackTimestampLimit : int			= 1000 * 60 * 5 # 5 minutes
 const RegenDelay : float					= 3.0
 const RegenTickInterval : float				= 0.5
+
+enum Recovery
+{
+	NONE = 0,
+	POOR,
+	NORMAL,
+	GOOD,
+	COUNT
+}
+const RecoveryBonusRatio : PackedFloat32Array	= [0.0, 0.5, 1.0, 2.0]
+const RecoveryMalusRatio : PackedFloat32Array	= [2.0, 1.5, 1.0, 0.0]
 const DeathDelay : float					= 10.0
 const DisplayHPDelay : float				= 7.0
 const MapProcessingToggleDelay : float		= 10.0

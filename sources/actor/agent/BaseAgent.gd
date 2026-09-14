@@ -125,28 +125,20 @@ func UpdateDeltas(delta : float):
 	if not ActorCommons.IsAlive(self):
 		return
 
-	var bonus : float = 1.0
-	if ActorCommons.IsAttacking(self):
-		bonus = 0.0
-	elif ActorCommons.IsRunning(self):
-		bonus = 0.0
-	elif ActorCommons.IsWalking(self):
-		bonus *= 0.5
-	elif ActorCommons.IsSitting(self):
-		bonus *= 2.0
-
-	if bonus != 0.0:
-		if stat.health < stat.current.maxHealth:
-			stat.deltaHealth += (stat.current.regenHealth / ActorCommons.RegenDelay) * delta * bonus
-		if stat.mana < stat.current.maxMana:
-			stat.deltaMana += (stat.current.regenMana / ActorCommons.RegenDelay) * delta * bonus
-		if stat.stamina < stat.current.maxStamina:
-			stat.deltaStamina += (stat.current.regenStamina / ActorCommons.RegenDelay) * delta * bonus
+	var recovery : ActorCommons.Recovery = ActorCommons.GetRecovery(self)
+	if stat.health < stat.current.maxHealth or stat.current.regenHealth < 0:
+		stat.deltaHealth += (stat.current.regenHealth / ActorCommons.RegenDelay) * delta * ActorCommons.GetRecoveryRatio(recovery, stat.current.regenHealth)
+	if stat.mana < stat.current.maxMana or stat.current.regenMana < 0:
+		stat.deltaMana += (stat.current.regenMana / ActorCommons.RegenDelay) * delta * ActorCommons.GetRecoveryRatio(recovery, stat.current.regenMana)
+	if stat.stamina < stat.current.maxStamina or stat.current.regenStamina < 0:
+		stat.deltaStamina += (stat.current.regenStamina / ActorCommons.RegenDelay) * delta * ActorCommons.GetRecoveryRatio(recovery, stat.current.regenStamina)
 
 	if abs(stat.deltaHealth) >= 1.0:
 		var healthChange : int = floori(abs(stat.deltaHealth)) * int(sign(stat.deltaHealth))
 		stat.deltaHealth -= healthChange
 		stat.SetHealth(healthChange)
+		if healthChange < 0:
+			NotifyDrain(-healthChange)
 
 	if abs(stat.deltaMana) >= 1.0:
 		var manaChange : int = floori(abs(stat.deltaMana)) * int(sign(stat.deltaMana))
@@ -157,6 +149,11 @@ func UpdateDeltas(delta : float):
 		var staminaChange : int = floori(abs(stat.deltaStamina)) * int(sign(stat.deltaStamina))
 		stat.deltaStamina -= staminaChange
 		stat.SetStamina(staminaChange)
+
+func NotifyDrain(damage : int):
+	var agentRID : int = get_rid().get_id()
+	var skillID : int = stat.buffs.GetSkillID(CellCommons.Modifier.RegenHealth)
+	Network.NotifyNeighbours(self, "TargetAlteration", [agentRID, agentRID, damage, ActorCommons.Alteration.HIT, skillID, false], true, true)
 
 #
 func SetData():

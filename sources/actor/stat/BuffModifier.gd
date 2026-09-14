@@ -9,11 +9,19 @@ const InfiniteTime : float									= -1.0
 static var storedBuffs : Dictionary[int, Array]				= {}
 
 var buffs : Dictionary[CellCommons.Modifier, StatModifier]	= {}
+var skills : Dictionary[CellCommons.Modifier, int]			= {}
 var actor : Actor											= null
 
 # Getter
 func Get(effect : CellCommons.Modifier) -> StatModifier:
 	return buffs.get(effect)
+
+func GetSkillID(effect : CellCommons.Modifier) -> int:
+	return skills.get(effect, DB.UnknownHash)
+
+func GetValue(effect : CellCommons.Modifier) -> Variant:
+	var modifier : StatModifier = Get(effect)
+	return modifier._value if modifier else 0
 
 func GetRemaining(effect : CellCommons.Modifier) -> float:
 	if not actor or not buffs.has(effect):
@@ -22,24 +30,25 @@ func GetRemaining(effect : CellCommons.Modifier) -> float:
 	return timer.time_left if timer else InfiniteTime
 
 # Application
-func ApplyCell(cell : BaseCell, duration : float):
-	if not cell or not cell.modifiers:
+func ApplyCell(skill : SkillCell, duration : float):
+	if not skill or not skill.modifiers:
 		return
 
-	for modifier in cell.modifiers._modifiers:
+	for modifier in skill.modifiers._modifiers:
 		if modifier and modifier._persistent:
-			Apply(modifier._effect, modifier._value, duration)
+			Apply(modifier._effect, modifier._value, duration, skill.id)
 
-func Apply(effect : CellCommons.Modifier, value : Variant, duration : float, merge : bool = true):
+func Apply(effect : CellCommons.Modifier, value : Variant, duration : float, skillID : int = DB.UnknownHash, merge : bool = true):
 	if not actor or effect == CellCommons.Modifier.None or duration == 0.0:
 		return
-	if IsInfinite(duration):
-		duration = InfiniteTime
 
 	var modifier : StatModifier = buffs.get(effect, null)
 	if modifier:
 		if merge:
-			value = MergeValue(effect, modifier._value, value)
+			var merged : Variant = MergeValue(effect, modifier._value, value)
+			if merged != value:
+				skillID = GetSkillID(effect)
+			value = merged
 			duration = MergeDuration(GetRemaining(effect), duration, effect, value)
 		modifier._value = value
 	else:
@@ -49,6 +58,7 @@ func Apply(effect : CellCommons.Modifier, value : Variant, duration : float, mer
 		modifier._persistent = true
 		buffs[effect] = modifier
 		actor.stat.modifiers.Add(modifier)
+	skills[effect] = skillID
 
 	if IsInfinite(duration):
 		Util.RemoveNode(actor.get_node_or_null(GetTimerName(effect)), actor)
@@ -56,6 +66,7 @@ func Apply(effect : CellCommons.Modifier, value : Variant, duration : float, mer
 		Callback.SelfDestructTimer(actor, duration, Expire, [effect], GetTimerName(effect))
 	actor.stat.RefreshEntityStats()
 	Notify(effect, value, duration)
+	Display(effect)
 
 # Removal
 func Expire(effect : CellCommons.Modifier):
@@ -64,13 +75,20 @@ func Expire(effect : CellCommons.Modifier):
 
 	actor.stat.modifiers.Remove(buffs[effect])
 	buffs.erase(effect)
+	skills.erase(effect)
 	actor.stat.RefreshEntityStats()
 	Notify(effect, 0, 0.0)
+	Display(effect)
 
 func Clear(effect : CellCommons.Modifier):
 	if actor:
 		Util.RemoveNode(actor.get_node_or_null(GetTimerName(effect)), actor)
 	Expire(effect)
+
+func ClearSkill(skillID : int):
+	for effect in skills.keys():
+		if skills[effect] == skillID:
+			Clear(effect)
 
 func ClearAll():
 	for effect in buffs.keys():
@@ -85,7 +103,7 @@ func Store(charID : int):
 	for effect in buffs:
 		var remaining : float = GetRemaining(effect)
 		if remaining != 0.0:
-			entries.append([effect, buffs[effect]._value, remaining])
+			entries.append([effect, buffs[effect]._value, remaining, GetSkillID(effect)])
 
 	if entries.is_empty():
 		storedBuffs.erase(charID)
@@ -94,17 +112,29 @@ func Store(charID : int):
 
 func Restore(charID : int):
 	for entry in storedBuffs.get(charID, []):
-		Apply(entry[0], entry[1], entry[2])
+		Apply(entry[0], entry[1], entry[2], entry[3])
 	storedBuffs.erase(charID)
 
-# Client sync
+# Notify client(s)
 func Notify(effect : CellCommons.Modifier, value : Variant, duration : float):
 	if actor is PlayerAgent:
-		Network.UpdateBuff(effect, value, duration, actor.peerID)
+		Network.UpdateBuff(effect, value, duration, GetSkillID(effect), actor.peerID)
 
 func NotifyAll():
 	for effect in buffs:
 		Notify(effect, buffs[effect]._value, GetRemaining(effect))
+
+func NotifyAgent(peerID : int):
+	var actorRID : int = actor.get_rid().get_id()
+	for effect in buffs:
+		Network.Bulk("EntityBuff", [actorRID, effect, GetSkillID(effect), true], peerID)
+
+func Display(effect : CellCommons.Modifier):
+	var enabled : bool = buffs.has(effect)
+	if actor is Entity:
+		actor.DisplayBuff(effect, GetSkillID(effect), enabled)
+	elif actor is BaseAgent:
+		Network.NotifyNeighbours(actor, "EntityBuff", [actor.get_rid().get_id(), effect, GetSkillID(effect), enabled], false)
 
 # A malus always beats a bonus and is never softened, two same sided buffs keep the strongest
 static func MergeValue(effect : CellCommons.Modifier, current : Variant, value : Variant) -> Variant:

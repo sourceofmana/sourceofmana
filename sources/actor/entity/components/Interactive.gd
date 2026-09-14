@@ -17,6 +17,7 @@ var selectionFx : GPUParticles2D			= null
 var visualOffset : int						= -1
 var hpFadeTween : Tween						= null
 var currentCastFx : GPUParticles2D			= null
+var buffFxs : Dictionary[CellCommons.Modifier, Node2D]	= {}
 
 var speechYExtraOffset : float				= 0.0
 var speechOffsetTween : Tween				= null
@@ -130,6 +131,26 @@ func StopCasting():
 		Callback.SelfDestructTimer(currentCastFx, currentCastFx.lifetime, Util.RemoveNode, [currentCastFx, self])
 		currentCastFx = null
 
+func DisplayBuff(effect : CellCommons.Modifier, skillID : int, enabled : bool):
+	var buffFx : Node2D = buffFxs.get(effect, null)
+	if enabled:
+		if not buffFx:
+			var skill : SkillCell = DB.SkillsDB.get(skillID, null)
+			var preset : PackedScene = skill.buffPreset if skill else null
+			if preset:
+				buffFx = preset.instantiate()
+				buffFxs[effect] = buffFx
+				buffFx.set("emitting", true)
+				add_child(buffFx)
+	elif buffFx:
+		buffFxs.erase(effect)
+		buffFx.set("emitting", false)
+		var lifetime : float = buffFx.get("lifetime") if buffFx.get("lifetime") else 0.0
+		if lifetime > 0.0:
+			Callback.SelfDestructTimer(buffFx, lifetime, Util.RemoveNode, [buffFx, self])
+		else:
+			Util.RemoveNode(buffFx, self)
+
 func DisplayCast(skillID : int):
 	if DB.SkillsDB.has(skillID):
 		var skill : SkillCell = DB.SkillsDB[skillID]
@@ -178,7 +199,7 @@ func DisplayAlteration(target : Entity, emitter : Entity, value : int, alteratio
 	if Launcher.Map.currentFringe:
 		var newLabel : Label = ActorCommons.AlterationLabel.instantiate()
 		newLabel.SetPosition(visibleNode.get_global_position(), target.get_global_position())
-		newLabel.SetValue(emitter, value, alteration)
+		newLabel.SetValue(emitter, target, value, alteration)
 		Launcher.Map.currentFringe.add_child(newLabel)
 
 		if entity.type != ActorCommons.Type.PLAYER:

@@ -5,6 +5,7 @@
 [ext_resource type="Material" uid="uid://dqxk2n8v5r3wp" path="res://presets/palettes/shaders/monsters/mob-scorpion-red.tres" id="2_mat"]
 [ext_resource type="Resource" uid="uid://7bcrmgajbnpg" path="res://presets/entities/Scorpion.tres" id="3_prnt"]
 [ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="4_anwdr"]
+[ext_resource type="Resource" uid="uid://cpoisonskil1a" path="res://presets/cells/skills/Poison.tres" id="5_poison"]
 
 [resource]
 script = ExtResource("1_r3ds")
@@ -22,3 +23,6 @@ _stats = {
 _equipment = Array[ExtResource("2_ibg52")]([null, null, null, null, null, null, null, null])
 _customMaterial = ExtResource("2_mat")
 _behaviour = 4
+_skills = Dictionary[ExtResource("4_anwdr"), float]({
+ExtResource("5_poison"): 0.25
+})

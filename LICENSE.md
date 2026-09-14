@@ -49,6 +49,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/default.png [Reid]
 ./graphics/effects/arrow.png [Alige]
 ./graphics/effects/particles/arc.png [Reid]
+./graphics/effects/particles/bubble-16.png [Fate]
 ./graphics/effects/particles/cast.png [Reid]
 ./graphics/effects/particles/cast1.png [Reid]
 ./graphics/effects/particles/cast2.png [Reid]

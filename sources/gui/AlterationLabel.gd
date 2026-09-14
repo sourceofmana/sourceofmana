@@ -20,7 +20,7 @@ func SetPosition(startPos : Vector2, floorPos : Vector2):
 	position = startPos
 	floorPosition = floorPos.y
 
-func SetValue(dealer : Entity, value : int, alteration : ActorCommons.Alteration):
+func SetValue(dealer : Entity, target : Entity, value : int, alteration : ActorCommons.Alteration):
 	velocity.x = randf_range(-maxVelocityAngle, maxVelocityAngle)
 	velocity.y = randf_range(minVelocitySpeed, maxVelocitySpeed)
 
@@ -36,12 +36,12 @@ func SetValue(dealer : Entity, value : int, alteration : ActorCommons.Alteration
 			set_text("dodge")
 		ActorCommons.Alteration.HIT:
 			bounce = true
-			if dealer == Launcher.Player:
-				hue = ActorCommons.LocalAttackColor
-			elif dealer.type == ActorCommons.Type.PLAYER:
-				hue = ActorCommons.PlayerColor
-			else:
-				hue = ActorCommons.MonsterColor
+			hue = ActorCommons.MonsterColor
+			if dealer != target:
+				if dealer == Launcher.Player:
+					hue = ActorCommons.LocalAttackColor
+				elif dealer.type == ActorCommons.Type.PLAYER:
+					hue = ActorCommons.PlayerColor
 			set_text(str(value))
 		ActorCommons.Alteration.MISS:
 			bounce = true

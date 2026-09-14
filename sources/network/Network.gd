@@ -327,6 +327,10 @@ func Casted(agentRID : int, skillID: int, cooldown : float, peerID : int = Netwo
 func ThrowProjectile(agentRID : int, targetPos : Vector2, skillID: int, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("ThrowProjectile", [agentRID, targetPos, skillID], peerID)
 
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
+func EntityBuff(agentRID : int, effect : CellCommons.Modifier, skillID : int, enabled : bool, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("EntityBuff", [agentRID, effect, skillID, enabled], peerID)
+
 @rpc("authority", "call_remote", "reliable", EChannel.ACTION)
 func Morphed(agentRID : int, morphID : int, notifyMorphing : bool, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("Morphed", [agentRID, morphID, notifyMorphing], peerID)
@@ -416,8 +420,8 @@ func UpdateSkill(skillID : int, level : int, peerID : int = NetworkCommons.PeerO
 	CallClient("UpdateSkill", [skillID, level], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
-func UpdateBuff(effect : CellCommons.Modifier, value : Variant, duration : float, peerID : int = NetworkCommons.PeerOfflineID):
-	CallClient("UpdateBuff", [effect, value, duration], peerID)
+func UpdateBuff(effect : CellCommons.Modifier, value : Variant, duration : float, skillID : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("UpdateBuff", [effect, value, duration, skillID], peerID)
 
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func UpdateBestiary(mobID : int, count : int, peerID : int = NetworkCommons.PeerOfflineID):
@@ -492,6 +496,7 @@ func NotifyNeighbours(agent : BaseAgent, callbackName : StringName, args : Array
 					if not player.visibleAgents.has(currentagentRID):
 						player.visibleAgents[currentagentRID] = true
 						Network.Bulk("FullUpdateEntity", [currentagentRID, agent.velocity, agent.position, agent.currentOrientation, agent.state, agent.currentSkillID, agent.stat.isRunning, NetworkCommons.FrameID()], player.peerID)
+						agent.stat.buffs.NotifyAgent(player.peerID)
 					if bulk:
 						Network.Bulk(callbackName, args, player.peerID)
 					else:

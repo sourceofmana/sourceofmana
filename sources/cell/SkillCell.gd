@@ -26,12 +26,14 @@ enum Category
 @export var projectilePreset : PackedScene		= null
 @export_category("Buff")
 @export var buffTime : float					= 0.0
+@export var buffPreset : PackedScene			= null
 
 #
 func StripClient():
 	super.StripClient()
 	castPreset = null
 	skillPreset = null
+	buffPreset = null
 
 func Hover(hovering : bool):
 	super.Hover(hovering)

@@ -131,6 +131,11 @@ func Casted(agentRID : int, skillID : int, cooldown : float, _peerID : int):
 	if entity and entity.get_parent() and entity.interactive:
 		entity.interactive.DisplaySkill.call_deferred(entity, skillID, cooldown)
 
+func EntityBuff(agentRID : int, effect : CellCommons.Modifier, skillID : int, enabled : bool, _peerID : int):
+	var entity : Entity = Entities.Get(agentRID)
+	if entity and entity.get_parent() and entity.interactive:
+		entity.interactive.DisplayBuff.call_deferred(effect, skillID, enabled)
+
 func ThrowProjectile(agentRID : int, targetPos : Vector2, skillID: int, _peerID : int):
 	if not Launcher.Map or not Launcher.Map.currentFringe:
 		return
@@ -352,10 +357,10 @@ func UpdateSkill(skillID : int, level : int, _peerID : int, notify : bool = true
 			if notify:
 				Launcher.Player.sfx.HandleAlteration(ActorCommons.Alteration.SKILL_UP)
 
-func UpdateBuff(effect : CellCommons.Modifier, value : Variant, duration : float, _peerID : int):
+func UpdateBuff(effect : CellCommons.Modifier, value : Variant, duration : float, skillID : int, _peerID : int):
 	if Launcher.Player:
 		if duration != 0.0:
-			Launcher.Player.stat.buffs.Apply(effect, value, duration, false)
+			Launcher.Player.stat.buffs.Apply(effect, value, duration, skillID, false)
 		else:
 			Launcher.Player.stat.buffs.Clear(effect)
 

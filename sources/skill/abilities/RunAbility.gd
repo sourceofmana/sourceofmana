@@ -1,5 +1,5 @@
 extends CellScript
 
 #
-func Execute(agent : BaseAgent, _cell : BaseCell):
-	agent.SetRunning(not agent.stat.isRunning)
+func Execute(target : BaseAgent, _cell : BaseCell):
+	target.SetRunning(not target.stat.isRunning)

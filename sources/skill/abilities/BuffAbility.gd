@@ -2,7 +2,7 @@ extends CellScript
 class_name BuffAbility
 
 #
-func Execute(agent : BaseAgent, cell : BaseCell):
+func Execute(target : BaseAgent, cell : BaseCell):
 	var skill : SkillCell = cell as SkillCell
-	if skill:
-		agent.stat.buffs.ApplyCell(skill, skill.buffTime)
+	if skill and target:
+		target.stat.buffs.ApplyCell(skill, skill.buffTime)

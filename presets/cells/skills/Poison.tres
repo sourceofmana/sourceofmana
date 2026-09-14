@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="SkillCell" format=3 uid="uid://cpoisonskil1a"]
+
+[ext_resource type="Texture2D" uid="uid://bndieinr0kcie" path="res://data/graphics/items/skill/spell.png" id="1_poisonicon"]
+[ext_resource type="Script" uid="uid://l20aaqylleqo" path="res://sources/cell/SkillCell.gd" id="2_poison"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="3_poisonmod"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="4_poisonmods"]
+[ext_resource type="Script" uid="uid://bbuffability1" path="res://sources/skill/abilities/BuffAbility.gd" id="5_poisonability"]
+[ext_resource type="PackedScene" uid="uid://cpoisonbub1fx" path="res://presets/effects/particles/PoisonBubbles.tscn" id="6_poisonfx"]
+
+[sub_resource type="Resource" id="Resource_poisonregen"]
+script = ExtResource("3_poisonmod")
+_effect = 13
+_value = -1.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_q3bwr"]
+script = ExtResource("3_poisonmod")
+_effect = 20
+_value = 1.0
+metadata/_custom_type_script = "uid://hdd6y6syvlm6"
+
+[sub_resource type="Resource" id="Resource_poisonmods"]
+script = ExtResource("4_poisonmods")
+_modifiers = Array[ExtResource("3_poisonmod")]([SubResource("Resource_poisonregen"), SubResource("Resource_q3bwr")])
+
+[resource]
+script = ExtResource("2_poison")
+category = 2
+state = 3
+cooldownTime = 15.0
+castTime = 0.1
+buffTime = -1.0
+buffPreset = ExtResource("6_poisonfx")
+id = 0
+name = "Poison"
+description = "A venomous attack that remove vital forces away until it is cured."
+icon = ExtResource("1_poisonicon")
+type = 2
+weight = 0.0
+usable = true
+modifiers = SubResource("Resource_poisonmods")
+cellScript = ExtResource("5_poisonability")

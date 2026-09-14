@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://cpoisonbub1fx"]
+
+[ext_resource type="Texture2D" uid="uid://cbubble16ptc" path="res://data/graphics/effects/particles/bubble-16.png" id="1_bubble"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bubbleanim"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 8
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_poison"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -58, 0)
+emission_shape_scale = Vector3(1.4, 0.6, 1)
+emission_shape = 2
+emission_sphere_radius = 5.0
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 6.0
+initial_velocity_max = 16.0
+gravity = Vector3(0, -40, 0)
+damping_min = 3.0
+damping_max = 5.0
+scale_min = 0.6
+color = Color(0.63736475, 1, 0.3362194, 1)
+hue_variation_min = -0.05
+hue_variation_max = 0.05
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="Poison Bubbles" type="GPUParticles2D" unique_id=1274830156]
+z_index = 1
+material = SubResource("CanvasItemMaterial_bubbleanim")
+amount = 2
+texture = ExtResource("1_bubble")
+explosiveness = 0.2
+randomness = 0.6
+visibility_rect = Rect2(-32, -64, 64, 80)
+process_material = SubResource("ParticleProcessMaterial_poison")

@@ -170,6 +170,7 @@ func CheckVisibility(neighbour : BaseAgent):
 		var agentRID : int = neighbour.get_rid().get_id()
 		if not visibleAgents.has(agentRID):
 			Network.Bulk("FullUpdateEntity", [agentRID, neighbour.velocity, neighbour.position, neighbour.currentOrientation, neighbour.state, neighbour.currentSkillID, neighbour.stat.isRunning, NetworkCommons.FrameID()], peerID)
+			neighbour.stat.buffs.NotifyAgent(peerID)
 		visibleAgents[agentRID] = true
 
 func UpdateVisibility():
