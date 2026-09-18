@@ -27,7 +27,7 @@ class Peer:
 	var permission : ActorCommons.Permission		= ActorCommons.Permission.NONE
 	var accountData : AccountData					= null
 	var transport : Peers.TransportType				= Peers.TransportType.OFFLINE
-	var ipAddress : String							= ""
+	var ipAddress : String							= NetworkCommons.LocalServerAddress
 	var primaryConnected : bool						= false
 	var rtcConnected : bool							= false
 	var rpcDeltas : Dictionary[StringName, int]		= {}
@@ -171,7 +171,7 @@ static func ResolvePeerIP(peerID : int) -> String:
 						return packetPeer.get_remote_address()
 			TransportType.OFFLINE:
 				return NetworkCommons.LocalServerAddress
-	return ""
+	return NetworkCommons.LocalServerAddress
 
 # Info getters
 static func HasPeer(peerID : int) -> bool:

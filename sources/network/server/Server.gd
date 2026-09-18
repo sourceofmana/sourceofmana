@@ -194,8 +194,7 @@ func ConnectCharacter(nickname : String, peerID : int):
 					agent.stat.buffs.Restore(peer.characterID)
 					Launcher.SQL.CharacterLogin(peer.characterID)
 
-					var ip : String = Peers.GetPeerIP(peerID)
-					Util.PrintLog("Server", "Player connected: %s (%d) via %s from %s" % [nickname, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), ip if not ip.is_empty() else "unavailable"])
+					Util.PrintLog("Server", "Player connected: %s (%d) via %s from %s" % [nickname, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), peer.ipAddress])
 					Network.online_player_connected.emit(nickname)
 
 	Network.CharacterError(err, peerID)
@@ -399,7 +398,6 @@ func ConnectPeer(peerID : int):
 		transportType = Peers.TransportType.OFFLINE
 	elif useWebSocket:
 		transportType = Peers.TransportType.WEBSOCKET
-	Util.PrintInfo("Server", "Peer connected: %d with %s" % [peerID, Peers.GetTransportName(transportType)])
 
 	Peers.AddPeer(peerID, transportType)
 
@@ -408,6 +406,8 @@ func ConnectPeer(peerID : int):
 		peer.primaryConnected = true
 		peer.ipAddress = Peers.ResolvePeerIP(peerID)
 	bulks[peerID] = {}
+
+	Util.PrintInfo("Server", "Peer connected: %d with %s from %s" % [peerID, Peers.GetTransportName(transportType), Peers.GetPeerIP(peerID)])
 
 	if currentPeer and currentPeer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
 		var clientPeer : PacketPeer = currentPeer.get_peer(peerID)
@@ -426,7 +426,7 @@ func DisconnectPeer(peerID : int):
 	FullyDisconnect(peerID)
 
 func FullyDisconnect(peerID : int):
-	Util.PrintInfo("Server", "Peer disconnected: %d" % peerID)
+	Util.PrintInfo("Server", "Peer disconnected: %d from %s" % [peerID, Peers.GetPeerIP(peerID)])
 	var peer : Peers.Peer = Peers.GetPeer(peerID)
 	if peer and peer.accountID != NetworkCommons.PeerUnknownID:
 		DisconnectAccount(peerID)
