@@ -31,7 +31,6 @@ buses/default_bus_layout="res://presets/audio/default_bus_layout.tres"
 Launcher="*res://sources/launcher/Launcher.gd"
 Network="*res://sources/network/Network.gd"
 FSM="*res://sources/launcher/FSM.gd"
-Monitoring="*res://sources/system/Monitoring.gd"
 
 [debug]
 
@@ -502,6 +501,7 @@ environment/default_environment="res://default_env.tres"
 
 schema_version=4
 options/auto_init=false
+options/dsn="https://12cad326937c9cf30cd78422e1bc2492@o4511861406826496.ingest.de.sentry.io/4511861413838928"
 options/attach_log=false
 godot_logger/include_variables=true
 godot_logger/events=15

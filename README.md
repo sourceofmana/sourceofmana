@@ -10,9 +10,9 @@ The game is still in early development but already offers a playable solo and mu
 
 **Engine:** Godot 4 (client and server)
 
-**Design Tools:**
-- Game editor: [Godot 4.7.1](https://godotengine.org/)
-- Level editor: [Tiled 1.11.2](https://www.mapeditor.org/)
+**Design Tools:** (exact versions in [versions.cfg](versions.cfg))
+- Game editor: [Godot](https://godotengine.org/)
+- Level editor: [Tiled](https://www.mapeditor.org/)
 
 **Organization:** [Manasource](https://manasource.org)
 
