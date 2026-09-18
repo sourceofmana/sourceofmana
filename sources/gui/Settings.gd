@@ -1,9 +1,5 @@
 extends WindowPanel
 
-var platformSection : String					= Util.GetPlatformName()
-const defaultSection : String					= "Default"
-const userSection : String						= "User"
-
 const creditsJson : JSON						= preload("res://data/db/credits.json")
 
 @onready var creditsContainer : VBoxContainer	= $Layout/Margin/TabBar/Credits/Margin/VBox
@@ -400,13 +396,7 @@ func SaveSettings():
 	Conf.SaveType("settings", Conf.Type.USERSETTINGS)
 
 func SetVal(key : String, value):
-	Conf.SetValue(userSection, key, Conf.Type.USERSETTINGS, value)
+	Conf.SetValue(Conf.userSection, key, Conf.Type.USERSETTINGS, value)
 
 func GetVal(key : String):
-	var value = Conf.GetVariant(userSection, key, Conf.Type.USERSETTINGS, null)
-	if value == null:
-		value = Conf.GetVariant(platformSection, key, Conf.Type.SETTINGS, null)
-	if value == null:
-		value = Conf.GetVariant(defaultSection, key, Conf.Type.SETTINGS, null)
-
-	return value
+	return Conf.GetUserValue(key)

@@ -12,6 +12,9 @@ enum Type
 	COUNT
 }
 
+const defaultSection : String					= "Default"
+const userSection : String						= "User"
+
 static var confFiles : Array[ConfigFile]		= []
 static var cache : Dictionary					= {}
 
@@ -52,6 +55,14 @@ static func GetVector2i(section : String, key : String, type : Type = Type.NONE)
 
 static func GetString(section : String, key : String, type : Type = Type.NONE) -> String:
 	return GetVariant(section, key, type, "")
+
+static func GetUserValue(key : String, default = null):
+	var value = GetVariant(userSection, key, Type.USERSETTINGS, null)
+	if value == null:
+		value = GetVariant(Util.GetPlatformName(), key, Type.SETTINGS, null)
+	if value == null:
+		value = GetVariant(defaultSection, key, Type.SETTINGS, default)
+	return value
 
 static func SetValue(section : String, key : String, type : Type, value):
 	assert(type < Type.COUNT and confFiles[type] != null, "Can't find %s within our loaded conf files")

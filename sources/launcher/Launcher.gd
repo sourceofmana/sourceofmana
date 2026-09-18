@@ -129,13 +129,15 @@ func Quit():
 	get_tree().quit()
 
 #
+func _init():
+	Conf.Init()
+	Monitoring.Init()
+
 func _ready():
 	var startClient : bool = false
 	var startServer : bool = false
 
 	Root = get_tree().get_root()
-
-	Conf.Init()
 
 	if "--server" in OS.get_cmdline_args():
 		Scene = FileSystem.LoadResource(Path.Pst + "Server" + Path.SceneExt)

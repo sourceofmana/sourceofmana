@@ -1,31 +1,37 @@
 extends Node
+class_name Monitoring
 
 #
-func Configure(options : SentryOptions):
+static func IsEnabled() -> bool:
+	return Conf.GetUserValue("Privacy-BugReports", false)
+
+static func Configure(options : SentryOptions):
 	options.godot_logger.event_mask = SentryOptions.MASK_ERROR | SentryOptions.MASK_WARNING | SentryOptions.MASK_SCRIPT | SentryOptions.MASK_SHADER
 	options.debug = false
 	options.attach_log = false
 	options.before_send = BeforeSend
 
-func BeforeSend(event : SentryEvent) -> SentryEvent:
-	var enabled : bool = Conf.GetVariant("User", "Privacy-BugReports", Conf.Type.USERSETTINGS, true)
-	return event if enabled else null
+static func BeforeSend(event : SentryEvent) -> SentryEvent:
+	return event if IsEnabled() else null
 
-func SetPlayer(playerName : String):
+static func SetPlayer(playerName : String):
 	if SentrySDK.is_enabled() and not playerName.is_empty():
 		var user : SentryUser = SentryUser.new()
 		user.username = playerName
 		SentrySDK.set_user(user)
 		SentrySDK.set_tag("player", playerName)
 
-func SetTransport(transport : Peers.TransportType):
+static func SetTransport(transport : Peers.TransportType):
 	if SentrySDK.is_enabled():
 		SentrySDK.set_tag("transport", Peers.TransportType.keys()[transport].to_lower())
 
 #
-func _enter_tree() -> void:
+static func Init():
 	if not OS.has_feature("sentry"):
 		return
+	if not IsEnabled():
+		return
+
 	SentrySDK.init(Configure)
 	if SentrySDK.is_enabled():
 		SentrySDK.set_tag("platform", OS.get_name())
