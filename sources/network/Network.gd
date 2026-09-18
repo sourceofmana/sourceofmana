@@ -459,9 +459,9 @@ func BulkCall(methodName : StringName, bulkedArgs : Array, peerID : int = Networ
 		WebRTCServer.multiplayerAPI.rpc(peerID, self, "BulkCall", [methodName, bulkedArgs])
 	elif WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
 		WebSocketServer.multiplayerAPI.rpc(peerID, self, "BulkCall", [methodName, bulkedArgs])
-	elif ENetServer and not ENetServer.isOffline:
+	elif ENetServer and not ENetServer.isOffline and Peers.IsUsingENet(peerID):
 		ENetServer.multiplayerAPI.rpc(peerID, self, "BulkCall", [methodName, bulkedArgs])
-	else:
+	elif Client:
 		for args in bulkedArgs:
 			Client.callv.call_deferred(methodName, args + [peerID])
 
@@ -470,7 +470,7 @@ func Bulk(methodName : StringName, args : Array, peerID : int):
 		WebRTCServer.Bulk(methodName, args, peerID)
 	elif WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
 		WebSocketServer.Bulk(methodName, args, peerID)
-	elif ENetServer:
+	elif ENetServer and (ENetServer.isOffline or Peers.IsUsingENet(peerID)):
 		ENetServer.Bulk(methodName, args, peerID)
 
 # Notify peers
@@ -546,7 +546,7 @@ func CallClient(methodName : StringName, args : Array, peerID : int):
 		WebRTCServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
 	elif WebSocketServer and not WebSocketServer.isOffline and Peers.IsUsingWebSocket(peerID):
 		WebSocketServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
-	elif ENetServer and not ENetServer.isOffline:
+	elif ENetServer and not ENetServer.isOffline and Peers.IsUsingENet(peerID):
 		ENetServer.multiplayerAPI.rpc(peerID, self, methodName, args + [peerID])
 	elif Client:
 		Client.callv.call_deferred(methodName, args + [peerID])

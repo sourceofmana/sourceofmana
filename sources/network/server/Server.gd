@@ -207,7 +207,7 @@ func DisconnectCharacter(peerID : int):
 		if player:
 			var playerName : String = player.nick
 			var ip : String = Peers.GetPeerIP(peerID)
-			Util.PrintLog("Server", "Player disconnected: %s (%d) via %s from %s" % [playerName, peerID, Peers.GetTransportName(Peers.GetTransport(peerID)), ip if not ip.is_empty() else "unavailable"])
+			Util.PrintLog("Server", "Player disconnected: %s (%d) via %s from %s" % [playerName, peerID, Peers.GetTransportName(peer.transport), ip if not ip.is_empty() else "unavailable"])
 
 			Launcher.SQL.RefreshCharacter(player)
 			player.stat.buffs.Store(peer.characterID)

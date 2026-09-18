@@ -4,7 +4,7 @@ class_name Peers
 #
 static var DisconnectedAccount : AccountData = AccountData.new(NetworkCommons.PeerUnknownID, ActorCommons.Permission.NONE)
 
-enum TransportType { OFFLINE, ENET, WEBSOCKET, WEBRTC }
+enum TransportType { OFFLINE, ENET, WEBSOCKET, WEBRTC, DISCONNECTED }
 
 #
 class AccountData:
@@ -112,7 +112,11 @@ static func Footprint(peerID : int, methodName : StringName, actionDelta : int) 
 
 static func GetTransport(peerID : int) -> TransportType:
 	var peer : Peers.Peer = GetPeer(peerID)
-	return peer.transport if peer else TransportType.OFFLINE
+	if not peer:
+		return TransportType.OFFLINE
+	if peer.transport != TransportType.OFFLINE and not peer.primaryConnected and not peer.rtcConnected:
+		return TransportType.DISCONNECTED
+	return peer.transport
 
 static func GetTransportName(transport : TransportType) -> String:
 	match transport:
@@ -122,6 +126,8 @@ static func GetTransportName(transport : TransportType) -> String:
 			return "WebSocket"
 		TransportType.ENET:
 			return "ENet"
+		TransportType.DISCONNECTED:
+			return "Disconnected"
 		_:
 			return "Offline"
 
@@ -131,16 +137,19 @@ static func IsUsingWebSocket(peerID : int) -> bool:
 static func IsUsingWebRTC(peerID : int) -> bool:
 	return GetTransport(peerID) == TransportType.WEBRTC
 
+static func IsUsingENet(peerID : int) -> bool:
+	return GetTransport(peerID) == TransportType.ENET
+
 static func GetAssociatedNetServer(peerID : int) -> NetServer:
-	if HasPeer(peerID):
-		match GetTransport(peerID):
-			TransportType.WEBRTC:
-				return Network.WebRTCServer
-			TransportType.WEBSOCKET:
-				return Network.WebSocketServer
-			_:
-				return Network.ENetServer
-	return null
+	match GetTransport(peerID):
+		TransportType.WEBRTC:
+			return Network.WebRTCServer
+		TransportType.WEBSOCKET:
+			return Network.WebSocketServer
+		TransportType.ENET, TransportType.OFFLINE:
+			return Network.ENetServer
+		_:
+			return null
 
 static func GetPeerIP(peerID : int) -> String:
 	var peer : Peers.Peer = GetPeer(peerID)
