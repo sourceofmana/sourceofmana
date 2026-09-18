@@ -38,12 +38,12 @@ func SetVolume(volume : float):
 	set_volume_db(volume)
 
 func Warped():
-	if Launcher.Map.currentMapNode:
+	if Launcher.Map and Launcher.Map.currentMapNode:
 		var mapName : String = Launcher.Map.currentMapNode.get_meta("music", "")
 		if not mapName.is_empty():
 			Load(mapName.hash())
-	else:
-		Stop()
+	elif DB.isInitialized:
+		Load(DefaultTrack.hash())
 
 func PlayDefault():
 	if DB.isInitialized and currentTrack == DB.UnknownHash:
