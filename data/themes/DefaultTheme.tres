@@ -150,6 +150,12 @@ border_color = Color(0, 0, 0, 0)
 expand_margin_left = 6.0
 expand_margin_right = 6.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_listentry"]
+content_margin_left = 4.0
+content_margin_top = 1.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lpei3"]
 content_margin_left = 6.0
 content_margin_top = 4.0
@@ -566,6 +572,8 @@ LineEditBorder/base_type = &"LineEdit"
 LineEditBorder/styles/focus = SubResource("StyleBoxTexture_ovqsu")
 LineEditBorder/styles/normal = SubResource("StyleBoxTexture_ovqsu")
 LineEditBorder/styles/read_only = SubResource("StyleBoxTexture_ovqsu")
+ListEntry/base_type = &"Button"
+ListEntry/styles/normal = SubResource("StyleBoxEmpty_listentry")
 MessageBox/base_type = &"PanelContainer"
 MessageBox/styles/panel = SubResource("StyleBoxTexture_5wphw")
 NotificationBox/base_type = &"RichTextLabel"

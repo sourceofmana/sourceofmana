@@ -8,6 +8,7 @@
 custom_minimum_size = Vector2(180, 100)
 offset_right = 180.0
 offset_bottom = 100.0
+mouse_force_pass_scroll_events = false
 theme = ExtResource("1_theme")
 theme_type_variation = &"WindowPanel"
 script = ExtResource("2_socgd")
@@ -42,11 +43,13 @@ metadata/_tab_index = 0
 [node name="Scroll" type="ScrollContainer" parent="Layout/Margin/TabBar/Online" unique_id=720451012]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_force_pass_scroll_events = false
 horizontal_scroll_mode = 0
 
 [node name="PlayerList" type="VBoxContainer" parent="Layout/Margin/TabBar/Online/Scroll" unique_id=720451005]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 0
 
 [node name="HSeparator" type="HSeparator" parent="Layout/Margin/TabBar/Online" unique_id=638143277]
 layout_mode = 2
@@ -60,6 +63,7 @@ vertical_alignment = 1
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+mouse_force_pass_scroll_events = false
 horizontal_scroll_mode = 0
 metadata/_tab_index = 1
 
@@ -77,6 +81,7 @@ horizontal_alignment = 1
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+mouse_force_pass_scroll_events = false
 horizontal_scroll_mode = 0
 metadata/_tab_index = 2
 

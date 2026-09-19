@@ -9,6 +9,6 @@ func _init(playerName : String):
 	text = playerName
 	name = playerName
 	flat = true
-	toggle_mode = true
+	theme_type_variation = &"ListEntry"
 	alignment = HORIZONTAL_ALIGNMENT_LEFT
 	pressed.connect(func(): line_selected.emit(playerName))
