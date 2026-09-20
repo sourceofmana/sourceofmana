@@ -622,6 +622,7 @@ TabBar/constants/h_separation = 4
 TabBar/constants/icon_max_width = 0
 TabBar/constants/outline_size = 0
 TabBar/font_sizes/font_size = 16
+TabBar/icons/close = ExtResource("11_ilveh")
 TabBar/styles/button_highlight = SubResource("StyleBoxFlat_8wb5d")
 TabBar/styles/button_pressed = SubResource("StyleBoxFlat_4uxys")
 TabBar/styles/tab_disabled = SubResource("StyleBoxFlat_x3g5j")
