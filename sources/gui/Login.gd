@@ -1,26 +1,33 @@
 extends Control
 
 #
-@onready var nameControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name
-@onready var nameTextControl : LineEdit		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Name/Container/Text
-@onready var passwordControl : Control		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password
-@onready var passwordLabel : Label			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Label
-@onready var passwordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Password/Container/Text
-@onready var confirmPasswordControl : Control	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword
-@onready var confirmPasswordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/ConfirmPassword/Container/Text
-@onready var emailControl : Control			= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email
-@onready var emailTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Email/Container/Text
-@onready var resetCodeControl : Control		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code
-@onready var resetCodeTextControl : LineEdit	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/Code/Container/Text
-@onready var indicatorRow : HBoxContainer	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow
-@onready var rememberMeCheckBox : CheckBox	= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/RememberMe
-@onready var onlineIndicator : CheckBox		= $HBoxContainer/Panel/Margin/VBoxContainer/LoginContainer/IndicatorRow/OnlineIndicator
-@onready var panel : PanelContainer			= $HBoxContainer/Panel
-@onready var separator : HSeparator			= $HBoxContainer/Panel/Margin/VBoxContainer/HSeparator2
-@onready var news : Scrollable				= $HBoxContainer/Panel/Margin/VBoxContainer/News
-@onready var agreement : Scrollable			= $HBoxContainer/Panel/Margin/VBoxContainer/Agreement
+@onready var nameControl : Control					= $HBoxContainer/Panel/Margin/Content/LoginContainer/Name
+@onready var nameTextControl : LineEdit				= $HBoxContainer/Panel/Margin/Content/LoginContainer/Name/Container/Text
+@onready var passwordControl : Control				= $HBoxContainer/Panel/Margin/Content/LoginContainer/Password
+@onready var passwordLabel : Label					= $HBoxContainer/Panel/Margin/Content/LoginContainer/Password/Label
+@onready var passwordTextControl : LineEdit			= $HBoxContainer/Panel/Margin/Content/LoginContainer/Password/Container/Text
+@onready var confirmPasswordControl : Control		= $HBoxContainer/Panel/Margin/Content/LoginContainer/ConfirmPassword
+@onready var confirmPasswordTextControl : LineEdit	= $HBoxContainer/Panel/Margin/Content/LoginContainer/ConfirmPassword/Container/Text
+@onready var emailControl : Control					= $HBoxContainer/Panel/Margin/Content/LoginContainer/Email
+@onready var emailTextControl : LineEdit			= $HBoxContainer/Panel/Margin/Content/LoginContainer/Email/Container/Text
+@onready var resetCodeControl : Control				= $HBoxContainer/Panel/Margin/Content/LoginContainer/Code
+@onready var resetCodeTextControl : LineEdit		= $HBoxContainer/Panel/Margin/Content/LoginContainer/Code/Container/Text
+@onready var indicatorRow : HBoxContainer			= $HBoxContainer/Panel/Margin/Content/LoginContainer/IndicatorRow
+@onready var rememberMeCheckBox : CheckBox			= $HBoxContainer/Panel/Margin/Content/LoginContainer/IndicatorRow/RememberMe
+@onready var onlineIndicator : CheckBox				= $HBoxContainer/Panel/Margin/Content/LoginContainer/IndicatorRow/OnlineIndicator
+@onready var panel : PanelContainer					= $HBoxContainer/Panel
+@onready var content : BoxContainer					= $HBoxContainer/Panel/Margin/Content
+@onready var horizontalSeparator : HSeparator		= $HBoxContainer/Panel/Margin/Content/HSeparator2
+@onready var verticalSeparator : VSeparator			= $HBoxContainer/Panel/Margin/Content/VSeparator
+@onready var news : Scrollable						= $HBoxContainer/Panel/Margin/Content/News
+@onready var agreement : Scrollable					= $HBoxContainer/Panel/Margin/Content/Agreement
+@onready var fieldControls : Array[Control]			= [nameControl, passwordControl, confirmPasswordControl, emailControl, resetCodeControl]
 
 enum RecoveryState { NONE, REQUEST_EMAIL, ENTER_CODE }
+
+const CompactMaxHeight : int				= 700
+const TwoColumnsMinWidth : int				= 820
+const TwoColumnsRatio : float				= 8.0
 
 var nameText : String						= ""
 var savedToken : String						= ""
@@ -29,6 +36,7 @@ var fillingFields : bool					= false
 var isAccountCreatorEnabled : bool			= false
 var recoveryState : RecoveryState			= RecoveryState.NONE
 var pendingFocusControl : Control			= null
+var defaultPlaceholders : Dictionary		= {}
 
 #
 func FillWarningLabel(err : NetworkCommons.AuthError):
@@ -114,78 +122,73 @@ func ApplyFocus():
 		pendingFocusControl.grab_focus()
 		pendingFocusControl = null
 
+func RefreshControls():
+	var isRecovering : bool = recoveryState != RecoveryState.NONE
+	var enteringCode : bool = recoveryState == RecoveryState.ENTER_CODE
+
+	nameControl.set_visible(not enteringCode)
+	passwordControl.set_visible(recoveryState != RecoveryState.REQUEST_EMAIL)
+	confirmPasswordControl.set_visible(isAccountCreatorEnabled or enteringCode)
+	emailControl.set_visible(isAccountCreatorEnabled)
+	resetCodeControl.set_visible(enteringCode)
+	indicatorRow.set_visible(not isAccountCreatorEnabled and not isRecovering)
+	news.set_visible(not isAccountCreatorEnabled and not isRecovering)
+	agreement.set_visible(isAccountCreatorEnabled)
+
+	passwordLabel.text = "New Password" if enteringCode else "Password"
+	passwordTextControl.secret = true
+
+	SetPanelExpand(not isRecovering)
+	RefreshFocusNodes(isAccountCreatorEnabled)
+	RefreshLayout()
+	EnableButtons(true)
+
 func SetRecoveryState(state : RecoveryState):
 	recoveryState = state
 	isAccountCreatorEnabled = false
+	RefreshControls()
 
 	match recoveryState:
 		RecoveryState.NONE:
-			nameControl.set_visible(true)
-			passwordControl.set_visible(true)
-			passwordLabel.text = "Password"
-			passwordTextControl.secret = true
-			confirmPasswordControl.set_visible(false)
-			emailControl.set_visible(false)
-			resetCodeControl.set_visible(false)
-			indicatorRow.set_visible(true)
-			separator.set_visible(true)
-			news.set_visible(true)
-			agreement.set_visible(false)
-			SetPanelExpand(true)
 			passwordTextControl.clear()
 			confirmPasswordTextControl.clear()
 			resetCodeTextControl.clear()
 		RecoveryState.REQUEST_EMAIL:
-			nameControl.set_visible(true)
-			passwordControl.set_visible(false)
-			confirmPasswordControl.set_visible(false)
-			emailControl.set_visible(false)
-			resetCodeControl.set_visible(false)
-			indicatorRow.set_visible(false)
-			separator.set_visible(false)
-			news.set_visible(false)
-			agreement.set_visible(false)
-			SetPanelExpand(false)
 			nameTextControl.grab_focus()
 		RecoveryState.ENTER_CODE:
-			nameControl.set_visible(false)
-			passwordControl.set_visible(true)
-			passwordLabel.text = "New Password"
-			passwordTextControl.secret = true
 			passwordTextControl.clear()
-			confirmPasswordControl.set_visible(true)
 			confirmPasswordTextControl.clear()
-			emailControl.set_visible(false)
-			resetCodeControl.set_visible(true)
-			indicatorRow.set_visible(false)
-			separator.set_visible(false)
-			news.set_visible(false)
-			agreement.set_visible(false)
-			SetPanelExpand(false)
 			resetCodeTextControl.grab_focus()
-	EnableButtons(true)
 
 func EnableAccountCreator(enable : bool):
 	recoveryState = RecoveryState.NONE
 	isAccountCreatorEnabled = enable
+	RefreshControls()
 
-	confirmPasswordControl.set_visible(isAccountCreatorEnabled)
-	emailControl.set_visible(isAccountCreatorEnabled)
-	agreement.set_visible(isAccountCreatorEnabled)
-	resetCodeControl.set_visible(false)
-
-	nameControl.set_visible(true)
-	passwordControl.set_visible(true)
-	passwordLabel.text = "Password"
-	passwordTextControl.secret = true
-	indicatorRow.set_visible(not isAccountCreatorEnabled)
-	separator.set_visible(true)
-	news.set_visible(not isAccountCreatorEnabled)
-	SetPanelExpand(true)
-	if not isAccountCreatorEnabled:
+	if not enable:
 		confirmPasswordTextControl.clear()
-	EnableButtons(true)
-	RefreshFocusNodes(enable)
+
+func RefreshLayout():
+	var viewportSize : Vector2 = get_viewport_rect().size
+	var sidePanel : Scrollable = agreement if isAccountCreatorEnabled else news
+	var isShort : bool = viewportSize.y < CompactMaxHeight
+	var isSqueezed : bool = isShort and sidePanel.is_visible()
+	var twoColumns : bool = isSqueezed and viewportSize.x >= TwoColumnsMinWidth
+
+	content.vertical = not twoColumns
+	panel.size_flags_stretch_ratio = TwoColumnsRatio if twoColumns else 1.0
+	horizontalSeparator.set_visible(sidePanel.is_visible() and not isShort)
+	verticalSeparator.set_visible(twoColumns)
+	SetCompactFields(isSqueezed and not twoColumns)
+
+func SetCompactFields(compact : bool):
+	for control : Control in fieldControls:
+		var label : Label = control.get_node("Label")
+		var text : LineEdit = control.get_node("Container/Text")
+		if not defaultPlaceholders.has(control):
+			defaultPlaceholders[control] = text.placeholder_text
+		label.set_visible(not compact)
+		text.placeholder_text = label.text if compact else defaultPlaceholders[control]
 
 func SetPanelExpand(expand : bool):
 	if expand:
@@ -233,7 +236,21 @@ func EnableButtons(state : bool):
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Create Account", EnableAccountCreator.bind(true))
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Forgot Password", SetRecoveryState.bind(RecoveryState.REQUEST_EMAIL))
 				RefreshOnlineMode()
+			RefreshServerButtons()
 		else:
+			onlineIndicator.text = "Connecting..."
+
+# Every action behind these buttons needs the server, so they stay greyed out until the client is connected
+func RefreshServerButtons():
+	if not Launcher.GUI or not Launcher.GUI.buttonBoxes:
+		return
+
+	var reachable : bool = Network.IsServerReachable()
+	Launcher.GUI.buttonBoxes.Enable(UICommons.ButtonBox.PRIMARY, reachable)
+	if recoveryState == RecoveryState.NONE and not isAccountCreatorEnabled:
+		Launcher.GUI.buttonBoxes.Enable(UICommons.ButtonBox.SECONDARY, reachable)
+		Launcher.GUI.buttonBoxes.Enable(UICommons.ButtonBox.CANCEL, reachable)
+		if not reachable and onlineIndicator:
 			onlineIndicator.text = "Connecting..."
 
 func RefreshOnce():
@@ -275,14 +292,18 @@ func FillFieldsFromToken():
 
 #
 func Connect():
+	if not Network.IsServerReachable():
+		FillWarningLabel(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
+		return
+
 	nameText = nameTextControl.get_text()
 	if not savedToken.is_empty():
 		if Network.LoginWithToken(savedAccountName, savedToken, NetworkCommons.GetPlatform()):
 			nameText = savedAccountName
+			savedToken = ""
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
 			if Launcher.GUI.settingsWindow:
 				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
-		savedToken = ""
 		return
 	var passwordText : String = passwordTextControl.get_text()
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
@@ -294,6 +315,10 @@ func Connect():
 				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
 
 func CreateAccount():
+	if not Network.IsServerReachable():
+		FillWarningLabel(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
+		return
+
 	nameText = nameTextControl.get_text()
 	var passwordText : String = passwordTextControl.get_text()
 	var confirmText : String = confirmPasswordTextControl.get_text()
@@ -313,6 +338,10 @@ func CreateAccount():
 		FillWarningLabel(authError)
 
 func RequestReset():
+	if not Network.IsServerReachable():
+		FillWarningLabel(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
+		return
+
 	nameText = nameTextControl.get_text()
 	if nameText.is_empty():
 		nameTextControl.grab_focus()
@@ -320,6 +349,10 @@ func RequestReset():
 	Network.RequestPasswordReset(nameText)
 
 func ConfirmReset():
+	if not Network.IsServerReachable():
+		FillWarningLabel(NetworkCommons.AuthError.ERR_SERVER_UNREACHABLE)
+		return
+
 	var codeText : String = resetCodeTextControl.get_text()
 	var newPassword : String = passwordTextControl.get_text()
 	var confirmText : String = confirmPasswordTextControl.get_text()
@@ -387,5 +420,7 @@ func _on_remember_me_toggled(toggled_on : bool):
 
 func _ready():
 	Launcher.launchModeUpdated.connect(OnlineMode)
+	get_viewport().size_changed.connect(RefreshLayout)
+	RefreshLayout()
 	if LoadSavedToken():
 		rememberMeCheckBox.button_pressed = true

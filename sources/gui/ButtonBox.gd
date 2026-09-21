@@ -13,19 +13,24 @@ func _bind(button : Button, buttonName : String, callable : Callable):
 	_name(button, buttonName)
 
 func _call(button : Button):
-	button.pressed.emit()
+	if not button.disabled:
+		button.pressed.emit()
 
 func _name(button : Button, buttonName : String):
 	button.set_text(buttonName)
 
 func _clear(button : Button):
 	button.set_visible(false)
+	button.set_disabled(false)
 	button.set_text("")
 	Callback.ClearCallbacks(button.pressed)
 
 func _focus(button : Button):
-	if button.visible:
+	if button.visible and not button.disabled:
 		button.grab_focus()
+
+func _enable(button : Button, state : bool):
+	button.set_disabled(not state)
 
 # Public functions
 func Bind(side : UICommons.ButtonBox, buttonName : String, callable : Callable):
@@ -42,6 +47,14 @@ func Call(side : UICommons.ButtonBox):
 		UICommons.ButtonBox.SECONDARY:	_call(secondaryButton)
 		UICommons.ButtonBox.TERTIARY:	_call(tertiaryButton)
 		UICommons.ButtonBox.CANCEL:		_call(cancelButton)
+		_:								assert(false, "Unknown button box side")
+
+func Enable(side : UICommons.ButtonBox, state : bool):
+	match side:
+		UICommons.ButtonBox.PRIMARY:	_enable(primaryButton, state)
+		UICommons.ButtonBox.SECONDARY:	_enable(secondaryButton, state)
+		UICommons.ButtonBox.TERTIARY:	_enable(tertiaryButton, state)
+		UICommons.ButtonBox.CANCEL:		_enable(cancelButton, state)
 		_:								assert(false, "Unknown button box side")
 
 func Rename(side : UICommons.ButtonBox, buttonName : String):
@@ -79,7 +92,7 @@ func TrapFocus():
 	var visibleButtons : Array[Button] = []
 	var visibleButtonCount : int = 0
 	for btn in [cancelButton, tertiaryButton, secondaryButton, primaryButton]:
-		if btn and btn.visible:
+		if btn and btn.visible and not btn.disabled:
 			visibleButtons.append(btn)
 			visibleButtonCount += 1
 

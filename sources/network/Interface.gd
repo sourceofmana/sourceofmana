@@ -18,6 +18,9 @@ var rtcConnections : Dictionary[int, WebRTCPeerConnection]	= {}
 var rtcIceServers : Array[Dictionary]				= NetworkCommons.IceServers
 
 #
+func IsPeerConnected() -> bool:
+	return multiplayerAPI.has_multiplayer_peer() and multiplayerAPI.multiplayer_peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED
+
 func Bulk(methodName : StringName, args : Array, peerID : int):
 	if methodName not in bulks[peerID]:
 		bulks[peerID][methodName] = []
@@ -107,5 +110,6 @@ func Destroy():
 	if currentPeer:
 		currentPeer.close()
 	interfaceID = NetworkCommons.PeerUnknownID
-	Launcher.Root.remove_child(self)
+	if is_inside_tree():
+		Launcher.Root.remove_child(self)
 	queue_free()

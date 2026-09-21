@@ -414,7 +414,13 @@ func CommandModifier(effect : CellCommons.Modifier, value : float, _peerID : int
 	Launcher.Player.stat.RefreshAttributes()
 
 #
+func IsActiveClient() -> bool:
+	return Network.Client == self or Network.WebRTCClient == self
+
 func ConnectServer():
+	if not IsActiveClient():
+		return
+
 	Network.clientConnected = true
 	if not isOffline:
 		interfaceID = multiplayerAPI.get_unique_id()
@@ -434,6 +440,9 @@ func ConnectServer():
 		Network.RequestRtcUpgrade()
 
 func DisconnectServer():
+	if not IsActiveClient():
+		return
+
 	Network.clientConnected = false
 	if Network.webRTCActive:
 		Util.PrintLog("Client", "WebSocket dropped, continuing on WebRTC")
@@ -448,6 +457,9 @@ func ConnectionFailed():
 
 #
 func _enter_tree():
+	if not IsActiveClient():
+		return
+
 	if isOffline:
 		interfaceID = NetworkCommons.PeerOfflineID
 		ConnectServer.call_deferred()
@@ -555,6 +567,7 @@ func _OnRtcServerDisconnected():
 		DisconnectServer()
 
 func Destroy():
+	Peers.RemovePeer(NetworkCommons.PeerAuthorityID)
 	if multiplayerAPI.connected_to_server.is_connected(ConnectServer):
 		multiplayerAPI.connected_to_server.disconnect(ConnectServer)
 	if multiplayerAPI.connection_failed.is_connected(ConnectionFailed):

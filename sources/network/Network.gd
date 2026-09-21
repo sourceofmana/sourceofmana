@@ -525,6 +525,13 @@ func NotifyGlobal(callbackName : StringName, args : Array):
 		NotifyArea(area, callbackName, args)
 
 # Peer calls
+func IsServerReachable() -> bool:
+	if Client == null or Client.isOffline:
+		return true
+	if webRTCActive and WebRTCClient:
+		return WebRTCClient.IsPeerConnected()
+	return Client.IsPeerConnected()
+
 func CallServer(methodName : StringName, args : Array, peerID : int, actionDelta : int = NetworkCommons.DelayDefault) -> bool:
 	if not Peers.Footprint(peerID, methodName, actionDelta):
 		return false
