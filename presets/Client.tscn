@@ -9,4 +9,5 @@
 layer = 128
 
 [node name="Audio" type="AudioStreamPlayer" parent="." unique_id=1461097546]
+bus = &"Music"
 script = ExtResource("2_1wl3n")

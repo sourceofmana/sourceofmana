@@ -116,8 +116,8 @@ func TargetAlteration(agentRID : int, targetRID : int, value : int, alteration :
 		entity.interactive.DisplayAlteration.call_deferred(entity, caller, value, alteration, skillID)
 
 	if hasFeedback:
-		if caller.sfx:
-			entity.sfx.HandleAlteration(alteration)
+		if entity.sfx:
+			entity.sfx.HandleAlteration(alteration, caller == Launcher.Player or entity.sfx.IsLocallyInvolved())
 
 		if entity == Launcher.Player:
 			match alteration:

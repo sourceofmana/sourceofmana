@@ -308,8 +308,15 @@ const MonsterTextColor : Color				= Color.DARK_SALMON
 
 # Sfx
 const SfxMaxDistance : float				= 500.0
+const MasterBus : StringName				= &"Master"
+const MusicBus : StringName					= &"Music"
 const SfxAlterationBus : StringName			= &"Alteration SFX"
+const SfxNotificationBus : StringName		= &"Notification SFX"
 const SfxStateBus : StringName				= &"State SFX"
+const NotificationAlterations : Array[Alteration] = [Alteration.LVL_UP, Alteration.SKILL_UP, Alteration.QUEST_COMPLETE, Alteration.QUEST_UPDATE, Alteration.WHISPER]
+
+static func IsNotificationAlteration(alteration : Alteration) -> bool:
+	return alteration in NotificationAlterations
 
 # Interactive
 const interactionDisplayOffset : int		= 32

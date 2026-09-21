@@ -14,6 +14,7 @@ class_name EntityData
 @export var _equipment : Array[ItemCell]			= []
 @export var _customTexture : Texture2D				= null
 @export var _customMaterial : Material				= null
+@export var _groundOffset : int						= 0
 @export var _displayName : bool						= false
 @export var _direction : ActorCommons.Direction		= ActorCommons.Direction.UNKNOWN
 @export var _state : ActorCommons.State				= ActorCommons.State.UNKNOWN
@@ -59,6 +60,7 @@ func GetMergedEntity() -> EntityData:
 	merged._radius = _radius if _radius != 0 else merged._radius
 	merged._customTexture = _customTexture if _customTexture != null else merged._customTexture
 	merged._customMaterial = _customMaterial if _customMaterial != null else merged._customMaterial
+	merged._groundOffset = _groundOffset if _groundOffset != 0 else merged._groundOffset
 	merged._displayName = _displayName if _displayName != false else merged._displayName
 	merged._direction = _direction if _direction != ActorCommons.Direction.UNKNOWN else merged._direction
 	merged._state = _state if _state != ActorCommons.State.UNKNOWN else merged._state

@@ -14,9 +14,13 @@ const creditsJson : JSON						= preload("res://data/db/credits.json")
 	"Render-Lighting": [init_lighting, set_lighting, apply_lighting, $Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting],
 	"Render-HQ4x": [init_hq4x, set_hq4x, apply_hq4x, $Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4],
 	"Render-CRT": [init_crt, set_crt, apply_crt, $Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/CRT],
-	"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider"],
-	"Audio-Alteration": [init_audioalteration, set_audioalteration, apply_audioalteration, $"Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider"],
-	"Audio-State": [init_audiostate, set_audiostate, apply_audiostate, $"Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider"],
+	"Audio-General": [init_audiogeneral, set_audiogeneral, apply_audiogeneral, $"Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Global/HSlider"],
+	"Audio-Music": [init_audiomusic, set_audiomusic, apply_audiomusic, $"Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Music/HSlider"],
+	"Audio-Alteration": [init_audioalteration, set_audioalteration, apply_audioalteration, $"Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Alteration SFX/HSlider"],
+	"Audio-Notification": [init_audionotification, set_audionotification, apply_audionotification, $"Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Notification SFX/HSlider"],
+	"Audio-State": [init_audiostate, set_audiostate, apply_audiostate, $"Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/State SFX/HSlider"],
+	"Audio-Others": [init_audioothers, set_audioothers, apply_audioothers, $"Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Other Entities/HSlider"],
+	"Audio-MuteUnfocused": [init_audiomuteunfocused, set_audiomuteunfocused, apply_audiomuteunfocused, $Layout/Margin/TabBar/Audio/VBoxContainer/MuteUnfocused],
 	"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
 	"Session-FirstLogin": [init_sessionfirstlogin, set_sessionfirstlogin, apply_sessionfirstlogin, null],
 	"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
@@ -198,8 +202,19 @@ func set_audiogeneral(volumeRatio : float):
 	SetVal("Audio-General", volumeRatio)
 	apply_audiogeneral(volumeRatio)
 func apply_audiogeneral(volumeRatio : float):
-	if Launcher.Audio:
-		Launcher.Audio.SetVolume(Util.VolumeRatioToDb(volumeRatio))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(ActorCommons.MasterBus), Util.VolumeRatioToDb(volumeRatio))
+
+# Audio Music
+func init_audiomusic(apply : bool):
+	var volumeRatio : float = GetVal("Audio-Music")
+	renderAccessors["Audio-Music"][ACC_TYPE.LABEL].value = volumeRatio
+	if apply:
+		apply_audiomusic(volumeRatio)
+func set_audiomusic(volumeRatio : float):
+	SetVal("Audio-Music", volumeRatio)
+	apply_audiomusic(volumeRatio)
+func apply_audiomusic(volumeRatio : float):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(ActorCommons.MusicBus), Util.VolumeRatioToDb(volumeRatio))
 
 # Audio Alteration SFX
 func init_audioalteration(apply : bool):
@@ -213,6 +228,18 @@ func set_audioalteration(volumeRatio : float):
 func apply_audioalteration(volumeRatio : float):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(ActorCommons.SfxAlterationBus), Util.VolumeRatioToDb(volumeRatio))
 
+# Audio Notification SFX
+func init_audionotification(apply : bool):
+	var volumeRatio : float = GetVal("Audio-Notification")
+	renderAccessors["Audio-Notification"][ACC_TYPE.LABEL].value = volumeRatio
+	if apply:
+		apply_audionotification(volumeRatio)
+func set_audionotification(volumeRatio : float):
+	SetVal("Audio-Notification", volumeRatio)
+	apply_audionotification(volumeRatio)
+func apply_audionotification(volumeRatio : float):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(ActorCommons.SfxNotificationBus), Util.VolumeRatioToDb(volumeRatio))
+
 # Audio State SFX
 func init_audiostate(apply : bool):
 	var volumeRatio : float = GetVal("Audio-State")
@@ -224,6 +251,31 @@ func set_audiostate(volumeRatio : float):
 	apply_audiostate(volumeRatio)
 func apply_audiostate(volumeRatio : float):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(ActorCommons.SfxStateBus), Util.VolumeRatioToDb(volumeRatio))
+
+# Audio Other Entities
+func init_audioothers(apply : bool):
+	var volumeRatio : float = GetVal("Audio-Others")
+	renderAccessors["Audio-Others"][ACC_TYPE.LABEL].value = volumeRatio
+	if apply:
+		apply_audioothers(volumeRatio)
+func set_audioothers(volumeRatio : float):
+	SetVal("Audio-Others", volumeRatio)
+	apply_audioothers(volumeRatio)
+func apply_audioothers(volumeRatio : float):
+	EntitySfx.othersVolumeDb = Util.VolumeRatioToDb(volumeRatio)
+
+# Audio Mute When Unfocused
+func init_audiomuteunfocused(apply : bool):
+	var enable : bool = GetVal("Audio-MuteUnfocused")
+	renderAccessors["Audio-MuteUnfocused"][ACC_TYPE.LABEL].set_pressed_no_signal(enable)
+	if apply:
+		apply_audiomuteunfocused(enable)
+func set_audiomuteunfocused(enable : bool):
+	SetVal("Audio-MuteUnfocused", enable)
+	apply_audiomuteunfocused(enable)
+func apply_audiomuteunfocused(enable : bool):
+	if Launcher.Audio:
+		Launcher.Audio.SetMuteUnfocused(enable)
 
 # Session Account Name
 func init_sessionaccountname(apply : bool):

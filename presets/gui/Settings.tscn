@@ -8,7 +8,7 @@
 
 [node name="Panel" type="PanelContainer" unique_id=538660767]
 show_behind_parent = true
-custom_minimum_size = Vector2(180, 100)
+custom_minimum_size = Vector2(300, 100)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -170,59 +170,134 @@ metadata/_tab_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Global Volume" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer" unique_id=508225996]
+[node name="VolumeVBox" type="VBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer" unique_id=201837481]
+layout_mode = 2
+
+[node name="Volume" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox" unique_id=201837482]
+layout_mode = 2
+text = "Volume"
+
+[node name="Global" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox" unique_id=508225996]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume" unique_id=591312565]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Global Volume"
-
-[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume" unique_id=1319659749]
-layout_mode = 2
-size_flags_horizontal = 3
 tooltip_text = "Sets the volume of every sound in the game at once."
+
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Global" unique_id=591312565]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SettingsLabel"
+text = "Global"
+
+[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Global" unique_id=1319659749]
+layout_mode = 2
+size_flags_horizontal = 3
 max_value = 1.0
 step = 0.1
 tick_count = 10
 ticks_on_borders = true
 
-[node name="Alteration SFX Volume" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer" unique_id=201837465]
+[node name="Music" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox" unique_id=201837471]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "Sets the volume of the background music."
 
-[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume" unique_id=201837466]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Music" unique_id=201837472]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Alteration SFX Volume"
+theme_type_variation = &"SettingsLabel"
+text = "Music"
 
-[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume" unique_id=201837467]
+[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Music" unique_id=201837473]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Sets the volume of combat and reward sounds like hits, heals and level ups."
 max_value = 1.0
 step = 0.1
 tick_count = 10
 ticks_on_borders = true
 
-[node name="State SFX Volume" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer" unique_id=201837468]
+[node name="Alteration SFX" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox" unique_id=201837465]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "Sets the volume of combat feedback like hits, crits, dodges and heals."
 
-[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume" unique_id=201837469]
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Alteration SFX" unique_id=201837466]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "State SFX Volume"
+theme_type_variation = &"SettingsLabel"
+text = "Combat"
 
-[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume" unique_id=201837470]
+[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Alteration SFX" unique_id=201837467]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Sets the volume of sounds tied to what characters are doing."
 max_value = 1.0
 step = 0.1
 tick_count = 10
 ticks_on_borders = true
+
+[node name="Notification SFX" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox" unique_id=201837474]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "Sets the volume of alerts meant for you: whispers, level ups, skill ups and quest updates."
+
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Notification SFX" unique_id=201837475]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SettingsLabel"
+text = "Alerts"
+
+[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Notification SFX" unique_id=201837476]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+tick_count = 10
+ticks_on_borders = true
+
+[node name="State SFX" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox" unique_id=201837468]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "Sets the volume of creatures and surrounding objects: attacks, deaths and chests opening."
+
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/State SFX" unique_id=201837469]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SettingsLabel"
+text = "Creatures & Objects"
+
+[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/State SFX" unique_id=201837470]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+tick_count = 10
+ticks_on_borders = true
+
+[node name="Other Entities" type="HBoxContainer" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox" unique_id=201837477]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "Sets the volume of fights you are not part of. Your own actions and your target stay at full volume."
+
+[node name="Label" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Other Entities" unique_id=201837478]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SettingsLabel"
+text = "Other Fights"
+
+[node name="HSlider" type="HSlider" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Other Entities" unique_id=201837479]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+tick_count = 10
+ticks_on_borders = true
+
+[node name="HSeparator" type="HSeparator" parent="Layout/Margin/TabBar/Audio/VBoxContainer" unique_id=201837483]
+layout_mode = 2
+
+[node name="MuteUnfocused" type="CheckButton" parent="Layout/Margin/TabBar/Audio/VBoxContainer" unique_id=201837480]
+layout_mode = 2
+tooltip_text = "Silences the game while its window is in the background."
+text = "Mute When Unfocused"
 
 [node name="Input" type="TabContainer" parent="Layout/Margin/TabBar" unique_id=753213710]
 visible = false
@@ -352,9 +427,13 @@ alignment = 1
 [connection signal="toggled" from="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/Lighting" to="." method="set_lighting"]
 [connection signal="toggled" from="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/HQx4" to="." method="set_hq4x"]
 [connection signal="toggled" from="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox/CRT" to="." method="set_crt"]
-[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/Global Volume/HSlider" to="." method="set_audiogeneral"]
-[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/Alteration SFX Volume/HSlider" to="." method="set_audioalteration"]
-[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/State SFX Volume/HSlider" to="." method="set_audiostate"]
+[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Global/HSlider" to="." method="set_audiogeneral"]
+[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Music/HSlider" to="." method="set_audiomusic"]
+[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Alteration SFX/HSlider" to="." method="set_audioalteration"]
+[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Notification SFX/HSlider" to="." method="set_audionotification"]
+[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/State SFX/HSlider" to="." method="set_audiostate"]
+[connection signal="value_changed" from="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox/Other Entities/HSlider" to="." method="set_audioothers"]
+[connection signal="toggled" from="Layout/Margin/TabBar/Audio/VBoxContainer/MuteUnfocused" to="." method="set_audiomuteunfocused"]
 [connection signal="pressed" from="Layout/Margin/TabBar/Account/AccountVBox/ChangeButton" to="Layout/Margin/TabBar/Account" method="_on_change_button_pressed"]
 [connection signal="toggled" from="Layout/Margin/TabBar/Privacy/PrivacyVBox/BugReports" to="." method="set_bugreports"]
 [connection signal="toggled" from="Layout/Margin/TabBar/Privacy/PrivacyVBox/LocalServer" to="." method="set_localserver"]

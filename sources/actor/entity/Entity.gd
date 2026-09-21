@@ -115,7 +115,7 @@ func LevelUp():
 	if interactive:
 		interactive.DisplayLevelUp.call_deferred()
 	if sfx:
-		sfx.HandleAlteration(ActorCommons.Alteration.LVL_UP)
+		sfx.HandleAlteration(ActorCommons.Alteration.LVL_UP, Launcher.Player == self)
 
 #
 func _physics_process(delta : float):

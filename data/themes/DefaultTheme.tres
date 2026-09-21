@@ -150,12 +150,6 @@ border_color = Color(0, 0, 0, 0)
 expand_margin_left = 6.0
 expand_margin_right = 6.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_listentry"]
-content_margin_left = 4.0
-content_margin_top = 1.0
-content_margin_right = 4.0
-content_margin_bottom = 1.0
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lpei3"]
 content_margin_left = 6.0
 content_margin_top = 4.0
@@ -249,6 +243,12 @@ texture_margin_right = 1.0
 texture_margin_bottom = 1.0
 expand_margin_right = 5.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_listentry"]
+content_margin_left = 4.0
+content_margin_top = 1.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5wphw"]
 texture = ExtResource("14_ceaab")
 texture_margin_left = 61.0
@@ -336,6 +336,9 @@ texture_margin_top = 5.0
 texture_margin_right = 6.0
 texture_margin_bottom = 6.0
 region_rect = Rect2(0, 0, 13, 16)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_settingslabel"]
+content_margin_left = 6.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8wb5d"]
 content_margin_left = 4.0
@@ -610,6 +613,8 @@ PopupMenu/styles/hover = SubResource("StyleBoxFlat_yh83i")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_0u4tm")
 PopupMenu/styles/panel_disabled = SubResource("StyleBoxFlat_wjx64")
 PopupPanel/styles/panel = SubResource("StyleBoxTexture_ik3rj")
+SettingsLabel/base_type = &"Label"
+SettingsLabel/styles/normal = SubResource("StyleBoxEmpty_settingslabel")
 SmallLabel/base_type = &"Label"
 SmallLabel/fonts/font = ExtResource("22_e68kl")
 TabBar/colors/drop_mark_color = Color(0.933, 0.847, 0.631, 1)
