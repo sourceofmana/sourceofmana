@@ -14,6 +14,7 @@ var isCharacterCreatorEnabled : bool					= false
 var charactersInfo : Array[Dictionary]					= []
 var charactersNode : Array[Entity]						= []
 var currentCharacterID : int							= ActorCommons.InvalidCharacterSlot
+var pendingFocusControl : Control						= null
 
 #
 func FillWarningLabel(err : NetworkCommons.CharacterError):
@@ -35,12 +36,16 @@ func FillWarningLabel(err : NetworkCommons.CharacterError):
 			warn = "Could not connect to the server (Error %d)." % err
 		NetworkCommons.CharacterError.ERR_MISSING_PARAMS:
 			warn = "Some character information are missing."
+			RequestFocus(characterNameLineEdit)
 		NetworkCommons.CharacterError.ERR_NAME_AVAILABLE:
 			warn = "Character name not available."
+			RequestFocus(characterNameLineEdit)
 		NetworkCommons.CharacterError.ERR_NAME_VALID:
 			warn = "Name should should only include alpha-numeric characters and symbols."
+			RequestFocus(characterNameLineEdit)
 		NetworkCommons.CharacterError.ERR_NAME_SIZE:
 			warn = "Name length should be inbetween %d and %d character long." % [NetworkCommons.PlayerNameMinSize, NetworkCommons.PlayerNameMaxSize]
+			RequestFocus(characterNameLineEdit)
 		NetworkCommons.CharacterError.ERR_EMPTY_ACCOUNT:
 			EnableCharacterCreator(true)
 		_:
@@ -49,6 +54,17 @@ func FillWarningLabel(err : NetworkCommons.CharacterError):
 	if not warn.is_empty():
 		warn = "[color=#%s]%s[/color]" % [UICommons.WarnTextColor.to_html(false), warn]
 	Launcher.GUI.notificationLabel.AddNotification(warn)
+
+func RequestFocus(control : Control):
+	pendingFocusControl = control
+	if control.is_visible_in_tree():
+		ApplyFocus.call_deferred()
+
+func ApplyFocus():
+	if pendingFocusControl:
+		pendingFocusControl.release_focus()
+		pendingFocusControl.grab_focus()
+		pendingFocusControl = null
 
 func FillMissingCharacterInfo(info : Dictionary):
 	Util.DicCheckOrAdd(info, "nickname", "")
@@ -237,7 +253,9 @@ func EnableCharacterCreator(enable : bool):
 	attributesPanel.set_visible(enable)
 
 	if enable:
-		characterNameLineEdit.grab_focus()
+		RequestFocus(characterNameLineEdit)
+	else:
+		pendingFocusControl = null
 
 	if Launcher.GUI.buttonBoxes:
 		Launcher.GUI.buttonBoxes.ClearAll()
@@ -335,7 +353,10 @@ func _physics_process(_delta: float):
 				entity.visual.Refresh()
 
 func _on_visibility_changed():
-	if not visible:
+	if visible:
+		if pendingFocusControl and pendingFocusControl.is_visible_in_tree():
+			ApplyFocus.call_deferred()
+	else:
 		if statsPanel:
 			statsPanel.set_visible(false)
 		if traitsPanel:
