@@ -12,9 +12,11 @@ func OnStart():
 			OnFeelingBetter()
 		ProgressCommons.TUTORIAL.CLOTHES_GIVEN:
 			OnExplainUI()
-		ProgressCommons.TUTORIAL.UI_EXPLAINED:
+		ProgressCommons.TUTORIAL.UI_EXPLAINED: # Deprecated
 			Mes("Is there something else on your mind?")
-			OnMainChoice()
+			SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.ELANORE_DONE)
+			OnSendToKael()
+			Action(OnMainChoice)
 		_:
 			Mes("Welcome back. What can I do for you?")
 			OnMainChoice()
@@ -80,14 +82,21 @@ func OnExplainUI():
 	HighlightUI(UICommons.UITarget.INVENTORY)
 	Narrate("On the inventory window you can handle your items, equipment, potions and any collectibles you found.")
 	HighlightUI(UICommons.UITarget.NONE)
-	SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.UI_EXPLAINED)
-	Action(OnMainChoice)
+	SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.ELANORE_DONE)
+	Mes("But I should not keep you here all day. You are new to the city and will want to find your footing.")
+	OnSendToKael()
+	DisplayActions(["gp_interact", "gp_target"])
+	Narrate("Use Interact near an NPC to talk to them. You can also use Target to select one first.")
+	Action(Farewell)
 
 # Main choice loop
 func HasAllIngredients() -> bool:
 	return HasItem(DB.GetCellHash("Maggot Slime"), 6) and HasItem(DB.GetCellHash("Water Bottle")) and HasItem(DB.GetCellHash("Pitaya"))
 
 func OnMainChoice():
+	if GetQuest(ProgressCommons.Quest.TUTORIAL) < ProgressCommons.CompletedProgress:
+		Choice("Where should I go now?", OnDirections)
+
 	var sideQuestState : int = GetQuest(ProgressCommons.Quest.ELANORE_POTION)
 	if sideQuestState == ProgressCommons.ELANORE_POTION.STARTED and HasAllIngredients():
 		Choice("I have your ingredients.", OnPotionQuestTurnIn)
@@ -95,21 +104,28 @@ func OnMainChoice():
 		Choice("About those ingredients...", OnPotionQuestReminder)
 	else:
 		Choice("Can I help you with anything?", OnHelpWithPotions)
+
 	Choice("What is Kaore?", OnExplainKaore)
 	Choice("Who are you?", OnExplainSelf)
-	if GetQuest(ProgressCommons.Quest.TUTORIAL) >= ProgressCommons.TUTORIAL.ELANORE_DONE:
+
+	if GetQuest(ProgressCommons.Quest.TUTORIAL) == ProgressCommons.CompletedProgress:
 		Choice("Thank you again but I have to leave", Farewell)
 
 # Help with potions
 func OnHelpWithPotions():
 	Mes("Yes! I make lots of Healing Potions for our guards and the people of this city. They're quick remedies for most ailments and really help keep our people safer.")
 	Mes("Healing Potions require knowledge to make and also some key ingredients. Maybe you could get back on your feet by helping me gather some of these ingredients?")
+	Choice("I'll gather them for you.", OnPotionQuestAccept)
+	Choice("Maybe later.", OnPotionQuestDecline)
+
+func OnPotionQuestAccept():
 	Mes("I need six Maggot Slimes, one Water and one Pitaya. Bring those to me and I will make you a Cactus Potion in return.")
 	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.STARTED)
-	if GetQuest(ProgressCommons.Quest.TUTORIAL) < ProgressCommons.TUTORIAL.ELANORE_DONE:
-		OnSendToKael()
-	else:
-		Action(OnMainChoice)
+	Action(OnMainChoice)
+
+func OnPotionQuestDecline():
+	Mes("The offer stands whenever you're ready.")
+	Action(OnMainChoice)
 
 func OnPotionQuestReminder():
 	Mes("I still need six Maggot Slimes, one Water and one Pitaya. Come back when you have them.")
@@ -145,14 +161,24 @@ func Farewell():
 	else:
 		Chat("Stay safe.")
 
-# Tutorial conclusion
+# Directions
+func OnDirections():
+	var questState : int = GetQuest(ProgressCommons.Quest.TUTORIAL)
+	if questState < ProgressCommons.TUTORIAL.KAEL_DONE:
+		OnSendToKael()
+	elif questState < ProgressCommons.CompletedProgress:
+		OnSendToEkinu()
+	Action(Farewell)
+
 func OnSendToKael():
-	Mes("But I should not keep you here all day. You are new to the city and will want to find your footing.")
 	Mes("Watchman Kael is currently in charge of the local patrol from within our wall, you should speak to him if you're looking for work.")
 	LookAtNpc("Kael")
 	Mes("He is standing northeast from here near some palm trees.")
 	Mes("Just follow this wall to the corner and walk up.")
 	ResetCamera()
-	SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.ELANORE_DONE)
-	DisplayActions(["gp_interact", "gp_target"])
-	Narrate("Use Interact near an NPC to talk to them. You can also use Target to select one first.")
+
+func OnSendToEkinu():
+	Mes("Watchman Ekinu is stationed at the gates south from here.")
+	LookAtNpc("Ekinu")
+	Mes("Tell him what you did for Kael he will know what to do with you next.")
+	ResetCamera()

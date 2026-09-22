@@ -7,7 +7,7 @@ func OnStart():
 	var questState : int = GetQuest(ProgressCommons.Quest.TUTORIAL)
 	if questState < ProgressCommons.TUTORIAL.ELANORE_DONE:
 		OnSendToElanore()
-	if questState == ProgressCommons.TUTORIAL.ELANORE_DONE:
+	elif questState == ProgressCommons.TUTORIAL.ELANORE_DONE:
 		OnFirstMeeting()
 	elif questState == ProgressCommons.TUTORIAL.KAEL_MET:
 		OnCheckProgress()
