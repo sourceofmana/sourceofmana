@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://bktu5qj8cn10k" path="res://sources/gui/Notification.gd" id="2_kd5n5"]
 
 [node name="Notification" type="Control" unique_id=1794777750]
-custom_minimum_size = Vector2(500, 0)
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 4
@@ -29,8 +28,6 @@ anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -250.0
-offset_right = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4

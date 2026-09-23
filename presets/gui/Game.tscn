@@ -113,7 +113,7 @@ size_flags_vertical = 4
 
 [node name="Notification" parent="Overlay/VSections/Indicators/Info" unique_id=1195237028 instance=ExtResource("17_64u4l")]
 visible = false
-custom_minimum_size = Vector2(500, 36)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
 [node name="PickUp" parent="Overlay/VSections/Indicators/Info" unique_id=530703044 instance=ExtResource("21_5ivxk")]
