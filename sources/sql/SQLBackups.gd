@@ -9,9 +9,9 @@ var stopRequested : bool				= false
 #
 func CreateDailyBackup() -> String:
 	var date : Dictionary = Time.get_datetime_dict_from_system()
-	var frequencyDir : String = SQLCommons.BackupFrequency.keys()[SQLCommons.BackupFrequency.DAILY]
-	var backupFile : String = SQLCommons.GetBackupPath() + "%s/%d-%02d-%02d_%02d-%02d-%02d" % [frequencyDir, date.year, date.month, date.day, date.hour, date.minute, date.second] + Path.DBExt
-	if Launcher.SQL.db.backup_to(backupFile):
+	var frequencyDir : String = SQLCommons.GetBackupFrequencyPath(SQLCommons.BackupFrequency.DAILY)
+	var backupFile : String = frequencyDir + "%d-%02d-%02d_%02d-%02d-%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second] + Path.DBExt
+	if Launcher.SQL.Backup(backupFile):
 		Util.PrintInfo("SQL", "Backup created: " + backupFile)
 		return backupFile
 	else:
@@ -19,8 +19,7 @@ func CreateDailyBackup() -> String:
 		return ""
 
 func CopyBackup(backupFilePath : String, backupFrequency : SQLCommons.BackupFrequency) -> String:
-	var frequencyDir : String = SQLCommons.BackupFrequency.keys()[backupFrequency]
-	var newFile : String = SQLCommons.GetBackupPath() + "%s/%s" % [frequencyDir, backupFilePath.get_file()]
+	var newFile : String = SQLCommons.GetBackupFrequencyPath(backupFrequency) + backupFilePath.get_file()
 	var errorCode : Error = DirAccess.copy_absolute(backupFilePath, newFile)
 
 	if (errorCode == Error.OK):
@@ -30,12 +29,24 @@ func CopyBackup(backupFilePath : String, backupFrequency : SQLCommons.BackupFreq
 		Util.PrintLog("SQL", "Backup failed for file %s with code %d" % [newFile, errorCode])
 		return ""
 
+func GetLastBackupTimestamp(backupFrequency : SQLCommons.BackupFrequency) -> int:
+	var frequencyDir : String = SQLCommons.GetBackupFrequencyPath(backupFrequency)
+	var dir : DirAccess = DirAccess.open(frequencyDir)
+	if not dir:
+		return 0
+
+	var lastTimestamp : int = 0
+	for file in dir.get_files():
+		if file.get_extension() == "db":
+			lastTimestamp = maxi(lastTimestamp, FileAccess.get_modified_time(frequencyDir + file))
+
+	return lastTimestamp
+
 func PruneBackups() -> void:
 	for backupFrequency in SQLCommons.BackupFrequency.values():
-		var backupFrequencyDir = SQLCommons.BackupFrequency.keys()[backupFrequency]
-		var dir : DirAccess = DirAccess.open(SQLCommons.GetBackupPath() + "/" + backupFrequencyDir)
+		var dir : DirAccess = DirAccess.open(SQLCommons.GetBackupFrequencyPath(backupFrequency))
 		if not dir:
-			return
+			continue
 		
 		var dirFiles : PackedStringArray = dir.get_files()
 		var backupFiles : PackedStringArray = []
@@ -57,9 +68,9 @@ func PruneBackups() -> void:
 func Run():
 	Thread.set_thread_safety_checks_enabled(false)
 
-	var lastDailyBackupTimestamp : int = SQLCommons.Timestamp()
-	var lastWeeklyBackupTimestamp : int = SQLCommons.Timestamp()
-	var lastMonthlyBackupTimestamp : int = SQLCommons.Timestamp()
+	var lastDailyBackupTimestamp : int = GetLastBackupTimestamp(SQLCommons.BackupFrequency.DAILY)
+	var lastWeeklyBackupTimestamp : int = GetLastBackupTimestamp(SQLCommons.BackupFrequency.WEEKLY)
+	var lastMonthlyBackupTimestamp : int = GetLastBackupTimestamp(SQLCommons.BackupFrequency.MONTHLY)
 	var lastPlayerUpdateTimestamp : int = SQLCommons.Timestamp()
 	var lastStopCheckTimestamp : int = SQLCommons.Timestamp()
 
@@ -70,15 +81,14 @@ func Run():
 			var backupFilePath: String = CreateDailyBackup()
 			lastDailyBackupTimestamp = timestamp
 
-			if timestamp - lastWeeklyBackupTimestamp >= SQLCommons.WeeklyBackupIntervalSec \
-					and !backupFilePath.is_empty():
-				backupFilePath = CopyBackup(backupFilePath, SQLCommons.BackupFrequency.WEEKLY)
-				lastWeeklyBackupTimestamp = timestamp
-			
-			if timestamp - lastMonthlyBackupTimestamp >= SQLCommons.MonthlyBackupIntervalSec \
-					and !backupFilePath.is_empty():
-				CopyBackup(backupFilePath, SQLCommons.BackupFrequency.MONTHLY)
-				lastMonthlyBackupTimestamp = timestamp
+			if not backupFilePath.is_empty():
+				if timestamp - lastWeeklyBackupTimestamp >= SQLCommons.WeeklyBackupIntervalSec \
+						and not CopyBackup(backupFilePath, SQLCommons.BackupFrequency.WEEKLY).is_empty():
+					lastWeeklyBackupTimestamp = timestamp
+
+				if timestamp - lastMonthlyBackupTimestamp >= SQLCommons.MonthlyBackupIntervalSec \
+						and not CopyBackup(backupFilePath, SQLCommons.BackupFrequency.MONTHLY).is_empty():
+					lastMonthlyBackupTimestamp = timestamp
 
 			PruneBackups()
 
@@ -112,8 +122,6 @@ func _init():
 		DirAccess.make_dir_absolute(backupPath)
 
 	for backupFrequency in SQLCommons.BackupFrequency.values():
-		var frequencyDir : String = SQLCommons.GetBackupPath() + SQLCommons.BackupFrequency.keys()[backupFrequency] + "/"
+		var frequencyDir : String = SQLCommons.GetBackupFrequencyPath(backupFrequency)
 		if not DirAccess.dir_exists_absolute(frequencyDir):
 			DirAccess.make_dir_absolute(frequencyDir)
-
-	Start()

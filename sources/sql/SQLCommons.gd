@@ -38,6 +38,9 @@ static func Timestamp() -> int:
 static func GetBackupPath() -> String:
 	return Path.Local + (BackupPathTesting if LauncherCommons.IsTesting else BackupPath)
 
+static func GetBackupFrequencyPath(backupFrequency : BackupFrequency) -> String:
+	return GetBackupPath() + BackupFrequency.keys()[backupFrequency] + "/"
+
 static func GetDBPath() -> String:
 	return Path.Local + (DBNameTesting if LauncherCommons.IsTesting else DBName)
 

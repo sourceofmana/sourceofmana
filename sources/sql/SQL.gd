@@ -505,6 +505,12 @@ func QueryBindings(query : String, params : Array) -> Array[Dictionary]:
 	queryMutex.unlock()
 	return data
 
+func Backup(targetPath : String) -> bool:
+	queryMutex.lock()
+	var ret : bool = db.backup_to(targetPath)
+	queryMutex.unlock()
+	return ret
+
 func ExecuteBindings(query : String, params : Array) -> bool:
 	queryMutex.lock()
 	var ret : bool = db.query_with_bindings(query, params)
@@ -536,6 +542,9 @@ func _post_launch():
 	CleanExpiredTokens()
 
 	isInitialized = true
+
+	if backups:
+		backups.Start()
 
 func Destroy():
 	if backups:
