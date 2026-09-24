@@ -27,5 +27,8 @@ runs:
         mv "$SRC/Windows" "$SRC/Source of Mana - Windows"
         ( cd "$SRC" && zip -r "$OUT/Source of Mana - Windows.zip" "Source of Mana - Windows" )
 
+        mv "$SRC/Web" "$SRC/Source of Mana - Web"
+        ( cd "$SRC" && zip -r "$OUT/Source of Mana - Web.zip" "Source of Mana - Web" )
+
         cp "$SRC"/macOS/*.zip "$OUT/Source of Mana - macOS.zip"
         cp "$SRC"/Android/*.apk "$OUT/Source of Mana - Android.apk"

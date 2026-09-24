@@ -41,6 +41,10 @@ jobs:
           export_template: "Android"
           outname: "Source of Mana"
           ext: "apk"
+        - name: Web
+          export_template: "Web"
+          outname: "index"
+          ext: "html"
 
     runs-on: ubuntu-latest
     container:

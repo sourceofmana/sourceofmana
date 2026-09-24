@@ -30,6 +30,10 @@ jobs:
         - name: Android
           export_template: "Android"
           ext: "apk"
+        - name: Web
+          export_template: "Web"
+          outname: "index"
+          ext: "html"
 
     runs-on: ubuntu-latest
     container:
@@ -87,7 +91,7 @@ jobs:
         run: |
           mkdir -p "build/${{ matrix.name }}"
           cd "$PROJECT_PATH"
-          godot --headless --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
+          godot --headless --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${{ matrix.outname || env.EXPORT_NAME }}.${{ matrix.ext }}"
 
       - name: Package ${{ matrix.name }}
         if: startsWith(matrix.name, 'Linux')
