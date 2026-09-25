@@ -231,9 +231,13 @@ func EnableButtons(state : bool):
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Create", CreateAccount)
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", EnableAccountCreator.bind(false))
 			else:
-				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Connect", Connect)
+				if IsReturningPlayer():
+					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Connect", Connect)
+					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Create Account", EnableAccountCreator.bind(true))
+				else:
+					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Create Account", EnableAccountCreator.bind(true))
+					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Connect", Connect)
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Switch Online", SwitchOnlineMode.bind(onlineIndicator.button_pressed))
-				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Create Account", EnableAccountCreator.bind(true))
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Forgot Password", SetRecoveryState.bind(RecoveryState.REQUEST_EMAIL))
 				RefreshOnlineMode()
 			RefreshServerButtons()
@@ -252,6 +256,18 @@ func RefreshServerButtons():
 		Launcher.GUI.buttonBoxes.Enable(UICommons.ButtonBox.CANCEL, reachable)
 		if not reachable and onlineIndicator:
 			onlineIndicator.text = "Connecting..."
+
+	if reachable:
+		Launcher.GUI.buttonBoxes.Suggest(UICommons.ButtonBox.PRIMARY)
+	else:
+		Launcher.GUI.buttonBoxes.ClearSuggest()
+
+func SaveAccountName():
+	if Launcher.GUI.settingsWindow:
+		Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
+
+func IsReturningPlayer() -> bool:
+	return not savedToken.is_empty() or not Conf.GetUserValue("Session-AccountName", "").is_empty()
 
 func RefreshOnce():
 	EnableAccountCreator(isAccountCreatorEnabled)
@@ -302,8 +318,6 @@ func Connect():
 			nameText = savedAccountName
 			savedToken = ""
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
-			if Launcher.GUI.settingsWindow:
-				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
 		return
 	var passwordText : String = passwordTextControl.get_text()
 	var authError : NetworkCommons.AuthError = NetworkCommons.CheckAuthInformation(nameText, passwordText)
@@ -311,8 +325,6 @@ func Connect():
 	if authError == NetworkCommons.AuthError.ERR_OK:
 		if Network.LoginWithPassword(nameText, passwordText, rememberMeCheckBox.button_pressed, NetworkCommons.GetPlatform()):
 			FSM.EnterState(FSM.States.LOGIN_PROGRESS)
-			if Launcher.GUI.settingsWindow:
-				Launcher.GUI.settingsWindow.set_sessionaccountname(nameText)
 
 func CreateAccount():
 	if not Network.IsServerReachable():

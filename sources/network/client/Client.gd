@@ -333,6 +333,7 @@ func AuthError(err : NetworkCommons.AuthError, _peerID : int):
 		else:
 			Launcher.GUI.loginPanel.FillWarningLabel(err)
 			if err == NetworkCommons.AuthError.ERR_OK:
+				Launcher.GUI.loginPanel.SaveAccountName()
 				FSM.EnterState(FSM.States.CHAR_SCREEN)
 
 func AuthTokenResult(accountName : String, token : String, _peerID : int):

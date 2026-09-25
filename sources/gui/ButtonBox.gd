@@ -6,6 +6,15 @@ extends Control
 @onready var tertiaryButton : Button	= $ButtonTertiary
 @onready var cancelButton : Button		= $ButtonCancel
 
+const SuggestedVariation : StringName	= &"LargeButtonSuggested"
+const DefaultVariation : StringName		= &"LargeButton"
+const SuggestPulseCount : int			= 6
+const SuggestPulseDurationSec : float	= 1.0
+const SuggestPulseColor : Color			= Color(1.2, 1.15, 1.0, 1.0)
+
+var suggestedButton : Button			= null
+var suggestTween : Tween				= null
+
 # Private functions
 func _bind(button : Button, buttonName : String, callable : Callable):
 	Callback.PlugCallback(button.pressed, callable)
@@ -20,6 +29,8 @@ func _name(button : Button, buttonName : String):
 	button.set_text(buttonName)
 
 func _clear(button : Button):
+	if suggestedButton == button:
+		_unsuggest()
 	button.set_visible(false)
 	button.set_disabled(false)
 	button.set_text("")
@@ -31,6 +42,33 @@ func _focus(button : Button):
 
 func _enable(button : Button, state : bool):
 	button.set_disabled(not state)
+	if not state and suggestedButton == button:
+		_unsuggest()
+
+func _suggest(button : Button):
+	if suggestedButton == button:
+		return
+
+	_unsuggest()
+	if not button.visible or button.disabled or not is_inside_tree():
+		return
+
+	suggestedButton = button
+	button.set_theme_type_variation(SuggestedVariation)
+	Callback.PlugCallback(button.mouse_entered, SettleSuggestion)
+	Callback.PlugCallback(button.focus_entered, SettleSuggestion)
+
+	suggestTween = create_tween().set_loops(SuggestPulseCount).set_trans(Tween.TRANS_SINE)
+	suggestTween.tween_property(button, "modulate", SuggestPulseColor, SuggestPulseDurationSec * 0.5)
+	suggestTween.tween_property(button, "modulate", Color.WHITE, SuggestPulseDurationSec * 0.5)
+
+func _unsuggest():
+	SettleSuggestion()
+	if suggestedButton:
+		suggestedButton.set_theme_type_variation(DefaultVariation)
+		Callback.RemoveCallback(suggestedButton.mouse_entered, SettleSuggestion)
+		Callback.RemoveCallback(suggestedButton.focus_entered, SettleSuggestion)
+		suggestedButton = null
 
 # Public functions
 func Bind(side : UICommons.ButtonBox, buttonName : String, callable : Callable):
@@ -81,7 +119,26 @@ func Focus(side : UICommons.ButtonBox):
 		UICommons.ButtonBox.CANCEL:		_focus(cancelButton)
 		_:								assert(false, "Unknown button box side")
 
+func Suggest(side : UICommons.ButtonBox):
+	match side:
+		UICommons.ButtonBox.PRIMARY:	_suggest(primaryButton)
+		UICommons.ButtonBox.SECONDARY:	_suggest(secondaryButton)
+		UICommons.ButtonBox.TERTIARY:	_suggest(tertiaryButton)
+		UICommons.ButtonBox.CANCEL:		_suggest(cancelButton)
+		_:								assert(false, "Unknown button box side")
+
+func ClearSuggest():
+	_unsuggest()
+
+func SettleSuggestion():
+	if suggestTween:
+		suggestTween.kill()
+		suggestTween = null
+	if suggestedButton:
+		suggestedButton.modulate = Color.WHITE
+
 func ClearAll():
+	_unsuggest()
 	_clear(primaryButton)
 	_clear(secondaryButton)
 	_clear(tertiaryButton)

@@ -20,6 +20,7 @@ func Display(text : String, primary = null, primaryText : String = "", cancel = 
 	set_visible(true)
 	buttonBox.TrapFocus()
 	buttonBox.Focus.call_deferred(UICommons.ButtonBox.PRIMARY)
+	buttonBox.Suggest.call_deferred(UICommons.ButtonBox.PRIMARY)
 
 func Clear():
 	if  wasActionEnabled:

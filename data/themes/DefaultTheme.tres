@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://cwb3pymvkf25d" path="res://data/graphics/gui/panelsideright.png" id="15_a7lxq"]
 [ext_resource type="Texture2D" uid="uid://cjnbc8hwuhqhv" path="res://data/graphics/gui/smallbar.png" id="15_ovqsu"]
 [ext_resource type="Texture2D" uid="uid://cxsevv3wmkp27" path="res://data/graphics/gui/button/button_focus.png" id="16"]
+[ext_resource type="Texture2D" uid="uid://bg204tdu2oe5x" path="res://data/graphics/gui/button/button_hover.png" id="17_sggst"]
 [ext_resource type="Texture2D" uid="uid://di2g4farnr2ej" path="res://data/graphics/gui/notification-leaf.png" id="18_h6yt3"]
 [ext_resource type="FontFile" uid="uid://shxh5secawoq" path="res://data/graphics/fonts/alagard-16.ttf" id="18_v607h"]
 [ext_resource type="Texture2D" uid="uid://dvalh5n0jqur2" path="res://data/graphics/gui/panelsides.png" id="22_4trm7"]
@@ -218,6 +219,17 @@ expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ceaab"]
 texture = ExtResource("13_mn5yk")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 6.0
+texture_margin_bottom = 5.0
+expand_margin_left = 10.0
+expand_margin_top = 5.0
+expand_margin_right = 10.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sggst"]
+texture = ExtResource("17_sggst")
 texture_margin_left = 5.0
 texture_margin_top = 4.0
 texture_margin_right = 6.0
@@ -562,6 +574,13 @@ LargeButton/styles/focus = SubResource("StyleBoxTexture_u08yo")
 LargeButton/styles/hover = SubResource("StyleBoxTexture_u08yo")
 LargeButton/styles/normal = SubResource("StyleBoxTexture_ad0ai")
 LargeButton/styles/pressed = SubResource("StyleBoxTexture_ceaab")
+LargeButtonSuggested/base_type = &"Button"
+LargeButtonSuggested/colors/font_color = Color(1, 1, 0.866667, 1)
+LargeButtonSuggested/styles/disabled = SubResource("StyleBoxTexture_ad0ai")
+LargeButtonSuggested/styles/focus = SubResource("StyleBoxTexture_u08yo")
+LargeButtonSuggested/styles/hover = SubResource("StyleBoxTexture_sggst")
+LargeButtonSuggested/styles/normal = SubResource("StyleBoxTexture_u08yo")
+LargeButtonSuggested/styles/pressed = SubResource("StyleBoxTexture_ceaab")
 LineEdit/colors/clear_button_color_pressed = Color(0.933, 0.847, 0.631, 1)
 LineEdit/colors/cursor_color = Color(0.933, 0.847, 0.631, 1)
 LineEdit/colors/font_color = Color(0.933, 0.847, 0.631, 1)

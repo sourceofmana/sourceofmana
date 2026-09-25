@@ -169,6 +169,16 @@ func RefreshCharacterList():
 		if character != null:
 			characterCount += 1
 	statsPanel.selection.set_visible(characterCount >= 2)
+	RefreshSuggestedButton()
+
+func RefreshSuggestedButton():
+	if not Launcher.GUI or not Launcher.GUI.buttonBoxes or not FSM.IsCharacterState():
+		return
+
+	if isCharacterCreatorEnabled or currentCharacterID != ActorCommons.InvalidCharacterSlot:
+		Launcher.GUI.buttonBoxes.Suggest(UICommons.ButtonBox.PRIMARY)
+	else:
+		Launcher.GUI.buttonBoxes.Suggest(UICommons.ButtonBox.SECONDARY)
 
 func CreateCharacter():
 	if isCharacterCreatorEnabled:
@@ -263,6 +273,7 @@ func EnableCharacterCreator(enable : bool):
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Create", CreateCharacter)
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Randomize", RandomizeCharacter)
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", EnableCharacterCreator.bind(false))
+			RefreshSuggestedButton()
 		else:
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Select", SelectCharacter)
 			if NextAvailableSlot() != ActorCommons.InvalidCharacterSlot:
@@ -270,6 +281,7 @@ func EnableCharacterCreator(enable : bool):
 			if currentCharacterID != ActorCommons.InvalidCharacterSlot:
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.TERTIARY, "Delete Player", DeleteCharacter.bind())
 			Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", Leave)
+			RefreshSuggestedButton()
 
 func UpdateCharacterCreatorBody():
 	if isCharacterCreatorEnabled and charactersNode[ActorCommons.MaxCharacterCount]:
