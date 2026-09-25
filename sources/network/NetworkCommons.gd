@@ -111,8 +111,9 @@ const ServerCertPath : String			= "user://server.crt"
 const PlayerNameMinSize : int			= 3
 const PlayerNameMaxSize : int			= 30
 const PasswordMinSize : int				= 6
-const PasswordMaxSize : int				= 30
+const PasswordMaxSize : int				= 128
 const EntryValidRegex : String			= "^[\\w#!@%&:;<>,\\$\\^*\\(\\)_+=\\{\\}\\[\\]\\.?/-]+$"
+const PasswordValidRegex : String		= "^[^\\x00-\\x1F\\x7F]+$"
 const EmailValidRegex : String			= "^[\\w\\.\\+\\-]+@[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,}$"
 
 # Token
@@ -198,7 +199,7 @@ static func CheckAuthInformation(nameText : String, passwordText : String) -> Au
 static func CheckPasswordInformation(passwordText : String) -> AuthError:
 	if not CheckSize(passwordText, PasswordMinSize, PasswordMaxSize):
 		return AuthError.ERR_PASSWORD_SIZE
-	elif not CheckValid(passwordText, EntryValidRegex):
+	elif not CheckValid(passwordText, PasswordValidRegex):
 		return AuthError.ERR_PASSWORD_VALID
 	return AuthError.ERR_OK
 

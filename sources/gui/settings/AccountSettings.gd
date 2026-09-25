@@ -39,7 +39,7 @@ func _on_change_button_pressed():
 		newPasswordField.grab_focus()
 		return
 	elif newErr == NetworkCommons.AuthError.ERR_PASSWORD_VALID:
-		SetPasswordStatus("New password should only include alpha-numeric characters and symbols.", true)
+		SetPasswordStatus("New password should not include control characters such as tabs or line breaks.", true)
 		newPasswordField.grab_focus()
 		return
 

@@ -68,7 +68,7 @@ func FillWarningLabel(err : NetworkCommons.AuthError):
 			warn = "Invalid account name or password."
 			RequestFocus(passwordTextControl)
 		NetworkCommons.AuthError.ERR_PASSWORD_VALID:
-			warn = "Password should only include alpha-numeric characters and symbols."
+			warn = "Password should not include control characters such as tabs or line breaks."
 			RequestFocus(passwordTextControl)
 		NetworkCommons.AuthError.ERR_PASSWORD_SIZE:
 			warn = "Password length should be inbetween %d and %d character long." % [NetworkCommons.PasswordMinSize, NetworkCommons.PasswordMaxSize]
