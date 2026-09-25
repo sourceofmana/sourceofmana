@@ -18,3 +18,4 @@ presets/maps/*
 
 # tmp files
 *.tmp
+__pycache__/
