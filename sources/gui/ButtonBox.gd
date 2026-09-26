@@ -18,12 +18,17 @@ var suggestTween : Tween				= null
 # Private functions
 func _bind(button : Button, buttonName : String, callable : Callable):
 	Callback.PlugCallback(button.pressed, callable)
-	button.set_visible(true)
+	_show(button, true)
 	_name(button, buttonName)
 
 func _call(button : Button):
 	if not button.disabled:
 		button.pressed.emit()
+
+func _show(button : Button, state : bool):
+	button.set_visible(state)
+	var trailingSpacer : Control = get_child(button.get_index() + 1)
+	trailingSpacer.set_visible(state)
 
 func _name(button : Button, buttonName : String):
 	button.set_text(buttonName)
@@ -31,7 +36,7 @@ func _name(button : Button, buttonName : String):
 func _clear(button : Button):
 	if suggestedButton == button:
 		_unsuggest()
-	button.set_visible(false)
+	_show(button, false)
 	button.set_disabled(false)
 	button.set_text("")
 	Callback.ClearCallbacks(button.pressed)

@@ -33,6 +33,7 @@ var nameText : String						= ""
 var savedToken : String						= ""
 var savedAccountName : String				= ""
 var fillingFields : bool					= false
+var fieldsEdited : bool						= false
 var isAccountCreatorEnabled : bool			= false
 var recoveryState : RecoveryState			= RecoveryState.NONE
 var pendingFocusControl : Control			= null
@@ -390,7 +391,7 @@ func Close():
 	elif isAccountCreatorEnabled:
 		EnableAccountCreator(false)
 	else:
-		Launcher.GUI.ToggleControl(Launcher.GUI.quitWindow)
+		Launcher.GUI.quitBox.Toggle()
 
 #
 func _on_text_focus_entered():
@@ -407,8 +408,9 @@ func _on_text_submitted(_newText):
 #
 func _on_visibility_changed():
 	if visible:
-		LoadSavedToken()
-		FillFieldsFromToken()
+		if not fieldsEdited:
+			LoadSavedToken()
+			FillFieldsFromToken()
 		if pendingFocusControl and pendingFocusControl.is_visible_in_tree():
 			ApplyFocus.call_deferred()
 		elif nameTextControl and nameTextControl.is_visible() and nameTextControl.get_text().length() == 0:
@@ -422,8 +424,16 @@ func SwitchOnlineMode(toggled : bool):
 	if Launcher.Mode(true, toggled):
 		EnableButtons(false)
 
+func _on_name_text_changed(_newText : String):
+	if not fillingFields:
+		fieldsEdited = true
+		if not savedToken.is_empty():
+			savedToken = ""
+			passwordTextControl.clear()
+
 func _on_password_text_changed(_newText : String):
 	if not fillingFields:
+		fieldsEdited = true
 		savedToken = ""
 
 func _on_remember_me_toggled(toggled_on : bool):

@@ -16,7 +16,8 @@ extends ServiceBase
 @onready var dialogueContainer : PanelContainer	= $Overlay/VSections/Contexts/Dialogue/BottomVbox/Dialogue
 @onready var choiceContext : ContextMenu		= $Overlay/VSections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
 @onready var infoContext : ContextMenu			= $Overlay/VSections/Contexts/Info
-@onready var messageBox : Control				= $Overlay/VSections/Contexts/MessageBox
+@onready var messageBox : MessageBox			= $Overlay/VSections/Contexts/MessageBox
+@onready var quitBox : QuitBox					= $Overlay/VSections/Contexts/QuitBox
 @onready var loginPanel : Control				= $Overlay/VSections/Contexts/Login
 @onready var characterPanel : Control			= $Overlay/VSections/Contexts/Character
 
@@ -35,7 +36,6 @@ extends ServiceBase
 @onready var emoteWindow : WindowPanel			= $Windows/Floating/Emote
 @onready var skillWindow : WindowPanel			= $Windows/Floating/Skill
 @onready var progressWindow : WindowPanel		= $Windows/Floating/Progress
-@onready var quitWindow : WindowPanel			= $Windows/Floating/Quit
 @onready var respawnWindow : WindowPanel		= $Windows/Floating/Respawn
 @onready var statWindow : WindowPanel			= $Windows/Floating/Stat
 @onready var socialWindow : WindowPanel			= $Windows/Floating/Social
@@ -63,7 +63,7 @@ func CloseWindow():
 		FSM.States.CHAR_SCREEN, FSM.States.CHAR_PROGRESS:
 			characterPanel.Close()
 		FSM.States.IN_GAME:
-			ToggleControl(quitWindow)
+			quitBox.Toggle()
 
 func GetCurrentWindow() -> Control:
 	if windows:
@@ -149,7 +149,8 @@ func EnterLoginMenu():
 	pickupPanel.AnimateClose()
 	loadingControl.set_visible(false)
 	actionBoxes.set_visible(false)
-	quitWindow.set_visible(false)
+	quitBox.Clear()
+	messageBox.Clear()
 	respawnWindow.EnableControl(false)
 	shortcuts.set_visible(false)
 	characterPanel.set_visible(false)
@@ -267,7 +268,7 @@ func Destroy():
 func _notification(notif):
 	match notif:
 		Node.NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_WM_GO_BACK_REQUEST:
-			ToggleControl(quitWindow)
+			quitBox.Toggle()
 		Node.NOTIFICATION_WM_MOUSE_EXIT:
 			if windows:
 				windows.ClearWindowsModifier()

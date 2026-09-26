@@ -17,7 +17,6 @@
 [ext_resource type="Script" uid="uid://cbmx23oytd53m" path="res://sources/gui/FloatingWindows.gd" id="7"]
 [ext_resource type="Texture2D" uid="uid://dyfc5o4skfkbn" path="res://data/graphics/gui/icon/map.png" id="7_cv35r"]
 [ext_resource type="PackedScene" uid="uid://cjgijbfxixe67" path="res://presets/gui/Login.tscn" id="7_lrq68"]
-[ext_resource type="PackedScene" uid="uid://c6nwveqo000dl" path="res://presets/gui/Quit.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://bq3n8kx1vw7e2" path="res://presets/gui/ProgressionTracker.tscn" id="8_5o8ki"]
 [ext_resource type="Texture2D" uid="uid://d2oyvnoxsg6ky" path="res://data/graphics/gui/icon/emotes.png" id="8_ppxwt"]
 [ext_resource type="PackedScene" uid="uid://b12q3nvdjbdxf" path="res://presets/gui/BossTracker.tscn" id="9_8gxxm"]
@@ -61,6 +60,7 @@
 [ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
 [ext_resource type="PackedScene" uid="uid://duqpp1dik8h8h" path="res://presets/gui/Character.tscn" id="49_78q3w"]
 [ext_resource type="PackedScene" uid="uid://dolxuw03u60eo" path="res://presets/gui/Progress.tscn" id="54_112vu"]
+[ext_resource type="Script" uid="uid://bx03gb6d40i6f" path="res://sources/gui/QuitBox.gd" id="55_6huw9"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
 shader = ExtResource("4_60kv4")
@@ -296,6 +296,23 @@ offset_bottom = 44.5
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="QuitBox" parent="Overlay/VSections/Contexts" unique_id=1938274615 instance=ExtResource("25_tem4r")]
+visible = false
+z_index = 201
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -44.5
+offset_right = 275.0
+offset_bottom = 44.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("55_6huw9")
+
 [node name="ButtonBar" type="Control" parent="Overlay/VSections" unique_id=300934480]
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
@@ -427,23 +444,6 @@ theme_override_constants/margin_top = 80
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("7")
-
-[node name="Quit" parent="Windows/Floating" unique_id=1540640516 instance=ExtResource("8")]
-visible = false
-z_index = 100
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -145.0
-offset_top = -60.0
-offset_right = 145.0
-offset_bottom = 60.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_layout_mode = 1
 
 [node name="Inventory" parent="Windows/Floating" unique_id=1715311206 instance=ExtResource("35_j05ha")]
 visible = false
