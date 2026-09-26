@@ -5,11 +5,13 @@ on:
       - '**'
 
 env:
-  GODOT_VERSION: 4.7.1
   EXPORT_NAME: "Source of Mana"
   PROJECT_PATH: "."
 
 jobs:
+  versions:
+    uses: ./.github/workflows/versions.yml
+
   builds:
     strategy:
       fail-fast: false
@@ -36,9 +38,12 @@ jobs:
           ext: "html"
 
     runs-on: ubuntu-latest
+    needs: versions
     container:
-      image: barichello/godot-ci:4.7.1
+      image: barichello/godot-ci:${{ needs.versions.outputs.godot }}
     name: Export ${{ matrix.name }}
+    env:
+      GODOT_VERSION: ${{ needs.versions.outputs.godot }}
 
     steps:
       - name: Checkout
