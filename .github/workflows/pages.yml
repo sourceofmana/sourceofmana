@@ -1,0 +1,56 @@
+name: "web pages"
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch, tag or commit"
+        type: string
+        default: ""
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    uses: ./.github/workflows/export.yml
+    with:
+      ref: ${{ inputs.ref }}
+      features: production,sentry
+      targets: Web
+    secrets: inherit
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    name: Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download Web build
+        uses: actions/download-artifact@v5
+        with:
+          name: Web
+          path: site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

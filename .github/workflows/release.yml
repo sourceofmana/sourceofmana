@@ -8,139 +8,22 @@ on:
         type: boolean
         default: false
 
-env:
-  PROJECT_PATH: "."
-
 permissions:
   contents: write
 
 jobs:
-  versions:
-    uses: ./.github/workflows/versions.yml
-
   builds:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-        - name: Linux
-          export_template: "Linux/X11"
-          outname: "Source of Mana"
-          ext: "x86_64"
-        - name: Linux (Headless Server)
-          export_template: "Linux/X11 Headless Server"
-          outname: "Source of Mana Server"
-          ext: "x86_64"
-        - name: Windows
-          export_template: "Windows Desktop"
-          outname: "Source of Mana"
-          ext: "exe"
-        - name: macOS
-          export_template: "macOS"
-          outname: "Source of Mana"
-          ext: "zip"
-        - name: Android
-          export_template: "Android"
-          outname: "Source of Mana"
-          ext: "apk"
-        - name: Web
-          export_template: "Web"
-          outname: "index"
-          ext: "html"
-
-    runs-on: ubuntu-latest
-    needs: versions
-    container:
-      image: barichello/godot-ci:${{ needs.versions.outputs.godot }}
-    name: Export ${{ matrix.name }}
-    env:
-      GODOT_VERSION: ${{ needs.versions.outputs.godot }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          ref: ${{ github.sha }}
-          lfs: true
-
-      - name: Install dependencies
-        run: |
-          apt-get update
-          apt-get install -y libfontconfig1 unzip
-
-      - name: Setup Godot templates
-        run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/
-          mkdir -v -p ~/.config/
-          cp -r /root/.config/godot ~/.config/godot
-          cp -r /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          echo "$DEBUG_KEYSTORE" | base64 -d > /root/debug.keystore
-        env:
-          DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
-
-      - name: Enable production and sentry features
-        run: |
-          cd "$PROJECT_PATH"
-          sed -E -i 's/custom_features="([^"]*)"/custom_features="\1,production,sentry"/; s/custom_features=",/custom_features="/' export_presets.cfg
-
-      - name: Install Android build template
-        if: matrix.name == 'Android'
-        run: |
-          cd "$PROJECT_PATH"
-          BUILD_VERSION=$(godot --version | sed -E 's/\.(official|custom_build)\..*$//')
-          mkdir -p android/build
-          unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip -d android/build
-          echo "$BUILD_VERSION" > android/.build_version
-          echo "Installed Android build template version: $BUILD_VERSION"
-
-      - name: Import assets
-        run: |
-          cd "$PROJECT_PATH"
-          godot --headless --editor --import --quit
-
-      - name: Build ${{ matrix.name }}
-        run: |
-          mkdir -p "build/${{ matrix.name }}"
-          cd "$PROJECT_PATH"
-          godot --headless --export-release "${{ matrix.export_template }}" "build/${{ matrix.name }}/${{ matrix.outname }}.${{ matrix.ext }}"
-        env:
-          GODOT_ANDROID_KEYSTORE_RELEASE_PATH: /root/debug.keystore
-          GODOT_ANDROID_KEYSTORE_RELEASE_USER: androiddebugkey
-          GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: android
-
-      - name: Upload Artifact - ${{ matrix.name }}
-        uses: actions/upload-artifact@v5
-        with:
-          name: ${{ matrix.name }}
-          path: build/${{ matrix.name }}
+    uses: ./.github/workflows/export.yml
+    with:
+      features: production,sentry
+    secrets: inherit
 
   snap:
-    runs-on: ubuntu-latest
     needs: builds
-    name: Pack and Publish Snap
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          ref: ${{ github.sha }}
-
-      - name: Download Linux build
-        uses: actions/download-artifact@v5
-        with:
-          name: Linux
-          path: .
-
-      - name: Build snap
-        uses: snapcore/action-build@v1
-        id: build
-
-      - name: Publish snap
-        uses: snapcore/action-publish@v1
-        env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
-        with:
-          snap: ${{ steps.build.outputs.snap }}
-          release: candidate
+    uses: ./.github/workflows/snap.yml
+    with:
+      channel: candidate
+    secrets: inherit
 
   release:
     runs-on: ubuntu-latest

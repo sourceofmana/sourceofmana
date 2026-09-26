@@ -18,6 +18,11 @@ runs:
         mkdir -p "${{ inputs.output-dir }}"
         OUT="$(cd "${{ inputs.output-dir }}" && pwd)"
 
+        for LINUX in "Linux" "Linux (Headless Server)"; do
+          tar -xzf "$SRC/$LINUX/$LINUX.tar.gz" -C "$SRC/$LINUX"
+          rm "$SRC/$LINUX/$LINUX.tar.gz"
+        done
+
         mv "$SRC/Linux" "$SRC/Source of Mana - Linux"
         tar -czf "$OUT/Source of Mana - Linux.tar.gz" -C "$SRC" "Source of Mana - Linux"
 

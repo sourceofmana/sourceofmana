@@ -4,152 +4,18 @@ on:
     branches:
       - '**'
 
-env:
-  EXPORT_NAME: "Source of Mana"
-  PROJECT_PATH: "."
-
 jobs:
-  versions:
-    uses: ./.github/workflows/versions.yml
-
   builds:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-        - name: Linux
-          export_template: "Linux/X11"
-          ext: "x86_64"
-        - name: Linux (Headless Server)
-          export_template: "Linux/X11 Headless Server"
-          ext: "x86_64"
-        - name: Windows
-          export_template: "Windows Desktop"
-          ext: "exe"
-        - name: macOS
-          export_template: "macOS"
-          ext: "zip"
-        - name: Android
-          export_template: "Android"
-          ext: "apk"
-        - name: Web
-          export_template: "Web"
-          outname: "index"
-          ext: "html"
-
-    runs-on: ubuntu-latest
-    needs: versions
-    container:
-      image: barichello/godot-ci:${{ needs.versions.outputs.godot }}
-    name: Export ${{ matrix.name }}
-    env:
-      GODOT_VERSION: ${{ needs.versions.outputs.godot }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          lfs: true
-
-      - name: Install dependencies
-        run: |
-          apt-get update
-          apt-get install -y libfontconfig1 unzip
-
-      - name: Setup Godot templates
-        run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/
-          mkdir -v -p ~/.config/
-          cp -r /root/.config/godot ~/.config/godot
-          cp -r /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          if [ -n "$DEBUG_KEYSTORE" ]; then
-            echo "$DEBUG_KEYSTORE" | base64 -d > /root/debug.keystore
-          else
-            keytool -genkeypair -v -keystore /root/debug.keystore -alias androiddebugkey \
-              -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android \
-              -dname "CN=Android Debug,O=Android,C=US" -storetype pkcs12
-          fi
-        env:
-          DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
-
-      - name: Enable sentry feature
-        run: |
-          cd "$PROJECT_PATH"
-          sed -E -i 's/custom_features="([^"]*)"/custom_features="\1,sentry"/; s/custom_features=",/custom_features="/' export_presets.cfg
-
-      - name: Install Android build template
-        if: matrix.name == 'Android'
-        run: |
-          cd "$PROJECT_PATH"
-          BUILD_VERSION=$(godot --version | sed -E 's/\.(official|custom_build)\..*$//')
-          mkdir -p android/build
-          unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip -d android/build
-          echo "$BUILD_VERSION" > android/.build_version
-          echo "Installed Android build template version: $BUILD_VERSION"
-
-      - name: Import assets
-        run: |
-          cd "$PROJECT_PATH"
-          godot --headless --editor --import --quit
-
-      - name: Build ${{ matrix.name }}
-        run: |
-          mkdir -p "build/${{ matrix.name }}"
-          cd "$PROJECT_PATH"
-          godot --headless --export-debug "${{ matrix.export_template }}" "build/${{ matrix.name }}/${{ matrix.outname || env.EXPORT_NAME }}.${{ matrix.ext }}"
-
-      - name: Package ${{ matrix.name }}
-        if: startsWith(matrix.name, 'Linux')
-        run: |
-          chmod +x "build/${{ matrix.name }}/${EXPORT_NAME}.${{ matrix.ext }}"
-          tar -czvf "build/${{ matrix.name }}.tar.gz" -C "build/${{ matrix.name }}" .
-
-      - name: Upload Artifact - ${{ matrix.name }} (Linux)
-        if: startsWith(matrix.name, 'Linux')
-        uses: actions/upload-artifact@v5
-        with:
-          name: ${{ matrix.name }}
-          path: build/${{ matrix.name }}.tar.gz
-
-      - name: Upload Artifact - ${{ matrix.name }}
-        if: ${{ !startsWith(matrix.name, 'Linux') }}
-        uses: actions/upload-artifact@v5
-        with:
-          name: ${{ matrix.name }}
-          path: build/${{ matrix.name }}
+    uses: ./.github/workflows/export.yml
+    with:
+      mode: debug
+      features: sentry
+    secrets: inherit
 
   snap:
-    runs-on: ubuntu-latest
     needs: builds
-    name: Pack and Publish Snap
-    env:
-      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Download Linux build
-        uses: actions/download-artifact@v5
-        with:
-          name: Linux
-          path: .
-
-      - name: Extract Linux build
-        run: tar -xzvf Linux.tar.gz
-
-      - name: Build snap
-        uses: snapcore/action-build@v1
-        id: build
-
-      - name: Upload Snap
-        uses: actions/upload-artifact@v5
-        with:
-          name: Snap
-          path: ${{ steps.build.outputs.snap }}
-
-      - name: Publish snap
-        if: github.ref == 'refs/heads/master' && env.SNAPCRAFT_STORE_CREDENTIALS != ''
-        uses: snapcore/action-publish@v1
-        with:
-          snap: ${{ steps.build.outputs.snap }}
-          release: edge
+    uses: ./.github/workflows/snap.yml
+    with:
+      channel: edge
+      publish: ${{ github.ref == 'refs/heads/master' && !github.event.repository.fork }}
+    secrets: inherit

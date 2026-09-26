@@ -1,0 +1,52 @@
+name: "snap"
+
+on:
+  workflow_call:
+    inputs:
+      channel:
+        description: "Snap Store channel"
+        type: string
+        required: true
+      publish:
+        description: "Publish to Snapcraft"
+        type: boolean
+        default: true
+
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    name: Pack and Publish Snap
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Download Linux build
+        uses: actions/download-artifact@v5
+        with:
+          name: Linux
+          path: .
+
+      - name: Extract Linux build
+        run: tar -xzvf Linux.tar.gz
+
+      - name: Build snap
+        uses: snapcore/action-build@v1
+        id: build
+
+      - name: Upload Snap
+        uses: actions/upload-artifact@v5
+        with:
+          name: Snap
+          path: ${{ steps.build.outputs.snap }}
+
+      - name: Publish snap
+        if: inputs.publish
+        uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        with:
+          snap: ${{ steps.build.outputs.snap }}
+          release: ${{ inputs.channel }}

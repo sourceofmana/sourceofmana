@@ -1,0 +1,184 @@
+name: "export"
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "Branch, tag or commit"
+        type: string
+        default: ""
+      mode:
+        description: "debug or release"
+        type: string
+        default: "release"
+      features:
+        description: "Custom features (comma separated)"
+        type: string
+        default: ""
+      targets:
+        description: "Target names, empty for all (comma separated)"
+        type: string
+        default: ""
+
+env:
+  PROJECT_PATH: "."
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    name: Setup
+    outputs:
+      godot: ${{ steps.versions.outputs.godot }}
+      matrix: ${{ steps.matrix.outputs.matrix }}
+
+    steps:
+      - name: Check mode
+        env:
+          MODE: ${{ inputs.mode }}
+        run: |
+          case "$MODE" in
+            debug|release) ;;
+            *) echo "Unknown mode '$MODE', expected debug or release" && exit 1 ;;
+          esac
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+          sparse-checkout: versions.cfg
+          sparse-checkout-cone-mode: false
+
+      - name: Checkout fallback versions.cfg
+        if: hashFiles('versions.cfg') == ''
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          path: fallback
+          sparse-checkout: versions.cfg
+          sparse-checkout-cone-mode: false
+
+      - name: Read versions.cfg
+        id: versions
+        run: |
+          VERSIONS=versions.cfg
+          if [ ! -f "$VERSIONS" ]; then
+            VERSIONS=fallback/versions.cfg
+            echo "::warning::versions.cfg is missing from ${{ inputs.ref || github.sha }}, using the one from ${{ github.sha }}"
+          fi
+          . "./$VERSIONS"
+          : "${GODOT:?GODOT is missing from versions.cfg}"
+          echo "godot=${GODOT}" >> "$GITHUB_OUTPUT"
+
+      - name: Select targets
+        id: matrix
+        env:
+          TARGETS: ${{ inputs.targets }}
+        run: |
+          MATRIX=$(jq -c --arg targets "$TARGETS" '
+            ($targets | split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$"; "")) | map(select(length > 0))) as $wanted
+            | ($wanted - map(.name)) as $unknown
+            | if ($unknown | length) > 0 then error("Unknown export targets: \($unknown | join(", "))")
+              elif ($wanted | length) == 0 then .
+              else map(select(.name | IN($wanted[])))
+              end' <<'EOF'
+          [
+            { "name": "Linux", "export_template": "Linux/X11", "outname": "Source of Mana", "ext": "x86_64" },
+            { "name": "Linux (Headless Server)", "export_template": "Linux/X11 Headless Server", "outname": "Source of Mana Server", "ext": "x86_64" },
+            { "name": "Windows", "export_template": "Windows Desktop", "outname": "Source of Mana", "ext": "exe" },
+            { "name": "macOS", "export_template": "macOS", "outname": "Source of Mana", "ext": "zip" },
+            { "name": "Android", "export_template": "Android", "outname": "Source of Mana", "ext": "apk" },
+            { "name": "Web", "export_template": "Web", "outname": "index", "ext": "html" }
+          ]
+          EOF
+          )
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+
+  builds:
+    needs: setup
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.setup.outputs.matrix) }}
+
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:${{ needs.setup.outputs.godot }}
+    name: Export ${{ matrix.name }}
+    env:
+      GODOT_VERSION: ${{ needs.setup.outputs.godot }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+          lfs: true
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y libfontconfig1 unzip
+
+      - name: Setup Godot templates
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          cp -r /root/.config/godot ~/.config/godot
+          cp -r /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          if [ -n "$DEBUG_KEYSTORE" ]; then
+            echo "$DEBUG_KEYSTORE" | base64 -d > /root/debug.keystore
+          elif [ "$MODE" = "debug" ]; then
+            keytool -genkeypair -v -keystore /root/debug.keystore -alias androiddebugkey \
+              -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android \
+              -dname "CN=Android Debug,O=Android,C=US" -storetype pkcs12
+          else
+            echo "SECRET_RELEASE_KEYSTORE_BASE64 is required for release exports" && exit 1
+          fi
+        env:
+          DEBUG_KEYSTORE: ${{ secrets.SECRET_RELEASE_KEYSTORE_BASE64 }}
+          MODE: ${{ inputs.mode }}
+
+      - name: Enable custom features
+        if: inputs.features != ''
+        env:
+          FEATURES: ${{ inputs.features }}
+        run: |
+          cd "$PROJECT_PATH"
+          sed -E -i "s/custom_features=\"([^\"]*)\"/custom_features=\"\1,${FEATURES}\"/; s/custom_features=\",/custom_features=\"/" export_presets.cfg
+
+      - name: Install Android build template
+        if: matrix.name == 'Android'
+        run: |
+          cd "$PROJECT_PATH"
+          BUILD_VERSION=$(godot --version | sed -E 's/\.(official|custom_build)\..*$//')
+          mkdir -p android/build
+          unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip -d android/build
+          echo "$BUILD_VERSION" > android/.build_version
+          echo "Installed Android build template version: $BUILD_VERSION"
+
+      - name: Import assets
+        run: |
+          cd "$PROJECT_PATH"
+          godot --headless --editor --import --quit
+
+      - name: Build ${{ matrix.name }}
+        run: |
+          mkdir -p "build/${{ matrix.name }}"
+          cd "$PROJECT_PATH"
+          godot --headless --export-${{ inputs.mode }} "${{ matrix.export_template }}" "build/${{ matrix.name }}/${{ matrix.outname }}.${{ matrix.ext }}"
+        env:
+          GODOT_ANDROID_KEYSTORE_RELEASE_PATH: /root/debug.keystore
+          GODOT_ANDROID_KEYSTORE_RELEASE_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: android
+
+      - name: Package ${{ matrix.name }}
+        if: startsWith(matrix.name, 'Linux')
+        run: |
+          chmod +x "build/${{ matrix.name }}/${{ matrix.outname }}.${{ matrix.ext }}"
+          tar -czvf "build/${{ matrix.name }}.tar.gz" -C "build/${{ matrix.name }}" .
+
+      - name: Upload Artifact - ${{ matrix.name }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ matrix.name }}
+          path: ${{ startsWith(matrix.name, 'Linux') && format('build/{0}.tar.gz', matrix.name) || format('build/{0}', matrix.name) }}
