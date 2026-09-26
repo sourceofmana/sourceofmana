@@ -556,6 +556,6 @@ func Destroy():
 	if multiplayerAPI.peer_disconnected.is_connected(DisconnectPeer):
 		multiplayerAPI.peer_disconnected.disconnect(DisconnectPeer)
 
-	for peerID in Peers.peers:
+	for peerID in Peers.peers.keys():
 		DisconnectPeer(peerID)
 	super.Destroy()

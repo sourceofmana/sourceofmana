@@ -18,7 +18,7 @@ var shuttingDownStep : int = 0
 
 #
 func Start() -> void:
-	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://canary"))
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(Path.CanaryFile))
 	timer = Timer.new()
 	timer.wait_time = checkInternalSec
 	timer.autostart = true
@@ -28,6 +28,7 @@ func Start() -> void:
 func CheckCanary() -> void:
 	if FileAccess.file_exists(Path.CanaryFile):
 		isShuttingDown = true
+		Util.PrintLog("Server", "Shutdown canary found, restarting server with %d connected peer(s)" % Peers.peers.size())
 		for server in [Network.ENetServer, Network.WebSocketServer, Network.WebRTCServer]:
 			if server and server.currentPeer:
 				server.currentPeer.refuse_new_connections = true
@@ -51,6 +52,7 @@ func OnShutdownStep() -> void:
 	if shuttingDownStep < shutdownMessages.size():
 		ShutdownStep()
 	else:
+		Util.PrintLog("Server", "Shutdown countdown over, disconnecting %d peer(s)" % Peers.peers.size())
 		for peerID in Peers.peers.keys():
 			var server : NetServer = Peers.GetAssociatedNetServer(peerID)
 			if server:
