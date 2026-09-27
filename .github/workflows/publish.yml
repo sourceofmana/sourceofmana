@@ -1,0 +1,142 @@
+name: "publish"
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to publish"
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  itch:
+    runs-on: ubuntu-latest
+    name: Publish to itch.io
+    if: inputs.tag || !github.event.release.prerelease
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          sparse-checkout: .github/actions/itch-push
+
+      - name: Download release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.event.release.tag_name }}
+        run: |
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir assets
+          echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
+
+      - name: Unpack builds
+        run: |
+          mkdir -p builds/macOS
+          unzip -q assets/*Web.zip -d builds
+          unzip -q assets/*Windows.zip -d builds
+          unzip -q assets/*macOS.zip -d builds/macOS
+          tar -xzf assets/*Linux.tar.gz -C builds
+          cp assets/*Android.apk "builds/Source of Mana.apk"
+
+      - name: Push to itch.io
+        uses: ./.github/actions/itch-push
+        with:
+          api-key: ${{ secrets.SECRET_ITCH_BUTLER_KEY }}
+          game: manasource/source-of-mana
+          version: ${{ env.VERSION }}
+          packages: |
+            web=builds/Source of Mana - Web
+            windows=builds/Source of Mana - Windows
+            linux=builds/Source of Mana - Linux
+            macos=builds/macOS
+            android=builds/Source of Mana.apk
+
+  wavedash:
+    runs-on: ubuntu-latest
+    name: Publish to Wavedash
+    if: inputs.tag || !github.event.release.prerelease
+
+    steps:
+      - name: Download Web build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.event.release.tag_name }}
+        run: |
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "*Web.zip" --dir assets
+          unzip -q assets/*Web.zip -d unpacked
+          echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
+
+      - name: Setup Wavedash CLI
+        run: |
+          curl -fsSL https://wavedash.com/cli/install.sh | sh
+          WAVEDASH="$(command -v wavedash || true)"
+          if [ -z "$WAVEDASH" ]; then
+            WAVEDASH="$(find "$HOME" -maxdepth 4 -type f -name wavedash -perm -u+x 2>/dev/null | head -n1 || true)"
+          fi
+          [ -n "$WAVEDASH" ] || { echo "wavedash CLI not found after install" && exit 1; }
+          echo "WAVEDASH=$WAVEDASH" >> "$GITHUB_ENV"
+
+      - name: Push and publish build
+        env:
+          WAVEDASH_TOKEN: ${{ secrets.SECRET_WAVEDASH_API_KEY }}
+          WAVEDASH_GAME_ID: "j97b69cc8d9g8hpxmmk7kwwg518ec9kj"
+          WAVEDASH_UPLOAD_DIR: "unpacked/Source of Mana - Web"
+          WAVEDASH_ENTRYPOINT: "index.html"
+        run: |
+          OUTPUT="$("$WAVEDASH" build push -m "v$VERSION" 2>&1)"
+          echo "$OUTPUT"
+          BUILD_ID="$(echo "$OUTPUT" | grep -oE '[a-z0-9]{24,}' | grep -vx "$WAVEDASH_GAME_ID" | head -n1)"
+          [ -n "$BUILD_ID" ] || { echo "Could not read a build id from the output above" && exit 1; }
+
+          "$WAVEDASH" publish "$BUILD_ID" --yes --title "Source of Mana $VERSION"
+
+  pages:
+    runs-on: ubuntu-latest
+    name: Publish to GitHub Pages
+    if: inputs.tag || !github.event.release.prerelease
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download Web build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.event.release.tag_name }}
+        run: |
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "*Web.zip" --dir assets
+          unzip -q assets/*Web.zip -d unpacked
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: unpacked/Source of Mana - Web
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  snap:
+    runs-on: ubuntu-latest
+    name: Promote snap to stable
+    if: inputs.tag || !github.event.release.prerelease
+
+    steps:
+      - name: Setup snapcraft
+        run: sudo snap install snapcraft --classic
+
+      - name: Promote candidate to stable
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        run: snapcraft promote source-of-mana --from-channel candidate --to-channel stable --yes

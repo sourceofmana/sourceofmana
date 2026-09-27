@@ -19,3 +19,30 @@ jobs:
       channel: edge
       publish: ${{ github.ref == 'refs/heads/master' && !github.event.repository.fork }}
     secrets: inherit
+
+  itch:
+    runs-on: ubuntu-latest
+    needs: builds
+    if: github.ref == 'refs/heads/master' && !github.event.repository.fork
+    name: Publish Web to itch.io
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout: .github/actions/itch-push
+
+      - name: Download Web build
+        uses: actions/download-artifact@v5
+        with:
+          name: Web
+          path: Web
+
+      - name: Push to itch.io
+        uses: ./.github/actions/itch-push
+        with:
+          api-key: ${{ secrets.SECRET_ITCH_BUTLER_KEY }}
+          game: reidya/source-of-mana-dev
+          version: ${{ github.sha }}
+          packages: web=Web

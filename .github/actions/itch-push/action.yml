@@ -1,0 +1,41 @@
+name: "Itch push"
+description: "Upload build directories to itch.io channels with butler"
+
+inputs:
+  api-key:
+    description: "Itch.io API key"
+    required: true
+  game:
+    description: "Target project as user/project"
+    required: true
+  packages:
+    description: "One channel=path pair per line"
+    required: true
+  version:
+    description: "Version displayed on itch.io, empty to let itch.io number the build"
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      env:
+        BUTLER_API_KEY: ${{ inputs.api-key }}
+        GAME: ${{ inputs.game }}
+        PACKAGES: ${{ inputs.packages }}
+        VERSION: ${{ inputs.version }}
+      run: |
+        curl -sfL -o /tmp/butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+        unzip -qo /tmp/butler.zip -d /usr/local/bin
+        chmod +x /usr/local/bin/butler
+
+        ARGS=(--if-changed --fix-permissions)
+        [ -n "$VERSION" ] && ARGS+=(--userversion "$VERSION")
+
+        while IFS='=' read -r CHANNEL PACKAGE; do
+          CHANNEL="${CHANNEL//[[:space:]]/}"
+          [ -n "$CHANNEL" ] || continue
+          [ -e "$PACKAGE" ] || { echo "Missing package for $CHANNEL: $PACKAGE" && exit 1; }
+          butler push "$PACKAGE" "$GAME:$CHANNEL" "${ARGS[@]}"
+        done <<< "$PACKAGES"
