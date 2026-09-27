@@ -19,6 +19,7 @@ func Toggle():
 			null, "",
 			logOut, "Log Out",
 			quit, "Quit")
+		closeCallback = Toggle
 
 func LogOut():
 	FSM.EnterState(FSM.States.LOGIN_SCREEN)

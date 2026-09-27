@@ -7,6 +7,7 @@ class_name MessageBox
 
 var hasActionLock : bool						= false
 var isSuspended : bool							= false
+var closeCallback : Callable					= Clear
 
 #
 func Display(text : String, primary = null, primaryText : String = "", cancel = null, cancelText : String = "", secondary = null, secondaryText : String = "", tertiary = null, tertiaryText : String = ""):
@@ -29,6 +30,7 @@ func Show():
 func Clear():
 	LockActions(false)
 	isSuspended = false
+	closeCallback = Clear
 
 	set_visible(false)
 	buttonBox.ReleaseFocus()
@@ -52,3 +54,10 @@ func LockActions(state : bool):
 func Call(callback : Callable):
 	Clear()
 	callback.call()
+
+func TryClose() -> bool:
+	if not is_visible():
+		return false
+	if closeCallback.is_valid():
+		closeCallback.call()
+	return true

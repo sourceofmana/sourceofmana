@@ -73,6 +73,9 @@ func GetCurrentWindow() -> Control:
 	return null
 
 func CloseCurrent():
+	if quitBox.TryClose() or messageBox.TryClose():
+		return
+
 	var focusedNode : Control = get_viewport().gui_get_focus_owner()
 	if focusedNode and focusedNode is LineEdit:
 		focusedNode.release_focus()
