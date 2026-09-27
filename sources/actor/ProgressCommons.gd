@@ -82,6 +82,7 @@ enum ELANORE_POTION
 {
 	INACTIVE = ProgressCommons.UnknownProgress,
 	STARTED,
+	BREWED = ProgressCommons.CompletedProgress,
 }
 enum NINA_HUNGRY
 {

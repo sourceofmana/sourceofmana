@@ -90,20 +90,35 @@ func OnExplainUI():
 	Action(Farewell)
 
 # Main choice loop
-func HasAllIngredients() -> bool:
-	return HasItem(DB.GetCellHash("Maggot Slime"), 6) and HasItem(DB.GetCellHash("Water Bottle")) and HasItem(DB.GetCellHash("Pitaya"))
+func GetPotionBatchCount() -> int:
+	var maggotSlimeID : int = DB.GetCellHash("Maggot Slime")
+	var waterBottleID : int = DB.GetCellHash("Water Bottle")
+	var pitayaID : int = DB.GetCellHash("Pitaya")
+
+	var batchCount : int = 0
+	while HasItem(maggotSlimeID, (batchCount + 1) * 6) and HasItem(waterBottleID, batchCount + 1) and HasItem(pitayaID, batchCount + 1):
+		batchCount += 1
+	return batchCount
 
 func OnMainChoice():
 	if GetQuest(ProgressCommons.Quest.TUTORIAL) < ProgressCommons.CompletedProgress:
 		Choice("Where should I go now?", OnDirections)
 
-	var sideQuestState : int = GetQuest(ProgressCommons.Quest.ELANORE_POTION)
-	if sideQuestState == ProgressCommons.ELANORE_POTION.STARTED and HasAllIngredients():
-		Choice("I have your ingredients.", OnPotionQuestTurnIn)
-	elif sideQuestState == ProgressCommons.ELANORE_POTION.STARTED:
-		Choice("About those ingredients...", OnPotionQuestReminder)
-	else:
-		Choice("Can I help you with anything?", OnHelpWithPotions)
+	var potionQuestState : int = GetQuest(ProgressCommons.Quest.ELANORE_POTION)
+	var hasPotionIngredients : bool = GetPotionBatchCount() > 0
+	match potionQuestState:
+		ProgressCommons.ELANORE_POTION.INACTIVE:
+			Choice("Can I help you with anything?", OnHelpWithPotions)
+		ProgressCommons.ELANORE_POTION.STARTED:
+			if hasPotionIngredients:
+				Choice("I have your ingredients.", OnPotionQuestTurnIn)
+			else:
+				Choice("About those ingredients...", OnPotionQuestReminder)
+		ProgressCommons.ELANORE_POTION.BREWED:
+			if hasPotionIngredients:
+				Choice("I brought you more ingredients.", OnPotionQuestTurnIn)
+			else:
+				Choice("About those ingredients...", OnPotionQuestReminder)
 
 	Choice("What is Kaore?", OnExplainKaore)
 	Choice("Who are you?", OnExplainSelf)
@@ -119,7 +134,7 @@ func OnHelpWithPotions():
 	Choice("Maybe later.", OnPotionQuestDecline)
 
 func OnPotionQuestAccept():
-	Mes("I need six Maggot Slimes, one Water and one Pitaya. Bring those to me and I will make you a Cactus Potion in return.")
+	Mes("I need six Maggot Slimes, one Water and one Pitaya for each potion. Bring those to me and I will make you a Cactus Potion in return.")
 	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.STARTED)
 	Action(OnMainChoice)
 
@@ -128,18 +143,46 @@ func OnPotionQuestDecline():
 	Action(OnMainChoice)
 
 func OnPotionQuestReminder():
-	Mes("I still need six Maggot Slimes, one Water and one Pitaya. Come back when you have them.")
+	Mes("I still need six Maggot Slimes, one Water and one Pitaya for each potion. Come back when you have them.")
 	OnMainChoice()
 
 func OnPotionQuestTurnIn():
-	Mes("Thank you for your help. I'll get to work on making new healing potions right away!")
-	Mes("Helping the people out here is much better than being stuck in some tower or palace. More of the leaders of this city should think about that.")
-	RemoveItem(DB.GetCellHash("Maggot Slime"), 6)
-	RemoveItem(DB.GetCellHash("Water Bottle"))
-	RemoveItem(DB.GetCellHash("Pitaya"))
-	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.INACTIVE)
-	AddItem(DB.GetCellHash("Cactus Potion"))
-	Action(OnMainChoice)
+	var batchCount : int = GetPotionBatchCount()
+	if batchCount > 1:
+		Mes("You brought enough for %d potions! How many should I brew?" % batchCount)
+		Choice("Just one.", OnPotionBrew.bind(1))
+		Choice("All %d of them." % batchCount, OnPotionBrew.bind(batchCount))
+	else:
+		OnPotionBrew(1)
+
+func OnPotionBrew(requestedCount : int):
+	var brewCount : int = mini(requestedCount, GetPotionBatchCount())
+	if brewCount <= 0:
+		Mes("Hmm, you don't seem to have the ingredients anymore.")
+		Action(OnMainChoice)
+		return
+	if not HasItemsSpace([DB.GetCellHash("Cactus Potion")]):
+		Mes("Your bags are full, make some room first.")
+		Action(OnMainChoice)
+		return
+
+	var isFirstBrew : bool = GetQuest(ProgressCommons.Quest.ELANORE_POTION) == ProgressCommons.ELANORE_POTION.STARTED
+	RemoveItem(DB.GetCellHash("Maggot Slime"), 6 * brewCount)
+	RemoveItem(DB.GetCellHash("Water Bottle"), brewCount)
+	RemoveItem(DB.GetCellHash("Pitaya"), brewCount)
+	AddItem(DB.GetCellHash("Cactus Potion"), brewCount)
+	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.BREWED)
+
+	if isFirstBrew:
+		Mes("Thank you for your help. I'll get to work on making new healing potions right away!")
+		Mes("Helping the people out here is much better than being stuck in some tower or palace. More of the leaders of this city should think about that.")
+	else:
+		Mes("Thank you, here you go!")
+	Action(OnPotionBrewedChoice)
+
+func OnPotionBrewedChoice():
+	Choice("I have something else to ask.", OnMainChoice)
+	Choice("Goodbye.", Farewell)
 
 # What is Kaore
 func OnExplainKaore():
