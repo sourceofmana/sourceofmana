@@ -138,11 +138,18 @@ func OnStartHungryQuest():
 func OnCroissantTurnIn():
 	Mes("Oh my!")
 	Mes("A croissant! I cannot believe it. You are truly too kind, I did not expect this at all!")
-	RemoveItem(DB.GetCellHash("Croissant"))
-	SetQuest(ProgressCommons.Quest.NINA_HUNGRY, ProgressCommons.NINA_HUNGRY.REWARDS_WITHDREW)
-	AddItem(DB.GetCellHash("Cactus Potion"), 10)
-	AddGP(100)
-	Mes("Please, take these Cactus Potions and a bit of gold to cover what you spent.")
+	ExchangeItems([DB.GetCellHash("Croissant")], [[DB.GetCellHash("Cactus Potion"), 10]], OnCroissantExchanged)
+
+func OnCroissantExchanged(result : ActorInventory.ExchangeResult):
+	match result:
+		ActorInventory.ExchangeResult.OK:
+			SetQuest(ProgressCommons.Quest.NINA_HUNGRY, ProgressCommons.NINA_HUNGRY.REWARDS_WITHDREW)
+			AddGP(100)
+			Mes("Please, take these Cactus Potions and a bit of gold to cover what you spent.")
+		ActorInventory.ExchangeResult.MISSING_ITEMS:
+			Mes("Oh... Where did it go? Never mind, maybe another time.")
+		ActorInventory.ExchangeResult.NO_SPACE:
+			Mes("I would like to give you something in return, but your bag is full. Make some room and come back to me.")
 
 # Desert Seed quest
 func OnDesertSeedIntro():
@@ -174,11 +181,17 @@ func OnNinaReacts():
 	Mes("Find them and show them the Kano. Explain what you saw.")
 	Mes("Avoid telling anyone else about this for now. This is a very powerful item. Something that will surely attract the wrong attention.")
 	Mes("Before you go, take this.")
-	SetQuest(DESERT_SEED_ID, ProgressCommons.DESERT_SEED.SEEK_MANAYIR)
-	AddItem(DB.GetCellHash("Brass Zielite Amulet"))
-	Mes("It is a Zielite Amulet. The stone at its centre is a fragment of pure Zielite, the same mineral this Menhir is made of.")
-	Mes("When worn, it allows you to channel Mana, and to connect with Soul Menhirs.")
-	Choice("What does connecting to a Soul Menhir do?", OnExplainMenhirSync)
+	ExchangeItems([], [DB.GetCellHash("Brass Zielite Amulet")], OnAmuletExchanged)
+
+func OnAmuletExchanged(result : ActorInventory.ExchangeResult):
+	match result:
+		ActorInventory.ExchangeResult.OK:
+			SetQuest(DESERT_SEED_ID, ProgressCommons.DESERT_SEED.SEEK_MANAYIR)
+			Mes("It is a Zielite Amulet. The stone at its centre is a fragment of pure Zielite, the same mineral this Menhir is made of.")
+			Mes("When worn, it allows you to channel Mana, and to connect with Soul Menhirs.")
+			Choice("What does connecting to a Soul Menhir do?", OnExplainMenhirSync)
+		ActorInventory.ExchangeResult.NO_SPACE:
+			Mes("Your bag is too full to carry it. Make some room and come back to me.")
 
 func OnExplainMenhirSync():
 	Mes("When you touch a Soul Menhir while wearing a Zielite Amulet, the stone resonates with the Menhir's Zielite.")

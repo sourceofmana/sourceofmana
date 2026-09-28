@@ -11,11 +11,13 @@ func OnStart():
 	if questState != ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.STARTED:
 		return
 
-	if HasItemsSpace([[sealedLettersID, 1], [heavyEnvelopeID, 1]]):
-		Mes("You find two old envelopes tucked between the dusty books.")
-		Mes("One is sealed with care, the other feels surprisingly heavy.")
-		SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.ENVELOPES_FOUND)
-		AddItem(sealedLettersID)
-		AddItem(heavyEnvelopeID)
-	else:
-		Mes("You spot the envelopes, but your bag is too full to carry them.")
+	ExchangeItems([], [sealedLettersID, heavyEnvelopeID], OnEnvelopesExchanged)
+
+func OnEnvelopesExchanged(result : ActorInventory.ExchangeResult):
+	match result:
+		ActorInventory.ExchangeResult.OK:
+			SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.ENVELOPES_FOUND)
+			Mes("You find two old envelopes tucked between the dusty books.")
+			Mes("One is sealed with care, the other feels surprisingly heavy.")
+		ActorInventory.ExchangeResult.NO_SPACE:
+			Mes("You spot the envelopes, but your bag is too full to carry them.")

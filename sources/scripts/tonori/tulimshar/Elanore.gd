@@ -155,30 +155,27 @@ func OnPotionQuestTurnIn():
 	else:
 		OnPotionBrew(1)
 
-func OnPotionBrew(requestedCount : int):
-	var brewCount : int = mini(requestedCount, GetPotionBatchCount())
-	if brewCount <= 0:
-		Mes("Hmm, you don't seem to have the ingredients anymore.")
-		Action(OnMainChoice)
-		return
-	if not HasItemsSpace([DB.GetCellHash("Cactus Potion")]):
-		Mes("Your bags are full, make some room first.")
-		Action(OnMainChoice)
-		return
+func OnPotionBrew(brewCount : int):
+	var removeItems : Array = [[DB.GetCellHash("Maggot Slime"), 6 * brewCount], [DB.GetCellHash("Water Bottle"), brewCount], [DB.GetCellHash("Pitaya"), brewCount]]
+	ExchangeItems(removeItems, [[DB.GetCellHash("Cactus Potion"), brewCount]], OnPotionBrewed)
 
-	var isFirstBrew : bool = GetQuest(ProgressCommons.Quest.ELANORE_POTION) == ProgressCommons.ELANORE_POTION.STARTED
-	RemoveItem(DB.GetCellHash("Maggot Slime"), 6 * brewCount)
-	RemoveItem(DB.GetCellHash("Water Bottle"), brewCount)
-	RemoveItem(DB.GetCellHash("Pitaya"), brewCount)
-	AddItem(DB.GetCellHash("Cactus Potion"), brewCount)
-	SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.BREWED)
-
-	if isFirstBrew:
-		Mes("Thank you for your help. I'll get to work on making new healing potions right away!")
-		Mes("Helping the people out here is much better than being stuck in some tower or palace. More of the leaders of this city should think about that.")
-	else:
-		Mes("Thank you, here you go!")
-	Action(OnPotionBrewedChoice)
+func OnPotionBrewed(result : ActorInventory.ExchangeResult):
+	match result:
+		ActorInventory.ExchangeResult.OK:
+			var isFirstBrew : bool = GetQuest(ProgressCommons.Quest.ELANORE_POTION) == ProgressCommons.ELANORE_POTION.STARTED
+			SetQuest(ProgressCommons.Quest.ELANORE_POTION, ProgressCommons.ELANORE_POTION.BREWED)
+			if isFirstBrew:
+				Mes("Thank you for your help. I'll get to work on making new healing potions right away!")
+				Mes("Helping the people out here is much better than being stuck in some tower or palace. More of the leaders of this city should think about that.")
+			else:
+				Mes("Thank you, here you go!")
+			Action(OnPotionBrewedChoice)
+		ActorInventory.ExchangeResult.MISSING_ITEMS:
+			Mes("Hmm, you don't seem to have the ingredients anymore.")
+			Action(OnMainChoice)
+		ActorInventory.ExchangeResult.NO_SPACE:
+			Mes("Your bags are full, make some room first.")
+			Action(OnMainChoice)
 
 func OnPotionBrewedChoice():
 	Choice("I have something else to ask.", OnMainChoice)

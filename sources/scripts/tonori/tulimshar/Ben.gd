@@ -25,25 +25,31 @@ func ReceiveLetters():
 		Mes("Come back when you've got something to show me. I have work to do.")
 
 func GiveLetters():
-		Mes("What. He sent you here with these?")
-		Think("Ben looks through the letters, shifting them in his hands.")
-		Mes("I know this handwriting.")
-		Mes("These are old. Back when the Queen had us stationed apart, before we even shared the same wall.")
-		Mes("Frost handled the people. I handled the stone. That was the deal.")
-		Mes("It worked, for a while.")
-		Mes("Then the Queen kept pushing. More demands, always her way. No room to just do the work.")
-		Mes("Frost started making rules. Procedures for everything. I told him we didn't need more pressure on top of what we already dealt with.")
-		Mes("He said I was shutting him out, making decisions without telling anyone.")
-		Mes("Maybe I was, words aren't my tool. Never were.")
-		Mes("I just wanted to build things and have people stop arguing about how I build them.")
-		Mes("Anyway. I told him to leave. He left. End of story.")
-		Mes("...")
-		Mes("Except it wasn't, obviously. Because here I am, guarding walls nobody's trying to break through.")
-		Mes("Except for you... but I guess Frost sent you, so it's different.")
-		RemoveItem(sealedLettersID)
-		SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.LETTERS_DELIVERED)
-		Mes("Take this envelope back to him. He'll know what's inside.")
-		Mes("And tell him the walls still stand. He'll... Yeah. Tell him that.")
+	Mes("What. He sent you here with these?")
+	Think("Ben looks through the letters, shifting them in his hands.")
+	Mes("I know this handwriting.")
+	Mes("These are old. Back when the Queen had us stationed apart, before we even shared the same wall.")
+	Mes("Frost handled the people. I handled the stone. That was the deal.")
+	Mes("It worked, for a while.")
+	Mes("Then the Queen kept pushing. More demands, always her way. No room to just do the work.")
+	Mes("Frost started making rules. Procedures for everything. I told him we didn't need more pressure on top of what we already dealt with.")
+	Mes("He said I was shutting him out, making decisions without telling anyone.")
+	Mes("Maybe I was, words aren't my tool. Never were.")
+	Mes("I just wanted to build things and have people stop arguing about how I build them.")
+	Mes("Anyway. I told him to leave. He left. End of story.")
+	Mes("...")
+	Mes("Except it wasn't, obviously. Because here I am, guarding walls nobody's trying to break through.")
+	Mes("Except for you... but I guess Frost sent you, so it's different.")
+	ExchangeItems([sealedLettersID], [], OnLettersExchanged)
+
+func OnLettersExchanged(result : ActorInventory.ExchangeResult):
+	match result:
+		ActorInventory.ExchangeResult.OK:
+			SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.LETTERS_DELIVERED)
+			Mes("Take this envelope back to him. He'll know what's inside.")
+			Mes("And tell him the walls still stand. He'll... Yeah. Tell him that.")
+		ActorInventory.ExchangeResult.MISSING_ITEMS:
+			Mes("Where did those letters go? Come back when you have them.")
 
 func FreeRoaming():
 	Mes("You again. Corridors are open to you now, I meant that.")

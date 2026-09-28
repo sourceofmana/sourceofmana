@@ -50,11 +50,17 @@ func QuestRewards():
 		Mes("I thought he'd spent this after I left. I would have understood if he did.")
 		Mes("I don't deserve this. It should belong to someone who is a better friend than I managed to be.")
 		Mes("Here. You take it. You've done more for us in one afternoon than we managed in years.")
-		RemoveItem(heavyEnvelopeID)
-		AddGP(1000)
-		SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.REWARDS_WITHDREW)
+		ExchangeItems([heavyEnvelopeID], [], OnEnvelopeExchanged)
 	else:
 		Mes("Did you find Ben? He's in the western wall corridor.")
+
+func OnEnvelopeExchanged(result : ActorInventory.ExchangeResult):
+	match result:
+		ActorInventory.ExchangeResult.OK:
+			SetQuest(QUEST_ID, ProgressCommons.TULIMSHAR_OLD_FRIENDSHIP.REWARDS_WITHDREW)
+			AddGP(1000)
+		ActorInventory.ExchangeResult.MISSING_ITEMS:
+			Mes("Wait, where did the envelope go? Bring it back to me.")
 
 func QuestCompleted():
 	Mes("Cacti are coming in nicely this year.")

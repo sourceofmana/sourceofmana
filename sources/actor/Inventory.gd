@@ -6,6 +6,14 @@ var items : Array[Item]				= []
 var equipment : Array[Item]			= []
 var itemCount : int					= 0
 
+enum ExchangeResult
+{
+	OK = 0,
+	MISSING_ITEMS,
+	NO_SPACE,
+	INVALID,
+}
+
 #
 func GetEquipmentCell(slot : int) -> ItemCell:
 	if slot >= ActorCommons.Slot.FIRST_EQUIPMENT and slot < ActorCommons.Slot.LAST_MODIFIER:
@@ -213,6 +221,72 @@ func RemoveItem(cell : ItemCell, count : int, itemIndex : int) -> bool:
 		actor.stat.weight -= cell.weight * count / 1000.0
 		return true
 	return false
+
+# Exchange
+static func GetExchangeCounts(entries : Array, counts : Dictionary[ItemCell, int]) -> bool:
+	for entry in entries:
+		var itemID : int = 0
+		var count : int = 1
+		if entry is Array and entry.size() == 2:
+			itemID = entry[0]
+			count = entry[1]
+		elif entry is int:
+			itemID = entry
+		else:
+			assert(false, "Exchange entry not recognized for " + str(entry))
+			return false
+
+		var cell : ItemCell = DB.GetItem(itemID)
+		if not cell or count <= 0:
+			return false
+
+		counts[cell] = counts.get(cell, 0) + count
+	return true
+
+func ExchangeItems(removeItems : Array, addItems : Array) -> ExchangeResult:
+	# Normalize our number of added/removed items
+	var removeCounts : Dictionary[ItemCell, int] = {}
+	var addCounts : Dictionary[ItemCell, int] = {}
+	if not GetExchangeCounts(removeItems, removeCounts) or not GetExchangeCounts(addItems, addCounts):
+		return ExchangeResult.INVALID
+
+	# Check the number of freed slots in the inventory
+	var slotDelta : int = 0
+	for cell in removeCounts:
+		var count : int = removeCounts[cell]
+		if not HasItem(cell, count):
+			return ExchangeResult.MISSING_ITEMS
+		if not cell.stackable:
+			slotDelta -= count
+		elif GetItem(cell).count == count:
+			slotDelta -= 1
+
+	# Check the number of newly used slots in the inventory
+	for cell in addCounts:
+		if not cell.stackable:
+			slotDelta += addCounts[cell]
+		else:
+			var heldItem : Item = GetItem(cell)
+			if not heldItem or heldItem.count == removeCounts.get(cell, 0):
+				slotDelta += 1
+
+	if itemCount + slotDelta > ActorCommons.InventorySize:
+		return ExchangeResult.NO_SPACE
+
+	# Remove items
+	for cell in removeCounts:
+		if cell.stackable:
+			RemoveItem(cell, removeCounts[cell], FindItemIndex(cell))
+		else:
+			for _i in removeCounts[cell]:
+				RemoveItem(cell, 1, FindItemIndex(cell))
+
+	# Add items
+	for cell in addCounts:
+		var isAdded : bool = AddItem(cell, addCounts[cell])
+		assert(isAdded, "Exchange could not add an item despite its space validation")
+
+	return ExchangeResult.OK
 
 #
 func ImportInventory(data : Array[Dictionary]):

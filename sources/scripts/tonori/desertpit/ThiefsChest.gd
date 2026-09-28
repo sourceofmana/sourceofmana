@@ -21,16 +21,21 @@ func OnTryOpen():
 		OnLocked()
 		return
 
-	if not IsTriggering():
-		Trigger()
+	ExchangeItems([thiefsKeyID], [scimitarID], OnChestExchanged)
 
-	SetQuest(questID, ProgressCommons.SNAKE_PIT_THIEF.REWARDS_WITHDREW)
-
-	RemoveItem(thiefsKeyID, 1)
-	AddGP(200)
-	AddItem(scimitarID, 1)
-	AddExp(50)
-	AddKarma(2)
+func OnChestExchanged(result : ActorInventory.ExchangeResult):
+	match result:
+		ActorInventory.ExchangeResult.OK:
+			if not IsTriggering():
+				Trigger()
+			SetQuest(questID, ProgressCommons.SNAKE_PIT_THIEF.REWARDS_WITHDREW)
+			AddGP(200)
+			AddExp(50)
+			AddKarma(2)
+		ActorInventory.ExchangeResult.MISSING_ITEMS:
+			OnLocked()
+		ActorInventory.ExchangeResult.NO_SPACE:
+			Chat("Your bag is too full to take anything from this chest.")
 
 func OnEmpty():
 	Chat("This chest is empty.")

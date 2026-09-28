@@ -357,7 +357,21 @@ func AddItem(itemID : int, count : int = 1, customfield : String = ""):
 func RemoveItem(itemID : int, count : int = 1, customfield : String = ""):
 	assert(IsPlayer(), "RemoveItem() requires a player agent")
 	if not IsPlayer(): return false
-	Action(NpcCommons.RemoveItem.bind(own, itemID, count, customfield))
+	Action(ApplyRemoveItem.bind(itemID, count, customfield))
+
+func ApplyRemoveItem(itemID : int, count : int, customfield : String):
+	if not NpcCommons.RemoveItem(own, itemID, count, customfield):
+		steps.resize(step + 1)
+		Narrate("You no longer have the required items.")
+
+func ExchangeItems(removeItems : Array, addItems : Array, onResult : Callable):
+	assert(IsPlayer(), "ExchangeItems() requires a player agent")
+	if not IsPlayer(): return
+	Action(ApplyExchangeItems.bind(removeItems, addItems, onResult))
+
+func ApplyExchangeItems(removeItems : Array, addItems : Array, onResult : Callable):
+	assert(step == steps.size() - 1 and not steps[step].has("choices"), "ExchangeItems() must be the last queued step")
+	onResult.call(NpcCommons.ExchangeItems(own, removeItems, addItems))
 
 # Skills
 func HasSkill(skillID : int) -> bool:

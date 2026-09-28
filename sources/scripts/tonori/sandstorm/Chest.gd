@@ -21,13 +21,18 @@ func OnTryOpen():
 		OnLocked()
 		return
 
-	if not IsTriggering():
-		Trigger()
+	ExchangeItems([chestMineKeyID], [shortSwordID], OnChestExchanged)
 
-	if HasSpace(1):
-		RemoveItem(chestMineKeyID, 1)
-		SetQuest(questID, ProgressCommons.SANDSTORM_MINE_ABANDONED_TREASURE.REWARDS_WITHDREW)
-		AddItem(shortSwordID, 1)
+func OnChestExchanged(result : ActorInventory.ExchangeResult):
+	match result:
+		ActorInventory.ExchangeResult.OK:
+			if not IsTriggering():
+				Trigger()
+			SetQuest(questID, ProgressCommons.SANDSTORM_MINE_ABANDONED_TREASURE.REWARDS_WITHDREW)
+		ActorInventory.ExchangeResult.MISSING_ITEMS:
+			OnLocked()
+		ActorInventory.ExchangeResult.NO_SPACE:
+			Chat("Your bag is too full to take anything from this chest.")
 
 func OnEmpty():
 	Chat("This chest is empty.")

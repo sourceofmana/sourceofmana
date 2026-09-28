@@ -60,14 +60,18 @@ func OnMonsterKilled(mob : BaseAgent):
 
 	npc.position = mob.position
 	RemoveAgent(mob)
-	SetState(ActorCommons.State.DEATH)
 	SetVisible(true)
 
+	if player and NpcCommons.ExchangeItems(player, [], [DB.GetCellHash("Sandstorm Kano")]) != ActorInventory.ExchangeResult.OK:
+		SetState(ActorCommons.State.IDLE)
+		NpcCommons.PushNotification(player, "Your bag is too full to take the Kano. Make some room and face Xakelbael again.")
+		return
+
+	SetState(ActorCommons.State.DEATH)
 	if not player:
 		return
 
 	NpcCommons.SetQuest(player, QUEST_ID, ProgressCommons.MINE_EXPLORATION.DEFEATED)
-	NpcCommons.AddItem(player, DB.GetCellHash("Sandstorm Kano"))
 
 	if ActorCommons.IsAlive(player) and not player.ownScript:
 		player.AddScript(npc)

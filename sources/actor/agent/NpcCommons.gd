@@ -198,6 +198,11 @@ static func RemoveItem(caller : BaseAgent, itemID : int, count : int = 1, custom
 			return caller.inventory.RemoveItem(cell, count, itemIndex)
 	return false
 
+static func ExchangeItems(caller : BaseAgent, removeItems : Array, addItems : Array) -> ActorInventory.ExchangeResult:
+	if caller is PlayerAgent and caller.inventory:
+		return caller.inventory.ExchangeItems(removeItems, addItems)
+	return ActorInventory.ExchangeResult.INVALID
+
 # Skills
 static func TeachSkill(caller : BaseAgent, skillID : int, level : int = 1) -> bool:
 	if caller is PlayerAgent and caller.progress:

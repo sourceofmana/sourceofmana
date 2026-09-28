@@ -36,9 +36,11 @@ func OnFillTick(startPos : Vector2, tick : int):
 
 func CompleteFill():
 	NpcCommons.ClearTracker(own)
-	if NpcCommons.RemoveItem(own, BOTTLE_ID):
-		NpcCommons.AddItem(own, WATER_BOTTLE_ID)
-		PromptNext()
+	match NpcCommons.ExchangeItems(own, [BOTTLE_ID], [WATER_BOTTLE_ID]):
+		ActorInventory.ExchangeResult.OK:
+			PromptNext()
+		ActorInventory.ExchangeResult.NO_SPACE:
+			Notification("You don't have any available space on your inventory.")
 
 func PromptNext():
 	if HasItem(BOTTLE_ID):
