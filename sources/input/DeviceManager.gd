@@ -80,6 +80,7 @@ static var actionNames : Dictionary[String, String] = {
 	"gp_untarget" : "Clear Target",
 	"gp_pickup" : "Pickup",
 	"gp_run" : "Run",
+	"gp_face_direction" : "Face Direction",
 	"ui_skill": "Skill Window",
 	"ui_accept": "Accept",
 	"ui_cancel": "Cancel",

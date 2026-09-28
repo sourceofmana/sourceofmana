@@ -246,6 +246,12 @@ func SetMovePos(direction : Vector2, peerID : int):
 	if player and not player.ownScript:
 		player.SetRelativeMode(true, direction.normalized())
 
+func SetOrientation(direction : Vector2, peerID : int):
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player and not player.ownScript:
+		player.SetRelativeMode(false, Vector2.ZERO)
+		player.SetOrientation(direction)
+
 func ClearNavigation(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player:

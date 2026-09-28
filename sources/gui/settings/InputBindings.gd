@@ -4,7 +4,7 @@ class_name InputBindings
 #
 const actionCategories : Dictionary[StringName, Array] = {
 	"Movement": [
-		"gp_move_up", "gp_move_down", "gp_move_left", "gp_move_right",
+		"gp_move_up", "gp_move_down", "gp_move_left", "gp_move_right", "gp_face_direction",
 	],
 	"Target": [
 		"gp_interact", "gp_target", "gp_untarget",

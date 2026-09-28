@@ -116,6 +116,15 @@ func LookAt(target : BaseAgent):
 			if self is AIAgent:
 				set_physics_process(true)
 
+func SetOrientation(direction : Vector2):
+	if direction.is_zero_approx() or not direction.is_finite():
+		return
+
+	var newOrientation : Vector2 = direction.normalized()
+	if not newOrientation.is_equal_approx(currentOrientation):
+		currentOrientation = newOrientation
+		requireFullUpdate = true
+
 func ResetNav():
 	WalkToward(position)
 	SwitchInputMode(true)

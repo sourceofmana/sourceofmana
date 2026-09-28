@@ -6,6 +6,7 @@ var isEnabled : bool			= true
 var supportMouse : bool			= true
 var clickTimer : Timer			= null
 var previousMove : Vector2		= Vector2.ZERO
+var wasFacing : bool			= false
 const stickDeadzone : float		= 0.2
 
 var consumed : Array[String]	= []
@@ -127,17 +128,22 @@ func _unhandled_input(event):
 func _physics_process(_deltaTime : float):
 	if Launcher.Player:
 		var move : Vector2 = GetMove()
+		var isFacing : bool = IsActionPressed("gp_face_direction")
 		if move != Vector2.ZERO:
 			Entities.ClearDelayedHoveredCallback()
 			Launcher.Map.ClearDelayedPickupCallback()
 			if clickTimer.get_time_left() > 0:
 				clickTimer.stop()
-			if previousMove != move:
-				Network.SetMovePos(move)
+			if previousMove != move or wasFacing != isFacing:
+				if isFacing:
+					Network.SetOrientation(move)
+				else:
+					Network.SetMovePos(move)
 		else:
 			if previousMove != move:
 				Network.ClearNavigation()
 		previousMove = move
+		wasFacing = isFacing
 
 #
 func _input(event : InputEvent):

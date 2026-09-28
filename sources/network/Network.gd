@@ -195,6 +195,10 @@ func SetClickPos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
 func SetMovePos(pos : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("SetMovePos", [pos], peerID, NetworkCommons.DelayInstant)
 
+@rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
+func SetOrientation(direction : Vector2, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("SetOrientation", [direction], peerID, NetworkCommons.DelayInstant)
+
 @rpc("authority", "call_remote", "unreliable_ordered", EChannel.ENTITY_UNRELIABLE)
 func UpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, frameID : int, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("UpdateEntity", [agentRID, velocity, position, frameID], peerID)
