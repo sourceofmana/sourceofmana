@@ -61,6 +61,7 @@
 [ext_resource type="PackedScene" uid="uid://duqpp1dik8h8h" path="res://presets/gui/Character.tscn" id="49_78q3w"]
 [ext_resource type="PackedScene" uid="uid://dolxuw03u60eo" path="res://presets/gui/Progress.tscn" id="54_112vu"]
 [ext_resource type="Script" uid="uid://bx03gb6d40i6f" path="res://sources/gui/QuitBox.gd" id="55_6huw9"]
+[ext_resource type="PackedScene" uid="uid://b8ixr8s8711q0" path="res://presets/gui/CellDetails.tscn" id="56_2uxo9"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
 shader = ExtResource("4_60kv4")
@@ -312,6 +313,9 @@ offset_bottom = 44.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("55_6huw9")
+
+[node name="CellDetails" parent="Overlay/VSections/Contexts" unique_id=1927589245 instance=ExtResource("56_2uxo9")]
+layout_mode = 0
 
 [node name="ButtonBar" type="Control" parent="Overlay/VSections" unique_id=300934480]
 custom_minimum_size = Vector2(0, 96)

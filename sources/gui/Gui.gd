@@ -18,6 +18,7 @@ extends ServiceBase
 @onready var infoContext : ContextMenu			= $Overlay/VSections/Contexts/Info
 @onready var messageBox : MessageBox			= $Overlay/VSections/Contexts/MessageBox
 @onready var quitBox : QuitBox					= $Overlay/VSections/Contexts/QuitBox
+@onready var cellDetails : CellDetails			= $Overlay/VSections/Contexts/CellDetails
 @onready var loginPanel : Control				= $Overlay/VSections/Contexts/Login
 @onready var characterPanel : Control			= $Overlay/VSections/Contexts/Character
 

@@ -115,32 +115,41 @@ func GetTooltipHeader() -> String:
 	return bbcode
 
 func SetToolTip():
-	if not cell:
-		set_tooltip_text("")
-		return
-	var currentEquipped : ItemCell = GetCurrentEquipped()
-	var bbcode : String = GetTooltipHeader()
-	bbcode += GetTooltipModifiers(currentEquipped)
-	bbcode += GetTooltipSkillModifiers()
-	bbcode += GetTooltipWeight()
+	var bbcode : String = ""
+	if cell:
+		var currentEquipped : ItemCell = GetCurrentEquipped()
+		bbcode = GetTooltipHeader()
+		bbcode += GetTooltipModifiers(currentEquipped)
+		bbcode += GetTooltipSkillModifiers()
+		bbcode += GetTooltipWeight()
 	set_tooltip_text(bbcode)
+	if Launcher.GUI and Launcher.GUI.cellDetails and Launcher.GUI.cellDetails.tile == self:
+		Launcher.GUI.cellDetails.Refresh()
 
-func ClampTooltipWidth(label : RichTextLabel):
+static func ClampTooltipWidth(label : RichTextLabel):
 	if label.get_content_width() > UICommons.TooltipMaxWidth:
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		label.custom_minimum_size.x = UICommons.TooltipMaxWidth
 
-func _make_custom_tooltip(for_text : String) -> Object:
-	if for_text.is_empty():
-		return null
+static func MakeTooltipLabel(text : String) -> RichTextLabel:
 	var label : RichTextLabel = RichTextLabel.new()
 	label.bbcode_enabled = true
 	label.fit_content = true
 	label.autowrap_mode = TextServer.AUTOWRAP_OFF
 	label.add_theme_color_override("default_color", UICommons.TextColor)
-	label.text = for_text
+	label.text = text
 	label.tree_entered.connect(ClampTooltipWidth.bind(label))
 	return label
+
+func _make_custom_tooltip(for_text : String) -> Object:
+	return null if for_text.is_empty() else MakeTooltipLabel(for_text)
+
+func IsInspectable() -> bool:
+	return LauncherCommons.isMobile and cell != null and UICommons.GetWindowPanelAncestor(self) != null
+
+func ToggleInfo():
+	if Launcher.GUI and Launcher.GUI.cellDetails and IsInspectable():
+		Launcher.GUI.cellDetails.Toggle(self)
 
 func UpdateCountLabel():
 	if countLabel:
@@ -310,6 +319,7 @@ func _gui_input(event):
 				UseCell()
 			elif event.pressed:
 				selected.emit(self)
+				ToggleInfo()
 		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and draggable:
 			cell = null
 			count = 0
