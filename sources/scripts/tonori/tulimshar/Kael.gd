@@ -80,6 +80,11 @@ func OnAgeOfKaore():
 
 # Task assignment
 func OnFieldCleanUp():
+	var shortSwordID : int = DB.GetCellHash("Short Sword")
+
+	Mes("You're not going to clear that field with your bare hands though.")
+	Mes("Here, take this sword. It's not much, but it will cut through Maggots and Peyotes just fine.")
+	AddItem(shortSwordID)
 	OnFightTutorial()
 	Mes("Start with the peyotes in that field just north from here.")
 	LookAtPosition(FIELD_POSITION)

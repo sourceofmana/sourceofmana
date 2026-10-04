@@ -66,18 +66,25 @@ func OnWhyExpedition():
 func OnJobExplanation():
 	Mes("Your job will be to scout the area and make sure the old cave system is clear of major dangers. If all is well, we will start bringing in miners and restart the whole operation.")
 
-	if GetQuest(ProgressCommons.Quest.TUTORIAL) < ProgressCommons.TUTORIAL.EKINU_DONE:
-		var shortSwordID : int = DB.GetCellHash("Short Sword")
+	var tutorialState : int = GetQuest(ProgressCommons.Quest.TUTORIAL)
+	if tutorialState < ProgressCommons.TUTORIAL.EKINU_DONE:
+		var desertBootsID : int = DB.GetCellHash("Desert Boots")
 		var desertGogglesID : int = DB.GetCellHash("Desert Goggles")
-		Mes("But before you go, you can't leave without any protection.")
-		Mes("Take these. You will need it out there!")
+		Mes("But before you go, you can't cross the desert barefoot and half-blind.")
+		Mes("Take these goggles and boots. The sand will burn your feet and get in your eyes out there!")
 		SetQuest(ProgressCommons.Quest.TUTORIAL, ProgressCommons.TUTORIAL.EKINU_DONE)
-		AddItem(shortSwordID)
+		AddItem(desertBootsID)
 		AddItem(desertGogglesID)
 		AddExp(20)
 
-		Mes("That should be enough to protect yourself")
-		Mes("But if you are in danger, remember to run away, there is no pride in being dead.")
+		if tutorialState < ProgressCommons.TUTORIAL.KAEL_MET:
+			var shortSwordID : int = DB.GetCellHash("Short Sword")
+			Mes("You haven't even got a weapon, have you?")
+			Mes("Here, take this sword. Better than walking out there empty-handed.")
+			AddItem(shortSwordID)
+
+		Mes("With proper boots you will also move a lot faster than on your bare feet.")
+		Mes("And if you are in danger, remember to run away, there is no pride in being dead.")
 
 		DisplayActions(["gp_run"])
 		Narrate("Hold Run to sprint and cover ground faster or flee a battle.")
