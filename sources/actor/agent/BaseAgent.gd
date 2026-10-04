@@ -145,8 +145,9 @@ func UpdateDeltas(delta : float):
 	if abs(stat.deltaHealth) >= 1.0:
 		var healthChange : int = floori(abs(stat.deltaHealth)) * int(sign(stat.deltaHealth))
 		stat.deltaHealth -= healthChange
-		stat.SetHealth(healthChange)
-		if healthChange < 0:
+		var previousHealth : int = stat.health
+		stat.SetHealth(healthChange, 1)
+		if healthChange < 0 and previousHealth != stat.health:
 			NotifyDrain(-healthChange)
 
 	if abs(stat.deltaMana) >= 1.0:

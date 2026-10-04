@@ -192,9 +192,9 @@ func SetAttributes(newStrength: int, newVitality: int, newAgility: int, newEndur
 		concentration = min(ActorCommons.MaxPointPerAttributes, newConcentration)
 		RefreshAttributes()
 
-func SetHealth(bonus : int):
+func SetHealth(bonus : int, safeValue : int = 0):
 	var previousHealth : int = health
-	health = clampi(health + bonus, 0, current.maxHealth)
+	health = clampi(health + bonus, safeValue, current.maxHealth)
 	vital_stats_updated.emit()
 	if health <= 0 and previousHealth > 0:
 		actor.Killed()
