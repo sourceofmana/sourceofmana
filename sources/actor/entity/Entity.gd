@@ -77,7 +77,7 @@ func SetLocalPlayer():
 		Launcher.Camera.remoteTransform.set_remote_node(Launcher.Camera.camera.get_path())
 		Launcher.Camera.camera.make_current()
 
-	entity_died.connect(Launcher.GUI.respawnWindow.EnableControl.bind(true))
+	entity_died.connect(Launcher.GUI.DisplayDeath)
 	Network.RetrieveCharacterInformation()
 	FSM.EnterState(FSM.States.IN_GAME)
 

@@ -37,7 +37,6 @@ extends ServiceBase
 @onready var emoteWindow : WindowPanel			= $Windows/Floating/Emote
 @onready var skillWindow : WindowPanel			= $Windows/Floating/Skill
 @onready var progressWindow : WindowPanel		= $Windows/Floating/Progress
-@onready var respawnWindow : WindowPanel		= $Windows/Floating/Respawn
 @onready var statWindow : WindowPanel			= $Windows/Floating/Stat
 @onready var socialWindow : WindowPanel			= $Windows/Floating/Social
 
@@ -141,6 +140,10 @@ Otherwise, have fun and thank you for playing!
 			settingsWindow.set_sessionfirstlogin.bind(false), "OK",
 			OpenDiscord, "Join our Discord")
 
+func DisplayDeath():
+	UICommons.MessageBox(DeathMessages.Pick(), Network.TriggerRespawn, "Respawn")
+	messageBox.closeCallback = Callable()
+
 #
 func EnterLoginMenu():
 	if progressTimer != null:
@@ -161,7 +164,6 @@ func EnterLoginMenu():
 	actionBoxes.set_visible(false)
 	quitBox.Clear()
 	messageBox.Clear()
-	respawnWindow.EnableControl(false)
 	shortcuts.set_visible(false)
 	characterPanel.set_visible(false)
 	buttonBoxes.set_visible(false)

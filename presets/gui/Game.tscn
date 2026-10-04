@@ -57,7 +57,6 @@
 [ext_resource type="PackedScene" uid="uid://u31xl3ap3wd8" path="res://presets/gui/Inventory.tscn" id="35_j05ha"]
 [ext_resource type="PackedScene" uid="uid://bmsbt0owg4j86" path="res://presets/gui/Emote.tscn" id="37_v7lrk"]
 [ext_resource type="PackedScene" uid="uid://b5jgfu2dukotm" path="res://presets/gui/Skill.tscn" id="38_ompay"]
-[ext_resource type="PackedScene" uid="uid://b8frfkv2y8x6" path="res://presets/gui/RespawnWindow.tscn" id="44_7o5pa"]
 [ext_resource type="PackedScene" uid="uid://duqpp1dik8h8h" path="res://presets/gui/Character.tscn" id="49_78q3w"]
 [ext_resource type="PackedScene" uid="uid://dolxuw03u60eo" path="res://presets/gui/Progress.tscn" id="54_112vu"]
 [ext_resource type="Script" uid="uid://bx03gb6d40i6f" path="res://sources/gui/QuitBox.gd" id="55_6huw9"]
@@ -540,21 +539,6 @@ offset_right = 1256.0
 offset_bottom = 468.0
 script = ExtResource("19_v8wo4")
 
-[node name="Respawn" parent="Windows/Floating" unique_id=1663296732 instance=ExtResource("44_7o5pa")]
-visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 490.0
-offset_top = 272.0
-offset_right = 770.0
-offset_bottom = 364.0
-grow_horizontal = 1
-grow_vertical = 1
-
 [node name="Stat" parent="Windows/Floating" unique_id=1490220876 instance=ExtResource("35_d1kq3")]
 visible = false
 custom_minimum_size = Vector2(380, 315)
@@ -593,5 +577,4 @@ top_level = true
 [connection signal="pressed" from="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions/ButtonA" to="Overlay/Sections/Shortcuts/Sticks" method="_press_button" binds= [0]]
 [connection signal="released" from="Overlay/Sections/Shortcuts/Sticks/RightAnchor/Actions/ButtonA" to="Overlay/Sections/Shortcuts/Sticks" method="_release_button" binds= [0]]
 [connection signal="resized" from="Windows/Floating" to="Windows/Floating" method="_on_window_resized"]
-[connection signal="gui_input" from="Windows/Floating/Respawn" to="Windows/Floating/Respawn" method="OnGuiInput"]
 [connection signal="gui_input" from="Windows/Floating/Stat" to="Windows/Floating/Stat" method="OnGuiInput"]

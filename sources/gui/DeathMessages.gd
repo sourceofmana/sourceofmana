@@ -1,11 +1,9 @@
-extends WindowPanel
+extends RefCounted
+class_name DeathMessages
 
-@onready var respawnLabel : Label = $Margin/VBoxContainer/Label
-@onready var respawnButton : Button = $Margin/VBoxContainer/Respawn
-
-var deathMessages: PackedStringArray = [
+#
+const Messages : PackedStringArray = [
 	# TMW dead messages
-
 	"You are dead.",
 	"We regret to inform you that your character was killed in battle.",
 	"You are not that alive anymore.",
@@ -57,44 +55,8 @@ var deathMessages: PackedStringArray = [
 	"Any last words? Oops, too late!", 
 	"Confusion will be my epitaph.", # King Crimson reference.
 	"There is no glory in suffering.",
-
-	# TMW2 custom dead messages
-
-	"KO",
-	"GG",
-	"Better luck next time.",
-	"Everything is a dream.",
-	"Oh dear, the RNG is angry with you again.",
-	"Well... That happens, I guess.",
-	"That is just part of life-- err, death, I mean.",
-	"Are you enjoying lying on the ground?",
-	"Today is not your lucky day, it seems.",
-	"Dead already? But you were so young...",
-	"Next time, say thanks when you get off the bus.",
-	"Walk towards the light.",
-	"And thus, you return to dust; Fulfilling the prophecy.",
-	"Do you want your noob certificate now or later?",
-	"One Tap.", # CSGO reference.
-	"Wasted", # GTA reference.
-	"Critical Existence Failure.", # TVTropes
-	"If you see an elevator, be sure to push the up button.", # TMW, sightly modified (if you die in -> if you see an)
-	"Well, that healing item was too awesome to use, anyway...", # TVTropes reference
-	"Hey hey, I wasn't done yet!", # The 'hey hey' is often spoken by Saulc
-	"Why you bully me!", # CSGO S1mple twitch clip
-	"The cake is a lie.", # Portal
-	"It is good day to be not dead!", # TF2 SMF Meme https://www.youtube.com/watch?v=oiuyhxp4w9I&ab_channel=AntoineDelak
-	"Well poop. Let's try not dying next time.", # WarZone 2100 #memes
-	"Outgunned.", # Operation Black Mesa
-	"If I try to get away, how long until I'm free? And if I don't come back here, will anyone remember me?", # Mana Source
 ]
 
 #
-func _on_visibility_changed():
-	if respawnLabel and visible:
-		respawnLabel.text = deathMessages[randi() % deathMessages.size()]
-		Center()
-		respawnButton.grab_focus.call_deferred()
-
-func _on_respawn_pressed():
-	Network.TriggerRespawn()
-	visible = false
+static func Pick() -> String:
+	return Messages[randi() % Messages.size()]
