@@ -6,6 +6,7 @@ const WhisperUnreadIcon : Texture2D = preload("res://data/graphics/gui/tab/tab_w
 
 @onready var tabContainer : TabContainer		= $ChatTabContainer
 @onready var lineEdit : LineEdit				= $NewText
+@onready var idlePlaceholder : String			= lineEdit.placeholder_text
 
 @onready var backlog : ChatBacklog				= ChatBacklog.new()
 
@@ -14,6 +15,10 @@ var channelTabs : Dictionary[String, int]		= {}
 #
 func AddLocalFeedback(text : String):
 	var channelIdx : GUICommons.ChatChannel = GUICommons.ChatChannel.LOCAL
+	AddLine(channelIdx, text + "\n", UICommons.TextColor)
+
+func AddGlobalFeedback(text : String):
+	var channelIdx : GUICommons.ChatChannel = GUICommons.ChatChannel.GLOBAL
 	AddLine(channelIdx, text + "\n", UICommons.TextColor)
 
 func AddPlayerChat(channelName : String, callerName : String, text : String, agentRID : int = -1):
@@ -89,13 +94,10 @@ func isNewLineEnabled() -> bool:
 
 func SetNewLineEnabled(enable : bool):
 	if Launcher.Action and lineEdit:
-		if not LauncherCommons.isMobile:
-			lineEdit.set_visible(enable)
-			if enable:
-				lineEdit.grab_focus()
-		else:
-			if not enable:
-				lineEdit.release_focus()
+		if not enable:
+			lineEdit.release_focus()
+		elif not LauncherCommons.isMobile:
+			lineEdit.grab_focus()
 
 #
 func OnNewTextSubmitted(newText : String):
@@ -170,6 +172,11 @@ func _ready():
 		channelTabs[str(channelIdx)] = channelIdx
 
 	AddLocalFeedback("Welcome to " + LauncherCommons.ProjectName)
+	var linkColor : String = "[color=#" + UICommons.WarnTextColor.to_html(false) + "]"
+	var discordLink : String = linkColor + "[url=" + LauncherCommons.DiscordInviteLink + "]Discord[/url][/color]"
+	var ircLink : String = linkColor + "[url=" + LauncherCommons.IRCLink + "]IRC[/url][/color]"
+	AddGlobalFeedback("Messages sent here are publicly bridged to our " + discordLink + " and " + ircLink + " channels.")
+
 	SetNewLineEnabled(false)
 
 func _input(event : InputEvent):
@@ -190,3 +197,4 @@ func _input(event : InputEvent):
 
 func _on_new_text_editing_toggled(toggled_on):
 	Launcher.Action.Enable(!toggled_on)
+	lineEdit.placeholder_text = "" if toggled_on else idlePlaceholder

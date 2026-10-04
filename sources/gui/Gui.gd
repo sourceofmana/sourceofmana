@@ -115,7 +115,7 @@ func IsDialogueContextOpened() -> bool:
 	return dialogueContainer.is_visible()
 
 func OpenDiscord():
-	OS.shell_open(LauncherCommons.SocialLink)
+	OS.shell_open(LauncherCommons.DiscordInviteLink)
 
 func DisplayFirstLogin():
 	if LauncherCommons.isWeb:

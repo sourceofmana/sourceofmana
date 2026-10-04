@@ -3,7 +3,8 @@ class_name LauncherCommons
 
 # Project
 const ProjectName : String				= "Source of Mana"
-const SocialLink : String				= "https://discord.com/channels/581622549566193664/1013487216493854780"
+const DiscordInviteLink : String		= "https://discord.com/invite/qR6ursz7xD"
+const IRCLink : String					= "https://web.libera.chat/?channels=#sourceofmana"
 
 # Map
 static var DefaultStartMapID : int		= "Tulimshar".hash()
