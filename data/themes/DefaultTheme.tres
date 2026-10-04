@@ -239,6 +239,13 @@ expand_margin_top = 5.0
 expand_margin_right = 10.0
 expand_margin_bottom = 5.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_le0fc"]
+bg_color = Color(0.933, 0.847, 0.631, 0.12)
+border_width_left = 4
+border_width_top = 2
+border_color = Color(0.933, 0.847, 0.631, 0.12)
+corner_detail = 1
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ia7e2"]
 bg_color = Color(0.176, 0.188, 0.2, 0.8)
 border_width_left = 4
@@ -254,6 +261,13 @@ texture_margin_top = 2.0
 texture_margin_right = 1.0
 texture_margin_bottom = 1.0
 expand_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_le0hv"]
+bg_color = Color(0.255, 0.267, 0.278, 0.85)
+border_width_left = 4
+border_width_top = 2
+border_color = Color(0.255, 0.267, 0.278, 0.85)
+corner_detail = 1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_listentry"]
 content_margin_left = 4.0
@@ -587,13 +601,15 @@ LineEdit/colors/font_color = Color(0.933, 0.847, 0.631, 1)
 LineEdit/colors/font_color_selected = Color(0.2, 0.137255, 0.0431373, 1)
 LineEdit/colors/selection_color = Color(0.32549, 0.305882, 0.290196, 1)
 LineEdit/icons/clear = ExtResource("11_ilveh")
-LineEdit/styles/focus = SubResource("StyleBoxFlat_ia7e2")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_le0fc")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_ia7e2")
 LineEdit/styles/read_only = SubResource("StyleBoxFlat_ia7e2")
 LineEditBorder/base_type = &"LineEdit"
 LineEditBorder/styles/focus = SubResource("StyleBoxTexture_ovqsu")
 LineEditBorder/styles/normal = SubResource("StyleBoxTexture_ovqsu")
 LineEditBorder/styles/read_only = SubResource("StyleBoxTexture_ovqsu")
+LineEditHovered/base_type = &"LineEdit"
+LineEditHovered/styles/normal = SubResource("StyleBoxFlat_le0hv")
 ListEntry/base_type = &"Button"
 ListEntry/styles/normal = SubResource("StyleBoxEmpty_listentry")
 MessageBox/base_type = &"PanelContainer"

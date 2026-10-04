@@ -205,6 +205,9 @@ func ConfirmDeleteCharacter():
 	if Network.DeleteCharacter(characterNameDisplay.get_text()):
 		RemoveCharacter(currentCharacterID)
 
+func GetSelectedEntity() -> Entity:
+	return charactersNode[currentCharacterID] if currentCharacterID != ActorCommons.InvalidCharacterSlot else null
+
 func UpdateSelectedCharacter(info : Dictionary, slotID : int):
 	var displayInformation : bool = not info.is_empty() or isCharacterCreatorEnabled
 	characterName.set_visible(displayInformation)
@@ -350,19 +353,23 @@ func _ready():
 	FSM.enter_game.connect(Clear)
 
 func _physics_process(_delta: float):
-	if currentCharacterID != ActorCommons.InvalidCharacterSlot:
-		var entity : Entity = charactersNode[currentCharacterID]
-		if entity:
-			var needsRefresh : bool = false
-			var move : Vector2 = Launcher.Action.GetMove()
-			if move != Vector2.ZERO:
-				entity.entityOrientation = move
-				needsRefresh = true
-			if Launcher.Action.IsActionJustPressed("gp_sit"):
-				entity.state = ActorCommons.State.IDLE if entity.state == ActorCommons.State.SIT else ActorCommons.State.SIT
-				needsRefresh = true
-			if needsRefresh and entity.visual:
+	var entity : Entity = GetSelectedEntity()
+	if entity:
+		var move : Vector2 = Launcher.Action.GetMove()
+		if move != Vector2.ZERO:
+			entity.entityOrientation = move
+			if entity.visual:
 				entity.visual.Refresh()
+
+func _unhandled_input(event : InputEvent):
+	if not visible:
+		return
+
+	var entity : Entity = GetSelectedEntity()
+	if entity and Launcher.Action.TryJustPressed(event, "gp_sit"):
+		entity.state = ActorCommons.State.IDLE if entity.state == ActorCommons.State.SIT else ActorCommons.State.SIT
+		if entity.visual:
+			entity.visual.Refresh()
 
 func _on_visibility_changed():
 	if visible:

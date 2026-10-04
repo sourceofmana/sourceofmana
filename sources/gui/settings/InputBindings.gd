@@ -20,6 +20,7 @@ const actionCategories : Dictionary[StringName, Array] = {
 	"Context": [
 		"ui_context_validate", "ui_context_cancel",
 		"ui_context_secondary", "ui_context_tertiary",
+		"ui_context_previous", "ui_context_next",
 	],
 	"System": [
 		"ui_screenshot", "ui_fullscreen",

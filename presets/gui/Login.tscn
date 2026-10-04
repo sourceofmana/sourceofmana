@@ -71,7 +71,6 @@ size_flags_vertical = 0
 layout_mode = 2
 size_flags_horizontal = 3
 focus_next = NodePath("../../../Password/Container/Text")
-focus_mode = 1
 max_length = 255
 clear_button_enabled = true
 caret_blink = true
@@ -96,7 +95,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 focus_previous = NodePath("../../../Name/Container/Text")
-focus_mode = 1
 max_length = 255
 clear_button_enabled = true
 select_all_on_focus = true
@@ -123,7 +121,6 @@ size_flags_vertical = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-focus_mode = 1
 max_length = 255
 clear_button_enabled = true
 select_all_on_focus = true
@@ -151,7 +148,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 focus_next = NodePath("../../../Name/Container/Text")
 focus_previous = NodePath("../../../Password/Container/Text")
-focus_mode = 1
 max_length = 255
 clear_button_enabled = true
 select_all_on_focus = true
@@ -177,7 +173,6 @@ size_flags_vertical = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-focus_mode = 1
 placeholder_text = "000000"
 max_length = 6
 clear_button_enabled = true
@@ -233,8 +228,8 @@ size_flags_horizontal = 3
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/Content/LoginContainer/Name/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/Content/LoginContainer/Name/Container/Text" to="." method="_on_text_focus_exited"]
-[connection signal="text_submitted" from="HBoxContainer/Panel/Margin/Content/LoginContainer/Name/Container/Text" to="." method="_on_text_submitted"]
 [connection signal="text_changed" from="HBoxContainer/Panel/Margin/Content/LoginContainer/Name/Container/Text" to="." method="_on_name_text_changed"]
+[connection signal="text_submitted" from="HBoxContainer/Panel/Margin/Content/LoginContainer/Name/Container/Text" to="." method="_on_text_submitted"]
 [connection signal="focus_entered" from="HBoxContainer/Panel/Margin/Content/LoginContainer/Password/Container/Text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="HBoxContainer/Panel/Margin/Content/LoginContainer/Password/Container/Text" to="." method="_on_text_focus_exited"]
 [connection signal="text_changed" from="HBoxContainer/Panel/Margin/Content/LoginContainer/Password/Container/Text" to="." method="_on_password_text_changed"]

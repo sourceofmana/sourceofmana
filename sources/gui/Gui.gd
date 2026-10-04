@@ -85,6 +85,12 @@ func CloseCurrent():
 		if control and control.is_visible():
 			ToggleControl(control)
 
+func GoBack():
+	if Launcher.Action and Launcher.Action.IsEnabled():
+		CloseWindow()
+	else:
+		CloseCurrent()
+
 func ToggleControl(control : WindowPanel):
 	if control:
 		control.ToggleControl()
@@ -171,6 +177,7 @@ func EnterLoginProgress():
 
 	progressTimer = Callback.SelfDestructTimer(self, NetworkCommons.LoginAttemptTimeout, TimeoutLoginProgress, [], "ProgressTimer")
 	loadingControl.set_visible(true)
+	ShaderWarmup.Start()
 
 func TimeoutLoginProgress():
 	Network.AuthError(NetworkCommons.AuthError.ERR_TIMEOUT)
@@ -188,6 +195,14 @@ func EnterCharMenu():
 	_show_char_menu()
 
 func _show_char_menu():
+	if ShaderWarmup.state != ShaderWarmup.State.DONE:
+		if not Launcher.shadersWarmed.is_connected(_show_char_menu):
+			Launcher.shadersWarmed.connect(_show_char_menu, CONNECT_ONE_SHOT)
+		ShaderWarmup.Start()
+		return
+	if FSM.currentState != FSM.States.CHAR_SCREEN:
+		return
+
 	loadingControl.set_visible(false)
 	background.set_visible(false)
 	loginPanel.set_visible(false)
@@ -271,8 +286,10 @@ func Destroy():
 
 func _notification(notif):
 	match notif:
-		Node.NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_WM_GO_BACK_REQUEST:
+		Node.NOTIFICATION_WM_CLOSE_REQUEST:
 			quitBox.Toggle()
+		NOTIFICATION_WM_GO_BACK_REQUEST:
+			GoBack()
 		Node.NOTIFICATION_WM_MOUSE_EXIT:
 			if windows:
 				windows.ClearWindowsModifier()
@@ -330,7 +347,6 @@ func _ready():
 	get_tree().set_auto_accept_quit(false)
 	get_tree().set_quit_on_go_back(false)
 	DisplayServer.pip_mode_set_auto_enter_on_background(true)
-	DB.WarmShaders()
 
 func _on_ui_margin_resized():
 	if CRTShader and CRTShader.material:

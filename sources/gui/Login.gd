@@ -28,6 +28,7 @@ enum RecoveryState { NONE, REQUEST_EMAIL, ENTER_CODE }
 const CompactMaxHeight : int				= 700
 const TwoColumnsMinWidth : int				= 820
 const TwoColumnsRatio : float				= 8.0
+const HoveredFieldVariation : StringName	= &"LineEditHovered"
 
 var nameText : String						= ""
 var savedToken : String						= ""
@@ -35,6 +36,7 @@ var savedAccountName : String				= ""
 var fillingFields : bool					= false
 var fieldsEdited : bool						= false
 var isAccountCreatorEnabled : bool			= false
+var isConnectPrimary : bool					= false
 var recoveryState : RecoveryState			= RecoveryState.NONE
 var pendingFocusControl : Control			= null
 var defaultPlaceholders : Dictionary		= {}
@@ -154,12 +156,10 @@ func SetRecoveryState(state : RecoveryState):
 			passwordTextControl.clear()
 			confirmPasswordTextControl.clear()
 			resetCodeTextControl.clear()
-		RecoveryState.REQUEST_EMAIL:
-			nameTextControl.grab_focus()
 		RecoveryState.ENTER_CODE:
 			passwordTextControl.clear()
 			confirmPasswordTextControl.clear()
-			resetCodeTextControl.grab_focus()
+	FocusDefault()
 
 func EnableAccountCreator(enable : bool):
 	recoveryState = RecoveryState.NONE
@@ -168,6 +168,7 @@ func EnableAccountCreator(enable : bool):
 
 	if not enable:
 		confirmPasswordTextControl.clear()
+	FocusDefault()
 
 func RefreshLayout():
 	var viewportSize : Vector2 = get_viewport_rect().size
@@ -191,6 +192,9 @@ func SetCompactFields(compact : bool):
 		label.set_visible(not compact)
 		text.placeholder_text = label.text if compact else defaultPlaceholders[control]
 
+func SetFieldHovered(text : LineEdit, hovered : bool):
+	text.set_theme_type_variation(HoveredFieldVariation if hovered else &"")
+
 func SetPanelExpand(expand : bool):
 	if expand:
 		panel.size_flags_vertical = Control.SIZE_FILL
@@ -198,6 +202,36 @@ func SetPanelExpand(expand : bool):
 		panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
 #
+func GetDefaultFocusFields() -> Array[LineEdit]:
+	match recoveryState:
+		RecoveryState.REQUEST_EMAIL:
+			return [nameTextControl]
+		RecoveryState.ENTER_CODE:
+			return [resetCodeTextControl, passwordTextControl, confirmPasswordTextControl]
+	if isAccountCreatorEnabled:
+		return [nameTextControl, passwordTextControl, confirmPasswordTextControl, emailTextControl]
+	if IsReturningPlayer():
+		return [nameTextControl, passwordTextControl]
+	return []
+
+func FocusDefault():
+	ApplyDefaultFocus.call_deferred()
+
+func ApplyDefaultFocus():
+	if not is_visible_in_tree():
+		return
+
+	for field in GetDefaultFocusFields():
+		if field.is_visible_in_tree() and field.get_text().is_empty():
+			field.grab_focus()
+			return
+
+	var focusOwner : Control = get_viewport().gui_get_focus_owner()
+	if focusOwner is LineEdit:
+		focusOwner.release_focus()
+	if Launcher.GUI and Launcher.GUI.buttonBoxes:
+		Launcher.GUI.buttonBoxes.Focus(UICommons.ButtonBox.PRIMARY)
+
 func RefreshFocusNodes(accountCreatorEnabled : bool):
 	if accountCreatorEnabled:
 		nameTextControl.set_focus_previous(emailTextControl.get_path())
@@ -232,7 +266,8 @@ func EnableButtons(state : bool):
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Create", CreateAccount)
 				Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.CANCEL, "Cancel", EnableAccountCreator.bind(false))
 			else:
-				if IsReturningPlayer():
+				isConnectPrimary = IsConnectPreferred()
+				if isConnectPrimary:
 					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.PRIMARY, "Connect", Connect)
 					Launcher.GUI.buttonBoxes.Bind(UICommons.ButtonBox.SECONDARY, "Create Account", EnableAccountCreator.bind(true))
 				else:
@@ -269,6 +304,9 @@ func SaveAccountName():
 
 func IsReturningPlayer() -> bool:
 	return not savedToken.is_empty() or not Conf.GetUserValue("Session-AccountName", "").is_empty()
+
+func IsConnectPreferred() -> bool:
+	return IsReturningPlayer() or not nameTextControl.get_text().is_empty()
 
 func RefreshOnce():
 	EnableAccountCreator(isAccountCreatorEnabled)
@@ -411,13 +449,11 @@ func _on_visibility_changed():
 		if not fieldsEdited:
 			LoadSavedToken()
 			FillFieldsFromToken()
+		EnableButtons(true)
 		if pendingFocusControl and pendingFocusControl.is_visible_in_tree():
 			ApplyFocus.call_deferred()
-		elif nameTextControl and nameTextControl.is_visible() and nameTextControl.get_text().length() == 0:
-			nameTextControl.grab_focus()
-		elif passwordTextControl and passwordTextControl.is_visible() and passwordTextControl.get_text().length() == 0:
-			passwordTextControl.grab_focus()
-		EnableButtons(true)
+		else:
+			FocusDefault()
 
 func SwitchOnlineMode(toggled : bool):
 	EnableButtons(true)
@@ -425,6 +461,8 @@ func SwitchOnlineMode(toggled : bool):
 		EnableButtons(false)
 
 func _on_name_text_changed(_newText : String):
+	if recoveryState == RecoveryState.NONE and not isAccountCreatorEnabled and isConnectPrimary != IsConnectPreferred():
+		EnableButtons(true)
 	if not fillingFields:
 		fieldsEdited = true
 		if not savedToken.is_empty():
@@ -443,6 +481,10 @@ func _on_remember_me_toggled(toggled_on : bool):
 func _ready():
 	Launcher.launchModeUpdated.connect(OnlineMode)
 	get_viewport().size_changed.connect(RefreshLayout)
+	for control : Control in fieldControls:
+		var text : LineEdit = control.get_node("Container/Text")
+		text.mouse_entered.connect(SetFieldHovered.bind(text, true))
+		text.mouse_exited.connect(SetFieldHovered.bind(text, false))
 	RefreshLayout()
 	if LoadSavedToken():
 		rememberMeCheckBox.button_pressed = true

@@ -24,6 +24,7 @@ var Player : Entity					= null
 # Signals
 signal launchModeUpdated
 signal dbInitialized
+signal shadersWarmed
 
 #
 func Mode(launchClient : bool = false, launchServer : bool = false) -> bool:

@@ -8,9 +8,12 @@ class_name MessageBox
 var hasActionLock : bool						= false
 var isSuspended : bool							= false
 var closeCallback : Callable					= Clear
+var previousFocus : Control						= null
 
 #
 func Display(text : String, primary = null, primaryText : String = "", cancel = null, cancelText : String = "", secondary = null, secondaryText : String = "", tertiary = null, tertiaryText : String = ""):
+	if not hasActionLock:
+		previousFocus = get_viewport().gui_get_focus_owner()
 	LockActions(true)
 
 	label.set_text(text)
@@ -36,6 +39,12 @@ func Clear():
 	buttonBox.ReleaseFocus()
 	buttonBox.ClearAll()
 	label.set_text("")
+	RestoreFocus()
+
+func RestoreFocus():
+	if is_instance_valid(previousFocus) and previousFocus.is_visible_in_tree():
+		previousFocus.grab_focus()
+	previousFocus = null
 
 func Suspend():
 	isSuspended = true
@@ -54,6 +63,13 @@ func LockActions(state : bool):
 func Call(callback : Callable):
 	Clear()
 	callback.call()
+
+#
+func _unhandled_input(event : InputEvent):
+	if not visible or not Launcher.Action or Launcher.Action.IsEnabled():
+		return
+
+	buttonBox.HandleInput(event)
 
 func TryClose() -> bool:
 	if not is_visible():

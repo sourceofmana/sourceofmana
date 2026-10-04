@@ -2,9 +2,19 @@ extends RefCounted
 class_name DB
 
 #
+enum Palette
+{
+	HAIR = 0,
+	SKIN,
+	EQUIPMENT,
+	COUNT
+}
+
+# Initialization
 static var isInitialized : bool								= false
 static var preloadPaths : PackedStringArray					= []
 
+# Asset databases
 static var MapsDB : Dictionary[int, MapData]				= {}
 static var MusicDB : Dictionary[int, FileData]				= {}
 static var RacesDB : Dictionary[int, RaceData]				= {}
@@ -16,18 +26,11 @@ static var ItemsDB : Dictionary[int, ItemCell]				= {}
 static var SkillsDB : Dictionary[int, SkillCell]			= {}
 static var QuestsDB : Dictionary[int, QuestData]			= {}
 
+# Common hashes
 static var hashDB : Dictionary								= {}
 const UnknownHash : int										= -1
 static var PlayerHash : int									= "Player".hash()
 static var ShipHash : int									= "Ship".hash()
-
-enum Palette
-{
-	HAIR = 0,
-	SKIN,
-	EQUIPMENT,
-	COUNT
-}
 
 #
 static func ParseFileDB(db : Dictionary, path : String):
@@ -153,20 +156,6 @@ static func GetQuest(questID : int) -> QuestData:
 	var data : QuestData = QuestsDB.get(questID, null)
 	assert(data != null, "Could not find the identifier %s in QuestsDB" % [questID])
 	return data
-
-static func WarmShaders():
-	var tree : SceneTree = Launcher.get_tree()
-	for resourcePath in FileSystem.ParseExtension(Path.ParticlePst, Path.SceneExt):
-		var preset : PackedScene = FileSystem.LoadResource(resourcePath, false)
-		if preset:
-			var node : Node = preset.instantiate()
-			if node is GPUParticles2D:
-				node.emitting = true
-				node.one_shot = true
-
-			Launcher.GUI.shaders.add_child(node)
-			await tree.process_frame
-			node.queue_free()
 
 #
 static func Preload():

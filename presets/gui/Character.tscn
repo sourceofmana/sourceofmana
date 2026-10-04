@@ -10,8 +10,6 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j7vvq"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qshgo"]
-
 [node name="Character" type="VBoxContainer" unique_id=211751759]
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,7 +30,6 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxEmpty_wilsl")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_j7vvq")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_qshgo")
 placeholder_text = "Enter Character Name"
 alignment = 1
 max_length = 30

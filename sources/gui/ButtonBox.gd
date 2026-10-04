@@ -42,8 +42,18 @@ func _clear(button : Button):
 	Callback.ClearCallbacks(button.pressed)
 
 func _focus(button : Button):
-	if button.visible and not button.disabled:
+	if button.is_visible_in_tree() and not button.disabled:
 		button.grab_focus()
+
+func _follow_suggestion(button : Button, previousButton : Button):
+	if suggestedButton != button:
+		return
+
+	var focusOwner : Control = get_viewport().gui_get_focus_owner()
+	if not focusOwner or (previousButton and focusOwner == previousButton):
+		Callback.RemoveCallback(button.focus_entered, SettleSuggestion)
+		_focus(button)
+		Callback.PlugCallback(button.focus_entered, SettleSuggestion)
 
 func _enable(button : Button, state : bool):
 	button.set_disabled(not state)
@@ -54,6 +64,7 @@ func _suggest(button : Button):
 	if suggestedButton == button:
 		return
 
+	var previousButton : Button = suggestedButton
 	_unsuggest()
 	if not button.visible or button.disabled or not is_inside_tree():
 		return
@@ -66,6 +77,7 @@ func _suggest(button : Button):
 	suggestTween = create_tween().set_loops(SuggestPulseCount).set_trans(Tween.TRANS_SINE)
 	suggestTween.tween_property(button, "modulate", SuggestPulseColor, SuggestPulseDurationSec * 0.5)
 	suggestTween.tween_property(button, "modulate", Color.WHITE, SuggestPulseDurationSec * 0.5)
+	_follow_suggestion.call_deferred(button, previousButton)
 
 func _unsuggest():
 	SettleSuggestion()
@@ -183,6 +195,9 @@ func ReleaseFocus():
 
 #
 func HandleInput(event : InputEvent):
+	if event.is_action("ui_accept") and get_viewport().gui_get_focus_owner() is BaseButton:
+		return
+
 	if primaryButton and primaryButton.is_visible() and event.is_action("ui_context_validate"):
 		if Launcher.Action.TryPressed(event, "ui_context_validate", true):
 			_call(primaryButton)
@@ -202,12 +217,35 @@ func HandleInput(event : InputEvent):
 		if Launcher.Action.TryPressed(event, "ui_cancel", true):
 			_call(cancelButton)
 
+func HandleTextFieldInput(event : InputEvent) -> bool:
+	var field : LineEdit = get_viewport().gui_get_focus_owner() as LineEdit
+	if not field or event is InputEventKey:
+		return false
+
+	if field.is_editing() and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("ui_context_cancel")):
+		field.unedit()
+	elif not field.is_editing() and event.is_action_pressed("ui_accept"):
+		field.edit()
+	else:
+		return false
+
+	get_viewport().set_input_as_handled()
+	return true
+
+func IsTextFieldFocused() -> bool:
+	var focusOwner : Control = get_viewport().gui_get_focus_owner()
+	return focusOwner is LineEdit or focusOwner is TextEdit
+
 # Overriden
 func _ready():
 	ClearAll()
 
 func _unhandled_input(event : InputEvent):
-	if not visible or not Launcher.Action or not Launcher.Action.IsEnabled():
+	if not visible or not Launcher.Action:
+		return
+	if not Launcher.Action.IsEnabled() and (event is InputEventKey or not IsTextFieldFocused()):
+		return
+	if HandleTextFieldInput(event):
 		return
 
 	HandleInput(event)

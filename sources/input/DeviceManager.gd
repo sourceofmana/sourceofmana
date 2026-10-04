@@ -88,6 +88,8 @@ static var actionNames : Dictionary[String, String] = {
 	"ui_context_cancel": "Context Cancel",
 	"ui_context_secondary": "Context Secondary",
 	"ui_context_tertiary": "Context Tertiary",
+	"ui_context_previous": "Context Previous",
+	"ui_context_next": "Context Next",
 	"gp_zoom_in": "Zoom In",
 	"gp_zoom_out": "Zoom Out",
 	"gp_zoom_reset": "Reset Zoom",
