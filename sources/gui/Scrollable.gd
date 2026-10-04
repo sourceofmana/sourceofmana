@@ -44,7 +44,9 @@ static func AddTitle(container : VBoxContainer, entry : Dictionary):
 static func AddContent(container : VBoxContainer, entry : Dictionary):
 	if "content" in entry:
 		var label : RichTextLabel = contentLabel.instantiate()
-		label.text = "[color=#" + UICommons.TextColor.to_html(false) + "]" + entry["content"] + "[/color]\n"
+		var content : String = entry["content"]
+		content = content.replace("[url", "[color=#" + UICommons.WarnTextColor.to_html(false) + "][url").replace("[/url]", "[/url][/color]")
+		label.text = "[color=#" + UICommons.TextColor.to_html(false) + "]" + content + "[/color]\n"
 		label.meta_clicked.connect(_richtextlabel_on_meta_clicked)
 		container.add_child.call_deferred(label)
 

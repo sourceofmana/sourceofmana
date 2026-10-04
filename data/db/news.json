@@ -4,7 +4,7 @@
 			"category": "Welcome to Source of Mana!",
 			"entries": [
 				{
-					"content": "\tSource of Mana is a 2D MMORPG using Godot to provide a modern player experience for a classic style of game that never really goes out of fashion.\nIn Source of Mana you can live your medieval fantasy RPG adventure with friends and explore a world of magical tales and just pure silly fun.\n\nWe are still in the very early stages of development and updates will come soon.\nStay tuned and join us on Discord or IRC to discuss the project!\n"
+					"content": "\tSource of Mana is a 2D MMORPG using Godot to provide a modern player experience for a classic style of game that never really goes out of fashion.\nIn Source of Mana you can live your medieval fantasy RPG adventure with friends and explore a world of magical tales and just pure silly fun.\n\nWe are still in the very early stages of development and updates will come soon.\nStay tuned and join us on [url=https://discord.com/invite/UnY77dR]Discord[/url] or [url=https://web.libera.chat/?channels=#sourceofmana]IRC[/url] to discuss the project!\n"
 				},
 				{
 					"title": "Version 0.0.9",
