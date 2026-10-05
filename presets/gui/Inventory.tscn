@@ -23,7 +23,7 @@ gradient = SubResource("Gradient_dark")
 
 [node name="Panel" type="PanelContainer" unique_id=932213900]
 show_behind_parent = true
-custom_minimum_size = Vector2(340, 224)
+custom_minimum_size = Vector2(345, 224)
 offset_left = 5.0
 offset_top = 5.0
 offset_right = 504.0
