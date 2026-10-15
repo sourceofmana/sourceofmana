@@ -1,10 +1,10 @@
-extends VBoxContainer
+extends WindowPanel
 
 #
-@onready var button : TouchScreenButton	= $BottomVbox/Dialogue/Button/TouchButton
-@onready var buttonLabel : Label		= $BottomVbox/Dialogue/Button/Label
-@onready var scrollable : Scrollable	= $BottomVbox/Dialogue/FixedHBox/Scrollable
-@onready var scrollbar: VScrollBar		= $BottomVbox/Dialogue/FixedHBox/Scrollable/Scroll/_v_scroll
+@onready var button : TouchScreenButton	= $Button/TouchButton
+@onready var buttonLabel : Label		= $Button/Label
+@onready var scrollable : Scrollable	= $FixedHBox/Scrollable
+@onready var scrollbar: VScrollBar		= $FixedHBox/Scrollable/Scroll/_v_scroll
 var lastName : String					= ""
 var lastTween : Tween					= null
 
@@ -16,12 +16,12 @@ const PlayerDialogueLabel : PackedScene	= preload("res://presets/gui/labels/Play
 func Toggle(toggle : bool):
 	if toggle:
 		Launcher.GUI.DisplayActions(["ui_accept", "ui_cancel"])
-		Launcher.GUI.dialogueWindow.Clear()
+		Clear()
 	else:
 		Launcher.GUI.infoContext.FadeOut()
 		Launcher.GUI.choiceContext.FadeOut()
 
-	Launcher.GUI.dialogueContainer.set_visible(toggle)
+	EnableControl(toggle)
 
 func AddName(text : String):
 	if lastName != text and not text.is_empty():
@@ -75,7 +75,7 @@ func ButtonPressed():
 	if Launcher.Player:
 		Network.TriggerNextContext()
 	if buttonLabel.get_text() == "Close":
-		Launcher.GUI.dialogueContainer.set_visible(false)
+		set_visible(false)
 
 func Clear():
 	scrollable.Clear()

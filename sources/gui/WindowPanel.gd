@@ -6,12 +6,16 @@ signal MoveFloatingWindowToTop
 
 #
 enum EdgeOrientation { NONE, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT, TOP_LEFT, TOP, TOP_RIGHT }
+enum ResizableEdge { LEFT = 1, TOP = 2, RIGHT = 4, BOTTOM = 8 }
 
 #
 @export var blockActions : bool		= false
 @export var saveOverlayState : bool	= false
 @export var allowAutomaticResize : bool = false
 @export var maxSize : Vector2		= Vector2(-1, -1)
+@export var floating : bool			= true
+@export var draggable : bool		= true
+@export_flags("Left", "Top", "Right", "Bottom") var resizableEdges : int = 15
 const edgeSize : int				= 6
 const cornerSize : int				= 10
 var clickPosition : Vector2			= Vector2.INF
@@ -83,20 +87,20 @@ func GetEdgeOrientation(pos : Vector2) -> EdgeOrientation:
 	var edgesArray = []
 	var edge : EdgeOrientation = EdgeOrientation.NONE
 
-	if pos.y >= size.y - cornerSize:
+	if pos.y >= size.y - cornerSize and resizableEdges & ResizableEdge.BOTTOM:
 		cornersArray.append(EdgeOrientation.BOTTOM)
 		if pos.y >= size.y - edgeSize:
 			edgesArray.append(EdgeOrientation.BOTTOM)
-	elif pos.y <= cornerSize:
+	elif pos.y <= cornerSize and resizableEdges & ResizableEdge.TOP:
 		cornersArray.append(EdgeOrientation.TOP)
 		if pos.y <= edgeSize:
 			edgesArray.append(EdgeOrientation.TOP)
 
-	if pos.x >= size.x - cornerSize:
+	if pos.x >= size.x - cornerSize and resizableEdges & ResizableEdge.RIGHT:
 		cornersArray.append(EdgeOrientation.RIGHT)
 		if pos.x >= size.x - edgeSize:
 			edgesArray.append(EdgeOrientation.RIGHT)
-	elif pos.x <= cornerSize:
+	elif pos.x <= cornerSize and resizableEdges & ResizableEdge.LEFT:
 		cornersArray.append(EdgeOrientation.LEFT)
 		if pos.x <= edgeSize:
 			edgesArray.append(EdgeOrientation.LEFT)
@@ -195,7 +199,7 @@ func UpdateWindow(eventPosition : Vector2 = Vector2.ZERO):
 	if isResizing:
 		ResizeWindow(ClampFloatingWindow(eventPosition, floatingWindowSize), ClampFloatingWindow(eventPosition + position, floatingWindowSize))
 	else:
-		if clickPosition != Vector2.INF:
+		if clickPosition != Vector2.INF and draggable:
 			position += eventPosition - clickPosition
 
 		if get_minimum_size().x > 0 and get_minimum_size().y > 0:

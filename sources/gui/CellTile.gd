@@ -146,7 +146,7 @@ func _make_custom_tooltip(for_text : String) -> Object:
 	return null if for_text.is_empty() else MakeTooltipLabel(for_text)
 
 func IsInspectable() -> bool:
-	return LauncherCommons.isMobile and cell != null and (UICommons.GetWindowPanelAncestor(self) != null or Launcher.GUI.tradePanel.is_ancestor_of(self))
+	return LauncherCommons.isMobile and cell != null and UICommons.GetWindowPanelAncestor(self) != null
 
 func ToggleInfo():
 	if Launcher.GUI and Launcher.GUI.cellDetails and IsInspectable():

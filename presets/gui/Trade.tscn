@@ -6,13 +6,15 @@
 [ext_resource type="PackedScene" path="res://presets/gui/ItemPicker.tscn" id="5_picker"]
 
 [node name="Trade" type="PanelContainer" unique_id=1630451001]
-custom_minimum_size = Vector2(380, 240)
+custom_minimum_size = Vector2(496, 282)
 offset_right = 380.0
 offset_bottom = 240.0
 mouse_force_pass_scroll_events = false
 theme = ExtResource("1_theme")
 theme_type_variation = &"DialogueBox"
 script = ExtResource("2_trade")
+floating = false
+resizableEdges = 10
 
 [node name="Layout" type="VBoxContainer" parent="." unique_id=1630451002]
 layout_mode = 2
@@ -192,6 +194,7 @@ layout_mode = 2
 theme_type_variation = &"LargeButton"
 text = "Cancel"
 
+[connection signal="gui_input" from="." to="." method="OnGuiInput"]
 [connection signal="gui_input" from="Layout/Margin/Content/Items/Own/Scroll/Grid" to="Layout/Margin/Content/Items/Own/Scroll/Grid" method="_on_gui_input"]
 [connection signal="resized" from="Layout/Margin/Content/Items/Own/Scroll/Grid" to="Layout/Margin/Content/Items/Own/Scroll/Grid" method="_on_panel_resized"]
 [connection signal="gui_input" from="Layout/Margin/Content/Items/Other/Scroll/Grid" to="Layout/Margin/Content/Items/Other/Scroll/Grid" method="_on_gui_input"]

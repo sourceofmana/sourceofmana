@@ -1,4 +1,4 @@
-extends PanelContainer
+extends WindowPanel
 
 #
 @onready var otherName : Label				= $Layout/Margin/Content/Header/Other
@@ -63,10 +63,10 @@ func Open(nick : String):
 
 	ClosePicker()
 	Refresh()
-	set_visible(true)
 
 	if not Launcher.GUI.inventoryWindow.is_visible():
 		Launcher.GUI.ToggleControl(Launcher.GUI.inventoryWindow)
+	EnableControl(true)
 
 func Close(reason : String = ""):
 	isTrading = false

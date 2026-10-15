@@ -50,6 +50,8 @@ func _on_window_resized():
 		if child is not WindowPanel:
 			assert(false, "Floating window node has non-WindowPanel defined as child")
 			continue
+		if not child.floating:
+			continue
 		if overallRatio != Vector2.ONE:
 			child.set_position(child.get_position() * overallRatio)
 			if child.allowAutomaticResize:

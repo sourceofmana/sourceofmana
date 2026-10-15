@@ -5,67 +5,51 @@
 [ext_resource type="PackedScene" uid="uid://3ldimch2l6rv" path="res://presets/gui/Scrollable.tscn" id="2_415ce"]
 [ext_resource type="Texture2D" uid="uid://bxbrk4eng2uhi" path="res://data/graphics/gui/menu/menubar_button.png" id="3_5rxxj"]
 [ext_resource type="Texture2D" uid="uid://b2t8xg8go0vsr" path="res://data/graphics/gui/menu/menubar_button_pressed.png" id="4_fspi0"]
-[ext_resource type="PackedScene" uid="uid://tqcjqyaicaol" path="res://presets/gui/contexts/ContextMenuV.tscn" id="5_6rp1f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qyvn"]
 
-[node name="Dialogue" type="VBoxContainer" unique_id=554568421]
-custom_minimum_size = Vector2(676, 280)
-offset_right = 676.0
-offset_bottom = 384.0
-mouse_filter = 2
-theme = ExtResource("1_w0q73")
-script = ExtResource("1_xbnx6")
-
-[node name="Buffer" type="Control" parent="." unique_id=495780376]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="BottomVbox" type="VBoxContainer" parent="." unique_id=586264]
-custom_minimum_size = Vector2(0, 280)
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Dialogue" type="PanelContainer" parent="BottomVbox" unique_id=1889534427]
+[node name="Dialogue" type="PanelContainer" unique_id=1889534427]
 visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 3
+offset_right = 640.0
+offset_bottom = 140.0
+theme = ExtResource("1_w0q73")
 theme_type_variation = &"DialogueBox"
+script = ExtResource("1_xbnx6")
+floating = false
+draggable = false
+resizableEdges = 2
 
-[node name="FixedHBox" type="HBoxContainer" parent="BottomVbox/Dialogue" unique_id=1663083452]
+[node name="FixedHBox" type="HBoxContainer" parent="." unique_id=1663083452]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Scrollable" parent="BottomVbox/Dialogue/FixedHBox" unique_id=500462899 instance=ExtResource("2_415ce")]
+[node name="Scrollable" parent="FixedHBox" unique_id=500462899 instance=ExtResource("2_415ce")]
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_5qyvn")
 
-[node name="Buffer" type="Control" parent="BottomVbox/Dialogue/FixedHBox" unique_id=26321625]
+[node name="Buffer" type="Control" parent="FixedHBox" unique_id=26321625]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Button" type="Control" parent="BottomVbox/Dialogue" unique_id=919609542]
+[node name="Button" type="Control" parent="." unique_id=919609542]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 mouse_filter = 2
 
-[node name="TouchButton" type="TouchScreenButton" parent="BottomVbox/Dialogue/Button" unique_id=1536368917]
+[node name="TouchButton" type="TouchScreenButton" parent="Button" unique_id=1536368917]
 position = Vector2(32, 0)
 texture_normal = ExtResource("3_5rxxj")
 texture_pressed = ExtResource("4_fspi0")
 
-[node name="Label" type="Label" parent="BottomVbox/Dialogue/Button" unique_id=366456701]
+[node name="Label" type="Label" parent="Button" unique_id=366456701]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -81,30 +65,5 @@ grow_vertical = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ChoiceVbox" type="VBoxContainer" parent="BottomVbox" unique_id=1701815967]
-custom_minimum_size = Vector2(0, 140)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="BufferUp" type="Control" parent="BottomVbox/ChoiceVbox" unique_id=1484291609]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Choice" parent="BottomVbox/ChoiceVbox" unique_id=1475578944 instance=ExtResource("5_6rp1f")]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 1
-theme_type_variation = &"DialogueBox"
-fadeInDelay = 0.5
-displayDelay = 0.0
-fadeOutDelay = 0.3
-
-[node name="BufferDown" type="Control" parent="BottomVbox/ChoiceVbox" unique_id=43001142]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-
-[connection signal="released" from="BottomVbox/Dialogue/Button/TouchButton" to="." method="ButtonPressed"]
+[connection signal="gui_input" from="." to="." method="OnGuiInput"]
+[connection signal="released" from="Button/TouchButton" to="." method="ButtonPressed"]

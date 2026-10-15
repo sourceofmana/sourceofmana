@@ -12,16 +12,13 @@ extends ServiceBase
 
 # Contexts
 @onready var loadingControl : Control			= $Overlay/VSections/Contexts/Loading
-@onready var dialogueWindow : VBoxContainer		= $Overlay/VSections/Contexts/Dialogue
-@onready var dialogueContainer : PanelContainer	= $Overlay/VSections/Contexts/Dialogue/BottomVbox/Dialogue
-@onready var choiceContext : ContextMenu		= $Overlay/VSections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
+@onready var choiceContext : ContextMenu		= $Overlay/VSections/Contexts/Choice
 @onready var infoContext : ContextMenu			= $Overlay/VSections/Contexts/Info
 @onready var messageBox : MessageBox			= $Modals/MessageBox
 @onready var quitBox : QuitBox					= $Modals/QuitBox
 @onready var cellDetails : CellDetails			= $Overlay/VSections/Contexts/CellDetails
 @onready var loginPanel : Control				= $Overlay/VSections/Contexts/Login
 @onready var characterPanel : Control			= $Overlay/VSections/Contexts/Character
-@onready var tradePanel : PanelContainer		= $Overlay/VSections/Contexts/Trade
 
 # Shortcuts
 @onready var actionBoxes : Control				= $Overlay/VSections/ButtonBar/ActionBoxes
@@ -40,6 +37,8 @@ extends ServiceBase
 @onready var progressWindow : WindowPanel		= $Windows/Floating/Progress
 @onready var statWindow : WindowPanel			= $Windows/Floating/Stat
 @onready var socialWindow : WindowPanel			= $Windows/Floating/Social
+@onready var dialoguePanel : WindowPanel		= $Windows/Floating/Dialogue
+@onready var tradePanel : WindowPanel			= $Windows/Floating/Trade
 
 @onready var chatContainer : ChatContainer		= $Windows/Floating/Chat/Margin/VBoxContainer
 @onready var emoteContainer : Container			= $Windows/Floating/Emote/Layout/ItemContainer/Grid
@@ -86,7 +85,7 @@ func CloseCurrent():
 		focusedNode.release_focus()
 	else:
 		var control : WindowPanel = GetCurrentWindow()
-		if control and control.is_visible():
+		if control and control.is_visible() and control.floating:
 			ToggleControl(control)
 
 func GoBack():
@@ -131,7 +130,7 @@ func OnPlayerMenuPressed(id : int):
 		UICommons.PlayerMenu.TRADE: Network.TriggerCommand("trade \"%s\"" % playerMenuTarget)
 
 func IsDialogueContextOpened() -> bool:
-	return dialogueContainer.is_visible()
+	return dialoguePanel.is_visible()
 
 func OpenDiscord():
 	OS.shell_open(LauncherCommons.DiscordInviteLink)
@@ -178,7 +177,7 @@ func EnterLoginMenu():
 	stats.SetBarsVisible(false)
 	statWindow.set_visible(false)
 	tradePanel.Close()
-	dialogueContainer.set_visible(false)
+	dialoguePanel.set_visible(false)
 	pickupPanel.AnimateClose()
 	loadingControl.set_visible(false)
 	actionBoxes.set_visible(false)

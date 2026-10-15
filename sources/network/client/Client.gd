@@ -60,35 +60,35 @@ func ChatSystem(channelName : String, text : String, _peerID : int):
 
 func ToggleContext(enable : bool, _peerID : int):
 	if Launcher.Player:
-		Launcher.GUI.dialogueWindow.Toggle(enable)
+		Launcher.GUI.dialoguePanel.Toggle(enable)
 
 func ContextText(author : String, text : String, _peerID : int):
 	if not Launcher.Player:
 		return
 	if not author.is_empty():
-		Launcher.GUI.dialogueWindow.AddName(author)
-	Launcher.GUI.dialogueWindow.AddDialogue(text)
-	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
+		Launcher.GUI.dialoguePanel.AddName(author)
+	Launcher.GUI.dialoguePanel.AddDialogue(text)
+	Launcher.GUI.dialoguePanel.ToggleButton(false, "")
 
 func ContextThink(author : String, text : String, _peerID : int):
 	if not Launcher.Player:
 		return
 	if not author.is_empty():
-		Launcher.GUI.dialogueWindow.AddName(author)
-	Launcher.GUI.dialogueWindow.AddThink(text)
-	Launcher.GUI.dialogueWindow.ToggleButton(false, "")
+		Launcher.GUI.dialoguePanel.AddName(author)
+	Launcher.GUI.dialoguePanel.AddThink(text)
+	Launcher.GUI.dialoguePanel.ToggleButton(false, "")
 
 func ContextContinue(_peerID : int):
 	if Launcher.Player:
-		Launcher.GUI.dialogueWindow.ToggleButton(true, "Next")
+		Launcher.GUI.dialoguePanel.ToggleButton(true, "Next")
 
 func ContextClose(_peerID : int):
 	if Launcher.Player:
-		Launcher.GUI.dialogueWindow.ToggleButton(true, "Close")
+		Launcher.GUI.dialoguePanel.ToggleButton(true, "Close")
 
 func ContextChoice(texts : PackedStringArray, _peerID : int):
 	if Launcher.Player:
-		Launcher.GUI.dialogueWindow.AddChoices(texts)
+		Launcher.GUI.dialoguePanel.AddChoices(texts)
 
 func HighlightUI(target : int, _peerID : int):
 	if Launcher.GUI:
