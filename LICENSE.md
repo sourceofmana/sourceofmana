@@ -180,6 +180,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./graphics/gui/panelsideright.png [Reid]
 ./graphics/gui/panelsides.png [Reid]
 ./graphics/gui/smallbar.png [Reid]
+./graphics/gui/smallbar-opaque.png [Reid]
 ./graphics/gui/smallbarprogress.png [Reid]
 ./graphics/gui/split_background.png [Reid]
 ./graphics/gui/split_bar.png [Reid]

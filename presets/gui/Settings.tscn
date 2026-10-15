@@ -66,6 +66,7 @@ size_flags_horizontal = 3
 text = "Preset"
 
 [node name="Option" type="OptionButton" parent="Layout/Margin/TabBar/Render/RenderVBox/Preset" unique_id=1281262132]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
@@ -97,6 +98,7 @@ size_flags_horizontal = 3
 text = " Window Resolution"
 
 [node name="Option" type="OptionButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/WindowResolution" unique_id=745099495]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sets the size of the game window."
@@ -111,6 +113,7 @@ size_flags_horizontal = 3
 text = " Scaling"
 
 [node name="Option" type="OptionButton" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox/Scaling" unique_id=815910694]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Zooms the whole game view by one, two or three times."

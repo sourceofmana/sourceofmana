@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://sources/gui/ItemPicker.gd" id="2_picker"]
+
+[node name="ItemPicker" type="ScrollContainer" unique_id=1630452001]
+custom_minimum_size = Vector2(0, 120)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_force_pass_scroll_events = false
+theme = ExtResource("1_theme")
+horizontal_scroll_mode = 0
+script = ExtResource("2_picker")
+
+[node name="Lines" type="VBoxContainer" parent="." unique_id=1630452002]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2

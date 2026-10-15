@@ -61,6 +61,7 @@
 [ext_resource type="PackedScene" uid="uid://dolxuw03u60eo" path="res://presets/gui/Progress.tscn" id="54_112vu"]
 [ext_resource type="Script" uid="uid://bx03gb6d40i6f" path="res://sources/gui/QuitBox.gd" id="55_6huw9"]
 [ext_resource type="PackedScene" uid="uid://b8ixr8s8711q0" path="res://presets/gui/CellDetails.tscn" id="56_2uxo9"]
+[ext_resource type="PackedScene" path="res://presets/gui/Trade.tscn" id="57_q4v1n"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wjdwk"]
 shader = ExtResource("4_60kv4")
@@ -260,7 +261,6 @@ theme_type_variation = &"PanelSideLeft"
 persistant = false
 
 [node name="Dialogue" parent="Overlay/VSections/Contexts" unique_id=1202850709 instance=ExtResource("24_fqnq4")]
-z_index = 150
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -269,6 +269,21 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Trade" parent="Overlay/VSections/Contexts" unique_id=1630451100 instance=ExtResource("57_q4v1n")]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -190.0
+offset_top = -240.0
+offset_right = 190.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="Login" parent="Overlay/VSections/Contexts" unique_id=1945197527 instance=ExtResource("7_lrq68")]
 visible = false
@@ -279,39 +294,6 @@ offset_right = 146.0
 [node name="Character" parent="Overlay/VSections/Contexts" unique_id=519458497 instance=ExtResource("49_78q3w")]
 visible = false
 layout_mode = 1
-
-[node name="MessageBox" parent="Overlay/VSections/Contexts" unique_id=242717945 instance=ExtResource("25_tem4r")]
-visible = false
-z_index = 200
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -275.0
-offset_top = -44.5
-offset_right = 275.0
-offset_bottom = 44.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="QuitBox" parent="Overlay/VSections/Contexts" unique_id=1938274615 instance=ExtResource("25_tem4r")]
-visible = false
-z_index = 201
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -275.0
-offset_top = -44.5
-offset_right = 275.0
-offset_bottom = 44.5
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("55_6huw9")
 
 [node name="CellDetails" parent="Overlay/VSections/Contexts" unique_id=1927589245 instance=ExtResource("56_2uxo9")]
 layout_mode = 0
@@ -548,6 +530,49 @@ offset_top = -20.0
 offset_right = 641.0
 offset_bottom = 455.0
 saveOverlayState = true
+
+[node name="Modals" type="Control" parent="." unique_id=1630451200]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("4_wx5hs")
+
+[node name="MessageBox" parent="Modals" unique_id=242717945 instance=ExtResource("25_tem4r")]
+visible = false
+z_index = 200
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -44.5
+offset_right = 275.0
+offset_bottom = 44.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="QuitBox" parent="Modals" unique_id=1938274615 instance=ExtResource("25_tem4r")]
+visible = false
+z_index = 201
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -44.5
+offset_right = 275.0
+offset_bottom = 44.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("55_6huw9")
 
 [node name="Shaders" type="CanvasLayer" parent="." unique_id=1012789573]
 layer = 128

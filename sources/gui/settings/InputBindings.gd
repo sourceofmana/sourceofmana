@@ -294,6 +294,7 @@ func BuildTouchRow(parent : VBoxContainer, action : String, actionName : String)
 
 	var combo := OptionButton.new()
 	combo.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	combo.get_popup().canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 	combo.add_item("-")
 	for entry in touchButtons:
 		combo.add_item(entry[1])

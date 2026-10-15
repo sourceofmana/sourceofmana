@@ -9,6 +9,7 @@ var circleShape : CircleShape2D			= CircleShape2D.new()
 var respawnDestination : Destination	= null
 var exploreOrigin : Destination			= null
 var ownScript : NpcScript				= null
+var tradeSession : WorldTrade.Session	= null
 var isWarping : bool					= false
 
 # Regen
@@ -239,6 +240,7 @@ func _ready():
 
 func _exit_tree():
 	ClearScript()
+	WorldTrade.Cancel(self, "Trade cancelled, %s left." % nick)
 	super._exit_tree()
 
 #
@@ -262,6 +264,7 @@ func WarpTo(dest : Destination):
 
 func Killed():
 	super.Killed()
+	WorldTrade.Cancel(self, "Trade cancelled.")
 	if ownScript:
 		ClearScript()
 		NpcCommons.ToggleContext(self, false)
@@ -276,6 +279,7 @@ func UpdateDeltas(delta : float):
 #
 func AddScript(npc : NpcAgent):
 	if npc:
+		WorldTrade.Cancel(self, "Trade cancelled.")
 		SetRelativeMode(false, Vector2.ZERO)
 		ownScript = npc.playerScriptPreset.new(npc, self) if npc.playerScriptPreset else NpcScript.new(npc, self)
 		ownScript.PostInit()

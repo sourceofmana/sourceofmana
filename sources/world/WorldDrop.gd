@@ -44,9 +44,8 @@ static func PickupDrop(dropID : int, agent : BaseAgent) -> bool:
 			var drop : Drop = inst.drops[dropID]
 			if drop and drop.item:
 				var cell : ItemCell = DB.GetItem(drop.item.cellID, drop.item.cellCustomfield)
-				if cell and \
-				agent.position.distance_squared_to(drop.position) < ActorCommons.PickupSquaredDistance \
-				and PopDrop(dropID, inst) \
-				and agent.inventory.AddItem(cell, drop.item.count):
-					return true
+				if cell and agent.position.distance_squared_to(drop.position) < ActorCommons.PickupSquaredDistance:
+					if agent.inventory.AddItem(cell, drop.item.count):
+						return PopDrop(dropID, inst)
+					NpcCommons.PushNotification(agent, "Your bag is full.")
 	return false

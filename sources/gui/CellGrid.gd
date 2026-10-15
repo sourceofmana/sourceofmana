@@ -2,6 +2,7 @@ extends GridContainer
 
 #
 @export var maxCount : int				= 100
+@export var interactiveTiles : bool		= true
 var tiles : Array[CellTile]				= []
 
 #
@@ -21,6 +22,7 @@ func _ready():
 	tiles.resize(maxCount)
 	for tileIdx in maxCount:
 		var tile : CellTile = UICommons.CellTilePreset.instantiate()
+		tile.isInteractive = interactiveTiles
 		tile.AssignData(null, 0)
 		tiles[tileIdx] = tile
 		add_child.call_deferred(tile)

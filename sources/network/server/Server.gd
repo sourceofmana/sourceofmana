@@ -237,18 +237,18 @@ func CharacterListing(peerID : int):
 # Navigation
 func SetClickPos(pos : Vector2, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player and not player.ownScript:
+	if player and not player.ownScript and not player.tradeSession:
 		player.SetRelativeMode(false, Vector2.ZERO)
 		player.WalkToward(pos)
 
 func SetMovePos(direction : Vector2, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player and not player.ownScript:
+	if player and not player.ownScript and not player.tradeSession:
 		player.SetRelativeMode(true, direction.normalized())
 
 func SetOrientation(direction : Vector2, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
-	if player and not player.ownScript:
+	if player and not player.ownScript and not player.tradeSession:
 		player.SetRelativeMode(false, Vector2.ZERO)
 		player.SetOrientation(direction)
 
@@ -380,6 +380,27 @@ func PickupDrop(dropID : int, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player:
 		WorldDrop.PickupDrop(dropID, player)
+
+# Trade
+func TradeRespond(accept : bool, peerID : int):
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player:
+		WorldTrade.Respond(player, accept)
+
+func TradeSetOffer(entries : Array, gp : int, peerID : int):
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player:
+		WorldTrade.SetOffer(player, entries, gp)
+
+func TradeLock(revision : int, state : bool, peerID : int):
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player:
+		WorldTrade.SetLock(player, revision, state)
+
+func TradeCancel(peerID : int):
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player:
+		WorldTrade.Cancel(player, "%s cancelled the trade." % player.nick)
 
 func RetrieveCharacterInformation(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)

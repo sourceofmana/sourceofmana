@@ -16,6 +16,7 @@ var count : int							= 0
 var itemIndex : int						= -1
 var hovered : bool						= false
 var equipped : bool						= false
+var isInteractive : bool				= true
 
 const modulateDisable : float			= 0.5
 
@@ -145,7 +146,7 @@ func _make_custom_tooltip(for_text : String) -> Object:
 	return null if for_text.is_empty() else MakeTooltipLabel(for_text)
 
 func IsInspectable() -> bool:
-	return LauncherCommons.isMobile and cell != null and UICommons.GetWindowPanelAncestor(self) != null
+	return LauncherCommons.isMobile and cell != null and (UICommons.GetWindowPanelAncestor(self) != null or Launcher.GUI.tradePanel.is_ancestor_of(self))
 
 func ToggleInfo():
 	if Launcher.GUI and Launcher.GUI.cellDetails and IsInspectable():
@@ -236,8 +237,11 @@ static func RefreshShortcuts(baseCell : BaseCell, newCount : int = -1):
 			shortcutTile.UpdateCountLabel()
 
 func UseCell():
-	if cell:
-		if cell is ItemCell and not cell.usable and IsInEquipmentSlot():
+	if cell and isInteractive:
+		if cell is ItemCell and Launcher.GUI.tradePanel.IsTrading() and UICommons.GetWindowPanelAncestor(self) == Launcher.GUI.inventoryWindow:
+			if not equipped and cell.slot != ActorCommons.Slot.QUEST:
+				Launcher.GUI.tradePanel.OpenPicker(cell, 1)
+		elif cell is ItemCell and not cell.usable and IsInEquipmentSlot():
 			if equipped:
 				Network.UnequipItem(cell.id, cell.customfield)
 			else:
@@ -264,7 +268,7 @@ func ClearCooldown():
 
 # Drag
 func _get_drag_data(_position : Vector2):
-	if cell:
+	if cell and isInteractive:
 		if cell.usable or IsInEquipmentSlot():
 			if icon:
 				set_drag_preview(icon.duplicate())

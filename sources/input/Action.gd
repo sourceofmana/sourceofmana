@@ -1,13 +1,20 @@
 extends ServiceBase
 class_name ActionService
 
+# Input Commons
+const stickDeadzone : float		= 0.2
+const longPressDelay : float	= 0.5
+const longPressMaxDrift : float	= 16.0
+
+#
 var disableCounter : int		= 0
 var isEnabled : bool			= true
 var supportMouse : bool			= true
 var clickTimer : Timer			= null
+var longPressTimer : Timer		= null
+var longPressPosition : Vector2	= Vector2.ZERO
 var previousMove : Vector2		= Vector2.ZERO
 var wasFacing : bool			= false
-const stickDeadzone : float		= 0.2
 
 var consumed : Array[String]	= []
 var incrementalPressedTouchCount : int	= 0
@@ -111,8 +118,18 @@ func _unhandled_input(event):
 				Entities.ClearDelayedHoveredCallback()
 				Launcher.Map.ClearDelayedPickupCallback()
 				MoveTo(Launcher.Camera.camera.get_global_mouse_position())
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and supportMouse:
+		if IsEnabled() and FSM.IsGameState() and Entities.hovered and Entities.hovered.type == ActorCommons.Type.PLAYER and Entities.hovered != Launcher.Player:
+			Launcher.GUI.DisplayPlayerMenu(Entities.hovered.nick)
 	elif event is InputEventScreenTouch:
 		incrementalPressedTouchCount = incrementalPressedTouchCount + 1 if event.pressed else 0
+		if event.pressed and incrementalPressedTouchCount == 1:
+			longPressPosition = event.position
+			longPressTimer.start()
+		else:
+			longPressTimer.stop()
+	elif event is InputEventScreenDrag and event.position.distance_to(longPressPosition) > longPressMaxDrift:
+		longPressTimer.stop()
 	elif not HasConsumed() and Launcher.Camera:
 		if event is InputEventMagnifyGesture and (not DisplayServer.is_touchscreen_available() or incrementalPressedTouchCount == 2):
 			if event.factor > 1.0:
@@ -198,8 +215,19 @@ func _input(event : InputEvent):
 			elif TryJustPressed(event, "ui_fullscreen"):	Launcher.GUI.ToggleFullscreen()
 	consumed.clear()
 
+func OnLongPress():
+	if IsEnabled() and FSM.IsGameState() and GetMove() == Vector2.ZERO and Entities.hovered and Entities.hovered.type == ActorCommons.Type.PLAYER and Entities.hovered != Launcher.Player:
+		Launcher.GUI.DisplayPlayerMenu(Entities.hovered.nick)
+
 #
 func _ready():
+	longPressTimer = Timer.new()
+	longPressTimer.set_name("LongPressTimer")
+	longPressTimer.set_wait_time(longPressDelay)
+	longPressTimer.set_one_shot(true)
+	longPressTimer.timeout.connect(OnLongPress)
+	add_child.call_deferred(longPressTimer)
+
 	clickTimer = Timer.new()
 	clickTimer.set_name("ClickTimer")
 	clickTimer.set_wait_time(0.2)
@@ -210,6 +238,10 @@ func _ready():
 	DeviceManager.Init()
 
 func Destroy():
+	if longPressTimer:
+		remove_child.call_deferred(longPressTimer)
+		longPressTimer.queue_free()
+		longPressTimer = null
 	if clickTimer:
 		remove_child.call_deferred(clickTimer)
 		clickTimer.queue_free()

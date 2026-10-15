@@ -16,11 +16,12 @@ extends ServiceBase
 @onready var dialogueContainer : PanelContainer	= $Overlay/VSections/Contexts/Dialogue/BottomVbox/Dialogue
 @onready var choiceContext : ContextMenu		= $Overlay/VSections/Contexts/Dialogue/BottomVbox/ChoiceVbox/Choice
 @onready var infoContext : ContextMenu			= $Overlay/VSections/Contexts/Info
-@onready var messageBox : MessageBox			= $Overlay/VSections/Contexts/MessageBox
-@onready var quitBox : QuitBox					= $Overlay/VSections/Contexts/QuitBox
+@onready var messageBox : MessageBox			= $Modals/MessageBox
+@onready var quitBox : QuitBox					= $Modals/QuitBox
 @onready var cellDetails : CellDetails			= $Overlay/VSections/Contexts/CellDetails
 @onready var loginPanel : Control				= $Overlay/VSections/Contexts/Login
 @onready var characterPanel : Control			= $Overlay/VSections/Contexts/Character
+@onready var tradePanel : PanelContainer		= $Overlay/VSections/Contexts/Trade
 
 # Shortcuts
 @onready var actionBoxes : Control				= $Overlay/VSections/ButtonBar/ActionBoxes
@@ -51,6 +52,10 @@ extends ServiceBase
 # Highlight
 var highlight : UIHighlight						= UIHighlight.new()
 var shortcutTiles : Array[CellTile]				= []
+
+# Player menu
+var playerMenu : PopupMenu						= UICommons.PlayerMenuPreset.instantiate()
+var playerMenuTarget : String					= ""
 
 # State transition
 var progressTimer : Timer						= null
@@ -111,6 +116,20 @@ func DisplayActions(actions : PackedStringArray, duration : float = -1.0):
 			infoContext.Push(ContextData.new(action))
 	infoContext.FadeIn(false, duration)
 
+func DisplayPlayerMenu(nick : String):
+	playerMenuTarget = nick
+	playerMenu.clear()
+	playerMenu.add_item("Whisper", UICommons.PlayerMenu.WHISPER)
+	if not tradePanel.IsTrading():
+		playerMenu.add_item("Trade", UICommons.PlayerMenu.TRADE)
+	playerMenu.position = Vector2i(get_viewport().get_mouse_position())
+	playerMenu.popup()
+
+func OnPlayerMenuPressed(id : int):
+	match id:
+		UICommons.PlayerMenu.WHISPER: Network.TriggerCommand("query \"%s\"" % playerMenuTarget)
+		UICommons.PlayerMenu.TRADE: Network.TriggerCommand("trade \"%s\"" % playerMenuTarget)
+
 func IsDialogueContextOpened() -> bool:
 	return dialogueContainer.is_visible()
 
@@ -158,6 +177,7 @@ func EnterLoginMenu():
 	menu.Close()
 	stats.SetBarsVisible(false)
 	statWindow.set_visible(false)
+	tradePanel.Close()
 	dialogueContainer.set_visible(false)
 	pickupPanel.AnimateClose()
 	loadingControl.set_visible(false)
@@ -348,6 +368,9 @@ func GetUITarget(target : UICommons.UITarget) -> Control:
 func _ready():
 	get_tree().set_auto_accept_quit(false)
 	get_tree().set_quit_on_go_back(false)
+	playerMenu.id_pressed.connect(OnPlayerMenuPressed)
+	playerMenu.set_visible(false)
+	add_child.call_deferred(playerMenu)
 	DisplayServer.pip_mode_set_auto_enter_on_background(true)
 
 func _on_ui_margin_resized():

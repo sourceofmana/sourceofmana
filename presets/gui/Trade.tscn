@@ -1,0 +1,201 @@
+[gd_scene format=3 uid="uid://ds2uy7m56ff2m"]
+
+[ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_theme"]
+[ext_resource type="Script" uid="uid://tlqd6d1k11rq" path="res://sources/gui/Trade.gd" id="2_trade"]
+[ext_resource type="Script" uid="uid://cuhwrw40yxve1" path="res://sources/gui/CellGrid.gd" id="4_grid"]
+[ext_resource type="PackedScene" path="res://presets/gui/ItemPicker.tscn" id="5_picker"]
+
+[node name="Trade" type="PanelContainer" unique_id=1630451001]
+custom_minimum_size = Vector2(380, 240)
+offset_right = 380.0
+offset_bottom = 240.0
+mouse_force_pass_scroll_events = false
+theme = ExtResource("1_theme")
+theme_type_variation = &"DialogueBox"
+script = ExtResource("2_trade")
+
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1630451002]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Layout" unique_id=1630451004]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Content" type="VBoxContainer" parent="Layout/Margin" unique_id=1630451005]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="Layout/Margin/Content" unique_id=1630451006]
+layout_mode = 2
+
+[node name="Own" type="Label" parent="Layout/Margin/Content/Header" unique_id=1630451007]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+text = "You"
+
+[node name="Separator" type="VSeparator" parent="Layout/Margin/Content/Header" unique_id=1630451008]
+layout_mode = 2
+
+[node name="Other" type="Label" parent="Layout/Margin/Content/Header" unique_id=1630451009]
+layout_mode = 2
+size_flags_horizontal = 3
+clip_text = true
+
+[node name="HeaderSeparator" type="HSeparator" parent="Layout/Margin/Content" unique_id=1630451010]
+layout_mode = 2
+
+[node name="Items" type="HBoxContainer" parent="Layout/Margin/Content" unique_id=1630451011]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Own" type="MarginContainer" parent="Layout/Margin/Content/Items" unique_id=1630451012]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="Scroll" type="ScrollContainer" parent="Layout/Margin/Content/Items/Own" unique_id=1630451013]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+horizontal_scroll_mode = 0
+
+[node name="Grid" type="GridContainer" parent="Layout/Margin/Content/Items/Own/Scroll" unique_id=1630451014]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 4
+script = ExtResource("4_grid")
+maxCount = 20
+interactiveTiles = false
+
+[node name="ItemPicker" parent="Layout/Margin/Content/Items/Own" unique_id=1630451015 instance=ExtResource("5_picker")]
+visible = false
+layout_mode = 2
+
+[node name="LockOverlay" type="ColorRect" parent="Layout/Margin/Content/Items/Own" unique_id=1630451016]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.25)
+
+[node name="Separator" type="VSeparator" parent="Layout/Margin/Content/Items" unique_id=1630451018]
+layout_mode = 2
+
+[node name="Other" type="MarginContainer" parent="Layout/Margin/Content/Items" unique_id=1630451019]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Scroll" type="ScrollContainer" parent="Layout/Margin/Content/Items/Other" unique_id=1630451020]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+horizontal_scroll_mode = 0
+
+[node name="Grid" type="GridContainer" parent="Layout/Margin/Content/Items/Other/Scroll" unique_id=1630451021]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 4
+script = ExtResource("4_grid")
+maxCount = 20
+interactiveTiles = false
+
+[node name="Empty" type="Label" parent="Layout/Margin/Content/Items/Other" unique_id=1630451022]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "Nothing offered yet"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LockOverlay" type="ColorRect" parent="Layout/Margin/Content/Items/Other" unique_id=1630451023]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.25)
+
+[node name="GPSeparator" type="HSeparator" parent="Layout/Margin/Content" unique_id=1630451025]
+layout_mode = 2
+
+[node name="GP" type="HBoxContainer" parent="Layout/Margin/Content" unique_id=1630451026]
+layout_mode = 2
+
+[node name="Own" type="HBoxContainer" parent="Layout/Margin/Content/GP" unique_id=1630451027]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="Label" type="Label" parent="Layout/Margin/Content/GP/Own" unique_id=1630451028]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "GP"
+
+[node name="Value" type="Label" parent="Layout/Margin/Content/GP/Own" unique_id=1630451029]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 2
+
+[node name="Picker" type="VBoxContainer" parent="Layout/Margin/Content/GP" unique_id=1630451030]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="Separator" type="VSeparator" parent="Layout/Margin/Content/GP" unique_id=1630451031]
+layout_mode = 2
+
+[node name="Other" type="HBoxContainer" parent="Layout/Margin/Content/GP" unique_id=1630451032]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Layout/Margin/Content/GP/Other" unique_id=1630451033]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "GP"
+
+[node name="Value" type="Label" parent="Layout/Margin/Content/GP/Other" unique_id=1630451034]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 2
+
+[node name="FooterSeparator" type="HSeparator" parent="Layout/Margin/Content" unique_id=1630451035]
+layout_mode = 2
+
+[node name="Footer" type="HBoxContainer" parent="Layout/Margin/Content" unique_id=1630451036]
+layout_mode = 2
+
+[node name="Status" type="Label" parent="Layout/Margin/Content/Footer" unique_id=1630451037]
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="Done" type="Button" parent="Layout/Margin/Content/Footer" unique_id=1630451038]
+visible = false
+layout_mode = 2
+theme_type_variation = &"LargeButton"
+text = "Done"
+
+[node name="Lock" type="Button" parent="Layout/Margin/Content/Footer" unique_id=1630451039]
+layout_mode = 2
+theme_type_variation = &"LargeButton"
+text = "Lock"
+
+[node name="Cancel" type="Button" parent="Layout/Margin/Content/Footer" unique_id=1630451040]
+layout_mode = 2
+theme_type_variation = &"LargeButton"
+text = "Cancel"
+
+[connection signal="gui_input" from="Layout/Margin/Content/Items/Own/Scroll/Grid" to="Layout/Margin/Content/Items/Own/Scroll/Grid" method="_on_gui_input"]
+[connection signal="resized" from="Layout/Margin/Content/Items/Own/Scroll/Grid" to="Layout/Margin/Content/Items/Own/Scroll/Grid" method="_on_panel_resized"]
+[connection signal="gui_input" from="Layout/Margin/Content/Items/Other/Scroll/Grid" to="Layout/Margin/Content/Items/Other/Scroll/Grid" method="_on_gui_input"]
+[connection signal="resized" from="Layout/Margin/Content/Items/Other/Scroll/Grid" to="Layout/Margin/Content/Items/Other/Scroll/Grid" method="_on_panel_resized"]
+[connection signal="pressed" from="Layout/Margin/Content/Footer/Done" to="." method="_on_done_pressed"]
+[connection signal="pressed" from="Layout/Margin/Content/Footer/Lock" to="." method="_on_lock_pressed"]
+[connection signal="pressed" from="Layout/Margin/Content/Footer/Cancel" to="." method="_on_cancel_pressed"]

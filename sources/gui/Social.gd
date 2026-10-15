@@ -17,7 +17,7 @@ func AddPlayerLine(playerName : String) -> void:
 
 func OnPlayerSelected(playerName : String) -> void:
 	if Launcher.Player and playerName != Launcher.Player.nick:
-		Network.TriggerCommand("query " + playerName)
+		Launcher.GUI.DisplayPlayerMenu(playerName)
 
 func RefreshOnline(players : PackedStringArray) -> void:
 	for child in playerList.get_children():

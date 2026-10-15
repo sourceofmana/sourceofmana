@@ -15,6 +15,7 @@ const CellTileColorHovered : Color					= Color("996805")
 const ContextAction : PackedScene					= preload("res://presets/gui/contexts/ContextAction.tscn")
 const CellTilePreset : PackedScene					= preload("res://presets/gui/CellTile.tscn")
 const CellSelectionPreset : PackedScene				= preload("res://presets/gui/CellSelection.tscn")
+const PlayerMenuPreset : PackedScene				= preload("res://presets/gui/PlayerMenu.tscn")
 
 const PickUpNotificationDelaySec : float			= 5.0
 const DisplayActionShortDelaySec : float			= 5.0
@@ -49,6 +50,12 @@ enum UITarget
 	EMOTE,
 	SETTINGS,
 	ACTION_BAR,
+}
+
+enum PlayerMenu
+{
+	WHISPER = 0,
+	TRADE,
 }
 
 static func ColorToHSVA(color : Color) -> Vector4:

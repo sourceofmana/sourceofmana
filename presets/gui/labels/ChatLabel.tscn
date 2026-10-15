@@ -24,6 +24,7 @@ threaded = true
 script = ExtResource("2_chatlabel")
 
 [node name="ContextMenu" type="PopupMenu" parent="." unique_id=2088607992]
+canvas_item_default_texture_filter = 0
 theme = ExtResource("1_1ynyk")
 item_count = 1
 item_0/text = "Clear"

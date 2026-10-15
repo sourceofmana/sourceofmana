@@ -241,6 +241,7 @@ func ItemAdded(itemID : int, customfield : StringName, count : int, _peerID : in
 			if Launcher.GUI:
 				Launcher.GUI.pickupPanel.AddLast(cell, count)
 				Launcher.GUI.inventoryWindow.RefreshInventory()
+				Launcher.GUI.tradePanel.RefreshInventory()
 				var countText : String = " x" + str(count) if count > 1 else ""
 				Launcher.GUI.chatContainer.AddLocalFeedback("You receive " + cell.name + countText)
 			if not (cell is ItemCell and CellCommons.IsEquipment(cell)):
@@ -254,6 +255,7 @@ func ItemRemoved(itemID : int, customfield : StringName, count : int, itemIndex 
 			CellTile.RefreshShortcuts(cell)
 			if Launcher.GUI and Launcher.GUI.inventoryWindow:
 				Launcher.GUI.inventoryWindow.RefreshInventory()
+				Launcher.GUI.tradePanel.RefreshInventory()
 			if not (cell is ItemCell and CellCommons.IsEquipment(cell)):
 				cell.used.emit()
 
@@ -274,6 +276,7 @@ func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state :
 			entity.visual.SetEquipment(cell.slot)
 			if entity == Launcher.Player:
 				Launcher.GUI.inventoryWindow.RefreshInventory()
+				Launcher.GUI.tradePanel.RefreshInventory()
 				if not CellCommons.IsEquipment(cell):
 					cell.used.emit()
 
@@ -282,6 +285,7 @@ func RefreshInventory(cells : Array[Dictionary], _peerID : int):
 		Launcher.Player.inventory.ImportInventory(cells)
 	if Launcher.GUI and Launcher.GUI.inventoryWindow:
 		Launcher.GUI.inventoryWindow.RefreshInventory()
+		Launcher.GUI.tradePanel.RefreshInventory()
 
 func RefreshEquipment(agentRID : int, equipment : Dictionary, _peerID : int):
 	if Launcher.Map:
@@ -295,6 +299,25 @@ func RefreshEquipment(agentRID : int, equipment : Dictionary, _peerID : int):
 			entity.inventory.ImportEquipment(equipment)
 		if entity == Launcher.Player and Launcher.GUI and Launcher.GUI.inventoryWindow:
 			Launcher.GUI.inventoryWindow.RefreshInventory()
+
+func TradeRequested(requesterName : String, _peerID : int):
+	if Launcher.GUI:
+		UICommons.MessageBox("%s wants to trade with you." % requesterName,
+			Network.TradeRespond.bind(true), "Accept",
+			Network.TradeRespond.bind(false), "Decline")
+		Launcher.GUI.messageBox.closeCallback = Launcher.GUI.messageBox.Call.bind(Network.TradeRespond.bind(false))
+
+func TradeOpened(otherName : String, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.tradePanel.Open(otherName)
+
+func TradeUpdate(ownOffer : Array, ownGP : int, otherOffer : Array, otherGP : int, ownLocked : bool, otherLocked : bool, revision : int, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.tradePanel.UpdateOffers(ownOffer, ownGP, otherOffer, otherGP, ownLocked, otherLocked, revision)
+
+func TradeClosed(reason : String, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.tradePanel.Close(reason)
 
 func DropAdded(dropID : int, itemID : int, customfield : StringName, pos : Vector2, _peerID : int):
 	if Launcher.Map:

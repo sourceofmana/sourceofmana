@@ -256,7 +256,7 @@ func AddItem(charID : int, itemID : int, customfield : String, itemCount : int =
 	var data : Dictionary = GetItem(charID, itemID, customfield, storageType)
 	# Increment item count
 	if not data.is_empty():
-		return ExecuteBindings("UPDATE item SET count = ? WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [data["count"] + 1, itemID, charID, storageType, customfield])
+		return ExecuteBindings("UPDATE item SET count = ? WHERE item_id = ? AND char_id = ? AND storage = ? AND customfield = ?;", [data["count"] + itemCount, itemID, charID, storageType, customfield])
 
 	# Insert new item
 	data = {

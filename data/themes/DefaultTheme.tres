@@ -38,6 +38,7 @@
 [ext_resource type="Texture2D" uid="uid://ckqp851k875au" path="res://data/graphics/gui/split_bar.png" id="27_sv4ge"]
 [ext_resource type="Texture2D" uid="uid://ccnvk4w2d6iav" path="res://data/graphics/gui/split_background.png" id="28_44afm"]
 [ext_resource type="Texture2D" uid="uid://bqthtc7tyobb5" path="res://data/graphics/gui/window/titlebar_bg.png" id="29_44afm"]
+[ext_resource type="Texture2D" uid="uid://coj8ge57b8tpi" path="res://data/graphics/gui/smallbar-opaque.png" id="30_p7m2k"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ls22y"]
 content_margin_left = 6.0
@@ -349,11 +350,19 @@ expand_margin_top = 1.0
 expand_margin_right = 5.0
 expand_margin_bottom = 1.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yh83i"]
-bg_color = Color(0.219608, 0.188235, 0.137255, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p7m2k"]
+bg_color = Color(0.843137, 0.717647, 0.482353, 0.2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0u4tm"]
-bg_color = Color(0.219608, 0.188235, 0.137255, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p7m2k"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+texture = ExtResource("30_p7m2k")
+texture_margin_left = 1.0
+texture_margin_top = 2.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wjx64"]
 bg_color = Color(0.219608, 0.188235, 0.137255, 1)
@@ -647,8 +656,8 @@ PearlBox/styles/normal = SubResource("StyleBoxTexture_wxm87")
 PearlBox/styles/pressed = SubResource("StyleBoxTexture_wxm87")
 PopupMenu/colors/font_color = Color(0.933, 0.847, 0.631, 1)
 PopupMenu/colors/font_hover_color = Color(0.933, 0.847, 0.631, 1)
-PopupMenu/styles/hover = SubResource("StyleBoxFlat_yh83i")
-PopupMenu/styles/panel = SubResource("StyleBoxFlat_0u4tm")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_p7m2k")
+PopupMenu/styles/panel = SubResource("StyleBoxTexture_p7m2k")
 PopupMenu/styles/panel_disabled = SubResource("StyleBoxFlat_wjx64")
 PopupPanel/styles/panel = SubResource("StyleBoxTexture_ik3rj")
 SettingsLabel/base_type = &"Label"

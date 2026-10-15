@@ -229,6 +229,13 @@ func AddGP(value : int, hasFeedback : bool = true):
 	if actor is PlayerAgent:
 		Network.TargetAlteration(actor.get_rid().get_id(), actor.get_rid().get_id(), value, ActorCommons.Alteration.GP, DB.UnknownHash, hasFeedback, actor.peerID)
 
+func SpendGP(value : int) -> bool:
+	if value <= 0 or gp < value:
+		return false
+	gp -= value
+	vital_stats_updated.emit()
+	return true
+
 func SetHairstyle(newStyle : int):
 	if DB.HairstylesDB.has(newStyle):
 		hairstyle = newStyle

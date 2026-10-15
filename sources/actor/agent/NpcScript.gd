@@ -371,7 +371,9 @@ func ExchangeItems(removeItems : Array, addItems : Array, onResult : Callable):
 
 func ApplyExchangeItems(removeItems : Array, addItems : Array, onResult : Callable):
 	assert(step == steps.size() - 1 and not steps[step].has("choices"), "ExchangeItems() must be the last queued step")
-	onResult.call(NpcCommons.ExchangeItems(own, removeItems, addItems))
+	var result : ActorInventory.ExchangeResult = NpcCommons.ExchangeItems(own, removeItems, addItems)
+	assert(result != ActorInventory.ExchangeResult.INVALID, "ExchangeItems() received invalid item entries")
+	onResult.call(result)
 
 # Skills
 func HasSkill(skillID : int) -> bool:

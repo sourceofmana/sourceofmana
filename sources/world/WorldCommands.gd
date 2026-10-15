@@ -44,6 +44,7 @@ func RegisterCommands():
 	CommandManager.Register("w", CommandWhisper, ActorCommons.Permission.NONE, "w <player> <message>" )
 	CommandManager.Register("query", CommandQuery, ActorCommons.Permission.NONE, "query <player>" )
 	CommandManager.Register("q", CommandQuery, ActorCommons.Permission.NONE, "q <player>" )
+	CommandManager.Register("trade", CommandTrade, ActorCommons.Permission.NONE, "trade <player>" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -87,6 +88,7 @@ static func UnregisterCommands():
 	CommandManager.Unregister("w")
 	CommandManager.Unregister("query")
 	CommandManager.Unregister("q")
+	CommandManager.Unregister("trade")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String = "1") -> bool:
@@ -662,6 +664,22 @@ func CommandQuery(caller : PlayerAgent, targetName : String) -> bool:
 		return true
 
 	Network.ChatQuery(target.nick, caller.peerID)
+	return true
+
+func CommandTrade(caller : PlayerAgent, targetName : String) -> bool:
+	if not caller or targetName.is_empty():
+		return false
+
+	var target : PlayerAgent = Launcher.World.GetGlobalPlayer(targetName)
+	if not target:
+		Network.CommandFeedback("Player '%s' is not online" % targetName, caller.peerID)
+		return true
+
+	if target == caller:
+		Network.CommandFeedback("You cannot trade with yourself", caller.peerID)
+		return true
+
+	WorldTrade.Request(caller, target)
 	return true
 
 # Helpers

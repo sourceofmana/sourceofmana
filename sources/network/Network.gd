@@ -418,6 +418,39 @@ func DropRemoved(dropID : int, peerID : int = NetworkCommons.PeerOfflineID):
 func PickupDrop(dropID : int, peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("PickupDrop", [dropID], peerID)
 
+# Trade
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TradeRespond(accept : bool, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TradeRespond", [accept], peerID)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TradeSetOffer(entries : Array, gp : int, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TradeSetOffer", [entries, gp], peerID, NetworkCommons.DelayShort)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TradeLock(revision : int, state : bool, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TradeLock", [revision, state], peerID, NetworkCommons.DelayShort)
+
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func TradeCancel(peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("TradeCancel", [], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func TradeRequested(requesterName : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("TradeRequested", [requesterName], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func TradeOpened(otherName : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("TradeOpened", [otherName], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func TradeUpdate(ownOffer : Array, ownGP : int, otherOffer : Array, otherGP : int, ownLocked : bool, otherLocked : bool, revision : int, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("TradeUpdate", [ownOffer, ownGP, otherOffer, otherGP, ownLocked, otherLocked, revision], peerID)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func TradeClosed(reason : String, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("TradeClosed", [reason], peerID)
+
 # Progress
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func UpdateSkill(skillID : int, level : int, peerID : int = NetworkCommons.PeerOfflineID):

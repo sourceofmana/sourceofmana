@@ -6,6 +6,8 @@ var items : Array[Item]				= []
 var equipment : Array[Item]			= []
 var itemCount : int					= 0
 
+signal items_changed
+
 enum ExchangeResult
 {
 	OK = 0,
@@ -178,6 +180,7 @@ func EquipItem(cell : ItemCell, itemIndex : int):
 		var inst : WorldInstance = WorldAgent.GetInstanceFromAgent(actor)
 		if inst:
 			Network.NotifyInstance(inst, "ItemEquiped", [actor.get_rid().get_id(), cell.id, cell.customfield, true, itemIndex])
+		items_changed.emit()
 
 func UnequipItem(cell : ItemCell):
 	if not actor or not cell or cell.type != CellCommons.Type.ITEM or cell.slot == ActorCommons.Slot.NONE:
@@ -218,6 +221,7 @@ func RemoveItem(cell : ItemCell, count : int, itemIndex : int) -> bool:
 			if charID != NetworkCommons.PeerUnknownID:
 				Launcher.SQL.RemoveItem(charID, cell.id, cell.customfield, count)
 			Network.ItemRemoved(cell.id, cell.customfield, count, itemIndex, actor.peerID)
+			items_changed.emit()
 		actor.stat.weight -= cell.weight * count / 1000.0
 		return true
 	return false
@@ -227,38 +231,49 @@ static func GetExchangeCounts(entries : Array, counts : Dictionary[ItemCell, int
 	for entry in entries:
 		var itemID : int = 0
 		var count : int = 1
-		if entry is Array and entry.size() == 2:
-			itemID = entry[0]
-			count = entry[1]
+		var customfield : String = ""
+		if entry is Array and entry.size() >= 2:
+			itemID = entry[0] if entry[0] is int else DB.UnknownHash
+			count = entry[1] if entry[1] is int else 0
+			if entry.size() == 3 and (entry[2] is String or entry[2] is StringName):
+				customfield = entry[2]
 		elif entry is int:
 			itemID = entry
 		else:
-			assert(false, "Exchange entry not recognized for " + str(entry))
 			return false
 
-		var cell : ItemCell = DB.GetItem(itemID)
-		if not cell or count <= 0:
+		if count <= 0 or not DB.ItemsDB.has(itemID):
 			return false
 
-		counts[cell] = counts.get(cell, 0) + count
+		var cell : ItemCell = DB.GetItem(itemID, customfield)
+		for countedCell in counts:
+			if CellCommons.IsSameCell(countedCell, cell):
+				cell = countedCell
+				break
+		var totalCount : int = counts.get(cell, 0) + count
+		if totalCount <= 0:
+			return false
+		counts[cell] = totalCount
 	return true
 
-func ExchangeItems(removeItems : Array, addItems : Array) -> ExchangeResult:
-	# Normalize our number of added/removed items
-	var removeCounts : Dictionary[ItemCell, int] = {}
-	var addCounts : Dictionary[ItemCell, int] = {}
-	if not GetExchangeCounts(removeItems, removeCounts) or not GetExchangeCounts(addItems, addCounts):
-		return ExchangeResult.INVALID
+func GetAvailableCount(cell : ItemCell, excludeEquipped : bool) -> int:
+	var totalCount : int = 0
+	for item in items:
+		if CellCommons.IsSameItem(cell, item) and not (excludeEquipped and IsItemEquipped(item)):
+			totalCount += item.count if cell.stackable else 1
+	return totalCount
 
+func ValidateExchange(removeCounts : Dictionary[ItemCell, int], addCounts : Dictionary[ItemCell, int], excludeEquipped : bool = false) -> ExchangeResult:
 	# Check the number of freed slots in the inventory
 	var slotDelta : int = 0
 	for cell in removeCounts:
 		var count : int = removeCounts[cell]
-		if not HasItem(cell, count):
+		var availableCount : int = GetAvailableCount(cell, excludeEquipped)
+		if availableCount < count:
 			return ExchangeResult.MISSING_ITEMS
 		if not cell.stackable:
 			slotDelta -= count
-		elif GetItem(cell).count == count:
+		elif availableCount == count:
 			slotDelta -= 1
 
 	# Check the number of newly used slots in the inventory
@@ -272,8 +287,9 @@ func ExchangeItems(removeItems : Array, addItems : Array) -> ExchangeResult:
 
 	if itemCount + slotDelta > ActorCommons.InventorySize:
 		return ExchangeResult.NO_SPACE
+	return ExchangeResult.OK
 
-	# Remove items
+func ApplyExchange(removeCounts : Dictionary[ItemCell, int], addCounts : Dictionary[ItemCell, int]):
 	for cell in removeCounts:
 		if cell.stackable:
 			RemoveItem(cell, removeCounts[cell], FindItemIndex(cell))
@@ -281,12 +297,20 @@ func ExchangeItems(removeItems : Array, addItems : Array) -> ExchangeResult:
 			for _i in removeCounts[cell]:
 				RemoveItem(cell, 1, FindItemIndex(cell))
 
-	# Add items
 	for cell in addCounts:
 		var isAdded : bool = AddItem(cell, addCounts[cell])
 		assert(isAdded, "Exchange could not add an item despite its space validation")
 
-	return ExchangeResult.OK
+func ExchangeItems(removeItems : Array, addItems : Array) -> ExchangeResult:
+	var removeCounts : Dictionary[ItemCell, int] = {}
+	var addCounts : Dictionary[ItemCell, int] = {}
+	if not GetExchangeCounts(removeItems, removeCounts) or not GetExchangeCounts(addItems, addCounts):
+		return ExchangeResult.INVALID
+
+	var result : ExchangeResult = ValidateExchange(removeCounts, addCounts)
+	if result == ExchangeResult.OK:
+		ApplyExchange(removeCounts, addCounts)
+	return result
 
 #
 func ImportInventory(data : Array[Dictionary]):
