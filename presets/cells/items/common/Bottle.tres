@@ -11,3 +11,5 @@ description = "An empty glass bottle, ready to be filled with whatever the world
 icon = ExtResource("1_mc4ws")
 weight = 15.0
 stackable = true
+buyPrice = 90
+sellPrice = 36

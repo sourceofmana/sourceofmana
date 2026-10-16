@@ -34,3 +34,5 @@ name = "Leather Shield"
 icon = ExtResource("1_xtpys")
 weight = 400.0
 modifiers = SubResource("Resource_jsvak")
+buyPrice = 2700
+sellPrice = 270

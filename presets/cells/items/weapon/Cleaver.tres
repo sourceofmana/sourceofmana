@@ -32,3 +32,5 @@ description = "A heavy blade crafted for sheer power and decisive strikes."
 icon = ExtResource("1_6ay8c")
 weight = 400.0
 modifiers = SubResource("Resource_cav7e")
+buyPrice = 2300
+sellPrice = 230

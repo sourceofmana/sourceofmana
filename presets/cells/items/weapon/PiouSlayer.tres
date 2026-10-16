@@ -31,3 +31,5 @@ name = "Piou Slayer"
 icon = ExtResource("1_h1gvw")
 weight = 400.0
 modifiers = SubResource("Resource_skk8k")
+buyPrice = 2300
+sellPrice = 230

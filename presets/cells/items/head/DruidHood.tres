@@ -14,3 +14,5 @@ id = 0
 name = "Druid Hood"
 icon = ExtResource("1_icon")
 weight = 300.0
+buyPrice = 2700
+sellPrice = 270

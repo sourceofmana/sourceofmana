@@ -3,6 +3,7 @@ extends ColumnTableView
 
 #
 const COLUMNS : Array[Dictionary] = [
+	{ "name" : "Icon", "property" : "icon", "type" : TYPE_OBJECT, "editable" : false, "width" : 60 },
 	{ "name" : "Name", "property" : "name", "type" : TYPE_STRING, "editable" : true, "width" : 150 },
 	{ "name" : "Category", "property" : "category", "type" : TYPE_INT, "editable" : true, "width" : 100, "is_enum" : true, "enum_name" : "Category" },
 	{ "name" : "State", "property" : "state", "type" : TYPE_INT, "editable" : true, "width" : 100, "is_enum" : true, "enum_name" : "State" },
@@ -15,7 +16,6 @@ const COLUMNS : Array[Dictionary] = [
 	{ "name" : "Skill Time", "property" : "skillTime", "type" : TYPE_FLOAT, "editable" : true, "width" : 80 },
 	{ "name" : "Modifiers", "property" : "modifiers", "type" : TYPE_OBJECT, "editable" : false, "width" : 250, "is_modifiers" : true },
 	{ "name" : "Description", "property" : "description", "type" : TYPE_STRING, "editable" : true, "width" : 250 },
-	{ "name" : "Icon", "property" : "icon", "type" : TYPE_OBJECT, "editable" : false, "width" : 60 },
 	{ "name" : "Edit", "property" : "_edit", "type" : TYPE_NIL, "editable" : false, "width" : 60, "is_action" : true },
 ]
 

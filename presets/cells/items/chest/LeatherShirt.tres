@@ -28,3 +28,5 @@ name = "Leather Shirt"
 icon = ExtResource("1_fwd6i")
 weight = 300.0
 modifiers = SubResource("Resource_6m8o0")
+buyPrice = 1900
+sellPrice = 190

@@ -11,3 +11,5 @@ description = "A cured hide from a desert snake."
 icon = ExtResource("1_skskin")
 weight = 2.0
 stackable = true
+buyPrice = 120
+sellPrice = 12

@@ -28,3 +28,5 @@ name = "Leather Armbands"
 icon = ExtResource("1_lklgh")
 weight = 300.0
 modifiers = SubResource("Resource_fgb6i")
+buyPrice = 7100
+sellPrice = 710

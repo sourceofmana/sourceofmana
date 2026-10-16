@@ -38,3 +38,5 @@ description = "A curved blade as swift and unyielding as the desert sun."
 icon = ExtResource("1_soho8")
 weight = 400.0
 modifiers = SubResource("Resource_4pa0l")
+buyPrice = 25000
+sellPrice = 2500

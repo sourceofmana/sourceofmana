@@ -34,3 +34,5 @@ name = "Leather Boots"
 icon = ExtResource("1_44ei4")
 weight = 300.0
 modifiers = SubResource("Resource_u2eud")
+buyPrice = 5100
+sellPrice = 510

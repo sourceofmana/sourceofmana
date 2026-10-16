@@ -31,3 +31,5 @@ name = "Ghutra"
 icon = ExtResource("1_l2gou")
 weight = 300.0
 modifiers = SubResource("Resource_mscun")
+buyPrice = 1900
+sellPrice = 190

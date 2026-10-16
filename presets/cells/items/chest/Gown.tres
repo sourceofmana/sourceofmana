@@ -15,3 +15,5 @@ id = 2089150048
 name = "Gown"
 icon = ExtResource("1_cdryd")
 weight = 800.0
+buyPrice = 1900
+sellPrice = 190

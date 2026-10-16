@@ -14,3 +14,5 @@ name = "Trousers"
 description = "Classic trousers ornated with some fluffy fur."
 icon = ExtResource("1_pmsey")
 weight = 300.0
+buyPrice = 1000
+sellPrice = 100

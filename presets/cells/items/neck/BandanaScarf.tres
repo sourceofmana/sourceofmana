@@ -14,3 +14,5 @@ id = 1956972377
 name = "Bandana Scarf"
 icon = ExtResource("1_op2dy")
 weight = 400.0
+buyPrice = 1200
+sellPrice = 120

@@ -33,3 +33,5 @@ name = "Gladius"
 icon = ExtResource("1_hu2iu")
 weight = 400.0
 modifiers = SubResource("Resource_pu81m")
+buyPrice = 5400
+sellPrice = 540

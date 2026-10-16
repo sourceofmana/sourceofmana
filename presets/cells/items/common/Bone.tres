@@ -11,3 +11,5 @@ name = "Bone"
 description = "A bone from a humanoid skeleton."
 icon = ExtResource("1_icon")
 stackable = true
+buyPrice = 40
+sellPrice = 4

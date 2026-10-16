@@ -77,6 +77,9 @@ static func ParseCellDB(db : Dictionary, path : String):
 		cell.id = SetCellHash(cell.name)
 		if cell.id != UnknownHash:
 			db[cell.id] = cell
+		if cell is ItemCell:
+			assert(cell.buyPrice >= 0 and cell.sellPrice >= 0, "Item %s has a negative price" % cell.name)
+			assert(cell.buyPrice == 0 or cell.buyPrice > cell.sellPrice, "Item %s buy price (%d) must be higher than its sell price (%d)" % [cell.name, cell.buyPrice, cell.sellPrice])
 
 static func ParseQuestsDB():
 	for resourcePath in FileSystem.ParseResources(Path.QuestPst):

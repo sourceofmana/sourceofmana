@@ -12,3 +12,5 @@ id = 3690476111
 name = "Funky Hat"
 icon = ExtResource("1_ttgvi")
 weight = 300.0
+buyPrice = 1900
+sellPrice = 190

@@ -48,10 +48,10 @@ func HandleSpecialButton(_resource : Resource, _item : TreeItem, _column : int, 
 
 #
 func Setup():
-	sortColumn = 0
+	var cols : Array[Dictionary] = GetColumns()
+	sortColumn = maxi(cols.find_custom(func(col : Dictionary) -> bool: return col.property == "name"), 0)
 	sortAscending = true
 
-	var cols : Array[Dictionary] = GetColumns()
 	tree.clear()
 	tree.columns = cols.size()
 	tree.hide_root = true

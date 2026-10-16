@@ -4,10 +4,10 @@ extends Control
 #
 const ATTRIBUTES : PackedStringArray = ["strength", "vitality", "agility", "endurance", "concentration"]
 const ATTR_LABELS : PackedStringArray = ["STR", "VIT", "AGI", "END", "CON"]
-const MATRIX_COLS : int = 19
-const COL_TITLES : PackedStringArray = ["Entity", "Lvl", "XP", "Atk", "Def", "MAtk", "MDef", "P→E Phy", "P→E Mag", "E→P Phy", "E→P Mag", "Ratio", "MRatio", "P Hits", "P TTK", "E Hits", "E TTK", "KTL(P)", "KTL(E)"]
-const COL_WIDTHS : PackedInt32Array = [130, 60, 60, 50, 50, 55, 55, 75, 80, 75, 80, 65, 70, 55, 60, 55, 60, 65, 65]
-const COL_SORT_KEYS : PackedStringArray = ["name", "level", "xp", "atk", "def", "matk", "mdef", "p_phys", "p_mag", "e_phys", "e_mag", "ratio", "mratio", "p_hits", "p_ttk", "e_hits", "e_ttk", "kills_p", "kills_e"]
+const MATRIX_COLS : int = 20
+const COL_TITLES : PackedStringArray = ["Entity", "Lvl", "XP", "Atk", "Def", "MAtk", "MDef", "P→E Phy", "P→E Mag", "E→P Phy", "E→P Mag", "Ratio", "MRatio", "P Hits", "P TTK", "E Hits", "E TTK", "KTL(P)", "KTL(E)", "GP/Kill"]
+const COL_WIDTHS : PackedInt32Array = [130, 60, 60, 50, 50, 55, 55, 75, 80, 75, 80, 65, 70, 55, 60, 55, 60, 65, 65, 65]
+const COL_SORT_KEYS : PackedStringArray = ["name", "level", "xp", "atk", "def", "matk", "mdef", "p_phys", "p_mag", "e_phys", "e_mag", "ratio", "mratio", "p_hits", "p_ttk", "e_hits", "e_ttk", "kills_p", "kills_e", "gp"]
 
 #
 const PlayerHitsBandMin : int = 3
@@ -419,6 +419,10 @@ func RefreshMatrix():
 		var neededXpEntity : int = Experience.GetNeededExperienceForNextLevel(entityLevel)
 		var killsP : int = ceili(float(neededXpPlayer) / float(xp)) if neededXpPlayer != Experience.MAX_LEVEL_REACHED and xp > 0 else -1
 		var killsE : int = ceili(float(neededXpEntity) / float(xp)) if neededXpEntity != Experience.MAX_LEVEL_REACHED and xp > 0 else -1
+		var gpPerKill : float = 0.0
+		for drop in entityData._drops:
+			if drop is ItemCell:
+				gpPerKill += drop.sellPrice * entityData._drops[drop]
 
 		rows.append({
 			"entity": entityData,
@@ -441,6 +445,7 @@ func RefreshMatrix():
 			"xp": xp,
 			"kills_p": killsP,
 			"kills_e": killsE,
+			"gp": gpPerKill,
 		})
 
 	rows.sort_custom(SortRows)
@@ -490,6 +495,7 @@ func RefreshMatrix():
 		treeItem.set_text(16, "%.1fs" % float(row["e_ttk"]))
 		treeItem.set_text(17, str(killsP) if killsP > 0 else "—")
 		treeItem.set_text(18, str(killsE) if killsE > 0 else "—")
+		treeItem.set_text(19, "%.2f" % float(row["gp"]))
 
 		treeItem.set_custom_color(13, green if pHits >= PlayerHitsBandMin and pHits <= PlayerHitsBandMax else red)
 		treeItem.set_custom_color(15, green if eHits >= EnemyHitsBandMin and eHits <= EnemyHitsBandMax else red)
@@ -525,7 +531,7 @@ func SortRows(a : Dictionary, b : Dictionary) -> bool:
 			var vb : String = String(b[key])
 			if va == vb: return false
 			return (va < vb) if sortAscending else (va > vb)
-		11, 12, 14, 16:
+		11, 12, 14, 16, 19:
 			var va : float = float(a[key])
 			var vb : float = float(b[key])
 			if va == vb: return false

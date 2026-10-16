@@ -3,15 +3,17 @@ extends ColumnTableView
 
 #
 const COLUMNS : Array[Dictionary] = [
+	{ "name" : "Icon", "property" : "icon", "type" : TYPE_OBJECT, "editable" : false, "width" : 60 },
 	{ "name" : "Name", "property" : "name", "type" : TYPE_STRING, "editable" : true, "width" : 150 },
 	{ "name" : "Slot", "property" : "slot", "type" : TYPE_INT, "editable" : true, "width" : 100, "is_enum" : true, "enum_class" : "ActorCommons.Slot" },
 	{ "name" : "Weight", "property" : "weight", "type" : TYPE_FLOAT, "editable" : true, "width" : 80 },
 	{ "name" : "Stackable", "property" : "stackable", "type" : TYPE_BOOL, "editable" : true, "width" : 80 },
 	{ "name" : "Usable", "property" : "usable", "type" : TYPE_BOOL, "editable" : true, "width" : 80 },
+	{ "name" : "Buy Price", "property" : "buyPrice", "type" : TYPE_INT, "editable" : true, "width" : 80 },
+	{ "name" : "Sell Price", "property" : "sellPrice", "type" : TYPE_INT, "editable" : true, "width" : 80 },
 	{ "name" : "Custom Field", "property" : "customfield", "type" : TYPE_STRING, "editable" : true, "width" : 120 },
 	{ "name" : "Description", "property" : "description", "type" : TYPE_STRING, "editable" : true, "width" : 250 },
 	{ "name" : "Modifiers", "property" : "modifiers", "type" : TYPE_OBJECT, "editable" : false, "width" : 250, "is_modifiers" : true },
-	{ "name" : "Icon", "property" : "icon", "type" : TYPE_OBJECT, "editable" : false, "width" : 60 },
 	{ "name" : "Edit", "property" : "_edit", "type" : TYPE_NIL, "editable" : false, "width" : 60, "is_action" : true },
 ]
 

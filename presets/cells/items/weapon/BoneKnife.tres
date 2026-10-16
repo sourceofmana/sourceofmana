@@ -34,3 +34,5 @@ description = "A knife made from bones. Quite effective."
 icon = ExtResource("1_uvles")
 weight = 400.0
 modifiers = SubResource("Resource_snree")
+buyPrice = 15500
+sellPrice = 1550

@@ -11,3 +11,5 @@ description = "A thick, viscous slime secreted by desert maggots. Used in the br
 icon = ExtResource("1_mc4ws")
 weight = 2.0
 stackable = true
+buyPrice = 5
+sellPrice = 1

@@ -9,6 +9,8 @@ class_name ItemCell
 @export var animationOverrides : AnimationLibrary	= null
 @export var spriteHframes : int				= 0
 @export var spriteVframes : int				= 0
+@export var buyPrice : int					= 0
+@export var sellPrice : int					= 0
 
 #
 func StripClient():

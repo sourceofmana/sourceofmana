@@ -28,3 +28,5 @@ name = "Cotton Shirt"
 icon = ExtResource("1_qatwx")
 weight = 300.0
 modifiers = SubResource("Resource_mods")
+buyPrice = 1200
+sellPrice = 120

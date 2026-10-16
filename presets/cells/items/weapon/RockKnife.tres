@@ -39,3 +39,5 @@ name = "Rock Knife"
 icon = ExtResource("1_b8u7e")
 weight = 400.0
 modifiers = SubResource("Resource_8s3hv")
+buyPrice = 50000
+sellPrice = 5000

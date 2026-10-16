@@ -15,3 +15,5 @@ id = 2739365196
 name = "Crop Top"
 icon = ExtResource("1_of3co")
 weight = 300.0
+buyPrice = 1000
+sellPrice = 100

@@ -25,3 +25,5 @@ name = "Desert Goggles"
 icon = ExtResource("1_gqe1k")
 weight = 100.0
 modifiers = SubResource("Resource_mscun")
+buyPrice = 1900
+sellPrice = 190

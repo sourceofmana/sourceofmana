@@ -28,3 +28,5 @@ name = "Desert Armbands"
 icon = ExtResource("1_smcxc")
 weight = 300.0
 modifiers = SubResource("Resource_fgb6i")
+buyPrice = 7100
+sellPrice = 710

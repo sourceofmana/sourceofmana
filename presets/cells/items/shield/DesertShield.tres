@@ -34,3 +34,5 @@ name = "Desert Shield"
 icon = ExtResource("1_cm80u")
 weight = 400.0
 modifiers = SubResource("Resource_jsvak")
+buyPrice = 2700
+sellPrice = 270

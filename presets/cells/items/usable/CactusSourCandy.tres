@@ -29,3 +29,5 @@ weight = 5.0
 stackable = true
 usable = true
 modifiers = SubResource("Resource_2kgew")
+buyPrice = 25
+sellPrice = 3

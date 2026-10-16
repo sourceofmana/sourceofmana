@@ -28,3 +28,5 @@ name = "Leather Gloves"
 icon = ExtResource("1_e120b")
 weight = 300.0
 modifiers = SubResource("Resource_eqy3a")
+buyPrice = 2900
+sellPrice = 290

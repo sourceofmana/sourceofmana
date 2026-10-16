@@ -28,3 +28,5 @@ name = "Desert Jacket"
 icon = ExtResource("1_7vell")
 weight = 5000.0
 modifiers = SubResource("Resource_thr1k")
+buyPrice = 13500
+sellPrice = 1350

@@ -34,3 +34,5 @@ name = "Desert Boots"
 icon = ExtResource("1_777fh")
 weight = 300.0
 modifiers = SubResource("Resource_hqfee")
+buyPrice = 3400
+sellPrice = 340

@@ -28,3 +28,5 @@ name = "Desert Armor"
 icon = ExtResource("1_w3t53")
 weight = 5000.0
 modifiers = SubResource("Resource_thr1k")
+buyPrice = 50000
+sellPrice = 5000

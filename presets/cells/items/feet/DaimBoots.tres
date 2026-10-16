@@ -34,3 +34,5 @@ name = "Daim Boots"
 icon = ExtResource("1_xvynf")
 weight = 300.0
 modifiers = SubResource("Resource_u2eud")
+buyPrice = 5100
+sellPrice = 510

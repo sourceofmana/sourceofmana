@@ -27,3 +27,5 @@ weight = 300.0
 modifiers = SubResource("Resource_mod")
 metadata/light_radius = 96
 metadata/light_color = Color(1, 0.824, 0.553, 1)
+buyPrice = 1500
+sellPrice = 150

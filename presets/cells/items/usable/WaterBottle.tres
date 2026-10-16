@@ -28,3 +28,5 @@ stackable = true
 usable = true
 modifiers = SubResource("Resource_t00vx")
 cellScript = ExtResource("1_c5i6d")
+buyPrice = 100
+sellPrice = 40

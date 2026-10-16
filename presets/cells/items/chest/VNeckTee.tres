@@ -16,3 +16,5 @@ name = "V-Neck Tee"
 description = "A thin, soft and warm shirt."
 icon = ExtResource("1_7885e")
 weight = 300.0
+buyPrice = 1000
+sellPrice = 100

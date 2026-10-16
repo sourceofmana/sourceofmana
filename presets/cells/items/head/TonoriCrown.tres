@@ -27,3 +27,5 @@ name = "Tonori Crown"
 icon = ExtResource("1_wp0su")
 weight = 200.0
 modifiers = SubResource("Resource_mscun")
+buyPrice = 20000
+sellPrice = 2000

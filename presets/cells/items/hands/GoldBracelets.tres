@@ -28,3 +28,5 @@ name = "Gold Bracelets"
 icon = ExtResource("1_im3vj")
 weight = 100.0
 modifiers = SubResource("Resource_fgb6i")
+buyPrice = 17500
+sellPrice = 1750

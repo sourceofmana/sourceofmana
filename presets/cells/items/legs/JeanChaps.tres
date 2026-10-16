@@ -27,3 +27,5 @@ description = "Jeans with snake skin chaps."
 icon = ExtResource("1_cs4ty")
 weight = 300.0
 modifiers = SubResource("Resource_ncx43")
+buyPrice = 13500
+sellPrice = 1350

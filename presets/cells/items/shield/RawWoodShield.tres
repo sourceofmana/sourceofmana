@@ -32,3 +32,5 @@ name = "Raw Wood Shield"
 icon = ExtResource("1_p2nnm")
 weight = 400.0
 modifiers = SubResource("Resource_mx3yq")
+buyPrice = 6000
+sellPrice = 600
