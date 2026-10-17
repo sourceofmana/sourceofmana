@@ -22,6 +22,8 @@ _modifiers = Array[ExtResource("2_4rutc")]([SubResource("Resource_y0bgm"), SubRe
 
 [resource]
 script = ExtResource("4_0tnm7")
+buyPrice = 25
+sellPrice = 3
 id = 3589756736
 name = "Cactus Sour Candy"
 icon = ExtResource("1_8ctvb")
@@ -29,5 +31,3 @@ weight = 5.0
 stackable = true
 usable = true
 modifiers = SubResource("Resource_2kgew")
-buyPrice = 25
-sellPrice = 3

@@ -17,6 +17,8 @@ _modifiers = Array[ExtResource("2_8o32r")]([SubResource("Resource_cp1hx")])
 
 [resource]
 script = ExtResource("4_ckwuv")
+buyPrice = 140
+sellPrice = 56
 id = 3878004993
 name = "Cactus Potion"
 description = "A potent healing potion brewed from cactus extract."
@@ -26,5 +28,3 @@ stackable = true
 usable = true
 modifiers = SubResource("Resource_cp2hx")
 cellScript = ExtResource("1_4au4q")
-buyPrice = 140
-sellPrice = 56

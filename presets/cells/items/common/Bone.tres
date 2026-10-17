@@ -7,9 +7,9 @@
 [resource]
 script = ExtResource("2_script")
 shader = ExtResource("3_palette")
+buyPrice = 40
+sellPrice = 4
 name = "Bone"
 description = "A bone from a humanoid skeleton."
 icon = ExtResource("1_icon")
 stackable = true
-buyPrice = 40
-sellPrice = 4

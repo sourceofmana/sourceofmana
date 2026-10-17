@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://dhb6h35g1bk0x" path="res://data/themes/DefaultTheme.tres" id="1_theme"]
 [ext_resource type="Script" uid="uid://tlqd6d1k11rq" path="res://sources/gui/Trade.gd" id="2_trade"]
 [ext_resource type="Script" uid="uid://cuhwrw40yxve1" path="res://sources/gui/CellGrid.gd" id="4_grid"]
-[ext_resource type="PackedScene" path="res://presets/gui/ItemPicker.tscn" id="5_picker"]
+[ext_resource type="PackedScene" uid="uid://cugn7mm0i7ltn" path="res://presets/gui/ItemPicker.tscn" id="5_picker"]
 
 [node name="Trade" type="PanelContainer" unique_id=1630451001]
 custom_minimum_size = Vector2(540, 282)
@@ -225,9 +225,9 @@ text = "Cancel"
 [connection signal="gui_input" from="Layout/Margin/Content/Items/Other/Scroll/Grid" to="Layout/Margin/Content/Items/Other/Scroll/Grid" method="_on_gui_input"]
 [connection signal="resized" from="Layout/Margin/Content/Items/Other/Scroll/Grid" to="Layout/Margin/Content/Items/Other/Scroll/Grid" method="_on_panel_resized"]
 [connection signal="pressed" from="Layout/Margin/Content/GP/Picker/Minus" to="." method="_on_gp_minus_pressed"]
-[connection signal="text_submitted" from="Layout/Margin/Content/GP/Picker/Value" to="." method="OnGPEdited"]
-[connection signal="focus_exited" from="Layout/Margin/Content/GP/Picker/Value" to="." method="OnGPEdited"]
 [connection signal="editing_toggled" from="Layout/Margin/Content/GP/Picker/Value" to="." method="OnGPEditingToggled"]
+[connection signal="focus_exited" from="Layout/Margin/Content/GP/Picker/Value" to="." method="OnGPEdited"]
+[connection signal="text_submitted" from="Layout/Margin/Content/GP/Picker/Value" to="." method="OnGPEdited"]
 [connection signal="pressed" from="Layout/Margin/Content/GP/Picker/Plus" to="." method="_on_gp_plus_pressed"]
 [connection signal="pressed" from="Layout/Margin/Content/Footer/Done" to="." method="_on_done_pressed"]
 [connection signal="pressed" from="Layout/Margin/Content/Footer/Lock" to="." method="_on_lock_pressed"]

@@ -5,11 +5,11 @@
 
 [resource]
 script = ExtResource("2_v0qjy")
+buyPrice = 90
+sellPrice = 36
 id = 2850928111
 name = "Bottle"
 description = "An empty glass bottle, ready to be filled with whatever the world has to offer."
 icon = ExtResource("1_mc4ws")
 weight = 15.0
 stackable = true
-buyPrice = 90
-sellPrice = 36

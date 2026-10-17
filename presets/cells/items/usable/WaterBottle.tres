@@ -19,6 +19,8 @@ metadata/_custom_type_script = "uid://btqmbqq2q7cm8"
 
 [resource]
 script = ExtResource("4_6ukje")
+buyPrice = 100
+sellPrice = 40
 id = 3288439794
 name = "Water Bottle"
 description = "A simple bottle filled with clear water."
@@ -28,5 +30,3 @@ stackable = true
 usable = true
 modifiers = SubResource("Resource_t00vx")
 cellScript = ExtResource("1_c5i6d")
-buyPrice = 100
-sellPrice = 40

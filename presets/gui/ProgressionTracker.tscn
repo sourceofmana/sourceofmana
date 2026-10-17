@@ -53,7 +53,6 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 textureProgress = SubResource("GradientTexture1D_yh6rj")
-labelColor = Color(1, 1, 0.8666667, 1)
 labelUnit = "%"
 labelOffset = Vector2(0, -2)
 fillDuration = 0.1

@@ -25,7 +25,6 @@ offset_top = 5.0
 offset_right = 59.0
 offset_bottom = 57.0
 textureProgress = ExtResource("6_6rl1b")
-labelColor = Color(1, 1, 0.8666667, 1)
 labelUnit = "%"
 labelOffset = Vector2(0, -2)
 precisionDivider = 100

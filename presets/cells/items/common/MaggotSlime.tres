@@ -5,11 +5,11 @@
 
 [resource]
 script = ExtResource("2_v0qjy")
+buyPrice = 5
+sellPrice = 1
 id = 3136767230
 name = "Maggot Slime"
 description = "A thick, viscous slime secreted by desert maggots. Used in the brewing of healing remedies."
 icon = ExtResource("1_mc4ws")
 weight = 2.0
 stackable = true
-buyPrice = 5
-sellPrice = 1

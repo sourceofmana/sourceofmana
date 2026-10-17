@@ -7,9 +7,9 @@
 [resource]
 script = ExtResource("2_script")
 shader = ExtResource("3_07ekf")
+buyPrice = 30
+sellPrice = 3
 name = "Sulphur Powder"
 description = "A fine yellow powder with a pungent smell."
 icon = ExtResource("1_icon")
 stackable = true
-buyPrice = 30
-sellPrice = 3
