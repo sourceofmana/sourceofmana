@@ -334,7 +334,7 @@ func ClearSavedToken():
 	savedAccountName = ""
 	Conf.confFiles[Conf.Type.AUTH_TOKEN].clear()
 	Conf.cache.clear()
-	DirAccess.remove_absolute(Path.Local + "auth_token" + Path.ConfExt)
+	DirAccess.remove_absolute(Path.Profile + "auth_token" + Path.ConfExt)
 
 func FillFieldsFromToken():
 	if savedToken.is_empty():

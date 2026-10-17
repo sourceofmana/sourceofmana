@@ -82,7 +82,7 @@ static func LoadScript(path : String) -> GDScript:
 
 # Config
 static func LoadConfig(path : String, userDir : bool = false) -> ConfigFile:
-	var fullPath : String		= (Path.Local if userDir else Path.ConfRsc) + path + Path.ConfExt
+	var fullPath : String		= (Path.Profile if userDir else Path.ConfRsc) + path + Path.ConfExt
 	var cfgFile : ConfigFile	= null
 
 	var pathExists : bool = FileExists(fullPath)
@@ -106,7 +106,7 @@ static func SaveConfig(path : String, cfgFile : ConfigFile):
 	assert(cfgFile != null, "Config file " + path + " not initialized")
 
 	if cfgFile:
-		var fullPath : String = Path.Local + path + Path.ConfExt
+		var fullPath : String = Path.Profile + path + Path.ConfExt
 		var err : Error = cfgFile.save(fullPath)
 		assert(err == OK, "Error saving the config file " + path + " located at " + fullPath)
 		Util.PrintLog("Config", "Saving file: " + fullPath)

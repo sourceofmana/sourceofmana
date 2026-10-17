@@ -54,6 +54,7 @@ const ParticlePst : String				= EffectsPst + "particles/"
 
 # Local
 const Local : String					= "user://"
+static var Profile : String				= Local
 const CanaryFile : String				= Local + "canary"
 
 # Extentions

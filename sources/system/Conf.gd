@@ -14,6 +14,7 @@ enum Type
 
 const defaultSection : String					= "Default"
 const userSection : String						= "User"
+const profileArg : String						= "--profile="
 
 static var confFiles : Array[ConfigFile]		= []
 static var cache : Dictionary					= {}
@@ -87,8 +88,19 @@ static func SaveType(fileName : String, type : Type):
 	if type < Type.COUNT:
 		FileSystem.SaveConfig(fileName, confFiles[type])
 
+# Profile
+static func InitProfile():
+	# Run several instances with their own user settings (e.g. --profile=1)
+	for arg : String in OS.get_cmdline_args() + OS.get_cmdline_user_args():
+		if arg.begins_with(profileArg):
+			Path.Profile = Path.Local + "profiles/%s/" % arg.trim_prefix(profileArg)
+			DirAccess.make_dir_recursive_absolute(Path.Profile)
+			Util.PrintLog("Config", "Using profile: " + ProjectSettings.globalize_path(Path.Profile))
+			return
+
 #
 static func Init():
+	InitProfile()
 	confFiles.resize(Type.COUNT)
 	confFiles[Type.SETTINGS] = FileSystem.LoadConfig("settings")
 	confFiles[Type.USERSETTINGS] = FileSystem.LoadConfig("settings", true)
