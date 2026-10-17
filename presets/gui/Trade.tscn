@@ -6,12 +6,12 @@
 [ext_resource type="PackedScene" path="res://presets/gui/ItemPicker.tscn" id="5_picker"]
 
 [node name="Trade" type="PanelContainer" unique_id=1630451001]
-custom_minimum_size = Vector2(496, 282)
-offset_right = 380.0
-offset_bottom = 240.0
+custom_minimum_size = Vector2(540, 282)
+offset_right = 540.0
+offset_bottom = 282.0
 mouse_force_pass_scroll_events = false
 theme = ExtResource("1_theme")
-theme_type_variation = &"DialogueBox"
+theme_type_variation = &"TradeBox"
 script = ExtResource("2_trade")
 floating = false
 resizableEdges = 10
@@ -37,6 +37,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
+theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
 text = "You"
 
 [node name="Separator" type="VSeparator" parent="Layout/Margin/Content/Header" unique_id=1630451008]
@@ -45,6 +46,7 @@ layout_mode = 2
 [node name="Other" type="Label" parent="Layout/Margin/Content/Header" unique_id=1630451009]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
 clip_text = true
 
 [node name="HeaderSeparator" type="HSeparator" parent="Layout/Margin/Content" unique_id=1630451010]
@@ -60,7 +62,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
 [node name="Scroll" type="ScrollContainer" parent="Layout/Margin/Content/Items/Own" unique_id=1630451013]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 mouse_force_pass_scroll_events = false
 horizontal_scroll_mode = 0
@@ -94,7 +96,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Scroll" type="ScrollContainer" parent="Layout/Margin/Content/Items/Other" unique_id=1630451020]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 mouse_force_pass_scroll_events = false
 horizontal_scroll_mode = 0
@@ -110,12 +112,9 @@ script = ExtResource("4_grid")
 maxCount = 20
 interactiveTiles = false
 
-[node name="Empty" type="Label" parent="Layout/Margin/Content/Items/Other" unique_id=1630451022]
+[node name="ItemPicker" parent="Layout/Margin/Content/Items/Other" unique_id=1630451024 instance=ExtResource("5_picker")]
+visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
-text = "Nothing offered yet"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="LockOverlay" type="ColorRect" parent="Layout/Margin/Content/Items/Other" unique_id=1630451023]
 visible = false
@@ -127,28 +126,37 @@ color = Color(0, 0, 0, 0.25)
 layout_mode = 2
 
 [node name="GP" type="HBoxContainer" parent="Layout/Margin/Content" unique_id=1630451026]
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="Own" type="HBoxContainer" parent="Layout/Margin/Content/GP" unique_id=1630451027]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.5
-
-[node name="Label" type="Label" parent="Layout/Margin/Content/GP/Own" unique_id=1630451028]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "GP"
-
-[node name="Value" type="Label" parent="Layout/Margin/Content/GP/Own" unique_id=1630451029]
-layout_mode = 2
-text = "0"
-horizontal_alignment = 2
-
-[node name="Picker" type="VBoxContainer" parent="Layout/Margin/Content/GP" unique_id=1630451030]
+[node name="Picker" type="HBoxContainer" parent="Layout/Margin/Content/GP" unique_id=1630451030]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
+
+[node name="Label" type="Label" parent="Layout/Margin/Content/GP/Picker" unique_id=1630451044]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "GP"
+
+[node name="Minus" type="Button" parent="Layout/Margin/Content/GP/Picker" unique_id=1630451045]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+focus_mode = 0
+text = "-"
+
+[node name="Value" type="LineEdit" parent="Layout/Margin/Content/GP/Picker" unique_id=1630451046]
+custom_minimum_size = Vector2(64, 28)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+alignment = 1
+
+[node name="Plus" type="Button" parent="Layout/Margin/Content/GP/Picker" unique_id=1630451047]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+focus_mode = 0
+text = "+"
 
 [node name="Separator" type="VSeparator" parent="Layout/Margin/Content/GP" unique_id=1630451031]
 layout_mode = 2
@@ -164,6 +172,23 @@ text = "GP"
 
 [node name="Value" type="Label" parent="Layout/Margin/Content/GP/Other" unique_id=1630451034]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+text = "0"
+horizontal_alignment = 2
+
+[node name="Balance" type="HBoxContainer" parent="Layout/Margin/Content/GP" unique_id=1630451041]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Layout/Margin/Content/GP/Balance" unique_id=1630451042]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "GP"
+
+[node name="Value" type="Label" parent="Layout/Margin/Content/GP/Balance" unique_id=1630451043]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
 text = "0"
 horizontal_alignment = 2
 
@@ -176,7 +201,7 @@ layout_mode = 2
 [node name="Status" type="Label" parent="Layout/Margin/Content/Footer" unique_id=1630451037]
 layout_mode = 2
 size_flags_horizontal = 3
-autowrap_mode = 3
+text_overrun_behavior = 3
 
 [node name="Done" type="Button" parent="Layout/Margin/Content/Footer" unique_id=1630451038]
 visible = false
@@ -199,6 +224,11 @@ text = "Cancel"
 [connection signal="resized" from="Layout/Margin/Content/Items/Own/Scroll/Grid" to="Layout/Margin/Content/Items/Own/Scroll/Grid" method="_on_panel_resized"]
 [connection signal="gui_input" from="Layout/Margin/Content/Items/Other/Scroll/Grid" to="Layout/Margin/Content/Items/Other/Scroll/Grid" method="_on_gui_input"]
 [connection signal="resized" from="Layout/Margin/Content/Items/Other/Scroll/Grid" to="Layout/Margin/Content/Items/Other/Scroll/Grid" method="_on_panel_resized"]
+[connection signal="pressed" from="Layout/Margin/Content/GP/Picker/Minus" to="." method="_on_gp_minus_pressed"]
+[connection signal="text_submitted" from="Layout/Margin/Content/GP/Picker/Value" to="." method="OnGPEdited"]
+[connection signal="focus_exited" from="Layout/Margin/Content/GP/Picker/Value" to="." method="OnGPEdited"]
+[connection signal="editing_toggled" from="Layout/Margin/Content/GP/Picker/Value" to="." method="OnGPEditingToggled"]
+[connection signal="pressed" from="Layout/Margin/Content/GP/Picker/Plus" to="." method="_on_gp_plus_pressed"]
 [connection signal="pressed" from="Layout/Margin/Content/Footer/Done" to="." method="_on_done_pressed"]
 [connection signal="pressed" from="Layout/Margin/Content/Footer/Lock" to="." method="_on_lock_pressed"]
 [connection signal="pressed" from="Layout/Margin/Content/Footer/Cancel" to="." method="_on_cancel_pressed"]

@@ -16,6 +16,7 @@ const ContextAction : PackedScene					= preload("res://presets/gui/contexts/Cont
 const CellTilePreset : PackedScene					= preload("res://presets/gui/CellTile.tscn")
 const CellSelectionPreset : PackedScene				= preload("res://presets/gui/CellSelection.tscn")
 const PlayerMenuPreset : PackedScene				= preload("res://presets/gui/PlayerMenu.tscn")
+const ItemPickerLinePreset : PackedScene			= preload("res://presets/gui/ItemPickerLine.tscn")
 
 const PickUpNotificationDelaySec : float			= 5.0
 const DisplayActionShortDelaySec : float			= 5.0

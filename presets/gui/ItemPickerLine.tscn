@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://c3v8asybma7a0"]
+
+[ext_resource type="Script" uid="uid://ciyhdct5sud1j" path="res://sources/gui/ItemPickerLine.gd" id="1_line"]
+[ext_resource type="PackedScene" uid="uid://cq76gfx44nn6q" path="res://presets/gui/CellTile.tscn" id="2_tile"]
+
+[node name="ItemPickerLine" type="HBoxContainer" unique_id=1630453001]
+size_flags_horizontal = 3
+focus_mode = 2
+script = ExtResource("1_line")
+
+[node name="Tile" parent="." unique_id=1630453002 instance=ExtResource("2_tile")]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 1
+
+[node name="Details" type="VBoxContainer" parent="." unique_id=1630453003]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Name" type="Label" parent="Details" unique_id=1630453004]
+layout_mode = 2
+text_overrun_behavior = 3
+
+[node name="Controls" type="HBoxContainer" parent="Details" unique_id=1630453005]
+layout_mode = 2
+
+[node name="Price" type="Label" parent="Details/Controls" unique_id=1630453006]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+text_overrun_behavior = 3
+
+[node name="Minus" type="Button" parent="Details/Controls" unique_id=1630453007]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+focus_mode = 0
+text = "-"
+
+[node name="Value" type="LineEdit" parent="Details/Controls" unique_id=1630453008]
+custom_minimum_size = Vector2(48, 28)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+alignment = 1
+
+[node name="Plus" type="Button" parent="Details/Controls" unique_id=1630453009]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+focus_mode = 0
+text = "+"
+
+[connection signal="focus_entered" from="." to="." method="FocusChanged" binds= [true]]
+[connection signal="focus_exited" from="." to="." method="FocusChanged" binds= [false]]
+[connection signal="pressed" from="Details/Controls/Minus" to="." method="_on_minus_pressed"]
+[connection signal="editing_toggled" from="Details/Controls/Value" to="." method="OnEditingToggled"]
+[connection signal="focus_exited" from="Details/Controls/Value" to="." method="OnApplyEditedValue"]
+[connection signal="text_submitted" from="Details/Controls/Value" to="." method="OnApplyEditedValue"]
+[connection signal="pressed" from="Details/Controls/Plus" to="." method="_on_plus_pressed"]

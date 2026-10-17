@@ -81,6 +81,17 @@ static func AddThousandsSeparators(integerPart : String) -> String:
 		charCounter -= 3
 	return integerPart
 
+static func GetCompactNumber(value : int) -> String:
+	var absValue : int = absi(value)
+	var prefix : String = "-" if value < 0 else ""
+	if absValue >= 1000000000:
+		return prefix + GetFormatedText(str(floorf(absValue * 10.0 / 1000000000) / 10.0)) + "B"
+	elif absValue >= 1000000:
+		return prefix + GetFormatedText(str(floorf(absValue * 10.0 / 1000000) / 10.0)) + "M"
+	elif absValue >= 1000:
+		return prefix + GetFormatedText(str(floorf(absValue * 10.0 / 1000) / 10.0)) + "K"
+	return prefix + str(absValue)
+
 # Dictionary
 static func DicCheckOrAdd(dic : Dictionary[Variant, Variant], key : Variant, value : Variant):
 	if not key in dic:

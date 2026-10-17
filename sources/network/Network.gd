@@ -451,6 +451,15 @@ func TradeUpdate(ownOffer : Array, ownGP : int, otherOffer : Array, otherGP : in
 func TradeClosed(reason : String, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("TradeClosed", [reason], peerID)
 
+# Merchant
+@rpc("any_peer", "call_remote", "reliable", EChannel.ACTION)
+func MerchantTrade(sellEntries : Array, buyEntries : Array, peerID : int = NetworkCommons.PeerAuthorityID):
+	CallServer("MerchantTrade", [sellEntries, buyEntries], peerID, NetworkCommons.DelayShort)
+
+@rpc("authority", "call_remote", "reliable", EChannel.ACTION)
+func MerchantOpened(merchantName : String, stockPrices : Dictionary, sellPrices : Dictionary, peerID : int = NetworkCommons.PeerOfflineID):
+	CallClient("MerchantOpened", [merchantName, stockPrices, sellPrices], peerID)
+
 # Progress
 @rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func UpdateSkill(skillID : int, level : int, peerID : int = NetworkCommons.PeerOfflineID):

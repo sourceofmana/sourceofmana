@@ -401,6 +401,14 @@ func TradeCancel(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player:
 		WorldTrade.Cancel(player, "%s cancelled the trade." % player.nick)
+		if player.ownScript is MerchantScript:
+			player.ownScript.CloseShop()
+
+# Merchant
+func MerchantTrade(sellEntries : Array, buyEntries : Array, peerID : int):
+	var player : PlayerAgent = Peers.GetAgent(peerID)
+	if player and player.ownScript is MerchantScript:
+		player.ownScript.Trade(sellEntries, buyEntries)
 
 func RetrieveCharacterInformation(peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)

@@ -4,9 +4,15 @@ extends WindowPanel
 @onready var button : TouchScreenButton	= $Button/TouchButton
 @onready var buttonLabel : Label		= $Button/Label
 @onready var scrollable : Scrollable	= $FixedHBox/Scrollable
+@onready var scroll : ScrollContainer	= $FixedHBox/Scrollable/Scroll
+@onready var scrollMargin : MarginContainer	= $FixedHBox/Scrollable/Scroll/Margin
 @onready var scrollbar: VScrollBar		= $FixedHBox/Scrollable/Scroll/_v_scroll
+
 var lastName : String					= ""
 var lastTween : Tween					= null
+var defaultHeight : float				= 0.0
+var autoGrowHeight : float				= 0.0
+var autoGrowFloor : float				= 0.0
 
 const PlayerNameLabel : PackedScene		= preload("res://presets/gui/labels/PlayerNameLabel.tscn")
 const NPCNameLabel : PackedScene		= preload("res://presets/gui/labels/NpcNameLabel.tscn")
@@ -17,6 +23,8 @@ func Toggle(toggle : bool):
 	if toggle:
 		Launcher.GUI.DisplayActions(["ui_accept", "ui_cancel"])
 		Clear()
+		autoGrowFloor = minf(defaultHeight, autoGrowHeight)
+		SetHeight(autoGrowFloor)
 	else:
 		Launcher.GUI.infoContext.FadeOut()
 		Launcher.GUI.choiceContext.FadeOut()
@@ -57,6 +65,23 @@ func TweenText(label : RichTextLabel):
 
 func DialogueDisplayed():
 	lastTween = null
+
+func SetHeight(height : float):
+	var bottom : float = position.y + size.y
+	size.y = height
+	position.y = bottom - size.y
+
+func GetPaddingHeight() -> float:
+	return get_theme_stylebox("panel").get_minimum_size().y + scrollable.get_theme_stylebox("panel").get_minimum_size().y + scroll.get_theme_stylebox("panel").get_minimum_size().y
+
+func AutoGrow():
+	var maxHeight : float = minf(autoGrowHeight, position.y + size.y)
+	if maxSize.y != -1:
+		maxHeight = minf(maxHeight, maxSize.y)
+	var contentHeight : float = scrollMargin.get_combined_minimum_size().y + GetPaddingHeight()
+	var height : float = clampf(contentHeight, autoGrowFloor, maxf(autoGrowFloor, maxHeight))
+	if not is_equal_approx(height, size.y):
+		SetHeight(height)
 
 func AutoScroll():
 	scrollbar.value = scrollbar.max_value
@@ -101,7 +126,16 @@ func AddChoices(choices : PackedStringArray):
 		Launcher.GUI.choiceContext.FadeIn(true)
 
 # Overloaded functions
+func ResizeWindow(pos : Vector2, globalPos : Vector2):
+	super.ResizeWindow(pos, globalPos)
+	autoGrowHeight = size.y
+	autoGrowFloor = size.y
+
 func _ready():
+	defaultHeight = size.y
+	autoGrowHeight = defaultHeight
+	autoGrowFloor = defaultHeight
+	scrollbar.changed.connect(AutoGrow)
 	scrollbar.changed.connect(AutoScroll)
 
 func _input(event : InputEvent):

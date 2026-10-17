@@ -391,6 +391,7 @@ const PickupSquaredDistance : float			= 48 * 48 # 1.5 Tile squared length
 # Trade
 const TradeMaxItems : int					= 20
 const TradeRequestTimeoutMs : int			= 30 * 1000
+const MerchantMaxItemCount : int			= 999999
 
 # Stats
 const MaxStatValue : int					= 1 << 32

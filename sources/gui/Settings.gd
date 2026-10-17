@@ -24,6 +24,7 @@ const creditsJson : JSON						= preload("res://data/db/credits.json")
 	"Session-AccountName": [init_sessionaccountname, set_sessionaccountname, apply_sessionaccountname, null],
 	"Session-FirstLogin": [init_sessionfirstlogin, set_sessionfirstlogin, apply_sessionfirstlogin, null],
 	"Session-Overlay": [init_sessionoverlay, set_sessionoverlay, apply_sessionoverlay, null],
+	"Session-DialogueHeight": [init_sessiondialogueheight, set_sessiondialogueheight, apply_sessiondialogueheight, null],
 	"Session-ShortcutCells": [init_shortcutcells, set_shortcutcells, apply_shortcutcells, null],
 	"Input-Bindings": [init_inputbindings, null, null, null],
 	"Account-PasswordChange": [null, set_account_password, null, $Layout/Margin/TabBar/Account],
@@ -332,6 +333,21 @@ func apply_sessionoverlay(overlay : Array):
 					floatingWindow.set_position(window[ESessionOverlay.POSITION])
 					floatingWindow.UpdateWindow()
 
+# Session Dialogue auto-grow height
+func init_sessiondialogueheight(apply : bool):
+	if apply:
+		var height : float = GetVal("Session-DialogueHeight")
+		apply_sessiondialogueheight(height)
+func save_sessiondialogueheight():
+	if Launcher.GUI and Launcher.GUI.dialoguePanel:
+		set_sessiondialogueheight(Launcher.GUI.dialoguePanel.autoGrowHeight)
+func set_sessiondialogueheight(height : float):
+	SetVal("Session-DialogueHeight", height)
+	apply_sessiondialogueheight(height)
+func apply_sessiondialogueheight(height : float):
+	if Launcher.GUI and Launcher.GUI.dialoguePanel and height > 0.0:
+		Launcher.GUI.dialoguePanel.autoGrowHeight = height
+
 # Shortcut cells
 func init_shortcutcells(apply : bool):
 	if apply:
@@ -442,6 +458,7 @@ func RefreshSettings(apply : bool):
 
 func SaveSettings():
 	save_sessionoverlay()
+	save_sessiondialogueheight()
 	save_windowPos()
 	save_shortcutcells()
 	InputBindings.SaveBindings()

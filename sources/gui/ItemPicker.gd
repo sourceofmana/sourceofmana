@@ -2,6 +2,9 @@ extends ScrollContainer
 class_name ItemPicker
 
 #
+signal values_changed
+
+#
 @onready var linesBox : VBoxContainer	= $Lines
 
 var lines : Array[ItemPickerLine]		= []
@@ -12,16 +15,18 @@ func Clear():
 		line.queue_free()
 	lines.clear()
 
-func AddLine(cell : BaseCell, maxValue : int, value : int, ownedCount : int = -1) -> ItemPickerLine:
-	var line : ItemPickerLine = ItemPickerLine.new(cell, maxValue, value, "", ownedCount)
+func AddLine(cell : BaseCell, maxValue : int, value : int, ownedCount : int = -1, price : int = -1) -> ItemPickerLine:
+	var line : ItemPickerLine = UICommons.ItemPickerLinePreset.instantiate()
 	linesBox.add_child(line)
+	line.Setup(cell, maxValue, value, ownedCount, price)
+	line.value_changed.connect(values_changed.emit)
 	lines.append(line)
 	return line
 
 func Fill(entries : Array[Dictionary]):
 	Clear()
 	for entry in entries:
-		AddLine(entry.get("cell", null), entry.get("max", 0), entry.get("value", 0), entry.get("owned", -1))
+		AddLine(entry.get("cell", null), entry.get("max", 0), entry.get("value", 0), entry.get("owned", -1), entry.get("price", -1))
 
 func GetLine(cell : BaseCell) -> ItemPickerLine:
 	for line in lines:

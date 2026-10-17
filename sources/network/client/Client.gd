@@ -319,6 +319,10 @@ func TradeClosed(reason : String, _peerID : int):
 	if Launcher.GUI:
 		Launcher.GUI.tradePanel.Close(reason)
 
+func MerchantOpened(merchantName : String, stockPrices : Dictionary, sellPrices : Dictionary, _peerID : int):
+	if Launcher.GUI:
+		Launcher.GUI.tradePanel.OpenMerchant(merchantName, stockPrices, sellPrices)
+
 func DropAdded(dropID : int, itemID : int, customfield : StringName, pos : Vector2, _peerID : int):
 	if Launcher.Map:
 		Launcher.Map.AddDrop(dropID, DB.GetItem(itemID, customfield), pos)

@@ -502,6 +502,15 @@ expand_margin_left = 3.0
 expand_margin_right = 3.0
 region_rect = Rect2(0, 0, 11, 23)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tr4d3"]
+content_margin_left = 24.0
+content_margin_right = 24.0
+texture = ExtResource("9_5par7")
+texture_margin_left = 61.0
+texture_margin_top = 14.0
+texture_margin_right = 61.0
+texture_margin_bottom = 14.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5w3ht"]
 bg_color = Color(0.219608, 0.188235, 0.137255, 0.698039)
 expand_margin_left = 2.0
@@ -692,6 +701,8 @@ TabContainer/styles/tab_disabled = SubResource("StyleBoxTexture_85tto")
 TabContainer/styles/tab_hovered = SubResource("StyleBoxTexture_8nsrj")
 TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_0d0g8")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_4jsee")
+TradeBox/base_type = &"PanelContainer"
+TradeBox/styles/panel = SubResource("StyleBoxTexture_tr4d3")
 Transparent/base_type = &"Button"
 Transparent/styles/normal = SubResource("StyleBoxFlat_5w3ht")
 VSeparator/styles/separator = SubResource("StyleBoxLine_q1nik")

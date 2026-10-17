@@ -12,7 +12,7 @@ func GetTile(idx : int) -> CellTile:
 #
 func _on_panel_resized():
 	var firstTile : CellTile = GetTile(0)
-	var tileSize : int = firstTile.size.x + get("theme_override_constants/h_separation") if firstTile else 0
+	var tileSize : int = firstTile.get_combined_minimum_size().x + get("theme_override_constants/h_separation") if firstTile else 0
 	if tileSize > 0:
 		columns = max(1, int(size.x / tileSize))
 	else:
