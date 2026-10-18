@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://tlqd6d1k11rq" path="res://sources/gui/Trade.gd" id="2_trade"]
 [ext_resource type="Script" uid="uid://cuhwrw40yxve1" path="res://sources/gui/CellGrid.gd" id="4_grid"]
 [ext_resource type="PackedScene" uid="uid://cugn7mm0i7ltn" path="res://presets/gui/ItemPicker.tscn" id="5_picker"]
+[ext_resource type="Texture2D" uid="uid://jtmnxtemsud" path="res://data/graphics/gui/misc/gold-self.png" id="6_goldself"]
+[ext_resource type="Texture2D" uid="uid://cdbniepik0abt" path="res://data/graphics/gui/misc/gold-other.png" id="7_goldother"]
 
 [node name="Trade" type="PanelContainer" unique_id=1630451001]
 custom_minimum_size = Vector2(540, 282)
@@ -135,6 +137,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
+[node name="Icon" type="TextureRect" parent="Layout/Margin/Content/GP/Picker" unique_id=1630451048]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_goldself")
+stretch_mode = 5
+
 [node name="Label" type="Label" parent="Layout/Margin/Content/GP/Picker" unique_id=1630451044]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -165,6 +173,12 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="Icon" type="TextureRect" parent="Layout/Margin/Content/GP/Other" unique_id=1630451049]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("7_goldother")
+stretch_mode = 5
+
 [node name="Label" type="Label" parent="Layout/Margin/Content/GP/Other" unique_id=1630451033]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -180,6 +194,12 @@ horizontal_alignment = 2
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Icon" type="TextureRect" parent="Layout/Margin/Content/GP/Balance" unique_id=1630451050]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_goldself")
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="Layout/Margin/Content/GP/Balance" unique_id=1630451042]
 layout_mode = 2
