@@ -163,6 +163,12 @@ func _physics_process(_deltaTime : float):
 		wasFacing = isFacing
 
 #
+func _notification(what : int):
+	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT or what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		for action : StringName in InputMap.get_actions():
+			if Input.is_action_pressed(action):
+				Input.action_release(action)
+
 func _input(event : InputEvent):
 	if event.is_pressed():
 		if event is InputEventJoypadButton and DeviceManager.currentDeviceType != DeviceManager.DeviceType.JOYSTICK:
