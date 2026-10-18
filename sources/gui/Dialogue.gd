@@ -55,7 +55,7 @@ func AddThink(text : String):
 	TweenText(label)
 
 func TweenText(label : RichTextLabel):
-	var textSize : int = label.text.length()
+	var textSize : int = label.get_total_character_count()
 	label.visible_characters = 0
 	if lastTween:
 		lastTween.custom_step(INF)

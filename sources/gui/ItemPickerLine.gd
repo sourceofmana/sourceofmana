@@ -42,10 +42,12 @@ func SetValue(newValue : int):
 	if value != newValue:
 		value = newValue
 		value_changed.emit()
+		queue_redraw()
 
 func FocusChanged(isFocused : bool):
 	tile.Hover(isFocused)
 	nameLabel.modulate = Color(1.2, 1.2, 1.2) if isFocused else Color.WHITE
+	queue_redraw()
 
 func OnApplyEditedValue(_text : String = ""):
 	SetValue(valueEdit.get_text().to_int())
@@ -60,6 +62,12 @@ func _on_plus_pressed():
 	SetValue(value + 1)
 
 #
+func _draw():
+	if value > 0:
+		draw_rect(Rect2(Vector2.ZERO, size), Color(UICommons.DarkTextColor, 0.5))
+	if has_focus():
+		draw_rect(Rect2(Vector2.ZERO, size), Color(UICommons.CellTileColorHovered, 0.25))
+
 func _exit_tree():
 	if valueEdit.is_editing():
 		OnEditingToggled(false)
