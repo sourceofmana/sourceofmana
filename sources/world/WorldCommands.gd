@@ -45,6 +45,7 @@ func RegisterCommands():
 	CommandManager.Register("query", CommandQuery, ActorCommons.Permission.NONE, "query <player>" )
 	CommandManager.Register("q", CommandQuery, ActorCommons.Permission.NONE, "q <player>" )
 	CommandManager.Register("trade", CommandTrade, ActorCommons.Permission.NONE, "trade <player>" )
+	CommandManager.Register("deploy", CommandDeploy, ActorCommons.Permission.ADMIN, "deploy, installs the latest CI build and restarts the server" )
 
 static func UnregisterCommands():
 	CommandManager.Unregister("spawn")
@@ -89,6 +90,7 @@ static func UnregisterCommands():
 	CommandManager.Unregister("query")
 	CommandManager.Unregister("q")
 	CommandManager.Unregister("trade")
+	CommandManager.Unregister("deploy")
 
 # Spawn 'x' times a specific monster near the calling player
 func CommandSpawn(caller : PlayerAgent, entityName : String, countStr : String = "1") -> bool:
@@ -359,6 +361,12 @@ func CommandLocalBroadcast(caller : PlayerAgent, text : String) -> bool:
 func CommandBroadcast(_caller : PlayerAgent, text : String) -> bool:
 	Network.NotifyGlobal("PushNotification", [text])
 	return true
+
+func CommandDeploy(caller : PlayerAgent) -> bool:
+	if not caller or not LauncherCommons.IsTesting:
+		return false
+
+	return Launcher.World.deploy.Request(caller)
 
 # Progress
 func CommandQuest(caller : PlayerAgent, questName : String, stateStr : String) -> bool:

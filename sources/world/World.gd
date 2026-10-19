@@ -5,6 +5,7 @@ class_name WorldService
 var areas : Dictionary[int, WorldMap]				= {}
 var commands : WorldCommands						= WorldCommands.new()
 var canary : ShutdownCanary							= ShutdownCanary.new()
+var deploy : ServerDeploy							= ServerDeploy.new()
 
 # Getters
 func GetMap(mapID : int) -> WorldMap:
