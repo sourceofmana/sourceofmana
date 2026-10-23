@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="177" height="168" tilewidth="32" tileheight="32" infinite="0" nextlayerid="23" nextobjectid="62">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="177" height="168" tilewidth="32" tileheight="32" infinite="0" nextlayerid="23" nextobjectid="63">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1175,6 +1175,12 @@
   <object id="61" name="Eridu" type="Spawn" x="3616" y="3680">
    <properties>
     <property name="player_script" value="tonori/tulimshar/Eridu.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="62" name="Maclat" type="Spawn" x="3028" y="2376">
+   <properties>
+    <property name="player_script" value="tonori/tulimshar/Maclat.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
