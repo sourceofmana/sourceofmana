@@ -47,18 +47,23 @@ install_build() {
 	[[ -s "$TOKEN_FILE" ]] || die "token file $TOKEN_FILE is missing or empty"
 	GH_TOKEN="$(tr -d '[:space:]' <"$TOKEN_FILE")"
 	local api="https://api.github.com/repos/$REPO/actions"
-	local runId runSha runNum artifactUrl=""
+	local runId runSha runNum artifactUrl="" newestRunNum=""
 
 	while read -r runId runSha runNum; do
+		[[ -z "$newestRunNum" ]] && newestRunNum="$runNum"
 		artifactUrl="$(gh_api "$api/runs/$runId/artifacts" | jq -r --arg name "$ARTIFACT_NAME" \
 			'.artifacts[] | select(.name == $name and .expired == false) | .archive_download_url' | head -n1)"
 		[[ -n "$artifactUrl" ]] && break
-	done < <(gh_api "$api/workflows/$WORKFLOW_FILE/runs?branch=$BRANCH&event=push&status=completed&per_page=10" \
+	done < <(gh_api "$api/workflows/$WORKFLOW_FILE/runs?branch=$BRANCH&event=push&per_page=10" \
 		| jq -r '.workflow_runs[] | "\(.id) \(.head_sha) \(.run_number)"')
 	[[ -n "$artifactUrl" ]] || die "no '$ARTIFACT_NAME' build found in the last 10 runs on $BRANCH"
 
 	if [[ -f "$VERSION_FILE" && "$(<"$VERSION_FILE")" == "$runSha" ]]; then
-		log "Already running the latest build (commit ${runSha:0:9})."
+		if [[ "$runNum" != "$newestRunNum" ]]; then
+			log "Already running the latest available build (commit ${runSha:0:9}), run #$newestRunNum has no server build yet."
+		else
+			log "Already running the latest build (commit ${runSha:0:9})."
+		fi
 		exit "$EXIT_UP_TO_DATE"
 	fi
 
