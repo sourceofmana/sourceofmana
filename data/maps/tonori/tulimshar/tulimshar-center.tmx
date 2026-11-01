@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="177" height="168" tilewidth="32" tileheight="32" infinite="0" nextlayerid="23" nextobjectid="63">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="177" height="168" tilewidth="32" tileheight="32" infinite="0" nextlayerid="23" nextobjectid="66">
  <properties>
   <property name="ambient" value="CloudLight"/>
   <property name="license" value="CC BY-SA 4.0 (c) Reid"/>
@@ -1181,6 +1181,24 @@
   <object id="62" name="Maclat" type="Spawn" x="3028" y="2376">
    <properties>
     <property name="player_script" value="tonori/tulimshar/Maclat.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="63" name="Shiro" type="Spawn" x="3120" y="2160">
+   <properties>
+    <property name="player_script" value="tonori/tulimshar/Shiro.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="64" name="Minguer" type="Spawn" x="2672" y="2480">
+   <properties>
+    <property name="player_script" value="tonori/tulimshar/Minguer.gd"/>
+    <property name="type" value="Npc"/>
+   </properties>
+  </object>
+  <object id="65" name="Neko" type="Spawn" x="3158" y="2375">
+   <properties>
+    <property name="player_script" value="tonori/tulimshar/Neko.gd"/>
     <property name="type" value="Npc"/>
    </properties>
   </object>
