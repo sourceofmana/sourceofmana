@@ -333,6 +333,7 @@ size_flags_horizontal = 3
 text = " Current Password"
 
 [node name="Text" type="LineEdit" parent="Layout/Margin/TabBar/Account/AccountVBox/CurrentPassword" unique_id=895317565]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Type your current password so we know it is really you."
@@ -347,6 +348,7 @@ size_flags_horizontal = 3
 text = " New Password"
 
 [node name="Text" type="LineEdit" parent="Layout/Margin/TabBar/Account/AccountVBox/NewPassword" unique_id=628449545]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Type the new password you want to use from now on."
@@ -361,6 +363,7 @@ size_flags_horizontal = 3
 text = " Confirm Password"
 
 [node name="Text" type="LineEdit" parent="Layout/Margin/TabBar/Account/AccountVBox/ConfirmPassword" unique_id=986277347]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Type your new password again so it can be checked for typos."

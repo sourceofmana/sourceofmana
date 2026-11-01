@@ -159,6 +159,7 @@ custom_minimum_size = Vector2(64, 28)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
 alignment = 1
+context_menu_enabled = false
 
 [node name="Plus" type="Button" parent="Layout/Margin/Content/GP/Picker" unique_id=1630451047]
 custom_minimum_size = Vector2(28, 28)

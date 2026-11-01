@@ -42,6 +42,7 @@ custom_minimum_size = Vector2(48, 28)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
 alignment = 1
+context_menu_enabled = false
 
 [node name="Plus" type="Button" parent="Details/Controls" unique_id=1630453009]
 custom_minimum_size = Vector2(28, 28)

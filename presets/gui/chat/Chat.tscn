@@ -48,6 +48,7 @@ layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="NewText" type="LineEdit" parent="Margin/VBoxContainer" unique_id=1138611423]
+texture_filter = 1
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath(".")

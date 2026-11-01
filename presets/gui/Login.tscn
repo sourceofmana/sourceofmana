@@ -68,6 +68,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 
 [node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/Content/LoginContainer/Name/Container" unique_id=1874705842]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 focus_next = NodePath("../../../Password/Container/Text")
@@ -91,6 +92,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 
 [node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/Content/LoginContainer/Password/Container" unique_id=91472582]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -118,6 +120,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 
 [node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/Content/LoginContainer/ConfirmPassword/Container" unique_id=2107626192]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -143,6 +146,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 
 [node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/Content/LoginContainer/Email/Container" unique_id=249140471]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -170,6 +174,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 
 [node name="Text" type="LineEdit" parent="HBoxContainer/Panel/Margin/Content/LoginContainer/Code/Container" unique_id=136911564]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
