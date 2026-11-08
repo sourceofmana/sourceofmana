@@ -1,4 +1,4 @@
-# Second Era: Ancean Era, 2000 years span
+# Second Era: Ancean Era, 2100 years span
 
 ## Founding of Keshlam and Mangarron (2E1)
 
@@ -8,7 +8,7 @@ Ever since their arrival on Ancea, Humans and Ukar live a nomadic lifestyle and 
 
 After having lived apart for over 1,000 years, the two races evolve very differently and are now fully distinct from each other and the original Tritans. At this stage, both races begin to grow closer communal ties, and their two largest camps become permanent cities and places of gathering. These eventually become the Human castle and town of Keshlam and the Ukar mountain fortress of Mangarron.
 
-## Age of the Platinum Kingdom (2E201–2E1664)
+## Age of the Platinum Kingdom (2E201–2E1665)
 
 Hailing from the higher ranks of the City of Keshlam, the young Victorio inherits the family lands north of the city. The site is recently discovered as a rich source of Platinum Ore, and Victorio becomes very wealthy as a result. In 2E201, the old Chief of Keshlam dies and a customary election is held. Such is the popularity and influence of Victorio that he is proclaimed the first King of Humans. He names his domain the Platinum Kingdom, and himself the Platinum King.
 
@@ -34,11 +34,11 @@ The vast grasslands of Tonori are inhabited by the nomadic Zuni tribes, the earl
 
 The cold north is sparsely populated by Human and Ukar alike, who live in small nomadic tribes known as Barbarians. The expansionist King Victorio VII launches an expedition and finds an elevated plateau, near the mountain passes that lead into Kaizei but also close enough to the Aemilian Sea. Here he founds the City of Nivalis—a refuge from the cold and a centre of trade for the whole region.
 
-### Birth of the Kralogs (c. 2E1500)
+### Birth of the Kralogs (2E1500?)
 
 The Ukar begin to notice that the mountains they inhabit do not cover as much land as the areas where the Humans live. A group of adventurous Ukar set forth in the early decades of the Ancean Era to find new lands to settle. They navigate the cold seas of the north and land on a volcanic island, which they name the Land of Fire.
 
-The climate of the island is far from ideal, and the settlers are tested to their extreme, but they survive and more generations are born. Over time, they adapt to the temperature extremes and harsh living conditions of the Land of Fire and become the resilient race now known as Kralogs.
+The climate of the island is far from ideal, and the settlers are tested to their extreme, but they survive and more generations are born. Over time, they adapt to the temperature extremes and harsh living conditions of the Land of Fire. Following the Mana Storm, the Ukar of the Land of Fire evolve into the resilient race now known as Kralogs.
 
 ### Founding of Candor (2E1551)
 
@@ -48,7 +48,7 @@ The island's mysterious cave system, thought to be warped and shaped by an unusu
 
 ## Reign of Queen Platyna the Mad (2E1599–2E1665)
 
-Queen Platyna XII, the Mad Queen, is the last monarch of the Platinum Kingdom. During her reign, she severely limits the power of her advisors and insists on directly controlling her kingdom, despite the fact that she rarely makes time for it. She is ultimately more interested in keeping her gardens.
+Queen Platyna XII, the Mad Queen, is the last monarch of the Platinum Kingdom. During her reign, she severely limits the power of her advisors and insists on directly controlling her kingdom, despite the fact that she rarely makes time for it.
 
 Due to her unwillingness to cooperate with her council, the kingdom's economy begins to crumble. After 40 years of mismanagement, the now older Mad Queen is despised by all her subjects. Over the years, she grows spiteful and sadistic, ordering public executions for petty crimes and demanding ever higher taxes.
 
@@ -76,7 +76,7 @@ Alone in the Republic, the rulers of Keshlam and Mangarron eventually proclaim i
 
 ### The Great Quake (2E1996)
 
-The Manayir, a chaste of Sorcerers that rule Tulimshar at this time, attempt to find what they believe to be the inner source of Mana inside the world of Aemil. They devise powerful magic constructs powered with Mana Crystals to dig deep into the earth.
+The Manayir, a chaste of Sorcerers that rule Tulimshar at this time attempt to find what they believe to be the inner source of Mana inside the world of Aemil. They devise powerful magic constructs powered with Mana Crystals to dig deep into the earth.
 
 At an unknown depth, something is triggered. Two-thirds of the vast ocean previously dividing the continents of Ancea and Aurora sink inward into the core of the world. Much of the Tritan civilisation is instantly extinguished, with the exception of those on the Oranye Isles and a few sheltered bays.
 
@@ -84,17 +84,17 @@ The Aemilian Sea becomes a smaller body of water almost fully surrounded by the 
 
 ## Age of Exploration (2E1996–2E2100)
 
-Navigators find new lands to the East. The faraway Oranye Isles and distant Aurora seem to have moved closer, creating a calmer sea with shorter distances to cover. A renewed spirit of adventure inspires the people of Ancea.
+Navigators find new lands to the East. The faraway lands of the Oranye Isles and distant Aurora seem to have moved closer, creating a calmer sea with shorter distances to cover. A renewed spirit of adventure inspires the people of Ancea.
 
 Adventurers, as well as refugees from the revolutionary war, are given ships and organised by the City-States into expedition parties and sent to explore the untamed lands across the Aemilian Sea. The Fleet of Aurora is the largest expedition and becomes the most well-known.
 
-### Discovery of Ker Ys (2E1999)
+### Discovery of Kyr Ys (2E1999)
 
-The City of Ker Ys has existed since the Hantu Era and continues to be the largest underwater city on Aemil. Nested in the low-lying Oranye Isles, it stands mostly submerged and densely populated.
+The City of Kyr Ys has existed since the Mana Era and continues to be the largest underwater city on Aemil. Nested in the low-lying Oranye Isles, it stands mostly submerged and densely populated.
 
-Following the Great Quake, the vast landscape of Tritan settlements in the far sea is largely lost, and the Oranye Isles stand as the main Tritan homeland. Once far in the middle of the Ocean, the Isles move closer to other lands as the continents shift, and Ker Ys begins to receive its first visitors.
+Following the Great Quake, the vast landscape of Tritan settlements in the far sea is largely lost, and the Oranye Isles stand as the main Tritan homeland. Once far in the middle of the Ocean, the Isles move closer to other lands as the continents shift, and Kyr Ys begins to receive its first visitors.
 
-## The Manayir Order (2E208)
+## The Manayir Order (2E2008)
 
 After having ruled Tulimshar throughout the Republic period, the Manayir are exiled from the city, having been blamed for the events leading to the Great Quake. They take refuge nearby and build a fortified tower, becoming isolated from the outside world and only interacting with those interested in furthering their study of magic.
 
