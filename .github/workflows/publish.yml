@@ -41,6 +41,7 @@ jobs:
           unzip -q assets/*macOS.zip -d builds/macOS
           tar -xzf assets/*Linux.tar.gz -C builds
           cp assets/*Android.apk "builds/Source of Mana.apk"
+          cp assets/*Windows?Setup.exe "builds/Source of Mana - Windows Setup.exe"
 
       - name: Push to itch.io
         uses: ./.github/actions/itch-push
@@ -51,6 +52,7 @@ jobs:
           packages: |
             web=builds/Source of Mana - Web
             windows=builds/Source of Mana - Windows
+            windows-installer=builds/Source of Mana - Windows Setup.exe
             linux=builds/Source of Mana - Linux
             macos=builds/macOS
             android=builds/Source of Mana.apk

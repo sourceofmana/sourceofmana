@@ -1,0 +1,68 @@
+name: "velopack"
+
+on:
+  workflow_call:
+
+jobs:
+  velopack:
+    runs-on: windows-latest
+    name: Pack Windows Installer
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout: |
+            versions.cfg
+            project.godot
+            data/press/logo/logo_colored.ico
+            data/press/installer/splash.png
+          sparse-checkout-cone-mode: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Download Windows build
+        uses: actions/download-artifact@v5
+        with:
+          name: Windows
+          path: build/Windows
+
+      - name: Pack with Velopack
+        run: |
+          . ./versions.cfg
+          : "${VELOPACK:?VELOPACK is missing from versions.cfg}"
+          VERSION=$(sed -n 's/^config\/version="\([^"]*\)"/\1/p' project.godot)
+          dotnet tool install vpk --version "$VELOPACK" --tool-path .tools
+          .tools/vpk pack \
+            --packId SourceOfMana \
+            --packVersion "$VERSION" \
+            --packTitle "Source of Mana" \
+            --packAuthors "Manasource" \
+            --packDir build/Windows \
+            --mainExe "Source of Mana.exe" \
+            --icon data/press/logo/logo_colored.ico \
+            --splashImage data/press/installer/splash.png \
+            --splashProgressColor "#9A7D6B" \
+            --skipVeloAppCheck \
+            --noPortable \
+            --outputDir velopack
+
+          mkdir -p installer
+          for FILE in releases.win.json "SourceOfMana-$VERSION-full.nupkg" SourceOfMana-win-Setup.exe; do
+            [ -f "velopack/$FILE" ] || { echo "Missing Velopack output: $FILE" && exit 1; }
+          done
+          cp velopack/releases.win.json "velopack/SourceOfMana-$VERSION-full.nupkg" installer/
+          cp velopack/SourceOfMana-win-Setup.exe "installer/Source of Mana - Windows Setup.exe"
+
+      - name: Upload Windows installer
+        uses: actions/upload-artifact@v5
+        with:
+          name: Windows Installer
+          path: installer

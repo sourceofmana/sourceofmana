@@ -25,9 +25,13 @@ jobs:
       channel: candidate
     secrets: inherit
 
+  windows-installer:
+    needs: builds
+    uses: ./.github/workflows/velopack.yml
+
   release:
     runs-on: ubuntu-latest
-    needs: builds
+    needs: [builds, windows-installer]
     name: Tag and Release
     steps:
       - name: Checkout
@@ -55,6 +59,9 @@ jobs:
         with:
           source-dir: dist
           output-dir: assets
+
+      - name: Add Windows installer
+        run: cp dist/"Windows Installer"/* assets/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

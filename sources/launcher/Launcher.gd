@@ -11,6 +11,7 @@ var GUI : ServiceBase				= null
 var Debug : ServiceBase				= null
 var Camera : ServiceBase			= null
 var Map : ServiceBase				= null
+var Updater : UpdaterService		= null
 
 # Server services
 var World : ServiceBase				= null
@@ -55,6 +56,10 @@ func Client():
 
 	add_child.call_deferred(Action)
 
+	if UpdaterService.IsAvailable():
+		Updater = UpdaterService.new()
+		add_child.call_deferred(Updater)
+
 func Server():
 	World			= WorldService.new()
 	SQL				= SQLService.new()
@@ -85,6 +90,9 @@ func Reset(clientStarted : bool, serverStarted : bool):
 			Map.Destroy()
 			Map.queue_free()
 			Map = null
+		if Updater:
+			Updater.queue_free()
+			Updater = null
 		if GUI:
 			GUI.Destroy()
 			# GUI is not cleared, but all signals should be re-connected
@@ -135,6 +143,10 @@ func _init():
 	Monitoring.Init()
 
 func _ready():
+	if UpdaterService.IsVelopackHook():
+		get_tree().quit()
+		return
+
 	var startClient : bool = false
 	var startServer : bool = false
 

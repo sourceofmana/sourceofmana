@@ -48,7 +48,7 @@
 				},
 				{
 					"title": "Version 0.0.1",
-					"date": "2023-08-31",
+					"date": "2021-08-31",
 					"content": "\tHello Mana world,\n\nOur prototype and first version of Source of Mana is now available to download on our itch.io page.\n\nFor this first version, the changelog would be pretty large, so instead, I prefer to present you on the main lines what we have been trying to achieve:\n\nOur ambition was to create a working offline prototype of what could be TMW within Godot in 2022, we prepared a basic code, asset, project architectures, and a game design document to support our game development.\n\nOur code rolls with a service system that can be enabled/disabled from a main scene. Multiple scenes will be created within the same Godot project to generate a server, a client, and a launcher.\n\nOur asset regroups what was previously done on TMW and rEvolt, we are preparing a new git repository to work like a giant asset store that features all available content that can be featured on SoM based on the quality and needs of these assets.\n\nOur project will be managed through Gitlab's built-in agile planning with a \"Milestone\" release plan.\n\nOur game design is currently being redacted into a Game Design Document that will feature all of the main designs and focus we will want to address.\n\nAside from all of these plans, our First Playable Preview release features a playable character with basic walk and sit actions that can wander inside a cave by mouse, keyboard, and gamepad.\nGodot's benefits are many but the most important is the easy release process that helps us to prepare builds for different platforms like Linux, MacOS, Windows, and Android.\n"
 				}
 			]

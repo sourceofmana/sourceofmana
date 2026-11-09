@@ -633,6 +633,7 @@ You must include a link to https://github.com/sourceofmana in your credits along
 ./music/Jose. S & Dakota. D - Night is calling.ogg [Chicka-Maria]
 ./music/Hitctrl - Foreboding ambiance.ogg [Hitctrl]
 ./music/NYC Sound Design & Dariunas - Cave.ogg [NYC Sound Design] [Dariunas]
+./press/installer/splash.png [Reid] [Modanung]
 ./press/logo/logo_bw.svg [Kolokolna] [Reid]
 ./press/logo/logo_colored.svg [Kolokolna] [Reid]
 ./press/logo/logo_seed.svg [Kolokolna] [Reid]
