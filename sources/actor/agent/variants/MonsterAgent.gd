@@ -30,4 +30,4 @@ func Killed():
 func _ready():
 	inventory = ActorInventory.new(self)
 	super._ready()
-	AddSkill(DB.SkillsDB[DB.GetCellHash(SkillCommons.SkillMeleeName)], 1.0)
+	AddSkill(SkillCommons.GetBasicAttack(self), 1.0)

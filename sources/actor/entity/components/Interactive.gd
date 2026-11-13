@@ -184,7 +184,11 @@ func DisplaySkill(emitter : Entity, skillID : int, cooldown : float):
 
 func DisplayProjectile(targetPos : Vector2, skill : SkillCell):
 	if Launcher.Map.currentFringe and skill and skill.projectilePreset:
-		var projectileNode : Node2D = skill.projectilePreset.instantiate()
+		var projectilePreset : PackedScene = skill.projectilePreset
+		var offhand : ItemCell = ActorCommons.GetEquippedCell(entity, ActorCommons.Slot.SHIELD)
+		if offhand and offhand.projectilePreset and offhand.attackStyle == skill.attackStyle:
+			projectilePreset = offhand.projectilePreset
+		var projectileNode : Node2D = projectilePreset.instantiate()
 		if not projectileNode:
 			return
 		if projectileNode is Projectile:
@@ -192,7 +196,7 @@ func DisplayProjectile(targetPos : Vector2, skill : SkillCell):
 			projectileNode.origin.y += ActorCommons.interactionDisplayOffset
 			projectileNode.destination = targetPos
 			projectileNode.destination.y -= ActorCommons.interactionDisplayOffset
-			projectileNode.delay = entity.stat.current.castAttackDelay
+			projectileNode.delay = SkillCommons.GetProjectileDelay(entity, skill, targetPos)
 			Launcher.Map.currentFringe.add_child(projectileNode)
 		else:
 			projectileNode.global_position = targetPos

@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://chmcxvrtitxbf"]
+
+[ext_resource type="Texture2D" uid="uid://cdeoihym5ayn5" path="res://data/graphics/items/weapon/shortbow.png" id="1_lkc5p"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_gsxb0"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_8fxpe"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="4_yg9km"]
+[ext_resource type="Resource" uid="uid://bxcnb6yfr3men" path="res://presets/cells/skills/Archer.tres" id="5_r0lke"]
+[ext_resource type="Texture2D" uid="uid://cy5uxxlw6nkbp" path="res://data/graphics/sprites/equipment/weapon/bow.png" id="6_bzf5n"]
+
+[sub_resource type="Resource" id="Resource_l6w24"]
+script = ExtResource("2_gsxb0")
+_effect = 20
+_value = 15.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_p004f"]
+script = ExtResource("2_gsxb0")
+_effect = 15
+_value = 0.6
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_b9p2q"]
+script = ExtResource("2_gsxb0")
+_effect = 17
+_value = 60.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_i9ace"]
+script = ExtResource("3_8fxpe")
+_modifiers = Array[ExtResource("2_gsxb0")]([SubResource("Resource_l6w24"), SubResource("Resource_p004f"), SubResource("Resource_b9p2q")])
+
+[resource]
+script = ExtResource("4_yg9km")
+slot = 6
+textures = Array[Texture2D]([ExtResource("6_bzf5n"), ExtResource("6_bzf5n"), ExtResource("6_bzf5n")])
+buyPrice = 2000
+sellPrice = 200
+attackStyle = 1
+attackSkill = ExtResource("5_r0lke")
+requiredSkillLevel = 2
+id = 602269405
+name = "Short Bow"
+description = "A light bow for trained archers."
+icon = ExtResource("1_lkc5p")
+weight = 400.0
+modifiers = SubResource("Resource_i9ace")

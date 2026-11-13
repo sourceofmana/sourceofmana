@@ -105,7 +105,7 @@ static func JustInteract():
 static func Interact():
 	if target != null:
 		if target.type == ActorCommons.Type.MONSTER:
-			Launcher.Player.Cast(DB.GetCellHash(SkillCommons.SkillMeleeName))
+			Launcher.Player.Cast(SkillCommons.GetBasicAttack(Launcher.Player).id)
 
 static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable : bool) -> Entity:
 	var nearestDistance : float	= INF
@@ -190,7 +190,7 @@ static func InteractHovered(targetHovered : Entity):
 				moveToEntity = true
 				walkToDistance = ActorCommons.TargetWalkToDistance
 		ActorCommons.Type.MONSTER:
-			walkToDistance = (Launcher.Player.stat.current.attackRange / 2.0) as int
+			walkToDistance = (ActorCommons.GetSkillRange(Launcher.Player, SkillCommons.GetBasicAttack(Launcher.Player)) / 2.0) as int
 			var hoveredInRange : bool = ActorCommons.IsAlive(targetHovered) and ActorCommons.IsActorNear(Launcher.Player, targetHovered, walkToDistance)
 			if hoveredInRange:
 				Entities.SetTarget(targetHovered)

@@ -7,10 +7,15 @@ class_name ItemCell
 @export var shader : Resource					= null
 @export var customfield : String				= ""
 @export var animationOverrides : AnimationLibrary	= null
-@export var spriteHframes : int				= 0
-@export var spriteVframes : int				= 0
-@export var buyPrice : int					= 0
-@export var sellPrice : int					= 0
+@export var spriteHframes : int					= 0
+@export var spriteVframes : int					= 0
+@export var buyPrice : int						= 0
+@export var sellPrice : int						= 0
+@export_category("Attack")
+@export var attackStyle : ActorCommons.AttackStyle	= ActorCommons.AttackStyle.ONE_HAND
+@export var attackSkill : SkillCell				= null
+@export var requiredSkillLevel : int			= 0
+@export var projectilePreset : PackedScene		= null
 
 #
 func StripClient():
@@ -18,6 +23,7 @@ func StripClient():
 	textures = []
 	shader = null
 	animationOverrides = null
+	projectilePreset = null
 
 func Use():
 	if usable:

@@ -52,7 +52,7 @@ func Update(nextVelocity : Vector2, gardbandPosition : Vector2, nextOrientation 
 
 	if visual:
 		if visual.skillCastID != nextskillCastID:
-			visual.skillCastID = nextskillCastID
+			visual.SetSkillCast(nextskillCastID)
 			interactive.DisplayCast(nextskillCastID)
 		visual.Refresh()
 

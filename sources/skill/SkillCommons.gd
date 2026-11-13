@@ -5,6 +5,7 @@ class_name SkillCommons
 const SkillMeleeName : String			= "Melee"
 const SkillRunName : String				= "Run"
 const PerspectiveIncrease : Vector2		= Vector2(1.0, 1.42)
+const MinProjectileDelay : float		= 0.05
 
 # Actions
 static func TryConsume(agent : BaseAgent, modifier : CellCommons.Modifier, skill : SkillCell) -> bool:
@@ -130,6 +131,36 @@ static func GetCooldown(actor : Actor, skill : SkillCell) -> float:
 
 static func IsDelayed(skill : SkillCell) -> bool:
 	return skill.projectilePreset != null
+
+static func HasEarlyRelease(skill : SkillCell) -> bool:
+	return IsDelayed(skill) and skill.mode == Skill.TargetMode.SINGLE and skill.releaseRatio < 1.0
+
+static func GetCastDelay(actor : Actor, skill : SkillCell) -> float:
+	return skill.castTime + actor.stat.current.castAttackDelay
+
+static func GetProjectileDelay(actor : Actor, skill : SkillCell, targetPos : Vector2) -> float:
+	if skill.projectileSpeed > 0.0:
+		return maxf(MinProjectileDelay, actor.position.distance_to(targetPos) / skill.projectileSpeed)
+	return actor.stat.current.castAttackDelay
+
+static func GetReleasedDelay(actor : Actor, skill : SkillCell) -> float:
+	return GetCastDelay(actor, skill) * (1.0 - skill.releaseRatio)
+
+static func GetBasicAttack(actor : Actor) -> SkillCell:
+	var weapon : ItemCell = ActorCommons.GetEquippedCell(actor, ActorCommons.Slot.WEAPON)
+	if weapon and weapon.attackSkill and ActorCommons.HasAttackStyle(actor, weapon.attackStyle) and CanEquip(actor, weapon):
+		var weaponSkill : SkillCell = DB.SkillsDB.get(weapon.attackSkill.id, null)
+		if weaponSkill:
+			return weaponSkill
+	return DB.SkillsDB[DB.GetCellHash(SkillMeleeName)]
+
+static func CanEquip(actor : Actor, cell : ItemCell) -> bool:
+	if not actor.progress or not cell.attackSkill:
+		return true
+	return actor.progress.HasSkill(cell.attackSkill, maxi(1, cell.requiredSkillLevel))
+
+static func IsMelee(skill : SkillCell) -> bool:
+	return skill.id == DB.GetCellHash(SkillMeleeName)
 
 static func HasSkill(agent : BaseAgent, skill : SkillCell) -> bool:
 	if agent.progress:

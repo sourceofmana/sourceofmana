@@ -11,6 +11,7 @@ enum Category
 
 @export var category : Category					= Category.SPELL
 @export var state : ActorCommons.State			= ActorCommons.State.IDLE
+@export var attackStyle : ActorCommons.AttackStyle	= ActorCommons.AttackStyle.ONE_HAND
 @export var skillRange : int						= 0
 @export var mode : Skill.TargetMode				= Skill.TargetMode.SINGLE
 @export var repeat : bool						= false
@@ -24,6 +25,8 @@ enum Category
 @export var skillTime : float					= 0.0
 @export_category("Projectile")
 @export var projectilePreset : PackedScene		= null
+@export_range(0.0, 1.0) var releaseRatio : float	= 1.0
+@export var projectileSpeed : float				= 0.0
 @export_category("Buff")
 @export var buffTime : float					= 0.0
 @export var buffPreset : PackedScene			= null

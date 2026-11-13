@@ -19,6 +19,7 @@ func _ready():
 	if delay <= 0.0:
 		return
 
+	fade = minf(fade, delay / 4.0)
 	scale = Vector2.ZERO
 	global_position = origin
 

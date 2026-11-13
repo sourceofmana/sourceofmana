@@ -113,6 +113,10 @@ func GetTooltipHeader() -> String:
 		bbcode += "\n[color=%s]%s[/color]" % [lightColor, cell.description]
 	if cell is SkillCell and Launcher.Player and Launcher.Player.progress:
 		bbcode += "\nLevel: [color=%s]%d[/color]" % [lightColor, Launcher.Player.progress.GetSkillLevel(cell)]
+	if cell is ItemCell and cell.attackSkill and cell.requiredSkillLevel > 0:
+		var canEquip : bool = Launcher.Player == null or SkillCommons.CanEquip(Launcher.Player, cell)
+		var requirementColor : String = lightColor if canEquip else "#" + UICommons.ModifierNegativeColor.to_html(false)
+		bbcode += "\nRequires: [color=%s]%s Lv. %d[/color]" % [requirementColor, cell.attackSkill.name, cell.requiredSkillLevel]
 	return bbcode
 
 func SetToolTip():

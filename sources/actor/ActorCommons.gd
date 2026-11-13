@@ -175,6 +175,23 @@ const STATE_NAMES : PackedStringArray = [
 	"From Trigger",
 ]
 
+enum AttackStyle
+{
+	ONE_HAND = 0,
+	BOW,
+	COUNT
+}
+
+const ATTACK_STYLE_STATE_NAMES : PackedStringArray = [
+	"Attack",
+	"Attack Bow",
+]
+
+const ATTACK_STYLE_ANIMATION_NAMES : PackedStringArray = [
+	"AttackDown",
+	"AttackBowDown",
+]
+
 static func GetStateName(state : State) -> String:
 	if state <= State.UNKNOWN or state >= State.COUNT:
 		return ""
@@ -353,6 +370,20 @@ static func GetRecovery(actor : Actor) -> Recovery:
 
 static func GetRecoveryRatio(recovery : Recovery, regen : int) -> float:
 	return RecoveryMalusRatio[recovery] if regen < 0 else RecoveryBonusRatio[recovery]
+
+static func GetEquippedCell(actor : Actor, slot : Slot) -> ItemCell:
+	if actor.inventory:
+		return actor.inventory.GetEquipmentCell(slot)
+	if actor.data and slot < actor.data._equipment.size():
+		return actor.data._equipment[slot]
+	return null
+
+static func HasAttackStyle(actor : Actor, style : AttackStyle) -> bool:
+	if style == AttackStyle.ONE_HAND:
+		return true
+	var weapon : ItemCell = GetEquippedCell(actor, Slot.WEAPON)
+	var offhand : ItemCell = GetEquippedCell(actor, Slot.SHIELD)
+	return weapon != null and offhand != null and weapon.attackStyle == style and offhand.attackStyle == style
 
 static func GetSkillRange(actor : Actor, skill : SkillCell) -> int:
 	return actor.stat.current.attackRange + (skill.skillRange if skill else 0)

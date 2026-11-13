@@ -22,11 +22,15 @@ var previousAnimState : ActorCommons.State	= ActorCommons.State.UNKNOWN
 
 var blendSpacePaths : Array[String]			= []
 var walkTimeScalePath : String				= ""
-var attackTimeScalePath : String			= ""
+
+var attackStyle : ActorCommons.AttackStyle	= ActorCommons.AttackStyle.ONE_HAND
+var previousAttackStyle : ActorCommons.AttackStyle	= ActorCommons.AttackStyle.ONE_HAND
+var attackBlendSpacePaths : Array[String]	= []
+var attackTimeScalePaths : Array[String]	= []
+var attackAnimLengths : PackedFloat32Array	= []
 
 var equipmentEffects : Array[Node2D]		= []
 var skillCastID : int						= DB.UnknownHash
-var attackAnimLength : float				= 1.0
 var originalAnimationLib : AnimationLibrary	= null
 var defaultHframes : Dictionary				= {}
 var defaultVframes : Dictionary				= {}
@@ -264,15 +268,34 @@ func SetData(slot : int, data : EntityData):
 
 	LoadSpriteSlot(slot, sprite)
 
-func LoadAnimationPaths():
-	if animation.has_animation("AttackDown"):
-		var attackAnim : Animation = animation.get_animation("AttackDown")
-		attackAnimLength = attackAnim.length if attackAnim else 1.0
+func LoadAttackStylePaths():
+	attackBlendSpacePaths.resize(ActorCommons.AttackStyle.COUNT)
+	attackBlendSpacePaths.fill("")
+	attackTimeScalePaths.resize(ActorCommons.AttackStyle.COUNT)
+	attackTimeScalePaths.fill("")
+	attackAnimLengths.resize(ActorCommons.AttackStyle.COUNT)
+	attackAnimLengths.fill(1.0)
 
+	for style in ActorCommons.AttackStyle.COUNT:
+		var animName : String		= ActorCommons.ATTACK_STYLE_ANIMATION_NAMES[style]
+		var hasAnimation : bool		= animation.has_animation(animName)
+		if hasAnimation:
+			attackAnimLengths[style] = animation.get_animation(animName).length
+		elif style != ActorCommons.AttackStyle.ONE_HAND:
+			continue
+
+		var stateName : String		= ActorCommons.ATTACK_STYLE_STATE_NAMES[style]
+		var blendSpace : String		= "parameters/%s/BlendSpace2D/blend_position" % [stateName]
+		var timeScale : String		= "parameters/%s/TimeScale/scale" % [stateName]
+		if blendSpace in animationTree:
+			attackBlendSpacePaths[style] = blendSpace
+		if timeScale in animationTree:
+			attackTimeScalePaths[style] = timeScale
+
+func LoadAnimationPaths():
 	blendSpacePaths.resize(ActorCommons.State.COUNT)
 	blendSpacePaths.fill("")
 	walkTimeScalePath = ""
-	attackTimeScalePath = ""
 
 	for i in ActorCommons.State.COUNT:
 		var stateName : String		= ActorCommons.GetStateName(i)
@@ -286,10 +309,30 @@ func LoadAnimationPaths():
 			var timeScale : String = "parameters/%s/TimeScale/scale" % [stateName]
 			if timeScale in animationTree:
 				walkTimeScalePath = timeScale
-		elif i == ActorCommons.State.ATTACK:
-			var timeScale : String = "parameters/%s/TimeScale/scale" % [stateName]
-			if timeScale in animationTree:
-				attackTimeScalePath = timeScale
+
+	LoadAttackStylePaths()
+
+func HasAttackStyleAnimation(style : ActorCommons.AttackStyle) -> bool:
+	return not attackBlendSpacePaths[style].is_empty()
+
+func GetDisplayedAttackStyle() -> ActorCommons.AttackStyle:
+	return attackStyle if HasAttackStyleAnimation(attackStyle) else ActorCommons.AttackStyle.ONE_HAND
+
+func GetTreeStateName(state : ActorCommons.State) -> String:
+	if state == ActorCommons.State.ATTACK:
+		return ActorCommons.ATTACK_STYLE_STATE_NAMES[GetDisplayedAttackStyle()]
+	return ActorCommons.STATE_NAMES[state]
+
+func GetBlendSpacePath(state : ActorCommons.State) -> String:
+	if state == ActorCommons.State.ATTACK and HasAttackStyleAnimation(attackStyle):
+		return attackBlendSpacePaths[attackStyle]
+	return blendSpacePaths[state]
+
+func SetSkillCast(nextSkillCastID : int):
+	skillCastID = nextSkillCastID
+	var skill : SkillCell = DB.SkillsDB.get(nextSkillCastID, null)
+	if skill:
+		attackStyle = skill.attackStyle
 
 func UpdateScale():
 	if not animationTree:
@@ -297,17 +340,23 @@ func UpdateScale():
 
 	if not walkTimeScalePath.is_empty():
 		animationTree[walkTimeScalePath] = Formula.GetWalkRatio(entity.stat)
-	if not attackTimeScalePath.is_empty() and entity.stat.current.castAttackDelay > 0:
-		animationTree[attackTimeScalePath] = attackAnimLength / entity.stat.current.castAttackDelay
+	if entity.stat.current.castAttackDelay > 0:
+		for style in attackTimeScalePaths.size():
+			if not attackTimeScalePaths[style].is_empty():
+				animationTree[attackTimeScalePaths[style]] = attackAnimLengths[style] / entity.stat.current.castAttackDelay
 
 func OnAnimationStarted(animName : StringName):
-	for stateIdx in ActorCommons.State.COUNT:
-		if animName == ActorCommons.STATE_NAMES[stateIdx]:
-			var stateId : ActorCommons.State = stateIdx as ActorCommons.State
-			if stateId != previousAnimState:
-				previousAnimState = stateId
-				state_changed.emit(stateId)
-			return
+	var startedName : String = String(animName)
+	var stateIdx : int = ActorCommons.STATE_NAMES.find(startedName)
+	if stateIdx < 0 and ActorCommons.ATTACK_STYLE_STATE_NAMES.has(startedName):
+		stateIdx = ActorCommons.State.ATTACK
+	if stateIdx < 0:
+		return
+
+	var stateId : ActorCommons.State = stateIdx as ActorCommons.State
+	if stateId != previousAnimState:
+		previousAnimState = stateId
+		state_changed.emit(stateId)
 
 func ResetAnimationValue():
 	if not animationTree:
@@ -334,12 +383,12 @@ func Init(data : EntityData):
 
 func RefreshTree(resetOnTeleport : bool = true):
 	if previousState > ActorCommons.State.UNKNOWN:
-		var blendPath : String = blendSpacePaths[previousState]
+		var blendPath : String = GetBlendSpacePath(previousState)
 		if not blendPath.is_empty():
 			animationTree[blendPath] = previousOrientation
 
 		if resetOnTeleport:
-			animationTree[ActorCommons.playbackParameter].travel(ActorCommons.STATE_NAMES[previousState], true)
+			animationTree[ActorCommons.playbackParameter].travel(GetTreeStateName(previousState), true)
 
 			# Random default offset for IDLE state of [0;1] second, need to call twice for the AnimationTree to properly apply it
 			if previousState == ActorCommons.State.IDLE or previousState == ActorCommons.State.SIT:
@@ -355,9 +404,11 @@ func Refresh():
 	var isMoving : bool = currentVelocity.length_squared() > 1
 	var newOrientation : Vector2 = currentVelocity.normalized() if isMoving else entity.entityOrientation
 	var newState : ActorCommons.State = ActorCommons.State.WALK if isMoving else entity.state
-	var differentState : bool = previousState != newState
+	var differentStyle : bool = newState == ActorCommons.State.ATTACK and previousAttackStyle != attackStyle
+	var differentState : bool = previousState != newState or differentStyle
 	if previousOrientation != newOrientation or differentState:
 		previousState = newState
+		previousAttackStyle = attackStyle
 		previousOrientation = newOrientation
 		RefreshTree(differentState)
 
@@ -433,3 +484,6 @@ func _notification(what : int):
 func _init():
 	sprites.resize(ActorCommons.SlotEquipmentCount + ActorCommons.SlotModifierCount)
 	equipmentEffects.resize(ActorCommons.State.COUNT)
+	attackBlendSpacePaths.resize(ActorCommons.AttackStyle.COUNT)
+	attackTimeScalePaths.resize(ActorCommons.AttackStyle.COUNT)
+	attackAnimLengths.resize(ActorCommons.AttackStyle.COUNT)

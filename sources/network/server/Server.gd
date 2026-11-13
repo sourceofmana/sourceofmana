@@ -329,7 +329,10 @@ func TriggerSkill(targetRID : int, skillID : int, peerID : int):
 	var player : PlayerAgent = Peers.GetAgent(peerID)
 	if player and DB.SkillsDB.has(skillID):
 		var target : BaseAgent = WorldAgent.GetAgent(targetRID)
-		Skill.Cast(player, target, DB.SkillsDB[skillID])
+		var skill : SkillCell = DB.SkillsDB[skillID]
+		if SkillCommons.IsMelee(skill):
+			skill = SkillCommons.GetBasicAttack(player)
+		Skill.Cast(player, target, skill)
 
 func TriggerSelect(targetRID : int, peerID : int):
 	var target : BaseAgent = WorldAgent.GetAgent(targetRID)
@@ -367,7 +370,10 @@ func EquipItem(itemID : int, customfield : StringName, itemIndex : int, peerID :
 	if cell and cell.slot != ActorCommons.Slot.NONE:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
 		if player and ActorCommons.IsAlive(player) and player.inventory:
-			player.inventory.EquipItem(cell, itemIndex)
+			if SkillCommons.CanEquip(player, cell):
+				player.inventory.EquipItem(cell, itemIndex)
+			else:
+				NpcCommons.PushNotification(player, "You need %s level %d to equip %s." % [cell.attackSkill.name, maxi(1, cell.requiredSkillLevel), cell.name])
 
 func UnequipItem(itemID : int, customfield : StringName, peerID : int):
 	var cell : ItemCell = DB.GetItem(itemID, customfield)

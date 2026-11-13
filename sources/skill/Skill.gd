@@ -19,6 +19,8 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 		return
 	if skill.mode == TargetMode.SINGLE and (not target or not ActorCommons.IsAlive(target)):
 		return
+	if not ActorCommons.HasAttackStyle(agent, skill.attackStyle):
+		return
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map and map.HasFlags(WorldMap.Flags.NO_SPELL):
 		return
@@ -30,11 +32,28 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	if SkillCommons.TryConsume(agent, CellCommons.Modifier.Mana, skill):
 		Stopped(agent)
 		agent.SetSkillCastID(skill.id)
-		Callback.StartTimer(agent.actionTimer, skill.castTime + agent.stat.current.castAttackDelay, Skill.Process.bind(agent, target, skill), true)
+		var castDelay : float = SkillCommons.GetCastDelay(agent, skill)
+		if SkillCommons.HasEarlyRelease(skill):
+			Callback.StartTimer(agent.actionTimer, castDelay * skill.releaseRatio, Skill.Release.bind(agent, target, skill), true)
+		else:
+			Callback.StartTimer(agent.actionTimer, castDelay, Skill.Process.bind(agent, target, skill), true)
 		if skill.mode == TargetMode.SINGLE:
 			agent.LookAt(target)
 
+static func Release(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
+	if ActorCommons.IsAlive(agent) and SkillCommons.IsCasting(agent, skill) and ActorCommons.IsAlive(target):
+		ThrowProjectile(agent, target.position, skill)
+	Skill.FinishCast.call_deferred(agent, target, skill)
+
+static func FinishCast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
+	if is_instance_valid(agent) and SkillCommons.IsCasting(agent, skill):
+		Callback.StartTimer(agent.actionTimer, SkillCommons.GetReleasedDelay(agent, skill), Skill.Process.bind(agent, target, skill), true)
+
 static func Process(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
+	if not ActorCommons.HasAttackStyle(agent, skill.attackStyle):
+		Stopped(agent)
+		return
+
 	if ActorCommons.IsAlive(agent) and SkillCommons.IsCasting(agent) and SkillCommons.HasSkill(agent, skill):
 		var hasStamina : bool = SkillCommons.TryConsume(agent, CellCommons.Modifier.Stamina, skill)
 
@@ -45,14 +64,16 @@ static func Process(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 					return
 				if SkillCommons.IsAttackable(agent, target, skill):
 					var handle : Callable = Skill.Handle.bind(agent, target, skill, SkillCommons.GetRNG(hasStamina))
-					if SkillCommons.IsDelayed(skill):
-						Callback.SelfDestructTimer(agent, agent.stat.current.castAttackDelay, handle)
+					if SkillCommons.HasEarlyRelease(skill):
+						Callback.SelfDestructTimer(agent, SkillCommons.GetProjectileDelay(agent, skill, target.position) - SkillCommons.GetReleasedDelay(agent, skill), handle)
+					elif SkillCommons.IsDelayed(skill):
+						Callback.SelfDestructTimer(agent, SkillCommons.GetProjectileDelay(agent, skill, target.position), handle)
 						ThrowProjectile(agent, target.position, skill)
 					else:
 						handle.call()
 					Casted(agent, target, skill)
 					return
-				if SkillCommons.IsInteractable(agent, target):
+				if SkillCommons.IsInteractable(agent, target) and not SkillCommons.HasEarlyRelease(skill):
 					ThrowProjectile(agent, agent.position + agent.currentOrientation * Vector2(skill.skillRange, skill.skillRange), skill)
 			TargetMode.ZONE:
 				var handle : Callable = Skill.HandleZone.bind(agent, agent.get_position(), skill, SkillCommons.GetRNG(hasStamina))
