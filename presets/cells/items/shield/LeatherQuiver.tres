@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="ItemCell" format=3 uid="uid://dadetmkmor6x3"]
+
+[ext_resource type="Texture2D" uid="uid://pvddphwf4jvy" path="res://data/graphics/items/ammo/quiver.png" id="1_2gofx"]
+[ext_resource type="Script" uid="uid://hdd6y6syvlm6" path="res://sources/actor/stat/StatModifier.gd" id="2_sk2yj"]
+[ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="3_4kgbh"]
+[ext_resource type="PackedScene" uid="uid://bwn2rvrwbyq5f" path="res://presets/effects/particles/Arrow.tscn" id="4_5nwvh"]
+[ext_resource type="Script" uid="uid://bsjkeucmohr0d" path="res://sources/cell/ItemCell.gd" id="5_4hy3c"]
+[ext_resource type="Material" uid="uid://lvqidalgcn6h" path="res://presets/palettes/shaders/equipment/material-leather.tres" id="6_nsgqe"]
+
+[sub_resource type="Resource" id="Resource_qbg6y"]
+script = ExtResource("2_sk2yj")
+_effect = 20
+_value = 5.0
+_persistent = true
+
+[sub_resource type="Resource" id="Resource_2wo7i"]
+script = ExtResource("3_4kgbh")
+_modifiers = Array[ExtResource("2_sk2yj")]([SubResource("Resource_qbg6y")])
+
+[resource]
+script = ExtResource("5_4hy3c")
+slot = 7
+textures = Array[Texture2D]([null, null, null])
+shader = ExtResource("6_nsgqe")
+buyPrice = 1000
+sellPrice = 100
+attackStyle = 1
+projectilePreset = ExtResource("4_5nwvh")
+id = 563932390
+name = "Leather Quiver"
+description = "A quiver full of arrows to wear with a bow."
+icon = ExtResource("1_2gofx")
+weight = 200.0
+modifiers = SubResource("Resource_2wo7i")
