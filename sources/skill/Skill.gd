@@ -41,13 +41,30 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 			agent.LookAt(target)
 
 static func Release(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
-	if ActorCommons.IsAlive(agent) and SkillCommons.IsCasting(agent, skill) and ActorCommons.IsAlive(target):
-		ThrowProjectile(agent, target.position, skill)
-	Skill.FinishCast.call_deferred(agent, target, skill)
+	if not ActorCommons.IsAlive(agent) or not SkillCommons.IsCasting(agent, skill):
+		return
+	if not ActorCommons.IsAlive(target) or not ActorCommons.HasAttackStyle(agent, skill.attackStyle) or not SkillCommons.HasSkill(agent, skill):
+		Stopped(agent)
+		return
 
-static func FinishCast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
+	var hasStamina : bool = SkillCommons.TryConsume(agent, CellCommons.Modifier.Stamina, skill)
+	ThrowProjectile(agent, target.position, skill)
+	if not SkillCommons.IsAttackable(agent, target, skill):
+		Missed(agent, target)
+		return
+
+	Callback.SelfDestructTimer(agent, SkillCommons.GetProjectileDelay(agent, skill, target.position), Skill.Handle.bind(agent, target, skill, SkillCommons.GetRNG(hasStamina)))
+	var recoveryDelay : float = SkillCommons.GetReleasedDelay(agent, skill)
+	StartCooldown(agent, target, skill, recoveryDelay)
+	Skill.Recover.call_deferred(agent, skill, recoveryDelay)
+
+static func Recover(agent : BaseAgent, skill : SkillCell, recoveryDelay : float):
 	if is_instance_valid(agent) and SkillCommons.IsCasting(agent, skill):
-		Callback.StartTimer(agent.actionTimer, SkillCommons.GetReleasedDelay(agent, skill), Skill.Process.bind(agent, target, skill), true)
+		Callback.StartTimer(agent.actionTimer, recoveryDelay, Skill.Recovered.bind(agent, skill), true)
+
+static func Recovered(agent : BaseAgent, skill : SkillCell):
+	if SkillCommons.IsCasting(agent, skill):
+		agent.SetSkillCastID(DB.UnknownHash)
 
 static func Process(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 	if not ActorCommons.HasAttackStyle(agent, skill.attackStyle):
@@ -64,16 +81,14 @@ static func Process(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 					return
 				if SkillCommons.IsAttackable(agent, target, skill):
 					var handle : Callable = Skill.Handle.bind(agent, target, skill, SkillCommons.GetRNG(hasStamina))
-					if SkillCommons.HasEarlyRelease(skill):
-						Callback.SelfDestructTimer(agent, SkillCommons.GetProjectileDelay(agent, skill, target.position) - SkillCommons.GetReleasedDelay(agent, skill), handle)
-					elif SkillCommons.IsDelayed(skill):
+					if SkillCommons.IsDelayed(skill):
 						Callback.SelfDestructTimer(agent, SkillCommons.GetProjectileDelay(agent, skill, target.position), handle)
 						ThrowProjectile(agent, target.position, skill)
 					else:
 						handle.call()
 					Casted(agent, target, skill)
 					return
-				if SkillCommons.IsInteractable(agent, target) and not SkillCommons.HasEarlyRelease(skill):
+				if SkillCommons.IsInteractable(agent, target):
 					ThrowProjectile(agent, agent.position + agent.currentOrientation * Vector2(skill.skillRange, skill.skillRange), skill)
 			TargetMode.ZONE:
 				var handle : Callable = Skill.HandleZone.bind(agent, agent.get_position(), skill, SkillCommons.GetRNG(hasStamina))
@@ -110,9 +125,12 @@ static func Handle(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng
 
 # Handling
 static func Casted(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
-	agent.cooldownTimers[skill.id] = true
 	agent.SetSkillCastID(DB.UnknownHash)
-	var timeLeft : float = SkillCommons.GetCooldown(agent, skill)
+	StartCooldown(agent, target, skill)
+
+static func StartCooldown(agent : BaseAgent, target : BaseAgent, skill : SkillCell, recoveryDelay : float = 0.0):
+	agent.cooldownTimers[skill.id] = true
+	var timeLeft : float = SkillCommons.GetCooldown(agent, skill) + recoveryDelay
 	Callback.SelfDestructTimer(agent, timeLeft, CooledDown, [agent, target, skill], skill.name + " CoolDown")
 	Network.NotifyNeighbours(agent, "Casted", [agent.get_rid().get_id(), skill.id, timeLeft])
 
