@@ -23,17 +23,25 @@ const modulateDisable : float			= 0.5
 signal selected
 
 # Private
-func GetTooltipModifierLine(modifier : StatModifier, currentEquipped : ItemCell, lightColor : String) -> String:
-	var modStr : String = "\n%s: [color=%s]%s[/color]" % [CellCommons.GetModifierDisplayName(modifier._effect), lightColor, CellCommons.FormatModifierValue(modifier._effect, modifier._value)]
+func HasMutedModifiers(itemCell : ItemCell) -> bool:
+	return itemCell != null and Launcher.Player != null and not ActorCommons.HasMatchingHand(Launcher.Player, itemCell)
+
+func GetTooltipMutedNotice() -> String:
+	var missingHand : String = "weapon" if cell.slot == ActorCommons.Slot.SHIELD else "off-hand"
+	return "\n[color=#%s]Inactive without a matching %s[/color]" % [UICommons.WarnTextColor.to_html(false), missingHand]
+
+func GetTooltipModifierLine(modifier : StatModifier, currentEquipped : ItemCell, valueColor : String, isMuted : bool) -> String:
+	var modStr : String = "\n%s: [color=%s]%s[/color]" % [CellCommons.GetModifierDisplayName(modifier._effect), valueColor, CellCommons.FormatModifierValue(modifier._effect, modifier._value)]
 	if IsInEquipmentSlot() and not CellCommons.IsSameCell(cell, currentEquipped):
+		var newVal : Variant = 0 if isMuted else modifier._value
 		var currentVal : Variant = 0
-		if currentEquipped and currentEquipped.modifiers:
+		if currentEquipped and currentEquipped.modifiers and not HasMutedModifiers(currentEquipped):
 			currentVal = currentEquipped.modifiers.Get(modifier._effect, true)
-		modStr += CellCommons.GetModifierDiffBBCode(modifier._effect, modifier._value - currentVal)
+		modStr += CellCommons.GetModifierDiffBBCode(modifier._effect, newVal - currentVal)
 	return modStr
 
 func GetTooltipMissingModifiers(currentEquipped : ItemCell, lightColor : String) -> String:
-	if not (currentEquipped and currentEquipped.modifiers and not CellCommons.IsSameCell(cell, currentEquipped)):
+	if not (currentEquipped and currentEquipped.modifiers and not CellCommons.IsSameCell(cell, currentEquipped)) or HasMutedModifiers(currentEquipped):
 		return ""
 	var bbcode : String = ""
 	for modifier in currentEquipped.modifiers._modifiers:
@@ -54,13 +62,17 @@ func GetTooltipModifiers(currentEquipped : ItemCell) -> String:
 	if not (cell is ItemCell):
 		return ""
 	var lightColor : String = "#" + UICommons.LightTextColor.to_html(false)
+	var isMuted : bool = IsInEquipmentSlot() and HasMutedModifiers(cell)
+	var valueColor : String = "#" + UICommons.DarkTextColor.to_html(false) if isMuted else lightColor
 	var bbcode : String = ""
 	if cell.modifiers and cell.modifiers.HasAny():
 		for modifier in cell.modifiers._modifiers:
 			if modifier and (modifier._persistent or cell.usable):
 				if bbcode.is_empty():
 					bbcode += "\n"
-				bbcode += GetTooltipModifierLine(modifier, currentEquipped, lightColor)
+				bbcode += GetTooltipModifierLine(modifier, currentEquipped, valueColor, isMuted)
+	if isMuted and not bbcode.is_empty():
+		bbcode += GetTooltipMutedNotice()
 	bbcode += GetTooltipMissingModifiers(currentEquipped, lightColor)
 	return bbcode
 

@@ -135,7 +135,7 @@ func GetEquipmentModifierTotals() -> Dictionary:
 	var totals : Dictionary = {}
 	for slot in range(ActorCommons.Slot.FIRST_EQUIPMENT, ActorCommons.Slot.LAST_EQUIPMENT):
 		var equippedCell : ItemCell = Launcher.Player.inventory.GetEquipmentCell(slot - ActorCommons.Slot.FIRST_EQUIPMENT)
-		if equippedCell and equippedCell.modifiers:
+		if equippedCell and equippedCell.modifiers and ActorCommons.HasMatchingHand(Launcher.Player, equippedCell):
 			for modifier in equippedCell.modifiers._modifiers:
 				if modifier and modifier._persistent:
 					if not totals.has(modifier._effect):

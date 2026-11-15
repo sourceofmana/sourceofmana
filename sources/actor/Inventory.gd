@@ -158,6 +158,24 @@ func DropItem(cell : ItemCell, count : int, itemIndex : int):
 			var item : Item = Item.new(cell, count)
 			WorldDrop.PushDrop(item, actor)
 
+func UnequipMismatchedHand(cell : ItemCell):
+	var otherHandCell : ItemCell = GetEquipmentCell(ActorCommons.GetOtherHandSlot(cell.slot))
+	if otherHandCell and otherHandCell.attackStyle != cell.attackStyle:
+		UnequipItem(otherHandCell)
+
+func SetCellModifiers(cell : ItemCell, isActive : bool):
+	if cell and cell.modifiers and ActorCommons.HasMatchingHand(actor, cell):
+		if isActive:
+			cell.modifiers.Equip(actor)
+		else:
+			cell.modifiers.Unequip(actor)
+
+func SetSlotModifiers(slot : ActorCommons.Slot, isActive : bool):
+	# A hand item is muted without its matching hand
+	SetCellModifiers(GetEquipmentCell(slot), isActive)
+	# So a change in one hand re-evaluates the other
+	SetCellModifiers(GetEquipmentCell(ActorCommons.GetOtherHandSlot(slot)), isActive)
+
 func EquipItem(cell : ItemCell, itemIndex : int):
 	if not cell or cell.type != CellCommons.Type.ITEM or cell.slot == ActorCommons.Slot.NONE or not actor:
 		return
@@ -170,14 +188,11 @@ func EquipItem(cell : ItemCell, itemIndex : int):
 	if equipment[cell.slot] == targetItem:
 		return
 
-	var previousItem : Item = equipment[cell.slot]
-	if previousItem:
-		var previousCell : ItemCell = DB.GetItem(previousItem.cellID, previousItem.cellCustomfield)
-		if previousCell and previousCell.modifiers:
-			previousCell.modifiers.Unequip(actor)
+	UnequipMismatchedHand(cell)
+
+	SetSlotModifiers(cell.slot, false)
 	equipment[cell.slot] = targetItem
-	if cell.modifiers:
-		cell.modifiers.Equip(actor)
+	SetSlotModifiers(cell.slot, true)
 	actor.stat.RefreshEntityStats()
 
 	if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:
@@ -196,9 +211,9 @@ func UnequipItem(cell : ItemCell):
 	if not equippedItem or not CellCommons.IsSameItem(cell, equippedItem):
 		return
 
-	if cell.modifiers:
-		cell.modifiers.Unequip(actor)
+	SetSlotModifiers(cell.slot, false)
 	equipment[cell.slot] = null
+	SetSlotModifiers(cell.slot, true)
 	actor.stat.RefreshEntityStats()
 
 	if actor is PlayerAgent and actor.peerID != NetworkCommons.PeerUnknownID:

@@ -378,12 +378,36 @@ static func GetEquippedCell(actor : Actor, slot : Slot) -> ItemCell:
 		return actor.data._equipment[slot]
 	return null
 
+static func GetOtherHandSlot(slot : Slot) -> Slot:
+	if slot == Slot.WEAPON:
+		return Slot.SHIELD
+	elif slot == Slot.SHIELD:
+		return Slot.WEAPON
+	else:
+		return Slot.NONE
+
 static func HasAttackStyle(actor : Actor, style : AttackStyle) -> bool:
-	if style == AttackStyle.ONE_HAND:
-		return true
-	var weapon : ItemCell = GetEquippedCell(actor, Slot.WEAPON)
-	var offhand : ItemCell = GetEquippedCell(actor, Slot.SHIELD)
-	return weapon != null and offhand != null and weapon.attackStyle == style and offhand.attackStyle == style
+	match style:
+		AttackStyle.ONE_HAND:
+			return true
+		AttackStyle.BOW:
+			var weapon : ItemCell = GetEquippedCell(actor, Slot.WEAPON)
+			var offhand : ItemCell = GetEquippedCell(actor, Slot.SHIELD)
+			return weapon != null and offhand != null and weapon.attackStyle == style and offhand.attackStyle == style
+		_:
+			assert(false, "Attack style %d has no equipment rule" % style)
+			return false
+
+static func HasMatchingHand(actor : Actor, cell : ItemCell) -> bool:
+	match cell.attackStyle:
+		AttackStyle.ONE_HAND:
+			return true
+		AttackStyle.BOW:
+			var otherHand : ItemCell = GetEquippedCell(actor, GetOtherHandSlot(cell.slot))
+			return otherHand != null and otherHand.attackStyle == cell.attackStyle
+		_:
+			assert(false, "Attack style %d has no hand pairing rule" % cell.attackStyle)
+			return false
 
 static func GetSkillRange(actor : Actor, skill : SkillCell) -> int:
 	return actor.stat.current.attackRange + (skill.skillRange if skill else 0)

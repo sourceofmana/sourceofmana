@@ -369,7 +369,7 @@ func EquipItem(itemID : int, customfield : StringName, itemIndex : int, peerID :
 	var cell : ItemCell = DB.GetItem(itemID, customfield)
 	if cell and cell.slot != ActorCommons.Slot.NONE:
 		var player : PlayerAgent = Peers.GetAgent(peerID)
-		if player and ActorCommons.IsAlive(player) and player.inventory:
+		if player and ActorCommons.IsAlive(player) and player.inventory and player.inventory.HasItem(cell, 1):
 			if SkillCommons.CanEquip(player, cell):
 				player.inventory.EquipItem(cell, itemIndex)
 			else:
