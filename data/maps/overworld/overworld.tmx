@@ -2,6 +2,7 @@
 <map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="385" height="290" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="81">
  <properties>
   <property name="flagnodrop" type="bool" value="true"/>
+  <property name="flagnomappool" type="bool" value="true"/>
   <property name="flagnorejoin" type="bool" value="true"/>
   <property name="flagnospell" type="bool" value="true"/>
   <property name="flagonlyspirit" type="bool" value="true"/>

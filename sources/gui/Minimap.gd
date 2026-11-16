@@ -20,9 +20,21 @@ func Warped():
 	if mapData.minimapPath.is_empty():
 		assert(false, "Could not load the minimap resource")
 		return
-	var resource : Texture2D = ResourceLoader.load(mapData.minimapPath) as Texture2D
+	LoadTexture(Launcher.Map.currentMapID, mapData.minimapPath)
+
+func LoadTexture(mapID : int, path : String):
+	if ResourceLoader.load_threaded_request(path) != OK:
+		return
+	while ResourceLoader.load_threaded_get_status(path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		await get_tree().process_frame
+
+	var resource : Texture2D = ResourceLoader.load_threaded_get(path) as Texture2D
+	if resource and Launcher.Map and Launcher.Map.currentMapID == mapID:
+		SetTexture(resource)
+
+func SetTexture(resource : Texture2D):
 	textureRect.set_texture(resource)
-	textureSize = textureRect.texture.get_size()
+	textureSize = resource.get_size()
 	if textureSize != Vector2.ZERO:
 		maxSize = textureSize
 	if size.x > maxSize.x:
@@ -30,23 +42,30 @@ func Warped():
 	if size.y > maxSize.y:
 		size.y = maxSize.y
 
-func Moved():
-	if not Launcher.Map or not Launcher.Map.currentMapNode:
+func _on_visibility_changed():
+	if is_visible_in_tree():
+		Moved(true)
+
+func Moved(forceSync : bool = false):
+	if not Launcher.Map or not Launcher.Map.currentMapNode or not Launcher.Player:
 		return
 
 	var mapSize : Vector2 = Launcher.Map.GetMapBoundaries()
 	if mapSize.x != 0 and mapSize.y != 0:
 		var posRatio : Vector2 = Launcher.Player.position / mapSize
 		var minimapPlayerPos : Vector2 = posRatio * textureRect.size - Vector2(5, 5)
-		if minimapPlayerPos.is_equal_approx(playerPoint.get_position()):
+		if not forceSync and minimapPlayerPos.is_equal_approx(playerPoint.get_position()):
 			return
-		var scrollPos : Vector2i = Vector2i(minimapPlayerPos - scrollContainer.size / 2)
-		scrollPos.x = clampi(scrollPos.x, 0, int(textureSize.x - scrollContainer.size.x))
-		scrollPos.y = clampi(scrollPos.y, 0, int(textureSize.y - scrollContainer.size.y))
-
-		scrollContainer.set_h_scroll(scrollPos.x)
-		scrollContainer.set_v_scroll(scrollPos.y)
 		playerPoint.set_position(minimapPlayerPos)
+		# Deffer as scrollContainer ignores a scroll set while it is sorting its children
+		CenterOnPlayer.call_deferred()
+
+func CenterOnPlayer():
+	var scrollPos : Vector2i = Vector2i(playerPoint.get_position() - scrollContainer.size / 2)
+	scrollPos.x = clampi(scrollPos.x, 0, int(textureSize.x - scrollContainer.size.x))
+	scrollPos.y = clampi(scrollPos.y, 0, int(textureSize.y - scrollContainer.size.y))
+	scrollContainer.set_h_scroll(scrollPos.x)
+	scrollContainer.set_v_scroll(scrollPos.y)
 
 #
 func _on_texture_rect_gui_input(event: InputEvent):
@@ -59,10 +78,12 @@ func _ready():
 	var HBar : HScrollBar = scrollContainer.get_h_scroll_bar()
 	HBar.set_scale(Vector2.ZERO)
 	HBar.set_allow_greater(false)
+	HBar.changed.connect(Moved.bind(true))
 
 	var VBar : VScrollBar = scrollContainer.get_v_scroll_bar()
 	VBar.set_scale(Vector2.ZERO)
 	VBar.set_allow_greater(false)
+	VBar.changed.connect(Moved.bind(true))
 	_post_launch()
 
 func _post_launch():

@@ -10,6 +10,7 @@ signal state_changed(state : ActorCommons.State)
 #
 @onready var entity : Entity				= get_parent()
 
+var loadedData : EntityData					= null
 var preset : Node2D							= null
 var questHighlight : Node2D					= null
 var animation : AnimationPlayer				= null
@@ -70,6 +71,7 @@ func AddPreset(presetNode : Node2D):
 
 func LoadData(data : EntityData):
 	ResetData()
+	loadedData = data
 
 	# Sprite Preset
 	if data._spritePreset:

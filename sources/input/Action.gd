@@ -143,6 +143,13 @@ func _unhandled_input(event):
 		elif TryJustPressed(event, "gp_zoom_reset"):	Launcher.Camera.ZoomReset()
 
 func _physics_process(_deltaTime : float):
+	UpdateMove()
+
+func ResendMove():
+	previousMove = Vector2.ZERO
+	UpdateMove()
+
+func UpdateMove():
 	if Launcher.Player:
 		var move : Vector2 = GetMove()
 		var isFacing : bool = IsActionPressed("gp_face_direction")

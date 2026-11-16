@@ -17,8 +17,9 @@ static func GetRandomStartPos() -> Vector2i:
 	return DefaultStartPos + Vector2i(randi_range(-DefaultStartOffset.x, DefaultStartOffset.x), randi_range(-DefaultStartOffset.y, DefaultStartOffset.y))
 
 # MapPool
-const EnableMapPool : bool				= false
+static var EnableMapPool : bool			= not OS.has_feature("nothreads")
 const MapPoolMaxSize : int				= 10
+const EntitySpawnBudgetPerFrameMs : int	= 2
 
 const ServerMaxFPS : int				= 30
 

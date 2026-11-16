@@ -1,5 +1,5 @@
 class_name EntityCacheEntry
-extends Object
+extends RefCounted
 
 #
 var actorType : ActorCommons.Type	= ActorCommons.Type.MONSTER

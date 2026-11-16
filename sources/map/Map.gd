@@ -16,6 +16,7 @@ var currentFringe : TileMapLayer		= null
 var drops : Dictionary[int, Sprite2D]	= {}
 var hoveredDrop : int					= -1
 var entityCache : Dictionary[int, EntityCacheEntry] = {}
+var pendingEntities : Array[Entity]		= []
 var pendingWarp : bool					= true
 
 # Map Scenes
@@ -31,17 +32,16 @@ func GetMapBoundaries() -> Vector2:
 
 func EmplaceMapNode(mapID : int, force : bool = false):
 	if not force and currentMapID == mapID:
+		ClearEntities()
 		return
 
 	UnloadMapNode()
 	LoadMapNode(mapID)
 
-	if LauncherCommons.EnableMapPool:
-		pool.RefreshPool()
-
 func UnloadMapNode():
 	if currentMapNode:
 		RemoveChildren()
+		pendingEntities.clear()
 		Launcher.remove_child(currentMapNode)
 		currentMapID = DB.UnknownHash
 		currentMapNode = null
@@ -61,6 +61,25 @@ func LoadMapNode(mapID : int):
 		RefreshTileMap()
 		Launcher.add_child(currentMapNode)
 		MapLoaded.emit()
+
+func RefreshPool(preloadAdjacentMaps : bool):
+	if not currentMapNode:
+		return
+	var adjacentMaps : PackedInt64Array = []
+	var mapData : MapData = DB.MapsDB.get(currentMapID, null)
+	var isPoolAllowed : bool = mapData != null and not mapData.HasFlags(WorldMap.Flags.NO_MAP_POOL)
+	if preloadAdjacentMaps and LauncherCommons.EnableMapPool and isPoolAllowed:
+		adjacentMaps = currentMapNode.get_meta("AdjacentMapIDs", adjacentMaps)
+	pool.Refresh(currentMapID, adjacentMaps)
+
+func ClearEntities():
+	Entities.ClearTarget()
+	Entities.ClearHovered()
+	for entity in Entities.entities.values():
+		if entity != Launcher.Player:
+			RemoveChild(entity)
+	entityCache.clear()
+	Entities.Clear()
 
 # Entity cache
 func PreloadEntity(agentRID : int, actorType : ActorCommons.Type, currentShape : int, nick : String, defaultState : ActorCommons.State):
@@ -122,10 +141,9 @@ func SpawnEntity(agentRID : int, entry : EntityCacheEntry) -> Entity:
 		Launcher.Player.SetLocalPlayer()
 		Monitoring.SetPlayer(entry.nick)
 		pendingWarp = false
-
-	AddChild(entity)
-	if entry.currentShape != shape:
-		entity.SetData.call_deferred()
+		AddChild(entity)
+	else:
+		pendingEntities.push_back(entity)
 	Entities.Add(entity, agentRID)
 
 	if isLocalPlayer:
@@ -142,6 +160,7 @@ func RemoveChildren():
 
 func RemoveChild(child : Node2D):
 	if child:
+		pendingEntities.erase(child)
 		if currentFringe and child.get_parent() == currentFringe:
 			currentFringe.remove_child.call_deferred(child)
 		if child != Launcher.Player:
@@ -151,6 +170,20 @@ func AddChild(child : Node2D):
 	assert(currentFringe != null, "Current fringe layer not found, could not add a new child")
 	if currentFringe:
 		currentFringe.add_child.call_deferred(child)
+
+func AddPendingEntities():
+	if pendingEntities.is_empty() or not currentFringe:
+		return
+
+	if Launcher.Player and pendingEntities.size() > 1:
+		var origin : Vector2 = Launcher.Player.position
+		pendingEntities.sort_custom(func(a : Entity, b : Entity): return a.position.distance_squared_to(origin) < b.position.distance_squared_to(origin))
+
+	var deadlineMs : int = Time.get_ticks_msec() + LauncherCommons.EntitySpawnBudgetPerFrameMs
+	while not pendingEntities.is_empty():
+		currentFringe.add_child(pendingEntities.pop_front())
+		if Time.get_ticks_msec() >= deadlineMs:
+			break
 
 # Entities
 func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : Vector2, agentOrientation : Vector2, agentState : ActorCommons.State, skillCastID : int, isRunning : bool, frameID : int):
@@ -168,7 +201,7 @@ func FullUpdateEntity(agentRID : int, agentVelocity : Vector2, agentPosition : V
 		if pendingWarp:
 			pendingWarp = false
 			isNewSpawn = entity.get_parent() != currentFringe
-			entity.SetData.call_deferred()
+			entity.RefreshData.call_deferred()
 			if isNewSpawn:
 				AddChild(entity)
 				PlayerWarped.emit.call_deferred()
@@ -262,9 +295,17 @@ func PickupNearestDrop():
 		Network.PickupDrop(nearestID)
 
 #
+func Tick():
+	pool.Poll()
+	AddPendingEntities()
+
 func _post_launch():
 	isInitialized = true
 	FSM.exit_game.connect(LeaveGame)
+	Launcher.get_tree().process_frame.connect(Tick)
 
 func Destroy():
 	LeaveGame()
+	if Launcher.get_tree().process_frame.is_connected(Tick):
+		Launcher.get_tree().process_frame.disconnect(Tick)
+	pool.Clear()

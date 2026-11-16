@@ -7,10 +7,11 @@ func WarpPlayer(mapID : int, playerPos : Vector2, _peerID : int):
 		var mapData : FileData = DB.MapsDB.get(mapID, null)
 		if mapData:
 			Launcher.Map.EmplaceMapNode(mapID)
+			Launcher.Map.RefreshPool(true)
 			Launcher.Camera.LookAt(playerPos, false)
-			# Reset input in both the client and server to force re-send a new update once the map is loaded
+			# Reset the server input and re-send ours in the same frame, so a held direction never leaves the server stopped for a tick
 			Network.ClearNavigation()
-			Launcher.Action.previousMove = Vector2.ZERO
+			Launcher.Action.ResendMove()
 			PushNotification(mapData._name, _peerID)
 
 func Emote(agentRID : int, emoteID : int, _peerID : int):
@@ -273,7 +274,8 @@ func ItemEquiped(agentRID : int, itemID : int, customfield : StringName, state :
 			else:
 				entity.inventory.UnequipItem(cell)
 
-			entity.visual.SetEquipment(cell.slot)
+			if entity.visual:
+				entity.visual.SetEquipment(cell.slot)
 			if entity == Launcher.Player:
 				Launcher.GUI.inventoryWindow.RefreshInventory()
 				Launcher.GUI.tradePanel.RefreshInventory()

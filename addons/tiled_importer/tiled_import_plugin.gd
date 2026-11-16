@@ -164,6 +164,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files) 
 	# Map Data, store paths for heavy resources to avoid loading them at startup
 	var map_data : MapData = MapData.new()
 	map_data._name = mapReader.map_name
+	map_data.flags = mapReader.map_flags
 
 	if server_resource:
 		map_data.serverData = ResourceLoader.load(Path.MapServerPst + file_map_hierarchy + Path.RscExt) as MapServerData

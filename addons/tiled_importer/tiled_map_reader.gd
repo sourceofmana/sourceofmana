@@ -1450,6 +1450,8 @@ func set_custom_properties(object, tiled_object):
 		map_flags |= WorldMap.Flags.NO_REJOIN
 	if properties.get("flagonlyspirit", false):
 		map_flags |= WorldMap.Flags.ONLY_SPIRIT
+	if properties.get("flagnomappool", false):
+		map_flags |= WorldMap.Flags.NO_MAP_POOL
 
 # Get the custom properties as a dictionary
 # Useful for tile meta, which is not stored directly

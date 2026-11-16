@@ -117,7 +117,7 @@ static func GetNextTarget(source : Vector2, currentEntity : Entity, interactable
 		nextTarget = currentEntity
 
 	for entity in entities.values():
-		if entity and entity != currentEntity:
+		if entity and entity != currentEntity and entity.is_inside_tree():
 			var isAliveMonster : bool = entity.type == ActorCommons.Type.MONSTER and entity.state != ActorCommons.State.DEATH
 			var isNpc : bool = interactable and entity.type == ActorCommons.Type.NPC
 			if isAliveMonster or isNpc:

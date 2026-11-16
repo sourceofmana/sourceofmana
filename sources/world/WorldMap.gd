@@ -9,6 +9,7 @@ enum Flags
 	NO_SPELL = 1 << 1,
 	NO_REJOIN = 1 << 2,
 	ONLY_SPIRIT = 1 << 3,
+	NO_MAP_POOL = 1 << 4,
 }
 
 #

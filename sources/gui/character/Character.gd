@@ -316,6 +316,7 @@ func RefreshOnce():
 	Clear()
 
 	Launcher.Map.EmplaceMapNode(ActorCommons.CharacterScreenMapID)
+	Launcher.Map.RefreshPool(false)
 	currentCharacterID = ActorCommons.InvalidCharacterSlot
 	for slotID in charactersInfo.size():
 		RemoveCharacter(slotID)

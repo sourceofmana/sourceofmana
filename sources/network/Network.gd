@@ -150,7 +150,7 @@ func TriggerRespawn(peerID : int = NetworkCommons.PeerAuthorityID):
 	CallServer("TriggerRespawn", [], peerID)
 
 # Warp
-@rpc("authority", "call_remote", "reliable", EChannel.MAP)
+@rpc("authority", "call_remote", "reliable", EChannel.ENTITY)
 func WarpPlayer(mapID : int, playerPos : Vector2, peerID : int = NetworkCommons.PeerOfflineID):
 	CallClient("WarpPlayer", [mapID, playerPos], peerID)
 
@@ -209,7 +209,7 @@ func FullUpdateEntity(agentRID : int, velocity : Vector2, position : Vector2, or
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.NAVIGATION)
 func ClearNavigation(peerID : int = NetworkCommons.PeerAuthorityID):
-	CallServer("ClearNavigation", [], peerID)
+	CallServer("ClearNavigation", [], peerID, NetworkCommons.DelayInstant)
 
 @rpc("any_peer", "call_remote", "reliable", EChannel.ENTITY)
 func SetViewportSize(halfWidth : float, halfHeight : float, peerID : int = NetworkCommons.PeerAuthorityID):

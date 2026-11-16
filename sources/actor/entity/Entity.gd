@@ -17,15 +17,28 @@ var lastUpdateFrameID : int				= -1
 signal entity_died
 
 # Init
+func GetDisplayedData() -> EntityData:
+	var altData : EntityData = DB.EntitiesDB.get(stat.currentShape, null) if stat.IsMorph() else null
+	return altData if altData else data
+
 func SetData():
-	var altData : EntityData = null
-	var isMorph : bool = stat.IsMorph()
-	if isMorph:
-		altData = DB.EntitiesDB.get(stat.currentShape, null)
-	SetVisual(altData if altData else data)
-	interactive.Init(altData if altData else data)
+	if not visual or not interactive:
+		return
+	var displayedData : EntityData = GetDisplayedData()
+	SetVisual(displayedData)
+	interactive.Init(displayedData)
+
+func RefreshData():
+	if not visual or not interactive:
+		return
+	var displayedData : EntityData = GetDisplayedData()
+	if visual.loadedData != displayedData:
+		SetVisual(displayedData)
+	interactive.Init(displayedData)
 
 func SetVisual(altData : EntityData, morphed : bool = false):
+	if not visual or not interactive:
+		return
 	if morphed:
 		interactive.DisplayMorph(visual.Init, [altData])
 	else:
