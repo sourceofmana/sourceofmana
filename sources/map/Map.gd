@@ -160,7 +160,8 @@ func RemoveChildren():
 
 func RemoveChild(child : Node2D):
 	if child:
-		pendingEntities.erase(child)
+		if child is Entity:
+			pendingEntities.erase(child)
 		if currentFringe and child.get_parent() == currentFringe:
 			currentFringe.remove_child.call_deferred(child)
 		if child != Launcher.Player:
