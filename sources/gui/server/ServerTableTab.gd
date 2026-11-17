@@ -13,6 +13,7 @@ func CanRefresh() -> bool:
 func AddLabel(text : String) -> Label:
 	var label : Label = Label.new()
 	label.text = text
+	label.theme_type_variation = &"ValueLabel"
 	box.add_child(label)
 	return label
 

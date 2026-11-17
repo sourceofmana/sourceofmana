@@ -1,16 +1,28 @@
-extends ServerTab
+extends ServerTableTab
 
 #
-@onready var label : RichTextLabel			= $RichTextLabel
+const Header : PackedStringArray			= ["RPC", "Account", "Character", "Agent", "Agent RID", "Mode"]
 
 #
+func CanRefresh() -> bool:
+	return true
+
 func Refresh():
-	var lines : PackedStringArray = []
+	var rows : Array = []
 	for peerID in Peers.peers:
 		var peer : Peers.Peer = Peers.GetPeer(peerID)
 		var player : PlayerAgent = Peers.GetAgent(peerID)
-		var playerNickname : String = player.nick if player else "-1"
-		lines.append("RPC: %d\t\tAccount: %d\t\tCharacter: %d\t\tAgent: %s [%d]\t\tMode: %s" % [peerID, peer.accountID, peer.characterID, playerNickname, peer.agentRID, Peers.GetTransportName(peer.transport)])
-	var text : String = "\n".join(lines)
-	if label.text != text:
-		label.text = text
+		rows.append([
+			peerID,
+			peer.accountID,
+			peer.characterID,
+			player.nick if player else "-",
+			peer.agentRID,
+			Peers.GetTransportName(peer.transport),
+		])
+	FillTable("Connected peers", Header, rows)
+
+#
+func _init():
+	super._init()
+	refreshTicks = 1

@@ -24,6 +24,12 @@ func SetCellColor(rowIndex : int, column : int, color : Color):
 	if root and rowIndex < root.get_child_count():
 		root.get_child(rowIndex).set_custom_color(column, color)
 
+func SetColumnColor(column : int, color : Color):
+	var root : TreeItem = get_root()
+	if root:
+		for item in root.get_children():
+			item.set_custom_color(column, color)
+
 func GetFitHeight(rowCount : int) -> float:
 	var rowHeight : float = get_theme_font("font").get_height(get_theme_font_size("font_size")) \
 		+ get_theme_constant("v_separation") \

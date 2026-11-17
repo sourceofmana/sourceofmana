@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://cr2by2nem8o87"]
 
-[ext_resource type="PackedScene" uid="uid://bq66pltgf5nhp" path="res://presets/gui/labels/ContentLabel.tscn" id="1_bk404"]
 [ext_resource type="Script" uid="uid://pdqsy1s1d8jr" path="res://sources/gui/ServerDisplay.gd" id="1_lgnu7"]
 [ext_resource type="Script" uid="uid://bd77opur4miet" path="res://sources/gui/server/ServerInfoTab.gd" id="2_ioqt5"]
 [ext_resource type="Script" uid="uid://bsxlkhkkp4hpy" path="res://sources/gui/server/ServerPeersTab.gd" id="3_z4ygr"]
@@ -28,11 +27,9 @@ layout_mode = 2
 script = ExtResource("2_ioqt5")
 metadata/_tab_index = 0
 
-[node name="RichTextLabel" parent="HSections/Info" unique_id=154489649 instance=ExtResource("1_bk404")]
+[node name="VBox" type="VBoxContainer" parent="HSections/Info" unique_id=1554896490]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-threaded = false
 
 [node name="Peers" type="ScrollContainer" parent="HSections" unique_id=1129398495]
 visible = false
@@ -40,11 +37,9 @@ layout_mode = 2
 script = ExtResource("3_z4ygr")
 metadata/_tab_index = 1
 
-[node name="RichTextLabel" parent="HSections/Peers" unique_id=1281254424 instance=ExtResource("1_bk404")]
+[node name="VBox" type="VBoxContainer" parent="HSections/Peers" unique_id=1281254425]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-threaded = false
 
 [node name="Database" type="ScrollContainer" parent="HSections" unique_id=1845767538]
 visible = false

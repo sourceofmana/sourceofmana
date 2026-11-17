@@ -2,7 +2,6 @@ extends ServerTableTab
 
 #
 const ListSize : int						= 25
-const OnlineColor : Color					= Color.GREEN
 const Header : PackedStringArray			= ["Character", "Account", "Level", "Exp", "Quests", "Kills", "GP", "Play time", "Map", "Created", "Last seen"]
 
 #
@@ -27,7 +26,7 @@ func FillCharacters(title : String, entries : Array[Dictionary]):
 	var table : TableView = FillTable(title, Header, rows)
 	for rowIndex in entries.size():
 		if entries[rowIndex].online:
-			table.SetCellColor(rowIndex, Header.size() - 1, OnlineColor)
+			table.SetCellColor(rowIndex, Header.size() - 1, UICommons.ModifierPositiveColor)
 
 #
 func Refresh():
