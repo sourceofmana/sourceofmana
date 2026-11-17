@@ -196,6 +196,20 @@ static func GetPermission(peerID : int) -> ActorCommons.Permission:
 	var peer : Peers.Peer = GetPeer(peerID)
 	return peer.permission if peer else ActorCommons.Permission.NONE
 
+static func GetOnlineCharacterIDs() -> PackedInt64Array:
+	var ids : PackedInt64Array = []
+	for peer in Peers.peers.values():
+		if peer.characterID != NetworkCommons.PeerUnknownID:
+			ids.append(peer.characterID)
+	return ids
+
+static func GetOnlineAccountCount() -> int:
+	var count : int = 0
+	for peer in Peers.peers.values():
+		if peer.accountID != NetworkCommons.PeerUnknownID:
+			count += 1
+	return count
+
 # Auth validation
 static func FinalizeLogin(peer : Peer, accountName : String, accountData : AccountData, platform : int, rememberMe : bool) -> NetworkCommons.AuthError:
 	if IsBanned(accountData.accountID):

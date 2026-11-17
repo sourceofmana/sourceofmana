@@ -151,3 +151,21 @@ static func FormatDuration(seconds : int) -> String:
 		"%dm" % minutes if minutes > 0 else "", \
 		"%ds" % seconds if seconds > 0 else "", \
 	]
+
+static func FormatPlayTime(seconds : int) -> String:
+	return "0s" if seconds <= 0 else FormatDuration(seconds)
+
+static func FormatDate(timestamp : int) -> String:
+	return "-" if timestamp <= 0 else Time.get_datetime_string_from_unix_time(timestamp, true)
+
+static func FormatTimeAgo(timestamp : int) -> String:
+	if timestamp <= 0:
+		return "never"
+	var elapsed : int = maxi(0, int(Time.get_unix_time_from_system()) - timestamp)
+	if elapsed < 60:
+		return "%ds ago" % elapsed
+	if elapsed < 3600:
+		return "%dm ago" % floori(elapsed / 60.0)
+	if elapsed < 24 * 3600:
+		return "%dh ago" % floori(elapsed / 3600.0)
+	return "%dd ago" % floori(elapsed / (24.0 * 3600.0))

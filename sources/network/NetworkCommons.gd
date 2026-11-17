@@ -154,6 +154,9 @@ static func GetPlatform() -> Platform:
 		"OpenBSD": return Platform.OPENBSD
 	return Platform.UNKNOWN
 
+static func GetPlatformName(platform : int) -> String:
+	return Platform.keys()[platform].capitalize() if platform > Platform.UNKNOWN and platform < Platform.COUNT else "Unknown"
+
 enum AuthError {
 	ERR_OK = 0,
 	ERR_NO_PEER_DATA,

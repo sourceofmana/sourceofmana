@@ -2,6 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bq66pltgf5nhp" path="res://presets/gui/labels/ContentLabel.tscn" id="1_bk404"]
 [ext_resource type="Script" uid="uid://pdqsy1s1d8jr" path="res://sources/gui/ServerDisplay.gd" id="1_lgnu7"]
+[ext_resource type="Script" uid="uid://bd77opur4miet" path="res://sources/gui/server/ServerInfoTab.gd" id="2_ioqt5"]
+[ext_resource type="Script" uid="uid://bsxlkhkkp4hpy" path="res://sources/gui/server/ServerPeersTab.gd" id="3_z4ygr"]
+[ext_resource type="Script" uid="uid://c44xkbhfmklm8" path="res://sources/gui/server/ServerDatabaseTab.gd" id="4_fjn1n"]
+[ext_resource type="Script" uid="uid://f7crgglb0fbt" path="res://sources/gui/server/ServerCharactersTab.gd" id="5_o6bpa"]
+[ext_resource type="Script" uid="uid://v4i20jh7jh3n" path="res://sources/gui/server/ServerLeaderboardTab.gd" id="6_52pkt"]
 
 [node name="PanelContainer" type="PanelContainer" unique_id=1400014647]
 clip_contents = true
@@ -18,37 +23,55 @@ layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Info" type="TabBar" parent="HSections" unique_id=496741025]
+[node name="Info" type="ScrollContainer" parent="HSections" unique_id=496741025]
 layout_mode = 2
+script = ExtResource("2_ioqt5")
 metadata/_tab_index = 0
 
-[node name="VBox" type="VBoxContainer" parent="HSections/Info" unique_id=1370377126]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="HSections/Info/VBox" unique_id=627928728]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="RichTextLabel" parent="HSections/Info/VBox/ScrollContainer" unique_id=154489649 instance=ExtResource("1_bk404")]
+[node name="RichTextLabel" parent="HSections/Info" unique_id=154489649 instance=ExtResource("1_bk404")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+threaded = false
 
-[node name="RefreshButon" type="Button" parent="HSections/Info/VBox" unique_id=1507395516]
-layout_mode = 2
-text = "Refresh"
-
-[node name="Peers" type="TabBar" parent="HSections" unique_id=1129398495]
+[node name="Peers" type="ScrollContainer" parent="HSections" unique_id=1129398495]
 visible = false
 layout_mode = 2
+script = ExtResource("3_z4ygr")
 metadata/_tab_index = 1
 
 [node name="RichTextLabel" parent="HSections/Peers" unique_id=1281254424 instance=ExtResource("1_bk404")]
-layout_mode = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+threaded = false
 
-[connection signal="pressed" from="HSections/Info/VBox/RefreshButon" to="." method="_on_info_update"]
+[node name="Database" type="ScrollContainer" parent="HSections" unique_id=1845767538]
+visible = false
+layout_mode = 2
+script = ExtResource("4_fjn1n")
+metadata/_tab_index = 2
+
+[node name="VBox" type="VBoxContainer" parent="HSections/Database" unique_id=1221886802]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Characters" type="ScrollContainer" parent="HSections" unique_id=1307427256]
+visible = false
+layout_mode = 2
+script = ExtResource("5_o6bpa")
+metadata/_tab_index = 3
+
+[node name="VBox" type="VBoxContainer" parent="HSections/Characters" unique_id=2146764330]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Leaderboard" type="ScrollContainer" parent="HSections" unique_id=13106387]
+visible = false
+layout_mode = 2
+script = ExtResource("6_52pkt")
+metadata/_tab_index = 4
+
+[node name="VBox" type="VBoxContainer" parent="HSections/Leaderboard" unique_id=332355453]
+layout_mode = 2
+size_flags_horizontal = 3
