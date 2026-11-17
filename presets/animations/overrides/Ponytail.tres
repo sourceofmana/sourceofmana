@@ -1,5 +1,73 @@
 [gd_resource type="AnimationLibrary" format=3 uid="uid://db3rdpuvcwng"]
 
+[sub_resource type="Animation" id="Animation_attackbowdown"]
+resource_name = "AttackBowDown"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Hair:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_attackbowleft"]
+resource_name = "AttackBowLeft"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Hair:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_attackbowright"]
+resource_name = "AttackBowRight"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Hair:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_attackbowup"]
+resource_name = "AttackBowUp"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Hair:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [6, 7, 8]
+}
+
 [sub_resource type="Animation" id="Animation_attackdown"]
 resource_name = "AttackDown"
 length = 0.4
@@ -297,6 +365,10 @@ tracks/0/keys = {
 
 [resource]
 _data = {
+&"AttackBowDown": SubResource("Animation_attackbowdown"),
+&"AttackBowLeft": SubResource("Animation_attackbowleft"),
+&"AttackBowRight": SubResource("Animation_attackbowright"),
+&"AttackBowUp": SubResource("Animation_attackbowup"),
 &"AttackDown": SubResource("Animation_attackdown"),
 &"AttackLeft": SubResource("Animation_attackleft"),
 &"AttackRight": SubResource("Animation_attackright"),
