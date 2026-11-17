@@ -243,6 +243,7 @@ func BuildDeviceTab(tabName : String, deviceType : DeviceManager.DeviceType, isT
 func BuildCategory(parent : VBoxContainer, categoryName : String, actions : PackedStringArray, deviceType : DeviceManager.DeviceType, isTouch : bool):
 	var header := Label.new()
 	header.text = categoryName
+	header.theme_type_variation = &"ValueLabel"
 	parent.add_child(header)
 
 	for action in actions:
@@ -276,6 +277,7 @@ func BuildBindingRow(parent : VBoxContainer, action : String, actionName : Strin
 
 	var bindingButton := Button.new()
 	bindingButton.text = binding if not binding.is_empty() else "-"
+	bindingButton.theme_type_variation = &"ValueButton"
 	bindingButton.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bindingButton.alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	bindingButton.pressed.connect(StartRebinding.bind(action, deviceType, bindingButton))

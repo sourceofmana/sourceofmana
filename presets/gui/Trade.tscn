@@ -39,7 +39,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 text = "You"
 
 [node name="Separator" type="VSeparator" parent="Layout/Margin/Content/Header" unique_id=1630451008]
@@ -48,7 +48,7 @@ layout_mode = 2
 [node name="Other" type="Label" parent="Layout/Margin/Content/Header" unique_id=1630451009]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 clip_text = true
 
 [node name="HeaderSeparator" type="HSeparator" parent="Layout/Margin/Content" unique_id=1630451010]
@@ -157,7 +157,6 @@ text = "-"
 [node name="Value" type="LineEdit" parent="Layout/Margin/Content/GP/Picker" unique_id=1630451046]
 custom_minimum_size = Vector2(64, 28)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
 alignment = 1
 context_menu_enabled = false
 
@@ -187,7 +186,7 @@ text = "GP"
 
 [node name="Value" type="Label" parent="Layout/Margin/Content/GP/Other" unique_id=1630451034]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 text = "0"
 horizontal_alignment = 2
 
@@ -209,7 +208,7 @@ text = "GP"
 
 [node name="Value" type="Label" parent="Layout/Margin/Content/GP/Balance" unique_id=1630451043]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 text = "0"
 horizontal_alignment = 2
 

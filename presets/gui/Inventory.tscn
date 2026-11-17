@@ -212,6 +212,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Equipment" type="Label" parent="Layout/Margin/HBoxContainer/InfoScroll/InfoBox" unique_id=1670075000]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Equipment"
 
@@ -265,6 +266,7 @@ defaultIcon = ExtResource("14_c43pa")
 layout_mode = 2
 
 [node name="ModifiersLabel" type="Label" parent="Layout/Margin/HBoxContainer/InfoScroll/InfoBox" unique_id=-1294967294]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Modifiers"
 
@@ -277,6 +279,7 @@ fit_content = true
 layout_mode = 2
 
 [node name="CapacityLabel" type="Label" parent="Layout/Margin/HBoxContainer/InfoScroll/InfoBox" unique_id=-1294967289]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Capacity"
 

@@ -40,6 +40,7 @@ select_all_on_focus = true
 
 [node name="Name" type="Label" parent="PlayerName" unique_id=1879101140]
 layout_mode = 2
+theme_type_variation = &"ValueLabel"
 size_flags_vertical = 1
 horizontal_alignment = 1
 
@@ -71,6 +72,7 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Display/Attributes/Margin/VBox" unique_id=1510561370]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Attributes"
 horizontal_alignment = 1
@@ -95,6 +97,7 @@ layout_mode = 2
 text = "-"
 
 [node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Strength" unique_id=1443596080]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
@@ -122,6 +125,7 @@ layout_mode = 2
 text = "-"
 
 [node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Vitality" unique_id=865686166]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
@@ -149,6 +153,7 @@ layout_mode = 2
 text = "-"
 
 [node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Agility" unique_id=816918566]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
@@ -176,6 +181,7 @@ layout_mode = 2
 text = "-"
 
 [node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Endurance" unique_id=940854357]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
@@ -203,6 +209,7 @@ layout_mode = 2
 text = "-"
 
 [node name="Value" type="Label" parent="Display/Attributes/Margin/VBox/Concentration" unique_id=1091348785]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "0"
@@ -230,6 +237,7 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Display/Stats/Margin/VBox" unique_id=629851390]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Stats"
 horizontal_alignment = 1
@@ -249,6 +257,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Value" type="Label" parent="Display/Stats/Margin/VBox/Level" unique_id=1019038645]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "1"
@@ -266,6 +275,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Value" type="Label" parent="Display/Stats/Margin/VBox/Location" unique_id=902543333]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 text = "Artis"
@@ -314,6 +324,7 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Display/Traits/Margin/VBox" unique_id=2091144788]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Traits"
 horizontal_alignment = 1
@@ -338,6 +349,7 @@ layout_mode = 2
 text = "<"
 
 [node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Hairstyle" unique_id=319746681]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Hairstyle"
@@ -365,6 +377,7 @@ layout_mode = 2
 text = "<"
 
 [node name="Name" type="Label" parent="Display/Traits/Margin/VBox/HairColor" unique_id=1555392213]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Hair Color"
@@ -392,6 +405,7 @@ layout_mode = 2
 text = "<"
 
 [node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Gender" unique_id=617445179]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Gender"
@@ -419,6 +433,7 @@ layout_mode = 2
 text = "<"
 
 [node name="Name" type="Label" parent="Display/Traits/Margin/VBox/Race" unique_id=744329124]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Ethnicity"
@@ -446,6 +461,7 @@ layout_mode = 2
 text = "<"
 
 [node name="Name" type="Label" parent="Display/Traits/Margin/VBox/SkinTone" unique_id=1535606027]
+theme_type_variation = &"ValueLabel"
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Skin Tone"

@@ -80,6 +80,7 @@ popup/item_1/id = 1
 layout_mode = 2
 
 [node name="Visual" type="Label" parent="Layout/Margin/TabBar/Render/RenderVBox/VisualVBox" unique_id=355890167]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Visual"
 
@@ -143,6 +144,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Effect" type="Label" parent="Layout/Margin/TabBar/Render/RenderVBox/EffectVBox" unique_id=1300611624]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Effect"
 
@@ -177,6 +179,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 
 [node name="Volume" type="Label" parent="Layout/Margin/TabBar/Audio/VBoxContainer/VolumeVBox" unique_id=201837482]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Volume"
 
@@ -321,6 +324,7 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
 [node name="PasswordLabel" type="Label" parent="Layout/Margin/TabBar/Account/AccountVBox" unique_id=453651108]
+theme_type_variation = &"ValueLabel"
 layout_mode = 2
 text = "Change Password"
 

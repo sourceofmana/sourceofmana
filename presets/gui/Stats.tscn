@@ -79,7 +79,7 @@ layout_mode = 2
 [node name="Name" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/Information" unique_id=320787605]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 text = "Test"
 
 [node name="Gender" type="TextureRect" parent="Layout/Scroll/Margin/Layout/Stats/Information" unique_id=785173096]
@@ -93,7 +93,7 @@ size_flags_horizontal = 3
 
 [node name="Level" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/Information" unique_id=578063057]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 text = "Lvl. 2"
 horizontal_alignment = 1
 
@@ -109,7 +109,7 @@ texture = ExtResource("4_de8qp")
 [node name="Spirit" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/Information" unique_id=1870001363]
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 2
 
 [node name="HSeparator2" type="HSeparator" parent="Layout/Scroll/Margin/Layout/Stats" unique_id=277581076]
@@ -131,7 +131,7 @@ text = "Strength"
 [node name="Current" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/StrengthBox" unique_id=1338229792]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -144,7 +144,7 @@ text = "-"
 [node name="ToAdd" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/StrengthBox" unique_id=1424645298]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -166,7 +166,7 @@ text = "Vitality"
 [node name="Current" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/VitalityBox" unique_id=1491674885]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -179,7 +179,7 @@ text = "-"
 [node name="ToAdd" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/VitalityBox" unique_id=280046153]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -201,7 +201,7 @@ text = "Agility"
 [node name="Current" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/AgilityBox" unique_id=1494958386]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -214,7 +214,7 @@ text = "-"
 [node name="ToAdd" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/AgilityBox" unique_id=245718018]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -236,7 +236,7 @@ text = "Endurance"
 [node name="Current" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/EnduranceBox" unique_id=1854145065]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -249,7 +249,7 @@ text = "-"
 [node name="ToAdd" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/EnduranceBox" unique_id=1261772200]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -271,7 +271,7 @@ text = "Concentration"
 [node name="Current" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox" unique_id=1093368796]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -284,7 +284,7 @@ text = "-"
 [node name="ToAdd" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/ConcentrationBox" unique_id=351802522]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -310,7 +310,7 @@ text = "Available points"
 [node name="Value" type="Label" parent="Layout/Scroll/Margin/Layout/Stats/StatBox/AvailablePointsBox" unique_id=469370077]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -422,7 +422,7 @@ text = "Money"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_colors/font_color = Color(1, 1, 0.866667, 1)
+theme_type_variation = &"ValueLabel"
 text = "0"
 horizontal_alignment = 2
 
