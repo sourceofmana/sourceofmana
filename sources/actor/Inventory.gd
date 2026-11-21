@@ -146,6 +146,8 @@ func UseItem(cell : ItemCell):
 	if itemIndex >= 0 and RemoveItem(cell, 1, itemIndex):
 		if cell.modifiers:
 			cell.modifiers.Apply(actor)
+			if cell.buffTime != 0.0:
+				actor.stat.buffs.ApplyCell(cell, cell.buffTime)
 		if cell.cellScript:
 			var script : CellScript = cell.cellScript.new()
 			if script:

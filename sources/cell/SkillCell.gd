@@ -28,7 +28,6 @@ enum Category
 @export_range(0.0, 1.0) var releaseRatio : float	= 1.0
 @export var projectileSpeed : float				= 0.0
 @export_category("Buff")
-@export var buffTime : float					= 0.0
 @export var buffPreset : PackedScene			= null
 
 #

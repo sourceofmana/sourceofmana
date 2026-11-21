@@ -62,5 +62,7 @@ offset_bottom = 57.0
 textureProgress = ExtResource("4")
 labelColor = Color(1, 1, 0.87058824, 0.78431374)
 labelOffset = Vector2(17, -3)
+fillDuration = 0.5
+fillTransition = 0
 
 [connection signal="pressed" from="TouchButton" to="." method="_on_button_pressed"]

@@ -25,9 +25,12 @@ const coefRatePerLevel : float					= 0.001
 const coefDelayPerAttribute : float				= 0.01
 const coefDelayPerLevel : float					= 0.002
 const coefRegenMana : float						= 0.05
-const coefRegenStamina : float					= 10.0
+const coefRegenStaminaRatio : float			= 0.2
+const coefRegenStaminaRatioPerEndurance : float	= 0.005
 const coefRegenHealth : float					= 1.0
 const weightSnap : float						= 0.001
+const encumbranceThreshold : float				= 0.5
+const encumbranceMinRatio : float				= 0.25
 const runningSpeedIncrease : float				= 50
 const minEvadeRate : float						= 0.01
 
@@ -86,7 +89,11 @@ static func GetMaxStamina(stat : ActorStats) -> int:
 	return F(levelStamina * enduranceRatio + stat.endurance * coefStaminaPerEndurance) + stat.modifiers.Get(CellCommons.Modifier.MaxStamina, true)
 
 static func GetRegenStamina(stat : ActorStats) -> int:
-	return GetRegen(stat, CellCommons.Modifier.RegenStamina, stat.endurance * 2 + FFifth(stat.level) + FPercent(GetMaxStamina(stat) * coefRegenStamina))
+	var regenRatio : float = coefRegenStaminaRatio + stat.endurance * coefRegenStaminaRatioPerEndurance
+	return GetRegen(stat, CellCommons.Modifier.RegenStamina, F(GetMaxStamina(stat) * regenRatio * GetStaminaRecoveryBonus(stat)))
+
+static func GetStaminaRecoveryBonus(stat : ActorStats) -> float:
+	return maxf(0.0, 1.0 + Percent(float(stat.modifiers.Get(CellCommons.Modifier.StaminaRecovery, true))))
 
 static func GetCooldownAttackDelay(stat : ActorStats) -> float:
 	return maxf(0.001, stat.morphStat.cooldownAttackDelay - stat.endurance * coefDelayPerAttribute - stat.level * coefDelayPerLevel) + stat.modifiers.Get(CellCommons.Modifier.CooldownDelay, true)
@@ -135,6 +142,13 @@ static func GetWalkSpeed(stat : ActorStats) -> float:
 
 static func GetWeightCapacity(stat : ActorStats) -> float:
 	return snappedf(stat.morphStat.weightCapacity + Half(stat.strength) + Fifth(stat.level), weightSnap) + stat.modifiers.Get(CellCommons.Modifier.WeightCapacity, true)
+
+static func GetEncumbranceRatio(stat : ActorStats) -> float:
+	if stat.current.weightCapacity <= 0.0:
+		return 1.0
+	var weightRatio : float = stat.weight / stat.current.weightCapacity
+	var overload : float = clampf((weightRatio - encumbranceThreshold) / (1.0 - encumbranceThreshold), 0.0, 1.0)
+	return lerpf(1.0, encumbranceMinRatio, overload)
 
 static func GetAttack(stat : ActorStats) -> int:
 	return stat.morphStat.attack + F(stat.strength * coefAttackPerAttribute) + F(stat.level * coefAttackPerLevel) + stat.modifiers.Get(CellCommons.Modifier.Attack, true)

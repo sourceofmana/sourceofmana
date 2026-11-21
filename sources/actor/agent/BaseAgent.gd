@@ -28,6 +28,9 @@ var defaultState : ActorCommons.State	= ActorCommons.State.UNKNOWN
 var requireFullUpdate : bool			= false
 var requireUpdate : bool				= false
 
+var staminaRegenBlockedUntil : int		= 0
+var lastCombatTick : int				= -ActorCommons.StaminaCombatDurationMs
+
 #
 func SwitchInputMode(clearCurrentInput : bool):
 	hasCurrentGoal = false
@@ -137,10 +140,15 @@ func UpdateDeltas(delta : float):
 	var recovery : ActorCommons.Recovery = ActorCommons.GetRecovery(self)
 	if stat.health < stat.current.maxHealth or stat.current.regenHealth < 0:
 		stat.deltaHealth += (stat.current.regenHealth / ActorCommons.RegenDelay) * delta * ActorCommons.GetRecoveryRatio(recovery, stat.current.regenHealth)
+
 	if stat.mana < stat.current.maxMana or stat.current.regenMana < 0:
 		stat.deltaMana += (stat.current.regenMana / ActorCommons.RegenDelay) * delta * ActorCommons.GetRecoveryRatio(recovery, stat.current.regenMana)
-	if stat.stamina < stat.current.maxStamina or stat.current.regenStamina < 0:
-		stat.deltaStamina += (stat.current.regenStamina / ActorCommons.RegenDelay) * delta * ActorCommons.GetRecoveryRatio(recovery, stat.current.regenStamina)
+
+	if ActorCommons.IsRunning(self):
+		stat.deltaStamina -= ActorCommons.RunningStaminaCostPerSecond * delta
+		BlockStaminaRegen()
+	else:
+		stat.deltaStamina += GetStaminaRegen() * delta
 
 	if abs(stat.deltaHealth) >= 1.0:
 		var healthChange : int = floori(abs(stat.deltaHealth)) * int(sign(stat.deltaHealth))
@@ -159,6 +167,74 @@ func UpdateDeltas(delta : float):
 		var staminaChange : int = floori(abs(stat.deltaStamina)) * int(sign(stat.deltaStamina))
 		stat.deltaStamina -= staminaChange
 		stat.SetStamina(staminaChange)
+	RefreshStaminaState()
+
+# Stamina
+func SpendStamina(amount : int):
+	if amount < 0:
+		return
+	if amount > 0:
+		stat.SetStamina(-amount)
+
+	BlockStaminaRegen()
+	RefreshStaminaState()
+
+func GetStaminaRegen() -> float:
+	if stat.current.regenStamina < 0:
+		return stat.current.regenStamina
+	if stat.stamina >= stat.current.maxStamina or Time.get_ticks_msec() < staminaRegenBlockedUntil:
+		return 0.0
+	return stat.current.regenStamina * GetStaminaRecoveryRatio()
+
+func GetStaminaRecoveryRatio() -> float:
+	if SkillCommons.HasAnyActionInProgress(self):
+		return 0.0
+
+	var ratio : float = ActorCommons.StaminaRecoveryRatio[ActorCommons.GetRecovery(self)]
+	if IsInCombat():
+		ratio *= ActorCommons.StaminaCombatRatio
+	if stat.health < stat.current.maxHealth * ActorCommons.StaminaLowHealthThreshold:
+		ratio *= ActorCommons.StaminaLowHealthRatio
+	return ratio * Formula.GetEncumbranceRatio(stat)
+
+func BlockStaminaRegen():
+	var regenDelay : int = ActorCommons.StaminaExhaustedRegenDelayMs if IsExhausted() else ActorCommons.StaminaRegenDelayMs
+	staminaRegenBlockedUntil = maxi(staminaRegenBlockedUntil, Time.get_ticks_msec() + regenDelay)
+
+func IsExhausted() -> bool:
+	return stat.staminaState == ActorCommons.StaminaState.EXHAUSTED
+
+func RefreshStaminaState():
+	var newState : ActorCommons.StaminaState = ActorCommons.StaminaState.NORMAL
+	if stat.stamina <= 0 or (IsExhausted() and stat.stamina < stat.current.maxStamina * ActorCommons.StaminaExhaustionRecoveryRatio):
+		newState = ActorCommons.StaminaState.EXHAUSTED
+	elif stat.stamina < stat.current.maxStamina and GetStaminaRegen() <= 0.0:
+		newState = ActorCommons.StaminaState.PAUSED
+
+	if newState == stat.staminaState:
+		return
+
+	stat.staminaState = newState
+	StaminaStateChanged(newState)
+
+func StaminaStateChanged(newState : ActorCommons.StaminaState):
+	if newState == ActorCommons.StaminaState.EXHAUSTED:
+		stat.deltaStamina = 0.0
+		SetRunning(false)
+		BlockStaminaRegen()
+
+func SetRunning(enable : bool):
+	if stat.isRunning != enable:
+		if not enable or (stat.stamina > 0 and not IsExhausted() and state == ActorCommons.State.WALK):
+			stat.isRunning = enable
+			RefreshWalkSpeed()
+			requireFullUpdate = true
+
+func EnterCombat():
+	lastCombatTick = Time.get_ticks_msec()
+
+func IsInCombat() -> bool:
+	return Time.get_ticks_msec() - lastCombatTick < ActorCommons.StaminaCombatDurationMs
 
 func NotifyDrain(damage : int):
 	var agentRID : int = get_rid().get_id()

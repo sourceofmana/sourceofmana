@@ -4,7 +4,7 @@ class_name SoulMenhirGlobal
 #
 const REGEN_HEALTH_BONUS : int = 3
 const REGEN_MANA_BONUS : int = 3
-const REGEN_STAMINA_BONUS : int = 3
+const STAMINA_RECOVERY_BONUS : int = 50
 
 var playerModifiers : Dictionary[int, Array] = {}
 
@@ -29,7 +29,7 @@ func OnAreaEnter(player : PlayerAgent):
 	var mods : Array[StatModifier] = []
 	mods.append(AddModifier(CellCommons.Modifier.RegenHealth, REGEN_HEALTH_BONUS, player))
 	mods.append(AddModifier(CellCommons.Modifier.RegenMana, REGEN_MANA_BONUS, player))
-	mods.append(AddModifier(CellCommons.Modifier.RegenStamina, REGEN_STAMINA_BONUS, player))
+	mods.append(AddModifier(CellCommons.Modifier.StaminaRecovery, STAMINA_RECOVERY_BONUS, player))
 	playerModifiers[playerRID] = mods
 
 func OnAreaExit(player : PlayerAgent):

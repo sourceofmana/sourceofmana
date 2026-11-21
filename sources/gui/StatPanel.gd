@@ -50,6 +50,7 @@ extends WindowPanel
 @onready var lDodgeRate : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/DodgeRateBox/Value
 @onready var lAccuracy : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/AccuracyBox/Value
 @onready var lWalkSpeed : RichTextLabel			= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/WalkBox/Value
+@onready var lStaminaRegen : RichTextLabel		= $Layout/Scroll/Margin/Layout/Stats/PreciseStats/AdvancedStatsBox/StaminaRegenBox/Value
 
 var panelStats: ActorStats = ActorStats.new()
 signal panel_stats_reset
@@ -244,6 +245,7 @@ func RefreshEntityStats():
 	var newWalkPercent : float = GetPercent(panelStats.current.walkSpeed, panelStats.morphStat.walkSpeed)
 	var liveWalkPercent : float = GetPercent(liveCurrent.walkSpeed, liveMorph.walkSpeed)
 	lWalkSpeed.set_text(GetStatBBCode("%.2f%%" % newWalkPercent, CellCommons.GetPercentDiffBBCode(newWalkPercent - liveWalkPercent)))
+	lStaminaRegen.set_text(GetStatBBCode("%d/s" % panelStats.current.regenStamina, CellCommons.GetModifierDiffBBCode(CellCommons.Modifier.RegenStamina, panelStats.current.regenStamina - liveCurrent.regenStamina)))
 
 #
 func GetStatBBCode(valueText : String, diffBBCode : String) -> String:

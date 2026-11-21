@@ -151,4 +151,5 @@ func OnFightTutorial():
 	Narrate("Press Interact near an enemy to automatically target and attack it.")
 	Narrate("You can also use the Target action to cycle target manually.")
 	Narrate("Each hit costs stamina. Run out and your attacks will have less effect.")
+	Narrate("Stamina only recovers once you stop attacking, and slower while enemies keep hitting you. Step back to catch your breath.")
 	Narrate("Sitting down helps stamina regeneration.")

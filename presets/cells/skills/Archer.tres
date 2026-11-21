@@ -9,7 +9,7 @@
 [sub_resource type="Resource" id="Resource_klyse"]
 script = ExtResource("2_cmomi")
 _effect = 3
-_value = -10
+_value = -12
 
 [sub_resource type="Resource" id="Resource_f1ymc"]
 script = ExtResource("2_cmomi")

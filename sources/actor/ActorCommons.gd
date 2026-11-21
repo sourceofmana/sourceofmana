@@ -452,7 +452,23 @@ const MerchantMaxItemCount : int			= 999999
 const MaxStatValue : int					= 1 << 32
 const MaxPointPerAttributes : int			= 20
 const InventorySize : int					= 100
-const RunningStaminaCostPerSecond : int		= 5
+const RunningStaminaCostPerSecond : int		= 10
+
+# Stamina
+enum StaminaState
+{
+	NORMAL = 0,
+	PAUSED,
+	EXHAUSTED,
+}
+const StaminaRecoveryRatio : PackedFloat32Array	= [0.0, 0.75, 1.0, 1.5]
+const StaminaRegenDelayMs : int				= 800
+const StaminaExhaustedRegenDelayMs : int	= 1500
+const StaminaExhaustionRecoveryRatio : float= 0.3
+const StaminaCombatDurationMs : int			= 4000
+const StaminaCombatRatio : float			= 0.5
+const StaminaLowHealthThreshold : float		= 0.25
+const StaminaLowHealthRatio : float			= 0.75
 
 # Explore
 static var SailingDestination : Destination	= Destination.new("Ocean".hash(), Vector2(71 * 32 + 16, 55 * 32 + 16))

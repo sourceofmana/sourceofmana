@@ -30,13 +30,13 @@ func GetRemaining(effect : CellCommons.Modifier) -> float:
 	return timer.time_left if timer else InfiniteTime
 
 # Application
-func ApplyCell(skill : SkillCell, duration : float):
-	if not skill or not skill.modifiers:
+func ApplyCell(cell : BaseCell, duration : float):
+	if not cell or not cell.modifiers:
 		return
 
-	for modifier in skill.modifiers._modifiers:
+	for modifier in cell.modifiers._modifiers:
 		if modifier and modifier._persistent:
-			Apply(modifier._effect, modifier._value, duration, skill.id)
+			Apply(modifier._effect, modifier._value, duration, cell.id)
 
 func Apply(effect : CellCommons.Modifier, value : Variant, duration : float, skillID : int = DB.UnknownHash, merge : bool = true):
 	if not actor or effect == CellCommons.Modifier.None or duration == 0.0:

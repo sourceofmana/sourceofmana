@@ -8,8 +8,14 @@
 [ext_resource type="Script" uid="uid://btqmbqq2q7cm8" path="res://sources/cell/CellModifier.gd" id="4_modifier"]
 [ext_resource type="PackedScene" uid="uid://b7pg4ja3fxjua" path="res://presets/effects/particles/Jump.tscn" id="6_rquis"]
 
+[sub_resource type="Resource" id="Resource_jumpStamina"]
+script = ExtResource("3_b04gy")
+_effect = 3
+_value = -15
+
 [sub_resource type="Resource" id="Resource_jump"]
 script = ExtResource("4_modifier")
+_modifiers = Array[ExtResource("3_b04gy")]([SubResource("Resource_jumpStamina")])
 metadata/_custom_type_script = "uid://btqmbqq2q7cm8"
 
 [resource]

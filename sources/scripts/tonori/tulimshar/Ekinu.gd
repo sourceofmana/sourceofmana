@@ -89,6 +89,7 @@ func OnJobExplanation():
 		DisplayActions(["gp_run"])
 		Narrate("Hold Run to sprint and cover ground faster or flee a battle.")
 		Narrate("Sprinting drains stamina, so use it when you need it.")
+		Narrate("Drain it completely and you will be too exhausted to sprint until you catch your breath.")
 
 		Mes("You should be all set now.")
 		LookAtNpc("Gilgames")
@@ -118,6 +119,7 @@ func OnStrangerDanger():
 	DisplayActions(["gp_run"])
 	Narrate("Hold Run to sprint and cover ground faster or flee a battle.")
 	Narrate("Sprinting drains stamina, so use it when you need it.")
+	Narrate("Drain it completely and you will be too exhausted to sprint until you catch your breath.")
 	OnMainChoice()
 
 # Red Queen chain

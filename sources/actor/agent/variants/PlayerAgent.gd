@@ -142,15 +142,6 @@ func Morph(notifyMorphing : bool, morphID : int = DB.UnknownHash):
 		if inst:
 			Network.NotifyInstance(inst, "Morphed", [get_rid().get_id(), morphID, notifyMorphing])
 
-
-# Running
-func SetRunning(enable : bool):
-	if stat.isRunning != enable:
-		if not enable or (stat.stamina > 0 and state == ActorCommons.State.WALK):
-			stat.isRunning = enable
-			RefreshWalkSpeed()
-			requireFullUpdate = true
-
 #
 func OnRegenTick():
 	UpdateDeltas(ActorCommons.RegenTickInterval)
@@ -268,13 +259,6 @@ func Killed():
 	if ownScript:
 		ClearScript()
 		NpcCommons.ToggleContext(self, false)
-
-func UpdateDeltas(delta : float):
-	if ActorCommons.IsRunning(self):
-		stat.deltaStamina -= ActorCommons.RunningStaminaCostPerSecond * delta
-		if (stat.stamina + stat.deltaStamina) <= 0.0:
-			SetRunning(false)
-	super.UpdateDeltas(delta)
 
 #
 func AddScript(npc : NpcAgent):

@@ -42,6 +42,7 @@ var buffs : BuffModifier				= BuffModifier.new()
 var deltaHealth : float					= 0.0
 var deltaMana : float					= 0.0
 var deltaStamina : float				= 0.0
+var staminaState : ActorCommons.StaminaState	= ActorCommons.StaminaState.NORMAL
 
 # Signals
 signal vital_stats_updated
@@ -79,10 +80,10 @@ func RefreshEntityStats():
 	current.weightCapacity	= Formula.GetWeightCapacity(self)
 	isHidden				= Formula.IsHidden(self)
 	isInvisible				= Formula.IsInvisible(self)
+	RefreshRegenStats()
 	entity_stats_updated.emit()
 
 	RefreshVitalStats()
-	RefreshRegenStats()
 
 func RefreshAttributes():
 	RefreshEntityStats()

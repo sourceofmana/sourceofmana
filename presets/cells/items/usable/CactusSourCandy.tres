@@ -12,8 +12,9 @@ _value = 20.0
 
 [sub_resource type="Resource" id="Resource_ivqp6"]
 script = ExtResource("2_4rutc")
-_effect = 3
-_value = 50.0
+_effect = 24
+_value = 50
+_persistent = true
 metadata/_custom_type_script = "uid://hdd6y6syvlm6"
 
 [sub_resource type="Resource" id="Resource_2kgew"]
@@ -26,8 +27,10 @@ buyPrice = 25
 sellPrice = 3
 id = 3589756736
 name = "Cactus Sour Candy"
+description = "Its sourness keeps you going, recovering stamina faster for a while."
 icon = ExtResource("1_8ctvb")
 weight = 5.0
 stackable = true
 usable = true
 modifiers = SubResource("Resource_2kgew")
+buffTime = 60.0

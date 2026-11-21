@@ -25,9 +25,10 @@ static func TryConsume(agent : BaseAgent, modifier : CellCommons.Modifier, skill
 				return true
 		CellCommons.Modifier.Stamina:
 			var exhaust : int = skill.modifiers.Get(modifier)
-			if agent.stat.stamina >= -exhaust:
-				agent.stat.SetStamina(exhaust)
-				return true
+			var hasEnough : bool = agent.stat.stamina >= -exhaust
+			if exhaust < 0:
+				agent.SpendStamina(mini(-exhaust, agent.stat.stamina))
+			return hasEnough
 	return false
 
 static func GetDamage(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rng : float) -> Skill.AlterationInfo:

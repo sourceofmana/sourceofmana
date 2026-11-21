@@ -57,6 +57,7 @@ enum Modifier {
 	Hide,
 	Invisible,
 	Accuracy,
+	StaminaRecovery,
 	Count
 }
 
@@ -81,6 +82,7 @@ static func GetModifierDisplayName(effect : Modifier) -> String:
 		Modifier.RegenHealth:	return "HP Regen"
 		Modifier.RegenMana:		return "MP Regen"
 		Modifier.RegenStamina:	return "SP Regen"
+		Modifier.StaminaRecovery:	return "SP Recovery"
 		Modifier.WalkSpeed:		return "Walk Speed"
 		Modifier.WeightCapacity: return "Carry Weight"
 		_:						return "Unknown"
@@ -122,6 +124,9 @@ static func FormatModifierValue(effect : Modifier, value : Variant) -> String:
 		Modifier.CastDelay, Modifier.CooldownDelay:
 			var floatVal : float = float(value)
 			return ("+" if floatVal >= 0.0 else "") + ("%.2f" % floatVal) + "s"
+		Modifier.StaminaRecovery:
+			var intVal : int = int(value)
+			return ("+" if intVal >= 0 else "") + str(intVal) + "%"
 		_:
 			var intVal : int = int(value)
 			return ("+" if intVal >= 0 else "") + str(intVal)

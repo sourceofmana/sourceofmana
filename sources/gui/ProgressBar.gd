@@ -9,6 +9,7 @@ extends Control
 @export var labelOffset : Vector2			= Vector2.ZERO
 @export var fillDuration : float			= 0.0
 @export var initDuration : float			= 0.0
+@export var fillTransition : Tween.TransitionType	= Tween.TRANS_CUBIC
 @export var precisionDivider : int			= 0
 @export var numberAfterComma : int			= 0
 @export var displayMax : bool				= true
@@ -63,7 +64,7 @@ func SetStat(value : float, maxValue : float):
 
 	if tween:
 		tween.kill()
-	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(fillTransition)
 	tween.tween_method(Animate, currentPercent, newPercent, duration)
 
 # Internal functions

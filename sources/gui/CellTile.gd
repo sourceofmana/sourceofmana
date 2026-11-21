@@ -65,16 +65,26 @@ func GetTooltipModifiers(currentEquipped : ItemCell) -> String:
 	var isMuted : bool = IsInEquipmentSlot() and HasMutedModifiers(cell)
 	var valueColor : String = "#" + UICommons.DarkTextColor.to_html(false) if isMuted else lightColor
 	var bbcode : String = ""
+	var buffs : String = ""
 	if cell.modifiers and cell.modifiers.HasAny():
 		for modifier in cell.modifiers._modifiers:
-			if modifier and (modifier._persistent or cell.usable):
+			if not modifier:
+				continue
+			if cell.usable and modifier._persistent:
+				buffs += GetTooltipSkillModifierLine(modifier, lightColor)
+			elif modifier._persistent or cell.usable:
 				if bbcode.is_empty():
 					bbcode += "\n"
 				bbcode += GetTooltipModifierLine(modifier, currentEquipped, valueColor, isMuted)
 	if isMuted and not bbcode.is_empty():
 		bbcode += GetTooltipMutedNotice()
 	bbcode += GetTooltipMissingModifiers(currentEquipped, lightColor)
+	if not buffs.is_empty():
+		bbcode += "\n" + GetTooltipSection(GetTooltipBuffHeader(), buffs)
 	return bbcode
+
+func GetTooltipBuffHeader() -> String:
+	return "Buff (%s)" % Util.FormatDuration(int(cell.buffTime)) if cell.buffTime > 0.0 else "Buff"
 
 func IsSkillCost(modifier : StatModifier) -> bool:
 	return not modifier._persistent and CellCommons.IsResourceModifier(modifier._effect) and float(modifier._value) < 0.0
@@ -106,8 +116,7 @@ func GetTooltipSkillModifiers() -> String:
 			else:
 				effects += line
 
-	var buffHeader : String = "Buff (%s)" % Util.FormatDuration(int(cell.buffTime)) if cell.buffTime > 0.0 else "Buff"
-	var bbcode : String = GetTooltipSection("Effect", effects) + GetTooltipSection(buffHeader, buffs) + GetTooltipSection("Cost", costs)
+	var bbcode : String = GetTooltipSection("Effect", effects) + GetTooltipSection(GetTooltipBuffHeader(), buffs) + GetTooltipSection("Cost", costs)
 	return "" if bbcode.is_empty() else "\n" + bbcode
 
 func GetTooltipWeight() -> String:

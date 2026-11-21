@@ -146,6 +146,8 @@ static func Damaged(agent : BaseAgent, target : BaseAgent, skill : SkillCell, rn
 		AI.Refresh(target)
 	# Re-calculate the clamp as AI.Refresh may have triggered the health regen
 	info.value = clampi(info.value, 0, target.stat.health)
+	agent.EnterCombat()
+	target.EnterCombat()
 	target.stat.SetHealth(-info.value)
 	target.agent_damaged.emit(target, info.value)
 	Network.NotifyNeighbours(agent, "TargetAlteration", [agent.get_rid().get_id(), target.get_rid().get_id(), info.value, info.type, skill.id, true], true, true)
