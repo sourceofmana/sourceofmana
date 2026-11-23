@@ -21,6 +21,8 @@ static func Cast(agent : BaseAgent, target : BaseAgent, skill : SkillCell):
 		return
 	if not ActorCommons.HasAttackStyle(agent, skill.attackStyle):
 		return
+	if agent is AIAgent and not AICommons.CanUseSkill(agent, skill, target):
+		return
 	var map : WorldMap = WorldAgent.GetMapFromAgent(agent)
 	if map and map.HasFlags(WorldMap.Flags.NO_SPELL):
 		return

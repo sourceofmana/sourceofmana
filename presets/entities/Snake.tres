@@ -24,6 +24,7 @@ _stats = {
 "dodgeRate": 0.0,
 "level": 17,
 "maxHealth": 150,
+"maxStamina": 100,
 "walkSpeed": 140.0
 }
 _equipment = Array[ExtResource("1_q84qv")]([null, null, null, null, null, null, null, null])

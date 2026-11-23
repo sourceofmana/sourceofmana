@@ -26,6 +26,8 @@ _stats = {
 "gender": "Male",
 "level": 20,
 "maxHealth": 250,
+"maxMana": 1000,
+"maxStamina": 1000,
 "race": "Raijin",
 "skintone": "Dark",
 "vitality": 5

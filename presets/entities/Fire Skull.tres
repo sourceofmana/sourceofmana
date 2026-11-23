@@ -17,6 +17,7 @@ _radius = 12
 _stats = {
 "baseExp": 20,
 "level": 10,
+"maxStamina": 200,
 "walkSpeed": 50.0
 }
 _equipment = Array[ExtResource("1_akvej")]([null, null, null, null, null, null, null, null])

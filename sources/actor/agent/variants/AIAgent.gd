@@ -7,7 +7,7 @@ var aiState : AICommons.State			= AICommons.State.IDLE
 var aiTimer : Timer						= null
 var aiRefreshDelay : float				= randf_range(AICommons.MinRefreshDelay, AICommons.MaxRefreshDelay)
 var aiSkills : Dictionary[int, float]	= {}
-var aiProbaSum : float					= 0.0
+var lastRegenTick : int					= Time.get_ticks_msec()
 
 var attackers : Array[Dictionary]		= []
 var followers : Dictionary[int, Array]	= {}
@@ -107,6 +107,9 @@ func RemoveFollower(follower : BaseAgent):
 		follower.leader = null
 
 #
+func IsPerformingAction() -> bool:
+	return SkillCommons.IsCasting(self)
+
 func SetSkillCastID(skillID : int):
 	super.SetSkillCastID(skillID)
 	if skillID == DB.UnknownHash:
@@ -114,7 +117,6 @@ func SetSkillCastID(skillID : int):
 
 func AddSkill(cell : SkillCell, proba : float):
 	if cell:
-		aiProbaSum += proba - aiSkills.get(cell.id, 0.0)
 		aiSkills[cell.id] = proba
 
 func SetData():

@@ -186,8 +186,11 @@ func GetStaminaRegen() -> float:
 		return 0.0
 	return stat.current.regenStamina * GetStaminaRecoveryRatio()
 
+func IsPerformingAction() -> bool:
+	return SkillCommons.HasAnyActionInProgress(self)
+
 func GetStaminaRecoveryRatio() -> float:
-	if SkillCommons.HasAnyActionInProgress(self):
+	if IsPerformingAction():
 		return 0.0
 
 	var ratio : float = ActorCommons.StaminaRecoveryRatio[ActorCommons.GetRecovery(self)]

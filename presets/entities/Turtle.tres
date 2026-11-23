@@ -23,6 +23,7 @@ _stats = {
 "defense": 35,
 "level": 10,
 "maxHealth": 250,
+"maxStamina": 200,
 "mdefense": 40,
 "walkSpeed": 30.0
 }

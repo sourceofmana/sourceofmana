@@ -18,6 +18,7 @@ _stats = {
 "dodgeRate": 0.28,
 "level": 25,
 "maxHealth": 380,
+"maxStamina": 200,
 "mdefense": 5,
 "walkSpeed": 120.0
 }

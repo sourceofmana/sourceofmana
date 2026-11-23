@@ -20,7 +20,8 @@ _stats = {
 "cooldownAttackDelay": 3.0,
 "defense": 2,
 "level": 2,
-"maxHealth": 70
+"maxHealth": 70,
+"maxStamina": 200
 }
 _equipment = Array[ExtResource("1_dxecr")]([null, null, null, null, null, null, null, null])
 _behaviour = 10

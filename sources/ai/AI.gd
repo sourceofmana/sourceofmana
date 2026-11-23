@@ -31,6 +31,7 @@ static func Refresh(agent : AIAgent):
 	if not ActorCommons.IsAlive(agent) or not WorldAgent.GetInstanceFromAgent(agent):
 		Stop(agent)
 	else:
+		UpdateRegen(agent)
 		if AICommons.HasExpiredNodeGoal(agent):
 			Reset(agent)
 		HandleBehaviour(agent)
@@ -80,9 +81,13 @@ static func HandleBehaviour(agent : AIAgent):
 		handled = AICommons.ApplyFollowerBehaviour(agent)
 
 #
+static func UpdateRegen(agent : AIAgent):
+	var currentTick : int = Time.get_ticks_msec()
+	agent.UpdateDeltas((currentTick - agent.lastRegenTick) / 1000.0)
+	agent.lastRegenTick = currentTick
+
 static func StateIdle(agent : AIAgent):
 	if not AICommons.IsActionInProgress(agent):
-		agent.UpdateDeltas(agent.aiRefreshDelay)
 		if AICommons.CanWalk(agent):
 			Callback.StartTimer(agent.actionTimer, AICommons.GetWalkTimer(), AI.ToWalk.bind(agent))
 
@@ -95,7 +100,7 @@ static func StateAttack(agent : AIAgent):
 	if not target:
 		Reset(agent)
 	elif not AICommons.IsActionInProgress(agent):
-		agent.skillSelected = AICommons.GetRandomSkill(agent)
+		agent.skillSelected = AICommons.GetRandomSkill(agent, target)
 		if not agent.skillSelected:
 			if AICommons.CanWalk(agent):
 				ToFlee(agent, target)

@@ -52,6 +52,8 @@ const MinUnstuckTimer : int			= 2
 const MaxUnstuckTimer : int			= 10
 
 const FleeHpRatio : float			= 0.25
+const FleeSelfHpRatio : float		= 0.2
+const FleeTargetHpRatio : float		= 0.2
 
 const MinOffsetDistance : int		= 30
 const MaxOffsetDistance : int		= 200
@@ -95,13 +97,33 @@ static func IsStationary(agent : AIAgent) -> bool:
 static func CanWalk(agent: AIAgent):
 	return agent.agent != null
 
-static func GetRandomSkill(agent : AIAgent) -> SkillCell:
-	if agent.aiProbaSum > 0.0:
-		var randProba : float = randf_range(0.0, agent.aiProbaSum)
-		for skill : int in agent.aiSkills:
-			randProba -= agent.aiSkills[skill]
-			if randProba <= 0.0:
-				return DB.GetSkill(skill)
+static func ShouldFleeWhenDrained(agent : AIAgent, target : BaseAgent) -> bool:
+	if agent.stat.health < agent.stat.current.maxHealth * FleeSelfHpRatio:
+		return true
+	return target != null and target.stat.health > target.stat.current.maxHealth * FleeTargetHpRatio
+
+static func CanUseSkill(agent : AIAgent, skill : SkillCell, target : BaseAgent) -> bool:
+	if agent.stat.mana < -skill.modifiers.Get(CellCommons.Modifier.Mana):
+		return false
+	var staminaCost : int = -skill.modifiers.Get(CellCommons.Modifier.Stamina)
+	if staminaCost <= 0 or (agent.stat.stamina >= staminaCost and not agent.IsExhausted()):
+		return true
+	return not ShouldFleeWhenDrained(agent, target)
+
+static func GetRandomSkill(agent : AIAgent, target : BaseAgent) -> SkillCell:
+	var affordableProbaSum : float = 0.0
+	for skillID : int in agent.aiSkills:
+		if CanUseSkill(agent, DB.GetSkill(skillID), target):
+			affordableProbaSum += agent.aiSkills[skillID]
+
+	if affordableProbaSum > 0.0:
+		var randProba : float = randf_range(0.0, affordableProbaSum)
+		for skillID : int in agent.aiSkills:
+			var skill : SkillCell = DB.GetSkill(skillID)
+			if CanUseSkill(agent, skill, target):
+				randProba -= agent.aiSkills[skillID]
+				if randProba <= 0.0:
+					return skill
 	return null
 
 static func HasExpiredNodeGoal(agent : AIAgent):

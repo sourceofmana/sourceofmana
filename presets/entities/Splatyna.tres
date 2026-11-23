@@ -18,6 +18,7 @@ _radius = 26
 _stats = {
 "baseExp": 20,
 "level": 10,
+"maxStamina": 1000,
 "walkSpeed": 50.0
 }
 _equipment = Array[ExtResource("1_qoprb")]([null, null, null, null, null, null, null, null])

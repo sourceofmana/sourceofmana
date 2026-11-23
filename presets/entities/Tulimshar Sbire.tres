@@ -19,6 +19,8 @@ _stats = {
 "gender": "Male",
 "haircolor": "Esperia Blue",
 "hairstyle": "Pompadour",
+"maxHealth": 600,
+"maxStamina": 300,
 "race": "Human",
 "skintone": "Dark"
 }

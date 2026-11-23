@@ -20,6 +20,7 @@ _stats = {
 "defense": 8,
 "level": 12,
 "maxHealth": 220,
+"maxStamina": 300,
 "walkSpeed": 130.0
 }
 _equipment = Array[ExtResource("1_4npla")]([null, null, null, null, null, null, null, null])

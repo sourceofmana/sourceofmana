@@ -21,6 +21,7 @@ _stats = {
 "defense": 0,
 "level": 4,
 "maxHealth": 200,
+"maxStamina": 200,
 "walkSpeed": 60.0
 }
 _equipment = Array[ExtResource("1_exyli")]([null, null, null, null, null, null, null, null])
